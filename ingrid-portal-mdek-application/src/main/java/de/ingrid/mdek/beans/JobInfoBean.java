@@ -8,6 +8,7 @@ public class JobInfoBean {
 	public enum EntityType { ADDRESS, OBJECT, URL }
 
 	private String description;
+	private String frontendMessages;
 	private EntityType entityType;
 	private Integer numEntities;
 	private Integer numObjects;
@@ -85,4 +86,10 @@ public class JobInfoBean {
 	public void setEntityType(EntityType entityType) {
 		this.entityType = entityType;
 	}
+    public String getFrontendMessages() {
+        return frontendMessages;
+    }
+    public void setFrontendMessages(String frontendMessages) {
+        this.frontendMessages = frontendMessages;
+    }
 }

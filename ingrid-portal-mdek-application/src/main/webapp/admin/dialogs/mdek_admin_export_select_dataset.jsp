@@ -97,11 +97,11 @@ scriptScope.selectDatasetForExport = function() {
                 </div>
             </div>
         </div>
-        <div class="inputContainer">
+        <!-- <div class="inputContainer">
             <span>
                 <fmt:message key="dialog.admin.export.selectNode.note" />
             </span>
-        </div>
+        </div>-->
         <div class="inputContainer">
             <span class="button transparent">
                 <span style="float:right;">

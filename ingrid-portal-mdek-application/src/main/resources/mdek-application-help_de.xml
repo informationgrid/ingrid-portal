@@ -2384,6 +2384,7 @@
 				 Eigenschaften des IGC-Datenmodells optimal abbildet.</p>
 				 <p>Es gibt zwei Möglichkeiten für den Export den <i>Teilexport</i> und den 
 				 <i>Teilbaumexport</i>.</p>
+				 
 				 <p><b>Teilexport</b></p>
 				 <p>Über den Teilexport werden einzelne Objekte aus dem Katalog exportiert, die im Feld 
 				 <i>XML-Export-Kriterium</i> der Feldgruppe <i>Zusatzinformation</i> mit einer 
@@ -2392,6 +2393,7 @@
 				 werden grundsätzlich einzelne Objekte ohne nachgeordnete Objekte exportiert. Adressen 
 				 können nicht exportiert werden.</p>
 				 <p>Der Export wird über einen Klick auf <i>Export starten</i> angestoßen.</p>
+				 
 				 <p><b>Teilbaumexport</b></p>
 				 <p>Über den <i>Teilbaumexport</i> können ganze Teilbäume einschließlich ihrer Struktur 
 				 exportiert werden. </p>
@@ -2405,6 +2407,10 @@
 				 <p>Wenn Sie die Einstellung <i>Nur der ausgewählte Datensatz</i> wählen, wird nicht der 
 				 Teilbaum sondern nur das einzelne ausgewählte Objekt bzw. Adresse exportiert.</p>
 				 <p>Der Export wird über einen Klick auf <i>Export</i> starten angestoßen.</p>
+				 <p>Normalerweise werden nur veröffentlichte Objekte bzw. Adressen exportiert. Wird jedoch
+				 ein vollständiger Export inklusive der Bearbeitungsversionen gewünscht, so muss die Auswahl
+				 <i>"auch Arbeitsversionen exportieren"</i> angekreuzt werden.</p>
+				 
 				 <p><b>Informationen zum letzten Prozess</b></p>
 				 <p>Der Export wird in allen Fällen asynchron ausgeführt. Je nach Menge der zu 
 				 exportierenden Objekte und Auslastung des Servers kann der Vorgang mehrere Minuten 
@@ -2426,6 +2432,7 @@
 				 die im GNU-Zip Format komprimiert wurde. Sie wird über die Schaltfläche <i>Durchsuchen</i> 
 				 vom lokalen Rechner ausgewählt. Dazu öffnet sich ein Dialog, wie er für den von Ihnen 
 				 verwendeten Internet-Browser üblich ist.</p>
+				 
 				 <p><b>Import-Typ</b></p>
 				 <p>Es gibt drei verschiedene Formate die importiert werden können:</p>
 				 <p><u>InGrid Catalog:</u> Der Import erfolgt im gleichen Format wie der 
@@ -2435,7 +2442,9 @@
                  des Application Profile ISO 1.0 bestehen. Dabei kann eine XML Datei oder ein ZIP Archiv importiert werden, in dem XML Datein ohne Pfadangaben verpackt wurden.</p>
                  <p><u>ArcGIS ISO-Editor (Single Metadata file / ZIP Archive):</u> Import von mit Hilfe von ArcGIS erzeugten XML-Dateien. Die Dokumente 
                  müssen aus ArcGIS heraus im ISO-Format gespeichert worden sein. Es kann eine XML Datei oder ein ZIP Archiv importiert werden, in dem XML Datein ohne Pfadangaben verpackt wurden.</p>
+                 
 				 <p><b>Importierte Datensätze veröffentlichen</b></p>
+				 <p>Diese Option steht nur bei den Import-Typen CSW und ArcGIS zur Verfügung!</p>
 				 <p>Standardmäßig werden alle importierten Objekte und Adressen in einer Arbeitsversion 
 				 zwischengespeichert, also noch nicht veröffentlicht. Mit der Einstellung 
 				 <i>Importierte Datensätze veröffentlichen</i> können Sie eine sofortige Veröffentlichung 
@@ -2445,6 +2454,13 @@
 				 wenn Pflichtangaben in den Objekten oder Adressen fehlen. Das Objekt bzw. die Adresse wird 
 				 dann doch nur als Arbeitsversion importiert und muss zur Veröffentlichung nachbearbeitet 
 				 werden.</p>
+				 
+				 <p><b>Identische Metadaten überschreiben</b></p>
+				 <p>Über den eindeutigen Identifikationsschlüssel eines Metadatensatzes können gleiche Metadaten erkannt
+				 werden. Ist diese Option aktiviert, so werden die Metadaten im Katalog mit denen von der Import-Datei
+				 überschrieben. Dabei kann es auch passieren, dass das Objekt bzw. die Adresse sich im Hierarchiebaum
+				 verschiebt.</p>
+				 
 				 <p><b>Importierte Datensätze ausschliesslich unter dem gewählten Importknoten anlegen</b></p>
 				 <p>Die Objekte und Adressen des InGridCatalogs (IGC) haben eindeutige Identifikationsschlüssel 
 				 (UUID). Werden Objekte aus externen Systemen in den IGC importiert, wird der von dem 
@@ -2461,10 +2477,7 @@
 				 ausschließlich unter dem gewählten Importknoten anlegen</i> anwählen. In diesem Fall werden 
 				 die Objekte, auch wenn Sie bereits im Katalog existieren sollten, unterhalb des angegebenen 
 				 Importknotens (siehe unten) abgespeichert (Es wird dabei eine neue UUID vergeben).</p>
-				 <p><u>Hinweis:</u> Die Einstellung <i>Importierte Datensätze ausschließlich unter dem 
-				 gewählten Importknoten anlegen</i> kann nur alternativ zu der Einstellung <i>Importierte 
-				 Datensätze veröffentlichen</i> gewählt werden, da neuangelegte Objekte vor der 
-				 Veröffentlichung grundsätzlich auf Vollständigkeit überprüft werden müssen.</p>
+				 
 				 <p><b>Teilbaumimport</b></p>
 				 <p>Für einen Import ist immer die Angabe eines <i>Ausgewählten übergeordneten Objekts</i> 
 				 und einer <i>Ausgewählten übergeordneten Adresse</i> notwendig. Alle noch nicht 
@@ -2475,6 +2488,7 @@
 				 übergeordnete Adresse</i> sind auch dann notwendig, wenn sie für die speziell gewählte 
 				 Importdatei nicht genutzt werden (weil z.B. nur bereits existierende Objekte oder Adressen 
 				 importiert werden). Wählen Sie in solch einem Fall einfach zwei Dummy-Angaben aus.</p>
+				 
 				 <p><b>Informationen zum letzten Prozess</b></p>
 				 <p>Der Import wird asynchron ausgeführt. Je nach Menge der zu importierenden Objekte 
 				 und Auslastung des Servers kann der Vorgang mehrere Minuten in Anspruch nehmen.</p>

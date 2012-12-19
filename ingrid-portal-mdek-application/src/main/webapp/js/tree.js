@@ -25,6 +25,7 @@ ingridDataTree.createTree = function(){
         onClick: menuEventHandler.handleNewEntity
     }));
 	menuDataTree.addChild(new dijit.MenuItem({
+	    id: "menuItemPreview",
         label: message.get('tree.nodePreview'),
         onClick: menuEventHandler.handlePreview
     }));

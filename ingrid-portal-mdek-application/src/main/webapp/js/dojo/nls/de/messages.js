@@ -378,7 +378,7 @@
     "operation.error.targetIsSubnodeOfSourceError":"Das Ziel einer Verschiebeoperation darf nicht Kind des Ausgangsknotens sein.",
 	"operation.error.object.subTreeHasWorkingCopiesError":"Ein oder mehrere untergeordnete Objekte befinden sich noch in Bearbeitung. Bitte speichern Sie zun&auml;chst diese Objekte ab!",
 	"operation.error.address.subTreeHasWorkingCopiesError":"Ein oder mehrere untergeordnete Adressen befinden sich noch in Bearbeitung. Bitte speichern Sie zun&auml;chst diese Adressen ab!",
-	"operation.error.parentHasSmallerPublicationConditionError":"Das Objekt konnte nicht ver&ouml;ffentlicht werden, da die &uuml;bergeordneten Objekte eine niedrigere Ver&ouml;ffentlichungsbreite haben.",
+	"operation.error.parentHasSmallerPublicationConditionError":"Das Objekt konnte nicht ver&ouml;ffentlicht werden, da die &uuml;bergeordneten ver&ouml;ffentlichten Objekte eine niedrigere Ver&ouml;ffentlichungsbreite haben.",
 	"operation.error.deletedAddressIsIdcUser":"Die Adresse kann nicht gel&ouml;scht werden, da Sie mit einem Portalbenutzer verkn&uuml;pft ist. Bitte heben Sie diese Assoziation &uuml;ber die Administrations-Oberfl&auml;che auf und versuchen Sie es erneut!",
 	"operation.error.addressTypeConflict":"Die Aktion kann nicht mit diesem Adress-Typ durchgeführt werden!",
     "operation.error.addressHasNoEmail":"Die Adresse kann nicht gel&ouml;scht werden. Eine Adresse muss mindestens eine Emailadresse enthalten!",

@@ -38,13 +38,13 @@ var mappingDescription = {"mappings":[
   		
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/general
+  		// /igc/data-sources/data-source/data-source-instance/general
   		//
   		// ****************************************************
   		{
   			// set the obj_class to a fixed value "Geoinformation/Karte"
   			"srcXpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
-  			"targetNode":"/igc/data-sources/data-source/general/object-class",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/object-class",
   			"targetAttribute":"id",
   			"storeValue":"objectClass",
   			"transform":{
@@ -53,15 +53,15 @@ var mappingDescription = {"mappings":[
   		},
 		{
   			"srcXpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString",
-			"targetNode":"/igc/data-sources/data-source/general/title"
+			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/title"
   		},
   		{
   			"srcXpath":"//gmd:identificationInfo//gmd:abstract/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/general/abstract"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/abstract"
   		},
 		{
 			"srcXpath":"//gmd:dateStamp/gco:DateTime | //gmd:dateStamp/gco:Date[not(../gco:DateTime)]",
-			"targetNode":"/igc/data-sources/data-source/general/date-of-creation",
+			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/date-of-creation",
 			"transform":{
 				"funct":transformDateIso8601ToIndex
 			}
@@ -71,19 +71,19 @@ var mappingDescription = {"mappings":[
 			"srcXpath":"//gmd:fileIdentifier/gco:CharacterString",
 			// make sure we always have a UUID 
 			"defaultValue":createUUID,
-  			"targetNode":"/igc/data-sources/data-source/general/original-control-identifier"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/original-control-identifier"
   		},
   		{	
   			"srcXpath":"//gmd:metadataStandardName/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/general/metadata/metadata-standard-name"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/metadata/metadata-standard-name"
   		},
   		{	
   			"srcXpath":"//gmd:metadataStandardVersion/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/general/metadata/metadata-standard-version"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/metadata/metadata-standard-version"
   		},
   		{	
   			"srcXpath":"//gmd:MD_Metadata/gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue",
-  			"targetNode":"/igc/data-sources/data-source/general/metadata/metadata-character-set",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/metadata/metadata-character-set",
   			"targetAttribute":"iso-code",
   			"transform":{
 				"funct":transformISOToIgcDomainId,
@@ -92,12 +92,12 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/general/dataset-alternate-name",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/dataset-alternate-name",
   			"concatEntriesWith":", "
   		},
         {   
             "srcXpath":"//gmd:identificationInfo/*/gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue",
-            "targetNode":"/igc/data-sources/data-source/general/dataset-character-set",
+            "targetNode":"/igc/data-sources/data-source/data-source-instance/general/dataset-character-set",
             "targetAttribute":"iso-code",
             "transform":{
                 "funct":transformISOToIgcDomainId,
@@ -106,7 +106,7 @@ var mappingDescription = {"mappings":[
         },
   		{
   			"srcXpath":"//gmd:identificationInfo//gmd:topicCategory",
-  			"targetNode":"/igc/data-sources/data-source/general/topic-categories",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/topic-categories",
   			"newNodeName":"topic-category",
   			"subMappings":{
   				"mappings": [
@@ -125,7 +125,7 @@ var mappingDescription = {"mappings":[
 
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/technical-domain/map
+  		// /igc/data-sources/data-source/data-source-instance/technical-domain/map
   		//
   		// ****************************************************
   		{
@@ -142,7 +142,7 @@ var mappingDescription = {"mappings":[
 	         		{	
 	        			"srcXpath":"//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue",
 	        			"defaultValue":"5", // default to "dataset", if no hierarchyLevel is supplied
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
+	        			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/hierarchy-level",
 	        			"targetAttribute":"iso-code",
 		      			"transform":{
 		      				"funct":transformGeneric,
@@ -151,7 +151,7 @@ var mappingDescription = {"mappings":[
 		        	},
 	        		{
 	        			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution",
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+	        			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map",
 	        			"newNodeName":"publication-scale",
 	        			"subMappings":{
 	        				"mappings": [
@@ -172,19 +172,19 @@ var mappingDescription = {"mappings":[
 		        	},
                     {   
                         "srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record",
-                        "targetNode":"/igc/data-sources/data-source/technical-domain/map/degree-of-record"
+                        "targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/degree-of-record"
                     },
 		        	{	
 	        			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description/gco:CharacterString",
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production"
+	        			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/method-of-production"
 	        		},
 	        		{	
 	        			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString",
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map/technical-base"
+	        			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/technical-base"
 	        		},
 	        		{
 	        			"srcXpath":"//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType",
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+	        			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map",
 	        			"newNodeName":"spatial-representation-type",
 	        			"subMappings":{
 	        				"mappings": [
@@ -202,7 +202,7 @@ var mappingDescription = {"mappings":[
 		        	},
 	        		{	
 	        			"srcXpath":"//gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue",
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format/vector-topology-level",
+	        			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/vector-format/vector-topology-level",
 	        			"targetAttribute":"iso-code",
 	        			"transform":{
 		      				"funct":transformISOToIgcDomainId,
@@ -211,7 +211,7 @@ var mappingDescription = {"mappings":[
 	        		},
 	        		{
 	        			"srcXpath":"//gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects",
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format",
+	        			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/vector-format",
 	        			"newNodeName":"geo-vector",
 	        			"subMappings":{
 	        				"mappings": [
@@ -233,7 +233,7 @@ var mappingDescription = {"mappings":[
 	        		},
 	        		{
 	        			"srcXpath":"//gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes",
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+	        			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map",
 	        			"newNodeName":"feature-type",
 	        			"subMappings":{
 	        				"mappings": [
@@ -255,7 +255,7 @@ var mappingDescription = {"mappings":[
 
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/technical-domain/service
+  		// /igc/data-sources/data-source/data-source-instance/technical-domain/service
   		//
   		// ****************************************************
   		{
@@ -271,7 +271,7 @@ var mappingDescription = {"mappings":[
   			    "mappings": [
 	         		{	
 	        			"srcXpath":"//gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName",
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/service/service-type",
+	        			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/service/service-type",
 	        			"targetAttribute":"id",
 	        			"storeValue":"serviceType",
 		      			"transform":{
@@ -286,11 +286,11 @@ var mappingDescription = {"mappings":[
 		        	},
 		        	{	
 	        			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description/gco:CharacterString",
-	        			"targetNode":"/igc/data-sources/data-source/technical-domain/service/database-of-system"
+	        			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/service/database-of-system"
 	        		},
 	         		{	
 		      			"srcXpath":"//gmd:identificationInfo//srv:serviceTypeVersion/gco:CharacterString",
-		      			"targetNode":"/igc/data-sources/data-source/technical-domain/service",
+		      			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/service",
 		      			"newNodeName":"service-version",
 		      			"subMappings":{
 		      				"mappings": [
@@ -303,7 +303,7 @@ var mappingDescription = {"mappings":[
 		        	},
 	         		{	
 		      			"srcXpath":"//gmd:identificationInfo//srv:containsOperations/srv:SV_OperationMetadata",
-		      			"targetNode":"/igc/data-sources/data-source/technical-domain/service",
+		      			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/service",
 		      			"newNodeName":"service-operation",
 		      			"subMappings":{
 		      				"mappings": [
@@ -459,12 +459,12 @@ var mappingDescription = {"mappings":[
 
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/additional-information
+  		// /igc/data-sources/data-source/data-source-instance/additional-information
   		//
   		// ****************************************************
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:language/gmd:LanguageCode/@codeListValue",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/data-language",
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformISOToIGCLanguageCode
@@ -472,7 +472,7 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:language/gmd:LanguageCode/@codeListValue",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/data-language",
   			"transform":{
 				"funct":transformISOToLanguage,
 				"params":['de']
@@ -481,7 +481,7 @@ var mappingDescription = {"mappings":[
   		{	
   			"srcXpath":"//gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue",
   			"defaultValue":"de",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/metadata-language",
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformISOToIGCLanguageCode
@@ -490,7 +490,7 @@ var mappingDescription = {"mappings":[
   		{	
   			"srcXpath":"//gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue",
   			"defaultValue":"de",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/metadata-language",
   			"transform":{
 				"funct":transformISOToLanguage,
 				"params":['de']
@@ -498,7 +498,7 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:purpose/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/dataset-intentions"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/dataset-intentions"
   		},
         {   
             "execute":{
@@ -507,7 +507,7 @@ var mappingDescription = {"mappings":[
         },
         {
             "srcXpath":"//gmd:identificationInfo//gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString",
-            "targetNode":"/igc/data-sources/data-source/additional-information",
+            "targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information",
             "newNodeName":"use-constraint",
             "subMappings":{
                 "mappings": [
@@ -531,13 +531,13 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine/gmd:MD_Medium",
-  			"targetNode":"/igc/data-sources/data-source/additional-information",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information",
   			"newNodeName":"medium-option",
   			"subMappings":{
   				"mappings": [
 					{
 						"srcXpath":"gmd:mediumNote/gco:CharacterString",
-						"targetNode":"medium-note",
+						"targetNode":"medium-note"
 					},
 	  				{
 			  			"srcXpath":"gmd:name/gmd:MD_MediumNameCode/@codeListValue",
@@ -560,7 +560,7 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format",
-  			"targetNode":"/igc/data-sources/data-source/additional-information",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information",
   			"newNodeName":"data-format",
   			"subMappings":{
   				"mappings": [
@@ -595,15 +595,15 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"defaultValue":"1",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/publication-condition"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/publication-condition"
   		},
   		{	
   			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/ordering-instructions"
   		},
   		{
   			"srcXpath":"//gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult",
-  			"targetNode":"/igc/data-sources/data-source/additional-information",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information",
   			"newNodeName":"conformity",
   			"subMappings":{
   				"mappings": [
@@ -662,7 +662,7 @@ var mappingDescription = {"mappings":[
   		
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/spatial-domain
+  		// /igc/data-sources/data-source/data-source-instance/spatial-domain
   		//
   		// ****************************************************
         {
@@ -672,21 +672,21 @@ var mappingDescription = {"mappings":[
         },
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-minimum",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-minimum",
   			"transform":{
 				"funct":transformNumberStrToIGCNumber
 			}
   		},
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:maximumValue/gco:Real",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-maximum",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-maximum",
   			"transform":{
 				"funct":transformNumberStrToIGCNumber
 			}
   		},
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:EX_Extent/gmd:verticalElement/gmd:EX_VerticalExtent/gmd:verticalCRS/gmd:VerticalCRS/gmd:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis/@uom",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-unit",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-unit",
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformToIgcDomainId,
@@ -700,7 +700,7 @@ var mappingDescription = {"mappings":[
         },
   		{
   			"srcXpath":"//gmd:identificationInfo//gmd:EX_Extent/gmd:geographicElement",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain",
   			"newNodeName":"geo-location",
   			"subMappings":{
   				"mappings": [
@@ -747,7 +747,7 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:type/gmd:MD_KeywordTypeCode/@codeListValue='place']/gmd:keyword/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain",
   			"newNodeName":"geo-location",
   			"subMappings":{
   				"mappings": [
@@ -766,12 +766,12 @@ var mappingDescription = {"mappings":[
 
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/temporal-domain
+  		// /igc/data-sources/data-source/data-source-instance/temporal-domain
   		//
   		// ****************************************************
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/description-of-temporal-domain"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/temporal-domain/description-of-temporal-domain"
   		},
   		{	
   			"execute":{
@@ -780,7 +780,7 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-period",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/temporal-domain/time-period",
   			"targetAttribute":"iso-code",
   			"transform":{
 				"funct":transformISOToIgcDomainId,
@@ -789,7 +789,7 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:status/gmd:MD_ProgressCode/@codeListValue",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-status",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/temporal-domain/time-status",
   			"targetAttribute":"iso-code",
   			"transform":{
 				"funct":transformISOToIgcDomainId,
@@ -798,21 +798,21 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency/gmd:TM_PeriodDuration",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-step",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/temporal-domain/time-step",
   			"transform":{
 				"funct":new TM_PeriodDurationToTimeInterval().parse
 			}
   		},
   		{	
   			"srcXpath":"//gmd:identificationInfo//gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency/gmd:TM_PeriodDuration",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-step",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/temporal-domain/time-step",
   			"transform":{
 				"funct":new TM_PeriodDurationToTimeAlle().parse
 			}
   		},
   		{
   			"srcXpath":"//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/temporal-domain",
   			"newNodeName":"dataset-reference",
   			"subMappings":{
   				"mappings": [
@@ -838,12 +838,12 @@ var mappingDescription = {"mappings":[
   		
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/subject-terms
+  		// /igc/data-sources/data-source/data-source-instance/subject-terms
   		//
   		// ****************************************************
   		{
   			"srcXpath":"//gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='GEMET - INSPIRE themes, version 1.0']/gmd:keyword/gco:CharacterString",
-  			"targetNode":"/igc/data-sources/data-source/subject-terms",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/subject-terms",
   			"newNodeName":"controlled-term",
   			"subMappings":{
   				"mappings": [
@@ -876,7 +876,7 @@ var mappingDescription = {"mappings":[
 
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/available-linkage
+  		// /igc/data-sources/data-source/data-source-instance/available-linkage
   		//
   		// ****************************************************
 
@@ -887,7 +887,7 @@ var mappingDescription = {"mappings":[
         },
   		{
   			"srcXpath":"//gmd:identificationInfo//gmd:graphicOverview/gmd:MD_BrowseGraphic[gmd:fileName/gco:CharacterString != '']",
-  			"targetNode":"/igc/data-sources/data-source",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance",
   			"newNodeName":"available-linkage",
   			"subMappings":{
   				"mappings": [
@@ -914,7 +914,7 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"//gmd:identificationInfo//srv:operatesOn",
-  			"targetNode":"/igc/data-sources/data-source",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance",
   			"newNodeName":"available-linkage",
   			"subMappings":{
   				"mappings": [
@@ -1241,8 +1241,8 @@ function mapReferenceSystemInfo(source, target) {
 			} else if (hasValue(code)) {
 				coordinateSystem = code;
 			}
-			log.debug("adding '" + "/igc/data-sources/data-source/spatial-domain/coordinate-system" + "' = '" + coordinateSystem + "' to target document.");
-			var node = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/spatial-domain/coordinate-system");
+			log.debug("adding '" + "/igc/data-sources/data-source/data-source-instance/spatial-domain/coordinate-system" + "' = '" + coordinateSystem + "' to target document.");
+			var node = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/data-source-instance/spatial-domain/coordinate-system");
 			XMLUtils.createOrReplaceTextNode(node, coordinateSystem);
             
             // get syslist id
@@ -1283,8 +1283,8 @@ function mapVerticalExtentVdatum(source, target) {
             	vDatumName = XPathUtils.getString(verticalDatums.item(i), "gml:identifier");
             }
             if (hasValue(vDatumName)) {
-	            log.debug("adding '/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum' = '" + vDatumName + "' to target document.");
-	            var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum");
+	            log.debug("adding '/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-vdatum' = '" + vDatumName + "' to target document.");
+	            var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-vdatum");
 	            XMLUtils.createOrReplaceTextNode(node, vDatumName);
 	            var datumId = transformToIgcDomainId(vDatumName, 101, "en", "Could not map VerticalDatum: ");
 	            if (hasValue(datumId)) {
@@ -1347,29 +1347,29 @@ function mapTimeConstraints(source, target) {
 		var endPosition = XPathUtils.getString(timePeriods.item(0), "gml:endPosition");
 		if (hasValue(beginPosition) && hasValue(endPosition)) {
 			if (beginPosition.equals(endPosition)) {
-				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/beginning-date");
 				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(beginPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/ending-date");
 				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(endPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "am");
 			} else {
-				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/beginning-date");
 				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(beginPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/ending-date");
 				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(endPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "von");
 			}
 		} else if (hasValue(beginPosition)) {
-				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/beginning-date");
 				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(beginPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "seit");
 		} else if (hasValue(endPosition)) {
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/ending-date");
 				XMLUtils.createOrReplaceTextNode(node, transformDateIso8601ToIndex(endPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "bis");
 		}
 	}
@@ -1390,7 +1390,7 @@ function mapRSIdentifier(source, target)  {
 			} else {
 				dataSourceID = code;
 			}
-			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map/datasource-identificator");
+			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/technical-domain/map/datasource-identificator");
 			XMLUtils.createOrReplaceTextNode(node, dataSourceID);
 		}
 	}
@@ -1418,8 +1418,8 @@ function mapAccessConstraints(source, target) {
 
 function addAccessConstraint(accConstraint, target) {
     if (hasValue(accConstraint)) {
-        log.debug("adding '" + "/igc/data-sources/data-source/additional-information/access-constraint/restriction" + "' = '" + accConstraint + "' to target document.");
-        var node = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/additional-information/access-constraint");
+        log.debug("adding '" + "/igc/data-sources/data-source/data-source-instance/additional-information/access-constraint/restriction" + "' = '" + accConstraint + "' to target document.");
+        var node = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/data-source-instance/additional-information/access-constraint");
         node = XPathUtils.createElementFromXPath(node, "restriction");
         XMLUtils.createOrReplaceTextNode(node, accConstraint);
         var accConstraintId = transformToIgcDomainId(accConstraint, 6010, "en", "Could not map access-constraint, use as free entry: ");
@@ -1443,7 +1443,7 @@ function mapAddresses(source, target) {
         	if (hasValue(organisationName) && hasValue(individualName)) {
         		var parentUuid = createUUIDFromString(organisationName.toString());
         		if (!hasValue(parentAddressList[parentUuid])) {
-	        		var igcAddressNode = XPathUtils.createElementFromXPathAsSibling(igcAdressNodes, "address");
+	        		var igcAddressNode = XPathUtils.createElementFromXPathAsSibling(igcAdressNodes, "address/address-instance");
 	                log.info("Organization in individual address detected. Create new address for organization '" + organisationName + "' with uuid=" + parentUuid + ".")
 	                XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "address-identifier"), parentUuid);
 	                XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "modificator-identifier"), "xxx");
@@ -1456,7 +1456,7 @@ function mapAddresses(source, target) {
         		}
         	}
         	var uuid = createUUIDFromAddress(isoAddressNode);
-    		var igcAddressNode = XPathUtils.createElementFromXPathAsSibling(igcAdressNodes, "address");
+    		var igcAddressNode = XPathUtils.createElementFromXPathAsSibling(igcAdressNodes, "address/address-instance");
             XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "address-identifier"), uuid);
             XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "modificator-identifier"), "xxx");
             XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(igcAddressNode, "responsible-identifier"), "xxx");
@@ -1482,7 +1482,7 @@ function mapAddresses(source, target) {
             }
 
             // add related addresses
-            var igcRelatedAddressNode = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/related-address");
+            var igcRelatedAddressNode = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/data-source-instance/related-address");
             var addressRoleId = transformISOToIgcDomainId(XPathUtils.getString(isoAddressNode, "gmd:role/gmd:CI_RoleCode/@codeListValue"), 505, "Could not transform ISO address role code to IGC id: ");
             if (!hasValue(addressRoleId)) {
             	addressRoleId = "-1";
@@ -1514,11 +1514,11 @@ function mapUncontrolledTerms(source, target) {
                 if (!hasValue(igcCode)) {
 	        		// check "inspireidentifiziert" and add flag !
 	                if (term.equals("inspireidentifiziert")) {
-	                    log.debug("adding '/igc/data-sources/data-source/general/is-inspire-relevant' = 'Y' to target document.");
-	                    XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/general/is-inspire-relevant"), "Y");
+	                    log.debug("adding '/igc/data-sources/data-source/data-source-instance/general/is-inspire-relevant' = 'Y' to target document.");
+	                    XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/general/is-inspire-relevant"), "Y");
 	                } else {
-	                    log.debug("adding '/igc/data-sources/data-source/subject-terms/uncontrolled-term' = '" + term + "' to target document.");
-	                    XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/subject-terms/uncontrolled-term"), term);
+	                    log.debug("adding '/igc/data-sources/data-source/data-source-instance/subject-terms/uncontrolled-term' = '" + term + "' to target document.");
+	                    XMLUtils.createOrReplaceTextNode(XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/data-source-instance/subject-terms/uncontrolled-term"), term);
 	                }
                 }
             }
@@ -1543,8 +1543,8 @@ function mapDistributionLinkages(source, target) {
 
 function addAvailableLinkage(linkage, target) {
     if (hasValue(linkage) && hasValue(linkage.url) && hasValue(linkage.urlType)) {
-        log.debug("adding '/igc/data-sources/data-source/available-linkage' -> 'linkage-url' = '" + linkage.url + "' to target document.");
-        var linkageNode = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/available-linkage");
+        log.debug("adding '/igc/data-sources/data-source/data-source-instance/available-linkage' -> 'linkage-url' = '" + linkage.url + "' to target document.");
+        var linkageNode = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/data-source-instance/available-linkage");
         if (!hasValue(linkage.name)) {
             linkage.name = linkage.url;
         }
@@ -1581,7 +1581,7 @@ function mapServiceClassifications(source, target) {
         			protocol(WARN, "Error tranforming ISO code '" + term + "' with code list 5200 to IGC id. Does the codeList exist?")
         		}
         		if (hasValue(igcCode)) {
-            		var node = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/technical-domain/service/service-classification");
+            		var node = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/data-source-instance/technical-domain/service/service-classification");
             		XMLUtils.createOrReplaceAttribute(node, "id", igcCode);
         		}
             }

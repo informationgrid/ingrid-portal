@@ -17,6 +17,7 @@ dojo.require("dijit.form.CheckBox");
 dojo.require("dijit.form.ValidationTextBox");
 
 var scriptScopeImport = _container_;
+scriptScopeImport.isStartUp = true;
 
 var importTreeSelectedParentDataset = null;
 var importTreeSelectedParentAddress = null;
@@ -34,6 +35,8 @@ var importServiceCallback = {
 		refreshImportProcessInfo();
 	},
 	errorHandler: function(msg, err) {
+	    console.debug("ERROR in importServiceCallback");
+	    console.ebug(err);
 		hideLoadingZone();
 		if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
 			dialog.show("<fmt:message key='general.error' />", "<fmt:message key='operation.error.userHasRunningJobs' />", dialog.WARNING);
@@ -50,6 +53,7 @@ var importTransformationCallback = {
         checkImportTransformationStatus();
     },
     errorHandler: function(msg, err) {
+        console.debug("ERROR in importTransformationCallback");
         //console.debugShallow(err);
         hideLoadingZone();
         if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
@@ -71,10 +75,10 @@ function initCheckboxBehaviour() {
 	console.debug("init checkboxes");
 	// Only one of the checkboxes is allowed to be active
 	var pubImportCheckbox = dijit.byId("publishImportedDatasetsCheckbox");
-	var sepImportCheckbox = dijit.byId("separateImportCheckbox");
+	var sepImportCheckbox = dijit.byId("radioSeparateImport");
 	var importFileType    = dijit.byId("importFileType");
 
-	dojo.connect(pubImportCheckbox, "onClick", function(){
+	/*dojo.connect(pubImportCheckbox, "onClick", function(){
 		if (sepImportCheckbox.checked) {
 			sepImportCheckbox.setValue(false);
 		}
@@ -83,9 +87,17 @@ function initCheckboxBehaviour() {
 		if (pubImportCheckbox.checked) {
 			pubImportCheckbox.setValue(false);
 		}
+	});*/
+	
+	dojo.connect(importFileType, "onChange", function(value){
+	    if (value == "igc") {
+	        dojo.addClass("publishImportedDatasets", "hide");
+	    } else {
+	        dojo.removeClass("publishImportedDatasets", "hide");
+	    }
 	});
 	
-	importFileType.setValue("igc");
+	importFileType.set("value", "igc");
 	console.debug("init checkboxes ... finished");
 }
 
@@ -93,7 +105,7 @@ scriptScopeImport.resetImport = function() {
 	dijit.byId("importTreeParentDataset").setValue("");
 	dijit.byId("importTreeParentAddress").setValue("");
 	dijit.byId("publishImportedDatasetsCheckbox").setValue(false);
-	dijit.byId("separateImportCheckbox").setValue(false);
+	dijit.byId("radioSeparateImport").setValue(false);
 	dijit.byId("importFileType").setValue("igc");
 	importTreeSelectedParentDataset = null;
 	importTreeSelectedParentAddress = null;
@@ -148,30 +160,28 @@ scriptScopeImport.showJobException = function() {
 	});
 }
 
-function startTreeImport() {
-	var file = dwr.util.getValue("importFile");
-	var fileType = dijit.byId("importFileType").getValue();
-	var parentObjectUuid = (importTreeSelectedParentDataset != null && importTreeSelectedParentDataset.uuid[0] != "objectRoot") ? importTreeSelectedParentDataset.uuid[0] : null;
-	var parentAddressUuid = (importTreeSelectedParentAddress != null) ? importTreeSelectedParentAddress.uuid[0] : null;
+function startTreeImport(force) {
+	var file                    = dwr.util.getValue("importFile");
+	var fileType                = dijit.byId("importFileType").getValue();
+	var parentObjectUuid        = (importTreeSelectedParentDataset != null && importTreeSelectedParentDataset.uuid[0] != "objectRoot") ? importTreeSelectedParentDataset.uuid[0] : null;
+	var parentAddressUuid       = (importTreeSelectedParentAddress != null) ? importTreeSelectedParentAddress.uuid[0] : null;
 	var publishImportedDatasets = dijit.byId("publishImportedDatasetsCheckbox").checked;
-	var separateImport = dijit.byId("separateImportCheckbox").checked;
+	var separateImport          = dijit.byId("radioSeparateImport").checked;
+	var copyNodeIfPresent       = force; // will be set to true if necessary and wished by the user
 
 	console.debug("file: "+file);
 	console.debug("parent object uuid: "+parentObjectUuid);
 	console.debug("parent address uuid: "+parentAddressUuid);
 
-	//ImportService.importEntities(file, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, importServiceCallback);
-    ImportService.startImportThread(file, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, {
+    ImportService.startImportThread(file, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, copyNodeIfPresent, {
         callback: function(res){
             refreshImportProcessInfo();
         },
         errorHandler: function(msg, err){
+            refreshImportProcessInfo();
             hideLoadingZone();
             if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
                 dialog.show("<fmt:message key='general.error' />", "<fmt:message key='operation.error.userHasRunningJobs' />", dialog.WARNING);
-            }
-            else {
-                displayErrorMessage(err);
             }
         }
     });
@@ -183,7 +193,7 @@ function startTreeImportProtocol() {
     var parentObjectUuid = (importTreeSelectedParentDataset != null && importTreeSelectedParentDataset.uuid[0] != "objectRoot") ? importTreeSelectedParentDataset.uuid[0] : null;
     var parentAddressUuid = (importTreeSelectedParentAddress != null) ? importTreeSelectedParentAddress.uuid[0] : null;
     var publishImportedDatasets = dijit.byId("publishImportedDatasetsCheckbox").checked;
-    var separateImport = dijit.byId("separateImportCheckbox").checked;
+    var separateImport = dijit.byId("radioSeparateImport").checked;
 
     console.debug("file: "+file);
     console.debug("parent object uuid: "+parentObjectUuid);
@@ -274,10 +284,29 @@ refreshImportProcessInfo = function() {
 			updateImportInfo(importInfo);
 			if (!jobFinished(importInfo)) {
 				setTimeout("refreshImportProcessInfo()", 2000);
+			} else {
+			    // do not execute on startup
+			    if (scriptScopeImport.isStartUp) {
+			        scriptScopeImport.isStartUp = false;
+			        return;
+			    } 
+			    if (importInfo.exception) {
+			        console.debug("Error showing importInfo:");
+			        console.debug(importInfo);
+			        if (importInfo.exception.message.indexOf("IMPORT_OBJECTS_ALREADY_EXIST") != -1) {
+			            scriptScopeImport.handleImportError(importInfo.exception.mdekError.errorInfo);
+			        }
+			    }
+			    
+			    // also show a dialog with information
+			    if (importInfo.frontendMessages) {
+    			    var log = importInfo.frontendMessages.replace(/\n/g, '<br />');
+    			    dialog.show("<fmt:message key='general.info' />", "<fmt:message key='dialog.admin.import.lastProcessInfo' /><br/><br/>" + log, dialog.INFO, null, 850);
+    			}
 			}
 		},
 		errorHandler: function(message, err) {
-            console.debug("refreshImportProcessInfo callback");
+            console.debug("ERROR refreshImportProcessInfo callback");
 		    displayErrorMessage(err);
 			console.debug("Error: "+ message);
 			// If there's a timeout try again
@@ -309,12 +338,12 @@ function showProtocol(infoBean) {
     if(infoBean.inputType != "igc"){
         var protocolMessageToHtml = returnToBr(infoBean.protocol);
         if(protocolMessageToHtml != null && protocolMessageToHtml.length > 0){
-            dialog.show("<fmt:message key='protocol.title' />", protocolMessageToHtml, dialog.MESSAGE, [{caption:"<fmt:message key='protocol.import' />",action:function(){startTreeImport()}}, {caption:"<fmt:message key='protocol.cancel' />",action:dialog.CLOSE_ACTION}], 500, 500);
+            dialog.show("<fmt:message key='protocol.title' />", protocolMessageToHtml, dialog.MESSAGE, [{caption:"<fmt:message key='protocol.import' />",action:function(){startTreeImport(false)}}, {caption:"<fmt:message key='protocol.cancel' />",action:dialog.CLOSE_ACTION}], 500, 500);
         }else{
-            dialog.show("<fmt:message key='protocol.title' />", "<fmt:message key='protocol.empty' />", dialog.MESSAGE, [{caption:"<fmt:message key='protocol.import' />",action:function(){startTreeImport()}}, {caption:"<fmt:message key='protocol.cancel' />",action:dialog.CLOSE_ACTION}], 500, 500);
+            dialog.show("<fmt:message key='protocol.title' />", "<fmt:message key='protocol.empty' />", dialog.MESSAGE, [{caption:"<fmt:message key='protocol.import' />",action:function(){startTreeImport(false)}}, {caption:"<fmt:message key='protocol.cancel' />",action:dialog.CLOSE_ACTION}], 500, 500);
         }
     } else {
-        startTreeImport();
+        startTreeImport(false);
     }
 }
 
@@ -363,10 +392,12 @@ function updateImportInfo(importInfo) {
     dojo.style("importInfoNumImportedAddresses", "display", "");
 
     console.debug("job finished?");
+    dojo.style("importMoreContainer", "display", "none");
 	if (jobFinished(importInfo)) {
 		dojo.byId("importInfoTitle").innerHTML = "<fmt:message key='dialog.admin.import.lastProcessInfo' />";
 		dojo.style("importProgressBarContainer","display","none");
 		dojo.style("cancelImportProcessButton","display","none");
+		dojo.style("importMoreInfo","display","none");
 
 		if (importInfo.exception) {
 			dojo.style("importExceptionMessage","display","block");
@@ -378,6 +409,8 @@ function updateImportInfo(importInfo) {
             dojo.style("importInfoNumImportedAddressContainer","display","none");
             dojo.byId("importInfoNumImportedObjects").innerHTML = "";
             dojo.byId("importInfoNumImportedAddresses").innerHTML = "";
+            dojo.byId("importMoreInfo").innerHTML = scriptScopeImport.addErrorInfo(importInfo.exception);
+            dojo.style("importMoreContainer", "display", "block");
 
 		} else if (importInfo.endTime) {
 			dojo.style("importExceptionMessage","display","none");
@@ -389,7 +422,8 @@ function updateImportInfo(importInfo) {
             dojo.style("importInfoNumImportedAddressContainer","display","");
             dojo.byId("importInfoNumImportedObjects").innerHTML = importInfo.numProcessedObjects;
             dojo.byId("importInfoNumImportedAddresses").innerHTML = importInfo.numProcessedAddresses;
-
+            dojo.byId("importMoreInfo").innerHTML = importInfo.frontendMessages.replace(/\n/g, '<br />');
+            dojo.style("importMoreContainer", "display", "block");
 
 		} else {
 			// No job has been started yet
@@ -443,12 +477,49 @@ function jobFinished(importInfo) {
 	return (importInfo.endTime != null || importInfo.exception != null || importInfo.startTime == null);
 }
 
+scriptScopeImport._prepareErrorInfo = function(errorInfo) {
+    var msg = "<ul>";
+    var entities = errorInfo.objEntities ? errorInfo.objEntities : errorInfo.addrEntities; 
+    
+    if (entities) {
+        dojo.forEach(entities, function(obj) {
+            msg += "<li>" + obj.title + "</li>";
+        });
+    }
+    msg += "</ul>";
+    return msg;
+}
+
+scriptScopeImport.handleImportError = function(errorInfo) {
+    var msg = scriptScopeImport._prepareErrorInfo(errorInfo);
+    dialog.show("<fmt:message key='general.error' />", dojo.string.substitute("<fmt:message key='dialog.admin.import.alreadyExistError' />", [msg]), dialog.WARNING, [{caption:"<fmt:message key='general.no' />",action:dialog.CLOSE_ACTION}, {caption:"<fmt:message key='general.yes' />",action:function(){startTreeImport(true)}}]);
+}
+
+scriptScopeImport.addErrorInfo = function(exception) {
+    if (exception.message.indexOf("IMPORT_OBJECTS_ALREADY_EXIST") != -1) {
+        var msg = dojo.string.substitute("<fmt:message key='dialog.admin.import.alreadyExistErrorInfo' />", [scriptScopeImport._prepareErrorInfo(exception.mdekError.errorInfo)]); 
+        return msg;
+    } else {
+        return exception.message;
+    }    
+}
+
 function showLoadingZone() {
     dojo.style("importLoadingZone","visibility","visible");
 }
 
 function hideLoadingZone() {
     dojo.style("importLoadingZone","visibility","hidden");
+}
+
+scriptScopeImport.toggleMoreInfo = function() {
+    var currentState = dojo.style("importMoreInfo", "display");
+    if (currentState == "none") {
+        dojo.style("importMoreInfo","display","block");
+    } else {
+        dojo.style("importMoreInfo","display","none");
+    }
+    
 }
 
 function returnToBr(string) {
@@ -515,6 +586,10 @@ function returnToBr(string) {
                             </td>
                         </tr>
                     </table>
+                    <div id="importMoreContainer">
+                        <p><a href="javascript:void(0);" onclick="javascript:scriptScopeImport.toggleMoreInfo();" title="<fmt:message key="dialog.admin.import.log" />"><fmt:message key="dialog.admin.import.moreInfo" /></a></p>
+                        <p id="importMoreInfo" style="display:none;"></p>
+                    </div>
                     <span id="cancelImportProcessButton" class="button" style="height:20px !important;">
                         <span style="float:right;">
                             <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.import.cancel" />" onClick="javascript:scriptScopeImport.cancelImport();">
@@ -553,7 +628,7 @@ function returnToBr(string) {
                         </select>
                     </td>
                 </tr>
-                <tr>
+                <tr id="publishImportedDatasets" class="hide">
                     <td  colspan="2">
                         <input type="checkbox" id="publishImportedDatasetsCheckbox" dojoType="dijit.form.CheckBox" />
                         <label onclick="javascript:dialog.showContextHelp(arguments[0], 8075)">
@@ -563,7 +638,15 @@ function returnToBr(string) {
                 </tr>
                 <tr>
                     <td  colspan="2">
-                        <input type="checkbox" id="separateImportCheckbox" dojoType="dijit.form.CheckBox" />
+                        <input type="radio" name="importType" id="radioOverwrite" dojoType="dijit.form.RadioButton" value="overwrite" checked />
+                        <label onclick="javascript:dialog.showContextHelp(arguments[0], 8209)">
+                            <fmt:message key="dialog.admin.import.overwrite" />
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td  colspan="2">
+                        <input type="radio" name="importType" id="radioSeparateImport" dojoType="dijit.form.RadioButton" value="separate" />
                         <label onclick="javascript:dialog.showContextHelp(arguments[0], 8076)">
                             <fmt:message key="dialog.admin.import.importToSubtree" />
                         </label>

@@ -193,41 +193,41 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
         return MdekCatalogUtils.extractCatalogFromResponse(response);
     }
 
-    public void exportFreeAddresses() {
-        IngridDocument response = exportAddressBranch(null, false, AddressArea.ALL_FREE_ADDRESSES);
+    public void exportFreeAddresses(boolean includeWorkingCopies) {
+        IngridDocument response = exportAddressBranch(null, false, AddressArea.ALL_FREE_ADDRESSES, includeWorkingCopies);
         MdekCatalogUtils.extractJobInfoFromResponse(response);
     }
 
-    public void exportTopAddresses(boolean exportChildren) {
-        IngridDocument response = exportAddressBranch(null, exportChildren, AddressArea.ALL_ADDRESSES);
+    public void exportTopAddresses(boolean exportChildren, boolean includeWorkingCopies) {
+        IngridDocument response = exportAddressBranch(null, exportChildren, AddressArea.ALL_ADDRESSES, includeWorkingCopies);
         MdekCatalogUtils.extractJobInfoFromResponse(response);
     }
 
-    public void exportAddressBranch(String rootUuid, boolean exportChildren) {
-        IngridDocument response = exportAddressBranch(rootUuid, exportChildren, null);
+    public void exportAddressBranch(String rootUuid, boolean exportChildren, boolean includeWorkingCopies) {
+        IngridDocument response = exportAddressBranch(rootUuid, exportChildren, null, includeWorkingCopies);
         MdekCatalogUtils.extractJobInfoFromResponse(response);
     }
 
-    private IngridDocument exportAddressBranch(String rootUuid, boolean exportChildren, AddressArea addressArea) {
+    private IngridDocument exportAddressBranch(String rootUuid, boolean exportChildren, AddressArea addressArea, boolean includeWorkingCopies) {
         return mdekCallerCatalog.exportAddressBranch(
                 connectionFacade.getCurrentPlugId(),
                 rootUuid, !exportChildren,
-                addressArea, MdekSecurityUtils.getCurrentUserUuid());
+                addressArea, includeWorkingCopies, MdekSecurityUtils.getCurrentUserUuid());
     }
 
-    public void exportObjectBranch(String rootUuid, boolean exportChildren) {
+    public void exportObjectBranch(String rootUuid, boolean exportChildren, boolean includeWorkingCopies) {
         IngridDocument response = mdekCallerCatalog.exportObjectBranch(
                 connectionFacade.getCurrentPlugId(),
                 rootUuid,
-                !exportChildren, MdekSecurityUtils.getCurrentUserUuid());
+                !exportChildren, includeWorkingCopies, MdekSecurityUtils.getCurrentUserUuid());
 
         MdekCatalogUtils.extractJobInfoFromResponse(response);
     }
 
-    public void exportObjectsWithCriteria(String exportCriteria) {
+    public void exportObjectsWithCriteria(String exportCriteria, boolean includeWorkingCopies) {
         IngridDocument response = mdekCallerCatalog.exportObjects(
                 connectionFacade.getCurrentPlugId(),
-                exportCriteria,
+                exportCriteria, includeWorkingCopies,
                 MdekSecurityUtils.getCurrentUserUuid());
         MdekCatalogUtils.extractJobInfoFromResponse(response);
     }
@@ -238,13 +238,13 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
     }
 
     public void importEntities(UserData currentUser, List<byte[]> importData, String targetObjectUuid, String targetAddressUuid,
-            String frontendProtocol, boolean publishImmediately, boolean doSeparateImport) {
+            String frontendMappingProtocol, boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent) {
         IngridDocument response = mdekCallerCatalog.importEntities(
                 currentUser.getPlugId(),
                 importData,
                 targetObjectUuid, targetAddressUuid,
                 publishImmediately, doSeparateImport,
-                frontendProtocol,
+                copyNodeIfPresent, frontendMappingProtocol,
                 currentUser.getAddressUuid());
         MdekCatalogUtils.extractJobInfoFromResponse(response);
     }

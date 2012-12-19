@@ -378,7 +378,7 @@
 	"operation.error.targetIsSubnodeOfSourceError":"The target node of a move operation must not be a child of the source node.",
 	"operation.error.object.subTreeHasWorkingCopiesError":"One or more subobjects have to be saved before the operation can be carried out.",
 	"operation.error.address.subTreeHasWorkingCopiesError":"One or more subaddresses have to be saved before the operation can be carried out.",
-	"operation.error.parentHasSmallerPublicationConditionError":"It is not possible to publish this node because its parent has a lower publication condition.",
+	"operation.error.parentHasSmallerPublicationConditionError":"It is not possible to publish this node because its published parent has a lower publication condition.",
 	"operation.error.deletedAddressIsIdcUser":"Could not delete address. The address is associated with a portal user. Please remove the association via the admin UI and try again!",
 	"operation.error.addressTypeConflict":"This action can not be carried out with this address type!",
     "operation.error.addressHasNoEmail":"Could not store address. The address must have at lease one email address!",

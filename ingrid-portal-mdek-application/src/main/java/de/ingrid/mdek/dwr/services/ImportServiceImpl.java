@@ -150,7 +150,7 @@ public class ImportServiceImpl {
         
         
     public void startImportThread(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
-                boolean publishImmediately, boolean doSeparateImport){
+                boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent){
         // Start the import process in a separate thread
         // After the thread is started, we wait on it for three seconds and check if it has finished afterwards
         // If the thread ended with an exception (probably because another job is already running),
@@ -159,7 +159,7 @@ public class ImportServiceImpl {
         
         ImportEntitiesThread importThread;
         ProtocolInfoBean infoBean = controlMap.get(getCurrentUserId());
-        importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, infoBean.getImportData(), fileType, targetObjectUuid, targetAddressUuid, infoBean.getProtocol(), publishImmediately, doSeparateImport);
+        importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, infoBean.getImportData(), fileType, targetObjectUuid, targetAddressUuid, infoBean.getProtocol(), publishImmediately, doSeparateImport, copyNodeIfPresent);
         importThread.start();
         try {
             importThread.join(3000);
@@ -178,6 +178,7 @@ public class ImportServiceImpl {
 	public FileTransfer getLastImportLog() {
 		JobInfoBean jobInfo = catalogRequestHandler.getImportInfo();
 		String log = jobInfo.getDescription();
+		log += "\n\n" + jobInfo.getFrontendMessages();
 
 		return new FileTransfer("log.txt", "text/plain", log.getBytes()); 
 	}
@@ -355,11 +356,13 @@ class ImportEntitiesThread extends Thread {
 	private final String protocol;
 
 	private volatile MdekException exception;
+
+    private final boolean copyNodeIfPresent;
 	
 	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, 
 	        UserData currentUser, List<byte[]> importData, String fileDataType, 
 	        String targetObjectUuid, String targetAddressUuid, String protocol, 
-	        boolean publishImmediately, boolean doSeparateImport) {
+	        boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent) {
 		super();
 		this.catalogRequestHandler = catalogRequestHandler;
 		this.currentUser = currentUser;
@@ -370,12 +373,13 @@ class ImportEntitiesThread extends Thread {
 		this.doSeparateImport = doSeparateImport;
 		//this.fileDataType = fileDataType;
 		this.protocol = protocol;
+		this.copyNodeIfPresent = copyNodeIfPresent;
 	}
 
 	@Override
 	public void run() {
 		try {
-			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, protocol, publishImmediately, doSeparateImport);
+			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, protocol, publishImmediately, doSeparateImport, copyNodeIfPresent);
 		} catch(MdekException ex) {
 			log.debug("Exception while importing entities.", ex);
 			setException(ex);

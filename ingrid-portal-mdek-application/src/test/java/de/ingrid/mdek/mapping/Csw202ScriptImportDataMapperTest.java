@@ -95,7 +95,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
         InputStream result;
         try {
             result = mapper.convert(data, protocolHandler);
-            assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/publication-scale/scale", "100000"));
+            assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/technical-domain/map/publication-scale/scale", "100000"));
             result.reset();
         } catch (Exception e) {
             fail("Error transforming: " + exampleXml);
@@ -125,13 +125,13 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler);
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
 			result.reset();
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/datasource-identificator", "866EF2B4-33C5-436E-A4E3-BA59DDAF0703"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/technical-domain/map/datasource-identificator", "866EF2B4-33C5-436E-A4E3-BA59DDAF0703"));
 			result.reset();
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/additional-information/access-constraint/restriction", "no conditions apply"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/additional-information/access-constraint/restriction", "no conditions apply"));
 			result.reset();
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/additional-information/use-constraint/terms-of-use", "no conditions apply"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/additional-information/use-constraint/terms-of-use", "no conditions apply"));
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}
@@ -159,14 +159,14 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler);
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Test_Schutzgebiete"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/general/title", "Test_Schutzgebiete"));
 			// service-type set as attribute in node !
 			result.reset();
-			assertEquals(1, xpathCount(result, "//igc/data-sources/data-source/technical-domain/service/service-type"));
+			assertEquals(1, xpathCount(result, "//igc/data-sources/data-source/data-source-instance/technical-domain/service/service-type"));
             result.reset();
-            assertEquals(1, xpathCount(result, "//igc/data-sources/data-source/technical-domain/service/service-classification[./@id='202']"));
+            assertEquals(1, xpathCount(result, "//igc/data-sources/data-source/data-source-instance/technical-domain/service/service-classification[./@id='202']"));
             result.reset();
-            assertEquals(0, xpathCount(result, "//igc/data-sources/data-source/subject-terms/uncontrolled-term[text()='infoMapAccessService']"));
+            assertEquals(0, xpathCount(result, "//igc/data-sources/data-source/data-source-instance/subject-terms/uncontrolled-term[text()='infoMapAccessService']"));
             
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
@@ -194,7 +194,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler1);
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
 		} catch (Exception e1) {
 			fail("Error transforming: " + exampleXml);
 		}
@@ -217,7 +217,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		protocolHandler2.setCurrentFilename("st_xml19119.xml");
 		try {
 			result = mapper.convert(data, protocolHandler2);
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/general/title", "Naturschutzgebiete Sachsen-Anhalt"));
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}
@@ -244,9 +244,9 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler);
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Gewässerflächen im Münsterland nach INSPIRE DataSpecification Hydrography"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/general/title", "Gewässerflächen im Münsterland nach INSPIRE DataSpecification Hydrography"));
 			result.reset();
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/technical-domain/map/datasource-identificator", "http://www.bkg.de#_6D115576E-4813-3C7D-786C2-563760A88D8"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/technical-domain/map/datasource-identificator", "http://www.bkg.de#_6D115576E-4813-3C7D-786C2-563760A88D8"));
 			result.reset();
 			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
 		} catch (Exception e) {
@@ -274,7 +274,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler);
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Karte der Überschwemmungsflächen der Gewässer II. und III. Ordnung"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/general/title", "Karte der Überschwemmungsflächen der Gewässer II. und III. Ordnung"));
 			result.reset();
 			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
 		} catch (Exception e) {
@@ -302,7 +302,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler);
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/general/title", "Hessen Wasser Analyser"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/general/title", "Hessen Wasser Analyser"));
 			result.reset();
 			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
 			fail("HierachyLevel application should not be supported!");
@@ -329,7 +329,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler);
-			assertEquals(3, xpathCount(result, "//igc/addresses/address"));
+			assertEquals(3, xpathCount(result, "//igc/addresses/address/address-instance"));
 			result.reset();
 			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
 		} catch (Exception e) {
@@ -357,7 +357,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler);
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/available-linkage[2]/linkage-url", "invalid link"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/available-linkage[2]/linkage-url", "invalid link"));
 			result.reset();
 			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
 		} catch (Exception e) {
@@ -411,15 +411,15 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
         InputStream result;
         try {
             result = mapper.convert(data, protocolHandler);
-            assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/temporal-domain/dataset-reference[1]/dataset-reference-date", "20020404000000000"));
+            assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/temporal-domain/dataset-reference[1]/dataset-reference-date", "20020404000000000"));
             result.reset();
 /*
 // DOES NOT WORK ANYMORE DUE TO CORRECT MAPPING !!!!
 // Reference File "dataset_inspire_annex_I_admin_units_2010-07-01.xml" IS WRONG concerning "DQ_ConformanceResult/specification/citation/CI_Citation"
 // correct is "DQ_ConformanceResult/specification/CI_Citation"
-            assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/additional-information/conformity/conformity-specification", "D2.8.I.4 Data Specification on Administrative units – Draft Guidelines"));
+            assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/additional-information/conformity/conformity-specification", "D2.8.I.4 Data Specification on Administrative units – Draft Guidelines"));
             result.reset();
-            assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/additional-information/conformity/conformity-publication-date", "20100426000000000"));
+            assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/additional-information/conformity/conformity-publication-date", "20100426000000000"));
             result.reset();
 */
             System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
@@ -480,7 +480,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
             InputStream result;
             try {
                 result = mapper.convert(data, protocolHandler);
-                String coordXPath = "//igc/data-sources/data-source/spatial-domain/coordinate-system";
+                String coordXPath = "//igc/data-sources/data-source/data-source-instance/spatial-domain/coordinate-system";
                 assertEquals(1, xpathCount(result, coordXPath));
                 result.reset();
 
@@ -519,7 +519,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
             InputStream result;
             try {
                 result = mapper.convert(data, protocolHandler);
-                String vdatumXPath = "/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum";
+                String vdatumXPath = "/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-vdatum";
                 assertEquals(1, xpathCount(result, vdatumXPath));
                 result.reset();
 

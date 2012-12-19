@@ -39,13 +39,13 @@ public interface CatalogRequestHandler {
 	public CatalogBean getCatalogData();
 	public CatalogBean storeCatalogData(CatalogBean cat);
 	
-	public void exportFreeAddresses();
-	public void exportTopAddresses(boolean exportChildren);
-	public void exportAddressBranch(String rootUuid, boolean exportChildren);
-	public void exportObjectBranch(String rootUuid, boolean exportChildren);
-	public void exportObjectsWithCriteria(String exportCriteria);
+	public void exportFreeAddresses(boolean includeWorkingCopies);
+	public void exportTopAddresses(boolean exportChildren, boolean includeWorkingCopies);
+	public void exportAddressBranch(String rootUuid, boolean exportChildren, boolean includeWorkingCopies);
+	public void exportObjectBranch(String rootUuid, boolean exportChildren, boolean includeWorkingCopies);
+	public void exportObjectsWithCriteria(String exportCriteria, boolean includeWorkingCopies);
 	public ExportJobInfoBean getExportInfo(boolean includeExportData);
-	public void importEntities(UserData currentUser, List<byte[]> importData, String targetObjectUuid, String targetAddressUuid, String frontendProtocol, boolean publishImmediately, boolean doSeparateImport);
+	public void importEntities(UserData currentUser, List<byte[]> importData, String targetObjectUuid, String targetAddressUuid, String frontendProtocol, boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent);
 	public JobInfoBean getImportInfo();
 	public void cancelRunningJob();
 	

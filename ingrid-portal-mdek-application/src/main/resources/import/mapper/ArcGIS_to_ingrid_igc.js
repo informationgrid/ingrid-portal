@@ -33,38 +33,38 @@ var mappingDescription = {"mappings":[
   		
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/general
+  		// /igc/data-sources/data-source/data-source-instance/general
   		//
   		// ****************************************************
   		{	
   			// set the obj_class to a fixed value "Geoinformation/Karte"
   			"defaultValue":"1",
-  			"targetNode":"/igc/data-sources/data-source/general/object-class",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/object-class",
   			"targetAttribute":"id"
   		},
 		{	
   			"srcXpath":"/metadata/dataIdInfo/idCitation/resTitle",
-			"targetNode":"/igc/data-sources/data-source/general/title"
+			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/title"
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/idAbs",
-  			"targetNode":"/igc/data-sources/data-source/general/abstract"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/abstract"
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/idCitation/resEd",
-  			"targetNode":"/igc/data-sources/data-source/general/abstract",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/abstract",
   			"appendWith":"\n\n",
   			"prefix":"Nummer der Ausgabe/Version: "
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/idCitation/resEdDate",
-  			"targetNode":"/igc/data-sources/data-source/general/abstract",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/abstract",
   			"appendWith":"\n\n",
   			"prefix":"Datum der Ausgabe/Version: "
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/dataLang/languageCode/@value",
-  			"targetNode":"/igc/data-sources/data-source/general/abstract",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/abstract",
   			"appendWith":"\n\n",
   			"prefix":"Folgende Sprachen werden im beschriebenen Datensatz verwendet: ",
   			"concatEntriesWith":", ",
@@ -80,20 +80,20 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"/metadata/Esri/MetaID",
-  			"targetNode":"/igc/data-sources/data-source/general/original-control-identifier"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/original-control-identifier"
   		},
   		{	
   			"srcXpath":"/metadata/mdStanName",
-  			"targetNode":"/igc/data-sources/data-source/general/metadata/metadata-standard-name"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/metadata/metadata-standard-name"
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/idCitation/resAltTitle",
-  			"targetNode":"/igc/data-sources/data-source/general/dataset-alternate-name",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/dataset-alternate-name",
   			"concatEntriesWith":", "
   		},
   		{
   			"srcXpath":"/metadata/dataIdInfo/tpCat/TopicCatCd",
-  			"targetNode":"/igc/data-sources/data-source/general/topic-categories",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/general/topic-categories",
   			"newNodeName":"topic-category",
   			"subMappings":{
   				"mappings": [
@@ -112,14 +112,14 @@ var mappingDescription = {"mappings":[
 
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/technical-domain/map
+  		// /igc/data-sources/data-source/data-source-instance/technical-domain/map
   		//
   		// ****************************************************
   		{	
             // set default to dataset
             "defaultValue":"5",
   			"srcXpath":"/metadata/dqInfo/dqScope/scpLvl/ScopeCd/@value",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/hierarchy-level",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/hierarchy-level",
   			"targetAttribute":"iso-code",
   			"transform":{
 				"funct":parseToInt
@@ -127,11 +127,11 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"/metadata/refSysInfo/RefSystem/refSysID/identCode",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/coordinate-system"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/coordinate-system"
   		},
   		{
   			"srcXpath":"/metadata/refSysInfo/RefSystem/refSysID/identCode",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/coordinate-system",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/coordinate-system",
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformToIgcDomainId,
@@ -145,20 +145,20 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"/metadata/dataqual/lineage/procstep/procdesc",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/method-of-production"
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/envirDesc",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/method-of-production",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/method-of-production",
   			"appendWith":"\n\n"
   		},
   		{	
   			"srcXpath":"/metadata/dqInfo/dataLineage/statement",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/technical-base"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/technical-base"
   		},
   		{
   			"srcXpath":"/metadata/dataIdInfo/spatRpType",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map",
   			"newNodeName":"spatial-representation-type",
   			"subMappings":{
   				"mappings": [
@@ -175,7 +175,7 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"/metadata/spatRepInfo/VectSpatRep/topLvl/TopoLevCd/@value",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format/vector-topology-level",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/vector-format/vector-topology-level",
   			"targetAttribute":"iso-code",
   			"transform":{
 				"funct":parseToInt
@@ -183,7 +183,7 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"/metadata/spatRepInfo/VectSpatRep/geometObjs",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map/vector-format",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map/vector-format",
   			"newNodeName":"geo-vector",
   			"subMappings":{
   				"mappings": [
@@ -204,7 +204,7 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"/metadata/eainfo/detailed/attr",
-  			"targetNode":"/igc/data-sources/data-source/technical-domain/map",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/technical-domain/map",
   			"newNodeName":"feature-type",
   			"subMappings":{
   				"mappings": [
@@ -219,12 +219,12 @@ var mappingDescription = {"mappings":[
   		
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/additional-information
+  		// /igc/data-sources/data-source/data-source-instance/additional-information
   		//
   		// ****************************************************
   		{	
   			"srcXpath":"/metadata/dataIdInfo/dataLang[1]/languageCode/@value",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/data-language",
   			"targetAttribute":"id",
   			"transform":{
 				"funct":UtilsLanguageCodelist.getCodeFromShortcut
@@ -232,7 +232,7 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/dataLang[1]/languageCode/@value",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/data-language",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/data-language",
   			"transform":{
 				"funct":UtilsLanguageCodelist.getNameFromShortcut,
 				"params":['de']
@@ -241,7 +241,7 @@ var mappingDescription = {"mappings":[
   		{	
   			"srcXpath":"/metadata/mdLang/languageCode/@value",
   			"defaultValue":"de",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/metadata-language",
   			"transform":{
 				"funct":UtilsLanguageCodelist.getNameFromShortcut,
 				"params":['de']
@@ -250,7 +250,7 @@ var mappingDescription = {"mappings":[
   		{	
   			"srcXpath":"/metadata/mdLang/languageCode/@value",
   			"defaultValue":"de",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/metadata-language",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/metadata-language",
   			"targetAttribute":"id",
   			"transform":{
 				"funct":UtilsLanguageCodelist.getCodeFromShortcut
@@ -258,7 +258,7 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"/metadata/idinfo/descript/purpose",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/dataset-intentions"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/dataset-intentions"
   		},
   		{	
   			"execute":{
@@ -267,7 +267,7 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"/metadata/distInfo/distributor/distorTran",
-  			"targetNode":"/igc/data-sources/data-source/additional-information",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information",
   			"newNodeName":"medium-option",
   			"subMappings":{
   				"mappings": [
@@ -291,7 +291,7 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"/metadata/distInfo/distributor/distorFormat",
-  			"targetNode":"/igc/data-sources/data-source/additional-information",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information",
   			"newNodeName":"data-format",
   			"subMappings":{
   				"mappings": [
@@ -313,43 +313,43 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"defaultValue":"1",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/publication-condition"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/publication-condition"
   		},
   		{	
   			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordInstr",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/ordering-instructions",
   			"concatEntriesWith":", "
   		},
   		{	
   			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/resFees",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/ordering-instructions",
   			"concatEntriesWith":", ",
   			"appendWith":"\n\n",
   			"prefix":"Gebühren/Bedingungen: "
   		},
   		{	
   			"srcXpath":"/metadata/distInfo/distributor/distorOrdPrc/ordTurn",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/ordering-instructions",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/ordering-instructions",
   			"concatEntriesWith":", ",
   			"appendWith":"\n\n",
   			"prefix":"Dauer des Bestellvorganges: "
   		},
   		{	
   			"defaultValue":"INSPIRE Richtline",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-specification"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/conformity/conformity-specification"
   		},
   		{	
   			"defaultValue":"13",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-specification",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/conformity/conformity-specification",
   			"targetAttribute":"id"
   		},
   		{	
   			"defaultValue":"nicht evaluiert",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-degree"
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/conformity/conformity-degree"
   		},
   		{	
   			"defaultValue":"3",
-  			"targetNode":"/igc/data-sources/data-source/additional-information/conformity/conformity-degree",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information/conformity/conformity-degree",
   			"targetAttribute":"id"
   		},
 
@@ -357,26 +357,26 @@ var mappingDescription = {"mappings":[
 
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/spatial-domain
+  		// /igc/data-sources/data-source/data-source-instance/spatial-domain
   		//
   		// ****************************************************
   		{	
   			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertMinVal",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-minimum",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-minimum",
   			"transform":{
 				"funct":transformNumberStrToIGCNumber
 			}
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertMaxVal",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-maximum",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-maximum",
   			"transform":{
 				"funct":transformNumberStrToIGCNumber
 			}
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertUoM/uomName",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-unit",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-unit",
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformGeneric,
@@ -385,7 +385,7 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/dataExt/vertEle/vertDatum/datumID/identCode",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain/vertical-extent/vertical-extent-vdatum",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-vdatum",
   			"targetAttribute":"id",
   			// check for german (150) name in the code list 101
   			"transform":{
@@ -395,7 +395,7 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"/metadata/dataIdInfo/geoBox",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain",
   			"newNodeName":"geo-location",
   			"subMappings":{
   				"mappings": [
@@ -441,7 +441,7 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='002']/keyword",
-  			"targetNode":"/igc/data-sources/data-source/spatial-domain",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/spatial-domain",
   			"newNodeName":"geo-location",
   			"subMappings":{
   				"mappings": [
@@ -462,17 +462,17 @@ var mappingDescription = {"mappings":[
 
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/temporal-domain
+  		// /igc/data-sources/data-source/data-source-instance/temporal-domain
   		//
   		// ****************************************************
   		{	
   			"srcXpath":"/metadata/dataIdInfo/resMaint/dateNext",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/description-of-temporal-domain",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/temporal-domain/description-of-temporal-domain",
   			"prefix":"Nächste Überarbeitung: "
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='004']/keyword",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/description-of-temporal-domain",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/temporal-domain/description-of-temporal-domain",
   			"appendWith":"\n\n",
   			"concatEntriesWith":", ",
   			"prefix":"Schlagworte: "
@@ -484,7 +484,7 @@ var mappingDescription = {"mappings":[
   		},
   		{	
   			"srcXpath":"/metadata/dataIdInfo/resMaint/maintFreq/MaintFreqCd/@value",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain/time-period",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/temporal-domain/time-period",
   			"targetAttribute":"iso-code",
   			"transform":{
 				"funct":parseToInt
@@ -492,7 +492,7 @@ var mappingDescription = {"mappings":[
   		},
   		{
   			"srcXpath":"/metadata/dataIdInfo/idCitation/resRefDate",
-  			"targetNode":"/igc/data-sources/data-source/temporal-domain",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/temporal-domain",
   			"newNodeName":"dataset-reference",
   			"subMappings":{
   				"mappings": [
@@ -519,12 +519,12 @@ var mappingDescription = {"mappings":[
 
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/subject-terms
+  		// /igc/data-sources/data-source/data-source-instance/subject-terms
   		//
   		// ****************************************************
   		{
   			"srcXpath":"/metadata/dataIdInfo/descKeys[@KeyTypCd='001' or @KeyTypCd='003' or @KeyTypCd='005']/keyword",
-  			"targetNode":"/igc/data-sources/data-source/subject-terms",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance/subject-terms",
   			"newNodeName":"uncontrolled-term",
   			"subMappings":{
   				"mappings": [
@@ -538,13 +538,13 @@ var mappingDescription = {"mappings":[
 
   		// ****************************************************
   		//
-  		// /igc/data-sources/data-source/available-linkage
+  		// /igc/data-sources/data-source/data-source-instance/available-linkage
   		//
   		// ****************************************************
 
   		{
   			"srcXpath":"/metadata/distInfo/distributor/distorTran/onLineSrc",
-  			"targetNode":"/igc/data-sources/data-source",
+  			"targetNode":"/igc/data-sources/data-source/data-source-instance",
   			"newNodeName":"available-linkage",
   			"subMappings":{
   				"mappings": [
@@ -591,7 +591,7 @@ var mappingDescription = {"mappings":[
   		{	
   			"srcXpath":"/metadata/distInfo/distributor/distorCont | /metadata/dataIdInfo/idCitation/citRespParty | /metadata/mdContact",
   			"targetNode":"/igc/addresses",
-  			"newNodeName":"address",
+  			"newNodeName":"address/address-instance",
   			"subMappings":{
   				"mappings": [
 	  				{
@@ -661,7 +661,7 @@ var mappingDescription = {"mappings":[
 			  		},
 			  		{
 				  		"srcXpath":".",
-			  			"targetNode":"/igc/data-sources/data-source",
+			  			"targetNode":"/igc/data-sources/data-source/data-source-instance",
 			  			"newNodeName":"related-address",
 			  			"subMappings":{
 			  				"mappings": [
@@ -734,7 +734,9 @@ function mapToTarget(mapping, source, target) {
 					for (var j=0; j<sourceNodeList.getLength(); j++ ) {
 						log.debug("handle sub mapping: " + sourceNodeList.item(j))
 						var node = XPathUtils.createElementFromXPath(target, m.targetNode);
-						node = node.appendChild(node.getOwnerDocument().createElement(m.newNodeName));
+						// to support xpaths in newNodeName !
+                        node = XPathUtils.createElementFromXPathAsSibling(node, m.newNodeName);
+//						node = node.appendChild(node.getOwnerDocument().createElement(m.newNodeName));
 						mapToTarget(m.subMappings, sourceNodeList.item(j), node);
 					}
 				} else {
@@ -870,15 +872,15 @@ function mapAccessConstraints(source, target) {
 	if (!hasValue(accessConsts) && !hasValue(useConsts)) {
         log.debug("No access- and no use constraints, create default values !");
 		
-		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/restriction");
+		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/additional-information/access-constraint/restriction");
 		XMLUtils.createOrReplaceTextNode(node, "keine");
 		XMLUtils.createOrReplaceAttribute(node, "id", "1");
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/use-constraint/terms-of-use");
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/additional-information/use-constraint/terms-of-use");
 		XMLUtils.createOrReplaceTextNode(node, "keine Einschr�nkungen");
 	
 	} else if (hasValue(accessConsts) && accessConsts.getLength() == 1 && accessConsts.item(0).getTextContent() == "006") {
 		
-		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/access-constraint/restriction");
+		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/additional-information/access-constraint/restriction");
 		XMLUtils.createOrReplaceTextNode(node, "aufgrund der Rechte des geistigen Eigentums");
 		XMLUtils.createOrReplaceAttribute(node, "id", "6");
 		var useConst = "";
@@ -888,7 +890,7 @@ function mapAccessConstraints(source, target) {
 			}
 			useConst += transformToIgcDomainValue(parseToInt(useConsts.item(i).getTextContent().trim()), 524, 150);
 		}
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/use-constraint/terms-of-use");
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/additional-information/use-constraint/terms-of-use");
 		XMLUtils.createOrReplaceTextNode(node, useConst);
 	} else {
 		var accessConst = "";
@@ -906,7 +908,7 @@ function mapAccessConstraints(source, target) {
 			useConst += transformToIgcDomainValue(parseToInt(useConsts.item(i).getTextContent().trim()), 524, 150);
 		}
 		var nodeText = "";
-		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
+		var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/additional-information/ordering-instructions");
 		if (hasValue(accessConst)) {
 			nodeText = "";
 			// append content to target nodes content?
@@ -935,7 +937,7 @@ function mapAccessConstraints(source, target) {
 		useLimit += useLimits.item(i).getTextContent().trim();
 	}
 	if (hasValue(useLimit)) {
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/additional-information/ordering-instructions");
 		// append content to target nodes content?
 		if (node.getTextContent()) {
 			nodeText = node.getTextContent() + "\n\n";
@@ -955,7 +957,7 @@ function mapAccessConstraints(source, target) {
 		othConst += othConsts.item(i).getTextContent().trim();
 	}
 	if (hasValue(othConst)) {
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/additional-information/ordering-instructions");
 		// append content to target nodes content?
 		if (node.getTextContent()) {
 			nodeText = node.getTextContent() + "\n\n";
@@ -975,7 +977,7 @@ function mapAccessConstraints(source, target) {
 		secConst += transformToIgcDomainValue(parseToInt(secConsts.item(i).getTextContent().trim()), 511, 150);
 	}
 	if (hasValue(secConst)) {
-		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/additional-information/ordering-instructions");
+		node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/additional-information/ordering-instructions");
 		// append content to target nodes content?
 		if (node.getTextContent()) {
 			nodeText = node.getTextContent() + "\n\n";
@@ -997,7 +999,7 @@ function mapDataScale(source, target) {
 		if (hasValue(refNom)) {
 			var refNomSplitted = refNom.split("/");
 			for (var j=0; j<refNomSplitted.length; j++ ) {
-				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map");
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/technical-domain/map");
 				node = node.appendChild(target.getOwnerDocument().createElement("publication-scale"));
 				node = node.appendChild(target.getOwnerDocument().createElement("scale"));
 				refNomSplitted[j] = replaceString(refNomSplitted[j], "\,", ".");
@@ -1010,7 +1012,7 @@ function mapDataScale(source, target) {
 	for (var i=0; i<scaleDists.getLength(); i++ ) {
 		var scaleDist = scaleDists.item(i).getTextContent()
 		if (hasValue(scaleDist)) {
-			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/technical-domain/map");
+			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/technical-domain/map");
 			node = node.appendChild(target.getOwnerDocument().createElement("publication-scale"));
 			node = node.appendChild(target.getOwnerDocument().createElement("resolution-ground"));
 			scaleDist = replaceString(scaleDist, "\,", ".");
@@ -1069,7 +1071,7 @@ function mapCreateDateTime(source, target) {
 		dateStr = dateStr.trim();
 		timeStr = timeStr.trim();
 		if (hasValue(dateStr) && hasValue(dateStr)) {
-			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/general/date-of-creation");
+			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/general/date-of-creation");
 			XMLUtils.createOrReplaceTextNode(node, dateStr + timeStr + "000");
 		}
 	}
@@ -1085,29 +1087,29 @@ function mapTimeConstraints(source, target) {
 		var endPosition = XPathUtils.getString(timePeriods.item(0), "end");
 		if (hasValue(beginPosition) && hasValue(endPosition)) {
 			if (beginPosition.equals(endPosition)) {
-				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/beginning-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(beginPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/ending-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(endPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "am");
 			} else {
-				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/beginning-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(beginPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/ending-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(endPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "von");
 			}
 		} else if (hasValue(beginPosition)) {
-				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
+				var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/beginning-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(beginPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "seit");
 		} else if (hasValue(endPosition)) {
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/ending-date");
 				XMLUtils.createOrReplaceTextNode(node, UtilsCSWDate.mapDateFromIso8601ToIndex(endPosition));
-				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
+				node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/time-type");
 				XMLUtils.createOrReplaceTextNode(node, "bis");
 		}
 	} else {
@@ -1117,11 +1119,11 @@ function mapTimeConstraints(source, target) {
 			var calDate = XPathUtils.getString(timePositions.item(0), "calDate");
 			var clkTime = XPathUtils.getString(timePositions.item(0), "clkTime");
 			var dateTime = calDate + clkTime;
-			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/beginning-date");
+			var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/beginning-date");
 			XMLUtils.createOrReplaceTextNode(node, dateTime);
-			node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/ending-date");
+			node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/ending-date");
 			XMLUtils.createOrReplaceTextNode(node, dateTime);
-			node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/temporal-domain/time-type");
+			node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/temporal-domain/time-type");
 			XMLUtils.createOrReplaceTextNode(node, "am");
 		}
 	}

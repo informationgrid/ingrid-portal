@@ -30,6 +30,8 @@ var exportServiceCallback = {
 		} else {
 			if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
 				dialog.show("<fmt:message key='general.error' />", "<fmt:message key='operation.error.userHasRunningJobs' />", dialog.WARNING);
+			} else {
+			    displayErrorMessage(msg);
 			}
 		}
 	}
@@ -46,10 +48,12 @@ dojo.connect(_container_, "onLoad", function(){
 });
 
 function startExportCriteria() {
-	var exportCriteria = dijit.byId("exportXMLCriteria").get("value");
+	var exportCriteria      = dijit.byId("exportXMLCriteria").get("value");
+	var exportWorkingCopies = dijit.byId("exportWorkingCopies").checked;
+	
 	console.debug("exportCriteria: "+ exportCriteria);
 	if (exportCriteria) {
-		exportObjectsWithCriteria(exportCriteria);
+		exportObjectsWithCriteria(exportCriteria, exportWorkingCopies);
 
 	} else {
 		dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.export.selectExportCriteriaError' />", dialog.WARNING);
@@ -58,57 +62,58 @@ function startExportCriteria() {
 
 function startExportPartial() {
 	if (currentSelectedNode) {
-		var exportChildren = !dijit.byId("exportTreeSelectionOnly").checked;
-
+		var exportChildren      = !dijit.byId("exportTreeSelectionOnly").checked;
+		var exportWorkingCopies = dijit.byId("exportWorkingCopies").checked;
+		
 		if (currentSelectedNode.nodeAppType == "O") {
-			startObjectExport(currentSelectedNode.uuid, exportChildren);
+			startObjectExport(currentSelectedNode.uuid, exportChildren, exportWorkingCopies);
 		} else {
-			startAddressExport(currentSelectedNode.uuid, exportChildren);
+			startAddressExport(currentSelectedNode.uuid, exportChildren, exportWorkingCopies);
 		}
 	} else {
 		dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.export.selectNodeError' />", dialog.WARNING);
 	}
 }
 
-function startObjectExport(uuid, exportChildren) {
+function startObjectExport(uuid, exportChildren, exportWorkingCopies) {
 	if (uuid == "objectRoot") {
-		exportObjectBranch(null, exportChildren);
+		exportObjectBranch(null, exportChildren, exportWorkingCopies);
 
 	} else {
-		exportObjectBranch(uuid, exportChildren);
+		exportObjectBranch(uuid, exportChildren, exportWorkingCopies);
 	}
 }
 
-function exportObjectBranch(uuid, exportChildren) {
-	ExportService.exportObjectBranch(uuid, exportChildren, exportServiceCallback);
+function exportObjectBranch(uuid, exportChildren, exportWorkingCopies) {
+	ExportService.exportObjectBranch(uuid, exportChildren, exportWorkingCopies, exportServiceCallback);
 }
 
-function exportObjectsWithCriteria(exportCriteria) {
-	ExportService.exportObjectsWithCriteria(exportCriteria, exportServiceCallback);
+function exportObjectsWithCriteria(exportCriteria, exportWorkingCopies) {
+	ExportService.exportObjectsWithCriteria(exportCriteria, exportWorkingCopies, exportServiceCallback);
 }
 
-function startAddressExport(uuid, exportChildren) {
+function startAddressExport(uuid, exportChildren, exportWorkingCopies) {
 	if (uuid == "addressRoot") {
-		exportTopAddresses(exportChildren);
+		exportTopAddresses(exportChildren, exportWorkingCopies);
 
 	} else if (uuid == "addressFreeRoot") {
-		exportFreeAddresses();
+		exportFreeAddresses(exportWorkingCopies);
 
 	} else {
-		exportAddressBranch(uuid, exportChildren);
+		exportAddressBranch(uuid, exportChildren, exportWorkingCopies);
 	}
 }
 
-function exportAddressBranch(uuid, exportChildren) {
-	ExportService.exportAddressBranch(uuid, exportChildren, exportServiceCallback);
+function exportAddressBranch(uuid, exportChildren, exportWorkingCopies) {
+	ExportService.exportAddressBranch(uuid, exportChildren, exportWorkingCopies, exportServiceCallback);
 }
 
-function exportTopAddresses(exportChildren) {
-	ExportService.exportTopAddresses(exportChildren, exportServiceCallback);
+function exportTopAddresses(exportChildren, exportWorkingCopies) {
+	ExportService.exportTopAddresses(exportChildren, exportWorkingCopies, exportServiceCallback);
 }
 
-function exportFreeAddresses() {
-	ExportService.exportFreeAddresses(exportServiceCallback);
+function exportFreeAddresses(exportWorkingCopies) {
+	ExportService.exportFreeAddresses(exportWorkingCopies, exportServiceCallback);
 }
 
 // Button function for 'start export'. Send a request to the backend to start a new export job
@@ -338,7 +343,8 @@ function hideLoadingZone() {
                         <td></td>
                         <td>
                             <span class="functionalLink marginRight" style="position:relative;margin-top: 0px;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:scriptScopeExport.selectDataset()" title="<fmt:message key="dialog.admin.export.selectTree" /> [Popup]"><fmt:message key="dialog.admin.export.selectTree" /></a></span>
-						    <span class="rightAlign marginRight"><span class="input leftAlign"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8083)"><fmt:message key="dialog.admin.export.selectedNodeOnly" /></label></span></span>
+						    <span class="rightAlign marginRight"><span class="input leftAlign" style="padding-bottom: 5px;"><input type="checkbox" name="exportTreeSelectionOnly" id="exportTreeSelectionOnly" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8083)"><fmt:message key="dialog.admin.export.selectedNodeOnly" /></label></span></span>
+                            <span class="rightAlign marginRight"><span class="input leftAlign"><input type="checkbox" name="exportWorkingCopies" id="exportWorkingCopies" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8208)"><fmt:message key="dialog.admin.export.workingCopies" /></label></span></span>
                         </td>
 					</tr>
 

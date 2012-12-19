@@ -23,16 +23,14 @@ igeMenuBar.getMenuString = function(entry) {
 igeMenuBar.create = function(pane) {
 	var menu = new dijit.MenuBar({}).placeAt(pane.domNode);
 	menu.addChild(new dijit.MenuBarItem({
+	    id: "menuPageDashboard",
         label: "<div class='image18px iconDashboard'></div>",
-        //label: "<img src='img/home.gif'>",
-        //'class': "image18px iconDashboard",
-        //iconClass: "image18px iconDashboard",
-		//style: "background-image: url(../img/ic_help.gif);",
 		onClick: function(){
 			igeMenuBar.selectChild("pageDashboard");
 		}
     }));
 	menu.addChild(new dijit.MenuBarItem({
+	    id: "menuPageHierarchy",
         label: message.get("menu.main.hierarchyAcquisition"),
 		onClick: function(){
 			igeMenuBar.selectChild("pageHierarchy");
@@ -41,30 +39,35 @@ igeMenuBar.create = function(pane) {
     
     var researchMenu = new dijit.Menu({});
 	researchMenu.addChild(new dijit.MenuItem({
+	    id: "menuPageResearch",
         label: message.get("menu.main.research.search"),
 		onClick: function(){
 			igeMenuBar.selectChild("pageResearch");
 		}
     }));
     researchMenu.addChild(new dijit.MenuItem({
+        id: "menuPageResearchThesaurus",
         label: message.get("menu.main.research.thesaurusNavigator"),
         onClick: function(){
             igeMenuBar.selectChild("pageResearchThesaurus");
         }
     }));
     researchMenu.addChild(new dijit.MenuItem({
+        id: "menuPageResearchDB",
         label: message.get("menu.main.research.databaseSearch"),
         onClick: function(){
             igeMenuBar.selectChild("pageResearchDB");
         }
     }));
     menu.addChild(new dijit.PopupMenuBarItem({
+        id: "submenuResearch",
         label: message.get("menu.main.research"),
         popup: researchMenu 
     })); 
     
     var qualityMenu = new dijit.Menu({});
 	qualityMenu.addChild(new dijit.MenuItem({
+	    id: "menuPageQualityEditor",
         label: message.get("menu.main.qualityAssurance.editor"),
 		onClick: function(){
 			igeMenuBar.selectChild("pageQualityEditor");
@@ -72,6 +75,7 @@ igeMenuBar.create = function(pane) {
     }));
    if (UtilQA.isQAActive() && UtilSecurity.isCurrentUserQA()) {
         qualityMenu.addChild(new dijit.MenuItem({
+            id: "menuPageQualityAssurance",
             label: message.get("menu.main.qualityAssurance.qa"),
             onClick: function(){
                 igeMenuBar.selectChild("pageQualityAssurance");
@@ -80,11 +84,13 @@ igeMenuBar.create = function(pane) {
     }
     
     menu.addChild(new dijit.PopupMenuBarItem({
+        id: "submenuQualityAssurance",
         label: message.get("menu.main.qualityAssurance"),
         popup: qualityMenu 
     }));   
     
 	menu.addChild(new dijit.MenuBarItem({
+	    id: "menuPageStatistics",
         label: message.get("menu.main.statistics"),
 		onClick: function(){
 			igeMenuBar.selectChild("pageStatistics");
@@ -101,12 +107,14 @@ igeMenuBar.create = function(pane) {
 	//---------------------------------------
 	var adminMenuCatalog = new dijit.Menu({});
 	adminMenuCatalog.addChild(new dijit.MenuItem({
+	    id: "menuPageCatalogSettings",
         label: message.get("menu.admin.main.catalog.settings"),
 		onClick: function(){
 			igeMenuBar.selectChild("catalogSettings");
 		}
     }));
 	adminMenuCatalog.addChild(new dijit.MenuItem({
+	    id: "menuPageGeneralSettings",
         label: message.get("menu.admin.main.catalog.generalSettings"),
 		onClick: function(){
 			igeMenuBar.selectChild("generalSettings");
@@ -116,18 +124,21 @@ igeMenuBar.create = function(pane) {
 	//---------------------------------------
 	var adminMenuUserManagement = new dijit.Menu({});
 	adminMenuUserManagement.addChild(new dijit.MenuItem({
+	    id: "menuPageUserManagement",
         label: message.get("menu.admin.main.user.userAdmin"),
 		onClick: function(){
 			igeMenuBar.selectChild("userManagement");
 		}
     }));
 	adminMenuUserManagement.addChild(new dijit.MenuItem({
+	    id: "menuPageGroupManagement",
         label: message.get("menu.admin.main.user.groupAdmin"),
 		onClick: function(){
 			igeMenuBar.selectChild("groupManagement");
 		}
     }));
 	adminMenuUserManagement.addChild(new dijit.MenuItem({
+	    id: "menuPagePermissionOverview",
         label: message.get("menu.admin.main.user.permissions"),
 		onClick: function(){
 			igeMenuBar.selectChild("permissionOverview");
@@ -137,12 +148,14 @@ igeMenuBar.create = function(pane) {
 	//---------------------------------------
 	var adminMenuCatManagement = new dijit.Menu({});
 	adminMenuCatManagement.addChild(new dijit.MenuItem({
+	    id: "menuPageAdminAnalysis",
         label: message.get("menu.admin.main.management.analysis"),
 		onClick: function(){
 			igeMenuBar.selectChild("adminAnalysis");
 		}		
     }));
 	adminMenuCatManagement.addChild(new dijit.MenuItem({
+        id: "menuPageAdminDublet",
         label: message.get("menu.admin.main.management.duplicates"),
 		onClick: function(){
 			igeMenuBar.selectChild("adminDublet");
@@ -150,11 +163,13 @@ igeMenuBar.create = function(pane) {
     }));
 	adminMenuCatManagement.addChild(new dijit.MenuItem({
         label: message.get("menu.admin.main.management.urls"),
+        id: "menuPageAdminURL",
 		onClick: function(){
 			igeMenuBar.selectChild("adminURL");
 		}	
     }));
 	adminMenuCatManagement.addChild(new dijit.MenuItem({
+        id: "menuPageAdminCodeLists",
         label: message.get("menu.admin.main.management.codelists"),
 		onClick: function(){
 			igeMenuBar.selectChild("adminCodeLists");
@@ -167,24 +182,28 @@ igeMenuBar.create = function(pane) {
 		}	
     }));*/
 	adminMenuCatManagement.addChild(new dijit.MenuItem({
+        id: "menuPageAdminFormFields",
         label: message.get("menu.admin.main.management.additionalFields"),
         onClick: function(){
             igeMenuBar.selectChild("adminFormFields");
         }   
     }));
 	adminMenuCatManagement.addChild(new dijit.MenuItem({
+        id: "menuPageAdminDeleteAddress",
         label: message.get("menu.admin.main.management.deleteAddress"),
 		onClick: function(){
 			igeMenuBar.selectChild("adminDeleteAddress");
 		}	
     }));
 	adminMenuCatManagement.addChild(new dijit.MenuItem({
+        id: "menuPageAdminSearchTerms",
         label: message.get("menu.admin.main.management.searchTerms"),
 		onClick: function(){
 			igeMenuBar.selectChild("adminSearchTerms");
 		}	
     }));
 	adminMenuCatManagement.addChild(new dijit.MenuItem({
+        id: "menuPageAdminLocations",
         label: message.get("menu.admin.main.management.spatialSearchTerms"),
 		onClick: function(){
 			igeMenuBar.selectChild("adminLocations");
@@ -194,12 +213,14 @@ igeMenuBar.create = function(pane) {
 	//---------------------------------------
 	var adminMenuImport = new dijit.Menu({});
 	adminMenuImport.addChild(new dijit.MenuItem({
+        id: "menuPageAdminExport",
         label: message.get("menu.admin.main.importExport.export"),
 		onClick: function(){
 			igeMenuBar.selectChild("adminExport");
 		}
     }));
 	adminMenuImport.addChild(new dijit.MenuItem({
+        id: "menuPageAdminImport",
         label: message.get("menu.admin.main.importExport.import"),
 		onClick: function(){
 			igeMenuBar.selectChild("adminImport");
@@ -211,6 +232,7 @@ igeMenuBar.create = function(pane) {
     // only show all menus to mdek admin!
     if (currentUser.role == 1) {
         menu.addChild(new dijit.PopupMenuBarItem({
+            id: "menuPageAdminMenuCatalog",
             label: message.get("menu.admin.main.catalog"),
             popup: adminMenuCatalog
         }));
@@ -219,6 +241,7 @@ igeMenuBar.create = function(pane) {
     // no user management for Authors
     if (currentUser.role != 3) {
         menu.addChild(new dijit.PopupMenuBarItem({
+            id: "menuPageAdminMenuUserManagement",
             label: message.get("menu.admin.main.user"),
             popup: adminMenuUserManagement
         }));
@@ -227,11 +250,13 @@ igeMenuBar.create = function(pane) {
     // only all menus for cat-admin
     if (currentUser.role == 1) {
         menu.addChild(new dijit.PopupMenuBarItem({
+            id: "menuPageAdminMenuCatManagement",
             label: message.get("menu.admin.main.management"),
             popup: adminMenuCatManagement
         }));
         
         menu.addChild(new dijit.PopupMenuBarItem({
+            id: "menuPageAdminMenuImport",
             label: message.get("menu.admin.main.importExport"),
             popup: adminMenuImport
         }));
@@ -251,10 +276,12 @@ function initContextMenu(gridProperties) {
     
     if (type == "DUPLICATE_GRID") {
         menu.addChild(new dijit.MenuItem({
+            id: "menuShowInTree_"+type,
             label: message.get('contextmenu.table.showInTree'),
             onClick: selectObjectInTree
         }));
         menu.addChild(new dijit.MenuItem({
+            id: "menuJumpToObject_"+type,
             label: message.get('contextmenu.table.jumpToObject'),
             onClick: function() {
                 menuEventHandler.handleSelectNodeInTree(clickedSlickGrid.getDataItem(clickedRow).uuid, "O");
@@ -262,6 +289,7 @@ function initContextMenu(gridProperties) {
         }));
     } else {
         menu.addChild(new dijit.MenuItem({
+            id: "menuSelectAll_"+type,
             label: message.get('contextmenu.table.selectAll'),
             onClick: function() {
                         var rows = [];

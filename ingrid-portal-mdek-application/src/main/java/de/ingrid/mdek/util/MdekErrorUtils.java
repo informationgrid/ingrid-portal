@@ -75,7 +75,7 @@ public class MdekErrorUtils {
 		}
 	}
 
-	private static void handlePublicationConditionConflictError(List<MdekError> errors,
+    private static void handlePublicationConditionConflictError(List<MdekError> errors,
             MdekErrorType errType) {
 	    
 	    List<MdekDataBean>    referencedConflictingObjects   = null;

@@ -131,9 +131,9 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			result = mapper.convert(data, handler);
 			Document doc = getDomFromSourceData(result);
 			
-			assertEquals("depmst_abgas.lyr", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
-			assertEquals("{29A18127-C648-463B-9146-B16A07D99514}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
-			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Deutsch") > -1);
+			assertEquals("depmst_abgas.lyr", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/title"));
+			assertEquals("{29A18127-C648-463B-9146-B16A07D99514}", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/original-control-identifier"));
+			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/abstract").indexOf("Deutsch") > -1);
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}
@@ -161,11 +161,11 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			result = mapper.convert(data, handler);
 			Document doc = getDomFromSourceData(result);
 			
-			assertEquals("Deponie-Messtellen: Abgas", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
-			assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
-			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Folgende Sprachen werden im beschriebenen Datensatz verwendet") > -1);
-			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Datum der Ausgabe/Version") > -1);
-			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Deponiegasverwertung") > -1);
+			assertEquals("Deponie-Messtellen: Abgas", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/title"));
+			assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/original-control-identifier"));
+			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/abstract").indexOf("Folgende Sprachen werden im beschriebenen Datensatz verwendet") > -1);
+			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/abstract").indexOf("Datum der Ausgabe/Version") > -1);
+			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/abstract").indexOf("Deponiegasverwertung") > -1);
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}
@@ -192,9 +192,9 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			result = mapper.convert(data, handler);
 			Document doc = getDomFromSourceData(result);
 			
-			assertEquals("[ISO ed. Titel] Wasserk\u00f6rper Polygone", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
-			assertEquals("{606D692B-004D-4BD1-9364-B18A75614B89}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
-			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("[ISO ed. Nummer der Ausgabe/Version]") > -1);
+			assertEquals("[ISO ed. Titel] Wasserk\u00f6rper Polygone", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/title"));
+			assertEquals("{606D692B-004D-4BD1-9364-B18A75614B89}", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/original-control-identifier"));
+			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/abstract").indexOf("[ISO ed. Nummer der Ausgabe/Version]") > -1);
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}
@@ -221,9 +221,9 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			result = mapper.convert(data, handler);
 			Document doc = getDomFromSourceData(result);
 			
-			assertEquals("Grundwassermessstellen an Deponien", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
-			assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
-			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Der Datenbestand enth\u00e4lt die Lageinforamtionen (Punkte) der Grundwasser") > -1);
+			assertEquals("Grundwassermessstellen an Deponien", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/title"));
+			assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/original-control-identifier"));
+			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/abstract").indexOf("Der Datenbestand enth\u00e4lt die Lageinforamtionen (Punkte) der Grundwasser") > -1);
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}
@@ -250,9 +250,9 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			result = mapper.convert(data, handler);
 			Document doc = getDomFromSourceData(result);
 			
-			assertEquals("Deponie-Messtellen: Sickerwasser", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
-			assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
-			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Der Datenbestand enth\u00e4lt die Lageinforamtionen (Punkte) der Sickerwasser-Messstellen der Deponien in NRW.") > -1);
+			assertEquals("Deponie-Messtellen: Sickerwasser", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/title"));
+			assertEquals("{CD2A5009-D1E1-4D58-B6E1-FA4B870724BE}", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/original-control-identifier"));
+			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/abstract").indexOf("Der Datenbestand enth\u00e4lt die Lageinforamtionen (Punkte) der Sickerwasser-Messstellen der Deponien in NRW.") > -1);
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}
@@ -279,9 +279,9 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			result = mapper.convert(data, handler);
 			Document doc = getDomFromSourceData(result);
 			
-			assertEquals("tgd.gd.HK500", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
-			assertEquals("{B50413B9-323A-40A2-AD0B-EAF0D84319CA}", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/original-control-identifier"));
-			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/general/abstract").indexOf("Folgende Sprachen werden im beschriebenen") > -1);
+			assertEquals("tgd.gd.HK500", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/title"));
+			assertEquals("{B50413B9-323A-40A2-AD0B-EAF0D84319CA}", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/original-control-identifier"));
+			assertTrue(XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/abstract").indexOf("Folgende Sprachen werden im beschriebenen") > -1);
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}
@@ -310,8 +310,8 @@ public class ArcGisScriptImportDataMapperTest extends TestCase {
 			result = mapper.convert(data, handler);
 			Document doc = getDomFromSourceData(result);
 			
-			assertEquals("Amtlicher Stadtplan Bremerhaven", XPathUtils.getString(doc, "/igc/data-sources/data-source/general/title"));
-			assertTrue(5 == XPathUtils.getInt(doc, "/igc/data-sources/data-source/technical-domain/map/hierarchy-level/@iso-code"));
+			assertEquals("Amtlicher Stadtplan Bremerhaven", XPathUtils.getString(doc, "/igc/data-sources/data-source/data-source-instance/general/title"));
+			assertTrue(5 == XPathUtils.getInt(doc, "/igc/data-sources/data-source/data-source-instance/technical-domain/map/hierarchy-level/@iso-code"));
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}

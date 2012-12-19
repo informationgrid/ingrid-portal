@@ -1609,6 +1609,9 @@
 				 <p><u>Note:</u> Click on <i>Select Tree Node</i>. A dialogue box opens up by means of which you can select objects as well as addresses. With one click on an object or an address this is highlighted in red. Via <i>Select</i> the highlighted object or the highlighted address is transferred into the Tree Export field. </p>
 				 <p>If you select the setting ‚Export the selected node only’ only the individual object or address selected will be exported and not the sub tree.</p>
 				 <p>The export operation is triggered via one click on <i>Start Export</i>.</p>
+     
+                 <p>Normally only published objects and addresses are exported. But if you want to do a full export
+                 including the working versions, then you have to check the option <i>"also export working copies"</i>.</p>            
 				 
 				 <p><b>Information about the last process</b></p>
 				 <p>In all cases export is carried out asynchronously. The process can take several minutes depending on the amount of the objects to be exported and the system load of the server. </p>
@@ -1632,11 +1635,15 @@
 				 <p>As a default, all imported objects and addresses are cached in a working version, that is, they are not yet published. With the <i>Publish Imported Datasets</i> setting you can instigate an immediate publication without the datasets being subject to a further checking and being ’manually’ published. </p>
 				 <p><u>Note:</u>The setting <i>Publish Imported Datasets</i> is overwritten if obligatory details are missing in the objects and addresses. In this case the object or address is imported as a working version only and has to be revisited before publication.</p>
 				 
+                 <p><b>Overwrite identical metadata</b></p>
+                 <p>With the unique identification key of a metadata it's possible to identify same metadatas, which come from an import.
+                 With this option activated, all identical metadata from the catalogue are overwritten with the data from the import. It
+                 can also happen that the position of the object or address in the hierarchy tree changed after the import.</p>
+                 
 				 <p><b>Only add imported datasets under the selected import nodes</b></p>
 				 <p>The objects and addresses of InGridCatalog (IGC) have a unique identifier (UUID). If objects are imported into IGC from external systems, the identifier supplied with them by the external system will be additionally saved in the object as the original identifier (OID).</p>
 				 <p>As a default, an object to be imported (or an address to be imported) is identified by the UUID and OID in the database. If it already exists then it is overwritten with the details to be imported. In so doing, the location under the structure tree will be kept. The import nodes (see below) are ignored in this case.</p>
 				 <p>You can overwrite the default setting by selecting Create datasets solely under the import nodes. In this case, the objects, even when they ought to already exist in the catalogue, will be saved underneath the import node given (see below). (In doing so, a new UUID will be given).</p>
-				 <p><u>Note:</u>The Create datasets solely under the import nodes setting can only be selected as an alternative to the <i>Publish Imported Datasets</i> setting as, as a rule, newly installed objects have to be thoroughly checked for completeness before publication. </p>
 				 
 				 <p><b>Sub Tree Import</b></p>
 				 <p>To carry out an import, the giving of a <i>Parent Object</i> and a <i>Parent Address</i> is always necessary. All objects and addresses that do not yet exist are filed underneath these import nodes. In so doing a structure of the objects or addresses supplied in the import file is kept if necessary.</p>

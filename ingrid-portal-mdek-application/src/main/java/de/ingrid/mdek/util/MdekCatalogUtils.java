@@ -335,6 +335,7 @@ public class MdekCatalogUtils {
 		IngridDocument jobInfoDoc = MdekUtils.getResultFromResponse(response);
 		if (jobInfoDoc != null) {
 			jobInfo.setDescription(jobInfoDoc.getString(MdekKeys.JOBINFO_MESSAGES));
+			jobInfo.setFrontendMessages(jobInfoDoc.getString(MdekKeys.JOBINFO_FRONTEND_MESSAGES));
 			jobInfo.setStartTime(MdekUtils.convertTimestampToDate(jobInfoDoc.getString(MdekKeys.JOBINFO_START_TIME)));
 			jobInfo.setEndTime(MdekUtils.convertTimestampToDate(jobInfoDoc.getString(MdekKeys.JOBINFO_END_TIME)));
 			if (jobInfoDoc.get(MdekKeys.JOBINFO_NUM_OBJECTS) != null) {

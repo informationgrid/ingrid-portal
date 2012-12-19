@@ -23,9 +23,9 @@ public class ExportServiceImpl {
 		this.catalogRequestHandler = catalogRequestHandler;
 	}
 
-	public void exportObjectBranch(String rootUuid, boolean exportChildren) {
+	public void exportObjectBranch(String rootUuid, boolean exportChildren, boolean includeWorkingCopies) {
 		try {
-			catalogRequestHandler.exportObjectBranch(rootUuid, exportChildren);
+			catalogRequestHandler.exportObjectBranch(rootUuid, exportChildren, includeWorkingCopies);
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
@@ -34,9 +34,9 @@ public class ExportServiceImpl {
 		}
 	}
 
-	public void exportObjectsWithCriteria(String exportCriteria) {
+	public void exportObjectsWithCriteria(String exportCriteria, boolean includeWorkingCopies) {
 		try {
-			catalogRequestHandler.exportObjectsWithCriteria(exportCriteria);
+			catalogRequestHandler.exportObjectsWithCriteria(exportCriteria, includeWorkingCopies);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while starting export job.", e);
@@ -44,9 +44,9 @@ public class ExportServiceImpl {
 		}
 	}
 
-	public void exportAddressBranch(String rootUuid, boolean exportChildren) {
+	public void exportAddressBranch(String rootUuid, boolean exportChildren, boolean includeWorkingCopies) {
 		try {
-			catalogRequestHandler.exportAddressBranch(rootUuid, exportChildren);
+			catalogRequestHandler.exportAddressBranch(rootUuid, exportChildren, includeWorkingCopies);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while starting export job.", e);
@@ -54,9 +54,9 @@ public class ExportServiceImpl {
 		}
 	}
 
-	public void exportFreeAddresses() {
+	public void exportFreeAddresses(boolean includeWorkingCopies) {
 		try {
-			catalogRequestHandler.exportFreeAddresses();
+			catalogRequestHandler.exportFreeAddresses(includeWorkingCopies);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while starting export job.", e);
@@ -64,9 +64,9 @@ public class ExportServiceImpl {
 		}
 	}
 
-	public void exportTopAddresses(boolean exportChildren) {
+	public void exportTopAddresses(boolean exportChildren, boolean includeWorkingCopies) {
 		try {
-			catalogRequestHandler.exportTopAddresses(exportChildren);
+			catalogRequestHandler.exportTopAddresses(exportChildren, includeWorkingCopies);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while starting export job.", e);
