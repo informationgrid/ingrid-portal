@@ -422,7 +422,7 @@ function updateImportInfo(importInfo) {
             dojo.style("importInfoNumImportedAddressContainer","display","");
             dojo.byId("importInfoNumImportedObjects").innerHTML = importInfo.numProcessedObjects;
             dojo.byId("importInfoNumImportedAddresses").innerHTML = importInfo.numProcessedAddresses;
-            dojo.byId("importMoreInfo").innerHTML = importInfo.frontendMessages.replace(/\n/g, '<br />');
+            dojo.byId("importMoreInfo").innerHTML = importInfo.frontendMessages ? importInfo.frontendMessages.replace(/\n/g, '<br />') : "<fmt:message key='dialog.admin.import.noMessages' />";
             dojo.style("importMoreContainer", "display", "block");
 
 		} else {
