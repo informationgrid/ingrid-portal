@@ -10,6 +10,9 @@
       <action type="update" dev="wemove" issue="INGRID-2154, INGRID-2158">
         Update BAW-WSV Profile.
       </action>
+      <action type="fix" dev="wemove">
+        Change JDBC connection pooling properties in tomcat context files to avoid broken database connections.
+      </action>  
       <action type="fix" dev="wemove" issue="INGRID-2188">
         MapClient: Fixed problem when loading an external service and enabling all layers (error tiles).
       </action>  

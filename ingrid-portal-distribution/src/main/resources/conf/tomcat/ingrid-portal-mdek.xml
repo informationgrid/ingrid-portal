@@ -30,6 +30,7 @@ limitations under the License.
           type="javax.sql.DataSource" username="root" password=""
           driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/mdek?autoReconnect=true"
           maxActive="100" maxIdle="30" maxWait="10000" validationQuery="SELECT 1"
+          testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="1800000"
           removeAbandoned="true" removeAbandonedTimeout="60" logAbandoned="true"/> 
 
 </Context>

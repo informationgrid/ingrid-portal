@@ -30,6 +30,7 @@ limitations under the License.
           type="javax.sql.DataSource" username="INGRID_PORTAL" password="INGRID_PORTAL"
           driverClassName="oracle.jdbc.OracleDriver" url="jdbc:oracle:thin:@localhost:1521:XE"
           maxActive="100" maxIdle="30" maxWait="10000" validationQuery="SELECT 1 FROM DUAL"
+          testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="1800000"
           removeAbandoned="true" removeAbandonedTimeout="60" logAbandoned="true"/> 
 
    <!-- make sure that unicode values are transmitted from form elements! 

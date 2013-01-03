@@ -28,8 +28,9 @@ limitations under the License.
   <Resource name="jdbc/jetspeed" auth="Container"
           factory="org.apache.commons.dbcp.BasicDataSourceFactory"
           type="javax.sql.DataSource" username="root" password=""
-          driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/ingrid-portal"
+          driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/ingrid-portal?autoReconnect=true"
           maxActive="100" maxIdle="30" maxWait="10000" validationQuery="SELECT 1"
+          testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="1800000"
           removeAbandoned="true" removeAbandonedTimeout="60" logAbandoned="true"/> 
 
 </Context>
