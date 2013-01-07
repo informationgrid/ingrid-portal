@@ -70,9 +70,9 @@ public class CatalogServiceImpl implements CatalogService {
 		// Reset timestamp of codelist repo so all syslists will be synchronized after manual import of syslist.
 		// This way we guarantee that syslist entries are not lost via import. 
 		// see https://dev.wemove.com/jira/browse/INGRID-2184
-		if (log.isDebugEnabled()) {
-	        log.debug("Reset sys_generic_key \"lastModifiedSyslist\" to \"-1\", " +
-	        	"so syslists will be reloaded from codelist repo after manual import.");			
+		if (log.isInfoEnabled()) {
+	        log.info("Reset sys_generic_key \"lastModifiedSyslist\" to \"-1\", " +
+	        	"so syslists will be reloaded from codelist repo after manual import.");
 		}
 
         List<GenericValueBean> genericValues = new ArrayList<GenericValueBean>();
