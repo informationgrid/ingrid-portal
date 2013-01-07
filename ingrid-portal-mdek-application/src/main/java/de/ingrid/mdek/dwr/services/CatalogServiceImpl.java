@@ -66,6 +66,21 @@ public class CatalogServiceImpl implements CatalogService {
 
 	public void importSysLists(byte[] data) throws UnsupportedEncodingException {
 		catalogRequestHandler.importSysLists(new String(data, "UTF-8"));
+
+		// Reset timestamp of codelist repo so all syslists will be synchronized after manual import of syslist.
+		// This way we guarantee that syslist entries are not lost via import. 
+		// see https://dev.wemove.com/jira/browse/INGRID-2184
+		if (log.isDebugEnabled()) {
+	        log.debug("Reset sys_generic_key \"lastModifiedSyslist\" to \"-1\", " +
+	        	"so syslists will be reloaded from codelist repo after manual import.");			
+		}
+
+        List<GenericValueBean> genericValues = new ArrayList<GenericValueBean>();
+        GenericValueBean valueBean = new GenericValueBean();
+        valueBean.setKey("lastModifiedSyslist");
+        valueBean.setValue("-1");
+        genericValues.add(valueBean);
+        storeSysGenericValues(genericValues);
 	}
 
 	public List<GenericValueBean> getSysGenericValues(String[] keyNames) {

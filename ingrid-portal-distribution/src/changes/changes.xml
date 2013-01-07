@@ -10,6 +10,10 @@
       <action type="update" dev="wemove" issue="INGRID-2154, INGRID-2158">
         Update BAW-WSV Profile.
       </action>
+      <action type="fix" dev="wemove" issue="INGRID-2184">
+        When importing syslists manually reset timestamp for synchronisation with codelist repository.
+        So all codelists are synchronized with repo to avoid loss of entries after manual import.
+      </action>
       <action type="fix" dev="wemove">
         Change JDBC connection pooling properties in tomcat context files to avoid broken database connections.
       </action>  
