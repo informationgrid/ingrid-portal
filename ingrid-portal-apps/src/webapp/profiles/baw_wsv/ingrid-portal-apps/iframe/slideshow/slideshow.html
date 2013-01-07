@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head>
+  <title>Slideshow - [GeoPortal.WSV]</title>
+  <meta content="GeoPortal, Wasserstrassen, Schifffahrt, Schifffahrtsverwaltung, Binnenwasserstrassen, Seewasserstrassen" name="KEYWORDS"/>
+  <meta content="GeoPortal der Wasser- und Schifffahrtsverwaltung des Bundes" name="DESCRIPTION"/>
+  <meta content="13.10.2009 09:51:49" name="DATE"/>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"/>
+  <meta content="de" http-equiv="content-language"/>
+  
+  <link media="screen" href="css/slidegp.css" type="text/css" rel="stylesheet"/>
+  <!--[if gte IE 8.0]>
+	<style type="text/css">
+	.clearfix {display: block;}
+	/>
+	</style>
+	<![endif]-->
+</head>
+<body class="bodybackground">
+<script type="text/javascript" src="js/mootools-1.2.5-core-yc.js"></script>
+	<script type="text/javascript">
+		window.addEvent('domready',function() {
+			/* settings */
+			var showDuration = 5000;
+			var container = $('slideshow-container');
+			var images = container.getElements('img');
+			var currentIndex = 0;
+			var interval;
+			/* opacity and fade */
+			images.each(function(img,i){ 
+				if(i > 0) {
+					img.set('opacity',0);
+				}
+			});
+			/* worker */
+			var show = function() {
+				images[currentIndex].fade('out');
+				images[currentIndex = currentIndex < images.length - 1 ? currentIndex+1 : 0].fade('in');
+			};
+			/* start once the page is finished loading */
+			window.addEvent('load',function(){
+				interval = show.periodical(showDuration);
+			});
+		});
+	</script>
+  <noscript>
+	<div id="slideshow-container">
+		  <img src="images/Slideshow_01.jpg" alt="images/Slideshow_01.jpg" title="Impressionen GeoPortal.WSV" />
+	</div>
+  </noscript>    
+	<div id="slideshow-container">
+		  <a href="images/Slideshow_01.jpg" title="Link zum Originalbild"><img src="images/Slideshow_01_t.jpg" alt="images/Slideshow_01.jpg" title="Impressionen GeoPortal.WSV"/></a>
+		  <a href="images/Slideshow_03.jpg" title="Link zum Originalbild"><img src="images/Slideshow_03_t.jpg" alt="images/Slideshow_03.jpg" title="Impressionen GeoPortal.WSV"/></a>
+		  <a href="images/Slideshow_04.jpg" title="Link zum Originalbild"><img src="images/Slideshow_04_t.jpg" alt="images/Slideshow_04.jpg" title="Impressionen GeoPortal.WSV"/></a>
+		  <a href="images/Slideshow_05.jpg" title="Link zum Originalbild"><img src="images/Slideshow_05_t.jpg" alt="images/Slideshow_05.jpg" title="Impressionen GeoPortal.WSV"/></a>
+		  <a href="images/Slideshow_06.jpg" title="Link zum Originalbild"><img src="images/Slideshow_06_t.jpg" alt="images/Slideshow_06.jpg" title="Impressionen GeoPortal.WSV"/></a>
+		  <a href="images/Slideshow_08.jpg" title="Link zum Originalbild"><img src="images/Slideshow_08_t.jpg" alt="images/Slideshow_08.jpg" title="Impressionen GeoPortal.WSV"/></a>
+		  <a href="images/Slideshow_09.jpg" title="Link zum Originalbild"><img src="images/Slideshow_09_t.jpg" alt="images/Slideshow_09.jpg" title="Impressionen GeoPortal.WSV"/></a>
+	</div>
+ </body>
+ </html>
