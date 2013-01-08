@@ -16,31 +16,6 @@
 </head>
 <body class="bodybackground">
 <script type="text/javascript" src="js/mootools-1.2.5-core-yc.js"></script>
-	<script type="text/javascript">
-		window.addEvent('domready',function() {
-			/* settings */
-			var showDuration = 5000;
-			var container = $('slideshow-container');
-			var images = container.getElements('img');
-			var currentIndex = 0;
-			var interval;
-			/* opacity and fade */
-			images.each(function(img,i){ 
-				if(i > 0) {
-					img.set('opacity',0);
-				}
-			});
-			/* worker */
-			var show = function() {
-				images[currentIndex].fade('out');
-				images[currentIndex = currentIndex < images.length - 1 ? currentIndex+1 : 0].fade('in');
-			};
-			/* start once the page is finished loading */
-			window.addEvent('load',function(){
-				interval = show.periodical(showDuration);
-			});
-		});
-	</script>
   <noscript>
 	<div id="slideshow-container">
 		  <img src="images/Slideshow_01.jpg" alt="images/Slideshow_01.jpg" title="Impressionen GeoPortal.WSV" />
@@ -55,5 +30,35 @@
 		  <a target="_new" href="images/Slideshow_08.jpg" title="Link zum Originalbild"><img src="images/Slideshow_08_t.jpg" alt="images/Slideshow_08.jpg" title="Impressionen GeoPortal.WSV"/></a>
 		  <a target="_new" href="images/Slideshow_09.jpg" title="Link zum Originalbild"><img src="images/Slideshow_09_t.jpg" alt="images/Slideshow_09.jpg" title="Impressionen GeoPortal.WSV"/></a>
 	</div>
+	<script type="text/javascript">
+		window.addEvent('domready',function() {
+			/* settings */
+			var showDuration = 5000;
+			var container = document.getElementById('slideshow-container');
+			var images = container.getElementsByTagName('img');
+			var currentIndex = 0;
+			var interval;
+			/* opacity and fade */
+			for(var i=0; i<images.length; i++){
+				var img = images.item(i);
+				if(i > 0) {
+					img.style.opacity = 0;
+					img.style.filter='progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
+				}
+			}
+			/* worker */
+			var show = function() {
+				images[currentIndex].style.opacity = 0;
+				images[currentIndex].style.filter='progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
+				images[currentIndex = currentIndex < images.length - 1 ? currentIndex+1 : 0].style.opacity = 1;
+				images[currentIndex = currentIndex < images.length - 1 ? currentIndex+1 : 0].style.filter='progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';
+				
+			};
+			/* start once the page is finished loading */
+			window.addEvent('load',function(){
+				interval = show.periodical(showDuration);
+			});
+		});
+	</script>
  </body>
  </html>
