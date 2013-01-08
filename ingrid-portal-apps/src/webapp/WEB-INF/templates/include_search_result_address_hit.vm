@@ -9,14 +9,14 @@
 		  #if($rs.udk_class == "2")
 		  	#if($rs.title)#set($title = "$rs.title")#end
 			#if($rs.address_salutation)#set($title = "$title$rs.address_salutation ")#end
-			#if($rs.address_lastname)#set($title = "$title$rs.address_lastname")#end
-			#if($rs.address_firstname)#set($title = "$title, $rs.address_firstname")#end
+            #if($rs.address_firstname)#set($title = "$title$rs.address_firstname")#end
+			#if($rs.address_lastname)#set($title = "$title $rs.address_lastname")#end
             #set($leftDistance = '25px')
 		  #elseif($rs.udk_class == "3")
 			#if($rs.title && $rs.title != "")#set($title = "$rs.title ")#end
 			#if($rs.address_salutation && $rs.address_salutation != "")#set($title = "$title, $rs.address_salutation ")#end
-			#if($rs.address_lastname && $rs.address_lastname != "")#set($title = "$title$rs.address_lastname")#end
-			#if($rs.address_firstname && $rs.address_firstname != "")#set($title = "$title, $rs.address_firstname")#end
+            #if($rs.address_firstname && $rs.address_firstname != "")#set($title = "$title$rs.address_firstname")#end
+			#if($rs.address_lastname && $rs.address_lastname != "")#set($title = "$title $rs.address_lastname")#end
             #set($leftDistance = '25px')
 		  #else
 			#set($title = "$rs.title")

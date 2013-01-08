@@ -10,6 +10,9 @@
       <action type="update" dev="wemove" issue="INGRID-2154, INGRID-2158">
         Update BAW-WSV Profile.
       </action>
+      <action type="fix" dev="wemove" issue="INGRID-2192">
+        Do NOT render institution field in title of address search results for persons. Change order to firstname lastname.
+      </action>
       <action type="fix" dev="wemove" issue="INGRID-2184">
         When importing syslists manually reset timestamp for synchronisation with codelist repository.
         So all codelists are synchronized with repo to avoid loss of entries after manual import.

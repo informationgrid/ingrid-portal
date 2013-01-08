@@ -390,6 +390,10 @@ public class QueryResultPostProcessor {
                     if (tmpTitle == null) {
                     	tmpTitle = "";
                     }
+                    // if address is person and has hierarchy data then do NOT render institution field, see INGRID-2192
+                    if (addrClass.equals("2") && tmpAddressId != null) {
+                    	tmpTitle = " ";
+                    }
                     
                     if (tmpAddressId != null && tmpAddressId.length()>0) {
         	            // we do have parent addresses included in the original result
