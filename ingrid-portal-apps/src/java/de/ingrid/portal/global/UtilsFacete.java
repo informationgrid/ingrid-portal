@@ -49,6 +49,7 @@ import de.ingrid.utils.query.FuzzyFieldQuery;
 import de.ingrid.utils.query.FuzzyTermQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.query.RangeQuery;
+import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.query.WildCardFieldQuery;
 import de.ingrid.utils.query.WildCardTermQuery;
 import de.ingrid.utils.queryparser.ParseException;
@@ -2106,6 +2107,11 @@ public class UtilsFacete {
         	}
     		IngridQuery tmpQuery = QueryStringParser.parse(term);
     		
+    		query.remove("term");
+    		
+    		for(TermQuery tmp :tmpQuery.getTerms()){
+    			query.addTerm(tmp);
+    		}
     		for(ClauseQuery tmp : tmpQuery.getClauses()){
 				query.addClause(tmp);	
 			}

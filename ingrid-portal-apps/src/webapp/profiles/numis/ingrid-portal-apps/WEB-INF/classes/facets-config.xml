@@ -151,15 +151,15 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
 				<facets>
               <!-- INSPIRE-relevant -->
 					<facet>
-<!--						<name>searchResult.facete.metaclass.inspire</name> -->
+<!--					<name>searchResult.facete.metaclass.inspire</name> -->
 						<name>INSPIRE</name>
-	                    <query>t04_search.searchterm:inspireidentifiziert</query>
+	                    <query>inspireidentifiziert</query>
 						<id>inspire</id>
 					</facet>
               <!-- Opendata -->
     	             <facet>
 						<name>Opendata</name>
-						<query>t04_search.searchterm:opendataident</query>
+						<query>opendataident</query>
 						<id>opendata</id>
 					</facet>
 				<!-- Organisationseinheit / Fachaufgabe -->
@@ -212,13 +212,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- INSPIRE-relevant -->
 			<facet>
 				<name>INSPIRE</name>
-              <query>t04_search.searchterm:inspireidentifiziert</query>
+              	<query>inspireidentifiziert</query>
 				<id>inspire</id>
 			</facet>
         <!-- Opendata -->
            <facet>
 				<name>Opendata</name>
-				<query>t04_search.searchterm:opendataident</query>
+				<query>opendataident</query>
 				<id>opendata</id>
 			</facet>
 
