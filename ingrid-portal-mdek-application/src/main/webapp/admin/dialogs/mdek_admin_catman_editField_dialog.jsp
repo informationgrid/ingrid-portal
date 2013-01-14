@@ -563,7 +563,7 @@
                                     <label for="visibleShow">
                                         <fmt:message key="dialog.admin.additionalfields.visibility.show" />
                                     </label>
-                                    <input dojoType="dijit.form.RadioButton" type="radio" name="visible" id="visibleHide" value="hide" />
+                                    <input dojoType="dijit.form.RadioButton" type="radio" name="visible" id="visibleHide" value="alwaysHidden" />
                                     <label for="visibleHide">
                                         <fmt:message key="dialog.admin.additionalfields.visibility.hide" />
                                     </label>
