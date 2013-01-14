@@ -399,7 +399,7 @@ div.resultset_show_partner {text-decoration:none;font-size:12px; margin: 10px 0p
 
 .intendResult { font-weight: bold; left: 20px; position: relative; padding: 0 10px 0 0; }
 
-div.resultset .map_link { float:left; background-color:#D9EAFA; width: 100px; padding: 3px; margin-top: 4px; text-align: center; margin-bottom: 1px; margin-right: 10px;}
+div.resultset .map_link { float:left; background-color:#D9EAFA; width: 70px; padding: 3px; margin-top: 4px; text-align: center; margin-bottom: 1px; margin-right: 10px;}
 div.resultset .map_link a { display: block; color: #1B78B1; font-size: 11px; padding: 0;}
 
 div.resultset p.coupled_resources { padding-left: 20px; margin-bottom: 5px; }
