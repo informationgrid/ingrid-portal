@@ -616,6 +616,8 @@ img.section_show_hide { padding-right:16px; padding-top:5px; }
 
 span.linkinfo { color:#000000; font-size: 60%; }
 
+img.preview { border: 1px solid #CCCCCC; margin-bottom: 15px; padding: 5px; }
+
 /******************************************
 * Dojo Tabs CSS style 
 *******************************************/

@@ -1747,6 +1747,8 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	}
 	
 	private void getCapabilityUrls(ArrayList elements, String xpathExpression) {
+	    boolean mapLinkAdded = false;
+	    
 	    if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
             
@@ -1762,9 +1764,15 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                         // also add an identifier to select the correct layer in the map client 
                         addBigMapLink(elements, urlValue + "&ID=" + getLayerIdentifier(null));
                         // ADD FIRST ONE FOUND !!!
+                        mapLinkAdded = true;
                         break;
                     }
                 }
+            }
+            if (!mapLinkAdded) {
+                // check if preview image is available
+                xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
+                getPreviewImage(elements, xpathExpression);
             }
 	    }
 	}
