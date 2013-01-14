@@ -842,7 +842,7 @@
                         </div>
                     </div><!-- RIGHT HAND SIDE CONTENT BLOCK 1 END --><!-- CONTENT BLOCK 2 START --><!-- SPLIT CONTAINER START -->
                 </div>
-                <div id="groupAdministrationTab" dojoType="dijit.layout.TabContainer" doLayout="false" style="width:100%;" selectedChild="permissionListObjects">
+                <div id="groupAdministrationTab" dojoType="dijit.layout.TabContainer" doLayout="false" style="width:100%;margin-top:40px;" selectedChild="permissionListObjects">
                     <!-- MAIN TAB 1 START -->
                     <div id="permissionListObjects" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.groups.objectPermissions" />" class="tab" style="overflow:hidden;">
                         <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" id="groupDataObjects" layoutAlign="client" design="headline" style="height:250px;">
