@@ -55,8 +55,9 @@ function selectObjectInTreeByUuid(uuid) {
 			path.splice(0, 0, "objectRoot");
 			for (i in path) { path[i] = "dubletsAdmin_" + path[i];}
 			path.splice(0, 0, "root_duplicatesTree");
+			var targetNodeId = path[path.length-1];
 			var def = dijit.byId("duplicatesTree")._setPathAttr(path);
-			def.addCallback(dojo.partial(selectNode, path[path.length-1]));
+			def.addCallback(dojo.partial(selectNode, targetNodeId));
 		},
 		errorHandler: function(msg, err) {
 		    displayErrorMessage(err);
