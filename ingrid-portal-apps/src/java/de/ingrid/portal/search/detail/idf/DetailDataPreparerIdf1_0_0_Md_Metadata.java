@@ -1785,7 +1785,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             elementMapLink.put("type", "linkLine");
             elementMapLink.put("isMapLink", new Boolean(true));
             elementMapLink.put("isExtern", new Boolean(false));
-            elementMapLink.put("title", messages.getString("common.result.showMap"));
+            elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
             this.firstGetCapabiltiesUrl = "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue);
             elementMapLink.put("href", this.firstGetCapabiltiesUrl);
             // use preview image if provided otherwise static image
