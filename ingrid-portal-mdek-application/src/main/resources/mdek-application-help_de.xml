@@ -371,8 +371,10 @@
 				 <p>Im Fenster Detailansicht können Sie die Anordnung der Objekt- bzw. 
 				 Adressinformation im Ausdruck ansehen. Die Anordnung der Information ist nicht 
 				 veränderbar. Mit einem Klick auf <i>[Drucken]</i> gelangen Sie in das Druckmenü 
-				 des Betriebssystems. 
-				 Verlassen Sie die Druckansicht mit dem Kreuz oben rechts in der Fensterecke.</p>
+				 des Betriebssystems.</p>
+				 <p>Neben der Anzeige der Detailansicht eines Objektes/einer Adresse, ist es auch möglich die Detailinformationen des gesamten Unterbaumes anzeigen zu lassen. Sind die Auswahlboxen <i>Detailansicht</i> und <i>Untergeordnete Adressen mit einbeziehen</i> beide ausgewählt, so werden alle Objekte/Adressen des Teilbaumes untereinander ausgegeben. Beachten Sie, dass die Ausgabe bei sehr vielen Objekten eine Weile dauern kann. Deshalb ist es jederzeit möglich die Anzeige abzubrechen.</p>
+				 <p>Wird die Auswahlbox <i>Detailansicht</i> entfernt, so wird anstatt einer Detailansicht, nur eine gekürzte Version angezeigt, bestehend aus dem Titel des Datensatzes. Der Baum wird hierbei jedoch in einer hierarchischen Darstellung angezeigt.</p>				 
+				 <p>Die Druckansicht kann mit dem Kreuz oben rechts in der Fensterecke verlassen werden.</p>
 				 <p>Diese Funktion steht für die Ebenen <i>Objekte</i>, <i>Adressen</i> und 
 				 <i>freie Adressen</i> nicht zur Verfügung.</p>
 				 <p><b>Objekt/Adresse/Teilbaum ausschneiden</b></p>
@@ -810,6 +812,7 @@
 				 das aus der Auswahlliste <i>Koordinatensystem</i> ausgewählt wird.</p>
 				 <p>Mit einem Klick auf die Schaltfläche <i><b>Hinzufügen</b></i> werden die Angaben in das 
 				 Feld <i>Freier Raumbezug</i> des Objektes übernommen.</p>
+				 <p>Über den Link <i>erben</i> ist es möglich, die freien Raumbezüge des übergeordneten Objektes zu erben. Vorhandene Raumbezüge (über den Namen identifiziert) werden nicht überschrieben. Diese Funktion steht nur Unterobjekten zur Verfügung!</p>
             </content>
         </section>
         <section help-key="maintanance-of-objects-5">
@@ -906,6 +909,7 @@
 				 <p>Optional können Sie eine <i>Erläuterung</i> zu dem Verweis angeben.</p>
 				 <p><u>Achtung:</u> Die Angabe <i>URL-Typ</i> ist ebenfalls optional, wird bei 
 				 der Darstellung des Metadatenobjektes über das Portal jedoch nicht angezeigt.</p>
+				 <p>Besitzt das Objekt ein übergeordnetes Objekt, so besteht ebenfalls die Möglichkeit, die Verweise von diesem zu erben. Dazu klickt man auf den Link <i>erben</i> und es werden alle übergeordneten Verweise in das geöffnete Objekt kopiert. Vorhandene Einträge werden dabei nicht überschrieben!</p>
             </content>
         </section>
         <section help-key="maintanance-of-objects-8">
@@ -1027,6 +1031,13 @@
 				 Wollen Sie eine „freie Adresse“, also ein Adresse ohne übergeordnete Institution und 
 				 Einheit anlegen, so wählen sie die Ebene <i>freie Adresse</i> im Strukturbaum aus 
 				 und legen darunter eine neue Adresse an.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-adresses-2a">
+            <header>Angaben aus übergeordneter Adresse übernehmen</header>
+            <content>
+                 <p>Anstatt die Adressinformationen per Hand eingeben zu müssen, ist es möglich, die Informationen aus der übergeordneten Adresse zu erhalten. Dabei werden die Felder <i>Straße/Hausnummer</i>, <i>PLZ</i>, <i>Ort</i>, <i>Postfach</i>, <i>PLZ (Postfach)</i> und <i>Land</i> überschrieben.</p>
+                 <p>Außerdem ist es über den Strukturbaum möglich, ausgehend von einer Adresse, die Adressinformationen auf alle Unteradressen zu verteilen. Dazu ruft man das Kontextmenü einer Adresse im Hierarchiebaum auf und wählt den Eintrag <i>Adressangaben in nachgeordnete Adressen übernehmen</i>. Nach einer Sicherheitsabfrage werden die Änderungen an den Adressen vorgenommen.</p>
             </content>
         </section>
         <section help-key="maintanance-of-adresses-3">
@@ -1703,7 +1714,7 @@
 				 <p><u>Hinweis:</u> Dieses Recht wird nur im Zusammenhang mit der eingeschalteten 
 				 <a href="?hkey=quality-assurance-0">Workflow-Kontrolle</a> in den 
 				 <a href="?hkey=catalog-administration-1">Katalogeinstellungen</a> wirksam.</p>
-                 <p><b>zugeordnete Nutzer</b></p>
+                 <p><b>Zugeordnete Nutzer</b></p>
                  <p>Auf einem extra Reiter ist es möglich, sich die Benutzer auflisten zu lassen, die zur 
                  ausgewählten Gruppe gehören.</p>
 				 <p><b>Die spezielle Gruppe <i>administrators</i> des Katalogadministrators</b></p>
@@ -1785,7 +1796,8 @@
 				 in einer <i>Liste</i> angezeigt. </p>
 				 <p>Klicken Sie mit der rechten Maustaste auf eines der aufgelisteten Objekte und wählen 
 				 <i>Im Hierarchiebaum anzeigen</i>, so wird die Lage des Objekts unter dem Kartenreiter 
-				 <i>Hierarchiebaum</i> angezeigt.</p>
+				 <i>Hierarchiebaum</i> angezeigt. Ein Klick auf <i>Öffne in Erfassung</i> lädt dieses Objekt
+				 in der Erfassung, von wo aus es direkt bearbeitet werden kann.</p>
 				 <p>Klicken Sie mit der linken Maustaste auf eines der aufgelisteten Objekte, werden 
 				 der <i>Objektname</i>, die <i>Klasse</i> und die <i>Beschreibung</i> des Objektes 
 				 angezeigt.</p>

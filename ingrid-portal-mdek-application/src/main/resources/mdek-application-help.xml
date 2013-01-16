@@ -259,7 +259,10 @@
 				 <p><b>New</b></p>
 				 <p>Install a new object or a new address under the current object or the current address.</p>
 				 <p><b>Print Preview</b></p>
-				 <p>In the <i>Print Preview</i> window you can view the arrangement of the object or address information as it looks in the printed version. The arrangement of the information is not alterable. With one click on <i>[Print]</i> you reach the print menu of the operating system. Leave the <i>Print Preview</i> window by clicking on the cross top right in the corner of the window.</p>
+				 <p>In the <i>Print Preview</i> window you can view the arrangement of the object or address information as it looks in the printed version. The arrangement of the information is not alterable. With one click on <i>[Print]</i> you reach the print menu of the operating system.</p>
+                 <p>Besides the detail view of a single object/address, it is also possible to view the detail information of the whole subtree. If the checkboxes <i>detail view</i> and <i>include sub objects</i> are selected, then all objects/addresses of the subtree will be printed. If there are many objects to print this procedure can take a while. It is however possible to cancel the operation at any time.</p>
+                 <p>Is the checkbox <i>Detail view</i> deselected, then instead of a detail view, only a short version is displayed. Only the title is being displayed within a hierachical order.</p>     
+                 <p>Leave the <i>Print Preview</i> window by clicking on the cross top right in the corner of the window.</p>
 				 <p>This function is not available for the <i>Objects</i>, <i>Addresses</i> and <i>Free Addresses</i> levels.</p>
 				 <p><b>Cut Object/Address/Sub tree</b></p>
 				 <p>To assign another position in the hierarchy of the current catalogue to an object, an address or a sub tree first cut these out in order to past them under another object or another address by means of the <i><b>Paste</b></i> function.</p>
@@ -577,6 +580,7 @@
 				 <i>Coordinate system</i> dropdown list.</p>
 				 <p>With one click on the <i>Add</i> button the details are adopted into the 
 				 <i>Costum Location</i> field of the object.</p>
+                 <p>Via the link <i>inherit</i> it is posible to inherit/copy the spatial references of the parent object. Already present spatial references (identified by name) will not be overwritten. This operation is only available for sub-objects!</p>            
             </content>
         </section>
         <section help-key="maintanance-of-objects-5">
@@ -652,6 +656,7 @@
 				 <p>Optionally you can make a <i>Description</i> on the reference.</p>
 				 <p><u>Take care</u>: <i>URL-Type</i> is also optional but will not be displayed in the representation of the metadata object 
 				 via the portal.</p>
+                 <p>If an object has a parent object, so it is possible to inherit/copy the references from it. Click on the link <i>inherit</i> and all references from the parent object are being copied to the current one. Entries already present will not be overwritten!</p>            
             </content>
         </section>
         <section help-key="maintanance-of-objects-8">
@@ -757,6 +762,13 @@
 				 address under which you wish to create the new address. After this the relevant mask opens up with fields to be filled in. 
 				 As standard, the person responsible is adopted from the superordinate addresse as the responsible user together with their 
 				 entry into the <i>Communication</i> field and the <i>Thesaurus Search Terms</i>.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-adresses-2a">
+            <header>Inherit address from parent</header>
+            <content>
+                 <p>Instead entering the address information all by hand, you also can receive the address information from the parent address. The following fields will be overwritten: <i>Street</i>, <i>Post code</i>, <i>City</i>, <i>P.O. Box</i>, <i>Post code (POB)</i> and <i>Country</i></p>
+                 <p>From the hierarchical tree, when calling the context menu, you can also distribute the address information of the clicked address to all its sub-addresses. Click the entry <i>Update address data in children</i> and after a dialog the changes to the sub-addresses will be propagated.</p>
             </content>
         </section>
         <section help-key="maintanance-of-adresses-3">
@@ -1310,7 +1322,7 @@
 				 <p>By the de-centralised maintenance of the objects in different places in the hierarchy tree it is possible that the same object names were given to objects that have different contents. In the standard case of a search being run, the object names in the result list are shown to the user after the search. The information about the position in the hierarchy tree is missing from this display. It is recommended to provide meaningful names for all objects so that users doing research get a clear idea of the found object. </p>
 				 <p>In calling up the submenu item <i>Duplicates</i> a test is run for duplicates (you can repeat this test later by clicking on the <i>Start Duplicates Check</i> button). The <i>Duplicate Check Result</i> is displayed in a <i>List</i>.  </p>
 				 <p>Click on one of the objects listed with the left mouse button and the Object Name, the Type and the Description of the object are displayed.</p>
-				 <p>With the right mouse button click on one of the objects listed and select <i>Display in Hierarchy Tree</i>. The location of the object is then displayed under the Tree tab. </p>
+				 <p>With the right mouse button click on one of the objects listed and select <i>Display in Hierarchy Tree</i>. The location of the object is then displayed under the Tree tab.Clicking on <i>Open in Editor</i> will load this object in the editor where it can be edited.</p>
 				 <p>You can now alter the <i>Object Name</i> and <i>Save Changes</i> via the respective button. </p>
             </content>
 		</section>
@@ -1632,6 +1644,7 @@
 				 <p><u>ArcGIS ISO-Editor:</u> Import of an XML file produced with the help of ArcGIS. The document must have been saved out of ArcGIS in the ISO format</p>
 				 
 				 <p><b>Publish Imported Datasets </b></p>
+                 <p>This option is only available for the import types <i>CSW</i> and <i>ArcGIS</i>!</p>            
 				 <p>As a default, all imported objects and addresses are cached in a working version, that is, they are not yet published. With the <i>Publish Imported Datasets</i> setting you can instigate an immediate publication without the datasets being subject to a further checking and being ’manually’ published. </p>
 				 <p><u>Note:</u>The setting <i>Publish Imported Datasets</i> is overwritten if obligatory details are missing in the objects and addresses. In this case the object or address is imported as a working version only and has to be revisited before publication.</p>
 				 

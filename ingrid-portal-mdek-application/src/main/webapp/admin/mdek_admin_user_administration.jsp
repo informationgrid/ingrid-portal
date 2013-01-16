@@ -1115,12 +1115,12 @@
                             <!-- BEGIN OF TAB 2 -->
                             <div id="responsibleData" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.users.responsible" />" class="tab grey" style="width: 100%; overflow:hidden;">
                                 <div class="inputContainer field grey">
-                                    <span class="label"><label><fmt:message key="dialog.admin.users.inObjects" /></label></span>
+                                    <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8210)"><fmt:message key="dialog.admin.users.inObjects" /></label></span>
                                     <div class="tableContainer spaceBelow">
                                         <div id="responsibleUserInObjects" autoHeight="10" contextMenu="none">
                                         </div>
                                     </div>
-                                    <span class="label"><label><fmt:message key="dialog.admin.users.inAddresses" /></label></span>
+                                    <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 8211)"><fmt:message key="dialog.admin.users.inAddresses" /></label></span>
                                     <div class="tableContainer">
                                         <div id="responsibleUserInAddresses" autoHeight="10" contextMenu="none">
                                         </div>
