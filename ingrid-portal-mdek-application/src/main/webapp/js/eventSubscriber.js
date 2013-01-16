@@ -325,26 +325,32 @@ udkDataProxy.checkForUnsavedChanges = function(nodeId, extraInfo)
 udkDataProxy.handleLoadRequest = function(msg)
 {
 	console.debug("About to be loaded: "+msg.id);
-
-	// Don't process newNode and objectRoot load requests.
-	if (msg.id == "newNode" || msg.id == "objectRoot" || msg.id == "addressRoot" || msg.id == "addressFreeRoot") {
-		//dojo.publish("/selectNode", [{node: dijit.byId(msg.id).item}]);
-	    currentUdk = {};
-		msg.resultHandler.callback();
-		return;
-	}
-    
-	var nodeId = msg.id;
-	var nodeAppType = msg.appType+"";
-	var resultHandler = msg.resultHandler;
+	var nodeId        = msg.id;
+    var nodeAppType   = msg.appType+"";
+    var resultHandler = msg.resultHandler;
+	var deferred      = udkDataProxy.checkForUnsavedChanges();
+	var deferred2     = new dojo.Deferred();
+	
 	// TODO Check if we are in a state where it's safe to load data.
-	//      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
-	var deferred = udkDataProxy.checkForUnsavedChanges();
-	var loadErrback = function(err) {
-		if (typeof(resultHandler) != "undefined") {
-			resultHandler.errback(err);
-		}
-	}
+    //      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
+    var loadErrback = function(err) {
+        if (typeof(resultHandler) != "undefined") {
+            resultHandler.errback(err);
+        }
+    }
+	
+	deferred.addCallbacks(function() {
+    	// Don't process newNode and objectRoot load requests.
+    	if (msg.id == "newNode" || msg.id == "objectRoot" || msg.id == "addressRoot" || msg.id == "addressFreeRoot") {
+    		//dojo.publish("/selectNode", [{node: dijit.byId(msg.id).item}]);
+    	    currentUdk = {};
+    		msg.resultHandler.callback();
+    	} else {
+    	    deferred2.callback();
+    	}
+	}, loadErrback);
+
+	
 	var loadCallback = function() {
 		console.debug("udkDataProxy calling ObjectService.getNodeData("+nodeId+", "+nodeAppType+")");
 		// ---- DWR call to load the data ----
@@ -426,7 +432,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 		}
 	};
 
-	deferred.addCallbacks(loadCallback, loadErrback);
+	deferred2.addCallback(loadCallback);
 }
 
 udkDataProxy.handleCreateObjectRequest = function(msg)

@@ -74,7 +74,7 @@ function initPrintFrame() {
     cssLink1.rel = "stylesheet"; 
     cssLink1.type = "text/css";
     var cssLink2 = document.createElement("link") 
-    cssLink2.href = "/ingrid-portal-mdek-application/css/styles.css"; 
+    cssLink2.href = "/ingrid-portal-mdek-application/dojo-src/release/dojo/css/styles.css"; 
     cssLink2.rel = "stylesheet"; 
     cssLink2.type = "text/css";
     parent.printFrame.document.head.appendChild(cssLink1);
