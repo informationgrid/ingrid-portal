@@ -3,6 +3,8 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
+import java.net.HttpURLConnection;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -12,14 +14,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.syndication.feed.synd.SyndCategoryImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -52,27 +54,27 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
      */
     public void execute(JobExecutionContext context) throws JobExecutionException {
-    	
-    	if (log.isDebugEnabled()) {
-    		log.debug("RSSFetcherJob is started ...");
-    	}
 
-        Session session 	= HibernateUtil.currentSession();
-        Transaction tx 		= null;
-        JobDataMap dataMap 	= context.getJobDetail().getJobDataMap();
+        if (log.isDebugEnabled()) {
+            log.debug("RSSFetcherJob is started ...");
+        }
 
-        int status 			= STATUS_OK;
-		String statusCode 	= STATUS_CODE_NO_ERROR;
+        Session session = HibernateUtil.currentSession();
+        Transaction tx = null;
+        JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+
+        int status = STATUS_OK;
+        String statusCode = STATUS_CODE_NO_ERROR;
         try {
 
-            SyndFeed feed 			= null;
-            URL feedUrl 			= null;
-            SyndFeedInput input 	= null;
-            Date publishedDate 		= null;
-            SyndEntry entry 		= null;
-            int cnt 				= 0;
-            int feedEntriesCount 	= 0;
-            //String errorMsg = "";
+            SyndFeed feed = null;
+            URL feedUrl = null;
+            SyndFeedInput input = null;
+            Date publishedDate = null;
+            SyndEntry entry = null;
+            int cnt = 0;
+            int feedEntriesCount = 0;
+            // String errorMsg = "";
 
             Calendar cal;
 
@@ -81,9 +83,10 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
             List rssSources = session.createCriteria(IngridRSSSource.class).list();
             tx.commit();
             Iterator it = rssSources.iterator();
-            
+
             // start timer
-        	startTimer();
+            startTimer();
+            URLConnection urlCon = null;
             while (it.hasNext()) {
                 IngridRSSSource rssSource = (IngridRSSSource) it.next();
                 if (log.isDebugEnabled()) {
@@ -91,16 +94,17 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                 }
                 try {
                     feedUrl = new URL(rssSource.getUrl());
-                    URLConnection urlCon = feedUrl.openConnection();
-                    urlCon.setConnectTimeout(10000);
-                    urlCon.setReadTimeout(10000);
-                    input 	= new SyndFeedInput();
-                    feed 	= input.build(new XmlReader(urlCon));
-                    
+                    urlCon = feedUrl.openConnection();
+                    urlCon.setConnectTimeout(15000);
+                    urlCon.setReadTimeout(15000);
+                    new Thread(new InterruptThread(urlCon, 30000)).start();
+                    input = new SyndFeedInput();
+                    feed = input.build(new XmlReader(urlCon));
+
                     if (log.isDebugEnabled()) {
                         log.debug("Resource fetched.");
                     }
-                    
+
                     if (feed.getLanguage() == null) {
                         feed.setLanguage(rssSource.getLanguage());
                     }
@@ -126,8 +130,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                                     String categoryStr = category.getName().toLowerCase();
                                     if (categoryStr != null && categoryStr.length() > 0) {
                                         categoryStr = UtilsString.regExEscape(category.getName().toLowerCase());
-                                        if (categoryFilter.toLowerCase().matches("^" + categoryStr + ".*|.*," + categoryStr
-                                                + ",.*|.*," + categoryStr + "$")) {
+                                        if (categoryFilter.toLowerCase().matches(
+                                                "^" + categoryStr + ".*|.*," + categoryStr + ",.*|.*," + categoryStr
+                                                        + "$")) {
                                             includeEntry = true;
                                             break;
                                         }
@@ -159,7 +164,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                         if (includeEntry && publishedDate != null && publishedDate.after(cal.getTime())) {
                             includeEntry = false;
                             if (log.isDebugEnabled()) {
-                                log.debug("Ignore item, because the publishing date is in the future: " + publishedDate);
+                                log
+                                        .debug("Ignore item, because the publishing date is in the future: "
+                                                + publishedDate);
                             }
                         }
                         // filter dates before RSS entry window
@@ -167,7 +174,8 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                         if (includeEntry && publishedDate != null && publishedDate.before(cal.getTime())) {
                             includeEntry = false;
                             if (log.isDebugEnabled()) {
-                                log.debug("Ignore item, because the publishing date is too far in the past: " + publishedDate);
+                                log.debug("Ignore item, because the publishing date is too far in the past: "
+                                        + publishedDate);
                             }
                         }
 
@@ -234,43 +242,49 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
 
                     feed = null;
                 } catch (SocketTimeoutException e) {
-                    if (log.isInfoEnabled()) {                    	
-                        log.info("Error building RSS feed (" + rssSource.getUrl() + "). [" + e.getMessage() + "]");
-                    }
-                    if (log.isDebugEnabled()) {
-                        log.debug("Error building RSS feed (" + rssSource.getUrl() + ").", e);
-                    }
-                    status 		= STATUS_ERROR;
-        			statusCode 	= STATUS_CODE_ERROR_TIMEOUT;
+                    log.error("Error building RSS feed (" + rssSource.getUrl() + ").", e);
+                    status = STATUS_ERROR;
+                    statusCode = STATUS_CODE_ERROR_TIMEOUT;
+                } catch (SocketException e) {
+                    log.error("Error building RSS feed (" + rssSource.getUrl()
+                            + "). Probable timeouted by watch dog thread.", e);
+                    status = STATUS_ERROR;
+                    statusCode = STATUS_CODE_ERROR_TIMEOUT;
                 } catch (Throwable t) {
-                	//errorMsg = e.getMessage();
-                    if (log.isInfoEnabled()) {                    	
-                        log.info("Error building RSS feed (" + rssSource.getUrl() + "). [" + t.getMessage() + "]");
-                    }
-                    if (log.isDebugEnabled()) {
-                        log.debug("Error building RSS feed (" + rssSource.getUrl() + ").", t);
-                    }
-                    status 		= STATUS_ERROR;
-        			statusCode 	= STATUS_CODE_ERROR_UNSPECIFIC;
+                    log.error("Error building RSS feed (" + rssSource.getUrl() + ").", t);
+                    status = STATUS_ERROR;
+                    statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
                 } finally {
-                	// add information about the fetching of this feed into the RSSSource database
-                    tx = session.beginTransaction();
-                    
-                    if (feedEntriesCount > 0) {
-                    	rssSource.setLastUpdate(new Date());
-                    	rssSource.setNumLastCount(feedEntriesCount);
+                    try {
+                        if (urlCon != null && urlCon instanceof HttpURLConnection) {
+                            if (log.isDebugEnabled()) {
+                                log.debug("Close '" + urlCon.getURL() + "' regulary.");
+                            }
+                            ((HttpURLConnection) urlCon).disconnect();
+                        }
+                    } catch (Exception e) {
+                        // ignore exception
                     }
-                    
-                    //rssSource.setLastMessageUpdate(new Date());
-                    
-                    //rssSource.setError(errorMsg);
-                    
+
+                    // add information about the fetching of this feed into the
+                    // RSSSource database
+                    tx = session.beginTransaction();
+
+                    if (feedEntriesCount > 0) {
+                        rssSource.setLastUpdate(new Date());
+                        rssSource.setNumLastCount(feedEntriesCount);
+                    }
+
+                    // rssSource.setLastMessageUpdate(new Date());
+
+                    // rssSource.setError(errorMsg);
+
                     session.save(rssSource);
                     tx.commit();
-                    
+
                     session.evict(rssSource);
                     feedEntriesCount = 0;
-                    //errorMsg = "";
+                    // errorMsg = "";
                 }
             }
 
@@ -302,16 +316,16 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
             if (log.isErrorEnabled()) {
                 log.error("Error executing quartz job RSSFetcherJob.", t);
             }
-            status 		= STATUS_ERROR;
-			statusCode 	= STATUS_CODE_ERROR_UNSPECIFIC;
+            status = STATUS_ERROR;
+            statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
             throw new JobExecutionException("Error executing quartz job RSSFetcherJob.", t, false);
         } finally {
-        	computeTime(dataMap, stopTimer());
+            computeTime(dataMap, stopTimer());
             if (log.isDebugEnabled()) {
                 log.debug("Update quartz job data.");
             }
-        	updateJobData(context, status, statusCode);
-        	updateJob(context);
+            updateJobData(context, status, statusCode);
+            updateJob(context);
             HibernateUtil.closeSession();
             if (log.isDebugEnabled()) {
                 log.debug("Hibernate session is closed.");
@@ -319,6 +333,40 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
         }
         if (log.isDebugEnabled()) {
             log.debug("RSSFetcherJob finished.");
+        }
+    }
+
+    /**
+     * Watch dog thread to force timeout of an HttpUrlConnection. The timeout
+     * defaults to 8 sec or the read timeout of the UrlConnection being watched.
+     * 
+     * @author joachim
+     * 
+     */
+    private class InterruptThread implements Runnable {
+        private URLConnection con;
+        private int timeout = 20000;
+
+        public InterruptThread(URLConnection con, int timeout) {
+            this.con = con;
+            this.timeout = timeout;
+        }
+
+        public void run() {
+            try {
+                Thread.sleep(timeout);
+            } catch (InterruptedException e) {
+
+            }
+            try {
+                if (log.isDebugEnabled()) {
+                    log.debug("Close '" + con.getURL() + "' by watch thread after " + timeout + " ms.");
+                }
+                if (con != null && con instanceof HttpURLConnection) {
+                    ((HttpURLConnection) con).disconnect();
+                }
+            } catch (Exception e) {
+            }
         }
     }
 

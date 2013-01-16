@@ -10,6 +10,9 @@
       <action type="update" dev="wemove" issue="INGRID-2154, INGRID-2158">
         Update BAW-WSV Profile.
       </action>
+      <action type="fix" dev="wemove">
+        Further improve robustness of RSS fetcher using special timeout thread for RSS connections.
+      </action>
       <action type="fix" dev="wemove" issue="INGRID-2192">
         Do NOT render institution field in title of address search results for persons. Change order to firstname lastname.
       </action>
