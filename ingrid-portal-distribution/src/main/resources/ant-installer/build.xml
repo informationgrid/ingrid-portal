@@ -331,10 +331,11 @@
         <replace      file="${xml-communication-apps}" token="${ipaXML.communication.client.connections.server.socket(ip)}"   value="${serverIp}"/>
         <replace      file="${xml-communication-apps}" token="${ipaXML.communication.client.connections.server.socket(port)}" value="${serverPort}"/>
 
-        <echo>Schreibe iBus Admin-URL in ingrid-portal-apps.xml (Ingrid-Portal-Apps)
+        <echo>Schreibe iBus Admin-URL and CSW-Schnittstelle-URL in ingrid-portal-apps.xml (Ingrid-Portal-Apps)
         </echo>
         <property file="${prop-ingrid-portal-apps}" prefix="appPROP"/>
         <replace  file="${prop-ingrid-portal-apps}" token="${appPROP.ibus.admin.url}"     value="http://${serverIp}/ibus-gui/"/>
+        <replace  file="${prop-ingrid-portal-apps}" token="${appPROP.csw.interface.url}"  value="${cswUrl}"/>
         
         <!-- Writing username and password into xml files -->
         <xmlproperty  file="${installedTomcatContextDir}/ROOT.xml" prefix="cipXML"/>
