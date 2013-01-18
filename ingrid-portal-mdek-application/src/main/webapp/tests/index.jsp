@@ -13,9 +13,8 @@
             var userLocale = 'de';
 </script>
 
-<link rel="stylesheet" href="../css/imageReferences.css" />
-
 <link rel="stylesheet" href="../css/styles.css" />
+<link rel="stylesheet" href="../css/imageReferences.css" />
 <script type="text/javascript" src="../dojo-src/dojo/dojo.js" djConfig="parseOnLoad:false, locale:userLocale"></script>
 <script type="text/javascript" src="../dojo-src/custom/layer.js"></script>
 <script type="text/javascript">
@@ -72,6 +71,11 @@
 
 
 <script type="text/javascript">
+dojo.require("ingrid.dijit.tree.LazyTreeStoreModel");
+dojo.require("dijit.layout.TabContainer");
+
+scrollBarWidth = 17;
+
 dojo.addOnLoad(function() {
     // create BorderContainer (Splitpane)
     var main = new dijit.layout.BorderContainer({ 
@@ -108,7 +112,7 @@ dojo.addOnLoad(function() {
     menu.addChild(new dijit.MenuBarItem({
         label: "Dialogs",
         onClick: function(){
-            dijit.byId("stackContainer").selectChild(dijit.byId("pageDialog"));
+            dijit.byId("stackContainer").selectChild(dijit.byId("pageDialogTest"));
         }
     }));
 
@@ -127,7 +131,7 @@ dojo.addOnLoad(function() {
     });
 
     var dialogTests = new dojox.layout.ContentPane({
-        id: "pageDialog",
+        id: "pageDialogTest",
         layoutAlign: "client",
         href: "DialogTest.jsp?c="+userLocale,
         scriptHasHooks: true,
@@ -140,7 +144,7 @@ dojo.addOnLoad(function() {
 
     main.startup();
     
-    sc.selectChild(dijit.byId("pageTable"));
+    sc.selectChild(dijit.byId("pageDialogTest"));
 });
 </script>
 </head>
