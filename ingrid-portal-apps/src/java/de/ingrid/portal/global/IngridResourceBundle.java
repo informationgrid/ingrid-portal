@@ -7,12 +7,17 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * TODO Describe your created type (class, etc.) here.
- *
+ * 
  * @author joachim@wemove.com
  */
 public class IngridResourceBundle {
+
+    private static final Log log = LogFactory.getLog(IngridResourceBundle.class);
 
     ResourceBundle r = null;
 
@@ -38,6 +43,7 @@ public class IngridResourceBundle {
 
     /**
      * Set a parameter which will be formatted into a message
+     * 
      * @param param
      */
     public void setMsgParam(String param) {
@@ -48,18 +54,29 @@ public class IngridResourceBundle {
     }
 
     /**
-     * Try to get a message first from a special profile resource bundle and if it 
-     * couldn't be found then try the encapsulated resource. Also takes CommonResources into account.
+     * Try to get a message first from a special profile resource bundle and if
+     * it couldn't be found then try the encapsulated resource. Also takes
+     * CommonResources into account.
+     * 
      * @param key
      * @return
      */
     public String getString(String key) {
         try {
+            if (log.isDebugEnabled()) {
+                log.debug("Get localization for key '" + key + "' and locale '" + r.getLocale().toString() + "'.");
+            }
             return getProfileString(key);
         } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug("Problem accessing the profile resource! Fall back to portlet specific resource file.", e);
+            }
             try {
                 return r.getString(key);
             } catch (Exception ex) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Problem accessing the portlet specific resource! Fall back to common resource file.", e);
+                }
                 return getCommonString(key);
             }
         }
@@ -68,14 +85,17 @@ public class IngridResourceBundle {
     public String getProfileString(String key) throws Exception {
         ResourceBundle profileRes = ResourceBundle.getBundle("de.ingrid.portal.resources.ProfileResources", r
                 .getLocale());
-        if(profileRes.getLocale() != r.getLocale()){
-        	throw new Exception("Profile resource file not exist!");
+        if (!profileRes.getLocale().getLanguage().equals(r.getLocale().getLanguage())) {
+            throw new Exception("Profile resource language '" + profileRes.getLocale()
+                    + "' does not match portlet resource '" + r.getLocale().getLanguage()
+                    + "', fall back to portlet resource!");
         }
         return profileRes.getString(key);
     }
 
     /**
      * Get a message only from CommonResources
+     * 
      * @param key
      * @return
      */
@@ -90,7 +110,9 @@ public class IngridResourceBundle {
     }
 
     /**
-     * Get a message from encapsulated resource with encapsulated parameters formatted into message !
+     * Get a message from encapsulated resource with encapsulated parameters
+     * formatted into message !
+     * 
      * @param key
      * @return
      */
@@ -105,8 +127,9 @@ public class IngridResourceBundle {
     }
 
     /**
-     * Get a message from encapsulated resource, also takes CommonResources into account.
-     * Message key is "generalKey" + "keyPostfix"
+     * Get a message from encapsulated resource, also takes CommonResources into
+     * account. Message key is "generalKey" + "keyPostfix"
+     * 
      * @param generalKey
      * @param keyPostfix
      * @return "" if message not found !

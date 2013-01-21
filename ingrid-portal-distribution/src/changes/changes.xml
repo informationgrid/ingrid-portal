@@ -11,6 +11,9 @@
         Update BAW-WSV Profile.
       </action>
       <action type="fix" dev="wemove">
+        Fix problem with finding localization from profile resources introduced with GSSOIL code. 
+      </action>
+      <action type="fix" dev="wemove">
         Further improve robustness of RSS fetcher using special timeout thread for RSS connections.
       </action>
       <action type="fix" dev="wemove" issue="INGRID-2192">
