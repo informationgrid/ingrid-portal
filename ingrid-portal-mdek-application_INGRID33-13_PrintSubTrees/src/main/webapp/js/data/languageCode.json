@@ -1,8 +1,0 @@
-{
-    label: "label",
-    identifier: "id",
-    items: [
-    	{label: "Deutsch", id: "de"},
-    	{label: "Englisch", id: "en"}
-    ]
-}
