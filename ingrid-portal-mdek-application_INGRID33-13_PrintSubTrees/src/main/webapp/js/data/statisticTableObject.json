@@ -1,0 +1,13 @@
+{
+    identifier: "type",
+    items: [
+        { type: "", objectClass: "dialog.statistics.numTotal", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<div class='TreeIcon TreeIconClass0' title='Organisationseinheit / Fachaufgabe' ></div>", objectClass: "dialog.statistics.objClass0", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<div class='TreeIcon TreeIconClass1' title='Geo-Information / Karte' ></div>", objectClass: "dialog.statistics.objClass1", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<div class='TreeIcon TreeIconClass2' title='Dokument / Bericht / Literatur' ></div>", objectClass: "dialog.statistics.objClass2", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<div class='TreeIcon TreeIconClass3' title='Geodatendienst' ></div>", objectClass: "dialog.statistics.objClass3", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<div class='TreeIcon TreeIconClass4' title='Vorhaben / Projekt / Programm' ></div>", objectClass: "dialog.statistics.objClass4", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<div class='TreeIcon TreeIconClass5' title='Datensammlung / Datenbank' ></div>", objectClass: "dialog.statistics.objClass5", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"},
+        { type: "<div class='TreeIcon TreeIconClass6' title='Dienst / Anwendung / Informationssystem' ></div>", objectClass: "dialog.statistics.objClass6", amount: "0", percentage: "0", published: "0", modified: "0", qa: "0", returned: "0"}
+    ]
+}

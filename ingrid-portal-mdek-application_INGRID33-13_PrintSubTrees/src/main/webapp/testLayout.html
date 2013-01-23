@@ -1,0 +1,380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="ltr">
+    <head>
+        <link rel="stylesheet" type="text/css" href="dojo-src/dijit/themes/claro/claro.css"/>
+        <link rel="stylesheet" type="text/css" href="css/testLayout.css"/>
+        <style type="text/css">
+            @import "dojo-src/dojox/grid/resources/Grid.css";
+            @import "dojo-src/dojox/grid/resources/claroGrid.css";
+            @import "dojo-src/dojo/resources/dojo.css";
+            html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                overflow: hidden;
+            }
+            
+            .rows4 {
+                height: 129px !important;
+            }
+        </style>
+        <!--<script type='text/javascript' src='../dwr/engine.js'></script>-->
+        <script type="text/javascript" src="dojo-src/dojo/dojo.js" djConfig="parseOnLoad: true">
+        </script>
+        <script type="text/javascript" src="js/config.js">
+        </script>
+        <script type="text/javascript" src="js/utilities.js">
+        </script>
+        <script type="text/javascript" src="js/layoutCreator.js">
+        </script>
+        <!--<script type="text/javascript" src="generated/dynamicJS.js">
+        </script>-->
+        <script type="text/javascript">
+            
+            dojo.require("dojox.grid.cells.dijit");
+            dojo.require("dijit.layout.ContentPane");
+            dojo.require("dijit.layout.BorderContainer");
+            dojo.require("dojox.grid.DataGrid");
+            dojo.require("dojox.data.CsvStore");
+            dojo.require("dojo.data.ItemFileWriteStore");
+            dojo.require("dijit.form.NumberTextBox");
+            dojo.require("dijit.form.ValidationTextBox");
+            dojo.require("dijit.form.Select");
+            dojo.require("dijit.form.SimpleTextarea");
+            dojo.require("ingrid.dijit.CustomDataGrid");
+            /* dojo.require("dijit.form.Select");
+             dojo.require("dijit.layout.TabContainer");
+             dojo.require("dijit.form.ValidationTextBox");
+             dojo.require("dijit.Toolbar");
+             dojo.require("ingrid.dijit.tree.LazyTreeStoreModel");
+             dojo.require("ingrid.dijit.LazyTree");*/
+            dojo.addOnLoad(function(){
+            
+                //dojox.grid.cells._Base.prototype.defaultValue = "xxx";
+                //dojo.extend(dojox.grid.cells._Base, {defaultValue: "xxx"});
+                
+                var element1 = {
+                    id: "textbox1",
+                    name: "label 1",
+                    type: "TEXT",
+                    style: "width:100%;"
+                };
+                var element2 = {
+                    id: "textbox2",
+                    name: "label 2",
+                    type: "TEXT",
+                    style: "width:100%;"
+                };
+                var element3 = {
+                    id: "textbox3",
+                    name: "label 3",
+                    type: "TEXT",
+                    style: "width:100%;"
+                };
+                var element4 = {
+                    id: "textbox4",
+                    name: "label 4",
+                    type: "TEXT",
+                    style: "width:100%;"
+                };
+                var element4b = {
+                    id: "textbox4b",
+                    name: "label 4b",
+                    type: "TEXT",
+                    style: "width:100%;"
+                };
+                var element5 = {
+                    id: "textbox5",
+                    name: "label 5",
+                    type: "TEXT",
+                    style: "width:100%;"
+                };
+                var element6 = {
+                    id: "textbox6",
+                    name: "label 6",
+                    type: "TEXT",
+                    style: "width:100%;"
+                };
+                var element7 = {
+                    id: "textbox7",
+                    name: "label 7",
+                    type: "TEXT",
+                    style: "width:100%;"
+                };
+                /*
+                 addElement(element1);
+                 //dojo.byId("c1").appendChild(createAdditionalFieldDomNode(element2));
+                 //dojo.byId("c2").appendChild(createAdditionalFieldDomNode(element3));
+                 var left = [];
+                 left.push(createAdditionalFieldDomNode(element4));
+                 left.push(createAdditionalFieldDomNode(element4b));
+                 
+                 var right = [];
+                 right.push(createAdditionalFieldDomNode(element5));
+                 right.push(createTwoColumnLayout([createAdditionalFieldDomNode(element6)], [createAdditionalFieldDomNode(element7)]));
+                 
+                 addToSection("contentDiv",
+                 createTwoColumnLayout(
+                 left,
+                 right
+                 ));
+                 
+                 addToSection("contentDiv",
+                 createAdditionalFieldDomNode(element2)
+                 );*/
+            });
+            
+            function addElement(e){
+                dojo.byId("contentDiv").appendChild(createAdditionalFieldDomNode(e));
+            }
+            
+            function addToSection(section, domElement){
+                dojo.byId(section).appendChild(domElement);
+            }
+            
+            function createDivElement(clazz, style){
+                var div = document.createElement("div");
+                dojo.addClass(div, clazz);
+                return div;
+            }
+            
+            function createTwoColumnLayout(/*Array*/leftContent, /*Array*/ rightContent){
+                //<table class="twoColumn" border="0" cellpadding="0" cellspacing="0">
+                //    <tr>
+                //        <td>
+                //            createAdditionalFieldDomNode(leftContent);
+                //        </td>
+                //        <td>
+                //            createAdditionalFieldDomNode(rightContent);
+                //        </td>
+                //    </tr>
+                //</table>
+                var uiElementTable = document.createElement("table");
+                dojo.addClass(uiElementTable, "twoColumn");
+                uiElementTable.setAttribute("border", "0");
+                uiElementTable.setAttribute("cellpadding", "0");
+                uiElementTable.setAttribute("cellspacing", "0");
+                
+                var uiElementTableRow = document.createElement("tr");
+                
+                var uiElementTableColumnLeft = document.createElement("td");
+                dojo.forEach(leftContent, function(content){
+                    uiElementTableColumnLeft.appendChild(content);//createAdditionalFieldDomNode(content));
+                });
+                if (leftContent.length == 0) 
+                    uiElementTableColumnLeft.innerHTML = "&nbsp;";
+                
+                var uiElementTableColumnRight = document.createElement("td");
+                dojo.forEach(rightContent, function(content){
+                    uiElementTableColumnRight.appendChild(content);//createAdditionalFieldDomNode(content));
+                });
+                if (rightContent.length == 0) 
+                    uiElementTableColumnRight.innerHTML = "&nbsp;";
+                
+                uiElementTableRow.appendChild(uiElementTableColumnLeft);
+                uiElementTableRow.appendChild(uiElementTableColumnRight);
+                uiElementTable.appendChild(uiElementTableRow);
+                return uiElementTable;
+            }
+            
+            // Create a dom node for an additional field definition (AdditionalFieldBean)
+            function createAdditionalFieldDomNode(additionalField){
+                // Create the following dom structure:
+                // <span id="uiElementAdd${additionalField.id}" type="optional">
+                //   <span class="label">
+                //     <label class="inActive">
+                //       ${additionalField.name}
+                //     </label>
+                //   </span>
+                //   <span class="input">
+                //      < ingrid:ValidationTextbox or ingrid:Select depending on ${additionalField.type} /> 
+                //   </span>
+                // </span>
+                
+                // Create dom nodes
+                var uiElementSpan = document.createElement("span");
+                uiElementSpan.id = "uiElementAdd" + additionalField.id;
+                uiElementSpan.setAttribute("type", "optional");
+                var labelSpanElement = document.createElement("span");
+                dojo.addClass(labelSpanElement, "label");
+                var labelElement = document.createElement("label");
+                dojo.addClass(labelElement, "inActive");
+                labelElement.innerHTML = additionalField.name;
+                var inputSpanElement = document.createElement("span");
+                dojo.addClass(inputSpanElement, "input");
+                
+                // Create the dojo widget depending on the type
+                var inputWidget;
+                if ("TEXT" == additionalField.type) {
+                    inputWidget = new dijit.form.ValidationTextBox({
+                        id: "additionalField" + additionalField.id,
+                        //type: "text",
+                        maxLength: additionalField.size,
+                        name: additionalField.name,
+                        style: additionalField.style
+                    });
+                    //dojo.addClass(inputWidget.textbox, "w668");
+                
+                }
+                else 
+                    if ("TEXTAREA" == additionalField.type) {
+                        inputWidget = new dijit.form.SimpleTextarea({
+                            id: "additionalField" + additionalField.id,
+                            //type: "text",
+                            //maxLength: additionalField.size,
+                            name: additionalField.name,
+                            style: additionalField.style
+                        });
+                    }
+                    else 
+                        if ("LIST" == additionalField.type) {
+                            // Set the correct select values via the contained data provider
+                            var data = [];
+                            if (additionalField.listEntries) {
+                                for (var entryIndex = 0; entryIndex < additionalField.listEntries.length; ++entryIndex) {
+                                    var currentEntry = additionalField.listEntries[entryIndex];
+                                    data.push([currentEntry, currentEntry]);
+                                }
+                            //inputWidget.dataProvider.setData(data);
+                            //UtilStore.updateWriteStore(inputWidget, res);
+                            }
+                            
+                            var storeProps = {
+                                data: {
+                                    identifier: '1',
+                                    label: '0'
+                                }
+                            };
+                            storeProps.data.items = data;
+                            var store = new dojo.data.ItemFileWriteStore(storeProps);
+                            
+                            inputWidget = new dijit.form.ComboBox({
+                                id: "additionalField" + additionalField.id,
+                                name: additionalField.name,
+                                searchAttr: '0',
+                                store: store,
+                                style: additionalField.style,
+                                autoComplete: "false"
+                            });
+                        //createComboBox(id, node, storeProps, initDataCallback, url) {
+                        //dojo.addClass(inputWidget.textInputNode, "w648");
+                        
+                        }
+                
+                // Add the widget to the global 'additionalFieldWidgets' list (from udkDataProxy.js)
+                //if (additionalFieldWidgets) {
+                //    additionalFieldWidgets.push(inputWidget);
+                //}
+                
+                // Build the complete structure
+                labelSpanElement.appendChild(labelElement);
+                uiElementSpan.appendChild(labelSpanElement);
+                inputSpanElement.appendChild(inputWidget.domNode);
+                uiElementSpan.appendChild(inputSpanElement);
+                return uiElementSpan;
+            }
+        </script>
+    </head>
+    <body class="claro">
+        <div dojoType="dijit.layout.ContentPane" doLayout="true" id="mainDiv" style="height:100%;width:733px;  margin:0; padding:0;background-color:white;">
+            <div id="contentDiv" style="width:703px;background-color:lightGrey;padding:6px 15px;">
+            </div>
+            <div id="contentDiv2" style="width:703px;background-color:lightGreen;padding:6px 15px;">
+                <span class="outer">
+                    <div>
+                        <span class="label">
+                            <label class="inActive">
+                                floatLabel1
+                            </label>
+                        </span>
+                        <span class="input">
+                            <div dojoType="dijit.form.ValidationTextBox" style="width:100%">
+                            </div>
+                        </span>
+                    </div>
+                </span>
+                <span class="outer" style="width:50%;">
+                    <div>
+                        <span class="label">
+                            <label class="inActive">
+                                floatLabel2
+                            </label>
+                        </span>
+                        <span class="input">
+                            <div dojoType="dijit.form.ValidationTextBox" style="width:100%;">
+                            </div>
+                        </span>
+                    </div>
+                </span>
+                <span class="outer" style="width:50%;">
+                    <div>
+                        <span class="label">
+                            <label class="inActive">
+                                floatLabel3
+                            </label>
+                        </span>
+                        <span class="input">
+                            <div dojoType="dijit.form.ValidationTextBox" style="width:100%">
+                            </div>
+                        </span>
+                    </div>
+                </span>
+                <span class="outer">
+                    <div>
+                        <span class="label">
+                            <label class="inActive">
+                                floatLabel4
+                            </label>
+                        </span>
+                        <span class="input">
+                            <div dojoType="dijit.form.ValidationTextBox" style="width:100%">
+                            </div>
+                        </span>
+                    </div>
+                </span>
+                <span class="outer" style="width:33%;">
+                    <div>
+                        <span class="label">
+                            <label class="inActive">
+                                floatLabel2
+                            </label>
+                        </span>
+                        <span class="input">
+                            <div dojoType="dijit.form.ValidationTextBox" style="width:100%;">
+                            </div>
+                        </span>
+                    </div>
+                </span>
+                <span class="outer" style="width:33%;">
+                    <div>
+                        <span class="label">
+                            <label class="inActive">
+                                floatLabel3
+                            </label>
+                        </span>
+                        <span class="input">
+                            <div dojoType="dijit.form.ValidationTextBox" style="width:100%">
+                            </div>
+                        </span>
+                    </div>
+                </span>
+                <span class="outer" style="width:34%;">
+                    <div>
+                        <span class="label">
+                            <label class="inActive">
+                                floatLabel4
+                            </label>
+                        </span>
+                        <span class="input">
+                            <div dojoType="dijit.form.ValidationTextBox" style="width:100%">
+                            </div>
+                        </span>
+                    </div>
+                </span>
+                <span>
+                    &nbsp;
+                </span>
+            </div>
+        </div>
+    </body>
+</html>

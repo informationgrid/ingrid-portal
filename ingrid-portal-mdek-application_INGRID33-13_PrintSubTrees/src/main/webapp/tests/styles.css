@@ -1,0 +1,10 @@
+@import "../dojo-src/dijit/themes/claro/claro.css";
+@import "../dojo-src/dojo/resources/dojo.css";
+@import "../dojo-src/dijit/themes/claro/Common.css";
+@import "../dojo-src/dijit/themes/claro/form/Common.css";
+@import "../dojo-src/dojox/layout/resources/FloatingPane.css";
+@import "../dojo-src/dojox/layout/resources/ResizeHandle.css";
+@import "../dojo-src/dojox/highlight/resources/highlight.css";
+
+@import "../css/main.css";
+@import "../css/tree.css";

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<communication xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="communication.xsd">
+        <server name="/ingrid-group:ige-ibus">
+                <socket port="11000" timeout="10" />
+                <messages maximumSize="3145728" threadCount="100" />
+        </server>
+        <messages handleTimeout="30" queueSize="2000" />
+</communication>

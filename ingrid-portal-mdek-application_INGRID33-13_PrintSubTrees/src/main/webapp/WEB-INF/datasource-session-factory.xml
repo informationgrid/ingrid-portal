@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+<!-- Session Factory -->
+   <bean id="sessionFactory"
+         class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+      <property name="dataSource">
+         <ref bean="dataSource"/>
+      </property>
+      <property name="hibernateProperties">
+         <ref bean="hibernateProperties"/>
+      </property>
+      <property name="exposeTransactionAwareSessionFactory" value="false"/>
+      <property name="mappingResources">
+         <list>
+            <value>de/ingrid/mdek/persistence/db/model/HelpMessage.hbm.xml</value>
+            <value>de/ingrid/mdek/persistence/db/model/UserData.hbm.xml</value>
+            <value>de/ingrid/mdek/persistence/db/model/RepoUser.hbm.xml</value>
+         </list>
+      </property>
+      <property name="entityCacheStrategies">
+         <props/>
+      </property>
+      <property name="collectionCacheStrategies">
+         <props/>
+      </property>
+   </bean>
+
+</beans>

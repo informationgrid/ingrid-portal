@@ -1,0 +1,137 @@
+/* indent for all tree children excepts root */
+.TreeNode {
+    background-image : url('../templates/images/Tree/i.gif');
+    background-position : top left;
+    background-repeat : repeat-y;
+    margin-left: 12px;
+    zoom: 1;
+}
+.TreeIsRoot {
+    margin-left: 0;
+}
+ 
+/* left vertical line (grid) for all nodes */
+.TreeIsLast {
+    background-image: url('../templates/images/Tree/i_half.gif');
+    background-repeat : no-repeat;
+}
+ 
+.TreeExpandOpen .TreeExpand {
+    background-image: url('../templates/images/Tree/expand_minus.gif');
+}
+ 
+/* closed is higher priority than open */
+.TreeExpandClosed .TreeExpand {
+    background-image: url('../templates/images/Tree/expand_plus.gif');
+}
+ 
+/* highest priority */
+.TreeExpandLeaf .TreeExpand {
+    background-image: url('../templates/images/Tree/expand_leaf.gif');
+}
+
+/* 
+should always override any expand setting, but do not touch children.
+if I add .TreeExpand .TreeExpandLoading same time and put it to top/bottom, then it will take precedence over +- for all descendants or always fail
+so I have to remove TreeExpand and process this one specifically
+*/
+
+.TreeExpandLoading   {
+    width: 16px;
+    height: 16px;
+    float: left;
+    display: inline;
+    background-repeat : no-repeat;
+/*    background-image: url('../templates/images/Tree/expand_loading.gif');	*/
+    background-image: url('../templates/images/Tree/expand_plus.gif');
+}
+ 
+.TreeContent {
+    min-height: 16px;
+    min-width: 16px;
+    margin-left:16px;
+  	cursor:pointer;
+  	cursor:hand;
+    padding-bottom: 5px;
+    /* can't make inline - multiline bugs */
+}
+
+.TreeIEContent {
+  	/*height: 16px;*/
+    padding-bottom: 5px;
+}
+ 
+.TreeExpand {
+    width: 16px;
+    height: 16px;
+    float: left;
+    display: inline;
+    background-repeat : no-repeat;
+}
+ 
+.TreeNodeHover {
+    border: none;
+    text-decoration: underline;
+}
+
+/* e.g. the node's context menu is opened */
+.TreeNodeEmphasized {
+    border: 1px dotted #000;
+    margin-left:-1px;
+}
+ 
+/* the node is selected */
+.TreeNodeSelect {
+    border: none;
+    color: #C21100 !important;
+    margin-left:0;
+	font-weight: bold !important;
+}
+
+.dijitTreeNode {
+    color: #000000;
+    font-weight: normal;
+}
+ 
+/* the node is not selectable */
+.TreeNodeNotSelectable {
+    border: none;
+    color: #666666;
+/*     margin-left:0; */
+}
+
+.TreeContent .RichTextEditable, .TreeContent .RichTextEditable iframe {
+    background-color: #ffc;
+    color: black;
+}
+
+/* don't use :focus due to opera's lack of support on div's */
+.TreeLabelFocused {
+    outline: none;
+}
+
+input.treeCheckbox {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    height: 12px;
+    vertical-align: middle;
+    border: none;
+    background: none;
+}
+
+/* when a tree node is cut, the node gets a new color */
+.nodeCut { color: #888888; }
+
+.claro .dijitTreeRowHover {
+    background-color: inherit;
+}
+
+.claro .dijitTreeRowSelected {
+    background-color: #ABD6FF;
+    color: inherit;
+}
+
+.claro .dijitTreeLabelFocused {
+    outline-color: transparent;
+}

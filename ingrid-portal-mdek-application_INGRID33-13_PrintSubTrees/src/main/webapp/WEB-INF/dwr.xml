@@ -1,0 +1,163 @@
+<!DOCTYPE dwr PUBLIC
+    "-//GetAhead Limited//DTD Direct Web Remoting 1.0//EN"
+    "http://www.getahead.ltd.uk/dwr/dwr10.dtd">
+<dwr>
+	<allow>
+		<create creator="spring" javascript="AddressService">
+			<param name="beanName" value="addressService" />
+		</create>
+		<create creator="spring" javascript="BackendService">
+			<param name="beanName" value="backendService" />
+		</create>
+		<create creator="spring" javascript="CatalogService">
+			<param name="beanName" value="catalogService" />
+		</create>
+		<create creator="spring" javascript="CatalogManagementService">
+			<param name="beanName" value="catalogManagementService" />
+		</create>
+		<create creator="spring" javascript="GetCapabilitiesService">
+			<param name="beanName" value="getCapabilitiesService" />
+		</create>
+		<create creator="spring" javascript="HelpService">
+			<param name="beanName" value="helpService" />
+		</create>
+		<create creator="spring" javascript="HttpService">
+			<param name="beanName" value="httpService" />
+		</create>
+		<create creator="spring" javascript="ExportService">
+			<param name="beanName" value="exportService" />
+		</create>
+		<create creator="spring" javascript="ImportService">
+			<param name="beanName" value="importService" />
+		</create>
+		<create creator="spring" javascript="ObjectService">
+			<param name="beanName" value="objectService" />
+		</create>
+		<create creator="spring" javascript="QueryService">
+			<param name="beanName" value="queryService" />
+		</create>
+		<create creator="spring" javascript="SecurityService">
+			<param name="beanName" value="securityService" />
+		</create>
+		<create creator="spring" javascript="TreeService">
+			<param name="beanName" value="treeService" />
+		</create>
+		<create creator="spring" javascript="UtilityService">
+			<param name="beanName" value="utilityService" />
+		</create>
+		<create creator="spring" javascript="SNSService">
+			<param name="beanName" value="snsService" />
+		</create>
+		<create creator="spring" javascript="CTService">
+			<param name="beanName" value="ctService" />
+		</create>
+		<create creator="spring" javascript="VersionInformation">
+			<param name="beanName" value="versionInformation" />
+		</create>
+        <create creator="spring" javascript="UserRepoManager">
+            <param name="beanName" value="userRepoManager" />
+        </create>
+
+		<convert converter="exception" match="java.lang.Exception" />
+ 		<convert converter="bean" match="java.lang.StackTraceElement" />
+
+        <convert converter="bean" match="de.ingrid.mdek.MdekError"/>
+        <convert converter="bean" match="de.ingrid.mdek.MdekError$MdekErrorType"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.AnalyzeJobInfoBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.CapabilitiesBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.CatalogBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.SysList"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.ExportJobInfoBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.GenericValueBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.ProtocolInfoBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.JobInfoBean"/>
+		<convert converter="enum" match="de.ingrid.mdek.beans.JobInfoBean$EntityType"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.KeyValuePair"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.SNSLocationUpdateResult"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.SNSTopicUpdateResult"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.SNSUpdateJobInfoBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.TreeNodeBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.URLJobInfoBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.VersionInformation"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.address.CommunicationBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.address.MdekAddressBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.AdditionalFieldBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.ConformityBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.DataFormatBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.DBContentBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.object.DQBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.LinkDataBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.LocationBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.MdekDataBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.MediaOptionBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.OperationBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.OperationParameterBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.ScaleBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.TimeReferenceBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.UrlBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.UsageLimitationBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.object.VectorFormatDetailsBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.object.ApplicationUrlBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.AddressExtSearchParamsBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.AddressSearchResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.AddressStatisticsResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.CSVSearchResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.ObjectExtSearchParamsBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.ObjectSearchResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.ObjectStatisticsResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.SearchResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.SearchTermBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.StatisticsBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.security.Group"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.security.Permission"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.security.User"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.Coordinate"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.CTSResponse"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.IndexedDocument"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSEventTopic"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSLocationTopic"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopic"/>
+		<convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.SNSTopic$Type"/>
+		<convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.SNSTopic$Source"/>
+		<convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopicMap"/>
+		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.HelpMessage"/>
+		<convert converter="bean" match="de.ingrid.mdek.persistence.db.model.UserData"/>
+        <convert converter="bean" match="de.ingrid.mdek.persistence.db.model.RepoUser"/>
+		<convert converter="bean" match="de.ingrid.mdek.quartz.jobs.util.URLObjectReference"/>
+		<convert converter="bean" match="de.ingrid.mdek.quartz.jobs.util.URLState"/>
+		<convert converter="enum" match="de.ingrid.mdek.quartz.jobs.util.URLState$State"/>
+        
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.ProfileBean" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.Rubric" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.Controls" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TextControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TableControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TableColumn" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.SelectControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.DateControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.NumberControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.ExtendedControls" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.OptionEntry" javascript="*"/>
+
+		<convert converter="enum" match="de.ingrid.mdek.dwr.services.cts.CoordinateTransformationService$SpatialReferenceSystem"/>
+
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtilsSecurity$IdcPermission"/>
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$CsvRequestType"/>
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcEntityOrderBy"/>
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcQAEntitiesSelectionType"/>
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$IdcWorkEntitiesSelectionType"/>
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$MdekSysList"/>
+		<convert converter="enum" match="de.ingrid.mdek.MdekUtils$WorkState"/>
+
+		<!-- Dependencies from mdek-service -->
+		<convert converter="bean" match="de.ingrid.mdek.services.catalog.dbconsistency.ErrorReport"/>
+        
+        <!-- Exception converter -->
+        <!-- <convert match="java.lang.Exception" converter="exception"/>
+        <convert match="java.lang.StackTraceElement" converter="bean"/>-->
+
+	</allow>
+</dwr>

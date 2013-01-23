@@ -1,0 +1,11 @@
+{
+    label: "name",
+    identifier: "id",
+    items: [
+        { name: "text field",   id: "textControl",   asColumn: "true"},
+        { name: "date field",   id: "dateControl",   asColumn: "true" },
+        { name: "list box",     id: "selectControl", asColumn: "true" },
+        { name: "number field", id: "numberControl", asColumn: "true" },
+        { name: "table",        id: "tableControl",  asColumn: "false" }
+    ]
+}
