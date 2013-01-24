@@ -2105,7 +2105,7 @@
                 </div>
                 <div id="contentFrameBodyAddress" class="contentContainer" style="display:none; width:720px;">
                     <!-- GREY FIELD //-->
-                    <!-- ADDRESS TYPE 0 //-->
+                    <!-- ADDRESS TYPE 0 - Institution //-->
                     <div id="headerAddressType0" class="rubric contentBlock firstBlock">
                         <div id="headerAddressType0Content" class="content">
                             <!-- AddressType0 parent institutions must not be displayed (http://jira.media-style.com/browse/INGRIDII-130) --><!--
@@ -2138,8 +2138,8 @@
                             </div>
                         </div>
                         <div class="fill"></div>
-                    </div><!-- ADDRESS TYPE 1 //-->
-                    <!-- ADDRESS TYPE 1 //-->                    
+                    </div>
+                    <!-- ADDRESS TYPE 1 - Unit //-->                    
                     <div id="headerAddressType1" class="rubric contentBlock firstBlock">
                         <div id="headerAddressType1Content" class="content">
                             <div class="inputContainer">
@@ -2176,8 +2176,8 @@
                             </div>
                         </div>
                         <div class="fill"></div>
-                    </div><!-- ADDRESS TYPE 2 //-->
-                    <!-- ADDRESS TYPE 2 //-->                    
+                    </div>
+                    <!-- ADDRESS TYPE 2 - Person //-->                    
                     <div id="headerAddressType2" class="rubric contentBlock firstBlock">
                         <div id="headerAddressType2Content" class="content">
                             <div class="inputContainer">
@@ -2227,6 +2227,14 @@
                                     </span>
                             </div>
                             <div>
+                                <span id="uiElement4571_at2" class="outer halfWidth">
+                                    <div><span class="label">
+                                        <label id="extraInfoPublishAreaAddress2Label" for="extraInfoPublishAreaAddress2" onclick="javascript:dialog.showContextHelp(arguments[0], 4571)">
+                                            <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
+                                        </label>
+                                    </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress2" /></span>
+                                    </div>
+                                </span>
                                 <span id="uiElement4320" class="outer halfWidth optional show">
                                     <div>
                                     <div class="input"><span class="label">&nbsp;</span>
@@ -2237,19 +2245,11 @@
                                     </div>
                                     </div>
                                 </span>
-                                <span id="uiElement4571_at2" class="outer halfWidth">
-                                    <div><span class="label">
-                                        <label id="extraInfoPublishAreaAddress2Label" for="extraInfoPublishAreaAddress2" onclick="javascript:dialog.showContextHelp(arguments[0], 4571)">
-                                            <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
-                                        </label>
-                                    </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress2" /></span>
-                                    </div>
-                                </span>
                             </div>
                         </div>
                         <div class="fill"></div>
                     </div>
-                    <!-- ADDRESS TYPE 3 //-->
+                    <!-- ADDRESS TYPE 3 - Free Address //-->
                     <div id="headerAddressType3" class="rubric contentBlock firstBlock">
                         <div id="headerAddressType3Content" class="content">
                             <div class="inputContainer">
