@@ -63,7 +63,7 @@ dojo.addOnLoad(function() {
         jumpToNodeOnInit();
         
         // create an iframe which will be used for printing    
-        dojo.create("iframe", {id: 'printFrame', name: 'printFrame', style: {position:"absolute", left:"-1000px", height: "0", border:"0"}}, dojo.body());
+        dojo.create("iframe", {id: 'printFrame', name: 'printFrame', style: {position:"absolute", left:"-1000px", height: "0", border:"0", zoom: "2"}}, dojo.body());
         initPrintFrame();
 	});
 });

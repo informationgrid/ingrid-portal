@@ -7,6 +7,7 @@
     #printDialogSettings {
         border: 1px #ccc solid;
         padding: 10px;
+        margin-bottom: 20px;
     }
 </style>
 <script type="text/javascript" src="js/detail_helper.js"></script>
@@ -63,6 +64,7 @@ scriptScopeDetailViewAddr.refreshView = function() {
     this.setLoadingZone(true);
     
     var showSubTree = dijit.byId("showSubTree").checked;
+    var showDetails = dijit.byId("showDetailedView").checked;
     this.useDirtyData = this.customParams.useDirtyData;
     
     // empty preview div
@@ -84,7 +86,13 @@ scriptScopeDetailViewAddr.refreshView = function() {
             def.addCallback(function() { dojo.byId("detailViewContent").innerHTML = scriptScopeDetailViewAddr.detailDivContent});
             def.addCallback(this.hideProcessingDialog);
         } else {
-            var def = this.loadAndRenderTreeNode(this.selectedNode.id[0]);
+            if (showDetails) {
+                var def = this.loadAndRenderTreeNode(this.selectedNode.id[0]);
+            } else {
+                this.renderSimpleTreeNode(this.nodeTreeItem);
+                var def = new dojo.Deferred();
+                def.callback();
+            }
             def.addCallback(function() { dojo.byId("detailViewContent").innerHTML = scriptScopeDetailViewAddr.detailDivContent});
             def.addCallback(dojo.partial(this.setLoadingZone, false));
         }
@@ -121,12 +129,6 @@ scriptScopeDetailViewAddr.updateCheckboxesFunctionality = function() {
         UtilUI.disableElement("showSubTree");
     } else {
         UtilUI.enableElement("showSubTree");
-    }
-    
-    if (dijit.byId("showSubTree").checked) {
-        UtilUI.enableElement("showDetailedView");
-    } else {
-        UtilUI.disableElement("showDetailedView");
     }
 }
 
@@ -395,7 +397,7 @@ scriptScopeDetailViewAddr.renderText = function(val) {
                 <div id="printDialogSettings" class="grey">
                     <input type="checkbox" id="showDetailedView" dojoType="dijit.form.CheckBox" checked=true /> 
                     <label
-                        for="showDetailedView" class="inActive" style="margin-right: 15px;"> <fmt:message
+                        for="showDetailedView" style="margin-right: 15px;"> <fmt:message
                             key="dialog.detail.print.showDetailedView" />
                     </label>
                     <input type="checkbox" id="showSubTree" dojoType="dijit.form.CheckBox" /> <label for="showSubTree"
@@ -405,13 +407,13 @@ scriptScopeDetailViewAddr.renderText = function(val) {
                         <img src="img/ladekreis.gif" width="20" height="20" alt="Loading" />
                     </span>
                 </div>
-                <span class="functionalLink onTab">
+                <span class="functionalLink">
                     <a id="printDetailObject" href="javascript:printDivContent('detailViewContent')"
                         title="<fmt:message key="dialog.detail.print" />">[<fmt:message key="dialog.detail.print" />]
                     </a>
                 </span>
                 <!-- MAIN TAB CONTAINER START -->
-                <div id="detailViewContainer" dojoType="dijit.layout.TabContainer" style="height:528px; width:100%;" selectedChild="detailView">
+                <div style="height:528px; width:100%; clear: both;">
                     <!-- MAIN TAB 1 START -->
                     <div id="detailView" dojoType="dijit.layout.ContentPane" class="blueTopBorder" style="height: 500px;" 
                             title="<fmt:message key="dialog.detail.title" />">

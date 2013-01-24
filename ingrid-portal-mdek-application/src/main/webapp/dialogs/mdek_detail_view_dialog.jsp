@@ -7,6 +7,7 @@
     #printDialogSettings {
         border: 1px #ccc solid;
         padding: 10px;
+        margin-bottom: 20px;
     }
 </style>
 <script type="text/javascript" src="js/detail_helper.js"></script>
@@ -66,6 +67,7 @@ scriptScopeDetailView.refreshView = function() {
     scriptScopeDetailView.setLoadingZone(true);
     
     var showSubTree = dijit.byId("showSubTree").checked;
+    var showDetails = dijit.byId("showDetailedView").checked;
     
     // empty preview div
     scriptScopeDetailView.detailDiv.innerHTML = "";
@@ -85,7 +87,13 @@ scriptScopeDetailView.refreshView = function() {
             def.addCallback(function() { scriptScopeDetailView.detailDiv.innerHTML = scriptScopeDetailView.detailDivContent});
             def.addCallback(scriptScopeDetailView.hideProcessingDialog);
         } else {
-            var def = scriptScopeDetailView.loadAndRenderTreeNode(scriptScopeDetailView.selectedNode.id[0]);
+            if (showDetails) {
+                var def = scriptScopeDetailView.loadAndRenderTreeNode(scriptScopeDetailView.selectedNode.id[0]);
+            } else {
+                scriptScopeDetailView.renderSimpleTreeNode(scriptScopeDetailView.nodeTreeItem);
+                var def = new dojo.Deferred();
+                def.callback();
+            }
             def.addCallback(function() { scriptScopeDetailView.detailDiv.innerHTML = scriptScopeDetailView.detailDivContent});
             def.addCallback(dojo.partial(scriptScopeDetailView.setLoadingZone, false));
         }
@@ -99,17 +107,17 @@ scriptScopeDetailView.updateCheckboxesFunctionality = function() {
         UtilUI.enableElement("showSubTree");
     }
     
-    if (dijit.byId("showSubTree").checked) {
+    /*if (dijit.byId("showSubTree").checked) {
         UtilUI.enableElement("showDetailedView");
     } else {
         UtilUI.disableElement("showDetailedView");
-    }
+    }    
     
     if (dijit.byId("showDetailedView").checked) {
         UtilUI.enableElement("showSubordinateObjects");
     } else {
         UtilUI.disableElement("showSubordinateObjects");
-    }
+    }*/
 }
 
 scriptScopeDetailView.renderSearchResults = function() {
@@ -1060,7 +1068,7 @@ scriptScopeDetailView.findNodeInSubTree = function(uuid) {
         <div id="dialogContent" class="content">
             <div id="printDialogSettings" class="grey">
                 <input type="checkbox" id="showDetailedView" dojoType="dijit.form.CheckBox" checked=true />
-                <label for="showDetailedView" class="inActive" style="margin-right: 15px;">
+                <label for="showDetailedView" style="margin-right: 15px;">
                     <fmt:message key="dialog.detail.print.showDetailedView" />
                 </label>
                 <input type="checkbox" id="showSubTree" dojoType="dijit.form.CheckBox" />
@@ -1073,13 +1081,14 @@ scriptScopeDetailView.findNodeInSubTree = function(uuid) {
                 </label>
                 <span id="detailLoadingZone" style="visibility:hidden;" class="processInfo right"><img src="img/ladekreis.gif" width="20" height="20" alt="Loading" /></span>
             </div>
-            <span class="functionalLink onTab">
+            <span class="functionalLink">
                 <a id="printDetailObject" href="javascript:printDivContent('detailViewContent')" title="<fmt:message key="dialog.detail.print" />">[<fmt:message key="dialog.detail.print" />]</a>
             </span>
             <!-- MAIN TAB CONTAINER START -->
-            <div id="detailViewContainer" dojoType="dijit.layout.TabContainer" style="height:528px; width:100%;" selectedChild="detailView">
+            <!-- <div id="detailViewContainer" dojoType="dijit.layout.TabContainer" style="height:528px; width:100%;" selectedChild="detailView"> -->
+            <div style="width:100%; clear: both;">
                 <!-- MAIN TAB 1 START -->
-                <div id="detailView" dojoType="dijit.layout.ContentPane" class="blueTopBorder" style="width:500px;" title="<fmt:message key="dialog.detail.title" />">
+                <div id="detailView" dojoType="dijit.layout.ContentPane" class="blueTopBorder" style="height: 550px;" title="<fmt:message key="dialog.detail.title" />">
                     <div id="detailViewContent" class="detailViewContentContainer" style="padding: 5px;"></div>
                 </div>
                 <!-- MAIN TAB 1 END -->
