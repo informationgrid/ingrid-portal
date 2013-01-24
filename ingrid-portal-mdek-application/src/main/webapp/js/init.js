@@ -64,16 +64,16 @@ dojo.addOnLoad(function() {
         
         // create an iframe which will be used for printing    
         dojo.create("iframe", {id: 'printFrame', name: 'printFrame', style: {position:"absolute", left:"-1000px", height: "0", border:"0", zoom: "2"}}, dojo.body());
-        initPrintFrame();
+        setTimeout(initPrintFrame, 4000);
 	});
 });
 
 function initPrintFrame() {
-    var cssLink1 = document.createElement("link") 
+    var cssLink1 = document.createElement("link");
     cssLink1.href = "/ingrid-portal-mdek-application/css/slick.grid.css"; 
     cssLink1.rel = "stylesheet"; 
     cssLink1.type = "text/css";
-    var cssLink2 = document.createElement("link") 
+    var cssLink2 = document.createElement("link");
     cssLink2.href = "/ingrid-portal-mdek-application/dojo-src/release/dojo/css/styles.css"; 
     cssLink2.rel = "stylesheet"; 
     cssLink2.type = "text/css";
