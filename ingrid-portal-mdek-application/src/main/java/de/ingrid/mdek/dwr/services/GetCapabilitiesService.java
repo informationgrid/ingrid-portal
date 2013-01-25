@@ -306,24 +306,28 @@ public class GetCapabilitiesService {
     }
 
     private String appendVersionParameterToWmsServiceUrl(String baseUrl, String version) {
-    	StringBuilder url = new StringBuilder(baseUrl);
-    	if (url.lastIndexOf("?") != url.length() - 1) {
-    		url.append('?');
-    	}
-
+        StringBuilder url = appendUrlRequestParameterSymbols(baseUrl);
+    	
     	url.append("version="+version);
     	return url.toString();
 	}
 
 	private String appendGetCapabilitiesParameterToWmsServiceUrl(String baseUrl, String version) {
-    	StringBuilder url = new StringBuilder(baseUrl);
-    	if (url.lastIndexOf("?") != url.length() - 1) {
-    		url.append('?');
-    	}
+    	StringBuilder url = appendUrlRequestParameterSymbols(baseUrl);
 
     	url.append("SERVICE=WMS&REQUEST=GetCapabilities&version="+version);
     	return url.toString();
     }
+	
+	private StringBuilder appendUrlRequestParameterSymbols(String url) {
+	    StringBuilder paramUrl = new StringBuilder(url);
+        if (url.indexOf("?") == -1) {
+            paramUrl.append('?');
+        } else if ((url.lastIndexOf("&") != url.length() - 1) && (url.lastIndexOf("?") != url.length() - 1)) {
+            paramUrl.append('&');
+        }
+        return paramUrl;
+	}
 
 
     public CapabilitiesBean getCapabilitiesWFS(Document doc) throws XPathExpressionException {
