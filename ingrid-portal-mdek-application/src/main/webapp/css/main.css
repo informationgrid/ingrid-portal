@@ -365,10 +365,11 @@ input.editor-text {
 .disabled .slick-row, .disabled .slick-row a { color: #818181; }
 
 /* Table presentation for detail/print preview */
-table.filteringTable, table.filteringTableBlue { top:0; left:0; font:normal 10px/14px Verdana, Helvetica, Arial, sans-serif; border-top:1px solid #838383; border-left:1px solid #838383; border-bottom:1px solid #add9f9; border-right:1px solid #add9f9; cursor:default; }
+table.filteringTable, table.filteringTableBlue { top:0; left:0; font:normal 10px/14px Verdana, Helvetica, Arial, sans-serif; border: 1px solid #B5BCC7; cursor:default; }
 table.relativePos { position:relative !important; } 
 
-table.filteringTable thead th, table.filteringTableBlue thead th { padding:3px 0 3px 4px; font-weight:bold; font-size:10px; color:#fff; background:#156496; text-align:left; }
+table.filteringTable thead th, table.filteringTableBlue thead th { padding:3px 0 3px 4px; font-weight:bold; font-size:10px; color:#0C3753; background:#82C4ED; text-align:left; border-left: 1px solid rgb(107, 123, 234);}
+table.filteringTable thead th:first-child, table.filteringTableBlue thead th:first-child { border-left: 1px solid transparent; }
 table.lightHead thead th { background:#e6f0f5 !important; color:#000; border-left:1px solid #156496; }
 table.lightHead thead th:first-child { border:none; }
 

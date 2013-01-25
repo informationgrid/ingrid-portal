@@ -186,12 +186,12 @@ scriptScopeDetailView.setLoadingZone = function(activate) {
         dojo.style("detailLoadingZone", "visibility", "visible");
         UtilUI.disableElement("showSubTree");
         UtilUI.disableElement("showDetailedView");
-        UtilUI.disableHtmlLink("printDetailObject");
+        UtilUI.disableElement("printDetailObject");
     } else {
         dojo.style("detailLoadingZone", "visibility", "hidden");
         UtilUI.enableElement("showSubTree");
         UtilUI.enableElement("showDetailedView");
-        UtilUI.enableHtmlLink("printDetailObject");
+        UtilUI.enableElement("printDetailObject");
         scriptScopeDetailView.updateCheckboxesFunctionality();
     }
 }
@@ -1079,11 +1079,13 @@ scriptScopeDetailView.findNodeInSubTree = function(uuid) {
                 <label for="showSubordinateObjects" style="display:none;" class="inActive" title="<fmt:message key="dialog.detail.print.showSubordinate.tooltip" />">
                     <fmt:message key="dialog.detail.print.showSubordinate" />
                 </label>
+                <button id="printDetailObject" dojoType="dijit.form.Button" class="right" style="margin: -3px 0 0 10px;"><fmt:message key="dialog.detail.print" />
+                    <script type="dojo/method" event="onClick" args="evt">
+                        printDivContent('detailViewContent');
+                    </script>
+                </button>
                 <span id="detailLoadingZone" style="visibility:hidden;" class="processInfo right"><img src="img/ladekreis.gif" width="20" height="20" alt="Loading" /></span>
             </div>
-            <span class="functionalLink">
-                <a id="printDetailObject" href="javascript:printDivContent('detailViewContent')" title="<fmt:message key="dialog.detail.print" />">[<fmt:message key="dialog.detail.print" />]</a>
-            </span>
             <!-- MAIN TAB CONTAINER START -->
             <!-- <div id="detailViewContainer" dojoType="dijit.layout.TabContainer" style="height:528px; width:100%;" selectedChild="detailView"> -->
             <div style="width:100%; clear: both;">
