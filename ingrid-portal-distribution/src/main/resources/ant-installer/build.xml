@@ -490,7 +490,14 @@
         <mkdir dir="${WebmapDataDir}/WebmapClientData"/>
         <mkdir dir="${WebmapDataDir}/WebmapClientData/data/tmp"/>
         <mkdir dir="${WebmapDataDir}/WebmapClientData/data/users"/>
-        <move file="${i-config-ingrid-webmap-client}" tofile="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>    
+    	<if>
+    		<available file="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
+    	    <then>
+   	        </then>
+    		<else>
+                <move file="${i-config-ingrid-webmap-client}" tofile="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>    
+   			</else>
+   	    </if>
     </target>    
 
     <target name="writeMapClientProps" description="">

@@ -65,6 +65,9 @@
       </action>
 
       <action type="fix" dev="wemove">
+        Do not overwrite map client configuration if it already exists. 
+      </action>
+      <action type="fix" dev="wemove">
         Fix problem with finding localization from profile resources introduced with GSSOIL code. 
       </action>
       <action type="fix" dev="wemove">
