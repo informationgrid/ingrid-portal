@@ -3366,10 +3366,15 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
         if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
             Node node = XPathUtils.getNode(rootNode, xpathExpression);
             if (node.hasChildNodes()) {
-                xpathExpression = "./gmd:abstract";
+                String xpathExpressionAbstract = "./idf:abstract";
+                // check if optional idf:abstract element exists
+                // if not, use general one 
+                if (!XPathUtils.nodeExists(node, xpathExpressionAbstract)) {
+                    xpathExpressionAbstract = "./gmd:abstract";
+                }
                 
                 // Beschreibung
-                if (XPathUtils.nodeExists(node, xpathExpression)) {
+                if (XPathUtils.nodeExists(node, xpathExpressionAbstract)) {
                     String alternateName = "";
                     String description = "";
                     
@@ -3380,15 +3385,12 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                     }
                     
                     // description
-                    xpathExpression = "./gmd:abstract";
-                    if (XPathUtils.nodeExists(node, xpathExpression)) {
-                        description = XPathUtils.getString(node, xpathExpression).trim();
-                        
-                        if (description != null) {
-                            description = description.replaceAll("\n", "<br/>");
-                            description = description.replaceAll("&lt;", "<");
-                            description = description.replaceAll("&gt;", ">");
-                        }
+                    description = XPathUtils.getString(node, xpathExpressionAbstract).trim();
+                    
+                    if (description != null) {
+                        description = description.replaceAll("\n", "<br/>");
+                        description = description.replaceAll("&lt;", "<");
+                        description = description.replaceAll("&gt;", ">");
                     }
                     
                     String capabilitiesUrl = getCapabilityUrl();
