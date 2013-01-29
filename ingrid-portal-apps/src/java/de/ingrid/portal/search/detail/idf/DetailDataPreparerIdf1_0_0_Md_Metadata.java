@@ -3367,14 +3367,16 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
             Node node = XPathUtils.getNode(rootNode, xpathExpression);
             if (node.hasChildNodes()) {
                 String xpathExpressionAbstract = "./idf:abstract";
+                Node abstractParentNode = rootNode;
                 // check if optional idf:abstract element exists
                 // if not, use general one 
-                if (!XPathUtils.nodeExists(node, xpathExpressionAbstract)) {
+                if (!XPathUtils.nodeExists(abstractParentNode, xpathExpressionAbstract)) {
                     xpathExpressionAbstract = "./gmd:abstract";
+                    abstractParentNode = node;
                 }
                 
                 // Beschreibung
-                if (XPathUtils.nodeExists(node, xpathExpressionAbstract)) {
+                if (XPathUtils.nodeExists(abstractParentNode, xpathExpressionAbstract)) {
                     String alternateName = "";
                     String description = "";
                     
@@ -3385,8 +3387,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                     }
                     
                     // description
-                    description = XPathUtils.getString(node, xpathExpressionAbstract).trim();
-                    
+                    description = XPathUtils.getString(abstractParentNode, xpathExpressionAbstract).trim();                    
                     if (description != null) {
                         description = description.replaceAll("\n", "<br/>");
                         description = description.replaceAll("&lt;", "<");
