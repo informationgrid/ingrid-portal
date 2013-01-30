@@ -83,6 +83,7 @@
 			<input class="float_left col2right inputstyletext" type="text" id="city" name="city" value="#getFieldValue('city')" />
 			<span class="clearer"></span>
 		</p>
+#if($enableAccountQuestion)
 		<div class="line_form"><hr /></div>
 		<p>
 			<label class="float_left col2left alignleft" for="attention">#displayFieldLabel('attention' $MESSAGES.getString('account.edit.label.attention'))</label>
@@ -127,6 +128,7 @@
 			</select>  
 			<span class="clearer"></span>
 		</p>
+#end
 #if ($enableNewsletter)		
 		<p>
 			<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.label.newsletter1')</label>

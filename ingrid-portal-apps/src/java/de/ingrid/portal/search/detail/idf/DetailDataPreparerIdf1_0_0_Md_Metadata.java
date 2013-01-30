@@ -17,6 +17,7 @@ import org.w3c.dom.NodeList;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
+import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.utils.udk.TM_PeriodDurationToTimeAlle;
@@ -1835,7 +1836,10 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			    			if (!urlValue.endsWith("?") && !urlValue.endsWith("&")) {
 			    				urlValue = urlValue + "&";
 			    			}
-			    			urlValue = urlValue + "REQUEST=GetCapabilities&SERVICE=WMS";
+			    			urlValue = urlValue + "REQUEST=GetCapabilities";
+			    			if(serviceType != null){
+			    				urlValue = Utils.getServiceTypeParameter(urlValue, serviceType);
+			    			}
 			    		}
 
 						HashMap elementCapabilities = new HashMap();
@@ -1864,13 +1868,13 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 
     					if (!hasAccessConstraints) {
     						elementCapabilities.put("title", messages.getString("common.result.showGetCapabilityUrl"));
-    						if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
+    						if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && (serviceType != null && serviceType.equals("view"))){
     	  			        	HashMap elementMapLink = new HashMap();
 	    						elementMapLink.put("type", "linkLine");
 	    						elementMapLink.put("hasLinkIcon", new Boolean(true));
 	    						elementMapLink.put("isExtern", new Boolean(false));
 	    						elementMapLink.put("title", messages.getString("common.result.showMap"));
-	    						elementMapLink.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue));
+    							elementMapLink.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue));
     	  						elementCapabilities.put("link", elementMapLink);
     	    					elementCapabilities.put("linkLeft", true);
     						}

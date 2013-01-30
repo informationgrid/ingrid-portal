@@ -39,6 +39,4 @@
 <!-- BESCHREIBUNG -->
 <p></p>
 <h2>$MESSAGES.getString('login.description.title')</h2>
-<ul class="anmeldung">
 $MESSAGES.getString('login.description.content')
-</ul>

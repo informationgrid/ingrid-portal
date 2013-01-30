@@ -93,6 +93,11 @@
                                 <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern2.tooltip")">$MESSAGES.getString("sitemap.application.extern2")</a>
                                 <p>$MESSAGES.getString("sitemap.application.extern2.description")</p>
                             </li>
+							<li>
+                                #set ($link = $renderResponse.encodeURL("/portal/application/main-application.psml"))
+                                <a href="$link" title="$MESSAGES.getString("sitemap.application.extern3.tooltip")">$MESSAGES.getString("sitemap.application.extern3")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern3.description")</p>
+                            </li>
                             <li>
                                 #set ($link = $renderResponse.encodeURL("/portal/application/main-application-0.psml"))
                                 <a href="$link" title="$MESSAGES.getString("sitemap.application.0.tooltip")">$MESSAGES.getString("sitemap.application.0")</a>
@@ -107,6 +112,48 @@
                                 #set ($link = $renderResponse.encodeURL("/portal/application/main-application-2.psml"))
                                 <a href="$link" title="$MESSAGES.getString("sitemap.application.2.tooltip")">$MESSAGES.getString("sitemap.application.2")</a>
                                 <p>$MESSAGES.getString("sitemap.application.2.description")</p>
+                            </li>
+							<li>
+                                #set ($link = "http://wms2go.wsv.bvbs.bund.de/demopub/")
+                                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern4.tooltip")">$MESSAGES.getString("sitemap.application.extern4")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern4.description")</p>
+                            </li>
+                            <li>
+                                #set ($link = "http://wsvmapserv.wsv.bund.de/ol_ienc/intranet.html")
+                                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern5.tooltip")">$MESSAGES.getString("sitemap.application.extern5")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern5.description")</p>
+                            </li>
+							<li>
+                                #set ($link = "http://routing.wsv.bund.de/")
+                                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern6.tooltip")">$MESSAGES.getString("sitemap.application.extern6")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern6.description")</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <br />
+            </div>
+			<div class="right">
+                <ul>
+                    <li>
+                        #set ($link = $renderResponse.encodeURL("/portal/application/main-application.psml"))
+                        <a href="$link" title="$MESSAGES.getString("sitemap.application.main2.tooltip")">$MESSAGES.getString("sitemap.application.main2")</a>
+                        <p>$MESSAGES.getString("sitemap.application.main2.description")</p>
+                        <ul>
+							<li>
+                                #set ($link = "/ingrid-portal-apps/cms/media/pdf/KartenLinkGenerator2.0.xls")
+                                <a href="$link" title="$MESSAGES.getString("sitemap.application.extern7.tooltip")">$MESSAGES.getString("sitemap.application.extern7")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern7.description")</p>
+                            </li>
+							<li>
+                                #set ($link = "http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?x=3832460,12&y=5668140,45&epsg=31467&zoom=16")
+                                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern8.tooltip")">$MESSAGES.getString("sitemap.application.extern8")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern8.description")</p>
+                            </li>
+							<li>
+                                #set ($link = $renderResponse.encodeURL("/ingrid-portal-apps/cms/media/pdf/Online-Excel-BWaStr-Locator.xls"))
+                                <a href="$link" title="$MESSAGES.getString("sitemap.application.extern9.tooltip")">$MESSAGES.getString("sitemap.application.extern9")</a>
+                                <p>$MESSAGES.getString("sitemap.application.extern9.description")</p>
                             </li>
                         </ul>
                     </li>
