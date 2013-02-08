@@ -515,12 +515,17 @@ function createThesaurusGrid(additionalField, section) {
     var surrDiv = addSurroundingContainer(div, additionalField, true, true);
     addToSection(section, surrDiv);
     
+    // relative width
+    var isHalfWidth = additionalField.style.indexOf("width:50%") != -1;
+    var w = isHalfWidth ? 0.49 : 1;
+    
     var thesaurusTermsStructure = [
-       {field: 'label',name: 'label',width: '550px'},
-       {field: 'sourceString',name: 'sourceString',width: 158-scrollBarWidth+'px'}
+       {field: 'label', name: 'label', width: 450*w + 'px'},
+       {field: 'topicId', name: 'topicId', width: (258*w)-scrollBarWidth+'px'}
     ];
     createDataGrid(additionalField.id, null, thesaurusTermsStructure, null);
     dojo.addClass(additionalField.id, "hideTableHeader");
+    dijit.byId(additionalField.id).hideColumn("topicId");
 }
 
 function addSurroundingContainer(/*DomNode*/nodeToInsert, additionalField, type, linkInfo) {

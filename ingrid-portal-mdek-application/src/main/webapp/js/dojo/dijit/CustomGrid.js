@@ -633,7 +633,10 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          dojo.forEach(this.columns, function(column, index) {
              if (column.id == colId) {
                  column.hidden = true;
+                 if (index > 0)
+                	 this.columns[index-1].width += column.width;
                  this.invalidate();
+                 this.applyColumnWidths();
                  this.headers.children[index].style.display = "none";
              }
          }, this);
@@ -643,7 +646,10 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          dojo.forEach(this.columns, function(column, index) {
              if (column.id == colId) {
                  column.hidden = false;
+                 if (index > 0)
+                	 this.columns[index-1].width -= column.width;
                  this.invalidate();
+                 this.applyColumnWidths();
                  this.headers.children[index].style.display = "";
              }
          }, this);
@@ -676,6 +682,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 
          var w = 0, i = this.columns.length;
          while (i--) {
+        	 if (this.columns[i].hidden) continue;
              w += this.columns[i].width;
          }
          this.setCanvasWidth(w);
@@ -919,6 +926,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          var rowWidth = 0;
          var i = this.columns.length;
          while (i--) {
+        	 if (this.columns[i].hidden) continue;
              rowWidth += (this.columns[i].width || this.columnDefaults.width);
          }
          return rowWidth;
@@ -1825,6 +1833,10 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
      applyColumnHeaderWidths: function() {
          var h;
          for (var i = 0, headers = this.headers.children, ii = headers.length; i < ii; i++) {
+        	 if (this.columns[i].hidden) {
+        		 dojo.style(headers[i], "width", "0px");
+        		 continue;
+        	 }
              h = headers[i];
              if (dojo.style(h, "width") !== this.columns[i].width - this.headerColumnWidthDiff) {
             	 dojo.style(h, "width", this.columns[i].width - this.headerColumnWidthDiff + "px");
@@ -1836,7 +1848,10 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          var rowWidth = this.getRowWidth();
          var x = 0, w, rule;
          for (var i = 0; i < this.columns.length; i++) {
-             w = this.columns[i].width;
+        	 if (this.columns[i].hidden)
+        		 w = 0;
+        	 else
+        		 w = this.columns[i].width;
 
              rule = this.findCssRule("." + this.uid + " .c" + i);
              rule.style.width = (w - this.cellWidthDiff) + "px";
