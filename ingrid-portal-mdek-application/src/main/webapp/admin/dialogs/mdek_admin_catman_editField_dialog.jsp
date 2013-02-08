@@ -735,7 +735,7 @@
                         <div>
                             <span class="label">
                                 <label for="formThesaurusLinkLabel" onclick="javascript:dialog.showContextHelp(arguments[0], 10104)">
-                                    <fmt:message key="dialog.admin.additionalfields.title" />*
+                                    <fmt:message key="dialog.admin.additionalfields.thesaurusLinkLabel" />
                                 </label>
                             </span>
                             <span class="input">
