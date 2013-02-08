@@ -48,6 +48,9 @@
 		<create creator="spring" javascript="SNSService">
 			<param name="beanName" value="snsService" />
 		</create>
+        <create creator="spring" javascript="RDFService">
+            <param name="beanName" value="rdfService" />
+        </create>
 		<create creator="spring" javascript="CTService">
 			<param name="beanName" value="ctService" />
 		</create>
@@ -134,6 +137,7 @@
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.Rubric" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.Controls" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TextControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.ThesaurusControl" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TableControl" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TableColumn" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.SelectControl" javascript="*"/>

@@ -541,6 +541,9 @@ scopeAdminFormFields.addElement = function(insideRubric) {
 		item.numTableRows = 4;
 		item.$dwrClassName = "TableControl";
         delete item.indexName;
+	} else if (type == "thesaurusControl") {
+        item.numTableRows = 4;
+        item.$dwrClassName = "ThesaurusControl";
 	} else if (type == "textControl") {
 		item.numLines = 1;
 		item.$dwrClassName = "TextControl";
@@ -650,26 +653,12 @@ scopeAdminFormFields.convertToHTML = function(noBreaks) {
     re1 = /\s+/g;
     noBreaks = noBreaks.replace(re1," ");
     
-    
-    //if(jbrTag != 0 || jbrTag !=  false){
     re4 = /\[-LB-\]\[-LB-\]/gi;
     noBreaks = noBreaks.replace(re4,"<br />\r\n<br />\r\n");
-    //}else{
-    //re4 = /\[-LB-\]\[-LB-\]/gi;
-    //noBreaks = noBreaks.replace(re4,"</p><p>");
-    //}
-    
-    //if(jpTag == 0 || jpTag ==  false){
-    //re5 = /\[-LB-\]/gi;
-    //noBreaks = noBreaks.replace(re5,linebs+"\r\n");
-    //}else{
+
     re5 = /\[-LB-\]/gi;
     noBreaks = noBreaks.replace(re5," ");
-    //}
-    
-    //if(jbrTag == 0 || jbrTag ==  false){
-    //noBreaks ='<p>'+noBreaks+'</p>';
-    //}
+
     
     noBreaks = noBreaks.replace("<p><\/p>","");
     noBreaks = noBreaks.replace("\r\n\r\n","");

@@ -26,9 +26,8 @@
     <!-- Import hibernate bean definitions -->
 	<import resource="core-services.xml"/>
     <import resource="external-services.xml"/>
+    <import resource="configurations.xml"/>
     
-    
-
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="configuration">
 		<property name="locations">
             <list>
@@ -57,6 +56,19 @@
             <ref bean="fullClassifyService" />
         </property>
     </bean>
+    
+    <bean id="rdfService" class="de.ingrid.mdek.dwr.services.sns.RDFService">
+        <property name="thesaurusService">
+            <ref bean="thesaurusRDFService" />
+        </property>
+        <property name="gazetteerService">
+            <ref bean="gazetteerService" />
+        </property>
+        <property name="fullClassifyService">
+            <ref bean="fullClassifyService" />
+        </property>
+    </bean>
+    
 	<bean id="ctService" class="de.ingrid.mdek.dwr.services.cts.CoordinateTransformationServiceImpl" />
 	<bean id="getCapabilitiesService" class="de.ingrid.mdek.dwr.services.GetCapabilitiesService" />
 	<bean id="httpService" class="de.ingrid.mdek.dwr.services.HttpService" />
@@ -98,9 +110,8 @@
  	</bean>
 	<bean id="mdekSecurityUtils"
 		class="de.ingrid.mdek.util.MdekSecurityUtils">
-		<property name="daoFactory">
-			<ref bean="daoFactory" />
-		</property>
+		<property name="daoFactory"><ref bean="daoFactory" /></property>
+        <property name="authProvider"><ref bean="authenticationProvider" /></property>
  	</bean>
 
 <!-- Services -->
@@ -170,6 +181,9 @@
 		<property name="securityRequestHandler">
 			<ref local="securityRequestHandler" />
 		</property>
+        <property name="authProvider">
+            <ref bean="authenticationProvider" />
+        </property>
 	</bean>
 	<bean id="treeService"
 		class="de.ingrid.mdek.dwr.services.TreeServiceImpl">
@@ -264,16 +278,18 @@
 		<property name="startDelay" value="10000" />
 		<property name="repeatInterval" value="600000" />
 	</bean>
-    
-
 	<!-- Scheduler Factory -->
 
 	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="simpleTrigger" />
+                <ref bean="simpleTriggerCodeLists" />
 			</list>
 		</property>
+        <property name="applicationContextSchedulerContextKey">  
+            <value>applicationContext</value>  
+        </property> 
 	</bean>
 	
 	<!-- Mapper Factory -->
@@ -307,17 +323,15 @@
 	<bean id="scriptImportDataMapper" class="de.ingrid.mdek.mapping.ScriptImportDataMapper">
 		<property name="mapperScript" value="classpath:import/mapper/ArcGIS_to_ingrid_igc.js" />
 		<property name="template" value="classpath:import/templates/igc_template.xml" />
-		<property name="dataProvider">
-			<ref local="importDataProvider" />
-		</property>
+		<property name="dataProvider"><ref local="importDataProvider" /></property>
+        <property name="codeListService"><ref local="codeListService" /></property>
 	</bean>
 
     <bean id="csw202ScriptImportDataMapper" class="de.ingrid.mdek.mapping.ScriptImportDataMapper">
         <property name="mapperScript" value="classpath:import/mapper/csw202_to_ingrid_igc.js" />
         <property name="template" value="classpath:import/templates/igc_template_csw202.xml" />
-        <property name="dataProvider">
-            <ref local="importDataProvider" />
-        </property>
+        <property name="dataProvider"><ref local="importDataProvider" /></property>
+        <property name="codeListService"><ref local="codeListService" /></property>
     </bean>
 
 	
@@ -329,26 +343,33 @@
 		</property>
 	</bean>
     
-    
     <!-- Beans for codelist access and synchronisation -->
     
-    <bean id="httpCommunication" class="de.ingrid.codelists.comm.HttpCLCommunication">
-        <property name="requestUrl" value="http://localhost:8082/rest/getCodelists" />
-    </bean>
-    <bean id="xmlPersistency" class="de.ingrid.codelists.persistency.XmlCodeListPersistency">
-        <property name="pathToXml" value="data/codelists.xml" />    
-    </bean>
     <bean id="igePersistency" class="de.ingrid.codelists.persistency.IgeCodeListPersistency">
-        <property name="connectionFacade"><ref local="connectionFacade" /></property> 
+        <property name="connectionFacade"><ref local="connectionFacade" /></property>
     </bean>
     <bean id="codeListService" class="de.ingrid.codelists.CodeListService">
         <property name="persistencies">
             <list>
-                <ref bean="xmlPersistency" />
+                <!-- <ref bean="xmlPersistency" /> -->
                 <ref bean="igePersistency" />
             </list>
         </property>
-        <property name="defaultPersistency" value="1" />
+        <property name="defaultPersistency" value="0" />
     </bean>
     
+    <bean name="updateCodeListsJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UpdateCodeListsFromIGEJob" />
+    </bean>
+    
+    <bean id="simpleTriggerCodeLists" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail" ref="updateCodeListsJobDetail" />
+        <property name="startDelay" value="15000" />
+        <property name="repeatInterval" value="1800000" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="connectionFacade"><ref local="connectionFacade" /></entry>
+            </map>
+        </property>
+    </bean>
  </beans>

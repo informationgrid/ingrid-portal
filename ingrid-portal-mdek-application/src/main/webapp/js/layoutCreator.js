@@ -508,7 +508,22 @@ function createDomDataGrid(additionalField, structure, section) {
     var gridWidget = createDataGrid(additionalField.id, null, structure, null, {interactive:"true", autoHeight:additionalField.rows});
 }
 
-function addSurroundingContainer(/*DomNode*/nodeToInsert, additionalField, type) {
+function createThesaurusGrid(additionalField, section) {
+    //var gridWidget = createDataGridWidget(additionalField.id, structure, {interactive:"true", autoHeight:4});
+    var div = document.createElement("div");
+    div.setAttribute("id", additionalField.id)
+    var surrDiv = addSurroundingContainer(div, additionalField, true, true);
+    addToSection(section, surrDiv);
+    
+    var thesaurusTermsStructure = [
+       {field: 'label',name: 'label',width: '550px'},
+       {field: 'sourceString',name: 'sourceString',width: 158-scrollBarWidth+'px'}
+    ];
+    createDataGrid(additionalField.id, null, thesaurusTermsStructure, null);
+    dojo.addClass(additionalField.id, "hideTableHeader");
+}
+
+function addSurroundingContainer(/*DomNode*/nodeToInsert, additionalField, type, linkInfo) {
     // Create the following dom structure:
     // <span id="uiElementAdd${additionalField.id}" class="outer" type="optional">
     //   <div>
@@ -516,6 +531,10 @@ function addSurroundingContainer(/*DomNode*/nodeToInsert, additionalField, type)
     //       <label class="inActive">
     //         ${additionalField.name}
     //       </label>
+    //     </span>
+    //     <span class="functional_link">
+    //       <img></img>
+    //       <a></a>
     //     </span>
     //     <span class="input">
     //       < ingrid:ValidationTextbox or ingrid:Select (or ...) depending on ${additionalField.type} /> 
@@ -540,11 +559,15 @@ function addSurroundingContainer(/*DomNode*/nodeToInsert, additionalField, type)
     uiElementSpan.setAttribute("style", additionalField.style);
     var uiPaddingDiv = document.createElement("div");
     var labelSpanElement = document.createElement("span");
-    dojo.addClass(labelSpanElement, "label");
+    dojo.addClass(labelSpanElement, "label left");
     var labelElement = document.createElement("label");
     //dojo.addClass(labelElement, "inActive");
     labelElement.setAttribute("onclick", "javascript:dialog.showContextHelp(arguments[0], \""+additionalField.help+"\")");
     labelElement.innerHTML = additionalField.name;
+    
+    if (linkInfo) {
+        var linkSpanElement = dojo.create("span", {"class": "functionalLink", innerHTML: "<a href='#' onclick=\"javascript:dialog.showPage(getLocalizedTitle('thesaurusNavigator'), 'dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {service: 'rdf', dstTable: '"+additionalField.id+"', rootUrl: '"+additionalField.rootUrl+"'});\">"+additionalField.linkLabel+"</a>"});
+    }
     
     /*if (isGrid) {
         var inputSpanElement = document.createElement("div");
@@ -552,13 +575,14 @@ function addSurroundingContainer(/*DomNode*/nodeToInsert, additionalField, type)
     }
     else {*/
         var inputSpanElement = document.createElement("span");
-        dojo.addClass(inputSpanElement, "input");
+        dojo.addClass(inputSpanElement, "input clear");
     //}
     
     // Build the complete structure
     labelSpanElement.appendChild(labelElement);
     uiElementSpan.appendChild(uiPaddingDiv);
     uiPaddingDiv.appendChild(labelSpanElement);
+    if (linkSpanElement) uiPaddingDiv.appendChild(linkSpanElement);
     if (type == "Numberbox") {
         var tableContainer = dojo.create("table", {
             style: {width:"100%"},

@@ -103,6 +103,9 @@ var udkDataProxy = {};
 // This flag is set when any value in the gui changes
 udkDataProxy.dirtyFlag = false;
 
+// remember the previous class for better conditions on class change
+udkDataProxy.previousClass = null;
+
 
 // In currentUdk we cache the currently loaded udk in it's original representation.
 // Changes are not tracked here! We need it to access static information that is not
@@ -2352,19 +2355,16 @@ udkDataProxy._getObjectData = function(nodeData)
 		  var identifier = currentField.id;
           
           // check if field is a table and handle differently
-          if (currentField instanceof ingrid.dijit.CustomGrid) { //currentField.keepRows != undefined) {
-              //identifier = currentField;
-              //currentField = gridManager[currentField];
+          if (currentField instanceof ingrid.dijit.CustomGrid) {
               // get column ids
               var tableData = [];
               var columnIds = [];
-              //for (var i = 0; i < currentField.getColumns().length; i++) {
+
               dojo.forEach(currentField.getColumns(), function(column) {
                   columnIds.push(column.field);
               });
-              //for (var i = 0; i < currentField._by_idx.length; i++) {
+
               dojo.forEach(currentField.getData(), function(row) {
-                  //var row = currentField.getItem(i);
                   var rowData = [];
                   for (var j = 0; j < columnIds.length; j++) {
                       var value = row[columnIds[j]];
@@ -2379,7 +2379,7 @@ udkDataProxy._getObjectData = function(nodeData)
                           var index = dojo.indexOf(currentField.getColumns()[j].values, value);
                           if (index == -1) index = dojo.indexOf(currentField.getColumns()[j].options, value);
                           if (index != -1) {
-                              var listId = currentField.getColumns()[j].values[index];
+                              listId = currentField.getColumns()[j].values[index];
                               value = currentField.getColumns()[j].options[index];
                           }
                       }
@@ -2412,8 +2412,7 @@ udkDataProxy._getObjectData = function(nodeData)
                   }
                   
                   // for lists to get value
-                  //var listId = additionalFieldWidgets[nr].get("value");
-                  var value = additionalFieldWidgets[nr].get("value");//UtilList.getSelectDisplayValue(additionalFieldWidgets[nr], listId);
+                  var value = additionalFieldWidgets[nr].get("value");
                   
               } else if (currentField instanceof dijit.form.DateTextBox) {
                  var value = currentField.get("value");
@@ -2928,12 +2927,12 @@ igeEvents.handleSelectNode = function(message) {
     }
 }
 
-igeEvents.selectUDKClass = function() {
-	var val = dijit.byId("objectClass").getValue();
+igeEvents.selectUDKClass = function(val) {
 	if (val) {
 	    igeEvents.setSelectedClass(val);
 		igeEvents.refreshTabContainers("contentFrameBodyObject");
-        dojo.publish("/onObjectClassChange", [{objClass: val}]);
+        dojo.publish("/onObjectClassChange", [{objClass: val, previousClass: udkDataProxy.previousClass}]);
+        udkDataProxy.previousClass = val;
 	}
 }
 

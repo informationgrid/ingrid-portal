@@ -27,18 +27,20 @@
         <script type="text/javascript">
             dojo.require("ingrid.dijit.ThesaurusTree");
             
-            var scriptScope = this;
+            var scriptScopeThesaurusDlg = _container_;
             
             var selectedTextNode = null;
             var selectedButton = null;
-            //dojo.addOnLoad(function(){
-            //	if (dojo.isIE)
-            //        init();
-            //    else
-                    dojo.connect(_container_, "onLoad", function(){
-                    	init();
-                	});
-            //});
+            dojo.connect(_container_, "onLoad", function(){
+                this.service = SNSService;
+                if (scriptScopeThesaurusDlg.customParams.service == "rdf") {
+                	this.service = RDFService;
+                	// hide search components
+                	dojo.query(".search, div[widgetid='thesResultTabContainer_tablist_thesResultPane']").forEach(function(item) { dojo.addClass(item, "hide"); })
+                }
+                    
+                init();
+            });
             
             function showLoadingZone(){
                 dojo.byId('thesLoadingZone').style.visibility = "visible";
@@ -65,8 +67,14 @@
             }
             
             function createDOMElements(){
+                var service = "sns";
+                if (scriptScopeThesaurusDlg.customParams.service)
+                    service = scriptScopeThesaurusDlg.customParams.service;
+                
                 thesTreeWidget = new ingrid.dijit.ThesaurusTree({
-                    domId:"thesTree", 
+                    domId: "thesTree", 
+                    service: service,
+                    rootUrl: scriptScopeThesaurusDlg.customParams.rootUrl,
                     showLoadingZone:showLoadingZone, 
                     hideLoadingZone:hideLoadingZone, 
                     showStatus:showStatus 
@@ -186,7 +194,7 @@
                 var resultPane = dijit.byId("thesResultPane");
                 dijit.byId("thesResultTabContainer").selectChild(resultPane);
 
-                SNSService.findTopics(queryTerm, {
+                scriptScopeThesaurusDlg.service.findTopics(queryTerm, {
                     preHook: function(){
                         showLoadingZone();
                     },
@@ -307,7 +315,7 @@
             <div id="thesaurusContent" class="content">
                 <!-- LEFT HAND SIDE CONTENT START -->
                 <span class="outer" style="width:60%;">
-                <div class="inputContainer field grey">
+                <div class="inputContainer field grey search">
                 	<span class="outer"><div>
                     <span class="label">
                         <label for="thesSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7031)">
@@ -317,7 +325,7 @@
                     </div></span>
                     <div class="fill"></div>
                 </div>
-                <div class="inputContainerFooter">
+                <div class="inputContainerFooter search">
                     <span class="button"><span style="float:right;">
                             <button type="button" dojoType="dijit.form.Button" id="findTopicButton" class="buttonBlue" title="<fmt:message key="dialog.thesaurusNavigator.search" />" onClick="findTopic">
                                 <fmt:message key="dialog.thesaurusNavigator.search" />
@@ -330,7 +338,7 @@
                             <div id="thesTree">
                             </div>
                         </div>
-                        <div class="grey" dojoType="dijit.layout.ContentPane" id="thesResultPane" title="<fmt:message key="dialog.thesaurusNavigator.list" />" style="">
+                        <div class="grey search" dojoType="dijit.layout.ContentPane" id="thesResultPane" title="<fmt:message key="dialog.thesaurusNavigator.list" />" style="">
                             <span id="thesResultContainer"></span>
                         </div>
                     </div>
@@ -366,8 +374,8 @@
                         </div>
                     </div>
                     <!--</div>-->
-                    <div class="inputContainer">
-                        <span class="buttonNoBg">
+                    <div class="inputContainerFooter">
+                        <span class="buttonNoBg" style="float:right;">
                             <button dojoType="dijit.form.Button" id="acceptTopicListButton" class="buttonGrey" onClick="acceptTopicList">
                                 <fmt:message key="dialog.thesaurusNavigator.apply" />
                             </button>

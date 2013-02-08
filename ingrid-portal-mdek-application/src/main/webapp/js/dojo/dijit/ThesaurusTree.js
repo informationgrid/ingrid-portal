@@ -8,13 +8,20 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
     nodeLabel: "title",
     treeWidget: null,
     loadingDivId: null,
+    service: SNSService,
+    rootUrl: null,
     
     constructor: function(args) {
+    	console.debug(args);
         this.domId = args.domId;
         if (args.loadingDivId) this.loadingDivId = args.loadingDivId;
         if (args.showLoadingZone) this.showLoadingZone = args.showLoadingZone;
         if (args.hideLoadingZone) this.hideLoadingZone = args.hideLoadingZone;
         if (args.showStatus) this.showStatus = args.showStatus;
+        if (args.service == "rdf") {
+        	this.service = RDFService;
+        	this.rootUrl = args.rootUrl;
+        }
         createCustomTree(this.domId, null, this.nodeId, this.nodeLabel, dojo.hitch(this, this._loadSNSData));
         this.treeWidget = dijit.byId(this.domId);
     },
@@ -25,7 +32,7 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
         
         // if it's the initialization
         if (node.item.root) {
-            SNSService.getRootTopics({
+            var serviceCallbacks = {
                 preHook: function(){
                     _this.showLoadingZone();
                 },
@@ -47,10 +54,14 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
                     deferred.errback(msg);
                     _this.showStatus("<fmt:message key='sns.connectionError' />");
                 }
-            });
+            };
+            if (this.service == RDFService)
+            	this.service.getRootTopics(this.rootUrl, serviceCallbacks);
+            else
+            	this.service.getRootTopics(serviceCallbacks);
         }
         else {
-            SNSService.getSubTopics(node.item.topicId[0], '2', 'down', {
+            this.service.getSubTopics(node.item.topicId[0], '2', 'down', {
                 preHook: function(){
                     _this.showLoadingZone();
                 },
@@ -129,7 +140,7 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
         var def = new dojo.Deferred();
         var treePane = this.treeWidget;
         var _this = this;
-        SNSService.getSubTopicsWithRoot(topicID, '0', 'up', {
+        this.service.getSubTopicsWithRoot(topicID, '0', 'up', {
             preHook: function(){
                 _this.showLoadingZone();
             },

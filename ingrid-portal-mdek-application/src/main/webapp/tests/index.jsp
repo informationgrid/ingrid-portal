@@ -1,6 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<% request.getSession(true).setAttribute("userName", "ige"); %>
+<% request.getSession(true).setAttribute("currLang", request.getParameter("lang") == null ? "de" : request.getParameter("lang")); %>
+
+<fmt:setLocale value="<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>" scope="session" />
+<fmt:setBundle basename="messages" scope="session"/>
 
 <html dir="ltr">
 
@@ -31,6 +36,7 @@
 <script src='../dwr/interface/AddressService.js'></script>
 <script src='../dwr/interface/SecurityService.js'></script>
 <script src='../dwr/interface/SNSService.js'></script>
+<script src='../dwr/interface/RDFService.js'></script>
 <script src='../dwr/interface/QueryService.js'></script>
 <script src='../dwr/interface/HelpService.js'></script>
 <script src='../dwr/interface/CTService.js'></script>
@@ -68,6 +74,8 @@
 <script type="text/javascript" src="../js/dojo/dijit/CustomGridRowSelector.js"></script>
 <script type="text/javascript" src="../js/dojo/dijit/CustomGridEditors.js"></script>
 <script type="text/javascript" src="../js/dojo/dijit/CustomGridFormatters.js"></script>
+
+<script type="text/javascript" src="../js/dojo/dijit/ThesaurusTree.js"></script>
 
 
 <script type="text/javascript">

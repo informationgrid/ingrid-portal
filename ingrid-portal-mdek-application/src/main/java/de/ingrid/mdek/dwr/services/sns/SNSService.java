@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.ingrid.external.FullClassifyService;
 import de.ingrid.external.GazetteerService;
@@ -28,6 +29,7 @@ import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 import de.ingrid.mdek.util.MdekUtils;
 
+@Qualifier("sns")
 public class SNSService {
 
 	private final static Logger log = Logger.getLogger(SNSService.class);	
@@ -38,7 +40,7 @@ public class SNSService {
     // Error string for the frontend
     private static String ERROR_SNS_INVALID_URL = "SNS_INVALID_URL";
     
-    private ThesaurusService thesaurusService;
+    protected ThesaurusService thesaurusService;
     private GazetteerService gazetteerService;
     private FullClassifyService fullClassifyService;
 
@@ -444,7 +446,7 @@ public class SNSService {
 
     /** NO adding of children !
     /* NOTICE: Type.TOP_TERM can only be determined if term is TreeTerm !!!!!! */
-    private SNSTopic convertTermToSNSTopic(Term term) {
+    protected SNSTopic convertTermToSNSTopic(Term term) {
     	Type type = getTypeFromTerm(term);
     	String id = term.getId();
     	String name = term.getName();

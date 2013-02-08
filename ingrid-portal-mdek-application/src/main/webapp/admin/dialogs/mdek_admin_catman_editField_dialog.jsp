@@ -54,6 +54,14 @@
                         'class': "fullWidth"
                     });
                     dijit.byId("formUnits").addChild(unitWidget);
+                    
+                 	// create link label
+                    var linkLabel = new dijit.form.TextBox({
+                        id: "formThesaurusLinkLabel_" + lang,
+                        title: lang,
+                        'class': "fullWidth"
+                    });
+                    dijit.byId("formThesaurusLinkLabel").addChild(linkLabel);
                 });
                 
                 dojo.connect(dijit.byId("formMandatory"), "onChange", scriptScope.mandatoryChanged);
@@ -102,11 +110,17 @@
                         	countColumn++;
                             scriptScope.writeColumn(column, countColumn);
                         });
-                        this.setAndShowField("span_formNumTableRows", "formNumTableRows", profileObjectToEdit.numTableRows);
                         dojo.removeClass("span_formColumns", "hide");
                         dojo.connect(dijit.byId("formWidth"), "onChange", scriptScope.updateAvailableTableWidth);
                         setTimeout(scriptScope.updateAvailableTableWidth, 1000);
                         // fall through!
+                    case "thesaurusControl":
+                        this.setAndShowField("span_formNumTableRows", "formNumTableRows", profileObjectToEdit.numTableRows);
+                        if (type == "thesaurusControl") {
+                            //dojo.removeClass("span_formThesaurusUrl", "hide");
+                            this.setAndShowField("span_formThesaurusUrl", "formThesaurusUrl", profileObjectToEdit.thesaurusUrl);
+                            this.setAndShowField("span_formThesaurusLinkLabel", "formThesaurusLinkLabel", profileObjectToEdit.linkLabel);
+                        }
                     case "selectControl":
                         if (type == "selectControl") {
                             scriptScope.prepareSelectOptions(profileObjectToEdit);
@@ -328,6 +342,7 @@
                 var data = scriptScope.customParams.item;
                 data.label = {};
                 data.helpMessage = {};
+                data.linkLabel = {};
                 data.options = {};
                 data.unit = {};
                 
@@ -346,6 +361,7 @@
                     
                     data.label[lang] = dijit.byId("formTitle_" + lang).get('value');
                     data.helpMessage[lang] = dijit.byId("formHelp_" + lang).get('value');
+                    data.linkLabel[lang] = dijit.byId("formThesaurusLinkLabel_" + lang).get("value");
                 });
                 
                 // title and help must be available in default/first language
@@ -363,6 +379,7 @@
                 data.widthUnit = "%";
                 data.numTableRows = dijit.byId("formNumTableRows").get('value');
                 data.numLines = dijit.byId("formNumTextRows").get("value");
+                data.thesaurusUrl = dijit.byId("formThesaurusUrl").get("value");
                 
                 // check if id is unique
                 // for this only check all created div containers in admin area
@@ -699,6 +716,31 @@
                             </span>
                             <span class="input">
                                 <input dojoType="dijit.form.NumberTextBox" id="formNumTableRows" constraints="{min:1}" style="width: 100%;"/>
+                            </span>
+                        </div>
+                    </span>
+                    <span id="span_formThesaurusUrl" class="outer hide">
+                        <div>
+                            <span class="label">
+                                <label for="formThesaurusUrl" onclick="javascript:dialog.showContextHelp(arguments[0], 9999)">
+                                    <fmt:message key="dialog.admin.additionalfields.thesaurusUrl" />
+                                </label>
+                            </span>
+                            <span class="input">
+                                <input dojoType="dijit.form.TextBox" id="formThesaurusUrl" style="width: 100%;"/>
+                            </span>
+                        </div>
+                    </span>
+                    <span id="span_formThesaurusLinkLabel" class="outer hide">
+                        <div>
+                            <span class="label">
+                                <label for="formThesaurusLinkLabel" onclick="javascript:dialog.showContextHelp(arguments[0], 10104)">
+                                    <fmt:message key="dialog.admin.additionalfields.title" />*
+                                </label>
+                            </span>
+                            <span class="input">
+                                <div dojoType="dijit.layout.TabContainer" doLayout="false" controllerWidget="dijit.layout.TabController" id="formThesaurusLinkLabel" style="width:100%;" selected="en">
+                                </div>
                             </span>
                         </div>
                     </span>
