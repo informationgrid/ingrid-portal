@@ -155,7 +155,7 @@ function _createContextHelpContent(helpMessage, guiId) {
     var text = "<div style='padding:10px;'>" + helpMessage.helpText; 
     
     if (helpMessage.sample && helpMessage.sample.length != 0)
-        text += "<br/><br/><strong>Beispiel:</strong><br/>"+helpMessage.sample;
+        text += "<br/><strong>Beispiel:</strong><br/>"+helpMessage.sample;
         
     if (guiId && guiId != -1)
         text += "<br/><br/>Feld ID: "+guiId
