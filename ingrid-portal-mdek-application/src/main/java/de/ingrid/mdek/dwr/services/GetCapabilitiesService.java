@@ -227,7 +227,7 @@ public class GetCapabilitiesService {
     	getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
     	List<String> getCapabilitiesOpAddressList = new ArrayList<String>();
     	String address = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_CAPABILITIES_HREF"), doc);
-    	getCapabilitiesOpAddressList.add(appendGetCapabilitiesParameterToWmsServiceUrl(address,version));
+    	getCapabilitiesOpAddressList.add(address);
     	getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
 
     	List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
@@ -246,7 +246,7 @@ public class GetCapabilitiesService {
     	getMapOpPlatform.add(ID_OP_PLATFORM_HTTP_GET);
     	getMapOp.setPlatform(getMapOpPlatform);
     	List<String> getMapOpAddressList = new ArrayList<String>();
-    	getMapOpAddressList.add(appendVersionParameterToWmsServiceUrl(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_MAP_HREF"), doc),version));
+    	getMapOpAddressList.add(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_MAP_HREF"), doc));
     	getMapOp.setAddressList(getMapOpAddressList);
 
     	paramList = new ArrayList<OperationParameterBean>();
@@ -273,7 +273,7 @@ public class GetCapabilitiesService {
     	operations.add(getMapOp);
 
     	// Operation - GetFeatureInfo - optional
-    	String getFeatureInfoAddress = appendVersionParameterToWmsServiceUrl(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_FEATURE_INFO_HREF"), doc),version);
+    	String getFeatureInfoAddress = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_FEATURE_INFO_HREF"), doc);
     	if (getFeatureInfoAddress != null && getFeatureInfoAddress.length() != 0) {
 	    	OperationBean getFeatureInfoOp = new OperationBean();
 	    	getFeatureInfoOp.setName("GetFeatureInfo");
@@ -305,6 +305,8 @@ public class GetCapabilitiesService {
     	return result;
     }
 
+    /*
+    // not used anymore (INGRID-2215)
     private String appendVersionParameterToWmsServiceUrl(String baseUrl, String version) {
         StringBuilder url = appendUrlRequestParameterSymbols(baseUrl);
     	
@@ -312,6 +314,7 @@ public class GetCapabilitiesService {
     	return url.toString();
 	}
 
+    
 	private String appendGetCapabilitiesParameterToWmsServiceUrl(String baseUrl, String version) {
     	StringBuilder url = appendUrlRequestParameterSymbols(baseUrl);
 
@@ -327,7 +330,7 @@ public class GetCapabilitiesService {
             paramUrl.append('&');
         }
         return paramUrl;
-	}
+	}*/
 
 
     public CapabilitiesBean getCapabilitiesWFS(Document doc) throws XPathExpressionException {
