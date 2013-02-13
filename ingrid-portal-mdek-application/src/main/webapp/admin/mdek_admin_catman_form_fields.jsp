@@ -234,6 +234,7 @@ scopeAdminFormFields.writeControl = function(control, putHere, editFunction, del
     // add javascript info if available
     // create tooltip only after connectId-node is inserted into DOM!!!
     scopeAdminFormFields.appendJsInfo(innerSpanTitlePadded, control);
+    scopeAdminFormFields.appendIdfInfo(innerSpanTitlePadded, control);
     return outerDiv.domNode;
 }
 
@@ -245,7 +246,21 @@ scopeAdminFormFields.appendJsInfo = function(appendTo, control) {
             'class': "tooltip",
             innerHTML: "(JS)"
         }, appendTo);
-        var tip = new dijit.Tooltip({connectId:[tipId], label:"<code class='javascript'>"+/*scopeAdminFormFields.convertToHTML(*/control.scriptedProperties/*)*/+"</code>"});
+        var tip = new dijit.Tooltip({connectId:[tipId], label:"<code class='javascript'>"+/*scopeAdminFormFields.convertToHTML(*/control.scriptedProperties.replace(/\n/g, "<br>")/*)*/+"</code>"});
+        dojo.connect(tip, "onShow", function() { dojo.query("code").forEach(dojox.highlight.init);});
+         
+    }
+}
+
+scopeAdminFormFields.appendIdfInfo = function(appendTo, control) {
+    if (control.scriptedCswMapping && dojo.trim(control.scriptedCswMapping).length > 0) {
+        var tipId = control.id+"IdfTooltip";
+        dojo.create("span", {
+            id: tipId,
+            'class': "tooltip",
+            innerHTML: "(IDF)"
+        }, appendTo);
+        var tip = new dijit.Tooltip({connectId:[tipId], label:"<code class='javascript'>"+/*scopeAdminFormFields.convertToHTML(*/control.scriptedCswMapping.replace(/\n/g, "<br>")/*)*/+"</code>"});
         dojo.connect(tip, "onShow", function() { dojo.query("code").forEach(dojox.highlight.init);});
          
     }

@@ -123,6 +123,12 @@ dojo.addOnLoad(function() {
             dijit.byId("stackContainer").selectChild(dijit.byId("pageDialogTest"));
         }
     }));
+    menu.addChild(new dijit.MenuBarItem({
+        label: "Additional Fields",
+        onClick: function(){
+            dijit.byId("stackContainer").selectChild(dijit.byId("pageAdditionalTest"));
+        }
+    }));
 
     sc = new dijit.layout.StackContainer({
         style: "width: 100%;",
@@ -146,8 +152,17 @@ dojo.addOnLoad(function() {
         executeScripts: true
     });
     
+    var additionalTests = new dojox.layout.ContentPane({
+        id: "pageAdditionalTest",
+        layoutAlign: "client",
+        href: "AdditionalTest.jsp?c="+userLocale,
+        scriptHasHooks: true,
+        executeScripts: true
+    });
+    
     sc.addChild(tableTests);
     sc.addChild(dialogTests);
+    sc.addChild(additionalTests);
     sc.startup();
 
     main.startup();

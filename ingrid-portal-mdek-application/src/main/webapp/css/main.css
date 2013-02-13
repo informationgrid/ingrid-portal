@@ -534,7 +534,7 @@ iframe {
 }
 
 #catalogueFormFields div div:hover, #span_formColumns div div:hover{
-	background-color: #C5C5C5;
+	background-color: #DDD;
 }
 
 #catalogueFormFields div.dijitContentPane div.rubricDiv:hover {
