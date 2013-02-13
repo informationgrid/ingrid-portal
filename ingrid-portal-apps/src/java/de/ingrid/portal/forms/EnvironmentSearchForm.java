@@ -90,10 +90,6 @@ public class EnvironmentSearchForm extends ActionForm {
             setError(FIELD_TOPIC, "envSearch.error.noTheme");
             allOk = false;
         }
-        if (!hasInput(FIELD_PARTNER)) {
-            setError(FIELD_PARTNER, "envSearch.error.noPartner");
-            allOk = false;
-        }
         if(PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_TOPICS_PROVIDER, Boolean.FALSE)){
 	        if (!hasInput(FIELD_PARTNER)) {

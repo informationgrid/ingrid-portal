@@ -87,7 +87,7 @@ public class ServiceSearchForm extends ActionForm {
         clearErrors();
 
         // check rubric
-        if(PortalConfig.getInstance().getString(PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_CATEGORY, "0") == "0"){
+        if(PortalConfig.getInstance().getString(PortalConfig.PORTAL_ENABLE_SEARCH_SERVICES_CATEGORY, "0").equals("0")){
 	        if (!hasInput(FIELD_RUBRIC)) {
 	            setError(FIELD_RUBRIC, "serviceSearch.error.noRubric");
 	            allOk = false;
