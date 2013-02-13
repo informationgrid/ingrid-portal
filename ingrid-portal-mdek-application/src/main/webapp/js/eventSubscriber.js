@@ -3029,8 +3029,7 @@ igeEvents.setSelectedClass = function(/* name of the object class/address type *
 }
 
 igeEvents.refreshTabContainers = function(section) {
-    dojo.query(".required .dijitTabContainer", section).forEach(function(node) { dijit.byId(node.id).resize(); });
-    dojo.query(".expanded .optional .dijitTabContainer", section).forEach(function(node) { dijit.byId(node.id).resize(); });
+    dojo.query(".rubric:not(.hide) span:not(.hide) .dijitTabContainer", section).forEach(function(node) { dijit.byId(node.id).resize(); });
 }
 
 igeEvents.toggleFields = function(section, /* optional */ mode, /* optional flag */ refreshContainers) {
