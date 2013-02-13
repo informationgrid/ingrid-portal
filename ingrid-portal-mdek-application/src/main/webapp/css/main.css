@@ -47,6 +47,7 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 }
 .importantIgnore { color:black !important; }
 .attention .dijitButtonNode {background-color: #bd0d00 !important;}
+.attention .dijitButtonText {color: #FFF !important;}
 
 .transparent { background:transparent !important; }
 
