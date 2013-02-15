@@ -7,6 +7,9 @@
   <body>
     <!-- ADD HERE NEW STUFF ONLY IN 3.3.x RELEASE -->
     <release version="3.3.0-SNAPSHOT" date="2013-??-??" description="???">
+      <action type="add" dev="wemove">
+        MapClient: Add support for resizing tiles while zooming.
+      </action>
       <action type="add" dev="wemove" issue="INGRID33-5">
         IGE: Codelist spatial references can have extra data now, which is interpreted
         as Bounding-Box-Parameters. These will be inserted automatically when a
@@ -60,6 +63,9 @@
         An "XML"-Button next to a search result and within the detail information requests the CSW-interface to show the IDF-document.
       </action>
       
+      <action type="update" dev="wemove" issue="INGRID-2218">
+        Update GeoExt to Version 1.1 for IE9 print support in map client.
+      </action>
       <action type="update" dev="wemove" issue="INGRID-2154, INGRID-2158">
         Update BAW-WSV Profile.
       </action>
