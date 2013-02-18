@@ -1,6 +1,9 @@
 package de.ingrid.mdek.servlets;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletContext;
@@ -11,9 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.xml.sax.InputSource;
 
 import de.ingrid.mdek.dwr.services.CatalogServiceImpl;
 import de.ingrid.utils.ige.profile.ProfileConverter;
+import de.ingrid.utils.ige.profile.ProfileMapper;
 import de.ingrid.utils.ige.profile.beans.ProfileBean;
 
 public class ProfileServlet extends HttpServlet {
@@ -38,6 +43,7 @@ public class ProfileServlet extends HttpServlet {
         }
 
         String lang = request.getParameter("lang");
+        String debug = request.getParameter("debug");
         if (lang == null ) lang = "en";
         ProfileConverter converter = new ProfileConverter(out, lang);
 
@@ -45,7 +51,13 @@ public class ProfileServlet extends HttpServlet {
         ServletContext context = getServletContext();
         WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(context);
         CatalogServiceImpl catalog = (CatalogServiceImpl) applicationContext.getBean("catalogService");
-        ProfileBean profileBean = catalog.getProfileData(request);
+        ProfileBean profileBean = null;
+        if ("true".equals(debug)) {
+        	ProfileMapper pM = new ProfileMapper();
+        	InputStream fis = ProfileServlet.class.getResourceAsStream("/profileXmlAdditionalFields.xml");
+            profileBean = pM.mapStreamToBean(new InputSource(fis));
+        } else
+        	profileBean = catalog.getProfileData(request);
         
         out.println("function createAdditionalFieldsDynamically() {");
         //ProfileMapper pM = new ProfileMapper();
