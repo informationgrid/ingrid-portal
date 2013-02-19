@@ -3,7 +3,7 @@
 <!-- development: 'dojo-src'     release: 'dojo-src/release/dojo' -->
 <% String dojoPath = "dojo-src"; request.getSession(true).setAttribute("dojoPath", dojoPath); %>
 
-<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/styles_dev.css" />
 <script type="text/javascript" src="<%=dojoPath%>/dojo/dojo.js" djConfig="parseOnLoad:false, locale:userLocale"></script>
 <script type="text/javascript" src="<%=dojoPath%>/custom/layer.js"></script>
 <script type="text/javascript">

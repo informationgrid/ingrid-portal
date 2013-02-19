@@ -1854,7 +1854,8 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
         		 w = this.columns[i].width;
 
              rule = this.findCssRule("." + this.uid + " .c" + i);
-             rule.style.width = (w - this.cellWidthDiff) + "px";
+             var newWidth = (w - this.cellWidthDiff) < 0 ? 0 : (w - this.cellWidthDiff);
+             rule.style.width = newWidth + "px";
 
              rule = this.findCssRule("." + this.uid + " .l" + i);
              rule.style.left = x + "px";

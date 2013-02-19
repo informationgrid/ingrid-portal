@@ -77,8 +77,15 @@ function initPrintFrame() {
     cssLink2.href = "/ingrid-portal-mdek-application/dojo-src/release/dojo/css/styles.css"; 
     cssLink2.rel = "stylesheet"; 
     cssLink2.type = "text/css";
-    parent.printFrame.document.head.appendChild(cssLink1);
-    parent.printFrame.document.head.appendChild(cssLink2);
+    // IE has problems here!
+    if (parent.printFrame.document.head) {
+    	parent.printFrame.document.head.appendChild(cssLink1);
+        parent.printFrame.document.head.appendChild(cssLink2);
+    } else {
+    	parent.printFrame.document.childNodes[0].childNodes[0].appendChild(cssLink1);
+    	parent.printFrame.document.childNodes[0].childNodes[0].appendChild(cssLink2);
+    }
+    
 }
 
 function initCatalogData() {

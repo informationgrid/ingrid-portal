@@ -600,9 +600,9 @@
             // 2) if only institution has text -> only this field is required 
             // 3) all field are required otherwise
             scriptScopeUser.checkFields = function() {
-                var surnameEmpty     = dijit.byId("userDataAddressSurname").value.trim() === "";
-                var forenameEmpty    = dijit.byId("userDataAddressForename").value.trim() === "";
-                var institutionEmpty = dijit.byId("userDataAddressInstitution").value.trim() === "";
+                var surnameEmpty     = dojo.trim(dijit.byId("userDataAddressSurname").value) === "";
+                var forenameEmpty    = dojo.trim(dijit.byId("userDataAddressForename").value) === "";
+                var institutionEmpty = dojo.trim(dijit.byId("userDataAddressInstitution").value) === "";
 
                 if (institutionEmpty && (!surnameEmpty || !forenameEmpty)) {
                     dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
@@ -961,8 +961,8 @@
         <!-- CONTENT START -->
         <!--<div dojoType="dijit.layout.ContentPane" layoutAlign="client">-->
             <div id="contentSection" class="content contentBlockWhite top">
-                <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="false" id="borderContainerMdekAdminUserAdmin" style="height:680px;">
-                    <div dojoType="dijit.layout.BorderContainer" splitter="false" region="leading" style="width:264px;">
+                <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="true" id="borderContainerMdekAdminUserAdmin" style="height:680px;">
+                    <div dojoType="dijit.layout.BorderContainer" splitter="true" region="leading" style="width:264px;">
                         <div dojoType="dijit.layout.ContentPane" splitter="false" region="center" class="grey">
                             <!--<div id="userAdmin" class="content">--><!-- LEFT HAND SIDE CONTENT BLOCK 1 START --><!--<div class="spacer"></div>-->
                             <div class="inputContainer">
