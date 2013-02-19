@@ -267,6 +267,18 @@
             scriptScopeUser.deleteUser = function(){
                 var user = dijit.byId("treeUser").selectedNode.item;
                 
+                // if it's a new node
+                if (user != null && user.id == "newUserNode") {
+                    var tree = dijit.byId("treeUser");
+                    tree.model.store.deleteItem(user);
+                    tree.model.store.save();
+                    resetInputFields();
+                    scriptScopeUser.setUserAddressDataFieldsDisabled(true);
+                    dijit.byId("bImportUser").set("disabled", true);
+                    dijit.byId("bDeleteUser").set("disabled", true);
+                    return;
+                }
+                
                 // Can't delete the cat admin. This is also checked in the backend.
                 if (user == null || user.role[0] == 1 || user.isFolder[0]) {
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.users.canNotDeleteError' />", dialog.WARNING);
@@ -648,6 +660,7 @@
 
                 currentSelectedUser = treeNode;
                 dijit.byId("bImportUser").set("disabled", false);
+                dijit.byId("bDeleteUser").set("disabled", false);
                 if (treeNode.role == 1) {
                     // Standards for catAdmin
                     var def = scriptScopeUser.initializeGroupLists(true);
@@ -971,7 +984,7 @@
                         </div>
                         <div dojoType="dijit.layout.ContentPane" splitter="false" region="bottom">
                             <span class="button"><span style="float:left;">
-                                    <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.users.delete" />" onClick="javascript:scriptScopeUser.deleteUser();">
+                                    <button dojoType="dijit.form.Button" id ="bDeleteUser" title="<fmt:message key="dialog.admin.users.delete" />" onClick="javascript:scriptScopeUser.deleteUser();">
                                         <fmt:message key="dialog.admin.users.delete" />
                                     </button>
                                 </span><span style="float:right;">
