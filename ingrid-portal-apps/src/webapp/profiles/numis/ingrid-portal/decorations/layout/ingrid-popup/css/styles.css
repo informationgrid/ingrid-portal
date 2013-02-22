@@ -18,7 +18,7 @@ sup { line-height: 0; }
 img { border:0; }
 /*Need for NUMIS profile*/
 img.image_alt {padding:31px 27px 0; }
-span.icon { margin-right:4px; margin-top:2px; float:left; position: absolute; }
+span.icon { padding-top: 0.25em; width: 12px; vertical-align: top; }
 span.icon_udk { margin-right:6px; margin-top:0px; float:left; width:21px; height:14px; }
 /* no float for detail page in OPERA */
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
@@ -559,7 +559,7 @@ div.detail_margin_left { margin-left:10px; padding-bottom:10px; }
 
 .width_one_half { width:48%; }
 .width_one_third { width:33%; }
-.width_two_thirds { width:66%; clear:both; position: relative; }
+.width_two_thirds { width:66%; padding: 0px 10px 10px; position: relative; }
 
 table.detail_table { width:100%; border-bottom:2px solid #DDDDDD; border-left:1px solid #2C5C91; border-right:1px solid #2C5C91; margin-bottom:10px; }
 table.detail_image_table { width:100%; }
@@ -626,6 +626,8 @@ li.detail_li p { font-size:100%; margin-bottom:0.2em; }
 img.section_show_hide { padding-right:16px; padding-top:5px; }
 
 span.linkinfo { color:#000000; font-size: 60%; padding-left:20px; }
+
+img.preview { border: 1px solid #CCCCCC; margin-bottom: 15px; padding: 5px; }
 
 /******************************************
 * Dojo Tabs CSS style 
