@@ -159,6 +159,25 @@ function emptyOrNullValidation(val, rowIdx, cell) {
 	return val;
 }
 
+function emptyRowValidation(gridId) {
+	var error = false;
+	var data = this.getData();
+	
+	// check for each row that it's not empty (row should be deleted to prevent null data!)
+    if (data.length > 0) {
+        dojo.some(data, function(row) {
+        	for(var key in row){ 
+        		if (row[key] == null || dojo.trim(row[key]+"") == "") {
+        			error = true;
+            		return true;
+        		}
+        	}
+        });
+    }
+    
+    return !error;
+}
+
 function titleDateValidation(gridId){
     var error = false;
 	var data = this.getData();
