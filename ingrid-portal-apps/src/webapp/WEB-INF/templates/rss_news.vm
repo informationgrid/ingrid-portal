@@ -3,7 +3,9 @@
   <div class="resultset">
     <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span><span class="intendResult"><a href="$!rssEntry.link" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rssEntry.title</a></span><em class="date"> <nobr>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</nobr></em></span>
     <p class="result_description">
-      $strutils.cutString($rssEntry.description, 350)
+      #if ($rssEntry && $rssEntry.description)
+        $strutils.cutString($rssEntry.description, 350)
+      #end  
     </p>
     <p class="result_metadata">
       <br />
