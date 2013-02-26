@@ -205,7 +205,7 @@
                                 <fmt:message key="dialog.admin.catalog.catalogNamespace" />*
                             </label>
                         </span>
-                        <span class="input"><input type="text" id="adminCatalogNamespace" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                        <span class="input"><input type="text" id="adminCatalogNamespace" style="width:100%;" required="true" tooltipPosition="below" dojoType="dijit.form.ValidationTextBox" /></span>
                         </div></span>
 						<span class="outer"><div>
 						    <span class="label">
