@@ -168,7 +168,8 @@
             	if(cat.location.name) // can be undefined now
                 return (dojo.trim(cat.countryCode).length != 0 &&
                 dojo.trim(cat.languageCode).length != 0 &&
-                dojo.trim(cat.location.name).length != 0/* &&
+                dojo.trim(cat.location.name).length != 0 &&
+                dojo.trim(cat.catalogNamespace).length != 0/* &&
                 dojo.validate.isInteger(cat.expiryDuration) &&
                 dojo.validate.isInRange(cat.expiryDuration, {
                     min: 0,
@@ -201,7 +202,7 @@
                         <span class="outer"><div>
                         <span class="label">
                             <label for="adminCatalogNamespace" onclick="javascript:dialog.showContextHelp(arguments[0], 8100)">
-                                <fmt:message key="dialog.admin.catalog.catalogNamespace" />
+                                <fmt:message key="dialog.admin.catalog.catalogNamespace" />*
                             </label>
                         </span>
                         <span class="input"><input type="text" id="adminCatalogNamespace" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
