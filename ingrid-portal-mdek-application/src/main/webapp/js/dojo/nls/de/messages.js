@@ -39,6 +39,7 @@
     "general.warning.unknownId":"Die UUID <ul><li>${0}</li></ul> ist unbekannt bzw. exisitiert nicht auf diesem Katalog!",
     "general.example":"Beispiel",
     "general.fieldId":"Feld ID",
+    "general.image.not.found":"Kein Bild gefunden",
 	
 	"general.page":"Seite",
     

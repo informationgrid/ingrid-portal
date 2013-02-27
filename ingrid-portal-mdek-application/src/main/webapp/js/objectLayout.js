@@ -159,15 +159,17 @@ ingridObjectLayout.createGeneralInfo = function(){
     // show a tooltip when hovering over image
     previewImage.tooltip = new dijit.Tooltip({
         connectId: ["generalPreviewImage"],
-        label: "<img src='' width='300' height='300' alt='IMAGE NOT FOUND' />",
+        label: "<img src='' width='300' height='300' alt='"+message.get("general.image.not.found")+"' />",
         showDelay: 600,
         position: 'above'
     });
     
     dojo.connect(previewImage, "onChange", function(value) {
         //this.tooltip.destroyRecursive();
-        this.tooltip.label = "<img src='"+value+"' width='300' height='300' alt='IMAGE NOT FOUND: "+value+"' />";
+        this.tooltip.label = "<img src='"+value+"' width='300' height='300' alt='"+message.get("general.image.not.found")+": "+value+"' />";
     });
+    
+    dojo.connect(previewImage.domNode, "onmouseout", function() {dijit.hideTooltip(dojo.byId("generalPreviewImage"));});
     
     var thesaurusInspireStructure = [
         {field: 'title',name: 'title',width: 708-scrollBarWidth+'px',
