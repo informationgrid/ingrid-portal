@@ -8,7 +8,7 @@ UPDATE `info` SET `value_name` = '3.3' WHERE  `info`.`key_name` = 'version';
 -- ========================
 
 INSERT INTO `help_messages` (`id`, `version`, `gui_id`, `entity_class`, `language`, `name`, `help_text`, `sample`) VALUES
-(1396, 0, 5100, -1, 'de', 'Vorschaugrafik', 'Hier kann eine URL auf ein Bild eingetragen werden, welches im Portal in den Suchergebnissen angezeigt werden soll.', ''),
+(1396, 0, 5100, -1, 'de', 'Vorschaugrafik', 'Tragen Sie hier eine URL ein, unter welcher eine Grafik abgerufen werden kann. Diese Grafik wird im Portal in der Suchergebnisliste neben dem Treffer angezeigt.', ''),
 (1397, 0, 5100, -1, 'en', 'Preview image', 'You can add an url to an image, which shall be shown within the search results in the portal.', ''),
 (1398, 0, 7103, -1, 'de', 'Zusatzinformation', 'Angabe von zusätzlichen Informationen wie zum Beispiel die Veröffentlichungsbreite.', ''),
 (1399, 0, 7103, -1, 'en', 'Preview image', 'Add additional information as for example the publication condition.', ''),
