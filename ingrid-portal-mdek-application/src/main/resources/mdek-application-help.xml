@@ -222,15 +222,13 @@
         <section help-key="dashboard-1">
             <header>Description</header>
             <content>
-                <p>The dashboard shows an overview of the catalogue that is in use. Moreover the currently
-                edited objects and addresses of the logged in user are shown. So it's possible to jump directly to 
-                the object/address that has been recently edited.</p>
+                <p>The dashboard gives an overview of the catalogue in form of some general information and 
+                two lists of recently edited objects. The first tab lists all objects of the actual user, 
+                the second tab lists all objects of the whole catalogue that have been edited recently. 
+                Clicking on one of the objects opens the editor view. A gray colour for an 
+                object/address indicates that the user has no write permissions for this object/address.</p>
                 <br />
-                <p>If you click on "All Datasets" all recently edited objects/addresses of all users are shown.
-                This overview show which objects/addresses are edited on the whole catalogue. A gray object/address
-                signifies that the logged in user has no write permission for this object/address.</p>
-                <br />
-                <p>A click on the "Update"-button refreshes the data without the need of reloading the whole page.</p>
+                <p>The content of the dashboard can be refresehd with the "Update"-button.</p>
             </content>
         </section>
     </chapter>

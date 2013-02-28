@@ -316,17 +316,20 @@
         <section help-key="dashboard-1">
             <header>Beschreibung</header>
             <content>
-                <p>Das Dashboard zeigt eine Übersicht über den verwendeten Katalog. Überdies werden alle zuletzt
-                bearbeiteten Objekte und Adressen des eingeloggten Benutzers tabellarisch angezeigt, so dass
-                ein schneller Sprung zu einem kürzlich bearbeiteten Objekte bzw. Adresse möglich ist.</p>
+                <p>Das Dashboard zeigt eine Übersicht des Kataloges in Form einiger allgemeiner
+                Informationen und einer Übersicht aller zuletzt bearbeiteter Objekte und Adressen.
+                Im ersten Reiter "Meine Datensätze" werden alle in Bearbeitung befindlichen 
+                Objekte bzw Adressen des eingeloggten Benutzers aufgelistet. Wird einer der 
+                angezeigten Datensätze ausgewählt, so wird dieser direkt im Editor geöffnet.</p>
                 <br />
-                <p>Ein Klick auf "Alle Datensätze" zeigt die zuletzt bearbeiteten Objekte und Adressen aller Nutzer
-                an. Hier erhält man einen Überblick, welche Objekte/Adressen auf dem gesamten Katalog gerade bearbeitet
-                werden. Ist ein Objekt/Adresse grau, so bedeutet dies, dass der eingeloggte Benutzer keine Schreibrechte
-                darauf besitzt.</p>
+                <p>Ein Klick auf "Alle Datensätze" zeigt die zuletzt bearbeiteten Objekte und
+                Adressen aller Nutzer an. Hier erhält man einen Überblick, welche
+                Objekte/Adressen im gesamten Katalog gerade bearbeitet werden. Ist ein/e
+                Objekt/Adresse grau, so bedeutet dies, dass der eingeloggte Benutzer keine
+                Schreibrechte darauf besitzt.</p>
                 <br />
-                <p>Ein Klick auf die "Aktualisieren"-Schaltfläche lädt die Informationen neu ein ohne dass die Seite neu 
-                geladen werden muss.</p>
+                <p>Über den Button "Aktualisieren" werden alle Informationen des Dashboards
+                neu geladen.</p>
             </content>
         </section>
     </chapter>
