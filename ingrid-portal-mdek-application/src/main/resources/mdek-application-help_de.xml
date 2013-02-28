@@ -1715,8 +1715,7 @@
 				 <a href="?hkey=quality-assurance-0">Workflow-Kontrolle</a> in den 
 				 <a href="?hkey=catalog-administration-1">Katalogeinstellungen</a> wirksam.</p>
                  <p><b>Zugeordnete Nutzer</b></p>
-                 <p>Auf einem extra Reiter ist es möglich, sich die Benutzer auflisten zu lassen, die zur 
-                 ausgewählten Gruppe gehören.</p>
+                 <p>Auf dem dritten Reiter werden alle Benutzer aufgelistet, welche der gewählten Gruppe zugeordnet wurden.</p>
 				 <p><b>Die spezielle Gruppe <i>administrators</i> des Katalogadministrators</b></p>
 				 <p>Dem Katalogadministrator wird immer automatisch die Gruppe <i>administrators</i> zugewiesen. 
 				 Diese Zuweisung kann <b>nicht</b> verändert werden. Die Gruppe hat Schreibrechte auf den gesamten 
