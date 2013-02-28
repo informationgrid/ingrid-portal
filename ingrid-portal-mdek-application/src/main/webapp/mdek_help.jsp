@@ -10,7 +10,7 @@
 
 <style type="text/css">
 div.left { float:left; width:15.75em;}
-div.right { margin-left:17em; padding:0;}
+div.right { margin-left:17em; padding:0; float:none;}
 .float-left {float:left}
 
 .head-menu {height:30px; background:#156496; padding:0; margin:0; background-image:url(img/head_bg_small.gif);}

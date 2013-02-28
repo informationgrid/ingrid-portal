@@ -1321,9 +1321,9 @@
                  <p>By <i>Duplicates</i> are understood different objects with the same object name. </p>
 				 <p>By the de-centralised maintenance of the objects in different places in the hierarchy tree it is possible that the same object names were given to objects that have different contents. In the standard case of a search being run, the object names in the result list are shown to the user after the search. The information about the position in the hierarchy tree is missing from this display. It is recommended to provide meaningful names for all objects so that users doing research get a clear idea of the found object. </p>
 				 <p>In calling up the submenu item <i>Duplicates</i> a test is run for duplicates (you can repeat this test later by clicking on the <i>Start Duplicates Check</i> button). The <i>Duplicate Check Result</i> is displayed in a <i>List</i>.  </p>
-				 <p>Click on one of the objects listed with the left mouse button and the Object Name, the Type and the Description of the object are displayed.</p>
-				 <p>With the right mouse button click on one of the objects listed and select <i>Display in Hierarchy Tree</i>. The location of the object is then displayed under the Tree tab.Clicking on <i>Open in Editor</i> will load this object in the editor where it can be edited.</p>
-				 <p>You can now alter the <i>Object Name</i> and <i>Save Changes</i> via the respective button. </p>
+				 <p>Choose one of the listed objects with the right mouse button click. The option "Display in Hierarchy Tree" opens the <i>Tree</i> tab and shows the location of the object in the catalogue hierarchy. The option "Open in Editor" loads the selected object in the editor where it can be edited.</p>
+				 <p>When choosing an object with the left mouse button the Name, Type and Description of the object will bedisplayed.</p>
+				 <p>Only the object name can be altered. Changes are applied when the button "Save Changes" is pressed.</p>
             </content>
 		</section>
         <section help-key="overall-catalog-management-3">

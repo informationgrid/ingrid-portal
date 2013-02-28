@@ -15,6 +15,7 @@
                     <li><a><xsl:attribute name="href">#<xsl:value-of select="@help-key" /></xsl:attribute>                    
                     <xsl:value-of select="header"/></a></li>
                 </xsl:for-each>
+                <!-- <li><a href="javascript:history.back()"><xsl:value-of select="../back"/></a></li> -->
               </ul>
               <br />
             </div>

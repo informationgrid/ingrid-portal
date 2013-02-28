@@ -1,5 +1,6 @@
 ﻿<?xml-stylesheet type="text/xsl" href="IGE-application-help.xsl" ?>
 <help>
+    <back>Zurück</back>
     <chapter>
         <header>Hilfe zum InGridEditor</header>
         <section help-key="index">
@@ -1793,15 +1794,14 @@
 				 durchgeführt (Sie können diese Prüfung später wiederholen, indem Sie auf den Button 
 				 <i>Prüfung erneut ausführen</i> klicken). Das <i>Ergebnis der Dublettenprüfung</i> wird 
 				 in einer <i>Liste</i> angezeigt. </p>
-				 <p>Klicken Sie mit der rechten Maustaste auf eines der aufgelisteten Objekte und wählen 
-				 <i>Im Hierarchiebaum anzeigen</i>, so wird die Lage des Objekts unter dem Kartenreiter 
-				 <i>Hierarchiebaum</i> angezeigt. Ein Klick auf <i>Öffne in Erfassung</i> lädt dieses Objekt
-				 in der Erfassung, von wo aus es direkt bearbeitet werden kann.</p>
-				 <p>Klicken Sie mit der linken Maustaste auf eines der aufgelisteten Objekte, werden 
-				 der <i>Objektname</i>, die <i>Klasse</i> und die <i>Beschreibung</i> des Objektes 
-				 angezeigt.</p>
-				 <p>Sie können nun den Objektnamen ändern und über den entsprechenden Button die 
-				 <i>Änderung speichern</i>.</p>
+				 <p>Wählen Sie mit der rechten Maustaste eines der aufgelisteten Objekte aus. Mit der Option 
+                 "Im Hierarchiebaum anzeigen" wird im Kartenreiter <i>Hierarchiebaum</i> die Lage des Objekts 
+                 in der Kataloghierarchie angezeigt. Mit der Option "Öffne in Erfassung" wird das gewählte 
+                 Objekt in der Erfassung geöffnet, wo es direkt bearbeitet werden kann.</p>
+				 <p>Ein Klick mit der linken Maustaste auf eines der aufgelisteten Objekte zeigt rechts den 
+                 Objektnamen, die Klasse und die Beschreibung des Objektes.</p>
+				 <p>Es kann lediglich der Objektname geändert und über den entsprechenden Button abgespeichert 
+                 werden.</p>
             </content>
         </section>
         <section help-key="overall-catalog-management-3">
@@ -2190,14 +2190,16 @@
                             var hierarchyLevelName = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:hierarchyLevelName");<br />
                             if (hierarchyLevelName) {<br />
                                 <blockquote>
-                                hierarchyLevelName.addElementAsSibling("gmd:hierarchyLevelName/gco:CharacterString").addText(types[content.get("list_item_id")-1]);<br />
+                                hierarchyLevelName.addElementAsSibling("gmd:hierarchyLevelName/gco:CharacterString")
+                                  .addText(types[content.get("list_item_id")-1]);<br />
                                 </blockquote>
                             } else {<br />
                                 <blockquote>
                                 var hierarchyLevel = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:hierarchyLevel");<br />
                                 if (hierarchyLevel) {<br />
                                     <blockquote>
-                                    hierarchyLevel.addElementAsSibling("gmd:hierarchyLevelName/gco:CharacterString").addText(types[content.get("list_item_id")-1]);<br />
+                                    hierarchyLevel.addElementAsSibling("gmd:hierarchyLevelName/gco:CharacterString")
+                                      .addText(types[content.get("list_item_id")-1]);<br />
                                     </blockquote>
                                 } else {<br />
                                     <blockquote>
