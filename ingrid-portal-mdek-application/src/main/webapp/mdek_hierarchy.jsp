@@ -285,7 +285,7 @@
                             </span>
                             <span id="uiElement5100" class="outer optional">
                                 <div><span class="label">
-                                    <label for="generalPreviewImage" onclick="javascript:dialog.showContextHelp(arguments[0], 5100)">
+                                    <label onclick="javascript:dialog.showContextHelp(arguments[0], 5100)">
                                         <fmt:message key="ui.obj.general.previewImage" />
                                     </label>
                                 </span><span class="input">
