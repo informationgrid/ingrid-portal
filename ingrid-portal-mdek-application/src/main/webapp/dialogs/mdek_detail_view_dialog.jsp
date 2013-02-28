@@ -1068,7 +1068,7 @@ scriptScopeDetailView.findNodeInSubTree = function(uuid) {
         <div id="dialogContent" class="content">
             <div id="printDialogSettings" class="grey">
                 <input type="checkbox" id="showDetailedView" dojoType="dijit.form.CheckBox" checked=true />
-                <label for="showDetailedView" style="margin-right: 15px;">
+                <label for="showDetailedView" class="inActive" style="margin-right: 15px;">
                     <fmt:message key="dialog.detail.print.showDetailedView" />
                 </label>
                 <input type="checkbox" id="showSubTree" dojoType="dijit.form.CheckBox" />
