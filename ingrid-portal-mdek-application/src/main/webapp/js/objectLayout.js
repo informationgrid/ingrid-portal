@@ -159,14 +159,14 @@ ingridObjectLayout.createGeneralInfo = function(){
     // show a tooltip when hovering over image
     previewImage.tooltip = new dijit.Tooltip({
         connectId: ["generalPreviewImage"],
-        label: "<div style='width:300px; height:300px;'><img src='' width='300' height='300' alt='"+message.get("general.image.not.found")+"' /></div>",
+        label: message.get("general.image.not.found"),
         showDelay: 600,
         position: 'above'
     });
     
     dojo.connect(previewImage, "onChange", function(value) {
         //this.tooltip.destroyRecursive();
-        this.tooltip.label = "<div style='width:300px; height:300px;'><img src='"+value+"' width='300' height='300' alt='"+message.get("general.image.not.found")+": "+value+"' /></div>";
+        this.tooltip.label = "<img style='min-width:150px;' src='"+value+"' alt='"+message.get('general.image.not.found')+": "+value+"' />";
     });
     
     dojo.connect(previewImage.domNode, "onmouseout", function() {dijit.hideTooltip(dojo.byId("generalPreviewImage"));});
