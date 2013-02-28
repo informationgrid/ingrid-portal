@@ -19,9 +19,9 @@ INSERT INTO `help_messages` (`id`, `version`, `gui_id`, `entity_class`, `languag
 (1404, 0, 8209, -1, 'de', 'Überschreiben von Metadaten', 'In diesem Fall werden alle Metadaten, die mit den Importdaten über die ID übereinstimmen, überschrieben. Darüber hinaus kann sich auch die Position der überschriebenen Metadaten im Hierarchiebaum ändern.', ''),
 (1405, 0, 8209, -1, 'en', 'Overwrite of Metadata', 'In this case all metadata, which have the same ID as the imported data are overwritten. Moreover the position of the overwritten metadata can change during the import.', ''),
 (1406, 0, 8210, -1, 'de', 'Verantwortlich für Objekte', 'Diese Tabelle zeigt alle Objekte an, für die der ausgewählter Nutzer als Verantwortlicher eingetragen worden ist.', ''),
-(1407, 0, 8210, -1, 'en', 'Responsible in objects', 'This table shows all objects the selected user is responsible of.', ''),
+(1407, 0, 8210, -1, 'en', 'Responsible in objects', 'This table lists all the objects that the selected user is responsible for.', ''),
 (1408, 0, 8211, -1, 'de', 'Verantwortlich für Adressen', 'Diese Tabelle zeigt alle Adressen an, für die der ausgewählter Nutzer als Verantwortlicher eingetragen worden ist.', ''),
-(1409, 0, 8211, -1, 'en', 'Responsible in addresses', 'This table shows all addresses the selected user is responsible of.', '');
+(1409, 0, 8211, -1, 'en', 'Responsible in addresses', 'This table lists all addresses that the selected user is responsible for.', '');
 
 
 DELETE FROM help_messages WHERE gui_id = 1000;
