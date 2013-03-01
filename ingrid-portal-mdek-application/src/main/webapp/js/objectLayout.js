@@ -166,7 +166,7 @@ ingridObjectLayout.createGeneralInfo = function(){
     
     dojo.connect(previewImage, "onChange", function(value) {
         //this.tooltip.destroyRecursive();
-        this.tooltip.label = "<img style='min-width:150px;' src='"+value+"' alt='"+message.get('general.image.not.found')+": "+value+"' />";
+        this.tooltip.label = "<img style='min-width:150px; max-width: 300px; max-height: 300px;' src='"+value+"' alt='"+message.get('general.image.not.found')+": "+value+"' />";
     });
     
     dojo.connect(previewImage.domNode, "onmouseout", function() {dijit.hideTooltip(dojo.byId("generalPreviewImage"));});
