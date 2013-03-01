@@ -3614,19 +3614,25 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
                     log.debug("IDF hierachyLevel: '" + hierachyLevel + "' and IDF hierachyLevelName: '" + hierachyLevelName+ "'");
                 }
                 
-                if(hierachyLevel.equals("service")){
+                if(hierachyLevel.equalsIgnoreCase("service")){
                     context.put(UDK_OBJ_CLASS_TYPE, "3");
-                }else if(hierachyLevel.equals("application")){
+                }else if(hierachyLevel.equalsIgnoreCase("application")){
                     context.put(UDK_OBJ_CLASS_TYPE, "6");
-                }else if(hierachyLevelName.equals("job") && hierachyLevel.equals("nonGeographicDataset")){
+                }else if(hierachyLevelName.equalsIgnoreCase("job") && hierachyLevel.equals("nonGeographicDataset")){
                     context.put(UDK_OBJ_CLASS_TYPE, "0");
-                }else if(hierachyLevelName.equals("document") && hierachyLevel.equals("nonGeographicDataset")){
+                }else if(hierachyLevelName.equalsIgnoreCase("document") && hierachyLevel.equals("nonGeographicDataset")){
                     context.put(UDK_OBJ_CLASS_TYPE, "2");
-                }else if(hierachyLevelName.equals("project") && hierachyLevel.equals("nonGeographicDataset")){
+                }else if(hierachyLevelName.equalsIgnoreCase("project") && hierachyLevel.equals("nonGeographicDataset")){
                     context.put(UDK_OBJ_CLASS_TYPE, "4");
-                }else if(hierachyLevelName.equals("database") && hierachyLevel.equals("nonGeographicDataset")){
+                }else if(hierachyLevelName.equalsIgnoreCase("database") && hierachyLevel.equals("nonGeographicDataset")){
                     context.put(UDK_OBJ_CLASS_TYPE, "5");
-                }else if(hierachyLevel.equals("dataset") || hierachyLevel.equals("series")){
+                }else if(hierachyLevel.equalsIgnoreCase("dataset") || hierachyLevel.equals("series")){
+                    context.put(UDK_OBJ_CLASS_TYPE, "1");
+                }else if(hierachyLevel.equalsIgnoreCase("tile")){
+                    // tile should be mapped to "Geoinformation/Karte" explicitly, see INGRID-2225
+                    context.put(UDK_OBJ_CLASS_TYPE, "1");
+                } else {
+                    // Default to "Geoinformation/Karte", see INGRID-2225
                     context.put(UDK_OBJ_CLASS_TYPE, "1");
                 }
             }

@@ -59,6 +59,9 @@
       <action type="add" dev="wemove" issue="INGRID33-20">
         IGE: All objects can add a preview image, which is show in the search results and the detail view.
       </action>
+      <action type="add" dev="wemove" issue="INGRID-2225">
+        In Detail view: Map hierarchyLevel value 'tile' to 'Geoinformation/Karte'. Default to 'Geoinformation/Karte' for unknown hierarchyLevels.
+      </action>
       <action type="add" dev="wemove" issue="INGRID33-22">
         An "XML"-Button next to a search result and within the detail information requests the CSW-interface to show the IDF-document.
       </action>
