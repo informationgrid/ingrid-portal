@@ -10,33 +10,6 @@
   <artifactId>ingrid-portal</artifactId>
   <packaging>pom</packaging>
   <name>Ingrid Portal Distribution</name>
-  <!-- <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>de.ingrid.portal</groupId>
-        <artifactId>ingrid-portal-base</artifactId>
-        <version>${project.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid.portal</groupId>
-        <artifactId>ingrid-portal-mdek-application</artifactId>
-        <version>${project.version}</version>
-        <type>war</type>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-portal-utils</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>de.ingrid.mdek</groupId>
-        <artifactId>ingrid-mdek-api</artifactId>
-        <version>3.3.0-SNAPSHOT</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement> -->
-  
   <dependencies>
     <!-- <dependency><groupId>de.ingrid</groupId><artifactId>ingrid-portal-apps</artifactId><version>3.3.0-SNAPSHOT</version><type>war</type></dependency>-->
     <dependency>
@@ -58,7 +31,6 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-webmap-client</artifactId>
-      <version>3.2.2-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>

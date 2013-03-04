@@ -26,6 +26,20 @@
   <build>
     <finalName>ingrid-portal-project-${version}</finalName>
     <!-- <resources><resource><directory>src/main/resources</directory><excludes><exclude>*.xml</exclude><exclude>*.properties</exclude><exclude>*.bak</exclude></excludes></resource></resources>-->
+    <plugins>
+      <!-- 
+        We need a pregoal when releasing to deploy mdek-application
+        since it is needed by portal-mdek and only fetched from repo!
+         -->
+      <plugin> 
+        <groupId>org.apache.maven.plugins</groupId> 
+        <artifactId>maven-release-plugin</artifactId> 
+        <configuration> 
+          <autoVersionSubmodules>true</autoVersionSubmodules> 
+          <preparationGoals>clean deploy</preparationGoals> 
+        </configuration> 
+      </plugin>
+    </plugins>
   </build>
   <repositories>
     <!-- Repo of parent pom needed, parent pom may not be installed locally yet -->
