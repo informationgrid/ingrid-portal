@@ -36,8 +36,18 @@
         <artifactId>maven-release-plugin</artifactId> 
         <configuration> 
           <autoVersionSubmodules>true</autoVersionSubmodules> 
-          <preparationGoals>clean deploy</preparationGoals> 
+          <preparationGoals>clean deploy changes:changes-report wagon:upload -Dproject.url=</preparationGoals>
+          <goals>changes:announcement-mail -Dproject.url= --non-recursive</goals>
         </configuration> 
+      </plugin>
+      <!-- "DISABLE" WAGON PLUGIN TO AVOID EMPTY UPLOAD DIRECTORIES FROM SUBMODULES -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>wagon-maven-plugin</artifactId>
+        <configuration>
+          <fromDir>NOT_EXISITING_DIRECTORY</fromDir>
+          <url>/dev/null</url>
+        </configuration>
       </plugin>
     </plugins>
   </build>

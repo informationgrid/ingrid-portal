@@ -1,3 +1,25 @@
+Wichtige Info über SVN-Einstellung
+==================================
+According to http://maven.apache.org/scm/subversion.html , it is necessary to create this file :
+
+$user_home/.scm/svn-settings.xml
+
+with (at least) this content:
+
+<svn-settings>
+  <configDirectory>C:\Users\<UserName>\AppData\Roaming\Subversion</configDirectory>
+</svn-settings>
+
+I installed Subversion from subversion.tigris.org , hence the above configDirectory. Creating svn-settings.xml was not necessary with SlikSvn's distribution of Subversion. It may also work with Cygwin's svn command.
+
+If you don't create this file, you can run svn commands directly from the cmd or Cygwin shell, but with Maven you get this message, ugly and hard to trace in internet :
+
+svn: Can't determine the user's config path
+
+
+
+
+
   PSML in database
   ================
 - s. mail in J-Userliste von Randy Watler, "Re: Storing PSML in Database" vom Donnerstag, 9. März 2006 18:04
@@ -29,6 +51,7 @@
 - maven jetspeed plugin (libs) holen:
   (- Neues jetspeed plugin installieren:
 	maven  -Dmaven.repo.remote=http://www.bluesunrise.com/maven/ -DartifactId=maven-jetspeed2-plugin -DgroupId=org.apache.portals.jetspeed-2 -Dversion=2.1 plugin:download
+  --> Download geht nicht mehr, stattdessen das plugin manuell von "ingrid-portal-base\maven-plugin\maven-jetspeed2-plugin-2.1.jar" nach "C:\Users\<user>\.maven\repository\org.apache.portals.jetspeed-2\plugins" kopieren!
     (ausgeführt im aktualisierten svn HEAD trunk mit build.properties: org.apache.jetspeed.project.home = C:/wemove/portalu/dev/jetspeed-2_svn))
   - BESSER, jetspeed von source builden, dann hat man auf alle Faelle die aktuellsten Sourcen und auch das aktuellste jetspeed maven plugin !
     Mit dem plugin aus dem repository GINGS NICHT !
