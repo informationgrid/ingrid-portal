@@ -5,8 +5,7 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <!-- ADD HERE NEW STUFF ONLY IN 3.3.x RELEASE -->
-    <release version="3.3.0-SNAPSHOT" date="2013-??-??" description="???">
+    <release version="3.3.0" date="2013-03-06" description="Release InGrid 3.3">
       <action type="add" dev="wemove">
         MapClient: Add support for resizing tiles while zooming.
       </action>
@@ -72,7 +71,16 @@
       <action type="update" dev="wemove" issue="INGRID-2154, INGRID-2158">
         Update BAW-WSV Profile.
       </action>
+	  <action type="udpate" dev="wemove">
+        Create facet by configuration XML "facets-config.xml". 
+      </action> 
+	  <action type="udpate" dev="wemove" issue="INGRID32-199">
+        Update NUMIS profile/layout to InGrid Portal Version 3.2.
+      </action> 
 
+      <action type="fix" dev="wemove">
+        Added missing fixes to SQL skript to be executed manually when migrating from MySQL to Oracle.
+      </action>  	
       <action type="fix" dev="wemove">
         Do not overwrite map client configuration if it already exists. 
       </action>
@@ -105,21 +113,6 @@
         MapClient: fix problems searching for terms with special characters.
       </action>  
     </release>
-
-    <!-- ADD HERE STUFF ALSO ADDED TO BRANCH 3.2.x ! -->
-    <!-- KEEP THIS SECTION IF BRANCH IS RELEASED BEFORE UPPER 3.3 RELEASE (then copy this section from branch release) -->
-    <!-- MOVE THIS SECTION TO UPPER 3.3 RELEASE IF BRANCH IS NOT RELEASED AND INSTEAD 3.3 IS RELEASED -->
-    <release version="3.2.x-SNAPSHOT" date="??" description="... for InGrid 3.2.1">
-	  <action type="udpate" dev="wemove">
-        Create facet by configuration XML "facets-config.xml". 
-      </action> 
-	  <action type="udpate" dev="wemove" issue="INGRID32-199">
-        Update NUMIS profile/layout to InGrid Portal Version 3.2.
-      </action> 
-      <action type="fix" dev="wemove">
-        Added missing fixes to SQL skript to be executed manually when migrating from MySQL to Oracle.
-      </action>  	
-	</release>
 
     <release version="3.2.1" date="2012-09-27" description="Fix + Update Release InGrid 3.2.1">
       <action type="update" dev="wemove" issue="INGRID-2140">
