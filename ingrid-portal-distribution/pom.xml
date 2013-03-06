@@ -1,9 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                              http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
     <!-- <artifactId>ingrid-base-pom</artifactId>-->
-    <version>3.3.0-SNAPSHOT</version>
+    <version>3.3.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -163,11 +163,11 @@
               <tasks>
                 <unjar dest="target/installer">
                   <fileset dir="target/dependency/lib">
-                    <include name="**/*.jar"/>
+                    <include name="**/*.jar" />
                   </fileset>
                 </unjar>
                 <copy todir="target/installer/resources">
-                  <fileset dir="target/dependency/resources"/>
+                  <fileset dir="target/dependency/resources" />
                 </copy>
               </tasks>
             </configuration>
@@ -226,7 +226,7 @@
   <repositories>
     <!-- Repo of parent pom needed, parent pom may not be installed locally yet -->
     <repository>
-      <snapshots/>
+      <snapshots />
       <id>de.ingrid.all</id>
       <name>Maven Repo InGrid</name>
       <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
