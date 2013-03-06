@@ -54,6 +54,23 @@ public class RDFReader {
         
         return children;
     }
+    
+    public List<Model> fetchAllMembers(String uri) {
+        List<Model> children = new ArrayList<Model>();
+        
+        // get parent model to find children relations
+        Model parent = fetchTerm(uri);
+        
+        // get Iterator for all children within parent model
+        NodeIterator childrenIt = RDFUtils.getMembers(parent);
+        
+        while (childrenIt.hasNext()) {
+            RDFNode node = childrenIt.next();  // get next statement
+            children.add(fetchTerm(node.toString()));
+        }
+        
+        return children;
+    }
 
     public Model findTerm(String rootUrl, String queryTerm) {
         String searchQuery = buildSearchQuery(rootUrl, queryTerm);

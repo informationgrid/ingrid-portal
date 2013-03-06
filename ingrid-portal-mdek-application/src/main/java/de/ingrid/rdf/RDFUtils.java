@@ -7,7 +7,6 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 public class RDFUtils {
     
@@ -53,6 +52,10 @@ public class RDFUtils {
         return getObjects(model, "skos", "narrower");
     }
     
+    public static NodeIterator getMembers(Model model) {
+        return getObjects(model, "skos", "member");
+    }
+    
     public static RDFNode getParent(Model model) {
         return getObject(model, "skos", "broader");
     }
@@ -74,7 +77,7 @@ public class RDFUtils {
     
     private static RDFNode getObject(Model model, String namespace, String name, String lang) {
         NodeIterator it = getObjects(model, namespace, name);
-        if (it.hasNext()) {
+        while (it.hasNext()) {
             RDFNode node = it.next();
             if (lang.equals(node.asLiteral().getLanguage())) {
                 return node;

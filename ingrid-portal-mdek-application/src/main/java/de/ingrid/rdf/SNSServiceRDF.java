@@ -1,5 +1,6 @@
 package de.ingrid.rdf;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,11 +35,24 @@ public class SNSServiceRDF implements ThesaurusService {
 
     public TreeTerm[] getHierarchyTopLevel(String rootURI, Locale lang) {
     	List<TreeTerm> resultList = null;
-
-    	Model termModel = rdfReader.findTerm(rootURI, "[");
-		resultList = rdfMapper.mapSearchToTreeTerms(termModel);
+    	if (rootURI.endsWith(".rdf")) {
+    		// only return this document which is used to get its children later on
     		
-        return resultList.toArray(new TreeTerm[resultList.size()]);
+//    		Model m = rdfReader.fetchTerm(rootURI.substring(0, rootURI.length()-4));
+//    		List<Model> modelList = new ArrayList<Model>();
+//    		modelList.add(m);
+//    		
+//    		resultList = rdfMapper.mapToTreeTerms(modelList);
+    		
+    		
+    		return getHierarchyNextLevel(rootURI.substring(0, rootURI.length()-4), lang);
+    	} else {
+    		Model termModel = rdfReader.findTerm(rootURI, "[");
+    		resultList = rdfMapper.mapSearchToTreeTerms(termModel);
+    		
+    	}
+    	return resultList.toArray(new TreeTerm[resultList.size()]);
+    	
     }
     
     @Override
@@ -48,6 +62,11 @@ public class SNSServiceRDF implements ThesaurusService {
     	// different handling if root nodes shall be fetched
    		
         termModels = rdfReader.fetchAllChildren(termURI);
+        // if nothing was found try to find members instead
+        // TODO: Check if this is correct!!!
+        if (termModels.isEmpty())
+        	termModels = rdfReader.fetchAllMembers(termURI);
+        
         resultList = rdfMapper.mapToTreeTerms(termModels);
 	        
         return resultList.toArray(new TreeTerm[resultList.size()]);
