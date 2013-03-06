@@ -1666,7 +1666,7 @@
              <content>
                 <p>Mit dem PortalU-Kartenviewer können Sie sich eine Vielzahl 
                    umweltrelevanter Karten ansehen. Auf der linken Seite des 
-                   Kartenviewers können <b>Dienste</b> reingeladen und die 
+                   Kartenviewers können <b>Dienste</b> hinzugeladen und die 
                    <b>Legende</b> zu den aktivierten Kartenebenen eingesehen 
                    werden. Dieser Bereich lässt sich bei Bedarf durch die 
                    Schaltfläche <b>zuklappen</b> <img border="0" width="15" height="16" src="../decorations/layout/ingrid-help/images/image205.jpg" alt="*"></img>    
@@ -1679,10 +1679,9 @@
         </section>
 
         <section help-key="maps-2">
-          <header>Reinladen von Kartendiensten</header>
+          <header>Hinzufügen von Kartendiensten</header>
             <content>
-
-            
+             
                 <p>Die Karten gehen auf Kartendienste (Web Map Services) 
                    unterschiedlicher Anbieter auf Bundes- und Länderebene 
                    zurück. Alle in PortalU eingebundenen Kartendienste sind 
@@ -1690,9 +1689,9 @@
                    <b>Dienste</b> zu finden. Die Dienste sind zum einen nach 
                    <b>Anbietern</b> und zum anderen nach <b>Themen</b> 
                    sortiert und müssen zunächst in den Bereich 
-                   <b>Aktive Dienste</b> rein geladen werden. </p>
+                   <b>Aktive Dienste</b> geladen werden. </p>
                 <p>Es gibt mehrere Möglichkeiten einen Kartendienst in den 
-                   Kartenviewer rein zu laden: </p>
+                   Kartenviewer zu laden: </p>
                 <ul>
                     <li>
                         aus der Rubrik Anbieter
@@ -1703,6 +1702,9 @@
                     <li>
                         aus einer Suchergebnisliste
                     </li>
+                    <li>
+                        aus den Metadatensätzen angeschlossener Kataloge
+                    </li>                    
                     <li>
                         durch die Eingabe eines externen Dienstes
                     </li>
@@ -1761,11 +1763,16 @@
                    Anklicken der Checkboxen die einzelnen thematischen Ebenen 
                    (Layer) des Kartendienstes aktivieren. </p>  
 
-                <p> <b>Suche</b></p>
+                <p> <b>Die Suche</b></p>
 
                     <p>Sie können auch direkt über eine Suchanfrage nach 
-                       Kartendiensten recherchieren. Gehen Sie hierbei wie folgt 
-                       vor: </p>
+                       Kartendiensten recherchieren. Bei der <b>Suche</b> wird 
+                       sowohl nach Kartendiensten in den Rubriken <b>Themen</b> 
+                       und <b>Anbieter</b> 
+                       als auch nach Kartendiensten in den angeschlossenen 
+                       Katalogen gesucht. </p>
+                       
+                    <p>Gehen Sie hierbei wie folgt vor:</p>
                 <ul>
                     <li>
                         Klicken Sie auf die Schaltfläche <b>Suche</b> (unten links)
@@ -1784,14 +1791,22 @@
                 <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
                    Anklicken der Checkboxen die einzelnen thematischen Ebenen 
                    (Layer) des Kartendienstes aktivieren. </p>  
-          </content>
-        </section>
-        <section help-key="maps-3">
-          <header>Externen Dienst hinzufügen</header>
-          <content>
+
+                <p><b>Kartendienste aus angeschlossenen Katalogen</b></p>
+
+                <p>Zu den in PortalU recherchierbaren Katalogen zählen unter 
+                   anderen auch in Umweltdatenkataloge von Bund und Ländern 
+                   (UDKs). In den UDKs kann für Metadaten in der Objektklasse 
+                   <b>Geoinformation/Karte</b> ein Link auf einen Kartendienst 
+                   gesetzt werden, der dann durch einen Klick auf die 
+                   Schaltfläche <b>Zeige in Karte</b> im Kartenviewer 
+                   hinzugefügt werden kann.   </p>
+ 
+               <p><b>Externen Dienst hinzufügen</b></p>
+        
                <p>Als externe Dienste werden Kartendienste bezeichnet, die 
                   derzeit nicht in PortalU eingebunden sind. Wenn Sie einen 
-                  solchen Dienst in den PortalU-Kartenviewer rein laden möchten 
+                  solchen Dienst in den PortalU-Kartenviewer laden möchten 
                   gehen Sie bitte wie folgt vor:</p>
                 <ul>
                     <li>Klicken Sie auf die Schaltfläche <b>Aktive Dienste</b> 
@@ -1812,12 +1827,13 @@
           </content>
         </section>
         <section help-key="maps-4">
-          <header>Schaltflächen im Bereich Dienste</header>
+          <header>Funktionen</header>
           <content>
+               <p><b>Schaltflächen im Bereich Dienste</b></p>
                    <p><img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img> <b>Dienst hinzufügen</b>: in 
                       den Bereichen <b>Anbieter</b>, 
                       <b>Themen</b> und <b>Suchergebnisse</b> wird über die 
-                      Schaltfläche ein Kartendienst in den Bereich 
+                      Schaltfläche ein markierter Kartendienst in den Bereich 
                       <b>Aktive Dienste</b> hinzugeladen. Im Bereich 
                       <b>Aktive Dienste</b> wird ein Dialogfeld geöffnet, 
                       damit ein externer Dienst hinzugeladen werden kann. 
@@ -1828,7 +1844,7 @@
                       durch einen Klick markiert werden. 
                     </p>
                     
-                   <p><img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img> <b>Layer transparenz</b>: 
+                   <p><img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img> <b>Layer-Transparenz</b>: 
                       Anpassung der Transparenz einer im Kartenfenster 
                       dargestellten Kartenebene. Um die Transparenz einer 
                       Kartenebene zu ändern, muss die Kartenebene vorher durch 
@@ -1840,33 +1856,20 @@
                       oder einer Kartenebene. 
                     </p>                    
 
-                   <p><img border="0" width="26" height="22" src="../decorations/layout/ingrid-help/images/image103.jpg" alt="*"></img> <b>Alle auf/zu klappen</b>: 
-                      Alle Kartenlayer werden auf- bzw. zugeklappt. 
-                    </p>                    
+                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image112.jpg" alt="*"></img> <b>Alle auf/zu klappen</b>: 
+                      Alle Ebenen werden auf- bzw. zugeklappt. 
+                    </p> 
+                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image113.jpg" alt="*"></img> <b>Zoome auf Service oder Layer</b>: 
+                      Zoomt auf den sichtbaren Bereich eines Kartendienstes oder 
+                      einer Ebene. 
+                    </p>                                         
 
                    <p><img border="0" width="26" height="23" src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"></img> <b>Suchergebnisse löschen</b>: 
                       Alle Suchergebnisse werden aus der Ergebnisliste gelöscht. 
                     </p>
-                    
-          </content>
-        </section>
-        <section help-key="maps-5">
-          <header>Legende</header>
-          <content>
-                   <p>Unter dem Reiter <b>Legende</b> (oben links) werden alle 
-                      verfügbaren Legenden der Kartenebenen (Layer) dargestellt, 
-                      die unter <b>Aktive Dienste</b> aktiviert sind und als Karten 
-                      im Viewer dargestellt werden. Die Legendenbeschreibung 
-                      gibt darüber Aufschluss, mit welchen Symbolen und/oder 
-                      Farben die unterschiedlichen Informationen in der Karte 
-                      dargestellt werden. 
-                   </p>
-          </content>
-        </section>
-        <section help-key="maps-6">
-          <header>Funktionen innerhalb und oberhalb des Kartenfensters</header>
-          <content>
-               <p>Innerhalb des Kartenfensters finden Sie folgende Funktionen:</p>
+
+               <p><b>Schaltflächen im Kartenfenster</b></p>
+               <p>Im Kartenfenster finden Sie folgende Funktionen:</p>
                 <ul>
                     <li>In der linken oberen Ecke: Leiste zum <b>Navigation</b> 
                         im Kartenausschnitt (reinzoomen, rauszoomen, verschieben).  
@@ -1884,17 +1887,18 @@
                         anklicken, wird eine Übersichtskarte eingeblendet.
                     </li>
                 </ul>                                        
+
+               <p><b>Schaltflächen oberhalb des Kartenfensters</b></p>
                 <p>Oberhalb des Kartenfensters stehen weitere Funktionen zur 
                    Verfügung, die im Folgenden von links nach rechts beschrieben 
                    werden:</p> 
                    <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img> <b>Objektinformationen</b>: 
                       Abfrage von Sachdaten in der Karte. Über einen Klick in 
                       die Karte erhalten Sie standortspezifische Informationen 
-                      der dargestellten Layer. Die Objektinformationen werden 
-                      für alle Kartendienste wiedergegeben, die diese 
-                      Informationen über einen entsprechenden Web Feature 
-                      Service (WFS) mitliefern. Derzeit unterstützen nicht 
-                      alle Kartendienste diese Funktion. 
+                      der dargestellten Layer. Nicht alle Objektinformationen 
+                      werden von den Anbietern für die Öffentlichkeit 
+                      bereitgestellt. In diesem Fall bleibt das Ergebnisfenster 
+                      leer.  
                     </p>
                    <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image105.jpg" alt="*"></img> <b>Zurück</b>: 
                       Der Kartenausschnitt, der vor der letzten Aktion angezeigt 
@@ -1924,14 +1928,15 @@
                    <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> <b>Laden</b>:
                       Zuvor gespeicherte Karten werden geladen. Schaltfläche ist 
                       nur dann aktiv, wenn Sie als PortalU-Nutzer eingeloggt 
-                      sind und bereits eine Karte gespeichert haben. Näheres 
+                      sind (www.portalu.de/personalisierungsoptionen) und 
+                      bereits eine Karte gespeichert haben. Näheres 
                       siehe unter <a href="?hkey=maps-7">Karte speichern</a>. 
                    </p>
                    <p><img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> <b>Speichern</b>:
                       Kartenausschnitt wird gespeichert. Schaltfläche ist nur 
-                      dann aktiv, wenn Sie als PortalU-Nutzer eingeloggt sind. 
-                      Näheres siehe unter 
-                      <a href="?hkey=maps-7">Karte speichern</a>. 
+                      dann aktiv, wenn Sie als PortalU-Nutzer eingeloggt sind 
+                      (www.portalu.de/personalisierungsoptionen). Näheres siehe 
+                      unter <a href="?hkey=maps-7">Karte speichern</a>. 
                    </p>
                    <p><img border="0" width="24" height="26" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> <b>Karte als WMC speichern</b>:
                       Kartenausschnitt wird im WMC gespeichert. WMC steht für 
@@ -1941,6 +1946,21 @@
 
           </content>
         </section>
+        <section help-key="maps-6">
+          <header>Legende</header>
+          <content>
+                   <p>Unter dem Reiter <b>Legende</b> (oben links) werden alle 
+                      verfügbaren Legenden der Kartenebenen (Layer) dargestellt, 
+                      die unter <b>Aktive Dienste</b> aktiviert sind und als Karten 
+                      im Viewer dargestellt werden. Die Legendenbeschreibung 
+                      gibt darüber Aufschluss, mit welchen Symbolen und/oder 
+                      Farben die unterschiedlichen Informationen in der Karte 
+                      dargestellt werden. 
+                   </p>
+          </content>
+        </section>
+
+
         <section help-key="maps-7">
           <header>Karte speichern</header>
           <content>
@@ -1978,13 +1998,15 @@
                <p><b>Warum wird eine Kartenebene, die ich aktiviert habe nicht 
                   angezeigt?</b></p>
                <p>Einige Kartenebenen werden nur in einem bestimmten 
-                  Maßstabsbereich dargestellt. Zoomen Sie in mehreren Stufen 
+                  Maßstabsbereich dargestellt. Maßstabsabhängige Layer sind 
+                  ausgegraut, wenn sich die aktuelle Kartenansicht außerhalb des 
+                  festgelegten Maßstabs befindet. Zoomen Sie in mehreren Stufen 
                   in den Kartenausschnitt hinein oder geben Sie unter 
                   <b>Erweiterte Einstellungen</b> (Dialogfeld im Kartenfenster 
                   oben rechts) einen Maßstab vor.</p> 
                <p><b>Kartenausschnitt individuell verschieben</b></p>
                <p>Wenn Sie den Kartenausschnitt individuell verschieben möchten, 
-                  strg-Taste und linke Maustaste gedrückt halten und 
+                  <b>strg-Taste</b> und <b>linke Maustaste</b> gedrückt halten und 
                   gleichzeitig die Maus im Kartenfenster in die gewünschte 
                   Richtung bewegen. Alternativ können Sie auf der Übersichtkarte, 
                   die sich über den Pfeil unten rechts im Kartenfenster 
@@ -1992,6 +2014,12 @@
                   hierfür mit gedrückter linker Maustaste auf das rote 
                   Fadenkreuz in der Übersichtskarte. 
                </p>
+               <p><b>In Kartenausschnitt hineinzoomen</b></p>
+               <p>Alternativ zu dem stufenweisen Hineinzoomen in die Karte, 
+                  können Sie mithilfe der <b>Shift-Taste</b> und gedrückter 
+                  <b>linker Maustaste</b> ein Zoom-Rechteck aufziehen. 
+               </p>
+
                <p><b>Kann ich einen Maßstab für den Kartenausschnitt auswählen?</b></p>
                <p>Ja. Wenn Sie das Dialogfeld Erweiterte Einstellungen (oben 
                   rechts im Kartenfenster) aufklappen, können Sie verschiedene 
@@ -2005,7 +2033,7 @@
                   überdeckende Kartenebene transparent, um die verdeckten Ebenen 
                   sichtbar zu machen. Klicken Sie hierfür auf eine Layer und 
                   betätigen Sie anschließend die Schaltfläche 
-                  <b>Layer transparenz</b> <img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img>.
+                  <b>Layer Transparenz</b> <img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img>.
                   Auf der nun eingeblendeten Skala können Sie die Transparenz 
                   individuell einstellen.  
                </p>
@@ -2018,8 +2046,8 @@
         <section help-key="rss-news-1">
             <header>Aktuelles</header>
             <content>
-                <p>Unter „Aktuelles“ werden aktuelle
-                    Meldungen zum Thema „Umwelt“ aus Bundes-
+                <p>Unter <b>Aktuelles</b> werden aktuelle
+                    Meldungen zum Thema <b>Umwelt</b> aus Bundes-
                      und Landesbehörden gelistet. Die aktuellste Meldung steht
                     dabei immer oben. Es wird jeweils nur der Titel und eine
                     Kurzbeschreibung der Meldung angezeigt. Durch einen Klick
@@ -2027,7 +2055,7 @@
                 <p>Ältere Meldungen, die nicht mehr auf der Startseite angezeigt
                     werden, werden in dem Meldungsarchiv abgelegt. Sie können
                     diese Meldungen einsehen, indem Sie auf den Link
-                    „Weitere Meldungen“ klicken.</p>
+                    <b>Weitere Meldungen</b> klicken.</p>
                 <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
                     sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
                     auf den Original-Servern der jeweiligen Bundes- oder

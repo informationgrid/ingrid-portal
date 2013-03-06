@@ -50,7 +50,7 @@
             <header>Concept and tasking of PortalU</header>
             <content>
                 <p>PortalU, Germany’s environment portal, provides a central 
-				point to access 3 million intent pages as well as about 500.000 
+				point to access several million intent pages as well as over 500.000 
 				catalogue- and data base entries of public institutions and 
 				organisations in the Federation, the Federal States and the 
 				Local Authorities. With a mix of current news, environmental 
@@ -66,7 +66,12 @@
         <section help-key="about-2">
             <header>The PortalU operators</header>
             <content>
-                <p> PortalU was developed as a follow-up project of the environment data catalogue (UDK) and of the German Environmental Information Network (gein) within the framework of the Federal Republic of Germany Federal States administration agreement (VwV, Verwaltungsvereinbarung) UDK/GEIN entwickelt. The Federal Ministry for the Environment, Nature Conservation and Nuclear Safety (BMU) and the environment ministries of 16 German Federal States were signatories to the administration agreement. PortalU is looked after from a technical and contents point of view by the Coordination Center PortalU in the Lower Saxony ministry for environment and climate protection in Hanover.</p>
+                <p> PortalU was developed as a follow-up project of the environment data catalogue (UDK) and of the German Environmental 
+				    Information Network (gein) within the framework of the Federal Republic of Germany Federal States administration 
+					agreement (Verwaltungsvereinbarung UDK/GEIN). The Federal Ministry for the Environment, Nature Conservation and 
+					Nuclear Safety (BMU) and the Environment Ministries of 16 German Federal States were signatories to the administration 
+					agreement. PortalU is managed and maintained from a technical and contents point of view by the Coordination Center PortalU 
+					in the Lower Saxony Ministry for Environment, Energy and Climate Protection in Hanover.</p>
             </content>
         </section>
         <section help-key="about-3">
@@ -74,20 +79,23 @@
             <content>
                 <p>
                     <b>Search:</b> Central function of the Portal is the PortalU-Search (<a href="?hkey=search-1">Search</a>),
-                    with the help of which web pages and data base entries can be searched via a customary full text search (<a
-                        href="?hkey=search-1">Basic search</a>), but can also be searched using a differentiated specialist vocabulary  (<a href="?hkey=ext-search-1">Advanced Search</a>). </p>
+                    with the help of which web pages and data base entries can be searched via a customary full text 
+					search (<a href="?hkey=search-1">Simple Search</a>), but can also be searched using a differentiated specialist 
+					vocabulary  (<a href="?hkey=ext-search-1">Advanced Search</a>). </p>
                 <p>
-                    <b>Service:</b> Here you can find news and information about events and current publications in the environment field.</p>
+                    <b>Topics:</b> The PortalU topic pages provide a topic-based access to selected, particularly interesting information and 
+					data (topic pages).</p>
                 <p>
-                    <b>Topics:</b> The PortalU topic pages provide a topic-based access to selected, particularly interesting information and data (topic pages).</p>
+                    <b>Data</b>: PortalU keeps you informed around the clock about the current state of your environment (environmental monitoring data).</p>
+				<p>
+				    <b>Service:</b> Here you can find news and information about events and current publications in the environment field.</p>
                 <p>
-                    <b>Data</b>: PortalU keeps you informed around the clock about the current state of your environment (readings).</p>
-                <p>
+                    <b>Catalogues</b>: Here you can investigate in the environmental and geo data catalogues (e.g. Umweltdatenkataloge) from 
+					Federation and Federal States.</p>
+				<p>
                     <b>Maps</b>: A maps viewer offers the possibility of entering spatial references for the search via interactive maps or else to display digital maps from the search results list directly in PortalU.</p>
                 <p>
                     <b>Almanac</b>: When did the Kyoto protocol come into effect? You can find an answer to this and many other questions on historical environment events in the environment chronicle (environment almanac)..</p>
-                <p>
-                    <b>News</b>: Current reports are displayed directly from the public relations departments of the participating authorities and organisations.</p>
             </content>
         </section>
         <section help-key="about-4">
@@ -97,15 +105,24 @@
             </content>
         </section>
         <section help-key="about-5">
-            <header>Conditions for the use and participation in PortalU</header>
+            <header>How to become information provider in PortalU</header>
             <content>
-                <p>The circle of information providers in PortalU restricts itself mainly to authorities and organisations closely connected with the authorities in Germany, but is being continually expanded. If your organisation would likewise like to make environmentally relevant information available, please contact the Coordination Center PortalU  <a
-                        href="http://www.kst.portalu.de/"
-                        target="_new">Koordinierungsstelle PortalU</a>.</p>
+                <p>In PortalU all German public environmental information refering to the EU environment guideline of 2003 and all 
+				   environmental catalogue entries refering to INSPIRE are welcome to be integrated. The following German information 
+				   providers are welcome:
+                <ul>
+                    <li>Public environmental departements from Federation and Federal States</li>
+					<li>Other departments from Federation and Federal States</li>
+                    <li>Information binding companies refereing to the EU environment guideline of 2003</li>
+                    <li>Municipalities</li>
+					<li>Public research institutions</li>
+                </ul></p>
+				<p>If your organisation would likewise like to make environmentally relevant information available, please contact 
+				   <a href="mailto:kst@portalu.de/">the Coordination Center PortalU</a>.</p>
             </content>
         </section>
         <section help-key="about-6">
-            <header>InGrid &#8211; the software behind PortalU</header>
+            <header>InGrid – the software behind PortalU</header>
             <content>
                 <p>The InGrid<sup>®</sup> software package was developed to realise PortalU. InGrid<sup>®</sup> is positioned on modular and flexible system architecture based on licence-free open source products. This way it becomes possible to adapt the technical structure of the environment information net to changing organisational specifications. Thus, if needed, regional environment portals, e.g. for individual German Federal States or Local Authorities can be created with minimal technical expense. Thanks to Open Source the follow up use of the software is license free and free of cost for partners of the VwV UDK/GEIN.</p>
             </content>
@@ -114,7 +131,7 @@
     <chapter>
         <header>Search</header>
         <section help-key="search-1">
-            <header>Basic search</header>
+            <header>Simple search</header>
             <content>
                 <p>When you use the search function you can enter one or more search terms. Those pages that contain all search terms will be found.</p>
                 <p>Depending on the setting, one of the following search areas will be searched:</p>
@@ -127,7 +144,7 @@
             </content>
         </section>
         <section help-key="search-2">
-            <header>Further topics for the search</header>
+            <header>Further search topics</header>
             <content>
                 <p>In addition to the basic search you can further refine your search. Read the following topics on this::</p>
                 <ul>
@@ -138,12 +155,10 @@
                         <a href="?hkey=ext-search-address-1">Advanced search for addresses </a>
                     </li>
                     <li>
-                        <a
-                            href="?hkey=ext-search-research-1">Advanced search for research projects </a>
+                        <a href="?hkey=ext-search-research-1">Advanced search for research projects </a>
                     </li>
                     <li>
-                        <a
-                            href="?hkey=ext-search-law-1">Advanced search for laws </a>
+                        <a href="?hkey=ext-search-law-1">Advanced search for laws </a>
                     </li>
                     <li>
                         <a href="?hkey=search-history-1">History </a>
@@ -163,9 +178,7 @@
                     <li>
                         <a href="?hkey=search-results-1">Search result list </a>
                     </li>
-                    <li>
-                        <a href="?hkey=search-catalog-1">Data Catalogues </a>
-                    </li>
+
                 </ul>
             </content>
         </section>
@@ -176,14 +189,15 @@
             <header>Advanced search for environmental information</header>
             <content>
                 <p>You can refine your search for environmental information via the <i>Advanced Search</i> option.</p>
-                <p>In principle, a search term is composed from individual search terms, which are connected by the operators (AND, OR, NOT). You can read about how you can enter these operators manually in the chapter <a href="?hkey=search-expert-1">Expert Entry </a>.</p>
+                <p>In principle, a search term is composed from individual search terms, which are connected by the operators (AND, OR, NOT). 
+				You can read about how you can enter these operators manually in the chapter <a href="?hkey=search-expert-1">Expert Entry </a>.</p>
                 <p>The <i>Advanced Search</i> offers you the possibility of constructing your search term using a wizard.</p>
             </content>
         </section>
         <section help-key="ext-search-2">
             <header>Areas for specifying the search</header>
             <content>
-                <p>The so-called search area embraces all web pages, documents etc. which are captured by a search query. The following areas are available to you to expand or restrict the search area:</p>
+                <p>An ordinary search includes all web pages, documents etc. which are captured by a search query. The following areas are available to you to expand or restrict the search area:</p>
                 <ul>
                     <li>
                         <a href="?hkey=ext-search-subject-1">Topic</a>
@@ -218,74 +232,31 @@
             </content>
         </section>
         <section help-key="ext-search-subject-2">
-            <header>Thesaurus (Specialist Dictionary)</header>
+            <header>Thesaurus</header>
             <content>
-                <p>You can add specialist terms to your search term via the specialist dictionary. To do this you put any term into the entry field and send a query to the <a href="#ext-search-subject-3">Thesaurus</a>.</p>
-                <p>You will then receive a series of <a
-                        href="#ext-search-subject-5">similar terms</a>,which you can add to the search term. You can further specify your search term by clicking on a similar term.</p>
+                <p>In order to optimise your search query, you can add special environmental terms from the environmental thesaurus UMTHES. 
+				   To do this you put any term into the entry field and click afterwords the button <b>Thesaurus look-up</b>.</p>
+                <p>You will then receive a series of <a href="#ext-search-subject-5">similar terms</a>,which you can add to the search term. 
+				   You can further specify your search term by clicking on a similar term.</p>
             </content>
         </section>
         <section help-key="ext-search-subject-3">
-            <header>Thesaurus</header>
-            <section help-key="ext-search-subject-4">
-                <header>What is a Thesaurus?</header>
+            <header>The UMTHES</header>
                 <content>
-                    <p>Like a dictionary, a thesaurus consists of specialist terms on a certain subject area. In addition to the correct spelling, a thesaurus also contains information whether and how a term can be generalised (superordinate terms), specialised (subordinate terms) or expressed in another way (synonyms). Thesauri are used, for example, for indexing keywords and finding documents. </p>
-                    <p>PortalU uses the environment thesaurus (UMTHES<sup>®</sup>) of the Federal Ministry of the Environment in Dessau. It contains more than 30,000 specialist terms from the &quot;Environment&quot;subject area.</p>
-                    <p>The UMTHES<sup>® </sup>is made available via the <a
-                            href="http://www.semantic-network.de/"
-                            target="_new">Semantic Network Service (SNS)</a> vom
+                    <p>In PortalU the environmental thesaurus UMTHES from the German Federal environmental agency Umweltbundesamt is used. A thesaurus 
+					   consists, like a dictionary, of specialist terms on a certain subject area. In addition to the correct spelling, a thesaurus 
+					   also contains information whether and how a term can be generalised (superordinate terms), specialised (subordinate terms) or 
+					   expressed in another way (synonyms). Thesauri are used, for example, for indexing keywords and finding documents. </p>
+                    <p>The UMTHES contains more than 30,000 specialist terms, which are related to the topic <b>environment</b>. The single terms can 
+					   have one or serveral superordinate, subordinate, silimilar terms and/or synonyms. A related term is an thesaurus term that 
+					   is connected with the thesaurus keyword, but is neither a super- nor a subordinate term. A thesaurus term can possess any 
+					   number of related terms. A synonym is an alternative expression, but one with the same meaning for the thesaurus keyword. 
+					   Sometimes a synonym consists of two or several thesaurus terms. In this case, the synonym is not to be understood as an 
+					   alternative expression for a single thesaurus term but as a synonym for the combined term.</p>
+                    <p>The UMTHES is made available via the <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> 
                         by the Federal Environment Agency (Umweltbundesamt).</p>
                 </content>
-            </section>
-            <section help-key="ext-search-subject-5">
-                <header>Similar Terms</header>
-                <content>
-                    <p>After your search terms are analysed by the SNS, similar terms are displayed from the thesaurus. You can highlight one or more of these terms and adopt them in your search term (<i>Add to Query</i>).</p>
-                    <p>However, you also have the possibility of further specifying a <i>similar term</i> by clicking on the respective term. It will then be shown as a  <a
-                        href="#_Thesaurus-Schlagwort">thesaurus-keyword</a>. In addition, the associated  <a
-                            href="#_Oberbegriffe"> superordinate</a>-, <a
-                        href="#_Unterbegriffe"> subordinate</a>- and <a
-                            href="#_Verwandte_Begriffe">related terms</a>
-                        will be displayed as well as the  <a href="#_Synonyme">synonyms</a>.</p>
-                </content>
-            </section>
-            <section help-key="_Thesaurus-Schlagwort">
-                <header>Thesaurus Keyword</header>
-                <content>
-                    <p>This is the thesaurus keyword currently set. You can adopt it into your search term by crossing it and clicking on the <i>Add to Query</i> button</p>
-                </content>
-            </section>
-            <section help-key="_Oberbegriffe">
-                <header>Superordinate Terms</header>
-                <content>
-                    <p>A superordinate term is a term that generalises a thesaurus keyword. UMTHES<sup>®</sup> provides the possibility of a thesaurus term having several superordinate terms.</p>
-                    <p>You can add the superordinate term(s) to your search term by crossing it and clicking on the <i>Add to Query</i> button.</p>
-                </content>
-            </section>
-            <section help-key="_Unterbegriffe">
-                <header>Subordinate Terms</header>
-                <content>
-                    <p>A subordinate term is a term that makes a thesaurus keyword more specific. A thesaurus term can possess as many subordinate terms as desired.</p>
-                    <p>You can add one or more subordinate terms to your search term by crossing them and clicking on <i>Add to Query</i> button.</p>
-                </content>
-            </section>
-            <section help-key="_Verwandte_Begriffe">
-                <header>Related Terms</header>
-                <content>
-                    <p>EA related term is a thesaurus term that is connected with the thesaurus keyword, but is neither a super- nor a subordinate term. A thesaurus term can possess any number of related terms.</p>
-                    <p>You can add one or more related terms to your search term by crossing them and clicking on the <i>Add to Query</i>.</p>
-                </content>
-            </section>
-            <section help-key="_Synonyme">
-                <header>Synonyms</header>
-                <content>
-                    <p>A synonym is an alternative expression, but one with the same meaning for the thesaurus keyword.</p>
-                    <p>Sometimes a synonym consists of two or several thesaurus terms. In this case, the synonym is not to be understood as an alternative expression for a single thesaurus term but as a synonym for the combined term.</p>
-                    <p>You can add one or more synonyms to your search term by crossing them and clicking <i>Add to Query</i> button.</p>
-                    <p>If you click on the synonym term then you will reach the thesaurus terms behind. You can also adopt these in your search expression.</p>
-                </content>
-            </section>
+   
         </section>
     </chapter>
     <chapter>
@@ -293,252 +264,122 @@
         <section help-key="ext-search-spacial-1">
             <header>Space</header>
             <content>
-                <p>Via the <a
-                    href="#ext-search-spacial-3">Gazetteer</a> [environment] of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau, PortalU analyses for every web page, which is made available by PortalU, the according spatial reference. This spatial reference is used in PortalU whithin the framework of the area search. Therefore, the area search is not, as in most other search engines, a full text search for spatial terms.</p>
+                <p>Via the <a href="#ext-search-spacial-3">Gazetteer</a> [environment] of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau, PortalU analyses for every web page, which is made available by PortalU, the according spatial reference. This spatial reference is used in PortalU whithin the framework of the area search. Therefore, the area search is not, as in most other search engines, a full text search for spatial terms.</p>
 					<p>In the connected databases the area search takes place by browsing the area attributes entered there.</p>
             </content>
         </section>
         <section help-key="ext-search-spacial-2">
-            <header>Restricting area <i>By Geographic Name</i></header>
+            <header>Restriction by Geographic Name</header>
             <content>
-                <p>You can add geographical terms in a targeted way to your search term via conceptual area restriction. To do this you enter any term (e.g. Berlin) into the entry field and send a query to the  <a
-                    href="#ext-search-spacial-3">gazetteer</a> (Button <i>Look-up Geographic Names</i>). Thereby a query to the Geo-Thesaurus is started. You then receive a listing of Geographical Names, which you can add to the search term. </p>
+                <p>You can add geographical terms in a targeted way to your search term via conceptual area restriction. To do this you enter 
+				   any term (e.g. Berlin) into the entry field and send a query to the  <a href="#ext-search-spacial-3">gazetteer</a> 
+				   (Button <b>Look-up Geographic Names</b>). Thereby a query to the Geo-Thesaurus is started. You then receive a listing of 
+				   <b>Geographical Names</b>, which you can add to the search term. </p>
                 
 				<p>If you want further to specify your search term, click on a geographic name (e.g. <i> Berlin country</i>) in the result list. You then receive a list of <i>Spatial Relations</i>. These have a spatial relation to the original search result.</p>
             </content>
-            <section help-key="ext-search-spacial-3">
-                <header>What is a gazetteer?</header>
-                <content>
-                    <p>Just like the place index of an atlas, the Environment gazetteer (EGT) depicts the names of communities, rivers, mountains, landscapes and other geographical objects in Germany. In so doing, the EGT gives the exact spelling as well as the geographical position (coordinates) of a place.</p>
-                    <p>For practical reasons, the EGT is restricted to places, which are normally depicted on maps from the scale 1:250,000. At present, approximately 50,000 geographical objects are depicted in it. The Environment gazetteer is made available via the  <a
-                            href="http://www.semantic-network.de/"
-                            target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt).</p>
-                </content>
-            </section>
-			<section help-key="ext-search-spacial-4">
-                <header>Pocedure in PortalU</header>
-                <content>
-                    <p>The search term that you have sent off via the <i>Search geographical names</i> button is analysed by the SNS and you receive a series of geographical names by return. You can now add a cross to these and add them to your search term. The geographical names are used to search for an area in the area information of the web pages and the data bases. </p>
-                    <p>If you want to further refine your area search terms then you can look at the positional relationships by clicking once on the respective term.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-spacial-5">
-                <header>Spatial Relations</header>
-                <content>
-                    <p>After clicking on a geographical name (e.g. Berlin, county), the positional relationships to this 
-					name are displayed. By selecting (clicking on) positionally relevant geographical names you can further 
-					concretise the spatial reference desired.</p>
-                </content>
-            </section>
-        </section>
+         </section>
+         <section help-key="ext-search-spacial-3">
+            <header>The Environmental Gazetteer Geo-Thesaurus-Umwelt</header>
+              <content>
+                 <p>The environmental gazetteer Geo-Thesaurus-Umwelt is a component of the <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> 
+					of the Federal Environment Agency (Umweltbundesamt). SNS offers commen environmental terms in German and English. Currently the Geo-Thesaurus provides 
+					about 50,000 geographical objects.</p>
+
+				 <p>Just like the place index of an atlas, the environment gazetteer depicts the names of communities, rivers, mountains, landscapes and other 
+					geographical objects in Germany. In so doing, the Geo-Thesaurus-Umwelt gives the exact spelling as well as the geographical position (coordinates) 
+					of a place.</p>
+
+              </content>
+          </section>
+
         <section help-key="ext-search-spacial-6">
-            <header>Restricting Area <i>By Map</i></header>
+            <header>Restricting by map</header>
             <content>
-                <p>The PortalU search can be restricted as to area not only via terms but also by selecting a map section (bounding box). When you have defined a suitable bounding box, a targeted search runs over the web provision made available via PortalU for area terms (such as, for example, towns, mountains etc.) that are found in the map section. In the databases available via PortalU, the map section (search rectangle) is searched for directly.</p>
-                <p>For orientation and specifiation of a map section you can use the background maps service (Web Map Service) of PortalU or use external map services.</p>
-			
+                <p>The PortalU search can be restricted spacially not only via terms but also by selecting a map section (bounding box). PortalU uses the Semantical 
+				   Network Service to connect several spatial terms within the coordinates of a defined bounding box (e.g. cities or mountains). These terms can be 
+				   considered within the search query. </p>
             </content>
-           <section help-key="ext-search-spacial-7">
-				<header>Menu</header>
+            </section>                
+            <section help-key="ext-search-spacial-7">
+                <header>Select bounding box</header>
                 <content>
-                    <p>In the PortalU map viewer available, as well as activated map services, keys and a metadatasearch are provided in an accordion men, which is situated to the left of the map. By clicking on a menu heading the respective menu item will be opened up.</p>
-					<p><img border="0" width="130" height="111"
-                            src="../decorations/layout/ingrid-help/images/image201eng.jpg"
-                        alt="*"/> </p>		
-                    <p><b>Legend</b></p>
-                    <p>In the menu item <i>Legend</i> all the keys available are displayed for the map layers activated under<i>Active Services</i> and which are depicted in the map viewer. The legend description provides information which symbols and/or colours are used for the different information displayed in the map.</p>
-                   <p><b>Active Services</b></p>
-                    <p>All map services, which are found under <i>Active Services</i>, can be activated or de-activated by one click in map viewer. The map services with their layers are represented in a tree structure. </p>
-									   
-					<p>The individual symbols have the following meaning:</p>
-
-                    <p> <img border="0" width="16" height="16"
-                            src="../decorations/layout/ingrid-help/images/image101.jpg"
-                        alt="*"/> <b>  	Moves the selection up</b> : highlighted service or a marked layer is moved up one level. A service or layer can be highlighted by one click with the left mouse button on the name. As regards depiction in the map: layers that are listed further down in the tree structure overlay layers that are listed further down. </p>								
-                    <p> <img border="0" width="16" height="16"
-                            src="../decorations/layout/ingrid-help/images/image102.jpg"
-                        alt="*"/> <b>  	Moves the selection down:</b> A highlighted service or layer is displaced downwards by one level. A service or layer can be highlighted by one click with the left mouse button on the name. When a layer is overlaid by another then this can be made visible by being pushed downwards. The layer that is at the bottom of the list is always depicted as the topmost layer in the map.</p>
-
-                    <p> <img border="0" width="18" height="17"
-                            src="../decorations/layout/ingrid-help/images/image114neu.png"
-                        alt="*"/> <b>  	Removes the selected WMS:</b> A highlighted service or layer is deleted from the ?active services" area. A service can be highlighted by one click with the left mouse button on the name. The removal of single layers is not possible. </p>
-
-                    <p> <img border="0" width="20" height="17"
-                            src="../decorations/layout/ingrid-help/images/image106.jpg"
-                        alt="*"/><b>  	Active Services</b> : The folder symbol is used to display the map services. In the individual folders are to be found the corresponding layers of a service. With one click (left mouse button) on the folder symbol you can move the service, remove it or alter its transparency.</p>
-
-                    <p> <img border="0" width="16" height="16"
-                            src="../decorations/layout/ingrid-help/images/image107.jpg"
-                        alt="*"/> <b>  	Active Services</b>: This symbol is used to display a layer. With one click (left mouse button) on the symbol you can move the service, zoom in to the level of the service or call up information.</p>
-
-                    <p> <img border="0" width="17" height="17"
-                            src="../decorations/layout/ingrid-help/images/image108.jpg"
-                        alt="*"/><b>  	(De)activate this service </b>: If the left check box is ticked for a service or a layer, the service or the layer in the map is activated and depicted in the map if the corresponding zoom level (pre-defined standard of the layer) is set. If the map section depicted is outside the zoom level of the layer then the layer is not displayed in the map and the layer title is depicted in grey. If the tick for a service is removed then all the layers of the service are de-activated.  </p>
-
-					<p> <img border="0" width="18" height="16"
-                            src="../decorations/layout/ingrid-help/images/image104.jpg"
-                        alt="*"/> <b>  	Show metadata:</b>  	Further information (metadata) about a service and/or a layer is displayed for Web Map Services, which are entered below Topics or Federation/Ferderal States. The information, which originate from the particular GetCapabilities-URL, are readout from the data base of the PortalU - Map viewer. If in the GetCapabilities-URL specific data as e.g. to the organisation or address are lacking, some fields can not be filled.</p>
-
-					<p><b>Topics</b></p>
-                    <p>Under topics you will find various map services of the Federation and Federal States sorted according to environment topics, which can be loaded into the PortalU map viewer.</p>
-                   					   
-					<p>The symbols used have the following meaning:</p>
-
-                    <p> <img border="0" width="17" height="17"
-                            src="../decorations/layout/ingrid-help/images/image109.jpg"
-                        alt="*"/> The folder symbol is used for displaying the individual environment topics. In the folder you will find the corresponding map services.</p>
-
-                    <p> <img border="0" width="18" height="22"
-                            src="../decorations/layout/ingrid-help/images/image111.jpg"
-                        alt="*"/> With one click (left mouse button) on this symbol the corresponding service will be added to the active services and the map section depicted by the service will be zoomed in on in the map.  </p>
- 					<p>Note: If the service contains fewer than 5 layers all the layers will be activated directly in the map as well. Should the service contain more than 5 layers then the layers will not be automatically activated. </p>
-                    <p> <img border="0" width="18" height="16"
-                            src="../decorations/layout/ingrid-help/images/image104.jpg"
-                        alt="*"/> <b>  	Show metadata:</b> Further information (metadata) about a service and/or a layer is displayed for Web Map Services, which are entered below Topics or Federation/Ferderal States. The information, which originate from the particular GetCapabilities-URL, are readout from the data base of the PortalU - Map viewer. If in the GetCapabilities-URL specific data as e.g. to the organisation or address are lacking, some fields can not be filled. </p>
-
-                    <p><b>Federation /Federal States</b></p>
-                    <p>Under <i>Federation /Federal States</i> you will find environmentally-relevant map services of different institutions and organisations of the Federation and the Federal States sorted on a regional basis (according to Federation and Federal States).</p>
-                    
-					<p>The meaning of the individual symbols is described under the <i>Topics</i> menu item (see above).</p>
-						
-                    <p><b>Metadatasearch</b></p>
-                    <p>In <i>Metadatasearch</i> you can search for map services of the Federation and Federal States which are incorporated in the PortalU map viewer. Enter a search term for this and click on <i>OK</i>. </p>
-                    			
-					
-					<p>In the search results list the following symbols are used:</p>
-
-                    <p> <img border="0" width="15" height="16"
-                            src="../decorations/layout/ingrid-help/images/image110.jpg"
-                        alt="*"/> With one click (left mouse button) on this symbol the corresponding layer is added to the active services. </p>
-
-                    <p> <img border="0" width="18" height="22"
-                            src="../decorations/layout/ingrid-help/images/image111.jpg"
-                        alt="*"/> With one click (left mouse button) on this symbol the corresponding layer is added to the active services and the map section described by the layer is zoomed in on. </p>
-					<p> With one click on the name of the service and/or of the layer further information on the service and/or layer is displayed.	</p>
+                    <p>When you click on the button <b>By Map </b> (Advanced Search: Space), you will see a map of Germany within the map window. The button 
+					   <b>Select area</b> <img border="0" width="20" height="21" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"></img> is active by 
+					   default. You define a bounding box by drawing a box while the left mouse button is pressed. The coordinates of the bounding box are shown on the 
+					   right side beneath the map window. With the button <b>Add to Query</b> you can use these information for your search query.</p>
                  </content>
             </section>
+            <section help-key="ext-search-spacial-8">
+                <header>Select administrative unit</header>
+                <content>                   
+                    <p>
+                <ul>
+                    <li>Click on the button <b>Select an ID of an administrative unit </b> 
+                        <img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img>  
+                    </li>
+                    <li>Click on a point in the map
+                    </li>
+                    <li>Activate in the dialog box <b>Administrative unit</b> an administrative unit and click afterwards on <b>Add</b>.  
+                    </li>
+                </ul></p>
+				<p>The unit ID is shown on the right side beneath the map window. With the button Add to Query you can use this information for your search query.</p>
+                </content>
+            </section>
+
             <section help-key="ext-search-spacial-9">
                 <header>Spatial constraints</header>
                 <content>
                     <p>If you have chosen a map section you can select in which form the area restriction is to be used for the PortalU search. Here the following options are possible:</p>
-                    <ul>
-                        <li>1.	The spatial footprint of the result is contained in the search area.</li>
-                        <li>2.	The spatial footprint of the result intersects the search area.</li>
-                        <li>3.	The spatial footprint of the result contains the search area.</li>
-                    </ul>
-					                    <p> <img border="0" width="455" height="252"
-                            src="../decorations/layout/ingrid-help/images/image208eng.jpg"
-                        alt="*"/></p>
+                    <ol>
+                        <li>The spatial footprint of the result is contained in the search area</li>
+                        <li>The spatial footprint of the result intersects the search area</li>
+                        <li>The spatial footprint of the result contains the search area.</li>
+                    </ol>
+                    <p> <img border="0" width="455" height="252" src="../decorations/layout/ingrid-help/images/image208eng.jpg" alt="*"></img></p>
                 </content>
             </section>
             <section help-key="ext-search-spacial-10">
-                <header>Tool Bar</header>
+                <header>Buttons above map window</header>
                 <content>
-                   <p>Via the tool bar you can either perform various actions directly or do so with one click in the map. </p>
-                   <p> <img border="0" width="356" height="35"
-                            src="../decorations/layout/ingrid-help/images/image209.jpg"
-                        alt="*"/></p>
-                    <p>
-                        <b>Area constraint: Select search area</b>
+                   <p><img border="0" width="20" height="21" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"></img> 
+                      <b>Select area</b>: Bounding box can be drawn by mouse. 
                     </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image029.png"
-                        alt="*"/> With this button a map section (bounding box) can be selected. After activating the button you can click on a point in the map and, by holding down left mouse button draw up a rectangle. After then letting go of the button the coordinates of the bounding box are displayed underneath the map.</p>
-                    <p>By clicking on the<i> Add to Query</i> button the coordinates of the selected map section are added as an area restriction to the search term.</p>
-					<p>
-                        <b>Area constraint: Select district area</b>
+                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img> 
+                      <b>Select ID of an administrative unit</b>: 
+                      ID from the Semantic Network Service can be drawn by mouse.
                     </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image028.png"
-                        alt="*"/> After selection the administrative unit chosen is displayed under the map. With one click on the <i>Add to Query</i> button the unit will be added to the search term as an area restriction.</p>					
-                    <p>
-                        <b>Add External Services </b>
+                   <p><img border="0" width="21" height="20" src="../decorations/layout/ingrid-help/images/image203.jpg" alt="*"></img> 
+                      <b>Move map</b>: After activating the button, klick with the left mouse button in the map, hold the button and pull it on the map.
                     </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image024.jpg"
-                        alt="*"/> By means of this button you can add any GetCapabilities-URL (external service) to the active services. 
-					</p>
-					<p> The layers of the service can be activated directly. Furthermore you can zoom in the map section of the service. Therefor the adequate checks have to be placed (check box).</p>
-                    <p>
-                        <b>Show Data</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image026.jpg"
-                        alt="*"/> Which information is displayed depends on for which layer under <i>Active Services </i>the check box has been activated (see above). At present not all services support this function.</p>
-                    <p>
-                        <b>Display Coordinates </b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image027.jpg"
-                        alt="*"/> By means of this button point coordinates can be called up in the map. The position of the mouse is displayed in geographical coordinates under the map. The coordinates of the last click in the map are also displayed. .</p>
-                    <p>
-                        <b>Zoom in </b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image031.jpg"
-                        alt="*"/> With this button you can zoom in on the map. You can draw up a map section by holding down the left mouse button to draw up a rectangle. The map is centered on this section and correspondingly enlarged.</p>
-                    <p>
-                        <b>Zoom out </b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image032.jpg"
-                        alt="*"/> With one click on this button the map is reduced by a half.</p>
-                    <p>
-                        <b>Move Map</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image033.jpg"
-                        alt="*"/> Via this button the map can be dragged. To drag: With the left mouse button click on a point in the map, hold the button down and pull the mouse over the map. After this process, the point on the map on which you clicked is then found to be located where you let go of the left mouse button. </p>
-                    <p>
-                        <b>Back</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image034.jpg"
-                        alt="*"/> By clicking on this button, the map section, which was displayed before the last action, is restored.</p>
-                    <p>The action can be carried out several times in succession.</p>
-                    <p>
-                        <b>Forward</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image035.jpg"
-                        alt="*"/> If you have gone back to a map section, which lies one or more actions back, using the <i>Back</i> button, you can leaf forward again through the actions you performed after that using the <i>Forward</i> button. The action can be performed as often as the<i>Back</i> action was performed previously.</p>
-                    <p>
-                        <b>Show Original Map</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image037.jpg"
-                        alt="*"/> By clicking this button the zoom area of the original map is restored.</p>
-                    <p>
-                        <b>Print</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image039.jpg"
-                        alt="*"/> By clicking on this button a PDF document of the map is produced with or without a key. You can choose the alignment of the map and also add a title and a commentary to the map. You can print the document via the usual PDF functionality or save it.</p>
-						
+                    <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image204.jpg" alt="*"></img> 
+                      <b>Print</b>: Generates a pdf file form the shown map.  
+                    </p>                  
                 </content>
             </section>
-        </section>
+            <section help-key="ext-search-spacial-11">
+                <header>Functions within map window</header>
+                <content>                   
+                    <p>Within the map window you will find the following functions:</p>
+					<p>
+                <ul>
+                    <li>Upper left corner: Bar to <b>navigate</b> within the map (zoome and move).   
+                    </li>
+                    <li>Lower left corner: <b>Scale bar</b> and <b>coordinates</b>. The coordinates refers to the current position of the mouse within the shown map.
+                    </li>
+                    <li>Lower right corner: When you click the arrow, you will see an overview map.
+                    </li>
+                </ul></p>
+                </content>
+            </section>
+
     </chapter>
     <chapter>
         <header>Advanced Search: Time</header>
         <section help-key="ext-search-time-1">
             <header>Time</header>
             <content>
-                <p>PortalU is able to search for the time references of the connected systems. For this, on the one hand, the data are used that the  <a
-                        href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) has analysed from the web pages as time references. On the other hand, the time references in the databases are accessed. </p>
+                <p>PortalU is able to search for the time references of the connected systems. For this, on the one hand, the data are used that the  <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) has analysed from the web pages as time references. On the other hand, the time references in the databases are accessed. </p>
             </content>
         </section>
         <section help-key="ext-search-time-2">
@@ -566,21 +407,14 @@
                 <header>What is the Almanac (Environmental Chronicle)?</header>
                 <content>
                     <p>The environmental chronicle is a collection of current and historical events that have significantly influenced our environment situation. As well as the dates of the events, a short description is given of the events as appropriate. </p>
-                    <p>The environment chronicle is being made available via the <a
-                            href="http://www.semantic-network.de/"
-                            target="_new">Semantic Network Service (SNS)</a>of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau.</p>
+                    <p>The environment chronicle is being made available via the <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a>of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau.</p>
                 </content>
             </section>
             <section help-key="ext-search-time-6">
                 <header>Environment events</header>
                 <content>
-                    <p>All environment events that were found via the search in the almanac (environment chronicle) will be displayed with title and date. By clicking on the event or the plus sign in front of it <img border="0" width="9"
-                            height="9"
-                            src="../decorations/layout/ingrid-help/images/image018.jpg"
-                        alt="*"/> the description of the event will be faded in, and faded out again by clicking on the minus sign
-                            <img border="0" width="9" height="9"
-                            src="../decorations/layout/ingrid-help/images/image019.jpg"
-                        alt="*"/>.</p>
+                    <p>All environment events that were found via the search in the almanac (environment chronicle) will be displayed with title and date. By clicking on the event or the plus sign in front of it <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="*"></img> the description of the event will be faded in, and faded out again by clicking on the minus sign
+                            <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image019.jpg" alt="*"></img>.</p>
                 </content>
             </section>
         </section>
@@ -616,9 +450,7 @@
             <header>Federation/Federal States</header>
             <content>
                 <p>The data provided in PortalU come from authorities and those organisations closely associated with authorities in the Federal Republic of Germany and the Federal States. You can limit the information provided for your search to the Federal Republic or individual Federal States. It is also possible to choose several items.</p>
-                <p>The Federal Republic and also most of the Federal States have several data providers. These are displayed if you click on the plus sign <img border="0" width="9" height="9"
-                        src="../decorations/layout/ingrid-help/images/image018.jpg"
-                    alt="*"/> Instead of the Federal Republic or a Federal State, individual providers can also be selected. In this case too, a multiple selection is possible.</p>
+                <p>The Federal Republic and also most of the Federal States have several data providers. These are displayed if you click on the plus sign <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="*"></img> Instead of the Federal Republic or a Federal State, individual providers can also be selected. In this case too, a multiple selection is possible.</p>
             </content>
         </section>
     </chapter>
@@ -627,8 +459,8 @@
         <section help-key="search-history-1">
             <header>Search History</header>
             <content>
-                <p>PortalU stores a history of your search queries. As well as this history, which is automatically carried for one session, you can also as a logged in user (see <a
-                        href="?hkey=myingrid-1">myPortalU</a>) save search queries permanently.</p>
+                <p>PortalU stores a history of your search queries. As well as this history, which is automatically carried for one session, you can also as a logged 
+				   in user (see <a href="?hkey=myingrid-1">myPortalU</a>) save search queries permanently.</p>
                 <p>You can call up both forms of stored search queries again via the <i>Search History</i> function.</p>
             </content>
         </section>
@@ -663,9 +495,9 @@
         <section help-key="search-settings-3">
             <header>Include similar terms in search</header>
             <content>
-                <p>PortalU not only carries out the usual indexing found in search engines but also has the page contents analysed by the <a href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a result of this analysis specialist terms from the <a
-                    href="?hkey=ext-search-subject-4">Environment Thesaurus</a> are assigned to the web pages.</p>
+                <p>PortalU not only carries out the usual indexing found in search engines but also has the page contents analysed by the 
+				   <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a 
+				   result of this analysis specialist terms from the <a href="?hkey=ext-search-subject-4">Environment Thesaurus</a> are assigned to the web pages.</p>
                 <p>If you chose to include the setting <i>Include similar terms in search</i> by putting a cross, the associated similar terms will be taken into account. (Note: In most cases the number of hits will be increased by selecting this setting.)</p>
             </content>
         </section>
@@ -677,43 +509,33 @@
             <content>
                 <p>You have three possibilities for including similar terms in the search:</p>
                 <ul>
-                    <li>Automatically: In the settings for the search options form (<a
-                        href="?hkey=search-settings-1">Search/Options</a>)
-                        cross the option <i>Include similar terms in search</i>. You can also use these setting on a lasting basis (see <a
-                            href="?hkey=myingrid-1">myPortalU</a>).</li>
+                    <li>Automatically: In the settings for the search options form (<a href="?hkey=search-settings-1">Search/Options</a>)
+                        cross the option <i>Include similar terms in search</i>. You can also use these setting on a lasting basis (see <a href="?hkey=myingrid-1">myPortalU</a>).</li>
                     <li>Before conducting a search expand your search term with similar terms by using the 
-                            <i><a
-                        href="?hkey=ext-search-subject-2">Topic/Thesaurus</a></i>
-                        functionality of the <i><a
-                            href="?hkey=ext-search-1">Advanced Search</a></i>.</li>
-                    <li>After a search you will be offered <i><a
-                            href="?hkey=ext-search-subject-5">Similar Terms</a></i> above the search results list, by means of which you can expand your search term. In order to see the similar terms click on <i>Similar Terms: Search for.... </i> or on the plus sign. </li>
+                            <i><a href="?hkey=ext-search-subject-2">Topic/Thesaurus</a></i>
+                        functionality of the <i><a href="?hkey=ext-search-1">Advanced Search</a></i>.</li>
+                    <li>After a search you will be offered <i><a href="?hkey=ext-search-subject-5">Similar Terms</a></i> above the search results list, by means of which you can expand your search term. In order to see the similar terms click on <i>Similar Terms: Search for.... </i> or on the plus sign. </li>
                 </ul>
             </content>
         </section>
         <section help-key="search-tipps-2">
             <header>You would like to limit your search to information about the place you live in?</header>
             <content>
-                <p>For this use  <i><a
-                        href="?hkey=ext-search-spacial-1">Space</a></i>.You can either call up a search rectangle over the search area desired (<i><a
-                    href="?hkey=ext-search-spacial-6">By Map</a></i>)
-                    or enter your town or district as a term (<i><a
-                        href="?hkey=ext-search-spacial-2">By Geographic Name</a></i>).</p>
+                <p>For this use  <i><a href="?hkey=ext-search-spacial-1">Space</a></i>.You can either call up a search rectangle over the search area desired (<i><a href="?hkey=ext-search-spacial-6">By Map</a></i>)
+                    or enter your town or district as a term (<i><a href="?hkey=ext-search-spacial-2">By Geographic Name</a></i>).</p>
             </content>
         </section>
         <section help-key="search-tipps-3">
             <header>You are only interested in information about your Federal State?</header>
             <content>
-                <p>You can select your Federal State via the  <i><a
-                        href="?hkey=ext-search-area-1">Search-Area</a></i> of the search. Be aware that information at national level could also be of interest to you. You can set national information in the search area as well as a Federal State. </p>
+                <p>You can select your Federal State via the  <i><a href="?hkey=ext-search-area-1">Search-Area</a></i> of the search. Be aware that information at national level could also be of interest to you. You can set national information in the search area as well as a Federal State. </p>
                 <p>You can also have these settings on a lasting basis (see  <a href="?hkey=myingrid-1">myPortalU</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
             <header>You have a particular search query that you can’t formulate via the advanced search?</header>
             <content>
-                <p>PortalU allows complex search queries to be carried out that go beyond the possibilities of the advanced search (e.g. grouping via bracketing or similarity search etc.). In PortalU’s help read the section <i><a
-                    href="?hkey=search-expert-1">Expert Entry</a></i>
+                <p>PortalU allows complex search queries to be carried out that go beyond the possibilities of the advanced search (e.g. grouping via bracketing or similarity search etc.). In PortalU’s help read the section <i><a href="?hkey=search-expert-1">Expert Entry</a></i>
                     and put your search term into the search field.</p>
             </content>
         </section>
@@ -801,8 +623,7 @@
             <header>Thesaurus</header>
             <content>
                   <p>You can add specialist terms to your search via the specialist dictionary. For this you enter any term into the entry field and send a query to the <a href="#ext-search-subject-3">thesaurus</a> ab.</p>
-                <p>You then receive a series of  <a
-                        href="#ext-search-subject-5">similar terms</a>, which you can add to the search term or by linking them you can further specify your search term.</p>
+                <p>You then receive a series of  <a href="#ext-search-subject-5">similar terms</a>, which you can add to the search term or by linking them you can further specify your search term.</p>
             </content>
         </section>
       <section help-key="ext-search-law-3">
@@ -824,8 +645,7 @@
             <content>
                 <p>After carrying out a search query the users logged in have the possibility of saving the search term used on a long-term basis (see  <a href="?hkey=myingrid-1">myPortalU</a>) die Möglichkeit, den verwendeten Suchausdruck
                     dauerhaft zu speichern. This takes place via the <i>Save Query </i>function.</p>
-                <p>Note: The search queries last used are also accessible without saving for the session in progress via <i><a
-                    href="?hkey=search-history-1">Search History</a></i>.</p>
+                <p>Note: The search queries last used are also accessible without saving for the session in progress via <i><a href="?hkey=search-history-1">Search History</a></i>.</p>
             </content>
         </section>
     </chapter>
@@ -841,31 +661,31 @@
             <header>Boolean operators</header>
             <content>
                 <p>The individual search terms can be linked via Boolean operators. The following operators are available:</p>
-                <p><b>AND</b>: All the words have to be in the document. It is the standard if no operator is given. (Note: instead of AND the symbol &amp;&amp; can be used)<br/> For example: &#8218;water fish&#8217; equates to &#8218;water AND fish&#8217; or &#8218;water &amp;&amp; fish&#8217; </p>
+                <p><b>AND</b>: All the words have to be in the document. It is the standard if no operator is given. (Note: instead of AND the symbol &amp;&amp; can be used)<br></br> For example: ‚water fish’ equates to ‚water AND fish’ or ‚water &amp;&amp; fish’ </p>
                 <p>
-                    <b>OR</b>: One of the words has to be in the document. (Note: instead of OR the symbol || can be used) <br/> Example:
-                    &#8218;water OR fish&#8217; equates to 
-                    &#8218;water || fish&#8217;</p>
+                    <b>OR</b>: One of the words has to be in the document. (Note: instead of OR the symbol || can be used) <br></br> Example:
+                    ‚water OR fish’ equates to 
+                    ‚water || fish’</p>
                 <p>
-                    <b>NOT</b>: The word after NOT must not be in the document. (Hint: instead of NOT the symbol ! or the symbol l - can be used)<br/> Example: &#8218;water NOT
-                    fish&#8217; (the search is for water but not fish)</p>
+                    <b>NOT</b>: The word after NOT must not be in the document. (Hint: instead of NOT the symbol ! or the symbol l - can be used)<br></br> Example: ‚water NOT
+                    fish’ (the search is for water but not fish)</p>
             </content>
         </section>
         <section help-key="search-expert-3">
             <header>Grouping (bracketing)</header>
             <content>
                 <p>The individual search terms linked by Boolean operators can be optionally grouped by bracketing (round brackets).</p>
-                <p>Example: &#8218;fish NOT (trout OR perch)&#8217;
+                <p>Example: ‚fish NOT (trout OR perch)’
                     (all documents are found that contain the term
-                    &#8218;fish&#8217; but not the terms  &#8218;trout&#8217; and &#8218;perch&#8217;)</p>
+                    ‚fish’ but not the terms  ‚trout’ and ‚perch’)</p>
             </content>
         </section>
         <section help-key="search-expert-4">
             <header>Search for word groups</header>
             <content>
-                <p>If a string is placed in quotation marks (&#8222;)
+                <p>If a string is placed in quotation marks („)
                     then the occurrence of the whole string is sought and not the occurrence of the individual terms..</p>
-                <p>Example: &#8222;The fish swims in the water&#8220;
+                <p>Example: „The fish swims in the water“
                     (Only texts are found that contain exactly this string.)</p>
             </content>
         </section>
@@ -873,9 +693,9 @@
             <header>Wild cards</header>
             <content>
                 <p>Within a search term it is possible to enter wild cards for one (?) or more (*) optional signs. All terms are then found that match the rest of the search term whereby one or more signs can appear for the wild card. </p>
-                <p>Example: &#8218;te?t&#8217; (Not only documents with the term&#8218;text&#8217; but also documents with the term  &#8218;test&#8217; will be found)</p>
-                <p>Example: &#8218;environment*catalogue&#8217; ((not only documents with the term 
-                    &#8218;environment data catalogue&#8217; will be found but also documents with the term   &#8218;environment object catalogue&#8217; )</p>
+                <p>Example: ‚te?t’ (Not only documents with the term‚text’ but also documents with the term  ‚test’ will be found)</p>
+                <p>Example: ‚environment*catalogue’ ((not only documents with the term 
+                    ‚environment data catalogue’ will be found but also documents with the term   ‚environment object catalogue’ )</p>
             </content>
         </section>
         <section help-key="search-expert-6">
@@ -884,21 +704,21 @@
                 <p>It is possible to search for areas of symbols. The areas are collected in square  [] or curved  {} brackets and the bottom and top pieces of information are linked with the operator TO. Square brackets[]
                     signify that the lower and upper value of the area are included in the search. Curved brackets  {}
                     signify that the lower and the upper value of the area are not included in the search.</p>
-                <p>Example: &#8218;[Aller TO Elbe]&#8217; (Documents are sought that contain words that begin with all in the alphabet and end at Elbe. The words 
-					&#8218;Aller&#8217; and &#8218;Elbe&#8217; are included in the search area by this.</p>
-                <p>Example: &#8218;{Aller TO Elbe}&#8217; (Documents are sought that contain words starting alphabetically with Aller and ending at Elbe. The words 
-					&#8218;Aller&#8217; and &#8218;Elbe&#8217; are not contained in the search area in this.)</p>
+                <p>Example: ‚[Aller TO Elbe]’ (Documents are sought that contain words that begin with all in the alphabet and end at Elbe. The words 
+					‚Aller’ and ‚Elbe’ are included in the search area by this.</p>
+                <p>Example: ‚{Aller TO Elbe}’ (Documents are sought that contain words starting alphabetically with Aller and ending at Elbe. The words 
+					‚Aller’ and ‚Elbe’ are not contained in the search area in this.)</p>
 				<p>The search area can also be given inside a search word. </p>
-                <p>Example: &#8218;te[i TO x]t&#8217; (Documents are searched for that contain, for example, the words &#8218;teilt&#8217;, &#8218;test&#8217; or &#8218;text&#8217;.)</p>
+                <p>Example: ‚te[i TO x]t’ (Documents are searched for that contain, for example, the words ‚teilt’, ‚test’ or ‚text’.)</p>
 				<p> As an alternative to the operator TO a hyphen - can also be used </p>
-                <p>Example: &#8218;te[i - x]t&#8217; (documents are searched for that, for example, contain the words  &#8218;tent&#8217;, &#8218;test&#8217; or &#8218;text&#8217;.)</p>
+                <p>Example: ‚te[i - x]t’ (documents are searched for that, for example, contain the words  ‚tent’, ‚test’ or ‚text’.)</p>
             </content>
         </section>
         <section help-key="search-expert-7">
             <header>Fuzzy search</header>
             <content>
                 <p>Documents are also found via the fuzzy search in which terms with similar spelling are found. The fuzzy search is instigated by attaching a tilde (~) to the search term.</p>
-                <p>Example: &#8218;Corn~&#8217; (documents will be found containing the term&#8218;horn&#8217; for example)</p>
+                <p>Example: ‚Corn~’ (documents will be found containing the term‚horn’ for example)</p>
             </content>
         </section>
         <section help-key="search-expert-8">
@@ -908,14 +728,14 @@
                 <p>+ - &amp;&amp; || ! ( ) { } [ ] ^ &quot; ~ * ? : \</p>
                 <p>SShould you however use them as simple symbols within a search term then they must be marked as such by the symbol
                     \ (Backslash).</p>
-                <p>Example: &#8218;\(1\+1\)\:2&#8217; (The expression &#8218;(1+1):2&#8217; is sought)</p>
+                <p>Example: ‚\(1\+1\)\:2’ (The expression ‚(1+1):2’ is sought)</p>
             </content>
         </section>
         <section help-key="search-expert-9a">
             <header>Search for special document types</header>
             <content>
-                <p> In PortalU different document types can be searched for. For this the syntax &#8218;fileformat:value&#8217; is used.</p>
-                <p>Example: &#8218;fileformat:pdf&#8217; (only PDF documents are searched for.)</p>
+                <p> In PortalU different document types can be searched for. For this the syntax ‚fileformat:value’ is used.</p>
+                <p>Example: ‚fileformat:pdf’ (only PDF documents are searched for.)</p>
                 <p>The following values are available for the 'fileformat' field in PortalU:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
@@ -953,9 +773,9 @@
             <header>Search for special datatypes</header>
             <content>
                 <p>The PortalU full text index is organized in different fields. All fields used in PortalU can be searched individually in targeted fashion. For this the syntax
-                    &#8218;field name:value&#8217; is used.</p>
-				<p>In searching for a data type the field name is &#8218;datatype&#8217;.</p>
-                <p>Example: &#8218;datatype:law&#8217; (documents are searched for that are arranged under legislation.)</p>
+                    ‚field name:value’ is used.</p>
+				<p>In searching for a data type the field name is ‚datatype’.</p>
+                <p>Example: ‚datatype:law’ (documents are searched for that are arranged under legislation.)</p>
                 <p>The following values are available for the <i>datatype</i> field in PortalU:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
@@ -1013,8 +833,8 @@
         <section help-key="search-expert-10">
             <header>Search for a particular environmental topic</header>
             <content>
-                <p>The search can be limited to pages associated with one or more environmental topics. For this the syntax &#8218;topic:value&#8217; is used.</p>
-                <p>Example: &#8218;datatype:topics topic:energy&#8217; (documents are searched for that are arranged under the environmental topic <i>Energy</i> eingeordnet wurden.)</p>
+                <p>The search can be limited to pages associated with one or more environmental topics. For this the syntax ‚topic:value’ is used.</p>
+                <p>Example: ‚datatype:topics topic:energy’ (documents are searched for that are arranged under the environmental topic <i>Energy</i> eingeordnet wurden.)</p>
 				<p> The following values are possible:</p>
 				<p> Abfall, Altlasten, Bauen, Boden, Chemikalien, Energie, Forstwirtschaft, Gentechnik, 
 					Geologie, Gesundheit, LaermErschuetterung, Landwirtschaft, LuftKlima, 
@@ -1025,8 +845,8 @@
         <section help-key="search-expert-11">
             <header>Search for particular measurement pages (data)</header>
             <content>
-                <p>The search can be restricted to the pages, which are associated with measurements in particular environmental areas. For this the syntax&#8218;topic:value&#8217; is used.</p>
-                <p>Example: &#8218;datatype:measure topic:air&#8217; (Documents are searched for that have as contents measurements on the topic <i>Air</i>.)</p>
+                <p>The search can be restricted to the pages, which are associated with measurements in particular environmental areas. For this the syntax‚topic:value’ is used.</p>
+                <p>Example: ‚datatype:measure topic:air’ (Documents are searched for that have as contents measurements on the topic <i>Air</i>.)</p>
 				<p> The following values are possible:</p>
 				<p> radiation, air, water, misc </p>
 			</content>
@@ -1034,8 +854,8 @@
         <section help-key="search-expert-12">
             <header>Search for a particular service</header>
             <content>
-                <p>The search can be restricted to the pages, which are associated with a service. For this the syntax&#8218;topic:value&#8217; is used.</p>
-                <p>Example: &#8218;datatype:service topic:press&#8217; (Documents containing press releases are searched for.)</p>
+                <p>The search can be restricted to the pages, which are associated with a service. For this the syntax‚topic:value’ is used.</p>
+                <p>Example: ‚datatype:service topic:press’ (Documents containing press releases are searched for.)</p>
 				<p> The following values are possible:</p>
 				<p> press, publication, event </p>
 			</content>
@@ -1043,8 +863,8 @@
         <section help-key="search-expert-13">
             <header>Search for a particular metadata class (data)</header>
             <content>
-				<p>In searching for a particular metadata class the syntax  &#8218;topic:Wert&#8217; is searched for.</p>
-                <p>Example: &#8218;datatype:metadata metaclass:map&#8217; (metadata of the <i>Geo-Information/Map</i> class are being searched for.)</p>
+				<p>In searching for a particular metadata class the syntax  ‚topic:Wert’ is searched for.</p>
+                <p>Example: ‚datatype:metadata metaclass:map’ (metadata of the <i>Geo-Information/Map</i> class are being searched for.)</p>
                 <p>The following values are available for the <i>metaclass</i> field in PortalU:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
@@ -1090,8 +910,8 @@
             <header>Stating the spatial reference</header>
             <content>
 				<p> The search can be restricted to documents that are associated with a certain spatial reference. The spatial reference can be stated via coordinates or via the area key of the administrative unit.</p>
-                <p>Example: &#8218;areaid: areaid:11000000&#8217; (The search will be restricted to Berlin as administrative unit.)</p>
-                <p>Example: &#8218;x1:7.52 y1:50.18 x2:10.17 y2:52.73&#8217; (The search is restricted to a selected rectangle.)</p>
+                <p>Example: ‚areaid: areaid:11000000’ (The search will be restricted to Berlin as administrative unit.)</p>
+                <p>Example: ‚x1:7.52 y1:50.18 x2:10.17 y2:52.73’ (The search is restricted to a selected rectangle.)</p>
                 <p>The following fields are available in PortalU for the restriction of the spatial reference:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
@@ -1130,7 +950,7 @@
             <header>Stating the temporal reference</header>
             <content>
 				<p> The search can be restricted to documents that are associated with a particular temporal reference.  </p>
-                <p>Example: &#8218;t1:2006-01-01 t2:2008-12-31&#8217; (The search is restricted to a selected time interval.)</p>
+                <p>Example: ‚t1:2006-01-01 t2:2008-12-31’ (The search is restricted to a selected time interval.)</p>
                 <p>The following fields are available for the restriction of the temporal references in PortalU:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
@@ -1165,20 +985,72 @@
         <section help-key="search-results-1">
             <header>Search result list</header>
             <content>
-                <p>After submitting a search query you will receive the result list. It is broken down into the main result list (left column) and the list with results from broader data sources (right column). You will also be given the possibility of refining your search query via the <a
-                    href="?hkey=search-1">Search form</a> and to do another search. For this you can also use the similar terms offered to you.</p>
+                <p>After submitting a search query you will receive the result list. The result list is structured in three areas. The main result list can be found in the page centre. On the left hand site you will find results ordered by categories and on the right hand site results from broader data sources. </p>
             </content>
         </section>
         <section help-key="search-results-2">
-            <header>Main result list</header>
+            <header>Categories</header>
             <content>
-                <p>In the main result list you will be shown the results from the search in the web pages of the connected server as well as in the meta- and specialist information systems in a list weighted according to relevance. </p>
-                <p>Instead of the simple weighted list you can also have the results displayed  <a
-                    href="?hkey=myingrid-12">grouped</a>
-                    according to Federal Republic and Federal States or according to providers or  <a href="?hkey=myingrid-12">sorted</a> according to currentness.</p>
-                <p>If the information you have found is a webpage then, as well as a series of pieces of information (e.g. title, description and provider), you will receive a link by means of which you will be led directly to the original page.</p>
-                <p>If the information you have found is a meta- or specialist information you will be led via the link to the detailed representation of the specialist information. In the cases, where there is a direct link available to a web page in which the meta- or specialist information is available, then you will be offered this and will be led by this to the original page. In the cases in which there is a map beyond, you will get a ‟show map” link offered by means of which you can open the map in PortalU‘s map viewer.</p>
-            </content> 
+                <p>Within the left column the results are sorted by categories. In brackets you will find the number of results within the current category. With a click on one of the categories the current results will be shown in the main result list. Different categories can be combined by activating corresponding checkboxes. Click on the button <b>More</b> to see further categories. Click on the button <b>Delete all restrictions</b> to switch of all category filters</p>
+				
+				<p><b>Datatypes</b> </p>
+                <p>Websites: environmental web pages</p>
+                <p>Metadata: data sets from all connected environmental data catalogues (Umweltdatenkataloge)  </p>
+                <p>Map: metadata from the class geoinformation/map from all connected environmental data catalogues and map services which are provided within the <a href="?hkey=maps-1">PortalU-map viewer</a>.</p>
+                <p>Law: web pages refering to environmental law</p>                   
+                <p>Research Projects: information refering to environmental research projects </p> 
+                <p>Topics: web pages from the PortalU rubric <a href="?hkey=search-topics-1">topics</a>.</p>                  
+                <p>Measure: web pages from the PortalU rubric <a href="?hkey=search-measure-1">data</a></p>             
+                <p>Service: web pages from the PortalU rubric <a href="?hkey=search-service-1">service</a></p>
+                   
+				<p><b>Timeliness</b> </p>
+                
+                <p>When you chose the dataype <b>metadata</b>, you can see the timeliness (e.g. older than 5 years or last month). The timeliness referes to the latest date of changes within the current data set. </p>
+                                      
+                <p><b>Provider</b> </p>
+                
+                <p>In the category <b>provider</b> you can restrict your search results to one or more information provider. The provider are sorted by Federation and Federal states.</p>                                         
+                                      
+                <p><b>Spatial reference</b> </p>
+                
+                <p>In the category <b>spatial reference</b> you can restrict your search results to an area of interest by dragging a bounding box on the map or by geographic name.</p>
+                <p><b>Map search</b></p> 
+				
+				<p>Do the following, to limit your search query to a certain <b>geographic area</b>:</p>    
+                 <ul>
+						<li>
+                        Click the button <b>Map search</b>, a new window will open.
+						</li>
+						<li>
+                        Click on the <b>Select area</b> icon <img border="0" width="20" height="21" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"></img> in the toolbar.
+						</li>
+						<li>
+                        Choose your area of interest by dragging a rectangle (bounding box) on the map.  
+						</li>
+						<li>
+                        Finish your selection by clicking the <b>Submit selection</b> button. 
+						</li> 
+						<li>The result list will be limited to your selection.</li>						
+				</ul>    
+
+				<p><b>Geothesaurus search</b></p> 
+				<p>You can limit your search results also to specific locations:</p>    
+                 <ul>
+						<li>
+                        Click the button <b>Geothesaurus search</b>, a new window will open.
+						</li>
+						<li>
+                        Enter a location (e.g. city name) and click the <b>Search</b> button
+						</li>
+						<li>
+                        Choose the location you are interested in and click the <b>Submit selection</b> button  
+						</li>
+						<li>The result list will be limited to your selection</li>						
+				</ul>  
+					
+				
+            </content>
+            
         </section>
         <section help-key="search-results-3">
             <header>Further data sources</header>
@@ -1190,14 +1062,9 @@
         <section help-key="search-results-4">
             <header>Similar terms</header>
             <content>
-                <p>PortalU offers you the possibility of expanding your search query by similar terms. For this, the search string entered by you will be analysed by the <a
-                        href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau and made available to them.</p>
-                <p>If you click on the plus sign  <img border="0" width="9"
-                        height="9"
-                    src="../decorations/layout/ingrid-help/images/image018.jpg"/> you will be offered the similar terms for each search entered. You can in turn get these displayed by means of the symbol
-                        <img border="0" width="9" height="9"
-                    src="../decorations/layout/ingrid-help/images/image018.jpg"/> By putting a cross next to the individual terms and clicking on the <i>Append to Query</i> button, the similar terms will be added to the associated search term each time such that a document will be found if either the search term or the similar term are contained (OR linking).</p>
+                <p>PortalU offers you the possibility of expanding your search query by similar terms. For this, the search string entered by you will be analysed by the <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau and made available to them.</p>
+                <p>If you click on the plus sign  <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> you will be offered the similar terms for each search entered. You can in turn get these displayed by means of the symbol
+                        <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> By putting a cross next to the individual terms and clicking on the <i>Append to Query</i> button, the similar terms will be added to the associated search term each time such that a document will be found if either the search term or the similar term are contained (OR linking).</p>
             </content>
         </section>
     </chapter>
@@ -1206,8 +1073,7 @@
         <section help-key="search-catalog-1">
             <header>Hierarchy-Tree</header>
             <content>
-                <p>The data catalogues connected and its contents are displayed in a hierarchy-tree, broken down according to Federal Republic/Federal States. In each catalogue navigation can take place by <i>Objects</i> (here "environment information") or <i>Addresses</i>. The details of an entry are represented only when queried, i.e. when clicking on its title, just as in the <a
-                    href="?hkey=search-results-2"> main results list</a> in the free search.</p>
+                <p>The data catalogues connected and its contents are displayed in a hierarchy-tree, broken down according to Federal Republic/Federal States. In each catalogue navigation can take place by <i>Objects</i> (here "environment information") or <i>Addresses</i>. The details of an entry are represented only when queried, i.e. when clicking on its title, just as in the <a href="?hkey=search-results-2"> main results list</a> in the free search.</p>
             </content>
         </section>
         <section help-key="search-catalog-2">
@@ -1319,9 +1185,7 @@
             <header>Environmental Almanac</header>
             <content>
                 <p>The environmental almanac is a collection of current and historical events which have significantly influenced our environment situation. As well as the basic data, the environmental almanac provides a short description of the events.</p>
-                <p>The environmental almanac is made available via the  <a
-                        href="http://www.semantic-network.de/"
-                        target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt).</p>
+                <p>The environmental almanac is made available via the  <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt).</p>
                 <p>You can search in a targeted manner for events by submitting a search in the environment chronicle via <i>Search Term</i>, <i>Temporal Relation</i> and <i>Event-Type</i> using the <i>Show</i> button.</p>
             </content>
         </section>
@@ -1349,181 +1213,209 @@
         <section help-key="maps-1">
             <header>Maps</header>
             <content>
-                <p>In Map viewer you can view maps relevant to the environment. Select a map service from the heading <i>Topics</i> or the heading <i>Federation/Federal States</i> or add an external service. If you have reached Map viewer via a PortalU-search result (<i>Show Map</i>), the corresponding map will be displayed to you immediately.
+                <p>In the PortalU rubric <b>maps</b> you can select diverse web map services (WMS) relevant to the environment. The map services can be combined and viewed in the PortalU map viewer. On the left site you can add services and view the <b>legend</b> of activated map layers. With the button <img border="0" width="15" height="16" src="../decorations/layout/ingrid-help/images/image205.jpg" alt="*"></img> you can collapse the left site and enlarge the map window. Clicking the button <img border="0" width="20" height="20" src="../decorations/layout/ingrid-help/images/image206.jpg" alt="*"></img>, the list of map services and providers will be displayed again.  
                    </p>
             </content>
         </section>
             <section help-key="maps-2">
-				<header>Accordion Menu </header>
+				<header>Add Web Map Services </header>
                 <content>
-                    <p>In the PortalU map viewer available, as well as activated map services, keys and a metadatasearch are provided in an accordion men, which is situated to the left of the map. By clicking on a menu heading the respective menu item will be opened up.</p>
+                    <p>Several WMS from Federation and German Federal State level are already integrated in the PortalU map viewer. These services are listet on the left site (flag services) provider-sorted (flag provider) as well as topic-sorted (flag topics). In order to activate one of these services, please click on a service and press afterwords the <b>Add service button</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>. The single layers of all active services (flag active services) are shown in the map viewer by activating the check box in front of the layer</p>
+					<p>You can add a WMS:  </p>
+					<ul>
+						<li>
+                        from the provider list
+						</li>
+						<li>
+                        from the topic list
+						</li>
+						<li>
+                        from the research result list
+						</li>
+						<li>
+                        by entering a valid GetCapabilities URL (click the <b>Add service button</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>)
+						</li>                    
+					</ul>                       
+
+					<p> <b>Tab Provider</b></p>
+
+					<p>Under the <b>flag Provider</b> you will find the map services relevant for environment and environment related information belonging to different data provider from Federation and German Federal States. To add a map service from the provider list,</p>
+					<ul>
+						<li>
+                        click (left mouse button) the tab <b>Provider</b>  
+						</li>
+						<li>
+                        click on the cross to the left of the required folder 
+						</li>
+						<li>
+                        click one of the map services  
+						</li>
+						<li>
+                        click the button <b>Add service</b><img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>  
+                        </li>
+					</ul>                                 
+					<p>All map services and associated layers found under <b>Active services</b> can be activated or de-activated by clicking on the check box. You can displace highlighted services upwards or downwards by simple drag and drop.</p>
+				
+					<p> <b>Tab Topics</b></p>
+
+                    <p>Under the <b>flag Topics</b> you will find various map services of the Federation and Federal States sorted according to environment topics, which can be loaded into the PortalU map viewer. To add a map service from the topic list,</p>
+					<ul>
+						<li>
+                        click (left mouse button) the tab <b>Topics</b> 
+						</li>
+						<li>
+                        click on the cross to the left of the required topic folder 
+						</li>
+						<li>
+                        click one of the map services  
+						</li>
+						<li>
+                        click the button <b>Add service</b>  
+                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>
+						</li>
+					</ul>                                        
+					<p>All map services found under <b>Active Services</b> can be activated or de-activated by one click on the check box. You can displace highlighted services upwards or downwards by simple drag and drop. </p>  
 					
-                    <p><b>Legend</b></p>
-                    <p>In the menu item <i>Legend</i> all the keys available are displayed for the map layers activated under<i>Active Services</i> and which are depicted in the map viewer. The legend description provides information which symbols and/or colours are used for the different information displayed in the map.</p>
-                   <p><b>Aktive Services</b></p>
-                    <p>All map services, which are found under <i>Active Services</i>, can be activated or de-activated by one click in map viewer. The map services with their layers are represented in a tree structure. </p>
-									   
-					<p>The individual symbols have the following meaning:</p>
+					
+					<p><b>Tab Search</b></p>
 
-                    <p> <img border="0" width="16" height="16"
-                            src="../decorations/layout/ingrid-help/images/image101.jpg"
-                        alt="*"/> <b>  	Moves the selection up</b> : highlighted service or a marked layer is moved up one level. A service or layer can be highlighted by one click with the left mouse button on the name. As regards depiction in the map: layers that are listed further down in the tree structure overlay layers that are listed further down. </p>								
-                    <p> <img border="0" width="16" height="16"
-                            src="../decorations/layout/ingrid-help/images/image102.jpg"
-                        alt="*"/> <b>  	Moves the selection down:</b> A highlighted service or layer is displaced downwards by one level. A service or layer can be highlighted by one click with the left mouse button on the name. When a layer is overlaid by another then this can be made visible by being pushed downwards. The layer that is at the bottom of the list is always depicted as the topmost layer in the map.</p>
-
-                    <p> <img border="0" width="18" height="17"
-                            src="../decorations/layout/ingrid-help/images/image114neu.png"
-                        alt="*"/> <b>  	Removes the selected WMS:</b> A highlighted service or layer is deleted from the ?active services" area. A service can be highlighted by one click with the left mouse button on the name. The removal of single layers is not possible. </p>
-
-                    <p> <img border="0" width="20" height="17"
-                            src="../decorations/layout/ingrid-help/images/image106.jpg"
-                        alt="*"/><b>  	Active Services</b> : The folder symbol is used to display the map services. In the individual folders are to be found the corresponding layers of a service. With one click (left mouse button) on the folder symbol you can move the service, remove it or alter its transparency.</p>
-
-                    <p> <img border="0" width="16" height="16"
-                            src="../decorations/layout/ingrid-help/images/image107.jpg"
-                        alt="*"/> <b>  	Active Services</b>: This symbol is used to display a layer. With one click (left mouse button) on the symbol you can move the service, zoom in to the level of the service or call up information.</p>
-
-                    <p> <img border="0" width="17" height="17"
-                            src="../decorations/layout/ingrid-help/images/image108.jpg"
-                        alt="*"/><b>  	(De)activate this service </b>: If the left check box is ticked for a service or a layer, the service or the layer in the map is activated and depicted in the map if the corresponding zoom level (pre-defined standard of the layer) is set. If the map section depicted is outside the zoom level of the layer then the layer is not displayed in the map and the layer title is depicted in grey. If the tick for a service is removed then all the layers of the service are de-activated.  </p>
-
-					<p> <img border="0" width="18" height="16"
-                            src="../decorations/layout/ingrid-help/images/image104.jpg"
-                        alt="*"/>  <b> 	Show Metadata: </b> Further information (metadata) about a service and/or a layer is displayed for Web Map Services, which are entered below Topics or Federation/Ferderal States. The information, which originate from the particular GetCapabilities-URL, are readout from the data base of the PortalU - Map viewer. If in the GetCapabilities-URL specific data as e.g. to the organisation or address are lacking, some fields can not be filled.</p>
-
-					<p><b>Topics</b></p>
-                    <p>Under topics you will find various map services of the Federation and Federal States sorted according to environment topics, which can be loaded into the PortalU map viewer.</p>
-                   					   
-					<p>The symbols used have the following meaning:</p>
-
-                    <p> <img border="0" width="17" height="17"
-                            src="../decorations/layout/ingrid-help/images/image109.jpg"
-                        alt="*"/>   	The folder symbol is used for displaying the individual environment topics. In the folder you will find the corresponding map services.</p>
-
-                    <p> <img border="0" width="18" height="22"
-                            src="../decorations/layout/ingrid-help/images/image111.jpg"
-                        alt="*"/> With one click (left mouse button) on this symbol the corresponding service will be added to the active services and the map section depicted by the service will be zoomed in on in the map.  </p>
- 					<p>Note: If the service contains fewer than 5 layers all the layers will be activated directly in the map as well. Should the service contain more than 5 layers then the layers will not be automatically activated. </p>
-                    <p> <img border="0" width="18" height="16"
-                            src="../decorations/layout/ingrid-help/images/image104.jpg"
-                        alt="*"/> <b>  	Show metadata:  </b> Further information (metadata) about a service and/or a layer is displayed for Web Map Services, which are entered below Topics or Federation/Ferderal States. The information, which originate from the particular GetCapabilities-URL, are readout from the data base of the PortalU - Map viewer. If in the GetCapabilities-URL specific data as e.g. to the organisation or address are lacking, some fields can not be filled. </p>
-
-                    <p><b>Federation /Federal States</b></p>
-                    <p>Under <i>Federation /Federal States</i> you will find environmentally-relevant map services of different institutions and organisations of the Federation and the Federal States sorted on a regional basis (according to Federation and Federal States).</p>
+					<p>Under Search you can search for map services which are listed under the flags <b>provider</b> and <b>topics</b> or in the <b>connected data catalogues</b> (e.g. environmental data catalogues UDKs). Enter a search term and click the button Search. From the result list please click on one of the services and press afterwords the Add service button <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img> to activate the service. </p>
+                       
+                   
+					<p><b>Add External Services</b></p>
+        
+					<p>External services are services which are not integrated in PortalU. In order to add an external service, please switch to the flag <b>Active services</b> and click on the <b>Add service button</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>, a new window will open. Enter the GetCapabilities URL of the new service and select (by using the check box) whether you want to activate the layer of the service straight away and whether you want to zoom in to the map section of the service directly. Click afterwards the <b>Add service</b> button.</p>
+							
+             </content>
+        </section>        
+        <section help-key="maps-4">
+          <header>Features</header>
+          <content>
+               <p><b>Toolbar in the table of content</b></p>
+                   <p><img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img> <b>Add service</b>: Under the tabs <b>Provider</b>, <b>Topics</b> and <b>Search results</b> you can add the highlighted service to the map viewer. You can also use this button to add an external service by entering the GetCapabilities URL. Added services will be listed under the tab <b>Active services</b>.
+                    </p>
+                   <p><img border="0" width="22" height="19" src="../decorations/layout/ingrid-help/images/image209.jpg" alt="*"></img> <b>Remote service</b>: 
+                      Delete a selected service from the current map viewer. 
+                    </p>
                     
-					<p>The meaning of the individual symbols is described under the <i>Topics</i> menu item (see above).</p>
-						
-                    <p><b>Metadatasearch</b></p>
-                    <p>In <i>Metadatasearch</i> you can search for map services of the Federation and Federal States which are incorporated in the PortalU map viewer. Enter a search term for this and click on <i>OK</i>. </p>
-                    			
+                   <p><img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img> <b>Transparency</b>: 
+                      Apply layer <b>transparency</b> using the slider control. First select a layer before making transparency changes.
+                    </p>                    
+                    
+                   <p><img border="0" width="22" height="21" src="../decorations/layout/ingrid-help/images/image102.jpg" alt="*"></img> <b>Metadata</b>: 
+                      Display information (metadata) about selected map services or layers.
+                    </p>                    
+
+                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image112.jpg" alt="*"></img> <b>Expand/Collaps all</b>: 
+                      Open and close all layers in the tree structure by one click. 
+                    </p> 
+                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image113.jpg" alt="*"></img> <b>Zoom to layer or service extend</b>: 
+                      Zoom to a layer’s or service’s visible area.
+                    </p>                                         
+
+                   <p><img border="0" width="26" height="23" src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"></img> <b>Delete Search results</b>: 
+                      Delete search results in the <b>hit list</b>. 
+                    </p>
+          					   
+			
+			
+					<p><b>Features in the map window:</b></p>
 					
-					<p>In the search results list the following symbols are used:</p>
+					<ul>
+						<li>In the top left corner: Navigation controls (zoom in, zoom out, move the map view). 
+						</li>
+						<li>In the lower left corner: <b>Scale bar</b> and <b>coordinates</b>. The values represent the current x-coordinate and y-coordinate of the mouse pointer position in the map.
+						</li>
+						<li>In the top right corner: By one click on the arrow next to the <b>Extended Preferences</b> button you can change the spatial references and scale.
+						</li>
+						<li>In the lower right corner: By one click on the arrow, the overview map will be hidden/shown.
+						</li>
+					</ul>    
 
-                    <p> <img border="0" width="15" height="16"
-                            src="../decorations/layout/ingrid-help/images/image110.jpg"
-                        alt="*"/>   	With one click (left mouse button) on this symbol the corresponding layer is added to the active services. </p>
+					<p><b>Toolbar above the map window</b></p>
+					 
+					<p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img> <b>Object information</b>: 
+                      Provides layer specific information. A click on the map reveals all available information for that location in a new window. Sometimes providers don’t offer specific information for every layer. In this case, no results are displayed in the feature info window.     
+                    </p>
+					<p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image105.jpg" alt="*"></img> <b>Back</b>: 
+                      Allows you to go back to the last map section.  
+                    </p>
+					<p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image106.jpg" alt="*"></img> <b>Foward</b>: 
+                      Allows you to go foward to the next map section. This action can be performed as many times as the <b>Back</b> action was executed previously. 
+                    </p>
+					<p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image107.jpg" alt="*"></img> 
+                      <b>Zoom to initial map</b>:
+                      By clicking on this button the zoom is restored to the start extend of the map. 
+                    </p>
+					<p><img border="0" width="35" height="21" src="../decorations/layout/ingrid-help/images/image108.jpg" alt="*"></img> <b>Measure Tool</b>:
+                     Measure distance or area on the map. Activate the required check box to measure distance or area. Click on the map to set the starting point for your measurement. Click again to set further points or double click to finish the measuerment. The final distance / area is displayed in the window.
+                    </p>
+					<p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image204.jpg" alt="*"></img> <b>Print</b>:
+                      Print the current map to pfd. You can set the resolution, scale and rotation of the map and in addition insert a title and comment. 
+					</p>
+					<p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> <b>Load</b>:
+                      Open an existing map (Access to this feature requires a personal account). This menu item is only active when you are logged in with a PortalU account (www.portalu.de/personalisierungsoptionen) and you’ve already saved a map. See <a href="?hkey=maps-7">Save map</a>. 
+					</p>
+					<p><img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> <b>Save</b>:
+                      The visible map section is saved. This menu item is only active when you are logged in with a PortalU account (www.portalu.de/personalisierungsoptionen). See <a href="?hkey=maps-7">Save map</a>. 
+					</p>
+					<p><img border="0" width="24" height="26" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> <b>Save map as WMC document</b>:
+                      The visible map section is saved as WMC (Web Map Context), an XML based format. 
+					</p>
+          </content>
+        </section>	
+		<section help-key="maps-6">
+          <header>Legend</header>
+          <content>
+                   <p>In the tab <b>Legend</b> (switch on the left site from the tab <b>Services</b> to the tab <b>Legend</b>), all available legends of the map layers are depicted, which are activated under <b>Active Services</b> and are depicted as maps in the viewer. The legend gives information about which symbols and/or colours are used to display the different information in the map.
+                   </p>
+          </content>
+        </section>
+		
+		 <section help-key="maps-7">
+          <header>Save map</header>
+          <content>
+               <p>For saving your individually arranged maps, please do the following:</p>
+                <ul>
+                    <li>Register with your PortalU user ID (above right in the main menu of the screen).  
+                    </li>
+                    <li>Go to the <b>map</b>.
+                    </li>
+                    <li>Click on the button <b>Save</b>
+                        <img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> (toolbar above the map window).
+                    </li>
+                    <li>Stored maps can be deleted using the <b>Delete</b> button <img border="0" width="22" height="19" src="../decorations/layout/ingrid-help/images/image209.jpg" alt="*"></img> . 
+                    </li>
+                </ul>                                        
+                <p>By clicking on the button <b>Load</b> 
+                   <img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> , 
+                   alle stored maps are displayed in a list. To load a map, please select an entry and click on the botton <b>Load</b>. </p> 
+          </content>
+        </section>
+		<section help-key="maps-8">
+          <header>Tips for handling maps</header>
+          <content>
+               <p><b>You have added a map and activated the layers, but you can’t see any data?</b></p>
+               <p>Some layers are only displayed at certain scales. The layers are displayed, when the scale of the current map view and the layer scale match. Otherwise the names of the layers are greyed out (flag active services) and the data are not drawn. You can make the data visible by zooming into the map or by using the feature <b>Zoom to service or layer extend</b> <img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image113.jpg" alt="*"></img> . </p> 
+			   
+               <p><b>Navigating the map</b></p>
+               <p>You can navigate in the map by moving the red rectangle in the overview map located in the lower right of the map viewer. Or you can pan the map by pressing the <b>CTRL</b> key and dragging with the <b>left mouse</b> key.</p>
+              
+			  <p><b>Zoom in the map</b></p>
+			   <p>Instead of using the navigation controls to zoom in the map, hold the <b>Shift</b> key and drag a zoom box on the map with the <b>left mouse</b> key.</p>
 
-                    <p> <img border="0" width="18" height="22"
-                            src="../decorations/layout/ingrid-help/images/image111.jpg"
-                        alt="*"/>   	With one click (left mouse button) on this symbol the corresponding layer is added to the active services and the map section described by the layer is zoomed in on. </p>
-					<p> With one click on the name of the service and/or of the layer further information on the service and/or layer is displayed.	</p>
-                 </content>
-            </section>
-            <section help-key="maps-3">
-                <header>Save Map</header>
-                <content>
-                    <p>If you have registered with your account under myPortalU, you can 
-					save your settings under Active Services. For this click on the link Save Map above Legend. 
-					Below the map viewer appeares a dialogue field offering the possibility to save the actual 
-					map view under a user-defined name. A permanent URL ist defined, which can be used later.</p>
-               	
-      				
-                </content>
-            </section>
-            <section help-key="maps-4">
-                <header>Tool Bar</header>
-                <content>
-                    <p>Via the tool bar you can carry out different actions directly or by clicking in the map.</p>
-                   <p> <img border="0" width="294" height="46"
-                            src="../decorations/layout/ingrid-help/images/image207.jpg"
-                        alt="*"/></p>			
-                    <p>
-                        <b>Add External Services </b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image024.jpg"
-                        alt="*"/> By means of this button you can add any GetCapabilities-URL (external service). The service is added to the active services and depicted in the map viewer with the <i>Add WMS</i> button. </p>
-					<p> Here you can select (check box) whether you want to activate the layer of the service straight away and whether you want to zoom in to the map section of the service directly. </p>
-                    <p><b>Show Data</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image026.jpg"
-                        alt="*"/> Which information is displayed depends on for which layer under <i>Active Services </i>the right check box <i>Info Query in Map</i> has been activated (see above). At present not all services support this function.</p>
-                    <p>
-                        <b>Display Coordinates </b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image027.jpg"
-                        alt="*"/> By means of this button point coordinates can be called up in the map. The position of the mouse is displayed in geographical coordinates under the map. The coordinates of the last click in the map are also displayed. .</p>
-                    <p>
-                        <b>Zoom in </b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image031.jpg"
-                        alt="*"/> With this button you can zoom in on the map. You can draw up a map section by holding down the left mouse button to draw up a rectangle. The map is centered on this section and correspondingly enlarged.</p>
-                    <p>
-                        <b>Zoom out </b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image032.jpg"
-                        alt="*"/> With one click on this button the map is reduced by a half.</p>
-                    <p>
-                    <b>Move Map</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image033.jpg"
-                        alt="*"/> Via this button the map can be dragged. To drag: With the left mouse button click on a point in the map, hold the button down and pull the mouse over the map. After this process, the point on the map on which you clicked is then found to be located where you let go of the left mouse button. </p>
-                    <p>
-                        <b>Back</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image034.jpg"
-                        alt="*"/> By clicking on this button, the map section, which was displayed before the last action, is restored.</p>
-                    <p>The action can be carried out several times in succession.</p>
-                    <p>
-                        <b>Forward</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image035.jpg"
-                        alt="*"/> If you have gone back to a map section, which lies one or more actions back, using the <i>Back</i> button, you can leaf forward again through the actions you performed after that using the <i>Forward</i> button. The action can be performed as often as the<i>Back</i> action was performed previously.</p>
-                    <p>
-                        <b>Show Original Map</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image037.jpg"
-                        alt="*"/> By clicking this button the zoom area of the original map is restored.</p>
-                    <p>
-                        <b>Print</b>
-                    </p>
-                    <p>
-                        <img border="0" width="24" height="23"
-                            src="../decorations/layout/ingrid-help/images/image039.jpg"
-                        alt="*"/> By clicking on this button a PDF document of the map is produced with or without a key. You can choose the alignment of the map and also add a title and a commentary to the map. You can print the document via the usual PDF functionality or save it.</p>
-						
-						
-                </content>
-            </section>
+               <p><b>Can I choose different scale levels?</b></p>
+               <p>You can determine different scale levels by expanding the dialogue window <b>Extended Preferences</b>.</p>
+			   
+               <p><b>A top layer overlapps information of underlying layers</b></p>
+               <p>When several layers are activated, some layer information may be overlapped. You can add transparency to the top layer to see the underlying layers. Click the layer you want to appear transparent and use the button layer <b>transparency</b> <img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img> to adjust the transparency by the slider bar.           
+               </p>
+
+          </content>
+        </section>
     </chapter>
+
+    
     <chapter>
         <header>News</header>
         <section help-key="rss-news-1">
@@ -1532,8 +1424,7 @@
                 <p>Under <i>News</i>
 				are listed current releases on the subject of the environment from the federal and regional authorities. Here the latest report is always on top. Each time only the title and a short description of the report are displayed. By clicking on the report you will be taken to the original report.</p>
                 <p>Older reports, which are no longer displayed on the start page, are stored in the report archive. You can look at these reports by clicking on the <i>Other News</i> link.</p>
-                <p>Note: If necessary, you can still find reports, which are so old that they can no longer be found in the report archive, on the original servers of the respective federal or regional authorities. To do this click on <a
-                        href="?hkey=search-service-1">Service / News-Bulletins</a>.</p>
+                <p>Note: If necessary, you can still find reports, which are so old that they can no longer be found in the report archive, on the original servers of the respective federal or regional authorities. To do this click on <a href="?hkey=search-service-1">Service / News-Bulletins</a>.</p>
             </content>
         </section>
     </chapter>
@@ -1542,8 +1433,7 @@
         <section help-key="ingrid-inform-1">
             <header>PortalU informs</header>
             <content>
-                <p>In this area you can find reports, which are provided by the operator of PortalU, the <a href="http://www.kst.portalu.de/"
-                        target="_new">Coordination Center PortalU</a>.</p>
+                <p>In this area you can find reports, which are provided by the operator of PortalU, the <a href="http://www.kst.portalu.de/" target="_new">Coordination Center PortalU</a>.</p>
             </content>
         </section>
     </chapter>
@@ -1571,8 +1461,7 @@
                     <p>If you do not yet have a user name and password then click on the <i>New User</i> link. This will take you to the <i>Login </i>form. </p>
                     <p>Please fill out the form. The detail fields with a star* are mandatory and must be filled in. All other details are voluntary.</p>
                     <p>All details are handled in strict confidence and are only used for anonymised statistical evaluation.</p>
-                    <p>If you would always like to receive the latest news from the PortalU arena then order the <a
-                        href="?hkey=ingrid-newsletter-1">PortalU Newsletter</a>, by putting a cross against <i>I want to subscribe to the newsletter</i> at the end of the contact form (Note: you can unsubscribe at any time).</p>
+                    <p>If you would always like to receive the latest news from the PortalU arena then order the <a href="?hkey=ingrid-newsletter-1">PortalU Newsletter</a>, by putting a cross against <i>I want to subscribe to the newsletter</i> at the end of the contact form (Note: you can unsubscribe at any time).</p>
                 </content>
             </section>
             <section help-key="myingrid-4">
@@ -1600,8 +1489,7 @@
                 <p>This link takes you to the form with your details thus far. If your details have changed, this is where you can update with these changes.</p>
                 <p>The data fields with a star * are mandatory and have to be filled in. All other details are voluntary.</p>
                 <p>All details are handled in strict confidence and are only used for anonymised statistical evaluation.</p>
-                <p>If you would always like to receive the latest news from the PortalU arena then order the <a
-                        href="?hkey=ingrid-newsletter-1">PortalU Newsletter</a>, by putting a cross against <i>I would like to subscribe to the newsletter</i> at the end of the form (Note: you can unsubscribe at any time).</p>
+                <p>If you would always like to receive the latest news from the PortalU arena then order the <a href="?hkey=ingrid-newsletter-1">PortalU Newsletter</a>, by putting a cross against <i>I would like to subscribe to the newsletter</i> at the end of the form (Note: you can unsubscribe at any time).</p>
             </content>
         </section>
         <section help-key="myingrid-8">
@@ -1653,10 +1541,7 @@
                     <p>
                         <b>Include similar terms in the search </b>
                     </p>
-                    <p>PortalU not only performs the usual indexing of the pages found on search engines but gets the page contents analysed by the n <a
-                            href="http://www.semantic-network.de/"
-                            target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a result of this analysis, appropriate technical terms from the <a
-                        href="?hkey=ext-search-subject-4#ext-search-subject-4">Environment-Thesaurus</a>
+                    <p>PortalU not only performs the usual indexing of the pages found on search engines but gets the page contents analysed by the n <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a result of this analysis, appropriate technical terms from the <a href="?hkey=ext-search-subject-4#ext-search-subject-4">Environment-Thesaurus</a>
                         are assigned to the web pages.</p>
                     <p>If you select the setting <i>Include similar terms in search</i> by putting a cross then these keywords will be taken account of in the search. (Note: one should assume that selecting this setting increases the number of hits.)</p>
                     <p>The settings will be effective on a lasting basis as preset settings for the display of the search result list, but can be overwritten via settings in <i>Search</i> for individual searches. </p>
