@@ -5,6 +5,12 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
+    <release version="3.4.0-SNAPSHOT" date="??" description="??">
+      <action type="add" dev="wemove">
+        Add handling of new iPlug Type IPLUG_DSC_MAPCLIENT.
+      </action>
+    </release>
+
     <release version="3.3.0" date="2013-03-06" description="Release InGrid 3.3">
       <action type="add" dev="wemove">
         MapClient: Add support for resizing tiles while zooming.
