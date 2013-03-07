@@ -96,14 +96,17 @@ public class QueryResultPostProcessor {
             }
         }
 
-        if (tmpString.endsWith("DSCSearcher") || tmpString.endsWith("DscSearchPlug")) {
+        tmpString = tmpString.toLowerCase();
+
+        // THIS IS THE iPlugClass from PD !!! :(
+        if (tmpString.contains("dsc") || tmpString.contains("search")) {
             processDSCHit(hit, detail, ds);
-        } else if (tmpString.equals("de.ingrid.iplug.se.NutchSearcher")) {
+        } else if (tmpString.equals("de.ingrid.iplug.se.nutchsearcher")) {
             hit.put(Settings.RESULT_KEY_TYPE, "www-style");
-        } else if (tmpString.equals("de.ingrid.iplug.tamino.TaminoSearcher")) {
+        } else if (tmpString.equals("de.ingrid.iplug.tamino.taminosearcher")) {
             hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
             hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
-        } else if (tmpString.equals("de.ingrid.iplug.opensearch.OpenSearchPlug")) {
+        } else if (tmpString.equals("de.ingrid.iplug.opensearch.opensearchplug")) {
             hit.put(Settings.RESULT_KEY_URL_TYPE, "opensearch");
         } else if (plugDescr.containsDataType("dsc_other")){
             hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
