@@ -7,17 +7,12 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * TODO Describe your created type (class, etc.) here.
  * 
  * @author joachim@wemove.com
  */
 public class IngridResourceBundle {
-
-    private static final Log log = LogFactory.getLog(IngridResourceBundle.class);
 
     ResourceBundle r = null;
 
@@ -63,20 +58,11 @@ public class IngridResourceBundle {
      */
     public String getString(String key) {
         try {
-            if (log.isDebugEnabled()) {
-                log.debug("Get localization for key '" + key + "' and locale '" + r.getLocale().toString() + "'.");
-            }
             return getProfileString(key);
         } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.debug("Problem accessing the profile resource! Fall back to portlet specific resource file.", e);
-            }
             try {
                 return r.getString(key);
             } catch (Exception ex) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Problem accessing the portlet specific resource! Fall back to common resource file.", e);
-                }
                 return getCommonString(key);
             }
         }
