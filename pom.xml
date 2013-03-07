@@ -23,6 +23,18 @@
     <module>ingrid-portal-mdek-application</module>
     <module>ingrid-portal-distribution</module>
   </modules>
+	<!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
+	<dependencyManagement>
+		<dependencies>
+            <!-- ADD TO base pom when 3.3.0 RELEASE process finished ! -->
+          <dependency>
+            <groupId>de.ingrid</groupId>
+            <artifactId>ingrid-utils</artifactId>
+            <version>3.4.0-SNAPSHOT</version>
+          </dependency>
+		</dependencies>
+	</dependencyManagement>
+	<!-- ==================== DEPENDENCIES ==================== -->
   <build>
     <finalName>ingrid-portal-project-${version}</finalName>
     <!-- <resources><resource><directory>src/main/resources</directory><excludes><exclude>*.xml</exclude><exclude>*.properties</exclude><exclude>*.bak</exclude></excludes></resource></resources>-->
