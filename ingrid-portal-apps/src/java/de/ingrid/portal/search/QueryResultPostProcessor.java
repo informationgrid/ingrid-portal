@@ -99,7 +99,7 @@ public class QueryResultPostProcessor {
         tmpString = tmpString.toLowerCase();
 
         // THIS IS THE iPlugClass from PD !!! :(
-        if (tmpString.contains("dsc") || tmpString.contains("search")) {
+        if (tmpString.contains("dsc") && tmpString.contains("search")) {
             processDSCHit(hit, detail, ds);
         } else if (tmpString.equals("de.ingrid.iplug.se.nutchsearcher")) {
             hit.put(Settings.RESULT_KEY_TYPE, "www-style");
