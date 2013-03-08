@@ -271,42 +271,38 @@ public class IngridMonitorFacade {
 				Object bName = getObject(jobB);
 				
 				if (ascending) {
+					if (bName == null && aName != null) return 1; 
 					if (aName instanceof String) {
 						return ((String)aName).toLowerCase().compareTo(((String)bName).toLowerCase());
 					} else if (aName instanceof Integer) {
 						return ((Integer)aName).compareTo(((Integer)bName));
 					} else if (aName instanceof Long) {
-						if (bName == null) {
-							return -1;
-						} else {
-							return ((Long)aName).compareTo(((Long)bName)); 
-						}
+						return ((Long)aName).compareTo(((Long)bName)); 
 					} else if (aName instanceof Date) {
-						if (bName == null) {
-							return -1;
-						}
 						return ((Date)aName).compareTo(((Date)bName));
 					} else if (aName == null) {
-						return 1;
+						if (bName == null) {
+							return 0;
+						} else {
+							return -1;
+						}
 					}
 				} else {
+					if (bName == null && aName != null) return -1;
 					if (aName instanceof String) {
 						return ((String)aName).toLowerCase().compareTo(((String)bName).toLowerCase()) * -1;
 					} else if (aName instanceof Integer) {
 						return ((Integer)aName).compareTo(((Integer)bName)) * -1;
 					} else if (aName instanceof Long) {
-						if (bName == null) {
-							return -1;
-						} else {
-							return ((Long)aName).compareTo(((Long)bName)) * -1;
-						}
+						return ((Long)aName).compareTo(((Long)bName)) * -1;
 					} else if (aName instanceof Date) {
-						if (bName == null) {
-							return 1;
-						}
 						return ((Date)aName).compareTo(((Date)bName)) * -1;
 					} else if (aName == null) {
-						return 1;
+						if (bName == null) {
+							return 0;
+						} else {
+							return 1;
+						}
 					}
 				}
 				return 0;
