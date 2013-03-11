@@ -1,0 +1,247 @@
+/**
+ * Inlcude CSS styles for portlets (standardized classes)
+ * See: Section PLT.C of the Portlet Specfication 1.0
+ */
+@import url("./PLT.C.All.css");
+
+
+/********************************************************************
+  standard styles 
+*********************************************************************/
+
+body { padding: 0; margin: 0; color: #111111; background-color: #FFFFFF; font: normal 100% Verdana, Arial, sans-serif; line-height: 120%; }
+
+sup { line-height: 0; }
+img { border:0; }
+span.icon { margin-right:0px; margin-top:3px; float:left; }
+span.icon_udk { margin-right:6px; margin-top:2px; position:absolute; width:21px; height:14px; }
+/* no float for detail page in OPERA */
+span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
+span.normaltext { font-weight:normal; text-transform:none; }
+span.smaller {font-size: 83%}
+ul { list-style-type:square; padding-left:0; margin: 0 0 1em 30px; }
+p { margin-top:0; margin-bottom:1em; font-size:12px; }
+strong {font-weight:bold}
+.section textarea, .section select, input { }
+div.line { border: 0; height: 0px; margin:10px 0 0 0; padding:0; border-bottom: 1px solid #B4B4B4; }
+div.line_form { border: 0; background-color: #CCCCCC; height: 1px; margin:10px 0 10px 0; padding:0}
+/* for CSS1 browsers */ 
+div.line hr { display: none;}
+div.line_form hr { display: none;}
+/* for CSS2 browsers */
+div.line * { display: none;}
+div.line_form * { display: none;}
+
+a, a:link { color: #14606D; text-decoration: none; }
+a:visited { color: #14606D; }
+a:hover, a:focus { color: #111111; text-decoration: underline; }
+a:active { color: #111111; text-decoration: none; }
+a.selected { font-weight:bold; }
+/*search_seperator style used at profile NUMIS*/
+span.search_seperator{ }
+
+h1 { font-family: Verdana, Arial, Helvetica, sans-serif ; font-size:20px; font-weight:normal; line-height:100%; margin-top:0; }
+h2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:90%; line-height:100%; font-weight:bold; margin-top:0; margin-bottom:0.8em; }
+h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-height:100%; font-weight:bold; margin-top:0.4em; margin-bottom:0.3em; }
+
+table.border { border-collapse:collapse; }
+table.fullwidth { width:100%; }
+th {font-size: 75%; vertical-align:top; padding:3px;}
+td {font-size: 75%; vertical-align:top; padding-left:3px;}
+table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
+td.iconwidth { width:9px; }
+table.layout td {font-size: 100%}
+td.fontcolor {color: #14606D;}
+
+/********************************************************************
+  helper styles 
+*********************************************************************/
+
+.hide { position: absolute; left: -1000em; width:500em; line-height:0px; }
+.clearer { clear:both; height:1px; line-height: 0px; font-size: 1px; margin:0; padding:0; }
+.float { float:left; }
+.float_left { float:left; }
+.float_right { float:right; }
+.bgred {background-color:#FF0000}
+.top { margin-top:0; }
+.nobottommargin { margin-bottom:0; }
+.leftmargin {margin-left: 12px; }
+.leftmargin_big {margin-left: 84px; }
+.nospace { margin-bottom:0; padding-bottom:0; }
+.rightmargin { margin-right:1.5em; }
+
+div.ico_linkintern {margin: 0 0 0.3em 0;padding-left: 15px; background-image:url("../images/icn_linkintern.gif");background-repeat: no-repeat;background-position: 0 5px;}
+div.ico_arrowup {margin: 0 0 0.3em 0;padding-left: 15px; background-image:url("../images/arrow_up.gif");background-repeat: no-repeat;background-position: 0.0em .4em;}
+div.ico_down_black {margin: 0 0 0.3em 0;padding-left: 10px; background-image:url("../images/ico_down_black.gif");background-repeat: no-repeat;background-position: 0.0em -.1em;}
+
+/********************************************************************
+  breadcrumb styles 
+*********************************************************************/
+
+div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; background-color:#FFFFFF; font-size: 75%; }
+
+/********************************************************************
+  identity area styles
+*********************************************************************/
+
+div#identity { padding:0; margin:0; height: 123px; width:59.5em; background-color:#3E3E3E; overflow:visible;position:relative; z-index:5;  }
+div.motiv_start { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
+
+div.en_motiv_start { background-image:url(../images/en/01_motiv_start.png); background-repeat:no-repeat; }
+
+
+/********************************************************************
+  logo styles 
+*********************************************************************/
+
+div#logo { float: left; }
+
+/********************************************************************
+  logged on styles 
+*********************************************************************/
+
+div#logged_on {float: right; clear:right; font-size: 70%; padding:3.5em 1.2em 0 0; color:#C7E7FF; }
+div#logged_on a, div#logged_on a:link, div#logged_on a:visited {color:#FFFFFF; text-decoration: none; background-color:rgba(127,127,127,0.7); }
+div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #111111; text-decoration: underline; }
+
+/********************************************************************
+  service navigation styles
+*********************************************************************/
+
+div#servicenav { padding:0; float: right; margin: 0 30px 0 0; }
+#servicenav { font-size: 70%; }
+div#servicenav ul { list-style: none; padding: 0; margin: 0; background-color:#FFFFFF; height:22px; padding:0 10px; }
+div#servicenav ul li { display:inline; color: #000000; }
+div#servicenav ul li a { color:#000000; padding:0px 5px; font-size: 11px; }
+div#servicenav ul li a.selected { text-decoration:none; color:#000000; font-weight:normal; }
+div#servicenav ul li a.selected:hover { text-decoration:none; color:#000000 !important; }
+div.service_nav_left { float:left; width:4px; height:23px; }
+div.service_nav_right { float:left; width:4px; height:23px; }
+
+/*style to change language switch style (use in profiles)*/
+select.language_switch_style { font-size:100%; color: #14606D; }
+
+/********************************************************************
+  main navigation styles
+*********************************************************************/
+
+/* IE Win needs this to show background-color \*/
+html body div#mainnav { height: 31px; }
+/* End Hack */
+
+div#mainnav { background: #3e3e3e; margin:0; padding:0; height:30px;  z-index: 10; position: relative;}  
+div#mainnav ul { list-style: none; padding: 0px 0 0px 56px; margin: 0;}
+div#mainnav ul li { padding: 5px 0px; margin: 0px 0px 0px -2px; border: 0; float: left;font-size: 12px; font-weight:bold;}
+/** FOR IE7 **/
+*+html div#mainnav ul li { padding: 5px 0px 10px 0px ; }
+div#mainnav ul li:hover { }
+
+div#mainnav ul li ul {}
+div#mainnav ul li ul li { padding:3px 0px; }
+div#mainnav ul li ul li:hover { background: url(); }
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+div#mainnav ul li a {float:none;}
+/* End IE5-Mac hack */
+
+div#mainnav ul li a,  
+div#mainnav ul li a:link, 
+div#mainnav ul li a:visited 
+ { text-decoration:none; color:#FFFFFF; padding:5px 12px 10px; margin:0; font-size: 13px; font-weight: normal; margin: 6px; }  
+
+div#mainnav ul li a.selected,
+div#mainnav ul li a.selected:link, 
+div#mainnav ul li a.selected:visited 
+ { background:#bad405; color:#000000; font-weight:bold;  }  
+
+div#mainnav ul li a:hover,
+div#mainnav ul li a:active
+ { }
+
+div#mainnav div.tabs { margin: -7px 0 -5px; height:33px; }
+div#mainnav div.tabs_left { width:4px; height:33px; float:left; background-image: url(../images/tabs-left.png); }
+div#mainnav div.tabs_right { width:4px; height:33px; float:left; background-image: url(../images/tabs-right.png); }
+div#mainnav div.tabs_center { height:33px; float:left; background-image: url(../images/tabs.png); }
+/********************************************************************
+  sub navigation styles
+*********************************************************************/
+
+div#subnav { height:1.375em; padding: 5px 0px 0px 0px; border-top: 0; margin-top: 1px; position: relative; z-index: 12; background: #bad405; }
+div#subnavBack { height:1.375em; padding: 5px 0px 0px 0px; border-top: 0; margin-top: 1px; position: relative; z-index: 12; background: #bad405; }
+
+div#subnav ul { list-style:none; padding:0 0 0 72px; margin:-3px; line-height:120%; color:#000000; font-weight:normal; }
+div#subnav ul li { display:inline; padding:0; margin:0; }
+
+div#subnav ul li a,
+div#subnav ul li a:link,
+div#subnav ul li a:visited,
+div#subnav ul li a:active { text-decoration:none; color:#000000; font-weight: normal; padding:0px 5px !important; border:0px !important; font-size:11px; }
+
+div#subnav ul li a:hover, div#subnav ul li a:focus { color:#000000; text-decoration:underline; }
+div#subnav ul li a.selected { text-decoration:none; font-weight: bold; background-image: url() !important; float:none !important; }
+
+div.subnav_corner { background: #bad405; float: right; height: 100%; vertical-align: bottom; width: 21px; }
+div.subnav_corner_img { height: 100%; vertical-align: bottom; width: 21px; }
+
+div#subnav div.subnav_left { background-image: url(../images/subnav_left.png); width: 5px; height: 28px; float:left; }
+div#subnav div.subnav_right { background-image: url(../images/subnav_right.png); width: 5px; height: 28px; float:left; }
+div#subnav div.subnav_center { background-image: url(../images/subnav.png); height: 28px; float:left; }
+
+div#subnavBack ul { list-style:none; padding: 0px; margin:0; line-height:120%; color:#111111; }
+div#subnavBack ul li { display:inline; padding: 5px 10px 2px 0; float:left; font-size: 11px; }
+
+div#subnavBack ul li a.selected { text-decoration:none; color:#215A7E; font-weight:bold; }
+div#subnavBack ul li a,
+div#subnavBack ul li a:link,
+div#subnavBack ul li a:visited,
+div#subnavBack ul li a:active {text-decoration:none; color:#000000;}  
+div#subnavBack ul li a:hover, div#subnav ul li a:focus {color:#000000;text-decoration:underline;}
+
+div#subnavBack div.subnav_left { background-image: url(../images/subnav_left.png); width: 5px; height: 28px; float:left; margin: 0px 0px 0px 63px }
+div#subnavBack div.subnav_right { background-image: url(../images/subnav_right.png); width: 5px; height: 28px; float:left; }
+div#subnavBack div.subnav_center { background-image: url(../images/subnav.png); height: 28px; float:left; padding-left:10px;}
+
+/********************************************************************
+  content block styles
+  base layout for content area and marginal column  
+*********************************************************************/
+
+div#container { width:56em; margin:28px 0 0 63px; min-height:500px; }
+
+/*** alt ***/
+div#content { float:left; width:37.1875em; }
+div#marginal { float:left; width:15.75em; margin: 0px 0px 0 2.625em; }
+
+/*** portlat column styles, replacing div#content and div#marginal ***/
+div.portal-layout-column-1 { float:left; width:37.1875em; }
+div.portal-layout-column-2 { float:left; width:15.75em; margin: 0px 0px 0 2.625em; }
+
+
+/********************************************************************
+  footer block styles  
+*********************************************************************/
+
+div#footercontainer { margin: 0; background: #cccccc; padding: 0; width:59.5em; padding:65px 0px 100px 0px; display:none;}
+#footercontent { font-size: 65%; line-height: 120%; color: #666666; padding:0px 35px 0px 35px; display:none;}
+#footerimage { background: url(../images/logo_footer_1.png) no-repeat; width:160px; height:50px; float:left; margin: -35px 0 0;  display:none;}
+#footerimage2 { background: url(../images/logo_footer_2.png) no-repeat; width:71px; height:52px; float:right;  display:none;}
+#footertext { float:left; margin:0 0 0 35px;  display:none;}
+#footertext2 { text-transform: uppercase; float:right;  display:none;}
+
+div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 0px; padding: 0; background: #FFFFFF; display:none;}
+div#footermarginal { background: #FFFFFF; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; width:100%; display:none;}
+
+div#finalfootercontainer { float: left; width: 59.5em; display:none;}
+div#finalfooter { padding-left:112px; padding-bottom:20px; padding-top:0px; height:11px; font-size:65%; line-height:120%; color:#666666; display:none;}
+
+#footerSeparator { display:none;}
+#footercontent a { color: #666666;  display:none;}
+#getNewsletter { font-size:10px !important; margin-top: 5px;}
+
+/* InGrid Map Client*/
+
+p,label.search-ext-env{padding:2px;}
+ol, ul { list-style-type: none !important; }
+.x-tree-node-anchor {   font-size:11px !important;}
+ul.x-tab-strip-top {background-color: #CEDFF5;border-bottom-color: #8DB2E3;margin: 0;important!;}
+li.x-tree-node{margin-left:-25px;}

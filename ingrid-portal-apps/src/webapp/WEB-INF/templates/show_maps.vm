@@ -21,7 +21,7 @@
 
 mapClientCallbackHooks = null;
 
-var viewConfiguration = "portalu-fullmap";
+var viewConfiguration = '$mapConfig';
 
 
 var mapUserId = '$mapUserId';
