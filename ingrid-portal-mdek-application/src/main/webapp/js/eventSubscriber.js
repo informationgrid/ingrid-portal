@@ -345,7 +345,7 @@ udkDataProxy.handleLoadRequest = function(msg)
 	deferred.addCallbacks(function() {
     	// Don't process newNode and objectRoot load requests.
     	if (msg.id == "newNode" || msg.id == "objectRoot" || msg.id == "addressRoot" || msg.id == "addressFreeRoot") {
-    		//dojo.publish("/selectNode", [{node: dijit.byId(msg.id).item}]);
+    		dojo.publish("/selectNode", [{id:"dataTree", node: dijit.byId(msg.id).item}]);
     	    currentUdk = {};
     		msg.resultHandler.callback();
     	} else {
@@ -2878,6 +2878,10 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 		} else {
 			console.debug("Error in _updateTree: TreeNode widget not found. ID: "+nodeData.uuid);
 		}
+	}
+	
+	if (/*doSelectNode && */node) {
+	    dojo.publish("/selectNode", [{id: "dataTree", node: node}]);
 	}
 }
 

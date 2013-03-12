@@ -117,7 +117,7 @@ attachNewNode = function(selectedNode, res) {
 		//tree.model.store.save(); // does not store it in subnode!!!
 		var newItem = dijit.byId(item.id[0]);
         UtilTree.selectNode("dataTree", item.id[0]);
-		dojo.publish("/selectNode", [{node: item}]);
+		dojo.publish("/selectNode", [{id:"dataTree", node: item}]);
 		dojo.window.scrollIntoView(newItem.domNode);
         dijit.byId("dataFormContainer").resize();
 	});
@@ -128,7 +128,7 @@ attachNewNode = function(selectedNode, res) {
 		if (newNode) {
 			newNode.getParent().expand();
             UtilTree.selectNode("dataTree", "newNode");
-			dojo.publish("/selectNode", [{node: newNode.item}]);
+			dojo.publish("/selectNode", [{id:"dataTree", node: newNode.item}]);
 			dojo.window.scrollIntoView(res.domNode);
 		} else {
 			dialog.show(message.get("general.error"), message.get("tree.nodeCreateLocalError"), dialog.WARNING);
@@ -384,7 +384,7 @@ menuEventHandler.handleSave = function() {
 		
 		// manually publish select event, because during save operation there
 		// is no tree-select-event!
-		dojo.publish("/selectNode", [{node: tree.selectedNode.item}]);
+		dojo.publish("/selectNode", [{id:"dataTree", node: tree.selectedNode.item}]);
 
 		resetRequiredFields();
 	});
@@ -481,7 +481,7 @@ menuEventHandler._discardNode = function(selectedNode) {
 						var d = new dojo.Deferred();
 						d.addCallback(function(){
 							UtilTree.selectNode("dataTree", newSelectNode.id[0]);
-							dojo.publish("/selectNode", [{node: newSelectNode.item}]);
+							dojo.publish("/selectNode", [{id:"dataTree", node: newSelectNode.item}]);
 							dojo.window.scrollIntoView(newSelectNode.domNode);
 							discardDeferred.callback();
 						});
@@ -753,7 +753,7 @@ menuEventHandler.reloadSubTree = function(msg) {
 		//tree.selectNode(selectedNode);
 		UtilTree.selectNode("dataTree", selectedNode.id[0]);
 		//tree.selectedNode = selectedNode;
-		dojo.publish("/selectNode", [{node: selectedNode.item}]);
+		dojo.publish("/selectNode", [{id:"dataTree", node: selectedNode.item}]);
 		tree.refreshChildren(selectedNode);
 	}
 }

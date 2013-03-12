@@ -1462,7 +1462,7 @@ UtilUI.setMandatory = function(/*html node to process*/containerNode) {
 		dojo.addClass(containerNode, "required");
 		dojo.addClass(containerNode, "show");
 		// make sure tab containers and alike are displayed correctly!
-		igeEvents.refreshTabContainers();
+		//igeEvents.refreshTabContainers();
 	}
 }
 UtilUI.setOptional = function(/*html node to process*/containerNode) {
@@ -2042,9 +2042,11 @@ UtilGrid.getTableData = function(grid) {
 UtilGrid.setTableData = function(gridId, data) {
 	var grid = UtilGrid.getTable(gridId);
 	var gridData = UtilGrid.getTableData(gridId);
-	if (gridData instanceof Array)
-		grid.setData(data);
-	else {
+	if (gridData instanceof Array) {
+		grid.setData(data, true, true); // scroll to top AND do not resize!
+		// just render
+		grid.render();
+	} else {
 		gridData.setItems(data);
 		grid.invalidate();
 	}
