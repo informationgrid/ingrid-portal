@@ -236,7 +236,7 @@ public class IngridMonitorFacade {
 					}				
 				} else if (sortBy.equals(IngridAbstractStateJob.PARAM_COMPONENT_TYPE)) {
 					object = jobDetail.getJobDataMap().get(sortBy);
-				} else if (sortBy.equals(IngridAbstractStateJob.PARAM_STATUS_CODE)) {
+				} else if (sortBy.equals(IngridAbstractStateJob.PARAM_STATUS)) {
 					object = jobDetail.getJobDataMap().get(sortBy);
 				} else if (sortBy.equals(IngridAbstractStateJob.PARAM_LAST_CHECK)) {
 					Trigger trigger = getTrigger(jobDetail.getName(), jobDetail.getGroup());
