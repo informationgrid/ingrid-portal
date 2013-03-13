@@ -141,7 +141,7 @@
 
 <div class="formbody formbody_border_style">
 		<table class="border fullwidth">
-		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status.code", "component.monitor.general.last.check", "component.monitor.general.last.errorfree.run", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
+		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status", "component.monitor.general.last.check", "component.monitor.general.last.errorfree.run", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
 		#set ($colTitles = [$MESSAGES.getString('component.forms.text.name'), $MESSAGES.getString('component.forms.text.type'), $MESSAGES.getString('component.forms.text.status'), $MESSAGES.getString('component.forms.text.last.check'), $MESSAGES.getString('component.forms.text.last.errorfree.run'), $MESSAGES.getString('component.forms.text.average.exec.time'), $MESSAGES.getString('component.forms.text.interval')]) ##, "aktiv"])
    
 		#renderDBBrowserHeader($colNames $colTitles)
