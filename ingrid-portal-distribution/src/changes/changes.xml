@@ -5,9 +5,18 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-    <release version="3.4.0-SNAPSHOT" date="??" description="??">
+    <release version="3.3.0.1" date="2013-03-15" description="Bugfix Release InGrid 3.3.0.1">
       <action type="add" dev="wemove">
         Add handling of new iPlug Type IPLUG_DSC_MAPCLIENT.
+      </action>
+      <action type="fix" dev="wemove" issue="INGRID-2233">
+        IGE: Increased speed when using IE8
+      </action>
+      <action type="fix" dev="wemove" issue="INGRID-2230">
+        Fixed sorting of columns in job overview.
+      </action>
+      <action type="fix" dev="wemove">
+        WebmapClient: Zoom-To-Layer should now zoom to correct scale, where the layer can be actually seen.
       </action>
     </release>
 
