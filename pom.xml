@@ -8,11 +8,11 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>3.4.0-SNAPSHOT</version>
+  <version>3.3.0.1</version>
   <name>Ingrid Portal</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk</developerConnection>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/tags/ingrid-portal-project-3.3.0.1</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/tags/ingrid-portal-project-3.3.0.1</developerConnection>
   </scm>
   <modules>
     <module>ingrid-portal-apps</module>
