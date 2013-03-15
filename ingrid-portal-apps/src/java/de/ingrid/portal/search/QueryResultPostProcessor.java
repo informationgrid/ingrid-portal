@@ -477,9 +477,20 @@ public class QueryResultPostProcessor {
                 }
             }
             String cswUrl = (String) PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
-            if (!cswUrl.isEmpty()) {
-                String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+hit.get(Settings.RESULT_KEY_DOC_UUID)+"&iplug="+hit.getPlugId()+"&elementSetName=full";
-                hit.put(Settings.RESULT_KEY_CSW_INTERFACE_URL, cswUrl + parameter);
+            String id = (String) hit.get(Settings.RESULT_KEY_DOC_UUID);
+            List typesPlug = Arrays.asList(plugDescr.getDataTypes());
+            boolean isMetadata = false;
+        	for (int i=0; i < typesPlug.size(); i++) {
+            	if (typesPlug.contains(Settings.QVALUE_DATATYPE_SOURCE_METADATA)) {
+            		isMetadata = true;
+            		break;
+            	}
+        	}
+            if(id != null && isMetadata){
+            	if (!cswUrl.isEmpty()) {
+                    String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id+"&iplug="+hit.getPlugId()+"&elementSetName=full";
+                    hit.put(Settings.RESULT_KEY_CSW_INTERFACE_URL, cswUrl + parameter);
+                }
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
