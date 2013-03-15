@@ -490,6 +490,7 @@
         <mkdir dir="${WebmapDataDir}/WebmapClientData"/>
         <mkdir dir="${WebmapDataDir}/WebmapClientData/data/tmp"/>
         <mkdir dir="${WebmapDataDir}/WebmapClientData/data/users"/>
+		<mkdir dir="${WebmapDataDir}/WebmapClientData/data/wms"/>         
     	<if>
     		<available file="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
     	    <then>
@@ -509,6 +510,7 @@
         <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.administration.file}"   value="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
         <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.sessionDir}"   value="${WebmapDataDir}/WebmapClientData/data/tmp"/>
         <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.userDataDir}"  value="${WebmapDataDir}/WebmapClientData/data/users"/>
+		<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.wms.dir}"				value="${WebmapDataDir}/WebmapClientData/data/wms"/>
         <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.opensearch.searchurl}"  value="${openSearchUrl}?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+cache:off+datatype:metadata+ranking:score&amp;ingrid=1&amp;h=100"/>
     	<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.mapdownload.dir}"   	value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/downloads"/>
         <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.shortUrlBase}" value="${loadMapUrl}"/>
