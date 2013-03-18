@@ -48,7 +48,7 @@
         <configuration> 
           <autoVersionSubmodules>true</autoVersionSubmodules> 
           <preparationGoals>clean deploy changes:changes-report wagon:upload -Dproject.url=</preparationGoals>
-          <goals>changes:announcement-mail -Dproject.url= --non-recursive</goals>
+          <goals>changes:announcement-mail -Dannouncement.runOnlyAtExecutionRoot=true -Dproject.url= --non-recursive</goals>
         </configuration> 
       </plugin>
       <!-- "DISABLE" WAGON PLUGIN TO AVOID EMPTY UPLOAD DIRECTORIES FROM SUBMODULES -->
@@ -58,6 +58,28 @@
         <configuration>
           <fromDir>NOT_EXISITING_DIRECTORY</fromDir>
           <url>/dev/null</url>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <xmlPath>${basedir}/ingrid-portal-distribution/src/changes/changes.xml</xmlPath>
+          <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+          <smtpHost>localhost</smtpHost>
+          <subject>[ingrid update announcement] ${project.artifactId}-${project.version}</subject>
+          <mailSender>
+            <name>Release Notification</name>
+            <email>noreply@wemove.com</email>
+          </mailSender>
+          <toAddresses>
+            <toAddress implementation="java.lang.String">andre.wallat@wemove.com</toAddress>
+          </toAddresses>
+          <issueManagement>
+            <system>JIRA</system>
+            <url>http://dev.wemove.com/jira/browse/INGRID</url>
+          </issueManagement>
         </configuration>
       </plugin>
     </plugins>

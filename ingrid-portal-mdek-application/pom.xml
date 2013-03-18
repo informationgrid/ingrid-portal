@@ -52,7 +52,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <version>2.1.1</version>
+        <!-- <version>2.1.1</version> -->
         <configuration>
           <warSourceExcludes>TEST_*.*,test_*.*,dev_*.*,dojo-release-1.6.0/**,dojo-src/util/**,dojo-src/dojo/**,dojo-src/dijit/**,dojo-src/dojox/**</warSourceExcludes>
           <!-- NOTICE: supply log4j.jar and commons-logging.jar in war, SO log4j.properties IS READ FROM WEBAPP !!!! -->
@@ -116,6 +116,16 @@
                 </arguments>
                 <!-- optional -->
                 <workingDirectory>src/main/webapp/dojo-src/util/buildscripts</workingDirectory>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-changes-plugin</artifactId>
+            <version>2.9</version>
+            <configuration>
+                <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+                <smtpHost>localhost</smtpHost>
+                <toAddresses></toAddresses>
             </configuration>
         </plugin>
     </plugins>

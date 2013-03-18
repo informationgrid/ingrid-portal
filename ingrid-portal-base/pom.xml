@@ -30,7 +30,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <version>2.1-alpha-2</version>
         <configuration>
           <warName>ingrid-portal-${version}</warName>
           <warSourceDirectory>${basedir}/src/webapp</warSourceDirectory>
@@ -125,6 +124,16 @@
           <arguments>
             <argument>j2:portal.genapp.minimal</argument>
           </arguments>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+          <smtpHost>localhost</smtpHost>
+          <toAddresses></toAddresses>
         </configuration>
       </plugin>
     </plugins>
