@@ -74,7 +74,7 @@
             <email>noreply@wemove.com</email>
           </mailSender>
           <toAddresses>
-            <toAddress implementation="java.lang.String">andre.wallat@wemove.com</toAddress>
+            <toAddress implementation="java.lang.String">ingrid-announcement@wemove.com</toAddress>
           </toAddresses>
           <issueManagement>
             <system>JIRA</system>
