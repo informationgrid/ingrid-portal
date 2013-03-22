@@ -279,12 +279,12 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef2Explanation((String) td2Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
             break;
         case 3:
+        	mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
             IngridDocument td3Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
             
             if (td3Map == null)
                 break;
 
-            mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
             mdekObj.setRef3ServiceType((Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY));
             mdekObj.setRef3CouplingType(td3Map.getString(MdekKeys.COUPLING_TYPE));
             mdekObj.setRef3ServiceTypeTable(mapToServiceTypeTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_TYPE2_LIST)));
@@ -322,10 +322,11 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef5dbContent(mapToDbContentTable((List<IngridDocument>) td5Map.get(MdekKeys.PARAMETERS)));
             break;
         case 6:
+        	mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
             IngridDocument td6Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
             if (td6Map == null)
                 break;
-
+            
             mdekObj.setRef6ServiceType((Integer) td6Map.get(MdekKeys.SERVICE_TYPE_KEY));
 
             mdekObj.setRef6SystemEnv((String) td6Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
@@ -896,6 +897,11 @@ public class MdekMapper implements DataMapperInterface {
             IngridDocument td6Map = new IngridDocument();
             td6Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef6ServiceType());
 
+            Boolean inspireRelevantC6 = data.getInspireRelevant();
+            if (inspireRelevantC6 != null && inspireRelevantC6 == true)
+                udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, "Y");
+            else
+                udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, "N");
             td6Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef6SystemEnv());
             td6Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef6History());
             td6Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef6BaseDataText());

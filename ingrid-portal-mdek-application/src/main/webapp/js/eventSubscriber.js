@@ -2039,6 +2039,7 @@ udkDataProxy._setObjectDataClass5 = function(nodeData) {
 }
 
 udkDataProxy._setObjectDataClass6 = function(nodeData) {
+	dijit.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
     dijit.byId("ref6ServiceType").attr("value", nodeData.ref6ServiceType, true);
     dijit.byId("ref6SystemEnv").attr("value", nodeData.ref6SystemEnv, true);
     dijit.byId("ref6History").attr("value", nodeData.ref6History, true);
@@ -2586,6 +2587,7 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {
 };
 
 udkDataProxy._getObjectDataClass6 = function(nodeData) {
+	nodeData.inspireRelevant = dijit.byId("isInspireRelevant").checked ? true : false;
     nodeData.ref6ServiceType = dijit.byId("ref6ServiceType").getValue();
     nodeData.ref6SystemEnv = dijit.byId("ref6SystemEnv").getValue();
     nodeData.ref6History = dijit.byId("ref6History").getValue();
