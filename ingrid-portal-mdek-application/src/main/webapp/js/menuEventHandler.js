@@ -587,7 +587,8 @@ menuEventHandler._deleteNodes = function(selectedNonNewNodes) {
 		var deleteFunction = function(nodeToDelete) {
 	    	var deleteObjDef = new dojo.Deferred();
 	    	// the node could have been deleted already if parent node was deleted before (multi selection!)
-	    	if (dojo.byId(nodeToDelete.id[0])) {
+	    	// in IE8 only widgetId is valid (id is not correctly set)!!!
+	    	if (dijit.byId(nodeToDelete.id[0])) {
     	    	deleteObjDef.addCallback(function() {
     	    		// This function is called when the user has selected yes and the node was successfully
     				// deleted from the database
@@ -1005,7 +1006,7 @@ menuEventHandler.handleMarkDeleted = function(msg) {
 		var deferred = new dojo.Deferred();
 		var deleteFunction = function(nodeToDelete) {
 	    	var deleteObjDef = new dojo.Deferred();
-	    	if (dojo.byId(nodeToDelete.id[0])) {
+	    	if (dijit.byId(nodeToDelete.id[0])) {
     	    	deleteObjDef.addCallback(function() {
     	    		// This function is called when the user has selected yes and the node was successfully
     				// marked as deleted

@@ -1839,7 +1839,7 @@ UtilTree.reloadNode = function(treeId, node) {
     var d = new dojo.Deferred();
     d.addCallback(function() {
         UtilTree.selectNode(treeId, node.id[0]);
-        dojo.window.scrollIntoView(dojo.byId(node.id[0]));
+        dojo.window.scrollIntoView(dijit.byId(node.id[0]).domNode);
     });
     d.addErrback(function(msg) {
         dialog.show(message.get("general.error"), message.get("tree.loadError"), dialog.WARNING);
