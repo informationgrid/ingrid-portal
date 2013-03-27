@@ -386,7 +386,7 @@
         <runtarget target="writeCodelistConfig"/>
     </target>
     
-    <target name="writeCodelistConfig">
+    <target name="writeCodelistConfig" if="ige.installed">
         <echo>Schreiben der Codelist-Repository Informationen in configurations.xml
         </echo>
         <replace file="${spring-xml}" token="@URL@"      value="${clUrl}" />
@@ -481,6 +481,43 @@
     <target name="KeepMapDataImpl" description="" if="KeepMapData">
         <!-- write the application.properties file-->
         <runtarget target="writeMapClientProps"/>
+		<if>
+    		<available file="${WebmapDataDir}/WebmapClientData"/>
+    	    <then>
+    	    	<if>
+					<available file="${WebmapDataDir}/WebmapClientData/data/wms"/>
+					<then>
+						<echo>Keep existing web map client services.</echo>
+					</then>
+					<else>
+						<mkdir dir="${WebmapDataDir}/WebmapClientData/data/wms"/>         
+						<copy todir="${WebmapDataDir}/WebmapClientData/data/wms" >
+							<fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/wms">
+								<include name="**/*.xml"/>
+							</fileset>
+						</copy>
+					</else>
+				</if>
+				<if>
+					<available file="${WebmapDataDir}/WebmapClientData/data/tmp"/>
+					<then>
+						<echo>Keep existing web map client tmp data.</echo>
+					</then>
+					<else>
+						<mkdir dir="${WebmapDataDir}/WebmapClientData/data/tmp"/>         
+					</else>
+				</if>
+				<if>
+					<available file="${WebmapDataDir}/WebmapClientData/data/users"/>
+					<then>
+						<echo>Keep existing web map client users data.</echo>
+					</then>
+					<else>
+						<mkdir dir="${WebmapDataDir}/WebmapClientData/data/users"/>         
+					</else>
+				</if>
+   	        </then>
+   	    </if>
     </target>
 
     <target name="OverwriteMapDataImpl"  description="" if="OverwriteMapData">
@@ -490,14 +527,27 @@
         <mkdir dir="${WebmapDataDir}/WebmapClientData"/>
         <mkdir dir="${WebmapDataDir}/WebmapClientData/data/tmp"/>
         <mkdir dir="${WebmapDataDir}/WebmapClientData/data/users"/>
-		<mkdir dir="${WebmapDataDir}/WebmapClientData/data/wms"/>         
-    	<if>
+		<if>
     		<available file="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
     	    <then>
     	    	<echo>Keep existing web map client config.</echo>
    	        </then>
     		<else>
                 <move file="${i-config-ingrid-webmap-client}" tofile="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>    
+   			</else>
+   	    </if>
+		<if>
+    		<available file="${WebmapDataDir}/WebmapClientData/data/wms"/>
+    	    <then>
+    	    	<echo>Keep existing web map client services.</echo>
+   	        </then>
+    		<else>
+				<mkdir dir="${WebmapDataDir}/WebmapClientData/data/wms"/>         
+				<copy todir="${WebmapDataDir}/WebmapClientData/data/wms" >
+					<fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/wms">
+						<include name="**/*.xml"/>
+					</fileset>
+				</copy>
    			</else>
    	    </if>
     </target>    
