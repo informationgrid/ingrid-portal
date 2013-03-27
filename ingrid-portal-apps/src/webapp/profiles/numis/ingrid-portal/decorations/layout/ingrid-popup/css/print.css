@@ -10,13 +10,15 @@
 *********************************************************************/
 
 body { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif !important; }
-body.claro { font-size: 16px; }
+.claro { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif; }
+body.body-background { width:966px; padding-bottom: 50px; }
+div.layout-tigris { background:#FFFFFF; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#bebebe' ); -moz-box-shadow:0 0 0.417em #BEBEBE; -webkit-box-shadow:0 0 0.417em #BEBEBE; }
 
 sup { line-height: 0; }
 img { border:0; }
 /*Need for NUMIS profile*/
-img.image_alt { padding:31px 27px 0; }
-span.icon { margin-right:4px; margin-top:2px; float:left; position: absolute; }
+img.image_alt {padding:31px 27px 0; }
+span.icon { padding-top: 0.25em; width: 12px;}
 span.icon_udk { margin-right:6px; margin-top:0px; float:left; width:21px; height:14px; }
 /* no float for detail page in OPERA */
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
@@ -37,9 +39,9 @@ div.line_form * { display: none;}
 
 a,a:link { color: #2C5C91; text-decoration: none; }
 a:visited { color: #2C5C91; }
-a:hover { text-decoration: underline; }
-a:focus { text-decoration: none; }
-a:active { text-decoration: none; }
+a:hover { color: #2C5C91 !important; text-decoration: underline; }
+a:focus { color: #2C5C91; text-decoration: none; }
+a:active { color: #2C5C91; text-decoration: none; }
 a.selected { font-weight:bold; }
 /*search_seperator style used at profile NUMIS*/
 span.search_seperator{ color:#999999; }
@@ -140,35 +142,34 @@ div#mainnav ul li a {float:none;}
 div#mainnav ul li a,  
 div#mainnav ul li a:link, 
 div#mainnav ul li a:visited 
- { color:#FFFFFF; padding:6px 11px 9px; vertical-align:super; }  
+ { text-decoration:none; color:#FFFFFF; margin-right:7px; padding:3px 6px 5px 6px; border-bottom:3px; margin:0; font-size: 95%; }  
 
 div#mainnav ul li a.selected,
 div#mainnav ul li a.selected:link, 
 div#mainnav ul li a.selected:visited 
- { color:#FFFFFF; text-decoration:none; background-color:#999999; padding:6px 11px 9px; vertical-align:super; background:#999999; }  
+ { text-decoration:none; color:#111; background-color:#BAD405; margin:0; padding:3px 6px 5px 6px; border-bottom: solid #FFFFFF 10px; font-size: 95%; }  
 
 div#mainnav ul li a:hover,
 div#mainnav ul li a:active
- { color:#FFFFFF; text-decoration:none; font-size: 100%;background:url(../images/background_mainnav_hover.png);padding:6px 11px 4px; vertical-align:super; }
+ { color:#111111; text-decoration:none; background-color:#F2FFCF; padding:3px 6px 5px 6px; border-bottom: solid #111111 10px; margin:0; font-size: 95%;}
 
 /********************************************************************
   sub navigation styles
 *********************************************************************/
 
-div#subnav { position:relative; border-top: solid #FFFFFF 0px; background:url(../images/background_subnav.png); width:59.5em; height:27px; z-index:12; margin-top:1px}
-div#subnav ul { list-style:none; padding: 0px 0px 0px 63px; margin:0; line-height:140%; color:#CCCCCC; height:27px; float:left; }
-div#subnav ul li { display:inline; font-size: 12px; }
+div#subnav { position:relative; border-top: solid #FFFFFF 1px; background-color:#BAD405; width:59.5em; height:1.375em; z-index:12;}
+div#subnav ul { list-style:none; padding: 0px 7px 1px 63px; margin:0; line-height:120%; color:#111111; }
+div#subnav ul li { display:inline; font-size: 65%; }
 
-div#subnav ul li a.selected { text-decoration:none; color:#FFFFFF; font-weight:bold; }
+div#subnav ul li a.selected { text-decoration:none; color:#111111; font-weight:bold; }
 div#subnav ul li a,
 div#subnav ul li a:link,
 div#subnav ul li a:visited,
-div#subnav ul li a:active {color:#FFFFFF; padding:4px 5px 5px 5px;vertical-align:baseline;}
-div#subnav ul li a:hover, 
-div#subnav ul li a:focus {color:#FFFFFF;text-decoration:none; background:url(../images/background_subnav_hover.png); padding:4px 5px 5px 5px; width:10px }
+div#subnav ul li a:active {text-decoration:none; color:#111111;}  
+div#subnav ul li a:hover, div#subnav ul li a:focus {color:#111111;text-decoration:underline;}
 
-div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#999}
-div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.png) no-repeat;background-position:bottom; background-color:#DDE9BD}
+div.subnav_corner {vertical-align:bottom;float:right; width:21px; height: 100%;background-color:#BAD405}
+div.subnav_corner_img {vertical-align:bottom;width: 21px; height:100%;background:url(../images/corner_sub_nav.gif) no-repeat;background-position:bottom; background-color:#BAD405}
 
 /********************************************************************
   content block styles
@@ -437,6 +438,9 @@ div.formfooter .iconLink { margin:0px 25px 0px 0px; font-size:70%; }
 input.btn { color: #FFFFFF; border: 1px solid #2C5C91; background:url(../images/background_btn.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
 input.btn:hover { color: #FFFFFF; border: 1px solid #2C5C91; background:url(../images/background_btn_hover.png); font-size: 12px; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 15px 0px 15px; }
 input.btn_disable { color:#FFFFFF; border: solid 1px #2C5C91; font-size: 11px; line-height: 130%; font-weight:bold; height:24px; margin:15px 0px 11px 0px; padding:0px 19px 0px 19px; }
+/*Use only at profile NUMIS*/
+input.btn_admin { margin:0px; }
+input.btn_admin:hover { margin:0px; }
 
 label.left {width:5.5em; float:left;}
 label.login {width:8em; float:left;}
@@ -503,8 +507,8 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { width:966px; background: url(../images/logo-numis_footer.png) no-repeat scroll 53px 30px #F8F8F8; border: 1px solid #F8F8F8; height:137px; }
-#footercontent { font-size: 11px; width:60.5em; margin-left:197px; color:#909090; padding: 45px 0 0; line-height: 140%; }
+div#footercontainer { background: url(../images/logo-numis_footer.png) no-repeat scroll 53px 30px #F8F8F8; border: 1px solid #F8F8F8; height:137px; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#bebebe' ); -moz-box-shadow:0 0 0.417em #BEBEBE; -webkit-box-shadow:0 0 0.417em #BEBEBE; }
+#footercontent { font-size: 11px; width:64.5em; margin-left:197px; color:#909090; padding: 45px 0 0; line-height: 140%; }
 
 #footercontent a { color:#909090; }
 #footercontent a:hover { color:#111111; text-decoration: underline; }
@@ -543,10 +547,10 @@ span.clearer_gray { background: #DDDDDD; height:2px; font-size: 1px; display:blo
 span.clearer_gray_small { background: #DDDDDD; height:1px; font-size: 1px; display:block; }
 span.clearer_dark_gray	{ background: #BBBBBB; height:1px; font-size: 1px; display:block; }
 
-div#detail_background span.clearer { background:#E2E2E2; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px; }
+div#detail_background span.clearer { background:#E2E2E2; clear:both; height:10px; line-height: 0px; font-size: 1px; margin:0px; padding:0px;}
 div#header_title { background:#F6F6F6; padding: 20px 13px 0px; }
 div#header_title span.clearer{ display:block; background:#F6F6F6; height:10px; border:0px; }
-div.header_div { margin-top:0; font-size:75%;color: #777777; }
+div.header_div { margin-top:0; font-size:75%; color: #777777; }
 div.header_div span.smaller {font-size: 83%}
 h1.detail_title_header { padding-bottom:0px; }
 div.detail_section_title { background:#EEEEEE; width:100%; height:25px; margin-bottom:20px; }
@@ -555,38 +559,38 @@ div.detail_margin_left { margin-left:10px; padding-bottom:10px; }
 
 .width_one_half { width:48%; }
 .width_one_third { width:33%; }
-.width_two_thirds { width:66%; clear:both; position: relative; }
+.width_two_thirds { width:66%; padding: 0px 10px 10px; position: relative; }
 
 table.detail_table { width:100%; border-bottom:2px solid #DDDDDD; border-left:1px solid #2C5C91; border-right:1px solid #2C5C91; margin-bottom:10px; }
 table.detail_image_table { width:100%; }
 table.detail_table_text {  border-top:1px solid #DDDDDD; width:100% }
 
-div.detail_text_link_line{ border-top:1px solid #DDDDDD; width:100%; padding-bottom:12px; }
-div.detail_text_link_line_title { color:#777777; font-size:75%; font-weight:bold; padding-left:0px; padding-right:20px; } 
+div.detail_text_link_line{ border-top:1px solid #DDDDDD; width:100%; padding:8px 0; width:100%; }
+div.detail_text_link_line_title { color:#777777; font-size:75%; font-weight:bold; padding-left:0px; padding-right:20px; width:20%; } 
 div.detail_text_link_line_body { color:#000000; font-size:75%; margin-bottom:0; margin-top:0; }
 
 th.detail_table_header { background:#2C5C91; color:#FFFFFF; text-align:left; font-size:75%; }
 tr.detail_image_tr { padding:2px; }
 tr.detail_table_row_1 { background:#EDEDED; color:#000000; }
 tr.detail_table_row_2 { background:#FFFFFF; color:#000000; }
-td.detail_table_cell_font { color:#000000; font-size:75%; }
+td.detail_table_cell_font { color: #505050; font-size:75%; }
 td.detail_table_cell { border-right:1px solid #DDDDDD;}
 td.detail_table_label { color:#777777; font-size:75%; font-weight:bold; width:200px; padding:0px; max-width:150px; width:150px;} 
 td.detail_table_body { color:#000000; font-size:75%; margin-bottom:0; margin-top:0; }
-td.detail_image_td	{ vertical-align:middle; text-align:center; background:#EEEEEE; height:303px; width:433px; border-top:1px solid #DDDDDD; }
-td.detail_image_descr_td { background:#EEEEEE; height:73px; width:433px; border-top:6px solid #FFFFFF; vertical-align:text-top; }
+td.detail_image_td	{ vertical-align:middle; text-align:center; background:none repeat scroll 0 0 #EEEEEE; height:303px; width:433px; border-top:1px solid #DDDDDD; }
+td.detail_image_descr_td { background:none repeat scroll 0 0 #EEEEEE; height:73px; width:433px; border-top:6px solid #FFFFFF; vertical-align:text-top; }
 
 H1.section_title { background:#EEEEEE; color:#777777; font-size:75%; font-weight:bold; line-height:22px; margin-top:0; padding-left:13px; }
 H2.group_title { background:#EEEEEE; color:#777777; font-size:75%; font-weight:bold; line-height:22px; margin-top:0; padding-left:13px;}
-H1.no_script_title { background:#68A5D2; color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px;} 
+H1.no_script_title { background:url(../images/background_mainnav.png); color:#FFFFFF; font-weight:bold; margin-bottom:0; margin-top:0; padding-left:13px; line-height:25px; font-size: 13px; } 
 
 p.detail_entry_title { color:#777777; font-weight:bold; font-weight:bold; padding-left:0; padding-right:20px; padding-top:3px; }
-p.detail_entry_body { color:#000000; font-size:75%; margin-bottom:0; margin-top:0; }
+p.detail_entry_body { font-size:75%; margin-bottom:0; margin-top:0; }
 p.detail_image_p { color:#777777; font-weight:bold; padding-left:14px; padding-right:14px; font-size:75%; margin:0; }
 p.detail_image_descr_p { color:#000000; padding-left:14px; padding-right:14px; }
 p.detail_list { color:#777777; font-weight:bold; padding-left:0; padding-right:20px; padding-top:3px; }
 
-a.detail_link { font-size:12px; margin-bottom:0; margin-top:0; left: 15px; position: relative; }
+a.detail_link { font-size:12px; margin-bottom:0; margin-top:0; }
 
 img.detail_image { max-height:300px; max-width:433px;}
 * html img.detail_image { max-height:300px; height: expression(this.width > 300 ? 300: true);}

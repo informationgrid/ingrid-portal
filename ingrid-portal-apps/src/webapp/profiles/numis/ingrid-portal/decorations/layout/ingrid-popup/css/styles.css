@@ -18,7 +18,7 @@ sup { line-height: 0; }
 img { border:0; }
 /*Need for NUMIS profile*/
 img.image_alt {padding:31px 27px 0; }
-span.icon { padding-top: 0.25em; width: 12px; vertical-align: top; }
+span.icon { padding-top: 0.25em; width: 12px;}
 span.icon_udk { margin-right:6px; margin-top:0px; float:left; width:21px; height:14px; }
 /* no float for detail page in OPERA */
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
@@ -590,7 +590,7 @@ p.detail_image_p { color:#777777; font-weight:bold; padding-left:14px; padding-r
 p.detail_image_descr_p { color:#000000; padding-left:14px; padding-right:14px; }
 p.detail_list { color:#777777; font-weight:bold; padding-left:0; padding-right:20px; padding-top:3px; }
 
-a.detail_link { font-size:12px; margin-bottom:0; margin-top:0; left: 15px; position: relative; }
+a.detail_link { font-size:12px; margin-bottom:0; margin-top:0; }
 
 img.detail_image { max-height:300px; max-width:433px;}
 * html img.detail_image { max-height:300px; height: expression(this.width > 300 ? 300: true);}

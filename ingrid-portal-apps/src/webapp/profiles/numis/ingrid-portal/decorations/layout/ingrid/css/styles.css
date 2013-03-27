@@ -383,10 +383,13 @@ div.resultset a:hover { color:#2C5C91; text-decoration:underline; }
 div.resultset p.result_title { font-size:90%; margin: 10px 0px; }
 div.resultset p.result_description { font-size:12px; margin: 10px 0px 0px 0px; line-height:16px; }
 div.resultset p.event_description { margin: 10px 0px 10px 0px; line-height:120%}
-div.resultset p.result_metadata { font-size:70%; color:#999999; margin:5px 0 0; line-height:120%; }
+div.resultset p.result_metadata { font-size:70%; color:#999999; margin:5px 0 0; line-height:120%; clear: both; }
 div.resultset p.result_metadata_adress { font-size:65%; color:#999999; margin:7px 0 8px 0; line-height:120%}
 div.resultset p.result_link { font-size:65%; color:#999999; margin:3px 0 8px 0; }
 div.resultset p.result_link img { position:relative; top:1px; }
+div.resultset p.preview_image { float: left; margin:0 5px 0 0; }
+div.resultset p.preview_image img { max-height: 100px; }
+div.resultset img.preview_image { float: left; margin:0 10px 5px 0; }
 div.resultset p.result_link a { text-decoration:none; }
 div.resultset p.result_link a:hover { color:#2C5C91; text-decoration:underline; }
 div.resultset span.result_title { }
@@ -403,6 +406,15 @@ div.resultset_partner_only { background-color:#D1E4F1; margin: 0 0 20px 0; paddi
 div.resultset_show_partner { text-decoration:none; font-size:75%; margin: 10px 0px 10px 0px; }
 
 .intendResult { position: relative; left: 20px; }
+
+div.resultset .map_link { float:left; background-color:#F8F8F8; width: 70px; padding: 3px; margin-top: 4px; text-align: center; margin-bottom: 1px; margin-right: 10px; border: 1px solid #E2EBF0;}
+div.resultset .map_link a { display: block; font-size: 11px; padding: 0;}
+
+div.resultset p.coupled_resources { padding-left: 20px; margin-bottom: 5px; }
+div.resultset p.result_link a { padding-right: 5px; }
+
+div.resultset p.result_link a .map { opacity: 0.5; }
+div.resultset p.result_link a:hover .map { opacity: 1; }
 
 /* TAB, EXTENDED SEARCH */
 div.tabs ul { list-style: none; padding: 7px 0 0px 0px; margin: 0;}
