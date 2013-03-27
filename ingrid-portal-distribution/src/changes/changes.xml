@@ -6,20 +6,23 @@
   </properties>
   <body>
     <release version="3.3.0.1" date="2013-03-15" description="Bugfix Release InGrid 3.3.0.1">	
-	  <action type="update" dev="wemove" issue="GEOPORTALWSV-35, GEOPORTALWSV-45">
-        Portal: Update "baw_wsv" profile for facets, map integration, detail view and search result list.
-      </action>
 	  <action type="add" dev="wemove" issue="INGRID-2231">
         Portal: Show "XML"-Link on search result list only if the hit has an ID and if is a metadata.
       </action>
       <action type="add" dev="wemove" issue="INGRID-2206">
         WebMapClient: Add Servlet to load created WMS services outside of tomcat.
       </action>
-      <action type="fix" dev="wemove">
-        WebMapClient: Add "fullmap" configuration for other portal profiles.
-      </action>
       <action type="add" dev="wemove">
         Add handling of new iPlug Type IPLUG_DSC_MAPCLIENT.
+      </action>
+      <action type="update" dev="wemove">
+        Update DWD Warnmodule flash file.
+      </action>
+	  <action type="update" dev="wemove" issue="GEOPORTALWSV-35, GEOPORTALWSV-45">
+        Portal: Update "baw_wsv" profile for facets, map integration, detail view and search result list.
+      </action>
+      <action type="fix" dev="wemove">
+        WebMapClient: Add "fullmap" configuration for other portal profiles.
       </action>
       <action type="fix" dev="wemove" issue="INGRID-2233">
         IGE: Increased speed when using IE8
