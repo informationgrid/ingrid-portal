@@ -517,6 +517,9 @@
 					</else>
 				</if>
    	        </then>
+			<else>
+				<runtarget target="createMapDataDirectory"/>
+			</else>
    	    </if>
     </target>
 
@@ -524,7 +527,27 @@
         <!-- write the application.properties file-->
         <runtarget target="writeMapClientProps"/>
         <!-- create the data dir and move the config file there-->
-        <mkdir dir="${WebmapDataDir}/WebmapClientData"/>
+        <runtarget target="createMapDataDirectory"/>
+    </target>    
+
+    <target name="writeMapClientProps" description="">
+        <echo>Schreibe Webmap-Client Konfigration
+            </echo>
+        <!-- write the application.properties file-->
+        <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.administration.file}"   value="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.sessionDir}"   value="${WebmapDataDir}/WebmapClientData/data/tmp"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.userDataDir}"  value="${WebmapDataDir}/WebmapClientData/data/users"/>
+		<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.wms.dir}"				value="${WebmapDataDir}/WebmapClientData/data/wms"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.opensearch.searchurl}"  value="${openSearchUrl}?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+cache:off+datatype:metadata+ranking:score&amp;ingrid=1&amp;h=100"/>
+    	<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.mapdownload.dir}"   	value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/downloads"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.shortUrlBase}" value="${loadMapUrl}"/>
+		<!-- replace occurences of backslash since tomcat doesnt understand it and escapes the tokens -->
+		<replace file="${i-prop-ingrid-webmap-client}" token="\" value="/"/>
+    </target>
+
+	<target name="createMapDataDirectory" description="">
+		<mkdir dir="${WebmapDataDir}/WebmapClientData"/>
         <mkdir dir="${WebmapDataDir}/WebmapClientData/data/tmp"/>
         <mkdir dir="${WebmapDataDir}/WebmapClientData/data/users"/>
 		<if>
@@ -550,25 +573,8 @@
 				</copy>
    			</else>
    	    </if>
-    </target>    
-
-    <target name="writeMapClientProps" description="">
-        <echo>Schreibe Webmap-Client Konfigration
-            </echo>
-        <!-- write the application.properties file-->
-        <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
-        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.administration.file}"   value="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
-        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.sessionDir}"   value="${WebmapDataDir}/WebmapClientData/data/tmp"/>
-        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.userDataDir}"  value="${WebmapDataDir}/WebmapClientData/data/users"/>
-		<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.wms.dir}"				value="${WebmapDataDir}/WebmapClientData/data/wms"/>
-        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.opensearch.searchurl}"  value="${openSearchUrl}?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+cache:off+datatype:metadata+ranking:score&amp;ingrid=1&amp;h=100"/>
-    	<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.mapdownload.dir}"   	value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/downloads"/>
-        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.frontend.shortUrlBase}" value="${loadMapUrl}"/>
-		<!-- replace occurences of backslash since tomcat doesnt understand it and escapes the tokens -->
-		<replace file="${i-prop-ingrid-webmap-client}" token="\" value="/"/>
-    </target>
-
-
+	</target>
+	
     <target name="cleanuptarget">
         <delete file="${mysqlDbDriverInApache}"/>
         <delete file="${oracleDbDriverInApache}"/>
