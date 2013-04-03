@@ -228,6 +228,7 @@ public class UtilsFacete {
         // Remove flag
         removeAttributeFromSession(request, "isSelection");
         
+        context.put("mapConfig", PortalConfig.getInstance().getString("portal.map.facets.config", "portalu-facete-search"));
 	}
 
 	/**

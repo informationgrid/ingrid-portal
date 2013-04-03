@@ -17,7 +17,7 @@ mapClientCallbackAreaId = function(value) {
 	showButtonSelectCheckboxForm(document.facete_map_form, 'facete_map_submit_btn','areaidOutput');
 	document.getElementById("coordinatesOutput").innerHTML="";
 };
-var viewConfiguration = "portalu-facete-search";
+var viewConfiguration = '$mapConfig';
 
 </script>
 #set ($action = $renderResponse.createActionURL())
