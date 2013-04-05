@@ -13,7 +13,7 @@ ul li ul  { padding-bottom:4px;}
   standard styles 
 *********************************************************************/
 
-body { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif; }
+body { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif; font-size: inherit; }
 body.body-background { background:url("../images/body.png") repeat-x scroll 0 0 #E2EBF0; width:986px; padding-bottom: 50px; }
 div.layout-tigris { background:#FFFFFF; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#bebebe' ); -moz-box-shadow:0 0 0.417em #BEBEBE; -webkit-box-shadow:0 0 0.417em #BEBEBE; }
 
@@ -972,3 +972,15 @@ div.dialog_content input.btn { text-align: center; min-width: 120px; }
 
 .tundra .dijitBorderContainer { background-color: transparent !important; }
 .tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child { border: 0px solid #CCCCCC !important; }
+
+/* InGrid Map Client*/
+
+p,label.search-ext-env{ padding:5px; }
+.x-tree-node-anchor {   font-size:11px !important;}
+ul.x-tab-strip-top {border-bottom-color: #8DB2E3;margin: 0;important!;}
+
+div.formbody_webmapclient h3 { font-size:80%; }
+div.formbody_webmapclient_coordinates { font-size:80%; }
+div.formbody_webmapclient_coordinates_title	{ font-size:80%; }
+div.formbody_webmapclient_areaid { font-size:80%; }
+div.formbody_webmapclient_areaid_title { font-size:80%; }

@@ -37,9 +37,6 @@
                     <li>
                         <a href="?hkey=myingrid-1">Mein NUMIS</a>
                     </li>
-                    <li>
-                        <a href="?hkey=ingrid-newsletter-1">Newsletter</a>
-                    </li>
                 </ul>
             </content>
         </section>
@@ -2125,11 +2122,6 @@
                         müssen. Alle anderen Angaben sind freiwillig.</p>
                     <p>Alle Angaben werden strikt vertraulich behandelt und
                         dienen nur der anonymisierten statistischen Auswertung.</p>
-                    <p>Wenn Sie immer die neusten Nachrichten aus dem Umfeld von
-                        NUMIS erhalten möchten, so bestellen Sie den <a href="?hkey=ingrid-newsletter-1">NUMIS-Newsletter</a>, indem Sie am
-                        Ende des Formulars „Ich möchte den Newsletter
-                        abonnieren.“ ankreuzen (Hinweis: Sie können ihn
-                        jederzeit wieder abbestellen).</p>
                 </content>
             </section>
             <section help-key="myingrid-4">
@@ -2173,11 +2165,6 @@
                     ausgefüllt werden müssen. Alle anderen Angaben sind freiwillig.</p>
                 <p>Alle Angaben werden strikt vertraulich behandelt und dienen
                     nur der anonymisierten statistischen Auswertung.</p>
-                <p>Wenn Sie immer die neuesten Nachrichten aus dem Umfeld von
-                    NUMIS erhalten möchten, können Sie den <a href="?hkey=ingrid-newsletter-1">NUMIS-Newsletter</a>
-                    abbonieren. Kreuzen Sie einfach am Ende des Formulars
-                    „Ich möchte den Newsletter abonnieren“
-                    an (Hinweis: Sie können ihn jederzeit wieder abbestellen).</p>
             </content>
         </section>
         <section help-key="myingrid-8">
@@ -2287,37 +2274,6 @@
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich
                     und kommen zurück auf die Startseite von NUMIS mit seinen Standard-Voreinstellungen.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Newsletter</header>
-        <section help-key="ingrid-newsletter-1">
-            <header>Newsletter</header>
-            <content>
-                <p>Sie können sich über Neuigkeiten und aktuelle Entwicklungen
-                    im Umfeld von NUMIS über unseren Newsletter per e-mail
-                    informieren lassen. Der Bezug des Newsletters ist kostenlos.
-                    Ihre E-Mail Adresse wird nicht weitergegeben oder zu anderen
-                    Zwecken als zur Zustellung des Newsletters genutzt.</p>
-            </content>
-        </section>
-        <section help-key="ingrid-newsletter-2">
-            <header>Anmeldung für neue Leser</header>
-            <content>
-                <p>Füllen Sie bitte die Felder des Anmeldeformulars aus und
-                    senden sie die Angaben ab. Alle mit Sternchen *
-                    gekennzeichneten Felder sind Pflichtfelder.</p>
-                <p>Ab der nächsten Ausgabe erhalten Sie dann den NUMIS-Newsletter.</p>
-            </content>
-        </section>
-        <section help-key="ingrid-newsletter-3">
-            <header>Newsletter abbestellen</header>
-            <content>
-                <p>Wenn Sie kein Interesse mehr an dem NUMIS-Newsletter haben,
-                    tragen Sie bitte Ihre Email-Adresse in das Formular ein und
-                    senden es ab. Sie werden dann keine weiteren
-                    NUMIS-Newsletter mehr erhalten.</p>
             </content>
         </section>
     </chapter>
