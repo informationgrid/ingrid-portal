@@ -114,7 +114,6 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
 	        headerResource.addHeaderInfo(
                 "<!-- start output header phase -->" +
                 "<script type=\"text/javascript\">var languageCode = '"+languageString+"';</script>" +
-                "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Locale.js\"></script>" +
                 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base-debug.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all-debug.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers.js\"></script>" +
@@ -129,7 +128,8 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs.ux/Extjs.ux.Notification.js\"></script>\r\n" + 
         							 "<!-- geoext extensions -->"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/SimplePrint.js\"></script>"+
-                                     "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Locale.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Locale.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/GeocoderComboBox.js\"></script>"+
         							 "<!-- custom code -->"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/config.js\"></script>"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/Message.js\"></script>"+
