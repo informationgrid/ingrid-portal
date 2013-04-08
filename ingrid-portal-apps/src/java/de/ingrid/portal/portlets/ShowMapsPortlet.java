@@ -114,6 +114,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
 	        headerResource.addHeaderInfo(
                 "<!-- start output header phase -->" +
                 "<script type=\"text/javascript\">var languageCode = '"+languageString+"';</script>" +
+                "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Locale.js\"></script>" +
                 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base-debug.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all-debug.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers.js\"></script>" +
@@ -172,6 +173,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
 	        headerResource.addHeaderInfo(
 	                "<!-- start output header phase -->" +
 	                "<script type=\"text/javascript\">var languageCode = '"+languageString+"';</script>" +
+	                "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Locale.js\"></script>" +
 	                "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base.js\"></script>" +
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all.js\"></script>" +
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/OpenLayers.js\"></script>" +
