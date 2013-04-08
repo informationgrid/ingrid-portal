@@ -535,16 +535,27 @@ function ref3OperationPublishable(notPublishableIDs) {
         var grid = UtilGrid.getTable("ref3Operation");
         grid.resetInvalidRows();
         var newInvalidRows = [];
+        var hasCapabilitiesOperation = false;
+        var serviceType = dijit.byId("ref3ServiceType").get("value");
+        
         dojo.forEach(UtilGrid.getTableData("ref3Operation"), function(op, row) {
             if (!UtilGeneral.hasValue(op.name) || !UtilGeneral.hasValue(op.addressList) || !UtilGeneral.hasValue(op.platform)) {
                 newInvalidRows.push(row);
             }
+            if (op.name === "GetCapabilities")
+            	hasCapabilitiesOperation = true;
         });
         if (newInvalidRows.length > 0) {
             grid.setInvalidRows(newInvalidRows);
             console.debug("All entries in the operation table must have a valid name.");
             notPublishableIDs.push("ref3Operation");
         }
+        
+        // at least one GetCapabilities entry has been entered
+        // only check for certain serviceTypes (2==Darstellungsdienste)!
+        // see email AW: Operationen zum Pflichtfeld (03.04.2013 14:48)
+        if ((serviceType === "2") && !hasCapabilitiesOperation)
+        	notPublishableIDs.push("ref3Operation");
         
     }
 }
