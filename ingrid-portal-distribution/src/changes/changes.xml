@@ -6,6 +6,9 @@
   </properties>
   <body>
 	<release version="3.4.0.-SNAPSHOT" date="2013-xx-xx" description="Release InGrid 3.4">	
+	  <action type="Fix" dev="wemove">
+        WebMapClient: Tranformation coordinates to WGS-84 by search area.
+      </action>
 	  <action type="add" dev="wemove" issue="GEOPORTALWSV-37">
         WebMapClient: Add Nominatim-Search to the frontend of the WebMapClient menu bar.
       </action>
