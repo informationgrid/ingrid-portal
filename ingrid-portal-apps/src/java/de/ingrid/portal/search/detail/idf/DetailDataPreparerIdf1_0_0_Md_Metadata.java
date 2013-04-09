@@ -126,6 +126,11 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			subXPathExpression = ".";
 			getNodeListValueList(elementsAccessConstraints, xpathExpression, subXPathExpression, "6010", "textList");
 			
+			// "Zugangsbeschränkungen" (Freie Einträge)
+			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints";
+			subXPathExpression = "./gmd:MD_RestrictionCode/@codeListValue";
+			getNodeListValueList(elementsAccessConstraints, xpathExpression, subXPathExpression, "otherRestrictions", "6010", "textList");
+			
 			if(elementsAccessConstraints.size() > 0){
 				HashMap element = new HashMap();
 	        	element.put("type", "textList");
@@ -404,6 +409,39 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 					if (!isEmptyList(listEntry)) {
 						elements.add(listEntry);
 					}
+        		}
+        	}
+		}
+	}
+	
+	private void getNodeListValueList(ArrayList elements, String xpathExpression, String subXPathExpression, String ignoreValue, String codeListId, String type) {
+		if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+			for (int i=0; i<nodeList.getLength();i++){
+        		if(XPathUtils.nodeExists(nodeList.item(i), subXPathExpression)){
+        			Node node = XPathUtils.getNode(nodeList.item(i), subXPathExpression);
+	        		String value = XPathUtils.getString(node, ".").trim();
+	        		if(value != null){
+	        			if(!value.equals(ignoreValue)){
+		        			HashMap listEntry = new HashMap();
+							listEntry.put("type", type);
+							if(codeListId != null){
+								String tmpValue = sysCodeList.getNameByCodeListValue(codeListId, value);
+								if(tmpValue != null && tmpValue.length() > 0){
+									value = tmpValue;
+								} else {
+									if(log.isDebugEnabled()){
+										log.debug("Codelist ID: " + codeListId + " return no value for '" + value+"'!");
+									}
+								}
+							}
+							value = value.replaceAll("\n", "<br/>");
+							listEntry.put("body", value);
+							if (!isEmptyList(listEntry)) {
+								elements.add(listEntry);
+							}
+		        		}
+	        		}
         		}
         	}
 		}
