@@ -30,7 +30,7 @@
             #if($entry.isExtern)
                 <img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
             #elseif($entry.isMapLink)
-                <a target="_new" href="${entry.get("href")}" style="text-align: center;" title="$entry.title"><img class="preview" width="200" src="$entry.src"></a>
+                <a target="_new" href="${entry.get("href")}" style="text-align: center;" title="$entry.title"><img class="preview" width="200" src="$entry.src"><p class="preview_label">$entry.title</p></a>
             #else
                 <img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
             #end

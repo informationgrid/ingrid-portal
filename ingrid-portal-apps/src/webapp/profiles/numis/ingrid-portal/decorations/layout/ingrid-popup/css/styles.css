@@ -553,7 +553,7 @@ div#header_title span.clearer{ display:block; background:#F6F6F6; height:10px; b
 div.header_div { margin-top:0; font-size:75%; color: #777777; }
 div.header_div span.smaller {font-size: 83%}
 h1.detail_title_header { padding-bottom:0px; }
-div.detail_section_title { background:#EEEEEE; width:100%; height:25px; margin-bottom:20px; }
+div.detail_section_title { background:#EEEEEE; width:100%; height:25px; margin-bottom:20px; clear: both;}
 div.detail_margin_right { margin-right:10px; padding-bottom:10px; }
 div.detail_margin_left { margin-left:10px; padding-bottom:10px; }
 
@@ -627,7 +627,8 @@ img.section_show_hide { padding-right:16px; padding-top:5px; }
 
 span.linkinfo { color:#000000; font-size: 60%; padding-left:20px; }
 
-img.preview { border: 1px solid #CCCCCC; margin-bottom: 15px; padding: 5px; }
+img.preview { width: 155px; height: 130px; margin-right: 40px; }
+p.preview_label { display: block;  font-size: 11px; width: 155px; color:#2C5C91; padding: 5px 0 0; }
 
 .icon .map_link {
 	background: url(/decorations/layout/ingrid-popup/images/show_map.png) rgb(217, 234, 250);

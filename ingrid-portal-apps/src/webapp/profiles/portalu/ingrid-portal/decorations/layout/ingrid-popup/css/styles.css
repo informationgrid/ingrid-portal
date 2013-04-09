@@ -543,7 +543,7 @@ div.address_right { padding: 0px 10px; }
 .width_one_third { width:33%; }
 .width_two_thirds { width:66%; position: relative; padding: 0 10px 10px; }
 
-.icon .map_link { background:#D9EAFA url(../images/show_map.png); width: 155px; height: 130px; margin-bottom: 20px; margin-right: 40px; right: 40px;text-align: center;}
+.icon .map_link { background-color:#D9EAFA; width: 155px; height: 130px; margin-bottom: 20px; margin-right: 40px; right: 40px;text-align: center;}
 .icon .map_link a { display: block; color: #1B78B1; font-size: 11px; line-height: 130px; padding: 0;}
 div.content a .map { opacity: 0.5; vertical-align: middle; }
 div.content a:hover .map { opacity: 1; }
@@ -615,6 +615,9 @@ li.detail_li p, body ul li p { font-size:11px; }
 img.section_show_hide { padding-right:16px; padding-top:5px; }
 
 span.linkinfo { color:#000000; font-size: 60%; }
+
+img.preview { border: 1px solid #CCCCCC; margin-bottom: 15px; padding: 5px; }
+p.preview_label { display: none; }
 
 /******************************************
 * Dojo Tabs CSS style 
