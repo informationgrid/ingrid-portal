@@ -1,0 +1,12 @@
+Hallo $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")},
+
+Sie haben ein neues Passwort für Ihren Account beantragt. 
+
+Ihr Benutzername: $!{map.get("username")}
+Ihr neues Passwort: $!{map.get("password")}
+
+Sie können Ihr Passwort online ändern.
+
+Mit freundlichen Grüßen,
+
+Ihr GeoPortal.WSV-Team
