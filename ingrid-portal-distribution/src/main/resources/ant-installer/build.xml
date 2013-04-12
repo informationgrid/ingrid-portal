@@ -20,6 +20,8 @@
 
     <property name="xml-communication-apps"        value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/communication.xml"/>
     <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties"/>
+    <property name="xml-hibernate-portal-apps"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/hibernate.cfg.xml"/>
+    <property name="xml-hibernate-portal-mdek"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/classes/hibernate.cfg.xml"/>
     <property name="mdek-app-class-path"           value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/classes"/>
     <property name="prop-mdek-apps"                value="${mdek-app-class-path}/mdek.properties"/>
     <property name="prop-datasource-mdek-apps"     value="${mdek-app-class-path}/default-datasource.properties"/>
@@ -103,6 +105,8 @@
     	<property name="useMysql" value="true" />
         <property name="usedDriver" value="${mySqlDriverClass}" />
         <property name="usedDialect" value="${mySqlDialect}" />
+        <property name="usedDialectPortal" value="${mySqlDialect}" />
+        <property name="usedValidationQuery" value="${mySqlValidationQuery}" />
         <!-- check current database status 
         <runtarget target="mysql.CheckDbs"/>-->
     </target>
@@ -111,6 +115,8 @@
     	<property name="useOracle" value="true" />
         <property name="usedDriver" value="${oracleDriverClass}" />
         <property name="usedDialect" value="${oracleDialect}" />
+        <property name="usedDialectPortal" value="${oracleDialectPortal}" />
+        <property name="usedValidationQuery" value="${oracleValidationQuery}" />
         <!-- check current database status
         <runtarget target="oracle.CheckDbs"/>-->
     </target>
@@ -343,12 +349,16 @@
         <replace      file="${installedTomcatContextDir}/ROOT.xml" token='password="${cipXML.Context.Resource(password)}"' value='password="${_dbPassword}"'/>
         <replace      file="${installedTomcatContextDir}/ROOT.xml" token='url="${cipXML.Context.Resource(url)}"' value='url="${_dbUrl}"'/>
         <replace      file="${installedTomcatContextDir}/ROOT.xml" token='driverClassName="${cipXML.Context.Resource(driverClassName)}"'                 value='driverClassName="${usedDriver}"'/>
+        <replace      file="${installedTomcatContextDir}/ROOT.xml" token='validationQuery="${cipXML.Context.Resource(validationQuery)}"'                 value='validationQuery="${usedValidationQuery}"'/>
 
         <xmlproperty  file="${installedTomcatContextDir}/ingrid-portal-apps.xml" prefix="cipaXML"/>
         <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='username="${cipaXML.Context.Resource(username)}"' value='username="${_dbUser}"'/>
         <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='password="${cipaXML.Context.Resource(password)}"' value='password="${_dbPassword}"'/>
         <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='url="${cipaXML.Context.Resource(url)}"' value='url="${_dbUrl}"'/>
         <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='driverClassName="${cipaXML.Context.Resource(driverClassName)}"'                 value='driverClassName="${usedDriver}"'/>
+        <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='validationQuery="${cipXML.Context.Resource(validationQuery)}"'                 value='validationQuery="${usedValidationQuery}"'/>
+
+        <xmlproperty  file="${installedTomcatContextDir}/ingrid-portal-apps.xml" prefix="cipaHibernateXML"/>
     </target>
 
     <target name="configurePortalOnly">
@@ -369,7 +379,7 @@
         <replace  file="${prop-datasource-mdek-apps}" token='driverClass=${madataPROP.hibernate.driverClass}' value='driverClass=${usedDriver}' />
         <replace  file="${prop-datasource-mdek-apps}" token='dialect=${madataPROP.hibernate.dialect}' value='dialect=${usedDialect}' />
         <replace  file="${prop-datasource-mdek-apps}" token='jdbcUrl=${madataPROP.hibernate.jdbcUrl}' value='jdbcUrl=${_mdekDBUrl}'/>
-        <replace  file="${prop-datasource-mdek-apps}" token='user=${madataPROP.hibernate.user}' 		value='user=${_mdekUser}'/>
+        <replace  file="${prop-datasource-mdek-apps}" token='user=${madataPROP.hibernate.user}' value='user=${_mdekUser}'/>
         <replace  file="${prop-datasource-mdek-apps}" token='password=${madataPROP.hibernate.password}' value='password=${_mdekPassword}'/>
 
         <property file="${prop-mdek-apps}" prefix="mdekPROP"/>
@@ -382,6 +392,7 @@
         <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='password="${cipmXML.Context.Resource(password)}"' value='password="${_mdekPassword}"'/>
         <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='url="${cipmXML.Context.Resource(url)}"' value='url="${_mdekDBUrl}"'/>
         <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='driverClassName="${cipaXML.Context.Resource(driverClassName)}"'                 value='driverClassName="${usedDriver}"'/>
+        <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='validationQuery="${cipXML.Context.Resource(validationQuery)}"'                 value='validationQuery="${usedValidationQuery}"'/>
 
         <runtarget target="writeCodelistConfig"/>
     </target>

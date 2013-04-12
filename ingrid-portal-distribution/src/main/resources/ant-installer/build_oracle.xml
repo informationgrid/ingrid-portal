@@ -9,6 +9,8 @@
          
     <property name="oracleDriverClass"             value="oracle.jdbc.driver.OracleDriver"/>
     <property name="oracleDialect"                 value="org.hibernate.dialect.Oracle10gDialect"/>
+    <property name="oracleDialectPortal"           value="org.hibernate.dialect.OracleDialect"/>
+    <property name="oracleValidationQuery"         value="SELECT 1 FROM DUAL"/>
     <property name="oracleDbDriver"                location="./ojdbc14.jar"/>
     
     <!-- mysql portal imports -->
@@ -297,4 +299,5 @@
             </transaction>
         </sql>
     </target>
+
 </project>

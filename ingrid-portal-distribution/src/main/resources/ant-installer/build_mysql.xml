@@ -9,6 +9,7 @@
          
     <property name="mySqlDriverClass"              value="com.mysql.jdbc.Driver"/>
     <property name="mySqlDialect"                  value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+    <property name="mySqlValidationQuery"          value="SELECT 1"/>
     <property name="mySqlDbDriver"                 location="${basedir}/mysql-connector-java-5.1.6.jar"/>
     
     <!-- mysql portal imports -->
