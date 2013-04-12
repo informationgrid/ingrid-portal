@@ -228,6 +228,10 @@
             <action>copy-dir</action>
             <src>ingrid-portal-mdek/</src>
         </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/</src>
+        </file>
     </files>
     <sql>
     	<!-- PortalU informiert -->
