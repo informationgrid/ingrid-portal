@@ -30,6 +30,10 @@ limitations under the License.
   <bean id="de.ingrid.portal.security.spi.impl.JetspeedPrincipalLookupManagerMySql" class="de.ingrid.portal.security.spi.impl.JetspeedPrincipalLookupManagerMySql" />
   
   
+  <!-- Shibboleth Configuration -->
+  <import resource="../assembly/alternate/shibboleth.xml"/>
+  <!-- <bean id="org.apache.jetspeed.security.shibboleth.ShibbolethConfiguration" class="org.apache.jetspeed.security.impl.shibboleth.ShibbolethConfiguration" /> -->   
+  
   <!-- Security: User Manager -->
   <bean id="org.apache.jetspeed.security.UserManager" 
   	   class="de.ingrid.portal.security.impl.IngridUserManagerImpl"

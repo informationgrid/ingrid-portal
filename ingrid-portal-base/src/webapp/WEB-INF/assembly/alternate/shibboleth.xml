@@ -1,0 +1,41 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+  
+  <!-- <bean id="PortalConfiguration" class="org.apache.jetspeed.administration.PortalConfigurationImpl">
+    <constructor-arg>
+      <ref bean="portal_configuration" />
+    </constructor-arg>
+  </bean> -->
+  
+  
+  <bean id="org.apache.jetspeed.security.shibboleth.ShibbolethConfiguration" class="org.apache.jetspeed.security.impl.shibboleth.ShibbolethConfiguration">
+    <!-- map of common jetspeed-security principals to shibboleth headers -->
+    <constructor-arg index='0'>
+      <map>
+        <entry key='username'>
+          <value>bvbwIdentifier</value>
+        </entry>
+        <entry key='rolename'>
+          <value>bvcwAccess</value>
+        </entry>
+        <!-- define multiple login names by separating them with ";" -->
+        <entry key='adminname'>
+          <value>datkatindex@dlz-it-bvbs.bund.de;test@email.de</value>
+        </entry>
+        <!-- define multiple role names by separating them with ";" -->
+        <entry key='roles-mapped-admin-portal'>
+          <value>admin</value>
+        </entry>
+      </map>
+    </constructor-arg>
+    <!-- Always authenticate against Jetspeed (should be false if your jetspeed db != authentication users) -->
+    <constructor-arg index='1'>
+      <value type="boolean">false</value>
+    </constructor-arg>
+    <constructor-arg index='2'>
+      <ref bean="portal_configuration" />
+    </constructor-arg>
+  </bean>
+  
+  
+</beans>

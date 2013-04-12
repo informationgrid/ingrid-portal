@@ -32,6 +32,15 @@ limitations under the License.
   </context-param>
       
   <filter>
+    <filter-name>ShibbolethPortalFilter</filter-name>
+    <filter-class>org.apache.jetspeed.security.impl.shibboleth.ShibbolethPortalFilter</filter-class>   
+  </filter>
+  <filter-mapping>
+    <filter-name>ShibbolethPortalFilter</filter-name>
+    <url-pattern>/*</url-pattern>    
+  </filter-mapping>  
+
+  <filter>
     <filter-name>XXSUrlAttackFilter</filter-name>
     <filter-class>org.apache.jetspeed.engine.servlet.XXSUrlAttackFilter</filter-class>
   </filter>
