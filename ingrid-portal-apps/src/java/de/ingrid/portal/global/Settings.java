@@ -421,5 +421,9 @@ public class Settings {
 
     // reg exp to check for forbidden login patterns
     public static final String FORBIDDEN_LOGINS_REGEXP_STR = ".*/.*";
+    
+    // can contain external user authentication info even if user does not exist in portal
+    public static final String USER_AUTH_INFO = "de.ingrid.user.auth.info";
+    public static final String USER_AUTH_INFO_IS_ADMIN = "de.ingrid.user.auth.isAdminPartner";
 
 }

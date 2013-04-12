@@ -1,5 +1,6 @@
 #set ($userNameGiven = $userAttributes.get("user.name.given", null))
 #set ($userNameFamily = $userAttributes.get("user.name.family", null))
+#set ($externalLogin = $renderRequest.getAttribute('de.ingrid.user.auth.info'))
 
 #if($userNameGiven)
 #set ($salutation = " $userNameGiven")
@@ -19,9 +20,11 @@
 		<li>
 			<a href="portal/default-page.psml">$MESSAGES.getString('overview.content.entry1')</a>
 		</li>
+		#if(!$externalLogin)
 		<li>
 			<a href="portal/myportal-edit-account.psml">$MESSAGES.getString('overview.content.entry2')</a>
 		</li>
+		#end
 		<li>
 			<a href="portal/myportal-personalize.psml">$MESSAGES.getString('overview.content.entry3')</a>
 		</li>

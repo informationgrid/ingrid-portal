@@ -1,5 +1,7 @@
 #set ($currPage = $renderRequest.getPreferences().getValue('currPage', ''))
+#set ($externalLogin = $renderRequest.getAttribute('de.ingrid.user.auth.info'))
 <div class="portlet-section-body">
+#if(!$externalLogin)
 	<p class="iconLink">
 		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
 ##if($currPage=="editAccount")
@@ -9,6 +11,7 @@
 ##end
 		<span class="clearer"></span>
 	</p>
+#end
 	<p class="iconLink">
 		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
 ##if($currPage=="personalize")
