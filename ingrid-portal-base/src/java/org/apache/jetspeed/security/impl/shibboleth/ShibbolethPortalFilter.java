@@ -221,12 +221,26 @@ public class ShibbolethPortalFilter implements Filter
 				sRequest.setAttribute("de.ingrid.user.auth.info", username);
 				sRequest.setAttribute("de.ingrid.user.auth.isAdminPartner", checkForAdminPortalRole(request));
 			}
+			if (log.isDebugEnabled()) {
+				showRequestHeader(request);
+			}
 		}
 
 		if (filterChain != null)
 		{
 			filterChain.doFilter(sRequest, sResponse);
 		}
+	}
+
+	private void showRequestHeader(HttpServletRequest request) {
+		Enumeration headerNames = request.getHeaderNames();
+        log.debug("HEADER INFORMATION");
+		while (headerNames.hasMoreElements()) { 
+            String header = (String) headerNames.nextElement();
+            String value = request.getHeader(header);
+            log.debug(header + ": " + value);
+        }
+		
 	}
 
 	private Boolean checkForAdminPortalRole(HttpServletRequest request) {
