@@ -1171,6 +1171,8 @@ menuEventHandler.handleSelectNodeInTree = function(nodeId, nodeAppType, formIdJu
             var def = dijit.byId("dataTree")._setPathAttr(rootNodes.concat(path));
             def.addCallback(function() {
                 menuEventHandler._loadNode(nodeId).addCallback(function() {
+                	// scroll to top of the document
+                	dojo.query('#centerContent')[0].scrollTop=0;
                     if (formIdJump) {
                         setTimeout(function() {
                             igeEvents.toggleFields(UtilUI.getSectionElement(dojo.byId(formIdJump)), "showAll");

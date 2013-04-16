@@ -710,8 +710,8 @@ UtilList.addObjectLinkLabels = function(list, isDirectLink, showPermission) {
     var disabledClass;
 	for (var i = 0; i < list.length; ++i) {
 	    // jump to specific element
-	    isDirectLink && list[i].relationType == 3210 ? addJump = ", \"uiElementN003\"" : "";
-	    !isDirectLink && list[i].relationType == 3210 ? addJump = ", \"uiElement3345\"" : "";
+	    isDirectLink && list[i].relationType == 3600 ? addJump = ", \"uiElementN003\"" : "";
+	    !isDirectLink && list[i].relationType == 3600 ? addJump = ", \"uiElement3345\"" : "";
 	    
 	    disabledClass = "";
 	    if (showPermission) {
