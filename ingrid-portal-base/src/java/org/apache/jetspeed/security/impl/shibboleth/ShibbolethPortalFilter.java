@@ -150,8 +150,7 @@ public class ShibbolethPortalFilter implements Filter
 					catch (SecurityException sex)
 					{
 						success = false;
-						UserPrincipal guest = new UserPrincipalImpl(userManager.getAnonymousUser());
-						sRequest = wrapperRequest(request, subject, guest);
+						sRequest = wrapperRequest(request, subject, null);
 					}
 				}
 				if (success)

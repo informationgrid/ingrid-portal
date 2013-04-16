@@ -12,16 +12,20 @@
     <!-- map of common jetspeed-security principals to shibboleth headers -->
     <constructor-arg index='0'>
       <map>
+        <!-- the attribute in the header which identifies the login name -->
         <entry key='username'>
           <value>bvbwIdentifier</value>
         </entry>
+        <!-- the attribute in the header which holds the role of the user -->
         <entry key='rolename'>
-          <value>bvcwAccess</value>
+          <value>wsvDatKatAccess</value>
         </entry>
+        <!-- the login names that shall have get jetspeed admin rights -->
         <!-- define multiple login names by separating them with ";" -->
         <entry key='adminname'>
-          <value>datkatindex@dlz-it-bvbs.bund.de;test@email.de</value>
+          <value>datkatindex@dlz-it-bvbs.bund.de</value>
         </entry>
+        <!-- the roles (found under 'rolename') that shall be mapped to admin-portal  -->
         <!-- define multiple role names by separating them with ";" -->
         <entry key='roles-mapped-admin-portal'>
           <value>admin</value>
