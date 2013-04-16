@@ -1034,6 +1034,7 @@
     
     "warning.address.inherit":"Do you really want to replace your data with the one from the parent address? The following fields will be replaced: <ul><li>Street</li><li>Post code</li><li>City</li><li>P.O. Box</li><li>Post code (POB)</li><li>Country</li></ul>",
     "warning.address.inherit.to.children":"Shall the address data from '${0}' be copied to all sub-addresses?",
+    "warning.update.capabilities":"Do you really want to update your data? The following fields will be replaced: <ul><li>Short Description</li><li>Description</li><li>Type of Service</li><li>Classification of Service</li><li>Relevance-Description</li><li>Service Version</li><li>Operations</li><li>Optional Topics</li></ul>",
     
     "info.address.inherit.to.children":"${0} addresses have been modified!"
   }

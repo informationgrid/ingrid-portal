@@ -3535,15 +3535,24 @@ igeEvents.updateDataset = function() {
         return;
     }
     
-    showLoadingZone = function() {dojo.byId('updateGetCapLoadingZone').style.visibility = "visible";}
-    hideLoadingZone = function() {dojo.byId('updateGetCapLoadingZone').style.visibility = "hidden";}
+    var def = new dojo.Deferred();
+    dialog.show(message.get("general.warning"), message.get('warning.update.capabilities'), dialog.WARNING, [
+        { caption: message.get("general.cancel"),  action: function() { /**onForceSaveDef.errback();*/ } },
+        { caption: message.get("general.ok"), action: function() { def.callback(); } }
+    ]);    
     
-    var setOperationValues = function(capBean) {
-        igeEvents._updateFormFromCapabilities(capBean);
-        dialog.show(message.get('general.hint'), message.get('hint.datasetUpdatedFromCapabilities'), dialog.INFO);
-    }
+    def.addCallback(function() {
     
-    igeEvents.getCapabilities(url, setOperationValues);
+	    showLoadingZone = function() {dojo.byId('updateGetCapLoadingZone').style.visibility = "visible";}
+	    hideLoadingZone = function() {dojo.byId('updateGetCapLoadingZone').style.visibility = "hidden";}
+	    
+	    var setOperationValues = function(capBean) {
+	        igeEvents._updateFormFromCapabilities(capBean);
+	        dialog.show(message.get('general.hint'), message.get('hint.datasetUpdatedFromCapabilities'), dialog.INFO);
+	    }
+	    
+	    igeEvents.getCapabilities(url, setOperationValues);
+    });
 }
 
 igeEvents.getLinksToFromParent = function() {
