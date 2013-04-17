@@ -2936,8 +2936,8 @@ igeEvents.handleSelectNode = function(message) {
 igeEvents.selectUDKClass = function(val) {
 	if (val) {
 	    igeEvents.setSelectedClass(val);
-		igeEvents.refreshTabContainers("contentFrameBodyObject");
         dojo.publish("/onObjectClassChange", [{objClass: val, previousClass: udkDataProxy.previousClass}]);
+        setTimeout(function() { igeEvents.refreshTabContainers("contentFrameBodyObject"); }, 100);
         udkDataProxy.previousClass = val;
 	}
 }
@@ -2947,7 +2947,7 @@ igeEvents.selectUDKAddressType = function(addressType) {
 	var val = UtilAddress.getAddressClass(addressType);
 	if (val != -1) {
 		igeEvents.setSelectedClass("AddressType"+val);
-		igeEvents.refreshTabContainers("contentFrameBodyAddress");
+		setTimeout(function() { igeEvents.refreshTabContainers("contentFrameBodyAddress"); }, 100);
 	}
 }
 
