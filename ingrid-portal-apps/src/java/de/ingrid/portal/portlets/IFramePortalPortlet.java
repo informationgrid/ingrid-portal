@@ -2,7 +2,10 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -153,7 +156,22 @@ public class IFramePortalPortlet extends org.apache.jetspeed.portlet.IFrameGener
 		
 		if(prefs != null && prefValue != null){
 				try {
-					prefs.setValue(prefName, prefValue.getPrefValue());
+					if(prefName.equals("SRC")){
+						String url = prefValue.getPrefValue();
+						HashMap map = (HashMap) request.getParameterMap();
+						if(map.size() > 0){
+							url = url + "?";
+							Set set = new TreeSet(map.keySet());
+							for (Iterator<String> iterator = set.iterator(); iterator.hasNext();) {
+								String key = iterator.next();
+								String value = request.getParameter(key);
+								url = url + "" + key + "=" + value + "&"; 
+							}
+						}
+						prefs.setValue(prefName, url);
+					}else{
+						prefs.setValue(prefName, prefValue.getPrefValue());						
+					}
 				} catch (ReadOnlyException e) {
 					log.error("Error by setting portlet prefences: " + e);
 					e.printStackTrace();
