@@ -105,7 +105,7 @@
     	<property name="useMysql" value="true" />
         <property name="usedDriver" value="${mySqlDriverClass}" />
         <property name="usedDialect" value="${mySqlDialect}" />
-        <property name="usedDialectPortal" value="${mySqlDialect}" />
+        <property name="usedDialectPortal" value="${mySqlDialectPortal}" />
         <property name="usedValidationQuery" value="${mySqlValidationQuery}" />
         <!-- check current database status 
         <runtarget target="mysql.CheckDbs"/>-->
@@ -358,7 +358,8 @@
         <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='driverClassName="${cipaXML.Context.Resource(driverClassName)}"'                 value='driverClassName="${usedDriver}"'/>
         <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='validationQuery="${cipXML.Context.Resource(validationQuery)}"'                 value='validationQuery="${usedValidationQuery}"'/>
 
-        <xmlproperty  file="${installedTomcatContextDir}/ingrid-portal-apps.xml" prefix="cipaHibernateXML"/>
+        <replaceregexp file="${xml-hibernate-portal-apps}" match='"dialect">org.hibernate.*&lt;/property>' replace='"dialect">${usedDialectPortal}&lt;/property>' byline="true"/>
+        
     </target>
 
     <target name="configurePortalOnly">
@@ -393,6 +394,8 @@
         <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='url="${cipmXML.Context.Resource(url)}"' value='url="${_mdekDBUrl}"'/>
         <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='driverClassName="${cipaXML.Context.Resource(driverClassName)}"'                 value='driverClassName="${usedDriver}"'/>
         <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='validationQuery="${cipXML.Context.Resource(validationQuery)}"'                 value='validationQuery="${usedValidationQuery}"'/>
+
+        <replaceregexp file="${xml-hibernate-portal-mdek}" match='"dialect">org.hibernate.*&lt;/property>' replace='"dialect">${usedDialectPortal}&lt;/property>' byline="true"/>
 
         <runtarget target="writeCodelistConfig"/>
     </target>

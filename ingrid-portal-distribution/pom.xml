@@ -98,7 +98,7 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>ingrid-portal-${version}</finalName>
+    <finalName>ingrid-portal-${project.version}</finalName>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -123,7 +123,7 @@
               <mainClass>org.tp23.antinstaller.selfextract.NonExtractor</mainClass>
             </manifest>
             <manifestEntries>
-              <Implementation-Version>${version}</Implementation-Version>
+              <Implementation-Version>${project.version}</Implementation-Version>
               <Implementation-Build>${buildNumber}</Implementation-Build>
               <Build-Timestamp>${timestamp}</Build-Timestamp>
             </manifestEntries>
@@ -196,7 +196,7 @@
         <version>2.9</version>
         <configuration>
           <smtpHost>localhost</smtpHost>
-          <subject>[ingrid update announcement] ${artifactId}-${version}</subject>
+          <subject>[ingrid update announcement] ${project.artifactId}-${project.version}</subject>
           <mailSender>
             <name>Release Notification</name>
             <email>noreply@wemove.com</email>
@@ -216,7 +216,7 @@
         <version>1.0-beta-1</version>
         <configuration>
           <fromDir>target</fromDir>
-          <includes>${build.finalName}-installer.jar,site*/**/*</includes>
+          <includes>${project.build.finalName}-installer.jar,site*/**/*</includes>
           <!-- NOTICE: distribution directory is "artifactId". REDEFINE in project pom if different directory needed (e.g. "ingrid-iplug-ige" instead of "ingrid-mdek" !) -->
           <url>file:///opt/ingrid/distributions/${project.artifactId}/${project.version}</url>
         </configuration>
