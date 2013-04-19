@@ -358,7 +358,9 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	    String value = null;
         if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
             Node node = XPathUtils.getNode(rootNode, xpathExpression);
-            value = node.getTextContent();
+            if(node.getTextContent().length() > 0){
+            	value = node.getTextContent();
+            }
         }
         return value;
     }
