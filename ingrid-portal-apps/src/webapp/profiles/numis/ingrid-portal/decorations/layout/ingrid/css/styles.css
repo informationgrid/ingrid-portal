@@ -405,7 +405,7 @@ div.resultset_partner_only { background-color:#D1E4F1; margin: 0 0 20px 0; paddi
 
 div.resultset_show_partner { text-decoration:none; font-size:75%; margin: 10px 0px 10px 0px; }
 
-.intendResult { position: relative; left: 20px; }
+.intendResult { position: relative; left: 20px; margin: 0 0 0 5px; }
 
 div.resultset .map_link { float:left; background-color:#F8F8F8; width: 70px; padding: 3px; margin-top: 4px; text-align: center; margin-bottom: 1px; margin-right: 10px; border: 1px solid #E2EBF0;}
 div.resultset .map_link a { display: block; font-size: 11px; padding: 0;}
