@@ -87,7 +87,7 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 div#identity { padding:0; margin:0; height: 123px; width:59.5em; background-color:#3E3E3E; overflow:visible; }
 div.motiv_start { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
 
-div.en_motiv_start { background-image:url(../images/en/01_motiv_start.png); background-repeat:no-repeat; }
+div.en_motiv_start { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
 
 
 /********************************************************************

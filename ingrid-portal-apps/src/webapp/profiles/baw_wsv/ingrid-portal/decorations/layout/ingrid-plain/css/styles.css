@@ -84,7 +84,7 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
   identity area styles
 *********************************************************************/
 
-div#identity { padding:0; margin:0; height: 123px; width:59.5em; background-color:#3E3E3E; overflow:visible;position:relative; z-index:5;  }
+div#identity { padding:0; margin:0; height: 123px; width: 1920px; background-color:#3E3E3E; overflow:visible;position:relative; z-index:5;  }
 div.motiv_start { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
 
 div.en_motiv_start { background-image:url(../images/en/01_motiv_start.png); background-repeat:no-repeat; }
@@ -100,7 +100,7 @@ div#logo { float: left; }
   logged on styles 
 *********************************************************************/
 
-div#logged_on {float: right; clear:right; font-size: 70%; padding:3.5em 1.2em 0 0; color:#C7E7FF; }
+div#logged_on {float: right; clear:right; font-size: 70%; padding:3.5em 1.2em 0 0; color:#C7E7FF; margin: 0 968px 0 0; }
 div#logged_on a, div#logged_on a:link, div#logged_on a:visited {color:#FFFFFF; text-decoration: none; background-color:rgba(127,127,127,0.7); }
 div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #111111; text-decoration: underline; }
 
@@ -108,7 +108,7 @@ div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #1
   service navigation styles
 *********************************************************************/
 
-div#servicenav { padding:0; float: right; margin: 0 30px 0 0; }
+div#servicenav { padding:0; float: right; margin: 0 998px 0 0; }
 #servicenav { font-size: 70%; }
 div#servicenav ul { list-style: none; padding: 0; margin: 0; background-color:#FFFFFF; height:22px; padding:0 10px; }
 div#servicenav ul li { display:inline; color: #000000; }
