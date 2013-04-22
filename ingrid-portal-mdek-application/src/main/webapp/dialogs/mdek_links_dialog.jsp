@@ -219,51 +219,21 @@
                 }
                 else {
                     var objectClass = UtilUdk.getCurrentObjectClass();
-                    console.debug("objectClass field value: '" + dijit.byId("objectClass").getValue() + "'");
+                    //console.debug("objectClass field value: '" + dijit.byId("objectClass").getValue() + "'");
                     console.debug("extracted objectClass: '" + objectClass + "'");
                     
                     var idList = [];
-                    switch (objectClass) {
-                        case "0":
-                            idList = ["9990", "9999"];
-                            break;
-                        case "1":
-                            idList = ["3570", "3520", "3515", "3535", "3555", "5066", "9990", "9999"];
-                            break;
-                        case "2":
-                            idList = ["3345", "9990", "9999"];
-                            break;
-                        case "3":
-                            idList = ["3210", "9990", "9999"];
-                            break;
-                        case "4":
-                            idList = ["9990", "9999"];
-                            break;
-                        case "5":
-                            idList = ["3100", "3109", "9990", "9999"];
-                            break;
-                        case "6":
-                            idList = ["3210", "9990", "9999"];
-                            break;
-                        default:
-                            console.debug("Error: could not determine object class.");
-                            break;
-                    }
+                    dojo.forEach(syslist2000Map, function(entry) {
+                        var containsClass = dojo.indexOf(entry.data.split(','), objectClass) !== -1;
+                        if (containsClass) idList.push(entry.entryId);
+                   	});
+                    
                     initialValues = dojo.filter(syslist2000Map, function(item) {
                         return dojo.some(idList, function(id){
                             return id == item.entryId;
                         });
                     });
-/*
-                    // add empty item at the beginning. ONLY IF SELECT BOX !
-                    if (initialValues.length > 1) {
-                        var emptyData = [{entryId:-1, name:""}];
-                        initialValues = emptyData.concat(initialValues);
-                    }
-*/
                 }
-//                console.debug("initialValues: " + initialValues);
-//                console.debug(initialValues);
 
                 // which data attributes for id and label (to show)
                 var storeProps = {

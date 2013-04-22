@@ -280,6 +280,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                     IngridDocument docEntry = new IngridDocument();
                     docEntry.putInt(MdekKeys.LST_ENTRY_ID, Integer.valueOf(entry.getId()));
                     docEntry.put(MdekKeys.LST_ENTRY_DESCRIPTION, entry.getDescription());
+                    docEntry.put(MdekKeys.LST_ENTRY_DATA, entry.getData());
                     IngridDocument locals = new IngridDocument();
                     for (String langKey : entry.getLocalisations().keySet()) {
                         locals.put(langKey, entry.getLocalisedEntry(langKey));
