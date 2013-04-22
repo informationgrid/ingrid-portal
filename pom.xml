@@ -2,7 +2,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-base-pom</artifactId>
-    <version>3.3.0</version>
+    <version>3.4.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -35,7 +35,7 @@
 	</dependencyManagement>
 	<!-- ==================== DEPENDENCIES ==================== -->
   <build>
-    <finalName>ingrid-portal-project-${version}</finalName>
+    <finalName>ingrid-portal-project-${project.version}</finalName>
     <!-- <resources><resource><directory>src/main/resources</directory><excludes><exclude>*.xml</exclude><exclude>*.properties</exclude><exclude>*.bak</exclude></excludes></resource></resources>-->
     <plugins>
       <!-- 
