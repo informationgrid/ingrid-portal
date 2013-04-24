@@ -157,18 +157,26 @@ public class IFramePortalPortlet extends org.apache.jetspeed.portlet.IFrameGener
 		if(prefs != null && prefValue != null){
 				try {
 					if(prefName.equals("SRC")){
-						String url = prefValue.getPrefValue();
+						String url = prefValue.getPrefValue().trim();
 						HashMap map = (HashMap) request.getParameterMap();
 						if(map.size() > 0){
-							url = url + "?";
+							if(url.indexOf("?") < 0){
+								url = url + "?";
+							}
+							if(!url.endsWith("?")){
+								url = url + "&";
+							}
 							Set set = new TreeSet(map.keySet());
 							for (Iterator<String> iterator = set.iterator(); iterator.hasNext();) {
 								String key = iterator.next();
 								String value = request.getParameter(key);
-								url = url + "" + key + "=" + value + "&"; 
+								url = url + "" + key + "=" + value; 
+								if(iterator.hasNext()){
+									url = url + "&";
+								}
 							}
 						}
-						prefs.setValue(prefName, url);
+						prefs.setValue(prefName, url.trim());
 					}else{
 						prefs.setValue(prefName, prefValue.getPrefValue());						
 					}

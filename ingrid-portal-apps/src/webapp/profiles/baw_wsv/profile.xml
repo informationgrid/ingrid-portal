@@ -86,7 +86,7 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>
                     <preference name="SRC">
-                    	<value>http://wsvmapserv.wsv.bvbs.bund.de/xml2wms/upload.php</value>
+                    	<value>http://wsvmapserv.wsv.bvbs.bund.de/xml2wms2/webapp/</value>
                     </preference>
                     <preference name="HEIGHT">
                     	<value>450</value>
