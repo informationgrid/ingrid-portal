@@ -89,7 +89,7 @@
                     	<value>http://wsvmapserv.wsv.bvbs.bund.de/xml2wms2/webapp/</value>
                     </preference>
                     <preference name="HEIGHT">
-                    	<value>450</value>
+                    	<value>900</value>
                     </preference>
                     <preference name="WIDTH">
                     	<value>883</value>
@@ -128,7 +128,7 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>
                     <preference name="SRC">
-                    	<value>http://wsvmapserv.wsv.bvbs.bund.de/wadaba/wadaba_client.html</value>
+                    	<value>http://10.140.110.140/wadaba/client/</value>
                     </preference>
                     <preference name="HEIGHT">
                     	<value>640</value>
