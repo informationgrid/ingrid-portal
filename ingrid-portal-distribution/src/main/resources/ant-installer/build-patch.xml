@@ -1,0 +1,32 @@
+<project name="Ingrid-Portal Patches">
+
+	<target name="patchFromVersion3.3.0">
+        <compareVersion value1="${oldVersion}" value2="3.3.0" prop="compResult"/>
+        <if>
+            <not>
+                <equals arg1="${compResult}" arg2="1" />
+            </not>
+            <then>
+                <echo>Patching ingrid-portal-apps.properties</echo>
+                <patchFile patchFile="patches/3.3.0.1/ingrid-portal-apps.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties" />
+            </then>
+        </if>
+    </target>
+
+    <target name="patchFromVersion3.3.0.1">
+        <compareVersion value1="${oldVersion}" value2="3.3.0.1" prop="compResult"/>
+        <if>
+            <not>
+                <equals arg1="${compResult}" arg2="1" />
+            </not>
+            <then>
+                <echo>Patching ingrid-portal-apps.properties</echo>
+                <patchFile patchFile="patches/3.4.0/ingrid-portal-apps.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties" />
+            </then>
+        </if>
+    </target>
+
+    <target name="patchFiles" depends="StartInstallation,patchFromVersion3.3.0,patchFromVersion3.3.0.1">
+        <!-- patch order determined through depends-order -->
+    </target>
+</project>

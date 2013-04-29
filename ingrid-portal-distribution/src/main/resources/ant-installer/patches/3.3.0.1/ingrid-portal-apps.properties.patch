@@ -1,0 +1,13 @@
+--- C:/temp/AppData/ingrid-portal-apps.properties-rev21961.svn001.tmp.properties	Tue Mar 05 18:00:38 2013
++++ C:/temp/AppData/ingrid-portal-apps.properties-rev21962.svn002.tmp.properties	Mon Mar 11 17:41:39 2013
+@@ -419,4 +419,7 @@
+ portal.admin.number.row.provider=500 
+ 
+ # Enable/Disable account registration questions
+-enable.account.registration.question=true
+\ No newline at end of file
++enable.account.registration.question=true
++
++# MapClient full map config (define on "ingrid-webmap-client" file ./shared/js/config.js)
++portal.map.config=portalu-fullmap
+\ No newline at end of file

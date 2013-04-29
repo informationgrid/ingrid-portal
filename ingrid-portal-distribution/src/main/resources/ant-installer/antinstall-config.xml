@@ -184,7 +184,7 @@
     </page>
     
     <page
-            ifProperty  ="(${portalChoice}==InstallPortal) || (${updateOrNew}==setUpdateProperty)"
+            ifTarget    ="InstallPortal"
             overflow    ="true"
             type        ="input"
             name        ="webmapOptions"
@@ -212,7 +212,7 @@
     </page>
     
     <page
-        ifProperty  ="(${configMdek}==true) || (${portalChoice}==InstallOnlyIge) || (${updateOrNew}==setUpdateProperty)"
+        ifProperty  ="(${configMdek}==true) || (${portalChoice}==InstallOnlyIge)"
         type        ="input"
         overflow    = "true"
         name        ="codelistRepoOptions"
@@ -224,7 +224,7 @@
     </page>
     
     <page
-        ifProperty  ="(${portalChoice}==InstallPortal) || (${updateOrNew}==setUpdateProperty)"
+        ifTarget    ="InstallPortal"
         type        ="input"
         overflow    = "true"
         name        ="otherOptions"
@@ -249,12 +249,13 @@
     </page>
     
     <page
-        ifTarget    ="setUpdateProperty"
-        type        ="input"
-        overflow    = "true"
-        name        ="properties"
-        displayText ="Benötigte Installationsoptionen"
-        target      ="StartInstallation">
+        ifTarget          ="setUpdateProperty"
+        type              ="input"
+        overflow          = "true"
+        name              ="properties"
+        displayText       ="Benötigte Installationsoptionen"
+        target            ="patchFiles"
+        postDisplayTarget ="antinstaller-determineVersion">
         <directory
             property            ="installDir"
             defaultValue        ="/opt/ingrid/ingrid-portal"

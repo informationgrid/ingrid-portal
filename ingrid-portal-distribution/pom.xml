@@ -182,6 +182,9 @@
                 <copy todir="target/installer/resources">
                   <fileset dir="target/dependency/resources" />
                 </copy>
+                <copy todir="target/installer">
+                  <fileset dir="target/dependency/utils"/>
+                </copy>
               </tasks>
             </configuration>
             <goals>

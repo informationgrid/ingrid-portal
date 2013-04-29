@@ -1,4 +1,4 @@
-<project name="PortalU Installation">
+<project name="PortalU Installation" basedir=".">
     <description>
         PortalU Installation Script
     </description>
@@ -31,6 +31,16 @@
     
     <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties"/>
     <property name="i-config-ingrid-webmap-client" value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/ingrid_webmap_client_config.xml"/>
+
+    <!-- THIS PORPERTIES ARE NECESSARY FOR UPDATES -->
+    <property name="libraryDir"         value="${tomcat-artifact}/webapps/ROOT/META-INF" />
+    <property name="libraryIdent"       value="MANIFEST.MF" />
+    <property name="versionsWithConfigurations"  value="" />
+    <property name="minSupportedVersion" value="3.3.0" />
+
+    <import file="build-installer-utils.xml"  as="utils" />
+    <import file="build-patch.xml"            as="patch" />
+
     
     <!-- =============================================
          = CONFIGURATIONS                            =
@@ -79,9 +89,9 @@
             <then>
                 <runtarget target="setMySqlProperty"/>
             </then>
-        <else>
-            <runtarget target="setOracleProperty"/>
-        </else>
+            <else>
+                <runtarget target="setOracleProperty"/>
+            </else>
         </if>
         
         <property name="_mdekUser" value="${cipmXML.Context.Resource(username)}" />
@@ -92,7 +102,7 @@
         <available file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps" type="dir" property="portal.installed"/>
     </target>
 
-    <target name="setUpdateProperty" depends="UnzipInstallerForUpdate">
+    <target name="setUpdateProperty" depends="checkPreconditionsForUpdate, UnzipInstallerForUpdate">
         <property name="installType" value="update" />
         <property name="updateProcedure" value="true" />
     </target>
@@ -142,9 +152,9 @@
     </target>
     
     <target name="UnzipInstallerForUpdate">
-    	 <unzip src="${antinstaller.jar}" dest="${basedir}">
+        <unzip src="${antinstaller.jar}" dest=".">
             <patternset>
-                <include name="distribution/**/*.*"/>
+                <include name="**/*.*"/>
                 <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ROOT.xml" />
                 <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ingrid-portal-apps.xml" />
                 <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ingrid-portal-mdek.xml" />
@@ -152,7 +162,7 @@
             </patternset>
         </unzip>
 
-        <copy file="${mysqlDbDriverInApache}"  todir="${basedir}"/>
+        <copy file="${mysqlDbDriverInApache}"  todir="."/>
         <copy file="${oracleDbDriverInApache}" todir="."/>
     </target>
 
@@ -240,8 +250,6 @@
                     <runtarget target="ExtractIgeForUpdate" />
                     <runtarget target="updatePortalDb"/>
                     <runtarget target="updateIgeDb"/>
-                    <runtarget target="writeCodelistConfig" />
-                    <runtarget target="UpdateWebMapClient"/>
                  </then>
             </elseif>
         </if>
@@ -273,7 +281,12 @@
         <!-- rename ingrid-portal to ROOT, so it'll be accessible from tomcat root -->
         <move file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-base.war" tofile="${installDir}/${tomcat-artifact}/webapps/ROOT.war"/>
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ROOT.war"                   dest="${installDir}/${tomcat-artifact}/webapps/ROOT"/>
-        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client"/>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client">
+            <patternset>
+                <exclude name="WEB-INF/classes/application.properties" />
+                <exclude name="WEB-INF/classes/ingrid_webmap_client_config.xml" />
+            </patternset>
+        </unwar>
         <move toDir="${installDir}/${tomcat-artifact}/webapps">
             <fileset dir="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/deploy">
                 <include name="**/ingrid-portal-apps.war"/>
@@ -283,6 +296,7 @@
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps">
             <patternset>
                 <exclude name="WEB-INF/classes/communication.xml" />
+                <exclude name="WEB-INF/classes/ingrid-portal-apps.properties" />
             </patternset>
         </unwar>
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek"/>
