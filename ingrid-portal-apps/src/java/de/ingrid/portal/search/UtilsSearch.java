@@ -375,13 +375,25 @@ public class UtilsSearch {
         if (obj instanceof String[]) {
             String[] valueArray = (String[]) obj;
             for (int i = 0; i < valueArray.length; i++) {
-                if (i != 0) {
-                    values.append(DETAIL_VALUES_SEPARATOR);
-                }
+            	String value = null;
+                
                 if (raw) {
-                    values.append(valueArray[i]);
+                	value = valueArray[i];
                 } else {
-                    values.append(mapResultValue(key, valueArray[i], resources));
+                	if(key.equals(Settings.RESULT_KEY_TOPIC)){
+                		String tmpValue = mapResultValue(key, valueArray[i], resources);
+                		if(!tmpValue.equals(valueArray[i])){
+                			value = tmpValue;
+                		}
+                	}else{
+                		value = mapResultValue(key, valueArray[i], resources);
+                	}
+                }
+                if(value != null){
+                	if (values.length() > 0 && i != 0) {
+                        values.append(DETAIL_VALUES_SEPARATOR);
+                    }
+                	values.append(value);
                 }
             }
         } else if (obj instanceof ArrayList) {
