@@ -1551,18 +1551,17 @@
             <header>Nutzeradministration</header>
             <content>
                  <p><b>Konzept der Nutzerverwaltung des InGridEditors</b></p>
-				 <p>Das Konzept der Nutzerverwaltung des InGridEditors (IGE) beruht darauf, dass sich ein 
-				 Nutzer grundsätzlich nur einmal im Portal (unter <i>Mein PortalU</i>) oder einer anderen externen
-				 Benutzerverwaltung anmelden muss. Daher müssen die Nutzerinformationen der externen
-				 Benutzerverwaltung (z.B. Portal) mit denen des Editors verknüpft sein.</p>
-				 <p>Dieser Anspruch macht eine Reihe von Schritten notwendig, damit ein spezieller Nutzer 
-				 die Rechte bekommt, die ihn gegenüber einem beliebigen Gast-Nutzer des Portals 
-				 auszeichnen. </p>
-				 <p>Die eigentlichen Rechte, die sowohl Schreibrechte als auch das Recht zur 
-				 Qualitätssicherung umfassen, werden in der 
-				 <a href="?hkey=hierarchy-maintenance-3">Gruppenadministration</a> festgelegt. 
-                 Jedem Nutzer werden eine oder mehrere Gruppen mit entsprechenden Rechten zugeordnet.</p>
-				 <p>Die Rechte bezüglich der Nutzerverwaltung werden durch drei Hierarchieebenen festgelegt:</p>
+				 <p>Der InGridEditor (IGE) ist eine Komponente der Portal-Software InGrid, die in erster Linie für
+				 das Umweltportal Deutschland PortalU konzipiert und weiterentwickelt wird. Durch die Verknüpfung 
+				 der Nutzverwaltungen des Umweltportals und des IGEs ergibt sich der Vorteil, dass sich ein 
+				 Nutzer nur einmal zentral im Portal (unter <i>Mein PortalU</i>) oder in einer anderen externen 
+				 Benutzerverwaltung anmelden muss.</p>
+				 <p>Die IGE-Nutzerrechte, die sowohl Schreibrechte als auch das Recht zur Qualitätssicherung 
+				 umfassen können, werden in der 
+				 <a href="?hkey=hierarchy-maintenance-3">Gruppenadministration</a> der IGE-Nutzerverwaltung 
+				 festgelegt. Zunächst werden Gruppen definiert, die spezifische Rechte für einen Teilbereich des 
+				 Katalogs aufweisen und anschließend die Nutzer einer oder mehreren Gruppen  zugeordnet. </p>
+				 <p>Im IGE werden hierbei folgende Rechte (Rollen) unterschieden:</p>
 				 <ol>
 				 <li><b>Katalog-Administrator</b>: Es gibt nur einen Nutzer mit diesen Rechten. Er hat das 
 				 Recht alle Verwaltungsfunktionen bedienen zu dürfen und kann Nutzer auf allen 
@@ -1577,49 +1576,49 @@
 				 <p>Der Katalog-Administrator kann Metadaten-Autoren unter beliebigen Metadaten-Administratoren 
 				 einrichten. Ein Metadaten-Administrator hat immer das Recht, die ihm nachgeordneten 
 				 Metadaten-Autoren zu administrieren.</p>
+				 <br/>
 				 <p><b>Neuanlegen eines Nutzers</b></p>
-				 <p>Folgende Schritte sind notwendig, bevor ein neuer Nutzer und seine Rechte im IGE 
-				 angelegt werden können:</p>
+				 <br/>
+				 <p>Vorbereitende Schritte:</p>
 				 <ol>
-				 <li>Der Benutzer muss in der externen Benutzerverwaltung registriert worden sein, so dass ein
-				 externer Login vorliegt. Wird als externe Benutzerverwaltung das Portal verwendet, so kann
-				 sich der Benutzer selbst anmelden oder vom Administrator im Portal unter <i>Mein PortalU</i> 
-				 angemeldet werden.</li>
-				 <li>Bei einer initialen Anmeldung im Portal erhält der Benutzer eine Email zur Bestätigung
-				 seiner Anmeldung. Er muss die Anmeldung über den in ihr vorhanden Link bestätigen.</li>
-				 <li>Der Benutzer muss über den Untermenüpunkt 
-                 <a href="?hkey=user-administration-2">Gruppenadministration</a> eine oder mehrere Gruppen angelegt haben, 
-                 die die Rechte besitzen, die der Nutzer erhalten soll.</li>
+				 <li>Der Nutzer muss in der externen Benutzerverwaltung registriert worden sein (Portal-Nutzer). Wird als 
+				 externe Nutzerverwaltung das Portal verwendet, kann sich der Nutzer selbst anmelden oder vom 
+				 Administrator im Portal unter <i>Mein PortalU</i> angemeldet werden.</li>
+				 <li>Der Nutzer erhält eine Email zur Bestätigung seiner Anmeldung. Mit der Bestätigung des Links 
+				 in der Email wird die Anmeldung aktiviert. </li>
+				 <li>Um dem neuen Nutzer passende Rechte zuordnen zu können, muss in der  
+                 <a href="?hkey=user-administration-2">Gruppenadministration</a> der IGE-Nutzerverwaltung geprüft 
+				 werden, ob bereits eine oder mehrere Gruppen existieren, die mit entsprechenden Rechten 
+				 ausgestattet sind. Ist dies nicht der Fall, müssen eine oder mehrere neue Gruppen angelegt werden. </li>
 				 </ol>
-				 <p>Nachdem diese Vorarbeiten erledigt sind, gehen Sie bitte wie folgt vor:</p>
+				 <p>Nachdem gehen Sie bitte wie folgt vor:</p>
 				 <ol>
-				 <li>Wählen Sie durch Mausklick im Hierarchiebaum der Nutzer auf der linken Seite des 
-				 Fensters einen Administrator aus, unterhalb dessen Sie den Nutzer anlegen wollen. Der 
-				 Name des ausgewählten Nutzers wird markiert. 
-				 <br/>Ein Metadaten-Administrator kann nur unterhalb seines eigenen Eintrags einen Nutzer 
-				 anlegen. Ein Katalog-Administrator kann Metadaten-Administratoren unterhalb seines eigenen 
-				 Eintrags anlegen oder Metadaten-Autoren unterhalb eines Metadaten-Administrators. Unterhalb 
-				 von Metadaten-Autoren können keine weiteren Nutzer angelegt werden.</li>
-				 <li>Klicken Sie auf die Schalfläche <i>Nutzer anlegen</i>. Es öffnet sich ein Dialog. Sie 
-				 können jetzt den in der externen Benutzerverwaltung (z.B. im Portal) vergebenen Nutzernamen (Login)
-				 eingeben. Und mit <i>Übernehmen</i> dem Katalog-Nutzer zuordnen.
-				 <br/><u>Hinweis1:</u> Die Auswahlliste lässt sich nicht wie üblich über einen Klick auf das 
-				 Symbol an der rechten Seite der Eingabezeile öffnen. Durch die Eingabe eines oder mehrerer 
-				 Anfangsbuchstaben des Benutzernamens wird die Auswahlliste mit allen Benutzernamen geöffnet, 
-				 die diesen Anfangsbuchstaben entsprechen. Sie können jetzt den Namen auswählen.
-				 <br/><u>Hinweis2:</u> Jeder Nutzer der externen Benutzerverwaltung (z.B. Portal-Nutzer) kann 
-				 maximal einem Katalog-Nutzer zugeordnet werden. Bereits einem Katalog-Nutzer zugeordnete Namen 
-				 von externen Nutzern werden nicht mehr in der Auswahlliste angezeigt und können nicht erneut 
-				 zugeordnet werden.
-				 <br/>Über diese Angabe sind <i>Login</i> und <i>Rolle</i> festgelegt.</li>
-				 <li>Fügen Sie Name, Email und Adressdaten des Katalog-Nutzers in den dafür vorgesehenen Feldern den 
-				 Nutzerangaben hinzu.</li>
-                 <li>Wählen Sie eine oder mehrere Gruppen aus der Auswahlliste aus. Es werden alle Gruppen angezeigt, 
-				 die in der <a href="?hkey=user-administration-2">Gruppenadministration</a> angelegt wurden 
-				 und für die Sie die Berechtigung zur Administration besitzen.</li>
-				 <li><i>Speichern</i> Sie den neuen Nutzer. Er kann jetzt verwendet werden.</li>
+				 <li>Klicken Sie in der Nutzeradministration (IGE-Nutzerverwaltung) auf den Administrator, der 
+				 für den neuen Nutzer zuständig sein soll (Hierarchiebaum auf der linken Seite). Der Name des 
+				 Administrators wird rot markiert.  
+				 <br/>Als Katalog-Administrator können Sie Metadaten-Administratoren und Metadaten-Autoren im 
+				 gesamten Katalog anlegen. Als Metadaten-Administrator können Sie nur Metadaten-Autoren unterhalb 
+				 ihres eigenen Eintrags anlegen. Unterhalb von Metadaten-Autoren können keine weiteren Nutzer 
+				 angelegt werden.</li>
+				 <li>Klicken Sie auf die Schalfläche <i>Nutzer anlegen</i> (unterhalb des Hierarchiebaums). Geben Sie nun 
+				 in das Dialogfeld die Anfangsbuchstaben des neuen Portal-Nutzers ein und wählen Sie dann aus der Auswahlliste 
+				 den entsprechenden Nutzer aus.  Klicken Sie anschließend auf 
+				 die Schalfläche <i>Übernehmen</i>, um dem neuen Nutzer dem ausgewählten IGE-Administrator zuzuordnen.
+				 <br/><u>Hinweis 1:</u> Die Auswahlliste öffnet sich nur durch die Eingabe von Buchstaben und nicht 
+				 wie üblich über einen Klick auf das Symbol an der rechten Seite der Eingabezeile. Namen, die mit großen 
+				 Anfangsbuchstaben beginnen, werden in der Auswahlliste zuerst gelistet. 
+				 <br/><u>Hinweis 2:</u> Ein Portal-Nutzer, der bereits einem IGE-Katalog zugeordnet ist, kann keinem 
+				 zweiten Katalog zugeordnet werden. Diese Regelung betrifft auch Schulungskataloge. Deshalb werden Nutzer, 
+				 die bereits mit IGE-Rechten ausgestattet sind, nicht mehr in der Auswahlliste angezeigt.</li>
+				 <li>Für den neuen IGE-Nutzer müssen nun einige Nutzerdaten (Name, Email, Institution) erfasst. </li>
+                 <li>Weisen Sie dem neuen IGE-Nutzer einer oder mehreren Gruppen zu. In der Auswahlliste werden alle 
+				 in der  <a href="?hkey=user-administration-2">Gruppenadministration</a> definierten Gruppen angezeigt 
+				 für die Sie die Berechtigung zur Administration besitzen.</li>
+				 <li>Mit <i>Speichern</i> (Schaltfläche unten rechts) schließen Sie den Vorgang ab.</li>
 				 </ol>
+				 <br/>
 				 <p><b>Bearbeiten und Löschen eines bereits existierenden Nutzers</b></p>
+				 <br/>
 				 <p>Wählen Sie durch Mausklick im Hierarchiebaum auf der linken Seite des Fensters einen 
 				 Nutzer aus, den Sie bearbeiten oder löschen wollen.</p>
 				 <p>Die Nutzerdaten werden in die Felder auf der rechten Seite des Fensters geladen. Sie 

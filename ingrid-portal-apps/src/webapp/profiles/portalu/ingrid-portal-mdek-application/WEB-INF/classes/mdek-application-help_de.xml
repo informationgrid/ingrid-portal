@@ -1,5 +1,6 @@
 ﻿<?xml-stylesheet type="text/xsl" href="IGE-application-help.xsl" ?>
 <help>
+    <back>Zurück</back>
     <chapter>
         <header>Hilfe zum InGridEditor</header>
         <section help-key="index">
@@ -315,17 +316,20 @@
         <section help-key="dashboard-1">
             <header>Beschreibung</header>
             <content>
-                <p>Das Dashboard zeigt eine Übersicht über den verwendeten Katalog. Überdies werden alle zuletzt
-                bearbeiteten Objekte und Adressen des eingeloggten Benutzers tabellarisch angezeigt, so dass
-                ein schneller Sprung zu einem kürzlich bearbeiteten Objekte bzw. Adresse möglich ist.</p>
+                <p>Das Dashboard zeigt eine Übersicht des Kataloges in Form einiger allgemeiner
+                Informationen und einer Übersicht aller zuletzt bearbeiteter Objekte und Adressen.
+                Im ersten Reiter "Meine Datensätze" werden alle in Bearbeitung befindlichen 
+                Objekte bzw Adressen des eingeloggten Benutzers aufgelistet. Wird einer der 
+                angezeigten Datensätze ausgewählt, so wird dieser direkt im Editor geöffnet.</p>
                 <br />
-                <p>Ein Klick auf "Alle Datensätze" zeigt die zuletzt bearbeiteten Objekte und Adressen aller Nutzer
-                an. Hier erhält man einen Überblick, welche Objekte/Adressen auf dem gesamten Katalog gerade bearbeitet
-                werden. Ist ein Objekt/Adresse grau, so bedeutet dies, dass der eingeloggte Benutzer keine Schreibrechte
-                darauf besitzt.</p>
+                <p>Ein Klick auf "Alle Datensätze" zeigt die zuletzt bearbeiteten Objekte und
+                Adressen aller Nutzer an. Hier erhält man einen Überblick, welche
+                Objekte/Adressen im gesamten Katalog gerade bearbeitet werden. Ist ein/e
+                Objekt/Adresse grau, so bedeutet dies, dass der eingeloggte Benutzer keine
+                Schreibrechte darauf besitzt.</p>
                 <br />
-                <p>Ein Klick auf die "Aktualisieren"-Schaltfläche lädt die Informationen neu ein ohne dass die Seite neu 
-                geladen werden muss.</p>
+                <p>Über den Button "Aktualisieren" werden alle Informationen des Dashboards
+                neu geladen.</p>
             </content>
         </section>
     </chapter>
@@ -371,8 +375,10 @@
 				 <p>Im Fenster Detailansicht können Sie die Anordnung der Objekt- bzw. 
 				 Adressinformation im Ausdruck ansehen. Die Anordnung der Information ist nicht 
 				 veränderbar. Mit einem Klick auf <i>[Drucken]</i> gelangen Sie in das Druckmenü 
-				 des Betriebssystems. 
-				 Verlassen Sie die Druckansicht mit dem Kreuz oben rechts in der Fensterecke.</p>
+				 des Betriebssystems.</p>
+				 <p>Neben der Anzeige der Detailansicht eines Objektes/einer Adresse, ist es auch möglich die Detailinformationen des gesamten Unterbaumes anzeigen zu lassen. Sind die Auswahlboxen <i>Detailansicht</i> und <i>Untergeordnete Adressen mit einbeziehen</i> beide ausgewählt, so werden alle Objekte/Adressen des Teilbaumes untereinander ausgegeben. Beachten Sie, dass die Ausgabe bei sehr vielen Objekten eine Weile dauern kann. Deshalb ist es jederzeit möglich die Anzeige abzubrechen.</p>
+				 <p>Wird die Auswahlbox <i>Detailansicht</i> entfernt, so wird anstatt einer Detailansicht, nur eine gekürzte Version angezeigt, bestehend aus dem Titel des Datensatzes. Der Baum wird hierbei jedoch in einer hierarchischen Darstellung angezeigt.</p>				 
+				 <p>Die Druckansicht kann mit dem Kreuz oben rechts in der Fensterecke verlassen werden.</p>
 				 <p>Diese Funktion steht für die Ebenen <i>Objekte</i>, <i>Adressen</i> und 
 				 <i>freie Adressen</i> nicht zur Verfügung.</p>
 				 <p><b>Objekt/Adresse/Teilbaum ausschneiden</b></p>
@@ -810,6 +816,7 @@
 				 das aus der Auswahlliste <i>Koordinatensystem</i> ausgewählt wird.</p>
 				 <p>Mit einem Klick auf die Schaltfläche <i><b>Hinzufügen</b></i> werden die Angaben in das 
 				 Feld <i>Freier Raumbezug</i> des Objektes übernommen.</p>
+				 <p>Über den Link <i>erben</i> ist es möglich, die freien Raumbezüge des übergeordneten Objektes zu erben. Vorhandene Raumbezüge (über den Namen identifiziert) werden nicht überschrieben. Diese Funktion steht nur Unterobjekten zur Verfügung!</p>
             </content>
         </section>
         <section help-key="maintanance-of-objects-5">
@@ -906,6 +913,7 @@
 				 <p>Optional können Sie eine <i>Erläuterung</i> zu dem Verweis angeben.</p>
 				 <p><u>Achtung:</u> Die Angabe <i>URL-Typ</i> ist ebenfalls optional, wird bei 
 				 der Darstellung des Metadatenobjektes über das Portal jedoch nicht angezeigt.</p>
+				 <p>Besitzt das Objekt ein übergeordnetes Objekt, so besteht ebenfalls die Möglichkeit, die Verweise von diesem zu erben. Dazu klickt man auf den Link <i>erben</i> und es werden alle übergeordneten Verweise in das geöffnete Objekt kopiert. Vorhandene Einträge werden dabei nicht überschrieben!</p>
             </content>
         </section>
         <section help-key="maintanance-of-objects-8">
@@ -973,6 +981,12 @@
 				 zu der Adresse angezeigt. Diese Anzeige ist immer sichtbar.</p>
 				 <p>Darunter wird - grau hinterlegt - je nach Adresstyp der Name der Institution, 
 				 der Einheit oder der Person angezeigt.</p>
+                 <p>In der Auswahlbox unter "Veröffentlichung" lässt sich die Sichtbarkeit dieser Adresse
+                 einstellen. Während die Auswahl "Internet" keine Einschränkungen besitzt, wird die Adresse
+                 bei "Intranet" oder "amtsintern" nicht im Internet veröffentlicht.</p>
+                 <p>Bei dem Adresstyp "Person" gibt es zusätzlich die Besonderheit "Daten nicht anzeigen" als 
+                 Checkbox. Hierdurch lassen sich die Daten einer Adresse verstecken und stattdessen, die der 
+                 übergeordneten Adresse verwendet.</p>
 				 <p>Die weiteren Informationen sind zu folgenden Gruppen zusammengefasst:</p>
 				 <ul>
 				 <li>Adresse und Aufgaben </li>
@@ -1021,6 +1035,13 @@
 				 Wollen Sie eine „freie Adresse“, also ein Adresse ohne übergeordnete Institution und 
 				 Einheit anlegen, so wählen sie die Ebene <i>freie Adresse</i> im Strukturbaum aus 
 				 und legen darunter eine neue Adresse an.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-adresses-2a">
+            <header>Angaben aus übergeordneter Adresse übernehmen</header>
+            <content>
+                 <p>Anstatt die Adressinformationen per Hand eingeben zu müssen, ist es möglich, die Informationen aus der übergeordneten Adresse zu erhalten. Dabei werden die Felder <i>Straße/Hausnummer</i>, <i>PLZ</i>, <i>Ort</i>, <i>Postfach</i>, <i>PLZ (Postfach)</i> und <i>Land</i> überschrieben.</p>
+                 <p>Außerdem ist es über den Strukturbaum möglich, ausgehend von einer Adresse, die Adressinformationen auf alle Unteradressen zu verteilen. Dazu ruft man das Kontextmenü einer Adresse im Hierarchiebaum auf und wählt den Eintrag <i>Adressangaben in nachgeordnete Adressen übernehmen</i>. Nach einer Sicherheitsabfrage werden die Änderungen an den Adressen vorgenommen.</p>
             </content>
         </section>
         <section help-key="maintanance-of-adresses-3">
@@ -1530,18 +1551,17 @@
             <header>Nutzeradministration</header>
             <content>
                  <p><b>Konzept der Nutzerverwaltung des InGridEditors</b></p>
-				 <p>Das Konzept der Nutzerverwaltung des InGridEditors (IGE) beruht darauf, dass sich ein 
-				 Nutzer grundsätzlich nur einmal im Portal (unter <i>Mein PortalU</i>) oder einer anderen externen
-				 Benutzerverwaltung anmelden muss. Daher müssen die Nutzerinformationen der externen
-				 Benutzerverwaltung (z.B. Portal) mit denen des Editors verknüpft sein.</p>
-				 <p>Dieser Anspruch macht eine Reihe von Schritten notwendig, damit ein spezieller Nutzer 
-				 die Rechte bekommt, die ihn gegenüber einem beliebigen Gast-Nutzer des Portals 
-				 auszeichnen. </p>
-				 <p>Die eigentlichen Rechte, die sowohl Schreibrechte als auch das Recht zur 
-				 Qualitätssicherung umfassen, werden in der 
-				 <a href="?hkey=hierarchy-maintenance-3">Gruppenadministration</a> festgelegt. 
-                 Jedem Nutzer werden eine oder mehrere Gruppen mit entsprechenden Rechten zugeordnet.</p>
-				 <p>Die Rechte bezüglich der Nutzerverwaltung werden durch drei Hierarchieebenen festgelegt:</p>
+				 <p>Der InGridEditor (IGE) ist eine Komponente der Portal-Software InGrid, die in erster Linie für
+				 das Umweltportal Deutschland PortalU konzipiert und weiterentwickelt wird. Durch die Verknüpfung 
+				 der Nutzverwaltungen des Umweltportals und des IGEs ergibt sich der Vorteil, dass sich ein 
+				 Nutzer nur einmal zentral im Portal (unter <i>Mein PortalU</i>) oder in einer anderen externen 
+				 Benutzerverwaltung anmelden muss.</p>
+				 <p>Die IGE-Nutzerrechte, die sowohl Schreibrechte als auch das Recht zur Qualitätssicherung 
+				 umfassen können, werden in der 
+				 <a href="?hkey=hierarchy-maintenance-3">Gruppenadministration</a> der IGE-Nutzerverwaltung 
+				 festgelegt. Zunächst werden Gruppen definiert, die spezifische Rechte für einen Teilbereich des 
+				 Katalogs aufweisen und anschließend die Nutzer einer oder mehreren Gruppen  zugeordnet. </p>
+				 <p>Im IGE werden hierbei folgende Rechte (Rollen) unterschieden:</p>
 				 <ol>
 				 <li><b>Katalog-Administrator</b>: Es gibt nur einen Nutzer mit diesen Rechten. Er hat das 
 				 Recht alle Verwaltungsfunktionen bedienen zu dürfen und kann Nutzer auf allen 
@@ -1556,49 +1576,49 @@
 				 <p>Der Katalog-Administrator kann Metadaten-Autoren unter beliebigen Metadaten-Administratoren 
 				 einrichten. Ein Metadaten-Administrator hat immer das Recht, die ihm nachgeordneten 
 				 Metadaten-Autoren zu administrieren.</p>
+				 <br/>
 				 <p><b>Neuanlegen eines Nutzers</b></p>
-				 <p>Folgende Schritte sind notwendig, bevor ein neuer Nutzer und seine Rechte im IGE 
-				 angelegt werden können:</p>
+				 <br/>
+				 <p>Vorbereitende Schritte:</p>
 				 <ol>
-				 <li>Der Benutzer muss in der externen Benutzerverwaltung registriert worden sein, so dass ein
-				 externer Login vorliegt. Wird als externe Benutzerverwaltung das Portal verwendet, so kann
-				 sich der Benutzer selbst anmelden oder vom Administrator im Portal unter <i>Mein PortalU</i> 
-				 angemeldet werden.</li>
-				 <li>Bei einer initialen Anmeldung im Portal erhält der Benutzer eine Email zur Bestätigung
-				 seiner Anmeldung. Er muss die Anmeldung über den in ihr vorhanden Link bestätigen.</li>
-				 <li>Der Benutzer muss über den Untermenüpunkt 
-                 <a href="?hkey=user-administration-2">Gruppenadministration</a> eine oder mehrere Gruppen angelegt haben, 
-                 die die Rechte besitzen, die der Nutzer erhalten soll.</li>
+				 <li>Der Nutzer muss in der externen Benutzerverwaltung registriert worden sein (Portal-Nutzer). Wird als 
+				 externe Nutzerverwaltung das Portal verwendet, kann sich der Nutzer selbst anmelden oder vom 
+				 Administrator im Portal unter <i>Mein PortalU</i> angemeldet werden.</li>
+				 <li>Der Nutzer erhält eine Email zur Bestätigung seiner Anmeldung. Mit der Bestätigung des Links 
+				 in der Email wird die Anmeldung aktiviert. </li>
+				 <li>Um dem neuen Nutzer passende Rechte zuordnen zu können, muss in der  
+                 <a href="?hkey=user-administration-2">Gruppenadministration</a> der IGE-Nutzerverwaltung geprüft 
+				 werden, ob bereits eine oder mehrere Gruppen existieren, die mit entsprechenden Rechten 
+				 ausgestattet sind. Ist dies nicht der Fall, müssen eine oder mehrere neue Gruppen angelegt werden. </li>
 				 </ol>
-				 <p>Nachdem diese Vorarbeiten erledigt sind, gehen Sie bitte wie folgt vor:</p>
+				 <p>Nachdem gehen Sie bitte wie folgt vor:</p>
 				 <ol>
-				 <li>Wählen Sie durch Mausklick im Hierarchiebaum der Nutzer auf der linken Seite des 
-				 Fensters einen Administrator aus, unterhalb dessen Sie den Nutzer anlegen wollen. Der 
-				 Name des ausgewählten Nutzers wird markiert. 
-				 <br/>Ein Metadaten-Administrator kann nur unterhalb seines eigenen Eintrags einen Nutzer 
-				 anlegen. Ein Katalog-Administrator kann Metadaten-Administratoren unterhalb seines eigenen 
-				 Eintrags anlegen oder Metadaten-Autoren unterhalb eines Metadaten-Administrators. Unterhalb 
-				 von Metadaten-Autoren können keine weiteren Nutzer angelegt werden.</li>
-				 <li>Klicken Sie auf die Schalfläche <i>Nutzer anlegen</i>. Es öffnet sich ein Dialog. Sie 
-				 können jetzt den in der externen Benutzerverwaltung (z.B. im Portal) vergebenen Nutzernamen (Login)
-				 eingeben. Und mit <i>Übernehmen</i> dem Katalog-Nutzer zuordnen.
-				 <br/><u>Hinweis1:</u> Die Auswahlliste lässt sich nicht wie üblich über einen Klick auf das 
-				 Symbol an der rechten Seite der Eingabezeile öffnen. Durch die Eingabe eines oder mehrerer 
-				 Anfangsbuchstaben des Benutzernamens wird die Auswahlliste mit allen Benutzernamen geöffnet, 
-				 die diesen Anfangsbuchstaben entsprechen. Sie können jetzt den Namen auswählen.
-				 <br/><u>Hinweis2:</u> Jeder Nutzer der externen Benutzerverwaltung (z.B. Portal-Nutzer) kann 
-				 maximal einem Katalog-Nutzer zugeordnet werden. Bereits einem Katalog-Nutzer zugeordnete Namen 
-				 von externen Nutzern werden nicht mehr in der Auswahlliste angezeigt und können nicht erneut 
-				 zugeordnet werden.
-				 <br/>Über diese Angabe sind <i>Login</i> und <i>Rolle</i> festgelegt.</li>
-				 <li>Fügen Sie Name, Email und Adressdaten des Katalog-Nutzers in den dafür vorgesehenen Feldern den 
-				 Nutzerangaben hinzu.</li>
-                 <li>Wählen Sie eine oder mehrere Gruppen aus der Auswahlliste aus. Es werden alle Gruppen angezeigt, 
-				 die in der <a href="?hkey=user-administration-2">Gruppenadministration</a> angelegt wurden 
-				 und für die Sie die Berechtigung zur Administration besitzen.</li>
-				 <li><i>Speichern</i> Sie den neuen Nutzer. Er kann jetzt verwendet werden.</li>
+				 <li>Klicken Sie in der Nutzeradministration (IGE-Nutzerverwaltung) auf den Administrator, der 
+				 für den neuen Nutzer zuständig sein soll (Hierarchiebaum auf der linken Seite). Der Name des 
+				 Administrators wird rot markiert.  
+				 <br/>Als Katalog-Administrator können Sie Metadaten-Administratoren und Metadaten-Autoren im 
+				 gesamten Katalog anlegen. Als Metadaten-Administrator können Sie nur Metadaten-Autoren unterhalb 
+				 ihres eigenen Eintrags anlegen. Unterhalb von Metadaten-Autoren können keine weiteren Nutzer 
+				 angelegt werden.</li>
+				 <li>Klicken Sie auf die Schalfläche <i>Nutzer anlegen</i> (unterhalb des Hierarchiebaums). Geben Sie nun 
+				 in das Dialogfeld die Anfangsbuchstaben des neuen Portal-Nutzers ein und wählen Sie dann aus der Auswahlliste 
+				 den entsprechenden Nutzer aus.  Klicken Sie anschließend auf 
+				 die Schalfläche <i>Übernehmen</i>, um dem neuen Nutzer dem ausgewählten IGE-Administrator zuzuordnen.
+				 <br/><u>Hinweis 1:</u> Die Auswahlliste öffnet sich nur durch die Eingabe von Buchstaben und nicht 
+				 wie üblich über einen Klick auf das Symbol an der rechten Seite der Eingabezeile. Namen, die mit großen 
+				 Anfangsbuchstaben beginnen, werden in der Auswahlliste zuerst gelistet. 
+				 <br/><u>Hinweis 2:</u> Ein Portal-Nutzer, der bereits einem IGE-Katalog zugeordnet ist, kann keinem 
+				 zweiten Katalog zugeordnet werden. Diese Regelung betrifft auch Schulungskataloge. Deshalb werden Nutzer, 
+				 die bereits mit IGE-Rechten ausgestattet sind, nicht mehr in der Auswahlliste angezeigt.</li>
+				 <li>Für den neuen IGE-Nutzer müssen nun einige Nutzerdaten (Name, Email, Institution) erfasst. </li>
+                 <li>Weisen Sie dem neuen IGE-Nutzer einer oder mehreren Gruppen zu. In der Auswahlliste werden alle 
+				 in der  <a href="?hkey=user-administration-2">Gruppenadministration</a> definierten Gruppen angezeigt 
+				 für die Sie die Berechtigung zur Administration besitzen.</li>
+				 <li>Mit <i>Speichern</i> (Schaltfläche unten rechts) schließen Sie den Vorgang ab.</li>
 				 </ol>
+				 <br/>
 				 <p><b>Bearbeiten und Löschen eines bereits existierenden Nutzers</b></p>
+				 <br/>
 				 <p>Wählen Sie durch Mausklick im Hierarchiebaum auf der linken Seite des Fensters einen 
 				 Nutzer aus, den Sie bearbeiten oder löschen wollen.</p>
 				 <p>Die Nutzerdaten werden in die Felder auf der rechten Seite des Fensters geladen. Sie 
@@ -1697,9 +1717,8 @@
 				 <p><u>Hinweis:</u> Dieses Recht wird nur im Zusammenhang mit der eingeschalteten 
 				 <a href="?hkey=quality-assurance-0">Workflow-Kontrolle</a> in den 
 				 <a href="?hkey=catalog-administration-1">Katalogeinstellungen</a> wirksam.</p>
-                 <p><b>zugeordnete Nutzer</b></p>
-                 <p>Auf einem extra Reiter ist es möglich, sich die Benutzer auflisten zu lassen, die zur 
-                 ausgewählten Gruppe gehören.</p>
+                 <p><b>Zugeordnete Nutzer</b></p>
+                 <p>Auf dem dritten Reiter werden alle Benutzer aufgelistet, welche der gewählten Gruppe zugeordnet wurden.</p>
 				 <p><b>Die spezielle Gruppe <i>administrators</i> des Katalogadministrators</b></p>
 				 <p>Dem Katalogadministrator wird immer automatisch die Gruppe <i>administrators</i> zugewiesen. 
 				 Diese Zuweisung kann <b>nicht</b> verändert werden. Die Gruppe hat Schreibrechte auf den gesamten 
@@ -1777,14 +1796,14 @@
 				 durchgeführt (Sie können diese Prüfung später wiederholen, indem Sie auf den Button 
 				 <i>Prüfung erneut ausführen</i> klicken). Das <i>Ergebnis der Dublettenprüfung</i> wird 
 				 in einer <i>Liste</i> angezeigt. </p>
-				 <p>Klicken Sie mit der rechten Maustaste auf eines der aufgelisteten Objekte und wählen 
-				 <i>Im Hierarchiebaum anzeigen</i>, so wird die Lage des Objekts unter dem Kartenreiter 
-				 <i>Hierarchiebaum</i> angezeigt.</p>
-				 <p>Klicken Sie mit der linken Maustaste auf eines der aufgelisteten Objekte, werden 
-				 der <i>Objektname</i>, die <i>Klasse</i> und die <i>Beschreibung</i> des Objektes 
-				 angezeigt.</p>
-				 <p>Sie können nun den Objektnamen ändern und über den entsprechenden Button die 
-				 <i>Änderung speichern</i>.</p>
+				 <p>Wählen Sie mit der rechten Maustaste eines der aufgelisteten Objekte aus. Mit der Option 
+                 "Im Hierarchiebaum anzeigen" wird im Kartenreiter <i>Hierarchiebaum</i> die Lage des Objekts 
+                 in der Kataloghierarchie angezeigt. Mit der Option "Öffne in Erfassung" wird das gewählte 
+                 Objekt in der Erfassung geöffnet, wo es direkt bearbeitet werden kann.</p>
+				 <p>Ein Klick mit der linken Maustaste auf eines der aufgelisteten Objekte zeigt rechts den 
+                 Objektnamen, die Klasse und die Beschreibung des Objektes.</p>
+				 <p>Es kann lediglich der Objektname geändert und über den entsprechenden Button abgespeichert 
+                 werden.</p>
             </content>
         </section>
         <section help-key="overall-catalog-management-3">
@@ -2173,14 +2192,16 @@
                             var hierarchyLevelName = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:hierarchyLevelName");<br />
                             if (hierarchyLevelName) {<br />
                                 <blockquote>
-                                hierarchyLevelName.addElementAsSibling("gmd:hierarchyLevelName/gco:CharacterString").addText(types[content.get("list_item_id")-1]);<br />
+                                hierarchyLevelName.addElementAsSibling("gmd:hierarchyLevelName/gco:CharacterString")
+                                  .addText(types[content.get("list_item_id")-1]);<br />
                                 </blockquote>
                             } else {<br />
                                 <blockquote>
                                 var hierarchyLevel = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:hierarchyLevel");<br />
                                 if (hierarchyLevel) {<br />
                                     <blockquote>
-                                    hierarchyLevel.addElementAsSibling("gmd:hierarchyLevelName/gco:CharacterString").addText(types[content.get("list_item_id")-1]);<br />
+                                    hierarchyLevel.addElementAsSibling("gmd:hierarchyLevelName/gco:CharacterString")
+                                      .addText(types[content.get("list_item_id")-1]);<br />
                                     </blockquote>
                                 } else {<br />
                                     <blockquote>
@@ -2378,6 +2399,7 @@
 				 Eigenschaften des IGC-Datenmodells optimal abbildet.</p>
 				 <p>Es gibt zwei Möglichkeiten für den Export den <i>Teilexport</i> und den 
 				 <i>Teilbaumexport</i>.</p>
+				 
 				 <p><b>Teilexport</b></p>
 				 <p>Über den Teilexport werden einzelne Objekte aus dem Katalog exportiert, die im Feld 
 				 <i>XML-Export-Kriterium</i> der Feldgruppe <i>Zusatzinformation</i> mit einer 
@@ -2386,6 +2408,7 @@
 				 werden grundsätzlich einzelne Objekte ohne nachgeordnete Objekte exportiert. Adressen 
 				 können nicht exportiert werden.</p>
 				 <p>Der Export wird über einen Klick auf <i>Export starten</i> angestoßen.</p>
+				 
 				 <p><b>Teilbaumexport</b></p>
 				 <p>Über den <i>Teilbaumexport</i> können ganze Teilbäume einschließlich ihrer Struktur 
 				 exportiert werden. </p>
@@ -2399,6 +2422,10 @@
 				 <p>Wenn Sie die Einstellung <i>Nur der ausgewählte Datensatz</i> wählen, wird nicht der 
 				 Teilbaum sondern nur das einzelne ausgewählte Objekt bzw. Adresse exportiert.</p>
 				 <p>Der Export wird über einen Klick auf <i>Export</i> starten angestoßen.</p>
+				 <p>Normalerweise werden nur veröffentlichte Objekte bzw. Adressen exportiert. Wird jedoch
+				 ein vollständiger Export inklusive der Bearbeitungsversionen gewünscht, so muss die Auswahl
+				 <i>"auch Arbeitsversionen exportieren"</i> angekreuzt werden.</p>
+				 
 				 <p><b>Informationen zum letzten Prozess</b></p>
 				 <p>Der Export wird in allen Fällen asynchron ausgeführt. Je nach Menge der zu 
 				 exportierenden Objekte und Auslastung des Servers kann der Vorgang mehrere Minuten 
@@ -2420,6 +2447,7 @@
 				 die im GNU-Zip Format komprimiert wurde. Sie wird über die Schaltfläche <i>Durchsuchen</i> 
 				 vom lokalen Rechner ausgewählt. Dazu öffnet sich ein Dialog, wie er für den von Ihnen 
 				 verwendeten Internet-Browser üblich ist.</p>
+				 
 				 <p><b>Import-Typ</b></p>
 				 <p>Es gibt drei verschiedene Formate die importiert werden können:</p>
 				 <p><u>InGrid Catalog:</u> Der Import erfolgt im gleichen Format wie der 
@@ -2429,7 +2457,9 @@
                  des Application Profile ISO 1.0 bestehen. Dabei kann eine XML Datei oder ein ZIP Archiv importiert werden, in dem XML Datein ohne Pfadangaben verpackt wurden.</p>
                  <p><u>ArcGIS ISO-Editor (Single Metadata file / ZIP Archive):</u> Import von mit Hilfe von ArcGIS erzeugten XML-Dateien. Die Dokumente 
                  müssen aus ArcGIS heraus im ISO-Format gespeichert worden sein. Es kann eine XML Datei oder ein ZIP Archiv importiert werden, in dem XML Datein ohne Pfadangaben verpackt wurden.</p>
+                 
 				 <p><b>Importierte Datensätze veröffentlichen</b></p>
+				 <p>Diese Option steht nur bei den Import-Typen CSW und ArcGIS zur Verfügung!</p>
 				 <p>Standardmäßig werden alle importierten Objekte und Adressen in einer Arbeitsversion 
 				 zwischengespeichert, also noch nicht veröffentlicht. Mit der Einstellung 
 				 <i>Importierte Datensätze veröffentlichen</i> können Sie eine sofortige Veröffentlichung 
@@ -2439,6 +2469,13 @@
 				 wenn Pflichtangaben in den Objekten oder Adressen fehlen. Das Objekt bzw. die Adresse wird 
 				 dann doch nur als Arbeitsversion importiert und muss zur Veröffentlichung nachbearbeitet 
 				 werden.</p>
+				 
+				 <p><b>Identische Metadaten überschreiben</b></p>
+				 <p>Über den eindeutigen Identifikationsschlüssel eines Metadatensatzes können gleiche Metadaten erkannt
+				 werden. Ist diese Option aktiviert, so werden die Metadaten im Katalog mit denen von der Import-Datei
+				 überschrieben. Dabei kann es auch passieren, dass das Objekt bzw. die Adresse sich im Hierarchiebaum
+				 verschiebt.</p>
+				 
 				 <p><b>Importierte Datensätze ausschliesslich unter dem gewählten Importknoten anlegen</b></p>
 				 <p>Die Objekte und Adressen des InGridCatalogs (IGC) haben eindeutige Identifikationsschlüssel 
 				 (UUID). Werden Objekte aus externen Systemen in den IGC importiert, wird der von dem 
@@ -2455,10 +2492,7 @@
 				 ausschließlich unter dem gewählten Importknoten anlegen</i> anwählen. In diesem Fall werden 
 				 die Objekte, auch wenn Sie bereits im Katalog existieren sollten, unterhalb des angegebenen 
 				 Importknotens (siehe unten) abgespeichert (Es wird dabei eine neue UUID vergeben).</p>
-				 <p><u>Hinweis:</u> Die Einstellung <i>Importierte Datensätze ausschließlich unter dem 
-				 gewählten Importknoten anlegen</i> kann nur alternativ zu der Einstellung <i>Importierte 
-				 Datensätze veröffentlichen</i> gewählt werden, da neuangelegte Objekte vor der 
-				 Veröffentlichung grundsätzlich auf Vollständigkeit überprüft werden müssen.</p>
+				 
 				 <p><b>Teilbaumimport</b></p>
 				 <p>Für einen Import ist immer die Angabe eines <i>Ausgewählten übergeordneten Objekts</i> 
 				 und einer <i>Ausgewählten übergeordneten Adresse</i> notwendig. Alle noch nicht 
@@ -2469,6 +2503,7 @@
 				 übergeordnete Adresse</i> sind auch dann notwendig, wenn sie für die speziell gewählte 
 				 Importdatei nicht genutzt werden (weil z.B. nur bereits existierende Objekte oder Adressen 
 				 importiert werden). Wählen Sie in solch einem Fall einfach zwei Dummy-Angaben aus.</p>
+				 
 				 <p><b>Informationen zum letzten Prozess</b></p>
 				 <p>Der Import wird asynchron ausgeführt. Je nach Menge der zu importierenden Objekte 
 				 und Auslastung des Servers kann der Vorgang mehrere Minuten in Anspruch nehmen.</p>
