@@ -21,7 +21,9 @@
         <input type="button" onclick="dialog.showPage('Thesaurus Navigator', '../dialogs/mdek_thesaurus_assist_dialog.jsp?c='+userLocale, 735, 430, true);" value="Thesaurus Navigator">
         <input type="button" onclick="dialog.showPage('Thesaurus Dialog', '../dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {service: 'sns', dstTable: 'thesaurusTerms'});" value="SNS Thesaurus Dialog">
         <input type="button" onclick="dialog.showPage('Thesaurus Dialog', '../dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {service: 'rdf', dstTable: 'thesaurusTerms', rootUrl: 'http://data.uba.de/umt/de/'});" value="RDF Thesaurus Dialog">
+        <input type="button" onclick="dialog.showPage('Thesaurus Dialog', '../dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {service: 'rdf', dstTable: 'thesaurusTerms', rootUrl: 'http://data.uba.de/umt/de/concepts/_00049251.rdf'});" value="RDF Thesaurus Dialog - Leaf">
+        <input type="button" onclick="dialog.showPage('Thesaurus Dialog', '../dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {service: 'rdf', dstTable: 'thesaurusTerms', rootUrl: 'http://boden-params.herokuapp.com/de/scheme.rdf'});" value="RDF Thesaurus Dialog - Hierarchy">
 
-        <div id="termContainer">loading ...</div>
+        <div id="termContainer"></div>
 	</body>
 </html>

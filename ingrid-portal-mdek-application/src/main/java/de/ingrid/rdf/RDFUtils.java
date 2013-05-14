@@ -7,6 +7,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 public class RDFUtils {
     
@@ -52,9 +53,17 @@ public class RDFUtils {
         return getObjects(model, "skos", "narrower");
     }
     
+    public static StmtIterator getChildren(Resource res) {
+        return getObjects(res, "skos", "narrower");
+    }
+    
     public static NodeIterator getMembers(Model model) {
         return getObjects(model, "skos", "member");
     }
+    
+	public static NodeIterator getTopConcepts(Model model) {
+		return getObjects(model, "skos", "hasTopConcept");
+	}
     
     public static RDFNode getParent(Model model) {
         return getObject(model, "skos", "broader");
@@ -89,8 +98,14 @@ public class RDFUtils {
     private static RDFNode getObject(Resource res, String namespace, String name, String lang) {
     	String nsURI = res.getModel().getNsPrefixURI(namespace);
         Property prop = res.getModel().createProperty(nsURI + name);
-        Statement stmt = res.getProperty(prop);
-        return stmt != null ? stmt.getObject() : null;
+        StmtIterator stmts = res.listProperties(prop);
+        while (stmts.hasNext()) {
+        	Statement stmt = stmts.next();
+        	if (stmt.getLanguage().equals(lang)) {
+        		return stmt.getObject();
+        	}
+        }
+        return null;
     }
     
     private static NodeIterator getObjects(Model model, String namespace, String name) {
@@ -98,11 +113,11 @@ public class RDFUtils {
         Property prop = model.createProperty(nsURI + name);
         return model.listObjectsOfProperty(prop);
     }
-    
-    /*private static NodeIterator getObjects(Resource res, String namespace, String name) {
+
+    private static StmtIterator getObjects(Resource res, String namespace, String name) {
         String nsURI = res.getModel().getNsPrefixURI(namespace);
         Property prop = res.getModel().createProperty(nsURI + name);
-        return res.getProperty(prop);
-    }*/
+        return res.listProperties(prop);
+    }
 
 }

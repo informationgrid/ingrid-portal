@@ -1,5 +1,7 @@
 package de.ingrid.rdf;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +22,15 @@ public class RDFReader {
         this.root = thesaurusRootURI;
     }*/
 
-    public Model fetchTerm(String uri) {
-        // create an empty model
+    public Model fetchTerm(String uri, String params) {
+    	// create an empty model
         Model model = ModelFactory.createDefaultModel();
 
         //if (uri == null)
         //    uri = root;
         
         // read the RDF/XML file
-        model.read(uri + ".rdf");
+        model.read(uri + ".rdf" + params);
 
         // write it to standard out
         if (log.isDebugEnabled()) {
@@ -36,26 +38,43 @@ public class RDFReader {
         }
         
         return model;
+    }    	
+    
+    public Model fetchTerm(String uri) {
+        return fetchTerm(uri, "");
     }
     
-    public List<Model> fetchAllChildren(String uri) {
-        List<Model> children = new ArrayList<Model>();
+    public List<ModelWrapper> fetchAllChildren(String uri) {
+        List<ModelWrapper> children = new ArrayList<ModelWrapper>();
         
         // get parent model to find children relations
         Model parent = fetchTerm(uri);
         
         // get Iterator for all children within parent model
-        NodeIterator childrenIt = RDFUtils.getChildren(parent);
+        NodeIterator childrenIt = getChildrenIterator(parent);
         
         while (childrenIt.hasNext()) {
             RDFNode node = childrenIt.next();  // get next statement
-            children.add(fetchTerm(node.toString()));
+            children.add(new ModelWrapper(fetchTerm(node.toString()), node.toString()));
         }
         
         return children;
     }
     
-    public List<Model> fetchAllMembers(String uri) {
+    private NodeIterator getChildrenIterator(Model parent) {
+    	// get Iterator for all children within parent model
+        NodeIterator childrenIt = RDFUtils.getChildren(parent);
+
+        // if no 'narrower' children then try to get members
+        if (!childrenIt.hasNext()) childrenIt = RDFUtils.getMembers(parent);
+        
+        // if no 'member'children then try to get hasTopConcept
+        if (!childrenIt.hasNext()) childrenIt = RDFUtils.getTopConcepts(parent);
+        
+        return childrenIt;
+    }
+    
+    private List<Model> fetchAllMembers(String uri) {
         List<Model> children = new ArrayList<Model>();
         
         // get parent model to find children relations
@@ -70,6 +89,25 @@ public class RDFReader {
         }
         
         return children;
+    }
+    
+    public ModelWrapper fetchHierarchy(String uri) {
+    	URL url = null;
+    	int pos;
+    	try {
+			url = new URL(uri);
+			pos = uri.indexOf(url.getHost()) + url.getHost().length();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    	
+    	String params = "?dir=down&depth=2";
+        Model hierarchy = fetchTerm(uri.substring(0, pos) + "/de/hierarchy" + url.getPath(), params);
+		return new ModelWrapper(hierarchy, uri);
+        //return hierarchy;
+        
     }
 
     public Model findTerm(String rootUrl, String queryTerm) {
@@ -96,5 +134,18 @@ public class RDFReader {
 	public Model findRootTerms(String rootURI) {
 		//http://data.uba.de/umt/de/search.rdf?c=&amp;for=concept&amp;l%5B%5D=de&amp;page=1&amp;q=%5B&amp;qt=begins_with&amp;t=labeling-skosxl-base#
 		return null;
+	}
+
+	public List<ModelWrapper> fetchHierarchiesFromRoot(String uri) {
+		List<ModelWrapper> hierarchies = new ArrayList<ModelWrapper>();
+		Model parent = fetchTerm(uri);
+    	NodeIterator childrenIt = getChildrenIterator(parent);
+        
+        while (childrenIt.hasNext()) {
+        	RDFNode node = childrenIt.next();  // get next statement
+        	hierarchies.add(fetchHierarchy(node.toString()));
+        }
+        
+    	return hierarchies;
 	}
 }

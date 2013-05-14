@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.shared.DoesNotExistException;
 
 import de.ingrid.external.ThesaurusService;
 import de.ingrid.external.om.RelatedTerm;
@@ -25,27 +26,24 @@ public class SNSServiceRDF implements ThesaurusService {
 
     @Override
     public Term[] findTermsFromQueryTerm(String queryTerm, MatchingType matching, boolean addDiscriptors, Locale language) {
-        
-        //Model model = rdfReader.findTerm(queryTerm);
-        
-        
-        
+
         return null;
     }
 
     public TreeTerm[] getHierarchyTopLevel(String rootURI, Locale lang) {
+    	List<ModelWrapper> termModels = null;
     	List<TreeTerm> resultList = null;
+    	
     	if (rootURI.endsWith(".rdf")) {
-    		// only return this document which is used to get its children later on
+
+    		String strippedUri = rootURI.substring(0, rootURI.length()-4);
+    		try {
+    			termModels = rdfReader.fetchHierarchiesFromRoot(strippedUri);
+    		} catch (DoesNotExistException e) {
+    			return getHierarchyNextLevel(rootURI.substring(0, rootURI.length()-4), lang);
+    		}
+            resultList = rdfMapper.mapToTreeTerms(termModels);
     		
-//    		Model m = rdfReader.fetchTerm(rootURI.substring(0, rootURI.length()-4));
-//    		List<Model> modelList = new ArrayList<Model>();
-//    		modelList.add(m);
-//    		
-//    		resultList = rdfMapper.mapToTreeTerms(modelList);
-    		
-    		
-    		return getHierarchyNextLevel(rootURI.substring(0, rootURI.length()-4), lang);
     	} else {
     		Model termModel = rdfReader.findTerm(rootURI, "[");
     		resultList = rdfMapper.mapSearchToTreeTerms(termModel);
@@ -57,18 +55,28 @@ public class SNSServiceRDF implements ThesaurusService {
     
     @Override
     public TreeTerm[] getHierarchyNextLevel(String termURI, Locale lang) {
-    	List<Model> termModels = null;
+    	List<ModelWrapper> termModels = null;
     	List<TreeTerm> resultList = null;
     	// different handling if root nodes shall be fetched
-   		
-        termModels = rdfReader.fetchAllChildren(termURI);
-        // if nothing was found try to find members instead
-        // TODO: Check if this is correct!!!
-        if (termModels.isEmpty())
-        	termModels = rdfReader.fetchAllMembers(termURI);
+   		// check first if description names of children are contained
+    	// within the same RDF-file
+    	
+    	// or if we have to fetch each child to get the name information (takes long!)
+    	/*if (resultList == null) {
+	        termModels = rdfReader.fetchAllChildren(termURI);
+	        resultList = rdfMapper.mapToTreeTerms(termModels);
+    	}*/
+    	
+    	try {
+    		ModelWrapper hierarchy = rdfReader.fetchHierarchy(termURI);
+    		resultList = rdfMapper.mapHierarchyToTreeTerms(hierarchy);
+    	} catch (DoesNotExistException e) {
+    		// if hierarchy functionality does not exist then try to fetch children individually
+    		termModels = rdfReader.fetchAllChildren(termURI);
+    		resultList = rdfMapper.mapToTreeTerms(termModels);
+    	}
         
-        resultList = rdfMapper.mapToTreeTerms(termModels);
-	        
+    	
         return resultList.toArray(new TreeTerm[resultList.size()]);
     }
 

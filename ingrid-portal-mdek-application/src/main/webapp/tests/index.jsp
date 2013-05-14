@@ -13,14 +13,26 @@
 <title>InGrid Editor</title>
 <link rel="shortcut icon" href="../img/iconLogo.gif" type="image/x-icon">
 <link rel="stylesheet" href="../css/slick.grid.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/imageReferences.css" />
 
 <script type="text/javascript">
             var userLocale = 'de';
 </script>
 
-<link rel="stylesheet" href="../css/styles.css" />
+<!-- <link rel="stylesheet" href="../css/styles.css" /> -->
+<link rel="stylesheet" href="../dojo-src/dijit/themes/claro/claro.css" />
+<link rel="stylesheet" href="../dojo-src/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="../dojo-src/dijit/themes/claro/Common.css" />
+<link rel="stylesheet" href="../dojo-src/dijit/themes/claro/form/Common.css" />
+<link rel="stylesheet" href="../dojo-src/dojox/layout/resources/FloatingPane.css" />
+<link rel="stylesheet" href="../dojo-src/dojox/layout/resources/ResizeHandle.css" />
+<link rel="stylesheet" href="../dojo-src/dojox/highlight/resources/highlight.css" />
+
+<link rel="stylesheet" href="../css/main.css" />
+<link rel="stylesheet" href="../css/tree.css" />
+
 <link rel="stylesheet" href="../css/imageReferences.css" />
-<script type="text/javascript" src="../dojo-src/dojo/dojo.js" djConfig="parseOnLoad:false, locale:userLocale"></script>
+<script type="text/javascript" src="../dojo-src/dojo/dojo.js" djConfig="parseOnLoad:false, locale:'de'"></script>
 <script type="text/javascript" src="../dojo-src/custom/layer.js"></script>
 <script type="text/javascript">
     var isRelease = false;
@@ -159,13 +171,13 @@ dojo.addOnLoad(function() {
         scriptHasHooks: true,
         executeScripts: true
     });
-    
+
     sc.addChild(tableTests);
     sc.addChild(dialogTests);
     sc.addChild(additionalTests);
     sc.startup();
 
-    main.startup();
+    //main.startup();
     
     sc.selectChild(dijit.byId("pageDialogTest"));
 });

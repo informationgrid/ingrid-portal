@@ -2,12 +2,17 @@ package de.ingrid.rdf;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
+
+import de.ingrid.external.om.TreeTerm;
 
 public class RDFReaderTest {
 
@@ -42,6 +47,28 @@ public class RDFReaderTest {
         RDFMapper mapper = new RDFMapper();
         
         mapper.mapToTreeTerms(rdf.fetchAllChildren("http://data.uba.de/umt/_00049251"));
+    }
+    
+    @Test
+    public final void readTopHierarchyTest() {
+    	String rootUri = "http://boden-params.herokuapp.com/scheme";
+        RDFReader rdf = new RDFReader();
+        RDFMapper mapper = new RDFMapper();
+        
+        //List<TreeTerm> list = mapper.mapToTreeTerms(rdf.fetchAllChildren("http://boden-params.herokuapp.com/scheme"));
+        List<ModelWrapper> hierarchies = rdf.fetchHierarchiesFromRoot(rootUri);
+        List<TreeTerm> list = mapper.mapToTreeTerms(hierarchies);
+        
+        
+//        for (ModelWrapper hierarchy : hierarchies) {
+//			NodeIterator children = RDFUtils.getChildren(hierarchy);
+//        	
+//		}
+        assertTrue(!list.isEmpty());
+        
+        ModelWrapper hierarchy = rdf.fetchHierarchy(hierarchies.get(0).getId());
+        List<TreeTerm> nextHierarchyOfFirstChild = mapper.mapHierarchyToTreeTerms(hierarchy);
+        assertTrue(!nextHierarchyOfFirstChild.isEmpty());
     }
     
 }
