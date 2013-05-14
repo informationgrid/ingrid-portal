@@ -22,11 +22,11 @@
             
             var MAX_NUM_DATASETS = 100;
             
-            var requiredElements = [["userDataAddressSurname", "userDataAddressSurnameLabel"],
+            /* var requiredElements = [["userDataAddressSurname", "userDataAddressSurnameLabel"],
                 ["userDataAddressForename", "userDataAddressForenameLabel"],
                 ["userDataAddressEmailUser", "userDataAddressEmailUserLabel",
                 ["userDataAddressInstitution", "userDataAddressInstitutionLabel"]]
-            ];
+            ]; */
             
             dojo.connect(_container_, "onLoad", function(){
                 dijit.byId("borderContainerMdekAdminUserAdmin").resize();
@@ -440,7 +440,7 @@
                             UtilTree.selectNode("treeUser", "TreeNode_" + newUser.id);
                             scriptScopeUser.updateInputElements(tree.selectedNode.item);
 
-                            dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.users.createSuccess' />", dialog.INFO);
+                            dialog.show("<fmt:message key='general.info' />", "<fmt:message key='dialog.admin.users.createSuccess' />", dialog.INFO);
                         },
                         errorHandler: function(errMsg, err){
                             hideLoadingZone();
@@ -482,11 +482,11 @@
                         callback: function(newUser){
                             // if cat-admin was changed then user must be logged out
                             if (user.role == 1 && (oldUserLogin != login)) {
-                                dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.users.updateCatAdmin' />", dialog.WARNING);
+                                dialog.show("<fmt:message key='general.info' />", "<fmt:message key='dialog.admin.users.updateCatAdmin' />", dialog.WARNING);
                             }
                             else {
                                 updateTreeNode(selectedUser, newUser);
-                                dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.users.updateSuccess' />", dialog.INFO);
+                                dialog.show("<fmt:message key='general.info' />", "<fmt:message key='dialog.admin.users.updateSuccess' />", dialog.INFO);
                             }
                             
                         },
@@ -554,9 +554,10 @@
                 
                 var valid = true;
                 
-                dojo.forEach(requiredElements, function(element){
-                    if (!dijit.byId(element[0]).isValid()) {
-                        dojo.addClass(dojo.byId(element[1]), "important");
+                var elements = dojo.query(".dijitTextBox", "userManagementTab");
+                dojo.forEach(elements, function(element){
+                    if (!dijit.getEnclosingWidget(element).isValid()) {
+                    	setErrorLabel(element.id);
                         valid = false;
                     }
                 });
@@ -597,13 +598,10 @@
             
             // Resets all labels that are tagged as 'important' to their initial state
             function resetRequiredElements(){
-                dojo.forEach(requiredElements, function(element){
-                    dojo.removeClass(dojo.byId(element[1]), "important");
-                });
+            	dojo.query(".important", "userManagementTab").removeClass("important");
             }
             
             scriptScopeUser.addRequiredBehaviour = function() {
-                dojo.connect(dijit.byId("userDataAddressInstitution"), "onChange", scriptScopeUser.checkFields);                
                 dojo.connect(dijit.byId("userDataAddressSurname"), "onChange", scriptScopeUser.checkFields);                
                 dojo.connect(dijit.byId("userDataAddressForename"), "onChange", scriptScopeUser.checkFields);
             }
@@ -614,20 +612,13 @@
             scriptScopeUser.checkFields = function() {
                 var surnameEmpty     = dojo.trim(dijit.byId("userDataAddressSurname").value) === "";
                 var forenameEmpty    = dojo.trim(dijit.byId("userDataAddressForename").value) === "";
-                var institutionEmpty = dojo.trim(dijit.byId("userDataAddressInstitution").value) === "";
 
-                if (institutionEmpty && (!surnameEmpty || !forenameEmpty)) {
+                if (!surnameEmpty || !forenameEmpty) {
                     dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
                     dojo.addClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = true;
-                    dojo.removeClass("institutionInput", "required"); dijit.byId("userDataAddressInstitution").required = false;
-                } else if (!institutionEmpty && surnameEmpty && forenameEmpty) {
-                    dojo.removeClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = false;
-                    dojo.removeClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = false;
-                    dojo.addClass("institutionInput", "required"); dijit.byId("userDataAddressInstitution").required = true;
                 } else {
-                    dojo.addClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = true;
-                    dojo.addClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = true;
-                    dojo.addClass("institutionInput", "required"); dijit.byId("userDataAddressInstitution").required = true;
+                	dojo.removeClass("surnameInput", "required"); dijit.byId("userDataAddressSurname").required = false;
+                	dojo.removeClass("forenameInput", "required"); dijit.byId("userDataAddressForename").required = false;
                 }
                 // make changes immediately
                 scriptScopeUser.revalidate();
@@ -1030,7 +1021,7 @@
                                                 <fmt:message key="dialog.admin.users.surName" /><span class="requiredSign">*</span>
                                             </label>
                                         </span>
-                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressSurname" name="userDataAddressSurname" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressSurname" name="userDataAddressSurname" required="false" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
                                     <span id="forenameInput" class="outer required" style="width:33%;"><div>
                                         <span class="label">
@@ -1038,7 +1029,7 @@
                                                 <fmt:message key="dialog.admin.users.foreName" /><span class="requiredSign">*</span>
                                             </label>
                                         </span>
-                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressForename" name="userDataAddressForename" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressForename" name="userDataAddressForename" required="false" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
                                     <span class="outer required" style="width:34%;"><div>
                                         <span class="label">
