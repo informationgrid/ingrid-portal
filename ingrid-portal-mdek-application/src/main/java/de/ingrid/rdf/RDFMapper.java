@@ -49,13 +49,14 @@ public class RDFMapper {
 		return treeTerm;
 	}
 
+    // always add a parent for RDF terms
 	private void addParentInfo(TreeTerm treeTerm, Resource resource) {
-        RDFNode parentNode = RDFUtils.getParent(resource.getModel());
-        if (parentNode != null) {
+        //RDFNode parentNode = RDFUtils.getParent(resource.getModel());
+        //if (parentNode != null) {
             TreeTerm parentTreeTerm = new TreeTermImpl();
-            parentTreeTerm.setId(parentNode.toString());
+        //    parentTreeTerm.setId(parentNode.toString());
             treeTerm.addParent(parentTreeTerm);
-        }
+        //}
         
     }
 

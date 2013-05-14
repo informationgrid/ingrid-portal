@@ -70,7 +70,7 @@ public class SNSServiceRDF implements ThesaurusService {
     	try {
     		ModelWrapper hierarchy = rdfReader.fetchHierarchy(termURI);
     		resultList = rdfMapper.mapHierarchyToTreeTerms(hierarchy);
-    	} catch (DoesNotExistException e) {
+    	} catch (Exception e) {
     		// if hierarchy functionality does not exist then try to fetch children individually
     		termModels = rdfReader.fetchAllChildren(termURI);
     		resultList = rdfMapper.mapToTreeTerms(termModels);

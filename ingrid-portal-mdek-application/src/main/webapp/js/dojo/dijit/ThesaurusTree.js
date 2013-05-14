@@ -127,7 +127,12 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
             topicList[i].isFolder = true;
             topicList[i].nodeDocType = topicList[i].type;
             // Top Terms are not selectable. Add the proper class to make them grey
-            topicList[i].labelClass = "TreeNodeNotSelectable";
+            // this is not valid for terms coming from RDF!
+            if (this.service === SNSService)
+            	topicList[i].labelClass = "TreeNodeNotSelectable";
+            else {
+            	topicList[i].label = topicList[i].title;
+            }
             topicList[i].uniqueId = topicList[i].topicId;
             
             this.treeWidget.model.store.newItem(topicList[i]);

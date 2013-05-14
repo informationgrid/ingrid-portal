@@ -104,7 +104,8 @@ public class RDFReader {
 		}
     	
     	String params = "?dir=down&depth=2";
-        Model hierarchy = fetchTerm(uri.substring(0, pos) + "/de/hierarchy" + url.getPath(), params);
+    	int lastSlash = url.getPath().lastIndexOf("/");
+        Model hierarchy = fetchTerm(uri.substring(0, pos) + "/de/hierarchy" + url.getPath().substring(lastSlash), params);
 		return new ModelWrapper(hierarchy, uri);
         //return hierarchy;
         
@@ -138,13 +139,17 @@ public class RDFReader {
 
 	public List<ModelWrapper> fetchHierarchiesFromRoot(String uri) {
 		List<ModelWrapper> hierarchies = new ArrayList<ModelWrapper>();
-		Model parent = fetchTerm(uri);
-    	NodeIterator childrenIt = getChildrenIterator(parent);
-        
-        while (childrenIt.hasNext()) {
-        	RDFNode node = childrenIt.next();  // get next statement
-        	hierarchies.add(fetchHierarchy(node.toString()));
-        }
+		try {
+			hierarchies.add(fetchHierarchy(uri));
+		} catch (Exception e) {
+			// try to get hierarchy of children
+			Model parent = fetchTerm(uri);
+	    	NodeIterator childrenIt = getChildrenIterator(parent);
+	        while (childrenIt.hasNext()) {
+	        	RDFNode node = childrenIt.next();  // get next statement
+	        	hierarchies.add(fetchHierarchy(node.toString()));
+	        }
+		}
         
     	return hierarchies;
 	}
