@@ -40,11 +40,52 @@ limitations under the License.
     <url-pattern>/*</url-pattern>    
   </filter-mapping>  
 
+<!-- OLD XSS filter from jetspeed (very basic) -->
+<!--
   <filter>
     <filter-name>XXSUrlAttackFilter</filter-name>
     <filter-class>org.apache.jetspeed.engine.servlet.XXSUrlAttackFilter</filter-class>
   </filter>
+  <filter-mapping>
+    <filter-name>XXSUrlAttackFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>    
+-->
   
+<!-- NEW XSS filter configurable with regexps ... -->
+    <filter>
+        <filter-name>XSSFilter</filter-name>
+        <filter-class>de.ingrid.portal.security.filter.XSSFilter</filter-class>
+        <!-- Pass replace value ! All matching regexps will be be replaced with this value ! -->
+        <!-- NOT USED YET ! Matching regexps cause an SC_BAD_REQUEST error ! -->
+<!--
+        <init-param>
+            <param-name>replaceValue</param-name>
+            <param-value>XSS_Stripped</param-value>
+        </init-param>
+-->
+        <!-- Pass regexps parameters to be checked against request GET content. -->
+        <!-- A matching regexp causes an SC_BAD_REQUEST error ! -->
+        <!-- If no parameters passed the filter applies internal default regexps ! -->
+        <init-param>
+            <param-name>regexp1</param-name>
+            <param-value>javascript:</param-value>
+        </init-param>
+        <init-param>
+            <param-name>regexp2</param-name>
+            <param-value>onload(.*?)=</param-value>
+        </init-param>
+        <init-param>
+            <param-name>regexp3</param-name>
+            <param-value><![CDATA[<script>(.*?)</script>]]></param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>XSSFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
   <filter>
       <filter-name>staticResourceCachingFilter</filter-name>
       <filter-class>org.apache.jetspeed.engine.servlet.StaticResourceCachingFilter</filter-class>
@@ -53,12 +94,6 @@ limitations under the License.
           <param-value>48</param-value>
       </init-param>
   </filter>
-
-  <filter-mapping>
-    <filter-name>XXSUrlAttackFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>    
-  
   <filter-mapping>
       <filter-name>staticResourceCachingFilter</filter-name>
       <servlet-name>default</servlet-name>
@@ -75,27 +110,24 @@ limitations under the License.
         <param-name>confReloadCheckInterval</param-name>
         <param-value>5</param-value>
     </init-param>
-
   </filter>
   <filter-mapping>
    <filter-name>UrlRewriteFilter</filter-name>
    <url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  <!--
+<!--
   <filter>
     <filter-name>PortalFilter</filter-name>
     <filter-class>org.apache.jetspeed.login.filter.PortalFilter</filter-class>   
   </filter>
-  -->
-<!--      
-    
   <filter-mapping>
     <filter-name>PortalFilter</filter-name>
     <url-pattern>/*</url-pattern>    
   </filter-mapping>  
 -->    
   
+
   <listener>
     <listener-class>org.apache.jetspeed.webapp.logging.Log4JConfigurator</listener-class>
   </listener>
