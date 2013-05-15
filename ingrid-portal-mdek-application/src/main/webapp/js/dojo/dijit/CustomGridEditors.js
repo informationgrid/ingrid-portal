@@ -370,10 +370,14 @@ DateCellEditor = function(args){
     this.init = function(){
         calendar = new dijit.form.DateTextBox({id:"activeCell_"+args.grid.id, style: "width: 100%; color: black; font-family: Verdana, Helvetica, Arial, sans-serif;"}).placeAt(args.container);
         calendar.set("value", new Date());
-        calendar.focus();
-        dojo.connect(calendar._picker.domNode, "onmousedown", this, function(evt){
-            dojo.stopEvent(evt);
-        });
+        // calendar might not be created immediately especially if navigating through table by keys!
+        setTimeout(function() {
+        	calendar.focus();
+            dojo.connect(calendar._picker.domNode, "onmousedown", this, function(evt){
+                dojo.stopEvent(evt);
+            });
+        }, 100);
+        
     };
     
     this.destroy = function(){
@@ -443,10 +447,13 @@ DateCellEditorToString = function(args){
     this.init = function(){
         calendar = new dijit.form.DateTextBox({id:"activeCell_"+args.grid.id, style: "width: 100%; color: black; font-family: Verdana, Helvetica, Arial, sans-serif;"}).placeAt(args.container);
         calendar.set("value", new Date());
-        calendar.focus();
-        dojo.connect(calendar._picker.domNode, "onclick", this, function(evt){
-            dojo.stopEvent(evt);
-        });
+        // calendar might not be created immediately especially if navigating through table by keys!
+        setTimeout(function() {
+        	calendar.focus();
+            dojo.connect(calendar._picker.domNode, "onmousedown", this, function(evt){
+                dojo.stopEvent(evt);
+            });
+        }, 100);
     };
     
     this.destroy = function(){
