@@ -43,7 +43,6 @@ limitations under the License.
 <!-- XSS FILTERING -->
  
 <!-- OLD XSS filter from jetspeed (very basic) just checks brackets in query (GET) -->
-<!--
   <filter>
     <filter-name>XXSUrlAttackFilter</filter-name>
     <filter-class>org.apache.jetspeed.engine.servlet.XXSUrlAttackFilter</filter-class>
@@ -51,35 +50,93 @@ limitations under the License.
   <filter-mapping>
     <filter-name>XXSUrlAttackFilter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping>    
+  </filter-mapping>
+
+<!--
+    NEW XSS filter configurable with regexps ...
+    At the moment all regex are checked against GET content.
+    A matching regexp causes an SC_BAD_REQUEST error.
+    If no parameters passed the filter applies internal default regexps !
+    All regexps are applied in modes: CASE_INSENSITIVE, MULTILINE, DOTALL
+    Future extensions:
+    - Check against POST content, at the moment problems with portal login due to request wrapping !
+    - Do not block pages, instead replace malicous content (replaceValue can already be passed as parameter).
 -->
-  
-<!-- NEW XSS filter configurable with regexps ... -->
     <filter>
         <filter-name>XSSFilter</filter-name>
         <filter-class>de.ingrid.portal.security.filter.XSSFilter</filter-class>
-        <!-- Pass replace value ! All matching regexps will be be replaced with this value ! -->
-        <!-- NOT USED YET ! Matching regexps cause an SC_BAD_REQUEST error ! -->
+        <!-- replaceValue Parameter NOT USED YET ! Matching regexps cause an SC_BAD_REQUEST error ! -->
+        <!-- Do NOT use this parameter name for passing regex -->
 <!--
         <init-param>
             <param-name>replaceValue</param-name>
             <param-value>XSS_Stripped</param-value>
         </init-param>
 -->
-        <!-- Pass regexps parameters to be checked against request GET content. -->
-        <!-- A matching regexp causes an SC_BAD_REQUEST error ! -->
-        <!-- If no parameters passed the filter applies internal default regexps ! -->
+        <!-- Pass regexps matching malicious content. -->
+        <!-- see also https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet -->
+        <!-- Script fragments -->
         <init-param>
             <param-name>regexp1</param-name>
-            <param-value>javascript:</param-value>
+            <param-value><![CDATA[<script>(.*?)</script>]]></param-value>
         </init-param>
+        <!-- src='...' -->
         <init-param>
             <param-name>regexp2</param-name>
-            <param-value>onload(.*?)=</param-value>
+            <param-value><![CDATA[src[\r\n]*=[\r\n]*\\\'(.*?)\\\']]></param-value>
         </init-param>
         <init-param>
             <param-name>regexp3</param-name>
-            <param-value><![CDATA[<script>(.*?)</script>]]></param-value>
+            <param-value><![CDATA[src[\r\n]*=[\r\n]*\\\"(.*?)\\\"]]></param-value>
+        </init-param>
+        <!-- lonely script tags -->
+        <init-param>
+            <param-name>regexp4</param-name>
+            <param-value><![CDATA[</script>]]></param-value>
+        </init-param>
+        <init-param>
+            <param-name>regexp5</param-name>
+            <param-value><![CDATA[<script(.*?)>]]></param-value>
+        </init-param>
+        <!-- eval(...) -->
+        <init-param>
+            <param-name>regexp6</param-name>
+            <param-value><![CDATA[eval\\((.*?)\\)]]></param-value>
+        </init-param>
+        <!-- expression(...) -->
+        <init-param>
+            <param-name>regexp7</param-name>
+            <param-value><![CDATA[expression\\((.*?)\\)]]></param-value>
+        </init-param>
+        <!-- javascript:... -->
+        <init-param>
+            <param-name>regexp8</param-name>
+            <param-value><![CDATA[javascript:]]></param-value>
+        </init-param>
+        <!-- vbscript:... -->
+        <init-param>
+            <param-name>regexp9</param-name>
+            <param-value><![CDATA[vbscript:]]></param-value>
+        </init-param>
+        <!-- FSCommand (flash) -->
+        <init-param>
+            <param-name>regexp10</param-name>
+            <param-value><![CDATA[FSCommand]]></param-value>
+        </init-param>
+        <!-- onload...= -->
+        <init-param>
+            <param-name>regexp11</param-name>
+            <param-value><![CDATA[onload(.*?)=]]></param-value>
+        </init-param>
+        <!-- onmouse...= -->
+        <init-param>
+            <param-name>regexp12</param-name>
+            <param-value><![CDATA[onmouse(.*?)=]]></param-value>
+        </init-param>
+        <!-- onfocus...= -->
+        <init-param>
+            <param-name>regexp13</param-name>
+            <param-value><![CDATA[onfocus(.*?)=]]></param-value>
         </init-param>
     </filter>
     <filter-mapping>

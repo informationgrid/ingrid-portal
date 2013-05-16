@@ -26,6 +26,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 /**
  * Simple XXS Url attack protection blocking access whenever the request url contains a &lt; or &gt; character.
  * @version $Id: XXSUrlAttackFilter.java 513987 2007-03-02 22:06:45Z ate $
@@ -33,8 +35,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class XXSUrlAttackFilter implements Filter
 {
+	private static final Logger LOG = Logger.getLogger(XXSUrlAttackFilter.class);
+	
     public void init(FilterConfig config) throws ServletException
     {
+        if (LOG.isInfoEnabled()) {
+        	LOG.info("XSS: Initializing Jetspeed XXSUrlAttackFilter !");
+        }
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
@@ -45,6 +52,7 @@ public class XXSUrlAttackFilter implements Filter
             HttpServletRequest hreq = (HttpServletRequest) request;
             if (isInvalid(hreq.getQueryString()) || isInvalid(hreq.getRequestURI()))
             {
+               	LOG.warn("XSS: Send response SC_BAD_REQUEST in Jetspeed XXSUrlAttackFilter !");
                 ((HttpServletResponse) response).sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
         }
