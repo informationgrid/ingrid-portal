@@ -40,7 +40,9 @@ limitations under the License.
     <url-pattern>/*</url-pattern>    
   </filter-mapping>  
 
-<!-- OLD XSS filter from jetspeed (very basic) -->
+<!-- XSS FILTERING -->
+ 
+<!-- OLD XSS filter from jetspeed (very basic) just checks brackets in query (GET) -->
 <!--
   <filter>
     <filter-name>XXSUrlAttackFilter</filter-name>
@@ -84,6 +86,36 @@ limitations under the License.
         <filter-name>XSSFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+<!--
+    Filter for adding X-XSS-Protection header to response !
+    ??? DOES NOT WORK IN PORTAL CONTEXT ??? No X-XSS-Protection header in response !!!
+    You can enable/disable XSS protection in the browser with the "enable" parameter. You can set the mode to "rewrite"
+    or "block". Rewrite mode tells the browser to rewrite pages suspected of containing XSS. Block mode tells the browser
+    to block all content from the site instead.
+    See www.h-online.com/security/news/item/Microsoft-to-fix-further-vulnerabilities-in-IE-8-XSS-filter-982864.html
+    Examples:
+    X-XSS-Protection: 0
+    X-XSS-protection: 1; mode=block
+-->
+<!--
+    <filter>
+        <filter-name>ConfigureBrowserXSSProtectionFilter</filter-name>
+        <filter-class>de.ingrid.portal.security.filter.ConfigureBrowserXSSProtectionFilter</filter-class>
+            <init-param>
+                <param-name>enable</param-name>
+                <param-value>true</param-value>
+            </init-param>
+            <init-param>
+                <param-name>mode</param-name>
+                <param-value>block</param-value>
+            </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>ConfigureBrowserXSSProtectionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+-->
 
 
   <filter>
