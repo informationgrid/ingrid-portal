@@ -6,25 +6,29 @@
   </properties>
   <body>
 	<release version="3.4.0.-SNAPSHOT" date="2013-xx-xx" description="Release InGrid 3.4">	
-	  <action type="fix" dev="wemove">
-        WebMapClient: Tranformation coordinates to WGS-84 by search area.
-    </action>
 	  <action type="add" dev="wemove" issue="GEOPORTALWSV-37">
         WebMapClient: Add Nominatim-Search to the frontend of the WebMapClient menu bar.
-    </action>
+      </action>
 	  <action type="add" dev="wemove">
         WebMapClient: Add configurations for other portal profiles.
-    </action>
+      </action>
 	  <action type="add" dev="wemove">
         Portal: Add Localization file to profiles for the InGrid-WebMapClient.
-    </action>
-	  <action type="upadate" dev="wemove" issue="INGRID-2242">
+      </action>
+	  <action type="update" dev="wemove" issue="INGRID-2242">
         Portal: Update NUMIS profile for InGrid 3.3.
-    </action>
-    <action type="upadate" dev="wemove" issue="INGRID-2260">
+      </action>
+      <action type="update" dev="wemove" issue="INGRID-2260">
         IGE: Update of help texts.
-    </action>
-  </release>
+      </action>
+	  <action type="fix" dev="wemove" issue="INGRID-2265">
+        Added missing oracle scripts for updating mdek database.
+      </action>
+      <action type="fix" dev="wemove">
+        WebMapClient: Transformation coordinates to WGS-84 by search area.
+      </action>
+    </release>
+
 	<release version="3.3.0.1" date="2013-03-15" description="Bugfix Release InGrid 3.3.0.1">	
 	  <action type="add" dev="wemove" issue="INGRID-2231">
         Portal: Show "XML"-Link on search result list only if the hit has an ID and if is a metadata.
