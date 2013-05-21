@@ -36,6 +36,8 @@
     <property name="mdekDBOracle_301"      location="${installDir}/sql/mdek_3.0.1_oracle.sql"/>
     <property name="mdekDBOracle_311"      location="${installDir}/sql/mdek_3.1.1_oracle.sql"/>
     <property name="mdekDBOracle_320"      location="${installDir}/sql/mdek_3.2.0_oracle.sql"/>
+    <property name="mdekDBOracle_330"      location="${installDir}/sql/mdek_3.3.0_oracle.sql"/>
+    <property name="mdekDBOracle_340"      location="${installDir}/sql/mdek_3.4.0_oracle.sql"/>
 
 
     <target name="CheckDbs" depends="checkPortalDbOracle, checkMdekDbOracle" if="useOracle">
@@ -256,8 +258,11 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${mdekDBOracle}"/>
-            <!--<transaction src="${mdekDBOracle_301}"/>
-            <transaction src="${mdekDBOracle_320}"/>-->
+            <transaction src="${mdekDBOracle_301}"/>
+            <transaction src="${mdekDBOracle_311}"/>
+            <transaction src="${mdekDBOracle_320}"/>
+            <transaction src="${mdekDBOracle_330}"/>
+            <transaction src="${mdekDBOracle_340}"/>
 
         </sql>
     </target>
@@ -280,6 +285,8 @@
             <transaction src="${mdekDBOracle_301}"/>
             <transaction src="${mdekDBOracle_311}"/>
             <transaction src="${mdekDBOracle_320}"/>
+            <transaction src="${mdekDBOracle_330}"/>
+            <transaction src="${mdekDBOracle_340}"/>
 
         </sql>
     </target>
