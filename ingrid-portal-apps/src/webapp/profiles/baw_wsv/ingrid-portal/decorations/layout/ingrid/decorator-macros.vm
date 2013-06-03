@@ -69,7 +69,7 @@
     #set ($salutation = "$!{salutation} $userNameFamily")
     #end		
 <div id="logged_on">
-  <a href="portal/myportal-edit-account.psml">$salutation</a> | <a href="login/logout">LOGOUT</a>
+  <a href="portal/myportal-edit-account.psml">$salutation</a>
 </div>
 #end
 </div>
