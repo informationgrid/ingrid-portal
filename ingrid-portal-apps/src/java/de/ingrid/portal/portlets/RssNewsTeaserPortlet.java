@@ -12,6 +12,8 @@ import org.apache.velocity.context.Context;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -20,6 +22,8 @@ import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridRSSStore;
 
 public class RssNewsTeaserPortlet extends GenericVelocityPortlet {
+    
+    private final static Logger log = LoggerFactory.getLogger(RssNewsTeaserPortlet.class);
 
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
@@ -56,6 +60,7 @@ public class RssNewsTeaserPortlet extends GenericVelocityPortlet {
                     .setMaxResults(noOfEntriesDisplayed).list();
             tx.commit();
         } catch (Throwable t) {
+            log.error("Error getting RSS entries", t);
             if (tx != null) {
                 tx.rollback();
             }
