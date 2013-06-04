@@ -1898,9 +1898,10 @@ public class UtilsFacete {
 					List<IngridEnvTopic> topics = UtilsDB.getEnvTopics(resources);
 					for(IngridEnvTopic topic : topics){
 						IngridFacet tmpFacet = new IngridFacet();
-						tmpFacet.setId(UtilsDB.getTopicFromKey(topic.getFormValue()));
-						tmpFacet.setQuery("topic:"+ topic.getQueryValue());
-						String entryId = codelistService.getCodeListEntryId("1410", UtilsDB.getTopicFromKey(topic.getFormValue()), UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
+						String id = UtilsDB.getTopicFromKey(topic.getFormValue());
+						tmpFacet.setId(id);
+						tmpFacet.setQuery("topic:"+ id);
+						String entryId = codelistService.getCodeListEntryId("1410", id, UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
 						String localizedValue = codelistService.getCodeListValue("1410", entryId, request.getLocale().getLanguage());
 						tmpFacet.setName(localizedValue);
 						tmpFacet.setParent(facet);
