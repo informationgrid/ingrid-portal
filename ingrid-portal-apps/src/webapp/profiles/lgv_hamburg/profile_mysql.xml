@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+    <name>lgv_hamburg</name>
+    <description>Portal-Profile für LGV Hamburg</description>
+    <pages>
+        <page>
+            <name>main-measures.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-service.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-environment.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-chronicle.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-maps.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>service-sitemap.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>administration/admin-content-rss.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>administration/admin-homepage.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>mdek/mdek_portal_admin.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-about.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-features.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <!--
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                -->
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <!--
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+                <portlet col="1" row="3">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
+                -->
+                <portlet col="1" row="4">
+                    <name>ingrid-portal-apps::WeatherTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <!--
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+                <portlet col="1" row="3">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
+                -->
+            </portlets>
+        </page>
+        <page>
+            <name>_user/template/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <!--
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                </portlet>
+                <portlet col="1" row="2">
+                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                </portlet>
+                <portlet col="1" row="3">
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                </portlet>
+                -->
+            </portlets>
+        </page>
+        <page>
+            <name>search-catalog/search-catalog-hierarchy.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>service-contact-newsletter.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>service-contact-newsletter.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>service-contact.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::Contact</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::InfoPortlet</name>
+                    <preference name="infoTemplate">
+                    	<value>/WEB-INF/templates/newsletter_teaser.vm</value>
+                    </preference>
+                    <preference name="titleKey">
+                    	<value>teaser.newsletter.title</value>
+                    </preference>
+                </portlet>
+            </portlets>
+        </page>
+      </pages>
+    <files>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+			<src>ingrid-portal-apps/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/</src>
+        </file>
+    </files>
+    <sql>
+		<execute>
+            <![CDATA[INSERT INTO ingrid_measures_rubric (`id`\, `form_value`\, `query_value`\, `sortkey`) VALUES (1\, 'str'\, 'radiation'\, 1);]]>
+        </execute>
+		<!-- Thesaurus Browser als Untermenü  -->
+        <execute>
+            <![CDATA[UPDATE folder_menu SET options='/search-catalog/search-catalog-hierarchy.psml' WHERE options='/search-catalog/search-catalog-thesaurus.psml';]]>
+        </execute>
+        <!-- Use _new templates for info portlet -->
+       	<execute>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/chronicle_info_new.vm' WHERE value='/WEB-INF/templates/chronicle_info.vm';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/environment_info_new.vm' WHERE value='/WEB-INF/templates/environment_info.vm';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/measures_info_new.vm' WHERE value='/WEB-INF/templates/measures_info.vm';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/service_info_new.vm' WHERE value='/WEB-INF/templates/service_info.vm';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/search_simple_info_new.vm' WHERE value='/WEB-INF/templates/search_simple_info.vm';]]>
+        </execute>
+        <!-- Set decorator to ingrid-marginal-header -->
+        <execute>
+            <![CDATA[CREATE TABLE IF NOT EXISTS `tmp_table` (`id` bigint(20) NOT NULL AUTO_INCREMENT\, `item_key` varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, `item_value` varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, `item_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP\, PRIMARY KEY (`id`));]]>
+        </execute>
+        <execute>
+            <![CDATA[INSERT INTO tmp_table (`item_key`\, `item_value`) values ('tmp_id'\, '0');]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-chronicle.psml')) WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-measures.psml')) WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-environment.psml')) WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-service.psml')) WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-search.psml')) WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[INSERT INTO ingrid_lookup (`item_key`\, `item_value`) values ('tmp_id'\, '0');]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE ingrid_lookup SET `item_value` = (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'jetspeed-layouts::IngridTwoColumns') WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_id';]]>
+        </execute>
+        <!-- Set feature page as default for about page -->
+        <execute>
+            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT menu_id FROM folder_menu WHERE name = 'main-menu') WHERE `item_key`='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder_menu SET OPTIONS = '/main-features.psml' WHERE OPTIONS = '/main-about.psml' AND parent_id  = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') ;]]>
+        </execute>
+        <execute>
+            <![CDATA[DROP TABLE tmp_table;]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE page SET title = 'ingrid.page.about.tooltip'\, short_title = 'ingrid.page.about' WHERE path = '/main-features.psml';]]>
+        </execute>
+	</sql>
+</profile>
