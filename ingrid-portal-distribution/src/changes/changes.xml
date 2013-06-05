@@ -21,6 +21,9 @@
       <action type="update" dev="wemove" issue="INGRID-2260">
         IGE: Update of help texts.
       </action>
+	  <action type="fix" dev="wemove" issue="INGRID-2278">
+        Switching to different profiles now also runs on Oracle.
+      </action>
 	  <action type="fix" dev="wemove" issue="INGRID-2265">
         Added missing oracle scripts for updating mdek database.
       </action>
