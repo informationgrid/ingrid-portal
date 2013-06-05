@@ -640,4 +640,8 @@ public class UtilsDB {
         }
     }
 
+    /** Do we use a Oracle database ? */
+    public static boolean isOracle() {
+		return HibernateUtil.isOracle();
+	}
 }

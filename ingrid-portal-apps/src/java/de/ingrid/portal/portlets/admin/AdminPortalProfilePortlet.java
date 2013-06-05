@@ -110,8 +110,12 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
 
         if (action != null && action.equals("switchProfile")) {
             String profileName = request.getParameter("profile");
+            String databasePostfix = "_mysql";
+            if (UtilsDB.isOracle()) {
+            	databasePostfix = "_oracle";
+            }
             String profileDescriptor = getPortletConfig().getPortletContext().getRealPath(
-                    "/profiles/" + profileName + "/profile.xml");
+                    "/profiles/" + profileName + "/profile" + databasePostfix + ".xml");
             String pageName = null;
             try {
                 XMLConfiguration profile = new XMLConfiguration(profileDescriptor);
