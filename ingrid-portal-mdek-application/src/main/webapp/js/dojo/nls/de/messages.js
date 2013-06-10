@@ -35,7 +35,7 @@
 	"general.select.remove":"Ausgewähltes Entfernen",
 	"general.deselect.all":"Alle Abwählen",
 	"general.row.remove":"Ausgewählte Zeile Entfernen",
-    "general.info.browser":"Der Internet Explorer 7 (oder Version 8 im Kompatibilitätsmodus) wird nicht unterstützt und es kann zu Layoutproblemen kommen. Es wird empfohlen, einen der unterstützten Browser zu verwenden (IE8, FF3.6, Chrome)!",
+    "general.info.browser":"Der Internet Explorer 7 (oder Version 8-10 im Kompatibilitätsmodus) wird nicht unterstützt und es kann zu Layoutproblemen kommen. Es wird empfohlen, einen der unterstützten Browser zu verwenden (IE8+9, FF3.6, Chrome)!",
     "general.warning.unknownId":"Die UUID <ul><li>${0}</li></ul> ist unbekannt bzw. exisitiert nicht auf diesem Katalog!",
     "general.example":"Beispiel",
     "general.fieldId":"Feld ID",

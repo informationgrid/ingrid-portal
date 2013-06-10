@@ -19,7 +19,7 @@ var sessionExpired = false;
 
 dojo.addOnLoad(function() {
     // show an info message for browser IE7 that it shouldn't be used
-    if (dojo.isIE == 7) {
+    if (dojo.isIE == 7) { //&& !(navigator.userAgent.indexOf("Trident/5.0") !== -1 || navigator.userAgent.indexOf("Trident/6.0") !== -1)) { // IE8 & 9 compatibility mode
         dialog.show("Info", message.get("general.info.browser"), dialog.INFO);
     }
     
