@@ -33,22 +33,18 @@ public class SNSServiceRDF implements ThesaurusService {
     public TreeTerm[] getHierarchyTopLevel(String rootURI, Locale lang) {
     	List<ModelWrapper> termModels = null;
     	List<TreeTerm> resultList = null;
+    	String strippedUri = rootURI;
     	
-    	if (rootURI.endsWith(".rdf")) {
-
-    		String strippedUri = rootURI.substring(0, rootURI.length()-4);
-    		try {
-    			termModels = rdfReader.fetchHierarchiesFromRoot(strippedUri);
-    		} catch (DoesNotExistException e) {
-    			return getHierarchyNextLevel(rootURI.substring(0, rootURI.length()-4), lang);
-    		}
-            resultList = rdfMapper.mapToTreeTerms(termModels);
-    		
-    	} else {
-    		Model termModel = rdfReader.findTerm(rootURI, "[");
-    		resultList = rdfMapper.mapSearchToTreeTerms(termModel);
-    		
-    	}
+    	if (rootURI.endsWith(".rdf"))
+    		strippedUri = rootURI.substring(0, rootURI.length()-4);
+    	
+		try {
+			termModels = rdfReader.fetchHierarchiesFromRoot(strippedUri);
+		} catch (DoesNotExistException e) {
+			return getHierarchyNextLevel(rootURI.substring(0, rootURI.length()-4), lang);
+		}
+        resultList = rdfMapper.mapHierarchyRootToTreeTerms(termModels);
+		
     	return resultList.toArray(new TreeTerm[resultList.size()]);
     	
     }

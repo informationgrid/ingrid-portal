@@ -64,6 +64,9 @@ public class RDFUtils {
 	public static NodeIterator getTopConcepts(Model model) {
 		return getObjects(model, "skos", "hasTopConcept");
 	}
+	public static ResIterator getTopConceptsOf(Model model) {
+		return getResources(model, "skos", "topConceptOf");
+	}
     
     public static RDFNode getParent(Model model) {
         return getObject(model, "skos", "broader");
@@ -112,6 +115,12 @@ public class RDFUtils {
         String nsURI = model.getNsPrefixURI(namespace);
         Property prop = model.createProperty(nsURI + name);
         return model.listObjectsOfProperty(prop);
+    }
+
+    private static ResIterator getResources(Model model, String namespace, String name) {
+    	String nsURI = model.getNsPrefixURI(namespace);
+    	Property prop = model.createProperty(nsURI + name);
+    	return model.listResourcesWithProperty(prop);
     }
 
     private static StmtIterator getObjects(Resource res, String namespace, String name) {

@@ -29,19 +29,25 @@ public class SNSServiceRDFTest {
 		}
         
         terms = service.getHierarchyTopLevel("http://boden-params.herokuapp.com/bodenbiologische-parameter.rdf", new Locale("de"));
-        String[] expectedTerms2 = {"Mineralisation", "Collembolen", "mikrobielle Aktivität", "Fauna"};
-        assertTrue("Child terms from hierarchy seems empty!", terms.length > 0);
-//        for (int i = 0; i < expectedTerms2.length; i++) {
-//			assertEquals(expectedTerms2[i], terms[i].getName());
-//		}
+        String[] expectedTerms2 = {"Bodenbiologische Parameter"};
+        assertEquals("Child terms from hierarchy should be 1!", 1, terms.length);
+        for (int i = 0; i < expectedTerms2.length; i++) {
+			assertEquals(expectedTerms2[i], terms[i].getName());
+		}
         
         terms = service.getHierarchyTopLevel("http://boden-params.herokuapp.com/de/concepts/bodenbiologische-parameter.rdf", new Locale("de"));
-        String[] expectedTerms3 = {"Mineralisation", "Collembolen", "mikrobielle Aktivität", "Fauna"};
-        assertTrue("Child terms from hierarchy seems empty!", terms.length > 0);
-//        for (int i = 0; i < expectedTerms3.length; i++) {
-//			assertEquals(expectedTerms3[i], terms[i].getName());
-//		}
+        String[] expectedTerms3 = {"Bodenbiologische Parameter"};
+        assertEquals("Child terms from hierarchy should be 1!", 1, terms.length);
+        for (int i = 0; i < expectedTerms3.length; i++) {
+			assertEquals(expectedTerms3[i], terms[i].getName());
+		}
         
+        terms = service.getHierarchyTopLevel("http://boden-exam.herokuapp.com/de/scheme.rdf", new Locale("de"));
+        String[] expectedTerms4 = {"Oberflächenwasser"};
+        assertTrue("Child terms from hierarchy should not be empty!", terms.length > 0);
+        for (int i = 0; i < expectedTerms4.length; i++) {
+			assertEquals(expectedTerms4[i], terms[i].getName());
+		}
     }
 
     @Test
@@ -55,17 +61,17 @@ public class SNSServiceRDFTest {
 		}
     }
     
-    @Test
-    public final void getRootElementBySearchTest() {
-        TreeTerm[] terms = service.getHierarchyTopLevel("http://data.uba.de/umt/de/", new Locale("de"));
-        String[] expectedTerms = {"[Erde und Weltraum]", "[Normen, technische Richtlinien]", "[Verkehr und Transport]", "[Chemische Stoffe und Prozesse]"};
-        assertTrue("Child terms from hierarchy seems empty!", terms.length > 0);
-        // check first terms
-        for (int i = 0; i < expectedTerms.length; i++) {
-			assertEquals(expectedTerms[i], terms[i].getName());
-		}
-        
-    }
+//    @Test
+//    public final void getRootElementBySearchTest() {
+//        TreeTerm[] terms = service.getHierarchyTopLevel("http://data.uba.de/umt/de/", new Locale("de"));
+//        String[] expectedTerms = {"[Erde und Weltraum]", "[Normen, technische Richtlinien]", "[Verkehr und Transport]", "[Chemische Stoffe und Prozesse]"};
+//        assertTrue("Child terms from hierarchy seems empty!", terms.length > 0);
+//        // check first terms
+//        for (int i = 0; i < expectedTerms.length; i++) {
+//			assertEquals(expectedTerms[i], terms[i].getName());
+//		}
+//        
+//    }
     
     @Test
     public final void getRootElementWithoutHierarchySupportTest() {

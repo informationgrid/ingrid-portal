@@ -109,5 +109,37 @@ public class RDFMapper {
 		}
 		return resultList;
 	}
+	
+	public List<TreeTerm> mapHierarchyRootToTreeTerms(List<ModelWrapper> parents) {
+		List<TreeTerm> resultList = new ArrayList<TreeTerm>();
+		for (ModelWrapper parent : parents) {
+				
+			ResIterator children = RDFUtils.getTopConceptsOf(parent.getModel());
+			while (children.hasNext()) {
+				TreeTerm treeTerm = new TreeTermImpl();
+				RDFNode child = children.next();
+				String identifier = child.toString();
+				treeTerm.setId(identifier);
+				treeTerm.setName(RDFUtils.getName(child.asResource()));
+				treeTerm.setType(Term.TermType.DESCRIPTOR);
+				
+				// needed to determine that it's not a top-term!
+				treeTerm.addParent(new TreeTermImpl());
+				
+				resultList.add(treeTerm);
+				
+				// check for children (simple check)
+				// needed to presentation ("plus"-sign in front of node)
+				StmtIterator it = RDFUtils.getChildren(child.asResource());
+				while (it.hasNext()) {
+					Statement node = it.next();
+					TreeTerm subChild = new TreeTermImpl();
+					subChild.setId(node.toString());
+					treeTerm.addChild(subChild);
+				}
+			}
+		}
+		return resultList;
+	}
     
 }
