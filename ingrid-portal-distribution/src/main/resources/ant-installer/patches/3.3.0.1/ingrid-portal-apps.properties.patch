@@ -2,13 +2,10 @@
 +++ C:/temp/AppData/ingrid-portal-apps.properties-rev21962.svn002.tmp.properties	Mon Mar 11 17:41:39 2013
 @@ -419,4 +419,7 @@
  portal.admin.number.row.provider=500 
-
- # (Administration) Number of provider row
--portal.admin.number.row.provider=500
+ 
+ # Enable/Disable account registration questions
+-enable.account.registration.question=true
 \ No newline at end of file
-+portal.admin.number.row.provider=500
-+
-+# Enable/Disable account registration questions
 +enable.account.registration.question=true
 +
 +# MapClient full map config (define on "ingrid-webmap-client" file ./shared/js/config.js)
