@@ -124,7 +124,13 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
     // The function adds the topics in 'topicList' as children to the tree 
     _handleRootTopics: function(topicList) {
         for (var i in topicList) {
-            topicList[i].isFolder = true;
+        	if (this.service === RDFService) {
+        		topicList[i].isFolder = (topicList[i].children.length > 0);
+        		// remove children since they are fetched again correctly (with their children)
+        		// when they were opened
+        		topicList[i].children = [];
+        	} else
+        		topicList[i].isFolder = true;
             topicList[i].nodeDocType = topicList[i].type;
             // Top Terms are not selectable. Add the proper class to make them grey
             // this is not valid for terms coming from RDF!

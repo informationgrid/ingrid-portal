@@ -472,7 +472,7 @@ public class SNSService {
     }
 
     /** Also adds children ! */
-    private SNSTopic convertTreeTermToSNSTopic(TreeTerm treeTerm) {
+    protected SNSTopic convertTreeTermToSNSTopic(TreeTerm treeTerm) {
     	SNSTopic resultTopic = convertTermToSNSTopic(treeTerm);
 
     	List<TreeTerm> childTerms = treeTerm.getChildren();

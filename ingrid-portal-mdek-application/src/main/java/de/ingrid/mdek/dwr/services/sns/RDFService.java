@@ -29,8 +29,8 @@ public class RDFService extends SNSService {
     	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
 
     	for (TreeTerm treeTerm : orderedTreeTerms) {
-    		// NO ADDING OF CHILDREN !!!!!!!!! Otherwise wrong behavior in JSP !
-    		SNSTopic resultTopic = convertTermToSNSTopic(treeTerm);
+    		// also contain children which will be removed in frontend
+    		SNSTopic resultTopic = convertTreeTermToSNSTopic(treeTerm);
     		resultList.add(resultTopic);
     	}
 
