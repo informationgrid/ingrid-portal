@@ -134,7 +134,7 @@
         <from>/freitextsuche/umweltinformationen(.?)</from>
         <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=1</to>
     </rule>
-	<rule>
+    <rule>
         <from>/freitextsuche/umweltinformationen(.*)</from>
         <to type="forward">/portal/main-search.psml$1</to>
     </rule>
@@ -183,6 +183,38 @@
         <from>/detailsuche$</from>
         <to type="forward">portal/search-extended/search-ext-env-topic-terms.psml</to>
     </rule>-->
+    <rule>
+        <from>/detailsuche/umwelt</from>
+        <to type="forward">/portal/search-extended/search-ext-env-topic-terms.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-env-topic-terms.psml</from>
+        <to>/detailsuche/umwelt</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/recht</from>
+        <to type="forward">/portal/search-extended/search-ext-law-topic-terms.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-law-topic-terms.psml</from>
+        <to>/detailsuche/recht</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/forschung</from>
+        <to type="forward">/portal/search-extended/search-ext-res-topic-attributes.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-res-topic-attributes.psml</from>
+        <to>/detailsuche/forschung</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/addressen</from>
+        <to type="forward">/portal/search-extended/search-ext-adr-topic-terms.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-adr-topic-terms.psml</from>
+        <to>/detailsuche/addressen</to>
+    </outbound-rule>
     <rule>
         <from>/detailsuche</from>
         <to type="forward">/portal/search-extended</to>
@@ -413,4 +445,3 @@
     </outbound-rule>
     
 </urlrewrite>
-
