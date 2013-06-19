@@ -66,7 +66,6 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
         // add personalized WMS Services to the URL
         String wmsURL = UtilsSearch.getWMSURL(request, request.getParameter("wms_url"), false);
         context.put("wmsURL", wmsURL);
-        context.put("mapConfig", PortalConfig.getInstance().getString("portal.map.search.config", "portalu-extended-search"));
         
         /*
         // enable the save button if the query was set AND a user is logged on

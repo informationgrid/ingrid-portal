@@ -82,7 +82,6 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
             context.put("wms", request.getParameter("wms_url"));
         }
 
-        context.put("mapConfig", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAP_CONFIG, "portalu-fullmap"));
         super.doView(request, response);
     }
 

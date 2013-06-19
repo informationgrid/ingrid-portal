@@ -240,8 +240,6 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_CONTACT_UPLOAD_ENABLE = "email.contact.upload.enable";
     public static final String PORTAL_CONTACT_UPLOAD_SIZE = "email.contact.upload.size";
     
-    public static final String PORTAL_MAP_CONFIG = "portal.map.config";
-
     // private stuff
     private static PortalConfig instance = null;
     

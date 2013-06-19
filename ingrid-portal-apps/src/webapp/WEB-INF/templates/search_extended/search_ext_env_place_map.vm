@@ -17,7 +17,7 @@ mapClientCallbackAreaId = function(value) {
 	document.getElementById("areaidOutput").innerHTML=" "+value ;
 	document.getElementById("coordinatesOutput").innerHTML="";
 };
-var viewConfiguration = '$mapConfig';
+var viewConfiguration = 'search';
 
 </script>
 
