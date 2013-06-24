@@ -216,6 +216,30 @@
         <to>/detailsuche/addressen</to>
     </outbound-rule>
     <rule>
+        <from>/detailsuche/raum</from>
+        <to type="forward">/portal/search-extended/search-ext-adr-place-reference.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-adr-place-reference.psml</from>
+        <to>/detailsuche/raum</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/partner</from>
+        <to type="forward">/portal/search-extended/search-ext-adr-area-partner.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-adr-area-partner.psml</from>
+        <to>/detailsuche/partner</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/modus</from>
+        <to type="forward">/portal/search-extended/search-ext-adr-topic-mode.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-adr-topic-mode.psml</from>
+        <to>/detailsuche/modus</to>
+    </outbound-rule>
+    <rule>
         <from>/detailsuche</from>
         <to type="forward">/portal/search-extended</to>
     </rule>
