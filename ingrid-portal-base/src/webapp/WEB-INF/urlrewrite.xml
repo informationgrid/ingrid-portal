@@ -208,36 +208,116 @@
         <to>/detailsuche/forschung</to>
     </outbound-rule>
     <rule>
-        <from>/detailsuche/addressen</from>
+        <from>/detailsuche/thema-addressen</from>
         <to type="forward">/portal/search-extended/search-ext-adr-topic-terms.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-extended/search-ext-adr-topic-terms.psml</from>
-        <to>/detailsuche/addressen</to>
+        <to>/detailsuche/thema-addressen</to>
     </outbound-rule>
     <rule>
-        <from>/detailsuche/raum</from>
+        <from>/detailsuche/raum-adressen</from>
         <to type="forward">/portal/search-extended/search-ext-adr-place-reference.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-extended/search-ext-adr-place-reference.psml</from>
-        <to>/detailsuche/raum</to>
+        <to>/detailsuche/raum-adressen</to>
     </outbound-rule>
     <rule>
-        <from>/detailsuche/partner</from>
+        <from>/detailsuche/partner-adressen</from>
         <to type="forward">/portal/search-extended/search-ext-adr-area-partner.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-extended/search-ext-adr-area-partner.psml</from>
-        <to>/detailsuche/partner</to>
+        <to>/detailsuche/partner-adressen</to>
     </outbound-rule>
     <rule>
-        <from>/detailsuche/modus</from>
+        <from>/detailsuche/modus-adressen</from>
         <to type="forward">/portal/search-extended/search-ext-adr-topic-mode.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-extended/search-ext-adr-topic-mode.psml</from>
-        <to>/detailsuche/modus</to>
+        <to>/detailsuche/modus-adressen</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/begriff-forschung</from>
+        <to type="forward">/portal/search-extended/search-ext-res-topic-terms.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-res-topic-terms.psml</from>
+        <to>/detailsuche/begriff-forschung</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/fach-recht</from>
+        <to type="forward">/portal/search-extended/search-ext-law-topic-thesaurus.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-law-topic-thesaurus.psml</from>
+        <to>/detailsuche/fach-recht</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/partner-recht</from>
+        <to type="forward">/portal/search-extended/search-ext-law-area-partner.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-law-area-partner.psml</from>
+        <to>/detailsuche/partner-recht</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/fach-umwelt</from>
+        <to type="forward">/portal/search-extended/search-ext-env-topic-thesaurus.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-env-topic-thesaurus.psml</from>
+        <to>/detailsuche/fach-umwelt</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/raum-umwelt</from>
+        <to type="forward">/portal/search-extended/search-ext-env-place-geothesaurus.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-env-place-geothesaurus.psml</from>
+        <to>/detailsuche/raum-umwelt</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/raum-karte-umwelt</from>
+        <to type="forward">/portal/search-extended/search-ext-env-place-map.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-env-place-map.psml</from>
+        <to>/detailsuche/raum-karte-umwelt</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/zeit-umwelt</from>
+        <to type="forward">/portal/search-extended/search-ext-env-time-constraint.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-env-time-constraint.psml</from>
+        <to>/detailsuche/zeit-umwelt</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/suchinhalt-umwelt</from>
+        <to type="forward">/portal/search-extended/search-ext-env-area-contents.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-env-area-contents.psml</from>
+        <to>/detailsuche/zeit-umwelt</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/datenquelle-umwelt</from>
+        <to type="forward">/portal/search-extended/search-ext-env-area-sources.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-env-area-sources.psml</from>
+        <to>/detailsuche/datenquelle-umwelt</to>
+    </outbound-rule>
+    <rule>
+        <from>/detailsuche/partner-umwelt</from>
+        <to type="forward">/portal/search-extended/search-ext-env-area-partner.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-extended/search-ext-env-area-partner.psml</from>
+        <to>/detailsuche/partner-umwelt</to>
     </outbound-rule>
     <rule>
         <from>/detailsuche</from>
