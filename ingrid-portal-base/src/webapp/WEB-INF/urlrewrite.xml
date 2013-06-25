@@ -301,7 +301,7 @@
     </rule>
     <outbound-rule>
         <from>/portal/search-extended/search-ext-env-area-contents.psml</from>
-        <to>/detailsuche/zeit-umwelt</to>
+        <to>/detailsuche/suchinhalt-umwelt</to>
     </outbound-rule>
     <rule>
         <from>/detailsuche/datenquelle-umwelt</from>
