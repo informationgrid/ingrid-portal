@@ -204,7 +204,8 @@ Local = {
 		tNominatimSearch: {en: 'Nominatim search ...', de: 'Ortssuche ...'},
 		tNominatimLoading: {en: 'Loading ...', de: 'Laden ...'},
 		tStaedte: {en: 'Cities', de: 'St&auml;dte'},
-		tNoTitle: {en: 'No title', de: 'Kein Titel'}
+		tNoTitle: {en: 'No title', de: 'Kein Titel'},
+		tGruppenLayerAnzeigen: {en: 'Display group layer', de: 'Gruppenlayer anzeigen'}
     }
 }
 
