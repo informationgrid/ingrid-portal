@@ -264,7 +264,7 @@ function hideLoadingZone() {
 	  <div class="inputContainer">
         <span class="button">
           <span style="float:right;">
-            <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.research.ext.adr.search" />" onClick="javascript:scriptScopeResearchExtAddr.startNewSearch();"><fmt:message key="dialog.research.ext.adr.search" /></button>
+            <button dojoType="dijit.form.Button" id="researchExtAddrSearch" title="<fmt:message key="dialog.research.ext.adr.search" />" onClick="javascript:scriptScopeResearchExtAddr.startNewSearch();"><fmt:message key="dialog.research.ext.adr.search" /></button>
 		  </span>
           <span style="float:right;">
             <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.research.ext.adr.reset" />" onClick="javascript:scriptScopeResearchExtAddr.resetInput();"><fmt:message key="dialog.research.ext.adr.reset" /></button>

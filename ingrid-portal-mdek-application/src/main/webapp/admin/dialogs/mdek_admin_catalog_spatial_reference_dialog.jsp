@@ -194,11 +194,11 @@
             }
             
             function showLoadingZone(){
-                dojo.style("spatialLoadingZone", "visibility", "visible");
+                dojo.style("adminCatSpatialLoadingZone", "visibility", "visible");
             }
             
             function hideLoadingZone(){
-                dojo.style("spatialLoadingZone", "visibility", "hidden");
+                dojo.style("adminCatSpatialLoadingZone", "visibility", "hidden");
             }
             
             function showNoResults(){
@@ -265,7 +265,7 @@
                                 <fmt:message key="dialog.admin.catalog.selectLocation.apply" />
                             </button>
                         </span>
-                        <span id="spatialLoadingZone" style="float:right; z-index: 100; visibility:hidden;">
+                        <span id="adminCatSpatialLoadingZone" style="float:right; z-index: 100; visibility:hidden;">
                             <img src="img/ladekreis.gif" />
                         </span>
                         <div class="fill"></div>

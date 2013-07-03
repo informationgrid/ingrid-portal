@@ -371,7 +371,7 @@ function showPreviewDialog() {
              <div id="addressSearchButtonContainer" class="inputContainer" style="display:block;">
               <span class="button">
                 <span style="float:right;">
-                  <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.research.search" />" onClick="javascript:researchScriptScope.startNewAddressSearch();"><fmt:message key="dialog.research.search" /></button>
+                  <button dojoType="dijit.form.Button" id="researchSearch" title="<fmt:message key="dialog.research.search" />" onClick="javascript:researchScriptScope.startNewAddressSearch();"><fmt:message key="dialog.research.search" /></button>
                 </span>
                 <span id="addressSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
                     <img src="img/ladekreis.gif" />

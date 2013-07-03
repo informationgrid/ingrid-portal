@@ -830,7 +830,7 @@ function hideLoadingZone() {
 			</span>
 
             <span class="inputButtonInLineRight">
-              <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.research.ext.obj.thesaurusLocationSearch" />" onClick="javascript:scriptScopeResearchExtObj.findLocationTopics();"><fmt:message key="dialog.research.ext.obj.thesaurusLocationSearch" /></button>
+              <button dojoType="dijit.form.Button" id="researchExtObjThesSearch" title="<fmt:message key="dialog.research.ext.obj.thesaurusLocationSearch" />" onClick="javascript:scriptScopeResearchExtObj.findLocationTopics();"><fmt:message key="dialog.research.ext.obj.thesaurusLocationSearch" /></button>
             </span>
           </div>
         </div>
@@ -842,7 +842,7 @@ function hideLoadingZone() {
 		  </span>
 
 	      <span id="objExtSearchAddLocationTopicButtonSpan" style="float:left; margin-top:95px; display:none;">
-	        <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.research.ext.obj.apply" />" onClick="javascript:scriptScopeResearchExtObj.addSelectedLocationTopics();"><fmt:message key="dialog.research.ext.obj.apply" /> -&gt;</button>
+	        <button dojoType="dijit.form.Button" id="researchExtObjApplyTerms" title="<fmt:message key="dialog.research.ext.obj.apply" />" onClick="javascript:scriptScopeResearchExtObj.addSelectedLocationTopics();"><fmt:message key="dialog.research.ext.obj.apply" /> -&gt;</button>
 		  </span>
 
 		  <span style="float:right;">
@@ -981,7 +981,7 @@ function hideLoadingZone() {
   <div class="inputContainer">
     <span class="button">
       <span style="float:right;">
-        <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.research.ext.obj.search" />" onClick="javascript:scriptScopeResearchExtObj.startNewSearch();"><fmt:message key="dialog.research.ext.obj.search" /></button>
+        <button dojoType="dijit.form.Button" id="researchExtObjSearch" title="<fmt:message key="dialog.research.ext.obj.search" />" onClick="javascript:scriptScopeResearchExtObj.startNewSearch();"><fmt:message key="dialog.research.ext.obj.search" /></button>
 	  </span>
       <span style="float:right;">
         <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.research.ext.obj.reset" />" onClick="javascript:scriptScopeResearchExtObj.resetInput();"><fmt:message key="dialog.research.ext.obj.reset" /></button>

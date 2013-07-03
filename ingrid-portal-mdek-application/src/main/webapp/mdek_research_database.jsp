@@ -143,7 +143,7 @@ function hideLoadingZone() {
         <div class="inputContainer">
           <span class="button">
             <span style="float:right;">
-              <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.research.db.search" />" onClick="javascript:scriptScopeResearchDb.startNewSearch();"><fmt:message key="dialog.research.db.search" /></button>
+              <button dojoType="dijit.form.Button" id="researchDbSearch" title="<fmt:message key="dialog.research.db.search" />" onClick="javascript:scriptScopeResearchDb.startNewSearch();"><fmt:message key="dialog.research.db.search" /></button>
     		</span>
 			<span id="databaseSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 				<img src="img/ladekreis.gif" />

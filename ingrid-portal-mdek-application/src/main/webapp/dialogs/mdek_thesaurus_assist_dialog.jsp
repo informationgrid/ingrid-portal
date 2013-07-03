@@ -77,18 +77,18 @@ function hideLoadingZone() {
 }
 
 function disableUiElements() {
-	dijit.byId("addSelectedButton").disable();
-	dijit.byId("addAllButton").disable();
-	dijit.byId("removeAllButton").disable();
-	dijit.byId("removeSelectedButton").disable();
+	dijit.byId("dlgThes_addSelectedButton").disable();
+	dijit.byId("dlgThes_addAllButton").disable();
+	dijit.byId("dlgThes_removeAllButton").disable();
+	dijit.byId("dlgThes_removeSelectedButton").disable();
 	dijit.byId("applyChangesButton").disable();
 }
 
 function enableUiElements() {
-	dijit.byId("addSelectedButton").enable();
-	dijit.byId("addAllButton").enable();
-	dijit.byId("removeAllButton").enable();
-	dijit.byId("removeSelectedButton").enable();
+	dijit.byId("dlgThes_addSelectedButton").enable();
+	dijit.byId("dlgThes_addAllButton").enable();
+	dijit.byId("dlgThes_removeAllButton").enable();
+	dijit.byId("dlgThes_removeSelectedButton").enable();
 	dijit.byId("applyChangesButton").enable();
 }
 
@@ -217,10 +217,10 @@ applyChanges = function() {
 
       <span class="outer" style="width:10%;"><div>
           <span class="buttonCol" style="margin:80px -4px 0px;">
-			<div dojoType="dijit.form.Button" id="addSelectedButton" onClick="addSelected">&nbsp;>&nbsp;</div>
-			<div dojoType="dijit.form.Button" id="addAllButton" onClick="addAll">>></div>
-			<div dojoType="dijit.form.Button" id="removeAllButton" onClick="removeAll"><<</div>
-			<div dojoType="dijit.form.Button" id="removeSelectedButton" onClick="removeSelected">&nbsp;<&nbsp;</div>
+			<div dojoType="dijit.form.Button" id="dlgThes_addSelectedButton" onClick="addSelected">&nbsp;>&nbsp;</div>
+			<div dojoType="dijit.form.Button" id="dlgThes_addAllButton" onClick="addAll">>></div>
+			<div dojoType="dijit.form.Button" id="dlgThes_removeAllButton" onClick="removeAll"><<</div>
+			<div dojoType="dijit.form.Button" id="dlgThes_removeSelectedButton" onClick="removeSelected">&nbsp;<&nbsp;</div>
           </span>
           </div>
         </span>
