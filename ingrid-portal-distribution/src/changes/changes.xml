@@ -15,6 +15,9 @@
 	  <action type="add" dev="wemove">
         Portal: Add Localization file to profiles for the InGrid-WebMapClient.
       </action>
+	  <action type="update" dev="wemove" issue="AF-00203">
+        Portal: Update GeoPortal.WSV profile for localization issues.
+      </action>
 	  <action type="update" dev="wemove" issue="INGRID-2242">
         Portal: Update NUMIS profile for InGrid 3.3.
       </action>
