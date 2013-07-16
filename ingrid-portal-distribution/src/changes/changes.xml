@@ -24,6 +24,9 @@
       <action type="update" dev="wemove" issue="INGRID-2260">
         IGE: Update of help texts.
       </action>
+	  <action type="fix" dev="wemove" issue="INGRID-2286">
+        Fix link to wemove page in content of Impressum.
+      </action>
 	  <action type="fix" dev="wemove" issue="INGRID-2278">
         Switching to different profiles now also runs on Oracle.
       </action>
