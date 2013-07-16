@@ -1250,12 +1250,16 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	        	    if (serviceType.trim().equals("view")) {
 	        	        link.put("mapLink", getCapabilityUrl() + "&ID=" + getLayerIdentifier(node));
 	        	    }
+	        	    // do not show link relation for coupled resources (INGRID-2285)
+	        	    link.remove("attachedToField");
 	        	    linkListCoupledData.add(link);
 	        	} else if (entryId.equals("3600") && context.get(UDK_OBJ_CLASS_TYPE).equals("1")) {
 	        	    if (this.firstGetCapabiltiesUrl != null) {
 	        	        // get link from online resource (possibilty it's wrong?)
 	        	        link.put("mapLink", this.firstGetCapabiltiesUrl + "&ID=" + getLayerIdentifier(node));
 	        	    }
+	        	    // do not show link relation for coupled resources (INGRID-2285)
+	        	    link.remove("attachedToField");
 	        	    linkListCoupledData.add(link);
 	        	} else {
 	        	    linkList.add(link);
