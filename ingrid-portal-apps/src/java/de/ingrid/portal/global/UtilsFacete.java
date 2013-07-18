@@ -2059,7 +2059,7 @@ public class UtilsFacete {
 			// Set facet provider
 			String restrictPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
 			if(restrictPartner != null && restrictPartner.length() > 0){
-				// Partner restriction: set always facet for define partner  
+				// Personalized partner restriction in portal: set always facet for defined partner  
 				faceteEntry = new IngridDocument();
 				faceteEntry.put("id", "provider");
 				faceteEntry.put("field", "provider");
@@ -2077,7 +2077,11 @@ public class UtilsFacete {
 					}
 					if(tmpFacet != null){
 						faceteEntry = new IngridDocument();
-						faceteEntry.put("id", "provider");
+						// NEW FACET ID ! Facet is restricted to providers of partner, so we 
+						// have to use NEW ID to separate from normal "provider" facet !
+						// This way caching works in backend, e.g. SE-iPlug where id is cache key !
+						// So facet id is e.g. "provider_by" when "by" is selected as partner.
+						faceteEntry.put("id", "provider_" + tmpFacet.getId());
 						faceteEntry.put("field", "provider");
 						faceteEntry.put("query", "partner:" + tmpFacet.getId());
 						facetQueries.add(faceteEntry);
