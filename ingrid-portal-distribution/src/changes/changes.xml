@@ -24,6 +24,9 @@
       <action type="update" dev="wemove" issue="INGRID-2260">
         IGE: Update of help texts.
       </action>
+	  <action type="fix" dev="wemove" issue="INGRID-2276">
+        Fix facet problem with providers when partner is selected.
+      </action>
 	  <action type="fix" dev="wemove" issue="INGRID-2286">
         Fix link to wemove page in content of Impressum.
       </action>
