@@ -1,6 +1,7 @@
 (
   {
     "general.ok":"Ok",
+    "general.ok.hide.next.time":"Nicht mehr anzeigen",
     "general.yes":"Ja",
     "general.save":"Speichern",
     "general.no":"Nein",
@@ -134,6 +135,7 @@
     "tree.forwardToQAHint":"Es m&uuml;ssen alle Pflichtfelder korrekt gef&uuml;llt sein bevor Sie das Objekt an die Qualit&auml;tssicherung &uuml;berweisen! Bitte &uuml;berpr&uuml;fen Sie die rot markierten Felder.",
     "tree.selectNodeHint":"Bitte wählen Sie einen Elternknoten.",
     "tree.selectNodeCopyHint":"Die Knoten Objekte, Adressen und Freie Adressen k&ouml;nnen nicht kopiert werden! Mit Strg+Click auf Knoten k&ouml;nnen diese aus- und abgew&auml;hlt werden.",
+    "tree.selectNodeCopyUuidHint":"Beim Kopieren erhält der eingefügte Metadatensatz eine neue UUID und kann unter der alten UUID nicht mehr gefunden werden.",
     "tree.selectNodeCutHint":"Bitte wählen Sie einen Knoten zum Ausschneiden.",
     "tree.selectNodeDeleteHint":"Die Knoten Objekte, Adressen und Freie Adressen d&uuml;rfen nicht gel&ouml;scht werden! Mit Strg+Click auf Knoten k&ouml;nnen diese aus- und abgew&auml;hlt werden.",
     "tree.nodePasteNoCutCopyHint":"Der Knoten konnte nicht kopiert werden!",

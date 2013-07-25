@@ -4,6 +4,8 @@
 
 var menuEventHandler = {};
 
+var COOKIE_HIDE_COPY_HINT = "ingrid.ige.copy.hint";
+
 // Singleton
 // menuEventHandler = new function MenuEventHandler() {}
 
@@ -206,6 +208,17 @@ menuEventHandler._copyWithSubtree = function(msg, withSubtree) {
         dialog.show(message.get("dialog.general.warning"), message.get("tree.selectNodeCopyHint"), dialog.WARNING); 
     } else {
         var deferred = new dojo.Deferred();
+        
+        // show info box about copying and and giving new UUID (https://redmine.wemove.com/issues/131)
+        // unless a cookie contains information to skip this message
+        if (dojo.cookie(COOKIE_HIDE_COPY_HINT) !== "true") {
+            dialog.show(message.get("dialog.general.info"), message.get("tree.selectNodeCopyUuidHint"), dialog.INFO,  
+                [
+                     { caption: message.get("general.ok.hide.next.time"), type: "checkbox", action: function(newValue) { console.debug("cookie: " + newValue); dojo.cookie(COOKIE_HIDE_COPY_HINT, newValue, {expires: 730}); } },
+                     { caption: message.get("general.ok"), action: function() {} }
+                ]);
+        }
+        
         deferred.addCallback(function() {
             var tree = dijit.byId("dataTree");
             tree.prepareCopy(tree.getSelectedItems(), withSubtree);

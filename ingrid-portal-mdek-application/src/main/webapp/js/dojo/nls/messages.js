@@ -1,6 +1,7 @@
 (
   {
     "general.ok":"Ok",
+    "general.ok.hide.next.time":"Don't show again",
     "general.yes":"Yes",
     "general.save":"Save",
     "general.no":"No",
@@ -134,6 +135,7 @@
     "tree.forwardToQAHint":"Please fill all required fields before assigning the object to the Quality Assurance.",
     "tree.selectNodeHint":"Please select a parent node.",
     "tree.selectNodeCopyHint":"The nodes Objects, Addresses and Free Addresses cannot be copied! With Ctrl+Click on the node you can de-/select it.",
+    "tree.selectNodeCopyUuidHint":"When copying the pasted metadata will have a new UUID and therefore cannot be found with the old UUID.",
     "tree.selectNodeCutHint":"Please select a node to cut.",
     "tree.selectNodeDeleteHint":"The nodes Objects, Addresses and Free Addresses must not be deleted!",
     "tree.nodePasteNoCutCopyHint":"The node couldn't be copied!",

@@ -220,14 +220,24 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
   if (btnActions) {
     for(i=0;i<btnActions.length;i++)
     {
-		var button = new dijit.form.Button({label:btnActions[i].caption}).placeAt(dojo.byId("dialogButtonBar"));//buttonSpan.domNode);//, dlgId+'_buttons');
+        var button;
+        if (btnActions[i].type == "checkbox") {
+            button = new dijit.form.CheckBox({id: "chkbox_hideCopyHint", style:"float:left;"}).placeAt(dojo.byId("dialogButtonBar"));
+            dojo.create("label", { for:"chkbox_hideCopyHint", innerHTML: btnActions[i].caption, style:"float:left;", "class":"inActive"}, dojo.byId("dialogButtonBar"));
+        } else {
+            button = new dijit.form.Button({label:btnActions[i].caption}).placeAt(dojo.byId("dialogButtonBar"));
+        }
 		
 		var closeAction = function() {dijit.byId("InfoDialog").hide()};
 		if (btnActions[i].action != dialog.CLOSE_ACTION) {
 			// call close action and given function afterwards (this order prevents the glasspane being closed 
 			// for following modal dialogs)
 			// we get the action through the event target, which shild have the same id as the button's widget id
-			button.onClick = btnActions[i].action;
+		    if (btnActions[i].type == "checkbox")
+		        button.onChange = btnActions[i].action;
+		    else		        
+		        button.onClick = btnActions[i].action;
+		    
 			button.type = "submit";
 		} else 
 	       button.onClick = closeAction;
