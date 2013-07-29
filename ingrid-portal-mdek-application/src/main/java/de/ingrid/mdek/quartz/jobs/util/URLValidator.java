@@ -17,8 +17,9 @@ import de.ingrid.mdek.quartz.jobs.util.URLState.State;
 public class URLValidator implements Callable<URLState> {
 
 	private final static Logger log = Logger.getLogger(URLValidator.class);	
-	private final HttpClient httpClient;
-	private final URLState urlState;
+	protected final HttpClient httpClient;
+	protected final URLState urlState;
+	protected String responseString = null;
 
 
 	public URLValidator(HttpClient httpClient, URLState urlState) {
@@ -39,6 +40,8 @@ public class URLValidator implements Callable<URLState> {
 
 			if (HttpURLConnection.HTTP_OK == responseCode) {
 				urlState.setState(State.VALID);
+				// get content for further analysis if page is ok
+				responseString = getMethod.getResponseBodyAsString();
 			} else {
 				urlState.setState(State.HTTP_ERROR);
 			}

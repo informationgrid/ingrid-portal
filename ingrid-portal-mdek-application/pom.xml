@@ -160,7 +160,8 @@
       <artifactId>log4j</artifactId>
       <!-- LOG4J PROVIDED to avoid classloader conflicts ! Tomcat logging has to be configured (log4j.jar in common/lib) -->
       <!-- NO !!! LOG4J has to be in webapp, otherwise log4j.properties is read from tomcat/common/classes !!! no classloader conflicts ! -->
-      <!-- scope>provided</scope-->
+      <!-- errors are thrown during IGE startup ... logging still can be configured within webapp! -->
+      <scope>provided</scope>
     </dependency>
       <dependency>
         <groupId>net.sf.ehcache</groupId>

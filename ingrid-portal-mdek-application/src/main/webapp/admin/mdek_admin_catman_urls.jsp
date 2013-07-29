@@ -21,7 +21,7 @@ var scriptScopeUrls = _container_;
 //filterTable.setFilter("errorCode", function(errorCode) { return ("VALID" != errorCode); });
 
 var urlListTable1Structure = [
-	{field: 'errorCode',name: "<fmt:message key='dialog.admin.catalog.management.urls.error' />",width: '106px'},
+	{field: 'errorCode',name: "<fmt:message key='dialog.admin.catalog.management.urls.error' />",width: '125px'},
 	{field: 'icon',name: '&nbsp;',width: '23px'},
 	{field: 'objectName',name: "<fmt:message key='dialog.admin.catalog.management.urls.objectName' />",width: '214px'},
 	{field: 'url',name: 'URL',width: '374px'},
@@ -29,6 +29,7 @@ var urlListTable1Structure = [
 ];
 createDataGrid("urlListTable1", null, urlListTable1Structure, null);
 createDataGrid("urlListTable2", null, dojo.clone(urlListTable1Structure), null);
+createDataGrid("urlListTableCap", null, dojo.clone(urlListTable1Structure), null);
 //var data = UtilGrid.getTableData("urlListTable1");
 //UtilGrid.getTableData("urlListTable2").setItems(data);
 //UtilGrid.getTableData("urlListTable2").setFilter(function(item) { return ("VALID" != item.errorCode); });
@@ -52,6 +53,7 @@ dojo.connect(_container_, "onLoad", function(){
     allUrlsTitle = dijit.byId("urlList1").title;
     allErrorUrlsTitle = dijit.byId("urlList2").title;
     summaryErrorUrlsTitle = dijit.byId("urlList3").title;
+    capabilitiesUrlsTitle = dijit.byId("urlListCap").title;
 	//dojo.html.hide(dojo.byId("urlsProgressBarContainer"));
 	dojo.style("urlsProgressBarContainer", "display", "none");
 	refreshUrlProcessInfo();
@@ -62,6 +64,7 @@ scriptScopeUrls.startUrlsJob = function() {
 	UtilGrid.setTableData("urlListTable1", []);
 	UtilGrid.setTableData("urlListTable2", []);
     UtilGrid.setTableData("urlListTable3", []);
+    UtilGrid.setTableData("urlListTableCap", []);
 
 	CatalogManagementService.startUrlValidatorJob({
 		preHook: showLoadingZone,
@@ -107,8 +110,9 @@ scriptScopeUrls.replaceUrl = function() {
 
 function replaceUrlDef(sourceUrls, targetUrl) {
 	var def = new dojo.Deferred();
+	var type = (getCurrentTabName() == "urlListCap") ? "capabilities" : "urls"; 
 
-	CatalogManagementService.replaceUrls(sourceUrls, targetUrl, {
+	CatalogManagementService.replaceUrls(sourceUrls, targetUrl, type, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: function() {
@@ -157,6 +161,9 @@ function getCurrentTable() {
     
     } else if (currentTab == "urlList3") {
         return "urlListTable3";
+        
+    } else if (currentTab == "urlListCap") {
+        return "urlListTableCap";
 
 	} else {
 		console.debug("unknown tab selected: '"+currentTab+"'");
@@ -173,7 +180,7 @@ refreshUrlProcessInfo = function() {
 			if (!jobFinished(jobInfo)) {
 				setTimeout("refreshUrlProcessInfo();", 3000);
 			} else {
-				updateUrlTables(jobInfo.urlObjectReferences);
+				updateUrlTables(jobInfo.urlObjectReferences, jobInfo.capabilitiesReferences);
 			}
 		},
 		errorHandler: function(msg, err) {
@@ -232,68 +239,90 @@ function updateUrlJobInfo(jobInfo) {
 }
 
 
-function updateUrlTables(urlObjectReferenceList) {
+function updateUrlTables(urlObjectReferenceList, capabilitiesReferenceList) {
 	if (urlObjectReferenceList) {
 	    console.debug("list-size: " + urlObjectReferenceList.length);
 		UtilList.addIcons(urlObjectReferenceList);
+		UtilList.addIcons(capabilitiesReferenceList);
 		
 		// show the first 100 entries and first 100 errors
 		var maxListSize   = 10000;
 		var errors        = 0;
 		var allErrors     = 0;
+		var capErrors     = 0;
 		var numUrls       = 0;
+		var numCap        = 0;
 		
 		var objList             = new Array();
 		var objErrorList        = new Array();
-        var objErrorSummary     = new Object();
+        var errorSummary        = new Object();
         var objErrorSummaryList = new Array();
+        var capabilitiesList = new Array();
 		
-		for (var i = 0; i < urlObjectReferenceList.length; ++i) {
-            addUrlTableInfo(urlObjectReferenceList[i]);
-		    if (i<maxListSize) {
-			    urlObjectReferenceList[i].objectName = "<a href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+urlObjectReferenceList[i].objectUuid+"\", \"O\"); return false;' title='"+urlObjectReferenceList[i].objectName+"' target='_new'>"+urlObjectReferenceList[i].objectName+"</a>";
-			    objList.push(urlObjectReferenceList[i]);
-			    numUrls++;
-		    }
-		    // just show in error table those who are not valid but have been checked for invalidity
-		    if (urlObjectReferenceList[i].urlState.state != "VALID" && urlObjectReferenceList[i].urlState.state != "NOT_CHECKED") {
-		        allErrors++;
-		        if (errors < maxListSize) {		        
-    		        if (i >= maxListSize) {
-                        urlObjectReferenceList[i].objectName = "<a href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+urlObjectReferenceList[i].objectUuid+"\", \"O\"); return false;' title='"+urlObjectReferenceList[i].objectName+"' target='_new'>"+urlObjectReferenceList[i].objectName+"</a>";
+        var prepareData = function(data) {
+            var list         = new Array();
+            var errorList    = new Array();
+            //var errorSummary = new Array();
+            var num = 0, errors = 0;
+            
+    		for (var i = 0; i < data.length; ++i) {
+                addUrlTableInfo(data[i]);
+    		    if (i<maxListSize) {
+    			    data[i].objectName = "<a href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+data[i].objectUuid+"\", \"O\"); return false;' title='"+data[i].objectName+"' target='_new'>"+data[i].objectName+"</a>";
+    			    list.push(data[i]);
+    			    num++;
+    		    }
+    		    // just show in error table those who are not valid but have been checked for invalidity
+    		    if (data[i].urlState.state != "VALID" && data[i].urlState.state != "NOT_CHECKED") {
+    		        allErrors++;
+    		        if (errors < maxListSize) {		        
+        		        if (i >= maxListSize) {
+                            data[i].objectName = "<a href='#' onclick='menuEventHandler.handleSelectNodeInTree(\""+data[i].objectUuid+"\", \"O\"); return false;' title='"+data[i].objectName+"' target='_new'>"+data[i].objectName+"</a>";
+        		        }
+        		        errorList.push(data[i]);
+        		        errors++;
     		        }
-    		        objErrorList.push(urlObjectReferenceList[i]);
-    		        errors++;
-		        }
-                if (!objErrorSummary[urlObjectReferenceList[i].errorCode]) {
-                    objErrorSummary[urlObjectReferenceList[i].errorCode] = 0;
-                }
-                objErrorSummary[urlObjectReferenceList[i].errorCode]++;
-		    }
-		}
+                    if (!errorSummary[data[i].errorCode]) {
+                        errorSummary[data[i].errorCode] = 0;
+                    }
+                    errorSummary[data[i].errorCode]++;
+    		    }
+    		}
+    		
+    		return [num, errors, list, errorList, errorSummary];
+        }
+        
+        var resultUrls = prepareData(urlObjectReferenceList);
+        var resultCaps = prepareData(capabilitiesReferenceList);
+
 		
-        for (errorCode in objErrorSummary) { 
-            objErrorSummaryList.push({'errorCode':errorCode, 'count':objErrorSummary[errorCode]}); 
+        for (errorCode in errorSummary) { 
+            objErrorSummaryList.push({'errorCode':errorCode, 'count':errorSummary[errorCode]}); 
         }
 
 		dijit.byId("urlList1").set('title', allUrlsTitle + " (" + /*numUrls + "/" +*/ urlObjectReferenceList.length + ")");
-        dijit.byId("urlList2").set('title', allErrorUrlsTitle + " (" + /*errors + "/" +*/ allErrors + ")");
+        dijit.byId("urlList2").set('title', allErrorUrlsTitle + " (" + /*errors + "/" +*/ resultUrls[1] + ")");
         dijit.byId("urlList3").set('title', summaryErrorUrlsTitle/* + " (" + allErrors + ")"*/);
+        dijit.byId("urlListCap").set('title', capabilitiesUrlsTitle + " (" + resultCaps[1] + ")");
     
         //UtilGrid.generateIDs(objList, "_id");
-        UtilGrid.setTableData("urlListTable1", objList);
-        UtilGrid.setTableData("urlListTable2", dojo.filter(objList, function(item) {return ("VALID" != item.errorCode);}));
+        UtilGrid.setTableData("urlListTable1", resultUrls[2]);
+        UtilGrid.setTableData("urlListTable2", dojo.filter(resultUrls[2], function(item) {return ("VALID" != item.errorCode);}));
         UtilGrid.setTableData("urlListTable3", objErrorSummaryList);
+        UtilGrid.setTableData("urlListTableCap", resultCaps[3]);
 	} else {
 		UtilGrid.setTableData("urlListTable1", []);
 		UtilGrid.setTableData("urlListTable2", []);
         UtilGrid.setTableData("urlListTable3", []);
+        UtilGrid.setTableData("urlListTableCap", []);
 	}
 	UtilGrid.getTable("urlListTable1").invalidate();
     UtilGrid.getTable("urlListTable2").invalidate();
+    UtilGrid.getTable("urlListTableCap").invalidate();
     //UtilGrid.getTable("urlListTable3").invalidate();
 	UtilGrid.getTable("urlListTable1").resizeCanvas();
 	UtilGrid.getTable("urlListTable2").resizeCanvas();
+	UtilGrid.getTable("urlListTableCap").resizeCanvas();
     //UtilGrid.getTable("urlListTable3").resizeCanvas();
 }
 
@@ -327,7 +356,7 @@ function hideLoadingZone() {
 
 			<!-- INFO START -->
 			<div class="inputContainer">
-				<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.urls.refresh" />" onClick="javascript:scriptScopeUrls.startUrlsJob();"><fmt:message key="dialog.admin.catalog.management.urls.refresh" /></button>
+				<button dojoType="dijit.form.Button" id="urlStartAnalysis" title="<fmt:message key="dialog.admin.catalog.management.urls.refresh" />" onClick="javascript:scriptScopeUrls.startUrlsJob();"><fmt:message key="dialog.admin.catalog.management.urls.refresh" /></button>
 			</div>
 
 			<div class="inputContainer noSpaceBelow">
@@ -371,10 +400,14 @@ function hideLoadingZone() {
 					<div id="urlList2" dojoType="dijit.layout.ContentPane" class="innerPadding" title="<fmt:message key="dialog.admin.catalog.management.urls.invalidUrls" />">
 							<div id="urlListTable2" autoHeight="20" forceGridHeight="true"  contextMenu="none" query=""></div>
 					</div> <!-- TAB 2 END -->
-                    <!-- TAB 3 START -->
+                    <!-- TAB Capabilities START -->
+                    <div id="urlListCap" dojoType="dijit.layout.ContentPane" class="innerPadding" title="<fmt:message key="dialog.admin.catalog.management.urls.capabilities" />">
+                        <div id="urlListTableCap" autoHeight="20" forceGridHeight="true" contextMenu="none"></div>
+                    </div> <!-- TAB Capabilities END -->
+                    <!-- TAB Summary START -->
                     <div id="urlList3" dojoType="dijit.layout.ContentPane" class="innerPadding" title="<fmt:message key="dialog.admin.catalog.management.urls.summaryUrls" />">
                         <div id="urlListTable3" autoHeight="20" forceGridHeight="true" contextMenu="none"></div>
-                    </div> <!-- TAB 3 END -->
+                    </div> <!-- TAB Summary END -->
 				</div>
 			</div>
 			<div id="replaceContainer" class="inputContainer grey field">

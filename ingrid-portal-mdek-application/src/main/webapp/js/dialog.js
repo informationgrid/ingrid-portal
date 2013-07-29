@@ -223,7 +223,7 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
         var button;
         if (btnActions[i].type == "checkbox") {
             button = new dijit.form.CheckBox({id: "chkbox_hideCopyHint", style:"float:left;"}).placeAt(dojo.byId("dialogButtonBar"));
-            dojo.create("label", { for:"chkbox_hideCopyHint", innerHTML: btnActions[i].caption, style:"float:left;", "class":"inActive"}, dojo.byId("dialogButtonBar"));
+            dojo.create("label", { "for":"chkbox_hideCopyHint", "innerHTML": btnActions[i].caption, "style":"float:left;", "class":"inActive"}, dojo.byId("dialogButtonBar"));
         } else {
             button = new dijit.form.Button({label:btnActions[i].caption}).placeAt(dojo.byId("dialogButtonBar"));
         }

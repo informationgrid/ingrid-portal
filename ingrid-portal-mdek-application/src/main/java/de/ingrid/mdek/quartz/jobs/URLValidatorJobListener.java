@@ -1,6 +1,7 @@
 package de.ingrid.mdek.quartz.jobs;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
@@ -40,12 +41,15 @@ public class URLValidatorJobListener implements JobListener {
 
 	public void jobWasExecuted(JobExecutionContext jobExecutionContext,
 			JobExecutionException jobExecutionException) {
-		List<URLObjectReference> urlObjectReferences = (List<URLObjectReference>) jobExecutionContext.getResult();
+	    Map<String, List<URLObjectReference>> results = (Map<String, List<URLObjectReference>>) jobExecutionContext.getResult();
+		List<URLObjectReference> urlObjectReferences = results.get(MdekKeys.URL_RESULT);
+		List<URLObjectReference> capabilitiesReferences = results.get(MdekKeys.CAP_RESULT);
 
 		if (urlObjectReferences != null) {
 			log.debug("sending URL Job result to the backend.");
 			IngridDocument jobInfo = new IngridDocument();
 			jobInfo.put(MdekKeys.URL_RESULT, MdekCatalogUtils.convertFromUrlJobResult(urlObjectReferences));
+			jobInfo.put(MdekKeys.CAP_RESULT, MdekCatalogUtils.convertFromUrlJobResult(capabilitiesReferences));
 			jobInfo.put(MdekKeys.JOBINFO_START_TIME, MdekUtils.dateToTimestamp(jobExecutionContext.getFireTime()));
 			mdekCallerCatalog.setURLInfo(plugId, jobInfo, userUuid);
 			log.debug("URL Validator Job result has been stored in the DB.");

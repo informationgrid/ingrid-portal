@@ -376,29 +376,36 @@ public class MdekCatalogUtils {
 
 	private static void addURLJobInfoFromResponse(IngridDocument response, URLJobInfoBean urlJobInfo) {
 		IngridDocument urlRefDoc = MdekUtils.getResultFromResponse(response);
-		List<URLObjectReference> urlObjectReferences = new ArrayList<URLObjectReference>();
 		if (urlRefDoc != null) {
 			List<Map<String, Object>> urlResult = (List<Map<String, Object>>) urlRefDoc.get(MdekKeys.URL_RESULT);
-			if (urlResult != null) {
-				for (Map<String, Object> urlRef : urlResult) {
-					URLObjectReference urlObjectRef = new URLObjectReference();
-					urlObjectRef.setObjectClass((Integer) urlRef.get(MdekKeys.URL_RESULT_OBJECT_CLASS));
-					urlObjectRef.setObjectName((String) urlRef.get(MdekKeys.URL_RESULT_OBJECT_NAME));
-					urlObjectRef.setObjectUuid((String) urlRef.get(MdekKeys.URL_RESULT_OBJECT_UUID));
-					urlObjectRef.setUrlReferenceDescription((String) urlRef.get(MdekKeys.URL_RESULT_REFERENCE_DESCRIPTION));
-					URLState urlState = new URLState((String) urlRef.get(MdekKeys.URL_RESULT_URL));
-					urlState.setState(State.valueOf((String) urlRef.get(MdekKeys.URL_RESULT_STATE)));
-					urlState.setResponseCode((Integer) urlRef.get(MdekKeys.URL_RESULT_RESPONSE_CODE));
-					urlObjectRef.setUrlState(urlState);
-					urlObjectReferences.add(urlObjectRef);
-				}
-			}
-			urlJobInfo.setUrlObjectReferences(urlObjectReferences);
+			List<Map<String, Object>> capResult = (List<Map<String, Object>>) urlRefDoc.get(MdekKeys.CAP_RESULT);
+			
+			urlJobInfo.setUrlObjectReferences(getUrlReferencesFromResult(urlResult));
+			urlJobInfo.setCapabilitiesReferences(getUrlReferencesFromResult(capResult));
 
 		} else {
 			MdekErrorUtils.handleError(response);
 		}
 	}
+
+    private static List<URLObjectReference> getUrlReferencesFromResult(List<Map<String, Object>> urlResult) {
+        List<URLObjectReference> urlReferences = new ArrayList<URLObjectReference>();
+        if (urlResult != null) {
+        	for (Map<String, Object> urlRef : urlResult) {
+        		URLObjectReference urlObjectRef = new URLObjectReference();
+        		urlObjectRef.setObjectClass((Integer) urlRef.get(MdekKeys.URL_RESULT_OBJECT_CLASS));
+        		urlObjectRef.setObjectName((String) urlRef.get(MdekKeys.URL_RESULT_OBJECT_NAME));
+        		urlObjectRef.setObjectUuid((String) urlRef.get(MdekKeys.URL_RESULT_OBJECT_UUID));
+        		urlObjectRef.setUrlReferenceDescription((String) urlRef.get(MdekKeys.URL_RESULT_REFERENCE_DESCRIPTION));
+        		URLState urlState = new URLState((String) urlRef.get(MdekKeys.URL_RESULT_URL));
+        		urlState.setState(State.valueOf((String) urlRef.get(MdekKeys.URL_RESULT_STATE)));
+        		urlState.setResponseCode((Integer) urlRef.get(MdekKeys.URL_RESULT_RESPONSE_CODE));
+        		urlObjectRef.setUrlState(urlState);
+        		urlReferences.add(urlObjectRef);
+        	}
+        }
+        return urlReferences;
+    }
 
 	private static void addReindexJobInfoFromResponse(IngridDocument response, JobInfoBean jobInfo) {
 		IngridDocument jobInfoDoc = MdekUtils.getResultFromResponse(response);

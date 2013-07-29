@@ -94,7 +94,7 @@ public class CatalogManagementServiceImpl {
 		}
 	}
 
-	public void replaceUrls(List<Map<String, String>> sourceUrls, String targetUrl) {
+	public void replaceUrls(List<Map<String, String>> sourceUrls, String targetUrl, String type) {
 		List<IngridDocument> urlList = new ArrayList<IngridDocument>();
 
 		for (Map<String, String> map : sourceUrls) {
@@ -109,6 +109,7 @@ public class CatalogManagementServiceImpl {
 				connectionFacade.getCurrentPlugId(),
 				urlList,
 				targetUrl,
+				type,
 				MdekSecurityUtils.getCurrentUserUuid());
 
 		IMdekClientCaller mdekClientCaller = connectionFacade.getMdekClientCaller();
@@ -118,9 +119,7 @@ public class CatalogManagementServiceImpl {
 	}
 
 	public List<MdekDataBean> getDuplicateObjects() {
-		// TODO Use function from backend when it's done
-		IMdekCallerQuery mdekCallerQuery = connectionFacade
-				.getMdekCallerQuery();
+		IMdekCallerQuery mdekCallerQuery = connectionFacade.getMdekCallerQuery();
 
 		String qString = "select obj.objUuid, obj.objClass, obj.objName, obj.objDescr "
 			+ "from ObjectNode oNode "

@@ -7,6 +7,7 @@ import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 public class URLJobInfoBean extends JobInfoBean {
 
 	private List<URLObjectReference> urlObjectReferences;
+	private List<URLObjectReference> capabilitiesReferences;
 
 	public URLJobInfoBean() {}
 
@@ -28,4 +29,12 @@ public class URLJobInfoBean extends JobInfoBean {
 	public void setUrlObjectReferences(List<URLObjectReference> urlObjectReferences) {
 		this.urlObjectReferences = urlObjectReferences;
 	}
+
+    public List<URLObjectReference> getCapabilitiesReferences() {
+        return capabilitiesReferences;
+    }
+
+    public void setCapabilitiesReferences(List<URLObjectReference> capabilitiesReferences) {
+        this.capabilitiesReferences = capabilitiesReferences;
+    }
 }

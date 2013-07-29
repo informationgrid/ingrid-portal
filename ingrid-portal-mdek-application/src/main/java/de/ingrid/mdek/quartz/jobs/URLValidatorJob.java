@@ -28,10 +28,11 @@ import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean.EntityType;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.handler.ConnectionFacade;
+import de.ingrid.mdek.quartz.jobs.util.CapabilitiesValidator;
 import de.ingrid.mdek.quartz.jobs.util.URLObjectReference;
 import de.ingrid.mdek.quartz.jobs.util.URLState;
-import de.ingrid.mdek.quartz.jobs.util.URLValidator;
 import de.ingrid.mdek.quartz.jobs.util.URLState.State;
+import de.ingrid.mdek.quartz.jobs.util.URLValidator;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
@@ -43,7 +44,9 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	private static final String JOB_BASE_NAME = "urlValidatorJob_";
 	private static final String JOB_LISTENER_SUFFIX = "_listener";
 	public static final String URL_MAP = "urlMap";
+	private static final String CAP_URL_MAP = "capMap";
 	public static final String URL_OBJECT_REFERENCES = "urlObjectReferences";
+	private static final String CAPABILITIES_REFERENCES = "capabilitiesReferences";
 	public static final String END_TIME = "endTime";
 	public static final int NUM_THREADS = 10;
 
@@ -90,12 +93,16 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	}
 
 	private JobDetail createJobDetail() {
-		List<URLObjectReference> urlObjectReferences = fetchUrls();
+		List<URLObjectReference> urlObjectReferences = fetchLinkUrls();
+		List<URLObjectReference> capabilitiesReferences = fetchCapabilitiesUrls();
 		Map<String, URLState> urlMap = createUrlMap(urlObjectReferences);
+		Map<String, URLState> capabilitiesMap = createUrlMap(capabilitiesReferences);
 
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put(URLValidatorJob.URL_MAP, urlMap);
+		dataMap.put(URLValidatorJob.CAP_URL_MAP, capabilitiesMap);
 		dataMap.put(URLValidatorJob.URL_OBJECT_REFERENCES, urlObjectReferences);
+		dataMap.put(URLValidatorJob.CAPABILITIES_REFERENCES, capabilitiesReferences);
 
 		JobDetail jobDetail = new JobDetail(jobName, Scheduler.DEFAULT_GROUP, URLValidatorJob.class);
 		JobDataMap jobDataMap = new JobDataMap(dataMap);
@@ -114,22 +121,44 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		return urlMap;
 	}
 
+	
+	private List<URLObjectReference> fetchCapabilitiesUrls() {
+	    // Fetch all URLs for objects that are published and not modified (objIdPub = objId)
+	    //SELECT connect_pont FROM `t011_obj_serv_op_connpoint` CP, t011_obj_serv_operation OP where CP.obj_serv_op_id=OP.id AND OP.name_key=1
+        String qString = "select obj.objUuid, obj.objName, obj.objClass, url.connectPoint " +
+                "from ObjectNode oNode " +
+                "inner join oNode.t01ObjectPublished obj " +
+                "inner join obj.t011ObjServs objServ " +
+                "join objServ.t011ObjServOperations objServOp " +
+                "inner join objServOp.t011ObjServOpConnpoints url " +
+                "where oNode.objIdPublished = oNode.objId " +
+                "order by url.connectPoint";
 
-	private List<URLObjectReference> fetchUrls() {
+        IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
+        IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+        return mapToUrlReferences(result, true);
+	}
+	
+	private List<URLObjectReference> fetchLinkUrls() {
+	    // Fetch all URLs for objects that are published and not modified (objIdPub = objId)
+        String qString = "select obj.objUuid, obj.objName, obj.objClass, " +
+                "urlRef.urlLink, urlRef.content " +
+                "from ObjectNode oNode " +
+                "inner join oNode.t01ObjectPublished obj " +
+                "inner join obj.t017UrlRefs urlRef " +
+                "where oNode.objIdPublished = oNode.objId " +
+                "order by urlRef.urlLink";
+
+        IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
+        IngridDocument result = MdekUtils.getResultFromResponse(response);
+
+        return mapToUrlReferences(result, false);
+	}
+	
+	private List<URLObjectReference> mapToUrlReferences(IngridDocument result, boolean isCapabilities) {
 		List<URLObjectReference> resultList = new ArrayList<URLObjectReference>();
-
-		// Fetch all URLs for objects that are published and not modified (objIdPub = objId)
-		String qString = "select obj.objUuid, obj.objName, obj.objClass, " +
-				"urlRef.urlLink, urlRef.content " +
-			"from ObjectNode oNode " +
-				"inner join oNode.t01ObjectPublished obj " +
-				"inner join obj.t017UrlRefs urlRef " +
-			"where oNode.objIdPublished = oNode.objId " +
-			"order by urlRef.urlLink";
-
-		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
-		IngridDocument result = MdekUtils.getResultFromResponse(response);
-
+		
 		if (result != null) {
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			if (objs != null) {
@@ -139,8 +168,13 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 					ref.setObjectClass(objEntity.getInt("obj.objClass"));
 					ref.setObjectName(objEntity.getString("obj.objName"));
 					ref.setObjectUuid(objEntity.getString("obj.objUuid"));
+					String url = null;
+					if (isCapabilities) {
+					    url = objEntity.getString("url.connectPoint");
+					} else {
+					    url = objEntity.getString("urlRef.urlLink");
+					}
 					ref.setUrlReferenceDescription(objEntity.getString("urlRef.content"));
-					String url = objEntity.getString("urlRef.urlLink");
 					URLState urlState = urlStateMap.get(url);
 					if (urlState == null) {
 						urlState = new URLState(url);
@@ -177,6 +211,9 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		JobDataMap mergedJobDataMap = jobExecutionContext.getMergedJobDataMap();
 		Map<String, URLState> urlMap = (Map<String, URLState>) mergedJobDataMap.get(URL_MAP);
 		List<URLValidator> validatorTasks = new ArrayList<URLValidator>(urlMap.size());
+		
+		Map<String, URLState> capabilitiesMap = (Map<String, URLState>) mergedJobDataMap.get(CAP_URL_MAP);
+		List<CapabilitiesValidator> capabilitiesValidatorTasks = new ArrayList<CapabilitiesValidator>(capabilitiesMap.size());
 
 		HttpClientParams httpClientParams = new HttpClientParams();
 		httpClientParams.setConnectionManagerTimeout(0);
@@ -188,12 +225,18 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		for (URLState urlState : urlMap.values()) {
 			validatorTasks.add(new URLValidator(httpClient, urlState));
 		}
+		for (URLState urlState : capabilitiesMap.values()) {
+		    capabilitiesValidatorTasks.add(new CapabilitiesValidator(httpClient, urlState));
+		}
 
 		log.debug("Starting url validation...");
 		long startTime = System.currentTimeMillis();
 		List<Future<URLState>> resultFutureList = new ArrayList<Future<URLState>>();
 		for (URLValidator validator : validatorTasks) {
 			resultFutureList.add(executorService.submit(validator));
+		}
+		for (CapabilitiesValidator validator : capabilitiesValidatorTasks) {
+		    resultFutureList.add(executorService.submit(validator));
 		}
 
 		for (Future<URLState> future : resultFutureList) {
@@ -218,7 +261,10 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 
 		// Only store if job was not cancelled
 		if (!cancelJob) {
-			jobExecutionContext.setResult(mergedJobDataMap.get(URL_OBJECT_REFERENCES));
+		    Map<String, List<URLObjectReference>> map = new HashMap<String, List<URLObjectReference>>();
+		    map.put(MdekKeys.URL_RESULT, (List<URLObjectReference>)mergedJobDataMap.get(URL_OBJECT_REFERENCES));
+		    map.put(MdekKeys.CAP_RESULT, (List<URLObjectReference>)mergedJobDataMap.get(CAPABILITIES_REFERENCES));
+			jobExecutionContext.setResult(map);
 		}
 	}
 
@@ -245,6 +291,11 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 
 		if (executionContext != null) {
 			Map<String, URLState> urlMap = (Map<String, URLState>) executionContext.getMergedJobDataMap().get(URLValidatorJob.URL_MAP);
+			Map<String, URLState> capMap = (Map<String, URLState>) executionContext.getMergedJobDataMap().get(URLValidatorJob.CAP_URL_MAP);
+			
+			// merge capabilities urls with normal urls
+			urlMap.putAll(capMap);
+			
 			int totalNumberOfUrls = urlMap.size();
 			int numberOfProcessedUrls = 0;
 			for (URLState urlState : urlMap.values()) {

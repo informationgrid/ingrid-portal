@@ -1023,13 +1023,37 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          // show info of long text which is necessary if no edit mode is available
          // if (dojo.query(".slick-cell.l2.r2")[1].scrollWidth > cellWidth)
          if (this.getDataItem(cell.row) && thisCell.scrollWidth > this.columns[cell.cell].width) {
+             var self = this;
         	 var tooltip = dijit.showTooltip(this.getDataItem(cell.row)[this.columns[cell.cell].field], thisCell);
-        	 dojo.connect(thisCell, "onmouseout", function() {dijit.hideTooltip(thisCell);});
-        	 //dojo.connect(tooltip.domNode, "onmouseenter", function() {console.debug("entered");});
+        	 var handle = dojo.connect(thisCell, "onmouseout", function(e) {
+        	     var mousePos = {};
+        	     var cellPosition = dojo.position(this);
+        	     var handleMove = dojo.connect(dojo.isIE ? document : window, "onmousemove", function(e) { mousePos.x = e.clientX; mousePos.y = e.clientY; });
+        	     setTimeout(function() {
+        	         var tooltip = dojo.query(".dijitTooltip")[0];
+        	         if (!self._isCoordinateInElement(tooltip, mousePos)) {
+            	         dijit.hideTooltip(thisCell);
+            	         dojo.disconnect(handle);
+            	         dojo.disconnect(handleMove);
+        	         } else {
+        	             var handleTipOut = dojo.connect(tooltip, "onmouseout", function(e) { if (!self._isCoordinateInElement(tooltip, {x:e.clientX, y:e.clientY})) { dijit.hideTooltip(thisCell); dojo.disconnect(handleTipOut); }} );
+        	             dojo.disconnect(handle);
+        	         }
+        	     }, 500);
+        	 });
          }
          
          // start listener for click outside grid to make sure editor is closed
          this.onMouseClickOutsideHandler();
+     },
+     
+     _isCoordinateInElement: function( element, coord) {
+         if (element) {
+             var el = dojo.position(element);
+             return (el.x <= coord.x && (el.x + el.w) > coord.x && 
+                     el.y <= coord.y && (el.y + el.h) > coord.y);
+         }
+         return false;
      },
      
      onMouseClickOutsideHandler: function() {
