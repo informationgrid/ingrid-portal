@@ -419,7 +419,7 @@ function hideLoadingZone() {
 					<input type="text" id="urlReplace" maxLength="255" dojoType="dijit.form.ValidationTextBox" style="width:100%;"/>
 				</span>
 				<span style="float:right;">
-					<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.urls.replace" />" onClick="javascript:scriptScopeUrls.replaceUrl();"><fmt:message key="dialog.admin.catalog.management.urls.replace" /></button>
+					<button dojoType="dijit.form.Button" id="urlBtnReplace" title="<fmt:message key="dialog.admin.catalog.management.urls.replace" />" onClick="javascript:scriptScopeUrls.replaceUrl();"><fmt:message key="dialog.admin.catalog.management.urls.replace" /></button>
 				</span>
 				<span id="replaceUrlLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
 					<img src="img/ladekreis.gif" />
