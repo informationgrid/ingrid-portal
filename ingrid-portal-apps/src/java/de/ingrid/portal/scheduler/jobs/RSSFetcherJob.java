@@ -180,12 +180,29 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                         }
 
                         if (includeEntry) {
+                            // process title here to have same value for checks !
+                        	// NOTICE: not empty, already checked above !
+                            String title = processStringForStore(entry.getTitle(), 255);
+
                             // check if this entry already exists
                             tx = session.beginTransaction();
                             List rssEntries = session.createCriteria(IngridRSSStore.class).add(
                                     Restrictions.eq("link", entry.getLink())).add(
                                     Restrictions.eq("language", feed.getLanguage())).list();
                             tx.commit();
+
+                            // NOTICE: link might be different although news IS THE SAME !!!
+                            // (e.g. Bing always adds different tid parameter ! for ads ?).
+                            // So we also check via title and date and language
+                            if (rssEntries.isEmpty()) {
+                                tx = session.beginTransaction();
+                                rssEntries = session.createCriteria(IngridRSSStore.class).add(
+                                        Restrictions.eq("title", title)).add(
+                                        Restrictions.eq("publishedDate", publishedDate)).add(
+                                        Restrictions.eq("language", feed.getLanguage())).list();
+                                tx.commit();                            	
+                            }
+
                             if (rssEntries.isEmpty()) {
                                 List authors = new ArrayList();
                                 SyndPerson author = new SyndPersonImpl();
@@ -206,17 +223,9 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                                 entry.setAuthors(authors);
 
                                 IngridRSSStore rssEntry = new IngridRSSStore();
-                                String title = entry.getTitle();
-                                title = title.replaceAll("<br.*?>|<p.*?>|</p.*?>", " ");
-                                title = title.replaceAll("\\s+", " ");
-                                title = UtilsString.stripHTMLTagsAndHTMLEncode(title);
-                                if (title.length() > 256)
-                                    title = title.substring(0, 255);
                                 rssEntry.setTitle(title);
-                                String description = entry.getDescription().getValue();
-                                description = description.replaceAll("<br.*?>|<p.*?>|</p.*?>", " ");
-                                description = description.replaceAll("\\s+", " ");
-                                rssEntry.setDescription(UtilsString.stripHTMLTagsAndHTMLEncode(description));
+                                String description = processStringForStore(entry.getDescription().getValue(), null);
+                                rssEntry.setDescription(description);
                                 rssEntry.setLink(entry.getLink());
                                 rssEntry.setLanguage(feed.getLanguage());
                                 rssEntry.setPublishedDate(publishedDate);
@@ -335,6 +344,29 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
             log.debug("RSSFetcherJob finished.");
         }
     }
+
+    /**
+     * Process string for store in database and for display as part of news.
+     * @param inString the String to process
+     * @param maxLength pass null if string should not be truncated otherwise
+     * 		returned string is substring(0, maxLength) !
+     * @return processed string or null if string is null
+     */
+    private String processStringForStore(String inString, Integer maxLength) {
+        String outString = inString;
+        if (outString != null) {
+            outString = outString.replaceAll("<br.*?>|<p.*?>|</p.*?>", " ");
+            outString = outString.replaceAll("\\s+", " ");
+            outString = UtilsString.stripHTMLTagsAndHTMLEncode(outString);
+            if (maxLength != null) {
+                if (outString.length() > maxLength)
+                    outString = outString.substring(0, maxLength);
+            }
+        }
+        
+        return outString;
+    }
+
 
     /**
      * Watch dog thread to force timeout of an HttpUrlConnection. The timeout

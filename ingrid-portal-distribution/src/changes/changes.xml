@@ -30,6 +30,9 @@
     <action type="update" dev="wemove" issue="INGRID-2260">
       IGE: Update of help texts.
     </action>
+    <action type="fix" dev="wemove" issue="AF-00211">
+      Fix reading of same RSS news where link differs (e.g. due to changing ad-parameters in link).
+    </action>
     <action type="fix" dev="wemove" issue="INGRID-2276">
       Fix facet problem with providers when partner is selected.
     </action>
