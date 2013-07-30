@@ -27,6 +27,9 @@ function displayErrorMessage(err) {
             err = err.message;
             dojo.debug("err.message: "+err.message);
         }
+        
+        var extraInfo = "";
+        if (err.cause && err.cause.message) extraInfo = "<br /><i>(" + err.cause.message + ")</i>";
 		
         if (err.message.indexOf("OPERATION_CANCELLED") != -1) {
             return;
@@ -59,13 +62,13 @@ function displayErrorMessage(err) {
             dialog.show(message.get("general.error"), message.get("dialog.inputInvalidHtmlTagError"), dialog.WARNING);
         
         } else if (err.message.indexOf("ERROR_GETCAP_ERROR") != -1) {
-            dialog.show(message.get("general.error"), message.get("dialog.getcap.error"), dialog.WARNING);
-
+            dialog.show(message.get("general.error"), message.get("dialog.getcap.error") + extraInfo, dialog.WARNING);
+            
         } else if (err.message.indexOf("ERROR_GETCAP_XPATH") != -1) {
-            dialog.show(message.get("general.error"), message.get("dialog.getcap.xpathError"), dialog.WARNING);
+            dialog.show(message.get("general.error"), message.get("dialog.getcap.xpathError") + extraInfo, dialog.WARNING);
 
         } else if (err.message.indexOf("ERROR_GETCAP_INVALID_URL") != -1) {
-            dialog.show(message.get("general.error"), message.get("dialog.getcap.invalidUrlError"), dialog.WARNING);
+            dialog.show(message.get("general.error"), message.get("dialog.getcap.invalidUrlError") + extraInfo, dialog.WARNING);
 
         } else if (err.message.indexOf("HQL_NOT_VALID") != -1) {
             dialog.show(message.get("general.error"), message.get("dialog.hqlQueryInvalidError"), dialog.WARNING);

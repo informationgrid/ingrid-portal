@@ -934,8 +934,12 @@ public class GetCapabilitiesService {
 
     	} else {
 			// Could not determine ServiceType
-    		log.debug("Could not evaluate service type.");
-    		throw new RuntimeException("Could not evaluate service type.");
+    	    String error = "";
+    	    if ("ExceptionReport".equals(doc.getFirstChild().getNodeName())) {
+    	        error = doc.getFirstChild().getFirstChild().getFirstChild().getNodeValue();
+    	    }
+    		log.debug("Could not evaluate service type. " + error);
+    		throw new RuntimeException("Could not evaluate service type: " + error);
     	}
     }
 

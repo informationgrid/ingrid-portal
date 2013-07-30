@@ -1387,7 +1387,17 @@ UtilString.hasValue = function(stringValue) {
 	return UtilGeneral.hasValue(stringValue);
 }
 
+// value starting from 0..n
+UtilString._getCapabilitiesType = function(value) {
+    // null, Suchdienste, Darstellungsdienste, Download, Sonstige, null, Sonstige
+    var types = [null, "CSW", "WMS", "WFS", "WCTS", null, "WCS"];
+    return types[value];
+}
+
 UtilString.addCapabilitiesParameter = function(type, connUrl) {
+    var mappedType = this._getCapabilitiesType(type);
+    if (!mappedType) console.error("Not supported Service Type: " + type);
+    
     if (connUrl.toLowerCase().indexOf("request=getcapabilities") == -1) {
         if (connUrl.indexOf("?") == -1) {
             connUrl = connUrl + "?";
@@ -1396,24 +1406,11 @@ UtilString.addCapabilitiesParameter = function(type, connUrl) {
                 && !(connUrl.lastIndexOf("&") == connUrl.length - 1)) {
             connUrl = connUrl + "&";
         }
-        switch (type) {
-        case "1": // Suchdienste
-            connUrl = connUrl + "REQUEST=GetCapabilities&SERVICE=CSW";
-            break;
-        case "2": // view / Darstellungsdienste
-            connUrl = connUrl + "REQUEST=GetCapabilities&SERVICE=WMS";
-            break;
-        case "3": // Download - Dienste
-            connUrl = connUrl + "REQUEST=GetCapabilities&SERVICE=WFS";
-            break;
-        case "4": // Sonstige Dienste
-            connUrl = connUrl + "REQUEST=GetCapabilities&SERVICE=WCTS";
-            break;
-        case "6": // Sonstige Dienste
-            connUrl = connUrl + "REQUEST=GetCapabilities&SERVICE=WCS";
-            break;
-        }
         
+        connUrl += "REQUEST=GetCapabilities&SERVICE=" + mappedType;
+    }
+    if (connUrl.toLowerCase().indexOf("service=") == -1) {
+        connUrl += "&SERVICE=" + mappedType;
     }
     return connUrl;
 }

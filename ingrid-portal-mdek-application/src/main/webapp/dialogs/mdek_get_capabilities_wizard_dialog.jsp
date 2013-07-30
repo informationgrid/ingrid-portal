@@ -15,31 +15,33 @@ var thisDialog = dijit.byId("subPageDialog");
 if (thisDialog == undefined)
     thisDialog = dijit.byId("pageDialog");
 
-//dojo.addOnLoad(function() {//doesnt work in IE
-    dojo.connect(_container_, "onLoad", function() {
-		dijit.byId("objectClass").setValue("Class3");
-
-	    // Pressing 'enter' on the url input field is equal to a start button click
-	    dojo.connect(dijit.byId("assistantURL").domNode, "onkeypress",
-	        function(event) {
-	            if (event.keyCode == dojo.keys.ENTER) {
-	                scriptScope.startRequest();
-	            }
-		});
+dojo.connect(_container_, "onLoad", function() {
+	dijit.byId("objectClass").setValue("Class3");
+	
+    // Pressing 'enter' on the url input field is equal to a start button click
+    dojo.connect(dijit.byId("assistantURL").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == dojo.keys.ENTER) {
+                scriptScope.startRequest();
+            }
 	});
-//});
+    
+	dijit.byId("assistantURL").focus();
+});
 
 
 scriptScope.startRequest = function() {
 	var url = dijit.byId("assistantURL").getValue();
-	console.debug(url);
+	var capUrl = UtilString.addCapabilitiesParameter("2", url);
+	console.debug(url + " -> " + capUrl);
 	
 	var setOperationValues = function(capBean) {
 	    igeEvents._updateFormFromCapabilities(capBean);
 	    scriptScope.closeThisDialog();
 	}
 	
-	igeEvents.getCapabilities(url, setOperationValues);
+	dojo.byId("assistantGetCapRequestedUrl").innerHTML = "("+capUrl+")";
+	igeEvents.getCapabilities(capUrl, setOperationValues);
 }
 
 scriptScope.closeThisDialog = function() {
@@ -64,10 +66,10 @@ function hideLoadingZone() {
 	<div class="assistant">
 		<div class="content">
 			<!-- LEFT HAND SIDE CONTENT START -->
-			<div id="winNavi" style="top:0;">
-                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=creation-of-objects-3#creation-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
-            </div>
 			<div class="inputContainer field grey">
+    			<div id="winNavi" style="top:0; padding-bottom: 0;">
+                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=creation-of-objects-3#creation-of-objects-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                </div>
 			    <span class="outer"><div style="padding:15px !important;">
 				<span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 8061)"><fmt:message key="dialog.wizard.getCap.url" /></label></span>
 				<span class="input"><input type="text" id="assistantURL" name="assistantURL" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
@@ -79,6 +81,7 @@ function hideLoadingZone() {
 		        <span style="float:right; margin-top:5px;"><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.wizard.getCap.cancel" />" onClick="javascript:scriptScope.closeThisDialog();"><fmt:message key="dialog.wizard.getCap.cancel" /></button></span>
 		        <span style="float:right; margin-top:5px;"><button dojoType="dijit.form.Button" type="button" title="<fmt:message key="dialog.wizard.getCap.start" />" onClick="javascript:scriptScope.startRequest();"><fmt:message key="dialog.wizard.getCap.start" /></button></span>
 				<span id="assistantGetCapLoadingZone" style="float:right; margin-top:6px; z-index: 100; visibility:hidden">
+                    <span id="assistantGetCapRequestedUrl" class="comment"></span>
 					<img src="img/ladekreis.gif" />
 				</span>
 			</div>

@@ -44,13 +44,13 @@ closeThisDialog = function() {
 
     		<span style="float:left;">
     			<div class="checkboxContainer" id="resultList" style="width: 320px; height: 55px; overflow: auto;">
-					<div>
-						<input type="radio" name="assistantRadioSelect" id="assistantRadioSelect1" style="margin-right: 3px;" checked>
-						<fmt:message key="dialog.wizard.select.create" />
+					<div class="spaceBelow">
+						<input type="radio" name="assistantRadioSelect" id="assistantRadioSelect1" style="vertical-align: text-bottom;" checked>
+						<label for="assistantRadioSelect1" class="inActive"><fmt:message key="dialog.wizard.select.create" /></label>
 					</div>
 					<div>
-						<input type="radio" name="assistantRadioSelect" id="assistantRadioSelect2" style="margin-right: 3px;">
-						<fmt:message key="dialog.wizard.select.getCap" />
+						<input type="radio" name="assistantRadioSelect" id="assistantRadioSelect2" style="vertical-align: text-bottom;">
+						<label for="assistantRadioSelect2" class="inActive"><fmt:message key="dialog.wizard.select.getCap" /></label>
 					</div>
     			</div>
     		</span>
