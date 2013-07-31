@@ -31,19 +31,19 @@
       IGE: Update of help texts.
     </action>
     <action type="fix" dev="wemove" issue="AF-00211">
-      Fix reading of same RSS news where link differs (e.g. due to changing ad-parameters in link).
+      Portal: Fix fetching of RSS news when link differs although same news (e.g. due to changing ad-parameters in link).
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2276">
-      Fix facet problem with providers when partner is selected.
+      Portal: Fix facet problem with providers when partner is selected.
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2286">
-      Fix link to wemove page in content of Impressum.
+      Portal: Fix link to wemove page in content of Impressum.
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2278">
-      Switching to different profiles now also runs on Oracle.
+      Portal: Switching to different profiles now also runs on Oracle.
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2265">
-      Added missing oracle scripts for updating mdek database.
+      Portal: Added missing oracle scripts for updating mdek database.
     </action>
     <action type="fix" dev="wemove">
       WebMapClient: Transformation coordinates to WGS-84 by search area.
