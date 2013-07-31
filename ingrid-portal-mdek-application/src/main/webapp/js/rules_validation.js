@@ -246,14 +246,14 @@ function addressValidation() {
         var data = this.getData();
 		dojo.forEach(data, function(item, i) {
 			if (typeof(item.uuid) == "undefined") {
-                UtilGrid.getTable(gridId).scrollRowIntoView(i);
+                UtilGrid.getTable("generalAddress").scrollRowIntoView(i);
                 var cell = dojo.query(".slick-row[row$="+i+"] .c2", "generalAddress")[0];
 				dojo.addClass(cell, "importantBackground");
 				result = false;
 			}
 			if (forPublish) {
                 if (typeof(item.nameOfRelation) == "undefined" || item.nameOfRelation == "") {
-                    UtilGrid.getTable(gridId).scrollRowIntoView(i);
+                    UtilGrid.getTable("generalAddress").scrollRowIntoView(i);
                     var cell = dojo.query(".slick-row[row$=" + i + "] .c0", "generalAddress")[0];
                     dojo.addClass(cell, "importantBackground");
                     result = false;

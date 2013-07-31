@@ -37,7 +37,7 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
                 clService.persistToAll(clService.getCodeLists());
             }
             
-            log.info("UpdateCodeListsFromIGEJob finished! (successful = " + (modifiedCodelists == null ? false : true) + ")");
+            log.info("UpdateCodeListsFromIGEJob finished! (timestamp = " + timestamp + ", successful = " + (modifiedCodelists == null ? false : true) + ")");
         } else {
             log.info("No iPlug connected to update codelists to!");
         }
