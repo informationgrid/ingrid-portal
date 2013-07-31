@@ -21,8 +21,8 @@
     <action type="add" dev="wemove">
       Portal: Add Localization file to profiles for the InGrid-WebMapClient.
     </action>
-    <action type="update" dev="wemove" issue="AF-00203">
-      Portal: Update GeoPortal.WSV profile for localization issues.
+    <action type="update" dev="wemove" issue="AF-00203, AF-00209">
+      Portal: Update GeoPortal.WSV profile: Localization issues. Hide info portlet on disclaimer page.
     </action>
     <action type="update" dev="wemove" issue="INGRID-2242">
       Portal: Update NUMIS profile for InGrid 3.3.
@@ -31,7 +31,7 @@
       IGE: Update of help texts.
     </action>
     <action type="fix" dev="wemove" issue="AF-00211">
-      Portal: Fix fetching of RSS news when link differs although same news (e.g. due to changing ad-parameters in link).
+      Portal: Fix fetching of RSS news when link differs although same news (e.g. due to changing ad-parameter in link).
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2276">
       Portal: Fix facet problem with providers when partner is selected.

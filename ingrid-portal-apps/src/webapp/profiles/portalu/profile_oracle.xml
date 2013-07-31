@@ -224,6 +224,33 @@
                 </portlet>
             </portlets>
         </page>
+        <page>
+            <name>disclaimer.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::CMSPortlet</name>
+                    <preference name="infoTemplate" readOnly="false">
+                        <value>/WEB-INF/templates/default_cms.vm</value>
+                    </preference>
+                    <preference name="titleKey" readOnly="false">
+                        <value>disclaimer.title</value>
+                    </preference>
+                    <preference name="cmsKey" readOnly="false">
+                        <value>portalu.disclaimer</value>
+                    </preference>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::InfoPortlet</name>
+                    <preference name="infoTemplate" readOnly="false">
+                        <value>/WEB-INF/templates/disclaimer_info.vm</value>
+                    </preference>
+                    <preference name="titleKey" readOnly="false">
+                        <value>disclaimer.info.title</value>
+                    </preference>
+                 </portlet>
+            </portlets>
+        </page>
       </pages>
     <files>
         <file>
