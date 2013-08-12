@@ -1306,14 +1306,15 @@ function handleAddressNeverPublishedException(err) {
     var addresses = [];
     
     for (var i = 0; i < err.notPublishedAddresses.length; ++i) {
-        addresses.push(err.notPublishedAddresses[i].organisation);
+        var address = err.notPublishedAddresses[i];
+        addresses.push(address.organisation ? address.organisation : address.name + ", " + address.givenName);
     }
     dialog.show(message.get("general.error"), dojo.string.substitute(message.get("operation.hint.addressNotPublishedHint"), [addresses.join(",")]), dialog.WARNING, null, 320, 300);
 }
 
 function alertNotImplementedYet()
 {
-  alert("Diese Funktionalit�t ist noch nicht implementiert.");
+  alert("Diese Funktionalität ist noch nicht implementiert.");
 }
 
 /**

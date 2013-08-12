@@ -54,6 +54,8 @@
                 dojo.connect(dojo.byId("addressSearchUnit"), "onkeypress", startSearchOnEnter);
                 dojo.connect(dojo.byId("addressSearchLastname"), "onkeypress", startSearchOnEnter);
                 dojo.connect(dojo.byId("addressSearchFirstname"), "onkeypress", startSearchOnEnter);
+                
+                dijit.byId("addressSearchUnit").focus();
             });
             
             function loadAddressData(node, callback_function){

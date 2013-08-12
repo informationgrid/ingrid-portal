@@ -40,6 +40,8 @@
                 }
                     
                 init();
+                
+                dijit.byId("locationTextBox").focus();
             });
             
             function showLoadingZone(){
