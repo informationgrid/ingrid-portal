@@ -424,7 +424,6 @@ UtilAddress.initObjectAddressReferenceTable = function(linkList, numReferences) 
 	}
 
 	UtilAddress.objectAddressRefPageNav.setTotalNumHits(numReferences);
-	//tableStore.setData(linkList);
 	UtilStore.updateWriteStore("associatedObjName", linkList);
 	UtilAddress.objectAddressRefPageNav.updateDomNodes();
 }
@@ -432,17 +431,12 @@ UtilAddress.initObjectAddressReferenceTable = function(linkList, numReferences) 
 UtilAddress.navObjectAddressReferences = function() {
 	var curPos = UtilAddress.objectAddressRefPageNav.getStartHit();
 	var totalNumHits = UtilAddress.objectAddressRefPageNav.totalNumHits;
-	var tableStore = dijit.byId("associatedObjName").store;
 
 	// TODO Do we need to get the uuid from somewhere else?
 	AddressService.fetchAddressObjectReferences(currentUdk.uuid, curPos, 20, {
 			preHook: UtilDWR.enterLoadingState,
 			postHook: UtilDWR.exitLoadingState,
 			callback: function(adr){
-//				console.debugShallow(adr);
-
-				tableStore.clearData();
-
 				var unpubLinkTable = adr.linksFromObjectTable;
 				var pubLinkTable = adr.linksFromPublishedObjectTable;
 				dojo.forEach(pubLinkTable, function(link) { link.pubOnly = true; } );
@@ -452,7 +446,7 @@ UtilAddress.navObjectAddressReferences = function() {
 				UtilList.addObjectLinkLabels(linkTable);  
 				UtilList.addIcons(linkTable);
 
-				tableStore.setData(linkTable);
+				UtilGrid.setTableData("associatedObjName", linkTable);
 				UtilAddress.objectAddressRefPageNav.updateDomNodes();
 			},
 			errorHandler:function(message) {
