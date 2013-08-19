@@ -39,6 +39,12 @@
     <action type="fix" dev="wemove" issue="INGRID-2286">
       Portal: Fix link to wemove page in content of Impressum.
     </action>
+    <action type="fix" dev="wemove" issue="INGRID-2294">
+      IGE: Paging of associated objects in an address working again.
+    </action>
+    <action type="fix" dev="wemove" issue="INGRID-2295">
+      IGE: Extended Search of objects in Research startup issue.
+    </action>
     <action type="fix" dev="wemove" issue="INGRID-2278">
       Portal: Switching to different profiles now also runs on Oracle.
     </action>
