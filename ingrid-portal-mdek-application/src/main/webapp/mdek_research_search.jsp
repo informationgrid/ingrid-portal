@@ -19,19 +19,11 @@ var curAdrQuery = null;     // string representing the current address query
 
 var lastQuery   = null;
 
-    createDomElements();
+createDomElements();
 
-//dojo.addOnLoad(function() {
-    
-    //if (dojo.isIE)
-    //    researchScriptScope.connectKeyEvents();
-    //else {
-        dojo.connect(_container_, "onLoad", function(){
-            researchScriptScope.connectKeyEvents();
-        });
-            
-    //}
-//});
+dojo.connect(_container_, "onLoad", function(){
+    researchScriptScope.connectKeyEvents();
+});
         
 researchScriptScope.connectKeyEvents = function() {
         console.debug("page research onload");

@@ -14,7 +14,6 @@ div.dojoTabPaneWrapper { overflow:visible; }
 <script type="text/javascript">
     dojo.require("dijit.form.FilteringSelect");
     
-console.debug("javascript active");
 scriptScopeResearchExtObj = {};
 
 var resultsPerPage = 10;
@@ -39,15 +38,9 @@ var currentQuery = {	// Map of strings defining the query. See 'ObjectExtSearchP
 }
 
 
-dojo.addOnLoad(function() {
-    createDomElements();
-    
-    if (dojo.isIE)
-        scriptScopeResearchExtObj.init();
-    else
-        dojo.connect(dijit.byId("extContentObj"), "onLoad", function() {
-            scriptScopeResearchExtObj.init();
-        });
+createDomElements();
+dojo.connect(dijit.byId("extContentObj"), "onLoad", function(){
+    scriptScopeResearchExtObj.init();
 });
 
 scriptScopeResearchExtObj.init = function() {
@@ -65,9 +58,6 @@ scriptScopeResearchExtObj.init = function() {
 
     // Init the 'custom location' select box 
     var languageCode = UtilCatalog.getCatalogLanguage();
-
-    //var storeProps = {identifier: '1',label: '0'};
-    //UtilStore.updateWriteStore("objSpaceGeoUnit", sysLists[1100], storeProps);
 
     // Pressing 'enter' on the thesaurus input field is equal to a button click
     dojo.connect(dojo.byId("objTopicThesaurus"), "onkeypress",
@@ -101,22 +91,12 @@ scriptScopeResearchExtObj.init = function() {
 
     dojo.connect(dijit.byId("objTimeRef1From"), "onInvalidInput",
         function(input) {
-/*
-            console.debug("valueNode: "+dijit.byId("objTimeRef1From").valueNode.value);
-            console.debug("inputNode: "+dijit.byId("objTimeRef1From").inputNode.value);
-            console.debug("input: "+input);
-*/
             dijit.byId("objTimeRef1From").clearValue();
             dialog.show("<fmt:message key='general.error' />", dojo.string.substitute("<fmt:message key='dialog.research.ext.obj.invalidDate' />", [input]), dialog.WARNING);
 
     });
     dojo.connect(dijit.byId("objTimeRef1To"), "onInvalidInput",
         function(input) {
-/*
-            console.debug("valueNode: "+dijit.byId("objTimeRef1To").valueNode.value);
-            console.debug("inputNode: "+dijit.byId("objTimeRef1To").inputNode.value);
-            console.debug("input: "+input);
-*/
             dijit.byId("objTimeRef1To").clearValue();
             dialog.show("<fmt:message key='general.error' />", dojo.string.substitute("<fmt:message key='dialog.research.ext.obj.invalidDate' />", [input]), dialog.WARNING);
     });

@@ -28,20 +28,11 @@ var currentQuery = {	// Map of strings/integers defining the query. See 'Address
 }
 
 
-dojo.addOnLoad(function() {
     dojo.connect(dijit.byId("extContentAdr"), "onLoad", function() {
     	// Initially select the first tab on load
     	scriptScopeResearchExtAddr.navInnerTab(0);
     	dijit.byId("addrTopicInputBool").setValue(0);
-    /*
-        // Pressing 'enter' on the input field is equal to a button click
-        dojo.connect(dijit.byId("addrTopicInput").domNode, "onkeypress",
-            function(event) {
-                if (event.keyCode == event.KEY_ENTER) {
-                    scriptScopeResearchExtAddr.startNewSearch();
-                }
-    	});
-    */
+
         // Pressing 'enter' on the street field is equal to a button click
         dojo.connect(dijit.byId("addrSpaceStreet").domNode, "onkeypress",
             function(event) {
