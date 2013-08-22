@@ -20,16 +20,18 @@
 		<li>
 			<a href="portal/default-page.psml">$MESSAGES.getString('overview.content.entry1')</a>
 		</li>
-		#if(!$externalLogin)
+#if(!$externalLogin)
 		<li>
 			<a href="portal/myportal-edit-account.psml">$MESSAGES.getString('overview.content.entry2')</a>
 		</li>
-		#end
+#end
 		<li>
 			<a href="portal/myportal-personalize.psml">$MESSAGES.getString('overview.content.entry3')</a>
 		</li>
+#if(!$externalLogin)
 		<li>
 			<a href="login/logout">$MESSAGES.getString('overview.content.entry4')</a>
 		</li>
+#end
 	</ul>  
 </div>
