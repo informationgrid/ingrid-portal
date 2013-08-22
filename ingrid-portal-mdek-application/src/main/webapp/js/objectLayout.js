@@ -97,27 +97,13 @@ ingridObjectLayout.createInfoHeader = function() {
 		style: "width:100%;"
     }, "objectName");
     
-	var datastoreObjectClasses = function() {
-		var def = new dojo.Deferred();
-		var data = [
-			{value: "Class0", label: message.get("dialog.research.ext.obj.class0")},
-			{value: "Class1", label: message.get("dialog.research.ext.obj.class1")},
-			{value: "Class2", label: message.get("dialog.research.ext.obj.class2")},
-			{value: "Class3", label: message.get("dialog.research.ext.obj.class3")},
-			{value: "Class4", label: message.get("dialog.research.ext.obj.class4")},
-			{value: "Class5", label: message.get("dialog.research.ext.obj.class5")},
-            {value: "Class6", label: message.get("dialog.research.ext.obj.class6")}            	
-		];
-		
-		def.callback(data);
-		return def;
-	}
-	
-	var storeProps = {data: {identifier: 'value',label: 'label'}};
-	createSelectBox("objectClass", null, storeProps, datastoreObjectClasses);
+    var storeProps = {data: {identifier: '1',label: '0'}};
+	createSelectBox("objectClass", null, storeProps, function(){
+	    // add a prefix for each value to stay compatible!
+        return UtilSyslist.getSyslistEntry(8000, "Class");
+    });
 	dijit.byId("objectClass").onChange = igeEvents.selectUDKClass;
     
-	var storeProps = {data: {identifier: '1',label: '0'}};
 	createFilteringSelect("objectOwner", null, storeProps, null);
 }
 
@@ -258,10 +244,6 @@ ingridObjectLayout.createFachBezugClass1 = function(){
     }];
     createDataGrid("ref1VFormatDetails", null, ref1VFormatDetailsStructure, null);
     
-    
-    /*createComboBox("ref1SpatialSystem", null, storeProps, function(){
-        return UtilSyslist.getSyslistEntry(100);
-    });*/
     var ref1SpatialSystemStructure = [{
         field: 'title',
         name: 'System',

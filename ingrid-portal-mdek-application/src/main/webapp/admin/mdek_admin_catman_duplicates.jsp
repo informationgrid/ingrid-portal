@@ -35,7 +35,7 @@ function initDuplicatesTable() {
 scriptScopeDuplicates.fillData = function(data) {
     dijit.byId("duplicatesObjectName").setValue(data.title);
     dijit.byId("duplicatesObjectDescription").setValue(data.generalDescription);
-    dijit.byId("duplicatesObjectClass").setValue(message.get('ui.obj.type'+ data.objectClass +'.name'));
+    dijit.byId("duplicatesObjectClass").setValue(UtilSyslist.getSyslistEntryName(8000, data.objectClass));
 }
 
 // Switch to the tree view and select the node referenced by the menu action

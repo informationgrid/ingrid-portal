@@ -1915,12 +1915,21 @@ var UtilSyslist = {}
 
 // we have to clone the data, so that modification to the returned
 // value won't change the original data
-UtilSyslist.getSyslistEntry = function(id) {
-	var def = new dojo.Deferred();
-	if (sysLists[id].length == 0)
-		console.debug("empty syslist: " + id);
-	def.callback(dojo.clone(sysLists[id]));
-	return def;
+// the valuePrefix is used to add a prefix to each value of the syslist
+// this is used for the object class select box for compatibility reason
+UtilSyslist.getSyslistEntry = function(id, valuePrefix) {
+    var def = new dojo.Deferred();
+    if (sysLists[id].length == 0)
+        console.debug("empty syslist: " + id);
+    var syslist = dojo.clone(sysLists[id])
+    // add a prefix to each value
+    if (valuePrefix) {
+        dojo.forEach(syslist, function(item) {
+            item[1] = valuePrefix + item[1];
+        });
+    }
+    def.callback(syslist);
+    return def;
 }
 
 UtilSyslist.getSyslistEntryName = function(syslist, value) {

@@ -128,13 +128,13 @@
 
             <p> Es werden sieben Objektklassen unterschieden:</p>
 			<ul>
-			<li> Organisationseinheit/Fachaufgabe</li> 
-			<li> Datensammlung/Datenbank</li> 
-			<li> Dokument/Bericht/Literatur</li> 
-			<li> Geoinformation/Karte</li>
+			<li> Fachaufgabe</li> 
+			<li> Datensammlung</li> 
+			<li> Literatur</li> 
+			<li> Geodatensatz</li>
             <li> Geodatendienst</li>
-			<li> Dienst/Anwendung/Informationssystem</li>
-			<li> Vorhaben/Projekt/Programm</li>
+			<li> Informationssystem</li>
+			<li> Projekt</li>
 			</ul>
 			<p> Metadatenobjekte enthalten Angaben zum Fach-, zum Raum- und Zeitbezug
 			eines Datenobjektes. Der Fachbezug macht Angaben zur Art und Weise der

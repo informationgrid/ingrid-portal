@@ -501,13 +501,6 @@
 	"ui.pageNav.navForward":"forward",
 	"ui.pageNav.pageNum":"Page ${0}",
 
-    "ui.obj.type0.name":"Organisational Unit / Task",
-    "ui.obj.type1.name":"Geo-Information / Map",
-    "ui.obj.type2.name":"Document / Report / Literature",
-    "ui.obj.type3.name":"Geo-Service",
-    "ui.obj.type4.name":"Enterprise / Project / Program",
-    "ui.obj.type5.name":"Data Pooling / Data Base",
-	"ui.obj.type6.name":"Service / Application / Information System",
     "ui.obj.header.objectName":"Object name",
 	"ui.obj.header.objectClass":"Object class",
 	"ui.obj.header.responsibleUser":"Responsible user",
@@ -980,14 +973,6 @@
 	"ui.dashboard.title.objectsDraft":"Modified objects",
 	"ui.dashboard.title.infos":"Catalog information",
 	
-	"dialog.research.ext.obj.class0":"Organisational Unit / Task",
-    "dialog.research.ext.obj.class1":"Geo-Information / Map",
-	"dialog.research.ext.obj.class2":"Document / Report / Literature",
-    "dialog.research.ext.obj.class3":"Geo-Service",
-    "dialog.research.ext.obj.class4":"Enterprise / Project / Program",
-    "dialog.research.ext.obj.class5":"Data Pooling / Data Base",
-    "dialog.research.ext.obj.class6":"Service / Application / Information System",
-    "dialog.research.ext.obj.class7":"Open Data",
 	"dialog.research.ext.obj.thesaurusSearch":"Search in thesaurus",
 	"dialog.research.ext.obj.searchTerms":"Search terms",
 

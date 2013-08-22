@@ -411,7 +411,7 @@ scriptScopeDetailView.renderNodeData = function(nodeData) {
 	this.renderObjectTitel(nodeData.objectName);
 
 	this.renderText(nodeData.generalShortDescription);
-	this.renderTextWithTitle(message.get("dialog.research.ext.obj.class"+nodeData.objectClass), "<fmt:message key='ui.obj.header.objectClass' />");
+	this.renderTextWithTitle(UtilSyslist.getSyslistEntryName(8000, nodeData.objectClass), "<fmt:message key='ui.obj.header.objectClass' />");
 	this.renderTextWithTitle(this.removeEvilTags(nodeData.generalDescription), "<fmt:message key='ui.obj.general.description' />");
 	// addresses
 	this.renderAddressList(nodeData.generalAddressTable);

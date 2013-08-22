@@ -46,6 +46,11 @@ dojo.connect(dijit.byId("extContentObj"), "onLoad", function(){
 scriptScopeResearchExtObj.init = function() {
     console.debug("init");
     
+    // set labels for object classes from codelist 8000
+    for (var i=0; i<7; i++) {
+        dojo.query("label[for='objTopicObjectClass"+i+"']")[0].textContent = UtilSyslist.getSyslistEntryName( 8000, i ); 
+    }
+    
     // Initially select the first tabs on load
     scriptScopeResearchExtObj.navInnerTab('objTopic', 0, 3);
     scriptScopeResearchExtObj.navInnerTab('objSpace', 0, 3);
@@ -705,15 +710,15 @@ function hideLoadingZone() {
     	<div class="spacer"></div>
         <div class="inputContainer field inTabWithMenu noSpaceBelow">
           <div class="checkboxContainer half">
-            <span class="input"><input type="checkbox" name="objTopicObjectClass0" id="objTopicObjectClass0" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass0"><fmt:message key="dialog.research.ext.obj.class0" /></label></span>
-            <span class="input"><input type="checkbox" name="objTopicObjectClass1" id="objTopicObjectClass1" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass1"><fmt:message key="dialog.research.ext.obj.class1" /></label></span>
-            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass2" id="objTopicObjectClass2" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass2"><fmt:message key="dialog.research.ext.obj.class2" /></label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass0" id="objTopicObjectClass0" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass0">Class0</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass1" id="objTopicObjectClass1" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass1">Class1</label></span>
+            <span class="input noSpaceBelow"><input type="checkbox" name="objTopicObjectClass2" id="objTopicObjectClass2" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass2">Class2</label></span>
           </div>
           <div class="checkboxContainer">
-            <span class="input"><input type="checkbox" name="objTopicObjectClass3" id="objTopicObjectClass3" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass3"><fmt:message key="dialog.research.ext.obj.class3" /></label></span>
-            <span class="input"><input type="checkbox" name="objTopicObjectClass4" id="objTopicObjectClass4" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass4"><fmt:message key="dialog.research.ext.obj.class4" /></label></span>
-            <span class="input"><input type="checkbox" name="objTopicObjectClass5" id="objTopicObjectClass5" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass5"><fmt:message key="dialog.research.ext.obj.class5" /></label></span>
-            <span class="input"><input type="checkbox" name="objTopicObjectClass6" id="objTopicObjectClass6" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass6"><fmt:message key="dialog.research.ext.obj.class6" /></label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass3" id="objTopicObjectClass3" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass3">Class3</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass4" id="objTopicObjectClass4" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass4">Class4</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass5" id="objTopicObjectClass5" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass5">Class5</label></span>
+            <span class="input"><input type="checkbox" name="objTopicObjectClass6" id="objTopicObjectClass6" checked="true" dojoType="dijit.form.CheckBox" /><label class="inActive" for="objTopicObjectClass6">Class6</label></span>
           </div>
     	</div>
         <div class="spacerField" style="height:28px !important;">

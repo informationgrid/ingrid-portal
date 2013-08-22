@@ -501,13 +501,6 @@
 	"ui.pageNav.navForward":"weiter",
 	"ui.pageNav.pageNum":"Seite ${0}",
 
-    "ui.obj.type0.name":"Organisationseinheit/Fachaufgabe",
-    "ui.obj.type1.name":"Geo-Information/Karte",
-    "ui.obj.type2.name":"Dokument/Bericht/Literatur",
-    "ui.obj.type3.name":"Geodatendienst",
-    "ui.obj.type4.name":"Vorhaben/Projekt/Programm",
-    "ui.obj.type5.name":"Datensammlung/Datenbank",
-    "ui.obj.type6.name":"Dienst/Anwendung/Informationssystem",
     "ui.obj.header.objectName":"Objektname",
 	"ui.obj.header.objectClass":"Objektklasse",
 	"ui.obj.header.responsibleUser":"Verantwortlicher",
@@ -980,14 +973,6 @@
 	"ui.dashboard.title.objectsDraft":"Objekte in Bearbeitung",
 	"ui.dashboard.title.infos":"Informationen zum ausgewählten Katalog",
 	
-	"dialog.research.ext.obj.class0":"Organisationseinheit / Fachaufgabe",
-	"dialog.research.ext.obj.class1":"Geo-Information / Karte",
-	"dialog.research.ext.obj.class2":"Dokument / Bericht / Literatur",
-	"dialog.research.ext.obj.class3":"Geodatendienst",
-	"dialog.research.ext.obj.class4":"Vorhaben / Projekt / Programm",
-	"dialog.research.ext.obj.class5":"Datensammlung / Datenbank",
-    "dialog.research.ext.obj.class6":"Dienst / Anwendung / Informationssystem",
-    "dialog.research.ext.obj.class7":"Open Data",
 	"dialog.research.ext.obj.thesaurusSearch":"In Thesaurus suchen",
 	"dialog.research.ext.obj.searchTerms":"Suchbegriffe",
 	
