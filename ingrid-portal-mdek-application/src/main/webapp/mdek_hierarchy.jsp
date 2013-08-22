@@ -191,9 +191,7 @@
                                     </label>
                                 </td>
                                 <td class="col2">
-                                    <select autoComplete="false" required="true" style="width: 100%; margin:0px;" id="objectClass">
-                                        <!--<option value="Class0"><fmt:message key="dialog.research.ext.obj.class0" /></option><option value="Class1"><fmt:message key="dialog.research.ext.obj.class1" /></option><option value="Class2"><fmt:message key="dialog.research.ext.obj.class2" /></option><option value="Class3"><fmt:message key="dialog.research.ext.obj.class3" /></option><option value="Class4"><fmt:message key="dialog.research.ext.obj.class4" /></option><option value="Class5"><fmt:message key="dialog.research.ext.obj.class5" /></option>-->
-                                    </select>
+                                    <select autoComplete="false" required="true" style="width: 100%; margin:0px;" id="objectClass"></select>
                                 </td>
                                 <td class="col3">
                                     <img id="permissionObjLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" />
