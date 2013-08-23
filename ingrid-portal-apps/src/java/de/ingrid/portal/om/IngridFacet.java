@@ -8,6 +8,8 @@ public class IngridFacet {
 	private String name;
 	private String query;
 	private String queryType;
+	private String codelistId;
+	private String codelistEntryId; 
 	private String dependency;
 	private String hidden;
 	private String facetValue;
@@ -20,7 +22,7 @@ public class IngridFacet {
 	private boolean isOldIPlug = false;
 	
 	private IngridFacet parent; 
-	private ArrayList<IngridFacet> facets; 
+	private ArrayList<IngridFacet> facets;
 	
 	public String getName() {
 		return name;
@@ -111,5 +113,21 @@ public class IngridFacet {
 	}
 	public void setParentHidden(boolean isParentHidden) {
 		this.isParentHidden = isParentHidden;
+	}
+	
+	public String getCodelistEntryId() {
+	    return codelistEntryId;
+	}
+	
+	public void setCodelistEntryId(String id) {
+	    this.codelistEntryId = id;
+	}
+	
+	public String getCodelistId() {
+	    return codelistId;
+	}
+	
+	public void setCodelistId(String id) {
+	    this.codelistId = id;
 	}
 }

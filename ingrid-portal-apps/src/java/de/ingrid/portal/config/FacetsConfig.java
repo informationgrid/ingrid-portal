@@ -90,6 +90,20 @@ public class FacetsConfig {
 					}
 				}
 				
+				if(facetNode.getChildren("codelist-id").size() > 0){
+				    Node node = (Node) facetNode.getChildren("codelist-id").get(0);
+				    if(node  != null){
+				        ingridFacet.setCodelistId((String) node.getValue());
+				    }
+				}
+				
+				if(facetNode.getChildren("codelist-entry-id").size() > 0){
+				    Node node = (Node) facetNode.getChildren("codelist-entry-id").get(0);
+				    if(node  != null){
+				        ingridFacet.setCodelistEntryId((String) node.getValue());
+				    }
+				}
+				
 				if(facetNode.getChildren("from").size() > 0 && facetNode.getChildren("to").size() > 0){
 					String from = null;
 					String to = null;

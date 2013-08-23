@@ -185,7 +185,7 @@ public class DetailDataPreparerIdf1_0_0 {
 			HashMap element = new HashMap();
 			element.put("type", "udkClass");
 			element.put("udkClass", udkClass);
-			element.put("udkClassName", messages.getString("udk_obj_class_name_".concat(udkClass)));
+			element.put("udkClassName", sysCodeList.getName("8000", udkClass));
 			elements.add(element);
 		}
 	}

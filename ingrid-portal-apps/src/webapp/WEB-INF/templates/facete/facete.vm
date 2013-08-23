@@ -1,678 +1,688 @@
 #set ($action = $renderResponse.createActionURL())
 
 #macro(renderFacetCategory $nodes)
-	#foreach($node in $nodes)
-		#if(!$node.getQuery())
-			#if($node.getDependency())
-				#if($node.isDependencySelect())
-					#if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
-						#renderFacetContent($node)
-					#else
-    					#if($node.getFacets())
-    						#set($nodeHasValueDependency = false)
-    						#foreach($facet in $node.getFacets())
-    							#if($facet.getFacetValue() || $facet.isOldIPlug())
-    								#set($nodeHasValueDependency = true)
-    							#end
-    						#end
-    						#if($nodeHasValueDependency)
-    							#renderFacetContent($node)
-    						#end
-						#end
-					#end
-				#end
-			#else
-				#if($node.getHidden())
-					#if($node.isHiddenSelect() == false)
-						#if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
-    						#renderFacetContent($node)
-    					#else
-    						#if($node.getFacets())
-        						#set($nodeHasValueHidden = false)
-        						#foreach($facet in $node.getFacets())
-        							#if($facet.getFacetValue() || $facet.isOldIPlug())
-        								#set($nodeHasValueHidden = true)
-        							#end
-        						#end
-        						#if($nodeHasValueHidden)
-        							#renderFacetContent($node)
-    							#end
-							#end
-						#end
-					#end
-				#else
-					#if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
-						#renderFacetContent($node)
-					#else
-    					#if($node.getFacets())
-        					#set($nodeHasValue = false)
-        					#foreach($facet in $node.getFacets())
-    							#if($facet.getFacetValue() || $facet.isOldIPlug())
-        							#set($nodeHasValue = true)
-        						#end
-    						#end
-        					#if($nodeHasValue)
-        						#renderFacetContent($node)
-    						#end
-						#end
-					#end
-				#end
-			#end
-		#end
-	#end
+    #foreach($node in $nodes)
+        #if(!$node.getQuery())
+            #if($node.getDependency())
+                #if($node.isDependencySelect())
+                    #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                        #renderFacetContent($node)
+                    #else
+                        #if($node.getFacets())
+                            #set($nodeHasValueDependency = false)
+                            #foreach($facet in $node.getFacets())
+                                #if($facet.getFacetValue() || $facet.isOldIPlug())
+                                    #set($nodeHasValueDependency = true)
+                                #end
+                            #end
+                            #if($nodeHasValueDependency)
+                                #renderFacetContent($node)
+                            #end
+                        #end
+                    #end
+                #end
+            #else
+                #if($node.getHidden())
+                    #if($node.isHiddenSelect() == false)
+                        #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                            #renderFacetContent($node)
+                        #else
+                            #if($node.getFacets())
+                                #set($nodeHasValueHidden = false)
+                                #foreach($facet in $node.getFacets())
+                                    #if($facet.getFacetValue() || $facet.isOldIPlug())
+                                        #set($nodeHasValueHidden = true)
+                                    #end
+                                #end
+                                #if($nodeHasValueHidden)
+                                    #renderFacetContent($node)
+                                #end
+                            #end
+                        #end
+                    #end
+                #else
+                    #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                        #renderFacetContent($node)
+                    #else
+                        #if($node.getFacets())
+                            #set($nodeHasValue = false)
+                            #foreach($facet in $node.getFacets())
+                                #if($facet.getFacetValue() || $facet.isOldIPlug())
+                                    #set($nodeHasValue = true)
+                                #end
+                            #end
+                            #if($nodeHasValue)
+                                #renderFacetContent($node)
+                            #end
+                        #end
+                    #end
+                #end
+            #end
+        #end
+    #end
 #end
 
 #macro(renderFacetCategoryEntry $facet $parentId)
-	<div>
-		<span>
-			#if($facet.getFacetValue() || $facet.isOldIPlug())
-    			#if($facet.getFacets())
-    				## Check for sub facets
-    				#if($facet.isSelect())
-    					## Check if 'OR' or 'AND'
-						#if($facet.getQueryType())
-							#if($facet.getQueryType() == "OR")
-        						## Create Tree with multi selection
-        						#if($facet.isOldIPlug())
-        							#set ($action = $renderResponse.createActionURL())
-        							$action.setParameter("$parentId", "$facet.getId()")
-        							#renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
-        						#else
-        							#renderCheckboxTree ($facet $parentId)
-        						#end
-        					#elseif($facet.getQueryType() == "OR_DIALOG")
-        						## Create Tree with multi selection with dialog
-        						#renderCheckboxTreeDialog ($facet $parentId)
-							#end
-						#else
-							## Create Tree with single selection
-							#if($facet.isOldIPlug())
-								#set ($action = $renderResponse.createActionURL())
-								$action.setParameter("$parentId", "$facet.getId()")
-								#renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
-							#else
-								#renderTree ($facet $parentId)
-							#end
-        				#end
-    				#else
-    					#if($facet.isParentHidden())
-							## Only for partner restriction
-							#renderCheckboxTreeDialog($facet $parentId)
-						#else
-							## Set single facets
-        					#set ($action = $renderResponse.createActionURL())
-        					$action.setParameter("$parentId", "$facet.getId()")
-    						#renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
-						#end
-    				#end
-    			#else
-    				## Set single facets
-    				#set ($action = $renderResponse.createActionURL())
+    <div>
+        <span>
+            #if($facet.getFacetValue() || $facet.isOldIPlug())
+                #if($facet.getFacets())
+                    ## Check for sub facets
+                    #if($facet.isSelect())
+                        ## Check if 'OR' or 'AND'
+                        #if($facet.getQueryType())
+                            #if($facet.getQueryType() == "OR")
+                                ## Create Tree with multi selection
+                                #if($facet.isOldIPlug())
+                                    #set ($action = $renderResponse.createActionURL())
+                                    $action.setParameter("$parentId", "$facet.getId()")
+                                    #renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+                                #else
+                                    #renderCheckboxTree ($facet $parentId)
+                                #end
+                            #elseif($facet.getQueryType() == "OR_DIALOG")
+                                ## Create Tree with multi selection with dialog
+                                #renderCheckboxTreeDialog ($facet $parentId)
+                            #end
+                        #else
+                            ## Create Tree with single selection
+                            #if($facet.isOldIPlug())
+                                #set ($action = $renderResponse.createActionURL())
+                                $action.setParameter("$parentId", "$facet.getId()")
+                                #renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+                            #else
+                                #renderTree ($facet $parentId)
+                            #end
+                        #end
+                    #else
+                        #if($facet.isParentHidden())
+                            ## Only for partner restriction
+                            #renderCheckboxTreeDialog($facet $parentId)
+                        #else
+                            ## Set single facets
+                            #set ($action = $renderResponse.createActionURL())
+                            $action.setParameter("$parentId", "$facet.getId()")
+                            #renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+                        #end
+                    #end
+                #else
+                    ## Set single facets
+                    #set ($action = $renderResponse.createActionURL())
                     $action.setParameter("$parentId", "$facet.getId()")
-    				#renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
-				#end
-			#end
+                    #renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+                #end
+            #end
         </span>
     </div>
 #end
 
 
 #macro(renderFacetContent $facet)
-	#if($facet)
-    	#if($facet.getQueryType())
-    		#if($facet.getQueryType() == "OR")
-        		#renderCheckboxTree ($facet "")
-        	#elseif($facet.getQueryType() == "OR_DIALOG")
-        		#renderCheckboxTreeDialog ($facet "")
-    		#end
-    	#else
-    		#if($facet.getId() == 'area' || $facet.getId() == 'attribute' || $facet.getId() == 'area.address')
-        		## RAUMBEZUG ##
+    #if($facet)
+        #if($facet.getQueryType())
+            #if($facet.getQueryType() == "OR")
+                #renderCheckboxTree ($facet "")
+            #elseif($facet.getQueryType() == "OR_DIALOG")
+                #renderCheckboxTreeDialog ($facet "")
+            #end
+        #else
+            #if($facet.getId() == 'area' || $facet.getId() == 'attribute' || $facet.getId() == 'area.address')
+                ## RAUMBEZUG ##
                 #if($facet.getId() == 'area')
-        			#parse ('/WEB-INF/templates/facete/facete_area.vm')
+                    #parse ('/WEB-INF/templates/facete/facete_area.vm')
                 #end
                 
                 ## ATTRIBUTE ##
                 #if($facet.getId() == 'attribute')
-        			#parse ('/WEB-INF/templates/facete/facete_attribute.vm')
+                    #parse ('/WEB-INF/templates/facete/facete_attribute.vm')
                 #end
                 
                 ## RAUMBEZUG - ADDRESSEN ##
                 #if($facet.getId() == 'area.address')
-        			#parse ('/WEB-INF/templates/facete/facete_area_address.vm')
-        		#end
-        	#else
-    			<div class="cat_label">
-        			<img id="$facet.getId()_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('$facet.getId()')">
-            		<a onclick="openNode('$facet.getId()')" title="$MESSAGES.getString("$facet.getName()")">$MESSAGES.getString("$facet.getName()")</a>
-            		<br>
-            	</div>
-            	
-            	<div id="$facet.getId()" class="cat_content">
-        			#set($isSelected = false)
-        			#foreach($subFacet in $facet.getFacets())
-        				#if($subFacet.isSelect())
-        					#set($isSelected = true)
-        				#end
-        			#end
-        			
-            		#foreach($subFacet in $facet.getFacets())
-        				#if($isSelected)
-        					#if($subFacet.isSelect())
-        						#renderFacetCategoryEntry($subFacet $facet.getId())
-        					#end
-        				#else
-    						#renderFacetCategoryEntry($subFacet $facet.getId())
-        				#end
-            		#end
+                    #parse ('/WEB-INF/templates/facete/facete_area_address.vm')
+                #end
+            #else
+                <div class="cat_label">
+                    <img id="$facet.getId()_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('$facet.getId()')">
+                    <a onclick="openNode('$facet.getId()')" title="$MESSAGES.getString("$facet.getName()")">$MESSAGES.getString("$facet.getName()")</a>
+                    <br>
                 </div>
-        		<br />
-    		#end
-		#end
-	#end
+                
+                <div id="$facet.getId()" class="cat_content">
+                    #set($isSelected = false)
+                    #foreach($subFacet in $facet.getFacets())
+                        #if($subFacet.isSelect())
+                            #set($isSelected = true)
+                        #end
+                    #end
+                    
+                    #foreach($subFacet in $facet.getFacets())
+                        #if($isSelected)
+                            #if($subFacet.isSelect())
+                                #renderFacetCategoryEntry($subFacet $facet.getId())
+                            #end
+                        #else
+                            #renderFacetCategoryEntry($subFacet $facet.getId())
+                        #end
+                    #end
+                </div>
+                <br />
+            #end
+        #end
+    #end
 #end
 
 #macro (renderCheckboxTree $treeFacet $treeParentId)
-	<div class="cat_label">
-    	<img id="$treeFacet.getId()_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('$treeFacet.getId()')">
-    	<a onclick="openNode('$treeFacet.getId()')" title="$MESSAGES.getString("$treeFacet.getName()")">
-    		$MESSAGES.getString("$treeFacet.getName()")
-    		#if($treeFacet.getFacetValue())
-				#renderLinkEntryNumber("$treeFacet.getFacetValue()")
-			#end
-    	</a>
-		#if($treeParentId != "")
-        	#set ($action = $renderResponse.createActionURL())
-    		$action.setParameter("$treeParentId", "$treeFacet.getId()")
-    		#if($action)
-        		#renderDeleteIcon ($action $MESSAGES.getString("searchResult.facete.category.delete.btn"))
-			#end
-		#end
-    	<br>
+    <div class="cat_label">
+        <img id="$treeFacet.getId()_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('$treeFacet.getId()')">
+        <a onclick="openNode('$treeFacet.getId()')" title="$MESSAGES.getString("$treeFacet.getName()")">
+            $MESSAGES.getString("$treeFacet.getName()")
+            #if($treeFacet.getFacetValue())
+                #renderLinkEntryNumber("$treeFacet.getFacetValue()")
+            #end
+        </a>
+        #if($treeParentId != "")
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("$treeParentId", "$treeFacet.getId()")
+            #if($action)
+                #renderDeleteIcon ($action $MESSAGES.getString("searchResult.facete.category.delete.btn"))
+            #end
+        #end
+        <br>
     </div>
-	<div id="$treeFacet.getId()" class="cat_content_entry">
-	#foreach ($treeSubFacet in $treeFacet.getFacets())
-		#if($treeSubFacet.getFacetValue())
-			<div class="facete_chb">
-				<span>
-				#if($treeSubFacet.isSelect())
-					#set ($action = $renderResponse.createActionURL())
-					$action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
-					<input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
-						<a href="$action" class="facete_label_chb">
-				#else
-					#set ($action = $renderResponse.createActionURL())
-					$action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
-					<input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
-						<a href="$action">
-				#end
-    					$MESSAGES.getString("$treeSubFacet.getName()")
-						#renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
-						</a> 
-					</input>
-				</span>
-			</div>
-		#end
-	#end
-	</div>
+    <div id="$treeFacet.getId()" class="cat_content_entry">
+    #foreach ($treeSubFacet in $treeFacet.getFacets())
+        #if($treeSubFacet.getFacetValue())
+            <div class="facete_chb">
+                <span>
+                #if($treeSubFacet.isSelect())
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
+                    <input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
+                        <a href="$action" class="facete_label_chb">
+                #else
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
+                    <input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
+                        <a href="$action">
+                #end
+                        $MESSAGES.getString("$treeSubFacet.getName()")
+                        #renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
+                        </a> 
+                    </input>
+                </span>
+            </div>
+        #end
+    #end
+    </div>
 #end
 
 #macro (renderCheckboxTreeDialog $treeFacet $treeParentId)
-	<div class="cat_label">
-		#if(!$treeFacet.isParentHidden())
-        	<img id="$treeFacet.getId()_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('$treeFacet.getId()')">
-        	<a onclick="openNode('$treeFacet.getId()')" title="$MESSAGES.getString("$treeFacet.getName()")">
-        		$MESSAGES.getString("$treeFacet.getName()")
-        		#if($treeFacet.getFacetValue())
-        			#renderLinkEntryNumber("$treeFacet.getFacetValue()")
-        		#end
-        	</a>
-        		#set ($action = $renderResponse.createActionURL())
-        		$action.setParameter("$treeParentId", "$treeFacet.getId()")
-        		#if($action)
-            		#renderDeleteIcon ($action $MESSAGES.getString("searchResult.facete.category.delete.btn"))
-        		#end
-        	<br>
-		#end
+    <div class="cat_label">
+        #if(!$treeFacet.isParentHidden())
+            <img id="$treeFacet.getId()_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('$treeFacet.getId()')">
+            <a onclick="openNode('$treeFacet.getId()')" title="$MESSAGES.getString("$treeFacet.getName()")">
+                $MESSAGES.getString("$treeFacet.getName()")
+                #if($treeFacet.getFacetValue())
+                    #renderLinkEntryNumber("$treeFacet.getFacetValue()")
+                #end
+            </a>
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("$treeParentId", "$treeFacet.getId()")
+                #if($action)
+                    #renderDeleteIcon ($action $MESSAGES.getString("searchResult.facete.category.delete.btn"))
+                #end
+            <br>
+        #end
     </div>
-	<div id="$treeFacet.getId()" class="cat_content_entry">
-	#set($isSelect = false)
-	#set($countFacetWithValue = 0)
-	#foreach ($treeSubFacet in $treeFacet.getFacets())
-		#if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
-			#set($countFacetWithValue = $countFacetWithValue + 1)
-		#end
-		#if($treeSubFacet.isSelect())
-			#set($isSelect = true)
-		#end
-	#end
-	#if($countFacetWithValue > 3)
+    <div id="$treeFacet.getId()" class="cat_content_entry">
+    #set($isSelect = false)
+    #set($countFacetWithValue = 0)
+    #foreach ($treeSubFacet in $treeFacet.getFacets())
+        #if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
+            #set($countFacetWithValue = $countFacetWithValue + 1)
+        #end
+        #if($treeSubFacet.isSelect())
+            #set($isSelect = true)
+        #end
+    #end
+    #if($countFacetWithValue > 3)
         #set($count = 0)
         #foreach ($treeSubFacet in $treeFacet.getFacets())
-        	#if($isSelect)
-        		#if($treeSubFacet.isSelect())
-        			#if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
-        				<div class="facete_chb">
-        					<span>
-            					#set ($action = $renderResponse.createActionURL())
-            					$action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
-            					<input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
-            						<a href="$action" class="facete_label_chb">
-            						$MESSAGES.getString("$treeSubFacet.getName()")
-            						#if($treeSubFacet.getFacetValue())
-        								#renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
-        							#end
-            						</a> 
-            					</input>
-                			</span>
-        				</div>
-        			#end
-        		#end
-        	#else
-        		#if($count < 3)
-        			#if($treeSubFacet.getFacetValue()|| $treeSubFacet.isOldIPlug())
-        				<div class="facete_chb">
-        					<span>
-            					#set ($action = $renderResponse.createActionURL())
-            					$action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
-            					<input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
-            						<a href="$action">
-            						$MESSAGES.getString("$treeSubFacet.getName()")
-        							#if($treeSubFacet.getFacetValue())
-        								#renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
-        							#end
-            						</a> 
-            					</input>
-            				</span>
-        				</div>
-        				#set($count = $count + 1)
-        			#end
-        		#end
-        	#end
+            #if($isSelect)
+                #if($treeSubFacet.isSelect())
+                    #if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
+                        <div class="facete_chb">
+                            <span>
+                                #set ($action = $renderResponse.createActionURL())
+                                $action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
+                                <input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox checked onclick="location.href='$action'">
+                                    <a href="$action" class="facete_label_chb">
+                                    $MESSAGES.getString("$treeSubFacet.getName()")
+                                    #if($treeSubFacet.getFacetValue())
+                                        #renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
+                                    #end
+                                    </a> 
+                                </input>
+                            </span>
+                        </div>
+                    #end
+                #end
+            #else
+                #if($count < 3)
+                    #if($treeSubFacet.getFacetValue()|| $treeSubFacet.isOldIPlug())
+                        <div class="facete_chb">
+                            <span>
+                                #set ($action = $renderResponse.createActionURL())
+                                $action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
+                                <input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox onclick="location.href='$action'">
+                                    <a href="$action">
+                                    $MESSAGES.getString("$treeSubFacet.getName()")
+                                    #if($treeSubFacet.getFacetValue())
+                                        #renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
+                                    #end
+                                    </a> 
+                                </input>
+                            </span>
+                        </div>
+                        #set($count = $count + 1)
+                    #end
+                #end
+            #end
         #end
         <ul class="facete_ul_more">
-        	<li>
-        		#renderFaceteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.plus") "" "dialog_$treeFacet.getId()" "button_$treeFacet.getId()")
+            <li>
+                #renderFaceteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.category.plus") "" "dialog_$treeFacet.getId()" "button_$treeFacet.getId()")
             </li>
-        	#if($isSelect)
-        		<li>
-        			<img class="more_seperator" src="/ingrid-portal-apps/images/facete/facete_delete_seperator.png">
+            #if($isSelect)
+                <li>
+                    <img class="more_seperator" src="/ingrid-portal-apps/images/facete/facete_delete_seperator.png">
                 </li>
-        		<li>
-        			#set ($action = $renderResponse.createActionURL())
-            		$action.setParameter("doRemove",  "${treeParentId}:$treeFacet.getId()")
-                	#renderFaceteDeleteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.topic.delete") $action)
+                <li>
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("doRemove",  "${treeParentId}:$treeFacet.getId()")
+                    #renderFaceteDeleteMoreLinkLineDialog($MESSAGES.getString("searchResult.facete.topic.delete") $action)
                 </li>
-        	#end
+            #end
         </ul>
         #renderFacetDialog($treeFacet)
-	#else
-		#foreach ($treeSubFacet in $treeFacet.getFacets())
-			#if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
-				<div class="facete_chb">
-					<span>
-    					#set ($action = $renderResponse.createActionURL())
-    					$action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
-    					<input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox 
-							#if($treeSubFacet.isSelect())
-								checked
-							#end
-							onclick="location.href='$action'">
-    						<a href="$action" class="facete_label_chb">
-    						$MESSAGES.getString("$treeSubFacet.getName()")
-    						#if($treeSubFacet.getFacetValue())
-								#renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
-							#end
-    						</a> 
-    					</input>
-        			</span>
-				</div>
-			#end
+    #else
+        #foreach ($treeSubFacet in $treeFacet.getFacets())
+            #if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
+                <div class="facete_chb">
+                    <span>
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("check_box_$treeFacet.getId()", "$treeSubFacet.getId()")
+                        <input id="$treeSubFacet.getId()" class="facete_input_chb" type=checkbox 
+                            #if($treeSubFacet.isSelect())
+                                checked
+                            #end
+                            onclick="location.href='$action'">
+                            <a href="$action" class="facete_label_chb">
+                            $MESSAGES.getString("$treeSubFacet.getName()")
+                            #if($treeSubFacet.getFacetValue())
+                                #renderLinkEntryNumber("$treeSubFacet.getFacetValue()")
+                            #end
+                            </a> 
+                        </input>
+                    </span>
+                </div>
+            #end
         #end
-	#end
-	</div>
+    #end
+    </div>
 #end
 
 #macro (renderTree $treeFacet $treeParentId)
-	<div class="cat_label">
-    	<img id="$treeFacet.getId()_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('$treeFacet.getId()')">
-    	<a onclick="openNode('$treeFacet.getId()')" title="$MESSAGES.getString("$treeFacet.getName()")">
-    		$MESSAGES.getString("$treeFacet.getName()")
-			#if($treeFacet.getFacetValue())
-				#renderLinkEntryNumber("$treeFacet.getFacetValue()")
-			#end
-    	</a>
-    	#set ($action = $renderResponse.createActionURL())
-		$action.setParameter("$treeParentId", "$treeFacet.getId()")
-		#if($action)
-    		#renderDeleteIcon ($action $MESSAGES.getString("searchResult.facete.category.delete.btn"))
-    	#end
-    	<br>
+    <div class="cat_label">
+        <img id="$treeFacet.getId()_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('$treeFacet.getId()')">
+        <a onclick="openNode('$treeFacet.getId()')" title="$MESSAGES.getString("$treeFacet.getName()")">
+            $MESSAGES.getString("$treeFacet.getName()")
+            #if($treeFacet.getFacetValue())
+                #renderLinkEntryNumber("$treeFacet.getFacetValue()")
+            #end
+        </a>
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter("$treeParentId", "$treeFacet.getId()")
+        #if($action)
+            #renderDeleteIcon ($action $MESSAGES.getString("searchResult.facete.category.delete.btn"))
+        #end
+        <br>
     </div>
-	<div id="$treeFacet.getId()" class="cat_content_entry">
-	#set($isSelectedTree = false)
-	#foreach ($treeSubFacet in $treeFacet.getFacets())
-		#if($treeSubFacet.isSelect())
-			#set($isSelectedTree = true)
-		#end
-	#end
-	#if($isSelectedTree)
-		#foreach ($treeSubFacet in $treeFacet.getFacets())
-			#if($treeSubFacet.isSelect())
-			<div class="facete_chb">
-				#set ($action = $renderResponse.createActionURL())
-				$action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
-				#renderFaceteSelectedAttributeNumber ($action $MESSAGES.getString("$treeSubFacet.getName()") $MESSAGES.getString("$treeSubFacet.getName()") $treeSubFacet.getFacetValue() $treeSubFacet.isSelect())
-			</div>
-			#end
-		 #end
+    <div id="$treeFacet.getId()" class="cat_content_entry">
+    #set($isSelectedTree = false)
+    #foreach ($treeSubFacet in $treeFacet.getFacets())
+        #if($treeSubFacet.isSelect())
+            #set($isSelectedTree = true)
+        #end
+    #end
+    #if($isSelectedTree)
+        #foreach ($treeSubFacet in $treeFacet.getFacets())
+            #if($treeSubFacet.isSelect())
+            <div class="facete_chb">
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
+                #if($treeSubFacet.getCodelistId())
+                   #set ($name = $Codelists.getCodeListValue($treeSubFacet.getCodelistId(), $treeSubFacet.getCodelistEntryId(), $languageCode))
+                #else
+                   #set ($name = $MESSAGES.getString("$treeSubFacet.getName()"))
+                #end
+                #renderFaceteSelectedAttributeNumber ($action $name $name $treeSubFacet.getFacetValue() $treeSubFacet.isSelect())
+            </div>
+            #end
+         #end
     #else
-		#foreach ($treeSubFacet in $treeFacet.getFacets())
-			#if($treeSubFacet.getFacetValue())
-				<div class="facete_chb">
-					#set ($action = $renderResponse.createActionURL())
-					$action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
-					#renderFaceteSelectedAttributeNumber ($action $MESSAGES.getString("$treeSubFacet.getName()") $MESSAGES.getString("$treeSubFacet.getName()") $treeSubFacet.getFacetValue() $treeSubFacet.isSelect())
-				</div>
-			#end
-		#end
+        #foreach ($treeSubFacet in $treeFacet.getFacets())
+            #if($treeSubFacet.getFacetValue())
+                <div class="facete_chb">
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
+                    #if($treeSubFacet.getCodelistId())
+                       #set ($name = $Codelists.getCodeListValue($treeSubFacet.getCodelistId(), $treeSubFacet.getCodelistEntryId(), $languageCode))
+                    #else
+                       #set ($name = $MESSAGES.getString("$treeSubFacet.getName()"))
+                    #end
+                    #renderFaceteSelectedAttributeNumber ($action $name $name $treeSubFacet.getFacetValue() $treeSubFacet.isSelect())
+                </div>
+            #end
+        #end
      #end
-	</div>
+    </div>
 #end
 
 #macro(renderFacetDialog $parentFacet)
-	#set ($action = $renderResponse.createActionURL())
+    #set ($action = $renderResponse.createActionURL())
     <div id="dialog_$parentFacet.getId()" class="facete_dialog" title="$MESSAGES.getString("$parentFacet.getName()")" dojoType="dijit.Dialog">
-    	<form name="$parentFacet.getId()_form" action="$action" method="post">
-    		<div class="dialog_content">
-				#set($i = 0)
-    			#if($parentFacet.getFacets())
-        			<div class="dialog_sub_content">
-						#set($isSelect = false)
-            			#foreach($facet in $parentFacet.getFacets())
-							#if($facet.isSelect())
-								#set($isSelect = true)
-							#end
-						#end 
-						#if($isSelect)
-							<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.selected.entries")</p>
-                			#foreach($facet in $parentFacet.getFacets())
-    							#if($facet.isSelect())
-    								#set($i = $i + 1)
-        							<div class="facete_chb">
-                    					<span class="facete_label_dialog">
-                                			<input id="$facet.getId()" class="facete_dialog_chb facete_input_chb" type=checkbox name="check${i}_box_$parentFacet.getId()" value="$facet.getId()"
-                    							#if($facet.isSelect())
-                    								checked
-                    							#end
+        <form name="$parentFacet.getId()_form" action="$action" method="post">
+            <div class="dialog_content">
+                #set($i = 0)
+                #if($parentFacet.getFacets())
+                    <div class="dialog_sub_content">
+                        #set($isSelect = false)
+                        #foreach($facet in $parentFacet.getFacets())
+                            #if($facet.isSelect())
+                                #set($isSelect = true)
+                            #end
+                        #end 
+                        #if($isSelect)
+                            <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.selected.entries")</p>
+                            #foreach($facet in $parentFacet.getFacets())
+                                #if($facet.isSelect())
+                                    #set($i = $i + 1)
+                                    <div class="facete_chb">
+                                        <span class="facete_label_dialog">
+                                            <input id="$facet.getId()" class="facete_dialog_chb facete_input_chb" type=checkbox name="check${i}_box_$parentFacet.getId()" value="$facet.getId()"
+                                                #if($facet.isSelect())
+                                                    checked
+                                                #end
                                             >$facet.getName()</input>
-                    					</span>
-										#if($facet.getFacetValue())
-											#renderLinkEntryNumber("$facet.getFacetValue()")
-										#end
-                                   	</div>
-								#end
-							#end
-							#set($hasEntryDialog = false)
-							#foreach ($facet in $parentFacet.getFacets())
-								#if(($facet.getFacetValue() || $facet.isOldIPlug()) && $facet.isSelect() == false)
-									#set($hasEntryDialog = true)
-								#end
-							#end
-							#if($hasEntryDialog)
-    							<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.unselected.entries")</p>
-                    			#foreach($facet in $parentFacet.getFacets())
-        							#if($facet.isSelect() == false)
-    									#if($facet.getFacetValue() || $facet.isOldIPlug())
-        									#set($i = $i + 1)
-                							<div class="facete_chb">
-                            					<span class="facete_label_dialog">
-                                        			<input id="$facet.getId()" class="facete_dialog_chb facete_input_chb" type=checkbox name="check${i}_box_$parentFacet.getId()" value="$facet.getId()"
-                            							#if($facet.isSelect())
-                            								checked
-                            							#end
+                                        </span>
+                                        #if($facet.getFacetValue())
+                                            #renderLinkEntryNumber("$facet.getFacetValue()")
+                                        #end
+                                    </div>
+                                #end
+                            #end
+                            #set($hasEntryDialog = false)
+                            #foreach ($facet in $parentFacet.getFacets())
+                                #if(($facet.getFacetValue() || $facet.isOldIPlug()) && $facet.isSelect() == false)
+                                    #set($hasEntryDialog = true)
+                                #end
+                            #end
+                            #if($hasEntryDialog)
+                                <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.unselected.entries")</p>
+                                #foreach($facet in $parentFacet.getFacets())
+                                    #if($facet.isSelect() == false)
+                                        #if($facet.getFacetValue() || $facet.isOldIPlug())
+                                            #set($i = $i + 1)
+                                            <div class="facete_chb">
+                                                <span class="facete_label_dialog">
+                                                    <input id="$facet.getId()" class="facete_dialog_chb facete_input_chb" type=checkbox name="check${i}_box_$parentFacet.getId()" value="$facet.getId()"
+                                                        #if($facet.isSelect())
+                                                            checked
+                                                        #end
                                                     >$facet.getName()</input>
-                            					</span>
-    											#renderLinkEntryNumber("$facet.getFacetValue()")
-    										</div>
-    									#end
-    								#end
-								#end
-							#end
-						#else
-    						<p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.result.entries")</p>
-                			#foreach ($facet in $parentFacet.getFacets())
-    							#if($facet.getFacetValue() || $facet.isOldIPlug())
-            						#set($i = $i + 1)
-        							<div class="facete_chb">
-                    					<span class="facete_label_dialog">
-                                			<input id="$facet.getId()" class="facete_dialog_chb facete_input_chb" type=checkbox name="check${i}_box_$parentFacet.getId()" value="$facet.getId()"
-                    							#if($facet.isSelect())
-                    								checked
-                    							#end
+                                                </span>
+                                                #renderLinkEntryNumber("$facet.getFacetValue()")
+                                            </div>
+                                        #end
+                                    #end
+                                #end
+                            #end
+                        #else
+                            <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.result.entries")</p>
+                            #foreach ($facet in $parentFacet.getFacets())
+                                #if($facet.getFacetValue() || $facet.isOldIPlug())
+                                    #set($i = $i + 1)
+                                    <div class="facete_chb">
+                                        <span class="facete_label_dialog">
+                                            <input id="$facet.getId()" class="facete_dialog_chb facete_input_chb" type=checkbox name="check${i}_box_$parentFacet.getId()" value="$facet.getId()"
+                                                #if($facet.isSelect())
+                                                    checked
+                                                #end
                                             >$facet.getName()</input>
-                    					</span>
-										#if($facet.getFacetValue())
-											#renderLinkEntryNumber("$facet.getFacetValue()")
-										#end
-                                   	</div>
-    							#end
-							#end
-						#end
-        			</div>
-    			#end
-    		</div>
-    		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "addFromDialog_$parentFacet.getId()" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
-    	</form>
-    	<div class="dialog_bottom">
-    		#renderInputButtonDialogCancel($MESSAGES.getString('searchResult.facete.dialog.cancel') "padding:0px 5px 0px 0px" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_$parentFacet.getId()')")
-    		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.select') "padding:0px 5px 0px 0px" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.select') "float_left" "faceteDialogSelectAll(document.$parentFacet.getId()_form)")
-    		#renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.delete') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.delete') "float_left" "faceteDialogDeselectAll(document.$parentFacet.getId()_form)")
-    	</div>
+                                        </span>
+                                        #if($facet.getFacetValue())
+                                            #renderLinkEntryNumber("$facet.getFacetValue()")
+                                        #end
+                                    </div>
+                                #end
+                            #end
+                        #end
+                    </div>
+                #end
+            </div>
+            #renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "addFromDialog_$parentFacet.getId()" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right btn_submit_dialog" "")
+        </form>
+        <div class="dialog_bottom">
+            #renderInputButtonDialogCancel($MESSAGES.getString('searchResult.facete.dialog.cancel') "padding:0px 5px 0px 0px" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.cancel') "float_right" "faceteDialogCancel('dialog_$parentFacet.getId()')")
+            #renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.select') "padding:0px 5px 0px 0px" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.select') "float_left" "faceteDialogSelectAll(document.$parentFacet.getId()_form)")
+            #renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.all.delete') "" "" $MESSAGES.getString('searchResult.facete.dialog.tooltip.all.delete') "float_left" "faceteDialogDeselectAll(document.$parentFacet.getId()_form)")
+        </div>
     </div>
 #end
 
 
 #macro (renderInputButtonDialog $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
-	<div class="$buttonclass" style="$buttonstyle">
-		<div class="btn_left" id="$buttonname left"></div>
-		<div class="btn_center">
-			#if($buttondisable && $buttondisable == "true")
-				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_disable" onclick="$buttononclick" disabled />
-			#else
-				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn" onclick="$buttononclick" />
-			#end
-		</div>
-		<div class="btn_right" id="$buttonname right"></div>
-	</div>
+    <div class="$buttonclass" style="$buttonstyle">
+        <div class="btn_left" id="$buttonname left"></div>
+        <div class="btn_center">
+            #if($buttondisable && $buttondisable == "true")
+                <input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_disable" onclick="$buttononclick" disabled />
+            #else
+                <input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn" onclick="$buttononclick" />
+            #end
+        </div>
+        <div class="btn_right" id="$buttonname right"></div>
+    </div>
 #end
 
 #macro (renderInputButtonDialogCancel $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
-	<div class="$buttonclass" style="$buttonstyle">
-		<div class="btn_gray_left" id="$buttonname left"></div>
-		<div class="btn_gray_center">
-			#if($buttondisable && $buttondisable == "true")
-				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray_disable" onclick="$buttononclick" disabled />
-			#else
-				<input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray" onclick="$buttononclick" />
-			#end
-		</div>
-		<div class="btn_gray_right" id="$buttonname right"></div>
-	</div>
+    <div class="$buttonclass" style="$buttonstyle">
+        <div class="btn_gray_left" id="$buttonname left"></div>
+        <div class="btn_gray_center">
+            #if($buttondisable && $buttondisable == "true")
+                <input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray_disable" onclick="$buttononclick" disabled />
+            #else
+                <input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray" onclick="$buttononclick" />
+            #end
+        </div>
+        <div class="btn_gray_right" id="$buttonname right"></div>
+    </div>
 #end
 #macro (renderButtonDialogCancelNotInput $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
-	<div class="$buttonclass" style="$buttonstyle">
-		<div class="btn_gray_left" id="$buttonname left"></div>
-		<div class="btn_gray_center">
-			#if($buttondisable && $buttondisable == "true")
-			<input type="button" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray_disable" onclick="$buttononclick" disabled />	
-			#else
-			<input type="button" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray" onclick="$buttononclick" />
-			#end
-		</div>
-		<div class="btn_gray_right" id="$buttonname right"></div>
-	</div>
+    <div class="$buttonclass" style="$buttonstyle">
+        <div class="btn_gray_left" id="$buttonname left"></div>
+        <div class="btn_gray_center">
+            #if($buttondisable && $buttondisable == "true")
+            <input type="button" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray_disable" onclick="$buttononclick" disabled /> 
+            #else
+            <input type="button" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_gray" onclick="$buttononclick" />
+            #end
+        </div>
+        <div class="btn_gray_right" id="$buttonname right"></div>
+    </div>
 #end
 #macro (renderFaceteMoreLinkLineDialog $label $style $id $button)
-	<a id="$button" class="facete_more" style="$style" onClick="prepareDialog('$id')">$label</a>
-	<img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png">
+    <a id="$button" class="facete_more" style="$style" onClick="prepareDialog('$id')">$label</a>
+    <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png">
 #end
 
 #macro (renderFaceteDeleteMoreLinkLineDialog $label $doAction)
-	<a href="$doAction" class="facete_link_line facete_delete_link">$label</a>
+    <a href="$doAction" class="facete_link_line facete_delete_link">$label</a>
 #end
 
 #macro (renderFaceteDeleteLinkLineDialog $label $doAction)
-	<div>
-		#renderFaceteDeleteMoreLinkLineDialog ($label $doAction)
-	</div>
+    <div>
+        #renderFaceteDeleteMoreLinkLineDialog ($label $doAction)
+    </div>
 #end
 
 #macro (renderFaceteSelectedAttribute $doAction $title)
-	<div>
-		<a href="$doAction" class="facete_link_line facete_select_link">$title</a>
-		#if($doAction)
-			#renderDeleteIcon ($doAction $MESSAGES.getString("searchResult.facete.category.delete.btn"))
-		#end
+    <div>
+        <a href="$doAction" class="facete_link_line facete_select_link">$title</a>
+        #if($doAction)
+            #renderDeleteIcon ($doAction $MESSAGES.getString("searchResult.facete.category.delete.btn"))
+        #end
     </div>
 #end
 
 #macro (renderFaceteSelectedAttributeNumber $doAction $title $tooltip $number $isDelete)
-	<div>
-		<span>
-			<a title="$tooltip" href="$doAction"  
-        		#if($isDelete)
-        			class="facete_link_line facete_select_link"
-				#else
-					class="facete_link_line"
-        		#end
-        		>$title</a>
-			#if($number)
-				#renderLinkEntryNumber("$number")
-			#end
+    <div>
+        <span>
+            <a title="$tooltip" href="$doAction"  
+                #if($isDelete)
+                    class="facete_link_line facete_select_link"
+                #else
+                    class="facete_link_line"
+                #end
+                >$title</a>
+            #if($number)
+                #renderLinkEntryNumber("$number")
+            #end
         </span>
-		#if($isDelete)
-			#if($doAction)
-				#renderDeleteIcon ($doAction $MESSAGES.getString("searchResult.facete.category.delete.btn"))
-			#end
-		#end
+        #if($isDelete)
+            #if($doAction)
+                #renderDeleteIcon ($doAction $MESSAGES.getString("searchResult.facete.category.delete.btn"))
+            #end
+        #end
     </div>
 #end
 
 #macro (renderFaceteSelectedAttributeHashMapNumber $doAction $title $numbers $key $isDelete)
-	<div>
-		<span>
-			<a href="$doAction"  
-        		#if($isDelete)
-        			class="facete_link_line facete_select_link"
-				#else
-					class="facete_link_line"
-        		#end
-        		>$title</a>
-			#if($numbers && $key)
-				#renderLinkEntryNumberInArrayHashMap($numbers $key)
-			#end
+    <div>
+        <span>
+            <a href="$doAction"  
+                #if($isDelete)
+                    class="facete_link_line facete_select_link"
+                #else
+                    class="facete_link_line"
+                #end
+                >$title</a>
+            #if($numbers && $key)
+                #renderLinkEntryNumberInArrayHashMap($numbers $key)
+            #end
         </span>
-		#if($isDelete)
-			#if($doAction)
-				#renderDeleteIcon ($doAction $MESSAGES.getString("searchResult.facete.category.delete.btn"))
-			#end
-		#end
+        #if($isDelete)
+            #if($doAction)
+                #renderDeleteIcon ($doAction $MESSAGES.getString("searchResult.facete.category.delete.btn"))
+            #end
+        #end
     </div>
 #end
 
 #macro(renderLinkEntryNumberInArrayHashMap $numbers $id)
-	<span class="facete_label_number">
-	#set($isFound = false)
+    <span class="facete_label_number">
+    #set($isFound = false)
     #foreach($number in $numbers)
-		#foreach($key in $number.keySet())
-			#if($key == "$id")
-				#set($num = "$number.get($key)")
-				#if($num != "" && $num != "0")
-					($num)
-				#end
-			#end
-		#end
-	#end
-	</span>
+        #foreach($key in $number.keySet())
+            #if($key == "$id")
+                #set($num = "$number.get($key)")
+                #if($num != "" && $num != "0")
+                    ($num)
+                #end
+            #end
+        #end
+    #end
+    </span>
 #end
 #macro(renderCloseDialog $doAction $title)
-	<div class="closeDialog">
-		<a href="$doAction" class="facete_link_line">
-			<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_close_dialog.png" title="$title"></img>
+    <div class="closeDialog">
+        <a href="$doAction" class="facete_link_line">
+            <img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_close_dialog.png" title="$title"></img>
         </a>
-	</div>
+    </div>
 #end
 
 #macro(renderLinkEntryNumberInHashMap $numbers $id)
-	<span class="facete_label_number">
-	#set($isFound = false)
-   	#foreach($key in $numbers.keySet())
-		#if($key == "$id")
-			#set($num = "$numbers.get($key)")
-			#if($num != "" && $num != "0")
-    			($num)
-			#end
-		#end
-	#end
-	</span>
+    <span class="facete_label_number">
+    #set($isFound = false)
+    #foreach($key in $numbers.keySet())
+        #if($key == "$id")
+            #set($num = "$numbers.get($key)")
+            #if($num != "" && $num != "0")
+                ($num)
+            #end
+        #end
+    #end
+    </span>
 #end
 
 #macro(renderLinkEntryNumber $number)
-	<span class="facete_label_number">
-       	#if($number != "" && $number != "0")
-    			($number)
-    	#end
-	</span>
+    <span class="facete_label_number">
+        #if($number != "" && $number != "0")
+                ($number)
+        #end
+    </span>
 #end
 
 #macro(renderDeleteIcon $doAction $title)
-	<a href="$doAction" class="facete_link_line">
-		<img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png" title="$title"></img>
-	</a>
+    <a href="$doAction" class="facete_link_line">
+        <img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png" title="$title"></img>
+    </a>
 #end
 
 <div>
-	#if($ds && $ds == "2")
-		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">
-	#elseif($isFilterDomain)
-		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">
-	#else
-		<a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete', 'search_hits')">
-	#end
-		<img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_open.png" >
-	</a>
-	<div id="facete">
-		<h2>$MESSAGES.getString("searchResult.facete.title")</h2>
-    	#set ($rankedHitslenght = $rankedResultList.get("length").toString())
-    	#if($rankedHitslenght != "0")
-    		#if($isSelection)
-    			#set ($action = $renderResponse.createActionURL())
-    			$action.setParameter("doRemoveAll", "true")
-    			<p>
-    				<img src="/ingrid-portal-apps/images/icn_linkintern.gif"/><a href="$action" title="$MESSAGES.getString('searchResult.facet.delete.selection.tooltip')">$MESSAGES.getString('searchResult.facet.delete.selection')</a>
-    			</p>
-    		#end
-    		#renderFacetCategory($facetConfig)
+    #if($ds && $ds == "2")
+        <a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">
+    #elseif($isFilterDomain)
+        <a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete_address', 'search_hits_address')">
+    #else
+        <a class="facete_open_node" onclick="openFaceteNode('facete', 'search_facete', 'search_hits')">
+    #end
+        <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_open.png" >
+    </a>
+    <div id="facete">
+        <h2>$MESSAGES.getString("searchResult.facete.title")</h2>
+        #set ($rankedHitslenght = $rankedResultList.get("length").toString())
+        #if($rankedHitslenght != "0")
+            #if($isSelection)
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("doRemoveAll", "true")
+                <p>
+                    <img src="/ingrid-portal-apps/images/icn_linkintern.gif"/><a href="$action" title="$MESSAGES.getString('searchResult.facet.delete.selection.tooltip')">$MESSAGES.getString('searchResult.facet.delete.selection')</a>
+                </p>
+            #end
+            #renderFacetCategory($facetConfig)
     
-    	#else
-    		<p>
-    			#if($isSelection)
-    				$MESSAGES.getString("searchResult.facete.category.error")
-    			#else
-    				$MESSAGES.getString("searchResult.facete.category.no.hits")	
-    			#end
-    			
+        #else
+            <p>
+                #if($isSelection)
+                    $MESSAGES.getString("searchResult.facete.category.error")
+                #else
+                    $MESSAGES.getString("searchResult.facete.category.no.hits") 
+                #end
+                
             </p>
-				#if($isSelection)
-            		#set ($action = $renderResponse.createActionURL())
-					$action.setParameter("doRemoveLast", "true")
-                	#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.last") $action)
-					#set ($action = $renderResponse.createActionURL())
-    				$action.setParameter("doRemoveAll", "true")
-            		#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
-    			#end
-    		<br>
-    	#end
-    	</div>
+                #if($isSelection)
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("doRemoveLast", "true")
+                    #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.last") $action)
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("doRemoveAll", "true")
+                    #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
+                #end
+            <br>
+        #end
+        </div>
 </div>
