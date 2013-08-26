@@ -249,13 +249,14 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
     getTooltip: function(/*dojo.data.Item*/ item){
     	var myTooltip = "";
         if (item.objectClass && item.objectClass[0] != null) {
-        	var myMsgKey = "dialog.statistics.";
-        	if (item.nodeAppType[0] == "O")
-        	   myMsgKey += "objClass";
-        	else
+        	if (item.nodeAppType[0] == "O") {
+        	    myTooltip = UtilSyslist.getSyslistEntryName("8000", item.objectClass[0]);
+        	} else {
+        	   var myMsgKey = "dialog.statistics.";
                myMsgKey += "adrClass";
-            myMsgKey += item.objectClass[0];
-            myTooltip = message.get(myMsgKey);
+               myMsgKey += item.objectClass[0];
+               myTooltip = message.get(myMsgKey);
+        	}
         }
         if (item.publicationCondition && item.publicationCondition[0] != null) {
             myMsgKey = "tooltip.publicationCondition." + item.publicationCondition[0];

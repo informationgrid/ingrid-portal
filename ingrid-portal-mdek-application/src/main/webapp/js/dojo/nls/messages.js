@@ -993,14 +993,6 @@
 	"dialog.research.ext.obj.content.time.until":"until",
     "dialog.research.ext.obj.content.time.fromto":"from - to",
     
-    "dialog.statistics.objClass0":"Organisational Unit / Task",
-    "dialog.statistics.objClass1":"Geo-Information / Map",
-    "dialog.statistics.objClass2":"Document / Report / Literature",
-    "dialog.statistics.objClass3":"Geo-Service",
-    "dialog.statistics.objClass4":"Enterprise / Project / Program",
-    "dialog.statistics.objClass5":"Data Pooling / Data Base",
-    "dialog.statistics.objClass6":"Service / Application / Information System",
-    
     "dialog.statistics.adrClass0":"Institution",
     "dialog.statistics.adrClass1":"Unit",
     "dialog.statistics.adrClass2":"Person",
