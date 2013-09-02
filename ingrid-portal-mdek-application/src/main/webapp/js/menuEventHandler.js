@@ -638,7 +638,7 @@ menuEventHandler._deleteNodes = function(selectedNonNewNodes) {
 		            var root = dijit.byId("addressRoot");
 		        }
 	            UtilTree.selectNode("dataTree", root.id[0], true);
-                //dojo.publish("/selectNode", [{node: root.item}]);
+                dojo.publish("/selectNode", [{id:"dataTree", node: root.item}]);
                 dojo.window.scrollIntoView(root.domNode);
 		    }
 		    deleteDeferred.callback();
