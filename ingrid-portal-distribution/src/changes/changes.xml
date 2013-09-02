@@ -21,6 +21,9 @@
     <action type="add" dev="wemove">
       Portal: Add Localization file to profiles for the InGrid-WebMapClient.
     </action>
+     <action type="update" dev="wemove" issue="INGRID-2298">
+      WebMapClient: Update content of Welcome Dialog.
+    </action>
     <action type="update" dev="wemove" issue="AF-00203, AF-00209">
       Portal: Update GeoPortal.WSV profile: Localization issues. Hide info portlet on disclaimer page. Slideshow.
     </action>
