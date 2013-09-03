@@ -4,6 +4,7 @@
 package de.ingrid.portal.portlets.myportal;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,6 +25,10 @@ import org.apache.jetspeed.administration.RegistrationException;
 import org.apache.jetspeed.components.portletregistry.PortletRegistry;
 import org.apache.jetspeed.login.LoginConstants;
 import org.apache.jetspeed.request.RequestContext;
+import org.apache.jetspeed.security.PermissionManager;
+import org.apache.jetspeed.security.RoleManager;
+import org.apache.jetspeed.security.SecurityException;
+import org.apache.jetspeed.security.UserPrincipal;
 import org.apache.pluto.om.common.Parameter;
 import org.apache.pluto.om.common.ParameterSet;
 import org.apache.portals.bridges.common.GenericServletPortlet;
@@ -37,6 +42,9 @@ import de.ingrid.portal.forms.LoginForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsSecurity;
+import de.ingrid.portal.portlets.security.SecurityUtil;
+import de.ingrid.portal.security.UserManager;
 import de.ingrid.portal.security.role.IngridRole;
 
 /**
@@ -184,9 +192,14 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 				admin.registerUser(username, password, roles, groups, userAttributes, rules, null);
 				//UserManager userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
 				//userManager.setPasswordEnabled(username, false);
+				if (isAdminPortalUser) {
+				    addAdminSystemRole(username);
+				}
 			} catch (RegistrationException e) {
 				e.printStackTrace();
-			}
+			} catch (SecurityException e) {
+                e.printStackTrace();
+            }
         } else {
             Integer errorCode = (Integer) ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
                     .getSessionAttribute(LoginConstants.ERRORCODE);
@@ -200,6 +213,32 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         }
     }
     
+    /**
+     * @param username
+     * @throws PortletException 
+     * @throws SecurityException 
+     */
+    private void addAdminSystemRole(String username) throws PortletException, SecurityException {
+        // set system specific flags
+        UserManager userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
+        if (null == userManager) {
+            throw new PortletException("Failed to find the User Manager on portlet initialization");
+        }
+        
+        Principal userPrincipal = SecurityUtil.getPrincipal(userManager.getUser(username).getSubject(), UserPrincipal.class);
+        RoleManager roleManager = (RoleManager) getPortletContext().getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
+        if (null == roleManager) {
+            throw new PortletException("Failed to find the Role Manager on portlet initialization");
+        }
+        PermissionManager permissionManager = (PermissionManager) getPortletContext().getAttribute(CommonPortletServices.CPS_PERMISSION_MANAGER);
+        if (permissionManager == null) {
+            throw new PortletException("Could not get instance of portal permission manager component");
+        }
+        permissionManager.grantPermission(userPrincipal, UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION);
+        roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PORTAL);
+        
+    }
+
     private List<String> getInitialParameterFromOtherPortlet(String parameter) {
     	PortletRegistry registry = (PortletRegistry) getPortletContext().getAttribute(CommonPortletServices.CPS_REGISTRY_COMPONENT);
     	ParameterSet initParams = registry.getPortletDefinitionByIdentifier("MyPortalCreateAccountPortlet").getInitParameterSet();
