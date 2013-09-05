@@ -172,14 +172,14 @@ dojo.addOnLoad(function() {
         executeScripts: true
     });
 
-    sc.addChild(tableTests);
     sc.addChild(dialogTests);
+    sc.addChild(tableTests);
     sc.addChild(additionalTests);
     sc.startup();
 
     //main.startup();
     
-    sc.selectChild(dijit.byId("pageDialogTest"));
+    sc.selectChild(dijit.byId("pageTable"));
 });
 </script>
 </head>

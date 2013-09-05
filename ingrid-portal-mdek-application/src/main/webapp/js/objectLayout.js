@@ -1307,17 +1307,31 @@ ingridObjectLayout.createThesaurus = function() {
 ingridObjectLayout.createReferences = function(){
     var linksToStructure = [
 		{field: 'icon',name: 'icon',width: '23px'}, 
-		{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth+'px'}
+		{field: 'linkLabel',name: 'linkLabel',width: '435px'},
+        {field: 'relationTypeName',name: 'relationTypeName',width: 250-scrollBarWidth+'px'}
 	];
     createDataGrid("linksTo", null, linksToStructure, null);
     // no immediate dialog on row click !
 //    UtilGrid.addRowSelectionCallback("linksTo", ingridObjectLayout.openLinkDialog);
     
     (new dijit.form.Button( {}, "btnGetLinksToFromParent")).onClick = igeEvents.getLinksToFromParent;
+
+    // relation type filter as selection list: content dependent from class !
+    // initialize with empty store !
+    var storeProps = {data: {identifier: 'entryId', label: 'name'}};
+    createSelectBox("linksToRelationTypeFilter", null, storeProps, null);
+    
+    // load content of relation type filter when object class changes !
+    // Also triggered on initial setting of object class !
+    dojo.subscribe("/onObjectClassChange", igeEvents.setLinksToRelationTypeFilterContent);
+
+    // filter table content on change of relation type filter
+    dojo.connect(dijit.byId("linksToRelationTypeFilter"), "onChange", igeEvents.filterLinksToViaRelationType);
+
     
     var linksFromStructure = [
 		{field: 'icon',name: 'icon',width: '23px'}, 
-		{field: 'linkLabel',name: 'linkLabel',width: 325-scrollBarWidth+'px'}
+		{field: 'linkLabel',name: 'linkLabel',width: 685-scrollBarWidth+'px'}
 	];
     createDataGrid("linksFrom", null, linksFromStructure, null);
 }

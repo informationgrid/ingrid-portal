@@ -1911,7 +1911,8 @@ udkDataProxy._connectSharedStore = function() {
 		["ref6BaseDataLink", "3210"]];
 	var idsLinkAddresses = [["ref2LocationLink", "3360"], ["ref4ParticipantsLink","3410"], ["ref4PMLink","3400"]];
 	
-	var linksToTableData = UtilGrid.getTableData("linksTo");
+    // request UNFILTERED data ! Get full data store !
+	var linksToTableData = UtilGrid.getTableData("linksTo", true);
 	dojo.forEach(ids, function(id) {
 		//UtilGrid.getTableData(id).setItems(linksToStore, "_id");
 		UtilGrid.setTableData(id[0], dojo.filter(linksToTableData, function(item) {return item.relationType == id[1];}));
@@ -2057,13 +2058,20 @@ udkDataProxy._setObjectDataClass6 = function(nodeData) {
 
 
 udkDataProxy._prepareObjectAndUrlReferences = function(nodeData) {
-    var objLinkTable = nodeData.linksToObjectTable;
+    var objLinkTable = nodeData.linksToObjectTable;       
     var urlLinkTable = nodeData.linksToUrlTable;
     
     var url = this._filterPreviewImage(urlLinkTable);
     dijit.byId("generalPreviewImage").set( "value", url );
     
     var linkTable = objLinkTable.concat(urlLinkTable);
+    // Replace relationTypeName with name from according syslist entry. Leave it if it's a free entry.
+    dojo.forEach(linkTable, function(entry) {
+        var entryName = UtilSyslist.getSyslistEntryName(2000, entry.relationType);
+        if (entryName != entry.relationType) {
+            entry.relationTypeName = entryName;
+        }
+    });
 
     UtilList.addObjectLinkLabels(linkTable, true);
     UtilList.addUrlLinkLabels(linkTable);
@@ -2887,18 +2895,20 @@ udkDataProxy._updateTree = function(nodeData, oldUuid) {
 	}
 }
 
-// Returns an array representing the data of the table with name 'tableName'
+// Returns an array representing the UNFILTERED data of the table with name 'tableName'.
+// ONLY CALLED FOR SAVING DATA !!!
 // The keys are stored in the fields named: 'Id' 
 udkDataProxy._getTableData = function(tableName)
 {
     var widget = dijit.byId(tableName);
     // if it's a slickgrid
     if (widget == undefined) {
-        return gridManager[tableName].getData();
+        // request UNFILTERED data ! Get full data store !
+        return gridManager[tableName].getData(true);
     } else {
         //var store = widget.store;
         //return UtilStore.convertItemsToJS(store, store._arrayOfTopLevelItems);
-    	return widget.getData();
+    	return widget.getData(true);
     }
 	//return dijit.byId(tableName).store._arrayOfTopLevelItems;
 }
@@ -3566,10 +3576,20 @@ igeEvents.getLinksToFromParent = function() {
                 var linkTableData = udkDataProxy._prepareObjectAndUrlReferences(objNodeData);
                 
                 // add parent references to current object
-                var data = UtilGrid.getTableData("linksTo");
+                // request UNFILTERED data ! Get full data store !
+                var data = UtilGrid.getTableData("linksTo", true);
                 // filter those entries that are not already present in the current object
                 var entriesToAdd = dojo.filter(linkTableData, function(item) {
-                    if (!dojo.some(data, function(d) { return d.uuid == item.uuid; })) {
+                    if (!dojo.some(data,
+                        function(d) {
+                            var sameRelationType = (d.relationTypeName == item.relationTypeName);
+                            if (d.url) {
+                                var sameEntity = (d.url == item.url);
+                            } else {
+                                var sameEntity = (d.uuid == item.uuid);
+                            }
+                            return (sameRelationType && sameEntity)
+                        })) {
                         return true;
                     }
                     return false;
@@ -3635,7 +3655,7 @@ igeEvents.getAddressDataFromParent = function() {
         AddressService.getAddressData(currentUdk.parentUuid, "true",
             {
                 callback:function(addrNodeData){
-                    
+                        
                     dijit.byId("addressStreet").attr("value", addrNodeData.street, true);
                     dijit.byId("addressCountry").attr("value", addrNodeData.countryCode == -1 ? null : addrNodeData.countryCode , true);
                     dijit.byId("addressZipCode").attr("value", addrNodeData.postalCode, true);
@@ -3648,4 +3668,72 @@ igeEvents.getAddressDataFromParent = function() {
             }
         );
     });
+}
+
+// load content when object class changes ! Also triggered on initial setting of object class !
+igeEvents.setLinksToRelationTypeFilterContent = function(fullObjectClass) {
+        // Class1, ... is passed
+        var objectClass = fullObjectClass.objClass.substring(5);
+    
+        // set up syslist data and filter according to object class
+        UtilSyslist.readSysListData(2000).then(function(listItems) {
+            var syslist2000Items = UtilSyslist.convertSysListToTableData(listItems);
+        
+            var idList = [];
+            dojo.forEach(syslist2000Items, function(entry) {
+                // "data" of list item contains relevant classes
+                var containsClass = dojo.indexOf(entry.data.split(','), objectClass) !== -1;
+                if (containsClass) idList.push(entry.entryId);
+            });
+
+            var initialItems = [ {
+                // add " " prefix to be first entry in list !
+                name: " " + message.get("ui.listentry.noFilter"),
+                // "0" not used in syslist !
+                entryId: "0",
+                isDefault: true,
+                // We set this entry for all classes (to be conform with data field, but not needed anymore)
+                data: "0,1,2,3,4,5,6"
+            }];
+            var filteredItems = dojo.filter(syslist2000Items, function(item) {
+                return dojo.some(idList, function(id) {
+                    return id == item.entryId;
+                });
+            });
+
+            // Set new items in store
+            var newItems = initialItems.concat(filteredItems);
+            var storeProps = {
+                searchAttr: "name",
+                data: {
+                    label: "name",
+                    identifier: "entryId",
+                    items: newItems
+                }
+            };
+            dijit.byId("linksToRelationTypeFilter").setStore(new dojo.data.ItemFileReadStore(storeProps));
+//            console.debug("/onObjectClassChange -> New items for relation type filter");
+//            console.debug(newItems);
+        });
+}
+
+igeEvents.filterLinksToViaRelationType = function(filterKey) {
+    console.debug("filterLinksToViaRelationType relationType: " + filterKey);
+    
+    if (filterKey == "0") {
+    	// "Kein Filter" selected
+        UtilGrid.getTable("linksTo").setRowFilter(null);
+    } else if (UtilGeneral.hasValue(filterKey)) {
+        UtilGrid.getTable("linksTo").setRowFilter({relationType: filterKey});
+    } else {
+    	// undefined state at initialization
+        UtilGrid.getTable("linksTo").setRowFilter(null);
+    }
+
+//    console.debug("Table FULL Data ->");
+//    console.debug(UtilGrid.getTable("linksTo").getData(true));
+//    console.debug("Table FILTERED Data ->");
+//    console.debug(UtilGrid.getTable("linksTo").getData());
+
+    UtilGrid.getTable("linksTo").invalidate();
 }

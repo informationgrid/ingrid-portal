@@ -675,8 +675,8 @@ scriptScopeDetailView.renderNodeData = function(nodeData) {
 	    	sortedList = nodeData.linksFromObjectTable.sort(function(a,b) {return (b.title<a.title)-(a.title<b.title);});
 	    	this.renderList(sortedList, "<fmt:message key='dialog.compare.object.linksFromTable.title' />", "title")
 	    	sortedList = nodeData.linksToObjectTable.sort(function(a,b) {return (b.title<a.title)-(a.title<b.title);});
-	    	this.renderList(sortedList, "<fmt:message key='dialog.compare.object.linksToTable.title' />", "title")
-	    	this.renderUrlLinkList(nodeData.linksToUrlTable);
+            this.renderLinkList(sortedList, "<fmt:message key='dialog.compare.object.linksToTable.title' />", false);
+	    	this.renderLinkList(nodeData.linksToUrlTable, "<fmt:message key='dialog.compare.object.linksToUrlTable.title' />", true);
 	    }
         
         this.renderAdditionalFieldsForRubric("links", additionalFields);
@@ -916,14 +916,26 @@ scriptScopeDetailView.renderOperations = function(list) {
 	}
 }
 
-scriptScopeDetailView.renderUrlLinkList = function(list) {
-	if (list && list.length > 0) {
-		var t = "<p><strong>URL Verweise</strong><br/>";
-		for (var i = 0; i < list.length; i++) {
-			t += "<a href=\"" + list[i].url + "\" target=\"new\">" + list[i].name + "</a><br/>";
-		}
-		this.detailDivContent += t + "<br/><br/>";
-	}
+
+scriptScopeDetailView.renderLinkList = function(list, title, isUrl) {
+    if (list && list.length > 0) {
+        var valList = "";
+        for (var i=0; i<list.length; i++) {
+            if (isUrl) {
+                var val = "<a href=\"" + list[i].url + "\" target=\"new\">" + list[i].name + "</a>";
+            } else {
+                var val = "" + list[i].title;
+            }
+            if (UtilString.hasValue(list[i].relationTypeName)) {
+                val += " (" + list[i].relationTypeName + ")"; 
+            }
+            valList += val + "<br/>";
+        }
+        if (valList != "") {
+            var t = "<strong>" + title + "</strong><br/>";
+            this.detailDivContent += "<p>" + t + valList + "</p><br/>";
+        }
+    }
 }
 
 scriptScopeDetailView.renderObjectTitel = function(val) {

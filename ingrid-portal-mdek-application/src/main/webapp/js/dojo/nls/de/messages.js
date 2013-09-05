@@ -1016,6 +1016,7 @@
     "warning.address.inherit.to.children":"Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?",
     "warning.update.capabilities":"Achtung: mit dem Aktualisieren werden folgende Felder mit den Werten aus dem aktuellen Capabilities-Dokument überschrieben: <ul><li>Kurzbezeichnung</li><li>Beschreibung</li><li>Art des Dienstes</li><li>Klassifikation des Dienstes</li><li>Erläuterungen</li><li>Version des Dienstes</li><li>Operationen</li><li>Optionale Schlagworte</li></ul>Fortfahren?",
     
-    "info.address.inherit.to.children":"Es wurden ${0} Adressen verändert!"
+    "info.address.inherit.to.children":"Es wurden ${0} Adressen verändert!",
+    "ui.listentry.noFilter":"Kein Filter"
   }
 )

@@ -2012,12 +2012,16 @@
                             </div>
                         </div>
                         <div id="linksContent" class="content">
-                            <span id="uiElementN017" class="outer" style="width:50%;">
+                          <div class="inputContainer">
+                            <span id="uiElementN017" class="outer">
                                 <div>
                                     <span class="label left">
                                         <label for="linksTo" onclick="javascript:dialog.showContextHelp(arguments[0], 1500)">
                                             <fmt:message key="ui.obj.links.linksTo.title" />
                                         </label>
+                                    </span>
+                                    <span class="input right" style="padding-left: 13px;">
+                                        <select autoComplete="false" id="linksToRelationTypeFilter"></select>
                                     </span>
                                     <span class="functionalLink">
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="javascript:dialog.showPage(getLocalizedTitle('linksTo'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {gridId: 'linksTo'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.links.linksTo.link" /></a>
@@ -2031,7 +2035,9 @@
                                     </div>
                                 </div>
                             </span>
-                            <span id="uiElementN018" class="outer" style="width:50%;">
+                          </div>
+                          <div class="inputContainer">
+                            <span id="uiElementN018" class="outer">
                                 <div>
                                     <span class="label">
                                         <label for="linksFrom" onclick="javascript:dialog.showContextHelp(arguments[0], 1510)">
@@ -2046,6 +2052,7 @@
                             </span>
                             <div class="fill">
                             </div>
+                          </div>
                         </div>
                         <div class="fill"></div>
                     </div>

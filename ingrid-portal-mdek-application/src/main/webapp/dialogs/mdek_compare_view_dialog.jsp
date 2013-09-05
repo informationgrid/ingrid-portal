@@ -276,8 +276,8 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
 	// references
 	renderSectionTitel("<fmt:message key='ui.obj.links.title' />");
 	renderList(nodeDataOld.linksFromObjectTable, nodeDataNew.linksFromObjectTable, "<fmt:message key='dialog.compare.object.linksFromTable.title' />", "title")
-	renderList(nodeDataOld.linksToObjectTable, nodeDataNew.linksToObjectTable, "<fmt:message key='dialog.compare.object.linksToTable.title' />", "title")
-	renderUrlLinkList(nodeDataOld.linksToUrlTable, nodeDataNew.linksToUrlTable);
+    renderLinkList(nodeDataOld.linksToObjectTable, nodeDataNew.linksToObjectTable, "<fmt:message key='dialog.compare.object.linksToTable.title' />", false);
+	renderLinkList(nodeDataOld.linksToUrlTable, nodeDataNew.linksToUrlTable, "<fmt:message key='dialog.compare.object.linksToUrlTable.title' />", true);
     
     renderAdditionalFieldsForRubric("links", oldAdditionalFields, newAdditionalFields);
 
@@ -740,24 +740,39 @@ function buildTableBodyForDiff(diff, rowProperties, cellRenderFunction, useGridF
 	return t;
 }
 
-function renderUrlLinkList(oldList, newList) {
-	var oldUrlList = [];
-	var newUrlList = [];
+function renderLinkList(oldList, newList, title, isUrl) {
+    var oldListProcessed = [];
+    var newListProcessed = [];
 
-	if (oldList && oldList.length > 0) {
-		for (var i = 0; i < oldList.length; i++) {
-			oldUrlList.push("<a href=\"" + oldList[i].url + "\" target=\"new\">" + oldList[i].name + "</a><br/>");
-		}
-	}
-	if (newList && newList.length > 0) {
-		for (var i = 0; i < newList.length; i++) {
-			newUrlList.push("<a href=\"" + newList[i].url + "\" target=\"new\">" + newList[i].name + "</a><br/>");
-		}
-	}
+    if (oldList && oldList.length > 0) {
+        for (var i = 0; i < oldList.length; i++) {
+            if (isUrl) {
+                var val = "<a href=\"" + oldList[i].url + "\" target=\"new\">" + oldList[i].name + "</a>";
+            } else {
+                var val = "" + oldList[i].title;
+            }
+            if (UtilString.hasValue(oldList[i].relationTypeName)) {
+                val += " (" + oldList[i].relationTypeName + ")"; 
+            }
+            oldListProcessed.push(val + "<br/>");
+        }
+    }
+    if (newList && newList.length > 0) {
+        for (var i = 0; i < newList.length; i++) {
+            if (isUrl) {
+                var val = "<a href=\"" + newList[i].url + "\" target=\"new\">" + newList[i].name + "</a>";
+            } else {
+                var val = "" + newList[i].title;
+            }
+            if (UtilString.hasValue(newList[i].relationTypeName)) {
+                val += " (" + newList[i].relationTypeName + ")"; 
+            }
+            newListProcessed.push(val + "<br/>");
+        }
+    }
 
-	renderList(oldUrlList, newUrlList, "URL Verweise");
+    renderList(oldListProcessed, newListProcessed, title);
 }
-
 
 // Compare two tables containing objects with 'properties'.
 // The result is returned as an object containing the following information:

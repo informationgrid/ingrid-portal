@@ -1015,6 +1015,7 @@
     "warning.address.inherit.to.children":"Shall the address data from '${0}' be copied to all sub-addresses?",
     "warning.update.capabilities":"Attention: updating the metadata will overwrite the content of the following metadata elements with the values from the capabilities document: <ul><li>Short Description</li><li>Description</li><li>Type of Service</li><li>Classification of Service</li><li>Relevance-Description</li><li>Service Version</li><li>Operations</li><li>Optional Topics</li></ul>Continue?",
     
-    "info.address.inherit.to.children":"${0} addresses have been modified!"
+    "info.address.inherit.to.children":"${0} addresses have been modified!",
+    "ui.listentry.noFilter":"No Filter"
   }
 )

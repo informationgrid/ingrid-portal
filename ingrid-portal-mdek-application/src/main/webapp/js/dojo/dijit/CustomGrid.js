@@ -51,6 +51,9 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
     headerColumnWidthDiff: null, headerColumnHeightDiff: null, cellWidthDiff: null, cellHeightDiff : null,
     viewport: null,
     canvas: null,
+    // row filter filters data for display, pass field and values to match ! 
+    // e.g. { dataField:dataValue, dataField2:dataValue2 }
+    rowFilter: null,
     data: [],
     container: null,
     viewportHasHScroll: false,
@@ -384,6 +387,22 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
             //this.setupColumnReorder();
         }
     },
+
+    // DOES NOT invalidate ! call invalidate() to take effect !
+    // Pass null to remove filter. 
+    setRowFilter: function(newRowFilter) {
+        console.debug("!!! set rowFilter on grid '" + this.id + "' -> ");
+        console.debug(newRowFilter);
+        this.rowFilter = newRowFilter;
+    },
+
+    // null if no filter set !
+    getRowFilter: function() {
+    	if (this.rowFilter) {
+            console.debug("!!! rowFilter set on grid: " + this.id);
+    	}
+        return this.rowFilter;
+    },
     
     setData: function(newData, scrollToTop, noRender) {
         this.resetInvalidRows();
@@ -395,26 +414,65 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
             this.resizeCanvas();
         this.onDataChanged({});
     },
-    
-    getData: function() {
+
+    // ALWAYS filters if no arguments passed !
+    // So only visible rows are returned and frontend works the usual way with row indexes !
+    getData: function(doNOTFilter) {
+    	if (!doNOTFilter && this.rowFilter) {
+//            console.debug("!!! rowFilter set on grid, we return FILTERED data  !!! rowFilter / grid " + this.id + " -> ");
+//            console.debug(this.rowFilter);
+//            console.debug(this);
+    		// filtering requested AND filter set ! We filter.
+            // convert to array ? We do it according to other functions !
+            var dataArray = [];
+            if (this.data.getLength) {
+                for (var i=0; i<this.data.getLength(); i++) {
+                    dataArray.push(this.data.getItem(i));
+                }
+            } else {
+                dataArray = this.data;
+            }
+            
+            return dojo.filter(dataArray, function(dataItem) {
+                // row filter is { dataField:dataValue, dataField2:dataValue2 }
+                var included = true;
+                for (fieldName in this.rowFilter) {
+                    if (dataItem[fieldName] != this.rowFilter[fieldName]) {
+                        included = false;
+                        break;
+                    }
+                }
+                return included;
+            }, this);
+    	}
+
+        // NO filtering, return full data
         return this.data;
     },
 
-    getDataLength: function() {
-        if (this.data.getLength) {
-            return this.data.getLength();
+    // ALWAYS filters if no arguments passed !
+    // So only visible rows are considered and frontend works the usual way with row indexes !
+    getDataLength: function(doNOTFilter) {
+        var myData = this.getData(doNOTFilter);
+
+        if (myData.getLength) {
+            return myData.getLength();
         }
         else {
-            return this.data.length;
+            return myData.length;
         }
     },
 
-    getDataItem: function(i) {
-        if (this.data.getItem) {
-            return this.data.getItem(i);
+    // ALWAYS filters if no arguments passed !
+    // So only visible rows are considered and frontend works the usual way with row indexes !
+    getDataItem: function(i, doNOTFilter) {
+        var myData = this.getData(doNOTFilter);
+
+        if (myData.getItem) {
+            return myData.getItem(i);
         }
         else {
-            return this.data[i];
+            return myData[i];
         }
     },
     

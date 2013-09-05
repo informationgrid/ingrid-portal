@@ -10,12 +10,34 @@
             
             dojo.addOnLoad(function(){
                 var gridStructure = [
-                    {field: 'name',name: 'i',width: '200px', editable: false, sortable:true},
-                    {field: 'description',name: 'label',width: '400px', editable: false, sortable:true}
-                ];
+                    {field: 'name',name: 'name (header)',width: '200px', editable: false, sortable:true},
+                    {field: 'description',name: 'description (header)',width: '400px', editable: false, sortable:true}
+                ];                
                 createDataGrid("grid", null, gridStructure, addTableData);
                 
                 // UtilGrid.setTableData("grid", data);
+
+                // FilterSelectBox for grid
+                var selectBoxProps = {searchAttr: 'name', data: {identifier: 'id', label: 'name'}};
+                createSelectBox("filterSelect", null, selectBoxProps, addSelectBoxData);
+
+                // filter table content on change of relation type filter
+                dojo.connect(dijit.byId("filterSelect"), "onChange", function(filterKey) {
+                    console.debug("filterTable id: " + filterKey);
+                    if (filterKey == "0") {
+                        UtilGrid.getTable("grid").setRowFilter(null);
+                    } else {
+                        UtilGrid.getTable("grid").setRowFilter({ id: filterKey });
+                    }
+
+                    console.debug("Table FULL Data ->");
+                    console.debug(UtilGrid.getTable("grid").getData(true));
+                    console.debug("Table FILTERED Data ->");
+                    console.debug(UtilGrid.getTable("grid").getData());
+
+                    UtilGrid.getTable("grid").invalidate();
+                });
+
                 
                 var gridStructureBool = [
                     {field: 'selection',name: 'selection',width: '23px', formatter: BoolCellFormatter, type: YesNoCheckboxCellEditor, editable: true},
@@ -39,12 +61,27 @@
             function addTableData() {
                 var def = new dojo.Deferred();
                 var data = [
-                    {name:"abc", description:"description", selection: true},
-                    {name:"aatete", description:"achso", selection: false},
-                    {name:"test", description:"aaabbbccc", selection: true}
+                    {id: "1", name:"abc", description:"description", selection: true},
+                    {id: "2", name:"aatete", description:"achso", selection: false},
+                    {id: "3", name:"test", description:"aaabbbccc", selection: true}
                 ];
                 def.callback(data);
                 return def;
+            }
+            
+            function addSelectBoxData() {
+                var def2 = new dojo.Deferred();
+
+                var def = addTableData();
+                def.addCallback(function(tableData) {
+                    var newItems = [
+                        {id: "0", name:" Kein Filter", description:"entfernt Filter auf Rows", selection: false},
+                        {id: "100", name:"irgendwas nicht in Tabelle :)", description:"fuehrt zu leerer Tabelle", selection: false}
+                    ];
+                    var selectBoxData = newItems.concat(tableData);
+                    def2.callback(selectBoxData);
+                });
+                return def2;
             }
             
             function changeData() {
@@ -53,6 +90,7 @@
                 data.push(UtilGrid.getTableData("grid")[0]);
                 UtilGrid.setTableData("grid", data);
             }
+
         </script>
         
 	</head>
@@ -61,6 +99,7 @@
 	    <div id="grid"></div>
         
         <input type="button" onclick="changeData()" value="ChangeData">
+        <select autoComplete="false" id="filterSelect"></select>
 
         <h2>ContextMenu: None</h2>        
         <div id="gridBool" interactive="true" autoEdit="true" contextMenu="none" class="hideTableHeader"></div>
