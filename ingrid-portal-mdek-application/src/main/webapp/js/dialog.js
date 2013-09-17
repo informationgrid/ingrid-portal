@@ -207,10 +207,13 @@ dialog.show = function(caption, text, /* dialog.WARNING|dialog.INFO */type, /* a
 	
 	dojo.addClass(dialogWnd.titleBar, type);
     
-	var content = '<div class="dijitDialogPaneContentArea">';
+	var contentHeight = height < 250 ? "auto" : (height - 150);
+	
+	var content = '<div class="dijitDialogPaneContentArea popupContent" style="overflow:auto; height: ' + (contentHeight) + 'px;" >';
 	if (type == dialog.INFO)
 		text = '<strong>' + text + '</strong>';
-	content += '<div class="popupContent xNoScroll yScroll" >' + text + '<span class="buttons" id="InfoDialog_buttons"></span></div>'; // style="height:'+height+'px;"
+	//content += '<div class="popupContent" style="word-wrap: break-word; height: ' + (contentHeight) + 'px;" >' + text + '</div>';
+	content += text;
 	content += '</div>';
 	content += '<div id="dialogButtonBar" class="dijitDialogPaneActionBar"></div>';
 	
