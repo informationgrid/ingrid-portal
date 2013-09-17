@@ -45,6 +45,9 @@
     <action type="fix" dev="wemove" issue="INGRID-2286">
       Portal: Fix link to wemove page in content of Impressum.
     </action>
+    <action type="fix" dev="wemove" issue="INGRID-2300">
+      IGE: Fix display of import/export exception.
+    </action>
     <action type="fix" dev="wemove" issue="INGRID-2294">
       IGE: Paging of associated objects in an address working again.
     </action>

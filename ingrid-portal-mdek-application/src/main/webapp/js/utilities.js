@@ -1618,12 +1618,11 @@ var UtilGeneral = {}
 
 // Returns the stack trace of an exception as string
 UtilGeneral.getStackTrace = function(exception) {
+    if (exception.cause) {
+        exception = exception.cause;
+    }
 	var stackTrace = "";
-	stackTrace += exception.message +"<br>";
-	if (exception.cause) {
-		exception = exception.cause;
-	}
-	stackTrace += exception.javaClassName+": "+exception.message +"<br>";
+    stackTrace += exception.javaClassName+": "+exception.message +"<br>";
 	for (var i = 0; i < exception.stackTrace.length; ++i) {
 		var ex = exception.stackTrace[i];
 		if (!ex.nativeMethod) {
