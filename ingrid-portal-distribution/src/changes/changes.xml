@@ -10,7 +10,7 @@
       WebMapClient: Add Nominatim-Search to the frontend of the WebMapClient menu bar.
     </action>
     <action type="add" dev="wemove" issue="REDMINE-132">
-      IGE: Added relation type filter for table "references to".
+      IGE: Added new relation type "Nutzungsbedingungen". Added relation type filter for table "references to".
     </action>
     <action type="add" dev="wemove" issue="REDMINE-126">
       IGE: Use Service-Url instead of getCapabilities-Url and append parameters automatically.
