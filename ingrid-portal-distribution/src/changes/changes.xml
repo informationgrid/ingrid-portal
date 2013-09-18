@@ -60,6 +60,9 @@
     <action type="fix" dev="wemove" issue="INGRID-2265">
       Portal: Added missing oracle scripts for updating mdek database.
     </action>
+    <action type="fix" dev="wemove" issue="REDMINE-179">
+      WebMapClient: Fix decoding of response of GetFeatureInfo.
+    </action>
     <action type="fix" dev="wemove">
       WebMapClient: Transformation coordinates to WGS-84 by search area.
     </action>
