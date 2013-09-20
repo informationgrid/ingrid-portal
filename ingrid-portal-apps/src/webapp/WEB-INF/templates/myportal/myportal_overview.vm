@@ -17,6 +17,11 @@
 		$MESSAGES.getString('overview.content.description')
 	</p>
 	<ul class="internlinklist2">
+#if($externalLogin)
+        <li>
+            <a href="portal/main-maps.psml">$MESSAGES.getString('overview.content.entry0')</a>
+        </li>
+#end
 		<li>
 			<a href="portal/default-page.psml">$MESSAGES.getString('overview.content.entry1')</a>
 		</li>

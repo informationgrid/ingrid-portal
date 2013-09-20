@@ -100,7 +100,7 @@ div#logo { float: left; }
   logged on styles 
 *********************************************************************/
 
-div#logged_on {float: right; clear:right; font-size: 70%; padding:3.5em 1.2em 0 0; color:#C7E7FF; margin: 0 968px 0 0; }
+div#logged_on {float: right; clear:right; font-size: 70%; padding:3.5em 1.2em 0 0; color:#FFFFFF; margin: 0 968px 0 0; }
 div#logged_on a, div#logged_on a:link, div#logged_on a:visited {color:#FFFFFF; text-decoration: none; background-color:rgba(127,127,127,0.7); }
 div#logged_on a:hover, div#logged_on a:focus, div#logged_on a:active { color: #111111; text-decoration: underline; }
 

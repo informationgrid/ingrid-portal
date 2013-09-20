@@ -69,7 +69,8 @@
     #set ($salutation = "$!{salutation} $userNameFamily")
     #end		
 <div id="logged_on">
-  <a href="portal/myportal-edit-account.psml">$salutation</a>
+<!-- NO LINK TO EDIT ACCOUNT DUE TO SSO ! -->
+  $salutation
 </div>
 #end
 </div>
