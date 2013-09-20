@@ -192,7 +192,7 @@ udkDataProxy.setDirtyFlag = function()
         if (udkDataProxy._onSetDirtyFlag) {
             clearTimeout(udkDataProxy._onSetDirtyFlag);
         }
-        udkDataProxy._onSetDirtyFlag = setTimeout(udkDataProxy.enableSetDirtyFlag, 100);
+        udkDataProxy._onSetDirtyFlag = setTimeout(udkDataProxy.enableSetDirtyFlag, 200);
     } else {
         udkDataProxy.setDirtyFlagNow();
     }
