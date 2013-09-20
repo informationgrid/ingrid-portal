@@ -1613,6 +1613,20 @@ UtilUI.disableElement = function(element) {
     element.set("disabled", true);
 }
 
+UtilUI.setComboBySyslistValue = function(boxId, entryId) {
+    var box = dijit.byId(boxId);
+    box.store.fetch({
+        onComplete: function(data) {
+            dojo.some(data, function(item) {
+                if (item[1] == entryId) {
+                    box.set('value', item[0]);
+                    return true;
+                }
+            });
+        }
+    });
+}
+
 // General utility functions for converting strings, etc.
 var UtilGeneral = {}
 
