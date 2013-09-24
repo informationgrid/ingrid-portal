@@ -1281,6 +1281,8 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          if (this.activeCellNode != null) {
              this.activeRow = parseInt(this.activeCellNode.parentNode.getAttribute("row"));
              this.activeCell = this.activePosX = this.getCellFromNode(this.activeCellNode);
+             // get cell again which might have lost dom connection!
+             this.activeCellNode = this.getCellNode(this.activeRow, this.activeCell);
 
              dojo.addClass(this.activeCellNode, "active");
 
