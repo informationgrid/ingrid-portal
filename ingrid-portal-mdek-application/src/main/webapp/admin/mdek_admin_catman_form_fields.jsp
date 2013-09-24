@@ -570,7 +570,9 @@ scopeAdminFormFields.addElement = function(insideRubric) {
 	} else if (type == "numberControl") {
         item.unit = {};
         item.$dwrClassName = "NumberControl";
-	}
+	} else if (type == "checkboxControl") {
+        item.$dwrClassName = "CheckboxControl";
+    }
 	
     var def = new dojo.Deferred();
     dialog.showPage("<fmt:message key='dialog.admin.additionalfields.title.addField' />", "admin/dialogs/mdek_admin_catman_editField_dialog.jsp", 650, 600, true, {

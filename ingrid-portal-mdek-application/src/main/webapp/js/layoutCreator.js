@@ -508,6 +508,16 @@ function createDomDataGrid(additionalField, structure, section) {
     var gridWidget = createDataGrid(additionalField.id, null, structure, null, {interactive:"true", autoHeight:additionalField.rows});
 }
 
+function createDomCheckbox(additionalField, section) {
+    var inputWidget = new dijit.form.CheckBox({
+        id: additionalFieldPrefix + additionalField.id,
+        name: additionalField.name
+    });
+    
+    // the checkbox's label is inline so we need to contruct a new surrounding
+    return addCheckSurroundingContainer(inputWidget.domNode, additionalField);
+}
+
 function createThesaurusGrid(additionalField, section) {
     //var gridWidget = createDataGridWidget(additionalField.id, structure, {interactive:"true", autoHeight:4});
     var div = document.createElement("div");
@@ -602,4 +612,44 @@ function addSurroundingContainer(/*DomNode*/nodeToInsert, additionalField, type,
     uiPaddingDiv.appendChild(inputSpanElement);
     return uiElementSpan;
 }
+ 
+function addCheckSurroundingContainer(/*DomNode*/nodeToInsert, additionalField, type, linkInfo) {
+    // Create the following dom structure:
+    // <span id="uiElementAdd${additionalField.id}" class="outer" type="optional">
+    //   <div>
+    //     < ingrid:Checkbox or ... depending on ${additionalField.type} /> 
+    //     <label class="inActive">
+    //       ${additionalField.name}
+    //     </label>
+    //   </div>
+    // </span>
     
+    // Create dom nodes
+    var uiElementSpan = document.createElement("span");
+    dojo.addClass(uiElementSpan, "outer additional content");
+    uiElementSpan.id = "uiElementAdd" + additionalField.id;
+   
+    // mark field as additional for easier saving data
+    dojo.addClass(nodeToInsert, "additionalField");
+   
+    if (additionalField.isMandatory) 
+        dojo.addClass(uiElementSpan, "required");
+    else {
+        dojo.addClass(uiElementSpan, additionalField.visible);
+    }
+    
+    uiElementSpan.setAttribute("style", additionalField.style);
+    var uiPaddingDiv = document.createElement("div");
+    dojo.addClass(uiPaddingDiv, "input checkboxContainer");
+    var labelElement = document.createElement("label");
+    //dojo.addClass(labelElement, "inActive");
+    labelElement.setAttribute("onclick", "javascript:dialog.showContextHelp(arguments[0], \""+additionalField.help+"\")");
+    labelElement.innerHTML = additionalField.name;
+    
+    // Build the complete structure
+    uiElementSpan.appendChild(uiPaddingDiv);
+    uiPaddingDiv.appendChild(nodeToInsert);
+    uiPaddingDiv.appendChild(labelElement);
+    
+    return uiElementSpan;
+}

@@ -1648,6 +1648,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
      commitCurrentEdit: function() {
          var item = this.getDataItem(this.activeRow);
          var column = this.columns[this.activeCell];
+         var oldItem = dojo.clone(item); 
 
          if (this.currentEditor) {
              if (this.currentEditor.isValueChanged()) {
@@ -1696,7 +1697,8 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
                      this.onCellChange({
                          row: this.activeRow,
                          cell: this.activeCell,
-                         item: newItem ? newItem : item
+                         item: newItem ? newItem : item,
+                         oldItem: oldItem
                      });
                      
                      // notify all subscribers who want to know that data has changed interactively

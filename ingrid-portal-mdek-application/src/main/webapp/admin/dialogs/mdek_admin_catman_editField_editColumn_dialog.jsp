@@ -27,7 +27,7 @@
                 );
                 // create table with data
                 var formColumnOptionsStructure = [
-                    {field: 'id',name: 'id',width: '30px',editable: false},
+                    {field: 'id',name: 'id',width: '30px',editable: true},
                     {field: 'value',name: 'option',width: '300px',editable: true}
                     ];
                 dojo.forEach(scopeAdminFormFields.profileData.languages, function(lang){
@@ -41,6 +41,7 @@
                     // add special action to events on store for synchronization
                     dojo.connect(UtilGrid.getTable("formColumnOptions_" + lang), "onAddNewRow", scriptScopeEditColumn.syncOptionTableRowsNew);
                     dojo.connect(UtilGrid.getTable("formColumnOptions_" + lang), "onDataChanged", scriptScopeEditColumn.syncOptionTableRowsDelete);
+                    dojo.connect(UtilGrid.getTable("formColumnOptions_" + lang), "onCellChange", scriptScopeEditColumn.syncOptionTableRowsCellChange);
                     
                     // set localized label
                     var titleWidget = new dijit.form.TextBox({
@@ -87,8 +88,31 @@
                 //}
 			}
             
+            // sync id among all tables if it has changed
+            scriptScopeEditColumn.syncOptionTableRowsCellChange = function(msg) {
+                // only update if id-column was changed!
+                if (msg.cell === 1) {
+                    //console.log("Cell changed: ", msg);
+                    var newId = msg.item.id;
+                    var oldId = msg.oldItem.id;
+                    var activelang = msg.item.lang;
+                    
+                    dojo.forEach(scopeAdminFormFields.profileData.languages, function(lang){
+                        if (activelang != lang) {
+                            var data = UtilGrid.getTableData("formColumnOptions_"+lang);
+                            dojo.some(data, function(row) {
+                                if (row.id === oldId) {
+                                    row.id = newId;
+                                    return true;
+                                }
+                            });
+                            UtilGrid.getTable("formColumnOptions_"+lang).invalidate();
+                        }
+                    });
+                    
+                }
+            }
             
-           
             scriptScopeEditColumn.syncOptionTableRowsNew = function(msg) {
                 if (syncRowsInTableProgress) 
                     return;

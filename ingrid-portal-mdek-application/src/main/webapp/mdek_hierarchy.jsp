@@ -273,11 +273,8 @@
                             </span>
                             <span id="uiElement6000" class="outer">
                                 <div>
-                                <div class="input">
-                                    <input type="checkbox" id="isInspireRelevant" />
-                                    <label onclick="javascript:dialog.showContextHelp(arguments[0], 6000)">
-                                        <fmt:message key="ui.obj.general.inspireRelevant" />
-                                    </label>
+                                <div class="input checkboxContainer">
+                                    <input type="checkbox" id="isInspireRelevant" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 6000)"><fmt:message key="ui.obj.general.inspireRelevant" /></label>
                                 </div>
                                 </div>
                             </span>
@@ -387,8 +384,8 @@
                                     </span>
                                     <div id="thesaurusEnvironment" class="outlined">
                                         <div class="checkboxContainer">
-                                            <span class="input"><input type="checkbox" name="thesaurusEnvExtRes" id="thesaurusEnvExtRes" />
-                                                <label onclick="javascript:dialog.showContextHelp(arguments[0], 7006)">
+                                            <span class="input">
+                                                <input type="checkbox" name="thesaurusEnvExtRes" id="thesaurusEnvExtRes" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 7006)">
                                                     <fmt:message key="ui.obj.thesaurus.terms.enviromental.displayCatalogPage" />
                                                 </label>
                                             </span>
@@ -1204,9 +1201,8 @@
                             <div class="inputContainer">
                             <span id="uiElement3260">
                                 <span class="checkboxContainer outer"><div>
-                                    <span class="input">
-                                        <input type="checkbox" id="ref3HasAccessConstraint" />
-                                        <label onclick="javascript:dialog.showContextHelp(arguments[0], 3260)">
+                                    <span class="input checkboxContainer">
+                                        <input type="checkbox" id="ref3HasAccessConstraint" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 3260)">
                                             <fmt:message key="ui.obj.type3.ref3HasAccessConstraint" />
                                         </label>
                                     </span>

@@ -142,6 +142,7 @@
                         if (type == "numberControl") 
                             this.setAndShowField("span_formUnits", "formUnits", profileObjectToEdit.unit);
                         // fall through!
+                    case "checkboxControl":
                     case "dateControl":
                     case "textControl":
                         this.setAndShowField("span_formTitle", "formTitle", profileObjectToEdit.label);
@@ -182,7 +183,7 @@
                 }
                 // create table with data
                 var formListOptionsStructure = [
-                    {field: 'id',name: 'id',width: '30px',editable: false},
+                    {field: 'id',name: 'id',width: '30px',editable: true},
                     {field: 'value',name: 'option',width: '200px',editable: true}
                     ];
                 //for (lang in profileObjectToEdit.options) {
@@ -198,11 +199,37 @@
                         UtilGrid.setTableData("formListOptions_" + lang, profileObjectToEdit.options[lang]);
                     
                     // add special action to events on store for synchronization
-                    dojo.connect(UtilGrid.getTable("formListOptions_" + lang), "onAddNewRow", scriptScope.syncOptionTableRowsNew);
+                    dojo.connect(UtilGrid.getTable("formListOptions_" + lang), "onAddNewRow",   scriptScope.syncOptionTableRowsNew);
                     dojo.connect(UtilGrid.getTable("formListOptions_" + lang), "onDataChanged", scriptScope.syncOptionTableRowsDelete);
+                    dojo.connect(UtilGrid.getTable("formListOptions_" + lang), "onCellChange",  scriptScope.syncOptionTableRowsCellChange);
                     
                 });
                 scriptScope.checkConsistency();
+            }
+                
+            // sync id among all tables if it has changed
+            scriptScope.syncOptionTableRowsCellChange = function(msg) {
+                // only update if id-column was changed!
+                if (msg.cell === 1) {
+                    //console.log("Cell changed: ", msg);
+                    var newId = msg.item.id;
+                    var oldId = msg.oldItem.id;
+                    var activelang = msg.item.lang;
+                    
+                    dojo.forEach(scopeAdminFormFields.profileData.languages, function(lang){
+                        if (activelang != lang) {
+                            var data = UtilGrid.getTableData("formListOptions_"+lang);
+                            dojo.some(data, function(row) {
+                                if (row.id === oldId) {
+                                    row.id = newId;
+                                    return true;
+                                }
+                            });
+                            UtilGrid.getTable("formListOptions_"+lang).invalidate();
+                        }
+                    });
+                    
+                }
             }
                         
             scriptScope.syncOptionTableRowsNew = function(msg) {

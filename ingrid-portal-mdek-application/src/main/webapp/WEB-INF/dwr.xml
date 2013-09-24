@@ -143,6 +143,7 @@
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.SelectControl" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.DateControl" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.NumberControl" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.CheckboxControl" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.ExtendedControls" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.OptionEntry" javascript="*"/>
 

@@ -39,12 +39,13 @@
 /********************************************************************************************/
 .controlImage { float: left; }
 
-.datecontrol   {background-position: -482px;}
-.legacycontrol {background-position: -576px;}
-.numbercontrol {background-position: -533px;}
-.selectcontrol {background-position: -462px;}
-.tablecontrol  {background-position: -500px;}
-.textcontrol   {background-position: -517px;}
+.datecontrol     {background-position: -18px;}
+.legacycontrol   {background-position: 0px;}
+.numbercontrol   {background-position: -72px;}
+.selectcontrol   {background-position: 0px;}
+.tablecontrol    {background-position: -36px;}
+.textcontrol     {background-position: -54px;}
+.checkboxcontrol {background-position: -90px;}
 
 .upArrow       {background-position: -612px;}
 .downArrow     {background-position: -594px;}

@@ -1831,6 +1831,8 @@ udkDataProxy._setObjectData = function(nodeData)
           if (currentFieldWidget instanceof ingrid.dijit.CustomGrid) {
               currentFieldWidget.setData([]);
               currentFieldWidget.invalidate();
+          } else if (currentFieldWidget instanceof dijit.form.CheckBox) {
+              currentFieldWidget.attr("value", false, true);
           } else 
               currentFieldWidget.attr("value", "", true);
 	  });
@@ -1876,6 +1878,8 @@ udkDataProxy._setObjectData = function(nodeData)
                 		  currentFieldWidget.attr("value", currentField.listId, true);
                   } else if (currentFieldWidget instanceof dijit.form.DateTextBox) {
                       currentFieldWidget.attr("value", dojo.date.locale.parse(currentField.value, {datePattern: "dd.MM.yyyy", selector: "date"}), true);
+                  } else if (currentFieldWidget instanceof dijit.form.CheckBox) {
+                      currentFieldWidget.attr("value", currentField.value == "true", true);
                   } else
                       currentFieldWidget.attr("value", currentField.value, true);
               }
@@ -2428,6 +2432,10 @@ udkDataProxy._getObjectData = function(nodeData)
                  if (value != null)
                     value = UtilString.getDateString(currentField.get("value"), "dd.MM.yyyy");
                  
+              } else if (currentField instanceof dijit.form.CheckBox) {
+                  var isChecked = currentField.checked;
+                  var value = isChecked ? "true" : "false";
+                  
               } else {
                   var value = currentField.get("displayedValue");
               }
