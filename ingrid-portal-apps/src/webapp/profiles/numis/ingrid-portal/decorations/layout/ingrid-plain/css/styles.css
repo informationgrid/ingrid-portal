@@ -24,7 +24,7 @@ span.icon_udk { float:left; width:17px; height:20px; position: absolute; margin:
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
 span.normaltext { font-weight:normal; text-transform:none; }
 span.smaller {font-size: 83%}
-ul { list-style-type:square; padding-left:0; margin: 0 0 0 30px; }
+ul { list-style-type:square; padding-left:30px; margin: 0 0 0 0; }
 p { margin-top:0; margin-bottom:1em; font-size:12px; }
 strong {font-weight:bold}
 
@@ -242,5 +242,5 @@ div#logo img { padding:31px 27px 0; }
 p,label.search-ext-env{padding:2px;}
 ol, ul { list-style-type: none !important; }
 .x-tree-node-anchor {   font-size:11px !important;}
-ul.x-tab-strip-top {background-color: #CEDFF5;border-bottom-color: #8DB2E3;margin: 0;important!;}
+ul.x-tab-strip-top {background-color: #CEDFF5;border-bottom-color: #8DB2E3;margin: 0 !important}
 li.x-tree-node{margin-left:-30px;}

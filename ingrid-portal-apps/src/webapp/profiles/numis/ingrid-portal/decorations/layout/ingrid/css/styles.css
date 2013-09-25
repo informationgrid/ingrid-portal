@@ -520,7 +520,7 @@ div.formbody_search div.optional-links { padding:10px 15px 12px 25px; margin:0; 
 /* use formbody_border_style if need to change border style in profile (e.g. NUMIS)*/
 div.formbody_border_style { border-left: 1px solid #E2EBF0; border-right: 1px solid #E2EBF0; border-top: 1px solid #E2EBF0; border-bottom:0px solid; }
 
-div.formbody_map { paddingpadding:10px 12px; }
+div.formbody_map { padding:10px 12px; }
 
 /* Sonderbehandlung f�r IE: dieser �bernimmt die Farbe des �bergeordneten divs nicht f�r rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
@@ -977,7 +977,7 @@ div.dialog_content input.btn { text-align: center; min-width: 120px; }
 
 p.search-ext-env, label.search-ext-env{ padding:5px; }
 .x-tree-node-anchor {   font-size:11px !important;}
-ul.x-tab-strip-top {border-bottom-color: #8DB2E3;margin: 0;important!;}
+ul.x-tab-strip-top {border-bottom-color: #8DB2E3;margin: 0 !important}
 
 div.formbody_webmapclient h3 { font-size:80%; }
 div.formbody_webmapclient_coordinates { font-size:80%; }

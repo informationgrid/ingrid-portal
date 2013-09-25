@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DOKUMENTATION
+
+Diese Datei dient zur Konfiguration der Facettierung. Hier können weitere Facetten definiert werden oder auch entfernt werden. 
+Standardmäßig sind hier die Facettierungseinstellungen von PortalU definiert.
+
+Für die Facette (<facet>) sind folgende Tags Pflicht:
+- <name>
+- <id>
+
+Eine Facette (<facet>), welches zur Auswahlt dient, müssen dazu einen Tag <query> bzw. <from>, <to> enthalten. 
+
+Struktur:
+*********
+<facets>
+	<facet> ***************************************** Neuer Facettierungsbaum (zum Ein-/Ausklappen)
+		<name></name> ******************************* Facettierungsbaum-Name (lokalisiert per Portal-Resource-Key oder nicht lokalisiert als reiner Text)
+		<id></id> *********************************** Facettierungsbaum-ID (dieser muss eindeutig sein und darf bei weiteren Facetten nicht existieren)
+		
+		<facets> ************************************ Facettierungsbaum-Kinder (zur Auswahl)
+			<facet> ********************************* Neuer Facettierungs-Kind (kann die Eigenschaft "sort" enthalten, siehe unten)
+				<name></name> *********************** Neuer Facettierungs-Kind-Name
+				<id></id> *************************** Neuer Facettierungs-Kind-ID 
+				<query></query> ********************* Neuer Facettierungs-Kind-Abfrage
+				 
+				<facets> **************************** Facettierungsbaum-Enkeln (zur Auswahl und kann die Eigenschaft "queryType" enthalten, siehe unten)
+					<facet> ************************* Facettierungsbaum-Enkel
+						<name></name> *************** Facettierungsbaum-Enkel-Name
+						<query></query> ************* Facettierungsbaum-Enkel-Abfrage
+						<id></id> ******************* Facettierungsbaum-Enkel-ID
+					</facet>
+					...
+				</facets> 
+			</facet>
+			...
+		</facets>
+	</facet>
+	...
+</facets>
+
+Weitere Facetten-Tags/Eigenschaften:
+****************
+<dependency>"ID"</dependency>:
+ - Diese Facetten-Tag dient dazu eine Abhängigkeit zu beschreiben, d.h. wird die existierende definierte Facetten-ID ausgewählt, so wird diese Facette sichtbar. (siehe Facette "Akualität") 
+  
+<hidden>"ID"</hidden>:
+ - Dieser Facetten-Tag dient dazu eine Facette verschwinden zu lassen, sobald die existierende definierte Facetten-ID ausgewählt wird. (siehe Facette "Raumbezug")  
+
+<facets queryType="">:
+ - UND Abfrage: (Einfachauswahl)
+ 		Standardmäßig sind alle definierten Query-Abfragen eine UND-Abfrage.
+ - ODER Abfrage: (Mehrfachauswahl) 
+		Bei der ODER-Abfrage bestehen zwei Möglichkeiten Unterfacetten (<facet>) einer Facette (<facets>) darzustellen:
+		1. ODER-Abfrage mit reinen Checkboxen - "OR"
+		2. ODER-Abfrage mit Erweiterung in einem Dialog-Fenster, d.h. standardmäßig erscheinen drei der definierten Facetten (<facet>) 
+
+<facet sort="">:
+Für die Sortierung der Unterfacetten eine Facette existieren vier Möglichkeiten:
+ - Absteigend nach Facettenwert - "SORT_BY_VALUE_DESC"
+ - Aufsteigend nach Facettenwert - "SORT_BY_VALUE_ASC"
+ - Alphabetisch nach Facettenname - "SORT_BY_NAME"
+ - keine Sortierung
+
+Spezielle Facetten:
+*************************
+Themen:
+Bei Betätigung der Themen-Facette (<id>topic</id>) wird diese mit Unterthemen erweitert, welches als ODER-Abfrage (Mehrauswahl) ausgewählt werden können.
+Die Unterthemen werden aus der Datenbank des Portals gelesen und sind hier in der Konfiguration nicht definiert.
+ 
+Aktualität:
+Die Facette Aktualität enthält keine <query>-Tag, wie üblich, sondern hier wird die Query aus den Tags <from> sowie <to> erstellt, deren Inhalt eine Zeit-Periode beschreibt.
+Die Notation (entspricht dem Format ISO 8601) für die Zeit-Periode ist folgendermaßen: (vom aktuellen Datum aus)
+
+ - P -> Bezeichnet, das nachfolgende Zeichen die Dauer einer Periode repräsentieren
+ - Y -> Positive Zahl, Anzahl von Jahren
+ - M -> Positive Zahl, Anzahl von Monaten
+ - D -> Positive Zahl, Anzahl von Tage
+ - T -> Bezeichnet, das nachfolgende Zeichen die Dauer einer Periode repräsentieren
+ - H -> Positive Zahl, Anzahl von Stunden
+ - M -> Positive Zahl, Anzahl von Minuten
+ - S -> Positive Zahl, Anzahl von Sekunden
+Beispiel: Eine Dauer von 5 Tagen, 4 Stunden und 30,7 Minuten hat folgenden Notation: P5DT4H30.7M
+ 
+Anbieter: (Analog zu Themen)
+Die Facette Anbieter (<id>provider</id>) wird aus der Portal-Datenbank generiert. Dabei werden die Partner als UND-Abfrage (Einfachauswahl), man kann nur einen Partner auswählen, 
+und deren Anbieter als ODER-Abfrage (Mehrauswahl), man kann mehrere Anbieter gleichzeitig auswählen, durchgeführt.
+
+Raumbezug:
+Die Facette Raumbezug (<id>area</id>) ist eine spezielle Facette. Hier werden keine Facetten gesendet, sondern nur Abfragen ausgeführt.
+- Raumbezug-Abfrage aus der Karte
+- Raumbezug-Abfrage aus dem Geothesaurus
+
+Raumbezug Adressen:
+Die Facette Raumbezug Addressen (<id>area.address</id>) ist eine spezielle Facette. Hier werden keine Facetten gesendet, sondern nur Abfragen ausgeführt.
+- Adressen-Raumbezugsabfrage anhand der Eingabe von Straße, Postleitzahl und/oder Ort.
+
+Attribute:
+Die Facette Attribute (<id>Attribute</id>) ist eine spezielle Facette. Hier werden keine Facetten gesendet, sondern nur Abfragen ausgeführt.
+- Forschungsprojekte-Attributenabfrage anhand der Eingabe von Projektname, Institution, Projektleiter, Beteiligte, Projektträger und/oder Laufzeit.
+
+
+Facetten-Klassen (Nicht-indexbasierte iPlugs)
+****************
+Wird eine Facette (<facet>) erstellt, deren Query (<query>) ein Nicht-indexbasiertes iPlug (z.B. Opensearch-iPlug) abfragt, so muss diese Facette zunächst im iPlug definiert werden.
+Um eine Definition in solch einen iPlug durchzuführen, fügt man der Datei "springapp-servlet.xml" (unter "<IPLUG_INSTALLATION>/webapp/WEB-INF") folgenden Eintrag hinzu:
+
+...
+<bean id="plugDescriptionFacetCounter"
+       class="de.ingrid.search.utils.facet.counter.DscPlugdescriptionFacetCounter">
+       <property name="plugDescriptionWrapper">
+           <ref bean="plugDescriptionWrapper" />
+       </property>
+       <property name="facetClassDefinitions">
+           <list>
+           		...
+           		<value>test3:test23</value> 		// Siehe Beispiel: "Test UND-Abfrage"
+           		...
+           </list>
+	</property>
+</bean>
+....
+
+Unter "property" (property>) mit dem Namen "facetClassDefinitions" erweitert man die Liste (<list>) mit dem Wert (<value>):  
+<value>"FACET-PARENT-ID":"FACET-ID"</value>
+
+Dadurch wird von dem iPlug eine Facetten-Klasse mit der Notation "FACET-PARENT-ID":"FACET-ID" zurückgeliefert. 
+
+
+Beispiele:
+**********
+Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dialog)
+ -->
+ 
+<facets>
+	<!-- Ergebnistypen -->
+	<facet>
+		<name>searchResult.facete.title.types</name>
+		<id>type</id>
+		<facets>
+		<!-- Webseiten -->
+			<facet>
+				<name>searchResult.facete.datatype.www</name>
+				<query>datatype:www</query>
+				<id>www</id>
+			</facet>
+		<!-- Karten -->
+			<facet>
+				<name>searchResult.facete.datatype.map</name>
+				<query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
+				<id>map</id>
+			</facet>
+		<!-- Themen -->
+		<!-- Kann nicht erweitert werden -->
+			<facet sort="SORT_BY_VALUE_DESC">
+				<name>searchResult.facete.title.topic</name>
+				<query>datatype:topics</query>
+				<id>topic</id>
+			</facet>
+		<!-- Rechtsvorschriften -->
+			<facet>
+				<name>searchResult.facete.datatype.law</name>
+				<query>datatype:law</query>
+				<id>law</id>
+			</facet>
+		<!-- Forschungsprojekte -->
+			<facet>
+				<name>searchResult.facete.datatype.research</name>
+				<query>datatype:research</query>
+				<id>research</id>
+			</facet>
+		<!-- Messwerte -->
+			<facet sort="SORT_BY_VALUE_DESC">
+				<name>searchResult.facete.datatype.measure</name>
+				<query>datatype:measure</query>
+				<id>measure</id>
+				<facets queryType="OR">
+					<facet>
+						<name>searchResult.facete.measures.radiation</name>
+						<query>topic:radiation</query>
+						<id>radiation</id>
+					</facet>
+					<facet>
+						<name>searchResult.facete.measures.air</name>
+						<query>topic:air</query>
+						<id>air</id>
+					</facet>
+					<facet>
+						<name>searchResult.facete.measures.water</name>
+						<query>topic:water</query>
+						<id>water</id>
+					</facet>
+					<facet>
+						<name>searchResult.facete.measures.misc</name>
+						<query>topic:misc</query>
+						<id>misc</id>
+					</facet>
+				</facets>
+			</facet>
+		<!-- Service -->
+			<facet sort="SORT_BY_VALUE_DESC">
+				<name>searchResult.facete.title.service</name>
+				<query>datatype:service</query>
+				<id>service</id>
+				<facets queryType="OR">
+					<facet>
+						<name>searchResult.facete.service.press</name>
+						<query>topic:press</query>
+						<id>press</id>
+					</facet>
+					<facet>
+						<name>searchResult.facete.service.publication</name>
+						<query>topic:publication</query>
+						<id>publication</id>
+					</facet>
+					<facet>
+						<name>searchResult.facete.service.event</name>
+						<query>topic:event</query>
+						<id>event</id>
+					</facet>
+				</facets>
+			</facet>
+		<!-- Metadaten -->
+			<facet>
+				<name>searchResult.facete.title.metaclass</name>
+				<query>datatype:metadata</query>
+				<id>metadata</id>
+				<facets>
+				<!-- Organisationseinheit / Fachaufgabe -->
+					<facet>
+						<name>searchResult.facete.metaclass.job</name>
+						<query>t01_object.obj_class:0</query>
+						<id>job</id>
+					</facet>
+				<!-- Dienst /Anwendung / Informationssystem -->
+					<facet>
+						<name>searchResult.facete.metaclass.service</name>
+						<query>t01_object.obj_class:6</query>
+						<id>service</id>
+					</facet>
+				<!-- Geo-Information / Karte -->
+					<facet>
+						<name>searchResult.facete.metaclass.map</name>
+						<query>t01_object.obj_class:1</query>
+						<id>map</id>
+					</facet>
+				<!-- Dokument / Bericht / Literatur -->
+					<facet>
+						<name>searchResult.facete.metaclass.document</name>
+						<query>t01_object.obj_class:2</query>
+						<id>document</id>
+					</facet>
+				<!-- Geodatendienst -->
+					<facet>
+						<name>searchResult.facete.metaclass.geoservice</name>
+						<query>t01_object.obj_class:3</query>
+						<id>geoservice</id>
+					</facet>
+				<!-- Vorhaben / Projekt / Programm -->
+					<facet>
+						<name>searchResult.facete.metaclass.project</name>
+						<query>t01_object.obj_class:4</query>
+						<id>project</id>
+					</facet>
+				<!-- Datensammlung / Datenbank -->
+					<facet>
+						<name>searchResult.facete.metaclass.database</name>
+						<query>t01_object.obj_class:5</query>
+						<id>database</id>
+					</facet>
+				<!-- INSPIRE relevant -->
+					<facet>
+						<name>searchResult.facete.metaclass.inspire</name>
+						<query>t04_search.searchterm:inspireidentifiziert</query>
+						<id>inspire</id>
+					</facet>
+				</facets>
+			</facet>
+		<!-- Adressen -->
+			<facet>
+				<name>searchResult.facete.datatype.address</name>
+				<query>datatype:address</query>
+				<id>address</id>
+			</facet>
+		<!-- Fachdatenbanken -->
+			<facet>
+				<name>searchResult.facete.datatype.fis</name>
+				<query>datatype:fis</query>
+				<id>fis</id>
+			</facet>
+		<!-- Opendata -->
+           <facet>
+				<name>Opendata</name>
+				<query>opendataident</query>
+				<id>#opendata_hh#</id>
+			</facet>
+		<!-- Weitere Daten -->
+			<facet>
+				<name>searchResult.facete.datatype.other</name>
+				<query>datatype:dsc_other</query>
+				<id>other</id>
+			</facet>
+		</facets>
+	</facet>
+	<!-- Aktualität (Metadaten)-->
+	<!-- Kann erweitert werden -->
+	<facet>
+		<name>searchResult.facete.title.time</name>
+		<id>modtime</id>
+		<dependency>metadata</dependency>
+		<facets>
+			<!-- letzter Monat -->
+			<facet>
+				<name>searchResult.facete.time.1</name>
+				<id>modtime1</id>
+				<from>P1MT</from>
+				<to>PT</to>
+			</facet>
+			<!-- letzte 3 Monate -->
+			<facet>
+				<name>searchResult.facete.time.2</name>
+				<id>modtime2</id>
+				<from>P3MT</from>
+				<to>P1M1DT</to>
+			</facet>
+			<!-- letztes Jahr -->
+			<facet>
+				<name>searchResult.facete.time.3</name>
+				<id>modtime3</id>
+				<from>P1YT</from>
+				<to>P3M1DT</to>
+			</facet>
+			<!-- letzte 5 Jahre -->
+			<facet>
+				<name>searchResult.facete.time.4</name>
+				<id>modtime4</id>
+				<from>P5YT</from>
+				<to>P1Y1DT</to>
+			</facet>
+			<!-- Älter als 5 Jahre -->
+			<facet>
+				<name>searchResult.facete.time.5</name>
+				<id>modtime5</id>
+				<from></from>
+				<to>P5Y1DT</to>
+			</facet>
+		</facets>
+	</facet>
+	<!-- Anbieter -->
+	<!-- Standard - Kann nicht erweitert werden -->
+	<facet sort="SORT_BY_VALUE_DESC">
+		<name>searchResult.facete.title.provider</name>
+		<id>provider</id>
+	</facet>
+	<!-- Raumbezug -->
+	<!-- Standard - Kann nicht erweitert werden -->
+	<facet>
+		<name>searchResult.facete.title.area</name>
+		<id>area</id>
+		<hidden>address</hidden>
+	</facet>
+	<!-- Raumbezug Adressen-->
+	<!-- Standard - Kann nicht erweitert werden -->
+	<facet>
+		<name>searchResult.facete.title.area.address</name>
+		<dependency>address</dependency>
+		<id>area.address</id>
+	</facet>
+	<!-- Attribute (Forschungsprojekte)-->
+	<!-- Standard - Kann nicht erweitert werden -->
+	<facet>
+		<name>searchResult.facete.title.attribute</name>
+		<dependency>research</dependency>
+		<id>attribute</id>
+	</facet>
+	<!-- Test ODER-Abfrage ohne Dialog-->
+	<!-- 
+	<facet>
+		<name>Testbeispiele OR</name>
+		<id>test1</id>
+		<facets>
+			<facet sort="SORT_BY_VALUE_DESC">
+				<name>Boden</name>
+				<query>Boden</query>
+				<id>test10</id>
+				<facets queryType="OR">
+					<facet>
+						<name>Boden Metadata</name>
+						<query>Boden datatype:metadata</query>
+						<id>test11</id>
+					</facet>
+					<facet>
+						<name>Boden www</name>
+						<query>Boden datatype:www</query>
+						<id>test12</id>
+					</facet>
+					<facet>
+						<name>Boden Opensearch</name>
+						<query>Boden datatype:opensearch</query>
+						<id>test13</id>
+					</facet>
+					<facet>
+						<name>Boden research</name>
+						<query>Boden datatype:research</query>
+						<id>test14</id>
+					</facet>
+					<facet>
+						<name>Boden Topics</name>
+						<query>Boden datatype:topics</query>
+						<id>test15</id>
+					</facet>
+				</facets>
+			</facet>
+		</facets>
+	</facet>
+	-->
+	<!-- Test ODER-Abfrage mit Dialog-->
+	<!-- 
+	<facet>
+		<name>Testbeispiele OR_DIALOG</name>
+		<id>test2</id>
+		<facets>
+			<facet sort="SORT_BY_NAME">
+				<name>Boden</name>
+				<query>Boden</query>
+				<id>test20</id>
+				<facets queryType="OR_DIALOG">
+					<facet>
+						<name>Boden Metadata</name>
+						<query>Boden datatype:metadata</query>
+						<id>test21</id>
+					</facet>
+					<facet>
+						<name>Boden WWW</name>
+						<query>Boden datatype:www</query>
+						<id>test22</id>
+					</facet>
+					<facet>
+						<name>Boden Opensearch</name>
+						<query>Boden datatype:opensearch</query>
+						<id>test23</id>
+					</facet>
+					<facet>
+						<name>Boden Research</name>
+						<query>Boden datatype:research</query>
+						<id>test24</id>
+					</facet>
+					<facet>
+						<name>Boden Topics</name>
+						<query>Boden datatype:topics</query>
+						<id>test25</id>
+					</facet>
+				</facets>
+			</facet>
+		</facets>
+	</facet>
+	-->
+	<!-- Test UND-Abfrage -->
+	<!-- 
+	<facet sort="SORT_BY_VALUE_ASC">
+		<name>Testbeispiele UND</name>
+		<id>test3</id>
+		<facets>
+			<facet>
+				<name>Boden Metadata</name>
+				<query>Boden datatype:metadata</query>
+				<id>test21</id>
+			</facet>
+			<facet>
+				<name>Boden www</name>
+				<query>Boden datatype:www</query>
+				<id>test22</id>
+			</facet>
+			<facet>
+				<name>Boden Opensearch</name>
+				<query>Boden datatype:opensearch</query>
+				<id>test23</id>
+			</facet>
+			<facet>
+				<name>Boden research</name>
+				<query>Boden datatype:research</query>
+				<id>test24</id>
+			</facet>
+			<facet>
+				<name>Boden Topics</name>
+				<query>Boden datatype:topics</query>
+				<id>test25</id>
+			</facet>
+		</facets>
+	</facet>
+	-->
+</facets>

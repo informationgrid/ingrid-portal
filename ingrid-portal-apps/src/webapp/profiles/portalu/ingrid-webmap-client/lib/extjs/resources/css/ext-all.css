@@ -6991,3 +6991,6 @@ body.x-body-masked .x-window-plain .x-window-mc {
 .x-window-dlg .ext-mb-error {
     background-image:url(../images/default/window/icon-error.gif);
 }
+
+.olControlOverviewMapElement { background-color: #D9E7F8 !important; border: 1px solid #8DB2E3 !important; padding: 7px 21px 0 5px !important; }
+    

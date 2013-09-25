@@ -516,7 +516,7 @@ div.formbody_border_style { border-left: 1px solid #CECECE; border-right: 1px so
 
 0px solid #CECECE; }
 
-div.formbody_map { paddingpadding:10px 12px; }
+div.formbody_map { padding:10px 12px; }
 
 /* Sonderbehandlung für IE: dieser übernimmt die Farbe des ?bergeordneten divs nicht für rollover Link Auszeichnungen 
    siehe auch http://jira.media-style.com/browse/INGRID-192
@@ -977,4 +977,4 @@ div.dialog_content input.btn { text-align: center; min-width: 120px; }
 
 p,label.search-ext-env{padding:2px;}
 .x-tree-node-anchor {   font-size:11px !important;}
-ul.x-tab-strip-top {background-color: #CEDFF5;border-bottom-color: #8DB2E3;margin: 0;important!;}
+ul.x-tab-strip-top {background-color: #CEDFF5;border-bottom-color: #8DB2E3;margin: 0 !important}
