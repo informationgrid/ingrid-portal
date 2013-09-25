@@ -44,11 +44,7 @@
           <smtpHost>localhost</smtpHost>
           <toAddresses></toAddresses>
         </configuration>
-      </plugin>
-      <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-      <!-- HACK: Upload JAR file WITHOUT "-classes" in name, so MAVEN1 can handle it (no classifier "classes" possible in maven1) !!! -->
-      
-     
+      </plugin>     
     </plugins>
     <resources>
       <resource>
@@ -279,7 +275,7 @@
       <groupId>de.ingrid.portal</groupId>
       <artifactId>ingrid-portal-mdek-application</artifactId>
       <version>${project.version}</version>
-      <!-- <classifier>classes</classifier> -->
+      <classifier>classes</classifier>
       <exclusions>
         <exclusion>
           <groupId>de.ingrid</groupId>

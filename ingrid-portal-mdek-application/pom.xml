@@ -52,21 +52,23 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <!-- <version>2.1.1</version> -->
+        <version>2.4</version>
         <configuration>
           <warSourceExcludes>TEST_*.*,test_*.*,dev_*.*,dojo-release-1.6.0/**,dojo-src/util/**,dojo-src/dojo/**,dojo-src/dijit/**,dojo-src/dojox/**</warSourceExcludes>
           <!-- NOTICE: supply log4j.jar and commons-logging.jar in war, SO log4j.properties IS READ FROM WEBAPP !!!! -->
           <!-- Tomcat is configured for log4j, so if NO log4j.jar is supplied in war, log4j.properties is read from tomcat/common/classes, ignoring the one in the war !!! -->
           <packagingExcludes>**/ingrid-utils.jar,**/ingrid-mdek-api*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
-          <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED -->
+          <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED to name of .jar -->
           <attachClasses>true</attachClasses>
-          <!-- CONFIG-FILES needed at runtime in classes-path-->
-          <archiveClasses>false</archiveClasses>
           <classesClassifier />
+          <!-- CONFIG-FILES needed at runtime in classes-path, so keep all underneath WEB-INF/classes and DO NOT bundle as .jar in war file -->
+          <archiveClasses>false</archiveClasses>
         </configuration>
       </plugin>
       <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
       <!-- HACK: Upload JAR file WITHOUT "-classes" in name, so MAVEN1 can handle it (no classifier "classes" possible in maven1) !!! -->
+      <!-- NOT NEEDED ANYMORE: Now MAVEN2, so we use classifier "classes" in dependencies !  So always ingrid-portal-mdek-application-XXX-classes.jar -->
+<!--
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>wagon-maven-plugin</artifactId>
@@ -86,6 +88,7 @@
           </execution>
         </executions>
       </plugin>
+-->
       <plugin>
           <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
