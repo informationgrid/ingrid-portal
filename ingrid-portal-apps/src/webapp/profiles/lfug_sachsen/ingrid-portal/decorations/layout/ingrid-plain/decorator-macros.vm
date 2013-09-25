@@ -42,8 +42,8 @@
   <div id="identity">
 
   <!-- TITLE LINE -->
-  <div id="header-line" style="position:absolute; left:0; top:74px; width:59.5em; height:1px; background-color:#E0EED9">&nbsp;</div>
-  <div id="header-line2" style="position:absolute; left:0; top:75px; width:59.5em; height:5px; background-color:#A1D19D"><img src="#GetPageResource('images/nav_back.gif')"/></div>
+  <div id="header-line" style="position:absolute; left:0; top:74px; width:1920px; height:1px; background-color:#E0EED9">&nbsp;</div>
+  <div id="header-line2" style="position:absolute; left:0; top:75px; width:1920px; height:5px; background-color:#A1D19D"><img src="#GetPageResource('images/nav_back.gif')"/></div>
   
   <!-- TITLE -->
   <div id="title">
@@ -128,106 +128,60 @@
         #end
 		## render menue item dependent from flags
 		#if ($elemRender)
-       	   #if ($elemSelected)
+    		#if ($elemSelected)
               <li>
-              <div class="tabs">
-	              <div class="tabs_left"></div>
-	              <div class="tabs_center">
-	              	<a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a>
-	              </div>
-	              <div class="tabs_right"></div>
-	           </div>
-            	#if ($currentPage.startsWith('/main-about') || $currentPage.startsWith('/main-feature'))
-                #set($subMenu = $site.getMenu("sub-menu-about"))
-	                #if($subMenu && !$subMenu.empty)
-	                    <div id="subnav">
-	                    	#includeSubNavigation($subMenu true)
-	                    </div>
-	                #end
-				#elseif ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy') || $currentPage.startsWith('/search-catalog/search-catalog-thesaurus'))
-				#set($subMenu = $site.getMenu("sub-menu-catalog"))
-	            	#if($subMenu && !$subMenu.empty)
-	                    <div id="subnav">
-	                    	#includeSubNavigation($subMenu true)
-	                    </div>
-            		#end
+              	<a href="$tabUrl" title="$tabTitle" class="selected">$tabName</a>
+              	#if ($currentPage.startsWith('/main-about') || $currentPage.startsWith('/main-feature'))
+	                #set($subMenu = $site.getMenu("sub-menu-about"))
             	#end
-          		</li>
+              </li>
             #else
-              <li class="mainnav_img"><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
-            #end
-        #end
+              <li><a href="$tabUrl" title="$tabTitle">$tabName</a></li>
+    		#end
+		#end
       #end
     #end
 #end
 
 #* include sub navigation component *#
-#macro (includeSubNavigation $_menu $_attached)
+#macro (includeSubNavigation $_menu)
     #set($currentPage = $site.getPage().url)
-    #if ($_attached)
-        <div class="float_left">
-    #else
-        <div class="float_left" style="position:absolute">
-    #end
-    <div class="subnav_left"></div>
-    <div class="subnav_center">
     <ul>
-    #foreach($element in $_menu.elements.iterator())
+	#foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #set($linkTitle = $element.getTitle($preferedLocale))
         #set($linkName = $element.getShortTitle($preferedLocale))
-        ## read localized title from resource with title from psml as key !
-        #if($linkTitle.startsWith('ingrid'))
+		## read localized title from resource with title from psml as key !
+		#if($linkTitle.startsWith('ingrid'))
             #set($linkTitle = $MESSAGES.getString($linkTitle))
-            #set($linkName = $MESSAGES.getString($linkName))            
-        #end
-         #if($velocityCount > 1)
-            <li>
-         	<span>
-           	|
-           	</span>
-            </li>
-           #end
+            #set($linkName = $MESSAGES.getString($linkName))			
+		#end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
-        ## flags indicating how to render menu item
+        #if($velocityCount > 1)
+           | 
+		#end
+		## flags indicating how to render menu item
         #set($elemSelected = false)
-        ## process and set flags accordingly
-        #if ($element.url.startsWith('/main-about.psml'))
+		## process and set flags accordingly
+		#if ($element.url.startsWith('/main-about.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.portrait.tooltip'))
             #set($linkName = $MESSAGES.getString('ingrid.page.portrait')) 
-        #elseif($element.url.startsWith('/main-features.psml'))
+        #end
+        #if ($element.url.startsWith('/main-features.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.features.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.features'))
-        #elseif($element.url.startsWith('/main-about-partner.psml'))
-            #set($linkTitle = $MESSAGES.getString('ingrid.page.partner.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.partner'))
-        #elseif($element.url.startsWith('/main-about-data-source.psml'))
-            #set($linkTitle = $MESSAGES.getString('ingrid.page.data.source.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.data.source'))
-        #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
-            #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
-        #elseif($element.url.startsWith('/search-catalog/search-catalog-thesaurus.psml'))
-            #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
+            #set($linkName = $MESSAGES.getString('ingrid.page.features')) 
         #end
         #if($element.isSelected($site))
-            #set($elemSelected = true)
-        #end
-        #if ($elemSelected)
-          <li>
-          <a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a></li>
+			#set($elemSelected = true)
+		#end
+		#if ($elemSelected)
+          <li><a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a></li>
         #else
-          <li>
-          <a href="$linkUrl" title="$linkTitle">$linkName</a>
-          </li>
-        #end
+          <li><a href="$linkUrl" title="$linkTitle">$linkName</a></li>
+		#end
       #end
-    #end
-    </ul>
-    </div>
-    <div class="subnav_right"></div>
-    </div>
+	#end
+	</ul>
 #end
 
 #* include service navigation component *#

@@ -7,28 +7,31 @@
             <content>
                 <ul>
                     <li>
-                        <a href="help.psml?hkey=about-1">Über SachsenPortalU</a>
+                        <a href="?hkey=about-1">Über SachsenPortalU</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-1">Suche</a>
+                        <a href="?hkey=search-1">Suche</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-topics-1">Umweltthemen</a>
+                        <a href="?hkey=search-topics-1">Umweltthemen</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-service-1">Service</a>
+                        <a href="?hkey=search-service-1">Service</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-measure-1">Messwerte</a>
+                        <a href="?hkey=search-measure-1">Messwerte</a>
+                    </li>
+					<li>
+                        <a href="?hkey=maps-1">Karten</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=rss-news-1">Aktuelles</a>
+                        <a href="?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=ingrid-inform-1">SachsenPortalU informiert</a>
+                        <a href="?hkey=ingrid-inform-1">SachsenPortalU informiert</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>
+                        <a href="?hkey=myingrid-1">Mein SachsenPortalU</a>
                     </li>
                 </ul>
             </content>
@@ -83,11 +86,11 @@
                 <p>
                     <b>Suche:</b> Zentrale Funktion des Portals ist die
                     SachsenPortalU-Suche (
-                    <a href="help.psml?hkey=search-1">Suche</a>)mit deren Hilfe Webseiten und Datenbankeinträge über eine
+                    <a href="?hkey=search-1">Suche</a>)mit deren Hilfe Webseiten und Datenbankeinträge über eine
                     herkömmliche Volltextsuche (
-                    <a href="help.psml?hkey=search-1">Einfache Suche</a>), aber
+                    <a href="?hkey=search-1">Einfache Suche</a>), aber
                     auch über ein differenziertes Fachvokabular (
-                    <a href="help.psml?hkey=ext-search-1">Erweiterte Suche</a>)durchsucht werden können.
+                    <a href="?hkey=ext-search-1">Erweiterte Suche</a>)durchsucht werden können.
                 </p>
                 <p>
                     <b>Karten:</b> Ein Kartenviewer bietet die Möglichkeit,
@@ -174,32 +177,32 @@
                     verfeinern. Lesen Sie hierzu folgende Themen:</p>
                 <ul>
                     <li>
-                        <a href="help.psml?hkey=ext-search-1">Erweiterte Suche
+                        <a href="?hkey=ext-search-1">Erweiterte Suche
                             nach Umweltinformationen</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=ext-search-address-1">Erweiterte Suche nach Adressen</a>
+                        <a href="?hkey=ext-search-address-1">Erweiterte Suche nach Adressen</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-history-1">Suchhistorie</a>
+                        <a href="?hkey=search-history-1">Suchhistorie</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-settings-1">Einstellungen</a>
+                        <a href="?hkey=search-settings-1">Einstellungen</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-tipps-1">Suchtipps</a>
+                        <a href="?hkey=search-tipps-1">Suchtipps</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-save-1">Suche Speichern</a>
+                        <a href="?hkey=search-save-1">Suche Speichern</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-expert-1">Experteneingabe</a>
+                        <a href="?hkey=search-expert-1">Experteneingabe</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-results-1">Suchergebnisliste</a>
+                        <a href="?hkey=search-results-1">Suchergebnisliste</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=search-catalog-1">Datenkataloge</a>
+                        <a href="?hkey=search-catalog-1">Datenkataloge</a>
                     </li>
                 </ul>
             </content>
@@ -216,7 +219,7 @@
                     Suchbegriffen zusammen, die  mit Operatoren (UND, ODER,
                     NICHT) verbunden werden. Wie Sie diese Operatoren von Hand
                     eingeben können lesen Sie in dem Kapitel &#8222;
-                    <a href="help.psml?hkey=search-expert-1">Experteneingabe</a>&#8220;.
+                    <a href="?hkey=search-expert-1">Experteneingabe</a>&#8220;.
                 </p>
                 <p>Die &#8222;Erweiterte Suche&#8220; bietet Ihnen die
                     Möglichkeit Ihren Suchausdruck per Assistenten aufzubauen.</p>
@@ -231,16 +234,16 @@
                     des Suchraumes stehen Ihnen zur Verfügung:</p>
                 <ul>
                     <li>
-                        <a href="help.psml?hkey=ext-search-subject-1">Thema</a>
+                        <a href="?hkey=ext-search-subject-1">Thema</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=ext-search-spacial-1">Raum</a>
+                        <a href="?hkey=ext-search-spacial-1">Raum</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=ext-search-time-1">Zeit</a>
+                        <a href="?hkey=ext-search-time-1">Zeit</a>
                     </li>
                     <li>
-                        <a href="help.psml?hkey=ext-search-area-1">Suchbereich</a>
+                        <a href="?hkey=ext-search-area-1">Suchbereich</a>
                     </li>
                 </ul>
             </content>
@@ -896,7 +899,7 @@
                 <p>SachsenPortalU speichert eine Historie Ihrer Suchanfragen. Neben
                     dieser Historie, die automatisch für eine Sitzung mitgeführt
                     wird, können Sie als eingeloggter Nutzer (siehe
-                    <a href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>) auch
+                    <a href="?hkey=myingrid-1">Mein SachsenPortalU</a>) auch
                     Suchanfragen permanent speichern.
                 </p>
                 <p>Beide Formen gespeicherter Suchanfragen können Sie über die
@@ -953,7 +956,7 @@
                     auch über den
                     <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a>desUmweltbundesamtes analysieren. Als Ergebnis dieser Analyse
                     werden den Web-Seiten Fachbegriffe aus dem
-                    <a href="help.psml?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a>zugeordnet.
+                    <a href="?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a>zugeordnet.
                 </p>
                 <p>Wenn Sie durch Ankreuzen die Einstellung &#8222;Ähnliche
                     Begriffe in die Suche einbeziehen&#8220; wählen werden
@@ -972,20 +975,20 @@
                 <ul>
                     <li>Automatisiert: Kreuzen Sie hierzu im Formular
                         &#8222;Einstellungen für die Suche&#8220; (
-                        <a href="help.psml?hkey=search-settings-1">Suche/Einstellungen</a>)die Option &#8222;Ähnliche Begriffe in die Suche
+                        <a href="?hkey=search-settings-1">Suche/Einstellungen</a>)die Option &#8222;Ähnliche Begriffe in die Suche
                         einbeziehen&#8220; an. Sie können diese
                         Einstellungen auch dauerhaft vornehmen (siehe
-                        <a href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>).
+                        <a href="?hkey=myingrid-1">Mein SachsenPortalU</a>).
                     </li>
                     <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
                         ähnliche Begriffe, indem Sie die die Funktionalität
                             &#8222;
-                        <a href="help.psml?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>&#8220;der &#8222;
-                        <a href="help.psml?hkey=ext-search-1">ErweitertenSuche</a>&#8220; nutzen.
+                        <a href="?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>&#8220;der &#8222;
+                        <a href="?hkey=ext-search-1">ErweitertenSuche</a>&#8220; nutzen.
                     </li>
                     <li>Nach einer Suche werden Ihnen neben der
                         Suchergebnisliste &#8222;
-                        <a href="help.psml?hkey=ext-search-subject-5">ähnlicheBegriffe</a>&#8220; angeboten, über die Sie ihren
+                        <a href="?hkey=ext-search-subject-5">ähnlicheBegriffe</a>&#8220; angeboten, über die Sie ihren
                         Suchausdruck erweitern können.
                     </li>
                 </ul>
@@ -995,10 +998,10 @@
             <header>Sie möchten Ihre Suche auf Informationen zu Ihrem Wohnort begrenzen?</header>
             <content>
                 <p>Nutzen Sie hierzu die
-                    <a href="help.psml?hkey=ext-search-spacial-1">RäumlicheSuche</a>. Sie können entweder ein Suchrechteck über den
+                    <a href="?hkey=ext-search-spacial-1">RäumlicheSuche</a>. Sie können entweder ein Suchrechteck über den
                     gewünschten Suchbereich aufziehen (
-                    <a href="help.psml?hkey=ext-search-spacial-6">Kartensuche</a>)oder Ihre Stadt oder Ihren Kreis als Begriff eingeben (
-                    <a href="help.psml?hkey=ext-search-spacial-2">begriffliche Raumsuche</a>).
+                    <a href="?hkey=ext-search-spacial-6">Kartensuche</a>)oder Ihre Stadt oder Ihren Kreis als Begriff eingeben (
+                    <a href="?hkey=ext-search-spacial-2">begriffliche Raumsuche</a>).
                 </p>
             </content>
         </section>
@@ -1010,7 +1013,7 @@
                     (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
                     usw.). Lesen Sie hierzu in der Hilfe zu SachsenPortalU den
                     Abschnitt &#8222;
-                    <a href="help.psml?hkey=search-expert-1">Expertensuche</a>&#8220;und geben Sie Ihren Suchausdruck in das Suchfeld ein.
+                    <a href="?hkey=search-expert-1">Expertensuche</a>&#8220;und geben Sie Ihren Suchausdruck in das Suchfeld ein.
                 </p>
             </content>
         </section>
@@ -1085,13 +1088,13 @@
             <content>
                 <p>Nach dem Ausführen einer Suchanfrage haben die eingeloggten
                     Nutzer (siehe
-                    <a href="help.psml?hkey=myingrid-1">Mein SachsenPortalU</a>) die Möglichkeit den verwendeten Suchausdruck
+                    <a href="?hkey=myingrid-1">Mein SachsenPortalU</a>) die Möglichkeit den verwendeten Suchausdruck
                     dauerhaft zu speichern. Dies geschieht über die Funktion
                     &#8222;Suche speichern&#8220;.
                 </p>
                 <p>Hinweis: Die zuletzt verwendeten Suchanfragen sind auch ohne
                     Speicherung für die laufende Sitzung über die &#8222;
-                    <a href="help.psml?hkey=search-history-1">Suchhistorie</a>&#8220; zugänglich.
+                    <a href="?hkey=search-history-1">Suchhistorie</a>&#8220; zugänglich.
                 </p>
             </content>
         </section>
@@ -1310,7 +1313,7 @@
                     (linke Spalte) und die Liste mit Ergebnissen aus weiteren
                     Datenquellen (rechte Spalte). Weiterhin wird Ihnen die
                     Möglichkeit gegeben, über das
-                    <a href="help.psml?hkey=search-1">Suchformular</a>Ihre Suchanfrage zu verfeinern und erneut zu suchen. Hierzu
+                    <a href="?hkey=search-1">Suchformular</a>Ihre Suchanfrage zu verfeinern und erneut zu suchen. Hierzu
                     können Sie auch die Ihnen angebotenen ähnlichen Begriffe nutzen.
                 </p>
             </content>
@@ -1324,8 +1327,8 @@
                     Relevanz gewichteten Liste angezeigt.</p>
                 <p>Anstatt der einfachen gewichteten Liste können Sie sich die
                     Ergebnisse auch nach Anbietern
-                    <a href="help.psml?hkey=search-settings-2#search-settings-2">gruppiert</a>anzeigen lassen oder sie nach Aktualität
-                    <a href="help.psml?hkey=search-settings-2#search-settings-2">sortieren</a>.
+                    <a href="?hkey=search-settings-2#search-settings-2">gruppiert</a>anzeigen lassen oder sie nach Aktualität
+                    <a href="?hkey=search-settings-2#search-settings-2">sortieren</a>.
                 </p>
                 <p>Ist die Fundstelle eine Web-Seite, erhalten Sie neben einer
                     Reihe von Informationen (z.B. Titel, Beschreibung und
@@ -1391,7 +1394,7 @@
                   oder Adressen navigiert werden. Die Detaildarstellung eines Eintrags
                   erfolgt erst auf Anfrage, d.h. bei Klick auf dessen Titel, gleich
                   wie in der
-                    <a href="help.psml?hkey=search-results-2">Hauptergebnisliste</a> bei
+                    <a href="?hkey=search-results-2">Hauptergebnisliste</a> bei
                      der freien Suche.
                 </p>
             </content>
@@ -1572,243 +1575,385 @@
         <header>Karten</header>
         <section help-key="maps-1">
             <header>Karten</header>
-            <content>
-                <p>Über diese Funktion können Karten interner und externer
-                    Dienste visualisiert werden.</p>
-                <p>Wenn Sie zu dieser Funktion über die Ergebnisliste
-                    (&#8222;Zeige Karte&#8220;) gelangt sind, wird Ihnen
-                    die ausgewählte Karte angezeigt. Ansonsten wird Ihnen Ihre
-                    letzte Einstellung im Menü &#8222;Karten&#8220; präsentiert.</p>
+             <content>
+                <p>Mit dem PortalU-Kartenviewer können Sie sich eine Vielzahl 
+                   umweltrelevanter Karten ansehen. Auf der linken Seite des 
+                   Kartenviewers können <b>Dienste</b> hinzugeladen und die 
+                   <b>Legende</b> zu den aktivierten Kartenebenen eingesehen 
+                   werden. Dieser Bereich lässt sich bei Bedarf durch die 
+                   Schaltfläche <b>zuklappen</b> <img border="0" width="15" height="16" src="../decorations/layout/ingrid-help/images/image205.jpg" alt="*"></img>    
+                   (oben rechts) schließen und durch die Schaltfläche 
+                   <b>aufklappen</b> <img border="0" width="20" height="20" src="../decorations/layout/ingrid-help/images/image206.jpg" alt="*"></img>  
+                   wieder öffnen.
+                </p> 
+                
             </content>
         </section>
+
         <section help-key="maps-2">
-            <header>Aktive Kartendienste</header>
+          <header>Hinzufügen von Kartendiensten</header>
             <content>
-                <p>In der rechten Spalte werden alle geladenen Services
-                        gelistet. Für jeden Service werden alle vorhandenen
-                        Layer angegeben. Sie können über das Pluszeichen
-                    <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img>angezeigtbzw. durch das Minuszeichen
-                    <img border="0" width="9" height="9" src="image019.jpg"></img>wieder ausgeblendet werden.
-                </p>
-                <p>Die verwendeten Symbole haben die folgende Bedeutung:</p>
-                <p>
-                    <img border="0" width="14" height="14" src="../decorations/layout/ingrid-help/images/image020.jpg" alt="*"></img>Ein Layer, der unterhalb dieses Symbols
-                        angekreuzt ist, wird angezeigt.
-                </p>
-                <p>
-                    <img border="0" width="14" height="14" src="../decorations/layout/ingrid-help/images/image021.jpg" alt="*"></img>Die Informationen für einen Layer, der
-                        unterhalb diesem Symbol angekreuzt ist, werden angezeigt
-                        wenn die &#8222;Layerbasierte
-                        Informationsabfrage&#8220; aktiviert wurde.
-                </p>
-                <p>
-                    <img border="0" width="14" height="14" src="../decorations/layout/ingrid-help/images/image022.jpg" alt="*"></img>Beim Klick auf dieses Symbol wird der
-                        zugehörige Layer um eine Position nach oben verschoben.
-                        (Hinweis: Die oben stehenden Layer werden zuerst
-                        angezeigt und können dadurch ggf. von folgenden Layern
-                        verdeckt werden.)
-                </p>
-                <p>
-                    <img border="0" width="14" height="14" src="../decorations/layout/ingrid-help/images/image023.jpg" alt="*"></img>Beim Klick auf dieses Symbol wird der
-                        zugehörige Service mit all seinen Layern um eine
-                        Position nach oben, vor den davor stehenden Service
-                        verschoben. (Hinweis: Die oben stehenden Layer werden
-                        zuerst angezeigt und können dadurch ggf. von folgenden
-                        Layern verdeckt werden. Das kann eventuell für alle
-                        Layer eines Service gelten.)
-                </p>
-            </content>
-        </section>
-        <section help-key="maps-3">
-            <header>Kartendienste speichern</header>
-            <content>
-                <p>Wenn Sie eine eingeloggte Nutzerin oder Nutzer sind,
-                      können Sie diverse Kartenansichten mit Ihren
-                      eingestellten Karten-Konfigurationen unter einem beliebigen
-                      Namen abspeichern. Der Dienst zur Kartenspeicherung
-                      steht unterhalb der Karte nur für eingeloggte Benutzer
-                      zur Verfügung. Konfigurieren Sie die
-                      Karte nach Ihren Wünschen, tragen Sie in das untere
-                      Textfeld den zugehörigen Namen für die Kartenansicht ein und
-                      verwenden Sie zur Speicherung den Button &#8222;
-                     Speichern&#8220;. Die Verwaltung der gespeicherten Kartenansichten
-                      werden tabellarisch dargestellt. Hierbei ist zu beachten,        dass die Karten-Webadressen verkürzt abgespeichert werden,
-                      aber trotzdem zum Weiterversenden geeignet sind. Zum Löschen
-                      von gespeicherten Kartenansichten selektieren Sie die
-                      jeweiligen Kartenansichten in der unteren Tabelle
-                      und bestätigen das Löschen mit dem Button &#8222;Löschen&#8220;.</p>
-            </content>
+             
+                <p>Die Karten gehen auf Kartendienste (Web Map Services) 
+                   unterschiedlicher Anbieter auf Bundes- und Länderebene 
+                   zurück. Alle in PortalU eingebundenen Kartendienste sind 
+                   in der linken Spalte des Kartenviewers unter dem Reiter 
+                   <b>Dienste</b> zu finden. Die Dienste sind zum einen nach 
+                   <b>Anbietern</b> und zum anderen nach <b>Themen</b> 
+                   sortiert und müssen zunächst in den Bereich 
+                   <b>Aktive Dienste</b> geladen werden. </p>
+                <p>Es gibt mehrere Möglichkeiten einen Kartendienst in den 
+                   Kartenviewer zu laden: </p>
+                <ul>
+                    <li>
+                        aus der Rubrik Anbieter
+                    </li>
+                    <li>
+                        aus der Rubrik Themen
+                    </li>
+                    <li>
+                        aus einer Suchergebnisliste
+                    </li>
+                    <li>
+                        aus den Metadatensätzen angeschlossener Kataloge
+                    </li>                    
+                    <li>
+                        durch die Eingabe eines externen Dienstes
+                    </li>
+                </ul>                       
+
+                <p> <b>Die Rubrik Anbieter</b></p>
+
+                <p>In der Rubrik Anbieter, die sich im unteren Bereich 
+                       der linken Spalte befindet, sind alle in PortalU 
+                       eingebundenen Kartendienste von Bund und Ländern zu 
+                       finden. Um die Kartendienste eines Bundeslandes in den 
+                       PortalU-Kartenviewer zu laden, gehen Sie bitte wie folgt 
+                       vor:</p>
+                <ul>
+                    <li>
+                        Klicken Sie auf die Schaltfläche <b>Anbieter</b> (unten links)
+                    </li>
+                    <li>
+                        Klicken Sie auf das Kreuz vor einem Bundesland
+                    </li>
+                    <li>
+                        Klicken Sie nun auf einen Kartendienst
+                    </li>
+                    <li>
+                        Klicken Sie zum Abschluss auf die Schaltfläche 
+                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>
+                    </li>
+                </ul>                                        
+                <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
+                   Anklicken der Checkboxen die einzelnen thematischen Ebenen 
+                   (Layer) des Kartendienstes aktivieren. </p>                  
+
+                <p> <b>Die Rubrik Themen</b></p>
+
+                    <p>In der Rubrik Themen, die sich im unteren Bereich der 
+                       linken Spalte befindet,  sind die in PortalU 
+                       eingebundenen Kartendienste nach Umweltthemen sortiert. 
+                       Um einen Kartendienst aus der Rubrik Themen in den 
+                       Kartenviewer zu laden, gehen Sie bitte wie folgt vor: </p>
+                <ul>
+                    <li>
+                        Klicken Sie auf die Schaltfläche <b>Themen</b> (unten links)
+                    </li>
+                    <li>
+                        Klicken Sie auf das Kreuz vor einem Thema (z.B. Boden)
+                    </li>
+                    <li>
+                        Klicken Sie nun auf einen Kartendienst
+                    </li>
+                    <li>
+                        Klicken Sie zum Abschluss auf die Schaltfläche 
+                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>
+                    </li>
+                </ul>                                        
+                <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
+                   Anklicken der Checkboxen die einzelnen thematischen Ebenen 
+                   (Layer) des Kartendienstes aktivieren. </p>  
+
+                <p> <b>Die Suche</b></p>
+
+                    <p>Sie können auch direkt über eine Suchanfrage nach 
+                       Kartendiensten recherchieren. Bei der <b>Suche</b> wird 
+                       sowohl nach Kartendiensten in den Rubriken <b>Themen</b> 
+                       und <b>Anbieter</b> 
+                       als auch nach Kartendiensten in den angeschlossenen 
+                       Katalogen gesucht. </p>
+                       
+                    <p>Gehen Sie hierbei wie folgt vor:</p>
+                <ul>
+                    <li>
+                        Klicken Sie auf die Schaltfläche <b>Suche</b> (unten links)
+                    </li>
+                    <li>
+                        Geben Sie einen Suchbegriff ein und klicken Sie dann 
+                        auf <b>suchen</b>
+                    </li>
+                    <li>
+                        Klicken Sie nun auf eine Karte aus der Suchergebnisliste
+                    </li>
+                    <li>Bedienen Sie anschließend die Schaltfläche  
+                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>
+                    </li>
+                </ul>                                        
+                <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
+                   Anklicken der Checkboxen die einzelnen thematischen Ebenen 
+                   (Layer) des Kartendienstes aktivieren. </p>  
+
+                <p><b>Kartendienste aus angeschlossenen Katalogen</b></p>
+
+                <p>Zu den in PortalU recherchierbaren Katalogen zählen unter 
+                   anderen auch in Umweltdatenkataloge von Bund und Ländern 
+                   (UDKs). In den UDKs kann für Metadaten in der Objektklasse 
+                   <b>Geoinformation/Karte</b> ein Link auf einen Kartendienst 
+                   gesetzt werden, der dann durch einen Klick auf die 
+                   Schaltfläche <b>Zeige in Karte</b> im Kartenviewer 
+                   hinzugefügt werden kann.   </p>
+ 
+               <p><b>Externen Dienst hinzufügen</b></p>
+        
+               <p>Als externe Dienste werden Kartendienste bezeichnet, die 
+                  derzeit nicht in PortalU eingebunden sind. Wenn Sie einen 
+                  solchen Dienst in den PortalU-Kartenviewer laden möchten 
+                  gehen Sie bitte wie folgt vor:</p>
+                <ul>
+                    <li>Klicken Sie auf die Schaltfläche <b>Aktive Dienste</b> 
+                        (oberen links). 
+                    </li>
+                    <li>Bedienen Sie anschließend die Schaltfläche  
+                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>
+                    </li>
+                    <li>Geben Sie nun die GetCapabilities-URL ein
+                    </li>
+                    <li>Bedienen Sie anschließend im Dialogfeld die Schaltfläche  
+                        <b>Dienst hinzufügen</b>
+                    </li>
+                </ul>                                        
+                <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
+                   Anklicken der Checkboxen die einzelnen thematischen Ebenen 
+                   (Layer) des Kartendienstes aktivieren. </p> 
+          </content>
         </section>
         <section help-key="maps-4">
-            <header>Kartendienste Werkzeugleiste</header>
-            <content>
-                <p>Über die Werkzeugleiste können entweder direkt Aktionen
-                        ausgelöst werden, oder die Funktion der Maus wird so
-                        geschaltet, dass die Funktionalität beim nächsten Klick
-                        in die Karte ausgelöst wird.</p>
-                <p>
-                    <b>Button &#8222;Dienst hinzufügen&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image024.jpg" alt="*"></img>Nach dem Klick auf diesen Button wird ein
-                        Fenster geöffnet. Sie können nun über Ankreuzen einen
-                        der bereits vorkonfigurierten Dienste dem Karten-Viewer hinzugefügen.
-                </p>
-                <p>Wenn Sie die URL eines nicht in der Liste vorhandenen
-                        Dienstes kennen, können Sie diese in der Eingabe einfügen.</p>
-                <p>In beiden Fällen wird der jeweilige Dienst zu den
-                        &#8222;Aktiven Kartendiensten&#8220;
-                        hinzugefügt. (Hinweis: Die zugefügten Dienste bleiben
-                        über die Sitzung erhalten. Wenn sie ein eingeloggter
-                        Nutzer sind, können Sie diese Einstellung auch permanent speichern.)</p>
-                <p>
-                    <b>Button &#8222;Dienst entfernen&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image025.jpg" alt="*"></img>Nach dem Klick auf diesen Button werden alle
-                        bereits eingefügten Dienste angezeigt. Sie können sie
-                        wieder aus der Auswahl (Aktive Kartendienste) entfernen.
-                        (Hinweis: Der WMS-Service von SachsenPortalU ist der
-                        voreingestellte Standard-Service. Er kann nicht entfernt
-                        werden und wird daher auch nicht angezeigt.)
-                </p>
-                <p>
-                    <b>Button &#8222;Layerbasierte Informationsabfrage&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image026.jpg" alt="*"></img>Dieser Button schaltet die Funktion der Maus
-                        auf die Informationsabfrage um. Über einen Klick in die
-                        Karte erhalten Sie Informationen zu dem Punkt der Karte,
-                        auf den Sie geklickt haben.
-                </p>
-                <p>Nach dem Klick öffnet sich Informationsabfrage ein neues
-                        Fenster, in dem Sie auswählen können, zu welchem Layer
-                        die Informationen angezeigt werden sollen. (Hinweis: Es
-                        werden nur diejenigen Layer angezeigt, für die unter
-                        &#8222;Aktive Kartendienste&#8220; die
-                        Informationsabfrage
-                    <img border="0" width="14" height="14" src="../decorations/layout/ingrid-help/images/image021.jpg" alt="*"></img>angekreuzt wurde.) Nach der Auswahl des Layers
-                        werden die Informationen in einem getrennten Fenster angezeigt.
-                </p>
-                <p>
-                    <b>Button &#8222;Punktkoordinate definieren&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image027.jpg" alt="*"></img>Über diesen Button wird die Funktion der Maus
-                        auf das Definieren eine Punktkoordinate umgeschaltet. Es
-                        wird jeweils die Position der Maus in geografischen
-                        Koordinaten unterhalb der Karte angezeigt. Ebenso wird
-                        die Position der Maus beim letzten Klick in die Karte angezeigt.
-                </p>
-                <p>
-                    <b>Button &#8222;Karte aktualisieren&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image030.jpg" alt="*"></img>Durch einen Klick auf diesen Button wird die
-                        Karte aktualisiert. Alle Layer-Informationen werden
-                        erneut von den Karten-Servern abgerufen.
-                </p>
-                <p>
-                    <b>Button &#8222;Zoom&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image031.jpg" alt="*"></img>Über diesen Button wird die Funktion der Maus
-                        auf das Hineinzoomen in die Karte umgeschaltet. Über das
-                        Klicken auf einen Punkt in der Karte, festhalten der
-                        linken Maustaste, ziehen der Maus über die Karte und
-                        anschließendes Loslassen der linken Maustaste können Sie
-                        das Zoom Gebiet definieren.
-                </p>
-                <p>Die Karte wird auf dieses Gebiet zentriert und soweit
-                        vergrößert, dass Sie gerade noch in den dargestellten
-                        Bereich hinein passt.</p>
-                <p>
-                    <b>Button &#8222;Zoom Out&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image032.jpg" alt="*"></img>Durch einen Klick auf diesen Button wird die
-                        Karten um die Hälfte verkleinert.
-                </p>
-                <p>
-                    <b>Button &#8222;Kartenausschnitt verschieben&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image033.jpg" alt="*"></img>Über diesen Button wird die Funktion der Maus
-                        auf das Verschieben des Kartenausschnittes umgeschaltet.
-                        Nach dem Klick auf einen Punkt in der Karte, Festhalten
-                        der linken Maustaste und Ziehen der Maus über die Karte,
-                        können Sie den Kartenausschnitt verschieben. Der Punkt
-                        der Karte auf den geklickt wurde befindet sich nach dem
-                        Vorgang dort, wo Sie die linke Maustaste wieder
-                        losgelassen haben.
-                </p>
-                <p>Die Karte wird so nachgeladen, dass Sie den dargestellten
-                        Bereich wieder ausfüllt.</p>
-                <p>
-                    <b>Button &#8222;Vorheriger Kartenausschnitt&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image034.jpg" alt="*"></img>Durch Klick auf diesen Button wird der
-                        Kartenausschnitt, der vor der letzten Aktion angezeigt
-                        wurde, wieder hergestellt.
-                </p>
-                <p>Die Aktion kann mehrfach hintereinander ausgeführt werden.</p>
-                <p>
-                    <b>Button &#8222;Nachfolgender Kartenausschnitt&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image035.jpg" alt="*"></img>Wurde über den Button &#8222;Vorheriger
-                        Kartenausschnitt&#8220; zu einem Kartenausschnitt
-                        zurück gesprungen, der eine oder mehrere Aktionen
-                        zurückliegt, kann über den Button
-                        &#8222;Nachfolgender Kartenausschnitt&#8220;
-                        wieder zu den danach ausgeführten Aktionen
-                        &#8222;vorgeblättert&#8220; werden.
-                </p>
-                <p>Die Aktion kann so häufig ausgeführt werden wie vorher
-                        die Aktion &#8222;Vorheriger
-                        Kartenausschnitt&#8220; ausgeführt wurde.</p>
-                <p>
-                    <b>Button &#8222;Kartenausschnitt zentrieren&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image036.jpg" alt="*"></img>Über diesen Button wird die Funktion der Maus
-                        auf das Zentrieren des Kartenausschnittes umgeschaltet.
-                        Nach dem Klick auf einen Punkt in der Karte wird der
-                        angeklickte Punkt in die Mitte des dargestellten
-                        Bereichs gerückt.
-                </p>
-                <p>Die Karte wird so nachgeladen, dass Sie den dargestellten
-                        Bereich wieder ausfüllt.</p>
-                <p>
-                    <b>Button &#8222;Zoom auf Ausgangskarte&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image037.jpg" alt="*"></img>Bei dem Klick auf diesen Button wird die
-                        Ausgangskarte wieder hergestellt.
-                </p>
-                <p>
-                    <b>Button &#8222;Legende darstellen&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image038.jpg" alt="*"></img>Bei einem Klick auf diesen Button wird ein
-                        neues Fenster geöffnet in dem die Legende für alle
-                        sichtbaren Layer angezeigt wird.
-                </p>
-                <p>
-                    <b>Button &#8222;Kartenausschnitt als PDF drucken&#8220;</b>
-                </p>
-                <p>
-                    <img border="0" width="24" height="23" src="../decorations/layout/ingrid-help/images/image039.jpg" alt="*"></img>Bei einem Klick auf diesen Button wird sowohl
-                        der dargestellte Kartenausschnitt als auch die Legende
-                        in eine PDF Datei geschrieben und in einem neuen Fenster geöffnet.
-                </p>
-                <p>Sie können das Dokument über die übliche Funktionalität
-                        drucken oder als Datei auf Ihrem Rechner speichern.</p>
-            </content>
+          <header>Funktionen</header>
+          <content>
+               <p><b>Schaltflächen im Bereich Dienste</b></p>
+                   <p><img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img> <b>Dienst hinzufügen</b>: in 
+                      den Bereichen <b>Anbieter</b>, 
+                      <b>Themen</b> und <b>Suchergebnisse</b> wird über die 
+                      Schaltfläche ein markierter Kartendienst in den Bereich 
+                      <b>Aktive Dienste</b> hinzugeladen. Im Bereich 
+                      <b>Aktive Dienste</b> wird ein Dialogfeld geöffnet, 
+                      damit ein externer Dienst hinzugeladen werden kann. 
+                    </p>
+                   <p><img border="0" width="22" height="19" src="../decorations/layout/ingrid-help/images/image209.jpg" alt="*"></img> <b>Dienst entfernen</b>: 
+                      Kartendienst wird aus dem Bereich <b>Aktive Dienste</b> 
+                      gelöscht. Um einen Dienst zu löschen, muss dieser vorher 
+                      durch einen Klick markiert werden. 
+                    </p>
+                    
+                   <p><img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img> <b>Layer-Transparenz</b>: 
+                      Anpassung der Transparenz einer im Kartenfenster 
+                      dargestellten Kartenebene. Um die Transparenz einer 
+                      Kartenebene zu ändern, muss die Kartenebene vorher durch 
+                      einen Klick markiert werden. 
+                    </p>                    
+                    
+                   <p><img border="0" width="22" height="21" src="../decorations/layout/ingrid-help/images/image102.jpg" alt="*"></img> <b>Metadaten</b>: 
+                      Aufruf von Hintergrundinformationen zu einem Kartendienst 
+                      oder einer Kartenebene. 
+                    </p>                    
+
+                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image112.jpg" alt="*"></img> <b>Alle auf/zu klappen</b>: 
+                      Alle Ebenen werden auf- bzw. zugeklappt. 
+                    </p> 
+                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image113.jpg" alt="*"></img> <b>Zoome auf Service oder Layer</b>: 
+                      Zoomt auf den sichtbaren Bereich eines Kartendienstes oder 
+                      einer Ebene. 
+                    </p>                                         
+
+                   <p><img border="0" width="26" height="23" src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"></img> <b>Suchergebnisse löschen</b>: 
+                      Alle Suchergebnisse werden aus der Ergebnisliste gelöscht. 
+                    </p>
+
+               <p><b>Schaltflächen im Kartenfenster</b></p>
+               <p>Im Kartenfenster finden Sie folgende Funktionen:</p>
+                <ul>
+                    <li>In der linken oberen Ecke: Leiste zum <b>Navigation</b> 
+                        im Kartenausschnitt (reinzoomen, rauszoomen, verschieben).  
+                    </li>
+                    <li>In der linken unteren Ecke: <b>Maßstabsleiste</b> und 
+                        <b>Koordinaten</b>. Die Koordinaten beziehen sich auf 
+                        die aktuelle Position der Maus auf dem Kartenausschnitt.
+                    </li>
+                    <li>In der rechten oberen Ecke: Wenn Sie den Pfeil neben der 
+                        Schaltfläche <b>Erweiterte Einstellungen</b> anklicken, 
+                        werden Ihnen Informationen z.B. zum Raumbezug oder 
+                        Maßstab angezeigt.
+                    </li>
+                    <li>In der rechten unteren Ecke: Wenn Sie den Pfeil 
+                        anklicken, wird eine Übersichtskarte eingeblendet.
+                    </li>
+                </ul>                                        
+
+               <p><b>Schaltflächen oberhalb des Kartenfensters</b></p>
+                <p>Oberhalb des Kartenfensters stehen weitere Funktionen zur 
+                   Verfügung, die im Folgenden von links nach rechts beschrieben 
+                   werden:</p> 
+                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img> <b>Objektinformationen</b>: 
+                      Abfrage von Sachdaten in der Karte. Über einen Klick in 
+                      die Karte erhalten Sie standortspezifische Informationen 
+                      der dargestellten Layer. Nicht alle Objektinformationen 
+                      werden von den Anbietern für die Öffentlichkeit 
+                      bereitgestellt. In diesem Fall bleibt das Ergebnisfenster 
+                      leer.  
+                    </p>
+                   <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image105.jpg" alt="*"></img> <b>Zurück</b>: 
+                      Der Kartenausschnitt, der vor der letzten Aktion angezeigt 
+                      wurde, wird wieder hergestellt. 
+                    </p>
+                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image106.jpg" alt="*"></img> <b>Vor</b>: 
+                      Wurde über die Schaltfläche <b>Zurück</b> zu einem 
+                      Kartenausschnitt zurück gesprungen, kann über die 
+                      Schaltfläche <b>Vor</b> wieder zu den danach ausgeführten 
+                      Aktionen vorgeblättert werden. 
+                    </p>
+                   <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image107.jpg" alt="*"></img> 
+                      <b>Auf initiale Kartenausdehnung zoomen</b>:
+                      Zoombereich der Ausgangskarte wird wieder hergestellt. 
+                    </p>
+                   <p><img border="0" width="35" height="21" src="../decorations/layout/ingrid-help/images/image108.jpg" alt="*"></img> <b>Messen</b>:
+                      Ausmessen von Strecken oder Flächen in der Karte. Zum 
+                      Messen aktivieren Sie die entsprechende Checkbox, klicken 
+                      auf einen Punkt in der Karte und anschließend auf weitere 
+                      Punkte, um den Streckenverlauf bzw. die Fläche zu 
+                      definieren. Mit einem Doppelklick auf einen Punkt ist die 
+                      Messung abgeschlossen. 
+                    </p>
+                   <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image204.jpg" alt="*"></img> <b>Drucken</b>:
+                      Erstellung einer pdf-Datei für einen Kartenausschnitt. 
+                   </p>
+                   <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> <b>Laden</b>:
+                      Zuvor gespeicherte Karten werden geladen. Schaltfläche ist 
+                      nur dann aktiv, wenn Sie als PortalU-Nutzer eingeloggt 
+                      sind (www.portalu.de/personalisierungsoptionen) und 
+                      bereits eine Karte gespeichert haben. Näheres 
+                      siehe unter <a href="?hkey=maps-7">Karte speichern</a>. 
+                   </p>
+                   <p><img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> <b>Speichern</b>:
+                      Kartenausschnitt wird gespeichert. Schaltfläche ist nur 
+                      dann aktiv, wenn Sie als PortalU-Nutzer eingeloggt sind 
+                      (www.portalu.de/personalisierungsoptionen). Näheres siehe 
+                      unter <a href="?hkey=maps-7">Karte speichern</a>. 
+                   </p>
+                   <p><img border="0" width="24" height="26" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> <b>Karte als WMC speichern</b>:
+                      Kartenausschnitt wird im WMC gespeichert. WMC steht für 
+                      Web Map Context und ist ein standardisiertes auf XML 
+                      basierendes Speicherformat für Kartenansichten. 
+                   </p>
+
+          </content>
+        </section>
+        <section help-key="maps-6">
+          <header>Legende</header>
+          <content>
+                   <p>Unter dem Reiter <b>Legende</b> (oben links) werden alle 
+                      verfügbaren Legenden der Kartenebenen (Layer) dargestellt, 
+                      die unter <b>Aktive Dienste</b> aktiviert sind und als Karten 
+                      im Viewer dargestellt werden. Die Legendenbeschreibung 
+                      gibt darüber Aufschluss, mit welchen Symbolen und/oder 
+                      Farben die unterschiedlichen Informationen in der Karte 
+                      dargestellt werden. 
+                   </p>
+          </content>
+        </section>
+
+
+        <section help-key="maps-7">
+          <header>Karte speichern</header>
+          <content>
+               <p>Wenn Sie sich eine im Kartenfenster individuell 
+                  zusammengestellte Karte speichern möchten, gehen Sie bitte 
+                  wie folgt vor:</p>
+                <ul>
+                    <li>Melden Sie mit Ihrer Benutzerkennung unter 
+                        <b>Mein PortalU</b> (oben rechts in der Kopfleiste). 
+                        Wenn Sie noch keinen Zugang haben, klicken Sie unter 
+                        <b>Mein PortalU</b> auf <b>Neuer Benutzer</b> und legen 
+                        Sie ein neues Profil an.  
+                    </li>
+                    <li>Wechseln Sie dann wieder in den Bereich <b>Karten</b>.
+                    </li>
+                    <li>Klicken Sie nun auf die Schalfläche <b>Speichern</b>
+                        <img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> (oberhalb des Kartenfensters, rechts)
+                    </li>
+                    <li>Über die Schaltfläche <b>Löschen</b>
+                        <img border="0" width="22" height="19" src="../decorations/layout/ingrid-help/images/image209.jpg" alt="*"></img> können gespeicherte Karten wieder gelöscht 
+                        werden.
+                    </li>
+                </ul>                                        
+                <p>Wenn Sie nun auf die Schaltfläche <b>Laden</b>
+                   <img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> 
+                   klicken, werden Ihnen alle gespeicherten Karten angezeigt. 
+                   Wählen Sie mit einem Klick eine Karte aus und klicken Sie 
+                   dann auf die Schaltfläche <b>Laden</b>, um eine gespeicherte 
+                   Karte zu den aktiven Diensten hinzuzufügen. </p> 
+          </content>
+        </section>
+        <section help-key="maps-8">
+          <header>Tipps zum Kartenviewer</header>
+          <content>
+               <p><b>Warum wird eine Kartenebene, die ich aktiviert habe nicht 
+                  angezeigt?</b></p>
+               <p>Einige Kartenebenen werden nur in einem bestimmten 
+                  Maßstabsbereich dargestellt. Maßstabsabhängige Layer sind 
+                  ausgegraut, wenn sich die aktuelle Kartenansicht außerhalb des 
+                  festgelegten Maßstabs befindet. Zoomen Sie in mehreren Stufen 
+                  in den Kartenausschnitt hinein oder geben Sie unter 
+                  <b>Erweiterte Einstellungen</b> (Dialogfeld im Kartenfenster 
+                  oben rechts) einen Maßstab vor.</p> 
+               <p><b>Kartenausschnitt individuell verschieben</b></p>
+               <p>Wenn Sie den Kartenausschnitt individuell verschieben möchten, 
+                  <b>strg-Taste</b> und <b>linke Maustaste</b> gedrückt halten und 
+                  gleichzeitig die Maus im Kartenfenster in die gewünschte 
+                  Richtung bewegen. Alternativ können Sie auf der Übersichtkarte, 
+                  die sich über den Pfeil unten rechts im Kartenfenster 
+                  aufklappen lässt, den Ausschnitt verschieben. Verschieben Sie 
+                  hierfür mit gedrückter linker Maustaste auf das rote 
+                  Fadenkreuz in der Übersichtskarte. 
+               </p>
+               <p><b>In Kartenausschnitt hineinzoomen</b></p>
+               <p>Alternativ zu dem stufenweisen Hineinzoomen in die Karte, 
+                  können Sie mithilfe der <b>Shift-Taste</b> und gedrückter 
+                  <b>linker Maustaste</b> ein Zoom-Rechteck aufziehen. 
+               </p>
+
+               <p><b>Kann ich einen Maßstab für den Kartenausschnitt auswählen?</b></p>
+               <p>Ja. Wenn Sie das Dialogfeld Erweiterte Einstellungen (oben 
+                  rechts im Kartenfenster) aufklappen, können Sie verschiedene 
+                  Maßstäbe auswählen. 
+               </p>
+               <p><b>Was kann ich machen, wenn eine Kartenebene andere 
+                  Kartenebenen verdeckt?</b></p>
+               <p>Wenn Sie mehrere Kartendienste aktiviert haben, kann es 
+                  insbesondere bei Flächeninformationen vorkommen, dass 
+                  einzelne Kartenebenen verdeckt werden. Setzen Sie die 
+                  überdeckende Kartenebene transparent, um die verdeckten Ebenen 
+                  sichtbar zu machen. Klicken Sie hierfür auf eine Layer und 
+                  betätigen Sie anschließend die Schaltfläche 
+                  <b>Layer Transparenz</b> <img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img>.
+                  Auf der nun eingeblendeten Skala können Sie die Transparenz 
+                  individuell einstellen.  
+               </p>
+
+          </content>
         </section>
     </chapter>
-    <chapter>
+	<chapter>
         <header>Aktuelles</header>
         <section help-key="rss-news-1">
             <header>Aktuelles</header>
@@ -1826,7 +1971,7 @@
                 <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
                     sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
                     auf den Orginal-Servern des jeweiligen Informationsanbieters finden. Klicken Sie hierzu auf
-                    <a href="help.psml?hkey=search-service-1">Service / Pressemitteilungen</a>.)
+                    <a href="?hkey=search-service-1">Service / Pressemitteilungen</a>.)
                 </p>
             </content>
         </section>
@@ -2000,7 +2145,7 @@
                         Seiteninhalt auch über den
                         <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a>desUmweltbundesamtes analysieren. Als Ergebnis dieser
                         Analyse werden geeignete Fachbegriffe aus dem
-                        <a href="help.psml?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a>den Web-Seiten zugeordnet.
+                        <a href="?hkey=ext-search-subject-4#ext-search-subject-4">Umwelt-Thesaurus</a>den Web-Seiten zugeordnet.
                     </p>
                     <p>Wenn Sie durch Ankreuzen die Einstellung
                         &#8222;Ähnliche Begriffe in die Suche
