@@ -205,7 +205,8 @@ Local = {
 		tNominatimLoading: {en: 'Loading ...', de: 'Laden ...'},
 		tStaedte: {en: 'Cities', de: 'St&auml;dte'},
 		tNoTitle: {en: 'No title', de: 'Kein Titel'},
-		tGruppenLayerAnzeigen: {en: 'Display group layer', de: 'Gruppenlayer anzeigen'}
+		tGruppenLayerAnzeigen: {en: 'Display group layer', de: 'Gruppenlayer anzeigen'},
+		tMailToMapLink: {en: 'Link to map', de: 'Link zur Karte'}
     }
 }
 
