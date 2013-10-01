@@ -1,0 +1,104 @@
+#===========================================================================
+# allowed DPIs
+#===========================================================================
+dpis: [75, 150, 300]
+
+#===========================================================================
+# the allowed scales
+#===========================================================================
+scales:
+  - 2000
+  - 2500
+  - 5000
+  - 10000
+  - 15000
+  - 20000
+  - 25000
+  - 50000
+  - 100000
+  - 200000
+  - 500000
+  - 1000000
+  - 2000000
+  - 4000000
+
+#===========================================================================
+# the list of allowed hosts
+#===========================================================================
+hosts:
+  # allow all hosts
+  - !ipMatch
+    host:0.0.0.0
+    mask:0.0.0.0
+
+#===========================================================================
+# the list of fonts
+#===========================================================================
+#fonts:
+#  - 'c:\windows\fonts\arial.ttf' 
+  
+#===========================================================================
+# the list of layouts
+#===========================================================================
+layouts:
+  A4:
+    metaData:
+      author: 'InGrid Map Client'
+      creator: 'MapFish'
+    mainPage:
+      pageSize: A4
+      rotation: true
+      header:
+        height: 50
+        items:
+          - !text
+            font: Helvetica
+            fontEncoding: Cp1252
+            fontSize: 30
+            align: center
+            text: '${mapTitle}'
+      items:
+        - !map
+          spacingAfter: 30
+          width: 440
+          height: 483
+        - !scalebar
+          type: bar
+          units: m
+          maxSize: 100
+          barBgColor: white
+          fontSize: 8
+          align: right
+        - !legends
+          maxHeight: 0
+          maxWidth: 0
+          maxIconWidth: 0
+          maxIconHeight: 0
+          defaultScale: 0
+          classIndentation: 0
+          layerSpace: 5
+          classSpace: 2
+          layerFont: Helvetica
+          layerFontSize: 8
+          classFont: Helvetica
+          classFontSize: 8
+          fontEncoding: Cp1252
+        - !text
+          font: Helvetica
+          fontEncoding: Cp1252
+          text: '${comment}'
+      footer:
+        height: 30
+        items:
+          - !columns
+            items:
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: left
+                text: '${now MM.dd.yyyy}'
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: right
+                text: 'Seite ${pageNum} von ${pageTot}'
