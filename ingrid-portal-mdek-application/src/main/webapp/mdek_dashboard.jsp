@@ -7,16 +7,23 @@
             dojo.require("dijit.layout.TabContainer");
         
 			var infoData = {};
+            var resultsPerPage = 10;
+            var pubObjPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("pubObjSearchResultsInfo"), pagingSpan:dojo.byId("pubObjSearchResultsPaging") });
 			
 			var def1 = getCatalogInfo();
 			
 			dojo.connect(_container_, "onLoad", function(){
+                pubObjPageNav.reset();
+
 				var def2 = createGrids();
 				
 				var defList = new dojo.DeferredList([def1, def2]);
 				defList.addCallback(updateInfo);
 				
 				dojo.connect(dijit.byId("dashboardTab"), "selectChild", updateInfo);
+                
+                // if page in navigation clicked then update
+                dojo.connect(pubObjPageNav, "onPageSelected", function() { navigatePublishedObjects(); });
 			});
 			
 			function getCatalogInfo() {
@@ -51,6 +58,8 @@
 			    ];
 			    var def1 = createDataGrid("objectInfo", null, structure, dojo.partial(receiveWorkObjects, "PORTAL_QUICKLIST"));
 				
+                var def5 = createDataGrid("publishedObjectInfo", null, structure, dojo.partial(receivePublishedObjectsResultList, "PORTAL_QUICKLIST_PUBLISHED", 0, resultsPerPage));
+
 				var addrStructure = [
 			        { field: 'nodeDocType', name: "&nbsp;", width: '23px',formatter:renderIconClass },
 				    { field: 'linkLabel', name: "<fmt:message key='ui.dashboard.name' />", width: '370px' },
@@ -62,7 +71,7 @@
 			    var def3 = createDataGrid("globalObjectInfo", null, structure, dojo.partial(receiveWorkObjects, "PORTAL_QUICKLIST_ALL_USERS"));
 			    var def4 = createDataGrid("globalAddressInfo", null, addrStructure, dojo.partial(receiveWorkAddresses, "PORTAL_QUICKLIST_ALL_USERS"));
 			    
-				var defList = new dojo.DeferredList([def1, def2, def3, def4]);
+				var defList = new dojo.DeferredList([def1, def2, def3, def4, def5]);
 				return defList;
 			}
 			
@@ -86,6 +95,39 @@
 				return def;
 			}
 			
+            function receivePublishedObjectsResult(selection, startHit, numHits) {
+                var def = new dojo.Deferred();
+                
+                ObjectService.getWorkObjects(selection, "DATE", true, startHit, numHits, {
+                    callback: function(res){
+                        if (selection == "PORTAL_QUICKLIST_PUBLISHED") {
+                            infoData.numObjectsPublished = res.totalNumHits;
+                            UtilList.addObjectLinkLabels(res.resultList);
+                        } else {
+//                            infoData.numObjectsPublishedAll = res.totalNumHits;
+                            UtilList.addObjectLinkLabels(res.resultList, null, true);
+                        }
+                            
+                        pubObjPageNav.setTotalNumHits(res.totalNumHits);
+                        pubObjPageNav.updateDomNodes();
+
+                        def.callback(res);
+                    }
+                });
+                return def;
+            }
+
+            function receivePublishedObjectsResultList(selection, startHit, numHits) {
+                var def2 = new dojo.Deferred();
+
+                var def = receivePublishedObjectsResult(selection, startHit, numHits);
+                def.addCallback(function(res) {
+                    def2.callback(res.resultList);
+                });
+
+                return def2;
+            }
+
 			function receiveWorkAddresses(selection) {
 				var def = new dojo.Deferred();
 				AddressService.getWorkAddresses(selection, "DATE", true, 0, 20, {
@@ -108,11 +150,27 @@
 				return def;
 			}
 			
+            function navigatePublishedObjects() {
+                var startHit = pubObjPageNav.getStartHit();
+
+                var def = receivePublishedObjectsResultList("PORTAL_QUICKLIST_PUBLISHED", startHit, resultsPerPage);
+                def.addCallback(function(data){
+                    UtilGrid.setTableData("publishedObjectInfo", data);
+                });
+            }
+
             function updateDashboard() {
                 var def1 = receiveWorkObjects("PORTAL_QUICKLIST");
                 def1.addCallback(function(data){
                     UtilGrid.setTableData("objectInfo", data);
                 });
+
+                pubObjPageNav.reset();
+                var def5 = receivePublishedObjectsResultList("PORTAL_QUICKLIST_PUBLISHED", 0, resultsPerPage);
+                def5.addCallback(function(data){
+                    UtilGrid.setTableData("publishedObjectInfo", data);
+                });
+
                 var def2 = receiveWorkAddresses("PORTAL_QUICKLIST");
                 def2.addCallback(function(data){
                     UtilGrid.setTableData("addressInfo", data);
@@ -133,9 +191,11 @@
 				dojo.byId("location").innerHTML = infoData.location;
 				if (dijit.byId("dashboardTab").selectedChildWidget.id == "userSpace") {
     				dojo.byId("numObjects").innerHTML = infoData.numObjects;
+                    dojo.byId("numObjectsPublished").innerHTML = infoData.numObjectsPublished;
     				dojo.byId("numAddresses").innerHTML = infoData.numAddresses;
 				} else {
 				    dojo.byId("numObjects").innerHTML = infoData.numObjectsAll;
+                    dojo.byId("numObjectsPublished").innerHTML = "";
                     dojo.byId("numAddresses").innerHTML = infoData.numAddressesAll;
 				}
 				dojo.byId("numUsers").innerHTML = infoData.numUsers;
@@ -144,7 +204,7 @@
 			function renderIconClass(row, cell, value, columnDef, dataContext) {
 				return "<div class=\"TreeIcon TreeIcon" + value + "\"></div>";
 			}
-			
+
 		</script>
     </head>
     <body>
@@ -172,6 +232,10 @@
 									<td><fmt:message key="ui.dashboard.numObjects" />:</td>
 									<td id="numObjects"></td>
 								</tr>
+                                <tr>
+                                    <td><fmt:message key="ui.dashboard.numObjectsPublished" />:</td>
+                                    <td id="numObjectsPublished"></td>
+                                </tr>
 								<tr>
 									<td><fmt:message key="ui.dashboard.numAddresses" />:</td>
 									<td id="numAddresses"></td>
@@ -189,13 +253,24 @@
         	                <div class="inputContainer field">
         	                    <h2><fmt:message key="ui.dashboard.title.objectsDraft" /></h2>
         	                    <div class="tableContainer">
-        							<div id="objectInfo" autoHeight="10" contextMenu="none"></div>
+        							<div id="objectInfo" autoHeight="6" contextMenu="none"></div>
         	                    </div>
         	                </div>
+                            <div class="inputContainer field" style="padding-top:2px">
+                                <h2><fmt:message key="ui.dashboard.title.objectsPublished" /></h2>
+                                <div class="listInfo">
+                                    <span id="pubObjSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
+                                    <span id="pubObjSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
+                                    <div class="fill"></div>
+                                </div>
+                                <div class="tableContainer">
+                                    <div id="publishedObjectInfo" autoHeight="6" contextMenu="none"></div>
+                                </div>
+                            </div>
         					<div class="inputContainer field">
         	                    <h2><fmt:message key="ui.dashboard.title.addressesDraft" /></h2>
         	                    <div class="tableContainer">
-        							<div id="addressInfo" autoHeight="10" contextMenu="none"></div>
+        							<div id="addressInfo" autoHeight="4" contextMenu="none"></div>
         	                    </div>
         	                </div>
                         </div>

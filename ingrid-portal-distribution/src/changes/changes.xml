@@ -6,6 +6,9 @@
   </properties>
   <body>
    <release version="3.4.0.-SNAPSHOT" date="2013-xx-xx" description="Release InGrid 3.4">	
+    <action type="add" dev="wemove" issue="REDMINE-115">
+      IGE: Added overview of published objects on user entry page (dashboard).
+    </action>
      <action type="add" dev="wemove" issue="GEOPORTALWSV-37">
       WebMapClient: Add Nominatim-Search to the frontend of the WebMapClient menu bar.
     </action>
