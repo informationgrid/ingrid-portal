@@ -1,0 +1,23 @@
+#set ($type = $TOOL.getAddressClassType())
+
+#renderDetailHeader ($TOOL.getAddressClassTitle($type) $type $TOOL.convertDateString($TOOL.getValueFromXPath("./idf:last-modified")) false )
+#openLayoutTabContainer()
+	## Allgemeines
+    #openTabContentPane($MESSAGES.getString("general_tab"))
+		## Beschreibung
+		#renderSectionTitle($MESSAGES.getString("detail_description"))
+			## Beschreibung
+			#renderTextLabelAbove($TOOL.getValueFromXPath("./gmd:alternateTitle") $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName")))
+		## Adressen
+			#renderMultiLineAddresses($MESSAGES.getString("addresses") $TOOL.getAddresses("."))
+		## Übergeordnete Adressen 
+			#renderLinkList($MESSAGES.getString("superior_address") $TOOL.getReference("./idf:superiorParty", false) "true")
+		## Untergeordnete Adressen 
+			#renderLinkList($MESSAGES.getString("subordinated_addresses") $TOOL.getReference("./idf:subordinatedParty", false) "true")
+	#closeDiv()
+	## Verweis
+	#openTabContentPane($MESSAGES.getString("references_tab"))
+		## Datenbezüge
+		#renderLinkList($MESSAGES.getString("search.detail.dataRelations") $TOOL.getReference("./idf:objectReference", true) "true")
+	#closeDiv()
+#closeDiv()

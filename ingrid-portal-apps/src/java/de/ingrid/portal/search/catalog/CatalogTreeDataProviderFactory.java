@@ -40,6 +40,8 @@ public class CatalogTreeDataProviderFactory {
 			return new CatalogTreeDataProvider_IDC_1_0_2();
 		} else if (version.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT) || version.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_ADDRESS)) {
 			return new CatalogTreeDataProvider_IDC_1_0_2();
+		} else if (version.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT) || version.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)) {
+			return new CatalogTreeDataProvider_IDC_1_0_2();
 		} else {
 			log.error("No CatalogTreeDataProvider could be found for iPlug version '" + version + "'.");
 		}

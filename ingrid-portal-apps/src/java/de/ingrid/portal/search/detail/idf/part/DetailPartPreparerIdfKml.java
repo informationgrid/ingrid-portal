@@ -1,4 +1,4 @@
-package de.ingrid.portal.search.detail.idf;
+package de.ingrid.portal.search.detail.idf.part;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,45 +8,37 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.apache.velocity.context.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xml.XPathUtils;
 
-//TODO: remove annotation
-@SuppressWarnings("unchecked")
-public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
-	
-	private final static Logger		log	= LoggerFactory.getLogger(DetailDataPreparerIdf1_0_0_Kml.class);
-	
-	private final static String		NODE_KML			= "kml:Document";
-	
-	public DetailDataPreparerIdf1_0_0_Kml(Node node, Context context, RenderRequest request, String iPlugId, RenderResponse response) {
-		super(node, context, request, iPlugId, response);
+public class DetailPartPreparerIdfKml extends DetailPartPreparer{
+
+	@Override
+	public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
 		this.rootNode = node;
-		this.context = context;
 		this.iPlugId = iPlugId;
 		this.request = request;
 		this.response = response;
-		messages = (IngridResourceBundle) context.get("MESSAGES");
-		sysCodeList = new IngridSysCodeList(request.getLocale());
+		this.templateName = "/WEB-INF/templates/detail/part/detail_part_preparer_kml.vm";
+		this.namespaceUri = IDFNamespaceContext.NAMESPACE_URI_IDF;
+		this.localTagName = "kml";
+		this.context = context;
+		this.messages = (IngridResourceBundle) context.get("MESSAGES");
+		this.sysCodeList = new IngridSysCodeList(request.getLocale());
 	}
 	
-	public void prepare(ArrayList data) {
-		initialArrayLists();
-		
+	public HashMap getKML(){
+		HashMap element = new HashMap();
 		if (rootNode != null) {
-			if(log.isDebugEnabled()){
-				log.debug("Start parsing of: '"+ rootNode.getLocalName() +"'");
-			}
 			ArrayList<Object> elementsKml = new ArrayList<Object>();
 			HashMap<String, Object> kmlDocument;
-			Node childNode = XPathUtils.getNode(rootNode, NODE_KML);
+			Node childNode = XPathUtils.getNode(rootNode, "./kml:Document");
 			
 			kmlDocument = new HashMap<String, Object>();
 			List<HashMap<String, String>> kmlDocumentPlacemark = new ArrayList<HashMap<String, String>>();
@@ -64,29 +56,29 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 					placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR, placemarkDescription);
 					
 					String placemarkCoordinates = XPathUtils.getString(nodePlacemark, "kml:Point/kml:coordinates").trim();
-					String [] coordinates = placemarkCoordinates.split(",");
-					placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, coordinates[0]);
-					placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, coordinates[1]);
-					
-					if(log.isDebugEnabled()){
-						log.debug("KML coord x: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_X));
-						log.debug("KML coord y: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_Y));
-						log.debug("KML coord description: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR));
-						log.debug("KML coord title: " + placemark.get(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE));
+					if(placemarkCoordinates.indexOf(" ") > -1){
+						String [] coordinates = placemarkCoordinates.split(" ");
+						placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, coordinates[0]);
+						placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, coordinates[1]);
+						kmlDocumentPlacemark.add(placemark);
+					}else if(placemarkCoordinates.indexOf(",") > -1){
+						String [] coordinates = placemarkCoordinates.split(",");
+						placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, coordinates[0]);
+						placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, coordinates[1]);
+						kmlDocumentPlacemark.add(placemark);
 					}
-					kmlDocumentPlacemark.add(placemark);
 				}
 				kmlDocument.put("kml_placemark", kmlDocumentPlacemark);
 				elementsKml.add(kmlDocument);
 			}
-			addKmlToContext(data, elementsKml, docName);
+			element = addKmlToContext(elementsKml, docName);
 		}
+		return element;
 	}
 	
-	private void addKmlToContext(List elements, List kml, String title) {
+	private HashMap addKmlToContext(List kml, String title) {
 		List<HashMap<String, String>> coords = mergeCoordsByKML(kml, title);
 		
-		addSpace(elements);
 		HashMap element = new HashMap();
 		element.put("type", "kml");
 		element.put("title", title);
@@ -97,7 +89,7 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 			element.put("plugId", plugId);
 		}
 		element.put("body", createTableOfPlacemark(kml));
-		elements.add(element);
+		return element;
 	}
 	
 	private ArrayList createTableOfPlacemark(List list) {
@@ -154,5 +146,4 @@ public class DetailDataPreparerIdf1_0_0_Kml extends DetailDataPreparerIdf1_0_0{
 	
 		return pointCoords;
 	}
-	
 }

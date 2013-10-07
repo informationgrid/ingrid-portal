@@ -59,6 +59,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
     private final static String TEMPLATE_DETAIL_IDF = "/WEB-INF/templates/search_detail_idf.vm";
 
+    private final static String TEMPLATE_DETAIL_IDF_2_0_0 = "/WEB-INF/templates/detail/search_detail_idf_2_0.vm";
+    
     // ecs fields that represent a date, used for date parsing and formating
     private List dateFields = null;
     
@@ -123,6 +125,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             	
             // TODO: Path of testing IDF xml file 
             String testIDF = request.getParameter("testIDF");
+            String testIDFVersion = request.getParameter("testIDFVersion");
             
             String docUuid = request.getParameter("docuuid");
             String altDocumentId = request.getParameter("altdocid");
@@ -167,6 +170,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT)){
 	                	qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_ADDRESS)){
+	                	qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT)){
+	                	qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)){
 	                	qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else {
 	            		qStr = docUuid.trim() + " iplugs:\"" + iplugId.trim() + "\" ranking:score";
@@ -295,7 +302,17 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             } else if (testIDF != null) {
             	// create IDF record, see below how the record will be filled
             	record = new Record();
-            	iPlugVersion = IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT;
+            	if(testIDFVersion != null){
+            		if(testIDFVersion.equals("1.0.0")){
+            			iPlugVersion = IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT;
+            		}else if(testIDFVersion.equals("2.0.0")){
+            			iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;
+            		}else{
+            			iPlugVersion = IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT;
+            		}
+            	}else{
+            		iPlugVersion = IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT;	
+            	}
            	}
             
             if (record == null) {
@@ -344,9 +361,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
                 } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
-                }else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT) || iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_ADDRESS)) {
-                    	setDefaultViewPage(TEMPLATE_DETAIL_IDF);
-                } else {
+                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT) || iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_1_0_0_ADDRESS)) {
+                	setDefaultViewPage(TEMPLATE_DETAIL_IDF);
+                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT) || iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)) {
+                	setDefaultViewPage(TEMPLATE_DETAIL_IDF_2_0_0);
+            	} else {
                 	setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                 }
                 // if "testIDF"-Parameter exist, use DetailDataPreparer for "IDF" version
@@ -366,8 +385,21 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                         record.put("data", stringBuilder.toString());
                         record.put("compressed", "false");
                     }
-                	DetailDataPreparer detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT);
-	                detailPreparer.prepare(record);
+                    
+                    DetailDataPreparer detailPreparer; 
+                    if(testIDFVersion != null){
+                		if(testIDFVersion.equals("1.0.0")){
+                			detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT);
+                		}else if(testIDFVersion.equals("2.0.0")){
+                			detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT);
+                		}else{
+                			detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT);
+                		}
+                	}else{
+                		detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_1_0_0_OBJECT);
+                	}
+                    
+                    detailPreparer.prepare(record);
                 } else {
 	                DetailDataPreparer detailPreparer = ddpf.getDetailDataPreparer(iPlugVersion);
 	                detailPreparer.prepare(record);
