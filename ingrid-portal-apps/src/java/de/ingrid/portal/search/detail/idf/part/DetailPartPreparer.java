@@ -55,7 +55,10 @@ public class DetailPartPreparer {
 			if(node.getTextContent().length() > 0){
 	        	value = node.getTextContent().trim();
 	        	if(value != null && codeListId != null){
-	        		value = getValueFromCodeList(codeListId, value);
+	        		String tmpValue = getValueFromCodeList(codeListId, value);
+	        		if(tmpValue.length() > 0){
+	        			value = tmpValue;
+	        		}
 	        	}
 	        	if(value != null){
 	        		if(value.equals("false")){

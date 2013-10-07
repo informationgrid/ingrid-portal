@@ -36,10 +36,6 @@ public class IPlugVersionInspector {
 	
 	public static final String VERSION_UDK_5_0_DSC_ADDRESS = "VERSION_UDK_5_0_DSC_ADDRESS";
 	
-	public static final String	VERSION_IDF_1_0_0_OBJECT	= "VERSION_IDF_1_0_0_OBJECT";
-	
-	public static final String	VERSION_IDF_1_0_0_ADDRESS	= "VERSION_IDF_1_0_0_ADDRESS";
-	
 	public static final String	VERSION_IDF_2_0_0_OBJECT	= "VERSION_IDF_2_0_0_OBJECT";
 	
 	public static final String	VERSION_IDF_2_0_0_ADDRESS	= "VERSION_IDF_2_0_0_ADDRESS";
@@ -57,12 +53,6 @@ public class IPlugVersionInspector {
 		
 		// try to get the right iPlug Type (object/adress/generic)
 		if (IPlugHelper.hasDataType(plugDescription, "IDF_1.0")) {
-        	if(IPlugHelper.hasDataType(plugDescription, "metadata")){
-        		return VERSION_IDF_1_0_0_OBJECT;
-        	}else{
-        		return VERSION_IDF_1_0_0_ADDRESS;
-        	}
-        } else if (IPlugHelper.hasDataType(plugDescription, "IDF_2.0")) {
         	if(IPlugHelper.hasDataType(plugDescription, "metadata")){
         		return VERSION_IDF_2_0_0_OBJECT;
         	}else{

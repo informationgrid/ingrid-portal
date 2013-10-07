@@ -146,23 +146,23 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 				Node tmpNode = XPathUtils.getNode(node, xpathExpression);
 				String addressType = "";
 				String tmpTitle = "";
-				if(XPathUtils.nodeExists(node, "./idf:addressType")){
-					addressType = XPathUtils.getString(node, "./idf:addressType").trim();
+				if(XPathUtils.nodeExists(tmpNode, "./idf:addressType")){
+					addressType = XPathUtils.getString(tmpNode, "./idf:addressType").trim();
 				}
 				
 				if(addressType.equals("2")){
-					if(XPathUtils.nodeExists(node, "./idf:addressIndividualName")){
-						tmpTitle = getIndividualName(XPathUtils.getString(node, "./idf:addressIndividualName").trim());
+					if(XPathUtils.nodeExists(tmpNode, "./idf:addressIndividualName")){
+						tmpTitle = getIndividualName(XPathUtils.getString(tmpNode, "./idf:addressIndividualName").trim());
 					}
 				}else if(addressType.equals("3")){
-					if(XPathUtils.nodeExists(node, "./idf:addressIndividualName")){
+					if(XPathUtils.nodeExists(tmpNode, "./idf:addressIndividualName")){
 						tmpTitle = getIndividualName(XPathUtils.getString(node, "./idf:addressIndividualName").trim());
-					}else if(XPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
-						tmpTitle = XPathUtils.getString(node, "./idf:addressOrganisationName").trim();
+					}else if(XPathUtils.nodeExists(tmpNode, "./idf:addressOrganisationName")){
+						tmpTitle = XPathUtils.getString(tmpNode, "./idf:addressOrganisationName").trim();
 					}
 				}else{
-					if(XPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
-						tmpTitle = XPathUtils.getString(node, "./idf:addressOrganisationName").trim();
+					if(XPathUtils.nodeExists(tmpNode, "./idf:addressOrganisationName")){
+						tmpTitle = XPathUtils.getString(tmpNode, "./idf:addressOrganisationName").trim();
 					}	
 					
 				}

@@ -34,7 +34,11 @@
             #if($entry.isExtern)
                 <img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
             #elseif($entry.isMapLink)
-                <a target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=${entry.get("href")}" style="text-align: center;" title="$entry.title"><img class="preview" width="200" src="$entry.src"><p class="preview_label">$entry.title</p></a>
+				#if($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
+					<a target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=${entry.get("href")}" style="text-align: center;" title="$entry.title"><img class="preview" width="200" src="$entry.src"><p class="preview_label">$entry.title</p></a>
+				#else
+					<a target="_new" href="${entry.get("href")}" style="text-align: center;" title="$entry.title"><img class="preview" width="200" src="$entry.src"><p class="preview_label">$entry.title</p></a>
+				#end
             #else
                 <img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
             #end
@@ -410,12 +414,20 @@
 #end
 
 ## Render Table
-#macro (renderTable $entry) 
-    #if($tool.hasContent($entry.get("body")))
-        <div>
-        #if($tool.hasContent($entry.title))
-            #renderGroupTitle($entry.title)
-        #end
+#macro (renderTable $entry)
+	#renderTableTitle("" $entry "")
+#end
+
+#macro (renderTableTitle $title $entry $space)
+	#if($tool.hasContent($entry.get("body")))
+		<div>
+		#if($title == "")
+            #if($tool.hasContent($entry.title))
+                #renderGroupTitle($entry.title)
+			#end
+		#else
+			#renderGroupTitle($title)
+		#end
         <div class="table_div">
         <table class="border detail_table" border="0">
         #if($tool.hasContent($entry.get("head")))
@@ -462,6 +474,10 @@
         </table>
         </div>
         </div>
+	#else
+		#if($space != "")
+			#renderTextLabelLeft($title $space)
+		#end
     #end
 #end
 
@@ -537,6 +553,9 @@
 
 ## Render link in list
 #macro (renderLinkList $title $linkList $titleAsSection)
+	#renderLinkListSpace ($title $linkList $titleAsSection "")
+#end
+#macro (renderLinkListSpace $title $linkList $titleAsSection $space)
     #if($tool.hasContent($linkList))
 		#if($titleAsSection == "true")
 			#if($tool.hasContent($title))
@@ -554,26 +573,46 @@
                 #renderLinkLine($link)
             #end
         </div>
+	#else
+		#if($space != "")
+			#renderTextLabelLeft($title $space)
+		#end
     #end
 #end
 
 ## Render list
 #macro (renderTextList $title $textList)
-    #if($tool.hasContent($textList))
-        <div class="width_two_thirds">            
-			#renderLine()
-            #if($tool.hasContent($title))
-                <p class="width_two_thirds detail_list">$title</p>
-                ##renderGroupTitle($entry.title)
-            #end
-            <div class="width_two_thirds">
-                <ul class="content_list">
-                #foreach($text in $sorter.sort($textList,"body"))
-                     <li class="detail_li"><p class="detail_li">$text</li>
+	#renderTextListSpace ($title $textList "")
+#end
+
+#macro (renderTextListSpace $title $textList $space)
+	#if($tool.hasContent($textList))
+		#if($textList.size() > 1)
+            <div class="width_two_thirds">            
+    			#renderLine()
+                #if($tool.hasContent($title))
+                    <p class="width_two_thirds detail_list">$title</p>
+                    ##renderGroupTitle($entry.title)
                 #end
-                </ul>
+                <div class="width_two_thirds">
+                    <ul class="content_list">
+                    #foreach($text in $sorter.sort($textList,"body"))
+                         <li class="detail_li"><p class="detail_li">$text</li>
+                    #end
+                    </ul>
+                </div>
             </div>
-        </div>
+		#else
+			#if($space == "")
+				#renderTextLabelLeft($title $textList.get(0))
+			#else
+				#renderTextLabelLeftSpace($title $textList.get(0) $space)
+			#end
+		#end
+	#else
+		#if($space != "")
+			#renderTextLabelLeft($title $space)
+		#end
     #end
 #end
 
@@ -614,6 +653,10 @@
 
 ## Render label left from text
 #macro (renderTextLabelLeft $title $body)
+	#renderTextLabelLeftSpace($title $body "")
+#end
+
+#macro (renderTextLabelLeftSpace $title $body $space)
 	#if($tool.hasContent($body))  
         <div class="width_two_thirds">
 			#renderLine()
@@ -630,6 +673,10 @@
                 </tr>
             </table>
         </div>
+	#else 
+		#if($space != "")
+			#renderTextLabelLeft($title $space)
+		#end
 	#end
 #end
 

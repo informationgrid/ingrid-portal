@@ -15,10 +15,8 @@ import org.w3c.dom.NodeList;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
-import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0.LinkType;
-import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0.ReferenceType;
 import de.ingrid.utils.udk.UtilsCountryCodelist;
 import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xml.XPathUtils;

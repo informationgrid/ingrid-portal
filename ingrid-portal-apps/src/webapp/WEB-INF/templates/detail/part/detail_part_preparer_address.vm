@@ -4,10 +4,13 @@
 #openLayoutTabContainer()
 	## Allgemeines
     #openTabContentPane($MESSAGES.getString("general_tab"))
-		## Beschreibung
-		#renderSectionTitle($MESSAGES.getString("detail_description"))
+		#set($xpathList = ["./gmd:alternateTitle"])
+        #if($TOOL.aNodeOfListExist($xpathList))
+            ## Beschreibung
+			#renderSectionTitle($MESSAGES.getString("detail_description"))
 			## Beschreibung
 			#renderTextLabelAbove($TOOL.getValueFromXPath("./gmd:alternateTitle") $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName")))
+		#end
 		## Adressen
 			#renderMultiLineAddresses($MESSAGES.getString("addresses") $TOOL.getAddresses("."))
 		## Übergeordnete Adressen 
@@ -15,9 +18,12 @@
 		## Untergeordnete Adressen 
 			#renderLinkList($MESSAGES.getString("subordinated_addresses") $TOOL.getReference("./idf:subordinatedParty", false) "true")
 	#closeDiv()
-	## Verweis
-	#openTabContentPane($MESSAGES.getString("references_tab"))
-		## Datenbezüge
-		#renderLinkList($MESSAGES.getString("search.detail.dataRelations") $TOOL.getReference("./idf:objectReference", true) "true")
-	#closeDiv()
+	#set($xpathList = ["./idf:objectReference"])
+	#if($TOOL.aNodeOfListExist($xpathList))
+        ## Verweis
+    	#openTabContentPane($MESSAGES.getString("references_tab"))
+    		## Datenbezüge
+    		#renderLinkList($MESSAGES.getString("search.detail.dataRelations") $TOOL.getReference("./idf:objectReference", true) "true")
+    	#closeDiv()
+	#end
 #closeDiv()

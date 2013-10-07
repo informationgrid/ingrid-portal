@@ -52,7 +52,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     hierachyLevel = XPathUtils.getString(node, xpathExpression).trim();
                 }
                 
-                xpathExpression = "./gmd:hierarchyLevelName";
+                xpathExpression = "./gmd:hierarchyLevelName/gco:CharacterString";
                 if(XPathUtils.nodeExists(node, xpathExpression)){
                     hierachyLevelName = XPathUtils.getString(node, xpathExpression).trim();
                 }
