@@ -297,7 +297,9 @@
     <div class="detail_content_background">
         <span class="clearer_main_color"></span>
         <span class="clearer_sub_color"></span>
-		<p class="float_right" style="font-size: 10px;padding-right: 10px;">$modTime</p> 
+		#if($modTime)
+			<p class="float_right" style="font-size: 10px;padding-right: 10px;">$modTime</p>
+		#end
         <div id="header_title">
             #renderTitleHeader($title)
 			#if($isMetadata == true)
