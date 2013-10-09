@@ -114,10 +114,20 @@
             };
             
             createDOMElements = function() {
-                var storeProps = {data: {identifier: 'entryId', label: 'name'}};
+                // "Verweistyp"
                 // initialize with empty store !
+                var storeProps = {data: {identifier: 'entryId', label: 'name'}};
                 createComboBox("linksFromFieldName", null, storeProps, null);
                 dijit.byId("linksFromFieldName").searchAttr = "name";
+
+                // React on change of content of "Verweistyp"
+                dojo.connect(dijit.byId("linksFromFieldName"), "onChange", handleRelationTypeChange);
+
+                // Datenformat
+                var storeProps = {data: {identifier: '1',label: '0'}};
+                createComboBox("linksToDataType", null, storeProps, function(){
+                    return UtilSyslist.getSyslistEntry(1320);
+                });
 
                 // storeProps data attributes overwritten by json data
                 createSelectBox("linksToURLType", null, storeProps, null, "js/data/urlReferenceTypes.json");
@@ -141,6 +151,9 @@
             }
             
             setUrlData = function(urlData) {
+//                console.debug("setUrlData:");
+//                console.debug(urlData);
+
                 var typeWidget = dijit.byId("linksFromFieldName");
                 if (urlData.relationType == -1) {
                     typeWidget.setValue(urlData.relationTypeName);
@@ -152,6 +165,7 @@
                 }
                 dijit.byId("linksToURL").setValue(urlData.url);
                 dijit.byId("linksToURLName").setValue(urlData.name);
+                dijit.byId("linksToDataType").setValue(urlData.datatype);
                 dijit.byId("linksToURLType").setValue(urlData.urlType);
                 dijit.byId("linksToUrlDescription").setValue(urlData.description);
             }
@@ -173,6 +187,7 @@
                     // URL Input Fields
                     dijit.byId("linksToURLName").setDisabled(true);
                     dijit.byId("linksToURL").setDisabled(true);
+                    dijit.byId("linksToDataType").setDisabled(true);
                     dijit.byId("linksToURLType").setDisabled(true);
                     dijit.byId("linksToUrlDescription").setDisabled(true);
                 }
@@ -247,6 +262,24 @@
                 dijit.byId("linksFromFieldName").store = new dojo.data.ItemFileWriteStore(storeProps);
             }
             
+            handleRelationTypeChange = function(typeName) {
+                console.debug("handleRelationTypeChange: " + typeName);
+                
+                var typeKey = UtilSyslist.getSyslistEntryKey(2000, typeName);
+                
+                // If not "Datendownload" then hide "Dateiformat"
+                if (typeKey == 9990) {
+                    // reduce left input field and show field
+                    dojo.style("uiElement2200", "width", "60%");
+                    UtilUI.setShow(dojo.byId("uiElement2240"));
+                } else {
+                    // widen left input field and hide field and clean data
+                    dojo.style("uiElement2200", "width", "80%");
+                    dijit.byId("linksToDataType").setValue("");
+                    UtilUI.setHide(dojo.byId("uiElement2240"));
+                }
+            }
+
             saveLink = function(){
                 var objSelected = dojo.byId("linksLinkType1").checked;
 
@@ -278,6 +311,7 @@
                     currentLink = curSelectedUrl;
                     currentLink.url = dijit.byId("linksToURL").getValue();
                     currentLink.name = dijit.byId("linksToURLName").getValue();
+                    currentLink.datatype = dijit.byId("linksToDataType").getValue();
                     currentLink.urlType = dijit.byId("linksToURLType").getValue();
                     currentLink.description = dijit.byId("linksToUrlDescription").getValue();
                     UtilList.addUrlLinkLabels([currentLink]);
@@ -304,6 +338,7 @@
                     } else {
                         caller.selectedRow.url = currentLink.url;
                         caller.selectedRow.name = currentLink.name;
+                        caller.selectedRow.datatype = currentLink.datatype;
                         caller.selectedRow.urlType = currentLink.urlType;
                         caller.selectedRow.description = currentLink.description;
                     }
@@ -396,6 +431,7 @@
                 dijit.byId("linksToObjectDescription").setValue("");
                 dijit.byId("linksToURL").setValue("http://");
                 dijit.byId("linksToURLName").setValue("");
+                dijit.byId("linksToDataType").setValue("");
                 dijit.byId("linksToURLType").setValue("");
                 dijit.byId("linksToUrlDescription").setValue("");
             }
@@ -548,7 +584,7 @@
                                         </span>
                                     </div>
                                 </span>
-                                <span class="outer required" style="width:66%;">
+                                <span id="uiElement2200" class="outer required" style="width:60%;">
                                     <div>
                                         <span class="label">
                                             <label id="linksToURLLabel" for="linksToURL" onclick="javascript:dialog.showContextHelp(arguments[0], 2200)">
@@ -560,7 +596,19 @@
                                         </span>
                                     </div>
                                 </span>
-                                <span class="outer" style="width:34%;">
+                                <span id="uiElement2240" class="outer" style="width:20%;">
+                                    <div>
+                                        <span class="label">
+                                            <label id="linksToDataTypeLabel" onclick="javascript:dialog.showContextHelp(arguments[0], 2240)">
+                                                <fmt:message key="dialog.links.dataType" />
+                                            </label>
+                                        </span>
+                                        <span class="input">
+                                            <input id="linksToDataType" style="width: 100%;">
+                                        </span>
+                                    </div>
+                                </span>
+                                <span class="outer" style="width:20%;">
                                     <div>
                                         <span class="label">
                                             <label for="linksToURLType" onclick="javascript:dialog.showContextHelp(arguments[0], 2251)">

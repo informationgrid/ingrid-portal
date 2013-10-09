@@ -5,6 +5,7 @@ public class UrlBean {
 	private String url;
 	private Integer relationType;
 	private String relationTypeName;
+	private String datatype;
 	private String description;
 	private Integer urlType;
 
@@ -30,6 +31,14 @@ public class UrlBean {
 
 	public void setRelationTypeName(String relationTypeName) {
 		this.relationTypeName = relationTypeName;
+	}
+
+	public String getDatatype() {
+		return datatype;
+	}
+
+	public void setDatatype(String datatype) {
+		this.datatype = datatype;
 	}
 
 	public String getDescription() {
