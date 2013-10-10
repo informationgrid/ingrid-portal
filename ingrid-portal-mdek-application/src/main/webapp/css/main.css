@@ -38,7 +38,7 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 
 
 .hidden { display:none !important; }
-.important { color:#bd0d00 !important; }
+.important { color:#bd0d00 !important; display: block !important; }
 .importantBackground { 
 	/*background-color:#E9AFAF !important;*/	
 	border: solid #D46363 1px !important;

@@ -41,16 +41,16 @@
                 
                 var objRightsStructure = [
                     {field: 'title',name: "<fmt:message key='dialog.admin.groups.objectName' />",width: '350px'},
-                    {field: 'single',name: "<fmt:message key='dialog.admin.groups.objectSingle' />",width: '100px'}, 
-                    {field: 'tree',name: "<fmt:message key='dialog.admin.groups.objectTree' />",width: '100px'},
-                    {field: 'subnode',name: "<fmt:message key='dialog.admin.groups.objectSubNode' />",width: '100px'}
+                    {field: 'single',name: "<fmt:message key='dialog.admin.groups.objectSingle' />", editor: YesNoCheckboxCellEditor, formatter:BoolCellFormatter, editable:true, width: '100px'}, 
+                    {field: 'tree',name: "<fmt:message key='dialog.admin.groups.objectTree' />", editor: YesNoCheckboxCellEditor, formatter:BoolCellFormatter, editable:true, width: '100px'},
+                    {field: 'subnode',name: "<fmt:message key='dialog.admin.groups.objectSubNode' />", editor: YesNoCheckboxCellEditor, formatter:BoolCellFormatter, editable:true, width: '100px'}
                 ];
                 
                 var addrRightsStructure = [
                     {field: 'title',name: "<fmt:message key='dialog.admin.groups.addressName' />",width: '350px'},
-                    {field: 'single',name: "<fmt:message key='dialog.admin.groups.addressSingle' />",width: '100px'}, 
-                    {field: 'tree',name: "<fmt:message key='dialog.admin.groups.addressTree' />",width: '100px'},
-                    {field: 'subnode',name: "<fmt:message key='dialog.admin.groups.addressSubNode' />",width: '100px'}
+                    {field: 'single',name: "<fmt:message key='dialog.admin.groups.addressSingle' />", editor: YesNoCheckboxCellEditor, formatter:BoolCellFormatter, editable:true, width: '100px'}, 
+                    {field: 'tree',name: "<fmt:message key='dialog.admin.groups.addressTree' />", editor: YesNoCheckboxCellEditor, formatter:BoolCellFormatter, editable:true, width: '100px'},
+                    {field: 'subnode',name: "<fmt:message key='dialog.admin.groups.addressSubNode' />", editor: YesNoCheckboxCellEditor, formatter:BoolCellFormatter, editable:true, width: '100px'}
                 ];
                 
                 var usersStructure = [
@@ -64,6 +64,19 @@
                 
                 createCustomTree("treeObjects", null, "id", "title", expandLoadObjects);
                 createCustomTree("treeAddresses", null, "id", "title", expandLoadAddresses);
+
+                var radioBehavior = function(msg) {
+                    if (msg.cell > 0) {
+                        // remove true default value from any other column!
+                        if (msg.cell != 1) msg.item.single = false;
+                        if (msg.cell != 2) msg.item.tree = false;
+                        if (msg.cell != 3) msg.item.subnode = false;
+                        this.invalidate();
+                    }
+                };
+                
+                dojo.connect(dijit.byId("groupDataRightsObjectsList"), "onCellChange", radioBehavior);
+                dojo.connect(dijit.byId("groupDataRightsAddressesList"), "onCellChange", radioBehavior);
                 
 				return def;
             }
@@ -187,17 +200,11 @@
                     var permission = {};
                     permission.title = obj.title;
                     permission.uuid = obj.id;
-                    permission.single = "<input type='radio' name='" + obj.id + "' id='" + obj.id + "_single' class='radio' />";
-                    permission.tree = "<input type='radio' name='"+obj.id+"' id='"+obj.id+"_tree' class='radio' checked='true' />";
-                    permission.subnode = "<input type='radio' name='" + obj.id + "' id='" + obj.id + "_subnode' class='radio' />";
-                    
-                    // store all radio states of all rows before updating table (which would reset states)
-                    var state = savePermissionState("groupDataRightsObjectsList");
+                    permission.single = false;
+                    permission.tree = true
+                    permission.subnode = false;
                     
                     UtilGrid.addTableDataRow("groupDataRightsObjectsList", permission);
-                    
-                    // set state back to previous one
-                    state.forEach(function(id) {dojo.byId(id).checked = true;});
                 }
             }
             
@@ -209,30 +216,12 @@
                     var permission = {};
                     permission.title = adr.title;
                     permission.uuid = adr.id;
-                    permission.single = "<input type='radio' name='" + adr.id + "' id='" + adr.id + "_single' class='radio' />";
-                    permission.tree = "<input type='radio' name='"+adr.id+"' id='"+adr.id+"_tree' class='radio' checked='true' />";
-                    permission.subnode = "<input type='radio' name='" + adr.id + "' id='" + adr.id + "_subnode' class='radio' />";
-                    
-                    // store all radio states of all rows before updating table (which would reset states)
-                    var state = savePermissionState("groupDataRightsAddressesList");
+                    permission.single = false;
+                    permission.tree = true;
+                    permission.subnode = false;
                     
                     UtilGrid.addTableDataRow("groupDataRightsAddressesList", permission);
-                    
-                    // set state back to previous one
-                    state.forEach(function(id) {dojo.byId(id).checked = true;});
                 }
-            }
-            
-           
-            function savePermissionState(grid) {
-                var markedButtons = [];
-                var data = UtilGrid.getTableData(grid);
-                dojo.forEach(data, function(item) {
-                    if (dojo.byId(item.uuid+"_single").checked){ markedButtons.push(item.uuid+"_single"); return; };
-                    if (dojo.byId(item.uuid+"_tree").checked) { markedButtons.push(item.uuid+"_tree"); return; };
-                    if (dojo.byId(item.uuid+"_subnode").checked) { markedButtons.push(item.uuid+"_subnode"); };
-                });
-                return markedButtons;
             }
             
             function addFreeRootToPermissionTable(node) {
@@ -287,9 +276,9 @@
                 dojo.forEach(data, function(obj){
                     var id = obj.uuid;
                     var permissionType;
-                    if (dojo.byId(obj.uuid+"_tree").checked) {
+                    if (obj.tree) {
                         permissionType = "WRITE_TREE";
-                    } else if (dojo.byId(obj.uuid+"_subnode").checked) {
+                    } else if (obj.subnode) {
                         permissionType = "WRITE_SUBNODE";
                     } else {
                         permissionType = "WRITE_SINGLE";
@@ -315,18 +304,20 @@
                     group.name = groupName;
                     
                     // update object permissions
-                    //var objs = dijit.byId("groupDataRightsObjectsList").store.getData();
+                    var grid = UtilGrid.getTable("groupDataRightsObjectsList");
                     var objs = UtilGrid.getTableData("groupDataRightsObjectsList");
                     var objPermissionList = [];
                     
-                    group.objectPermissions = adminGroupScope.mapPermissions(objs);//objPermissionList;
+                    console.debug("map permissions object");
+                    group.objectPermissions = adminGroupScope.mapPermissions(objs, grid);//objPermissionList;
                     
                     // update address permissions
-                    //var adrs = dijit.byId("groupDataRightsAddressesList").store.getData();
+                    var gridAdr = UtilGrid.getTable("groupDataRightsAddressesList");
                     var adrs = UtilGrid.getTableData("groupDataRightsAddressesList");
                     var adrPermissionList = [];
                     
-                    group.addressPermissions = adminGroupScope.mapPermissions(adrs);//adrPermissionList;
+                    console.debug("map permissions address");
+                    group.addressPermissions = adminGroupScope.mapPermissions(adrs, gridAdr);//adrPermissionList;
                     
                     // update group permissions
                     group.groupPermissions = [];
@@ -526,17 +517,17 @@
                     adr.uuid = p.uuid;
                     
                     if (p.permission == "WRITE_SINGLE") {
-                        adr.single = "<input type='radio' name='" + p.uuid + "' id='" + p.uuid + "_single' class='radio' checked='true' />";
-                        adr.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' />";
-                        adr.subnode = "<input type='radio' name='" + p.uuid + "' id='" + p.uuid + "_subnode' class='radio' />";
+                        adr.single = true;
+                        adr.tree = false;
+                        adr.subnode = false;
                     } else if (p.permission == "WRITE_TREE") {
-                        adr.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' />";
-                        adr.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' checked='true' />";
-                        adr.subnode = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subnode' class='radio' />";
+                        adr.single =  false;
+                        adr.tree = true;
+                        adr.subnode = false;
                     } else {
-                        adr.single = "<input type='radio' name='" + p.uuid + "' id='" + p.uuid + "_single' class='radio' />";
-                        adr.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' />";
-                        adr.subnode = "<input type='radio' name='" + p.uuid + "' id='" + p.uuid + "_subnode' class='radio' checked='true' />";
+                        adr.single = false;
+                        adr.tree = false;
+                        adr.subnode = true;
                     }
                     
                     UtilGrid.addTableDataRow("groupDataRightsAddressesList", adr);
@@ -554,17 +545,17 @@
                     obj.uuid = p.uuid;
                     
                     if (p.permission == "WRITE_SINGLE") {
-                        obj.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' checked='true' />";
-                        obj.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' />";
-                        obj.subnode = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subnode' class='radio' />";
+                        obj.single = true;
+                        obj.tree = false;
+                        obj.subnode = false;
                     } else if (p.permission == "WRITE_TREE") {
-                        obj.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' />";
-                        obj.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' checked='true' />";
-                        obj.subnode = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subnode' class='radio' />";
+                        obj.single = false;
+                        obj.tree = true;
+                        obj.subnode = false;
                     } else {
-                        obj.single =  "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_single' class='radio' />";
-                        obj.tree = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_tree' class='radio' />";
-                        obj.subnode = "<input type='radio' name='"+p.uuid+"' id='"+p.uuid+"_subnode' class='radio' checked='true' />";
+                        obj.single = false;
+                        obj.tree = false;
+                        obj.subnode = true;
                     }
                     
                     UtilGrid.addTableDataRow("groupDataRightsObjectsList", obj);
@@ -861,7 +852,7 @@
                                 </div>
                                 <div id="groupDataObjectsData">
                                     <div class="tableContainer">
-                                        <div id="groupDataRightsObjectsList" autoHeight="9">
+                                        <div id="groupDataRightsObjectsList" interactive="true" autoedit="true" autoHeight="9">
                                         </div>
                                     </div>
                                 </div>
@@ -888,7 +879,7 @@
                                 </div>
                                 <div id="groupDataAddressesData">
                                     <div class="tableContainer">
-                                        <div id="groupDataRightsAddressesList" autoHeight="9">
+                                        <div id="groupDataRightsAddressesList" interactive="true" autoedit="true" autoHeight="9">
                                         </div>
                                     </div>
                                 </div>
