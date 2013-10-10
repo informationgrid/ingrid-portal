@@ -419,6 +419,10 @@ scriptScopeDetailView.renderNodeData = function(nodeData) {
 	var previewImageUrl = udkDataProxy._filterPreviewImage(nodeData.linksToUrlTable);
 	this.renderTextWithTitle(previewImageUrl, "<fmt:message key='ui.obj.general.previewImage' />");
     
+	this.renderTextWithTitle(nodeData.inspireRelevant ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.inspireRelevant' />");
+	this.renderTextWithTitle(nodeData.openData ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.openData' />");
+	this.renderList(nodeData.openDataCategories, "<fmt:message key='ui.obj.general.categoriesOpenData' />");
+	
     this.renderAdditionalFieldsForRubric("general", additionalFields);
 
     var def = new dojo.Deferred();
@@ -748,6 +752,8 @@ scriptScopeDetailView.getValueFromAdditional = function(id, additionalFields) {
             }
         }
     }, this);
+    if (result == "true") result = "<fmt:message key='general.yes' />";
+    if (result == "false") result = "<fmt:message key='general.no' />";
     return result;
 }
 
@@ -786,12 +792,17 @@ scriptScopeDetailView.prepareAdditionalTable = function(rows) {
 }
 
 scriptScopeDetailView.searchLabelFrom = function(element) {
-    while (!dojo.hasClass(element, "input")) {
+    while (!dojo.hasClass(element, "input") && !dojo.hasClass(element, "dijitCheckBox")) {
         element = element.parentNode;
     }
-    element = element.previousSibling;
-    while (!dojo.hasClass(element, "label")) {
+    if (dojo.hasClass(element, "dijitCheckBox")) {
+        element = element.nextSibling;
+    } else {
         element = element.previousSibling;
+        
+        while (!dojo.hasClass(element, "label")) {
+            element = element.previousSibling;
+        }
     }
     
     if (element != null) {

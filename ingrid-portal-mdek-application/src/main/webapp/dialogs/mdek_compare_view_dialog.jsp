@@ -48,6 +48,10 @@ function renderNodeData(nodeDataOld, nodeDataNew) {
     var previewImageUrlNew = udkDataProxy._filterPreviewImage(nodeDataNew.linksToUrlTable);
     renderTextWithTitle(previewImageUrlOld, previewImageUrlNew, "<fmt:message key='ui.obj.general.previewImage' />");
     
+    renderTextWithTitle(nodeDataOld.inspireRelevant ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", nodeDataNew.inspireRelevant ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.inspireRelevant' />");
+    renderTextWithTitle(nodeDataOld.openData ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", nodeDataNew.openData ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.openData' />");
+    renderList(nodeDataOld.openDataCategories, nodeDataNew.openDataCategories, "<fmt:message key='ui.obj.general.categoriesOpenData' />");
+    
     renderAdditionalFieldsForRubric("general", oldAdditionalFields, newAdditionalFields);
     
 	// technical domains
@@ -331,6 +335,9 @@ function getValueFromAdditional(id, additionalFields) {
             }
         }
     });
+    // convert boolean values to text
+    if (result == "true") result = "<fmt:message key='general.yes' />";
+    if (result == "false") result = "<fmt:message key='general.no' />";
     return result;
 }
 
@@ -370,12 +377,16 @@ function prepareAdditionalTable(rows) {
 }
 
 function searchLabelFrom(element) {
-    while (!dojo.hasClass(element, "input")) {
+    while (!dojo.hasClass(element, "input") && !dojo.hasClass(element, "dijitCheckBox")) {
         element = element.parentNode;
     }
-    element = element.previousSibling;
-    while (!dojo.hasClass(element, "label")) {
+    if (dojo.hasClass(element, "dijitCheckBox")) {
+        element = element.nextSibling;
+    } else {
         element = element.previousSibling;
+        while (!dojo.hasClass(element, "label")) {
+            element = element.previousSibling;
+        }
     }
     
     if (element != null) {

@@ -101,7 +101,7 @@ dojo.connect(dijit.byId("publicationHmbTG"), "onChange", function(isChecked) {
     }
 });
 
-// tick checkbox if "open data" has been selected
+// tick checkbox if "open data" has been selected (REDMINE-194)
 dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
     if (isChecked) {
         dijit.byId("publicationHmbTG").set("value", true);
