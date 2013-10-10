@@ -6,6 +6,9 @@
   </properties>
   <body>
    <release version="3.4.0.-SNAPSHOT" date="2013-xx-xx" description="Release InGrid 3.4">	
+    <action type="add" dev="wemove" issue="REDMINE-128">
+      IGE: Added "Open data" checkbox and Categories.
+    </action>
     <action type="add" dev="wemove" issue="REDMINE-118">
       IGE: When editing link and relation is "Download of data" then new input field "file format".
     </action>
@@ -30,6 +33,9 @@
     <action type="add" dev="wemove">
       Portal: Add Localization file to profiles for the InGrid-WebMapClient.
     </action>
+    <action type="add" dev="wemove" issue="REDMINE-192">
+      IGE: Add checkbox to available additional field.
+    </action>
      <action type="update" dev="wemove" issue="INGRID-2298">
       WebMapClient: Update content of Welcome Dialog.
     </action>
@@ -50,6 +56,9 @@
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2286">
       Portal: Fix link to wemove page in content of Impressum.
+    </action>
+    <action type="fix" dev="wemove" issue="INGRID-2308">
+      IGE: Fix group administration when setting permissions to more than visible entries in table.
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2300">
       IGE: Fix display of import/export exception.
