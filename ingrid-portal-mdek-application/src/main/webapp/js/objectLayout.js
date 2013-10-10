@@ -170,6 +170,21 @@ ingridObjectLayout.createGeneralInfo = function(){
     createDataGrid("thesaurusInspire", null, thesaurusInspireStructure, null);
     
     new dijit.form.CheckBox({}, "isInspireRelevant");
+    new dijit.form.CheckBox({}, "isOpenData");
+    // show open data checkbox only for specific classes
+    applyRuleOpenData();
+    
+    var categoriesStructure = [
+          {field: 'title',name: 'title',width: 348-scrollBarWidth+'px',
+              type: ComboboxEditor,
+              options: [], // will be filled later, when syslists are loaded
+              values: [],
+              editable: true,
+              listId: 6400,
+              formatter: dojo.partial(SyslistCellFormatter, 6400)
+          }
+      ];
+      createDataGrid("categoriesOpenData", null, categoriesStructure, null);
 }
 
 ingridObjectLayout.createFachBezugClass1 = function(){

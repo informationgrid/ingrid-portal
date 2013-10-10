@@ -52,6 +52,8 @@ public class MdekDataBean {
 	private String generalDescription;
 	private List<MdekAddressBean> generalAddressTable;
 	private List<CommentBean> commentTable;
+	private Boolean openData;
+	private List<String> openDataCategories;
 
 	// Spatial
 	private List<LocationBean> spatialRefAdminUnitTable;
@@ -1962,5 +1964,24 @@ public class MdekDataBean {
 
     public String getRef3CouplingType() {
         return ref3CouplingType;
+    }
+
+
+    public Boolean getOpenData() {
+        return openData;
+    }
+
+
+    public void setOpenData(Boolean openData) {
+        this.openData = openData;
+    }
+
+
+    public List<String> getOpenDataCategories() {
+        return openDataCategories;
+    }
+    
+    public void setOpenDataCategories(List<String> data) {
+        this.openDataCategories = data;
     }
 }

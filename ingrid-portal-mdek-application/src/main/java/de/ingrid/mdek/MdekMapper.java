@@ -62,6 +62,8 @@ public class MdekMapper implements DataMapperInterface {
         }
 
         MdekDataBean mdekObj = new MdekDataBean();
+        
+        boolean isOpenData = "Y".equals(obj.get(MdekKeys.IS_OPEN_DATA)) ? true : false;
 
         // General
         mdekObj.setGeneralShortDescription((String) obj.get(MdekKeys.DATASET_ALTERNATE_NAME));
@@ -171,7 +173,7 @@ public class MdekMapper implements DataMapperInterface {
         // Availability
         // Inspire field
         mdekObj.setAvailabilityAccessConstraints(mapToAvailAccessConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.ACCESS_LIST)));
-        mdekObj.setAvailabilityUseConstraints(mapToAvailUseConstraints((List<IngridDocument>) obj.get(MdekKeys.USE_LIST)));
+        mdekObj.setAvailabilityUseConstraints(mapToAvailUseConstraints((List<IngridDocument>) obj.get(MdekKeys.USE_LIST), isOpenData));
         
         mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
         // NOTICE: always map this one (maps default value if not set), although only displayed in class 1
@@ -230,6 +232,8 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setDq127Table(mapToDqTable(127, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
 
             mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setOpenData(isOpenData);
+            mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             
             IngridDocument td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
             if (td1Map == null)
@@ -259,6 +263,8 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef1ProcessText((String) td1Map.get(MdekKeys.METHOD_OF_PRODUCTION));
             break;
         case 2:
+            mdekObj.setOpenData(isOpenData);
+            mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             IngridDocument td2Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_DOCUMENT);
             if (td2Map == null)
                 break;
@@ -279,7 +285,9 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef2Explanation((String) td2Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
             break;
         case 3:
-        	mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setOpenData(isOpenData);
+            mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             IngridDocument td3Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
             
             if (td3Map == null)
@@ -313,6 +321,8 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef4Explanation((String) td4Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
             break;
         case 5:
+            mdekObj.setOpenData(isOpenData);
+            mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             IngridDocument td5Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_DATASET);
             if (td5Map == null)
                 break;
@@ -322,7 +332,9 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef5dbContent(mapToDbContentTable((List<IngridDocument>) td5Map.get(MdekKeys.PARAMETERS)));
             break;
         case 6:
-        	mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setOpenData(isOpenData);
+            mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             IngridDocument td6Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
             if (td6Map == null)
                 break;
@@ -702,7 +714,7 @@ public class MdekMapper implements DataMapperInterface {
         IngridDocument responsibleUser = new IngridDocument();
         responsibleUser.put(MdekKeys.UUID, data.getObjectOwner());
         udkObj.put(MdekKeys.RESPONSIBLE_USER, responsibleUser);
-
+        
         // extrahieren des int Wertes für die Objekt-Klasse
         udkObj.put(MdekKeys.CLASS, data.getObjectClass());
         udkObj.put(MdekKeys.ADR_REFERENCES_TO, mapFromGeneralAddressTable(data.getGeneralAddressTable()));
@@ -748,8 +760,8 @@ public class MdekMapper implements DataMapperInterface {
 
         // Availability
         if (data.getObjectClass() != null && data.getObjectClass() != 0) {
-            udkObj.put(MdekKeys.ACCESS_LIST, mapFromAvailAccessConstraintsTable(data.getAvailabilityAccessConstraints()));          
-            udkObj.put(MdekKeys.USE_LIST, mapFromAvailUseConstraints(data.getAvailabilityUseConstraints()));           
+            udkObj.put(MdekKeys.ACCESS_LIST, mapFromAvailAccessConstraintsTable(data.getAvailabilityAccessConstraints()));
+            udkObj.put(MdekKeys.USE_LIST, mapFromAvailUseConstraints(data.getAvailabilityUseConstraints(), data.getOpenData()));
             udkObj.put(MdekKeys.DATA_FORMATS, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
             udkObj.put(MdekKeys.MEDIUM_OPTIONS, mapFromAvailMediaOptionsTable(data.getAvailabilityMediaOptionsTable()));
             udkObj.put(MdekKeys.ORDERING_INSTRUCTIONS, data.getAvailabilityOrderInfo());
@@ -787,6 +799,18 @@ public class MdekMapper implements DataMapperInterface {
         
         udkObj.put(MdekKeys.SPATIAL_SYSTEM_LIST, mapFromSpatialSystemTable(data.getRef1SpatialSystemTable()));
 
+        // determine inspire relevant value
+        Boolean isInspireRelevant = data.getInspireRelevant();
+        String isInspireRelevantValue = "N";
+        if (isInspireRelevant != null && isInspireRelevant == true)
+            isInspireRelevantValue = "Y";
+        
+        // determine open data value
+        Boolean isOpenData = data.getOpenData();
+        String isOpenDataValue = "N";
+        if (isOpenData != null && isOpenData == true)
+            isOpenDataValue = "Y";
+        
         int objClass = data.getObjectClass() != null ? data.getObjectClass() : 0; 
         switch(objClass) {
         case 0: // Object of type 0 doesn't have any special values
@@ -804,11 +828,9 @@ public class MdekMapper implements DataMapperInterface {
             mapFromDQTable(127, data.getDq127Table(), dqList);
             udkObj.put(MdekKeys.DATA_QUALITY_LIST, dqList);
             
-            Boolean inspireRelevantC1 = data.getInspireRelevant();
-            if (inspireRelevantC1 != null && inspireRelevantC1 == true)
-                udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, "Y");
-            else
-                udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, "N");
+            udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);
+            udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
+            udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
 
             udkObj.put(MdekKeys.FORMAT_INSPIRE_LIST, mapFromAvailDataFormatInspire(data.getAvailabilityDataFormatInspire()));
 
@@ -831,6 +853,8 @@ public class MdekMapper implements DataMapperInterface {
             udkObj.put(MdekKeys.TECHNICAL_DOMAIN_MAP, td1Map);
             break;
         case 2:
+            udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
+            udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
             IngridDocument td2Map = new IngridDocument();
             td2Map.put(MdekKeys.AUTHOR, data.getRef2Author());
             td2Map.put(MdekKeys.EDITOR, data.getRef2Publisher());
@@ -856,11 +880,11 @@ public class MdekMapper implements DataMapperInterface {
             IngridDocument td3Map = new IngridDocument();           
             td3Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
             td3Map.put(MdekKeys.COUPLING_TYPE, data.getRef3CouplingType());
-            Boolean inspireRelevantC3 = data.getInspireRelevant();
-            if (inspireRelevantC3 != null && inspireRelevantC3 == true)
-                udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, "Y");
-            else
-                udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, "N");
+            
+            udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);
+            udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
+            udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
+            
             td3Map.put(MdekKeys.SERVICE_TYPE2_LIST, mapFromServiceTypeTable(data.getRef3ServiceTypeTable()));
             td3Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef3SystemEnv());
             td3Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef3History());
@@ -886,6 +910,8 @@ public class MdekMapper implements DataMapperInterface {
             udkObj.put(MdekKeys.TECHNICAL_DOMAIN_PROJECT, td4Map);
             break;
         case 5:
+            udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
+            udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
             IngridDocument td5Map = new IngridDocument();           
             td5Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef5Explanation());
             td5Map.put(MdekKeys.METHOD, data.getRef5MethodText());
@@ -897,11 +923,10 @@ public class MdekMapper implements DataMapperInterface {
             IngridDocument td6Map = new IngridDocument();
             td6Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef6ServiceType());
 
-            Boolean inspireRelevantC6 = data.getInspireRelevant();
-            if (inspireRelevantC6 != null && inspireRelevantC6 == true)
-                udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, "Y");
-            else
-                udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, "N");
+            udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);
+            udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
+            udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
+            
             td6Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef6SystemEnv());
             td6Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef6History());
             td6Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef6BaseDataText());
@@ -1283,13 +1308,37 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
+    private List<IngridDocument> mapFromCategoriesOpenDataTable(List<String> acList) {
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        
+        if (acList != null) {
+            for (String ac : acList) {
+                KeyValuePair kvp = mapFromKeyValue(MdekKeys.OPEN_DATA_CATEGORY_KEY, ac);
+                if (kvp.getValue() != null || kvp.getKey() != -1) {
+                    IngridDocument result = new IngridDocument();
+                    result.put(MdekKeys.OPEN_DATA_CATEGORY_KEY, kvp.getKey());
+                    result.put(MdekKeys.OPEN_DATA_CATEGORY_VALUE, kvp.getValue());
+                    resultList.add(result);
+                }
+            }           
+        }
+        
+        return resultList;
+    }
+    
     /** Map single value to list ! UseConstraints was a table, now a text field, see INGRID32-45 */
-    private List<IngridDocument> mapFromAvailUseConstraints(String uc) {
+    private List<IngridDocument> mapFromAvailUseConstraints(String uc, boolean isOpenData) {
         List<IngridDocument> resultList = new ArrayList<IngridDocument>();
         if (uc != null) {
-            KeyValuePair kvp = mapFromKeyValue(MdekKeys.USE_TERMS_OF_USE_KEY, uc);
+            String key = MdekKeys.USE_TERMS_OF_USE_KEY;
+            // if open-data then lookup the key-value pair in a different syslist!  
+            if (isOpenData) {
+                key = MdekKeys.USE_TERMS_OF_LICENCE_KEY;
+            }
+            KeyValuePair kvp = mapFromKeyValue(key, uc);
             if (kvp.getValue() != null || kvp.getKey() != -1) {
                 IngridDocument result = new IngridDocument();
+                // always save under use-key which will be used in backend
                 result.put(MdekKeys.USE_TERMS_OF_USE_KEY, kvp.getKey());
                 result.put(MdekKeys.USE_TERMS_OF_USE_VALUE, kvp.getValue());
                 resultList.add(result);
@@ -1869,14 +1918,31 @@ public class MdekMapper implements DataMapperInterface {
 
         return resultList;
     }
+    
+    private List<String> mapToCategoriesOpenDataTable(List<IngridDocument> docList) {
+        List<String> resultList = new ArrayList<String>();
+        
+        if (docList != null) {
+            for (IngridDocument doc : docList) {
+                KeyValuePair kvp = mapToKeyValuePair(doc, MdekKeys.OPEN_DATA_CATEGORY_KEY, MdekKeys.OPEN_DATA_CATEGORY_VALUE);
+                resultList.add(kvp.getValue());
+            }
+        }
+        
+        return resultList;
+    }
 
     /** Map only first element ! UseConstraints was a table, now a text field, see INGRID32-45 */
-    private String mapToAvailUseConstraints(List<IngridDocument> docList) {
+    private String mapToAvailUseConstraints(List<IngridDocument> docList, boolean isOpenData) {
         String result = null;
 
         if (docList != null) {
+            String key = MdekKeys.USE_TERMS_OF_USE_KEY;
+            if (isOpenData) {
+                key = MdekKeys.USE_TERMS_OF_LICENCE_KEY;
+            }
             for (IngridDocument doc : docList) {
-                KeyValuePair kvp = mapToKeyValuePair(doc, MdekKeys.USE_TERMS_OF_USE_KEY, MdekKeys.USE_TERMS_OF_USE_VALUE);
+                KeyValuePair kvp = mapToKeyValuePair(doc, key, MdekKeys.USE_TERMS_OF_USE_VALUE);
                 result = kvp.getValue();
                 // use only FIRST element, ignore rest (will be deleted on save !). was a table, now a text field, see INGRID32-45
                 break;

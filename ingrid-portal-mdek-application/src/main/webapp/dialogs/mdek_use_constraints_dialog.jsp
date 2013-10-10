@@ -22,7 +22,9 @@ function createDOMElements() {
     ];
     createDataGrid("constraintsList", null, Structure, null);
 
-    var def = UtilSyslist.readSysListData(6020);
+    var listId = constraintsScriptScope.customParams.listId;
+    console.debug("ListID: ", listId);
+    var def = UtilSyslist.getSyslistEntry(listId);
     def.then(function(syslistData) {
         var tableData = UtilSyslist.convertSysListToTableData(syslistData);
         UtilGrid.setTableData("constraintsList", tableData);

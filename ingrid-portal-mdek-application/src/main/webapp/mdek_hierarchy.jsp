@@ -248,6 +248,16 @@
                                     </div>
                                 </span></div>
                             </span>
+                            <span id="uiElement5100" class="outer optional">
+                                <div><span class="label">
+                                    <label onclick="javascript:dialog.showContextHelp(arguments[0], 5100)">
+                                        <fmt:message key="ui.obj.general.previewImage" />
+                                    </label>
+                                </span><span class="input">
+                                    <div type="text" maxLength="255" id="generalPreviewImage" name="generalPreviewImage" class="fullWidth">
+                                    </div>
+                                </span></div>
+                            </span>
                             <span id="uiElement1010" class="outer">
                             	<div><span id="generalDescLabel" class="label">
                                     <label for="generalDesc" onclick="javascript:dialog.showContextHelp(arguments[0], 1010)">
@@ -272,21 +282,26 @@
                                 </div></div>
                             </span>
                             <span id="uiElement6000" class="outer">
-                                <div>
                                 <div class="input checkboxContainer">
                                     <input type="checkbox" id="isInspireRelevant" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 6000)"><fmt:message key="ui.obj.general.inspireRelevant" /></label>
                                 </div>
+                            </span>
+                            <span id="uiElement6010" class="outer halfWidth">
+                                <div class="input checkboxContainer">
+                                    <input type="checkbox" id="isOpenData" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 6010)"><fmt:message key="ui.obj.general.openData" /></label>
                                 </div>
                             </span>
-                            <span id="uiElement5100" class="outer optional">
-                                <div><span class="label">
-                                    <label onclick="javascript:dialog.showContextHelp(arguments[0], 5100)">
-                                        <fmt:message key="ui.obj.general.previewImage" />
+                            <span id="uiElement6020" class="outer halfWidth">
+                                <div><span id="categoriesOpenDataLabel" class="label">
+                                    <label for="categoriesOpenData" onclick="javascript:dialog.showContextHelp(arguments[0], 6020)">
+                                        <fmt:message key="ui.obj.general.categoriesOpenData" />
                                     </label>
-                                </span><span class="input">
-                                    <div type="text" maxLength="255" id="generalPreviewImage" name="generalPreviewImage" class="fullWidth">
+                                </span>
+                                <div class="input tableContainer">
+                                    <div id="categoriesOpenData" autoHeight="4" interactive="true" class="hideTableHeader">
                                     </div>
-                                </span></div>
+                                </div>
+                                </div>
                             </span>
                             <div class="fill"></div>
                         </div>
@@ -1931,7 +1946,7 @@
                                     </span>
                                     <span class="functionalLink">
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
-                                        <a id="availabilityUseConstraintsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('availabilityUseConstraints'), 'dialogs/mdek_use_constraints_dialog.jsp?c='+userLocale, 735, 300, true);" title="<fmt:message key="dialog.popup.useConstraints.link" /> [Popup]"><fmt:message key="ui.obj.availability.useConstraints.link" /></a>
+                                        <a id="availabilityUseConstraintsLink" href="javascript:void(0);" onclick="javascript:dialog.showPage(getLocalizedTitle('availabilityUseConstraints'), 'dialogs/mdek_use_constraints_dialog.jsp?c='+userLocale, 735, 300, true, {listId: '6020'});" title="<fmt:message key="dialog.popup.useConstraints.link" /> [Popup]"><fmt:message key="ui.obj.availability.useConstraints.link" /></a>
                                     </span>
                                     <span class="input clear"><input type="text" id="availabilityUseConstraints" name="availabilityUseConstraints" /></span>
                                     </div>

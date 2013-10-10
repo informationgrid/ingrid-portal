@@ -177,19 +177,6 @@
                 var mainStore = UtilGrid.getTableData("codeListTable12");//.store;
                 UtilGrid.setTableData("codeListTable11", mainStore);
                 
-                // We need to connect 'before' the function is called so the field is updated properly
-                // by the filteringTable
-                //dojo.connect(mainStore, "onAddData", function(obj){
-                /*dojo.connect(UtilGrid.getTable("codeListTable11"), "onAddNewRow", function() {
-                    var radioButton = createHtmlForRadio("codeListRadio", "codeListRadio_" + (new Date()).getTime(), false);
-                    //obj.src.isDefault = radioButton;
-                });
-                dojo.connect(UtilGrid.getTable("codeListTable12"), "onAddNewRow", function() {
-                    var radioButton = createHtmlForRadio("codeListRadio", "codeListRadio_" + (new Date()).getTime(), false);
-                    //obj.src.isDefault = radioButton;
-                });*/
-                
-                
                 // Helper function that displays a simple dialog with 'text' as content. There are two buttons 'yes' and 'no'.
                 // If the user clicks yes, the invocation is triggered. Otherwise nothing happens.
                 var askUserAndInvokeOrCancel = function(text, invocation){
@@ -205,19 +192,6 @@
                         }
                     }]);
                 }
-                // Register functions 'around' deleteItem and deleteSelectedItems from the table context menu
-                /*var contextMenu1 = dijit.byId("codeListTable11").getContextMenu();
-                 var contextMenu2 = dijit.byId("codeListTable12").getContextMenu();
-                 var displayText = "<fmt:message key='dialog.admin.catalog.management.codelist.deleteSingleHint' />";
-                 //!!! connect "around" ???
-                 dojo.connect(contextMenu1, "deleteItemClicked", dojo.lang.curry(this, askUserAndInvokeOrCancel, displayText));
-                 dojo.connect(contextMenu2, "deleteItemClicked", dojo.lang.curry(this, askUserAndInvokeOrCancel, displayText));
-                 displayText = "<fmt:message key='dialog.admin.catalog.management.codelist.deleteMultipleHint' />";
-                 dojo.connect(contextMenu1, "deleteSelectedItemsClicked", dojo.lang.curry(this, askUserAndInvokeOrCancel, displayText));
-                 dojo.connect(contextMenu2, "deleteSelectedItemsClicked", dojo.lang.curry(this, askUserAndInvokeOrCancel, displayText));
-                 */
-                
-                
             }
             
             
@@ -334,25 +308,12 @@
                 }
                 // Add radio buttons
                 for (var index = 0; index < data.length; index++) {
-                    data[index].isDefault = data[index].isDefault;//createHtmlForRadio("codeListRadio", "codeListRadio_" + data[index].entryId, data[index].isDefault);
+                    data[index].isDefault = data[index].isDefault;
                 }
                 // Both stores are the same
                 //dijit.byId("codeListTable11").store.setData(data);
                 UtilGrid.setTableData("codeListTable11", data);
                 UtilGrid.setTableData("codeListTable12", data);
-            }
-            
-            function createHtmlForRadio(name, id, checked){
-                return "<input type='radio' " +
-                "class='radio' " +
-                "name='" +
-                name +
-                "' " +
-                "id='" +
-                id +
-                "' " +
-                (checked ? "checked='checked' " : " ") +
-                "/>";
             }
             
             // Check if the given list of objects contains an object with property 'isDefault' == true

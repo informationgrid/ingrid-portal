@@ -1947,6 +1947,8 @@ udkDataProxy._setObjectDataClass0 = function(nodeData) {}
 
 udkDataProxy._setObjectDataClass1 = function(nodeData) {
     dijit.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+    dijit.byId("isOpenData").attr("value", nodeData.openData, true);
+    UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
 	dijit.byId("ref1ObjectIdentifier").attr("value", nodeData.ref1ObjectIdentifier, true);
 	dijit.byId("ref1DataSet").attr("value", nodeData.ref1DataSet, true);
 	dijit.byId("ref1Coverage").attr("value", nodeData.ref1Coverage, true);
@@ -1980,6 +1982,8 @@ udkDataProxy._setObjectDataClass1 = function(nodeData) {
 }
 
 udkDataProxy._setObjectDataClass2 = function(nodeData) {
+    dijit.byId("isOpenData").attr("value", nodeData.openData, true);
+    UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
 	dijit.byId("ref2Author").attr("value", nodeData.ref2Author, true);
 	dijit.byId("ref2Publisher").attr("value", nodeData.ref2Publisher, true);
 	dijit.byId("ref2PublishedIn").attr("value", nodeData.ref2PublishedIn, true);
@@ -1998,6 +2002,8 @@ udkDataProxy._setObjectDataClass2 = function(nodeData) {
 
 udkDataProxy._setObjectDataClass3 = function(nodeData) {
     dijit.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+    dijit.byId("isOpenData").attr("value", nodeData.openData, true);
+    UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
 	dijit.byId("ref3ServiceType").attr("value", nodeData.ref3ServiceType, true);
 	dijit.byId("ref3CouplingType").attr("value", nodeData.ref3CouplingType, true);
 	dijit.byId("ref3SystemEnv").attr("value", nodeData.ref3SystemEnv, true);
@@ -2036,6 +2042,8 @@ udkDataProxy._setObjectDataClass4 = function(nodeData) {
 }
 
 udkDataProxy._setObjectDataClass5 = function(nodeData) {
+    dijit.byId("isOpenData").attr("value", nodeData.openData, true);
+    UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
 	dijit.byId("ref5MethodText").attr("value", nodeData.ref5MethodText, true);
 	dijit.byId("ref5Explanation").attr("value", nodeData.ref5Explanation, true);
 
@@ -2045,6 +2053,8 @@ udkDataProxy._setObjectDataClass5 = function(nodeData) {
 
 udkDataProxy._setObjectDataClass6 = function(nodeData) {
 	dijit.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+	dijit.byId("isOpenData").attr("value", nodeData.openData, true);
+	UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
     dijit.byId("ref6ServiceType").attr("value", nodeData.ref6ServiceType, true);
     dijit.byId("ref6SystemEnv").attr("value", nodeData.ref6SystemEnv, true);
     dijit.byId("ref6History").attr("value", nodeData.ref6History, true);
@@ -2499,6 +2509,8 @@ udkDataProxy._getObjectDataClass0 = function(nodeData) {};
 
 udkDataProxy._getObjectDataClass1 = function(nodeData) {
     nodeData.inspireRelevant = dijit.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
+    nodeData.openData = dijit.byId("isOpenData").checked ? true : false; // in case value is NULL!
+    nodeData.openDataCategories = UtilList.tableDataToList(udkDataProxy._getTableData("categoriesOpenData"));
 	nodeData.ref1ObjectIdentifier = dijit.byId("ref1ObjectIdentifier").getValue();
 	nodeData.ref1DataSet = dijit.byId("ref1DataSet").getValue();
 	nodeData.ref1Coverage = UtilGeneral.getNumberFromDijit("ref1Coverage");
@@ -2534,6 +2546,8 @@ udkDataProxy._getObjectDataClass1 = function(nodeData) {
 };
 
 udkDataProxy._getObjectDataClass2 = function(nodeData) {
+    nodeData.openData = dijit.byId("isOpenData").checked ? true : false; // in case value is NULL!
+    nodeData.openDataCategories = UtilList.tableDataToList(udkDataProxy._getTableData("categoriesOpenData"));
 	nodeData.ref2Author = dijit.byId("ref2Author").getValue();
 	nodeData.ref2Publisher = dijit.byId("ref2Publisher").getValue();
 	nodeData.ref2PublishedIn = dijit.byId("ref2PublishedIn").getValue();
@@ -2553,6 +2567,8 @@ udkDataProxy._getObjectDataClass2 = function(nodeData) {
 
 udkDataProxy._getObjectDataClass3 = function(nodeData) {
     nodeData.inspireRelevant = dijit.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
+    nodeData.openData = dijit.byId("isOpenData").checked ? true : false; // in case value is NULL!
+    nodeData.openDataCategories = UtilList.tableDataToList(udkDataProxy._getTableData("categoriesOpenData"));
 	nodeData.ref3ServiceType = dijit.byId("ref3ServiceType").getValue();
 	nodeData.ref3CouplingType = dijit.byId("ref3CouplingType").getValue();
 	nodeData.ref3SystemEnv = dijit.byId("ref3SystemEnv").getValue();
@@ -2595,6 +2611,8 @@ udkDataProxy._getObjectDataClass4 = function(nodeData) {
 };
 
 udkDataProxy._getObjectDataClass5 = function(nodeData) {
+    nodeData.openData = dijit.byId("isOpenData").checked ? true : false; // in case value is NULL!
+    nodeData.openDataCategories = UtilList.tableDataToList(udkDataProxy._getTableData("categoriesOpenData"));
 	nodeData.ref5MethodText = dijit.byId("ref5MethodText").getValue();
 	nodeData.ref5Explanation = dijit.byId("ref5Explanation").getValue();
 
@@ -2604,6 +2622,8 @@ udkDataProxy._getObjectDataClass5 = function(nodeData) {
 
 udkDataProxy._getObjectDataClass6 = function(nodeData) {
 	nodeData.inspireRelevant = dijit.byId("isInspireRelevant").checked ? true : false;
+	nodeData.openData = dijit.byId("isOpenData").checked ? true : false; // in case value is NULL!
+	nodeData.openDataCategories = UtilList.tableDataToList(udkDataProxy._getTableData("categoriesOpenData"));
     nodeData.ref6ServiceType = dijit.byId("ref6ServiceType").getValue();
     nodeData.ref6SystemEnv = dijit.byId("ref6SystemEnv").getValue();
     nodeData.ref6History = dijit.byId("ref6History").getValue();

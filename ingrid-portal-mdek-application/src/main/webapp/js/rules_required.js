@@ -9,6 +9,9 @@
 
 // NOTICE: Most of these functions are "called from" Profile XML !
 
+// handler for subscriber to check for required download link when open data is selected
+var openDataLinkCheck = null;
+
 function applyRule1() {
 	console.debug("apply rule 1");
 	var tableData = UtilGrid.getTableData("ref1Representation");
@@ -208,6 +211,69 @@ function applyRule7() {
             displayDiv(dojo.byId("uiElement7509"));
         }
     }
+}
+
+function applyRuleOpenData() {
+    // hide open-data checkbox for classes 0 and 4
+    dojo.subscribe("/onObjectClassChange", function(data) { 
+        if (data.objClass === "Class0" || data.objClass === "Class4") {
+            dojo.addClass(dojo.byId("uiElement6010"), "hide");
+        } else {
+            dojo.removeClass(dojo.byId("uiElement6010"), "hide");
+        }
+    });
+    
+    dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
+        // get link for use constraints which will be changed depending on the
+        // state of the open data checkbox
+        var link = dojo.byId("availabilityUseConstraintsLink");
+        var onclickValue = link.attributes.onclick.nodeValue;
+        
+        if (isChecked) {
+            // automatically add access constraint 
+            var data = UtilGrid.getTableData('availabilityAccessConstraints');
+            var entryExists = dojo.some(data, function(item) {
+                if (item.title == "keine") return true;
+            });
+            if (!entryExists) {
+                data.push({title: "keine"});
+                UtilGrid.setTableData('availabilityAccessConstraints', data);
+            }
+            
+            // change codelist for 'availabilityUseConstraints'
+            link.attributes.onclick.nodeValue = onclickValue.replace(/(listId:).*'}/, "$1 '6500'}");
+            
+            // show categories
+            dojo.removeClass("uiElement6020", "hide");
+            
+            // make field mandatory
+            dojo.addClass("uiElement6020", "required");
+            
+            // add check for url reference of type download when publishing
+            openDataLinkCheck = dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
+                var data = UtilGrid.getTableData("linksTo");
+                var containsDownloadLink = dojo.some(data, function(item) { if (item.relationType === 9990) return true; });
+                if (!containsDownloadLink)
+                    notPublishableIDs.push("linksTo");
+            });
+        } else {
+            // change codelist for 'availabilityUseConstraints'
+            link.attributes.onclick.nodeValue = onclickValue.replace(/(listId:).*'}/, "$1 '6020'}");
+            
+            // hide categories
+            dojo.addClass("uiElement6020", "hide");
+            
+            // remove all categories
+            UtilGrid.setTableData("categoriesOpenData", []);
+            
+            // revert field mandatory
+            dojo.removeClass("uiElement6020", "required");
+            
+            // unregister from check for download link
+            if (openDataLinkCheck)
+                dojo.unsubscribe(openDataLinkCheck);
+        }
+    });
 }
 
 function displayDiv(divElement) {
