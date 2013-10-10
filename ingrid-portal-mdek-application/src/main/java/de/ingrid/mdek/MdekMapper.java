@@ -45,6 +45,9 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 public class MdekMapper implements DataMapperInterface {
 
     private final static Logger log = Logger.getLogger(MdekMapper.class);
+    // this constant is used to get the correct codelist for mapping "object use", which
+    // can be one of two different codelists, depending on open data checkbox state
+    private static final String USE_TERMS_OF_LICENCE_KEY = "use-terms-of-licence-key";
     private SysListCache sysListMapper;
     private ResourceBundle snsResourceBundle;
 
@@ -1333,7 +1336,7 @@ public class MdekMapper implements DataMapperInterface {
             String key = MdekKeys.USE_TERMS_OF_USE_KEY;
             // if open-data then lookup the key-value pair in a different syslist!  
             if (isOpenData) {
-                key = MdekKeys.USE_TERMS_OF_LICENCE_KEY;
+                key = USE_TERMS_OF_LICENCE_KEY;
             }
             KeyValuePair kvp = mapFromKeyValue(key, uc);
             if (kvp.getValue() != null || kvp.getKey() != -1) {
@@ -1939,7 +1942,7 @@ public class MdekMapper implements DataMapperInterface {
         if (docList != null) {
             String key = MdekKeys.USE_TERMS_OF_USE_KEY;
             if (isOpenData) {
-                key = MdekKeys.USE_TERMS_OF_LICENCE_KEY;
+                key = USE_TERMS_OF_LICENCE_KEY;
             }
             for (IngridDocument doc : docList) {
                 KeyValuePair kvp = mapToKeyValuePair(doc, key, MdekKeys.USE_TERMS_OF_USE_VALUE);
