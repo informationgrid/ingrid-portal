@@ -1968,7 +1968,7 @@ public class MdekDataBean {
 
 
     public Boolean getOpenData() {
-        return openData;
+        return openData == null ? false : openData;
     }
 
 

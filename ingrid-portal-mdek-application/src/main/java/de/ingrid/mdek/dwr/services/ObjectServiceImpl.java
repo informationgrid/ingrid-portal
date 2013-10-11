@@ -236,7 +236,7 @@ public class ObjectServiceImpl implements ObjectService {
 			}
 			catch (RuntimeException e) {
 				log.debug("Error while saving node", e);
-				throw e;
+				throw new RuntimeException(e);
 			}
 		} else {
 			log.debug("Publishing node with ID: "+data.getUuid());
