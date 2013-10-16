@@ -6,7 +6,16 @@
   </properties>
   <body>
    <release version="3.4.0.-SNAPSHOT" date="2013-xx-xx" description="Release InGrid 3.4">	
-    <action type="add" dev="wemove" issue="REDMINE-128">
+    <action type="add" dev="wemove" issue="REDMINE-138">
+      WebMapClient: Add capabilities Update-Checker.
+    </action>
+    <action type="add" dev="wemove" issue="REDMINE-185">
+      WebMapClient: Add setting and function to send saved maps as mail.
+    </action>
+    <action type="add" dev="wemove" issue="REDMINE-188">
+      WebMapClient: Add capabilities URL to metadata dialog.
+    </action>
+	<action type="add" dev="wemove" issue="REDMINE-128">
       IGE: Added "Open data" checkbox and Categories.
     </action>
     <action type="add" dev="wemove" issue="REDMINE-118">
@@ -48,7 +57,16 @@
     <action type="update" dev="wemove" issue="INGRID-2260">
       IGE: Update of help texts.
     </action>
-    <action type="fix" dev="wemove" issue="AF-00211">
+	<action type="update" dev="wemove" issue="REDMINE-121">
+      Portal: Update detail view to flexible order of content.
+    </action>
+	<action type="update" dev="wemove">
+      Portal: Update Sachsen profile.
+    </action>
+	<action type="update" dev="wemove">
+      Portal: Update Hamburg profile.
+    </action>
+	<action type="fix" dev="wemove" issue="AF-00211">
       Portal: Fix fetching of RSS news when link differs although same news (e.g. due to changing ad-parameter in link).
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2276">
@@ -83,6 +101,12 @@
     </action>
     <action type="fix" dev="wemove">
       WebMapClient: Transformation coordinates to WGS-84 by search area.
+    </action>
+	<action type="fix" dev="wemove" issue="REDMINE-181">
+      WebMapClient: Fix outside definition of map extent at the admin-gui.
+    </action>
+	<action type="fix" dev="wemove" issue="REDMINE-182">
+      WebMapClient: Fix to move services on layer tree by icon.
     </action>
   </release>
 
