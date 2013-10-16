@@ -362,35 +362,49 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 						if(value.length() < 1){
 							value = XPathUtils.getString(keywordNode, ".").trim();
 						}
+						boolean isHidden = false;
 						
-						// "Service Classification, version 1.0"
-						if (thesaurusName.indexOf("Service") < 0) {
-							// "UMTHES Thesaurus"
-							if (thesaurusName.indexOf("UMTHES") > -1) {
-								listSearch.add(value);
-							// "GEMET - Concepts, version 2.1"
-							} else if (thesaurusName.indexOf("Concepts") > -1) {
-								String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
-								if(tmpValue.length() < 1){
-									tmpValue = value;
+						ArrayList<String> hiddenKeywordList = (ArrayList<String>) PortalConfig.getInstance().getList(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
+						if(hiddenKeywordList != null){
+							for(int h=0; h < hiddenKeywordList.size(); h++){
+								String hiddenValue = hiddenKeywordList.get(h);
+								if(value.equals(hiddenValue)){
+									isHidden = true; 
+									break;
 								}
-								listGemet.add(tmpValue);
-								// "GEMET - INSPIRE themes, version 1.0"
-							} else if (thesaurusName.indexOf("INSPIRE") > -1) {
-								String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
-								if(tmpValue.length() < 1){
-									tmpValue = value;
-								}
-								listInspire.add(tmpValue);
-								// "German Environmental Classification - Category, version 1.0"
-							} else if (thesaurusName.indexOf("German Environmental Classification") > -1) {
-								// do not used in detail view.
-								
-							} else if (thesaurusName.length() < 1 && type.length() < 1) {
-								listSearch.add(value);
-							} else{
-								listSearch.add(value);
-							}	
+							}
+						}
+						
+						if(isHidden == false){
+							// "Service Classification, version 1.0"
+							if (thesaurusName.indexOf("Service") < 0) {
+								// "UMTHES Thesaurus"
+								if (thesaurusName.indexOf("UMTHES") > -1) {
+									listSearch.add(value);
+								// "GEMET - Concepts, version 2.1"
+								} else if (thesaurusName.indexOf("Concepts") > -1) {
+									String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
+									if(tmpValue.length() < 1){
+										tmpValue = value;
+									}
+									listGemet.add(tmpValue);
+									// "GEMET - INSPIRE themes, version 1.0"
+								} else if (thesaurusName.indexOf("INSPIRE") > -1) {
+									String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
+									if(tmpValue.length() < 1){
+										tmpValue = value;
+									}
+									listInspire.add(tmpValue);
+									// "German Environmental Classification - Category, version 1.0"
+								} else if (thesaurusName.indexOf("German Environmental Classification") > -1) {
+									// do not used in detail view.
+									
+								} else if (thesaurusName.length() < 1 && type.length() < 1) {
+									listSearch.add(value);
+								} else{
+									listSearch.add(value);
+								}	
+							}
 						}
 					}
 				}
