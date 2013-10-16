@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -123,18 +122,11 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
 	        	link.put("title", title);
 	        	if(this.iPlugId != null){
 	        		if(uuid != null){
-	        			PortletURL actionUrl = response.createActionURL();
 	        			if(isObject){
-	        				actionUrl.setParameter("cmd", "doShowObjectDetail");
-	        				actionUrl.setParameter("objId", uuid);
+	        				link.put("href", "?cmd=doShowObjectDetail&docuuid="+uuid+"&plugid="+this.iPlugId);
 				    	}else{
-	        				actionUrl.setParameter("cmd", "doShowDocument");
-	        				actionUrl.setParameter("docuuid", uuid);
+	        				link.put("href", "?cmd=doShowDocument&docuuid="+uuid+"&plugid="+this.iPlugId);
 				    	}
-	        			
-	        			actionUrl.setParameter("plugid", this.iPlugId);
-			    		link.put("href", actionUrl.toString());
-			        	
 		        	}else{
 		        		link.put("href", "");
 		        	}

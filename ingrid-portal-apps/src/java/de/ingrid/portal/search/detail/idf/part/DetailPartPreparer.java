@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -412,11 +411,7 @@ public class DetailPartPreparer {
 		
 		if (this.iPlugId != null){
 			if(uuid != null){
-				PortletURL actionUrl = response.createActionURL();
-		    	actionUrl.setParameter("cmd", "doShowAddressDetail");
-				actionUrl.setParameter("addrId", uuid);
-				actionUrl.setParameter("plugid", this.iPlugId);
-				element.put("href", actionUrl.toString());
+				element.put("href", "?cmd=doShowAddressDetail&docuuid="+uuid+"&plugid="+this.iPlugId);
 			}else{
 				element.put("href", "");
 			}
