@@ -1627,6 +1627,29 @@ UtilUI.setComboBySyslistValue = function(boxId, entryId) {
     });
 }
 
+//function to add a new entry to the conformity table if not already there
+UtilUI.updateEntryToConformityTable = function(entryId, deleteEntry) {
+    if (deleteEntry) {
+        // remove all automatically added entries
+        var itemIndexes = [];
+        var entry = UtilSyslist.getSyslistEntryName(6005, entryId);
+        dojo.forEach(UtilGrid.getTableData("extraInfoConformityTable"), function(row, index) { if (row.specification == entry) itemIndexes.push(index); });
+        UtilGrid.removeTableDataRow("extraInfoConformityTable", itemIndexes);
+
+    } else {
+        // get name of codelist entry for entry-id "2"
+        var entry = UtilSyslist.getSyslistEntryName(6005, entryId);
+        
+        // check if entry already exists in table
+        var exists = dojo.some(UtilGrid.getTableData("extraInfoConformityTable"), function(row) { return row.specification === entry; });
+        
+        // add entry to table if it doesn't already exist
+        if (!exists)
+            UtilGrid.addTableDataRow("extraInfoConformityTable", {specification: entry});
+        
+    }
+}
+
 // General utility functions for converting strings, etc.
 var UtilGeneral = {}
 

@@ -168,6 +168,7 @@ ingridObjectLayout.createGeneralInfo = function(){
         }
     ];
     createDataGrid("thesaurusInspire", null, thesaurusInspireStructure, null);
+    applyRuleThesaurusInspire();
     
     new dijit.form.CheckBox({}, "isInspireRelevant");
     new dijit.form.CheckBox({}, "isOpenData");
@@ -713,6 +714,7 @@ ingridObjectLayout.createFachBezugClass3 = function(){
     createSelectBox("ref3ServiceType", null, storeProps, function(){
         return UtilSyslist.getSyslistEntry(5100);
     });
+    applyRuleServiceType();
     
     var couplingTypes = function() {
         var def = new dojo.Deferred();

@@ -276,6 +276,79 @@ function applyRuleOpenData() {
     });
 }
 
+function applyRuleThesaurusInspire() {
+    
+    var applySpecification = function(inspireId, deleteEntry) {
+        if (inspireId == 103) UtilUI.updateEntryToConformityTable(4, deleteEntry);
+        else if (inspireId == 104) UtilUI.updateEntryToConformityTable(2, deleteEntry);
+        else if (inspireId == 105) UtilUI.updateEntryToConformityTable(1, deleteEntry);
+        else if (inspireId == 106) UtilUI.updateEntryToConformityTable(3, deleteEntry);
+        else if (inspireId == 107) UtilUI.updateEntryToConformityTable(7, deleteEntry);
+        else if (inspireId == 108) UtilUI.updateEntryToConformityTable(5, deleteEntry);
+        else if (inspireId == 109) UtilUI.updateEntryToConformityTable(6, deleteEntry);
+        else if (inspireId == 201) UtilUI.updateEntryToConformityTable(14, deleteEntry);
+        else if (inspireId == 202) UtilUI.updateEntryToConformityTable(15, deleteEntry);
+        else if (inspireId == 203) UtilUI.updateEntryToConformityTable(16, deleteEntry);
+        else if (inspireId == 204) UtilUI.updateEntryToConformityTable(17, deleteEntry);
+        else if (inspireId == 301) UtilUI.updateEntryToConformityTable(18, deleteEntry);
+        else if (inspireId == 302) UtilUI.updateEntryToConformityTable(19, deleteEntry);
+        else if (inspireId == 303) UtilUI.updateEntryToConformityTable(20, deleteEntry);
+        else if (inspireId == 304) UtilUI.updateEntryToConformityTable(21, deleteEntry);
+        else if (inspireId == 305) UtilUI.updateEntryToConformityTable(22, deleteEntry);
+        else if (inspireId == 306) UtilUI.updateEntryToConformityTable(23, deleteEntry);
+        else if (inspireId == 307) UtilUI.updateEntryToConformityTable(24, deleteEntry);
+        else if (inspireId == 308) UtilUI.updateEntryToConformityTable(25, deleteEntry);
+        else if (inspireId == 309) UtilUI.updateEntryToConformityTable(26, deleteEntry);
+        else if (inspireId == 310) UtilUI.updateEntryToConformityTable(27, deleteEntry);
+        else if (inspireId == 311) UtilUI.updateEntryToConformityTable(28, deleteEntry);
+        else if (inspireId == 312) UtilUI.updateEntryToConformityTable(29, deleteEntry);
+        else if (inspireId == 313 || inspireId == 314) UtilUI.updateEntryToConformityTable(30, deleteEntry);
+        else if (inspireId == 315) UtilUI.updateEntryToConformityTable(31, deleteEntry);
+        else if (inspireId == 316) UtilUI.updateEntryToConformityTable(32, deleteEntry);
+        else if (inspireId == 317) UtilUI.updateEntryToConformityTable(33, deleteEntry);
+        else if (inspireId == 318) UtilUI.updateEntryToConformityTable(34, deleteEntry);
+        else if (inspireId == 319) UtilUI.updateEntryToConformityTable(35, deleteEntry);
+        else if (inspireId == 320) UtilUI.updateEntryToConformityTable(36, deleteEntry);
+        else if (inspireId == 321) UtilUI.updateEntryToConformityTable(37, deleteEntry);
+    };
+    
+    // react when inspire topics has been added
+    dojo.connect(UtilGrid.getTable("thesaurusInspire"), "onCellChange", function(msg) {
+        var objClass = dijit.byId("objectClass").getValue();
+        // only react if class == 1
+        if (objClass == "Class1") {
+            applySpecification(msg.item.title, false);
+        }
+    });
+
+    // remove specific entry from conformity table when inspire topic was deleted
+    dojo.connect(UtilGrid.getTable("thesaurusInspire"), "onDeleteItems", function(msg) {
+        dojo.forEach(msg.items, function(item) {
+            applySpecification(item.title, true);
+        });
+
+    });
+}
+
+function applyRuleServiceType() {
+    var typesWithBehavior = [1,2,3,5];
+    var applySpecification = function(type, deleteEntry) {
+        if (type == 1) UtilUI.updateEntryToConformityTable(38, deleteEntry);
+        else if (type == 2) UtilUI.updateEntryToConformityTable(39, deleteEntry);
+        else if (type == 3) UtilUI.updateEntryToConformityTable(40, deleteEntry);
+        else if (type == 5) UtilUI.updateEntryToConformityTable(43, deleteEntry);
+    };
+    
+    // react when inspire topics has been added
+    dojo.connect(dijit.byId("ref3ServiceType"), "onChange", function(msg) {
+        // remove all dependent types
+        dojo.forEach(typesWithBehavior, function(type) { applySpecification(type, true); })
+        // add possibly new type
+        applySpecification(msg, false);
+    });
+    
+}
+
 function displayDiv(divElement) {
     if (divElement)
         dojo.removeClass(divElement, "hide");
