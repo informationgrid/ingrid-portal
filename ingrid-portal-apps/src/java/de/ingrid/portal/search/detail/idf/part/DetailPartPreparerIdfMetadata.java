@@ -30,6 +30,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 		this.iPlugId = iPlugId;
 		this.request = request;
 		this.response = response;
+		this.uuid = this.request.getParameter("docuuid");
 		this.templateName = "/WEB-INF/templates/detail/part/detail_part_preparer_metadata.vm";
 		this.namespaceUri = IDFNamespaceContext.NAMESPACE_URI_IDF;
 		this.localTagName = "idfMdMetadata";
