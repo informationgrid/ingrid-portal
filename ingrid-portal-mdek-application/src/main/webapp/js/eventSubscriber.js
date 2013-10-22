@@ -1947,7 +1947,7 @@ udkDataProxy._setObjectDataClass0 = function(nodeData) {}
 
 udkDataProxy._setObjectDataClass1 = function(nodeData) {
     dijit.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
-    dijit.byId("isOpenData").attr("value", nodeData.openData, true);
+    dijit.byId("isOpenData").attr("value", nodeData.openData, false);
     UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
 	dijit.byId("ref1ObjectIdentifier").attr("value", nodeData.ref1ObjectIdentifier, true);
 	dijit.byId("ref1DataSet").attr("value", nodeData.ref1DataSet, true);
@@ -2004,7 +2004,8 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
     dijit.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
     dijit.byId("isOpenData").attr("value", nodeData.openData, true);
     UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
-	dijit.byId("ref3ServiceType").attr("value", nodeData.ref3ServiceType, true);
+    dijit.byId("ref3ServiceType")._lastValueReported = nodeData.ref3ServiceType + "";
+    dijit.byId("ref3ServiceType").set("value", nodeData.ref3ServiceType, false);
 	dijit.byId("ref3CouplingType").attr("value", nodeData.ref3CouplingType, true);
 	dijit.byId("ref3SystemEnv").attr("value", nodeData.ref3SystemEnv, true);
 	dijit.byId("ref3History").attr("value", nodeData.ref3History, true);

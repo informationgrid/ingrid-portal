@@ -341,10 +341,13 @@ function applyRuleServiceType() {
     
     // react when inspire topics has been added
     dojo.connect(dijit.byId("ref3ServiceType"), "onChange", function(msg) {
-        // remove all dependent types
-        dojo.forEach(typesWithBehavior, function(type) { applySpecification(type, true); })
-        // add possibly new type
-        applySpecification(msg, false);
+        var objClass = dijit.byId("objectClass").getValue();
+        if (objClass == "Class3") {
+            // remove all dependent types
+            dojo.forEach(typesWithBehavior, function(type) { applySpecification(type, true); })
+            // add possibly new type
+            applySpecification(msg, false);
+        }
     });
     
 }
