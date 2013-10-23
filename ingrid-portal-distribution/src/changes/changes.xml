@@ -6,6 +6,9 @@
   </properties>
   <body>
    <release version="3.4.0.-SNAPSHOT" date="2013-xx-xx" description="Release InGrid 3.4">	
+    <action type="add" dev="wemove" issue="REDMINE-134">
+      WebMapClient: Activate layers by using "Zeige Karte" function and defined layer identifier.
+    </action>
     <action type="add" dev="wemove" issue="REDMINE-138">
       WebMapClient: Add capabilities Update-Checker.
     </action>
