@@ -3,6 +3,7 @@
  */
 package de.ingrid.portal.forms;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -122,22 +123,22 @@ public class ContactForm extends ActionForm {
     	setError(FIELD_UPLOAD, "contact.error.upload");
     }
     
-    public void populate(List<FileItem> items) {
+    public void populate(List<FileItem> items) throws UnsupportedEncodingException {
     	if(items != null){
 	        clearInput();
 	        for(FileItem item : items){
 	        	if(item.getFieldName().equals(FIELD_MESSAGE)){
-	        		setInput(FIELD_MESSAGE, item.getString());
+	        		setInput(FIELD_MESSAGE, item.getString("UTF-8"));
 	        	} else if(item.getFieldName().equals(FIELD_FIRSTNAME)){
-	        		setInput(FIELD_FIRSTNAME, item.getString());
+	        		setInput(FIELD_FIRSTNAME, item.getString("UTF-8"));
 	        	} else if(item.getFieldName().equals(FIELD_LASTNAME)){
-	        		setInput(FIELD_LASTNAME, item.getString());
+	        		setInput(FIELD_LASTNAME, item.getString("UTF-8"));
 	        	} else if(item.getFieldName().equals(FIELD_COMPANY)){
-	        		setInput(FIELD_COMPANY, item.getString());
+	        		setInput(FIELD_COMPANY, item.getString("UTF-8"));
 	        	} else if(item.getFieldName().equals(FIELD_PHONE)){
-	        		setInput(FIELD_PHONE, item.getString());
+	        		setInput(FIELD_PHONE, item.getString("UTF-8"));
 	        	} else if(item.getFieldName().equals(FIELD_EMAIL)){
-	        		setInput(FIELD_EMAIL, item.getString());
+	        		setInput(FIELD_EMAIL, item.getString("UTF-8"));
 	        	} else if(item.getFieldName().equals(FIELD_ACTIVITY)){
 	        		setInput(FIELD_ACTIVITY, item.getString());
 	        	} else if(item.getFieldName().equals(FIELD_INTEREST)){
