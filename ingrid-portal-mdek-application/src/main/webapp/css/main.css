@@ -147,10 +147,7 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 	display: block;
 }
 
-.hide, .alwaysHidden {
-	display: none !important;
-}
-
+/* used when mandatory fields should be NOT visible ! */
 .showOnlyExpanded {
     display: none !important;
 /*    visibility: hidden;*/
@@ -161,8 +158,13 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 /*  visibility: visible;*/
 }
 
-/* THIS CLASS BELOW OF ALL OTHER visibility classes -> HIGHEST PRIO (also against other "importants" */
+/* used to mark input fields when input is missing on publish ! should be below upper classes to have highest prio concerning display (fields become visible if input is missing) ! */
 .important { color:#bd0d00 !important; display: block !important; }
+
+/* this one has HIGHEST prio against all other classes above ! so we can hide fields with missing input (e.g. when open data checkbox unclicked !) */
+.hide, .alwaysHidden {
+    display: none !important;
+}
 
 .grey { background:#ececec !important; }
 
