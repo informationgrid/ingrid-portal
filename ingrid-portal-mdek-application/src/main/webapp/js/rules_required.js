@@ -250,9 +250,12 @@ function applyRuleOpenData() {
             dojo.addClass("uiElement6020", "required");
             
             // add check for url reference of type download when publishing
+            // we check name and not id cause is combo box ! id not adapted yet if not saved !
             openDataLinkCheck = dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
+                // get name of codelist entry for entry-id "9990" = "Download of data"/"Datendownload"
+                var entryNameDownload = UtilSyslist.getSyslistEntryName(2000, 9990);
                 var data = UtilGrid.getTableData("linksTo");
-                var containsDownloadLink = dojo.some(data, function(item) { if (item.relationType === 9990) return true; });
+                var containsDownloadLink = dojo.some(data, function(item) { if (item.relationTypeName == entryNameDownload) return true; });
                 if (!containsDownloadLink)
                     notPublishableIDs.push("linksTo");
             });

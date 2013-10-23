@@ -15,6 +15,9 @@
     <action type="add" dev="wemove" issue="REDMINE-188">
       WebMapClient: Add capabilities URL to metadata dialog.
     </action>
+    <action type="add" dev="wemove" issue="REDMINE-117">
+      IGE: Added scripting and IDF mapping templates for profile of LGV HH.
+    </action>
 	<action type="add" dev="wemove" issue="REDMINE-128">
       IGE: Added "Open data" checkbox and Categories.
     </action>

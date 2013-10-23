@@ -38,7 +38,6 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 
 
 .hidden { display:none !important; }
-.important { color:#bd0d00 !important; display: block !important; }
 .importantBackground { 
 	/*background-color:#E9AFAF !important;*/	
 	border: solid #D46363 1px !important;
@@ -151,7 +150,20 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 .hide, .alwaysHidden {
 	display: none !important;
 }
-	
+
+.showOnlyExpanded {
+    display: none !important;
+/*    visibility: hidden;*/
+}
+
+.expanded .showOnlyExpanded {
+    display: block !important;
+/*  visibility: visible;*/
+}
+
+/* THIS CLASS BELOW OF ALL OTHER visibility classes -> HIGHEST PRIO (also against other "importants" */
+.important { color:#bd0d00 !important; display: block !important; }
+
 .grey { background:#ececec !important; }
 
 .noSpaceBelow { margin-bottom:0 !important; padding-bottom:0 !important; }

@@ -1,5 +1,9 @@
-// ------------------------------------------------------------
+// ========================================================================================================================
+// Defaultwerte bei neuem Objekt der Objektklasse "Geodatensatz" (REDMINE-119)
+// ========================================================================================================================
+// ------------------------
 // JS
+// ------------------------
 // default values when creating new objects of class 1 - geodata (REDMINE-119)
 dojo.subscribe("/onObjectClassChange", function(data) { 
     if (currentUdk.uuid === "newNode" && data.objClass === "Class1") { 
@@ -13,13 +17,14 @@ dojo.subscribe("/onObjectClassChange", function(data) {
 });
 
 
-//------------------------------------------------------------
-// List: "Informationsgegenstand"
-// ----------------------------
-- Erstellung einer Tabelle(ID:'Informationsgegenstand') mit einer Spalte(ID:'informationHmbTG') und Indexnamen der Spalte 'infoHmbTG' und Breite 691px
-- Spaltentyp ist eine Liste in der die Codeliste übertragen wird
-
+// ========================================================================================================================
+// Neues Auswahlfeld/Liste: "Informationsgegenstand" (REDMINE-193)
+// - Erstellung einer Tabelle(ID:'Informationsgegenstand') mit einer Spalte(ID:'informationHmbTG') und Indexnamen der Spalte 'infoHmbTG' und Breite 691px
+// - Spaltentyp ist eine Liste in der die Codeliste übertragen wird
+// ========================================================================================================================
+// ------------------------
 // IDF
+// ------------------------
 importPackage(Packages.de.ingrid.iplug.dsc.om);
 //add Namespaces to Utility for convenient handling of NS !
 DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
@@ -85,14 +90,15 @@ if ( contentLabel && contentLabel.size() > 0) {
 }
 
 
-
-// ------------------------------------------------------------
-// Checkbox: "Veröffentlichung gemäß HmbTG" (REDMINE-192)
-- Erstellung einer einfachen Checkbox mit
-    ID: publicationHmbTG
-    Titel: Veröffentlichung gemäß HmbTG
-
+// ========================================================================================================================
+// Neue Checkbox: "Veröffentlichung gemäß HmbTG" (REDMINE-192)
+// - Erstellung einer einfachen Checkbox mit
+//    ID: publicationHmbTG
+//    Titel: Veröffentlichung gemäß HmbTG
+// ========================================================================================================================
+// ------------------------
 // JS
+// ------------------------
 dojo.connect(dijit.byId("publicationHmbTG"), "onChange", function(isChecked) {
     if (isChecked) {
         dojo.addClass("uiElementAddInformationsgegenstand", "required");
@@ -108,7 +114,9 @@ dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
     }
 });
 
+// ------------------------
 // IDF
+// ------------------------
 importPackage(Packages.de.ingrid.iplug.dsc.om);
 //add Namespaces to Utility for convenient handling of NS !
 DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
@@ -134,7 +142,7 @@ if (contentLabel && contentLabel.size() > 0) {
         var nodeBeforeInsert = null;
         for (i=0; i<path.length; i++) {
             // get the last occurrence of this path if any
-        nodeBeforeInsert = DOM.getElement(dataIdentification, path[i]+"[last()]");
+            nodeBeforeInsert = DOM.getElement(dataIdentification, path[i]+"[last()]");
             if (nodeBeforeInsert) { break; }
         }
         
@@ -151,4 +159,100 @@ if (contentLabel && contentLabel.size() > 0) {
     }
 }
 
-//------------------------------------------------------------
+
+// ========================================================================================================================
+// Wenn OpenData (REDMINE-117)
+// - neues Keyword "#opendata_hh#"
+// - toggle fields
+// ========================================================================================================================
+// ------------------------
+// JS
+// ------------------------
+var openDataAddressCheck = null;
+dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
+    if (isChecked) {
+        // add check for address of type publisher (Herausgeber) when publishing
+        // we check name and not id cause is combo box ! id not adapted yet if not saved !
+        openDataAddressCheck = dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
+            // get name of codelist entry for entry-id "10" = "publisher"/"Herausgeber"
+            var entryNamePublisher = UtilSyslist.getSyslistEntryName(505, 10);
+        
+            // check if entry already exists in table
+            var data = UtilGrid.getTableData("generalAddress");
+            var containsPublisher = dojo.some(data, function(item) { if (item.nameOfRelation == entryNamePublisher) return true; });
+            if (!containsPublisher)
+                notPublishableIDs.push("generalAddress");
+        });
+
+        // set publication condition to Internet
+        dijit.byId("extraInfoPublishArea").attr("value", 1, true);
+
+        // set Nutzungsbedingungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
+        var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
+        dijit.byId("availabilityUseConstraints").attr("value", entryNameLicense, true);
+
+        // SHOW mandatory fields ONLY IF EXPANDED !
+        dojo.addClass("uiElement5064", "showOnlyExpanded"); // INSPIRE-Themen
+        dojo.addClass("uiElement3520", "showOnlyExpanded"); // Fachliche Grundlage
+        dojo.addClass("uiElement5061", "showOnlyExpanded"); // Datensatz/Datenserie
+        dojo.addClass("uiElement3565", "showOnlyExpanded"); // Datendefizit
+        dojo.addClass("uiElementN006", "showOnlyExpanded"); // Geothesaurus-Raumbezug
+        dojo.addClass("uiElement3500", "showOnlyExpanded"); // Raumbezugssystem
+        dojo.addClass("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
+        dojo.addClass("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
+        dojo.addClass("uiElementN024", "showOnlyExpanded"); // Konformität
+        dojo.addClass("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
+
+    } else {
+        // unregister from check for publisher address
+        if (openDataAddressCheck)
+            dojo.unsubscribe(openDataAddressCheck);
+
+        // remove "keine" from access constraints
+        var data = UtilGrid.getTableData('availabilityAccessConstraints');
+        var posToRemove = 0;
+        var entryExists = dojo.some(data, function(item) {
+            if (item.title == "keine") {
+                return true;
+            }
+            posToRemove++;
+        });
+        if (entryExists) {
+            UtilGrid.removeTableDataRow('availabilityAccessConstraints', [posToRemove]);
+        }
+
+        // remove license set when open data was clicked
+        dijit.byId("availabilityUseConstraints").attr("value", "");
+
+        // ALWAYS SHOW mandatory fields !
+        dojo.removeClass("uiElement5064", "showOnlyExpanded"); // INSPIRE-Themen
+        dojo.removeClass("uiElement3520", "showOnlyExpanded"); // Fachliche Grundlage
+        dojo.removeClass("uiElement5061", "showOnlyExpanded"); // Datensatz/Datenserie
+        dojo.removeClass("uiElement3565", "showOnlyExpanded"); // Datendefizit
+        dojo.removeClass("uiElementN006", "showOnlyExpanded"); // Geothesaurus-Raumbezug
+        dojo.removeClass("uiElement3500", "showOnlyExpanded"); // Raumbezugssystem
+        dojo.removeClass("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
+        dojo.removeClass("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
+        dojo.removeClass("uiElementN024", "showOnlyExpanded"); // Konformität
+        dojo.removeClass("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
+    }
+});
+
+// ------------------------
+// IDF
+// ------------------------
+importPackage(Packages.de.ingrid.iplug.dsc.om);
+//add Namespaces to Utility for convenient handling of NS !
+DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
+DOM.addNS("gco", "http://www.isotc211.org/2005/gco");
+
+if (!(sourceRecord instanceof DatabaseSourceRecord)) {
+  throw new IllegalArgumentException("Record is no DatabaseRecord!");
+}
+
+var id = sourceRecord.get(DatabaseSourceRecord.ID);
+var openDataKeyword = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[gco:CharacterString='opendata']");
+if (openDataKeyword) {
+    var hhKeyword = openDataKeyword.addElementAsSibling("gmd:keyword");
+    hhKeyword.addElement("gco:CharacterString").addText("#opendata_hh#");
+}
