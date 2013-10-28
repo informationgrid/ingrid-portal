@@ -290,7 +290,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
 		<!-- Opendata -->
            <facet>
 				<name>Opendata</name>
-				<query>#opendata_hh#</query>
+				<query>"#opendata_hh#"</query>
 				<id>opendata_hh</id>
 			</facet>
 		<!-- Weitere Daten -->
