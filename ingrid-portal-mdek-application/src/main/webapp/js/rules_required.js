@@ -289,30 +289,30 @@ function applyRuleThesaurusInspire() {
         else if (inspireId == 107) UtilUI.updateEntryToConformityTable(7, deleteEntry);
         else if (inspireId == 108) UtilUI.updateEntryToConformityTable(5, deleteEntry);
         else if (inspireId == 109) UtilUI.updateEntryToConformityTable(6, deleteEntry);
-        else if (inspireId == 201) UtilUI.updateEntryToConformityTable(14, deleteEntry);
-        else if (inspireId == 202) UtilUI.updateEntryToConformityTable(15, deleteEntry);
-        else if (inspireId == 203) UtilUI.updateEntryToConformityTable(16, deleteEntry);
-        else if (inspireId == 204) UtilUI.updateEntryToConformityTable(17, deleteEntry);
-        else if (inspireId == 301) UtilUI.updateEntryToConformityTable(18, deleteEntry);
-        else if (inspireId == 302) UtilUI.updateEntryToConformityTable(19, deleteEntry);
-        else if (inspireId == 303) UtilUI.updateEntryToConformityTable(20, deleteEntry);
-        else if (inspireId == 304) UtilUI.updateEntryToConformityTable(21, deleteEntry);
-        else if (inspireId == 305) UtilUI.updateEntryToConformityTable(22, deleteEntry);
-        else if (inspireId == 306) UtilUI.updateEntryToConformityTable(23, deleteEntry);
-        else if (inspireId == 307) UtilUI.updateEntryToConformityTable(24, deleteEntry);
-        else if (inspireId == 308) UtilUI.updateEntryToConformityTable(25, deleteEntry);
-        else if (inspireId == 309) UtilUI.updateEntryToConformityTable(26, deleteEntry);
-        else if (inspireId == 310) UtilUI.updateEntryToConformityTable(27, deleteEntry);
-        else if (inspireId == 311) UtilUI.updateEntryToConformityTable(28, deleteEntry);
-        else if (inspireId == 312) UtilUI.updateEntryToConformityTable(29, deleteEntry);
-        else if (inspireId == 313 || inspireId == 314) UtilUI.updateEntryToConformityTable(30, deleteEntry);
-        else if (inspireId == 315) UtilUI.updateEntryToConformityTable(31, deleteEntry);
-        else if (inspireId == 316) UtilUI.updateEntryToConformityTable(32, deleteEntry);
-        else if (inspireId == 317) UtilUI.updateEntryToConformityTable(33, deleteEntry);
-        else if (inspireId == 318) UtilUI.updateEntryToConformityTable(34, deleteEntry);
-        else if (inspireId == 319) UtilUI.updateEntryToConformityTable(35, deleteEntry);
-        else if (inspireId == 320) UtilUI.updateEntryToConformityTable(36, deleteEntry);
-        else if (inspireId == 321) UtilUI.updateEntryToConformityTable(37, deleteEntry);
+        else if (inspireId == 201) { UtilUI.updateEntryToConformityTable(14, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 19); }
+        else if (inspireId == 202) { UtilUI.updateEntryToConformityTable(15, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 20); }
+        else if (inspireId == 203) { UtilUI.updateEntryToConformityTable(16, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 21); }
+        else if (inspireId == 204) { UtilUI.updateEntryToConformityTable(17, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 22); }
+        else if (inspireId == 301) { UtilUI.updateEntryToConformityTable(18, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 23); }
+        else if (inspireId == 302) { UtilUI.updateEntryToConformityTable(19, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 24); }
+        else if (inspireId == 303) { UtilUI.updateEntryToConformityTable(20, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 25); }
+        else if (inspireId == 304) { UtilUI.updateEntryToConformityTable(21, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 26); }
+        else if (inspireId == 305) { UtilUI.updateEntryToConformityTable(22, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 27); }
+        else if (inspireId == 306) { UtilUI.updateEntryToConformityTable(23, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 28); }
+        else if (inspireId == 307) { UtilUI.updateEntryToConformityTable(24, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 29); }
+        else if (inspireId == 308) { UtilUI.updateEntryToConformityTable(25, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 30); }
+        else if (inspireId == 309) { UtilUI.updateEntryToConformityTable(26, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 31); }
+        else if (inspireId == 310) { UtilUI.updateEntryToConformityTable(27, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 32); }
+        else if (inspireId == 311) { UtilUI.updateEntryToConformityTable(28, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 33); }
+        else if (inspireId == 312) { UtilUI.updateEntryToConformityTable(29, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 34); }
+        else if (inspireId == 313 || inspireId == 314) { UtilUI.updateEntryToConformityTable(30, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 35); } 
+        else if (inspireId == 315) { UtilUI.updateEntryToConformityTable(31, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 36); }
+        else if (inspireId == 316) { UtilUI.updateEntryToConformityTable(32, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 37); }
+        else if (inspireId == 317) { UtilUI.updateEntryToConformityTable(33, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 38); }
+        else if (inspireId == 318) { UtilUI.updateEntryToConformityTable(34, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 39); }
+        else if (inspireId == 319) { UtilUI.updateEntryToConformityTable(35, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 40); }
+        else if (inspireId == 320) { UtilUI.updateEntryToConformityTable(36, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 41); }
+        else if (inspireId == 321) { UtilUI.updateEntryToConformityTable(37, deleteEntry); UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", 42); }
     };
     
     // react when inspire topics has been added
