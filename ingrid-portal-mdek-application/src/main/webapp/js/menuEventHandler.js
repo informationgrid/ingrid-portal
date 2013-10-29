@@ -58,7 +58,7 @@ menuEventHandler.handleNewEntity = function(mes) {
 
 menuEventHandler._createNewAddress = function(addressClass, parentNode) {
 //	console.debug("_createNewAddress("+addressClass+", "+parentNode.id+")");
-	var parentId = parentNode.id[0];
+	var parentId = parentNode.id;
 
 	if (addressClass == 3 && parentId == "addressRoot") {
 		var treeController = dijit.byId("treeController");
@@ -97,7 +97,7 @@ attachNewNode = function(selectedNode, res) {
 	
 	// expand tree node if not already done!
 	var def;
-	var selNodeWidget = dijit.byId(selectedNode.id[0]);
+	var selNodeWidget = dijit.byId(selectedNode.id);
 	if (!selNodeWidget.isExpanded) {
 		// need a deferred here!
 		//def = selNodeWidget.expand();
@@ -268,14 +268,14 @@ menuEventHandler.handlePaste = function(msg) {
 				dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
 				return;
 			} else {
-//				var cutNodeWidget = dijit.byId(tree.nodeToCut.id[0]);
+//				var cutNodeWidget = dijit.byId(tree.nodeToCut.id);
 			    var appType = tree.nodesToCut[0].nodeAppType;
 				// Valid target was selected. Start the request
 				var deferred = new dojo.Deferred();
 				deferred.addCallback(function() {
 					// Move was successful. Update the tree
 				    dojo.forEach(tree.nodesToCut, function(node) {
-				        UtilTree.deleteNode("dataTree", dijit.byId(node.id[0]));
+				        UtilTree.deleteNode("dataTree", dijit.byId(node.id+""));
 				    });
 					tree.model.store.save();
 					tree.refreshChildren(targetNode);
@@ -315,11 +315,11 @@ menuEventHandler.handlePaste = function(msg) {
 				
 				if (appType == "O") {
 					def.addCallback(function() {
-						dojo.publish("/cutObjectRequest", [{srcIds: nodeIds, parentUuids: parentNodeIds, dstId: targetNode.id[0], forcePublicationCondition: false, resultHandler: deferred}]);
+						dojo.publish("/cutObjectRequest", [{srcIds: nodeIds, parentUuids: parentNodeIds, dstId: targetNode.id, forcePublicationCondition: false, resultHandler: deferred}]);
 					});
 				} else if (appType == "A") {
 					def.addCallback(function() {
-						dojo.publish("/cutAddressRequest", [{srcIds: nodeIds, parentUuids: parentNodeIds, dstId: targetNode.id[0], resultHandler: deferred}]);
+						dojo.publish("/cutAddressRequest", [{srcIds: nodeIds, parentUuids: parentNodeIds, dstId: targetNode.id, resultHandler: deferred}]);
 					});
 				}
 			}
@@ -366,7 +366,7 @@ menuEventHandler.handlePaste = function(msg) {
 				def.addCallback(function() {
 					dojo.publish("/copyObjectRequest", [{
 						srcIds: nodeIds,
-						dstId: targetNode.id[0],
+						dstId: targetNode.id,
 						copyTree: tree.copySubTree,
 						resultHandler: deferred
 					}]);				
@@ -376,7 +376,7 @@ menuEventHandler.handlePaste = function(msg) {
 				def.addCallback(function() {
 					dojo.publish("/copyAddressRequest", [{
 						srcIds: nodeIds,
-						dstId: targetNode.id[0],
+						dstId: targetNode.id,
 						copyTree: tree.copySubTree,
 						resultHandler: deferred
 					}]);				
@@ -433,7 +433,7 @@ menuEventHandler.handleUndo = function(mes) {
 			});
 			udkDataProxy.resetDirtyFlag();
     		console.debug("Publishing event: /loadRequest("+selectedNode.id+", "+selectedNode.item.nodeAppType+")");
-	    	dojo.publish("/loadRequest", [{id: selectedNode.id[0], appType: selectedNode.item.nodeAppType[0], node: selectedNode.item, resultHandler:def}]);
+	    	dojo.publish("/loadRequest", [{id: selectedNode.id, appType: selectedNode.item.nodeAppType[0], node: selectedNode.item, resultHandler:def}]);
 		});
 //		dialog.showPage(message.get("dialog.undoChangesTitle"), "mdek_delete_working_copy_dialog.html", 342, 220, true, {resultHandler:deferred, action:"UNDO"});
 		var displayText = "";
@@ -458,7 +458,7 @@ menuEventHandler.handleDiscard = function(msg) {
 
 menuEventHandler._discardNode = function(selectedNode) {
     var discardDeferred = new dojo.Deferred();
-	if (!selectedNode || selectedNode.id[0] == "objectRoot") {
+	if (!selectedNode || selectedNode.id == "objectRoot") {
     	dialog.show(message.get("general.hint"), message.get("tree.selectNodeDeleteHint"), dialog.WARNING);
 	} else {
 		// If a selected node was found do the following:
@@ -493,7 +493,7 @@ menuEventHandler._discardNode = function(selectedNode) {
 
 						var d = new dojo.Deferred();
 						d.addCallback(function(){
-							UtilTree.selectNode("dataTree", newSelectNode.id[0]);
+							UtilTree.selectNode("dataTree", newSelectNode.id);
 							dojo.publish("/selectNode", [{id:"dataTree", node: newSelectNode.item}]);
 							dojo.window.scrollIntoView(newSelectNode.domNode);
 							discardDeferred.callback();
@@ -506,7 +506,7 @@ menuEventHandler._discardNode = function(selectedNode) {
 						// We also have to reset the dirty flag since the 'dirty' ndoe is deleted anyway
 						udkDataProxy.resetDirtyFlag();
 			    		console.debug("Publishing event: /loadRequest("+newSelectNode.id+", "+newSelectNode.item.nodeAppType+")");
-				    	dojo.publish("/loadRequest", [{id: newSelectNode.id[0], appType: newSelectNode.item.nodeAppType, node: newSelectNode.item, resultHandler:d}]);
+				    	dojo.publish("/loadRequest", [{id: newSelectNode.id, appType: newSelectNode.item.nodeAppType, node: newSelectNode.item, resultHandler:d}]);
 					} else {
 						// The selection does not have to be altered. Delete the node.
                         UtilTree.deleteNode("dataTree", selectedNode);
@@ -524,7 +524,7 @@ menuEventHandler._discardNode = function(selectedNode) {
 
 			// Tell the backend to delete the selected node.
 	    	console.debug("Publishing event: /deleteWorkingCopyRequest("+selectedNode.id+", "+selectedNode.item.nodeAppType+")");
-	    	dojo.publish("/deleteWorkingCopyRequest", [{id: selectedNode.id[0], resultHandler: deleteObjDef}]);				
+	    	dojo.publish("/deleteWorkingCopyRequest", [{id: selectedNode.id, resultHandler: deleteObjDef}]);				
 		});
 
 		// Build the dialog parameters
@@ -601,7 +601,7 @@ menuEventHandler._deleteNodes = function(selectedNonNewNodes) {
 	    	var deleteObjDef = new dojo.Deferred();
 	    	// the node could have been deleted already if parent node was deleted before (multi selection!)
 	    	// in IE8 only widgetId is valid (id is not correctly set)!!!
-	    	if (dijit.byId(nodeToDelete.id[0])) {
+	    	if (dijit.byId(nodeToDelete.id)) {
     	    	deleteObjDef.addCallback(function() {
     	    		// This function is called when the user has selected yes and the node was successfully
     				// deleted from the database
@@ -617,7 +617,7 @@ menuEventHandler._deleteNodes = function(selectedNonNewNodes) {
     			// Tell the backend to delete the selected node.
     	    	console.debug("Publishing event: /deleteRequest("+nodeToDelete.id+", "+nodeToDelete.nodeAppType+")");
     	    	
-   	    	    dojo.publish("/deleteRequest", [{id: nodeToDelete.id[0], resultHandler: deleteObjDef}]);
+   	    	    dojo.publish("/deleteRequest", [{id: nodeToDelete.id, resultHandler: deleteObjDef}]);
 	    	} else {
 	    	    deleteObjDef.callback();
 	    	}
@@ -637,7 +637,7 @@ menuEventHandler._deleteNodes = function(selectedNonNewNodes) {
 		        } else {
 		            var root = dijit.byId("addressRoot");
 		        }
-	            UtilTree.selectNode("dataTree", root.id[0], true);
+	            UtilTree.selectNode("dataTree", root.id, true);
                 dojo.publish("/selectNode", [{id:"dataTree", node: root.item}]);
                 dojo.window.scrollIntoView(root.domNode);
 		    }
@@ -703,7 +703,7 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
             var treeSelectedNode;
             if (tree.selectedNode) {
             	// fetch again to avoid null domNode !
-            	treeSelectedNode = dijit.byId(tree.selectedNode.id[0]);
+            	treeSelectedNode = dijit.byId(tree.selectedNode.id);
             }
             console.debug("fetched treeSelectedNode");
             console.debug(treeSelectedNode);
@@ -729,7 +729,7 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
 //                udkDataProxy.resetDirtyFlag();
 
                 console.debug("Publishing event: /loadRequest("+treeSelectedNode.id+", "+treeSelectedNode.item.nodeAppType+")");
-                dojo.publish("/loadRequest", [{id: treeSelectedNode.id[0], appType: treeSelectedNode.item.nodeAppType[0], node: treeSelectedNode.item, resultHandler:defUpdateTree}]);
+                dojo.publish("/loadRequest", [{id: treeSelectedNode.id, appType: treeSelectedNode.item.nodeAppType[0], node: treeSelectedNode.item, resultHandler:defUpdateTree}]);
             } else {
                 // if no reload of displayed node necessary, just update the according node in tree and its children !
             	defUpdateTree.callback();
@@ -742,7 +742,7 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
         var forcePubCondition = false;
         var useWorkingCopy = !("V" == selectedNode.item.workState[0]);
         console.debug("Publishing event: /changePublicationCondition("+selectedNode.id+", useWorkingCopy="+useWorkingCopy+", newPubCondition="+newPubCondition+", forcePubCondition="+forcePubCondition+")");
-        dojo.publish("/changePublicationCondition", [{id: selectedNode.id[0],
+        dojo.publish("/changePublicationCondition", [{id: selectedNode.id,
             useWorkingCopy: useWorkingCopy,
             publicationCondition: newPubCondition,
             forcePublicationCondition: forcePubCondition,
@@ -756,7 +756,7 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
 menuEventHandler.reloadSubTree = function(msg) {
 	// Get the selected node from the message
 	//var selectedNodeItem = getSelectedNode(msg);
-	var selectedNode = getSelectedNode(msg);//dijit.byId(selectedNodeItem.id[0]);
+	var selectedNode = getSelectedNode(msg);//dijit.byId(selectedNodeItem.id);
 	var tree = dijit.byId("dataTree");
 	//var treeListener = dijit.byId("treeListener");
 	//var treeController = dijit.byId("treeController");
@@ -765,7 +765,7 @@ menuEventHandler.reloadSubTree = function(msg) {
 		//selectedNode.state = "UNCHECKED";
 		udkDataProxy.resetDirtyFlag();
 		//tree.selectNode(selectedNode);
-		UtilTree.selectNode("dataTree", selectedNode.id[0]);
+		UtilTree.selectNode("dataTree", selectedNode.id);
 		//tree.selectedNode = selectedNode;
 		dojo.publish("/selectNode", [{id:"dataTree", node: selectedNode.item}]);
 		tree.refreshChildren(selectedNode);
@@ -1019,7 +1019,7 @@ menuEventHandler.handleMarkDeleted = function(msg) {
 		var deferred = new dojo.Deferred();
 		var deleteFunction = function(nodeToDelete) {
 	    	var deleteObjDef = new dojo.Deferred();
-	    	if (dijit.byId(nodeToDelete.id[0])) {
+	    	if (dijit.byId(nodeToDelete.id)) {
     	    	deleteObjDef.addCallback(function() {
     	    		// This function is called when the user has selected yes and the node was successfully
     				// marked as deleted
@@ -1060,7 +1060,7 @@ menuEventHandler.handleMarkDeleted = function(msg) {
     
     			// Tell the backend to delete the selected node.
     	    	console.debug("Publishing event: /deleteRequest("+nodeToDelete.id+", "+nodeToDelete.item.nodeAppType+")");
-    	    	dojo.publish("/deleteRequest", [{id: nodeToDelete.id[0], resultHandler: deleteObjDef}]);
+    	    	dojo.publish("/deleteRequest", [{id: nodeToDelete.id, resultHandler: deleteObjDef}]);
 	    	} else {
                 deleteObjDef.callback();
             }
@@ -1120,7 +1120,7 @@ menuEventHandler.handleShowChanges = function(msg) {
 	var selectedNode = getSelectedNode(msg);
 
 	var params = {
-		selectedNodeId: selectedNode.id[0]
+		selectedNodeId: selectedNode.id
 	};
 
 	if (selectedNode.item.nodeAppType == "O") {
@@ -1250,7 +1250,7 @@ menuEventHandler._loadNode = function(nodeId) {
 		});
 
 		console.debug("Publishing event: /loadRequest("+targetNode.id+", "+targetNode.item.nodeAppType+")");
-		dojo.publish("/loadRequest", [{id: targetNode.id[0], appType: targetNode.item.nodeAppType[0], node:targetNode.item, resultHandler:loadNodeDef}]);
+		dojo.publish("/loadRequest", [{id: targetNode.id+"", appType: targetNode.item.nodeAppType[0], node:targetNode.item, resultHandler:loadNodeDef}]);
 	}
     return loadNodeResultDef;
 }
@@ -1282,7 +1282,7 @@ menuEventHandler.inheritAddressToChildren = function(msg) {
     
     def.addCallback(function() {
         console.debug("Publishing event: /inheritAddressToChildren("+selectedNode.id+")");
-        dojo.publish("/inheritAddressToChildren", [{id: selectedNode.id[0], resultHandler: defMain}]);
+        dojo.publish("/inheritAddressToChildren", [{id: selectedNode.id+"", resultHandler: defMain}]);
     });
     return defMain;
 }

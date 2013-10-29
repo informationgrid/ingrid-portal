@@ -2146,7 +2146,7 @@ udkDataProxy._getAddressData = function(nodeData) {
 	// ------------- General Static Data -------------
 	nodeData.uuid = currentUdk.uuid;
 	nodeData.workState = currentUdk.workState;
-	var parentUuid = dijit.byId(currentUdk.uuid).getParent().id[0];
+	var parentUuid = dijit.byId(currentUdk.uuid).getParent().id;
 	if (parentUuid != "addressRoot" && parentUuid != "addressFreeRoot") {
 		nodeData.parentUuid = parentUuid;
 	}
@@ -2244,7 +2244,7 @@ udkDataProxy._getObjectData = function(nodeData)
   nodeData.orgObjId = currentUdk.orgObjId;
   nodeData.hasChildren = currentUdk.hasChildren; // Do we need to store this?
   nodeData.workState = currentUdk.workState;
-  var parentUuid = dijit.byId(currentUdk.uuid).getParent().id[0];
+  var parentUuid = dijit.byId(currentUdk.uuid).getParent().id;
   if (parentUuid != "objectRoot") {
   	nodeData.parentUuid = parentUuid;
   }
