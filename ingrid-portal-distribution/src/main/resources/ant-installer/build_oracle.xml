@@ -37,6 +37,7 @@
     <property name="mdekDBOracle_311"      location="${installDir}/sql/mdek_3.1.1_oracle.sql"/>
     <property name="mdekDBOracle_320"      location="${installDir}/sql/mdek_3.2.0_oracle.sql"/>
     <property name="mdekDBOracle_330"      location="${installDir}/sql/mdek_3.3.0_oracle.sql"/>
+    <property name="mdekDBOracle_331"      location="${installDir}/sql/mdek_3.3.1_oracle.sql"/>
     <property name="mdekDBOracle_340"      location="${installDir}/sql/mdek_3.4.0_oracle.sql"/>
 
 
@@ -262,6 +263,7 @@
             <transaction src="${mdekDBOracle_311}"/>
             <transaction src="${mdekDBOracle_320}"/>
             <transaction src="${mdekDBOracle_330}"/>
+            <transaction src="${mdekDBOracle_331}"/>
             <transaction src="${mdekDBOracle_340}"/>
 
         </sql>
@@ -286,6 +288,7 @@
             <transaction src="${mdekDBOracle_311}"/>
             <transaction src="${mdekDBOracle_320}"/>
             <transaction src="${mdekDBOracle_330}"/>
+            <transaction src="${mdekDBOracle_331}"/>
             <transaction src="${mdekDBOracle_340}"/>
 
         </sql>

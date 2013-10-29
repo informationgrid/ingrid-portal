@@ -18,6 +18,9 @@
     <action type="add" dev="wemove" issue="REDMINE-188">
       WebMapClient: Add capabilities URL to metadata dialog.
     </action>
+    <action type="add" dev="wemove" issue="INGRID-2302,INGRID-2303">
+      IGE: Added behavior to automatically fill some fields when INSPIRE topic was chosen.
+    </action>
     <action type="add" dev="wemove" issue="REDMINE-117">
       IGE: Added scripting and IDF mapping templates for profile of LGV HH.
     </action>
