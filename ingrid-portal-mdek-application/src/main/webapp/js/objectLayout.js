@@ -168,7 +168,6 @@ ingridObjectLayout.createGeneralInfo = function(){
         }
     ];
     createDataGrid("thesaurusInspire", null, thesaurusInspireStructure, null);
-    applyRuleThesaurusInspire();
     
     new dijit.form.CheckBox({}, "isInspireRelevant");
     new dijit.form.CheckBox({}, "isOpenData");
