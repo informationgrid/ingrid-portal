@@ -320,16 +320,22 @@ function applyRuleThesaurusInspire() {
         var objClass = dijit.byId("objectClass").getValue();
         // only react if class == 1
         if (objClass == "Class1") {
+            // remove old dependent values
+            applySpecification(msg.oldItem.title, true);
+            // add new dependent value
             applySpecification(msg.item.title, false);
         }
     });
 
     // remove specific entry from conformity table when inspire topic was deleted
     dojo.connect(UtilGrid.getTable("thesaurusInspire"), "onDeleteItems", function(msg) {
-        dojo.forEach(msg.items, function(item) {
-            applySpecification(item.title, true);
-        });
-
+        var objClass = dijit.byId("objectClass").getValue();
+        // only react if class == 1
+        if (objClass == "Class1") {
+            dojo.forEach(msg.items, function(item) {
+                applySpecification(item.title, true);
+            });
+        }
     });
 }
 
