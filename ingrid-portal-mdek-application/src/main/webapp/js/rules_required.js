@@ -321,7 +321,9 @@ function applyRuleThesaurusInspire() {
         // only react if class == 1
         if (objClass == "Class1") {
             // remove old dependent values
-            applySpecification(msg.oldItem.title, true);
+            if (msg.oldItem) {
+                applySpecification(msg.oldItem.title, true);
+            }
             // add new dependent value
             applySpecification(msg.item.title, false);
         }
