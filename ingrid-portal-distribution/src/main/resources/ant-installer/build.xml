@@ -313,6 +313,7 @@
                 <exclude name="WEB-INF/classes/default-datasource.properties" />
                 <exclude name="WEB-INF/classes/mdek.properties" />
                 <exclude name="WEB-INF/classes/igeAdminUser.properties" />
+                <exclude name="WEB-INF/configurations.xml" />
             </patternset>
         </unwar>
 

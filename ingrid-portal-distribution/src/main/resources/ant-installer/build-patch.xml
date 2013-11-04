@@ -21,7 +21,7 @@
             </not>
             <then>
                 <echo>Patching ingrid-portal-apps.properties</echo>
-                <patchFile patchFile="patches/3.4.0/ingrid-portal-apps.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties" />
+                <patchFile patchFile="patches/3.3.1/ingrid-portal-apps.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties" />
             </then>
         </if>
     </target>
