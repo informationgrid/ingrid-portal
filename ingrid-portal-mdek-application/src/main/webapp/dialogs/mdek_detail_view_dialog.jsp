@@ -88,7 +88,7 @@ scriptScopeDetailView.refreshView = function() {
             def.addCallback(scriptScopeDetailView.hideProcessingDialog);
         } else {
             if (showDetails) {
-                var def = scriptScopeDetailView.loadAndRenderTreeNode(scriptScopeDetailView.selectedNode.id[0]);
+                var def = scriptScopeDetailView.loadAndRenderTreeNode(scriptScopeDetailView.selectedNode.id);
             } else {
                 scriptScopeDetailView.renderSimpleTreeNode(scriptScopeDetailView.nodeTreeItem);
                 var def = new dojo.Deferred();
@@ -839,9 +839,9 @@ scriptScopeDetailView.renderSuperiorElements = function(nodeUuid, ignoreFirstNod
 	    // leave selected subtree and find parents in the rendered tree
 	    var treeNode = dijit.byId(nodeUuid);
 	    if (ignoreFirstNode)
-	        return this.renderSuperiorElements(treeNode.getParent().id[0]);
+	        return this.renderSuperiorElements(treeNode.getParent().id);
 	    else
-	        return this.renderSuperiorElements(treeNode.getParent().id[0]) + "@@" + treeNode.label;
+	        return this.renderSuperiorElements(treeNode.getParent().id) + "@@" + treeNode.label;
 	} else {
 	    if (ignoreFirstNode)
 	        return this.renderSuperiorElements(node.parent);

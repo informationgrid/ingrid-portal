@@ -87,7 +87,7 @@ scriptScopeDetailViewAddr.refreshView = function() {
             def.addCallback(this.hideProcessingDialog);
         } else {
             if (showDetails) {
-                var def = this.loadAndRenderTreeNode(this.selectedNode.id[0]);
+                var def = this.loadAndRenderTreeNode(this.selectedNode.id);
             } else {
                 this.renderSimpleTreeNode(this.nodeTreeItem);
                 var def = new dojo.Deferred();

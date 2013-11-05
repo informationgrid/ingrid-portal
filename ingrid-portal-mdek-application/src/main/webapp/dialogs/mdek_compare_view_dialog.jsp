@@ -11,7 +11,7 @@ dojo.connect(_container_, "onLoad", function(){
 	var nodeDataNew = udkDataProxy._getData();
 	var nodeOld = dijit.byId(dijit.byId("pageDialog").customParams.selectedNodeId);
 
-	ObjectService.getPublishedNodeData(nodeOld.id[0],
+	ObjectService.getPublishedNodeData(nodeOld.id,
 		{
 			callback:function(res) { renderNodeData(res, nodeDataNew); },
 			errorHandler:function(message) {console.debug("Error in mdek_compare_view_dialog.jsp: Error while waiting for published nodeData: " + message); displayErrorMessage(message);}
