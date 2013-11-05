@@ -204,7 +204,8 @@ div.rubricBottom span.rubricButtons .dijitButtonNode:hover { background-color:#A
 
 
 .slick-cell .dijitInputField {box-sizing: border-box; -webkit-box-sizing: border-box; padding: 0 !important;}
-.slick-cell .dijitTextBox, .slick-cell .dijitComboBox {border: none; height:20px !important; position: absolute; outline-width:0px;}
+.slick-cell .dijitTextBox, .slick-cell .dijitComboBox {border: none; height:17px !important; position: absolute; outline-width:0px;}
+.slick-cell .dijitComboBoxFocused .dijitButtonNode { padding: 0px !important; }
 .slick-cell.active.editable {padding: 0 !important;}
 .slick-cell .dijitComboBox .dijitButtonNode, .slick-cell .dijitComboBox .dijitButtonNode input {height:100% !important;}
 .slick-row {height:20px;}
