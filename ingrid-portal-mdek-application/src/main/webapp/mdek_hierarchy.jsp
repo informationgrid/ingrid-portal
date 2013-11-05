@@ -1532,9 +1532,7 @@
                                         <div id="spatialRefCoordsAdminUnitContent" style="display:block; height: 44px;">
                                             <span class="outer halfWidth"><div style="margin-left: -6px; margin-top: 3px;">
                                                 <div class="input">
-                                                    <select id="spatialRefAdminUnitSelect" toggle="plain" style="width:100%; margin:0.01px;">
-                                                        <!--<option value="GEO_WGS84"><fmt:message key="dialog.research.ext.obj.coordinates.wgs84" /></option> ... -->
-                                                    </select>
+                                                    <select id="spatialRefAdminUnitSelect" toggle="plain" style="width:100%; margin:0.01px;"></select>
                                                 </div>
                                             </div></span>
                                             <span class="outer halfWidth"><div>
@@ -1573,9 +1571,7 @@
                                         <div id="spatialRefCoordsLocationContent" style="display:block; height: 44px;">
                                             <span class="outer halfWidth"><div style="margin-left: -6px; margin-top: 3px;">
                                                 <div class="input">
-                                                    <select id="spatialRefLocationSelect" toggle="plain" style="width:100%; margin:0.01px;">
-                                                        <!--<option value="GEO_WGS84"><fmt:message key="dialog.research.ext.obj.coordinates.wgs84" /></option> ... -->
-                                                    </select>
+                                                    <select id="spatialRefLocationSelect" toggle="plain" style="width:100%; margin:0.01px;"></select>
                                                 </div>
                                                 </div>
                                             </span>
@@ -1710,9 +1706,7 @@
                                                         Typ
                                                     </label>
                                                 </span><span class="input">
-                                                    <select autoComplete="false" style="width:100%;" id="timeRefType">
-                                                        <!--<option value="am"><fmt:message key="dialog.research.ext.obj.content.time.at" /></option><option value="seit"><fmt:message key="dialog.research.ext.obj.content.time.since" /></option><option value="bis"><fmt:message key="dialog.research.ext.obj.content.time.until" /></option><option value="von"><fmt:message key="dialog.research.ext.obj.content.time.fromto" /></option>-->
-                                                    </select>
+                                                    <select autoComplete="false" style="width:100%;" id="timeRefType"></select>
                                                 </span>
 												</div>
 											</span>
