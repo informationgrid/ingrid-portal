@@ -21,11 +21,44 @@
     <action type="add" dev="wemove" issue="INGRID-2302,INGRID-2303">
       IGE: Added behavior to automatically fill some fields when INSPIRE topic was chosen.
     </action>
+    <action type="add" dev="wemove" issue="REDMINE-132">
+      IGE: Added new relation type "Nutzungsbedingungen". Added relation type filter for table "references to".
+    </action>
+    <action type="add" dev="wemove" issue="REDMINE-126">
+      IGE: Use Service-Url instead of getCapabilities-Url and append parameters automatically.
+    </action>
+    <action type="add" dev="wemove" issue="REDMINE-130">
+      IGE: Check for invalid getCapabilities and possibility to replace them.
+    </action>
+    <action type="add" dev="wemove" issue="REDMINE-192">
+      IGE: Add checkbox to available additional field.
+    </action>
+	<action type="update" dev="wemove" issue="REDMINE-121">
+      Portal: Update detail view to flexible order of content.
+    </action>
+	<action type="update" dev="wemove">
+      Portal: Update Sachsen profile.
+    </action>
+	<action type="update" dev="wemove">
+      Portal: Update Hamburg profile.
+    </action>
+	<action type="fix" dev="wemove" issue="REDMINE-181">
+      WebMapClient: Fix outside definition of map extent at the admin-gui.
+    </action>
+	<action type="fix" dev="wemove" issue="REDMINE-182">
+      WebMapClient: Fix to move services on layer tree by icon.
+    </action>
+  </release>
+
+   <release version="3.3.1" date="2013-11-05" description="Release InGrid 3.3.1">
     <action type="add" dev="wemove" issue="REDMINE-117">
       IGE: Added scripting and IDF mapping templates for profile of LGV HH.
     </action>
-	<action type="add" dev="wemove" issue="REDMINE-128">
+    <action type="add" dev="wemove" issue="REDMINE-128">
       IGE: Added "Open data" checkbox and Categories.
+    </action>
+    <action type="add" dev="wemove" issue="REDMINE-192">
+      IGE: Added new additional field: "Checkbox".
     </action>
     <action type="add" dev="wemove" issue="REDMINE-118">
       IGE: When editing link and relation is "Download of data" then new input field "file format".
@@ -36,23 +69,11 @@
      <action type="add" dev="wemove" issue="GEOPORTALWSV-37">
       WebMapClient: Add Nominatim-Search to the frontend of the WebMapClient menu bar.
     </action>
-    <action type="add" dev="wemove" issue="REDMINE-132">
-      IGE: Added new relation type "Nutzungsbedingungen". Added relation type filter for table "references to".
-    </action>
-    <action type="add" dev="wemove" issue="REDMINE-126">
-      IGE: Use Service-Url instead of getCapabilities-Url and append parameters automatically.
-    </action>
-    <action type="add" dev="wemove" issue="REDMINE-130">
-      IGE: Check for invalid getCapabilities and possibility to replace them.
-    </action>
     <action type="add" dev="wemove">
       WebMapClient: Add configurations for other portal profiles.
     </action>
     <action type="add" dev="wemove">
       Portal: Add Localization file to profiles for the InGrid-WebMapClient.
-    </action>
-    <action type="add" dev="wemove" issue="REDMINE-192">
-      IGE: Add checkbox to available additional field.
     </action>
      <action type="update" dev="wemove" issue="INGRID-2298">
       WebMapClient: Update content of Welcome Dialog.
@@ -66,16 +87,7 @@
     <action type="update" dev="wemove" issue="INGRID-2260">
       IGE: Update of help texts.
     </action>
-	<action type="update" dev="wemove" issue="REDMINE-121">
-      Portal: Update detail view to flexible order of content.
-    </action>
-	<action type="update" dev="wemove">
-      Portal: Update Sachsen profile.
-    </action>
-	<action type="update" dev="wemove">
-      Portal: Update Hamburg profile.
-    </action>
-	<action type="fix" dev="wemove" issue="AF-00211">
+    <action type="fix" dev="wemove" issue="AF-00211">
       Portal: Fix fetching of RSS news when link differs although same news (e.g. due to changing ad-parameter in link).
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2276">
@@ -83,6 +95,12 @@
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2286">
       Portal: Fix link to wemove page in content of Impressum.
+    </action>
+    <action type="fix" dev="wemove" issue="INGRID-2301">
+      IGE: fixed bug that save dialog appeared without reason.
+    </action>
+    <action type="fix" dev="wemove" issue="INGRID-2311">
+      IGE: Fixed a bug where IE8/9 could not inherit address data to its children.
     </action>
     <action type="fix" dev="wemove" issue="INGRID-2308">
       IGE: Fix group administration when setting permissions to more than visible entries in table.
@@ -111,11 +129,8 @@
     <action type="fix" dev="wemove">
       WebMapClient: Transformation coordinates to WGS-84 by search area.
     </action>
-	<action type="fix" dev="wemove" issue="REDMINE-181">
-      WebMapClient: Fix outside definition of map extent at the admin-gui.
-    </action>
-	<action type="fix" dev="wemove" issue="REDMINE-182">
-      WebMapClient: Fix to move services on layer tree by icon.
+    <action type="fix" dev="wemove">
+      IGE: Fixed scrolling of info dialog.
     </action>
   </release>
 
