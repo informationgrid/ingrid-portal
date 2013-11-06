@@ -28,6 +28,7 @@
     <property name="updateMySQL320b" location="${installDir}/sql/update_3.2.0b_mysql.sql"/>
     <property name="updateMySQL320c" location="${installDir}/sql/update_3.2.0c_mysql.sql"/>
     <property name="updateMySQL320d" location="${installDir}/sql/update_3.2.0d_mysql.sql"/>
+    <property name="updateMySQL331" location="${installDir}/sql/update_3.3.1_mysql.sql"/>
 
     <!-- mysql ige imports -->
     <property name="mdekDB"          location="${installDir}/sql/mdek_0_mysql.sql"/>
@@ -157,6 +158,7 @@
             <transaction src="${updateMySQL320b}"/>
             <transaction src="${updateMySQL320c}"/>
             <transaction src="${updateMySQL320d}"/>
+            <transaction src="${updateMySQL331}"/>
         </sql>
     </target>
     
@@ -180,6 +182,7 @@
             <transaction src="${updateMySQL320b}"/>
             <transaction src="${updateMySQL320c}"/>
             <transaction src="${updateMySQL320d}"/>
+            <transaction src="${updateMySQL331}"/>
         </sql>
     </target>
     
@@ -202,6 +205,7 @@
             <transaction src="${updateMySQL320b}"/>
             <transaction src="${updateMySQL320c}"/>
             <transaction src="${updateMySQL320d}"/>
+            <transaction src="${updateMySQL331}"/>
         </sql>
     </target>
     
@@ -223,6 +227,25 @@
             <transaction src="${updateMySQL320b}"/>
             <transaction src="${updateMySQL320c}"/>
             <transaction src="${updateMySQL320d}"/>
+            <transaction src="${updateMySQL331}"/>
+        </sql>
+    </target>
+    
+    <target name="PortalDbUpdateFrom320d" if="useMysql">
+        <echo>MySQL-Portal Daten importieren (ab 3.2.0d)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateMySQL331}"/>
         </sql>
     </target>
     

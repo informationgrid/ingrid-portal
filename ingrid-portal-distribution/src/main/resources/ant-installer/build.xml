@@ -478,6 +478,13 @@
         <elseif>
             <equals arg1="${portal.version}" arg2=",3.2.0d" />
             <then>
+                <runtarget target="mysql.PortalDbUpdateFrom320d"/>
+                <runtarget target="oracle.PortalDbUpdateFrom320d"/>
+            </then>
+        </elseif>
+        <elseif>
+            <equals arg1="${portal.version}" arg2=",3.3.1" />
+            <then>
                 <echo>Ihre Datenbank ist aktuell!</echo>
             </then>
         </elseif>

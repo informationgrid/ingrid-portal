@@ -29,6 +29,7 @@
     <property name="updateOracle320b" location="${installDir}/sql/update_3.2.0b_oracle.sql"/>
     <property name="updateOracle320c" location="${installDir}/sql/update_3.2.0c_oracle.sql"/>
     <property name="updateOracle320d" location="${installDir}/sql/update_3.2.0d_oracle.sql"/>
+    <property name="updateOracle331" location="${installDir}/sql/update_3.3.1_oracle.sql"/>
     
 
     <!-- oracle ige imports -->
@@ -157,6 +158,7 @@
             <transaction src="${updateOracle320b}"/>
             <transaction src="${updateOracle320c}"/>
             <transaction src="${updateOracle320d}"/>
+            <transaction src="${updateOracle331}"/>
         </sql>
         
         <sql    driver    ="${oracleDriverClass}"
@@ -192,6 +194,7 @@
             <transaction src="${updateOracle320b}"/>
             <transaction src="${updateOracle320c}"/>
             <transaction src="${updateOracle320d}"/>
+            <transaction src="${updateOracle331}"/>
         </sql>
     </target>
     
@@ -214,6 +217,7 @@
             <transaction src="${updateOracle320b}"/>
             <transaction src="${updateOracle320c}"/>
             <transaction src="${updateOracle320d}"/>
+            <transaction src="${updateOracle331}"/>
         </sql>
     </target>
     
@@ -235,6 +239,25 @@
             <transaction src="${updateOracle320b}"/>
             <transaction src="${updateOracle320c}"/>
             <transaction src="${updateOracle320d}"/>
+            <transaction src="${updateOracle331}"/>
+        </sql>
+    </target>
+    
+    <target name="PortalDbUpdateFrom320d" if="useOracle">
+        <echo>Oracle-Portal Daten importieren (ab 3.2.0d)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateOracle331}"/>
         </sql>
     </target>
     
