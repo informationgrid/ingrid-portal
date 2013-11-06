@@ -1,5 +1,9 @@
+// JS Code für LGV HH 3.3.1 zum Hinzufügen in "Gesamtkatalogmanagement -> Zusätzliche Felder"
+
 // ========================================================================================================================
 // Defaultwerte bei neuem Objekt der Objektklasse "Geodatensatz" (REDMINE-119)
+// TODO:
+//   - nachfolgendes Javascript (JS) hinzufügen z.B. in 1. Feld "Allgemeines - Kurzbezeichnung"
 // ========================================================================================================================
 // ------------------------
 // JS
@@ -18,9 +22,108 @@ dojo.subscribe("/onObjectClassChange", function(data) {
 
 
 // ========================================================================================================================
-// Neues Auswahlfeld/Liste: "Informationsgegenstand" (REDMINE-193)
-// - Erstellung einer Tabelle(ID:'Informationsgegenstand') mit einer Spalte(ID:'informationHmbTG') und Indexnamen der Spalte 'infoHmbTG' und Breite 691px
-// - Spaltentyp ist eine Liste in der die Codeliste übertragen wird
+// Zusätzliches Feld -> Checkbox: "Veröffentlichung gemäß HmbTG" (REDMINE-192)
+// TODO:
+// - Zusätzliches Feld anlegen unter "Allgemeines - Kategorien"
+//   - Checkbox (Id:'publicationHmbTG', Sichtbarkeit:anzeigen, Beschriftung:'Veröffentlichung gemäß HmbTG', Hilfetext:?)
+//   - nachfolgendes Javascript (JS) und IDF-Mapping hinzufügen
+// ========================================================================================================================
+// ------------------------
+// JS
+// ------------------------
+dojo.connect(dijit.byId("publicationHmbTG"), "onChange", function(isChecked) {
+    if (isChecked) {
+        dojo.addClass("uiElementAddInformationsgegenstand", "required");
+    } else {
+        dojo.removeClass("uiElementAddInformationsgegenstand", "required");
+    }
+});
+
+// tick checkbox if "open data" has been selected (REDMINE-194)
+dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
+    if (isChecked) {
+        dijit.byId("publicationHmbTG").set("value", true);
+    }
+});
+
+// ------------------------
+// IDF
+// ------------------------
+importPackage(Packages.de.ingrid.iplug.dsc.om);
+//add Namespaces to Utility for convenient handling of NS !
+DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
+DOM.addNS("gco", "http://www.isotc211.org/2005/gco");
+
+if (!(sourceRecord instanceof DatabaseSourceRecord)) {
+  throw new IllegalArgumentException("Record is no DatabaseRecord!");
+}
+
+var id = sourceRecord.get(DatabaseSourceRecord.ID);
+var igcProfileControlId = XPATH.getString(igcProfileControlNode, "igcp:id");
+var contentLabel = SQL.all("SELECT add1.data FROM `additional_field_data` as add1 WHERE add1.obj_id=? AND add1.field_key=?", [id, igcProfileControlId]);
+if (contentLabel && contentLabel.size() > 0) {
+    var isChecked = contentLabel.get(0).get("data") == "true";
+    if (isChecked) {
+        
+        var i;
+        var dataIdentification = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification");
+        
+        var path = ["gmd:resourceFormat", "gmd:graphicOverview", "gmd:resourceMaintenance","gmd:pointOfContact", "gmd:status","gmd:credit","gmd:purpose"];
+        
+        // find first present node from paths
+        var nodeBeforeInsert = null;
+        for (i=0; i<path.length; i++) {
+            // get the last occurrence of this path if any
+            nodeBeforeInsert = DOM.getElement(dataIdentification, path[i]+"[last()]");
+            if (nodeBeforeInsert) { break; }
+        }
+        
+        // write keys of thesaurus codelist
+        var keywords;
+        var keywordsParent;
+        if (nodeBeforeInsert) {
+            keywordsParent = nodeBeforeInsert.addElementAsSibling("gmd:descriptiveKeywords");
+        } else {
+            keywordsParent = dataIdentification.addElement("gmd:descriptiveKeywords");
+        }
+        keywords = keywordsParent.addElement("gmd:MD_Keywords");
+        keywords.addElement("gmd:keyword/gco:CharacterString").addText("hmbtg");
+    }
+}
+
+
+// ========================================================================================================================
+// Zusätzliches Auswahlfeld/Liste: "Informationsgegenstand" (REDMINE-193)
+// TODO:
+// - Zusätzliches Feld anlegen unter erzeugter Checkbox "Veröffentlichung gemäß HmbTG" (s.o.)
+//   - Tabelle (Id:'Informationsgegenstand', Beschriftung:'Informationsgegenstand', Hilfetext:?)
+//     mit einer Spalte(Typ: Liste, Id:'informationHmbTG', Breite: 691px, Indexname: 'infoHmbTG', Einträge: ensprechende Codeliste -> 
+/*
+Codeliste für das Feld „Informationsgegenstand“ (id / option)
+{
+  "hmbtg_01_senatsbeschluss": "Senatsbeschlüsse",
+  "hmbtg_02_mitteilung_buergerschaft": "Mitteilungen des Senats",
+  "hmbtg_03_beschluesse_oeffentliche_sitzung": "Öffentliche Beschlüsse",
+  "hmbtg_04_vertraege_daseinsvorsorge": "Verträge der Daseinsvorsorge",
+  "hmbtg_05_verwaltungsplaene": "Verwaltungspläne",
+  "hmbtg_06_verwaltungsvorschriften": "Verwaltungsvorschriften",
+  "hmbtg_07_statistiken": "Statistiken und Tätigkeitsberichte",
+  "hmbtg_08_gutachten": "Gutachten und Studien",
+  "hmbtg_09_geodaten": "Geodaten",
+  "hmbtg_10_messungen": "Umweltdaten",
+  "hmbtg_11_baumkataster": "Baumkataster",
+  "hmbtg_12_oeffentliche_plaene": "Öffentliche Pläne",
+  "hmbtg_13_baugenehmigungen": "Baugenehmigungen",
+  "hmbtg_14_zuwendungen_subventionen": "Subventionen und Zuwendungen",
+  "hmbtg_15_unternehmensdaten": "Unternehmensdaten",
+  "hmbtg_16_vertraege_oeffentl_interesse": "Verträge von öffentl. Interesse",
+  "hmbtg_17_dienstanweisungen": "Dienstanweisungen",
+  "hmbtg_18_vergleichbar": "vergleichbare Informationen von öffentl. Interesse",
+  "hmbtg_19_andere_veroeffentlichungspflicht": "Veröffentlichungspflicht außerhalb HmbTG",
+  "hmbtg_20_ohne_veroeffentlichungspflicht": "Ohne gesetzliche Verpflichtung" 
+}
+*/
+//   - nachfolgendes IDF-Mapping hinzufügen
 // ========================================================================================================================
 // ------------------------
 // IDF
@@ -91,79 +194,10 @@ if ( contentLabel && contentLabel.size() > 0) {
 
 
 // ========================================================================================================================
-// Neue Checkbox: "Veröffentlichung gemäß HmbTG" (REDMINE-192)
-// - Erstellung einer einfachen Checkbox mit
-//    ID: publicationHmbTG
-//    Titel: Veröffentlichung gemäß HmbTG
-// ========================================================================================================================
-// ------------------------
-// JS
-// ------------------------
-dojo.connect(dijit.byId("publicationHmbTG"), "onChange", function(isChecked) {
-    if (isChecked) {
-        dojo.addClass("uiElementAddInformationsgegenstand", "required");
-    } else {
-        dojo.removeClass("uiElementAddInformationsgegenstand", "required");
-    }
-});
-
-// tick checkbox if "open data" has been selected (REDMINE-194)
-dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
-    if (isChecked) {
-        dijit.byId("publicationHmbTG").set("value", true);
-    }
-});
-
-// ------------------------
-// IDF
-// ------------------------
-importPackage(Packages.de.ingrid.iplug.dsc.om);
-//add Namespaces to Utility for convenient handling of NS !
-DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
-DOM.addNS("gco", "http://www.isotc211.org/2005/gco");
-
-if (!(sourceRecord instanceof DatabaseSourceRecord)) {
-  throw new IllegalArgumentException("Record is no DatabaseRecord!");
-}
-
-var id = sourceRecord.get(DatabaseSourceRecord.ID);
-var igcProfileControlId = XPATH.getString(igcProfileControlNode, "igcp:id");
-var contentLabel = SQL.all("SELECT add1.data FROM `additional_field_data` as add1 WHERE add1.obj_id=? AND add1.field_key=?", [id, igcProfileControlId]);
-if (contentLabel && contentLabel.size() > 0) {
-    var isChecked = contentLabel.get(0).get("data") == "true";
-    if (isChecked) {
-        
-        var i;
-        var dataIdentification = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification");
-        
-        var path = ["gmd:resourceFormat", "gmd:graphicOverview", "gmd:resourceMaintenance","gmd:pointOfContact", "gmd:status","gmd:credit","gmd:purpose"];
-        
-        // find first present node from paths
-        var nodeBeforeInsert = null;
-        for (i=0; i<path.length; i++) {
-            // get the last occurrence of this path if any
-            nodeBeforeInsert = DOM.getElement(dataIdentification, path[i]+"[last()]");
-            if (nodeBeforeInsert) { break; }
-        }
-        
-        // write keys of thesaurus codelist
-        var keywords;
-        var keywordsParent;
-        if (nodeBeforeInsert) {
-            keywordsParent = nodeBeforeInsert.addElementAsSibling("gmd:descriptiveKeywords");
-        } else {
-            keywordsParent = dataIdentification.addElement("gmd:descriptiveKeywords");
-        }
-        keywords = keywordsParent.addElement("gmd:MD_Keywords");
-        keywords.addElement("gmd:keyword/gco:CharacterString").addText("hmbtg");
-    }
-}
-
-
-// ========================================================================================================================
-// Wenn OpenData (REDMINE-117)
-// - neues Keyword "#opendata_hh#"
-// - toggle fields
+// Wenn "OpenData" gesetzt, dann neues Keyword "#opendata_hh#" und Felder ein-/ausblenden ... (REDMINE-117)
+// TODO:
+//   - nachfolgendes Javascript (JS) hinzufügen z.B. in Feld "Allgemeines - Open Data"
+//   - nachfolgendes IDF-Mapping hinzufügen (z.B. in neuem Zusätzlichem Feld, das immer versteckt wird !)
 // ========================================================================================================================
 // ------------------------
 // JS
@@ -250,7 +284,8 @@ if (!(sourceRecord instanceof DatabaseSourceRecord)) {
   throw new IllegalArgumentException("Record is no DatabaseRecord!");
 }
 
-var id = sourceRecord.get(DatabaseSourceRecord.ID);
+//var id = sourceRecord.get(DatabaseSourceRecord.ID);
+// add "#opendata_hh#" keyword if opendata keyword set ! (opendata keyword is set if checkbox Open Data activated !
 var openDataKeyword = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[gco:CharacterString='opendata']");
 if (openDataKeyword) {
     var hhKeyword = openDataKeyword.addElementAsSibling("gmd:keyword");
