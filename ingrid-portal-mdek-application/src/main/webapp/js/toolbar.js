@@ -99,6 +99,7 @@ ingridToolbar._createToolbarButtons = function(toolbar, entries, rightAligned) {
 			params.style = "float: " + aligned;
 			params.onClick = entry[1];
 			params.iconClass = "image18px tabIcon" + entry[0];
+			params.id = "toolbarBtn" + entry[0];
 			if (entry[2])
 				params.id = entry[2];
 			
