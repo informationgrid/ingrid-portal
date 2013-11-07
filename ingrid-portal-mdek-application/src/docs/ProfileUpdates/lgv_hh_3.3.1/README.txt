@@ -3,13 +3,14 @@ Vorgehen Upgrade InGrid LGV HH 3.3.1
 ====================================
 
 Nachfolgend sind die einzelnen Komponenten aufgeführt und nötige Schritte zum Upgrade.
-Prinzipiell besitzt jeder Installer eine UPDATE Funktionalität, bei der bestehende Komponenten auf die neue Version aktualisiert werden (Konfigurationen bleiben erhalten und werden evtl. erweitert).
+Prinzipiell besitzt jeder Installer eine UPDATE Funktionalität, bei der die bestehende Komponente auf die neue Version aktualisiert werden (Konfigurationen bleiben erhalten und werden evtl. erweitert).
 Sollte dies nicht zum Ziel führen, kann die Komponente auch NEU installiert werden, dann müssen die Konfigurationen manuell angepasst werden.
 Vor jeder Installation gilt:
-- BACKUP DER ALTEN KOMPONENTE + BACKUP DER ZUGEHÖRIGEN DATENBANKEN !
+- STOPPEN DER ALTEN KOMPONENTE + BACKUP DER ALTEN KOMPONENTE + BACKUP DER ZUGEHÖRIGEN DATENBANKEN !
 
-Alle Installer finden sich unter:
+Alle Installer finden sich im Moment auf dem internen Distributionsserver:
 http://213.144.28.209/ingrid-distributions/
+(ingrid::g31n1ngr1d23)
 
 
 ingrid-codelist-repository
