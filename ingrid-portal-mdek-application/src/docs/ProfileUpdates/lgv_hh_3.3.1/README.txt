@@ -8,9 +8,8 @@ Sollte dies nicht zum Ziel führen, kann die Komponente auch NEU installiert werd
 Vor jeder Installation gilt:
 - STOPPEN DER ALTEN KOMPONENTE + BACKUP DER ALTEN KOMPONENTE + BACKUP DER ZUGEHÖRIGEN DATENBANKEN !
 
-Alle Installer finden sich im Moment auf dem internen Distributionsserver:
+Alle Installer finden sich im Moment auf dem internen Distributionsserver (demnächst auch auf öffentlichem, entsprechend IP ersetzen):
 http://213.144.28.209/ingrid-distributions/
-(ingrid::g31n1ngr1d23)
 
 
 ingrid-codelist-repository
