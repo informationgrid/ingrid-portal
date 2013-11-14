@@ -20,7 +20,7 @@ span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px
 span.normaltext { font-weight:normal; text-transform:none; }
 span.smaller {font-size: 83%}
 ul { list-style-type:square; padding-left:30px; margin: 0 0 0 0; }
-p { margin-top:0; margin-bottom:1em; font-size:75%}
+p { margin-top:0; margin-bottom:1em; font-size:11px;}
 strong {font-weight:bold}
 
 div.line { border: 0; background-color: #CCCCCC; height: 1px; margin:10px 0 0 0; padding:0 }
