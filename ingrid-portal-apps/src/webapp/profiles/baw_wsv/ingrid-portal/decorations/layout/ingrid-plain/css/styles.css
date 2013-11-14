@@ -19,7 +19,7 @@ span.icon_udk { margin-right:6px; margin-top:2px; position:absolute; width:21px;
 span.icon_udk_detail { margin-right:6px; margin-top:2px; width:21px; height:14px; }
 span.normaltext { font-weight:normal; text-transform:none; }
 span.smaller {font-size: 83%}
-ul { list-style-type:square; padding-left:30px; margin: 0 0 0 0; }
+ul { list-style-type:square; padding-left:0px; margin: 0 0 0 0; }
 p { margin-top:0; margin-bottom:1em; font-size:12px; }
 strong {font-weight:bold}
 .section textarea, .section select, input { }
@@ -244,5 +244,5 @@ p,label.search-ext-env{padding:2px;}
 ol, ul { list-style-type: none !important; }
 .x-tree-node-anchor {   font-size:11px !important;}
 ul.x-tab-strip-top {background-color: #CEDFF5;border-bottom-color: #8DB2E3;margin: 0 !important}
-li.x-tree-node{margin-left:-30px;}
+li.x-tree-node{margin-left:0px;}
 .mapclientLegendPanel div div div label{ background-color:#D0D0D0; }
