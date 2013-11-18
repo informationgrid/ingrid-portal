@@ -621,11 +621,8 @@ function returnToBr(string) {
                         </label>
                     </td>
                     <td>
-                        <select dojoType="dijit.form.Select" id="importFileType" style="width:100%;">
-                            <option value="igc">InGrid Catalog</option>
-                            <option value="csw202">CSW 2.0.2 AP ISO 1.0 (Single Metadata file / ZIP Archive)</option>
-                            <option value="arcgis1">ArcGIS ISO-Editor (Single Metadata file / ZIP Archive)</option>
-                        </select>
+                        <!-- Select box all in one line ! Due to strange bug with dojo and firefox/chrome newest versions ! ??? -->
+                        <select dojoType="dijit.form.Select" id="importFileType" style="width:100%;"><option value="igc">InGrid Catalog</option><option value="csw202">CSW 2.0.2 AP ISO 1.0 (Single Metadata file / ZIP Archive)</option><option value="arcgis1">ArcGIS ISO-Editor (Single Metadata file / ZIP Archive)</option></select>
                     </td>
                 </tr>
                 <tr id="publishImportedDatasets" class="hide">
