@@ -43,10 +43,11 @@
                 //tree.attr("path", [tree.rootNode.item, tree.rootNode.getChildren()[0].item]);
                 this.setUserAddressDataFieldsDisabled(true);
 
-                Validation.addEmailCheck("userDataAddressEmailUser", false);
-                Validation.addEmailCheck("userDataAddressEmailPointOfContact", false);
-                
-                
+                // validation rule has been put in html since then the input is validated
+                // more intelligently after text has been entered
+                //Validation.addEmailCheck("userDataAddressEmailUser", false);
+                //Validation.addEmailCheck("userDataAddressEmailPointOfContact", false);
+                                
                 this.addRequiredBehaviour();
                 
             });
@@ -1037,7 +1038,7 @@
                                                 <fmt:message key="dialog.admin.users.emailUser" /><span class="requiredSign">*</span>
                                             </label>
                                         </span>
-                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressEmailUser" name="userDataAddressEmailUser" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressEmailUser" name="userDataAddressEmailUser" regExp="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
                                     <span id="institutionInput" class="outer required" style="width:33%; clear:both;"><div>
                                         <span class="label">
@@ -1045,7 +1046,7 @@
                                                 <fmt:message key="dialog.admin.users.institution" /><span class="requiredSign">*</span>
                                             </label>
                                         </span>
-                                        <span class="input"><input type="text" id="userDataAddressInstitution" name="userDataAddressEmailPointOfContact" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                        <span class="input"><input type="text" id="userDataAddressInstitution" name="userDataAddressInstitution" required="true" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
                                     <span class="outer" style="width:33%;"><div>
                                         <span class="label">
@@ -1061,7 +1062,7 @@
                                                 <fmt:message key="dialog.admin.users.emailPointOfContact" />
                                             </label>
                                         </span>
-                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressEmailPointOfContact" name="userDataAddressEmailPointOfContact" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                                        <span class="input"><input type="text" maxLength="255" id="userDataAddressEmailPointOfContact" name="userDataAddressEmailPointOfContact" regExp="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
                                     </div></span>
                                     <span class="outer" style="width:33%; clear:both;"><div>
                                         <span class="label">
