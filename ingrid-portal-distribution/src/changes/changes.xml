@@ -134,6 +134,12 @@
     </action>
   </release>
 
+  <release version="3.3.2-SNAPSHOT" date="2013-??-??" description="Release InGrid 3.3.2">
+    <action type="add" dev="wemove" issue="REDMINE-230">
+      IGE: Added ATOM Url to catalog settings and checkbox to set metadata for ATOM download.
+    </action>
+   </release>
+
   <release version="3.3.0.1" date="2013-03-15" description="Bugfix Release InGrid 3.3.0.1">	
    <action type="add" dev="wemove" issue="INGRID-2231">
     Portal: Show "XML"-Link on search result list only if the hit has an ID and if is a metadata.

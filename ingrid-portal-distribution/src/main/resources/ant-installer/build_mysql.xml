@@ -37,6 +37,7 @@
     <property name="mdekDB_320"      location="${installDir}/sql/mdek_3.2.0_mysql.sql"/>
     <property name="mdekDB_330"      location="${installDir}/sql/mdek_3.3.0_mysql.sql"/>
     <property name="mdekDB_331"      location="${installDir}/sql/mdek_3.3.1_mysql.sql"/>
+    <property name="mdekDB_332"      location="${installDir}/sql/mdek_3.3.2_mysql.sql"/>
     <property name="mdekDB_340"      location="${installDir}/sql/mdek_3.4.0_mysql.sql"/>
 
 
@@ -300,6 +301,7 @@
             <transaction src="${mdekDB_320}"/>
             <transaction src="${mdekDB_330}"/>
             <transaction src="${mdekDB_331}"/>
+            <transaction src="${mdekDB_332}"/>
             <transaction src="${mdekDB_340}"/>
 
         </sql>
@@ -326,6 +328,7 @@
             <transaction src="${mdekDB_320}"/>
             <transaction src="${mdekDB_330}"/>
             <transaction src="${mdekDB_331}"/>
+            <transaction src="${mdekDB_332}"/>
             <transaction src="${mdekDB_340}"/>
 
         </sql>

@@ -17,14 +17,6 @@ INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, he
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1281, 0, 8061, -1, 'en', 'Service URL', 'Enter the getCapability-URL of the corresponding service. The parameters REQUEST and SERVICE are optional and will be added automatically. However it is possible to set them explicitly.', 'http://www.portalu.de/csw202?SERVICE=CSW');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
-(1420, 0, 8091, -1, 'de', 'ATOM-Downloadservice-URL', 'Die hier eingetragene URL wird im Portal verwendet, um einen Metadatensatz als ATOM-Feed herunterzuladen. Dieser Metadatensatz muss hierfür explizit für den Download freigeschaltet sein, wofür die Checkbox "Als ATOM-Download Dienst bereitstellen" zuständig ist!', 'http://portalu.de/dls/');
-INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
-(1421, 0, 8091, -1, 'en', 'ATOM-Downloadservice-URL', 'This URL is used in the portal to download metadata as an ATOM-feed. For this functionality this metadata has to be explicitly marked with "Provide as ATOM-download service!', 'http://portalu.de/dls/');
-INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
-(1422, 0, 3225, -1, 'de', 'Als ATOM-Download Dienst bereitstellen', 'Bei aktivierter Option, wird dieser Datensatz im Portal als Download angeboten.', '');
-INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
-(1423, 0, 3225, -1, 'en', 'Provide as ATOM-download service', 'If checked, this metadata will be available as a download in the portal.', '');
-INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (137, 0, 5064, -1, 'de', 'INSPIRE-Themen', 'Auswahl eines INSPIRE Themengebiets zur Verschlagwortung des Datensatzes (INSPIRE-Pflichtfeld).<br/><br/>Bei Eintragung oder Löschen eines INSPIRE-Themas werden in den Pflichtfeldern Konformität/Spezifikation und Kodierungsschema automatisch Einträge vorgenommen bzw. entfernt. ', 'Boden (automatischer Eintrag von "INSPIRE Data Specification on Soil - Draft Technical Guidelines" in Konformität/Spezifikation)');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1137, 0, 5064, -1, 'en', 'INSPIRE-Topics', 'Selection of an INSPIRE subject area for providing keywords from the data set (INSPIRE-obligatory field).<br/><br/>Inserting or deleting an entry here will cause an automatic insertion or deletion of a corresponding entry in "Conformity/Specification of Conformity".', 'Soil (automatic insertion of "INSPIRE Data Specification on Soil - Draft Technical Guidelines" in Conformity/Specification of Conformity)');
