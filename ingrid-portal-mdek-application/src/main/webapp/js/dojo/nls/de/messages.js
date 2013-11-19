@@ -797,6 +797,7 @@
     "ui.3210.description":"Basisdaten",
     "ui.3220.description":"Art des Dienstes",
     "ui.3221.description":"Kopplungstyp",
+    "ui.3225.description":"Als ATOM-Download Dienst bereitstellen",
     "ui.3230.description":"Version des Services",
     "ui.3240.description":"Historie",
     "ui.3250.description":"Erl&auml;uterungen",

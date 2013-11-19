@@ -2006,6 +2006,7 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
     UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
     dijit.byId("ref3ServiceType")._lastValueReported = nodeData.ref3ServiceType + "";
     dijit.byId("ref3ServiceType").set("value", nodeData.ref3ServiceType, false);
+	dijit.byId("ref3IsAtomDownload").attr("value", nodeData.ref3AtomDownload, true);
 	dijit.byId("ref3CouplingType").attr("value", nodeData.ref3CouplingType, true);
 	dijit.byId("ref3SystemEnv").attr("value", nodeData.ref3SystemEnv, true);
 	dijit.byId("ref3History").attr("value", nodeData.ref3History, true);
@@ -2571,6 +2572,7 @@ udkDataProxy._getObjectDataClass3 = function(nodeData) {
     nodeData.openData = dijit.byId("isOpenData").checked ? true : false; // in case value is NULL!
     nodeData.openDataCategories = UtilList.tableDataToList(udkDataProxy._getTableData("categoriesOpenData"));
 	nodeData.ref3ServiceType = dijit.byId("ref3ServiceType").getValue();
+	nodeData.ref3AtomDownload = dijit.byId("ref3IsAtomDownload").checked ? true : false;
 	nodeData.ref3CouplingType = dijit.byId("ref3CouplingType").getValue();
 	nodeData.ref3SystemEnv = dijit.byId("ref3SystemEnv").getValue();
 	nodeData.ref3History = dijit.byId("ref3History").getValue();

@@ -286,7 +286,8 @@ public class MdekCatalogUtils {
 			resultCat.setExpiryDuration((Integer) result.get(MdekKeys.EXPIRY_DURATION));
 			resultCat.setDateOfCreation(MdekUtils.convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_CREATION)));
 			resultCat.setDateOfLastModification(MdekUtils.convertTimestampToDate((String) result.get(MdekKeys.DATE_OF_LAST_MODIFICATION)));
-			resultCat.setLocation(mapToLocationBean((IngridDocument) result.get(MdekKeys.CATALOG_LOCATION)));			
+			resultCat.setLocation(mapToLocationBean((IngridDocument) result.get(MdekKeys.CATALOG_LOCATION)));
+			resultCat.setAtomUrl(result.getString(MdekKeys.CATALOG_ATOM_URL));			
 
 			IngridDocument modUserDoc = (IngridDocument) result.get(MdekKeys.MOD_USER);
 			if (modUserDoc != null)
@@ -432,6 +433,7 @@ public class MdekCatalogUtils {
 		catDoc.put(MdekKeys.WORKFLOW_CONTROL, cat.getWorkflowControl());
 		catDoc.put(MdekKeys.EXPIRY_DURATION, cat.getExpiryDuration());
 		catDoc.put(MdekKeys.CATALOG_LOCATION, mapLocationBeanToIngridDoc(cat.getLocation()));
+		catDoc.put(MdekKeys.CATALOG_ATOM_URL, cat.getAtomUrl());
 
 		return catDoc;
 	}

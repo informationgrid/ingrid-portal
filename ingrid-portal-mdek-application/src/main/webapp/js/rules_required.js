@@ -38,7 +38,7 @@ function applyRule2() {
 	console.debug("apply rule 2");
 	if (!dojo.hasClass("uiElementN014", "hide")) {
     	if (dijit.byId("thesaurusEnvExtRes").checked || UtilGrid.getTableData("thesaurusEnvTopics").length != 0) {
-    		UtilUI.setMandatory(dojo.byId("uiElementN014"));
+			UtilUI.setMandatory(dojo.byId("uiElementN014"));
     		UtilUI.setMandatory(dojo.byId("uiElementN015"));
     	} else {
     		UtilUI.setOptional(dojo.byId("uiElementN014"));
@@ -361,6 +361,17 @@ function applyRuleServiceType() {
         }
     });
     
+}
+
+function applyRuleDownloadService() {
+    dijit.byId("ref3ServiceType").onChange = function(value) {
+        if (value == "3") { // Downloadservice
+            dojo.removeClass("uiElement3225", "hide");
+        } else {
+            dijit.byId("ref3IsAtomDownload").set("checked", false);
+            dojo.addClass("uiElement3225", "hide");
+        }
+    };
 }
 
 function displayDiv(divElement) {

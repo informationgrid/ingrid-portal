@@ -15,6 +15,7 @@ public class CatalogBean {
 	private String languageShort;
 
 	private LocationBean location;
+	private String atomUrl;
 	private String workflowControl;
 	private Integer expiryDuration;
 	private Date dateOfCreation;
@@ -132,4 +133,12 @@ public class CatalogBean {
 	public void setLanguageShort(String languageShort) {
 		this.languageShort = languageShort;
 	}
+
+    public String getAtomUrl() {
+        return atomUrl;
+    }
+
+    public void setAtomUrl(String atomUrl) {
+        this.atomUrl = atomUrl;
+    }
 }

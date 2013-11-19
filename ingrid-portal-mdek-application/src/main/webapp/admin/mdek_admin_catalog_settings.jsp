@@ -76,6 +76,7 @@
                 dijit.byId("adminCatalogLanguage").setValue(catalogData.languageCode);
                 dijit.byId("adminCatalogSpatialRef").setValue(catalogData.location.name);
                 dijit.byId("adminCatalogSpatialRef").location = catalogData.location;
+                dijit.byId("adminCatalogAtomDownload").setValue(catalogData.atomUrl);
                 if (catalogData.workflowControl == "Y") {
                     dijit.byId("adminCatalogWorkflowControl").setValue(true);
                 }
@@ -119,6 +120,7 @@
                 newCatalogData.countryCode = dijit.byId("adminCatalogCountry").getValue();
                 newCatalogData.languageCode = dijit.byId("adminCatalogLanguage").getValue();
                 newCatalogData.location = dijit.byId("adminCatalogSpatialRef").location;
+                newCatalogData.atomUrl = dijit.byId("adminCatalogAtomDownload").getValue();
                 newCatalogData.expiryDuration = (dijit.byId("adminCatalogExpire").checked ? dijit.byId("adminCatalogExpiryDuration").getValue() : "0");
                 newCatalogData.workflowControl = dijit.byId("adminCatalogWorkflowControl").checked ? "Y" : "N";
                 console.debug("validating");
@@ -262,6 +264,18 @@
 							<input type="text" required="true" id="adminCatalogSpatialRef" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" />
 						</span>
                         </div></span>
+						<span class="outer">
+                            <div>
+    						    <span class="label left">
+                                    <label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 8091)">
+                                        <fmt:message key="dialog.admin.catalog.atomDownloadService" />
+                                    </label>
+                                </span>
+        						<span class="input">
+        							<input type="text" required="true" id="adminCatalogAtomDownload" style="width:100%;" dojoType="dijit.form.ValidationTextBox" />
+        						</span>
+                            </div>
+                        </span>
                         <span class="outer "><div>
                         <div class="checkboxContainer">
                             <span class="input">

@@ -164,6 +164,7 @@ public class MdekDataBean {
 
 	// Object class 3 (Geodatendienst)
 	private Integer ref3ServiceType;
+	private Boolean ref3AtomDownload;	
 	private String ref3CouplingType;
 	private List<Integer> ref3ServiceTypeTable;
 	private List<String> ref3ServiceVersion;
@@ -1983,5 +1984,15 @@ public class MdekDataBean {
     
     public void setOpenDataCategories(List<String> data) {
         this.openDataCategories = data;
+    }
+
+
+    public Boolean getRef3AtomDownload() {
+        return ref3AtomDownload;
+    }
+
+
+    public void setRef3AtomDownload(Boolean ref3AtomDownload) {
+        this.ref3AtomDownload = ref3AtomDownload;
     }
 }

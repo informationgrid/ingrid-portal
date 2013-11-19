@@ -297,6 +297,7 @@ public class MdekMapper implements DataMapperInterface {
                 break;
 
             mdekObj.setRef3ServiceType((Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY));
+            mdekObj.setRef3AtomDownload("Y".equals(td3Map.get(MdekKeys.HAS_ATOM_DOWNLOAD)) ? true : false);            
             mdekObj.setRef3CouplingType(td3Map.getString(MdekKeys.COUPLING_TYPE));
             mdekObj.setRef3ServiceTypeTable(mapToServiceTypeTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_TYPE2_LIST)));
 
@@ -882,6 +883,13 @@ public class MdekMapper implements DataMapperInterface {
         case 3:
             IngridDocument td3Map = new IngridDocument();           
             td3Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
+            if (data.getRef3AtomDownload() != null) {
+                if (data.getRef3AtomDownload().booleanValue()) {
+                    td3Map.put(MdekKeys.HAS_ATOM_DOWNLOAD, "Y");
+                } else {
+                    td3Map.put(MdekKeys.HAS_ATOM_DOWNLOAD, "N");
+                }
+            }
             td3Map.put(MdekKeys.COUPLING_TYPE, data.getRef3CouplingType());
             
             udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);

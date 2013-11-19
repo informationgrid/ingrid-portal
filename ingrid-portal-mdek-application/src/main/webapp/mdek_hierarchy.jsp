@@ -1100,6 +1100,11 @@
                                         </span>
 									</div>
                                 </span>
+                                <span id="uiElement3225" class="optional">
+                                    <div class="input checkboxContainer" style="padding-left: 2px;">
+                                        <input type="checkbox" id="ref3IsAtomDownload" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 3225)"><fmt:message key="ui.obj.type3.serviceAtomDownload" /></label>
+                                    </div>
+                                </span>
                               </div> 
                               </span>
                                 <span id="uiElement3230" class="outer halfWidth">

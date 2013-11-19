@@ -715,6 +715,9 @@ ingridObjectLayout.createFachBezugClass3 = function(){
     });
     applyRuleServiceType();
     
+    applyRuleDownloadService();
+    new dijit.form.CheckBox({}, "ref3IsAtomDownload");
+    
     var couplingTypes = function() {
         var def = new dojo.Deferred();
         var data = [
