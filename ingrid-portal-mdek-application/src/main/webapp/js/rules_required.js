@@ -351,27 +351,31 @@ function applyRuleServiceType() {
     };
     
     // react when inspire topics has been added
-    dojo.connect(dijit.byId("ref3ServiceType"), "onChange", function(msg) {
+    dojo.connect(dijit.byId("ref3ServiceType"), "onChange", function(value) {
         var objClass = dijit.byId("objectClass").getValue();
         if (objClass == "Class3") {
             // remove all dependent types
             dojo.forEach(typesWithBehavior, function(type) { applySpecification(type, true); })
             // add possibly new type
-            applySpecification(msg, false);
+            applySpecification(value, false);
         }
     });
     
 }
 
+function _updateAtomFieldVisibility(value) {
+    if (value == "3") { // Downloadservice
+        dojo.removeClass("uiElement3225", "hide");
+    } else {
+        dijit.byId("ref3IsAtomDownload").set("checked", false);
+        dojo.addClass("uiElement3225", "hide");
+    }
+}
+
 function applyRuleDownloadService() {
-    dijit.byId("ref3ServiceType").onChange = function(value) {
-        if (value == "3") { // Downloadservice
-            dojo.removeClass("uiElement3225", "hide");
-        } else {
-            dijit.byId("ref3IsAtomDownload").set("checked", false);
-            dojo.addClass("uiElement3225", "hide");
-        }
-    };
+    dojo.connect(dijit.byId("ref3ServiceType"), "onChange", function(value) {
+        _updateAtomFieldVisibility(value);
+    });
 }
 
 function displayDiv(divElement) {

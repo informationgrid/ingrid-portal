@@ -2007,6 +2007,11 @@ udkDataProxy._setObjectDataClass3 = function(nodeData) {
     dijit.byId("ref3ServiceType")._lastValueReported = nodeData.ref3ServiceType + "";
     dijit.byId("ref3ServiceType").set("value", nodeData.ref3ServiceType, false);
 	dijit.byId("ref3IsAtomDownload").attr("value", nodeData.ref3AtomDownload, true);
+	// manually call behavior to show atom checkk box or not
+	// -> we've got the problem that another event wants to change metadata when service type has changed
+	//    which should not happen when we load a dataset (but only when we activly change type!)
+	_updateAtomFieldVisibility(nodeData.ref3ServiceType);
+	
 	dijit.byId("ref3CouplingType").attr("value", nodeData.ref3CouplingType, true);
 	dijit.byId("ref3SystemEnv").attr("value", nodeData.ref3SystemEnv, true);
 	dijit.byId("ref3History").attr("value", nodeData.ref3History, true);
