@@ -1499,7 +1499,7 @@ ingridObjectLayout.connectDirtyFlagsEvents = function() {
 	// Connect the widgets onChange methods to the setDirtyFlag Method
 	// These elements are defined in rules_checker.js!
     var excludeFields = ["spatialRefAdminUnitSelect", "spatialRefAdminUnitCoords", "spatialRefLocationSelect", 
-        "spatialRefLocationCoords", "thesaurusFreeTerms"];
+        "spatialRefLocationCoords", "thesaurusFreeTerms", "linksToRelationTypeFilter"];
     
     var allFields = dojo.query(".dijitTextBox, .dijitSelect", "sectionTopObject").map(function(item) {return item.getAttribute("widgetid");});
     allFields = allFields.concat(dojo.query(".ui-widget, .input .dijitCheckBoxInput", "contentFrameBodyObject").map(function(item) {return item.getAttribute("id");}));
