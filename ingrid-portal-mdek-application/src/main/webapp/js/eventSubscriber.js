@@ -3202,8 +3202,9 @@ igeEvents.addKeywords = function(termList, caller) {
         // If so, tell the user and wait for confirmation. Then proceed with the normal search
         if (hasInspireTable) {
             termList = dojo.filter(termList, function(t) {
-                if (UtilThesaurus.isInspireTopic(t)) {
-                    inspireTopics.push(t);
+                var iTopic = UtilThesaurus.isInspireTopic(t);
+                if (iTopic) {
+                    inspireTopics.push(iTopic);
                     return false;
                 } else {
                     return true;

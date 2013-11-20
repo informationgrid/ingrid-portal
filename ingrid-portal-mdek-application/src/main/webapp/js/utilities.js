@@ -2603,8 +2603,10 @@ UtilThesaurus.getInspireTopicId = function(topic) {
 
 // check if term is in Inspire Syslist
 UtilThesaurus.isInspireTopic = function(topic) {
-	return dojo.some(sysLists[6100], function(list) { return list[0] == topic;});
-	//return getInspireTopicId(topic) != null;
+    var topicLow = topic.toLowerCase();
+    var result = null;
+	dojo.some(sysLists[6100], function(list) { if (list[0].toLowerCase() == topicLow) { result = list[0]; return true; } else return false; });
+	return result;
 }
 
 //Add inspire topics to the inspire table if they don't already exist
