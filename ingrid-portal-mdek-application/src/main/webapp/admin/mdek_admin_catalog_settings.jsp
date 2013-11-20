@@ -121,6 +121,8 @@
                 newCatalogData.languageCode = dijit.byId("adminCatalogLanguage").getValue();
                 newCatalogData.location = dijit.byId("adminCatalogSpatialRef").location;
                 newCatalogData.atomUrl = dijit.byId("adminCatalogAtomDownload").getValue();
+                // add a slash at the end
+                if (dojo.lastIndexOf(newCatalogData.atomUrl, "/") != newCatalogData.atomUrl.length-1) newCatalogData.atomUrl += "/"; 
                 newCatalogData.expiryDuration = (dijit.byId("adminCatalogExpire").checked ? dijit.byId("adminCatalogExpiryDuration").getValue() : "0");
                 newCatalogData.workflowControl = dijit.byId("adminCatalogWorkflowControl").checked ? "Y" : "N";
                 console.debug("validating");
