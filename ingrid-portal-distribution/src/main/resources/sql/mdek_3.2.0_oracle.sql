@@ -3,6 +3,11 @@
 --
 
 -- Create table for storing version info
+BEGIN
+execute immediate 'DROP TABLE info';
+exception when others then null;
+END;
+/
 CREATE TABLE info (
   key_name varchar2(255) default NULL,
   value_name varchar2(255) default NULL

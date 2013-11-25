@@ -11,7 +11,11 @@ UPDATE ingrid_lookup SET item_value = '3.2.0a', item_date = SYSDATE WHERE ingrid
 -- -----------------------------
 
 -- Temp Table um values zwischen zu speichern (subselect in insert auf gleiche Tabelle nicht moeglich)
---DROP TABLE IF EXISTS ingrid_temp;
+BEGIN
+execute immediate 'DROP TABLE ingrid_temp';
+exception when others then null;
+END;
+/
 CREATE TABLE  ingrid_temp (
 	temp_key VARCHAR2(255),
 	temp_value NUMBER(10,0)

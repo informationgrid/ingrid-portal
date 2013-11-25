@@ -23,7 +23,11 @@ UPDATE fragment SET NAME = 'jetspeed-layouts::IngridOneColumn' WHERE PAGE_ID =(S
 --  exception when others then null;
 --end;
 --/
---DROP TABLE ingrid_temp;
+BEGIN
+execute immediate 'DROP TABLE ingrid_temp';
+exception when others then null;
+END;
+/
 CREATE TABLE  ingrid_temp (
 	temp_key VARCHAR2(255),
 	temp_value NUMBER(10,0)

@@ -12,7 +12,11 @@
 -- Tabellenstruktur für Tabelle help_messages
 --
 
-DROP TABLE help_messages;
+BEGIN
+execute immediate 'DROP TABLE help_messages';
+exception when others then null;
+END;
+/
 CREATE TABLE help_messages (
   id NUMBER(24,0) NOT NULL,
   version NUMBER(10,0) DEFAULT '0' NOT NULL,

@@ -50,6 +50,15 @@
     </action>
   </release>
 
+   <release version="3.3.2-SNAPSHOT" date="2013-??-??" description="Release InGrid 3.3.2">
+    <action type="add" dev="wemove" issue="REDMINE-230">
+      IGE: Added ATOM Url to catalog settings and checkbox to set metadata for ATOM download.
+    </action>
+    <action type="fix" dev="wemove">
+      Fixed SQL scripts for Oracle (now drop table before creation via PL/SQL).
+    </action>
+   </release>
+
    <release version="3.3.1" date="2013-11-05" description="Release InGrid 3.3.1">
     <action type="add" dev="wemove" issue="REDMINE-117">
       IGE: Added scripting and IDF mapping templates for profile of LGV HH.
@@ -133,12 +142,6 @@
       IGE: Fixed scrolling of info dialog.
     </action>
   </release>
-
-  <release version="3.3.2-SNAPSHOT" date="2013-??-??" description="Release InGrid 3.3.2">
-    <action type="add" dev="wemove" issue="REDMINE-230">
-      IGE: Added ATOM Url to catalog settings and checkbox to set metadata for ATOM download.
-    </action>
-   </release>
 
   <release version="3.3.0.1" date="2013-03-15" description="Bugfix Release InGrid 3.3.0.1">	
    <action type="add" dev="wemove" issue="INGRID-2231">

@@ -25,7 +25,11 @@ DELETE FROM fragment_pref WHERE fragment_pref.fragment_id = (SELECT fragment_id 
 DELETE FROM fragment WHERE name= 'ingrid-portal-apps::SaveMapsPortlet';
 
 -- Temp Table
---DROP TABLE IF EXISTS ingrid_temp;
+BEGIN
+execute immediate 'DROP TABLE ingrid_temp';
+exception when others then null;
+END;
+/
 CREATE TABLE  ingrid_temp (
 	temp_key VARCHAR2(255),
 	temp_value NUMBER(10,0)

@@ -3,6 +3,7 @@
 --
 
 -- Create table for storing version info
+DROP TABLE IF EXISTS `info`;
 CREATE TABLE IF NOT EXISTS `info` (
   `key_name` varchar(255) default NULL,
   `value_name` varchar(255) default NULL

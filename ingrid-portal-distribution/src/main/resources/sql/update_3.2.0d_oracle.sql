@@ -2,7 +2,11 @@
 UPDATE ingrid_lookup SET item_value = '3.2.0d', item_date = SYSDATE WHERE ingrid_lookup.item_key ='ingrid_db_version';
 
 -- Temp Table um values aus folder_menu zwischen zu speichern (subselect in insert auf gleiche Tabelle nicht moeglich, s.u.)
---DROP TABLE IF EXISTS ingrid_temp;
+BEGIN
+execute immediate 'DROP TABLE ingrid_temp';
+exception when others then null;
+END;
+/
 CREATE TABLE  ingrid_temp (
 	temp_key VARCHAR2(255),
 	temp_value NUMBER(10,0)
