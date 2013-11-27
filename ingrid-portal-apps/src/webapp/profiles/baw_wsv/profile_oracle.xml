@@ -62,7 +62,7 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>
                     <preference name="SRC">
-                    	<value>/ingrid-portal-apps/iframe/application/html/app-0.html</value>
+                    	<value>/ingrid-portal-apps/cms/html/tools-uebersicht.html</value>
                     </preference>
                     <preference name="HEIGHT">
                     	<value>650</value>
