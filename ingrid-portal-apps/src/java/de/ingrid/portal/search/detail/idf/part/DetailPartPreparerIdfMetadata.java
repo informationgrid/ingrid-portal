@@ -370,7 +370,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 							if(hiddenKeywordList != null){
 								for(int h=0; h < hiddenKeywordList.size(); h++){
 									String hiddenValue = hiddenKeywordList.get(h);
-									if(value.toLowerCase().equals(hiddenValue)){
+									if(value.toLowerCase().equals(hiddenValue.toLowerCase())){
 										isHidden = true; 
 										break;
 									}
