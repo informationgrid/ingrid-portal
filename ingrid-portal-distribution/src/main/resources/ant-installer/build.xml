@@ -278,11 +278,12 @@
     <target name="ExtractPortalForUpdate" if="portal.installed">
         <!-- rename ingrid-portal to ROOT, so it'll be accessible from tomcat root -->
         <move file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-base.war" tofile="${installDir}/${tomcat-artifact}/webapps/ROOT.war"/>
-        <unwar src="${installDir}/${tomcat-artifact}/webapps/ROOT.war"                   dest="${installDir}/${tomcat-artifact}/webapps/ROOT">
-            <patternset>
-                <exclude name="WEB-INF/assembly/alternate/shibboleth.xml" />
-            </patternset>
-        </unwar>
+
+        <!-- since the file shibboleth.xml was added with version 3.3.1 we need to preserve configuration changes -->
+        <move file="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/assembly/alternate/shibboleth.xml" tofile="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/assembly/alternate/shibboleth.xml.bak" failonerror="false"/>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ROOT.war" dest="${installDir}/${tomcat-artifact}/webapps/ROOT"/>
+        <move file="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/assembly/alternate/shibboleth.xml.bak" tofile="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/assembly/alternate/shibboleth.xml" failonerror="false"/>
+
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client">
             <patternset>
                 <exclude name="WEB-INF/classes/application.properties" />
