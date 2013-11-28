@@ -155,10 +155,8 @@
         <unzip src="${antinstaller.jar}" dest=".">
             <patternset>
                 <include name="**/*.*"/>
-                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ROOT.xml" />
-                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ingrid-portal-apps.xml" />
-                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ingrid-portal-mdek.xml" />
-                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ingrid-webmap-client.xml" />
+                <exclude name="distribution/${tomcat-artifact}/conf/*.xml" />
+                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/*.xml" />
             </patternset>
         </unzip>
 
@@ -280,7 +278,11 @@
     <target name="ExtractPortalForUpdate" if="portal.installed">
         <!-- rename ingrid-portal to ROOT, so it'll be accessible from tomcat root -->
         <move file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-base.war" tofile="${installDir}/${tomcat-artifact}/webapps/ROOT.war"/>
-        <unwar src="${installDir}/${tomcat-artifact}/webapps/ROOT.war"                   dest="${installDir}/${tomcat-artifact}/webapps/ROOT"/>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ROOT.war"                   dest="${installDir}/${tomcat-artifact}/webapps/ROOT">
+            <patternset>
+                <exclude name="WEB-INF/assembly/alternate/shibboleth.xml" />
+            </patternset>
+        </unwar>
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client">
             <patternset>
                 <exclude name="WEB-INF/classes/application.properties" />
@@ -297,9 +299,14 @@
             <patternset>
                 <exclude name="WEB-INF/classes/communication.xml" />
                 <exclude name="WEB-INF/classes/ingrid-portal-apps.properties" />
+                <exclude name="WEB-INF/classes/hibernate.cfg.xml" />
             </patternset>
         </unwar>
-        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek"/>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek">
+            <patternset>
+                <exclude name="WEB-INF/classes/hibernate.cfg.xml" />
+            </patternset>
+        </unwar>
     </target>
     
     <target name="ExtractIge">
