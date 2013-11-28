@@ -1,0 +1,70 @@
+Index: ../../../ingrid-webmap-client/branches/ingrid-webmap-client-3.3.x/src/main/resources/ingrid_webmap_client_config.xml
+===================================================================
+--- ../../../ingrid-webmap-client/branches/ingrid-webmap-client-3.3.x/src/main/resources/ingrid_webmap_client_config.xml	(revision 22995)
++++ ../../../ingrid-webmap-client/branches/ingrid-webmap-client-3.3.x/src/main/resources/ingrid_webmap_client_config.xml	(revision 23163)
+@@ -94,21 +94,6 @@
+       <value>resize</value>
+     </setting>
+     <setting>
+-      <key>defaultNominatimParams</key>
+-      <name>Nominatim-Suche Parameter: Eingrenzung der Ortssuche</name>
+-      <value>countrycodes=de</value>
+-    </setting>
+-    <setting>
+-      <key>defaultNominatimEnable</key>
+-      <name>Nominatimsuche: Ortssuche im Kartenkomponente</name>
+-      <value>true</value>
+-    </setting>
+-    <setting>
+-      <key>defaultMinimapEnable</key>
+-      <name>Minimap: Anzeigen des Minimap-Controls</name>
+-      <value>true</value>
+-    </setting>
+-    <setting>
+       <key>defaultTreeDragDrop</key>
+       <name>Layer-Tree Drag/Drop: Verschieben von Diensten im Dienst Baum</name>
+       <value>true</value>
+@@ -204,6 +189,21 @@
+       <value>true</value>
+     </setting>
+     <setting>
++      <key>viewNominatimParams</key>
++      <name>Nominatim-Suche Parameter: Eingrenzung der Ortssuche</name>
++      <value>countrycodes=de</value>
++    </setting>
++    <setting>
++      <key>viewNominatimEnable</key>
++      <name>Nominatimsuche: Ortssuche im Kartenkomponente</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewMinimapEnable</key>
++      <name>Minimap: Anzeigen des Minimap-Controls</name>
++      <value>true</value>
++    </setting>
++    <setting>
+       <key>searchHasServicesPanel</key>
+       <name>Dienstebereich: Darstellung des Dienstebereiches</name>
+       <value>false</value>
+@@ -283,6 +283,21 @@
+       <name>Info-Dialog: Initiales Info-Dialog der Kartenkomponente</name>
+       <value>true</value>
+     </setting>
++    <setting>
++      <key>searchNominatimParams</key>
++      <name>Nominatim-Suche Parameter: Eingrenzung der Ortssuche</name>
++      <value>countrycodes=de</value>
++    </setting>
++    <setting>
++      <key>searchNominatimEnable</key>
++      <name>Nominatimsuche: Ortssuche im Kartenkomponente</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>searchMinimapEnable</key>
++      <name>Minimap: Anzeigen des Minimap-Controls</name>
++      <value>true</value>
++    </setting>
+   </settings>
+   <proxyUrl></proxyUrl>
+   <mapServiceCategories/>
