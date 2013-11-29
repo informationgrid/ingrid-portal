@@ -671,10 +671,9 @@
                     $MESSAGES.getString("searchResult.facete.category.error")
                 #else
                     $MESSAGES.getString("searchResult.facete.category.no.hits") 
-                #end
-                
+				#end
             </p>
-                #if($isSelection)
+                #if($enableFacetSelection > 0)
                     #set ($action = $renderResponse.createActionURL())
                     $action.setParameter("doRemoveLast", "true")
                     #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.last") $action)
