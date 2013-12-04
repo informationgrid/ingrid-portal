@@ -1,0 +1,9 @@
+--- C:\temp\AppData\application.properties-revHEAD.svn004.tmp.properties 
++++ (clipboard) 
+@@ -44,3 +44,6 @@
+ # Set to 'resize' to resize tiles on zooming the map.
+ # Comment this entry to disable resizing
+ frontend.transitionEffect=resize
++
++# WMS directory
++wms.dir =  /home/joachim/ingrid/eclipse.workspace/ingrid-webmap-client/tmp/data/wms/

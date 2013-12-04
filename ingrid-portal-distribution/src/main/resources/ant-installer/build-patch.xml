@@ -9,6 +9,7 @@
             <then>
                 <echo>Patching ingrid-portal-apps.properties</echo>
                 <patchFile patchFile="patches/3.3.0.1/ingrid-portal-apps.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties" />
+                <patchFile patchFile="patches/3.3.0.1/application.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties" />
             </then>
         </if>
     </target>
@@ -22,6 +23,7 @@
             <then>
                 <echo>Patching ingrid-portal-apps.properties</echo>
                 <patchFile patchFile="patches/3.3.1/ingrid-portal-apps.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties" />
+                <patchFile patchFile="patches/3.3.1/application.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties" />
             </then>
         </if>
     </target>

@@ -1,0 +1,36 @@
+--- C:\temp\AppData\application.properties-revHEAD.svn005.tmp.properties 
++++ (clipboard) 
+@@ -5,7 +5,7 @@
+ # Properties that are also available in client applications
+ # through the ConfigurationResource.getProperties() method or
+ # the /config/static url respectively
+-public.properties = administration.modules, frontend.shortUrlBase, frontend.singleTile, frontend.transitionEffect
++public.properties = administration.modules, frontend.shortUrlBase
+ 
+ # Location of the file, where dynamic configuration that is managed 
+ # in the administration interface is stored.
+@@ -18,7 +18,7 @@
+ 
+ # Comma separated list of the ids of modules that are available
+ # in the administration interface (case sensitive).
+-administration.modules = basic, maintenance, services, areas
++administration.modules = basic, maintenance, services
+ 
+ # Directory, where user session data are stored.
+ frontend.sessionDir = /home/joachim/ingrid/eclipse.workspace/ingrid-webmap-client/tmp/
+@@ -36,14 +36,7 @@
+ frontend.db.password = sa
+ 
+ # Base url for short urls
+-frontend.shortUrlBase = http://localhost:8080/ingrid-webmap-client/view/
+-
+-# Fetch maps as single tiles, set to true or false
+-frontend.singleTile = false
+-
+-# Set to 'resize' to resize tiles on zooming the map.
+-# Comment this entry to disable resizing
+-frontend.transitionEffect=resize
++frontend.shortUrlBase = /kartendienste
+ 
+ # WMS directory
+ wms.dir =  /home/joachim/ingrid/eclipse.workspace/ingrid-webmap-client/tmp/data/wms/
