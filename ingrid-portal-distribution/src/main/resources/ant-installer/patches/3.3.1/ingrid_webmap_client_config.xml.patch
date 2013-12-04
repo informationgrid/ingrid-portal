@@ -1,0 +1,225 @@
+--- C:\temp\AppData\ingrid_webmap_client_config.xml-revHEAD.svn002.tmp.xml 
++++ (clipboard) 
+@@ -15,7 +15,7 @@
+   </mapExtend>
+   <projections>
+     <projection>
+-      <name>WGS84A</name>
++      <name>WGS84</name>
+       <epsgCode>EPSG:4326</epsgCode>
+     </projection>
+     <projection>
+@@ -77,2172 +77,215 @@
+       <zoomLevel>4000000.0</zoomLevel>
+     </scale>
+   </scales>
++  <settings>
++    <setting>
++      <key>defaultSingleTile</key>
++      <name>Single Tile: Darstellung der Karte in einem Kachel</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>defaultLayerSelection</key>
++      <name>Auswahl im Layer-Baum: Gruppenlayer wird dargestellt und automatische Selektierung von Unterlayer</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>defaultTransitionEffect</key>
++      <name>Transition Effekt</name>
++      <value>resize</value>
++    </setting>
++    <setting>
++      <key>defaultNominatimParams</key>
++      <name>Nominatim-Suche Parameter: Eingrenzung der Ortssuche</name>
++      <value>countrycodes=de</value>
++    </setting>
++    <setting>
++      <key>defaultNominatimEnable</key>
++      <name>Nominatimsuche: Ortssuche im Kartenkomponente</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>defaultMinimapEnable</key>
++      <name>Minimap: Anzeigen des Minimap-Controls</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>defaultTreeDragDrop</key>
++      <name>Layer-Tree Drag/Drop: Verschieben von Diensten im Dienst Baum</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>defaultMailToSaveMaps</key>
++      <name>Mailto Funktion: Versende Kartenausschnitte aus der Liste der gespeicherten Kartenlinks per Email.</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewActiveAccordionWestPanel</key>
++      <name>Aktives Akkordeon: Default geöffnetes Akkordeon im Dienstebereich (0=1.Akkordeon, 1=2.Akkordeon, ...)</name>
++      <value>0</value>
++    </setting>
++   <setting>
++      <key>viewHasServicesPanel</key>
++      <name>Dienstebereich: Darstellung des Dienstebereiches</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasInfoTool</key>
++      <name>Info-Button: Feature-Abfrage eines Dienstes</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasHistoryTool</key>
++      <name>History-Button: Einen Kartenausschnitt vor oder zurück gehen</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasMeasureTool</key>
++      <name>Messungs-Button: Strecken und Flächen messen</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasPrintTool</key>
++      <name>Druck-Button: Drucken von Kartenaussschnitten</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasLoadTool</key>
++      <name>Dienste-Laden-Button: Gespeicherte Kartenausschnitte laden</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasSaveTool</key>
++      <name>Dienste-Speichern-Button: Aktuellen Kartenausschnitt speichern</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasHelpTool</key>
++      <name>Hilfe-Button: Hilfe für die Kartenkomponente</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasProjectionsList</key>
++      <name>Projektionsliste: In der Admin-GUI definierte Projektion aufrufen</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasScaleList</key>
++      <name>Maßstäbeliste: In der Admin-GUI definierte Maßstäbe aufrufen</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasPermaLink</key>
++      <name>Permalink: Darstellung des Permalink</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>viewSpacerTop</key>
++      <name>Top-Abstand: Abstand zum oberen Browserrand (nötig für die Einbindung in das Portal)</name>
++      <value>142</value>
++    </setting>
++    <setting>
++      <key>viewHasSettings</key>
++      <name>Erweiterte-Einstellungen: Darstellung des Erweiterte-Einstellungsdialog</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasDownloadTool</key>
++      <name>Download-Button: Karte als WMC abspeichern</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasZoomTool</key>
++      <name>Zoom-Button: Zoomen zur initiale Kartenausdehnung</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>viewHasWelcomeDialog</key>
++      <name>Willkommens-Dialog: Initiales Willkommens-Dialog beim Aufruf der Kartenkomponente</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>searchHasServicesPanel</key>
++      <name>Dienstebereich: Darstellung des Dienstebereiches</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>searchHasHistoryTool</key>
++      <name>History-Button: Einen Kartenausschnitt vor oder zurück gehen</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>searchHasMeasureTool</key>
++      <name>Messungs-Button: Strecken und Flächen messen</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>searchHasPrintTool</key>
++      <name>Druck-Button: Drucken von Kartenaussschnitten</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>searchHasLoadTool</key>
++      <name>Dienste-Laden-Button: Gespeicherte Kartenausschnitte laden</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>searchHasSaveTool</key>
++      <name>Dienste-Speichern-Button: Aktuellen Kartenausschnitt speichern</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>searchHasHelpTool</key>
++      <name>Hilfe-Button: Hilfe für die Kartenkomponente</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>searchHasProjectionsList</key>
++      <name>Projektionsliste: In der Admin-GUI definierte Projektion aufrufen</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>searchHasScaleList</key>
++      <name>Maßstäbeliste: In der Admin-GUI definierte Maßstäbe aufrufen</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>searchHasPermaLink</key>
++      <name>Permalink: Darstellung des Permalink</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>searchPanelHeight</key>
++      <name>Panel Höhe: Höhe der Kartenkomponente</name>
++      <value>676</value>
++    </setting>
++    <setting>
++      <key>searchHasSettings</key>
++      <name>Erweiterte-Einstellungen: Darstellung des Erweiterte-Einstellungsdialog</name>
++      <value>false</value>
++    </setting>
++    <setting>
++      <key>searchHasBboxSelectTool</key>
++      <name>Gebiet-Auswahl Button: Zur Auswahl des Gebietes </name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>searchHasFeatureInfoTool</key>
++      <name>ID einer Administrativen Einheit Button: Zur Auswahl einer ID einer Administrativen Einheit</name>
++      <value>true</value>
++    </setting>
++    <setting>
++      <key>searchPanelHeightFacets</key>
++      <name>Panel Höhe: Höhe der Kartenkomponente für die Facettierung</name>
++      <value>500</value>
++    </setting>
++    <setting>
++      <key>searchHasInfoDialog</key>
++      <name>Info-Dialog: Initiales Info-Dialog der Kartenkomponente</name>
++      <value>true</value>
++    </setting>
++  </settings>
+   <proxyUrl></proxyUrl>
+     <mapServiceCategories>
+       <mapServiceCategory>

@@ -24,6 +24,9 @@
                 <echo>Patching ingrid-portal-apps.properties</echo>
                 <patchFile patchFile="patches/3.3.1/ingrid-portal-apps.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties" />
                 <patchFile patchFile="patches/3.3.1/application.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties" />
+                <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
+                <echo>Patching ingrid_webmap_client_config.xml in directory: ${webmapPROP.administration.file}</echo>
+                <patchFile patchFile="patches/3.3.1/ingrid_webmap_client_config.xml.patch" originalFile="${webmapPROP.administration.file}" />
             </then>
         </if>
     </target>
