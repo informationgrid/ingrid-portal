@@ -60,7 +60,7 @@ if (!(sourceRecord instanceof DatabaseSourceRecord)) {
 
 var id = sourceRecord.get(DatabaseSourceRecord.ID);
 var igcProfileControlId = XPATH.getString(igcProfileControlNode, "igcp:id");
-var contentLabel = SQL.all("SELECT add1.data FROM `additional_field_data` as add1 WHERE add1.obj_id=? AND add1.field_key=?", [id, igcProfileControlId]);
+var contentLabel = SQL.all("SELECT add1.data FROM additional_field_data add1 WHERE add1.obj_id=? AND add1.field_key=?", [id, igcProfileControlId]);
 if (contentLabel && contentLabel.size() > 0) {
     var isChecked = contentLabel.get(0).get("data") == "true";
     if (isChecked) {
@@ -140,7 +140,7 @@ if (!(sourceRecord instanceof DatabaseSourceRecord)) {
 var id = sourceRecord.get(DatabaseSourceRecord.ID);
 var igcProfileControlId = XPATH.getString(igcProfileControlNode, "igcp:id");
 var columnName = 'informationHmbTG'; // the column of the table to get the value from
-var contentLabel = SQL.all("SELECT add2.data, add2.list_item_id FROM `additional_field_data` as add1, `additional_field_data` as add2 WHERE add1.obj_id=? AND add1.field_key=? AND add2.parent_field_id=add1.id AND add2.`field_key`=?", [id, igcProfileControlId, columnName]);
+var contentLabel = SQL.all("SELECT add2.data, add2.list_item_id FROM additional_field_data add1, additional_field_data add2 WHERE add1.obj_id=? AND add1.field_key=? AND add2.parent_field_id=add1.id AND add2.field_key=?", [id, igcProfileControlId, columnName]);
 
 if ( contentLabel && contentLabel.size() > 0) {
   var i;
