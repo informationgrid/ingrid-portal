@@ -139,10 +139,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 			capabilitiesUrl = XPathUtils.getString(rootNode, xpathExpression);
 			String url = "";
 			
-			if(serviceType.equals("view")){
-				url = url + "portal/main-maps.psml?wms_url=";	
-			}
-			
 			if (serviceOperation.equals("GetCapabilities")) {
 				if (capabilitiesUrl.toLowerCase().indexOf("request=getcapabilities") == -1) {
 	    			if (capabilitiesUrl.indexOf("?") == -1) {
