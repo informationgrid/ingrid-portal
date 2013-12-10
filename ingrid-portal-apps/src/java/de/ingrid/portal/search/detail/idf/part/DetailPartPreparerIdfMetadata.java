@@ -131,22 +131,60 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 		String xpathExpression = "";
 		String capabilitiesUrl = getCapabilityUrl();
         // showMap/Preview-Link
-        if (getUdkObjectClassType().equals("1") || getUdkObjectClassType().equals("3")) {
-            if (getUdkObjectClassType().equals("1")) {
-                // search for it in onlineResources
-                xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
-                map = getCapabilityUrls(xpathExpression);
-            }else if (getUdkObjectClassType().equals("3")) {
-            	 if (capabilitiesUrl != null) {
-                    // get it directly from the operation
-            		 map = addBigMapLink(capabilitiesUrl);
-            	 }
-            }
-        } else {
-            // show preview image (with map link information if provided)
-            xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
-            map = getPreviewImage(xpathExpression);
-        }
+		
+		xpathExpression = "./idf:crossReference/idf:serviceUrl";
+		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
+			String serviceOperation = XPathUtils.getString(rootNode, "./idf:crossReference/idf:serviceOperation");
+			String serviceType = XPathUtils.getString(rootNode, "./idf:crossReference/idf:serviceType");
+			capabilitiesUrl = XPathUtils.getString(rootNode, xpathExpression);
+			String url = "";
+			
+			if(serviceType.equals("view")){
+				url = url + "portal/main-maps.psml?wms_url=";	
+			}
+			
+			if (serviceOperation.equals("GetCapabilities")) {
+				if (capabilitiesUrl.toLowerCase().indexOf("request=getcapabilities") == -1) {
+	    			if (capabilitiesUrl.indexOf("?") == -1) {
+	    				capabilitiesUrl = capabilitiesUrl + "?";
+	    			}
+	    			if (!capabilitiesUrl.endsWith("?") && !capabilitiesUrl.endsWith("&")) {
+	    				capabilitiesUrl = capabilitiesUrl + "&";
+	    			}
+	    			capabilitiesUrl = capabilitiesUrl + "REQUEST=GetCapabilities";
+	    			if(serviceType != null){
+	    				capabilitiesUrl = Utils.getServiceTypeParameter(capabilitiesUrl, serviceType);
+	    			}
+	    		}
+				url = url + UtilsVelocity.urlencode(capabilitiesUrl);
+			}
+			
+			if(!getLayerIdentifier(null).equals("NOT_FOUND")){
+				url = url + "&ID=" + UtilsVelocity.urlencode(getLayerIdentifier(null));
+			}
+			
+			if(capabilitiesUrl.length() > 0){
+				map = addBigMapLink(url, false);
+			}
+		}else{
+			if (getUdkObjectClassType().equals("1") || getUdkObjectClassType().equals("3")) {
+	            if (getUdkObjectClassType().equals("1")) {
+	                // search for it in onlineResources
+	                xpathExpression = "./gmd:distributionInfo/*/gmd:transferOptions";
+	                map = getCapabilityUrls(xpathExpression);
+	            }else if (getUdkObjectClassType().equals("3")) {
+	            	 if (capabilitiesUrl != null) {
+	                    // get it directly from the operation
+	            		 map = addBigMapLink(capabilitiesUrl, true);
+	            	 }
+	            }
+	        } else {
+	            // show preview image (with map link information if provided)
+	            xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
+	            map = getPreviewImage(xpathExpression);
+	        }
+		}
+        
         return map;
 	}
 	
@@ -1555,7 +1593,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
                     if (urlValue.toLowerCase().indexOf("request=getcapabilities") != -1) {
                         // also add an identifier to select the correct layer in the map client 
-                    	map = addBigMapLink(urlValue + "&ID=" + getLayerIdentifier(null));
+                    	map = addBigMapLink(urlValue + "&ID=" + getLayerIdentifier(null), true);
                         // ADD FIRST ONE FOUND !!!
                         mapLinkAdded = true;
                         break;
@@ -1619,7 +1657,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 	    return "NOT_FOUND";
 	}
 	
-	private HashMap<String, Object> addBigMapLink(String urlValue) {
+	private HashMap<String, Object> addBigMapLink(String urlValue, boolean urlEncodeHref) {
 		HashMap<String, Object> elementCapabilities = new HashMap<String, Object>();
 	    if (urlValue != null) {
             elementCapabilities.put("type", "multiLine");
@@ -1628,7 +1666,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             elementMapLink.put("isMapLink", new Boolean(true));
             elementMapLink.put("isExtern", new Boolean(false));
             elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
-            elementMapLink.put("href", UtilsVelocity.urlencode(urlValue));
+            if(urlEncodeHref){
+            	elementMapLink.put("href", UtilsVelocity.urlencode(urlValue));
+            }else{
+            	elementMapLink.put("href", urlValue);
+            }
             // use preview image if provided otherwise static image
             String imageUrl = getPreviewImageUrl(null);
             if (imageUrl == null ) imageUrl = "/ingrid-portal-apps/images/show_map.png";
