@@ -218,10 +218,10 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>wagon-maven-plugin</artifactId>
-        <version>1.0-beta-1</version>
+        <version>1.0-beta-4</version>
         <configuration>
-          <fromDir>..</fromDir>
-          <includes>ingrid-portal-distribution/target/${project.build.finalName}-installer.jar,target/site*/**/*</includes>
+          <fromDir>target</fromDir>
+          <includes>${project.build.finalName}-installer.jar,site*/**/*</includes>
           <!-- NOTICE: distribution directory is "artifactId". REDEFINE in project pom if different directory needed (e.g. "ingrid-iplug-ige" instead of "ingrid-mdek" !) -->
           <url>file:///opt/ingrid/distributions/${project.artifactId}/${project.version}</url>
         </configuration>

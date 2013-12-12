@@ -66,6 +66,7 @@
         <version>2.9</version>
         <configuration>
           <xmlPath>${basedir}/ingrid-portal-distribution/src/changes/changes.xml</xmlPath>
+          <outputDirectory>ingrid-portal-distribution/target/site</outputDirectory>
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
           <smtpHost>localhost</smtpHost>
           <subject>[ingrid update announcement] ${project.artifactId}-${project.version}</subject>
