@@ -13,7 +13,7 @@ public class CapabilitiesValidator extends URLValidator {
 	    super(httpClient, urlState);
 	}
 
-	@Override
+    @Override
 	public URLState call() {
 	    long startTime = System.currentTimeMillis();
 	    
@@ -26,8 +26,13 @@ public class CapabilitiesValidator extends URLValidator {
 	            log.debug("checking capability url (extended): "+state.getUrl());
 	        }
     		
-    		// is Element "Capabilities" present?
-    		if (!responseString.contains("<csw:CapabilitiesX")) {
+    		// is Element "Capabilities" present for all types?
+    		if ((!responseString.contains("<csw:Capabilities")) &&
+    		   (!responseString.contains("<WMT_MS_Capabilities")) &&
+    		   (!responseString.contains("<WMS_Capabilities")) &&
+    		   (!responseString.contains("<WCS_Capabilities")) &&
+    		   (!responseString.contains("<Capabilities")) &&
+    		   (!responseString.contains("<WFS_Capabilities"))) {
     		    state.setState(State.INVALID_CAPABILITIES);
     		}
     		

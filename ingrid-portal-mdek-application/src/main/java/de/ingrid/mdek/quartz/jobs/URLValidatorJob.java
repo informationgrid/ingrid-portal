@@ -125,13 +125,14 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	private List<URLObjectReference> fetchCapabilitiesUrls() {
 	    // Fetch all URLs for objects that are published and not modified (objIdPub = objId)
 	    //SELECT connect_pont FROM `t011_obj_serv_op_connpoint` CP, t011_obj_serv_operation OP where CP.obj_serv_op_id=OP.id AND OP.name_key=1
-        String qString = "select obj.objUuid, obj.objName, obj.objClass, url.connectPoint " +
+	    // the typeKey is used to identify the service type for correct url preparation
+        String qString = "select obj.objUuid, obj.objName, obj.objClass, url.connectPoint, objServ.typeKey " +
                 "from ObjectNode oNode " +
                 "inner join oNode.t01ObjectPublished obj " +
                 "inner join obj.t011ObjServs objServ " +
                 "join objServ.t011ObjServOperations objServOp " +
                 "inner join objServOp.t011ObjServOpConnpoints url " +
-                "where oNode.objIdPublished = oNode.objId " +
+                "where oNode.objIdPublished = oNode.objId and objServOp.nameValue = 'GetCapabilities' " +
                 "order by url.connectPoint";
 
         IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
@@ -170,7 +171,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 					ref.setObjectUuid(objEntity.getString("obj.objUuid"));
 					String url = null;
 					if (isCapabilities) {
-					    url = objEntity.getString("url.connectPoint");
+					    url = prepareCapabilitiesUrl(objEntity.getString("url.connectPoint"), objEntity.getInt("objServ.typeKey"));
 					} else {
 					    url = objEntity.getString("urlRef.urlLink");
 					}
@@ -189,7 +190,48 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	}
 
 
-	public boolean start(Scheduler scheduler) throws SchedulerException {
+	/**
+	 * Add URL parameters if necessary, so that the capabilities document can be fetched correctly!
+     * @param url
+     * @param type
+     * @return
+     */
+    private String prepareCapabilitiesUrl(String url, int type) {
+        String mappedType = getServiceTypeFromKey(type);
+        
+        if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
+            if (url.indexOf("?") == -1) {
+                url = url + "?";
+            }
+            if (!(url.lastIndexOf("?") == url.length() - 1)
+                    && !(url.lastIndexOf("&") == url.length() - 1)) {
+                url = url + "&";
+            }
+            
+            url += "REQUEST=GetCapabilities";
+        }
+        if (url.toLowerCase().indexOf("service=") == -1) {
+            url += "&SERVICE=" + mappedType;            
+        }
+        return url;
+    }
+
+    /**
+     * Determine the URL-Parameter to request a getCapabilities document
+     * @param type, is the id of the codelist entry
+     * @return the value of the codelist entry key of the service
+     */
+    private String getServiceTypeFromKey(int type) {
+        String result = "CSW";
+        if (type == 1) result = "CSW";
+        else if (type == 2) result = "WMS"; 
+        else if (type == 3) result = "WFS";
+        else if (type == 4) result = "WCTS";
+        else if (type == 6) result = "WCS";
+        return result;
+    }
+
+    public boolean start(Scheduler scheduler) throws SchedulerException {
 		this.scheduler = scheduler;
 
 		if (!isRunning()) {
