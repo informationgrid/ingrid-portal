@@ -673,7 +673,7 @@
                     $MESSAGES.getString("searchResult.facete.category.no.hits") 
 				#end
             </p>
-                #if($enableFacetSelection > 0)
+                #if($enableFacetSelection > 0 || $isSelection)
                     #set ($action = $renderResponse.createActionURL())
                     $action.setParameter("doRemoveLast", "true")
                     #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.last") $action)
@@ -682,6 +682,6 @@
                     #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.category.delete.all") $action)
                 #end
             <br>
-        #end
+		#end
         </div>
 </div>
