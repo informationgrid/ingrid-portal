@@ -135,7 +135,7 @@
     "tree.forwardToQAHint":"Es m&uuml;ssen alle Pflichtfelder korrekt gef&uuml;llt sein bevor Sie das Objekt an die Qualit&auml;tssicherung &uuml;berweisen! Bitte &uuml;berpr&uuml;fen Sie die rot markierten Felder.",
     "tree.selectNodeHint":"Bitte wählen Sie einen Elternknoten.",
     "tree.selectNodeCopyHint":"Die Knoten Objekte, Adressen und Freie Adressen k&ouml;nnen nicht kopiert werden! Mit Strg+Click auf Knoten k&ouml;nnen diese aus- und abgew&auml;hlt werden.",
-    "tree.selectNodeCopyUuidHint":"Beim Kopieren erhält der eingefügte Metadatensatz eine neue UUID und kann unter der alten UUID nicht mehr gefunden werden.",
+    "tree.selectNodeCopyUuidHint":"Wenn Sie die Kopie dieses Metadatensatzes an anderer Stelle einfügen, dann erhält das Objekt eine neue UUID!<br/><br/>Bitte beachten Sie, dass damit ein neues Objekt angelegt wird, welches nicht mehr identisch ist mit dem Original und auch unter der alten UUID nicht mehr gefunden werden kann! Wenn Sie ein Objekt unter Beibehaltung seiner Identität verschieben wollen, müssen sie die Operationen \"Objekte/Adressen/Teilbäume Ausschneiden\" und \"Einfügen\" verwenden.",
     "tree.selectNodeCutHint":"Bitte wählen Sie einen Knoten zum Ausschneiden.",
     "tree.selectNodeDeleteHint":"Die Knoten Objekte, Adressen und Freie Adressen d&uuml;rfen nicht gel&ouml;scht werden! Mit Strg+Click auf Knoten k&ouml;nnen diese aus- und abgew&auml;hlt werden.",
     "tree.nodePasteNoCutCopyHint":"Der Knoten konnte nicht kopiert werden!",

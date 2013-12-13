@@ -135,7 +135,7 @@
     "tree.forwardToQAHint":"Please fill all required fields before assigning the object to the Quality Assurance.",
     "tree.selectNodeHint":"Please select a parent node.",
     "tree.selectNodeCopyHint":"The nodes Objects, Addresses and Free Addresses cannot be copied! With Ctrl+Click on the node you can de-/select it.",
-    "tree.selectNodeCopyUuidHint":"When copying the pasted metadata will have a new UUID and therefore cannot be found with the old UUID.",
+    "tree.selectNodeCopyUuidHint":"If you insert a copy of this metadata at another location, then this object will get a new UUID!<br/><br/>Please note that a new object is created, which is not identical to the original onea and which cannot be found under the old UUID! If you want to move an object including its identity then you have to use the operation \"Cut Objects / Addresses / Subtrees\" and \"Paste\".",
     "tree.selectNodeCutHint":"Please select a node to cut.",
     "tree.selectNodeDeleteHint":"The nodes Objects, Addresses and Free Addresses must not be deleted!",
     "tree.nodePasteNoCutCopyHint":"The node couldn't be copied!",
