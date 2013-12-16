@@ -222,15 +222,13 @@
         <section help-key="dashboard-1">
             <header>Description</header>
             <content>
-                <p>The dashboard shows an overview of the catalogue that is in use. Moreover the currently
-                edited objects and addresses of the logged in user are shown. So it's possible to jump directly to 
-                the object/address that has been recently edited.</p>
+                <p>The dashboard gives an overview of the catalogue in form of some general information and 
+                two lists of recently edited objects. The first tab lists all objects of the actual user, 
+                the second tab lists all objects of the whole catalogue that have been edited recently. 
+                Clicking on one of the objects opens the editor view. A gray colour for an 
+                object/address indicates that the user has no write permissions for this object/address.</p>
                 <br />
-                <p>If you click on "All Datasets" all recently edited objects/addresses of all users are shown.
-                This overview show which objects/addresses are edited on the whole catalogue. A gray object/address
-                signifies that the logged in user has no write permission for this object/address.</p>
-                <br />
-                <p>A click on the "Update"-button refreshes the data without the need of reloading the whole page.</p>
+                <p>The content of the dashboard can be refresehd with the "Update"-button.</p>
             </content>
         </section>
     </chapter>
@@ -259,7 +257,10 @@
 				 <p><b>New</b></p>
 				 <p>Install a new object or a new address under the current object or the current address.</p>
 				 <p><b>Print Preview</b></p>
-				 <p>In the <i>Print Preview</i> window you can view the arrangement of the object or address information as it looks in the printed version. The arrangement of the information is not alterable. With one click on <i>[Print]</i> you reach the print menu of the operating system. Leave the <i>Print Preview</i> window by clicking on the cross top right in the corner of the window.</p>
+				 <p>In the <i>Print Preview</i> window you can view the arrangement of the object or address information as it looks in the printed version. The arrangement of the information is not alterable. With one click on <i>[Print]</i> you reach the print menu of the operating system.</p>
+                 <p>Besides the detail view of a single object/address, it is also possible to view the detail information of the whole subtree. If the checkboxes <i>detail view</i> and <i>include sub objects</i> are selected, then all objects/addresses of the subtree will be printed. If there are many objects to print this procedure can take a while. It is however possible to cancel the operation at any time.</p>
+                 <p>Is the checkbox <i>Detail view</i> deselected, then instead of a detail view, only a short version is displayed. Only the title is being displayed within a hierachical order.</p>     
+                 <p>Leave the <i>Print Preview</i> window by clicking on the cross top right in the corner of the window.</p>
 				 <p>This function is not available for the <i>Objects</i>, <i>Addresses</i> and <i>Free Addresses</i> levels.</p>
 				 <p><b>Cut Object/Address/Sub tree</b></p>
 				 <p>To assign another position in the hierarchy of the current catalogue to an object, an address or a sub tree first cut these out in order to past them under another object or another address by means of the <i><b>Paste</b></i> function.</p>
@@ -577,6 +578,7 @@
 				 <i>Coordinate system</i> dropdown list.</p>
 				 <p>With one click on the <i>Add</i> button the details are adopted into the 
 				 <i>Costum Location</i> field of the object.</p>
+                 <p>Via the link <i>inherit</i> it is posible to inherit/copy the spatial references of the parent object. Already present spatial references (identified by name) will not be overwritten. This operation is only available for sub-objects!</p>            
             </content>
         </section>
         <section help-key="maintanance-of-objects-5">
@@ -652,6 +654,7 @@
 				 <p>Optionally you can make a <i>Description</i> on the reference.</p>
 				 <p><u>Take care</u>: <i>URL-Type</i> is also optional but will not be displayed in the representation of the metadata object 
 				 via the portal.</p>
+                 <p>If an object has a parent object, so it is possible to inherit/copy the references from it. Click on the link <i>inherit</i> and all references from the parent object are being copied to the current one. Entries already present will not be overwritten!</p>            
             </content>
         </section>
         <section help-key="maintanance-of-objects-8">
@@ -710,6 +713,11 @@
 				 as well as the status information <i>Created</i>, <i>Modified</i> and <i>Last Change</i>. This display is always visible.</p>
 				 <p>Underneath – with a grey background – the name of the institution, unit or the person is displayed according to the 
 				 type of address.</p>
+                 <p>The select box "Publication condition" determines the visibility of the address. While
+                 the choice "internet" has no restriction, an address with "intranet" or "internal" will not 
+                 be published in the internet.</p>
+                 <p>The address type "person" also offers a ceckbox "Do not display data". Is this option checked
+                 the data of this address will not be used. Instead the data from the parent address is used.</p>
 				 <p>Further information is collected in the following groups:</p>
 				 <ul>
 				 <li>Address and Tasks</li>
@@ -752,6 +760,13 @@
 				 address under which you wish to create the new address. After this the relevant mask opens up with fields to be filled in. 
 				 As standard, the person responsible is adopted from the superordinate addresse as the responsible user together with their 
 				 entry into the <i>Communication</i> field and the <i>Thesaurus Search Terms</i>.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-adresses-2a">
+            <header>Inherit address from parent</header>
+            <content>
+                 <p>Instead entering the address information all by hand, you also can receive the address information from the parent address. The following fields will be overwritten: <i>Street</i>, <i>Post code</i>, <i>City</i>, <i>P.O. Box</i>, <i>Post code (POB)</i> and <i>Country</i></p>
+                 <p>From the hierarchical tree, when calling the context menu, you can also distribute the address information of the clicked address to all its sub-addresses. Click the entry <i>Update address data in children</i> and after a dialog the changes to the sub-addresses will be propagated.</p>
             </content>
         </section>
         <section help-key="maintanance-of-adresses-3">
@@ -1257,8 +1272,8 @@
 				 <p><u>Note:</u> This right is only effective in connection with   
 				 <a href="?hkey=quality-assurance-0">Workflow Control</a> being switched on in the 
 				 <a href="?hkey=catalog-administration-1">Catalogue Settings</a>.</p>
-				<p><b>belonging users</b></p>
-                 <p>On an extra tab, a table shows all the users that belong to the selected group.</p>
+				<p><b>Assigned Users</b></p>
+                 <p>On the third tab, a table shows all users that have been assigned to the selected group.</p>
 				<p><b>The special <i>administrators</i> group of the catalogue administrator</b></p>
 				 <p>The <i>Administrators</i> group is always assigned to the catalogue administrator. This assignment can <b>not</b> be changed. The group has write permission for the whole catalogue (of course including the permission to add new objects and addresses to the topmost level). The group has fixed permissions and is automatically present in every catalogue. It cannot be maintained via the group administration and is therefore not shown in the list of the groups.</p>
             </content>
@@ -1304,9 +1319,9 @@
                  <p>By <i>Duplicates</i> are understood different objects with the same object name. </p>
 				 <p>By the de-centralised maintenance of the objects in different places in the hierarchy tree it is possible that the same object names were given to objects that have different contents. In the standard case of a search being run, the object names in the result list are shown to the user after the search. The information about the position in the hierarchy tree is missing from this display. It is recommended to provide meaningful names for all objects so that users doing research get a clear idea of the found object. </p>
 				 <p>In calling up the submenu item <i>Duplicates</i> a test is run for duplicates (you can repeat this test later by clicking on the <i>Start Duplicates Check</i> button). The <i>Duplicate Check Result</i> is displayed in a <i>List</i>.  </p>
-				 <p>Click on one of the objects listed with the left mouse button and the Object Name, the Type and the Description of the object are displayed.</p>
-				 <p>With the right mouse button click on one of the objects listed and select <i>Display in Hierarchy Tree</i>. The location of the object is then displayed under the Tree tab. </p>
-				 <p>You can now alter the <i>Object Name</i> and <i>Save Changes</i> via the respective button. </p>
+				 <p>Choose one of the listed objects with the right mouse button click. The option "Display in Hierarchy Tree" opens the <i>Tree</i> tab and shows the location of the object in the catalogue hierarchy. The option "Open in Editor" loads the selected object in the editor where it can be edited.</p>
+				 <p>When choosing an object with the left mouse button the Name, Type and Description of the object will bedisplayed.</p>
+				 <p>Only the object name can be altered. Changes are applied when the button "Save Changes" is pressed.</p>
             </content>
 		</section>
         <section help-key="overall-catalog-management-3">
@@ -1605,6 +1620,9 @@
 				 <p>If you select the setting ‚Export the selected node only’ only the individual object or address selected will be exported and not the sub tree.</p>
 				 <p>The export operation is triggered via one click on <i>Start Export</i>.</p>
 				 
+                 <p>Normally only published objects and addresses are exported. But if you want to do a full export
+                 including the working versions, then you have to check the option <i>"also export working copies"</i>.</p>            
+				 
 				 <p><b>Information about the last process</b></p>
 				 <p>In all cases export is carried out asynchronously. The process can take several minutes depending on the amount of the objects to be exported and the system load of the server. </p>
 				 <p>In the window Information about the last process information on the last export operation triggered is displayed. If the operation has ended, you can download the export file by activating the download function with a click on the button <i>Link</i>. </p>
@@ -1624,14 +1642,19 @@
 				 <p><u>ArcGIS ISO-Editor:</u> Import of an XML file produced with the help of ArcGIS. The document must have been saved out of ArcGIS in the ISO format</p>
 				 
 				 <p><b>Publish Imported Datasets </b></p>
+                 <p>This option is only available for the import types <i>CSW</i> and <i>ArcGIS</i>!</p>            
 				 <p>As a default, all imported objects and addresses are cached in a working version, that is, they are not yet published. With the <i>Publish Imported Datasets</i> setting you can instigate an immediate publication without the datasets being subject to a further checking and being ’manually’ published. </p>
 				 <p><u>Note:</u>The setting <i>Publish Imported Datasets</i> is overwritten if obligatory details are missing in the objects and addresses. In this case the object or address is imported as a working version only and has to be revisited before publication.</p>
 				 
+                 <p><b>Overwrite identical metadata</b></p>
+                 <p>With the unique identification key of a metadata it's possible to identify same metadatas, which come from an import.
+                 With this option activated, all identical metadata from the catalogue are overwritten with the data from the import. It
+                 can also happen that the position of the object or address in the hierarchy tree changed after the import.</p>
+                 
 				 <p><b>Only add imported datasets under the selected import nodes</b></p>
 				 <p>The objects and addresses of InGridCatalog (IGC) have a unique identifier (UUID). If objects are imported into IGC from external systems, the identifier supplied with them by the external system will be additionally saved in the object as the original identifier (OID).</p>
 				 <p>As a default, an object to be imported (or an address to be imported) is identified by the UUID and OID in the database. If it already exists then it is overwritten with the details to be imported. In so doing, the location under the structure tree will be kept. The import nodes (see below) are ignored in this case.</p>
 				 <p>You can overwrite the default setting by selecting Create datasets solely under the import nodes. In this case, the objects, even when they ought to already exist in the catalogue, will be saved underneath the import node given (see below). (In doing so, a new UUID will be given).</p>
-				 <p><u>Note:</u>The Create datasets solely under the import nodes setting can only be selected as an alternative to the <i>Publish Imported Datasets</i> setting as, as a rule, newly installed objects have to be thoroughly checked for completeness before publication. </p>
 				 
 				 <p><b>Sub Tree Import</b></p>
 				 <p>To carry out an import, the giving of a <i>Parent Object</i> and a <i>Parent Address</i> is always necessary. All objects and addresses that do not yet exist are filed underneath these import nodes. In so doing a structure of the objects or addresses supplied in the import file is kept if necessary.</p>
