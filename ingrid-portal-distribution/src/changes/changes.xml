@@ -50,14 +50,44 @@
     </action>
   </release>
 
-   <release version="3.3.2-SNAPSHOT" date="2013-??-??" description="Release InGrid 3.3.2">
-    <action type="add" dev="wemove" issue="REDMINE-230">
-      IGE: Added ATOM Url to catalog settings and checkbox to set metadata for ATOM download.
-    </action>
-    <action type="fix" dev="wemove">
-      Fixed SQL scripts for Oracle (now drop table before creation via PL/SQL).
-    </action>
-   </release>
+    <release version="3.3.2" date="2013-12-12" description="Release InGrid 3.3.2">
+      <action type="add" dev="wemove" issue="REDMINE-230">
+        IGE: Added ATOM Url to catalog settings and checkbox to set metadata for ATOM download.
+      </action>
+      <action type="fix" dev="wemove" issue="REDMINE-255">
+        Portal: Fix reset facets if no search results.
+      </action>
+      <action type="fix" dev="wemove">
+        Fixed SQL scripts for Oracle (now drop table before creation via PL/SQL).
+      </action>
+      <action type="fix" dev="wemove">
+        WebMapClient: Support of non WGS-84 services as base layer.
+      </action>
+      <action type="fix" dev="wemove">
+        WebMapClient: Get maxExtent from base layer.
+      </action>
+      <action type="fix" dev="wemove">
+        WebMapClient: Split nominatim and minimap settings for viewer and searcher.
+      </action>
+      <action type="fix" dev="wemove">
+        WebMapClient: Get title for feature info not depend on service "OnlineResource" tag.
+      </action>
+      <action type="fix" dev="wemove">
+        WebMapClient: Restore selected layers from session.
+      </action>
+      <action type="fix" dev="wemove">
+        IGE: Mark table cells if they have empty rows (which should be deleted to prevent null-values in database).
+      </action>
+      <action type="fix" dev="wemove">
+        IGE: Url for ATOM download service is not required anymore.
+      </action>
+      <action type="fix" dev="wemove">
+        IGE: Fixed a bug where object-/address-tree could not be selected anymore.
+      </action>
+      <action type="fix" dev="wemove">
+        IGE: If there are more than one use constraints in database, then they will be merged into one text field.
+      </action>
+    </release>
 
    <release version="3.3.1" date="2013-11-05" description="Release InGrid 3.3.1">
     <action type="add" dev="wemove" issue="REDMINE-117">
