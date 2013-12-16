@@ -14,7 +14,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
 <script type="text/javascript">
     dojo.require("dijit.form.FilteringSelect");
     
-scriptScopeResearchExtObj = {};
+scriptScopeResearchExtObj = _container_;
 
 var resultsPerPage = 10;
 //var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("objSearchExtResultsInfo"), pagingSpan:dojo.byId("objSearchExtResultsPaging") });
@@ -39,7 +39,7 @@ var currentQuery = {	// Map of strings defining the query. See 'ObjectExtSearchP
 
 
 createDomElements();
-dojo.connect(dijit.byId("extContentObj"), "onLoad", function(){
+dojo.connect(_container_, "onLoad", function(){
     scriptScopeResearchExtObj.init();
 });
 
@@ -679,11 +679,8 @@ function hideLoadingZone() {
           <div class="spacer"></div>
 
           <span class="label noSpaceBelow"><label class="inActive" for="objTopicInputBool"><fmt:message key="dialog.research.ext.obj.contains" /></label>
-            <select dojoType="dijit.form.Select" id="objTopicInputBool">
-              <!-- TODO: fill in jsp -->
-            	<option value="0"><fmt:message key="dialog.research.ext.obj.contains.all" /></option>
-            	<option value="1"><fmt:message key="dialog.research.ext.obj.contains.one" /></option>
-            </select></span>
+            <select dojoType="dijit.form.Select" id="objTopicInputBool"><option value="0"><fmt:message key="dialog.research.ext.obj.contains.all" /></option><option value="1"><fmt:message key="dialog.research.ext.obj.contains.one" /></option></select>
+          </span>
 
           <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7046)"><fmt:message key="dialog.research.ext.obj.mode" /></label></span>
           <div class="checkboxContainer">
@@ -775,11 +772,7 @@ function hideLoadingZone() {
 
             <span class="label">
               <label class="inActive" for="thesaurusTermsRelation"><fmt:message key="dialog.research.ext.obj.contains" /></label>
-              <select dojoType="dijit.form.Select" id="thesaurusTermsRelation">
-              <!-- TODO: fill in jsp -->
-                <option value="0"><fmt:message key="dialog.research.ext.obj.contains.all" /></option>
-                <option value="1"><fmt:message key="dialog.research.ext.obj.contains.one" /></option>
-              </select>
+              <select dojoType="dijit.form.Select" id="thesaurusTermsRelation"><option value="0"><fmt:message key="dialog.research.ext.obj.contains.all" /></option><option value="1"><fmt:message key="dialog.research.ext.obj.contains.one" /></option></select>
             </span>
 
 		  </span>
@@ -838,11 +831,7 @@ function hideLoadingZone() {
 
             <span class="label">
               <label class="inActive" for="geoThesaurusTermsRelation"><fmt:message key="dialog.research.ext.obj.contains" /></label>
-              <select dojoType="dijit.form.Select" id="geoThesaurusTermsRelation">
-              <!-- TODO: fill in jsp -->
-                <option value="0"><fmt:message key="dialog.research.ext.obj.contains.all" /></option>
-                <option value="1"><fmt:message key="dialog.research.ext.obj.contains.one" /></option>
-              </select>
+              <select dojoType="dijit.form.Select" id="geoThesaurusTermsRelation"><option value="0"><fmt:message key="dialog.research.ext.obj.contains.all" /></option><option value="1"><fmt:message key="dialog.research.ext.obj.contains.one" /></option></select>
             </span>
 
 		  </span>
@@ -921,12 +910,7 @@ function hideLoadingZone() {
               <div>
                   <span class="label hidden"><label for="objTimeRef1">Typ</label></span>
         		  <span class="input">
-        		  	<select dojoType="dijit.form.Select" autoComplete="false" style="width:100%;" id="objTimeRef1">
-        		  	<option value="am"><fmt:message key="dialog.research.ext.obj.content.time.at" /></option>
-        		  	<option value="seit"><fmt:message key="dialog.research.ext.obj.content.time.since" /></option>
-        		  	<option value="bis"><fmt:message key="dialog.research.ext.obj.content.time.until" /></option>
-        		  	<option value="von"><fmt:message key="dialog.research.ext.obj.content.time.fromto" /></option>
-        		  	</select>
+        		  	<select dojoType="dijit.form.Select" autoComplete="false" style="width:100%;" id="objTimeRef1"><option value="am"><fmt:message key="dialog.research.ext.obj.content.time.at" /></option><option value="seit"><fmt:message key="dialog.research.ext.obj.content.time.since" /></option><option value="bis"><fmt:message key="dialog.research.ext.obj.content.time.until" /></option><option value="von"><fmt:message key="dialog.research.ext.obj.content.time.fromto" /></option></select>
         		  </span>
               </div>
    		    </span>

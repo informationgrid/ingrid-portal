@@ -16,7 +16,7 @@ var statsFreeTermsAdrPageNav = new PageNavigation({ resultsPerPage: resultsPerPa
 var statsThesTermsObjPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("statsThesTermsObjTableInfo"), pagingSpan:dojo.byId("statsThesTermsObjTablePaging") });
 var statsThesTermsAdrPageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("statsThesTermsAdrTableInfo"), pagingSpan:dojo.byId("statsThesTermsAdrTablePaging") });
 
-dojo.addOnLoad(function() {
+dojo.connect(_container_, "onLoad", function() {
     
     var def = createDomElements();
     
@@ -794,7 +794,7 @@ function hideLoadingZone() {
 
 <body>
 	<!-- SPLIT CONTAINER START -->
-    <div dojoType="dijit.layout.BorderContainer" id="statisticsContentSection" design="headline" sizerWidth="15" layoutAlign="client">
+    <div dojoType="dijit.layout.BorderContainer" id="statisticsContentSection" design="headline" sizerWidth="15" layoutAlign="client" style="height: 100%; border: 0;">
         <!-- LEFT CONTENT PANE START -->
         <div dojoType="dijit.layout.ContentPane" class="contentContainer" id="statisticsTreeContainer" region="leading" splitter="true" style="width:300px;">
             <div id="statisticsTree">

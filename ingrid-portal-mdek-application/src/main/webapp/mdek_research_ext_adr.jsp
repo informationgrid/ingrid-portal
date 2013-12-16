@@ -11,7 +11,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
 </style>
 
 <script type="text/javascript">
-var scriptScopeResearchExtAddr = {};
+var scriptScopeResearchExtAddr = _container_;
 
 var resultsPerPage = 10;
 //var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("adrSearchExtResultsInfo"), pagingSpan:dojo.byId("adrSearchExtResultsPaging") });
@@ -28,35 +28,34 @@ var currentQuery = {	// Map of strings/integers defining the query. See 'Address
 }
 
 
-    dojo.connect(dijit.byId("extContentAdr"), "onLoad", function() {
-    	// Initially select the first tab on load
-    	scriptScopeResearchExtAddr.navInnerTab(0);
-    	dijit.byId("addrTopicInputBool").setValue(0);
+dojo.connect(_container_, "onLoad", function() {
+	// Initially select the first tab on load
+	scriptScopeResearchExtAddr.navInnerTab(0);
+	dijit.byId("addrTopicInputBool").setValue(0);
 
-        // Pressing 'enter' on the street field is equal to a button click
-        dojo.connect(dijit.byId("addrSpaceStreet").domNode, "onkeypress",
-            function(event) {
-                if (event.keyCode == event.KEY_ENTER) {
-                    scriptScopeResearchExtAddr.startNewSearch();
-                }
-    	});
-        // Pressing 'enter' on the zip code field is equal to a button click
-        dojo.connect(dijit.byId("addrSpaceZip").domNode, "onkeypress",
-            function(event) {
-                if (event.keyCode == event.KEY_ENTER) {
-                    scriptScopeResearchExtAddr.startNewSearch();
-                }
-    	});
-        // Pressing 'enter' on the city field is equal to a button click
-        dojo.connect(dijit.byId("addrSpaceCity").domNode, "onkeypress",
-            function(event) {
-                if (event.keyCode == event.KEY_ENTER) {
-                    scriptScopeResearchExtAddr.startNewSearch();
-                }
-    	});
-    
-    	dojo.connect(pageNav, "onPageSelected", function() { startSearch(); });
-    });
+    // Pressing 'enter' on the street field is equal to a button click
+    dojo.connect(dijit.byId("addrSpaceStreet").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScopeResearchExtAddr.startNewSearch();
+            }
+	});
+    // Pressing 'enter' on the zip code field is equal to a button click
+    dojo.connect(dijit.byId("addrSpaceZip").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScopeResearchExtAddr.startNewSearch();
+            }
+	});
+    // Pressing 'enter' on the city field is equal to a button click
+    dojo.connect(dijit.byId("addrSpaceCity").domNode, "onkeypress",
+        function(event) {
+            if (event.keyCode == event.KEY_ENTER) {
+                scriptScopeResearchExtAddr.startNewSearch();
+            }
+	});
+
+	dojo.connect(pageNav, "onPageSelected", function() { startSearch(); });
 });
 
 
@@ -195,11 +194,8 @@ function hideLoadingZone() {
 	          <div class="spacer"></div>
 
 	          <span class="label noSpaceBelow"><label class="inActive" for="addrTopicInputBool"><fmt:message key="dialog.research.ext.adr.contains" /></label>
-	            <select dojoType="dijit.form.Select" style="width:190px;" id="addrTopicInputBool">
-	              <!-- TODO: fill in jsp -->
-	            	<option value="0"><fmt:message key="dialog.research.ext.adr.contains.all" /></option>
-	            	<option value="1"><fmt:message key="dialog.research.ext.adr.contains.one" /></option>
-	            </select></span>
+	            <select dojoType="dijit.form.Select" style="width:190px;" id="addrTopicInputBool"><option value="0"><fmt:message key="dialog.research.ext.adr.contains.all" /></option><option value="1"><fmt:message key="dialog.research.ext.adr.contains.one" /></option></select>
+              </span>
 
 	          <span class="label"><label onclick="javascript:dialog.showContextHelp(arguments[0], 7054)"><fmt:message key="dialog.research.ext.adr.mode" /></label></span>
 	          <div class="checkboxContainer">

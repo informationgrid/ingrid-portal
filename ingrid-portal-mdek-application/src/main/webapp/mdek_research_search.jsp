@@ -329,7 +329,7 @@ function showPreviewDialog() {
               </span>
             </div>
 
-            <div dojoType="dojox.layout.ContentPane" id="extContentObj" style="margin-top:5px;" executeScripts="true" loadingMessage="<fmt:message key="general.loading.data" /> ..."></div>
+            <div dojoType="dojox.layout.ContentPane" id="extContentObj" style="margin-top:5px;" executeScripts="true" scriptHasHooks="true" loadingMessage="<fmt:message key="general.loading.data" /> ..."></div>
 
             <!-- OBJECT SEARCH RESULT LIST START -->
             <div class="spacer"></div>
@@ -371,7 +371,7 @@ function showPreviewDialog() {
               </span>
             </div>
 
-            <div dojoType="dojox.layout.ContentPane" widgetId="extContentAdr" id="extContentAdr" style="margin-top:5px;" executeScripts="true" loadingMessage="<fmt:message key="general.loading.data" />"></div>
+            <div dojoType="dojox.layout.ContentPane" widgetId="extContentAdr" id="extContentAdr" style="margin-top:5px;" executeScripts="true" scriptHasHooks="true" loadingMessage="<fmt:message key="general.loading.data" />"></div>
 
             <!-- ADDRESS SEARCH RESULT LIST START -->
             <div class="spacer"></div>

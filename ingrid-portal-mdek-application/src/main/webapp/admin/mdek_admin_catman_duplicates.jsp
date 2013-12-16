@@ -239,69 +239,67 @@ function hideLoadingZone() {
 <body>
 
 <!-- CONTENT START -->
-	<div id="contentSection" dojoType="dijit.layout.ContentPane" class="contentBlockWhite top">
-		<div id="duplicatesContent" dojoType="dijit.layout.BorderContainer" class="content" style="height:100%;">
+	<div id="duplicatesContent" dojoType="dijit.layout.BorderContainer" class="content" style="height:100%; border: 0;">
 
-			<!-- INFO START -->
-			<!-- LEFT HAND SIDE CONTENT START -->
-			<div id="duplicatesListContainer" dojoType="dijit.layout.ContentPane" region="leading" class="inputContainer" style="padding:5px;">
-				<div id="duplicatesLists" dojoType="dijit.layout.TabContainer" style="width: 270px; height: 100%;" selectedChild="duplicatesList1">
-                    <span class="outer required"><div><span class="label" style="height:12px;"><fmt:message key="dialog.admin.catalog.management.duplicates.result" /></span></div></span>
-					<!-- TAB 1 START -->
-					<div id="duplicatesList1" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.catalog.management.duplicates.list" />">
-						<div class="tableContainer">
-							<div id="duplicatesListTable" autoHeight="13" forceGridHeight="false" class="hideTableHeader" contextMenu="DUPLICATE_GRID"></div>
-						</div>
-					</div> <!-- TAB 1 END -->
-	
-	        		<!-- TAB 2 START -->
-					<div id="duplicatesList2" dojoType="dijit.layout.ContentPane" class="grey" title="<fmt:message key="dialog.admin.catalog.management.duplicates.tree" />">
-	
-						<div class="inputContainer grey">
-							<div id="duplicatesTree"></div>
-						</div>
-					</div> <!-- TAB 2 END -->
-	   
-	        	</div>
-			</div>
-			<!-- LEFT HAND SIDE CONTENT END -->
-	
-			<!-- RIGHT HAND SIDE CONTENT START -->
-			<div id="duplicatesData" dojoType="dijit.layout.ContentPane" region="center" class="inputContainer field">
-				<div id="winNavi" style="top:0;">
-	                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-2#overall-catalog-management-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
-	            </div>
-				<div class="inputContainer grey">
-				    <span class="outer"><div>
-				    <span class="label"><label for="duplicatesObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 8030)"><fmt:message key="dialog.admin.catalog.management.duplicates.objectName" /></label></span>
-					<span class="input spaceBelow"><input type="text" id="duplicatesObjectName" dojoType="dijit.form.ValidationTextBox" style="width:100%;"/></span>
-					</div></span>
-					<span class="outer"><div>
-					<span class="label"><label for="duplicatesObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 8031)"><fmt:message key="dialog.admin.catalog.management.duplicates.objectClass" /></label></span>
-					<span class="input spaceBelow"><input type="text" id="duplicatesObjectClass" disabled="true" dojoType="dijit.form.ValidationTextBox" style="width:100%;" /></span>
-					</div></span>
-					<span class="outer"><div>
-					<span class="label"><label for="duplicatesObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 8032)"><fmt:message key="dialog.admin.catalog.management.duplicates.objectDescription" /></label></span>
-   	           		<span class="input"><input type="text" mode="textarea" id="duplicatesObjectDescription" disabled="true" dojoType="dijit.form.SimpleTextarea" style="width:100%;" /></span> 
-					</div></span>
-					<div class="fill"></div>
-				</div>
-	
-				<div class="inputContainer">
-					<span class="button">
-						<span style="float:right;">
-							<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.duplicates.saveChanges" />" onClick="javascript:scriptScopeDuplicates.saveChanges();"><fmt:message key="dialog.admin.catalog.management.duplicates.saveChanges" /></button>
-						</span>
-						<span style="float:right;">
-							<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.duplicates.refresh" />" onClick="javascript:scriptScopeDuplicates.startDuplicatesJob();"><fmt:message key="dialog.admin.catalog.management.duplicates.refresh" /></button>
-						</span>
-						<span id="duplicatesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
-							<img src="img/ladekreis.gif" />
-						</span>
-					</span>
-				</div>
-			</div> <!-- RIGHT HAND SIDE CONTENT END -->
+		<!-- INFO START -->
+		<!-- LEFT HAND SIDE CONTENT START -->
+		<div id="duplicatesListContainer" dojoType="dijit.layout.ContentPane" region="leading" class="inputContainer" style="padding:5px;">
+			<div id="duplicatesLists" dojoType="dijit.layout.TabContainer" style="width: 270px; height: 100%;" selectedChild="duplicatesList1">
+                <span class="outer required"><div><span class="label" style="height:12px;"><fmt:message key="dialog.admin.catalog.management.duplicates.result" /></span></div></span>
+				<!-- TAB 1 START -->
+				<div id="duplicatesList1" dojoType="dijit.layout.ContentPane" title="<fmt:message key="dialog.admin.catalog.management.duplicates.list" />">
+					<div class="tableContainer">
+						<div id="duplicatesListTable" autoHeight="13" forceGridHeight="false" class="hideTableHeader" contextMenu="DUPLICATE_GRID"></div>
+					</div>
+				</div> <!-- TAB 1 END -->
+
+        		<!-- TAB 2 START -->
+				<div id="duplicatesList2" dojoType="dijit.layout.ContentPane" class="grey" title="<fmt:message key="dialog.admin.catalog.management.duplicates.tree" />">
+
+					<div class="inputContainer grey">
+						<div id="duplicatesTree"></div>
+					</div>
+				</div> <!-- TAB 2 END -->
+   
+        	</div>
 		</div>
-	</div> <!-- CONTENT END -->
+		<!-- LEFT HAND SIDE CONTENT END -->
+
+		<!-- RIGHT HAND SIDE CONTENT START -->
+		<div id="duplicatesData" dojoType="dijit.layout.ContentPane" region="center" class="inputContainer field">
+			<div id="winNavi" style="top:0;">
+                    <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-2#overall-catalog-management-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+            </div>
+			<div class="inputContainer grey">
+			    <span class="outer"><div>
+			    <span class="label"><label for="duplicatesObjectName" onclick="javascript:dialog.showContextHelp(arguments[0], 8030)"><fmt:message key="dialog.admin.catalog.management.duplicates.objectName" /></label></span>
+				<span class="input spaceBelow"><input type="text" id="duplicatesObjectName" dojoType="dijit.form.ValidationTextBox" style="width:100%;"/></span>
+				</div></span>
+				<span class="outer"><div>
+				<span class="label"><label for="duplicatesObjectClass" onclick="javascript:dialog.showContextHelp(arguments[0], 8031)"><fmt:message key="dialog.admin.catalog.management.duplicates.objectClass" /></label></span>
+				<span class="input spaceBelow"><input type="text" id="duplicatesObjectClass" disabled="true" dojoType="dijit.form.ValidationTextBox" style="width:100%;" /></span>
+				</div></span>
+				<span class="outer"><div>
+				<span class="label"><label for="duplicatesObjectDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 8032)"><fmt:message key="dialog.admin.catalog.management.duplicates.objectDescription" /></label></span>
+           		<span class="input"><input type="text" mode="textarea" id="duplicatesObjectDescription" disabled="true" dojoType="dijit.form.SimpleTextarea" style="width:100%;" /></span> 
+				</div></span>
+				<div class="fill"></div>
+			</div>
+
+			<div class="inputContainer">
+				<span class="button">
+					<span style="float:right;">
+						<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.duplicates.saveChanges" />" onClick="javascript:scriptScopeDuplicates.saveChanges();"><fmt:message key="dialog.admin.catalog.management.duplicates.saveChanges" /></button>
+					</span>
+					<span style="float:right;">
+						<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.duplicates.refresh" />" onClick="javascript:scriptScopeDuplicates.startDuplicatesJob();"><fmt:message key="dialog.admin.catalog.management.duplicates.refresh" /></button>
+					</span>
+					<span id="duplicatesLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+						<img src="img/ladekreis.gif" />
+					</span>
+				</span>
+			</div>
+		</div> <!-- RIGHT HAND SIDE CONTENT END -->
+	</div>
 </body>
 </html>
