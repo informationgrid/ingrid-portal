@@ -50,7 +50,7 @@
     </action>
   </release>
 
-    <release version="3.3.2" date="2013-12-12" description="Release InGrid 3.3.2">
+    <release version="3.3.2" date="2013-12-18" description="Release InGrid 3.3.2">
       <action type="add" dev="wemove" issue="REDMINE-230">
         IGE: Added ATOM Url to catalog settings and checkbox to set metadata for ATOM download.
       </action>
@@ -74,6 +74,9 @@
       </action>
       <action type="fix" dev="wemove">
         WebMapClient: Restore selected layers from session.
+      </action>
+      <action type="fix" dev="wemove">
+        IGE: Fixed UI problems introduced by new versions of firefox and chrome.
       </action>
       <action type="fix" dev="wemove">
         IGE: Mark table cells if they have empty rows (which should be deleted to prevent null-values in database).
