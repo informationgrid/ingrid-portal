@@ -144,6 +144,7 @@
 		<property name="catalogRequestHandler">
 			<ref local="catalogRequestHandler" />
 		</property>
+		<property name="codelistService"><ref local="codeListService" /></property>
 	</bean>
 
 	<bean id="exportService"

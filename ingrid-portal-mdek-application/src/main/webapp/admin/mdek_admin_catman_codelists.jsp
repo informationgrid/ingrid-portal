@@ -15,9 +15,9 @@
 
 			createDOMElements();
 			            
-            dojo.connect(_container_, "onLoad", function(){
+            dojo.connect( _container_, "onLoad", function() {
                 initImportExportLink();
-                
+                this.updateCodelistTimeStamp();
                 initCodelistSelect();
                 initCodelistTables();
                 initFreeEntrySelect();
@@ -880,7 +880,7 @@
             scriptScopeCodeLists.startReindexJob = function(){
                 CatalogManagementService.rebuildSysListData({
                     timeout: 5000,
-                    preHook: showReindexLoadingZone,
+                    preHook: dojo.partial(scriptScopeCodeLists.showLoadingZone, "reindexLoadingZone"),
                     callback: function(res){
                         refreshReindexProcessInfo();
                     },
@@ -907,7 +907,7 @@
                             
                         }
                         else {
-                            hideReindexLoadingZone();
+                            scriptScopeCodeLists.hideLoadingZone("reindexLoadingZone");
                         }
                     },
                     errorHandler: function(message, err){
@@ -957,12 +957,12 @@
             }
             
             
-            function showReindexLoadingZone(){
-                dojo.byId("reindexLoadingZone").style.visibility = "visible";
+            scriptScopeCodeLists.showLoadingZone = function(id) {
+                dojo.byId(id).style.visibility = "visible";
             }
             
-            function hideReindexLoadingZone(){
-                dojo.byId("reindexLoadingZone").style.visibility = "hidden";
+            scriptScopeCodeLists.hideLoadingZone = function(id) {
+                dojo.byId(id).style.visibility = "hidden";
             }
             
             // -- Import / Export --
@@ -1012,7 +1012,7 @@
                 });
             }
             
-            scriptScopeCodeLists.exportCodelists = function(){
+            scriptScopeCodeLists.exportCodelists = function() {
                 CatalogService.exportSysLists(null, {
                     callback: function(exportFile){
                         dwr.engine.openInDownload(exportFile);
@@ -1022,8 +1022,48 @@
                         console.debug("Error: " + errMsg);
                     }
                 });
+            };
+            
+            scriptScopeCodeLists.updateCodelistTimeStamp = function() {
+                scriptScopeCodeLists.codelistTimestamp = null;
+                CatalogManagementService.getLastModifiedCodelistTimestamp( {
+                    preHook: dojo.partial(showLoadingZone, "updateCodelistsLoadingZone"),
+                    postHook: dojo.partial(hideLoadingZone, "updateCodelistsLoadingZone"),
+                    callback: function(timestamp){
+                        var content = "";
+                        if (timestamp > 0) {
+                            scriptScopeCodeLists.codelistTimestamp = timestamp;
+                            content = new Date(timestamp);
+                        } else {
+                            content = timestamp;
+                        }
+                        dojo.byId("updateCodelistsStatus").innerHTML = content;
+                    },
+                    errorHandler: function(errMsg, err){
+                        displayErrorMessage(err);
+                        console.debug("Error: " + errMsg);
+                    }
+                });
+                
             }
             
+            /**
+             * Force to update all codelists from initial codelist or from connected repository.
+             */
+            scriptScopeCodeLists.updateCodelists = function() {
+                CatalogManagementService.forceUpdateCodelists( {
+                    preHook: dojo.partial(scriptScopeCodeLists.showLoadingZone, "updateCodelistsLoadingZone"),
+                    postHook: dojo.partial(scriptScopeCodeLists.hideLoadingZone, "updateCodelistsLoadingZone"),
+                    callback: function( result ) {
+                        dojo.byId("updateCodelistsResult").innerHTML = result ? '<fmt:message key="dialog.admin.catalog.management.codelists.result.success" />' : '<fmt:message key="dialog.admin.catalog.management.codelists.result.error" />';
+                        scriptScopeCodeLists.updateCodelistTimeStamp();
+                    },
+                    errorHandler: function(errMsg, err){
+                        displayErrorMessage(err);
+                        console.debug("Error: " + errMsg);
+                    }
+                } );
+            };
             
         </script>
     </head>
@@ -1156,26 +1196,44 @@
                         <div id="reindexTab" dojoType="dijit.layout.ContentPane" class="grey" title="<fmt:message key="dialog.admin.catalog.management.codelists.reindex" />">
                             <div class="inputContainer grey field">
                                 <div class="innerPadding" style="border:1px solid grey;">
-	                                <div id="reindexJobInfo">
-	                                </div>
-	                                <br/>
-	                                <div id="reindexStart">
-	                                </div>
-	                                <div id="reindexEnd">
-	                                </div>
-	                                <div id="reindexStatus">
-	                                </div>
-	                                <div id="reindexNumEntities">
-	                                </div>
-	                                    <span><span style="float:right;">
-	                                            <button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.codelists.reindexStart" />" onClick="javascript:scriptScopeCodeLists.startReindexJob();">
-	                                                <fmt:message key="dialog.admin.catalog.management.codelists.reindexStart" />
-	                                            </button>
-	                                        </span><span id="reindexLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden"><img src="img/ladekreis.gif" /></span>
-	                                    </span>
-	                                    <div class="fill"></div>
-	                                    </div>
+                                    <div><fmt:message key="dialog.admin.catalog.management.codelists.header" />:</div>
+                                    <br/>
+                                    <div><fmt:message key="dialog.admin.catalog.management.codelists.timestamp" />: <span id="updateCodelistsStatus"></span></div>
+                                    <div><fmt:message key="dialog.admin.catalog.management.codelists.result" />: <span id="updateCodelistsResult">---</span></div>
+                                    <span>
+                                        <span style="float:right;">
+                                            <button dojoType="dijit.form.Button" onClick="javascript:scriptScopeCodeLists.updateCodelists();">
+                                                <fmt:message key="dialog.admin.catalog.management.codelists.updateCodelistsStart" />
+                                            </button>
+                                        </span>
+                                        <span id="updateCodelistsLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden"><img src="img/ladekreis.gif" /></span>
+                                    </span>
+                                    <div class="fill"></div>
+                                </div>
                             </div>
+                            <div class="inputContainer grey field">
+								<div class="innerPadding" style="border: 1px solid grey;">
+									<div id="reindexJobInfo"></div>
+									<br />
+									<div id="reindexStart"></div>
+									<div id="reindexEnd"></div>
+									<div id="reindexStatus"></div>
+									<div id="reindexNumEntities"></div>
+									<span>
+									    <span style="float: right;">
+										    <button dojoType="dijit.form.Button"
+												onClick="javascript:scriptScopeCodeLists.startReindexJob();">
+												<fmt:message key="dialog.admin.catalog.management.codelists.reindexStart" />
+											</button>
+									    </span>
+									    <span id="reindexLoadingZone" style="float: right; margin-top: 1px; z-index: 100; visibility: hidden">
+									        <img src="img/ladekreis.gif" />
+										</span>
+									</span>
+									<div class="fill"></div>
+								</div>
+						  </div>
+					</div>
                         </div>
                     </div><!-- TAB 3 END -->
                 </div>

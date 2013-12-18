@@ -23,6 +23,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import de.ingrid.codelists.CodeListService;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
 import de.ingrid.mdek.MdekUtils.CsvRequestType;
@@ -43,6 +44,7 @@ import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.quartz.MdekJobHandler;
 import de.ingrid.mdek.quartz.MdekJobHandler.JobType;
 import de.ingrid.mdek.quartz.jobs.util.URLState;
+import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
@@ -57,6 +59,8 @@ public class CatalogManagementServiceImpl {
 	private CatalogRequestHandler catalogRequestHandler;
 
 	private ConnectionFacade connectionFacade;
+	
+	private CodeListService codelistService;
 
 	public void startUrlValidatorJob() {
 		mdekJobHandler.startUrlValidatorJob();
@@ -364,4 +368,36 @@ public class CatalogManagementServiceImpl {
             return null;
         }
     }
+    
+    public Long getLastModifiedCodelistTimestamp() {
+    	String plugId = connectionFacade.getCurrentPlugId();
+    	String uuid = MdekSecurityUtils.getCurrentUserUuid();
+    	IngridDocument response = connectionFacade.getMdekCallerCatalog().getLastModifiedTimestampOfSyslists(plugId, uuid);
+        return MdekCatalogUtils.extractLastModifiedTimestampFromResponse(response);
+    }
+    
+    /**
+     * Get all codelists from the codelist repository and update the database with 
+     * these values. If the codelist repo could not be reached, the initial codelist
+     * is used instead.
+     * 
+     * @return true if codelists have been fetched from Repository, otherwise false when
+     * from local initial codelist
+     */
+    public boolean forceUpdateCodelists() {
+    	// try to get all codelists from repo first
+    	Object repoCodelists = codelistService.updateFromServer(-1l);
+        
+    	// if repo could not be reached use local initial codelist
+    	if (repoCodelists == null) {
+    		codelistService.persistToAll( codelistService.getInitialCodelists() );
+    		return false;
+    	} else {
+    		return true;
+    	}
+    }
+
+	public void setCodelistService(CodeListService codelistService) {
+		this.codelistService = codelistService;
+	}
 }

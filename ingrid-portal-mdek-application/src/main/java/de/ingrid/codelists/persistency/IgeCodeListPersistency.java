@@ -1,6 +1,5 @@
 package de.ingrid.codelists.persistency;
 
-import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -211,14 +210,6 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 boolean success = updateConnectedIgePlugs(plugId, doc, highestTimestamp, user); ;
                 if (!success) {
                     log.error("Could not update codelists in iPlug: " + plugId);
-                } else {
-                    // rebuild syslist so that all documents have updated syslist values
-                    // for those who allow free entries!
-                    try {
-                        rebuildSyslists(plugId, user);
-                    } catch (UndeclaredThrowableException e) {
-                        // a timeout exception is normal for a longer running process
-                    }
                 }
             }
             if (log.isDebugEnabled()) {
@@ -237,17 +228,6 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         return (Boolean) response.get(IJobRepository.JOB_INVOKE_SUCCESS);
     }
     
-    private boolean rebuildSyslists(String plugId, String catAdminUuid) {
-        if (log.isDebugEnabled()) {
-            log.debug("Call backend to rebuild syslist data (reindex) ...");
-        }
-        IngridDocument response = connectionFacade.getMdekCallerCatalog().rebuildSyslistData(plugId, catAdminUuid);
-        if (null == de.ingrid.mdek.util.MdekUtils.getResultFromResponse(response)) {
-            return false;
-        }
-        return true;
-    }
-
     private List<IngridDocument> mapToIngridDocument(List<CodeList> codelists) throws Exception {
         List<IngridDocument> lists = new ArrayList<IngridDocument>();
         IngridDocument doc = null;

@@ -1,5 +1,6 @@
 package de.ingrid.mdek.quartz.jobs;
 
+import java.lang.reflect.UndeclaredThrowableException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ import de.ingrid.codelists.CodeListService;
 import de.ingrid.codelists.quartz.jobs.UpdateCodeListsJob;
 import de.ingrid.mdek.MdekKeysSecurity;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
+import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.utils.IngridDocument;
@@ -37,10 +39,42 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
                 clService.persistToAll(clService.getCodeLists());
             }
             
+            // reindex codelist changes if codelists have changed or initially updated
+            if (modifiedCodelists != null || timestamp == -1) {
+            	updateIndexForAllIPlugs();
+            }
+            
             log.info("UpdateCodeListsFromIGEJob finished! (timestamp = " + timestamp + ", successful = " + (modifiedCodelists == null ? false : true) + ")");
         } else {
             log.info("No iPlug connected to update codelists to!");
         }
+    }
+    
+    private void updateIndexForAllIPlugs() {
+    	IMdekClientCaller caller = connectionFacade.getMdekClientCaller();
+        List<String> iplugList = caller.getRegisteredIPlugs();
+        log.debug("Number of iplugs found: "+iplugList.size());
+        for (String plugId : iplugList) {
+            String user = getCatAdminUuid(plugId);
+	         // rebuild syslist so that all documents have updated syslist values
+	         // for those who allow free entries!
+	         try {
+	             rebuildSyslists(plugId, user);
+	         } catch (UndeclaredThrowableException e) {
+	             // a timeout exception is normal for a longer running process
+	         }
+        }
+    }
+    
+    private boolean rebuildSyslists(String plugId, String catAdminUuid) {
+        if (log.isDebugEnabled()) {
+            log.debug("Call backend to rebuild syslist data (reindex) ...");
+        }
+        IngridDocument response = connectionFacade.getMdekCallerCatalog().rebuildSyslistData(plugId, catAdminUuid);
+        if (null == de.ingrid.mdek.util.MdekUtils.getResultFromResponse(response)) {
+            return false;
+        }
+        return true;
     }
 
     private Long getLastModifiedTimestampFromDb() {
