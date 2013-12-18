@@ -169,9 +169,11 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 					ref.setObjectClass(objEntity.getInt("obj.objClass"));
 					ref.setObjectName(objEntity.getString("obj.objName"));
 					ref.setObjectUuid(objEntity.getString("obj.objUuid"));
-					String url = null;
+					String url = objEntity.getString("url.connectPoint");
+					String params = "";
 					if (isCapabilities) {
-					    url = prepareCapabilitiesUrl(objEntity.getString("url.connectPoint"), objEntity.getInt("objServ.typeKey"));
+					    params = getAdditionalCapabilitiesParameter(objEntity.getString("url.connectPoint"), objEntity.getInt("objServ.typeKey"));
+					    
 					} else {
 					    url = objEntity.getString("urlRef.urlLink");
 					}
@@ -179,6 +181,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 					URLState urlState = urlStateMap.get(url);
 					if (urlState == null) {
 						urlState = new URLState(url);
+						urlState.setAdditionalParams(params);
 						urlStateMap.put(url, urlState);
 					}
 					ref.setUrlState(urlState);
@@ -196,24 +199,26 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
      * @param type
      * @return
      */
-    private String prepareCapabilitiesUrl(String url, int type) {
+    private String getAdditionalCapabilitiesParameter(String url, int type) {
         String mappedType = getServiceTypeFromKey(type);
+        String parameters = "";
         
         if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
             if (url.indexOf("?") == -1) {
-                url = url + "?";
+            	parameters = "?";
             }
-            if (!(url.lastIndexOf("?") == url.length() - 1)
+            // if url or parameters already contains a ? or & at the end then do not add another one!
+            if (!(url.lastIndexOf("?") == url.length() - 1 || parameters.length() > 0)
                     && !(url.lastIndexOf("&") == url.length() - 1)) {
-                url = url + "&";
+            	parameters = "&";
             }
             
-            url += "REQUEST=GetCapabilities";
+            parameters += "REQUEST=GetCapabilities";
         }
         if (url.toLowerCase().indexOf("service=") == -1) {
-            url += "&SERVICE=" + mappedType;            
+        	parameters += "&SERVICE=" + mappedType;            
         }
-        return url;
+        return parameters;
     }
 
     /**

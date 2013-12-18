@@ -23,7 +23,7 @@ public class CapabilitiesValidator extends URLValidator {
 	    // if we return a valid page then check for correct content
 	    if (state.getState() == State.VALID) {
 	        if (log.isDebugEnabled()) {
-	            log.debug("checking capability url (extended): "+state.getUrl());
+	            log.debug("checking capability url (extended): "+state.getUrl() + state.getAdditionalParams());
 	        }
     		
     		// is Element "Capabilities" present for all types?

@@ -5,6 +5,7 @@ public class URLState {
 	public enum State { NOT_CHECKED, HTTP_ERROR, CONNECT_TIMEOUT, SOCKET_TIMEOUT, MALFORMED_URL, VALID, INVALID_CAPABILITIES }
 	
 	private final String url;
+	private String additionalParams;
 	private State state;
 	private int responseCode;
 
@@ -31,5 +32,13 @@ public class URLState {
 
 	public void setResponseCode(int responseCode) {
 		this.responseCode = responseCode;
+	}
+
+	public String getAdditionalParams() {
+		return additionalParams;
+	}
+
+	public void setAdditionalParams(String additionalParams) {
+		this.additionalParams = additionalParams;
 	}
 }

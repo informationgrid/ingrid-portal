@@ -29,7 +29,7 @@ public class URLValidator implements Callable<URLState> {
 
 	public URLState call() {
 		log.debug("checking url: "+urlState.getUrl());
-		String url = urlState.getUrl();
+		String url = urlState.getUrl() + urlState.getAdditionalParams();
 
 		GetMethod getMethod = null;
 		long startTime = System.currentTimeMillis();
