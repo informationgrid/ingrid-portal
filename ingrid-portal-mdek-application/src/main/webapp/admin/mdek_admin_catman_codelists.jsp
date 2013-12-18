@@ -1150,7 +1150,7 @@
                                         </span>
                                     </div>
                                     <div dojoType="dijit.layout.ContentPane" region="left" class="innerPadding" style="width:370px;">
-                                        <div dojoType="dijit.layout.BorderContainer">
+                                        <div dojoType="dijit.layout.BorderContainer" style="height: 100%; border: 0;">
                                             <div dojoType="dijit.layout.ContentPane" region="top" class="grey">
                                                 <span class="label" style="height:37px;"><fmt:message key="dialog.admin.catalog.management.codelists.entriesNotInList" /></span>
                                             </div>
@@ -1178,7 +1178,7 @@
                                     </div>
                                     
                                     <div dojoType="dijit.layout.ContentPane" region="right"  class="innerPadding" style="width:370px;">
-                                        <div dojoType="dijit.layout.BorderContainer">
+                                        <div dojoType="dijit.layout.BorderContainer" style="height: 100%; border: 0;">
                                             <div dojoType="dijit.layout.ContentPane" region="top" class="grey">
                                                 <span class="label" style="height:37px;"><fmt:message key="dialog.admin.catalog.management.codelists.listContent" /></span>
                                             </div>

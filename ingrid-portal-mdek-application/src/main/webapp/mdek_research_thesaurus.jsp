@@ -307,7 +307,7 @@ function hideLoadingZone() {
         </div>
 
             <div dojoType="dijit.layout.ContentPane" region="center" class="innerPadding">
-    		<div id="researchThesaurusTabContainer" dojoType="dijit.layout.TabContainer" class="tabContainerWithBorderTop" selectedChild="thesaurusTreeContainer">
+    		<div id="researchThesaurusTabContainer" dojoType="dijit.layout.TabContainer" class="tabContainerWithBorderTop" style="height: 100%; border: 0;" selectedChild="thesaurusTreeContainer">
     		  <!-- first tab, tree view -->
     		  <div class="grey" dojoType="dijit.layout.ContentPane" id="thesaurusTreeContainer" title="<fmt:message key="dialog.research.thes.tree" />">
                     <div id="treeSearchThesaurus"></div>
