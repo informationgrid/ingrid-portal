@@ -50,6 +50,15 @@
     </action>
   </release>
 
+    <release version="3.3.3-SNAPSHOT" date="??" description="Release InGrid ??">
+      <action type="fix" dev="wemove">
+        Profiles: Fixed typo on error page. Updated facets definition.
+      </action>
+      <action type="fix" dev="wemove">
+        IGE: Fixed wrong icons in dashboard for published objects.
+      </action>
+    </release>
+
     <release version="3.3.2" date="2013-12-18" description="Release InGrid 3.3.2">
       <action type="add" dev="wemove" issue="REDMINE-230">
         IGE: Added ATOM Url to catalog settings and checkbox to set metadata for ATOM download.
