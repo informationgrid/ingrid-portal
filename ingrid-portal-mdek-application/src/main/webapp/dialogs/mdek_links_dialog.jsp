@@ -239,8 +239,10 @@
                     
                     var idList = [];
                     dojo.forEach(syslist2000Map, function(entry) {
-                        var containsClass = dojo.indexOf(entry.data.split(','), objectClass) !== -1;
-                        if (containsClass) idList.push(entry.entryId);
+                        if (entry.data) {
+	                        var containsClass = dojo.indexOf(entry.data.split(','), objectClass) !== -1;
+	                        if (containsClass) idList.push(entry.entryId);
+                        }
                    	});
                     
                     initialValues = dojo.filter(syslist2000Map, function(item) {
