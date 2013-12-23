@@ -2,7 +2,7 @@ package de.ingrid.mdek.quartz.jobs.util;
 
 public class URLState {
 
-	public enum State { NOT_CHECKED, HTTP_ERROR, CONNECT_TIMEOUT, SOCKET_TIMEOUT, MALFORMED_URL, VALID, INVALID_CAPABILITIES }
+	public enum State { NOT_CHECKED, HTTP_ERROR, CONNECT_TIMEOUT, CONNECT_REFUSED, SOCKET_TIMEOUT, MALFORMED_URL, VALID, UNKNOWN_HOST, INVALID_CAPABILITIES }
 	
 	private final String url;
 	private String additionalParams;

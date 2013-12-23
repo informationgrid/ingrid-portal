@@ -1,8 +1,10 @@
 package de.ingrid.mdek.quartz.jobs.util;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.concurrent.Callable;
 
 import javax.xml.ws.http.HTTPException;
@@ -48,12 +50,18 @@ public class URLValidator implements Callable<URLState> {
 
 		} catch (HTTPException ex) {
 			urlState.setState(State.HTTP_ERROR);
+			
+		} catch (ConnectException ex) {
+		    urlState.setState(State.CONNECT_REFUSED);		    
 
 		} catch (ConnectTimeoutException ex) {
 			urlState.setState(State.CONNECT_TIMEOUT);
 
 		} catch (SocketTimeoutException ex) {
 			urlState.setState(State.SOCKET_TIMEOUT);
+			
+		} catch (UnknownHostException ex) {
+		    urlState.setState(State.UNKNOWN_HOST);		    
 
 		} catch (IOException ex) {
 			urlState.setState(State.HTTP_ERROR);
