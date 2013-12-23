@@ -5,6 +5,10 @@
 #* Loads our custom macros *#
 #parse($layoutDecoration.getResource("decorator-macros.vm"))
 
+#* SET SECURE PROTOCOL FOR BaseHref (macro defined in jetspeed_macros.vm) *#
+#* #macro(BaseHref)${request.scheme}://${request.serverName}:${request.serverPort}${request.contextPath}/#end *#
+#macro(BaseHref)https://${request.serverName}${request.contextPath}/#end
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
   <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "PortalU")</title>

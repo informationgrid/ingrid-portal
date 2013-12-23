@@ -51,6 +51,9 @@
   </release>
 
     <release version="3.3.3-SNAPSHOT" date="??" description="Release InGrid ??">
+      <action type="add" dev="wemove" issue="REDMINE-266">
+        Profile GeoPortal.WSV: Switched base url in header to HTTPS.
+      </action>
       <action type="fix" dev="wemove">
         Profiles: Fixed typo on error page. Updated facets definition.
       </action>
