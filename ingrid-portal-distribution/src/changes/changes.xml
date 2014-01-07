@@ -5,7 +5,7 @@
     <author email="joachim@wemove.com">Joachim Müller</author>
   </properties>
   <body>
-   <release version="3.4.0.-SNAPSHOT" date="2013-xx-xx" description="Release InGrid 3.4">	
+   <release version="3.4.0.-SNAPSHOT" date="2014-xx-xx" description="Release InGrid 3.4">	
     <action type="add" dev="wemove" issue="REDMINE-134">
       WebMapClient: Activate layers by using "Zeige Karte" function and defined layer identifier.
     </action>
@@ -50,21 +50,15 @@
     </action>
   </release>
 
-    <release version="3.3.3-SNAPSHOT" date="??" description="Release InGrid ??">
+  <release version="3.3.2" date="2014-01-17" description="Release InGrid 3.3.2">
       <action type="add" dev="wemove" issue="REDMINE-266">
         Profile GeoPortal.WSV: Switched base url in header to HTTPS.
       </action>
-      <action type="fix" dev="wemove">
-        Profiles: Fixed typo on error page. Updated facets definition.
-      </action>
-      <action type="fix" dev="wemove">
-        IGE: Fixed wrong icons in dashboard for published objects.
-      </action>
-    </release>
-
-    <release version="3.3.2" date="2013-12-18" description="Release InGrid 3.3.2">
       <action type="add" dev="wemove" issue="REDMINE-230">
         IGE: Added ATOM Url to catalog settings and checkbox to set metadata for ATOM download.
+      </action>
+      <action type="fix" dev="wemove">
+        Profiles: Fixed typo on error page. Updated NUMIS facets definition. Removed webmap client configuration from profiles.
       </action>
       <action type="fix" dev="wemove" issue="REDMINE-255">
         Portal: Fix reset facets if no search results.
@@ -86,6 +80,9 @@
       </action>
       <action type="fix" dev="wemove">
         WebMapClient: Restore selected layers from session.
+      </action>
+      <action type="fix" dev="wemove">
+        IGE: Fixed wrong icons in dashboard for published objects.
       </action>
       <action type="fix" dev="wemove">
         IGE: Fixed UI problems introduced by new versions of firefox and chrome.
