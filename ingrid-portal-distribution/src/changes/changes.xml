@@ -50,7 +50,13 @@
     </action>
   </release>
 
-  <release version="3.3.2" date="2014-01-17" description="Release InGrid 3.3.2">
+    <release version="3.3.3-SNAPSHOT" date="??" description="Release InGrid 3.3.?">
+      <action type="update" dev="wemove" issue="REDMINE-266">
+        Reconfigure portal so protocol is preserved in all portal urls (keep https protocol in GeoPortal.WSV where secured frontend is used).
+      </action>
+    </release>
+
+    <release version="3.3.2" date="2014-01-17" description="Release InGrid 3.3.2">
       <action type="add" dev="wemove" issue="REDMINE-266">
         Profile GeoPortal.WSV: Switched base url in header to HTTPS.
       </action>
