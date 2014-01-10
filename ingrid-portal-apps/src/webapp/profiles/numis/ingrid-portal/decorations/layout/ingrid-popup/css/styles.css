@@ -9,7 +9,7 @@
   standard styles 
 *********************************************************************/
 
-body { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif !important; }
+body { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif !important; line-height:100%; }
 .claro { padding: 0; margin: 0; color: #505050; background-color: #FFFFFF; font-family: Arial,sans-serif; }
 body.body-background { background:url("../images/body.png") repeat-x scroll 0 0 #E2EBF0; width:966px; padding-bottom: 50px; }
 div.layout-tigris { background:#FFFFFF; filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#bebebe' ); -moz-box-shadow:0 0 0.417em #BEBEBE; -webkit-box-shadow:0 0 0.417em #BEBEBE; }
@@ -625,7 +625,7 @@ li.detail_li p { font-size:100%; margin-bottom:0.2em; }
  
 img.section_show_hide { padding-right:16px; padding-top:5px; }
 
-span.linkinfo { color:#000000; font-size: 60%; padding-left:20px; }
+span.linkinfo { color:#000000; font-size: 60%; }
 
 img.preview { width: 155px; height: 130px; margin-right: 40px; }
 p.preview_label { display: block;  font-size: 11px; width: 155px; color:#2C5C91; padding: 5px 0 0; }

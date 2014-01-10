@@ -49,17 +49,20 @@
     #elseif(!$entry.isMapLink)
         <a class="detail_link" href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a>
     #end
-    
-    #if($tool.hasContent($entry.linkInfo))
-        <span class="linkinfo">$entry.linkInfo</span>
-    #end
-    #if($tool.hasContent($entry.attachedToField))
-        <span class="linkinfo">(${entry.get("attachedToField")})</span>
-    #end
-    #if($tool.hasContent($entry.description))
-        #set($myIndent = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-        #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>${myIndent}"))
-        <span class="linkinfo"><br/>${myIndent}${myDescription}</span>
+    #if($tool.hasContent($entry.linkInfo) || $tool.hasContent($entry.attachedToField) || $tool.hasContent($entry.description))
+        #if($tool.hasContent($entry.linkInfo))
+            <span class="linkinfo">$entry.linkInfo</span>
+        #end
+        #if($tool.hasContent($entry.attachedToField))
+            <span class="linkinfo">(${entry.get("attachedToField")})</span>
+        #end
+        #if($tool.hasContent($entry.description))
+            #set($myIndent = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+            #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>${myIndent}"))
+            <span class="linkinfo"><br/>${myIndent}${myDescription}</span>
+		#end
+	#else
+		<span class="linkinfo">&nbsp;</span>
     #end
     #if($tool.hasContent($entry.mapLink))
         <a target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
