@@ -1580,8 +1580,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
             
             for (int i=0; i<nodeList.getLength();i++){
-                if(XPathUtils.nodeExists(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/idf:idfOnlineResource/gmd:linkage/gmd:URL")){
-                    Node node = XPathUtils.getNode(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/idf:idfOnlineResource/gmd:linkage/gmd:URL");                
+                if(XPathUtils.nodeExists(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL")){
+                    Node node = XPathUtils.getNode(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL");                
                     String urlValue = XPathUtils.getString(node, ".").trim();
                     // do not display empty URLs
                     if (urlValue == null || urlValue.length() == 0) {
