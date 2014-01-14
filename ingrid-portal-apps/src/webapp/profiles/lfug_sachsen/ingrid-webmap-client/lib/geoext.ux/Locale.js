@@ -50,7 +50,7 @@ Local = {
     	tAuswahlZuSuchanfrageHinzufuegen: { en: 'Add to query', de: 'Auswahl zu Suchanfrage hinzuf&uuml;gen' },
     	tBeimSpeichernDerDatenIstEinFehlerAufgetreten: { en: 'Error storing the Data.', de: 'Beim Speichern der Daten ist ein Fehler aufgetreten.' },
     	tBeschreibung: { en: 'Description', de: 'Beschreibung' },
-    	tBitteCapabilitiesExternerService: { en: 'Enter the GetCapabilities-URL of an external web map service (WMS):', de: 'Bitte geben Sie eine GetCapabilities-URL eines externen web map service (WMS) an:' },
+    	tBitteCapabilitiesExternerService: { en: '<p class="accordion-lable">Enter the GetCapabilities-URL of an external web map service (WMS):</p>', de: '<p class="accordion-lable">Bitte geben Sie eine GetCapabilities-URL eines externen web map service (WMS) an:</p>' },
     	tBundesland: { en: 'County', de: 'Bundesland' },
     	tChooseMapServices: { en: 'Viewing Data', de: 'Kartendienste ausw&auml;hlen' },
     	tCouldNotObtainAdminInfo: { en: 'Could not obtain administrative information.', de: 'Konnte keine administrativen Informationen abrufen.' },
@@ -86,7 +86,8 @@ Local = {
         tGebietAuswaehlen : { en: 'Select area', de: 'Gebiet ausw&auml;hlen' },
         tGebuehren : { en: 'Fees', de: 'Geb&uuml;hren' },
         tHilfe : { en: 'Help', de: 'Hilfe' },
-        tHintZoomToView : { en: 'Hint: You may have to zoom into the map to see the layers of the external service. The provider of the service is responsible for the display of the service. PortalU has no influence here.', de: 'Hinweis: M&ouml;glicherweise m&uuml;ssen Sie die Ansicht vergr&ouml;&szlig;ern, um Ebenen von externen Kartendiensten betrachten zu k&oumlnnen. Der Betreiber des Kartendienstes ist f&uuml;r die Anzeige verantwortlich. PortalU hat keine Beteiligung an dessen Verhalten.' },
+        tHinweis : { en: 'Hint', de: 'Hinweis' },
+        tHintZoomToView : { en: '<p class="hint">You may have to zoom into the map to see the layers of the external service. The provider of the service is responsible for the display of the service. SachsenPortalU has no influence here.</p>', de: '<p class="hint">M&ouml;glicherweise m&uuml;ssen Sie die Ansicht vergr&ouml;&szlig;ern, um Ebenen von externen Kartendiensten betrachten zu k&oumlnnen. Der Betreiber des Kartendienstes ist f&uuml;r die Anzeige verantwortlich. SachsenPortalU hat keine Beteiligung an dessen Verhalten.</p>' },
 		tHinzufuegen : { en: 'Add', de:'Hinzuf&uuml;gen'},
 		tIdAuswaehlen : { en: 'Select an ID of an administrative unit', de: 'ID einer Administrativen Einheit ausw&auml;hlen' },
         tInfo : { en: 'Info', de: 'Info' },
@@ -175,8 +176,8 @@ Local = {
         tWelcomeTextMeassure: { en: 'Measure distance or area on the map', de: 'Misst die Entfernungen oder Fl&auml;chen auf der Karte'},
         
         tWelcomeTextPrint: { en: 'Print the current map to PDF', de: 'Druckt den aktuellen Kartenausschnitt als PDF'},
-        tWelcomeTextLoad: { en: 'Open an existing map (Access to this feature requires a personal account)', de: 'L&auml;dt die zuvor gespeicherte Karten (<strong>Mein PortalU</strong> Login erforderlich)'},
-        tWelcomeTextSave: { en: 'Saves the current map (Access to this feature requires a personal account)', de: 'Speichert die aktuelle Kartenansicht (<strong>Mein PortalU</strong> Login erforderlich)'},
+        tWelcomeTextLoad: { en: 'Open an existing map (Access to this feature requires a personal account)', de: 'L&auml;dt die zuvor gespeicherte Karten (<strong>Mein SachsenPortalU</strong> Login erforderlich)'},
+        tWelcomeTextSave: { en: 'Saves the current map (Access to this feature requires a personal account)', de: 'Speichert die aktuelle Kartenansicht (<strong>Mein SachsenPortalU</strong> Login erforderlich)'},
         tWelcomeTextDownload: { en: 'Saves the current map as XML file (Web Map Context)', de: 'Speichert die Karte als WMC (Web Map Context)'},
         
         tWelcomeTextTipp0: { en: '<h1>You want to see an area of the map in greater detail?</h1><p>Hold the Shift key and drag a zoom box on the map with the left mouse key.</p>', de: '<h1>Sie wollen eine detailliertere Ansicht eines bestimmten Kartenbereichs?</h1><p>Mit gedr&uuml;ckter SHIFT- und linker Maustaste k&ouml;nnen Sie ein Zoom-Rechteck auf den gew&uuml;nschten Bereich aufziehen.</p>'},
@@ -184,7 +185,7 @@ Local = {
         tWelcomeTextTipp2: { en: '<h1>You want to visualize your own or external data in our map viewer?</h1><p>All you need is a valid GetCapabilities URL. Our map client supports WMS 1.1.0, 1.1.1 and 1.3.0. Add the GetCapabilities URL by using the plus symbol <span class="iconTable iconAdd" style="display: inline-block;"></span> from the toolbar.</p>', de: '<h1>Sie wollen eigene Kartendienste in unserem Kartenviewer visualisieren?</h1><p>Externe Kartendienste lassen sich &uuml;ber eine GetCapabilities-URL einbinden. Unterst&uuml;tzt werden die Standards 1.1.0, 1.1.1 und 1.3.0. &Ouml;ffnen Sie mit dem <span class="iconTable iconAdd" style="display: inline-block;"></span> das Fenster <strong>Dienst hinzuf&uuml;gen</strong> und geben eine valide GetCapabilities-URL ein.</p>'},
         tWelcomeTextTipp3: { en: '<h1>You have added a digital map, but you can’t see any data?</h1><p>Some layers are only displayed at certain scales. The layers are displayed, when the scale of the current map view and the layer scale match. Otherwise the names of the layers are greyed out (flag active services) and the data are not drawn. You can make the data visible by zooming into the map or by using the feature Zoom-To-Layer <span class="iconTable iconZoomLayerExtent" style="display: inline-block;"></span>.</p>', de: '<h1>Sie haben einen Kartendienst (WMS) geladen, aber keine Informationen werden angezeigt?</h1><p>Die Informationen mancher Layer werden nur innerhalb eines bestimmten Ma&szlig;stabbereichs gezeichnet. Ma&szlig;stabsabh&auml;ngige Layer erkennen Sie an der ausgegrauten Farbgebung. &Auml;ndern Sie den Ma&szlig;stab mithilfe des Navigation-Tools im Kartenfenster oder den Ma&szlig;stabseinstellung unter "Erweiterte Einstellungen".</p>'},
         tWelcomeTextTipp4: { en: '<h1>You are searching maps on a particular topic?</h1><p>Use the search field below the list of topics to find further maps. By entering a keyword, all connected catalogues from our partners will be searched for suitable maps (WMS).</p>', de: '<h1>Sie suchen Karten zu einem bestimmten Umweltthema?</h1><p>Finden Sie eine passende Karte mit Hilfe der Suchfunktion unterhalb der Anbieter- und Themenliste. Mit der Suchanfrage werden s&auml;mtliche angeschlossene Kataloge aus Bund und L&auml;ndern nach passenden Kartendiensten (WMS) durchsucht.</p>'},
-        tWelcomeTextTipp5: { en: '<h1>You want to save the current map and load it at a later stage?</h1><p>Take advantage of a personal PortalU Login: Register on <a href="/personalisierungsoptionen"><strong>my PortalU</strong></a> and make use of various options to personalize PortalU.</p>', de: '<h1>Sie wollen eine Kartenansicht speichern und zu einem sp&auml;teren Zeitpunkt wieder aufrufen?</h1><p>Nutzen Sie die Vorteile eines pers&ouml;nlichen PortalU-Logins: Auf der Seite des Men&uuml;reiters <a href="/personalisierungsoptionen"><strong>Mein PortalU</strong></a> k&ouml;nnen Sie sich als Benutzer registrieren. Damit steht Ihnen eine Vielzahl von M&ouml;glichkeiten offen, die Funktionen des Portals nach Ihren Bed&uuml;rfnissen zusammenzustellen.</p>'},
+        tWelcomeTextTipp5: { en: '<h1>You want to save the current map and load it at a later stage?</h1><p>Take advantage of a personal SachsenPortalU Login: Register on <a href="/personalisierungsoptionen"><strong>my SachsenPortalU</strong></a> and make use of various options to personalize SachsenPortalU.</p>', de: '<h1>Sie wollen eine Kartenansicht speichern und zu einem sp&auml;teren Zeitpunkt wieder aufrufen?</h1><p>Nutzen Sie die Vorteile eines pers&ouml;nlichen SachsenPortalU-Logins: Auf der Seite des Men&uuml;reiters <a href="/personalisierungsoptionen"><strong>Mein SachsenPortalU</strong></a> k&ouml;nnen Sie sich als Benutzer registrieren. Damit steht Ihnen eine Vielzahl von M&ouml;glichkeiten offen, die Funktionen des Portals nach Ihren Bed&uuml;rfnissen zusammenzustellen.</p>'},
         tWelcomeTextTitle: { en: 'WELCOME TO THE MAP VIEWER', de: 'WILLKOMMEN BEIM KARTENVIEWER'},
         tWelcomeTextSubtitle: { en: 'Our map viewer contains a selection of digital maps (WMS) from public organisations in Germany. More than 200 digital maps are ordered by provider and by topic. Beyond that you can use the search function to find further maps.', de: 'Unser Kartenviewer enth&auml;lt eine Auswahl digitaler Kartendienste (WMS) von Umweltbeh&ouml;rden aus Sachsen. Sie haben die Wahl: Mehr als 200 digitale Karten stellen wir zur Zeit &uuml;ber die Themen- und Anbieterliste bereit. Weitere Kartendienste k&ouml;nnen Sie &uuml;ber die Suchmaske recherchieren.'},
         tWelcomeTextLink1: { en: 'Where does the data come from', de: 'Woher kommen die Daten'},
@@ -206,7 +207,19 @@ Local = {
 		tStaedte: {en: 'Cities', de: 'St&auml;dte'},
 		tNoTitle: {en: 'No title', de: 'Kein Titel'},
 		tGruppenLayerAnzeigen: {en: 'Display group layer', de: 'Gruppenlayer anzeigen'},
-		tMailToMapLink: {en: 'Link to map', de: 'Link zur Karte'}
+		tMailToMapLink: {en: 'Link to map', de: 'Link zur Karte'},
+		tSettingsToolBar: {en: 'Settings', de: 'Einstellungen'},
+		tLegendToolBar: {en: 'Legend', de: 'Legende'},
+		tTransparenz: {en: 'Transparency', de: 'Transparenz'},
+		tInformation: {en: 'Information', de: 'Information'},
+		tLoeschen: {en: 'Delete', de: 'L&ouml;schen'},
+		tZoomToLayerExtent: {en: 'Zoom to layer', de: 'Zoom auf Layer'},
+		tExternServicePanel: {en: 'External Service', de: 'Externer Dienst'},
+		tUrlEingabe: {en: 'URL ...', de: 'Url ...'},
+		tSuchbegriff: {en: 'Search term ...', de: 'Suchbegriff ...'},
+		tPfichtfeld: {en: 'This field is required', de: 'Pflichtfeld'},
+		tOptionen: {en: 'Menu', de: 'Menü'},
+		tServiceBereichAufUndZuKlappen: {en: 'Expand and collapse service-area', de: 'Service-Bereich ein- und ausblenden'}
     }
 }
 

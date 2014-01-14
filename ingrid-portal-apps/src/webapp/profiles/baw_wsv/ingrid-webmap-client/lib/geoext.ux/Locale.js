@@ -50,7 +50,7 @@ Local = {
     	tAuswahlZuSuchanfrageHinzufuegen: { en: 'Add to query', de: 'Auswahl zu Suchanfrage hinzuf&uuml;gen' },
     	tBeimSpeichernDerDatenIstEinFehlerAufgetreten: { en: 'Error storing the Data.', de: 'Beim Speichern der Daten ist ein Fehler aufgetreten.' },
     	tBeschreibung: { en: 'Description', de: 'Beschreibung' },
-    	tBitteCapabilitiesExternerService: { en: 'Enter the GetCapabilities-URL of an external web map service (WMS):', de: 'Bitte geben Sie eine GetCapabilities-URL eines externen web map service (WMS) an:' },
+    	tBitteCapabilitiesExternerService: { en: '<p class="accordion-lable">Enter the GetCapabilities-URL of an external web map service (WMS):</p>', de: '<p class="accordion-lable">Bitte geben Sie eine GetCapabilities-URL eines externen web map service (WMS) an:</p>' },
     	tBundesland: { en: 'County', de: 'Bundesland' },
     	tChooseMapServices: { en: 'Viewing Data', de: 'Kartendienste ausw&auml;hlen' },
     	tCouldNotObtainAdminInfo: { en: 'Could not obtain administrative information.', de: 'Konnte keine administrativen Informationen abrufen.' },
@@ -86,7 +86,8 @@ Local = {
         tGebietAuswaehlen : { en: 'Select area', de: 'Gebiet ausw&auml;hlen' },
         tGebuehren : { en: 'Fees', de: 'Geb&uuml;hren' },
         tHilfe : { en: 'Help', de: 'Hilfe' },
-        tHintZoomToView : { en: 'Hint: You may have to zoom into the map to see the layers of the external service. The provider of the service is responsible for the display of the service. GeoPortal.WSV has no influence here.', de: 'Hinweis: M&ouml;glicherweise m&uuml;ssen Sie die Ansicht vergr&ouml;&szlig;ern, um Ebenen von externen Kartendiensten betrachten zu k&oumlnnen. Der Betreiber des Kartendienstes ist f&uuml;r die Anzeige verantwortlich. GeoPortal.WSV hat keine Beteiligung an dessen Verhalten.' },
+        tHinweis : { en: 'Hint', de: 'Hinweis' },
+        tHintZoomToView : { en: '<p class="hint">You may have to zoom into the map to see the layers of the external service. The provider of the service is responsible for the display of the service. GeoPortal.WSV has no influence here.</p>', de: '<p class="hint">Hinweis: M&ouml;glicherweise m&uuml;ssen Sie die Ansicht vergr&ouml;&szlig;ern, um Ebenen von externen Kartendiensten betrachten zu k&oumlnnen. Der Betreiber des Kartendienstes ist f&uuml;r die Anzeige verantwortlich. GeoPortal.WSV hat keine Beteiligung an dessen Verhalten.</p>' },
 		tHinzufuegen : { en: 'Add', de:'Hinzuf&uuml;gen'},
 		tIdAuswaehlen : { en: 'Select an ID of an administrative unit', de: 'ID einer Administrativen Einheit ausw&auml;hlen' },
         tInfo : { en: 'Info', de: 'Info' },
@@ -206,7 +207,19 @@ Local = {
 		tStaedte: {en: 'Cities', de: 'St&auml;dte'},
 		tNoTitle: {en: 'No title', de: 'Kein Titel'},
 		tGruppenLayerAnzeigen: {en: 'Display group layer', de: 'Gruppenlayer anzeigen'},
-		tMailToMapLink: {en: 'Link to map', de: 'Link zur Karte'}
+		tMailToMapLink: {en: 'Link to map', de: 'Link zur Karte'},
+		tSettingsToolBar: {en: 'Settings', de: 'Einstellungen'},
+		tLegendToolBar: {en: 'Legend', de: 'Legende'},
+		tTransparenz: {en: 'Transparency', de: 'Transparenz'},
+		tInformation: {en: 'Information', de: 'Information'},
+		tLoeschen: {en: 'Delete', de: 'L&ouml;schen'},
+		tZoomToLayerExtent: {en: 'Zoom to layer', de: 'Zoom auf Layer'},
+		tExternServicePanel: {en: 'External Service', de: 'Externer Dienst'},
+		tUrlEingabe: {en: 'URL ...', de: 'Url ...'},
+		tSuchbegriff: {en: 'Search term ...', de: 'Suchbegriff ...'},
+		tPfichtfeld: {en: 'This field is required', de: 'Pflichtfeld'},
+		tOptionen: {en: 'Menu', de: 'Menü'},
+		tServiceBereichAufUndZuKlappen: {en: 'Expand and collapse service-area', de: 'Service-Bereich ein- und ausblenden'}
     }
 }
 
