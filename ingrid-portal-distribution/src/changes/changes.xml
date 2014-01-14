@@ -54,6 +54,9 @@
       <action type="update" dev="wemove" issue="REDMINE-266">
         Reconfigure portal so protocol is preserved in all portal urls (keep https protocol in GeoPortal.WSV where secured frontend is used).
       </action>
+      <action type="fix" dev="wemove">
+        Profile SachsenPortalU: Fixed images and content.
+      </action>
     </release>
 
     <release version="3.3.2" date="2014-01-17" description="Release InGrid 3.3.2">
