@@ -976,7 +976,6 @@ div.dialog_content input.btn { text-align: center; min-width: 120px; }
 /* InGrid Map Client*/
 
 p.search-ext-env, label.search-ext-env{ padding:5px; }
-.x-tree-node-anchor {   font-size:11px !important;}
 ul.x-tab-strip-top {border-bottom-color: #8DB2E3;margin: 0 !important}
 
 div.formbody_webmapclient h3 { font-size:80%; }

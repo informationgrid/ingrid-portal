@@ -719,7 +719,6 @@ div.btn_center { float:left; background-image: url("../images/button.png"); back
 
 p,label.search-ext-env{padding:2px;}
 ol, ul { list-style-type: none !important; }
-.x-tree-node-anchor {   font-size:11px !important;}
 ul.x-tab-strip-top {background-color: #CEDFF5;border-bottom-color: #8DB2E3;margin: 0 !important}
 li.x-tree-node{margin-left:0px;}
 .mapclientLegendPanel div div div label{ background-color:#D0D0D0; }
