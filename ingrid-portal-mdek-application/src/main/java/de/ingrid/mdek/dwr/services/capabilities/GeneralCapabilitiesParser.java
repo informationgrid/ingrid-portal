@@ -27,6 +27,7 @@ import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.TimeReferenceBean;
 import de.ingrid.mdek.beans.object.UrlBean;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
@@ -61,6 +62,15 @@ public class GeneralCapabilitiesParser {
         String[] keywordsArray = xPathUtils.getStringArray(doc, xpath);
         // explicit conversion into an ArrayList to support the addAll-Method
         return new ArrayList<String>(Arrays.asList(keywordsArray));
+    }
+    
+    protected List<SNSTopic> getKeywordsFromLayer(List<String> keywords) throws XPathExpressionException {
+        List<SNSTopic> snsTopics = new ArrayList<SNSTopic>();
+        for (String keyword : keywords) {
+            SNSTopic snsTopic = new SNSTopic(SNSTopic.Type.NON_DESCRIPTOR, null, null, keyword, null, null);
+            snsTopics.add(snsTopic);
+        }
+        return snsTopics;
     }
     
     protected OperationBean mapToOperationBean(Document doc, String[] xPathsOfMethods, Integer[] platformsOfMethods) throws XPathExpressionException {

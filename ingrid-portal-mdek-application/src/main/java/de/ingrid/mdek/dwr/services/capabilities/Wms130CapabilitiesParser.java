@@ -22,7 +22,6 @@ import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
 import de.ingrid.mdek.beans.object.SpatialReferenceSystemBean;
-import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.utils.xml.Wms130NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -113,7 +112,7 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         		newDataset.setUuid(null);
         		newDataset.setRef1ObjectIdentifier(id);
                 newDataset.setTitle( xPathUtils.getString( layerNode, "wms:Title" ) );
-        		newDataset.setThesaurusTermsTable( getKeywordsFromLayer( layerNode ) );
+        		newDataset.setThesaurusTermsTable( getKeywordsFromLayer( getKeywords(layerNode, "wms:KeywordList/wms:Keyword") ) );
         		List<LocationBean> boxes = new ArrayList<LocationBean>();
         		LocationBean box = getBoundingBoxFromLayer( layerNode );
         		if ( box != null ) boxes.add( box );
@@ -234,16 +233,6 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         return result;
         
     }
-
-	private List<SNSTopic> getKeywordsFromLayer(Node layerNode) throws XPathExpressionException {
-    	List<String> keywords = getKeywords(layerNode, "wms:KeywordList/wms:Keyword");
-    	List<SNSTopic> snsTopics = new ArrayList<SNSTopic>();
-    	for (String keyword : keywords) {
-			SNSTopic snsTopic = new SNSTopic(SNSTopic.Type.NON_DESCRIPTOR, null, null, keyword, null, null);
-			snsTopics.add(snsTopic);
-		}
-		return snsTopics;
-	}
 
 	/**
      * @param boundingBoxesFromLayers

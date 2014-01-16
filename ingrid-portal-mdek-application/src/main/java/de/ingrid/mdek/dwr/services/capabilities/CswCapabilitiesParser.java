@@ -10,15 +10,11 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
 
-import de.ingrid.mdek.MdekUtils.AddressType;
 import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
-import de.ingrid.mdek.handler.ConnectionFacade;
-import de.ingrid.mdek.util.MdekUtils;
-import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 

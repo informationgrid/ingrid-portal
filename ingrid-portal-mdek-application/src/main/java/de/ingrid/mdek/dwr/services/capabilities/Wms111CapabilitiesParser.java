@@ -18,6 +18,7 @@ import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.LocationBean;
+import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.object.ObjectReferenceBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
@@ -93,13 +94,47 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         // add found keywords to our result bean
         result.setKeywords(keywords);
         
+        // get bounding boxes of each layer and create a union
+        List<LocationBean> boundingBoxesFromLayers = getBoundingBoxesFromLayers(doc);
+        LocationBean unionOfBoundingBoxes = null; 
+        if ( !boundingBoxesFromLayers.isEmpty() ) {
+            unionOfBoundingBoxes = getUnionOfBoundingBoxes(boundingBoxesFromLayers);
+            unionOfBoundingBoxes.setName("Raumbezug von: " + result.getTitle());
+            List<LocationBean> union = new ArrayList<LocationBean>();
+            union.add(unionOfBoundingBoxes);
+            result.setBoundingBoxes(union);            
+        }
+        
         // Coupled Resources
-        String[] references = xPathUtils.getStringArray(doc, XPATH_EXP_WMS_IDENTIFIER);
+        //String[] references = xPathUtils.getStringArray(doc, XPATH_EXP_WMS_IDENTIFIER);
         
-        // TODO: check for the found IDs if a metadata with this resource identifier exists
-        List<ObjectReferenceBean> coupledResources = checkForCoupledResource(references); 
-        
-        // TODO: result.setCoupledResources(coupledResources);
+        // Coupled Resources
+        NodeList identifierNodes = xPathUtils.getNodeList(doc, "/WMT_MS_Capabilities/Capability/Layer//Identifier");
+        List<MdekDataBean> coupledResources = new ArrayList<MdekDataBean>();
+        for ( int i = 0; i < identifierNodes.getLength(); i++ ) {
+            String id = identifierNodes.item(i).getTextContent();
+            // check for the found IDs if a metadata with this resource identifier exists
+            MdekDataBean coupledResource = checkForCoupledResource(id);
+            // the dataset does not exist yet
+            if (coupledResource == null) {
+                MdekDataBean newDataset = new MdekDataBean();
+                Node layerNode = xPathUtils.getNode( identifierNodes.item(i), ".." );
+                newDataset.setUuid(null);
+                newDataset.setRef1ObjectIdentifier(id);
+                newDataset.setTitle( xPathUtils.getString( layerNode, "Title" ) );
+                newDataset.setThesaurusTermsTable( getKeywordsFromLayer( getKeywords(layerNode, "KeywordList/Keyword") ) );
+                List<LocationBean> boxes = new ArrayList<LocationBean>();
+                LocationBean box = getBoundingBoxFromLayer( layerNode );
+                if ( box != null ) boxes.add( box );
+                else if ( unionOfBoundingBoxes != null ) boxes.add( unionOfBoundingBoxes );
+                newDataset.setSpatialRefLocationTable( boxes );
+                coupledResources.add( newDataset );
+                
+            } else {
+                coupledResources.add( coupledResource );
+            }
+        }
+        result.setCoupledResources(coupledResources);
         
         // Spatial Reference Systems (SRS / CRS)
         // Note: The root <Layer> element shall include a sequence of zero or more
@@ -109,19 +144,6 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         // get all root Layer coordinate Reference Systems
         // there only can be one root layer!
         result.setSpatialReferenceSystems(getSpatialReferenceSystems(doc));
-        
-        // get bounding box covering all layers
-        // ...
-        
-        // get bounding boxes of each layer
-        List<LocationBean> boundingBoxesFromLayers = getBoundingBoxesFromLayers(doc);
-        if ( !boundingBoxesFromLayers.isEmpty() ) {
-            LocationBean unionOfBoundingBoxes = getUnionOfBoundingBoxes(boundingBoxesFromLayers);
-            unionOfBoundingBoxes.setName("Raumbezug von: " + result.getTitle());
-            List<LocationBean> union = new ArrayList<LocationBean>();
-            union.add(unionOfBoundingBoxes);
-            result.setBoundingBoxes(union);            
-        }
         
         // get contact information
         result.setAddress(getAddress(doc));
@@ -413,6 +435,48 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
             result.add(bean);            
         }
         return result;
+    }
+    
+    private LocationBean getBoundingBoxFromLayer(Node layerNode) {
+        LocationBean box = null;
+        CoordTransformUtil coordUtils = CoordTransformUtil.getInstance();
+        
+        // iterate over bounding boxes until it could be transformed to WGS84
+        NodeList boundingBoxesNodes = xPathUtils.getNodeList(layerNode, "BoundingBox");
+        for (int j = 0; j < boundingBoxesNodes.getLength(); j++) {
+            Node bboxNode = boundingBoxesNodes.item(j);
+            CoordType coordType = getCoordType(bboxNode, coordUtils);
+            double[] coordinates = null;
+            if (coordType == null) {
+                // if coordinate type could not be determined, then try the next available
+                // bounding box of the layer, which should use a different CRS
+                continue;
+                
+            } else if (coordType.equals(CoordTransformUtil.CoordType.COORDS_WGS84)) {
+                coordinates = getBoundingBoxCoordinates(bboxNode);
+                        
+            } else { // TRANSFORM
+                coordinates = getBoundingBoxCoordinates(bboxNode, coordUtils, coordType);
+                
+            }
+            if (coordinates != null) {
+                box = new LocationBean();
+                box.setLatitude1(coordinates[1]);
+                box.setLongitude1(coordinates[0]);
+                box.setLatitude2(coordinates[3]);
+                box.setLongitude2(coordinates[2]);
+                
+                box.setName(xPathUtils.getString(layerNode, "Name"));
+                box.setTopicId(box.getName());
+                box.setType( "F" );
+                
+                // finished!
+                break;                    
+            }
+            
+        }
+        
+        return box;
     }
 
 }
