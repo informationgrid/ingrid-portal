@@ -773,15 +773,22 @@ UtilList.addDisplayDates = function(list) {
 
 // Creates table data from a list of values.
 // ["a", "b", "c"] -> [{identifier: "a"}, {identifier: "b"}, {identifier: "c"}]
-UtilList.listToTableData = function(list, identifier) {
+// @param list, contains strings to be mapped
+// @param identifier, the property of the object to store the arrayfield in
+// @param ignoreEmptyValues, if true then empty values will be filtered
+UtilList.listToTableData = function(list, identifier, /*boolean*/ignoreEmptyValues) {
 	var resultList = [];
 	if (typeof(identifier) == "undefined")
 		identifier = "title";
 
 	dojo.forEach(list, function(item){
-		var x = {};
-		x[identifier] = item;
-		resultList.push(x);
+	    // if we want to map all values OR we ignore empty values and only add
+	    // those who actually have a value in it
+	    if (!ignoreEmptyValues || (item && dojo.trim(item).length > 0)) { 
+    		var x = {};
+    		x[identifier] = item;
+    		resultList.push(x);
+	    }
 	});
 	return resultList;
 }
@@ -1388,7 +1395,7 @@ UtilString._getCapabilitiesType = function(value) {
     return types[value];
 }
 
-UtilString.addCapabilitiesParameter = function(type, connUrl) {
+UtilString.addCapabilitiesParameter = function(type, connUrl, paramServiceType) {
     var mappedType = this._getCapabilitiesType(type);
     if (!mappedType) console.error("Not supported Service Type: " + type);
     
@@ -1401,10 +1408,14 @@ UtilString.addCapabilitiesParameter = function(type, connUrl) {
             connUrl = connUrl + "&";
         }
         
-        connUrl += "REQUEST=GetCapabilities&SERVICE=" + mappedType;
+        connUrl += "REQUEST=GetCapabilities";
     }
     if (connUrl.toLowerCase().indexOf("service=") == -1) {
-        connUrl += "&SERVICE=" + mappedType;
+        if (paramServiceType) {
+            connUrl += "&" + paramServiceType;
+        } else {
+            connUrl += "&SERVICE=" + mappedType;            
+        }
     }
     return connUrl;
 }
@@ -1557,14 +1568,23 @@ UtilUI.setVisibleBlockDiv = function(visible) {
 		dojo.style(div, "display", visible ? "block" : "none");
 }
 
-UtilUI.updateBlockerDivInfo = function(progress) {
-	if (progress == 100)
-		dojo.style("waitInfo", "display", "none");
-	else {
-		dojo.byId("waitInfo").innerHTML = message.get("general.init");//progress + " / 100";
-		dojo.style("waitInfo", "display", "block");
-	}
+UtilUI.updateBlockerDivInfo = function() {
+    var waitInfo = dojo.byId("waitInfo");
+    waitInfo.data.current++;
+    waitInfo.innerHTML = dojo.string.substitute(waitInfo.data.text, [waitInfo.data.current, waitInfo.data.max]);
+    if (waitInfo.data.current == waitInfo.data.max)
+        dojo.style("waitInfo", "display", "none");
+    else
+        dojo.style("waitInfo", "display", "table");
 }
+
+UtilUI.initBlockerDivInfo = function(/*INTEGER*/max, /*STRING*/text) {
+    var waitInfo = dojo.byId("waitInfo");
+    waitInfo.data = { max: max, current: 0, text: text };
+    dojo.style("waitInfo", "display", "table");
+    waitInfo.innerHTML = dojo.string.substitute(waitInfo.data.text, [waitInfo.data.current, waitInfo.data.max]);
+}
+
 
 UtilUI.showNextError = function(id, message) {
     var mightBeHidden = dojo.query(".rubric:not(.expanded) #"+id);
@@ -2407,6 +2427,7 @@ UtilThesaurus.findTopicsDef = function(term) {
 	SNSService.findTopics(term, {
 		callback: function(res) {
 			UtilList.addSNSTopicLabels(res);
+			UtilUI.updateBlockerDivInfo();
 			def.callback(res);
 		},
 		errorHandler: function(errMsg, err) {

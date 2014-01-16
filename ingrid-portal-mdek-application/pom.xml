@@ -166,7 +166,7 @@
       <!-- errors are thrown during IGE startup ... logging still can be configured within webapp! -->
       <scope>provided</scope>
     </dependency>
-      <dependency>
+    <dependency>
         <groupId>net.sf.ehcache</groupId>
         <artifactId>ehcache</artifactId>
         <scope>provided</scope>
@@ -183,6 +183,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
+      <version>3.4.0-SNAPSHOT</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -351,8 +352,13 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.4</version>
+      <version>4.11</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>1.9.5</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -371,6 +377,17 @@
       <artifactId>xml-apis</artifactId>
       <version>1.4.01</version>
     </dependency>
+    <!-- need geo-utils to calculate bounding boxes in other formats -->
+    <dependency>
+      <groupId>de.ingrid</groupId>
+      <artifactId>ingrid-utils-geo</artifactId>
+    </dependency>
+    <!-- this lib might be needed(?) for utils-geo when transforming coordinates  -->
+    <!-- <dependency>
+      <groupId>javax.media</groupId>
+      <artifactId>jai-core</artifactId>
+      <version>1.1.3</version>
+    </dependency> -->
   </dependencies>
   <repositories>
     <repository>

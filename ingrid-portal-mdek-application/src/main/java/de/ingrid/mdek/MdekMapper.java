@@ -1952,12 +1952,21 @@ public class MdekMapper implements DataMapperInterface {
             if (isOpenData) {
                 key = USE_TERMS_OF_LICENCE_KEY;
             }
+            result = "";
             for (IngridDocument doc : docList) {
                 KeyValuePair kvp = mapToKeyValuePair(doc, key, MdekKeys.USE_TERMS_OF_USE_VALUE);
-                result = kvp.getValue();
+                result += kvp.getValue() + "\n";
                 // use only FIRST element, ignore rest (will be deleted on save !). was a table, now a text field, see INGRID32-45
-                break;
-            }           
+                // -> NO! MERGE all elements into the new text area!
+                //break;
+            }
+            // in case docList is empty make sure we return a null value
+            if (result.isEmpty()) {
+                result = null;
+            } else {
+                // remove last line break
+                result = result.substring(0, result.length()-1);
+            }
         }
 
         return result;

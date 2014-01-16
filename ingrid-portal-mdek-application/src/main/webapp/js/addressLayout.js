@@ -12,7 +12,8 @@ ingridAddressLayout.create = function(){
     // created only once
     addressTemplateCreated = true;
     
-    UtilUI.updateBlockerDivInfo(0);
+    UtilUI.initBlockerDivInfo(2, message.get("general.init"));
+    UtilUI.updateBlockerDivInfo();
     setTimeout(dojo.hitch(ingridAddressLayout, ingridAddressLayout.createPartOne), 10);
     return ingridAddressLayout.deferredCreation;
 }
@@ -51,7 +52,7 @@ ingridAddressLayout.createPartOne = function() {
     // show only required fields initially
     igeEvents.toggleFields(undefined, "showRequired");
     
-    UtilUI.updateBlockerDivInfo(100);
+    UtilUI.updateBlockerDivInfo();
     
     // tell the calling function that we are finished and can proceed
     ingridAddressLayout.deferredCreation.callback();

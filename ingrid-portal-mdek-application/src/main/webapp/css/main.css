@@ -622,6 +622,8 @@ iframe {
 
 .checkboxContainer { display:block; margin-bottom:10.5px; }
 .checkboxContainer label { padding:0 10px 0 5px; font-size:11px; vertical-align: bottom; }
+.checkboxContainer label.inActive { padding: 0; }
+.checkboxContainer label.inActive .dijitCheckBox { margin-right: 5px; }
 .checkboxContainer label.noRightMargin { padding:0 0 0 3px; }
 /*.checkboxContainer a { color:#156496; text-decoration:none; }
 .checkboxContainer a:hover { text-decoration:underline; }*/
@@ -646,8 +648,9 @@ iframe {
 .required .requiredSign { display:inline !important; font-weight: bold;}
 
 #waitInfo {
-	width: 200px;
-	height: 50px;
+	/* width: 200px;
+	height: 50px; */
+	padding: 20px;
 	border: 1px lightgray solid;
 	background-color: #EDEDED;
 	margin: 100px auto;

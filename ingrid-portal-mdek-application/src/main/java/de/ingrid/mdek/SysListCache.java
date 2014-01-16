@@ -349,6 +349,11 @@ public class SysListCache {
 		IngridDocument response = mdekCallerCatalog.getSysLists(connectionFacade.getCurrentPlugId(), listIds, languageCode, MdekSecurityUtils.getCurrentUserUuid());
 		return MdekCatalogUtils.extractSysListFromResponse(response);
 	}
+	
+	public List<String[]> getSyslistByLanguage(Integer listId, String lang) {
+	    Integer[] syslists = { listId };
+	    return getSysLists(syslists, lang).get(listId);
+	}
 
 	public ConnectionFacade getConnectionFacade() {
 		return connectionFacade;

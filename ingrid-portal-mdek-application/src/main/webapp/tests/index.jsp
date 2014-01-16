@@ -67,7 +67,6 @@
 <script type="text/javascript" src="../js/menuEventHandler.js"></script>
 <script type="text/javascript" src="../js/eventSubscriber.js"></script>
 
-
 <script type="text/javascript" src="../js/layoutCreator.js"></script>
 <script type="text/javascript" src="../js/debugFunctions.js"></script>
 <script type="text/javascript" src="../js/menu.js"></script>
@@ -180,7 +179,70 @@ dojo.addOnLoad(function() {
     //main.startup();
     
     sc.selectChild(dijit.byId("pageTable"));
+    
+    fetchSysLists();
 });
+
+//get an array of Inspire topics
+function getInspireTopics(topics) {
+    var inspireArray = new Array();
+    dojo.forEach(topics, function(topic) {
+        if (topic.inspireList.length > 0) {
+            dojo.forEach(topic.inspireList, function(inspireTopic) {
+                // exclude multiple same entries
+                if (!inspireArrayContains(inspireArray,inspireTopic)) {         
+                    var obj = new Object();
+                    obj.title = inspireTopic;
+                    obj.label = inspireTopic;
+                    obj.source = "INSPIRE";
+                    inspireArray.push(obj);
+                }
+            });
+        }
+    });
+    return inspireArray;
+}
+
+function fetchSysLists() {
+    var def = new dojo.Deferred();
+
+    // Setting the language code to "de". Uncomment the previous block to enable language specific settings depending on the browser language
+    var languageCode = UtilCatalog.getCatalogLanguage();
+    console.debug("LanguageShort is: " + languageCode);
+    
+    var lstIds = [100, 101, 102, 502, 505, 510, 515, 518, 520, 523, 525, 526, 527, 528, 1100, 1230, 1320, 1350, 1370, 1400, 1410, 2000,
+        3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5180, 5200, 5300, 6000, 6005, 6010, 6020, 6100, 6200, 6300,
+        6400, 6500, 7109, 7112, 7113, 7114, 7115, 7120, 7125, 7126, 7127, 8000, 99999999];
+
+    CatalogService.getSysListsRemoveMetadata(lstIds, languageCode, {
+        //preHook: UtilDWR.enterLoadingState,
+        //postHook: UtilDWR.exitLoadingState,
+        callback: function(res){
+            sysLists = res;
+            
+            // only if not sorted in backend, e.g. INSPIRE Themes (6100) !
+            dojo.forEach(lstIds, function(id) {
+                if (id != 6100) {
+                    sysLists[id].sort(function(a, b) {
+                        return UtilString.compareIgnoreCase(a[0], b[0]);
+                    });
+                }
+            });
+            
+            def.callback();
+        },
+        errorHandler: function(mes){
+            //UtilDWR.exitLoadingState();
+            //displayErrorMessage(err);
+            console.debug("Error: " + mes);
+            dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+            console.debug("Error: " + mes);
+            def.errback(mes);
+        }
+    });
+
+    return def;
+}
 </script>
 </head>
 <body class="claro">

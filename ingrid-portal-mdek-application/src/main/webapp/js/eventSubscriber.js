@@ -3233,30 +3233,42 @@ igeEvents.addKeywords = function(termList, caller) {
     if (termList && termList.length > 0) {
         def.addCallback(function() {
             // search for topics in SNS and put results into findTopicDefList
-            var findTopicDefList = [];
-            for (var i = 0; i < termList.length; ++i) {
-                findTopicDefList.push(UtilThesaurus.findTopicsDef(termList[i]));
-            }
-
-            UtilDWR.enterLoadingState();
-            var defList = new dojo.DeferredList(findTopicDefList, false, false, true);
-            defList.addErrback( function(err) { UtilDWR.exitLoadingState(); handleFindTopicsError(err); } );
-            defList.addCallback(function(resultList) {
-                UtilDWR.exitLoadingState();
-                var snsTopicList = [];
-                //for (var i = 0; i < resultList[0][1].length; ++i) {
-                dojo.forEach(resultList, function(item) {
-                    // TODO handle sns timeout errors?
-                    snsTopicList.push(item[1]);
-                });
-
-                UtilThesaurus.handleFindTopicsResult(termList, snsTopicList, caller._termListWidget);
+            igeEvents.analyzeKeywords(termList).then( function(topics) {
+                UtilThesaurus.handleFindTopicsResult(termList, topics, caller._termListWidget);
             });
         });
     }
     
     // expand rubric so that new entries are visible
     igeEvents.toggleFields('thesaurus', "showAll");
+}
+
+igeEvents.analyzeKeywords = function(termList) {
+    var def = new dojo.Deferred();
+    if (termList && termList.length > 0) {
+        var findTopicDefList = [];
+        UtilUI.initBlockerDivInfo(termList.length, message.get("general.add.keywords"));
+        for (var i = 0; i < termList.length; ++i) {
+            findTopicDefList.push(UtilThesaurus.findTopicsDef(termList[i]));
+        }
+    
+        UtilDWR.enterLoadingState();
+        var defList = new dojo.DeferredList(findTopicDefList, false, false, true);
+        defList.addErrback( function(err) { UtilDWR.exitLoadingState(); handleFindTopicsError(err); def.errback(); } );
+        defList.addCallback(function(resultList) {
+            UtilDWR.exitLoadingState();
+            var snsTopicList = [];
+            dojo.forEach(resultList, function(item) {
+                // TODO handle sns timeout errors?
+                snsTopicList.push(item[1]);
+            } );
+            def.callback( snsTopicList );
+        } );
+        
+    } else {
+        def.callback( [] );
+    }
+    return def;
 }
 
 igeEvents.setObjectUuid = function() {
@@ -3488,23 +3500,15 @@ igeEvents.addDataLink = function() {
     });
 }
 
-igeEvents.getCapabilities = function(url, callback) {
+igeEvents.getCapabilities = function(url, callback, scope) {
     GetCapabilitiesService.getCapabilities(url, {
-        preHook: showLoadingZone,
-        postHook: hideLoadingZone,
+        preHook: scope.showLoadingZone,
+        postHook: scope.hideLoadingZone,
         callback: function(res) {
-            /*if (res.versions == "1.3.0") {
-                dialog.show(message.get('general.warning'), dojo.string.substitute(message.get('dialog.wizard.getCap.version.warning'),[res.versions]), dialog.WARNING, [
-                    { caption: message.get('general.no'),  action: function() { dijit.byId("InfoDialog").hide(); scriptScope.closeThisDialog(); } },
-                    { caption: message.get('general.ok'), action: function() { dijit.byId("InfoDialog").hide(); callback(res); } }
-                ]);
-            } else {
-                callback(res);
-            }*/
             callback(res);
         },
         errorHandler:function(errMsg, err) {
-            hideLoadingZone();
+            scope.hideLoadingZone();
             console.debug("Error: "+errMsg);
             displayErrorMessage(err);
         }
@@ -3517,15 +3521,28 @@ igeEvents.getCapabilityUrl = function() {
     var type = dijit.byId("ref3ServiceType").value;
     dojo.some(data, function(item) {
         if (item.name == "GetCapabilities") {
+            // check parameters for service type
+            var serviceType = null;
+            dojo.some(item.paramList, function(param) {
+                if (param.description == "Service type") {
+                    serviceType = param.name; // e.g. "SERVICE=CSW"
+                    return true;
+                }
+            });
             url = item.addressList[0].title;
-            url = UtilString.addCapabilitiesParameter(type, url);
+            url = UtilString.addCapabilitiesParameter(type, url, serviceType);
         }
     });
     
     return url;
 }
 
-igeEvents._updateFormFromCapabilities = function(capBean) {
+
+/**
+ * The filter is created by the getCapabilities assistant which defines, which values are
+ * used from the bean to update the metadata.
+ */
+igeEvents._updateFormFromCapabilities = function(capBean, filter) {
     dijit.byId("generalShortDesc").setValue(capBean.title);
     var serviceTitle = dojo.trim(capBean.title+"");
     if (serviceTitle.length != 0) {
@@ -3533,45 +3550,6 @@ igeEvents._updateFormFromCapabilities = function(capBean) {
     }
 
     dijit.byId("generalDesc").setValue(capBean.description);
-    if (capBean.serviceType.indexOf("CSW") != -1) {
-        dijit.byId("ref3ServiceType").setValue(1);      
-        UtilStore.updateWriteStore("ref3ServiceTypeTable", UtilList.listToTableData([207]));
-
-    } else if (capBean.serviceType.indexOf("WMS") != -1) {
-        dijit.byId("ref3ServiceType").setValue(2);      
-        UtilStore.updateWriteStore("ref3ServiceTypeTable", UtilList.listToTableData([202]));
-
-    } else if (capBean.serviceType.indexOf("WFS") != -1) {
-        dijit.byId("ref3ServiceType").setValue(3);      
-        UtilStore.updateWriteStore("ref3ServiceTypeTable", UtilList.listToTableData([201]));
-        
-    } else if (capBean.serviceType.indexOf("WCTS") != -1) {
-        dijit.byId("ref3ServiceType").setValue(4);      
-//      dijit.byId("ref3ServiceTypeTable").store.setData(UtilList.addTableIndices(UtilList.listToTableData([207])));
-
-    } else if (capBean.serviceType.indexOf("WCS") != -1) {  // WCS does not exist yet
-        dijit.byId("ref3ServiceType").setValue(6);
-        UtilStore.updateWriteStore("ref3ServiceTypeTable", UtilList.listToTableData([203]));
-        dijit.byId("ref3Explanation").setValue("WCS Service");
-    }
-
-    UtilStore.updateWriteStore("ref3ServiceVersion", UtilList.listToTableData(capBean.versions));
-
-    // Prepare the operation table for display.
-    // Add table indices to the main obj and paramList
-    // Add table indices and convert to tableData: platform, addressList and dependencies
-    if (capBean.operations) {
-        for (var i = 0; i < capBean.operations.length; ++i) {
-            //UtilList.addTableIndices(capBean.operations[i].paramList);
-            capBean.operations[i].platform = UtilList.listToTableData(capBean.operations[i].platform);
-            capBean.operations[i].addressList = UtilList.listToTableData(capBean.operations[i].addressList);
-            capBean.operations[i].dependencies = UtilList.listToTableData(capBean.operations[i].dependencies);      
-        }
-    }   
-    UtilStore.updateWriteStore("ref3Operation", capBean.operations);
-    
-    // keywords !
-    igeEvents.addKeywords(capBean.keywords, { id:"getCapabilitiesWizard", _termListWidget:"thesaurusTerms" });
 }
 
 igeEvents.updateDataset = function() {
@@ -3582,9 +3560,12 @@ igeEvents.updateDataset = function() {
         return;
     }
     
+    dialog.showPage("<fmt:message key='dialog.wizard.getCap.title' />", "dialogs/mdek_get_capabilities_wizard_dialog.jsp", 755, 750, true, { url: url });
+    
+    /*
     var def = new dojo.Deferred();
     dialog.show(message.get("general.warning"), message.get('warning.update.capabilities'), dialog.WARNING, [
-        { caption: message.get("general.cancel"),  action: function() { /**onForceSaveDef.errback();*/ } },
+        { caption: message.get("general.cancel"),  action: function() { } },
         { caption: message.get("general.ok"), action: function() { def.callback(); } }
     ]);    
     
@@ -3599,7 +3580,7 @@ igeEvents.updateDataset = function() {
 	    }
 	    
 	    igeEvents.getCapabilities(url, setOperationValues);
-    });
+    });*/
 }
 
 igeEvents.getLinksToFromParent = function() {

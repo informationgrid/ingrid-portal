@@ -274,7 +274,7 @@
                                     </label>
                                 </span>
         						<span class="input">
-        							<input type="text" required="true" id="adminCatalogAtomDownload" style="width:100%;" dojoType="dijit.form.ValidationTextBox" />
+        							<input type="text" required="false" id="adminCatalogAtomDownload" style="width:100%;" dojoType="dijit.form.ValidationTextBox" />
         						</span>
                             </div>
                         </span>

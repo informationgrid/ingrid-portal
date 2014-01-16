@@ -41,6 +41,7 @@
     "general.example":"Beispiel",
     "general.fieldId":"Feld ID",
     "general.image.not.found":"Kein Bild gefunden",
+    "general.add.keywords":"Verarbeite Schlagworte: ${0} von ${1}",
 	
 	"general.page":"Seite",
     
@@ -367,6 +368,7 @@
 	"dialog.wizard.create.snsInvalidPageError":"Die von Ihnen angegebene Seite konnte vom SNS nicht analysiert werden.",
 	"dialog.wizard.getCap.title":"getCapabilities Assistent",
 	"dialog.wizard.getCap.version.warning":"Diese Version '${0}' wird derzeit nicht unterstützt! M&ouml;chten Sie das Objekt trotzdem erstellen?",
+	"dialog.wizard.getCap.crs.unknown":"Die folgenden Raumbezugssysteme wurden nicht erkannt: ${0}",
 
 	"dialog.spatialAssist.title":"Raumbezug hinzuf&uuml;gen",
 	"dialog.spatialNavigator.title":"Geothesaurus-Navigator",

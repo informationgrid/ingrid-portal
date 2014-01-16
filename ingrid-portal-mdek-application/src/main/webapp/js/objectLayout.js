@@ -14,7 +14,8 @@ ingridObjectLayout.create = function(){
     // created only once
     objectTemplateCreated = true;
     
-    UtilUI.updateBlockerDivInfo(0);
+    UtilUI.initBlockerDivInfo(2, message.get("general.init"));
+    UtilUI.updateBlockerDivInfo();
     setTimeout(dojo.hitch(ingridObjectLayout, ingridObjectLayout.createPartOne), 30);
     return ingridObjectLayout.deferredCreation;
 }
@@ -85,7 +86,7 @@ ingridObjectLayout.createPartOne = function(){
     console.debug("toggle");
     // show only required fields initially
     igeEvents.toggleFields(undefined, "showRequired");
-    UtilUI.updateBlockerDivInfo(100);
+    UtilUI.updateBlockerDivInfo();
     
     // tell the calling function that we are finished and can proceed
     ingridObjectLayout.deferredCreation.callback();

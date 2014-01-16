@@ -132,7 +132,7 @@ dojo.declare("ingrid.dijit.CustomTree", dijit.Tree, {
             this.ctrlKeyPressed = false;
             //dojo.publish("/selectNode", [{id: this.id, node: null}]);
         } else {
-            this.allFocusedNodes = [node];
+            this.allFocusedNodes = node ? [node] : [];
             // set de-/selection css classes
             var oldSelectedNode = this.selectedNode ? dijit.byId(this.selectedNode.id+"") : null;
             if (oldSelectedNode) dojo.removeClass(oldSelectedNode.domNode, "TreeNodeSelect");

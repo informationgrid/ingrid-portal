@@ -41,6 +41,7 @@
     "general.example":"Example",
     "general.fieldId":"Field ID",
     "general.image.not.found":"Image not found",
+    "general.add.keywords":"Prepare keywords: ${0} of ${1}",
     
 	"general.page":"Page",
 	
@@ -367,6 +368,7 @@
 	"dialog.wizard.create.snsInvalidPageError":"The given Url could not be analyzed by the SNS.",
 	"dialog.wizard.getCap.title":"getCapabilities wizard",
 	"dialog.wizard.getCap.version.warning":"This version '${0}' is not supported yet! Would you like to create the object anyway?",
+	"dialog.wizard.getCap.crs.unknown":"The following spatial reference system could not be identified: ${0}",
 
 	"dialog.spatialAssist.title":"Add Custom Location",
 	"dialog.spatialNavigator.title":"Geothesaurus-Navigator",

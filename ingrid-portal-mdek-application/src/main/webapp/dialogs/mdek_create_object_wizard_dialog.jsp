@@ -9,13 +9,21 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
-var scriptScope = this;
+var scopeCreateObjectWiz = _container_;
 
 var thisDialog = dijit.byId("subPageDialog");
 if (thisDialog == undefined)
     thisDialog = dijit.byId("pageDialog");
 
-hideResults();
+
+new dojox.layout.ContentPane({
+    title: "results",
+    layoutAlign: "client",
+    href: "dialogs/mdek_wizard_result.jsp?c="+userLocale,
+    preload: "true",
+    scriptHasHooks: true,
+    executeScripts: true
+}, "resultsContainer");
 
 //dojo.addOnLoad(function() {
     /*if (dojo.isIE) {
@@ -28,39 +36,9 @@ hideResults();
     //}
 //});
 
-createDOMElements = function() {
-	var assistantDescriptorTableStructure = [
-		{field: 'selection',name: 'selection',width: '23px', formatter: BoolCellFormatter, type: YesNoCheckboxCellEditor, editable: true},
-		{field: 'label',name: 'label',width: '580px'},
-		{field: 'source',name: 'source',width: 92-scrollBarWidth+'px'}
-	];
-    createDataGrid("assistantDescriptorTable", null, assistantDescriptorTableStructure, null);
-	
-	var assistantSpatialRefTableStructure = [
-		{field: 'selection',name: '&nbsp;',width: '30px', formatter: BoolCellFormatter, type: YesNoCheckboxCellEditor, editable: true},
-		{field: 'label',name: "<fmt:message key='dialog.wizard.create.spatial.name' />",width: '300px'},
-		{field: 'longitude1',name: "<fmt:message key='dialog.wizard.create.spatial.longitude1' />",width: '90px'},
-		{field: 'latitude1',name: "<fmt:message key='dialog.wizard.create.spatial.latitude1' />",width: '90px'},
-		{field: 'longitude2',name: "<fmt:message key='dialog.wizard.create.spatial.longitude2' />",width: '90px'},
-		{field: 'latitude2',name: "<fmt:message key='dialog.wizard.create.spatial.latitude2' />",width: 95-scrollBarWidth+'px'}
-	];
-    createDataGrid("assistantSpatialRefTable", null, assistantSpatialRefTableStructure, null);
-	
-	var assistantTimeRefTableStructure = [
-		{field: 'selection',name: "<fmt:message key='dialog.wizard.create.time.select' />",width: '60px'},
-		{field: 'name',name: "<fmt:message key='dialog.wizard.create.time.description' />",width: '346px'},
-		{field: 'date1',name: "<fmt:message key='dialog.wizard.create.time.firstDate' />",width: '100px', formatter: DateCellFormatter},
-		{field: 'date2',name: "<fmt:message key='dialog.wizard.create.time.secondDate' />",width: '100px', formatter: DateCellFormatter},
-		{field: 'type',name: "<fmt:message key='dialog.wizard.create.time.type' />",width: 89-scrollBarWidth+'px'}
-	];
-    createDataGrid("assistantTimeRefTable", null, assistantTimeRefTableStructure, null);
-}
 
 init = (function() {
     console.debug("init");
-    createDOMElements();
-    
-    console.debug("created");
 	dijit.byId("assistantURL").setValue("http://");
 	dijit.byId("assistantNumWords").setValue(1000);
 	dijit.byId("assistantHtmlContentNumWords").setValue(100);
@@ -69,181 +47,27 @@ init = (function() {
     dojo.connect(dijit.byId("assistantURL").domNode, "onkeypress",
         function(event) {
             if (event.keyCode == dojo.keys.ENTER) {
-                scriptScope.startSearch();
+                scopeCreateObjectWiz.startSearch();
             }
 	});
     // Pressing 'enter' on the input field is equal to a button click
     dojo.connect(dijit.byId("assistantNumWords").domNode, "onkeypress",
         function(event) {
             if (event.keyCode == dojo.keys.ENTER) {
-                scriptScope.startSearch();
+                scopeCreateObjectWiz.startSearch();
             }
 	});
     // Pressing 'enter' on the input field is equal to a button click
     dojo.connect(dijit.byId("assistantHtmlContentNumWords").domNode, "onkeypress",
         function(event) {
             if (event.keyCode == dojo.keys.ENTER) {
-                scriptScope.startSearch();
+                scopeCreateObjectWiz.startSearch();
             }
 	});
 
-
-	var descriptorCheckbox = dijit.byId("assistantDescriptorTableCheckbox");
-	dojo.connect(descriptorCheckbox, "onClick", function() {
-		// get checkbox value
-		var value = dijit.byId("assistantDescriptorTableCheckbox").checked;
-		// get data from the topic store
-		var data = UtilGrid.getTableData("assistantDescriptorTable");
-        dojo.forEach(data, function(d) {
-           d.selection = value ? 1 : 0; 
-        });
-        UtilGrid.getTable("assistantDescriptorTable").invalidate();
-		//for (var i in data) {
-			// check / uncheck all select boxes
-		//		dojo.byId("objectWiz_"+getThesaurusId(data[i])).checked = value;
-		//}
-	});
-	
-	var spatialCheckbox = dijit.byId("assistantSpatialRefTableCheckbox");
-	dojo.connect(spatialCheckbox, "onClick", function() {
-		// get checkbox value
-		var value = dijit.byId("assistantSpatialRefTableCheckbox").checked;
-		// get data drom the spatial store
-		var data = UtilGrid.getTableData("assistantSpatialRefTable");
-        dojo.forEach(data, function(d) {
-           d.selection = value ? 1 : 0; 
-        });
-        UtilGrid.getTable("assistantSpatialRefTable").invalidate();
-		//for (var i in data) {
-			// check / uncheck all select boxes
-		//	dojo.byId("objectWiz_"+data[i].topicId).checked = value;
-		//}
-	});
 });
 
-function resetInputFields() {
-	dijit.byId("assistantHtmlTitleCheckbox").setValue(false);
-	dijit.byId("assistantHtmlTitle").setValue("");
-	dijit.byId("assistantDescriptionCheckbox").setValue(false);
-	dijit.byId("assistantDescription").setValue("");
-	UtilGrid.setTableData("assistantDescriptorTable", []);
-	dijit.byId("assistantDescriptorTableCheckbox").setValue(false);
-	UtilGrid.setTableData("assistantSpatialRefTable", []);
-	dijit.byId("assistantSpatialRefTableCheckbox").setValue(false);
-	UtilGrid.setTableData("assistantTimeRefTable", []);
-}
-
-function hideResults() {
-	dojo.style("resultContainer", "display", "none");
-	dojo.style("resultButtonContainer", "display", "none");
-}
-
-function showResults(showDescription, showHtmlContent) {
-    console.debug("showResults");
-	dojo.style("resultContainer", "display", "block");
-	dojo.style("resultButtonContainer", "display", "block");
-	
-	if (showDescription) {
-		dojo.style("assistantDescriptionContainer", "display", "block");
-	} else {
-		dojo.style("assistantDescriptionContainer", "display", "none");
-	}
-
-	if (showHtmlContent) {
-		dojo.style("assistantHtmlContentContainer", "display", "block");
-	} else {
-		dojo.style("assistantHtmlContentContainer", "display", "none");
-	}
-}
-
-// Updates the input fields with values from the given topic map
-function updateInputFields(topicMap) {
-	var indexedDocument = topicMap.indexedDocument;
-	var thesaTopicList = topicMap.thesaTopics;
-	var locationTopicList = topicMap.locationTopics;
-	var eventTopicList = topicMap.eventTopics;
-	UtilList.addSNSTopicLabels(thesaTopicList);
-
-	dijit.byId("assistantDescriptionCheckbox").setValue(false);
-	dijit.byId("assistantHtmlContentCheckbox").setValue(false);
-
-	// Description
-	if (indexedDocument.description != null)
-		dijit.byId("assistantDescription").setValue(dojo.trim(""+indexedDocument.description));
-
-	//-- test value
-	  //thesaTopicList[0].inspireList[0] = "Adressen";
-	  //thesaTopicList[0].inspireList[1] = "Medien der Umwelt";
-	//--
-	
-	// // Inspire Topics
-	var inspireTopics = getInspireTopics(thesaTopicList);
-	console.debug(inspireTopics.length + " inspire topics found");
-	thesaTopicList = thesaTopicList.concat(inspireTopics);
-    console.debug("go on");
-	// Thesaurus Topics
-	if (thesaTopicList != null) {
-		//UtilList.addTableIndices(thesaTopicList);
-		for (var i in thesaTopicList) {
-			// Add checkbox to entry
-			thesaTopicList[i].selection = 0;//"<input type='checkbox' id='objectWiz_"+getThesaurusId(thesaTopicList[i])+"'>";
-		}
-		UtilStore.updateWriteStore("assistantDescriptorTable", thesaTopicList);
-	}
-
-	// Location Topics
-	if (locationTopicList != null) {
-		//UtilList.addTableIndices(locationTopicList);
-		UtilList.addSNSLocationLabels(locationTopicList);
-		for (var i in locationTopicList) {
-			// Add checkbox to entry
-			locationTopicList[i].selection = 0;//"<input type='checkbox' id='objectWiz_"+locationTopicList[i].topicId+"'>";
-			// Prepare bb for display in the table
-			if (locationTopicList[i].boundingBox) {
-				locationTopicList[i].longitude1 = locationTopicList[i].boundingBox[0];
-				locationTopicList[i].latitude1  = locationTopicList[i].boundingBox[1];
-				locationTopicList[i].longitude2 = locationTopicList[i].boundingBox[2];
-				locationTopicList[i].latitude2  = locationTopicList[i].boundingBox[3];
-			}
-		}
-		UtilStore.updateWriteStore("assistantSpatialRefTable", locationTopicList);
-	}
-    console.debug("event topics");
-	// Event Topics
-	if (eventTopicList != null) {
-		//UtilList.addTableIndices(eventTopicList);
-		for (var i in eventTopicList) {
-            console.debug("prepare: " + i);
-			eventTopicList[i].selection = "<input type='radio' name='objectWiz_eventTopic' id='objectWiz_"+eventTopicList[i].topicId+"'>";
-	
-			if (null != eventTopicList[i].at) {
-				eventTopicList[i].date1 = eventTopicList[i].at;
-				eventTopicList[i].type = "am";
-	
-			} else if (null != eventTopicList[i].from && null != eventTopicList[i].to) {
-				eventTopicList[i].date1 = eventTopicList[i].from;
-				eventTopicList[i].date2 = eventTopicList[i].to;
-				eventTopicList[i].type = "von - bis";
-	
-			} else if (null != eventTopicList[i].from && null == eventTopicList[i].to) {
-				eventTopicList[i].date1 = eventTopicList[i].from;
-				eventTopicList[i].type = "seit";
-	
-			} else if (null == eventTopicList[i].from && null != eventTopicList[i].to) {
-				eventTopicList[i].date1 = eventTopicList[i].to;
-				eventTopicList[i].type = "bis";
-			}
-		}
-        console.debug("update store");
-        console.debug(eventTopicList);
-		UtilStore.updateWriteStore("assistantTimeRefTable", eventTopicList);
-        console.debug("update store finished");
-	}
-    console.debug("finished update");
-}
-
-
-scriptScope.addValuesToObject = function() {
+scopeCreateObjectWiz.addValuesToObject = function() {
 	// If selected, add description
 	var desc = "";
 	if (dijit.byId("assistantDescriptionCheckbox").checked) {
@@ -426,9 +250,9 @@ function hideLoadingZone() {
 
 // SNS Start search button function
 // Reads the url from the input field and executes a SNS autoClassify request
-scriptScope.startSearch = function() {
-	hideResults();
-	resetInputFields();
+scopeCreateObjectWiz.startSearch = function() {
+    scopeWizardResults.hideResults();
+    scopeWizardResults.resetInputFields();
 	var url = dojo.trim(dijit.byId("assistantURL").getValue());
 	var numWords = dijit.byId("assistantNumWords").getValue();
 	var htmlContentNumWords = dijit.byId("assistantHtmlContentNumWords").getValue();
@@ -460,12 +284,8 @@ scriptScope.startSearch = function() {
                 console.debug(topicMap);
                 console.debug(htmlContent);
                 console.debug(htmlTitle);
-				updateInputFields(topicMap);
-                console.debug("update content");
-				dijit.byId("assistantHtmlContent").setValue(htmlContent);
-				console.debug("update title");
-                dijit.byId("assistantHtmlTitle").setValue(htmlTitle);
-				showResults(showDescription, showHtmlContent);
+                scopeWizardResults.updateInputFields(topicMap, {title: htmlTitle, content: htmlContent}, true);
+                scopeWizardResults.showResults(showDescription, showHtmlContent);
 			}
 		}
 		thisDialog.resize();
@@ -552,122 +372,50 @@ function getHtmlTitle(url) {
 	return def;
 }
 
-closeThisDialog = function() {
-	thisDialog.hide();
-}
 
 </script>
 </head>
 
 <body>
-	<div dojotype="dijit.layout.ContentPane" style="height:550px">
-	<div id="assistant" class="">
-		<div id="assistantContent" class="content">
-			<div id="winNavi" style="top:0px; right: 3px;">
+	<div dojotype="dijit.layout.ContentPane" style="height:650px">
+        <div id="assistant" class="">
+        <div id="assistantContent" class="content">
+            <div id="winNavi" style="top:0px; right: 3px;">
                     <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=creation-of-objects-2#creation-of-objects-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
             </div>
-			<!-- LEFT HAND SIDE CONTENT START -->
-			<div class="inputContainer field grey" style="padding:10px !important;">
-			    <span class="outer"><div>
-				    <span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 8063)"><fmt:message key="dialog.wizard.create.url" /></label></span>
-				    <span class="input"><input type="text" id="assistantURL" name="assistantURL" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
-				</div></span>
+            <!-- LEFT HAND SIDE CONTENT START -->
+            <div class="inputContainer field grey" style="padding:10px !important;">
+                <span class="outer"><div>
+                    <span class="label"><label for="assistantURL" onclick="javascript:dialog.showContextHelp(arguments[0], 8063)"><fmt:message key="dialog.wizard.create.url" /></label></span>
+                    <span class="input"><input type="text" id="assistantURL" name="assistantURL" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                </div></span>
                 <span class="outer"><div>
                 <span>
-			     <label for="assistantNumWords" onclick="javascript:dialog.showContextHelp(arguments[0], 8064)"><fmt:message key="dialog.wizard.create.numWords" /></label></span>
-				<span><input dojoType="dijit.form.NumberTextBox" min="0" max="1000" maxLength="4" id="assistantNumWords" class="w038" /></span>
-				<div class="checkboxContainer">
-					<span class="input"><input type="checkbox" name="assistantIncludeMetaTagCheckbox" id="assistantIncludeMetaTagCheckbox" dojoType="dijit.form.CheckBox" checked /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8065, 'Beschreibung')"><fmt:message key="dialog.wizard.create.showDescription" /></label></span>
-					<span class="input"><input type="checkbox" name="assistantIncludeHtmlContentCheckbox" id="assistantIncludeHtmlContentCheckbox" dojoType="dijit.form.CheckBox" checked /><label style="cursor:default;"><fmt:message key="dialog.wizard.create.showNumWords.1" /> <input dojoType="dijit.form.NumberTextBox" min="0" max="10000" maxlength="5" id="assistantHtmlContentNumWords" /> <fmt:message key="dialog.wizard.create.showNumWords.2" /></label></span>
-				</div>
+                 <label for="assistantNumWords" onclick="javascript:dialog.showContextHelp(arguments[0], 8064)"><fmt:message key="dialog.wizard.create.numWords" /></label></span>
+                <span><input dojoType="dijit.form.NumberTextBox" min="0" max="1000" maxLength="4" id="assistantNumWords" class="w038" /></span>
+                <div class="checkboxContainer">
+                    <span class="input"><input type="checkbox" name="assistantIncludeMetaTagCheckbox" id="assistantIncludeMetaTagCheckbox" dojoType="dijit.form.CheckBox" checked /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8065, 'Beschreibung')"><fmt:message key="dialog.wizard.create.showDescription" /></label></span>
+                    <span class="input"><input type="checkbox" name="assistantIncludeHtmlContentCheckbox" id="assistantIncludeHtmlContentCheckbox" dojoType="dijit.form.CheckBox" checked /><label style="cursor:default;"><fmt:message key="dialog.wizard.create.showNumWords.1" /> <input dojoType="dijit.form.NumberTextBox" min="0" max="10000" maxlength="5" id="assistantHtmlContentNumWords" /> <fmt:message key="dialog.wizard.create.showNumWords.2" /></label></span>
+                </div>
                 </div></span>
                 <div class="fill"></div>
-			</div>
+            </div>
 
-			<div class="inputContainerFooter">
-				<span class="button">
-					<span>
-						<button id="createObjWizardStartButton" type="button" style="float:right" dojoType="dijit.form.Button" onClick="javascript:scriptScope.startSearch();" title="<fmt:message key="dialog.wizard.create.start" />"><fmt:message key="dialog.wizard.create.start" /></button>
-					</span>
-					<span id="createObjectWizardLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
-						<img src="img/ladekreis.gif" />
-					</span>
-				</span>
-			</div>
-
-			<div id="resultContainer" class="inputContainer">
-			    <span class="outer"><div>
-				<span class="label"><h2><fmt:message key="dialog.wizard.create.result" /></h2></span>
-					<div class="checkboxContainer">
-						<span class="input" style="margin-bottom: 5px;"><input type="checkbox" name="assistantHtmlTitleCheckbox" id="assistantHtmlTitleCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8066)"><fmt:message key="dialog.wizard.create.addTitle" /></label></span>
-					</div>
-					<div class="inputContainer">
-		           		<span class="input" style="margin-bottom: 5px;"><input type="text" id="assistantHtmlTitle" dojoType="dijit.form.ValidationTextBox" style="width:100%;" /></span> 
-					</div>
-
-
-				<span id="assistantDescriptionContainer">
-					<div class="checkboxContainer">
-						<span class="input"><input type="checkbox" name="assistantDescriptionCheckbox" id="assistantDescriptionCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8067)"><fmt:message key="dialog.wizard.create.addDescription" /></label></span>
-					</div>
-					<div class="inputContainer">
-		           		<span class="input" style="margin-bottom: 5px;"><input type="text" mode="textarea" id="assistantDescription" dojoType="dijit.form.SimpleTextarea" rows="5" style="width:100%;" /></span> 
-					</div>
-				</span>
-
-				<span id="assistantHtmlContentContainer">
-					<div class="checkboxContainer">
-						<span class="input"><input type="checkbox" name="assistantHtmlContentCheckbox" id="assistantHtmlContentCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8068)"><fmt:message key="dialog.wizard.create.addContent" /></label></span>
-					</div>
-					<div class="inputContainer">
-		           		<span class="input"><input type="text" mode="textarea" id="assistantHtmlContent" dojoType="dijit.form.SimpleTextarea" rows="5" style="width:100%;" /></span> 
-					</div>
-				</span>
-                </div></span>
-                
-                <span class="outer"><div>
-				<span class="label"><label for="assistantDescriptorTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8069)"><fmt:message key="dialog.wizard.create.descriptors" /></label></span>
-	                <div class="tableContainer" style="margin-bottom: 5px;">
-	                	<div id="assistantDescriptorTable" interactive="true" autoEdit="true" class="hideTableHeader"></div>
-	                </div>
-
-    				<div class="checkboxContainer">
-    					<span class="input"><input type="checkbox" name="assistantDescriptorTableCheckbox" id="assistantDescriptorTableCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8070)"><fmt:message key="dialog.wizard.create.selectAllDescriptors" /></label></span>
-    				</div>
-                </div></span>
-
-                <span class="outer"><div>
-	                <span class="label"><label for="assistantSpatialRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8071)"><fmt:message key="dialog.wizard.create.spatial" /></label></span>
-					<div class="tableContainer" style="margin-bottom: 5px;">
-						<div id="assistantSpatialRefTable" interactive="true" autoEdit="true"></div>
-	                </div>
-    				<div class="checkboxContainer">
-    					<span class="input"><input type="checkbox" name="assistantSpatialRefTableCheckbox" id="assistantSpatialRefTableCheckbox" dojoType="dijit.form.CheckBox" /><label onclick="javascript:dialog.showContextHelp(arguments[0], 8072)"><fmt:message key="dialog.wizard.create.selectAllSpatialRefs" /></label></span>
-    				</div>
-                </div></span>
-                
-                <span class="outer"><div>
-					<span class="label"><label for="assistantTimeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8073)"><fmt:message key="dialog.wizard.create.time" /></label></span>
-	                <div class="tableContainer">
-	                	<div id="assistantTimeRefTable"></div>
-					</div>
-                </div></span>
-			</div> <!-- RESULT CONTAINER END -->
-
-			<div id="resultButtonContainer" class="inputContainer">
-				<span class="button" style="height:20px !important;">
-					<span style="float:right;">
-						<button id="createObjWizardAcceptButton" dojoType="dijit.form.Button" title="<fmt:message key="dialog.wizard.create.apply" />" onClick="javascript:scriptScope.addValuesToObject();"><fmt:message key="dialog.wizard.create.apply" /></button>
-					</span>
-					<span style="float:right;">
-						<button id="createObjWizardCancelButton" dojoType="dijit.form.Button" title="<fmt:message key="dialog.wizard.create.cancel" />" onClick="javascript:closeThisDialog();"><fmt:message key="dialog.wizard.create.cancel" /></button>
-					</span>
-				</span>
-			</div>
-
-			<!-- LEFT HAND SIDE CONTENT END -->
-		</div>
-	</div>
+            <div class="inputContainerFooter">
+                <span class="button">
+                    <span>
+                        <button id="createObjWizardStartButton" type="button" style="float:right" dojoType="dijit.form.Button" onClick="javascript:scopeCreateObjectWiz.startSearch();" title="<fmt:message key="dialog.wizard.create.start" />"><fmt:message key="dialog.wizard.create.start" /></button>
+                    </span>
+                    <span id="createObjectWizardLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+                        <img src="img/ladekreis.gif" />
+                    </span>
+                </span>
+            </div>
+            <div class="fill"></div>
+            <div id="resultsContainer"></div>
+        </div>
+    </div>
+	
 	</div>
 </body>
 </html>

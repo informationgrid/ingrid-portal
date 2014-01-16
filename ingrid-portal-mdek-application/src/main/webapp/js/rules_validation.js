@@ -163,15 +163,22 @@ function emptyRowValidation(gridId) {
 	var error = false;
 	var data = this.getData();
 	
+	unmarkGridCells(gridId);
+	
 	// check for each row that it's not empty (row should be deleted to prevent null data!)
     if (data.length > 0) {
+        var rowPos = 0;
         dojo.some(data, function(row) {
+            var colPos = 0;
         	for(var key in row){ 
         		if (row[key] == null || dojo.trim(row[key]+"") == "") {
         			error = true;
+        			markCells("ERROR", gridId, rowPos, [colPos]);
             		return true;
         		}
+        		colPos++;
         	}
+        	rowPos++;
         });
     }
     
@@ -312,6 +319,13 @@ function applyRef6UrlListValidation() {
         }
     });
     return !error;
+}
+
+function unmarkGridCells(gridId) {
+    var errorCells = dojo.query("#generalAddress .slick-cell.importantBackground");
+    dojo.forEach(errorCells, function(cell) {
+        dojo.removeClass(cell, "importantBackground");
+    });
 }
 
 function markCells(type, gridId, row, cells) {

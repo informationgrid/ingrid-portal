@@ -1082,7 +1082,10 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          // if (dojo.query(".slick-cell.l2.r2")[1].scrollWidth > cellWidth)
          if (this.getDataItem(cell.row) && thisCell.scrollWidth > this.columns[cell.cell].width) {
              var self = this;
-        	 var tooltip = dijit.showTooltip(this.getDataItem(cell.row)[this.columns[cell.cell].field], thisCell);
+             var cellContent = this.getDataItem(cell.row)[this.columns[cell.cell].field];
+             // in case the content is formatted we have to convert it
+             if (this.columns[cell.cell].formatter) cellContent = this.columns[cell.cell].formatter(cell.row, cell.cell, cellContent);
+        	 var tooltip = dijit.showTooltip(cellContent, thisCell);
         	 var handle = dojo.connect(thisCell, "onmouseout", function(e) {
         	     var mousePos = {};
         	     var cellPosition = dojo.position(this);

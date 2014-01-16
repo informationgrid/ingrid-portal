@@ -88,6 +88,67 @@
     <Format>INIMAGE</Format>
     <Format>BLANK</Format>
   </Exception>
+  <inspire_vs:ExtendedCapabilities> 
+    <inspire_common:MetadataUrl xsi:type="inspire_common:resourceLocatorType"> 
+      <inspire_common:URL>http://discoveryServiceURL.be?Service=CSW&amp;Request=GetRecordById&amp;Version=2.0.2&amp;id=qc7f8260-3pe9-66e0-9031-d15699a4fda4&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full</inspire_common:URL> 
+      <inspire_common:MediaType>application/vnd.ogc.csw.GetRecordByIdResponse_xml</inspire_common:MediaType> 
+    </inspire_common:MetadataUrl>    
+    <inspire_common:ResourceLocator>
+      <inspire_common:URL>http://ogc.beta.agiv.be/ogc/wms/vrbgINSP?</inspire_common:URL> 
+      <inspire_common:MediaType>application/vnd.ogc.wms_xml</inspire_common:MediaType> 
+    </inspire_common:ResourceLocator> 
+    <inspire_common:ResourceType>service</inspire_common:ResourceType> 
+    <inspire_common:TemporalReference> 
+    <inspire_common:DateOfCreation>2003-01-01</inspire_common:DateOfCreation> 
+    <inspire_common:DateOfPublication>2003-05-10</inspire_common:DateOfPublication> 
+    <inspire_common:TemporalExtent> 
+    <inspire_common:IndividualDate>2003-01-01T09:30:47Z</inspire_common:IndividualDate> 
+    </inspire_common:TemporalExtent> 
+    </inspire_common:TemporalReference> 
+    <inspire_common:Conformity> 
+    <inspire_common:Specification xsi:type="inspire_common:citationInspireNSRegulation_dut"> 
+    <inspire_common:Title>Verordening (EG) nr. 976/2009 van de Commissie van 19 oktober 2009 tot uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad wat betreft de netwerkdiensten</inspire_common:Title> 
+    <inspire_common:DateOfPublication>2009-10-19</inspire_common:DateOfPublication>
+    <inspire_common:URI>CELEX:32009R0976:NL:NOT</inspire_common:URI> 
+    <inspire_common:ResourceLocator>
+      <inspire_common:URL>http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=CELEX:32009R0976:NL:NOT</inspire_common:URL> 
+      <inspire_common:MediaType>text/html</inspire_common:MediaType> 
+    </inspire_common:ResourceLocator> 
+    </inspire_common:Specification> 
+    <inspire_common:Degree>notEvaluated</inspire_common:Degree> 
+    </inspire_common:Conformity> 
+    <inspire_common:MetadataPointOfContact> 
+    <inspire_common:OrganisationName>MScontact</inspire_common:OrganisationName> 
+    <inspire_common:EmailAddress> contactPoint@organisation.country
+    </inspire_common:EmailAddress> 
+    </inspire_common:MetadataPointOfContact> 
+    <inspire_common:MetadataDate>2010-11-27</inspire_common:MetadataDate>
+    <inspire_common:SpatialDataServiceType>view</inspire_common:SpatialDataServiceType> 
+    <inspire_common:MandatoryKeyword xsi:type="inspire_common:classificationOfSpatialDataService"> 
+      <inspire_common:KeywordValue>infoMapAccessService</inspire_common:KeywordValue> 
+    </inspire_common:MandatoryKeyword> 
+    <inspire_common:Keyword xsi:type="inspire_common:inspireTheme_dut"> 
+      <inspire_common:OriginatingControlledVocabulary xsi:type="inspire_common:originatingControlledVocabularyGemetInspireThemes">
+        <inspire_common:Title>GEMET - INSPIRE themes</inspire_common:Title> 
+        <inspire_common:DateOfPublication>2008-06-01</inspire_common:DateOfPublication>
+      </inspire_common:OriginatingControlledVocabulary> 
+      <inspire_common:KeywordValue>Administratieveeenheden</inspire_common:KeywordValue> 
+    </inspire_common:Keyword> 
+    <inspire_common:Keyword> 
+      <inspire_common:KeywordValue xsi:type="inspire_common:topicCategory">boundaries</inspire_common:KeywordValue> 
+    </inspire_common:Keyword>
+    <inspire_common:SupportedLanguages xsi:type="inspire_common:supportedLanguagesType"> 
+      <inspire_common:DefaultLanguage> 
+        <inspire_common:Language>dut</inspire_common:Language> 
+      </inspire_common:DefaultLanguage> 
+      <inspire_common:SupportedLanguage> 
+        <inspire_common:Language>eng</inspire_common:Language> 
+      </inspire_common:SupportedLanguage> 
+    </inspire_common:SupportedLanguages> 
+    <inspire_common:ResponseLanguage> 
+      <inspire_common:Language>dut</inspire_common:Language> 
+    </inspire_common:ResponseLanguage> 
+  </inspire_vs:ExtendedCapabilities>
   <Layer>
     <Title>Acme Corp. Map Server</Title>
     <CRS>CRS:84</CRS> <!-- all layers are available in at least this CRS -->

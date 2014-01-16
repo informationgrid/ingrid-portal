@@ -3,160 +3,40 @@ package de.ingrid.mdek.dwr.services;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
-import de.ingrid.mdek.beans.object.OperationBean;
-import de.ingrid.mdek.beans.object.OperationParameterBean;
+import de.ingrid.mdek.dwr.services.capabilities.CapabilitiesParserFactory;
+import de.ingrid.mdek.dwr.services.capabilities.ICapabilitiesParser;
 
 
 public class GetCapabilitiesService {
 
 	private final static Logger log = Logger.getLogger(GetCapabilitiesService.class);	
 
-	private enum ServiceType { WMS, WFS, WCS, CSW, WCTS }
-
-	private final static String SERVICE_TYPE_WMS = "WMS";
-	private final static String SERVICE_TYPE_WFS = "WFS";
-	private final static String SERVICE_TYPE_WCS = "WCS";
-	private final static String SERVICE_TYPE_CSW = "CSW";
-	private final static String SERVICE_TYPE_WCTS = "WCTS";
-
-	/**	ID of syslist entry "HTTPGet" in Syslist 5180 */
-	private final static Integer ID_OP_PLATFORM_HTTP_GET = 7;
-	/**	ID of syslist entry "HTTPPost" in Syslist 5180 */
-	private final static Integer ID_OP_PLATFORM_HTTP_POST = 8;
-
     private static String ERROR_GETCAP_INVALID_URL = "ERROR_GETCAP_INVALID_URL";
-    private static String ERROR_GETCAP_XPATH = "ERROR_GETCAP_XPATH";
     private static String ERROR_GETCAP = "ERROR_GETCAP_ERROR";
 
-	// Version 1.3.0 of the WMS uses 'WMS_Capabilities' as its root element (OGC 06-042, Chapter 7.2.4.1)
-    // Version 1.1.1 uses 'WMT_MS_Capabilities'
-    private final static String XPATH_EXP_WMS_1_1_1_TITLE = "/WMT_MS_Capabilities/Service[1]/Title[1]";
-	private final static String XPATH_EXP_WMS_1_1_1_ABSTRACT = "/WMT_MS_Capabilities/Service[1]/Abstract[1]";
-	private final static String XPATH_EXP_WMS_1_1_1_VERSION = "/WMT_MS_Capabilities/@version";
-	private final static String XPATH_EXP_WMS_1_1_1_OP_GET_CAPABILITIES_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetCapabilities[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
-	private final static String XPATH_EXP_WMS_1_1_1_OP_GET_MAP_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
-	private final static String XPATH_EXP_WMS_1_1_1_OP_GET_FEATURE_INFO_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
-
-	private final static String XPATH_EXP_WMS_1_3_0_TITLE = "/WMS_Capabilities/Service[1]/Title[1]";
-	private final static String XPATH_EXP_WMS_1_3_0_ABSTRACT = "/WMS_Capabilities/Service[1]/Abstract[1]";
-	private final static String XPATH_EXP_WMS_1_3_0_VERSION = "/WMS_Capabilities/@version";
-	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_CAPABILITIES_HREF = "/WMS_Capabilities/Capability[1]/Request[1]/GetCapabilities[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
-	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_MAP_HREF = "/WMS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
-	private final static String XPATH_EXP_WMS_1_3_0_OP_GET_FEATURE_INFO_HREF = "/WMS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@href";
-
-	private final static String XPATH_EXP_WFS_TITLE = "/WFS_Capabilities/ServiceIdentification[1]/Title[1]";
-	private final static String XPATH_EXP_WFS_ABSTRACT = "/WFS_Capabilities/ServiceIdentification[1]/Abstract[1]";
-	private final static String XPATH_EXP_WFS_VERSION = "/WFS_Capabilities/ServiceIdentification[1]/ServiceTypeVersion[1]";
-	private final static String XPATH_EXP_WFS_OP_GET_CAPABILITIES_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='DescribeFeatureType']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='DescribeFeatureType']/DCP[1]/HTTP[1]/Post[1]/@href";
-	private final static String XPATH_EXP_WFS_OP_GET_FEATURE_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='GetFeature']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WFS_OP_GET_FEATURE_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='GetFeature']/DCP[1]/HTTP[1]/Post[1]/@href";
-	private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='GetGmlObject']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='GetGmlObject']/DCP[1]/HTTP[1]/Post[1]/@href";
-	private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='LockFeature']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='LockFeature']/DCP[1]/HTTP[1]/Post[1]/@href";
-	private final static String XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='Transaction']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/WFS_Capabilities/OperationsMetadata[1]/Operation[@name='Transaction']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	// Version 1.0.0 uses 'WCS_Capabilities' as root element (see http://schemas.opengis.net/wcs/1.0.0/wcsCapabilities.xsd)
-	// Version 1.1.0 uses 'Capabilities'
-	private final static String XPATH_EXP_WCS_1_0_0_TITLE = "/WCS_Capabilities/Service/name";
-	private final static String XPATH_EXP_WCS_1_0_0_ABSTRACT = "/WCS_Capabilities/Service/description";
-	private final static String XPATH_EXP_WCS_1_0_0_VERSION = "/WCS_Capabilities/@version";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_CAPABILITIES_GET_HREF = "/WCS_Capabilities/Capability/Request/GetCapabilities/DCPType/HTTP/Get/OnlineResource/@href";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_CAPABILITIES_POST_HREF = "/WCS_Capabilities/Capability/Request/GetCapabilities/DCPType/HTTP/Post/OnlineResource/@href";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_DESCRIBE_COVERAGE_GET_HREF = "/WCS_Capabilities/Capability/Request/DescribeCoverage/DCPType/HTTP/Get/OnlineResource/@href";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_DESCRIBE_COVERAGE_POST_HREF = "/WCS_Capabilities/Capability/Request/DescribeCoverage/DCPType/HTTP/Post/OnlineResource/@href";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_COVERAGE_GET_HREF = "/WCS_Capabilities/Capability/Request/GetCoverage/DCPType/HTTP/Get/OnlineResource/@href";
-	private final static String XPATH_EXP_WCS_1_0_0_OP_GET_COVERAGE_POST_HREF = "/WCS_Capabilities/Capability/Request/GetCoverage/DCPType/HTTP/Post/OnlineResource/@href";
-
-	private final static String XPATH_EXP_WCS_1_1_0_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
-	private final static String XPATH_EXP_WCS_1_1_0_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Abstract[1]";
-	private final static String XPATH_EXP_WCS_1_1_0_VERSION = "/Capabilities/@version";
-	private final static String XPATH_EXP_WCS_1_1_0_OP_GET_CAPABILITIES_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCS_1_1_0_OP_GET_CAPABILITIES_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
-	private final static String XPATH_EXP_WCS_1_1_0_OP_DESCRIBE_COVERAGE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCS_1_1_0_OP_DESCRIBE_COVERAGE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
-	private final static String XPATH_EXP_WCS_1_1_0_OP_GET_COVERAGE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCS_1_1_0_OP_GET_COVERAGE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCoverage']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_CSW_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
-	private final static String XPATH_EXP_CSW_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Abstract[1]";
-	private final static String XPATH_EXP_CSW_VERSION = "/Capabilities/@version";
-
-	private final static String XPATH_EXP_CSW_OP_GET_CAPABILITIES_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_CSW_OP_GET_CAPABILITIES_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeRecord']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeRecord']/DCP[1]/HTTP[1]/Post[1]/@href";
-	
-	private final static String XPATH_EXP_CSW_OP_GET_DOMAIN_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetDomain']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_CSW_OP_GET_DOMAIN_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetDomain']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_CSW_OP_GET_RECORDS_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetRecords']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_CSW_OP_GET_RECORDS_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetRecords']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetRecordById']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetRecordById']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_CSW_OP_HARVEST_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='Harvest']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_CSW_OP_HARVEST_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='Harvest']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_WCTS_TITLE = "/Capabilities/ServiceIdentification[1]/Title[1]";
-	private final static String XPATH_EXP_WCTS_ABSTRACT = "/Capabilities/ServiceIdentification[1]/Abstract[1]";
-	private final static String XPATH_EXP_WCTS_VERSION = "/Capabilities/@version";
-
-	private final static String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetCapabilities']/DCP[1]/HTTP[1]/Post[1]/@href";
-	
-	private final static String XPATH_EXP_WCTS_OP_TRANSFORM_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='Transform']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCTS_OP_TRANSFORM_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='Transform']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='IsTransformable']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='IsTransformable']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetTransformation']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='GetTransformation']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeTransformation']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeTransformation']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCRS']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeCRS']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_GET_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeMethod']/DCP[1]/HTTP[1]/Get[1]/@href";
-	private final static String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_POST_HREF = "/Capabilities/OperationsMetadata[1]/Operation[@name='DescribeMethod']/DCP[1]/HTTP[1]/Post[1]/@href";
-
-	private XPath xPath = null;
+	@Autowired
+	private SysListCache sysListMapper;
 	
     // Init Method is called by the Spring Framework on initialization
     public void init() throws Exception {
-    	XPathFactory factory = XPathFactory.newInstance();
-    	xPath = factory.newXPath();
     }
 
     public CapabilitiesBean getCapabilities(String urlStr) {
+        
     	try {
     		URL url = new URL(urlStr);
     		// get the content in UTF-8 format, to avoid "MalformedByteSequenceException: Invalid byte 1 of 1-byte UTF-8 sequence"
@@ -166,145 +46,32 @@ public class GetCapabilitiesService {
         	// Build a document from the xml response
         	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         	// nameSpaceAware is false by default. Otherwise we would have to query for the correct namespace for every evaluation
-//        	factory.setNamespaceAware(false);
+        	factory.setNamespaceAware(true);
         	DocumentBuilder builder = factory.newDocumentBuilder();
         	Document doc = builder.parse(inputSource);
 
-        	ServiceType serviceType = getServiceType(doc);
-        	switch (serviceType) {
-	        	case WMS: return getCapabilitiesWMS(doc, getServiceVersionWMS(doc));
-	        	case WFS: return getCapabilitiesWFS(doc);
-	        	case WCS: return getCapabilitiesWCS(doc, getServiceVersionWCS(doc));
-	        	case CSW: return getCapabilitiesCSW(doc);
-	        	case WCTS: return getCapabilitiesWCTS(doc);
-	        	default:
-	        		throw new RuntimeException("Unknown Service Type.");
-        	}
+        	return getCapabilitiesData(doc);
 
     	} catch (MalformedURLException e) {
-    		log.debug("", e);
+    		log.debug("URL is malformed: " + urlStr, e);
     		throw new RuntimeException(ERROR_GETCAP_INVALID_URL, e);
 
     	} catch (IOException e) {
-    		log.debug("", e);
+    		log.debug("IO-Exception occured with url: " + urlStr, e);
     		throw new RuntimeException(ERROR_GETCAP, e);
 
-    	} catch (XPathExpressionException e) {
-    		log.debug("", e);
-    		throw new RuntimeException(ERROR_GETCAP_XPATH, e);
-
     	} catch (Exception e) {
-    		log.debug("", e);
+    		log.debug("A general exception occured with url: " + urlStr, e);
     		throw new RuntimeException(ERROR_GETCAP, e);
     	}    
     }
 
-    public CapabilitiesBean getCapabilitiesWMS(Document doc, String serviceVersion) throws XPathExpressionException {
-    	CapabilitiesBean result = new CapabilitiesBean();
-
-    	// General settings
-    	result.setServiceType("WMS");
-    	result.setTitle(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "TITLE"), doc));
-    	result.setDescription(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "ABSTRACT"), doc));
-    	String version = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "VERSION"), doc);
-    	List<String> versions = new ArrayList<String>();
-    	versions.add(version);
-    	result.setVersions(versions);
-
-    	// Keywords
-    	List<String> keywords = getKeywords(doc);
-    	result.setKeywords(keywords);
-
-    	// Operation List
-    	List<OperationBean> operations = new ArrayList<OperationBean>();
-
-    	// Operation - GetCapabilities
-    	OperationBean getCapabilitiesOp = new OperationBean();
-    	getCapabilitiesOp.setName("GetCapabilities");
-    	getCapabilitiesOp.setMethodCall("GetCapabilities");
-    	List<Integer> getCapabilitiesOpPlatform = new ArrayList<Integer>();
-    	getCapabilitiesOpPlatform.add(ID_OP_PLATFORM_HTTP_GET);
-    	getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
-    	List<String> getCapabilitiesOpAddressList = new ArrayList<String>();
-    	String address = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_CAPABILITIES_HREF"), doc);
-    	getCapabilitiesOpAddressList.add(address);
-    	getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
-
-    	List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
-    	paramList.add(new OperationParameterBean("VERSION="+version, "Request version", "", true, false));
-    	paramList.add(new OperationParameterBean("SERVICE=WMS", "Service type", "", false, false));
-    	paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Request name", "", false, false));
-    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=number", "Sequence number for cache control", "", true, false));
-    	getCapabilitiesOp.setParamList(paramList);
-    	operations.add(getCapabilitiesOp);
-
-    	// Operation - GetMap
-    	OperationBean getMapOp = new OperationBean();
-    	getMapOp.setName("GetMap");
-    	getMapOp.setMethodCall("GetMap");
-    	List<Integer> getMapOpPlatform = new ArrayList<Integer>();
-    	getMapOpPlatform.add(ID_OP_PLATFORM_HTTP_GET);
-    	getMapOp.setPlatform(getMapOpPlatform);
-    	List<String> getMapOpAddressList = new ArrayList<String>();
-    	getMapOpAddressList.add(xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_MAP_HREF"), doc));
-    	getMapOp.setAddressList(getMapOpAddressList);
-
-    	paramList = new ArrayList<OperationParameterBean>();
-    	paramList.add(new OperationParameterBean("VERSION="+version, "Request version", "", false, false));
-    	paramList.add(new OperationParameterBean("REQUEST=GetMap", "Request name", "", false, false));
-    	paramList.add(new OperationParameterBean("LAYERS=layer_list", "Comma-separated list of one or more map layers. Optional if SLD parameter is present", "", false, false));
-    	paramList.add(new OperationParameterBean("STYLES=style_list", "Comma-separated list of one rendering style per requested layer. Optional if SLD parameter is present", "", false, false));
-    	paramList.add(new OperationParameterBean("SRS=namespace:identifier", "Spatial Reference System", "", false, false));
-    	paramList.add(new OperationParameterBean("BBOX=minx,miny,maxx,maxy", "Bounding box corners (lower left, upper right) in SRS units", "", false, false));
-    	paramList.add(new OperationParameterBean("WIDTH=output_width", "Width in pixels of map picture", "", false, false));
-    	paramList.add(new OperationParameterBean("HEIGHT=output_height", "Height in pixels of map picture", "", false, false));
-    	paramList.add(new OperationParameterBean("FORMAT=output_format", "Output format of map", "", false, false));
-    	paramList.add(new OperationParameterBean("TRANSPARENT=TRUE|FALSE", "Background transparency of map (default=FALSE)", "", true, false));
-    	paramList.add(new OperationParameterBean("BGCOLOR=color_value", "Hexadecimal red-green-blue color value for the background color (default=0xFFFFFF)", "", true, false));
-    	paramList.add(new OperationParameterBean("EXCEPTIONS=exception_format", "The format in which exceptions are to be reported by the WMS (default=SE_XML)", "", true, false));
-    	paramList.add(new OperationParameterBean("TIME=time", "Time value of layer desired", "", true, false));
-    	paramList.add(new OperationParameterBean("ELEVATION=elevation", "Elevation of layer desired", "", true, false));
-    	paramList.add(new OperationParameterBean("Other sample dimension(s)", "Value of other dimensions as appropriate", "", true, false));
-    	paramList.add(new OperationParameterBean("Vendor-specific parameters", "Optional experimental parameters", "", true, false));
-    	paramList.add(new OperationParameterBean("SLD=styled_layer_descriptor_URL", "URL of Styled Layer Descriptor (as defined in SLD Specification)", "", true, false));
-    	paramList.add(new OperationParameterBean("WFS=web_feature_service_URL", "URL of Web Feature Service providing features to be symbolized using SLD", "", true, false));
-
-    	getMapOp.setParamList(paramList);
-    	operations.add(getMapOp);
-
-    	// Operation - GetFeatureInfo - optional
-    	String getFeatureInfoAddress = xPath.evaluate(getXPathExpressionFor(ServiceType.WMS, serviceVersion, "OP_GET_FEATURE_INFO_HREF"), doc);
-    	if (getFeatureInfoAddress != null && getFeatureInfoAddress.length() != 0) {
-	    	OperationBean getFeatureInfoOp = new OperationBean();
-	    	getFeatureInfoOp.setName("GetFeatureInfo");
-	    	getFeatureInfoOp.setMethodCall("GetFeatureInfo");
-	    	List<Integer> getFeatureInfoOpPlatform = new ArrayList<Integer>();
-	    	getFeatureInfoOpPlatform.add(ID_OP_PLATFORM_HTTP_GET);
-	    	getFeatureInfoOp.setPlatform(getFeatureInfoOpPlatform);
-	    	List<String> getFeatureInfoOpAddressList = new ArrayList<String>();
-	    	getFeatureInfoOpAddressList.add(getFeatureInfoAddress);
-	    	getFeatureInfoOp.setAddressList(getFeatureInfoOpAddressList);
-	
-	    	paramList = new ArrayList<OperationParameterBean>();
-	    	paramList.add(new OperationParameterBean("VERSION="+version, "Request version", "", false, false));
-	    	paramList.add(new OperationParameterBean("REQUEST=GetFeatureInfo", "Request name", "", false, false));
-	    	paramList.add(new OperationParameterBean("(map_request_copy)", "Partial copy of the Map request parameters that generated the map for which information is desired", "", false, false));
-	    	paramList.add(new OperationParameterBean("QUERY_LAYERS=layer_list", "Comma-separated list of one or more layers to be queried", "", false, false));
-	    	paramList.add(new OperationParameterBean("INFO_FORMAT=output_format", "Return format of feature information (MIME type)", "", true, false));
-	    	paramList.add(new OperationParameterBean("FEATURE_COUNT=number", "Number of features about which to return information (default=1)", "", true, false));
-	    	paramList.add(new OperationParameterBean("X=pixel_column", "X coordinate in pixels of feature (measured from upper left corner=0)", "", false, false));
-	    	paramList.add(new OperationParameterBean("Y=pixel_row", "Y coordinate in pixels of feature (measured from upper left corner=0)", "", false, false));
-	    	paramList.add(new OperationParameterBean("EXCEPTIONS=exception_format", "The format in which exceptions are to be reported by the WMS (default=application/vnd.ogc.se_xml)", "", true, false));
-	    	paramList.add(new OperationParameterBean("Vendor-specific parameters", "Optional experimental parameters", "", true, false));
-
-	    	getFeatureInfoOp.setParamList(paramList);
-	    	operations.add(getFeatureInfoOp);
-    	}
-
-    	result.setOperations(operations);
-    	return result;
+    public CapabilitiesBean getCapabilitiesData(Document doc) throws XPathExpressionException {
+        ICapabilitiesParser capDoc = CapabilitiesParserFactory.getDocument(doc, sysListMapper);
+        return capDoc.getCapabilitiesData(doc);
     }
-
+    
+    
     /*
     // not used anymore (INGRID-2215)
     private String appendVersionParameterToWmsServiceUrl(String baseUrl, String version) {
@@ -330,9 +97,10 @@ public class GetCapabilitiesService {
             paramUrl.append('&');
         }
         return paramUrl;
-	}*/
+	}
+	*/
 
-
+/*
     public CapabilitiesBean getCapabilitiesWFS(Document doc) throws XPathExpressionException {
     	CapabilitiesBean result = new CapabilitiesBean();
 
@@ -458,8 +226,8 @@ public class GetCapabilitiesService {
     	result.setOperations(operations);
     	return result;
     }
-
-
+*/
+/*
     public CapabilitiesBean getCapabilitiesWCS(Document doc, String serviceVersion) throws XPathExpressionException {
     	CapabilitiesBean result = new CapabilitiesBean();
 
@@ -548,150 +316,9 @@ public class GetCapabilitiesService {
     	result.setOperations(operations);
     	return result;
     }
+*/
 
-    public CapabilitiesBean getCapabilitiesCSW(Document doc) throws XPathExpressionException {
-    	CapabilitiesBean result = new CapabilitiesBean();
-
-    	// General settings
-    	result.setServiceType("CSW");
-    	result.setTitle(xPath.evaluate(XPATH_EXP_CSW_TITLE, doc));
-    	result.setDescription(xPath.evaluate(XPATH_EXP_CSW_ABSTRACT, doc));
-    	String version = xPath.evaluate(XPATH_EXP_CSW_VERSION, doc);
-    	List<String> versions = new ArrayList<String>();
-    	versions.add(version);
-    	result.setVersions(versions);
-
-    	// Keywords
-    	List<String> keywords = getKeywords(doc);
-    	result.setKeywords(keywords);
-
-    	// Operation List
-    	List<OperationBean> operations = new ArrayList<OperationBean>();
-
-    	// Operation - GetCapabilities
-    	OperationBean getCapabilitiesOp = mapToOperationBean(doc,
-        		new String[]{ XPATH_EXP_CSW_OP_GET_CAPABILITIES_GET_HREF, XPATH_EXP_CSW_OP_GET_CAPABILITIES_POST_HREF },
-        		new Integer[]{ ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_POST });
-    	getCapabilitiesOp.setName("GetCapabilities");
-    	getCapabilitiesOp.setMethodCall("GetCapabilities");
-
-    	List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
-    	paramList.add(new OperationParameterBean("SERVICE=CSW", "Service type", "", false, false));
-    	paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
-    	paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
-    	paramList.add(new OperationParameterBean("SECTIONS=Contents", "Comma-separated unordered list of zero or more names of sections of service metadata document to be returned in service metadata document", "", true, false));
-    	paramList.add(new OperationParameterBean("UPDATESEQUENCE=XXX (where XXX is character string previously provided by server)", "Service metadata document version, value is \"increased\" whenever any change is made in complete service metadata document", "", true, false));
-    	paramList.add(new OperationParameterBean("ACCEPTFORMATS= text/xml", "Comma-separated prioritized sequence of zero or more response formats desired by client, with preferred formats listed first", "", true, false));
-    	getCapabilitiesOp.setParamList(paramList);
-    	operations.add(getCapabilitiesOp);
-
-
-    	// Operation - DescribeRecord
-    	OperationBean describeRecordOp = mapToOperationBean(doc,
-        		new String[]{ XPATH_EXP_CSW_OP_DESCRIBE_RECORD_GET_HREF, XPATH_EXP_CSW_OP_DESCRIBE_RECORD_POST_HREF },
-        		new Integer[]{ ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_POST });
-    	describeRecordOp.setName("DescribeRecord");
-    	describeRecordOp.setMethodCall("DescribeRecord");
-
-    	paramList = new ArrayList<OperationParameterBean>();
-    	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
-    	paramList.add(new OperationParameterBean("request=DescribeRecord", "Fixed value of DescribeRecord, case insensitive", "", false, false));
-    	paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
-    	paramList.add(new OperationParameterBean("NAMESPACE", "List of Character String, comma separated. Used to specify namespace(s) and their prefix(es). Format is xmlns([prefix=]namespace-url). If prefix is not specified, then this is the default namespace.", "", true, false));
-    	paramList.add(new OperationParameterBean("TypeName", "List of Character String, comma separated. One or more qualified type names to be described", "", true, false));
-    	paramList.add(new OperationParameterBean("outputFormat", "Character String. A MIME type indicating the format that the output document should have", "", true, false));
-    	paramList.add(new OperationParameterBean("schemaLanguage", "Character String", "", true, false));
-    	describeRecordOp.setParamList(paramList);
-    	operations.add(describeRecordOp);
-
-
-    	// Operation - GetDomain
-    	OperationBean getDomainOp = mapToOperationBean(doc,
-        		new String[]{ XPATH_EXP_CSW_OP_GET_DOMAIN_GET_HREF, XPATH_EXP_CSW_OP_GET_DOMAIN_POST_HREF },
-        		new Integer[]{ ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_POST });
-    	getDomainOp.setName("GetDomain");
-    	getDomainOp.setMethodCall("GetDomain");
-
-    	paramList = new ArrayList<OperationParameterBean>();
-    	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
-    	paramList.add(new OperationParameterBean("request=GetDomain", "Fixed value of GetDomain, case insensitive", "", false, false));
-    	paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
-    	paramList.add(new OperationParameterBean("ParameterName", "List of Character String, comma separated. Unordered list of names of requested parameters, of the form OperationName.ParameterName", "", true, false));
-    	paramList.add(new OperationParameterBean("PropertyName", "List of Character String, comma separated. Unordered list of names of requested properties, from the information model that the catalogue is using", "", true, false));
-    	getDomainOp.setParamList(paramList);
-    	operations.add(getDomainOp);
-
-    	// Operation - GetRecords
-    	OperationBean getRecordsOp = mapToOperationBean(doc,
-        		new String[]{ XPATH_EXP_CSW_OP_GET_RECORDS_GET_HREF, XPATH_EXP_CSW_OP_GET_RECORDS_POST_HREF },
-        		new Integer[]{ ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_POST });
-    	getRecordsOp.setName("GetRecords");
-    	getRecordsOp.setMethodCall("GetRecords");
-
-    	paramList = new ArrayList<OperationParameterBean>();
-    	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
-    	paramList.add(new OperationParameterBean("request=GetRecords", "Fixed value of GetRecords, case insensitive", "", false, false));
-    	paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
-    	paramList.add(new OperationParameterBean("typeNames", "List of Character String, comma separated. Unordered List of object types implicated in the query", "", false, false));
-    	paramList.add(new OperationParameterBean("NAMESPACE", "List of Character String, comma separated. Used to specify namespace(s) and their prefix(es). Format is xmlns([prefix=]namespace-url). If prefix is not specified, then this is the default namespace.", "", true, false));
-    	paramList.add(new OperationParameterBean("resultType", "CodeList with allowed values: 'hits', 'results' or 'validate'", "", true, false));
-    	paramList.add(new OperationParameterBean("requestId", "URI", "", true, false));
-    	paramList.add(new OperationParameterBean("outputFormat", "Character String. Value is Mime type. The only value that is required to be supported is application/xml. Other supported values may include text/html and text/plain", "", true, false));
-    	paramList.add(new OperationParameterBean("outputSchema", "Any URI", "", true, false));
-    	paramList.add(new OperationParameterBean("startPosition", "Non-Zero Positive Integer", "", true, false));
-    	paramList.add(new OperationParameterBean("maxRecords", "Positive Integer", "", true, false));
-    	paramList.add(new OperationParameterBean("ElementSetName", "List of Character String", "", true, false));
-    	paramList.add(new OperationParameterBean("ElementName", "List of Character String", "", true, false));
-    	paramList.add(new OperationParameterBean("CONSTRAINTLANGUAGE", "CodeList with allowed values: CQL_TEXT or FILTER", "", true, false));
-    	paramList.add(new OperationParameterBean("Constraint", "Character String. Predicate expression specified in the language indicated by the CONSTRAINTLANGUAGE parameter", "", true, false));
-    	paramList.add(new OperationParameterBean("SortBy", "List of Character String, comma separated. Ordered list of names of metadata elements to use for sorting the response. Format of each list item is metadata_element_name:A indicating an ascending sort or metadata_ element_name:D indicating descending sort", "", true, false));
-    	paramList.add(new OperationParameterBean("DistributedSearch", "Boolean", "", true, false));
-    	paramList.add(new OperationParameterBean("hopCount", "Integer", "", true, false));
-    	paramList.add(new OperationParameterBean("ResponseHandler", "Any URI", "", true, false));
-    	getRecordsOp.setParamList(paramList);
-    	operations.add(getRecordsOp);
-    	
-    	// Operation - GetRecordById
-    	OperationBean getRecordByIdOp = mapToOperationBean(doc,
-        		new String[]{ XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_GET_HREF, XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_POST_HREF },
-        		new Integer[]{ ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_POST });
-    	getRecordByIdOp.setName("GetRecordById");
-    	getRecordByIdOp.setMethodCall("GetRecordById");
-
-    	paramList = new ArrayList<OperationParameterBean>();
-    	paramList.add(new OperationParameterBean("request=GetRecordById", "Fixed value of GetRecordById, case insensitive", "", false, false));
-    	paramList.add(new OperationParameterBean("Id", "Comma separated list of anyURI", "", false, false));
-    	paramList.add(new OperationParameterBean("ElementSetName", "CodeList with allowed values: 'brief', 'summary' or 'full'", "", true, false));
-    	paramList.add(new OperationParameterBean("outputFormat", "Character String. Value is Mime type. The only value that is required to be supported is application/xml. Other supported values may include text/html and text/plain", "", true, false));
-    	paramList.add(new OperationParameterBean("outputSchema", "Reference to the preferred schema of the response", "", true, false));
-    	getRecordByIdOp.setParamList(paramList);
-    	operations.add(getRecordByIdOp);
-
-    	// Operation - Harvest
-    	OperationBean harvestOp = mapToOperationBean(doc,
-        		new String[]{ XPATH_EXP_CSW_OP_HARVEST_GET_HREF, XPATH_EXP_CSW_OP_HARVEST_POST_HREF },
-        		new Integer[]{ ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_POST });
-    	harvestOp.setName("Harvest");
-    	harvestOp.setMethodCall("Harvest");
-
-    	paramList = new ArrayList<OperationParameterBean>();
-    	paramList.add(new OperationParameterBean("request=Harvest", "Fixed value of Harvest, case insensitive", "", false, false));
-    	paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
-    	paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
-    	paramList.add(new OperationParameterBean("Source", "URI. Reference to the source from which the resource is to be harvested", "", false, false));
-    	paramList.add(new OperationParameterBean("ResourceType", "Character String. Reference to the type of resource being harvested", "", false, false));
-    	paramList.add(new OperationParameterBean("NAMESPACE", "List of Character String, comma separated. Used to specify namespace(s) and their prefix(es). Format is xmlns([prefix=]namespace-url). If prefix is not specified, then this is the default namespace.", "", true, false));
-    	paramList.add(new OperationParameterBean("ResourceFormat", "Character String. MIME type indicating format of the resource being harvested", "", true, false));
-    	paramList.add(new OperationParameterBean("ResponseHandler", "URL. A reference to a person or entity that the CSW should respond to when it has completed processing Harvest request asynchronously", "", true, false));
-    	paramList.add(new OperationParameterBean("HarvestInterval", "Period. Must conform to ISO8601 Period syntax.", "", true, false));
-    	harvestOp.setParamList(paramList);
-    	operations.add(harvestOp);
-
-    	
-    	result.setOperations(operations);
-    	return result;
-    }
-
+/*
     public CapabilitiesBean getCapabilitiesWCTS(Document doc) throws XPathExpressionException {
     	CapabilitiesBean result = new CapabilitiesBean();
 
@@ -838,141 +465,19 @@ public class GetCapabilitiesService {
     	result.setOperations(operations);
     	return result;
     }
-
+*/
     /** Length of passed xPathsOfMethods and platformsOfMethods has to be the same !!! */
-    private OperationBean mapToOperationBean(Document doc, String[] xPathsOfMethods, Integer[] platformsOfMethods) throws XPathExpressionException {
-    	OperationBean opBean = new OperationBean();
-    	List<String> methodAddresses = new ArrayList<String>();
-    	List<Integer> methodPlatforms = new ArrayList<Integer>();
-    	for (int i=0; i < xPathsOfMethods.length; i++) {
-        	String methodAddress = xPath.evaluate(xPathsOfMethods[i], doc);
-        	if (methodAddress != null && methodAddress.length() != 0) {
-            	methodAddresses.add(methodAddress);
-        		methodPlatforms.add(platformsOfMethods[i]);
-        	}
-    	}
-    	opBean.setPlatform(methodPlatforms);
-    	opBean.setAddressList(methodAddresses);
-    	
-    	return opBean;
+
+
+    
+    
+
+    public SysListCache getSysListMapper() {
+        return sysListMapper;
     }
 
-    private String getServiceVersionWMS(Document doc) throws XPathExpressionException {
-    	// WMS Version 1.3.0
-    	String serviceType = xPath.evaluate("/WMS_Capabilities/Service/Name[1]", doc);
-    	if (serviceType != null && serviceType.length() != 0) {
-    		return "1_3_0";
-    	}
-    	// WMS Version 1.1.1
-    	serviceType = xPath.evaluate("/WMT_MS_Capabilities/Service/Name[1]", doc);
-    	if (serviceType != null && serviceType.length() != 0) {
-    		return "1_1_1";
-    	}
-
-    	throw new RuntimeException("Could not determine WMS Service Version.");
-    }
-    	
-    private String getServiceVersionWCS(Document doc) throws XPathExpressionException {
-    	// WCS Version 1.0.0. Doesn't have a Service or ServiceType/Name Element. Just check if WCS_Capabilities exists
-    	String serviceType = xPath.evaluate("/WCS_Capabilities", doc);
-    	if (serviceType != null && serviceType.length() != 0) {
-    		return "1_0_0";
-    	}
-    	// WCS Version 1.1.0
-    	serviceType = xPath.evaluate("/Capabilities/ServiceIdentification/ServiceType[1]", doc);
-    	if (serviceType != null && serviceType.contains(SERVICE_TYPE_WCS)) {
-    		return "1_1_0";
-    	}
-
-    	throw new RuntimeException("Could not determine WCS Service Version.");
+    public void setSysListMapper(SysListCache syslistCache) {
+        this.sysListMapper = syslistCache;
     }
 
-    private ServiceType getServiceType(Document doc) throws XPathExpressionException {
-    	// WMS Version 1.3.0
-    	String serviceType = xPath.evaluate("/WMS_Capabilities/Service/Name[1]", doc);
-    	if (serviceType != null && serviceType.length() != 0) {
-    		return ServiceType.WMS;
-    	}
-    	// WMS Version 1.1.1
-    	serviceType = xPath.evaluate("/WMT_MS_Capabilities/Service/Name[1]", doc);
-    	if (serviceType != null && serviceType.length() != 0) {
-    		return ServiceType.WMS;
-    	}
-    	// WCS Version 1.0.0. Doesn't have a Service or ServiceType/Name Element. Just check if WCS_Capabilities exists
-    	serviceType = xPath.evaluate("/WCS_Capabilities", doc);
-    	if (serviceType != null && serviceType.length() != 0) {
-    		return ServiceType.WCS;
-    	}
-    	// WFS
-    	serviceType = xPath.evaluate("/WFS_Capabilities/ServiceIdentification/ServiceType[1]", doc);
-    	if (serviceType != null && serviceType.length() != 0) {
-    		return ServiceType.WFS;
-    	}
-
-    	// All other services have can be evaluated via '/Capabilities/ServiceIdentification/ServiceType[1]'
-    	serviceType = xPath.evaluate("/Capabilities/ServiceIdentification/ServiceType[1]", doc);
-    	if (serviceType != null && serviceType.length() != 0) {
-    		if (serviceType.contains(SERVICE_TYPE_WMS)) {
-    			return ServiceType.WMS;
-
-    		} else if (serviceType.contains(SERVICE_TYPE_WFS)) {
-    			return ServiceType.WFS;
-
-    		} else if (serviceType.contains(SERVICE_TYPE_WCS)) {
-    			return ServiceType.WCS;
-
-    		} else if (serviceType.contains(SERVICE_TYPE_CSW)) {
-    			return ServiceType.CSW;
-
-    		} else if (serviceType.contains(SERVICE_TYPE_WCTS)) {
-    			return ServiceType.WCTS;
-
-    		} else {
-        		log.debug("Invalid service type: "+serviceType);
-        		throw new RuntimeException("Invalid service type: "+serviceType);
-    		}
-
-    	} else {
-			// Could not determine ServiceType
-    	    String error = "";
-    	    if ("ExceptionReport".equals(doc.getFirstChild().getNodeName())) {
-    	        error = doc.getFirstChild().getFirstChild().getFirstChild().getNodeValue();
-    	    }
-    		log.debug("Could not evaluate service type. " + error);
-    		throw new RuntimeException("Could not evaluate service type: " + error);
-    	}
-    }
-
-    private List<String> getKeywords(Document doc) throws XPathExpressionException {
-    	List<String> keywords = new ArrayList<String>();
-
-    	NodeList nodeList = (NodeList) xPath.evaluate("//KeywordList/Keyword/text()", doc, XPathConstants.NODESET);
-		for (int index = 0; index < nodeList.getLength(); ++index) {
-			Node node = nodeList.item(index);
-			String content = node.getTextContent();
-			if (content != null && content.trim().length() > 0 && !keywords.contains(content)) {
-				keywords.add(content);
-			}
-		}
-
-    	return keywords;
-    }
-
-    private static String getXPathExpressionFor(ServiceType serviceType, String ver, String postfix) {
-    	String fieldId = "XPATH_EXP_"+serviceType+"_"+ver+"_"+postfix;
-    	try {
-    		final Field fields[] = GetCapabilitiesService.class.getDeclaredFields();
-    		for (Field f : fields) {
-    	      if (fieldId.equals(f.getName())) {
-    	        f.setAccessible(true);
-    	        return (String) f.get(null);
-    	      }
-    	    }
-
-    	} catch (IllegalAccessException e) {
-    		log.debug("Could not access field for xpathExpression.", e);
-    	}
-
-    	return null;
-    }
 }

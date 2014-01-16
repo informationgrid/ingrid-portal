@@ -103,6 +103,9 @@
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.UsageLimitationBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.object.VectorFormatDetailsBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.ApplicationUrlBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.object.AddressBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.object.ObjectReferenceBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.object.SpatialReferenceSystemBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.AddressExtSearchParamsBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.AddressSearchResultBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.query.AddressStatisticsResultBean"/>
