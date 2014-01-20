@@ -32,3 +32,47 @@ INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, he
 (48, 0, 3220, 3, 'de', 'Art des Dienstes', 'In diesem Pflichtfeld kann die Art des Dienstes ausgewählt werden. Über das Feld werden die zur weiteren Befüllung auszuwählenden Angaben zu Operationen gesteuert.<br/><br/>Bei Eintragungen bzw. Änderungen dieses Feldes werden in der Tabelle Konformität die Einträge für die zugehörige Spezifikation automatisch gesetzt (gilt nicht für alle Dienstarten).', 'Darstellungsdienst (automatischer Eintrag "Technical Guidance for the implementation of INSPIRE View Services" in Konformität/Spezifikation)');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1048, 0, 3220, 3, 'en', 'Type of Service', 'This mandatory field specifies the type of the service. The input of this field controls the information that has to be provided for the operations of the service.<br/><br/>Inserting or deleting an entry here will cause an automatic insertion or deletion of an corresponding entry in "Conformity/Specification of Conformity" (not for all types of services).', 'View Service (automatic insertion of "Technical Guidance for the implementation of INSPIRE View Services" in Conformity/Specification of Conformit).');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1500, 0, 10200, -1, 'de', 'Erfassungsassistent - Nutzungsbedingungen', 'Auswahl, ob die Nutzungsbedingungen für ein neues Datenobjekt übernommen werden sollen.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1501, 0, 10200, -1, 'en', 'Assistent - Fees', 'Selection whether the fees should be adopted for the new data object.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1502, 0, 10201, -1, 'de', 'Erfassungsassistent - Zugangsbeschränkungen', 'Auswahl, welche der Zugangsbeschränkungen übernommen werden sollen. Durch einen Klick in die erste Spalte der Tabelle, kann über eine Checkbox der zu übernehmende Eintrag ausgewählt werden.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1503, 0, 10201, -1, 'en', 'Assistent - Access Constraints', 'Selection, which access constraints shall be used for the object. By clicking in the first column of the table you can activate a checkbox for selection of the chosen entry.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1504, 0, 10202, -1, 'de', 'Erfassungsassistent - Art des Dienstes', 'Auswahl des Diensttyps, der für das neue Dienst-Objekt verwendet werden soll.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1505, 0, 10202, -1, 'en', 'Assistent - Type of Service', 'Selection of the service type of this service object.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1506, 0, 10203, -1, 'de', 'Erfassungsassistent - Verweise', 'Auswahl der zu erstellenden Verweise. Durch einen Klick in die erste Spalte der Tabelle, kann über eine Checkbox der zu übernehmende Eintrag ausgewählt werden.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1507, 0, 10203, -1, 'en', 'Assistent - References', 'Selection, which references shall be used for the object. By clicking in the first column of the table you can activate a checkbox for selection of the chosen entry.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1508, 0, 10204, -1, 'de', 'Erfassungsassistent - Ressource Adresse', 'Auswahl, welche Ressource Addressen übernommen werden sollen. Durch einen Klick in die erste Spalte der Tabelle, kann über eine Checkbox der zu übernehmende Eintrag ausgewählt werden.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1509, 0, 10204, -1, 'en', 'Assistent - Resource Locator', 'Selection, which resource locators shall be used for the object. By clicking in the first column of the table you can activate a checkbox for selection of the chosen entry.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1510, 0, 10205, -1, 'de', 'Erfassungsassistent - Raumbezugssysteme', 'Auswahl, welche Raumbezugssysteme übernommen werden sollen. Durch einen Klick in die erste Spalte der Tabelle, kann über eine Checkbox der zu übernehmende Eintrag ausgewählt werden.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1511, 0, 10205, -1, 'en', 'Assistent - Spatial Reference System', 'Selection, which reference systems shall be used for the object. By clicking in the first column of the table you can activate a checkbox for selection of the chosen entry.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1512, 0, 10206, -1, 'de', 'Erfassungsassistent - Schlagwörter', 'Auswahl, welche Schlagwörter übernommen werden sollen. Durch einen Klick in die erste Spalte der Tabelle, kann über eine Checkbox der zu übernehmende Eintrag ausgewählt werden.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1513, 0, 10206, -1, 'en', 'Assistent - Keywords', 'Selection, which keywords shall be used for the object. By clicking in the first column of the table you can activate a checkbox for selection of the chosen entry.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1514, 0, 10207, -1, 'de', 'Erfassungsassistent - Konformität', 'Auswahl, welche Konformitäten übernommen werden sollen. Durch einen Klick in die erste Spalte der Tabelle, kann über eine Checkbox der zu übernehmende Eintrag ausgewählt werden.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1515, 0, 10207, -1, 'en', 'Assistent - Conformity', 'Selection, which conformities shall be used for the object. By clicking in the first column of the table you can activate a checkbox for selection of the chosen entry.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1516, 0, 10208, -1, 'de', 'Erfassungsassistent - Zeitspanne', 'Auswahl, welche Zeitspanne übernommen werden soll. Durch einen Klick in die erste Spalte der Tabelle, kann über eine Radiobox der zu übernehmende Eintrag ausgewählt werden.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1517, 0, 10208, -1, 'en', 'Assistent - Time Span', 'Selection, which time span shall be used for the object. By clicking in the first column of the table you can activate a radiobox for selection of the chosen entry.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1518, 0, 10209, -1, 'de', 'Erfassungsassistent - Adressen', 'Auswahl, welche Addressen übernommen werden sollen. Wenn eine Adresse schon existiert, wird diese verlinkt (Aktion=Link), ansonsten wird sie unter den freien Adressen neu angelegt (Aktion=Neu). Durch einen Klick in die erste Spalte der Tabelle, kann über eine Checkbox der zu übernehmende Eintrag ausgewählt werden.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1519, 0, 10209, -1, 'en', 'Assistent - Addresses', 'Selection, which addresses shall be used for the object. If an address already exists, then this will be linked to (Action=Link), otherwise it will be created under "Free Addresses" (Action=New). By clicking in the first column of the table you can activate a checkbox for selection of the chosen entry.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1520, 0, 10210, -1, 'de', 'Erfassungsassistent - Gekoppelte Daten', 'Auswahl, welche gekoppelten Daten übernommen werden sollen. Die Aktion bestimmt, ob ein Datensatz verlinkt wird, wenn dieser schon existiert oder ob dieser Datensatz neu angelegt wird. Durch einen Klick in die erste Spalte der Tabelle, kann über eine Checkbox der zu übernehmende Eintrag ausgewählt werden.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1521, 0, 10210, -1, 'en', 'Assistent - Coupled Resources', 'Selection, which coupled resources shall be used for the object. The action defines if a dataset is linked to the new service object if it already exists or otherwise it will be created as a new dataset. By clicking in the first column of the table you can activate a checkbox for selection of the chosen entry.', '');
