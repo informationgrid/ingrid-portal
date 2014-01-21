@@ -755,6 +755,7 @@
         } else {
             var creates = new dojo.DeferredList( createDatasetsDeferreds );
 	        creates.then( function(resourcesDefs) {
+	            console.log("all layers created!");
 	            addCoupledResourcesInfo( coupledResources );
 	            dojo.forEach( resourcesDefs, function(res) {
 	                // add additional information to show reference in table
@@ -768,33 +769,65 @@
 
     }
     
+    scopeWizardResults.prepareTopics = function( keywords, topics ) {
+        var conTopics = [];
+        dojo.forEach( topics, function( topic, i ) {
+            if (topic && topic.length != 0) {
+                conTopics.push( topic[0] );                
+            } else {
+                conTopics.push( { label: keywords[i], title: keywords[i], source: "FREE", sourceString: "FREE" } );
+            }
+        });
+        return conTopics;
+    };
+    
     scopeWizardResults.createDataset = function(data) {
         var def = new dojo.Deferred();
 
-        ObjectService.createNewNode( currentUdk.parentUuid, function(objNode) {
-            objNode.ref1ObjectIdentifier = data.ref1ObjectIdentifier;
-            objNode.objectClass = 1;
-            objNode.objectName = data.title;
-            objNode.spatialRefLocationTable = data.spatialRefLocationTable;
-            igeEvents.analyzeKeywords([]).then( function(topics) {
-                objNode.thesaurusTermsTable = topics;
-                // save the object as WORKING copy to create a UUID
-                ObjectService.saveNodeData( objNode, true, false, function(bean) {
-                    
-                    // update tree node
-                    var newNode = _createNewNode( bean );
-                    console.log("new node is: ", newNode);
-                    newNode.title = data.title;
-                    var tree = dijit.byId("dataTree");
-                    tree.model.store.newItem(newNode, {
-                        parent: dijit.byId( currentUdk.parentUuid ).item,
-                        attribute: "children"
-                    });
-                    def.callback( bean ); //{ uuid: bean.uuid, title: "xxx", objectClass: "1" } );
-                } );
-            } );
-            
-        } );
+        // call this function as long as object has not been created due to USER_HAS_RUNNING_JOBS errors!
+        var createFunction = function(def) {
+	        ObjectService.createNewNode( currentUdk.parentUuid, function(objNode) {
+	            objNode.ref1ObjectIdentifier = data.ref1ObjectIdentifier;
+	            objNode.objectClass = 1;
+	            objNode.objectName = data.title;
+	            objNode.spatialRefLocationTable = data.spatialRefLocationTable;
+	            console.log("data of layer: ", data);
+	            var keywords = UtilList.tableDataToList( data.thesaurusTermsTable, "title" );
+	            igeEvents.analyzeKeywords(keywords).then( function(topics) {
+	                console.log( "Found topics for layer:", topics );
+	                objNode.thesaurusTermsTable = scopeWizardResults.prepareTopics( keywords, topics );;
+	                console.log( "converted topics for layer:", objNode.thesaurusTermsTable );
+	                // save the object as WORKING copy to create a UUID
+	                var response = ObjectService.saveNodeData( objNode, true, false, {
+	                    callback: function(bean) {
+		                    
+		                    // update tree node
+		                    var newNode = _createNewNode( bean );
+		                    console.log("new node is: ", newNode);
+		                    newNode.title = data.title;
+		                    var tree = dijit.byId("dataTree");
+		                    tree.model.store.newItem(newNode, {
+		                        parent: dijit.byId( currentUdk.parentUuid ).item,
+		                        attribute: "children"
+		                    });
+		                    def.callback( bean ); //{ uuid: bean.uuid, title: "xxx", objectClass: "1" } );
+		                },
+	                    errorHandler:function(message) { console.log("errorHandler::"+message); },
+	                    exceptionHandler:function(errorString, exception) {
+	                        // try to create the dataset a second later if backend was busy
+	                        if (errorString.indexOf( "[USER_HAS_RUNNING_JOBS]" ) != -1) {
+	                            console.log( "[USER_HAS_RUNNING_JOBS] ... try again in 1s" );
+	                            setTimeout( function() { createFunction( def ); }, 1000);
+	                        } else {
+	                            console.log( "exceptionHandler::"+errorString );
+	                        }
+	                    }
+	                });
+	            } );
+	        } );
+        };
+        // initial call
+        createFunction(def);
 
         return def;
     }
