@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- current exchange-format will be set -->
+<!-- current exchange-format will be set in ScriptImportDataMapper -->
 <igc xmlns="http://www.portalu.de/igc-import" exchange-format="x">
 	<data-sources>
 		<data-source>
