@@ -751,6 +751,7 @@
             console.log( "Adding all coupled resources as links: ", coupledResources );
             addCoupledResourcesInfo( coupledResources );
             UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
+            igeEvents.refreshTabContainers();
             
         } else {
             var creates = new dojo.DeferredList( createDatasetsDeferreds );
@@ -764,6 +765,7 @@
 	            } );
 	            console.log( "Adding coupled resources: ", coupledResources );
 	            UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
+	            igeEvents.refreshTabContainers();
 	        } );
         }
 
