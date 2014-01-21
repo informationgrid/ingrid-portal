@@ -134,6 +134,9 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 	private void setDocumentExchangeFormat(Document docTarget) {
 		NodeList nodeList = docTarget.getElementsByTagName(XMLKeys.IGC);
 
+        // !!! NOTICE !!!
+        // Will be linked STATICALLY at compile time (all frontend class files) !!!
+        // So will not be read from import-export jar at runtime !!!
 		String exchangeFormat = Versioning.CURRENT_IMPORT_EXPORT_VERSION;
 		
 		setAttributesInNodeList(nodeList, XMLKeys.EXCHANGE_FORMAT, exchangeFormat);
