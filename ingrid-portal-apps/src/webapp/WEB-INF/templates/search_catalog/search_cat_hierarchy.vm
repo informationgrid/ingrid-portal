@@ -13,7 +13,7 @@
 		#if ($node.plugType == 'dsc_ecs')
 			## objects
 			#set($nodeIcon = "icn_udk_obj_${node.udk_class}.gif")
-			#set($nodeAlt = $MESSAGES.getString("udk_obj_class_name_${node.udk_class}"))
+			#set($nodeAlt = $Codelists.getCodeListValue('8000', $node.udk_class, $languageCode))
 		#else
 			## addresses
 			#set($nodeIcon = "icn_udk_adr_${node.udk_class}.gif")

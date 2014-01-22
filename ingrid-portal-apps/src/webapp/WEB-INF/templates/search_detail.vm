@@ -697,8 +697,7 @@
 #set($pageDescription = $rec.get("summary"))
 #set($pageDescription = $pageDescription.replace('"',"'"))
 #set($pageDescription = $stringTool.cutString($pageDescription,300))
-#set($udkObjClass     = $rec.get("t01_object.obj_class"))
-#set($udkObjClassName = $MESSAGES.getString("udk_obj_class_name_$udkObjClass"))
+#set($udkObjClassName = $Codelists.getCodeListValue('8000', $rec.get("t01_object.obj_class"), $languageCode))
 #parse('WEB-INF/templates/search_detail_header.vm')
 
 #set ($action = $renderResponse.createActionURL())

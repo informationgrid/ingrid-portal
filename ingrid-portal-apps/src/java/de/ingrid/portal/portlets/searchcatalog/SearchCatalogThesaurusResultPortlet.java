@@ -23,6 +23,7 @@ import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -72,6 +73,10 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
 
         PageState ps = getPageState(request);
         context.put("ps", ps);
+        
+        context.put("Codelists", CodeListServiceFactory.instance());
+        // add request language, used to localize the map client
+        context.put("languageCode", request.getLocale().getLanguage());
 
         context.put("enable_address", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS_RESULT_ADDRESS, Boolean.TRUE));
         

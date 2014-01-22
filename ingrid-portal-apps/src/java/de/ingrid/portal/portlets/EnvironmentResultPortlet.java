@@ -192,6 +192,10 @@ public class EnvironmentResultPortlet extends AbstractVelocityMessagingPortlet {
         context.put("rankedPageSelector", pageNavigation);
         context.put("rankedResultList", hits);
 
+        context.put("Codelists", CodeListServiceFactory.instance());
+        // add request language, used to localize the map client
+        context.put("languageCode", request.getLocale().getLanguage());
+        
         super.doView(request, response);
     }
 

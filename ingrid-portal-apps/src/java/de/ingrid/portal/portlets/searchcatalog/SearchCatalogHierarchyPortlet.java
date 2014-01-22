@@ -14,6 +14,7 @@ import javax.portlet.PortletSession;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IPlugHelper;
 import de.ingrid.portal.global.IPlugHelperDscEcs;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -51,6 +52,10 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         context.put("scrollTop", scrollTop);
         // set positions in main tab
         context.put(VAR_MAIN_TAB, PARAMV_TAB_HIERARCHY);
+        
+        context.put("Codelists", CodeListServiceFactory.instance());
+        // add request language, used to localize the map client
+        context.put("languageCode", request.getLocale().getLanguage());
 
         setDefaultViewPage(TEMPLATE_START);
 
