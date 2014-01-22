@@ -751,27 +751,23 @@ menuEventHandler.changePublicationCondition = function(newPubCondition, msg) {
 }
 
 // Reloads the tree structure for the selected root node
-// TODO: adapt to reload only the selected root node
-//       at the moment the whole tree is reloaded
 menuEventHandler.reloadSubTree = function(msg) {
 	// Get the selected node from the message
-	//var selectedNodeItem = getSelectedNode(msg);
-	var selectedNode = getSelectedNode(msg);//dijit.byId(selectedNodeItem.id);
-	var tree = dijit.byId("dataTree");
-	//var treeListener = dijit.byId("treeListener");
-	//var treeController = dijit.byId("treeController");
-
-	if (selectedNode) {
-		//selectedNode.state = "UNCHECKED";
-		udkDataProxy.resetDirtyFlag();
-		//tree.selectNode(selectedNode);
-		UtilTree.selectNode("dataTree", selectedNode.id);
-		//tree.selectedNode = selectedNode;
-		dojo.publish("/selectNode", [{id:"dataTree", node: selectedNode.item}]);
-		tree.refreshChildren(selectedNode);
-	}
+	var selectedNode = getSelectedNode(msg);
+	menuEventHandler.reloadSubTreeByNode( selectedNode );
 }
 
+menuEventHandler.reloadSubTreeByNode = function(node) {
+    // Get the selected node from the message
+    var tree = dijit.byId("dataTree");
+
+    if (node) {
+        udkDataProxy.resetDirtyFlag();
+        UtilTree.selectNode("dataTree", node.id);
+        dojo.publish("/selectNode", [{id:"dataTree", node: node.item}]);
+        tree.refreshChildren(node);
+    }
+}
 
 menuEventHandler.handleFinalSave = function(msg) {
 	// Get the selected node from the message

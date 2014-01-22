@@ -51,6 +51,7 @@ ingridDataTree.createTree = function(){
         onClick: menuEventHandler.handlePaste
     }));
 	menuDataTree.addChild(new dijit.MenuItem({
+	    id: "menuItemReloadSub",
         label: message.get('tree.subReload'),
         onClick: menuEventHandler.reloadSubTree
     }));

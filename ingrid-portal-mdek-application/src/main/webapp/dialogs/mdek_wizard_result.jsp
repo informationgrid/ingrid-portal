@@ -751,7 +751,7 @@
             console.log( "Adding all coupled resources as links: ", coupledResources );
             addCoupledResourcesInfo( coupledResources );
             UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
-            igeEvents.refreshTabContainers();
+            setTimeout(igeEvents.refreshTabContainers, 500);
             
         } else {
             var creates = new dojo.DeferredList( createDatasetsDeferreds );
@@ -765,7 +765,9 @@
 	            } );
 	            console.log( "Adding coupled resources: ", coupledResources );
 	            UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
-	            igeEvents.refreshTabContainers();
+	            var parentId = dojo.byId("newNode").parentNode.parentNode.id;
+	            menuEventHandler.reloadSubTreeByNode( dijit.byId( parentId ) );
+	            setTimeout(igeEvents.refreshTabContainers, 500);
 	        } );
         }
 
@@ -804,15 +806,18 @@
 	                    callback: function(bean) {
 		                    
 		                    // update tree node
-		                    var newNode = _createNewNode( bean );
+		                    // NO -> is done by reload subtree later!
+		                    /*var newNode = _createNewNode( bean );
 		                    console.log("new node is: ", newNode);
 		                    newNode.title = data.title;
+		                    newNode.id = bean.uuid;
+		                    newNode.isFolder = false;
 		                    var tree = dijit.byId("dataTree");
 		                    tree.model.store.newItem(newNode, {
 		                        parent: dijit.byId( currentUdk.parentUuid ).item,
 		                        attribute: "children"
-		                    });
-		                    def.callback( bean ); //{ uuid: bean.uuid, title: "xxx", objectClass: "1" } );
+		                    });*/
+		                    def.callback( bean );
 		                },
 	                    errorHandler:function(message) { console.log("errorHandler::"+message); },
 	                    exceptionHandler:function(errorString, exception) {
