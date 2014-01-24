@@ -283,12 +283,6 @@ public class QueryResultPostProcessor {
                 //doNotShowMaps = true;
             }
             
-            // Coupled Resources (Map-objects)
-            tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_COUPLED_RESOURCE);
-            if (tmpArray != null && tmpArray.length > 0) {
-                hit.put(Settings.RESULT_KEY_COUPLED_RESOURCE, tmpArray);
-            }
-            
             // Capabilities Url
             tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_CAPABILITIES_URL);
             if (!doNotShowMaps && tmpArray != null && tmpArray.length > 0) {

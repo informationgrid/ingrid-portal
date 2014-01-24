@@ -121,8 +121,7 @@ public class QueryPreProcessor {
         		"kml",
         		Settings.RESULT_KEY_ADDITIONAL_HTML_1,
         		Settings.RESULT_KEY_CAPABILITIES_URL,
-        		Settings.RESULT_KEY_SERVICE_UUID,
-        		Settings.RESULT_KEY_COUPLED_RESOURCE
+        		Settings.RESULT_KEY_SERVICE_UUID
         		// other dsc scripted iPlugs might deliver a direct URL, so always request URL !
         		// NO, older SE iPlugs have a bug: extracted SE url is set empty when URL is requested :(
         		// so let's skip URL for now ... (26. Sep. 2011)
