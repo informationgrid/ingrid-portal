@@ -260,10 +260,10 @@ scriptScopeResearchExtObj.resetInput = function() {
 	dijit.byId("objTopicInputBool").setValue(0);
 	scriptScopeResearchExtObj.selectAllObjectClasses();
 	dijit.byId("objTopicThesaurus").setValue("");
-	dijit.byId("objExtSearchThesaurusTerms").clear();//store.clearData();
+	UtilGrid.setTableData("objExtSearchThesaurusTerms", []);
 	dijit.byId("thesaurusTermsRelation").setValue(0);
 	dijit.byId("objLocationTopic").setValue("");
-	dijit.byId("objExtSearchLocationTerms").clear();//store.clearData();
+	UtilGrid.setTableData("objExtSearchLocationTerms", []);
 	dijit.byId("geoThesaurusTermsRelation").setValue(0);
 	dijit.byId("objSpaceGeoUnit").setValue("");
 //	dojo.byId("objTimeRef1").checked = false;
