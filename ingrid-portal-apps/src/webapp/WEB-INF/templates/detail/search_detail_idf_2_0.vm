@@ -87,7 +87,7 @@
         </span>
         &nbsp;
         <strong>
-            $MESSAGES.getString("udk_obj_class_name_${type}")
+            $Codelists.getCodeListValue('8000', ${type}, $lang)
         </strong>
         &nbsp;
         <span class="smaller">$MESSAGES.getString('search.detail.object.class')</span>

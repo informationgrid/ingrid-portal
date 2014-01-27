@@ -25,6 +25,7 @@ import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
@@ -105,6 +106,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 request.getLocale()));
         context.put("MESSAGES", messages);
         context.put("lang", "de".equals(request.getLocale().getLanguage().toLowerCase()) ? "" : "en");
+        context.put("Codelists", CodeListServiceFactory.instance());
 
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
