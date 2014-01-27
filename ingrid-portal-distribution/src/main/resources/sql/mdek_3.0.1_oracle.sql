@@ -12,11 +12,24 @@
 -- Tabellenstruktur für Tabelle help_messages
 --
 
-BEGIN
-execute immediate 'DROP TABLE help_messages';
-exception when others then null;
-END;
-/
+-- oracle way of: DROP TABLE IF EXISTS
+
+-- !!!!!!!! -------------------------------------------------
+-- !!! DIFFERENT SYNTAX FOR JDBC <-> Scripting !  Choose your syntax, default is JDBC version
+
+-- !!! JDBC VERSION (installer):
+-- !!! All in one line and DOUBLE SEMICOLON at end !!! Or causes problems when executing via JDBC in installer (ORA-06550) !
+
+BEGIN execute immediate 'DROP TABLE help_messages'; exception when others then null; END;;
+
+-- !!! SCRIPT VERSION (SQL Developer, SQL Plus):
+-- !!! SINGLE SEMICOLON AND "/" in separate line !
+
+-- BEGIN execute immediate 'DROP TABLE help_messages'; exception when others then null; END;
+-- /
+
+-- !!!!!!!! -------------------------------------------------
+
 CREATE TABLE help_messages (
   id NUMBER(24,0) NOT NULL,
   version NUMBER(10,0) DEFAULT '0' NOT NULL,

@@ -25,11 +25,24 @@ DELETE FROM fragment_pref WHERE fragment_pref.fragment_id = (SELECT fragment_id 
 DELETE FROM fragment WHERE name= 'ingrid-portal-apps::SaveMapsPortlet';
 
 -- Temp Table
-BEGIN
-execute immediate 'DROP TABLE ingrid_temp';
-exception when others then null;
-END;
-/
+-- oracle way of: DROP TABLE IF EXISTS
+
+-- !!!!!!!! -------------------------------------------------
+-- !!! DIFFERENT SYNTAX FOR JDBC <-> Scripting !  Choose your syntax, default is JDBC version
+
+-- !!! JDBC VERSION (installer):
+-- !!! All in one line and DOUBLE SEMICOLON at end !!! Or causes problems when executing via JDBC in installer (ORA-06550) !
+
+BEGIN execute immediate 'DROP TABLE ingrid_temp'; exception when others then null; END;;
+
+-- !!! SCRIPT VERSION (SQL Developer, SQL Plus):
+-- !!! SINGLE SEMICOLON AND "/" in separate line !
+
+-- BEGIN execute immediate 'DROP TABLE ingrid_temp'; exception when others then null; END;
+-- /
+
+-- !!!!!!!! -------------------------------------------------
+
 CREATE TABLE  ingrid_temp (
 	temp_key VARCHAR2(255),
 	temp_value NUMBER(10,0)

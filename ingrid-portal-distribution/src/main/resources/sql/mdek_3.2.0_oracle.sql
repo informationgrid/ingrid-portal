@@ -2,12 +2,26 @@
 -- Daten für Tabelle help_messages
 --
 
+
 -- Create table for storing version info
-BEGIN
-execute immediate 'DROP TABLE info';
-exception when others then null;
-END;
-/
+-- oracle way of: DROP TABLE IF EXISTS
+
+-- !!!!!!!! -------------------------------------------------
+-- !!! DIFFERENT SYNTAX FOR JDBC <-> Scripting !  Choose your syntax, default is JDBC version
+
+-- !!! JDBC VERSION (installer):
+-- !!! All in one line and DOUBLE SEMICOLON at end !!! Or causes problems when executing via JDBC in installer (ORA-06550) !
+
+BEGIN execute immediate 'DROP TABLE info'; exception when others then null; END;;
+
+-- !!! SCRIPT VERSION (SQL Developer, SQL Plus):
+-- !!! SINGLE SEMICOLON AND "/" in separate line !
+
+-- BEGIN execute immediate 'DROP TABLE info'; exception when others then null; END;
+-- /
+
+-- !!!!!!!! -------------------------------------------------
+
 CREATE TABLE info (
   key_name varchar2(255) default NULL,
   value_name varchar2(255) default NULL

@@ -17,17 +17,24 @@ UPDATE folder_menu SET PARENT_ID = '19', ELEMENT_ORDER = '4' WHERE folder_menu.O
 UPDATE fragment SET NAME = 'jetspeed-layouts::IngridOneColumn' WHERE PAGE_ID =(SELECT PAGE_ID FROM page WHERE PATH ='/service-sitemap.psml');
 
 -- Temp Table um values aus folder_menu zwischen zu speichern (subselect in insert auf gleiche Tabelle nicht moeglich, s.u.)
--- oracle way of: DROP TABLE IF EXISTS ingrid_temp;
---begin
---  execute immediate 'DROP TABLE ingrid_temp';
---  exception when others then null;
---end;
---/
-BEGIN
-execute immediate 'DROP TABLE ingrid_temp';
-exception when others then null;
-END;
-/
+-- oracle way of: DROP TABLE IF EXISTS
+
+-- !!!!!!!! -------------------------------------------------
+-- !!! DIFFERENT SYNTAX FOR JDBC <-> Scripting !  Choose your syntax, default is JDBC version
+
+-- !!! JDBC VERSION (installer):
+-- !!! All in one line and DOUBLE SEMICOLON at end !!! Or causes problems when executing via JDBC in installer (ORA-06550) !
+
+BEGIN execute immediate 'DROP TABLE ingrid_temp'; exception when others then null; END;;
+
+-- !!! SCRIPT VERSION (SQL Developer, SQL Plus):
+-- !!! SINGLE SEMICOLON AND "/" in separate line !
+
+-- BEGIN execute immediate 'DROP TABLE ingrid_temp'; exception when others then null; END;
+-- /
+
+-- !!!!!!!! -------------------------------------------------
+
 CREATE TABLE  ingrid_temp (
 	temp_key VARCHAR2(255),
 	temp_value NUMBER(10,0)
@@ -287,13 +294,6 @@ UPDATE ingrid_lookup SET item_value = (SELECT fragment_id FROM fragment WHERE pa
 UPDATE fragment SET decorator = 'ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'fragment_tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';
 DELETE FROM ingrid_lookup WHERE item_key = 'fragment_tmp_id';
 
--- delete temporary table
--- oracle way of: DROP TABLE IF EXISTS ingrid_temp;
---begin
---  execute immediate 'DROP TABLE ingrid_temp';
---  exception when others then null;
---end;
---/
 DROP TABLE ingrid_temp;
   
 -- update max keys

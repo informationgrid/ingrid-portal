@@ -55,6 +55,9 @@
         Reconfigure portal so protocol is preserved in all portal urls (keep https protocol in GeoPortal.WSV where secured frontend is used).
       </action>
       <action type="fix" dev="wemove">
+        Fix sql scripts for oracle (installer).
+      </action>
+      <action type="fix" dev="wemove">
         Profile SachsenPortalU: Fixed images and content.
       </action>
     </release>
