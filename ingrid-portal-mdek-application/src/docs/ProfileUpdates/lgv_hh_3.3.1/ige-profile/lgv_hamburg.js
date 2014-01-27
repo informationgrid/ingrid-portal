@@ -269,6 +269,9 @@ dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
         dojo.removeClass("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
         dojo.removeClass("uiElementN024", "showOnlyExpanded"); // Konformität
         dojo.removeClass("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
+
+        // Tab containers may be rendered for the first time and needs to be layouted
+        igeEvents.refreshTabContainers();
     }
 });
 
