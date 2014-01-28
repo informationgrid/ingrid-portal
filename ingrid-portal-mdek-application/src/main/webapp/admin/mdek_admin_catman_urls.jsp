@@ -220,7 +220,7 @@ function updateUrlJobInfo(jobInfo) {
 		dojo.byId("urlsInfoNumProcessedUrls").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
 
 		var progressBar = dijit.byId("urlsProgressBar");
-		progressBar.set('maximum', jobInfo.numEntities);
+		progressBar.set('maximum', (jobInfo.numEntities + jobInfo.numEntities/100)); // so that 100% is never reached!
 		progressBar.set('progress', jobInfo.numProcessedEntities);
 		progressBar.update();
 	}
