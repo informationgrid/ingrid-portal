@@ -4,7 +4,9 @@
 package de.ingrid.mdek.dwr.services.capabilities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.xpath.XPathExpressionException;
 
@@ -98,6 +100,17 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
             result.setBoundingBoxes(union);            
         }
         
+        // Spatial Reference Systems (SRS / CRS)
+        // Note: The root <Layer> element shall include a sequence of zero or more
+        // CRS elements listing all CRSs that are common to all subsidiary layers.
+        // see: 7.2.4.6.7 CRS (WMS Implementation Specification, page 26)
+        
+        // get all root Layer coordinate Reference Systems
+        // there only can be one root layer!
+        Node rootLayerNode = xPathUtils.getNode( doc, "/wms:WMS_Capabilities/wms:Capability/wms:Layer");
+        result.setSpatialReferenceSystems(getSpatialReferenceSystems(rootLayerNode));
+        List<String> rootCRSs = convertToStringList( result.getSpatialReferenceSystems() );
+        
         // Coupled Resources
         NodeList identifierNodes = xPathUtils.getNodeList(doc, "/wms:WMS_Capabilities/wms:Capability/wms:Layer//wms:Identifier");
         List<MdekDataBean> coupledResources = new ArrayList<MdekDataBean>();
@@ -112,12 +125,21 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         		newDataset.setUuid(null);
         		newDataset.setRef1ObjectIdentifier(id);
                 newDataset.setTitle( xPathUtils.getString( layerNode, "wms:Title" ) );
+                newDataset.setGeneralDescription( xPathUtils.getString( layerNode, "wms:Abstract" ) );
         		newDataset.setThesaurusTermsTable( getKeywordsFromLayer( getKeywords(layerNode, "wms:KeywordList/wms:Keyword") ) );
         		List<LocationBean> boxes = new ArrayList<LocationBean>();
         		LocationBean box = getBoundingBoxFromLayer( layerNode );
         		if ( box != null ) boxes.add( box );
         		else if ( unionOfBoundingBoxes != null ) boxes.add( unionOfBoundingBoxes );
                 newDataset.setSpatialRefLocationTable( boxes );
+                // get CRS from layer and merge them with the ones found in root node
+                // using a set here to filter out duplicates!
+                Set<String> layerCRSs = new HashSet(convertToStringList( getSpatialReferenceSystems( layerNode )) );
+                layerCRSs.addAll( rootCRSs );
+                List<String> layerCRSsList = new ArrayList<String>();
+                layerCRSsList.addAll( layerCRSs );
+                newDataset.setRef1SpatialSystemTable( layerCRSsList );
+                
                 coupledResources.add( newDataset );
         		
         	} else {
@@ -126,15 +148,6 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
 		}
         
         result.setCoupledResources( coupledResources );
-        
-        // Spatial Reference Systems (SRS / CRS)
-        // Note: The root <Layer> element shall include a sequence of zero or more
-        // CRS elements listing all CRSs that are common to all subsidiary layers.
-        // see: 7.2.4.6.7 CRS (WMS Implementation Specification, page 26)
-        
-        // get all root Layer coordinate Reference Systems
-        // there only can be one root layer!
-        result.setSpatialReferenceSystems(getSpatialReferenceSystems(doc));
         
         // get contact information
         result.setAddress(getAddress(doc));
@@ -234,7 +247,15 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         
     }
 
-	/**
+	private List<String> convertToStringList( List<SpatialReferenceSystemBean> spatialReferenceSystems ) {
+	    List<String> result = new ArrayList<String>();
+        for (SpatialReferenceSystemBean bean : spatialReferenceSystems) {
+            result.add( bean.getName() );
+        }
+        return result;
+    }
+
+    /**
      * @param boundingBoxesFromLayers
      * @return
      */
@@ -396,12 +417,12 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
     }
 
     /**
-     * @param doc
+     * @param layerNode
      * @return
      */
-    private List<SpatialReferenceSystemBean> getSpatialReferenceSystems(Document doc) {
+    private List<SpatialReferenceSystemBean> getSpatialReferenceSystems(Node layerNode) {
         List<SpatialReferenceSystemBean> result = new ArrayList<SpatialReferenceSystemBean>();
-        String[] crs = xPathUtils.getStringArray(doc, XPATH_EXP_WMS_LAYER_CRS);
+        String[] crs = xPathUtils.getStringArray(layerNode, "wms:CRS");
         
         // check codelists for matching entryIds
         for (String item : crs) {

@@ -42,6 +42,7 @@
     "general.fieldId":"Feld ID",
     "general.image.not.found":"Kein Bild gefunden",
     "general.add.keywords":"Verarbeite Schlagworte: ${0} von ${1}",
+    "general.add.layers":"Erzeuge gekoppelte Resource: ${0} of ${1}",
 	
 	"general.page":"Seite",
     

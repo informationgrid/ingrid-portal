@@ -729,6 +729,8 @@
             }
         } );
         
+        UtilUI.initBlockerDivInfo(createDatasetsDeferreds.length, message.get("general.add.layers"));
+        
         var addCoupledResourceInfo = function( obj ) {
             obj.relationType = "3600";
             obj.relationTypeName = "Verweis zu Daten";
@@ -754,6 +756,7 @@
             setTimeout(igeEvents.refreshTabContainers, 500);
             
         } else {
+            UtilDWR.enterLoadingState();
             var creates = new dojo.DeferredList( createDatasetsDeferreds );
 	        creates.then( function(resourcesDefs) {
 	            console.log("all layers created!");
@@ -766,8 +769,20 @@
 	            console.log( "Adding coupled resources: ", coupledResources );
 	            UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
 	            var parentId = dojo.byId("newNode").parentNode.parentNode.id;
+	            var newNode = itemToJS(dijit.byId("dataTree").model.store, dijit.byId("newNode").item);
 	            menuEventHandler.reloadSubTreeByNode( dijit.byId( parentId ) );
-	            setTimeout(igeEvents.refreshTabContainers, 500);
+	            setTimeout(function() {
+	                igeEvents.refreshTabContainers();
+	                // add new node again, which was removed after tree has been reloaded
+	                var tree = dijit.byId("dataTree");
+                    var treeItem = tree.model.store.newItem(newNode, {
+                        parent: dijit.byId( currentUdk.parentUuid ).item,
+                        attribute: "children"
+                    });
+                    UtilTree.selectNode("dataTree", treeItem.id[0]);
+                    udkDataProxy.setDirtyFlagNow();
+                    UtilDWR.exitLoadingState();
+	            }, 500);
 	        } );
         }
 
@@ -794,6 +809,9 @@
 	            objNode.ref1ObjectIdentifier = data.ref1ObjectIdentifier;
 	            objNode.objectClass = 1;
 	            objNode.objectName = data.title;
+	            objNode.generalDescription = data.generalDescription;
+	            objNode.ref1SpatialSystemTable = data.ref1SpatialSystemTable;
+	            
 	            objNode.spatialRefLocationTable = data.spatialRefLocationTable;
 	            console.log("data of layer: ", data);
 	            var keywords = UtilList.tableDataToList( data.thesaurusTermsTable, "title" );
@@ -817,9 +835,10 @@
 		                        parent: dijit.byId( currentUdk.parentUuid ).item,
 		                        attribute: "children"
 		                    });*/
+		                    UtilUI.updateBlockerDivInfo();
 		                    def.callback( bean );
 		                },
-	                    errorHandler:function(message) { console.log("errorHandler::"+message); },
+	                    errorHandler:function(message) { console.log("errorHandler::"+message); UtilUI.updateBlockerDivInfo(); },
 	                    exceptionHandler:function(errorString, exception) {
 	                        // try to create the dataset a second later if backend was busy
 	                        if (errorString.indexOf( "[USER_HAS_RUNNING_JOBS]" ) != -1) {

@@ -42,6 +42,7 @@
     "general.fieldId":"Field ID",
     "general.image.not.found":"Image not found",
     "general.add.keywords":"Prepare keywords: ${0} of ${1}",
+    "general.add.layers":"Adding coupled resource: ${0} of ${1}",
     
 	"general.page":"Page",
 	
