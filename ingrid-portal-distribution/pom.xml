@@ -211,25 +211,25 @@
           </execution>
         </executions>
       </plugin>
+      <!-- Creation of report BOUND to deploy phase to avoid calling changes:changes-report in top dir ! -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
         <version>2.9</version>
         <configuration>
-          <smtpHost>localhost</smtpHost>
-          <subject>[ingrid update announcement] ${project.artifactId}-${project.version}</subject>
-          <mailSender>
-            <name>Release Notification</name>
-            <email>noreply@wemove.com</email>
-          </mailSender>
-          <toAddresses>
-            <toAddress implementation="java.lang.String">ingrid-announcement@wemove.com</toAddress>
-          </toAddresses>
-          <issueManagement>
-            <system>JIRA</system>
-            <url>http://dev.wemove.com/jira/browse/INGRID</url>
-          </issueManagement>
+          <xmlPath>${basedir}/src/changes/changes.xml</xmlPath>
+          <outputDirectory>target/site</outputDirectory>
         </configuration>
+        <!-- bind creation of report to deploy phase to be executed AFTER clean ! -->
+        <executions>
+            <execution>
+                <id>report-when-deploying</id>
+                <phase>deploy</phase>
+                <goals>
+                    <goal>changes-report</goal>
+                </goals>
+            </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>

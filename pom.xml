@@ -43,16 +43,16 @@
     <finalName>ingrid-portal-project-${project.version}</finalName>
     <!-- <resources><resource><directory>src/main/resources</directory><excludes><exclude>*.xml</exclude><exclude>*.properties</exclude><exclude>*.bak</exclude></excludes></resource></resources>-->
     <plugins>
-      <!-- 
-        We need a pregoal when releasing to deploy mdek-application
-        since it is needed by portal-mdek and only fetched from repo!
-         -->
       <plugin> 
         <groupId>org.apache.maven.plugins</groupId> 
         <artifactId>maven-release-plugin</artifactId> 
         <configuration> 
           <autoVersionSubmodules>true</autoVersionSubmodules> 
-          <preparationGoals>clean deploy changes:changes-report wagon:upload -Dproject.url=</preparationGoals>
+          <!-- We do NOT call changes:... goals during release:prepare cause changes plugin is only executed on top and later clean in submodule would delete report ! -->
+          <!-- Instead changes:changes-report is bound to deploy phase in distribution submodule ! This way we generate report with every deploy ! -->
+          <!-- And changes:announcement-mail is only executed on top to avoid errors in submodules without changes plugin ! -->
+          <preparationGoals>clean deploy wagon:upload -Dproject.url=</preparationGoals>
+          <!-- Calls top changes plugin which is not calling submodules ! -->
           <goals>changes:announcement-mail -Dannouncement.runOnlyAtExecutionRoot=true -Dproject.url= --non-recursive</goals>
         </configuration> 
       </plugin>
@@ -73,6 +73,7 @@
           <xmlPath>${basedir}/ingrid-portal-distribution/src/changes/changes.xml</xmlPath>
           <outputDirectory>ingrid-portal-distribution/target/site</outputDirectory>
           <templateOutputDirectory>ingrid-portal-distribution/target/site</templateOutputDirectory>
+          <!-- Only run at root to avoid errors when calling changes:announcement-mail in submodules ! -->
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
           <smtpHost>localhost</smtpHost>
           <subject>[ingrid update announcement] ${project.artifactId}-${project.version}</subject>
