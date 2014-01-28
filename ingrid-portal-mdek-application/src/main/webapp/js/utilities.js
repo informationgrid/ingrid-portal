@@ -1575,9 +1575,10 @@ UtilUI.updateBlockerDivInfo = function() {
         dojo.style("waitInfo", "display", "table");
 }
 
-UtilUI.initBlockerDivInfo = function(/*INTEGER*/max, /*STRING*/text) {
+UtilUI.initBlockerDivInfo = function(/*INTEGER*/max, /*STRING*/text, /*INTEGER*/current) {
     var waitInfo = dojo.byId("waitInfo");
-    waitInfo.data = { max: max, current: 0, text: text };
+    var curr = current ? current : 0;
+    waitInfo.data = { max: max, current: curr, text: text };
     dojo.style("waitInfo", "display", "table");
     waitInfo.innerHTML = dojo.string.substitute(waitInfo.data.text, [waitInfo.data.current, waitInfo.data.max]);
 }

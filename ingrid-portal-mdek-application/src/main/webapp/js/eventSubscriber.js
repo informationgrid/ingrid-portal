@@ -3190,6 +3190,7 @@ igeEvents.executeSearch = function() {
 // pass termList: list of strings or [] in JS
 // pass caller: e.g. { id:"getCapabilitiesWizard", _termListWidget:"thesaurusTerms" }
 igeEvents.addKeywords = function(termList, caller) {
+    var defKeywords = new dojo.Deferred();
     var inspireTopics = [];
 
     // For object search terms...
@@ -3235,12 +3236,16 @@ igeEvents.addKeywords = function(termList, caller) {
             // search for topics in SNS and put results into findTopicDefList
             igeEvents.analyzeKeywords(termList).then( function(topics) {
                 UtilThesaurus.handleFindTopicsResult(termList, topics, caller._termListWidget);
+                defKeywords.callback();
             });
         });
+    } else {
+        defKeywords.callback();
     }
     
     // expand rubric so that new entries are visible
     igeEvents.toggleFields('thesaurus', "showAll");
+    return defKeywords;
 }
 
 igeEvents.analyzeKeywords = function(termList) {

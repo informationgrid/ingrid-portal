@@ -589,7 +589,7 @@
             }
         } );
         if (keywords.length > 0) {
-            igeEvents.addKeywords( keywords, {
+            var defKeywords = igeEvents.addKeywords( keywords, {
                 id: "getCapabilitiesWizard",
                 _termListWidget: "thesaurusTerms"
             } );
@@ -753,78 +753,88 @@
         UtilList.addUrlLinkLabels( allLinks );
         UtilStore.updateWriteStore( "linksTo", allLinks );
         
-        // add references to datasets/layers or create new objects
-        var datasets = UtilGrid.getTableData( "assistantDatasetsTable" );
-        var coupledResources = [];
-        var createDatasetsDeferreds = [];
-        dojo.forEach( datasets, function( dataset ) {
-            if (applyAll || dataset.selection == 1) {
-                if (dataset.actionId == "CREATE") {
-                    createDatasetsDeferreds.push( scopeWizardResults.createDataset( dataset ) );
-                    
-                } else {
-                    coupledResources.push( dataset );
-                }
-            }
-        } );
         
-        UtilUI.initBlockerDivInfo(createDatasetsDeferreds.length, message.get("general.add.layers"));
-        
-        var addCoupledResourceInfo = function( obj ) {
-            obj.relationType = "3600";
-            obj.relationTypeName = "Verweis zu Daten";
-            // remove thesaurus entries for links, which might not be complete
-            // -> not needed for references!
-            obj.thesaurusTermsTable = [];
-            UtilList.addObjectLinkLabels([obj], true);
-            UtilList.addIcons([obj]);
-            return obj;
-        };
-        
-        var addCoupledResourcesInfo = function( resources ) {
-            dojo.forEach( resources, function(obj) {
-                addCoupledResourceInfo( obj );
-            } );
-            return resources;
-        };
-
-        if ( createDatasetsDeferreds.length === 0 ) {
-            console.log( "Adding all coupled resources as links: ", coupledResources );
-            addCoupledResourcesInfo( coupledResources );
-            UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
-            setTimeout(igeEvents.refreshTabContainers, 500);
-            
-        } else {
-            UtilDWR.enterLoadingState();
-            var creates = new dojo.DeferredList( createDatasetsDeferreds );
-	        creates.then( function(resourcesDefs) {
-	            console.log("all layers created!");
-	            addCoupledResourcesInfo( coupledResources );
-	            dojo.forEach( resourcesDefs, function(res) {
-	                // add additional information to show reference in table
-	                var cr = addCoupledResourceInfo( res[1] );
-	                coupledResources.push( cr );
-	            } );
-	            console.log( "Adding coupled resources: ", coupledResources );
-	            UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
-	            var parentId = dojo.byId("newNode").parentNode.parentNode.id;
-	            var newNode = itemToJS(dijit.byId("dataTree").model.store, dijit.byId("newNode").item);
-	            menuEventHandler.reloadSubTreeByNode( dijit.byId( parentId ) );
-	            setTimeout(function() {
-	                igeEvents.refreshTabContainers();
-	                // add new node again, which was removed after tree has been reloaded
-	                var tree = dijit.byId("dataTree");
-                    var treeItem = tree.model.store.newItem(newNode, {
-                        parent: dijit.byId( currentUdk.parentUuid ).item,
-                        attribute: "children"
-                    });
-                    UtilTree.selectNode("dataTree", treeItem.id[0]);
-                    udkDataProxy.setDirtyFlagNow();
-                    UtilDWR.exitLoadingState();
-	            }, 500);
+        var addCoupledResources = function() {
+	        // add references to datasets/layers or create new objects
+	        var datasets = UtilGrid.getTableData( "assistantDatasetsTable" );
+	        var coupledResources = [];
+	        var createDatasetsDeferreds = [];
+	        dojo.forEach( datasets, function( dataset ) {
+	            if (applyAll || dataset.selection == 1) {
+	                if (dataset.actionId == "CREATE") {
+	                    createDatasetsDeferreds.push( scopeWizardResults.createDataset( dataset ) );
+	                    
+	                } else {
+	                    coupledResources.push( dataset );
+	                }
+	            }
 	        } );
+	        
+	        var addCoupledResourceInfo = function( obj ) {
+	            obj.relationType = "3600";
+	            obj.relationTypeName = "Verweis zu Daten";
+	            // remove thesaurus entries for links, which might not be complete
+	            // -> not needed for references!
+	            obj.thesaurusTermsTable = [];
+	            UtilList.addObjectLinkLabels([obj], true);
+	            UtilList.addIcons([obj]);
+	            return obj;
+	        };
+	        
+	        var addCoupledResourcesInfo = function( resources ) {
+	            dojo.forEach( resources, function(obj) {
+	                addCoupledResourceInfo( obj );
+	            } );
+	            return resources;
+	        };
+	
+	        if ( createDatasetsDeferreds.length === 0 ) {
+	            console.log( "Adding all coupled resources as links: ", coupledResources );
+	            addCoupledResourcesInfo( coupledResources );
+	            UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
+	            setTimeout(igeEvents.refreshTabContainers, 500);
+	            
+	        } else {
+	            UtilDWR.enterLoadingState();
+	            UtilUI.initBlockerDivInfo(createDatasetsDeferreds.length, message.get("general.add.layers"));
+	            
+	            var creates = new dojo.DeferredList( createDatasetsDeferreds );
+		        creates.then( function(resourcesDefs) {
+		            console.log("all layers created!");
+		            addCoupledResourcesInfo( coupledResources );
+		            dojo.forEach( resourcesDefs, function(res) {
+		                // add additional information to show reference in table
+		                var cr = addCoupledResourceInfo( res[1] );
+		                coupledResources.push( cr );
+		            } );
+		            console.log( "Adding coupled resources: ", coupledResources );
+		            UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
+		            var parentId = dojo.byId("newNode").parentNode.parentNode.id;
+		            var newNode = itemToJS(dijit.byId("dataTree").model.store, dijit.byId("newNode").item);
+		            menuEventHandler.reloadSubTreeByNode( dijit.byId( parentId ) );
+		            setTimeout(function() {
+		                igeEvents.refreshTabContainers();
+		                // add new node again, which was removed after tree has been reloaded
+		                var tree = dijit.byId("dataTree");
+	                    var treeItem = tree.model.store.newItem(newNode, {
+	                        parent: dijit.byId( currentUdk.parentUuid ).item,
+	                        attribute: "children"
+	                    });
+	                    UtilTree.selectNode("dataTree", treeItem.id[0]);
+	                    udkDataProxy.setDirtyFlagNow();
+	                    UtilDWR.exitLoadingState();
+		            }, 500);
+		        } );
+	        }
         }
-
+        
+        if (defKeywords) {
+            defKeywords.then( function() {
+                addCoupledResources();
+            });
+        } else {
+            addCoupledResources;
+        }
     }
     
     scopeWizardResults.prepareTopics = function( keywords, topics ) {
@@ -874,7 +884,7 @@
 		                        parent: dijit.byId( currentUdk.parentUuid ).item,
 		                        attribute: "children"
 		                    });*/
-		                    UtilUI.updateBlockerDivInfo();
+	                        UtilUI.updateBlockerDivInfo();
 		                    def.callback( bean );
 		                },
 	                    errorHandler:function(message) { console.log("errorHandler::"+message); UtilUI.updateBlockerDivInfo(); },
