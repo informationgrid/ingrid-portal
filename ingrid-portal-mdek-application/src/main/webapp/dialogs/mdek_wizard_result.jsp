@@ -130,6 +130,24 @@
         } );
         UtilGrid.getTable( tableId ).invalidate();
     };
+    
+    scopeWizardResults.checkAll = function(checkAll) {
+        // click on each check box to set to wanted state 
+        dojo.query("#resultContainer .dijitCheckBoxInput").forEach( function(box) {
+            if (box.checked !== checkAll) {
+                box.click();
+            }
+        });
+        
+        // time ref table has radio buttons where we will select the first one
+        var eventList = UtilGrid.getTableData( "assistantTimeRefTable" );
+        if ( eventList.length > 0 ) {
+            if (checkAll)
+                dojo.byId( "objectWiz_" + eventList[0].topicId ).checked = true;
+            else
+                dojo.byId( "objectWiz_" + eventList[0].topicId ).checked = false;
+        }
+    };
 
     scopeWizardResults.showResults = function(showDescription, showHtmlContent, isService) {
         console.debug( "showResults" );
@@ -189,8 +207,24 @@
         dijit.byId( "assistantAddressTableCheckbox" ).setValue( false );
         UtilGrid.setTableData( "assistantDatasetsTable", [] );
         dijit.byId( "assistantDatasetsTableCheckbox" ).setValue( false );
-    }
-
+    };
+    
+    scopeWizardResults.toggleContainers = function() {
+        // all grids
+        dojo.query("#resultsContainer .ui-widget").forEach(function(grid) {
+            var length = dijit.byId(grid.id).data.length;
+            console.log("Grid " + grid.id + ": " + length);
+            var node = UtilDOM.findParentNodeWithClass( grid, "outer" );
+            if (length === 0) {
+                // hide
+                dojo.addClass(node, "hide");
+            } else {
+                // show
+                dojo.removeClass(node, "hide");
+            }
+        });
+    };
+    
     // Updates the input fields with values from the given topic map
     scopeWizardResults.updateInputFields = function(topicMap, fields, isWebsite) {
         dijit.byId( "assistantHtmlTitle" ).setValue( fields.title );
@@ -366,6 +400,9 @@
             UtilStore.updateWriteStore( "assistantDatasetsTable", topicMap.coupledResources );
         }
 
+        // only show input fields with content!
+        scopeWizardResults.toggleContainers();
+        
         console.debug( "finished update" );
     }
 
@@ -643,43 +680,45 @@
         // add versions and operations automatically of a capabilities document!
         if (scopeWizardResults.databean) {
             var serviceType = scopeWizardResults.databean.serviceType;
-
-            if (serviceType.indexOf( "CSW" ) != -1) {
-                UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 207 ] ) );
-
-            } else if (serviceType.indexOf( "WMS" ) != -1) {
-                UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 202 ] ) );
-
-            } else if (serviceType.indexOf( "WFS" ) != -1) {
-                UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 201 ] ) );
-
-            } else if (serviceType.indexOf( "WCTS" ) != -1) {
-
-            } else if (serviceType.indexOf( "WCS" ) != -1) { // WCS does not exist yet
-                UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 203 ] ) );
-                dijit.byId( "ref3Explanation" ).setValue( "WCS Service" );
-
+            
+            if (serviceType) {
+	            if (serviceType.indexOf( "CSW" ) != -1) {
+	                UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 207 ] ) );
+	
+	            } else if (serviceType.indexOf( "WMS" ) != -1) {
+	                UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 202 ] ) );
+	
+	            } else if (serviceType.indexOf( "WFS" ) != -1) {
+	                UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 201 ] ) );
+	
+	            } else if (serviceType.indexOf( "WCTS" ) != -1) {
+	
+	            } else if (serviceType.indexOf( "WCS" ) != -1) { // WCS does not exist yet
+	                UtilStore.updateWriteStore( "ref3ServiceTypeTable", UtilList.listToTableData( [ 203 ] ) );
+	                dijit.byId( "ref3Explanation" ).setValue( "WCS Service" );
+	
+	            }
+	
+	            // Versions
+	            if (scopeWizardResults.databean.versions) {
+	                UtilStore.updateWriteStore( "ref3ServiceVersion", UtilList
+	                        .listToTableData( scopeWizardResults.databean.versions ) );
+	            }
+	
+	            // Operations
+	            // Prepare the operation table for display.
+	            // Add table indices to the main obj and paramList
+	            // Add table indices and convert to tableData: platform, addressList and dependencies
+	            var operations = scopeWizardResults.databean.operations;
+	            if (operations) {
+	                for (var i = 0; i < operations.length; ++i) {
+	                    operations[i].platform = UtilList.listToTableData( operations[i].platform );
+	                    operations[i].addressList = UtilList.listToTableData( operations[i].addressList );
+	                    operations[i].dependencies = UtilList.listToTableData( operations[i].dependencies );
+	                }
+	            }
+	            UtilStore.updateWriteStore( "ref3Operation", operations );
             }
-
-            // Versions
-            if (scopeWizardResults.databean.versions) {
-                UtilStore.updateWriteStore( "ref3ServiceVersion", UtilList
-                        .listToTableData( scopeWizardResults.databean.versions ) );
-            }
-
-            // Operations
-            // Prepare the operation table for display.
-            // Add table indices to the main obj and paramList
-            // Add table indices and convert to tableData: platform, addressList and dependencies
-            var operations = scopeWizardResults.databean.operations;
-            if (operations) {
-                for (var i = 0; i < operations.length; ++i) {
-                    operations[i].platform = UtilList.listToTableData( operations[i].platform );
-                    operations[i].addressList = UtilList.listToTableData( operations[i].addressList );
-                    operations[i].dependencies = UtilList.listToTableData( operations[i].dependencies );
-                }
-            }
-            UtilStore.updateWriteStore( "ref3Operation", operations );
         }
 
         // Online Resources
@@ -1110,9 +1149,9 @@
                 <span style="float:right;">
                     <button id="createObjWizardAcceptButton" dojoType="dijit.form.Button" onClick="javascript:scopeWizardResults.addValuesToObject();"><fmt:message key="dialog.wizard.create.apply" /></button>
                 </span>
-                <span style="float:right;">
+                <!-- <span style="float:right;">
                     <button id="createObjWizardAcceptAllButton" dojoType="dijit.form.Button" onClick="javascript:scopeWizardResults.addValuesToObject(true);"><fmt:message key="dialog.wizard.create.applyAll" /></button>
-                </span>
+                </span> -->
                 <span style="float:left;">
                     <button id="createObjWizardCancelButton" dojoType="dijit.form.Button" onClick="javascript:scopeWizardResults.closeThisDialog();"><fmt:message key="dialog.wizard.create.cancel" /></button>
                 </span>

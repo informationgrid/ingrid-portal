@@ -340,10 +340,10 @@ public class GetCapabilitiesServiceTest {
         // these coordinates did not need a transformation
         assertThat(result.getBoundingBoxes().size(), is(1));
         assertThat(result.getBoundingBoxes().get(0).getName(), is("Raumbezug von: Naturschutz"));
-        assertThat(result.getBoundingBoxes().get(0).getLatitude1(), is(51.2575719691118));
+        assertThat(result.getBoundingBoxes().get(0).getLatitude1(), is(2.290712647054455));
         assertThat(result.getBoundingBoxes().get(0).getLongitude1(), is(6.32836880550564));
         assertThat(result.getBoundingBoxes().get(0).getLatitude2(), is(54.0294452991844));
-        assertThat(result.getBoundingBoxes().get(0).getLongitude2(), is(11.6580524828798));
+        assertThat(result.getBoundingBoxes().get(0).getLongitude2(), is(53.135865214373496));
         
         assertThat(result.getAddress().getFirstname(), is("Dorothea"));
         assertThat(result.getAddress().getLastname(), is("Pielke"));

@@ -1495,10 +1495,7 @@ UtilUI.removeVisibilityClasses = function(/*html node to process*/containerNode)
 }
 
 UtilUI.getSectionElement = function(node) {
-    if (dojo.hasClass(node, "rubric"))
-        return node;
-    else
-        return UtilUI.getSectionElement(node.parentNode);
+    return UtilDOM.findParentNodeWithClass(node, "rubric");
 }
 
 UtilUI.toggleFunctionalLink = function(linkTab, event) {
@@ -1964,6 +1961,14 @@ UtilDOM.activeNodeHasParent = function(parentUuid){
         activeDomNode = activeDomNode.parentNode;
     }
     return false;
+}
+
+UtilDOM.findParentNodeWithClass = function(node, clazz) {
+    if (!node) return null;
+    if (dojo.hasClass(node, clazz))
+        return node;
+    else
+        return UtilDOM.findParentNodeWithClass(node.parentNode, clazz);
 }
 
 // Utility functions for DOM

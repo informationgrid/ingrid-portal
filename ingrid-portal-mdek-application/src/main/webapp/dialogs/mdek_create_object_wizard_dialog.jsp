@@ -64,6 +64,11 @@ init = (function() {
                 scopeCreateObjectWiz.startSearch();
             }
 	});
+    
+    dojo.connect( dijit.byId("assistantCheckAll"), "onClick", function() {
+        var checkedValue = dijit.byId("assistantCheckAll").checked;
+        scopeWizardResults.checkAll( checkedValue );
+    } );
 
 });
 
@@ -280,7 +285,6 @@ scopeCreateObjectWiz.startSearch = function() {
 					dialog.show("<fmt:message key='general.hint' />", "<fmt:message key='dialog.wizard.create.snsNoResultError' />", dialog.INFO);
 
 			} else {
-                console.debug("callback else else");
                 console.debug(topicMap);
                 console.debug(htmlContent);
                 console.debug(htmlTitle);
@@ -289,6 +293,7 @@ scopeCreateObjectWiz.startSearch = function() {
 			}
 		}
 		thisDialog.resize();
+		dojo.removeClass( dojo.byId("assistantCheckAllContainer"), "hide" );
 		hideLoadingZone();
 	});
 
@@ -406,6 +411,7 @@ function getHtmlTitle(url) {
                     <span>
                         <button id="createObjWizardStartButton" type="button" style="float:right" dojoType="dijit.form.Button" onClick="javascript:scopeCreateObjectWiz.startSearch();" title="<fmt:message key="dialog.wizard.create.start" />"><fmt:message key="dialog.wizard.create.start" /></button>
                     </span>
+                    <span id="assistantCheckAllContainer" style="float:left; margin-top:5px; margin-left:15px;" class="checkboxContainer hide"><label class="inActive input"><input type="checkbox" name="assistantCheckAll" id="assistantCheckAll" dojoType="dijit.form.CheckBox" /><fmt:message key="dialog.wizard.checkAll" /></label></span>
                     <span id="createObjectWizardLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
                         <img src="img/ladekreis.gif" />
                     </span>

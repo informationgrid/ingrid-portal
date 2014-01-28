@@ -49,6 +49,11 @@ dojo.connect(_container_, "onLoad", function() {
             scopeCapWiz.startRequest();
     	}
     });
+    
+    dojo.connect( dijit.byId("assistantCheckAll"), "onClick", function() {
+        var checkedValue = dijit.byId("assistantCheckAll").checked;
+        scopeWizardResults.checkAll( checkedValue );
+    } );
 });
 
 
@@ -65,6 +70,7 @@ scopeCapWiz.startRequest = function() {
 	
 	dojo.byId("assistantGetCapRequestedUrl").innerHTML = "("+capUrl+")";
 	igeEvents.getCapabilities(capUrl, setOperationValues, scopeCapWiz);
+	dojo.removeClass( dojo.byId("assistantCheckAllContainer"), "hide" );
 }
 
 scopeCapWiz.prepareData = function(bean) {
@@ -147,6 +153,7 @@ scopeCapWiz.hideLoadingZone = function() {
     			</div>
     
     			<div class="inputContainer grey" style="height:30px; padding: 5px 0px ! important;">
+    			    <span id="assistantCheckAllContainer" style="float:left; margin-top:10px; margin-left:15px;" class="checkboxContainer hide"><label class="inActive input"><input type="checkbox" name="assistantCheckAll" id="assistantCheckAll" dojoType="dijit.form.CheckBox" /><fmt:message key="dialog.wizard.checkAll" /></label></span>
     		        <span style="float:right; margin-top:5px;"><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.wizard.getCap.cancel" />" onClick="javascript:scopeWizardResults.closeThisDialog();"><fmt:message key="dialog.wizard.getCap.cancel" /></button></span>
     		        <span style="float:right; margin-top:5px;"><button dojoType="dijit.form.Button" type="button" title="<fmt:message key="dialog.wizard.getCap.start" />" onClick="javascript:scopeCapWiz.startRequest();"><fmt:message key="dialog.wizard.getCap.start" /></button></span>
     				<span id="assistantGetCapLoadingZone" style="float:right; margin-top:6px; z-index: 100; visibility:hidden">

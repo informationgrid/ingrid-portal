@@ -380,8 +380,8 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         double[] coords = getBoundingBoxCoordinates(bboxNode);
                 
         try {
-            double[] transMin = coordUtils.transformToWGS84(coords[0], coords[1], coordType);
-            double[] transMax = coordUtils.transformToWGS84(coords[2], coords[3], coordType);
+            double[] transMin = coordUtils.transformToWGS84(coords[1], coords[0], coordType);
+            double[] transMax = coordUtils.transformToWGS84(coords[3], coords[2], coordType);
             coordsTrans[0] = transMin[0];
             coordsTrans[1] = transMin[1];
             coordsTrans[2] = transMax[0];
