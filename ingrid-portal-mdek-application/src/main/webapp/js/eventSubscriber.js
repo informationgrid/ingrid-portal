@@ -3252,7 +3252,7 @@ igeEvents.analyzeKeywords = function(termList) {
     var def = new dojo.Deferred();
     if (termList && termList.length > 0) {
         var findTopicDefList = [];
-        UtilUI.initBlockerDivInfo(termList.length, message.get("general.add.keywords"));
+        UtilUI.initBlockerDivInfo( "keywords", termList.length, message.get("general.add.keywords") );
         for (var i = 0; i < termList.length; ++i) {
             findTopicDefList.push(UtilThesaurus.findTopicsDef(termList[i]));
         }

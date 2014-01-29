@@ -1565,22 +1565,40 @@ UtilUI.setVisibleBlockDiv = function(visible) {
 		dojo.style(div, "display", visible ? "block" : "none");
 }
 
-UtilUI.updateBlockerDivInfo = function() {
+UtilUI.updateBlockerDivInfo = function(id) {
     var waitInfo = dojo.byId("waitInfo");
-    waitInfo.data.current++;
-    waitInfo.innerHTML = dojo.string.substitute(waitInfo.data.text, [waitInfo.data.current, waitInfo.data.max]);
-    if (waitInfo.data.current == waitInfo.data.max)
+
+    if ( !id || !waitInfo.data[id] ) return;
+    waitInfo.data[id].current++;
+    dojo.byId("waitInfo_"+id).innerHTML = dojo.string.substitute(waitInfo.data[id].text, [waitInfo.data[id].current, waitInfo.data[id].max]);
+    
+    // if maximum is reached, remove html div and data element
+    if (waitInfo.data[id].current == waitInfo.data[id].max) {
+        dojo.destroy( "waitInfo_" + id );
+        delete waitInfo.data[id];
+    }
+    
+    // if no elements are present, hide info
+    var keys = [];
+    for(var k in waitInfo.data) keys.push(k);
+    if ( keys.length === 0 )
         dojo.style("waitInfo", "display", "none");
-    else
+    else {
         dojo.style("waitInfo", "display", "table");
+        UtilDWR.enterLoadingState();
+    }
 }
 
-UtilUI.initBlockerDivInfo = function(/*INTEGER*/max, /*STRING*/text, /*INTEGER*/current) {
+UtilUI.initBlockerDivInfo = function(/*STRING*/id, /*INTEGER*/max, /*STRING*/text, /*INTEGER*/current) {
     var waitInfo = dojo.byId("waitInfo");
     var curr = current ? current : 0;
-    waitInfo.data = { max: max, current: curr, text: text };
+    if (!waitInfo.data) waitInfo.data = {};
+    waitInfo.data[id] = { max: max, current: curr, text: text };
     dojo.style("waitInfo", "display", "table");
-    waitInfo.innerHTML = dojo.string.substitute(waitInfo.data.text, [waitInfo.data.current, waitInfo.data.max]);
+    var newText = dojo.string.substitute(waitInfo.data[id].text, [waitInfo.data[id].current, waitInfo.data[id].max]);
+    // remove div if the id already exists
+    dojo.destroy( "waitInfo_" + id );
+    dojo.create( "div", { id: "waitInfo_"+id, innerHTML: newText }, "waitInfo" );
 }
 
 
@@ -2433,7 +2451,7 @@ UtilThesaurus.findTopicsDef = function(term) {
 	SNSService.findTopics(term, {
 		callback: function(res) {
 			UtilList.addSNSTopicLabels(res);
-			UtilUI.updateBlockerDivInfo();
+			UtilUI.updateBlockerDivInfo( "keywords" );
 			def.callback(res);
 		},
 		errorHandler: function(errMsg, err) {
