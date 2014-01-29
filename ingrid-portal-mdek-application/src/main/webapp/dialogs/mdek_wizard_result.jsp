@@ -17,9 +17,9 @@
         // initialize data grids
         
         var assistantDescriptorTableStructure = [
-            {field: 'selection',name: 'selection',width: '23px', formatter: BoolCellFormatter, type: YesNoCheckboxCellEditor, editable: true},
-            {field: 'label',name: 'label',width: '590px'},
-            {field: 'source',name: 'source',width: 92-scrollBarWidth+'px'}
+            {field: 'selection',name: 'selection',width: '30px', formatter: BoolCellFormatter, type: YesNoCheckboxCellEditor, editable: true},
+            {field: 'label',name: 'label',width: '600px'},
+            {field: 'source',name: 'source',width: '60px'}
         ];
         createDataGrid("assistantDescriptorTable", null, assistantDescriptorTableStructure, null);
         
@@ -29,23 +29,23 @@
             {field: 'longitude1',name: "<fmt:message key='dialog.wizard.create.spatial.longitude1' />",width: '90px'},
             {field: 'latitude1',name: "<fmt:message key='dialog.wizard.create.spatial.latitude1' />",width: '90px'},
             {field: 'longitude2',name: "<fmt:message key='dialog.wizard.create.spatial.longitude2' />",width: '90px'},
-            {field: 'latitude2',name: "<fmt:message key='dialog.wizard.create.spatial.latitude2' />",width: 95-scrollBarWidth+'px'}
+            {field: 'latitude2',name: "<fmt:message key='dialog.wizard.create.spatial.latitude2' />",width: '80px'}
         ];
         createDataGrid("assistantSpatialRefTable", null, assistantSpatialRefTableStructure, null);
         
         var assistantTimeRefTableStructure = [
             {field: 'selection',name: "<fmt:message key='dialog.wizard.create.time.select' />",width: '60px'},
             //{field: 'name',name: "<fmt:message key='dialog.wizard.create.time.description' />",width: '346px'},
-            {field: 'date1',name: "<fmt:message key='dialog.wizard.create.time.firstDate' />",width: '100px', formatter: DateCellFormatter},
-            {field: 'date2',name: "<fmt:message key='dialog.wizard.create.time.secondDate' />",width: '100px', formatter: DateCellFormatter},
-            {field: 'type',name: "<fmt:message key='dialog.wizard.create.time.type' />",width: 89-scrollBarWidth+'px'}
+            {field: 'date1',name: "<fmt:message key='dialog.wizard.create.time.firstDate' />",width: '95px', formatter: DateCellFormatter},
+            {field: 'date2',name: "<fmt:message key='dialog.wizard.create.time.secondDate' />",width: '95px', formatter: DateCellFormatter},
+            {field: 'type',name: "<fmt:message key='dialog.wizard.create.time.type' />",width: '80px'}
         ];
         createDataGrid("assistantTimeRefTable", null, assistantTimeRefTableStructure, null);
         
         var assistantTimeEventsTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: BoolCellFormatter, type: YesNoCheckboxCellEditor, editable: true},
-            {field: 'date',name: "<fmt:message key='dialog.wizard.create.time.date' />",width: '346px', formatter: DateCellFormatter},
-            {field: 'type',name: "<fmt:message key='dialog.wizard.create.time.type' />",width: '317px', formatter: dojo.partial(SyslistCellFormatter, 502)}
+            {field: 'date',name: "<fmt:message key='dialog.wizard.create.time.date' />",width: '150px', formatter: DateCellFormatter},
+            {field: 'type',name: "<fmt:message key='dialog.wizard.create.time.type' />",width: '150px', formatter: dojo.partial(SyslistCellFormatter, 502)}
         ];
         createDataGrid("assistantTimeEventsTable", null, assistantTimeEventsTableStructure, null);
         
@@ -71,8 +71,8 @@
         
         var assistantOnlineResourcesTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: BoolCellFormatter, type: YesNoCheckboxCellEditor, editable: true},
-            {field: 'url',name: "<fmt:message key='dialog.wizard.create.links.name' />",width: '494px'},
-            {field: 'relationType',name: "<fmt:message key='dialog.wizard.create.links.type' />",width: '165px', formatter: dojo.partial(SyslistCellFormatter, 2000)}
+            {field: 'url',name: "<fmt:message key='dialog.wizard.create.links.name' />",width: '500px'},
+            {field: 'relationType',name: "<fmt:message key='dialog.wizard.create.links.type' />",width: '160px', formatter: dojo.partial(SyslistCellFormatter, 2000)}
         ];
         createDataGrid("assistantOnlineResourcesTable", null, assistantOnlineResourcesTableStructure, null);
         createDataGrid("assistantResourceLocatorsTable", null, assistantOnlineResourcesTableStructure, null);
@@ -81,8 +81,8 @@
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: BoolCellFormatter, type: YesNoCheckboxCellEditor, editable: true},
             {field: 'firstname',name: "<fmt:message key='dialog.wizard.create.address.firstname' />",width: '200px'},
             {field: 'lastname',name: "<fmt:message key='dialog.wizard.create.address.lastname' />",width: '200px'},
-            {field: 'email',name: "<fmt:message key='dialog.wizard.create.address.email' />",width: '160px'},
-            {field: 'action',name: "<fmt:message key='dialog.wizard.create.datasets.action' />", width: '100px'}
+            {field: 'email',name: "<fmt:message key='dialog.wizard.create.address.email' />",width: '140px'},
+            {field: 'action',name: "<fmt:message key='dialog.wizard.create.datasets.action' />", width: '120px'}
         ];
         createDataGrid("assistantAddressTable", null, assistantAddressTableStructure, null);
         
@@ -94,8 +94,8 @@
         
         var assistantDatasetsTableStructure = [
             {field: 'selection',name: '&nbsp;',width: '30px', formatter: BoolCellFormatter, type: YesNoCheckboxCellEditor, editable: true},
-            {field: 'title',name: "<fmt:message key='dialog.wizard.create.datasets.label' />", width: '560px'},
-            {field: 'action',name: "<fmt:message key='dialog.wizard.create.datasets.action' />", width: '100px'}
+            {field: 'title',name: "<fmt:message key='dialog.wizard.create.datasets.label' />", width: '540px'},
+            {field: 'action',name: "<fmt:message key='dialog.wizard.create.datasets.action' />", width: '120px'}
         ];
         createDataGrid("assistantDatasetsTable", null, assistantDatasetsTableStructure, null);
         
@@ -833,7 +833,7 @@
                 addCoupledResources();
             });
         } else {
-            addCoupledResources;
+            addCoupledResources();
         }
     }
     
@@ -1110,7 +1110,7 @@
                 </div>
             </span>
             
-            <span class="outer">
+            <span class="outer halfWidth">
                 <div>
                     <span class="label"><label for="assistantTimeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 10208)"><fmt:message key="dialog.wizard.create.timeSpan" /></label></span>
                     <div class="tableContainer">
@@ -1118,9 +1118,9 @@
                     </div>
                 </div>
             </span>
-            <span class="outer">
+            <span class="outer halfWidth">
                 <div>
-                    <span class="label"><label for="assistantTimeRefTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8073)"><fmt:message key="dialog.wizard.create.timeEvents" /></label></span>
+                    <span class="label"><label for="assistantTimeEventsTable" onclick="javascript:dialog.showContextHelp(arguments[0], 8073)"><fmt:message key="dialog.wizard.create.timeEvents" /></label></span>
                     <div class="tableContainer">
                         <div id="assistantTimeEventsTable" interactive="true" autoEdit="true"></div>
                     </div>
