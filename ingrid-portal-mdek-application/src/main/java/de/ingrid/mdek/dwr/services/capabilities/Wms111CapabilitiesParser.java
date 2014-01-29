@@ -281,7 +281,11 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         if (name != null) {
             address.setFirstname(name[0].trim());
             address.setLastname(name[1].trim());
+        } else {
+            address.setLastname("N/A");
         }
+        
+        address.setOrganisation(xPathUtils.getString(doc, XPATH_EXT_WMS_CONTACTINFORMATION + "/ContactPersonPrimary/ContactOrganization"));
         address.setEmail(xPathUtils.getString(doc, XPATH_EXT_WMS_CONTACTINFORMATION + "/ContactElectronicMailAddress"));
         
         // try to find address in database and set the uuid if found

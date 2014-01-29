@@ -259,6 +259,8 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
         if (name != null) {
             address.setFirstname(name[0].trim());
             address.setLastname(name[1].trim());
+        } else {
+            address.setLastname("N/A");
         }
         address.setEmail(xPathUtils.getString(doc, XPATH_EXT_WCTS_SERVICECONTACT + "/owsgeo:ContactInfo/owsgeo:Address/owsgeo:ElectronicMailAddress"));
         

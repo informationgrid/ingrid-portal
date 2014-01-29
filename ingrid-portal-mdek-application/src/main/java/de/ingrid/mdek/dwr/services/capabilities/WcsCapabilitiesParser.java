@@ -178,6 +178,8 @@ public class WcsCapabilitiesParser extends GeneralCapabilitiesParser implements 
         if (name != null) {
             address.setFirstname(name[0].trim());
             address.setLastname(name[1].trim());
+        } else {
+            address.setLastname("N/A");
         }
         address.setEmail(xPathUtils.getString(doc, XPATH_EXT_WCS_SERVICECONTACT + "/wcs:contactInfo/wcs:address/wcs:electronicMailAddress"));
         

@@ -218,6 +218,8 @@ public class WfsCapabilitiesParser extends GeneralCapabilitiesParser implements 
         if (name != null) {
             address.setFirstname(name[0].trim());
             address.setLastname(name[1].trim());
+        } else {
+            address.setLastname("N/A");
         }
         address.setEmail(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows11:ContactInfo/ows11:Address/ows11:ElectronicMailAddress"));
         

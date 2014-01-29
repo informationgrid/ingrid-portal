@@ -240,7 +240,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
         AddressBean address = new AddressBean();
         String[] name = extractName(xPathUtils.getString(doc, XPATH_EXT_CSW_SERVICECONTACT+"/ows:IndividualName"));
         if (name == null) {
-        	return null;
+            address.setLastname("N/A");
         } else {
             address.setFirstname(name[0].trim());
             address.setLastname(name[1].trim());

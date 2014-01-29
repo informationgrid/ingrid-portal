@@ -621,6 +621,10 @@
         var defs = [];
         var addressData = UtilGrid.getTableData( "assistantAddressTable" );
         var addressesToAdd = [];
+        // get localized syslist values
+        var sysEmail = UtilSyslist.getSyslistEntryName( 4430, 3 ); // E-Mail
+        var sysPhone = UtilSyslist.getSyslistEntryName( 4430, 1 ); // Phone
+        var sysGermany = UtilSyslist.getSyslistEntryName( 6200, 276 ) // Germany
         dojo.forEach( addressData, function(address) {
             if (applyAll || address.selection == 1) {
                 var def = new dojo.Deferred();
@@ -630,8 +634,6 @@
                 // if uuid is set, this means that an address was found by first, lastname and email, see REDMINE-125
                 // create a new address if none exists with the given data
                 if (!address.uuid) {
-                    // get localized syslist values
-                    var sysEmail = UtilSyslist.getSyslistEntryName( 4430, 3 ); // E-Mail
                     AddressService.createNewAddress( null, function(data) {
                         data.givenName = address.firstname;
                         data.name = address.lastname;
@@ -640,6 +642,20 @@
                             medium: sysEmail,
                             value: address.email
                         } ];
+                        data.organisation = address.organisation;
+                        data.street = address.street;
+                        data.city = address.city;
+                        if ( address.country && address.country.toLowerCase() == "de" )
+                            data.countryName = sysGermany;
+                        else
+                            data.countryName = address.country;
+                        data.postalCode = address.postcode;
+                        if (address.phone && address.phone.length > 0) {
+                            data.communication.push( {
+                                medium: sysPhone,
+                                value: address.phone
+                            } );
+                        }
                         AddressService.saveAddressData( data, true, false, function(savedData) {
                             console.debug( "Address created ... create reference within new object!" );
                             console.debug( savedData );
@@ -675,6 +691,13 @@
         defList.then( function() {
             console.debug( "update address table now!" );
             UtilStore.updateWriteStore( "generalAddress", addressesToAdd );
+            // reload sub tree of newly created addresses
+            // WARNING: this removes focus of selected node and new node cannot be clicked again!?
+            /*var freeAddresses = dijit.byId( "addressFreeRoot" );
+            if ( freeAddresses ) {
+                menuEventHandler.reloadSubTreeByNode( freeAddresses );
+                UtilTree.selectNode( "dataTree", "newNode" );
+            }*/
         } );
 
         // add versions and operations automatically of a capabilities document!

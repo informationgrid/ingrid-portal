@@ -19,6 +19,7 @@ public class AddressBean {
     private String country;
     private String uuid;
     private Integer type;
+    private String organisation;
     
     public String getFirstname() {
         return firstname;
@@ -85,6 +86,12 @@ public class AddressBean {
     }
     public void setType( Integer type ) {
         this.type = type;
+    }
+    public String getOrganisation() {
+        return organisation;
+    }
+    public void setOrganisation( String organisation ) {
+        this.organisation = organisation;
     }
     
 }
