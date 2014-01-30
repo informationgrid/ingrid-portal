@@ -906,7 +906,7 @@
 	                        UtilUI.updateBlockerDivInfo( "layers" );
 		                    def.callback( bean );
 		                },
-	                    errorHandler:function(message) { console.log("errorHandler::"+message); UtilUI.updateBlockerDivInfo(); },
+	                    errorHandler:function(message) { console.log("errorHandler::"+message); UtilUI.updateBlockerDivInfo( "layers" ); displayErrorMessage(err);},
 	                    exceptionHandler:function(errorString, exception) {
 	                        // try to create the dataset a second later if backend was busy
 	                        if (errorString.indexOf( "[USER_HAS_RUNNING_JOBS]" ) != -1) {
@@ -914,6 +914,7 @@
 	                            setTimeout( function() { createFunction( def ); }, 1000);
 	                        } else {
 	                            console.log( "exceptionHandler::"+errorString );
+	                            displayErrorMessage(err);
 	                        }
 	                    }
 	                });
