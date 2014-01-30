@@ -1581,9 +1581,10 @@ UtilUI.updateBlockerDivInfo = function(id) {
     // if no elements are present, hide info
     var keys = [];
     for(var k in waitInfo.data) keys.push(k);
-    if ( keys.length === 0 )
+    if ( keys.length === 0 ) {
         dojo.style("waitInfo", "display", "none");
-    else {
+        UtilDWR.exitLoadingState();
+    } else {
         dojo.style("waitInfo", "display", "table");
         UtilDWR.enterLoadingState();
     }
