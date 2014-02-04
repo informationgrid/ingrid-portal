@@ -18,8 +18,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.mdek.MdekKeys;
-import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.MdekUtils.AddressType;
+import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.ConformityBean;
@@ -341,6 +341,10 @@ public class GeneralCapabilitiesParser {
         return null;
     }
 
+    /**
+     * Search for an existing address by equal firstname, lastname and email OR institution and email.
+     * @param address
+     */
     protected void searchForAddress( AddressBean address ) {
         String qString = "select aNode.addrUuid, addr.adrType " +
                 "from AddressNode aNode " +
@@ -348,8 +352,9 @@ public class GeneralCapabilitiesParser {
                 "inner join addr.t021Communications comm " +
                 "where " +
                 AddressType.getHQLExcludeIGEUsersViaNode("aNode") + // exclude hidden user addresses !
-                " AND addr.lastname = '" + address.getLastname() + "'" +
-                " AND addr.firstname = '" + address.getFirstname() + "'" +
+                " AND ((addr.lastname = '" + address.getLastname() + "'" +
+                    " AND addr.firstname = '" + address.getFirstname() + "' ) " +
+                    " OR addr.institution = '" + address.getOrganisation() + "' ) " +
                 " AND comm.commtypeKey = 3 " +  // type: email
                 " AND comm.commValue = '" + address.getEmail() + "'";
 
