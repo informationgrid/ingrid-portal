@@ -248,7 +248,12 @@ var mappingDescription = {"mappings":[
 	        			"execute":{
 	        				"funct":mapRSIdentifier
 	        			}
-	        		}
+	        		},
+                    {
+                        "execute":{
+                            "funct":mapMDIdentifier
+                        }
+                    }
   			    ]
   			}
   		},
@@ -1394,6 +1399,20 @@ function mapRSIdentifier(source, target)  {
 			XMLUtils.createOrReplaceTextNode(node, dataSourceID);
 		}
 	}
+}
+
+function mapMDIdentifier(source, target)  {
+    log.debug("Map MD_Identifier.");
+    var mdIdentifiers = XPathUtils.getNodeList(source, "//gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier");
+    if (hasValue(mdIdentifiers) && mdIdentifiers.getLength() > 0) {
+        log.debug("Found " + mdIdentifiers.getLength() + " MD_Identifier records.");
+        var code = XPathUtils.getString(mdIdentifiers.item(0), "gmd:code/gco:CharacterString");
+        if (hasValue(code)) {
+            log.debug("Found MD_Identifier: " + code);
+            var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/technical-domain/map/datasource-identificator");
+            XMLUtils.createOrReplaceTextNode(node, code);
+        }
+    }
 }
 
 function mapAccessConstraints(source, target) {

@@ -308,7 +308,36 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 			fail("HierachyLevel application should not be supported!");
 		} catch (Exception e) {}
 	}
-	
+
+	/** See https://dev.wemove.com/jira/browse/INGRID-2321 */
+	public final void testConvertCSWImport_INGRID_2321() throws TransformerException, IOException {
+		// set variables that are needed for running correctly
+		initClassVariables(mapperScript, templateIGC);
+		
+		String exampleXml = "/de/ingrid/mdek/mapping/MD_Metadata_11111-0001_dataset.xml";
+		
+		InputStream data = null;
+		try {
+			// get example file from test resource directory
+			// spring-dependency is used to access test-resources (search from every class path!)
+			data = (new ClassPathResource(exampleXml)).getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
+		HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
+		protocolHandler.setCurrentFilename("MD_Metadata_11111-0001_dataset.xml");
+		InputStream result;
+		try {
+			result = mapper.convert(data, protocolHandler);
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/technical-domain/map/datasource-identificator", "DE-ST#30303031-3131-4031-312d-303030310000"));
+			result.reset();
+			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
+		} catch (Exception e) {
+			fail("Error transforming: " + exampleXml);
+		}
+	}
+
 	public final void testConvertTHObjectsComplete() throws TransformerException, IOException {
 		// set variables that are needed for running correctly
 		initClassVariables(mapperScript, templateIGC);
