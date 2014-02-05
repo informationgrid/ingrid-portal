@@ -40,8 +40,8 @@ dojo.connect(dijit.byId("publicationHmbTG"), "onChange", function(isChecked) {
 });
 
 // tick checkbox if "open data" has been selected (REDMINE-194)
-dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
-    if (isChecked) {
+dojo.connect(dijit.byId("isOpenData"), "onClick", function() {
+    if (this.checked) {
         dijit.byId("publicationHmbTG").set("value", true);
     }
 });
@@ -203,8 +203,9 @@ if ( contentLabel && contentLabel.size() > 0) {
 // JS
 // ------------------------
 var openDataAddressCheck = null;
-dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
-    if (isChecked) {
+dojo.connect(dijit.byId("isOpenData"), "onClick", function() {
+    
+    if (this.checked) {
         // add check for address of type publisher (Herausgeber) when publishing
         // we check name and not id cause is combo box ! id not adapted yet if not saved !
         openDataAddressCheck = dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
