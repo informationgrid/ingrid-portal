@@ -113,7 +113,7 @@ public class CapabilitiesParserFactory {
         }
         
         // WFS 2.0
-        serviceType = xPathUtils.getString(doc, "/wfs:WFS_Capabilities/ows11:ServiceIdentification/ows11:ServiceType[1]");
+        serviceType = xPathUtils.getString(doc, "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:ServiceType[1]");
         if (serviceType != null && serviceType.length() != 0) {
             return ServiceType.WFS200;
         }

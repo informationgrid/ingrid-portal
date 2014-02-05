@@ -222,14 +222,16 @@ public class GeneralCapabilitiesParser {
     protected List<UrlBean> getOnlineResources(Document doc, String xPath) {
         NodeList orNodes = xPathUtils.getNodeList(doc, xPath);
         List<UrlBean> urls = new ArrayList<UrlBean>();
-        for (int i = 0; i < orNodes.getLength(); i++) {
-            UrlBean url = new UrlBean();
-            String link = xPathUtils.getString(orNodes.item(i), "@xlink:href");
-            if (link != null) url.setUrl(link);
-            String type = xPathUtils.getString(orNodes.item(i), "@xlink:type");
-            if (type != null) url.setDatatype(type);
-            
-            urls.add(url);
+        if (orNodes != null) {
+            for (int i = 0; i < orNodes.getLength(); i++) {
+                UrlBean url = new UrlBean();
+                String link = xPathUtils.getString(orNodes.item(i), "@xlink:href");
+                if (link != null) url.setUrl(link);
+                String type = xPathUtils.getString(orNodes.item(i), "@xlink:type");
+                if (type != null) url.setDatatype(type);
+                
+                urls.add(url);
+            }
         }
         return urls;
     }
