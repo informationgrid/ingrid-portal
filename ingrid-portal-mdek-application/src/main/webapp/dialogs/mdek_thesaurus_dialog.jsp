@@ -41,7 +41,7 @@
                     
                 init();
                 
-                dijit.byId("locationTextBox").focus();
+                dijit.byId("thesSearch").focus();
             });
             
             function showLoadingZone(){

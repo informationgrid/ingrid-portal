@@ -789,7 +789,7 @@
 	        dojo.forEach( datasets, function( dataset ) {
 	            if (applyAll || dataset.selection == 1) {
 	                if (dataset.actionId == "CREATE") {
-	                    createDatasetsDeferreds.push( scopeWizardResults.createDataset( dataset ) );
+	                    createDatasetsDeferreds.push( scopeWizardResults.createDataset( dataset, addressesToAdd ) );
 	                    
 	                } else {
 	                    coupledResources.push( dataset );
@@ -868,7 +868,7 @@
         return conTopics;
     };
     
-    scopeWizardResults.createDataset = function(data) {
+    scopeWizardResults.createDataset = function(data, addresses) {
         var def = new dojo.Deferred();
 
         // call this function as long as object has not been created due to USER_HAS_RUNNING_JOBS errors!
@@ -879,6 +879,9 @@
 	            objNode.objectName = data.title;
 	            objNode.generalDescription = data.generalDescription;
 	            objNode.ref1SpatialSystemTable = data.ref1SpatialSystemTable;
+	            if (addresses.length > 0) {
+	                objNode.generalAddressTable = addresses;
+	            }
 	            
 	            objNode.spatialRefLocationTable = data.spatialRefLocationTable;
 	            console.log("data of layer: ", data);
