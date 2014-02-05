@@ -359,7 +359,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler);
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/subject-terms/controlled-term[@id='301' and @source='INSPIRE']", "Population distribution — demography"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/subject-terms/controlled-term[@id='310' and @source='INSPIRE']", "Population distribution — demography"));
 			result.reset();
 			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
 		} catch (Exception e) {

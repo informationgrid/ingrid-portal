@@ -862,7 +862,8 @@ var mappingDescription = {"mappings":[
 			  			"targetAttribute":"id",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[6100, "en", "Could not map INSPIRE theme:", true]
+							// PASS "" as language to check all localized values !!!
+							"params":[6100, "", "Could not map INSPIRE theme:", true]
 						}
 			  		},
 	  				{
