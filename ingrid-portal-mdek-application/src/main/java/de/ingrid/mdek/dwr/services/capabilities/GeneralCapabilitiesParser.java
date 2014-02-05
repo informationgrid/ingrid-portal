@@ -214,7 +214,10 @@ public class GeneralCapabilitiesParser {
         List<String> list = new ArrayList<String>();
         if ( versionNodes == null ) return list;
         for (int i = 0; i < versionNodes.getLength(); i++) {
-            list.add(versionNodes.item(i).getTextContent());
+            String content = versionNodes.item(i).getTextContent();
+            if (content.trim().length() > 0) {
+                list.add(content);
+            }
         }
         return list;
     }

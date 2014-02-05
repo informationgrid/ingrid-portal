@@ -375,7 +375,7 @@ public class GetCapabilitiesServiceTest {
         
         assertThat(result.getTitle(), is("WFS_Geotourismus"));
         assertThat(result.getFees(), is(""));
-        assertThat(result.getAccessConstraints().get(0), is(""));
+        assertThat(result.getAccessConstraints().size(), is(0));
         
         // Online Resource
         assertThat(result.getOnlineResources().get(0).getUrl(), is("www.geoinfo.hamburg.de"));
