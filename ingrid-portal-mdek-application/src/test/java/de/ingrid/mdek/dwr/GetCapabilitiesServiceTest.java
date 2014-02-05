@@ -363,6 +363,46 @@ public class GetCapabilitiesServiceTest {
     }
 
     @Test
+    public void testGetCapabilitiesWFS110() throws Exception {
+        Document doc = getDocumentFromFile(capDir + "capabilities_WFS_110.xml");
+        
+        CapabilitiesBean result = service.getCapabilitiesData(doc);
+        
+        assertThat(result, notNullValue());
+        assertThat(result.getServiceType(), is("WFS"));
+        assertThat(result.getDataServiceType(), is(3));
+        assertThat(result.getVersions().get(0), is("1.1.0"));
+        
+        assertThat(result.getTitle(), is("WFS_Geotourismus"));
+        assertThat(result.getFees(), is(""));
+        assertThat(result.getAccessConstraints().get(0), is(""));
+        
+        // Online Resource
+        assertThat(result.getOnlineResources().get(0).getUrl(), is("www.geoinfo.hamburg.de"));
+        
+        // Keywords
+        String[] expected = { };
+        assertThat(result.getKeywords(), hasItems(expected));
+        
+        // check address
+        assertThat(result.getAddress().getFirstname(), is("Thomas"));
+        assertThat(result.getAddress().getLastname(), is("Eichhorn"));
+        assertThat(result.getAddress().getStreet(), is("Neuenfelder Straße 19"));
+        assertThat(result.getAddress().getCity(), is("Hamburg"));
+        assertThat(result.getAddress().getPostcode(), is("21109"));
+        assertThat(result.getAddress().getCountry(), is("Germany"));
+        assertThat(result.getAddress().getState(), is("Hamburg"));
+        assertThat(result.getAddress().getPhone(), is("+49 40 42826 5450"));
+        assertThat(result.getAddress().getEmail(), is("gvgeoportal@gv.hamburg.de"));
+        
+        assertThat(result.getOperations().size(), is(3));
+        assertThat(result.getOperations().get(0).getAddressList().get(0), is("http://gateway.hamburg.de/OGCFassade/HH_WFS_Geotourismus.aspx?"));
+        assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
+        assertThat(result.getOperations().get(1).getName(), is("DescribeFeatureType"));
+        assertThat(result.getOperations().get(2).getName(), is("GetFeature"));
+    }
+    
+    @Test
     public void testGetCapabilitiesWFS20() throws Exception {
         Document doc = getDocumentFromFile(capDir + "capabilities_WFS_20.xml");
         

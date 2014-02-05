@@ -15,41 +15,41 @@ import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
-import de.ingrid.utils.xml.WfsNamespaceContext;
+import de.ingrid.utils.xml.Wfs110NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
 /**
  * @author André Wallat
  *
  */
-public class WfsCapabilitiesParser extends GeneralCapabilitiesParser implements ICapabilitiesParser {
+public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implements ICapabilitiesParser {
     
-    private static final String XPATH_EXP_WFS_KEYWORDS_FEATURE_TYPE = "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType/ows11:Keywords/ows11:Keyword";
-    private static final String XPATH_EXP_WFS_TITLE = "/wfs:WFS_Capabilities/ows11:ServiceIdentification/ows11:Title";
-    private static final String XPATH_EXP_WFS_ABSTRACT = "/wfs:WFS_Capabilities/ows11:ServiceIdentification/ows11:Abstract";
-    private static final String XPATH_EXP_WFS_VERSION = "/wfs:WFS_Capabilities/ows11:ServiceIdentification/ows11:ServiceTypeVersion";
+    private static final String XPATH_EXP_WFS_KEYWORDS_FEATURE_TYPE = "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType/ows:Keywords/ows:Keyword";
+    private static final String XPATH_EXP_WFS_TITLE = "/wfs:WFS_Capabilities/ows:ServiceIdentification/ows:Title";
+    private static final String XPATH_EXP_WFS_ABSTRACT = "/wfs:WFS_Capabilities/ows:ServiceIdentification/ows:Abstract";
+    private static final String XPATH_EXP_WFS_VERSION = "/wfs:WFS_Capabilities/ows:ServiceIdentification/ows:ServiceTypeVersion";
     
-    private final static String XPATH_EXP_WFS_OP_GET_CAPABILITIES_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_GET_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeFeatureType']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_POST_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeFeatureType']/ows11:DCP[1]/ows11:HTTP[1]/Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_FEATURE_GET_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_FEATURE_POST_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_GET_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetGmlObject']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_POST_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetGmlObject']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_GET_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='LockFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_POST_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='LockFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='Transaction']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/wfs:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='Transaction']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private static final String XPATH_EXP_WFS_FEES = "/wfs:WFS_Capabilities/ows11:ServiceIdentification/ows11:Fees";
-    private static final String XPATH_EXP_WFS_ACCESS_CONSTRAINTS = "/wfs:WFS_Capabilities/ows11:ServiceIdentification/ows11:AccessConstraints";
-    private static final String XPATH_EXP_WFS_ONLINE_RESOURCE = "/wfs:WFS_Capabilities/ows11:ServiceProvider/ows11:ServiceContact/ows11:ContactInfo/ows11:OnlineResource";
-    private static final String XPATH_EXP_WFS_KEYWORDS = "/wfs:WFS_Capabilities/ows11:ServiceIdentification/ows11:Keywords/ows11:Keyword";
-    private static final String XPATH_EXT_WFS_SERVICECONTACT = "/wfs:WFS_Capabilities/ows11:ServiceProvider/ows11:ServiceContact";
-    private static final String XPATH_EXP_WFS_EXTENDED_CAPABILITIES = "/wfs:WFS_Capabilities/ows11:OperationsMetadata/ows11:ExtendedCapabilities/inspire_dls:ExtendedCapabilities";
+    private final static String XPATH_EXP_WFS_OP_GET_CAPABILITIES_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetCapabilities']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_GET_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='DescribeFeatureType']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_POST_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='DescribeFeatureType']/ows:DCP[1]/ows:HTTP[1]/Post[1]/@xlink:href";
+    private final static String XPATH_EXP_WFS_OP_GET_FEATURE_GET_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetFeature']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private final static String XPATH_EXP_WFS_OP_GET_FEATURE_POST_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetFeature']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_GET_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetGmlObject']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_POST_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetGmlObject']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_GET_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='LockFeature']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_POST_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='LockFeature']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private final static String XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='Transaction']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private final static String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/wfs:WFS_Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='Transaction']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_FEES = "/wfs:WFS_Capabilities/ows:ServiceIdentification/ows:Fees";
+    private static final String XPATH_EXP_WFS_ACCESS_CONSTRAINTS = "/wfs:WFS_Capabilities/ows:ServiceIdentification/ows:AccessConstraints";
+    private static final String XPATH_EXP_WFS_ONLINE_RESOURCE = "/wfs:WFS_Capabilities/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:OnlineResource";
+    private static final String XPATH_EXP_WFS_KEYWORDS = "/wfs:WFS_Capabilities/ows:ServiceIdentification/ows:Keywords/ows:Keyword";
+    private static final String XPATH_EXT_WFS_SERVICECONTACT = "/wfs:WFS_Capabilities/ows:ServiceProvider/ows:ServiceContact";
+    private static final String XPATH_EXP_WFS_EXTENDED_CAPABILITIES = "/wfs:WFS_Capabilities/ows:OperationsMetadata/ows:ExtendedCapabilities/inspire_dls:ExtendedCapabilities";
 
 
-    public WfsCapabilitiesParser(SysListCache syslistCache) {
-        super(new XPathUtils(new WfsNamespaceContext()), syslistCache);
+    public Wfs110CapabilitiesParser(SysListCache syslistCache) {
+        super(new XPathUtils(new Wfs110NamespaceContext()), syslistCache);
     }
     
     /* (non-Javadoc)
@@ -214,24 +214,24 @@ public class WfsCapabilitiesParser extends GeneralCapabilitiesParser implements 
      */
     private AddressBean getAddress(Document doc) {
         AddressBean address = new AddressBean();
-        String[] name = extractName(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows11:IndividualName"));
+        String[] name = extractName(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows:IndividualName"));
         if (name != null) {
             address.setFirstname(name[0].trim());
             address.setLastname(name[1].trim());
         } else {
             address.setLastname("N/A");
         }
-        address.setEmail(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows11:ContactInfo/ows11:Address/ows11:ElectronicMailAddress"));
+        address.setEmail(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows:ContactInfo/ows:Address/ows:ElectronicMailAddress"));
         
         // try to find address in database and set the uuid if found
         searchForAddress(address);
         
-        address.setStreet(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows11:ContactInfo/ows11:Address/ows11:DeliveryPoint"));
-        address.setCity(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows11:ContactInfo/ows11:Address/ows11:City"));
-        address.setPostcode(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows11:ContactInfo/ows11:Address/ows11:PostalCode"));
-        address.setCountry(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows11:ContactInfo/ows11:Address/ows11:Country"));
-        address.setState(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows11:ContactInfo/ows11:Address/ows11:AdministrativeArea"));
-        address.setPhone(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows11:ContactInfo/ows11:Phone/ows11:Voice"));
+        address.setStreet(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows:ContactInfo/ows:Address/ows:DeliveryPoint"));
+        address.setCity(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows:ContactInfo/ows:Address/ows:City"));
+        address.setPostcode(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows:ContactInfo/ows:Address/ows:PostalCode"));
+        address.setCountry(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows:ContactInfo/ows:Address/ows:Country"));
+        address.setState(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows:ContactInfo/ows:Address/ows:AdministrativeArea"));
+        address.setPhone(xPathUtils.getString(doc, XPATH_EXT_WFS_SERVICECONTACT + "/ows:ContactInfo/ows:Phone/ows:Voice"));
         
         return address;
     }

@@ -14,7 +14,8 @@ import de.ingrid.utils.xml.Csw202NamespaceContext;
 import de.ingrid.utils.xml.Wcs11NamespaceContext;
 import de.ingrid.utils.xml.WcsNamespaceContext;
 import de.ingrid.utils.xml.WctsNamespaceContext;
-import de.ingrid.utils.xml.WfsNamespaceContext;
+import de.ingrid.utils.xml.Wfs110NamespaceContext;
+import de.ingrid.utils.xml.Wfs200NamespaceContext;
 import de.ingrid.utils.xml.Wms130NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -27,7 +28,7 @@ public class CapabilitiesParserFactory {
     private final static Logger log = Logger.getLogger(CapabilitiesParserFactory.class);
     
     // Definition of all supported types
-    private enum ServiceType { WMS, WMS111, WFS, WCS, WCS11, CSW, WCTS }
+    private enum ServiceType { WMS, WMS111, WFS110, WFS200, WCS, WCS11, CSW, WCTS }
     
     // identifier for each service type
     private final static String SERVICE_TYPE_WMS = "WMS";
@@ -45,7 +46,8 @@ public class CapabilitiesParserFactory {
             ConfigurableNamespaceContext ns = new ConfigurableNamespaceContext();
             ns.addNamespaceContext(new Csw202NamespaceContext());
             ns.addNamespaceContext(new Wms130NamespaceContext());
-            ns.addNamespaceContext(new WfsNamespaceContext());
+            ns.addNamespaceContext(new Wfs110NamespaceContext());
+            ns.addNamespaceContext(new Wfs200NamespaceContext());
             ns.addNamespaceContext(new WcsNamespaceContext());
             ns.addNamespaceContext(new Wcs11NamespaceContext());
             ns.addNamespaceContext(new WctsNamespaceContext());
@@ -58,7 +60,8 @@ public class CapabilitiesParserFactory {
             switch (serviceType) {
             case WMS: return new Wms130CapabilitiesParser(syslistCache);
             case WMS111: return new Wms111CapabilitiesParser(syslistCache);            
-            case WFS: return new WfsCapabilitiesParser(syslistCache);
+            case WFS110: return new Wfs110CapabilitiesParser(syslistCache);
+            case WFS200: return new Wfs200CapabilitiesParser(syslistCache);
             case WCS: return new WcsCapabilitiesParser(syslistCache);
             case WCS11: return new Wcs11CapabilitiesParser(syslistCache);
             case CSW: return new CswCapabilitiesParser(syslistCache);
@@ -103,10 +106,16 @@ public class CapabilitiesParserFactory {
             return ServiceType.WCTS;
         }
         
-        // WFS
+        // WFS 1.1.0
+        serviceType = xPathUtils.getString(doc, "/wfs:WFS_Capabilities/ows:ServiceIdentification/ows:ServiceType[1]");
+        if (serviceType != null && serviceType.length() != 0) {
+            return ServiceType.WFS110;
+        }
+        
+        // WFS 2.0
         serviceType = xPathUtils.getString(doc, "/wfs:WFS_Capabilities/ows11:ServiceIdentification/ows11:ServiceType[1]");
         if (serviceType != null && serviceType.length() != 0) {
-            return ServiceType.WFS;
+            return ServiceType.WFS200;
         }
 
         // All other services have can be evaluated via '/Capabilities/ServiceIdentification/ServiceType[1]'
@@ -116,7 +125,7 @@ public class CapabilitiesParserFactory {
                 return ServiceType.WMS;
 
             } else if (serviceType.contains(SERVICE_TYPE_WFS)) {
-                return ServiceType.WFS;
+                return ServiceType.WFS200;
 
             } else if (serviceType.contains(SERVICE_TYPE_WCS)) {
                 return ServiceType.WCS;
