@@ -42,8 +42,8 @@
 	<action type="update" dev="wemove">
       Portal: Update Hamburg profile.
     </action>
-	<action type="fix" dev="wemove" issue="INGRID-2321">
-      IGE: Fix import of CSW Resource-Identifier.
+	<action type="fix" dev="wemove" issue="INGRID-2321,INGRID-2334">
+      IGE: Import: Fix import of CSW Resource-Identifier. More robust mapping of INSPIRE keywords to codelist entries.
     </action>
 	<action type="fix" dev="wemove" issue="REDMINE-181">
       WebMapClient: Fix outside definition of map extent at the admin-gui.

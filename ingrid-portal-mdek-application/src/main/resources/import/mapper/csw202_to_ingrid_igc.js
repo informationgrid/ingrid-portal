@@ -862,7 +862,7 @@ var mappingDescription = {"mappings":[
 			  			"targetAttribute":"id",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[6100, "en", "Could not map INSPIRE theme:"]
+							"params":[6100, "en", "Could not map INSPIRE theme:", true]
 						}
 			  		},
 	  				{
@@ -1640,13 +1640,18 @@ function transformGeneric(val, mappings, caseSensitive, logErrorOnNotFound) {
 	return val;
 }
 
-function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound) {
+function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound, doRobustComparison) {
 	if (hasValue(val)) {
 		// transform to IGC domain id
 		var idcCode = null;
 		try {
-			//idcCode = UtilsUDKCodeLists.getCodeListDomainId(codeListId, val, languageId);
-		    idcCode = codeListService.getCodeListEntryId(codeListId, val, languageId);
+            // more robust comparison, see INGRID-2334
+			var robustCompare = false;
+			if (doRobustComparison) {
+                robustCompare = true;
+			}
+            //idcCode = UtilsUDKCodeLists.getCodeListDomainId(codeListId, val, languageId);
+		    idcCode = codeListService.getCodeListEntryId(codeListId, val, languageId, robustCompare);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
 				log.warn("Error tranforming code '" + val + "' with code list " + codeListId + " with language '" + languageId + "' to IGC id. Does the codeList exist?");
