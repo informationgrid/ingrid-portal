@@ -116,7 +116,7 @@ var mappingDescription = {"mappings":[
 			  			"targetAttribute":"id",
 			  			"transform":{
 							"funct":transformISOToIgcDomainId,
-							"params":[527, "Could not tranform topic category: "]
+							"params":[527, "Could not tranform topic category: ", true]
 						}
 			  		}
 			  	]
@@ -623,7 +623,7 @@ var mappingDescription = {"mappings":[
 			  			"defaultValue":"-1",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[6005, ""]
+							"params":[6005, "", true]
 						}
 			  		},
 	  				{
@@ -1718,13 +1718,18 @@ function transformToIgcDomainValue(val, codeListId, languageId, logErrorOnNotFou
 	}
 }
 
-function transformISOToIgcDomainId(val, codeListId, logErrorOnNotFound) {
+function transformISOToIgcDomainId(val, codeListId, logErrorOnNotFound, doRobustComparison) {
 	if (hasValue(val)) {
 		// transform to IGC domain id
 		var idcCode = null;
 		try {
+            // more robust comparison, see INGRID-2334
+            var robustCompare = false;
+            if (doRobustComparison) {
+                robustCompare = true;
+            }
 			//idcCode = UtilsUDKCodeLists.getIgcIdFromIsoCodeListEntry(codeListId, val);
-			idcCode = codeListService.getCodeListEntryId(codeListId, val, "iso");
+			idcCode = codeListService.getCodeListEntryId(codeListId, val, "iso", robustCompare);
 		} catch (e) {
 			if (log.isWarnEnabled()) {
 				log.warn("Error tranforming ISO code '" + val + "' with code list " + codeListId + " to IGC id. Does the codeList exist?");
