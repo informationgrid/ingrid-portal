@@ -328,7 +328,7 @@ var mappingDescription = {"mappings":[
 		    			  			"targetAttribute":"id",
 		    			  			"transform":{
 		        						"funct":transformToIgcDomainId,
-		        						"params":[5105, "en"]
+		        						"params":[5105, ""]
 		        					}
 		    			  		},
 		    	  				{
@@ -343,7 +343,7 @@ var mappingDescription = {"mappings":[
 		    			  			"targetAttribute":"id",
 		    			  			"transform":{
 		        						"funct":transformToIgcDomainId,
-		        						"params":[5110, "en"]
+		        						"params":[5110, ""]
 		        					}
 		    			  		},
 		    	  				{
@@ -358,7 +358,7 @@ var mappingDescription = {"mappings":[
 		    			  			"targetAttribute":"id",
 		    			  			"transform":{
 		        						"funct":transformToIgcDomainId,
-		        						"params":[5120, "en"]
+		        						"params":[5120, ""]
 		        					}
 		    			  		},
 		    	  				{
@@ -373,7 +373,7 @@ var mappingDescription = {"mappings":[
 		    			  			"targetAttribute":"id",
 		    			  			"transform":{
 		        						"funct":transformToIgcDomainId,
-		        						"params":[5130, "en"]
+		        						"params":[5130, ""]
 		        					}
 		    			  		},
 		    	  				{
@@ -528,7 +528,7 @@ var mappingDescription = {"mappings":[
 			  			"defaultValue":"-1",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[6020, "en"]
+							"params":[6020, ""]
 						}
 			  		}
                 ]
@@ -580,7 +580,7 @@ var mappingDescription = {"mappings":[
 			  			"defaultValue":"-1",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[1320, "en"]
+							"params":[1320, ""]
 						}
 			  		},
 	  				{
@@ -623,7 +623,7 @@ var mappingDescription = {"mappings":[
 			  			"defaultValue":"-1",
 			  			"transform":{
 							"funct":transformToIgcDomainId,
-							"params":[6005, "en"]
+							"params":[6005, ""]
 						}
 			  		},
 	  				{
@@ -695,7 +695,7 @@ var mappingDescription = {"mappings":[
   			"targetAttribute":"id",
   			"transform":{
 				"funct":transformToIgcDomainId,
-				"params":[102, "en", "Could not map vertical-extent unit:"]
+				"params":[102, "", "Could not map vertical-extent unit:"]
 			}						    					
   		},
         {
@@ -1252,7 +1252,7 @@ function mapReferenceSystemInfo(source, target) {
 			XMLUtils.createOrReplaceTextNode(node, coordinateSystem);
             
             // get syslist id
-			var coordinateSystemId = transformToIgcDomainId(code, 100, "en");
+			var coordinateSystemId = transformToIgcDomainId(code, 100, "");
             if (hasValue(coordinateSystemId) && coordinateSystemId == -1) {
                 // try to parse coordsystem name for correct mapping to syslist id
                 var coordinateSystemLower = coordinateSystem.toLowerCase();
@@ -1292,7 +1292,7 @@ function mapVerticalExtentVdatum(source, target) {
 	            log.debug("adding '/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-vdatum' = '" + vDatumName + "' to target document.");
 	            var node = XPathUtils.createElementFromXPath(target, "/igc/data-sources/data-source/data-source-instance/spatial-domain/vertical-extent/vertical-extent-vdatum");
 	            XMLUtils.createOrReplaceTextNode(node, vDatumName);
-	            var datumId = transformToIgcDomainId(vDatumName, 101, "en", "Could not map VerticalDatum: ");
+	            var datumId = transformToIgcDomainId(vDatumName, 101, "", "Could not map VerticalDatum: ");
 	            if (hasValue(datumId)) {
 	                XMLUtils.createOrReplaceAttribute(node, "id", datumId);
 	            }
@@ -1442,7 +1442,7 @@ function addAccessConstraint(accConstraint, target) {
         var node = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/data-source-instance/additional-information/access-constraint");
         node = XPathUtils.createElementFromXPath(node, "restriction");
         XMLUtils.createOrReplaceTextNode(node, accConstraint);
-        var accConstraintId = transformToIgcDomainId(accConstraint, 6010, "en", "Could not map access-constraint, use as free entry: ");
+        var accConstraintId = transformToIgcDomainId(accConstraint, 6010, "", "Could not map access-constraint, use as free entry: ");
         if (hasValue(accConstraintId)) {
             XMLUtils.createOrReplaceAttribute(node, "id", accConstraintId);                 
         }
@@ -1667,8 +1667,13 @@ function transformToIgcDomainId(val, codeListId, languageId, logErrorOnNotFound,
 			return idcCode;
 		} else {
 			if (log.isWarnEnabled()) {
-				log.warn("Domain code '" + val + "' unknown in code list " + codeListId + " for language '" + languageId + "'.");
-				protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + " for language '" + languageId + "'.")
+				if (languageId != null && languageId != "") {
+					log.warn("Domain code '" + val + "' unknown in code list " + codeListId + " for language '" + languageId + "'.");
+					protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + " for language '" + languageId + "'.");
+				} else {
+                    log.warn("Domain code '" + val + "' unknown in code list " + codeListId + " for all languages.");
+                    protocol(WARN, "Domain code '" + val + "' unknown in code list " + codeListId + " for all languages.");
+				}
 			}
 			if (logErrorOnNotFound) {
 				log.warn(logErrorOnNotFound + val);
