@@ -64,7 +64,7 @@ public class GeneralCapabilitiesParser {
         return new ArrayList<String>(Arrays.asList(keywordsArray));
     }
     
-    protected List<SNSTopic> getKeywordsFromLayer(List<String> keywords) throws XPathExpressionException {
+    protected List<SNSTopic> transformKeywordListToSNSTopics(List<String> keywords) throws XPathExpressionException {
         List<SNSTopic> snsTopics = new ArrayList<SNSTopic>();
         for (String keyword : keywords) {
             SNSTopic snsTopic = new SNSTopic(SNSTopic.Type.NON_DESCRIPTOR, null, null, keyword, null, null);

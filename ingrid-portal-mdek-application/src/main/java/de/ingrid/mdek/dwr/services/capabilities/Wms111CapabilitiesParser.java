@@ -4,7 +4,9 @@
 package de.ingrid.mdek.dwr.services.capabilities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.xpath.XPathExpressionException;
 
@@ -23,6 +25,7 @@ import de.ingrid.mdek.beans.object.ObjectReferenceBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
 import de.ingrid.mdek.beans.object.SpatialReferenceSystemBean;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.utils.xml.Wms130NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -84,15 +87,18 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         // TODO: Extended Capabilities?
         
         // Keywords
-        List<String> keywords = getKeywords(doc, XPATH_EXP_WMS_KEYWORDS);
-        List<String> layerKeywords = getKeywords(doc, XPATH_EXP_WMS_KEYWORDS_LAYER);
-        keywords.addAll(layerKeywords);
+        // use a Set to remove duplicate entries
+        List<String> commonKeywords = getKeywords(doc, XPATH_EXP_WMS_KEYWORDS);
+        Set<String> allKeywordsSet = new HashSet( getKeywords(doc, XPATH_EXP_WMS_KEYWORDS_LAYER) );        
+        allKeywordsSet.addAll( commonKeywords );
+        List<String> allKeywordsList = new ArrayList<String>();
+        allKeywordsList.addAll( allKeywordsSet );
         
         // Extended - Keywords
         //String[] extKeywords = xPathUtils.getStringArray(doc, "/csw:Capabilities/ows:OperationsMetadata/inspire_ds:ExtendedCapabilities/inspire_common:Keyword/inspire_common:KeywordValue");
         //keywords.addAll(Arrays.asList(extKeywords));
         // add found keywords to our result bean
-        result.setKeywords(keywords);
+        result.setKeywords(allKeywordsList);
         
         // get bounding boxes of each layer and create a union
         List<LocationBean> boundingBoxesFromLayers = getBoundingBoxesFromLayers(doc);
@@ -111,6 +117,7 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         // Coupled Resources
         NodeList identifierNodes = xPathUtils.getNodeList(doc, "/WMT_MS_Capabilities/Capability/Layer//Identifier");
         List<MdekDataBean> coupledResources = new ArrayList<MdekDataBean>();
+        List<SNSTopic> commonSNSTopics = transformKeywordListToSNSTopics( commonKeywords );
         for ( int i = 0; i < identifierNodes.getLength(); i++ ) {
             String id = identifierNodes.item(i).getTextContent();
             // check for the found IDs if a metadata with this resource identifier exists
@@ -122,7 +129,9 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
                 newDataset.setUuid(null);
                 newDataset.setRef1ObjectIdentifier(id);
                 newDataset.setTitle( xPathUtils.getString( layerNode, "Title" ) );
-                newDataset.setThesaurusTermsTable( getKeywordsFromLayer( getKeywords(layerNode, "KeywordList/Keyword") ) );
+                List<SNSTopic> keywordsFromLayer = transformKeywordListToSNSTopics( getKeywords(layerNode, "KeywordList/Keyword") );
+                keywordsFromLayer.addAll( commonSNSTopics );
+                newDataset.setThesaurusTermsTable( keywordsFromLayer );
                 List<LocationBean> boxes = new ArrayList<LocationBean>();
                 LocationBean box = getBoundingBoxFromLayer( layerNode );
                 if ( box != null ) boxes.add( box );

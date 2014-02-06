@@ -213,7 +213,7 @@
         // all grids
         dojo.query("#resultsContainer .ui-widget").forEach(function(grid) {
             var length = dijit.byId(grid.id).data.length;
-            console.log("Grid " + grid.id + ": " + length);
+            //console.log("Grid " + grid.id + ": " + length);
             var node = UtilDOM.findParentNodeWithClass( grid, "outer" );
             if (length === 0) {
                 // hide
@@ -690,17 +690,17 @@
         } );
 
         // wait for all addresses being added and update address table then
-        var defList = new dojo.DeferredList( defs );
-        defList.then( function() {
+        var defAddresses = new dojo.DeferredList( defs );
+        defAddresses.then( function() {
             console.debug( "update address table now!" );
             UtilStore.updateWriteStore( "generalAddress", addressesToAdd );
             // reload sub tree of newly created addresses
             // WARNING: this removes focus of selected node and new node cannot be clicked again!?
-            /*var freeAddresses = dijit.byId( "addressFreeRoot" );
+            // -> added parameter to prevent selection of node!
+            var freeAddresses = dijit.byId( "addressFreeRoot" );
             if ( freeAddresses ) {
-                menuEventHandler.reloadSubTreeByNode( freeAddresses );
-                UtilTree.selectNode( "dataTree", "newNode" );
-            }*/
+                menuEventHandler.reloadSubTreeByNode( freeAddresses, true );
+            }
         } );
 
         // add versions and operations automatically of a capabilities document!
@@ -779,8 +779,8 @@
         UtilList.addUrlLinkLabels( allLinks );
         UtilStore.updateWriteStore( "linksTo", allLinks );
         
-        
-        defKeywords.then( function() {
+        // wait for adding keywords AND addresses to be finished
+        defKeywords.then( function() { defAddresses.then( function() {
 	        
 	        // add references to datasets/layers or create new objects
 	        var datasets = UtilGrid.getTableData( "assistantDatasetsTable" );
@@ -853,7 +853,7 @@
 		            }, 500);
 		        } );
 	        }
-        });
+        }); });
     }
     
     scopeWizardResults.prepareTopics = function( keywords, topics ) {
@@ -880,6 +880,7 @@
 	            objNode.generalDescription = data.generalDescription;
 	            objNode.ref1SpatialSystemTable = data.ref1SpatialSystemTable;
 	            if (addresses.length > 0) {
+	                console.log("Adding addresses to layer: ", addresses);
 	                objNode.generalAddressTable = addresses;
 	            }
 	            
@@ -887,25 +888,14 @@
 	            console.log("data of layer: ", data);
 	            var keywords = UtilList.tableDataToList( data.thesaurusTermsTable, "title" );
 	            igeEvents.analyzeKeywords(keywords).then( function(topics) {
+	                // loading state might have ended after analyzing keywords
+	                UtilDWR.enterLoadingState();
 	                console.log( "Found topics for layer:", topics );
 	                objNode.thesaurusTermsTable = scopeWizardResults.prepareTopics( keywords, topics );;
 	                console.log( "converted topics for layer:", objNode.thesaurusTermsTable );
 	                // save the object as WORKING copy to create a UUID
 	                var response = ObjectService.saveNodeData( objNode, true, false, {
 	                    callback: function(bean) {
-		                    
-		                    // update tree node
-		                    // NO -> is done by reload subtree later!
-		                    /*var newNode = _createNewNode( bean );
-		                    console.log("new node is: ", newNode);
-		                    newNode.title = data.title;
-		                    newNode.id = bean.uuid;
-		                    newNode.isFolder = false;
-		                    var tree = dijit.byId("dataTree");
-		                    tree.model.store.newItem(newNode, {
-		                        parent: dijit.byId( currentUdk.parentUuid ).item,
-		                        attribute: "children"
-		                    });*/
 	                        UtilUI.updateBlockerDivInfo( "layers" );
 		                    def.callback( bean );
 		                },

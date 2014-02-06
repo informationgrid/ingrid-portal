@@ -198,16 +198,23 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getKeywords(), hasItems(expected));
         
         assertThat(result.getCoupledResources().get(0).getRef1ObjectIdentifier(), is("123456"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().size(), is(3));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 0 ).getTitle(), is("bird"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 1 ).getTitle(), is("roadrunner"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 2 ).getTitle(), is("ambush"));
 //        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().size(), is(1));
 //        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLatitude1(), is(41.75));
 //        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLongitude1(), is(-71.63));
 //        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLatitude2(), is(42.90));
 //        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLongitude2(), is(-70.78));
         assertThat(result.getCoupledResources().get(1).getRef1ObjectIdentifier(), is("78910"));
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().size(), is(3));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().size(), is(6));
         assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 0 ).getTitle(), is("road"));
         assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 1 ).getTitle(), is("transportation"));
         assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 2 ).getTitle(), is("atlas"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 3 ).getTitle(), is("bird"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 4 ).getTitle(), is("roadrunner"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 5 ).getTitle(), is("ambush"));
         
         assertThat(result.getSpatialReferenceSystems().get(0).getId(), is(-1));
         assertThat(result.getSpatialReferenceSystems().get(0).getName(), is("EPSG:26986"));
@@ -251,6 +258,10 @@ public class GetCapabilitiesServiceTest {
         
         assertThat(result.getCoupledResources().get(0).getRef1ObjectIdentifier(), is("123456"));
         assertThat(result.getCoupledResources().get(0).getTitle(), is("Roads and Rivers"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().size(), is(3));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 0 ).getTitle(), is("bird"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 1 ).getTitle(), is("roadrunner"));
+        assertThat(result.getCoupledResources().get(0).getThesaurusTermsTable().get( 2 ).getTitle(), is("ambush"));
         assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().size(), is(3));
         assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().contains( "EPSG:26986" ), is( true ));
         assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().contains("CRS:84"), is( true ));
@@ -266,10 +277,13 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getCoupledResources().get(1).getRef1SpatialSystemTable().size(), is(2));
         assertThat(result.getCoupledResources().get(1).getRef1SpatialSystemTable().contains("CRS:84"), is( true ));
         assertThat(result.getCoupledResources().get(1).getRef1SpatialSystemTable().contains("EPSG 4230: ED50 / geographisch"), is( true ));        
-        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().size(), is(3));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().size(), is(6));
         assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 0 ).getTitle(), is("road"));
         assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 1 ).getTitle(), is("transportation"));
         assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 2 ).getTitle(), is("atlas"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 3 ).getTitle(), is("bird"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 4 ).getTitle(), is("roadrunner"));
+        assertThat(result.getCoupledResources().get(1).getThesaurusTermsTable().get( 5 ).getTitle(), is("ambush"));
         
         assertThat(result.getSpatialReferenceSystems().get(0).getId(), is(-1));
         assertThat(result.getSpatialReferenceSystems().get(0).getName(), is("CRS:84"));

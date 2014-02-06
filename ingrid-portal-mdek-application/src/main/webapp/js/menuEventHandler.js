@@ -757,14 +757,16 @@ menuEventHandler.reloadSubTree = function(msg) {
 	menuEventHandler.reloadSubTreeByNode( selectedNode );
 }
 
-menuEventHandler.reloadSubTreeByNode = function(node) {
+menuEventHandler.reloadSubTreeByNode = function(node, /*boolean*/doNotSelectNode) {
     // Get the selected node from the message
     var tree = dijit.byId("dataTree");
 
     if (node) {
-        udkDataProxy.resetDirtyFlag();
-        UtilTree.selectNode("dataTree", node.id);
-        dojo.publish("/selectNode", [{id:"dataTree", node: node.item}]);
+        if ( !doNotSelectNode ) {
+            udkDataProxy.resetDirtyFlag();
+            UtilTree.selectNode("dataTree", node.id);
+            dojo.publish("/selectNode", [{id:"dataTree", node: node.item}]);
+        }
         tree.refreshChildren(node);
     }
 }

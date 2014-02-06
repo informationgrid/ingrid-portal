@@ -24,6 +24,7 @@ import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
 import de.ingrid.mdek.beans.object.SpatialReferenceSystemBean;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.utils.xml.Wms130NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -82,12 +83,15 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         addExtendedCapabilities(result, doc, XPATH_EXP_WMS_EXTENDED_CAPABILITIES);
         
         // Keywords
-        List<String> keywords = getKeywords(doc, XPATH_EXP_WMS_KEYWORDS);
-        List<String> layerKeywords = getKeywords(doc, XPATH_EXP_WMS_KEYWORDS_LAYER);
-        keywords.addAll(layerKeywords);
+        // use a Set to remove duplicate entries
+        List<String> commonKeywords = getKeywords(doc, XPATH_EXP_WMS_KEYWORDS);
+        Set<String> allKeywordsSet = new HashSet( getKeywords(doc, XPATH_EXP_WMS_KEYWORDS_LAYER) );        
+        allKeywordsSet.addAll( commonKeywords );
+        List<String> allKeywordsList = new ArrayList<String>();
+        allKeywordsList.addAll( allKeywordsSet );
         
         // add found keywords to our result bean
-        result.getKeywords().addAll(keywords);
+        result.getKeywords().addAll(allKeywordsList);
 
         // get bounding boxes of each layer and create a union
         List<LocationBean> boundingBoxesFromLayers = getBoundingBoxesFromLayers(doc);
@@ -114,6 +118,7 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         // Coupled Resources
         NodeList identifierNodes = xPathUtils.getNodeList(doc, "/wms:WMS_Capabilities/wms:Capability/wms:Layer//wms:Identifier");
         List<MdekDataBean> coupledResources = new ArrayList<MdekDataBean>();
+        List<SNSTopic> commonSNSTopics = transformKeywordListToSNSTopics( commonKeywords );
         for ( int i = 0; i < identifierNodes.getLength(); i++ ) {
         	String id = identifierNodes.item(i).getTextContent();
         	// check for the found IDs if a metadata with this resource identifier exists
@@ -126,7 +131,9 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         		newDataset.setRef1ObjectIdentifier(id);
                 newDataset.setTitle( xPathUtils.getString( layerNode, "wms:Title" ) );
                 newDataset.setGeneralDescription( xPathUtils.getString( layerNode, "wms:Abstract" ) );
-        		newDataset.setThesaurusTermsTable( getKeywordsFromLayer( getKeywords(layerNode, "wms:KeywordList/wms:Keyword") ) );
+                List<SNSTopic> keywordsFromLayer = transformKeywordListToSNSTopics( getKeywords(layerNode, "wms:KeywordList/wms:Keyword") );
+                keywordsFromLayer.addAll( commonSNSTopics );
+        		newDataset.setThesaurusTermsTable( keywordsFromLayer );
         		List<LocationBean> boxes = new ArrayList<LocationBean>();
         		LocationBean box = getBoundingBoxFromLayer( layerNode );
         		if ( box != null ) boxes.add( box );
