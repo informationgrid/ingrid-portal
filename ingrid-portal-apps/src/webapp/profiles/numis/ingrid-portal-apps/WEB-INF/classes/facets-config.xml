@@ -167,42 +167,56 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
 						<name>searchResult.facete.metaclass.job</name>
 						<query>t01_object.obj_class:0</query>
 						<id>job</id>
+						<codelist-id>8000</codelist-id>
+                        <codelist-entry-id>0</codelist-entry-id>
 					</facet>
 				<!-- Dienst /Anwendung / Informationssystem -->
 					<facet>
 						<name>searchResult.facete.metaclass.service</name>
 						<query>t01_object.obj_class:6</query>
 						<id>service</id>
+						<codelist-id>8000</codelist-id>
+                        <codelist-entry-id>6</codelist-entry-id>
 					</facet>
 				<!-- Geo-Information / Karte -->
 					<facet>
 						<name>searchResult.facete.metaclass.map</name>
 						<query>t01_object.obj_class:1</query>
 						<id>map</id>
+						<codelist-id>8000</codelist-id>
+                        <codelist-entry-id>1</codelist-entry-id>
 					</facet>
 				<!-- Dokument / Bericht / Literatur -->
 					<facet>
 						<name>searchResult.facete.metaclass.document</name>
 						<query>t01_object.obj_class:2</query>
 						<id>document</id>
+						<codelist-id>8000</codelist-id>
+                        <codelist-entry-id>2</codelist-entry-id>
 					</facet>
 				<!-- Geodatendienst -->
 					<facet>
 						<name>searchResult.facete.metaclass.geoservice</name>
 						<query>t01_object.obj_class:3</query>
 						<id>geoservice</id>
+						<codelist-id>8000</codelist-id>
+                        <codelist-entry-id>3</codelist-entry-id>
 					</facet>
 				<!-- Vorhaben / Projekt / Programm -->
 					<facet>
 						<name>searchResult.facete.metaclass.project</name>
 						<query>t01_object.obj_class:4</query>
 						<id>project</id>
+						<codelist-id>8000</codelist-id>
+                        <codelist-entry-id>4</codelist-entry-id>
 					</facet>
 				<!-- Datensammlung / Datenbank -->
 					<facet>
 						<name>searchResult.facete.metaclass.database</name>
 						<query>t01_object.obj_class:5</query>
 						<id>database</id>
+						<codelist-id>8000</codelist-id>
+                        <codelist-entry-id>5</codelist-entry-id>
 					</facet>
 				</facets>
 			</facet>
