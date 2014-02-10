@@ -48,7 +48,7 @@ scriptScopeResearchExtObj.init = function() {
     
     // set labels for object classes from codelist 8000
     for (var i=0; i<7; i++) {
-        dojo.query("label[for='objTopicObjectClass"+i+"']")[0].textContent = UtilSyslist.getSyslistEntryName( 8000, i ); 
+        dojo.query("label[for='objTopicObjectClass"+i+"']")[0].innerHTML = UtilSyslist.getSyslistEntryName( 8000, i ); 
     }
     
     // Initially select the first tabs on load
