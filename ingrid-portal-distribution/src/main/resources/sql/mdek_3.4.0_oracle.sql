@@ -12,6 +12,7 @@ DELETE FROM help_messages WHERE gui_id = 5064;
 DELETE FROM help_messages WHERE gui_id = 10024;
 DELETE FROM help_messages WHERE gui_id = 1315;
 DELETE FROM help_messages WHERE gui_id = 3220;
+DELETE FROM help_messages WHERE gui_id = 6010;
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (281, 0, 8061, -1, 'de', 'GetCapabilities Assistent - Dienst-URL', 'Eintrag der Dienst-URL des entsprechenden Dienstes. Die Parameter REQUEST und SERVICE werden automatisch ergänzt, können aber auch explizit mit angegeben werden.', 'http://www.portalu.de/csw202?SERVICE=CSW');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
@@ -76,3 +77,7 @@ INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, he
 (1520, 0, 10210, -1, 'de', 'Erfassungsassistent - Gekoppelte Daten', 'Auswahl, welche gekoppelten Daten übernommen werden sollen. Die Aktion bestimmt, ob ein Datensatz verlinkt wird, wenn dieser schon existiert oder ob dieser Datensatz neu angelegt wird. Durch einen Klick in die erste Spalte der Tabelle, kann über eine Checkbox der zu übernehmende Eintrag ausgewählt werden.', '');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1521, 0, 10210, -1, 'en', 'Assistent - Coupled Resources', 'Selection, which coupled resources shall be used for the object. The action defines if a dataset is linked to the new service object if it already exists or otherwise it will be created as a new dataset. By clicking in the first column of the table you can activate a checkbox for selection of the chosen entry.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1410, 0, 6010, -1, 'de', 'Open Data', 'Diese Checkbox kennzeichnet dieses Objekt als "Open Data"-Objekt. Es sind dann zusätzlich folgende Angaben verpflichtend:<ul><li>In der (nur für Opendata) erscheinenden Tabelle "Kategorien" muß mindestens ein Wert eingetragen werden.</li><li>Unter Verweisen muß mindestens ein Verweis vom Typ "Datendownload" eingetragen werden.</li><li>Unter Nutzungsbedingungen wird eine spezielle Codeliste für Lizenzen verwendet, aus der ein Eintrag gewählt werden muß.</li></ul>', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1411, 0, 6010, -1, 'en', 'Open Data', 'This checkbox defines this object as an "open data"-object. If checked, the following inputs will be mandatory:<ul><li>in the appearing table "Categories", at least one value must be entered</li><li>in the table "Links To", at least one link of type download must exist</li><li>the use constraints will have a different codelist where at least one entry must be chosen</li></ul>', '');
