@@ -36,6 +36,7 @@ import de.ingrid.mdek.quartz.jobs.util.URLValidator;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.capabilities.CapabilitiesUtils;
 
 public class URLValidatorJob extends QuartzJobBean implements MdekJob, InterruptableJob {
 
@@ -172,7 +173,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 					String url = objEntity.getString("url.connectPoint");
 					String params = "";
 					if (isCapabilities) {
-					    params = getAdditionalCapabilitiesParameter(objEntity.getString("url.connectPoint"), objEntity.getInt("objServ.typeKey"));
+					    params = CapabilitiesUtils.getMissingCapabilitiesParameter( objEntity.getString("url.connectPoint"), objEntity.getInt("objServ.typeKey"));
 					    
 					} else {
 					    url = objEntity.getString("urlRef.urlLink");
@@ -191,50 +192,6 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		}
 		return resultList;
 	}
-
-
-	/**
-	 * Add URL parameters if necessary, so that the capabilities document can be fetched correctly!
-     * @param url
-     * @param type
-     * @return
-     */
-    private String getAdditionalCapabilitiesParameter(String url, int type) {
-        String mappedType = getServiceTypeFromKey(type);
-        String parameters = "";
-        
-        if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
-            if (url.indexOf("?") == -1) {
-            	parameters = "?";
-            }
-            // if url or parameters already contains a ? or & at the end then do not add another one!
-            if (!(url.lastIndexOf("?") == url.length() - 1 || parameters.length() > 0)
-                    && !(url.lastIndexOf("&") == url.length() - 1)) {
-            	parameters = "&";
-            }
-            
-            parameters += "REQUEST=GetCapabilities";
-        }
-        if (url.toLowerCase().indexOf("service=") == -1) {
-        	parameters += "&SERVICE=" + mappedType;            
-        }
-        return parameters;
-    }
-
-    /**
-     * Determine the URL-Parameter to request a getCapabilities document
-     * @param type, is the id of the codelist entry
-     * @return the value of the codelist entry key of the service
-     */
-    private String getServiceTypeFromKey(int type) {
-        String result = "CSW";
-        if (type == 1) result = "CSW";
-        else if (type == 2) result = "WMS"; 
-        else if (type == 3) result = "WFS";
-        else if (type == 4) result = "WCTS";
-        else if (type == 6) result = "WCS";
-        return result;
-    }
 
     public boolean start(Scheduler scheduler) throws SchedulerException {
 		this.scheduler = scheduler;
