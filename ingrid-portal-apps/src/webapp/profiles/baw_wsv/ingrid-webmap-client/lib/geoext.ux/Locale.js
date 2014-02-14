@@ -41,6 +41,9 @@ Local = {
 
     localizedStrings: {
     	tAbbrechen: { en: 'Cancel', de: 'Abbrechen' },
+    	tOk: { en: 'Ok', de: 'Ok' },
+    	tNein: { en: 'No', de: 'Nein' },
+    	tJa: { en: 'Yes', de: 'Ja' },
     	tAdresse: { en: 'Address', de: 'Adresse' },
     	tAdministrativeAuswahl: { en: 'Select administrative entity', de: 'Administrative Auswahl' },
     	tAdministrativeEinheit : { en: 'Administrative entity', de: 'Administrative Einheit' },
@@ -123,7 +126,7 @@ Local = {
         tOrganisation : { en: 'Organisation', de: 'Organisation' },
         tPDFErstellen: { en: 'Create PDF', de: 'PDF Erstellen' },
         tPleaseWait: { en: 'Please wait', de: 'Bitte warten' },
-        tPleaseWaitCapabilities: { en: 'Loading Capabilities. Please wait ...', de: 'Capabilities wird geladen. Bitte warten ...' },
+        tPleaseWaitCapabilities: { en: 'Loading Capabilities. Please wait ...', de: 'Dienst wird geladen...' },
         tPleaseWaitSearch: { en: 'Searching term. Please wait ...', de: 'Suche wird durchgef&uuml;hrt. Bitte warten ...' },
         tPLZ: { en: 'ZIP', de: 'PLZ' },
         tPreviousHint: { en: '&laquo; Previous', de: '&laquo; Vorheriger' },
@@ -221,7 +224,16 @@ Local = {
 		tSuchbegriff: {en: 'Add search term', de: 'Suchbegriff hinzufügen'},
 		tPfichtfeld: {en: 'This field is required', de: 'Pflichtfeld'},
 		tOptionen: {en: 'Menu', de: 'Menü'},
-		tServiceBereichAufUndZuKlappen: {en: 'Expand and collapse service-area', de: 'Service-Bereich ein- und ausblenden'}
+		tServiceBereichAufUndZuKlappen: {en: 'Expand and collapse service-area', de: 'Service-Bereich ein- und ausblenden'},
+		tLoadingFailServiceWFS: {en: 'WFS not supported.', de: 'WFS wird nicht unterst&uuml;tzt.'},
+		tLoadingFailServiceException: {en: 'ServiceException.', de: 'GetCapabilities-Anfrage fehlerhaft: ServiceException.'},
+		tLoadingFailServiceCSW: {en: 'CSW not supported.', de: 'CSW wird nicht unterst&uuml;tzt.'},
+		tLoadingFailServiceNoContent: {en: 'No service content.', de: 'GetCapabilities-Anfrage: Keine Response-Inhalt vorhanden.'},
+		tLoadDialogMail: {en: 'Sending saved map as mail.', de: 'Gespeicherte Karte als Email versenden.'},
+		tLoadDialogDelete: {en: 'Delete saved map.', de: 'Gespeicherte Karte l&ouml;schen.'},
+		tLoadDialogLink: {en: 'Open saved map in a new tab.', de: 'Gespeicherte Karte im neuen Tab &ouml;ffnen.'},
+		tLoadingServiceTaskTitle: {en: 'Added service not available?', de: 'Hinzugef&uuml;gter Dienst nicht erreichbar?'},
+		tLoadingServiceTaskMessage: {en: 'Cancel loading capabilities?', de: 'M&ouml;chten Sie den Ladenvorgang abbrechen?'}
     }
 }
 
