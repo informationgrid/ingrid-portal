@@ -246,6 +246,7 @@
 
                     <runtarget target="ExtractPortalForUpdate" />
                     <runtarget target="ExtractIgeForUpdate" />
+                    <runtarget target="RemoveIgeForUpdate" />
                     <runtarget target="updatePortalDb"/>
                     <runtarget target="updateIgeDb"/>
                  </then>
@@ -329,6 +330,10 @@
         <chmod dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF" perm="600" includes="configurations.xml"/>
 
         <mkdir dir="${installDir}/${tomcat-artifact}/logs"/>
+    </target>
+
+    <target name="RemoveIgeForUpdate" unless="ige.installed">
+        <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application.war" />
     </target>
     
     <target name="RemoveOldLibs" if="updateProcedure">
