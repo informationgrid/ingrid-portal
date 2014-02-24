@@ -33,9 +33,9 @@
         
         <script type="text/javascript">
             // browser check (no IE9 yet)
-            if (!(dojo.isChrome || dojo.isIE == 7 || dojo.isIE == 8 || dojo.isIE == 9 || dojo.isFF >= 3.6)) {
-                document.location.href = "not_supported_browser.jsp"
-            }
+            //if (!(dojo.isChrome || dojo.isIE >= 7 || dojo.isFF >= 3.6)) {
+                //document.location.href = "not_supported_browser.jsp"
+            //}
         </script>
         
 		<script src='dwr/interface/CatalogService.js'></script>
