@@ -1149,7 +1149,9 @@ ingridObjectLayout.createZeitbezug = function() {
         return UtilSyslist.getSyslistEntry(518);
     });
 	
-	new dijit.form.NumberTextBox({style: "width: 65%;"}, "timeRefIntervalNum");
+	var interval = new dijit.form.NumberTextBox({style: "width: 65%;"}, "timeRefIntervalNum");
+	// set periodicity to "kontinuierlich" when val has been entered
+	dojo.connect(interval, "onKeyUp", function() { dijit.byId("timeRefPeriodicity").set("value", 1) });
 	
 	createFilteringSelect("timeRefIntervalUnit", null, dojo.clone(storeProps), function(){
         return UtilSyslist.getSyslistEntry(1230);
