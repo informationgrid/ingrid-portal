@@ -1,0 +1,165 @@
+Index: ../../ingrid-webmap-client/merge/src/main/resources/ingrid_webmap_client_config.xml
+===================================================================
+--- ../../ingrid-webmap-client/merge/src/main/resources/ingrid_webmap_client_config.xml	(revision 23335)
++++ ../../ingrid-webmap-client/merge/src/main/resources/ingrid_webmap_client_config.xml	(revision 23617)
+@@ -81,31 +81,31 @@
+   	<!-- Url-Check -->
+     <setting>
+       <key>urlCheckMailAddressTo</key>
+-      <name>Email Adresse: Kontaktadresse des Admin</name>
++      <name>Email-Adresse des Empfängers der Benachrichtigungs-Email</name>
+       <value>webmaster@portalu.de</value>
+       <group>urlCheck</group>
+     </setting>
+     <setting>
+       <key>urlCheckMailAddressFrom</key>
+-      <name>Email Adresse: Sender der Benachrichtigungs-Email</name>
++      <name>Email-Adresse des Senders der Benachrichtigungs-Email</name>
+       <value>portalu@portalu.de</value>
+       <group>urlCheck</group>
+     </setting>
+     <setting>
+       <key>urlCheckMailHost</key>
+-      <name>Email Host der die Benachrichtigungs-Email sendet</name>
++      <name>Email-Server, von dem die Benachrichtigungs-Email gesendet wird</name>
+       <value>localhost</value>
+       <group>urlCheck</group>
+     </setting>
+     <setting>
+       <key>urlCheckMailUpdateText</key>
+-      <name>Email Inhalt: Text der Benachrichtigungs-Email (angehängt wird in einer neuen Zeile die betroffene Capabilities-URL )</name>
++      <name>Erläuternder Text in Benachrichtigungs-Email (die entsprechende URL wird automatisch hinzugefügt)</name>
+       <value>Eine neues Update erhältlich für folgende Capabilities:</value>
+       <group>urlCheck</group>
+     </setting>
+     <setting>
+       <key>urlCheckMailUpdateSubject</key>
+-      <name>Email Betreff in der Benachrichtigungs-Email</name>
++      <name>Text in der Betreffzeile der Benachrichtigungs-Email</name>
+       <value>Capabilities-Update erhältlich!</value>
+       <group>urlCheck</group>
+     </setting>
+@@ -131,11 +131,35 @@
+     <!-- View -->
+     <setting>
+       <key>viewHasServicesPanel</key>
+-      <name>Dienste und Legende anzeigen</name>
++      <name>Dienste anzeigen</name>
+       <value>true</value>
+       <group>view</group>
+     </setting>
+     <setting>
++      <key>viewHasActiveServiceTreeState</key>
++      <name>Aktive Dienste: Baumstruktur wird in der Session gespeichert</name>
++      <value>false</value>
++      <group>view</group>
++    </setting>
++    <setting>
++      <key>viewHasActiveServiceTreeExpand</key>
++      <name>Aktive Dienste: Layer-Baum wird immer komplett aufgeklappt dargestellt</name>
++      <value>true</value>
++      <group>view</group>
++    </setting>
++    <setting>
++      <key>viewHasActiveServiceTreeExpandAddNode</key>
++      <name>Aktive Dienste: Layer-Baum klappt neu hinzugefügten Dienst auf</name>
++      <value>true</value>
++      <group>view</group>
++    </setting>
++    <setting>
++      <key>viewHasActiveServiceTreeZoomToExtend</key>
++      <name>Aktive Dienste: Zoomen auf Dienst beim Hinzufügen aus den Kategorien</name>
++      <value>true</value>
++      <group>view</group>
++    </setting>
++    <setting>
+       <key>viewActiveAccordionWestPanel</key>
+       <name>Aktive Rubrik bestimmen (0=1.Rubrik, 1=2.Rubrik, ...)</name>
+       <value>0</value>
+@@ -148,6 +172,12 @@
+       <group>view</group>
+     </setting>
+     <setting>
++      <key>viewHasCollapseTool</key>
++      <name>Button zum Ein- und Ausblenden des Service-Bereiches</name>
++      <value>true</value>
++      <group>view</group>
++    </setting>
++    <setting>
+       <key>defaultTreeDragDrop</key>
+       <name>Dienste verschieben</name>
+       <value>true</value>
+@@ -154,6 +184,12 @@
+       <group>view</group>
+     </setting>
+     <setting>
++      <key>viewHasLegendTool</key>
++      <name>Legende-Button: Darstellung der Legende</name>
++      <value>true</value>
++      <group>view</group>
++    </setting>
++    <setting>
+       <key>viewHasInfoTool</key>
+       <name>Objektinformationen-Button: Feature Abfrage eines Dienstes</name>
+       <value>true</value>
+@@ -185,8 +221,8 @@
+     </setting>
+     <setting>
+       <key>viewNominatimParams</key>
+-      <name>Ortssuche Ländereinstellung oder Gebiet festlegen</name>
+-      <value>countrycodes=de</value>
++      <name>Ortssuche: URL und Ländereinstellung bzw. Gebiet festlegen</name>
++      <value>http://nominatim.openstreetmap.org/search?format=json&amp;amp;countrycodes=de</value>
+       <group>view</group>
+     </setting>
+     <setting>
+@@ -226,12 +262,6 @@
+       <group>view</group>
+     </setting>
+     <setting>
+-      <key>viewHasPermaLink</key>
+-      <name>Permalink: Permalink anzeigen</name>
+-      <value>false</value>
+-      <group>view</group>
+-    </setting>
+-    <setting>
+       <key>viewMinimapEnable</key>
+       <name>Minimap: Übersichtskarte anzeigen</name>
+       <value>true</value>
+@@ -269,6 +299,12 @@
+     </setting>
+     <!-- Suche -->
+     <setting>
++      <key>searchHasLegendTool</key>
++      <name>Legende-Button: Darstellung der Legende</name>
++      <value>false</value>
++      <group>search</group>
++    </setting>
++    <setting>
+       <key>searchHasBboxSelectTool</key>
+       <name>Gebiet-Button: Gebiet auswählen</name>
+       <value>true</value>
+@@ -300,8 +336,8 @@
+     </setting>
+     <setting>
+       <key>searchNominatimParams</key>
+-      <name>Ortssuche Ländereinstellung oder Gebiet festlegen</name>
+-      <value>countrycodes=de</value>
++      <name>Ortssuche: URL und Ländereinstellung bzw. Gebiet festlegen</name>
++      <value>http://nominatim.openstreetmap.org/search?format=json&amp;amp;countrycodes=de</value>
+       <group>search</group>
+     </setting>
+     <setting>
+@@ -329,12 +365,6 @@
+       <group>search</group>
+     </setting>
+     <setting>
+-      <key>searchHasPermaLink</key>
+-      <name>Permalink: Permalink anzeigen</name>
+-      <value>false</value>
+-      <group>search</group>
+-    </setting>
+-    <setting>
+       <key>searchMinimapEnable</key>
+       <name>Minimap: Übersichtskarte anzeigen</name>
+       <value>true</value>

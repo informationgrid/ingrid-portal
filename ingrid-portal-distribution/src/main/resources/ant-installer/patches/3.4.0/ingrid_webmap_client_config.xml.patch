@@ -1,0 +1,163 @@
+Index: ../../ingrid-webmap-client/merge/src/main/resources/ingrid_webmap_client_config.xml
+===================================================================
+--- ../../ingrid-webmap-client/merge/src/main/resources/ingrid_webmap_client_config.xml	(revision 23617)
++++ ../../ingrid-webmap-client/merge/src/main/resources/ingrid_webmap_client_config.xml	(revision 23750)
+@@ -100,13 +100,13 @@
+     <setting>
+       <key>urlCheckMailUpdateText</key>
+       <name>Erläuternder Text in Benachrichtigungs-Email (die entsprechende URL wird automatisch hinzugefügt)</name>
+-      <value>Eine neues Update erhältlich für folgende Capabilities:</value>
++      <value>Nachfolgende GetCap-URL wurde aktualisiert. Um den Update in den Kartenviewer zu übernehmen, in der Kartenviewer-Administration bitte folgenden Dienst neu einlesen.</value>
+       <group>urlCheck</group>
+     </setting>
+     <setting>
+       <key>urlCheckMailUpdateSubject</key>
+       <name>Text in der Betreffzeile der Benachrichtigungs-Email</name>
+-      <value>Capabilities-Update erhältlich!</value>
++      <value>Eingebundene Kartendienste: GetCap-Update erforderlich!</value>
+       <group>urlCheck</group>
+     </setting>
+     <setting>
+@@ -155,31 +155,31 @@
+     </setting>
+     <setting>
+       <key>viewHasActiveServiceTreeZoomToExtend</key>
+-      <name>Aktive Dienste: Zoomen auf Dienst beim Hinzufügen aus den Kategorien</name>
++      <name>Aktive Dienste: Zoomen auf Dienst beim Hinzufügen aus den Rubriken</name>
+       <value>true</value>
+       <group>view</group>
+     </setting>
+     <setting>
+-      <key>viewActiveAccordionWestPanel</key>
+-      <name>Aktive Rubrik bestimmen (0=1.Rubrik, 1=2.Rubrik, ...)</name>
+-      <value>0</value>
++      <key>defaultLayerSelection</key>
++      <name>Aktive Dienste: Gruppenlayer wird dargestellt und automatische Selektierung von Unterlayer</name>
++      <value>true</value>
+       <group>view</group>
+     </setting>
+     <setting>
+-      <key>defaultLayerSelection</key>
+-      <name>Layersteuerung festlegen: Gruppenlayer wird dargestellt und automatische Selektierung von Unterlayer</name>
++      <key>defaultTreeDragDrop</key>
++      <name>Aktive Dienste: Dienste verschieben</name>
+       <value>true</value>
+       <group>view</group>
+     </setting>
+     <setting>
+-      <key>viewHasCollapseTool</key>
+-      <name>Button zum Ein- und Ausblenden des Service-Bereiches</name>
+-      <value>true</value>
++      <key>viewActiveAccordionWestPanel</key>
++      <name>Aktive Rubrik bestimmen (0=1.Rubrik, 1=2.Rubrik, ...)</name>
++      <value>0</value>
+       <group>view</group>
+     </setting>
+     <setting>
+-      <key>defaultTreeDragDrop</key>
+-      <name>Dienste verschieben</name>
++      <key>viewHasCollapseTool</key>
++      <name>Button zum Ein- und Ausblenden des Service-Bereiches</name>
+       <value>true</value>
+       <group>view</group>
+     </setting>
+@@ -226,6 +226,24 @@
+       <group>view</group>
+     </setting>
+     <setting>
++      <key>viewHasSettings</key>
++      <name>Button Einstellungen: Fenster anzeigen</name>
++      <value>true</value>
++      <group>view</group>
++    </setting>
++    <setting>
++      <key>viewHasProjectionsList</key>
++      <name>Einstellungen: Auswahlfunktion Raumbezugssystem anzeigen</name>
++      <value>true</value>
++      <group>view</group>
++    </setting>
++    <setting>
++      <key>viewHasScaleList</key>
++      <name>Einstellungen: Auswahlfunktion Maßstab anzeigen</name>
++      <value>true</value>
++      <group>view</group>
++    </setting>
++    <setting>
+       <key>viewHasPrintTool</key>
+       <name>Druck-Button: Kartenausschnitt drucken</name>
+       <value>true</value>
+@@ -268,24 +286,6 @@
+       <group>view</group>
+     </setting>
+     <setting>
+-      <key>viewHasSettings</key>
+-      <name>Erweiterte Einstellungen: Fenster anzeigen</name>
+-      <value>true</value>
+-      <group>view</group>
+-    </setting>
+-    <setting>
+-      <key>viewHasProjectionsList</key>
+-      <name>Raumbezugssystem: Auswahlfunktion anzeigen</name>
+-      <value>true</value>
+-      <group>view</group>
+-    </setting>
+-    <setting>
+-      <key>viewHasScaleList</key>
+-      <name>Maßstab: Auswahlfunktion anzeigen</name>
+-      <value>true</value>
+-      <group>view</group>
+-    </setting>
+-    <setting>
+       <key>viewHasWelcomeDialog</key>
+       <name>Willkommens-Dialog: Willkommens-Dialog anzeigen</name>
+       <value>true</value>
+@@ -341,6 +341,24 @@
+       <group>search</group>
+     </setting>
+     <setting>
++      <key>searchHasSettings</key>
++      <name>Button Einstellungen: Fenster anzeigen</name>
++      <value>false</value>
++      <group>search</group>
++    </setting>
++    <setting>
++      <key>searchHasProjectionsList</key>
++      <name>Einstellungen: Auswahlfunktion Raumbezugssystem anzeigen</name>
++      <value>false</value>
++      <group>search</group>
++    </setting>
++    <setting>
++      <key>searchHasScaleList</key>
++      <name>Einstellungen: Auswahlfunktion Maßstab anzeigen</name>
++      <value>true</value>
++      <group>search</group>
++    </setting>
++    <setting>
+       <key>searchHasPrintTool</key>
+       <name>Druck-Button: Kartenausschnitt drucken</name>
+       <value>false</value>
+@@ -371,24 +389,6 @@
+       <group>search</group>
+     </setting>
+     <setting>
+-      <key>searchHasSettings</key>
+-      <name>Erweiterte Einstellungen: Fenster anzeigen</name>
+-      <value>false</value>
+-      <group>search</group>
+-    </setting>
+-    <setting>
+-      <key>searchHasProjectionsList</key>
+-      <name>Raumbezugssystem: Auswahlfunktion anzeigen</name>
+-      <value>false</value>
+-      <group>search</group>
+-    </setting>
+-    <setting>
+-      <key>searchHasScaleList</key>
+-      <name>Maßstab: Auswahlfunktion anzeigen</name>
+-      <value>true</value>
+-      <group>search</group>
+-    </setting>
+-    <setting>
+       <key>searchHasInfoDialog</key>
+       <name>Info-Dialog: Info-Dialog anzeigen</name>
+       <value>true</value>

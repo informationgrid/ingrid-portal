@@ -44,8 +44,36 @@
             </then>
         </if>
     </target>
+	
+	<target name="patchFromVersion3.3.2">
+        <compareVersion value1="${oldVersion}" value2="3.3.2" prop="compResult"/>
+        <if>
+            <not>
+                <equals arg1="${compResult}" arg2="1" />
+            </not>
+            <then>
+                <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
+                <echo>Patching ingrid_webmap_client_config.xml in directory: ${webmapPROP.administration.file}</echo>
+                <patchFile patchFile="patches/3.3.2.2/ingrid_webmap_client_config.xml.patch" originalFile="${webmapPROP.administration.file}" />
+            </then>
+        </if>
+    </target>
 
-    <target name="patchFiles" depends="StartInstallation,patchFromVersion3.3.0,patchFromVersion3.3.0.1,patchFromVersion3.3.1">
+	<target name="patchFromVersion3.3.2.2">
+        <compareVersion value1="${oldVersion}" value2="3.3.2.2" prop="compResult"/>
+        <if>
+            <not>
+                <equals arg1="${compResult}" arg2="1" />
+            </not>
+            <then>
+                <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
+                <echo>Patching ingrid_webmap_client_config.xml in directory: ${webmapPROP.administration.file}</echo>
+                <patchFile patchFile="patches/3.4.0/ingrid_webmap_client_config.xml.patch" originalFile="${webmapPROP.administration.file}" />
+            </then>
+        </if>
+    </target>
+	
+    <target name="patchFiles" depends="StartInstallation,patchFromVersion3.3.0,patchFromVersion3.3.0.1,patchFromVersion3.3.1,patchFromVersion3.3.2,patchFromVersion3.3.2.2">
         <!-- patch order determined through depends-order -->
     </target>
 </project>
