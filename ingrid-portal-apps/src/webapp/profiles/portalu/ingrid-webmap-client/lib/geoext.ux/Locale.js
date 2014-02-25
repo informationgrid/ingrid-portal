@@ -232,9 +232,8 @@ Local = {
 		tLoadDialogMail: {en: 'Sending saved map as mail.', de: 'Gespeicherte Karte als Email versenden.'},
 		tLoadDialogDelete: {en: 'Delete saved map.', de: 'Gespeicherte Karte l&ouml;schen.'},
 		tLoadDialogLink: {en: 'Open saved map in a new tab.', de: 'Gespeicherte Karte im neuen Tab &ouml;ffnen.'},
-		tLoadingServiceTaskTitle: {en: 'Added service not available?', de: 'Hinzugef&uuml;gter Dienst nicht erreichbar?'},
+		tLoadingServiceTaskTitle: {en: 'Service seems to be unresponsive.', de: 'Dienst evtl. nicht erreichbar.'},
 		tLoadingServiceTaskMessage: {en: 'Cancel loading capabilities?', de: 'M&ouml;chten Sie den Ladenvorgang abbrechen?'}
-    }
 }
 
 // initialize localizing
