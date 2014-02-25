@@ -20,25 +20,19 @@
 <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
   <dependencyManagement>
     <dependencies>
-        <!-- REMOVE FOR RELEASE -->
-		<dependency>
-			<groupId>de.ingrid</groupId>
-			<artifactId>ingrid-webmap-client</artifactId>
-            <version>${project.version}</version>
-            <type>war</type>
-		</dependency>
-		<dependency>
-			<groupId>de.ingrid.portal</groupId>
-			<artifactId>ingrid-portal-base</artifactId>
-            <version>${project.version}</version>
-            <type>war</type>
-		</dependency>
-		<dependency>
-			<groupId>de.ingrid.portal</groupId>
-			<artifactId>ingrid-portal-mdek-application</artifactId>
-            <version>${project.version}</version>
-            <type>war</type>
-		</dependency>
+        <dependency>
+          <groupId>de.ingrid.portal</groupId>
+          <artifactId>ingrid-portal-base</artifactId>
+                <!-- "Dynamic" VERSION replaced with release version cause submodule ! -->
+                <version>${project.version}</version>
+                <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>de.ingrid.portal</groupId>
+          <artifactId>ingrid-portal-mdek-application</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+        </dependency>
     </dependencies>
   </dependencyManagement>
 
