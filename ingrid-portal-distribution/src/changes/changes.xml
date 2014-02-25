@@ -28,6 +28,9 @@
 				IGE: Added new relation type "Nutzungsbedingungen". Added relation type
 				filter for table "references to".
 			</action>
+			<action type="add" dev="wemove" issue="REDMINE-131">
+				IGE: Added a dialog to inform the user when copying a metadata. This dialog can be hidden by a checkbox by setting a cookie value.
+			</action>
 			<action type="add" dev="wemove" issue="REDMINE-126">
 				IGE: Use Service-Url instead of getCapabilities-Url and append
 				parameters automatically.
@@ -35,7 +38,16 @@
 			<action type="add" dev="wemove" issue="REDMINE-130">
 				IGE: Check for invalid getCapabilities and possibility to replace them.
 			</action>
+			<action type="add" dev="wemove" issue="REDMINE-129">
+				IGE: Updated all views to use labels of object classes from codelist repository.
+			</action>
+			<action type="add" dev="wemove" issue="REDMINE-125,REDMINE-127">
+				IGE: GetCapabilities-Assistant extension.
+			</action>
 			<action type="add" dev="wemove" issue="REDMINE-192">
+				IGE: Add checkbox to available additional field.
+			</action>
+			<action type="add" dev="wemove" issue="INGRID-2241">
 				IGE: Add checkbox to available additional field.
 			</action>
 			<action type="add" dev="wemove" issue="REDMINE-258">
@@ -44,6 +56,10 @@
 			<action type="add" dev="wemove">
 				WebMapClient: Add Identifier to metadata info dialog.
 			</action>
+			<action type="add" dev="wemove" issue="REDMINE-135">
+				Portal: Define keywords to hide on detail view.
+			</action>
+			
 			<action type="update" dev="wemove" issue="REDMINE-137">
 				WebMapClient: Update frontend layout and UI.
 			</action>
@@ -78,10 +94,16 @@
 				Portal: Update detail view to flexible order of content.
 			</action>
 			<action type="update" dev="wemove">
+				Portal: Update WebMapClient localization for portal profiles.
+			</action>
+			<action type="update" dev="wemove">
 				Portal: Update Sachsen profile.
 			</action>
 			<action type="update" dev="wemove">
 				Portal: Update Hamburg profile.
+			</action>
+			<action type="update" dev="wemove">
+				Portal: Update DLZ-IT profile.
 			</action>
 			<action type="fix" dev="wemove" issue="INGRID-2321,INGRID-2334">
 				IGE: Import: Fix import of CSW Resource-Identifier. More robust mapping
