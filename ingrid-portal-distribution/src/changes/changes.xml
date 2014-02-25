@@ -5,9 +5,9 @@
 		<author email="joachim@wemove.com">Joachim Müller</author>
 	</properties>
 	<body>
-		<release version="3.4.0.-SNAPSHOT" date="2014-xx-xx"
+		<release version="3.4.0" date="2014-02-25"
 			description="Release InGrid 3.4">
-			<action type="add" dev="wemove" issue="REDMINE-134">
+			<action type="add" dev="wemove" issue="REDMINE-134,REDMINE-136">
 				WebMapClient: Activate layers by using "Zeige Karte" function and defined layer
 				identifier.
 			</action>
@@ -38,6 +38,42 @@
 			<action type="add" dev="wemove" issue="REDMINE-192">
 				IGE: Add checkbox to available additional field.
 			</action>
+			<action type="add" dev="wemove" issue="REDMINE-258">
+				WebMapClient: Save active service tree state into session.
+			</action>
+			<action type="add" dev="wemove">
+				WebMapClient: Add Identifier to metadata info dialog.
+			</action>
+			<action type="update" dev="wemove" issue="REDMINE-137">
+				WebMapClient: Update frontend layout and UI.
+			</action>
+			<action type="update" dev="wemove" issue="INGRID34-5">
+				WebMapClient: Update load saved services dialog.
+			</action>
+			<action type="update" dev="wemove" issue="INGRID-2316">
+				WebMapClient: Remove permalink function.
+			</action>
+			<action type="update" dev="wemove" issue="INGRID-2327">
+				WebMapClient: Closing the searcher info dialog does not show it anymore until clear browser cookie.
+			</action>
+			<action type="update" dev="wemove" issue="INGRID34-3">
+				WebMapClient: Localization of Admin-GUI.
+			</action>
+			<action type="update" dev="wemove" issue="INGRID34-4">
+				WebMapClient: Localization of message buttons. (Admin-GUI)
+			</action>
+			<action type="update" dev="wemove" issue="INGRID-2324">
+				WebMapClient: Update Admin-GUI layout and configuration order.
+			</action>
+			<action type="update" dev="wemove">
+				WebMapClient: Get initial map projection from configuration parameter "projections".
+			</action>
+			<action type="update" dev="wemove">
+				WebMapClient: Get maxExtent from capabilities entry "BoundingBox".
+			</action>
+			<action type="update" dev="wemove">
+				WebMapClient: Update Admin-GUI to save copyright, baselayer, featureInfo URL with one button.
+			</action>
 			<action type="update" dev="wemove" issue="REDMINE-121">
 				Portal: Update detail view to flexible order of content.
 			</action>
@@ -51,11 +87,14 @@
 				IGE: Import: Fix import of CSW Resource-Identifier. More robust mapping
 				of INSPIRE keywords to codelist entries.
 			</action>
-			<action type="fix" dev="wemove" issue="REDMINE-181">
+			<action type="fix" dev="wemove" issue="INGRID-2307,REDMINE-181">
 				WebMapClient: Fix outside definition of map extent at the admin-gui.
 			</action>
 			<action type="fix" dev="wemove" issue="REDMINE-182">
 				WebMapClient: Fix to move services on layer tree by icon.
+			</action>
+			<action type="fix" dev="wemove">
+				WebMapClient: Fix feature info dialog height.
 			</action>
 		</release>
 
