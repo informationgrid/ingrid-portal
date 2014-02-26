@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>3.4.0-SNAPSHOT</version>
+    <version>3.4.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -11,8 +11,8 @@
   <packaging>war</packaging>
   <name>Ingrid Portal Mdek</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek</developerConnection>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/tags/ingrid-portal-project-3.4.0/ingrid-portal-mdek</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/tags/ingrid-portal-project-3.4.0/ingrid-portal-mdek</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal-mdek</finalName>
@@ -42,7 +42,7 @@
         <configuration>
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
           <smtpHost>localhost</smtpHost>
-          <toAddresses></toAddresses>
+          <toAddresses />
         </configuration>
       </plugin>     
     </plugins>

@@ -3,7 +3,7 @@
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
     <!-- <artifactId>ingrid-base-pom</artifactId>-->
-    <version>3.4.0-SNAPSHOT</version>
+    <version>3.4.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -195,7 +195,7 @@
                   <fileset dir="target/dependency/resources" />
                 </copy>
                 <copy todir="target/installer">
-                  <fileset dir="target/dependency/utils"/>
+                  <fileset dir="target/dependency/utils" />
                 </copy>
               </tasks>
             </configuration>
