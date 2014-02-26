@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>3.4.0</version>
+    <version>3.5.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -11,8 +11,8 @@
   <packaging>war</packaging>
   <name>Ingrid Portal Base</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/tags/ingrid-portal-project-3.4.0/ingrid-portal-base</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/tags/ingrid-portal-project-3.4.0/ingrid-portal-base</developerConnection>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-base</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-base</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal</finalName>
