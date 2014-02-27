@@ -344,6 +344,8 @@
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/lib"/>
+        <!-- remove tomcat working dir to force compilation of JSPs -->
+        <delete dir="${installDir}/${tomcat-artifact}/work"/>
     </target>
     
     <target name="MoveFiles" depends="RemoveOldLibs">
