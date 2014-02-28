@@ -265,7 +265,7 @@
                                 <fmt:message key="dialog.admin.catalog.selectLocation.apply" />
                             </button>
                         </span>
-                        <span id="adminCatSpatialLoadingZone" style="float:right; z-index: 100; visibility:hidden;">
+                        <span id="spatialLoadingZone" style="float:right; z-index: 100; visibility:hidden;">
                             <img src="img/ladekreis.gif" />
                         </span>
                         <div class="fill"></div>
