@@ -194,11 +194,11 @@
             }
             
             function showLoadingZone(){
-                dojo.style("adminCatSpatialLoadingZone", "visibility", "visible");
+                dojo.style("spatialLoadingZone", "visibility", "visible");
             }
             
             function hideLoadingZone(){
-                dojo.style("adminCatSpatialLoadingZone", "visibility", "hidden");
+                dojo.style("spatialLoadingZone", "visibility", "hidden");
             }
             
             function showNoResults(){
