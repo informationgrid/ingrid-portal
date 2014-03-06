@@ -116,8 +116,11 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
                 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base-debug.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all-debug.js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers.js\"></script>" +
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers/Lang/"+languageString+".js\"></script>" +
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext/lib/GeoExt.js\"></script>"+
-        							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
+        							 "<script type=\"text/javascript\">OpenLayers.Lang.setCode('"+languageString+"');</script>"+ 
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/lang/"+languageString+".js\"></script>"+
+									 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
         							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style.css\" />"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs.ux/plugins/CustomTreeFeature.js\"></script>"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/proj4js/lib/proj4js-compressed.js\"></script>"+
@@ -130,6 +133,21 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/SimplePrint.js\"></script>"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Locale.js\"></script>"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/GeocoderComboBox.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/downloadify/js/swfobject.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/downloadify/js/downloadify.min.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/utils/flash.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/FormatStore.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Export.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Import.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerExportPanel.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerImportPanel.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerWindow.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerExportWindow.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Styler/ux/LayerStyleManager.js\"></script>"+
+        							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Styler/ux/widgets/StyleSelectorComboBox.js\"></script>"+
+        							   
+									 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/FeatureEditing.js\"></script>"+
+        							 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/css/feature-editing.css\" />"+  
         							 "<!-- custom code -->"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/config.js\"></script>"+
         							 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/Message.js\"></script>"+
@@ -179,8 +197,28 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
 	                "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/adapter/ext/ext-base.js\"></script>" +
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all.js\"></script>" +
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/OpenLayers.js\"></script>" +
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers/Lang/"+languageString+".js\"></script>" +
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext/script/GeoExt.js\"></script>"+
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs.ux/plugins/CustomTreeFeature.js\"></script>"+
+
+					 "<script type=\"text/javascript\">OpenLayers.Lang.setCode('"+languageString+"');</script>"+ 
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/lang/"+languageString+".js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/downloadify/js/swfobject.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/downloadify/js/downloadify.min.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/utils/flash.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/FormatStore.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Export.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Import.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerExportPanel.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerImportPanel.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerWindow.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerExportWindow.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Styler/ux/LayerStyleManager.js\"></script>"+
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Styler/ux/widgets/StyleSelectorComboBox.js\"></script>"+
+					   
+					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/FeatureEditing.js\"></script>"+
+					 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/css/feature-editing.css\" />"+  
+					 
 					 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
 					 "<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel-min.css\" />"+
 					 "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/proj4js/lib/proj4js-compressed.js\"></script>"+

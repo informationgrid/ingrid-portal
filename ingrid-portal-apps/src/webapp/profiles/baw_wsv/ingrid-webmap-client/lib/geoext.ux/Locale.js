@@ -215,7 +215,7 @@ Local = {
 		tMailToMapLink: {en: 'Link to map', de: 'Link zur Karte'},
 		tSettingsToolBar: {en: 'Settings', de: 'Einstellungen'},
 		tLegendToolBar: {en: 'Legend', de: 'Legende'},
-		tTransparenz: {en: 'Transparency', de: 'Transparenz'},
+		tTransparenz: {en: 'Visibility', de: 'Sichtbarkeit'},
 		tInformation: {en: 'Information', de: 'Information'},
 		tLoeschen: {en: 'Delete', de: 'L&ouml;schen'},
 		tZoomToLayerExtent: {en: 'Zoom to layer', de: 'Zoom auf Layer'},

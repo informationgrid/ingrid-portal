@@ -1161,6 +1161,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 	}
 
 	public HashMap getAddresses(String xpathExpression, boolean isForAdditionalInfo) {
+		return getAddresses(xpathExpression, isForAdditionalInfo, false);
+	}
+	
+	public HashMap getAddresses(String xpathExpression, boolean isForAdditionalInfo, boolean showAll) {
 		HashMap elementAddress = new HashMap();
 		
         ArrayList elementsAddress = new ArrayList();
@@ -1172,12 +1176,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     xpathExpression = "./idf:idfResponsibleParty";
                     if(XPathUtils.nodeExists(childNode, xpathExpression)){
                         Node subNode = XPathUtils.getNode(childNode, xpathExpression);
-                        addSingleAddress(elementsAddress, subNode, isForAdditionalInfo);    
+                        addSingleAddress(elementsAddress, subNode, isForAdditionalInfo, showAll);    
                     }
                     xpathExpression = "./gmd:CI_ResponsibleParty";
                     if(XPathUtils.nodeExists(childNode, xpathExpression)){
                         Node subNode = XPathUtils.getNode(childNode, xpathExpression);
-                        addSingleAddress(elementsAddress, subNode, isForAdditionalInfo);    
+                        addSingleAddress(elementsAddress, subNode, isForAdditionalInfo, showAll);    
                     }
                 }
             }
@@ -1188,7 +1192,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i = 0; i < nodeList.getLength(); i++){
-                addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo);
+                addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo, showAll);
             }
             
         }
@@ -1198,7 +1202,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i = 0; i < nodeList.getLength(); i++){
-                addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo);
+                addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo, showAll);
             }
             
         }
@@ -1207,11 +1211,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i = 0; i < nodeList.getLength(); i++){
-                addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo);
+                addSingleAddress(elementsAddress, nodeList.item(i), isForAdditionalInfo, showAll);
             }
         }
         
-        if(isForAdditionalInfo){
+        if(isForAdditionalInfo && !showAll){
             if(elementsAddress != null && elementsAddress.size() > 0){
             	HashMap a = (HashMap) elementsAddress.get(0);
             	if(a != null){
@@ -1257,7 +1261,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 	 * Private functiions
 	 *
 	 */
-	private void addSingleAddress(ArrayList elementsAddress, Node node, boolean isForAdditionalInfo) {
+	private void addSingleAddress(ArrayList elementsAddress, Node node, boolean isForAdditionalInfo, boolean showAll) {
         if (node != null) {
             HashMap element;
             String xpathExpression;
@@ -1294,8 +1298,17 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 
                 
                 if((isForAdditionalInfo && isMetadatumContact)){
-                	// render only email of MetadatumContact, see INGRID32-146
-                    addSingleMetaAddress(elementsAddress, node, title, isIdfResponsibleParty, true);
+                	if(showAll){
+                        element = addElementAddress("multiLine", title, "", "false", new ArrayList());
+                        ArrayList elements = (ArrayList) element.get("elements");
+                        
+                        addressEvaluateNode(elements, node, isIdfResponsibleParty, false);
+                        
+                        elementsAddress.add(element);
+                	}else{
+                    	// render only email of MetadatumContact, see INGRID32-146
+                        addSingleMetaAddress(elementsAddress, node, title, isIdfResponsibleParty, true);
+                	}
                 }else if (!isForAdditionalInfo && !isMetadatumContact){
                     element = addElementAddress("multiLine", title, "", "false", new ArrayList());
                     ArrayList elements = (ArrayList) element.get("elements");
