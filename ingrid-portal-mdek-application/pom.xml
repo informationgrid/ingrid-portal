@@ -11,8 +11,8 @@
   <packaging>war</packaging>
   <name>Ingrid Portal MDEK Application</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-mdek-application</developerConnection>
+    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/branches/ingrid-portal-3.5_REDMINE-304_JetspeedMigration/ingrid-portal-mdek-application</connection>
+    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/branches/ingrid-portal-3.5_REDMINE-304_JetspeedMigration/ingrid-portal-mdek-application</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal-mdek-application</finalName>
