@@ -3,7 +3,6 @@
 <script type="text/javascript">
 		var kml = null;
 		
-		var wms = null;
     </script>
 #if($kmlUrl && $kmlTitle)
 	<script type="text/javascript">
@@ -11,21 +10,9 @@
 	</script>
 #end
 
-#if($wms)
-	<script type="text/javascript">
-		wms = '$wms';
-    </script>
-#end
-
 <script type="text/javascript">
 
 mapClientCallbackHooks = null;
-
-var viewConfiguration = 'view';
-
-
-var mapUserId = '$mapUserId';
-
 
 </script>
 <div class="section">

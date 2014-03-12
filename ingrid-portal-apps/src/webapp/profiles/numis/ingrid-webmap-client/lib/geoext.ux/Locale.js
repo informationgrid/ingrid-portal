@@ -1,4 +1,4 @@
-function i18n(key, arrInsertValues) {
+i18n(key, arrInsertValues) {
     return Local.getLocalizedString(key, Local.languageCode, arrInsertValues);
 }
 
@@ -233,7 +233,9 @@ Local = {
 		tLoadDialogDelete: {en: 'Delete saved map.', de: 'Gespeicherte Karte l&ouml;schen.'},
 		tLoadDialogLink: {en: 'Open saved map in a new tab.', de: 'Gespeicherte Karte im neuen Tab &ouml;ffnen.'},
 		tLoadingServiceTaskTitle: {en: 'Service seems to be unresponsive.', de: 'Dienst evtl. nicht erreichbar.'},
-		tLoadingServiceTaskMessage: {en: 'Cancel loading capabilities?', de: 'M&ouml;chten Sie den Ladenvorgang abbrechen?'}
+		tLoadingServiceTaskMessage: {en: 'Cancel loading capabilities?', de: 'M&ouml;chten Sie den Ladenvorgang abbrechen?'},
+		tFullScreen: {en: 'Open map client on full screen', de: 'Darstellung der Kartenkomponente im Vollbildschirm'},
+		tPortal: {en: 'Open NUMIS', de: 'NUMIS &ouml;ffnen'}
     }
 }
 
