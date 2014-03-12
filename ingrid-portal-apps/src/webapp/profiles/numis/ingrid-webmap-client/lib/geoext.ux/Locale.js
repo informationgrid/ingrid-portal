@@ -1,4 +1,4 @@
-i18n(key, arrInsertValues) {
+function i18n(key, arrInsertValues) {
     return Local.getLocalizedString(key, Local.languageCode, arrInsertValues);
 }
 
