@@ -167,9 +167,9 @@ Local = {
         tVor: { en: 'Forward', de: 'Vor' },
         tWarning: { en: 'Warning', de: 'Warnung' },
         tWelcomeTextAdd: { en: 'a) Add a selected service from the <strong>provider/topic list</strong> to the current map viewer <br />b) Add an <strong>external service (WMS)</strong> by entering the GetCapabilities URL', de: 'Klicken Sie auf einen Kartendienst in der Rubrik <b>Anbieter</b> oder <b>Themen</b>, um eine Karte zu den <b>Aktiven Diensten</b> hinzuzuf&uuml;gen. Aktivieren Sie anschlie&szlig;end unter <b>Aktive Dienste</b> die Checkboxen vor den Kartenlayern, die in der Karte geladen werden sollen.' },
-        tWelcomeTextRemove: { en: 'Delete a selected service from the current map viewer', de: 'L&ouml;scht einen Kartendienste aus der Rubrik <b>Aktive Dienste</b>'},
+        tWelcomeTextRemove: { en: 'Delete a selected service from the current map viewer', de: 'L&ouml;scht einen Kartendienst aus der Rubrik <b>Aktive Dienste</b>'},
         tWelcomeTextRemoveAll: { en: 'Delete the last search results in the <strong>hit list</strong>', de: 'L&ouml;scht die <strong>Ergebnisliste</strong> der Suchanfrage'},
-        tWelcomeTextTransparency: { en: 'Apply layer <strong>transparency</strong> using the slider control', de: 'Steuert die Layer-Transparenz &uml;ber einen Schieberegler (Rubrik: Aktive Dienste)'},
+        tWelcomeTextTransparency: { en: 'Apply layer <strong>transparency</strong> using the slider control', de: 'Steuert die Layer-Transparenz &uuml;ber einen Schieberegler (Rubrik: Aktive Dienste)'},
         tWelcomeTextMetadata: { en: 'Display information (metadata) about selected map services or layers', de: 'Zeigt Informationen zu Kartendiensten oder Layern an'},
         tWelcomeTextExpand: { en: 'Open and close all layers in the tree structure by one click', de: 'a) Klappt alle Dienste eines <strong>Partners</strong> oder eines <strong>Themas</strong> auf / zu<br/>b) Klappt die  Layer aller  <strong>Aktiven Dienste</strong> auf / zu'},
         tWelcomeTextZoomLayerExtent: { en: 'Zoom to a layer’s visible area', de: 'Zoomt auf den sichtbaren Bereich eines Kartendienstes oder Layers'},
@@ -233,7 +233,9 @@ Local = {
 		tLoadDialogDelete: {en: 'Delete saved map.', de: 'Gespeicherte Karte l&ouml;schen.'},
 		tLoadDialogLink: {en: 'Open saved map in a new tab.', de: 'Gespeicherte Karte im neuen Tab &ouml;ffnen.'},
 		tLoadingServiceTaskTitle: {en: 'Service seems to be unresponsive.', de: 'Dienst evtl. nicht erreichbar.'},
-		tLoadingServiceTaskMessage: {en: 'Cancel loading capabilities?', de: 'M&ouml;chten Sie den Ladenvorgang abbrechen?'}
+		tLoadingServiceTaskMessage: {en: 'Cancel loading capabilities?', de: 'M&ouml;chten Sie den Ladenvorgang abbrechen?'},
+		tFullScreen: {en: 'Open map client on full screen', de: 'Darstellung der Kartenkomponente im Vollbildschirm'},
+		tPortal: {en: 'Open PortalU', de: 'PortalU &ouml;ffnen'}
     }
 }
 
