@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright 2004 The Apache Software Foundation
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
@@ -14,8 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<portlet-app id="jetspeed" version="1.0">
-
+<portlet-app version="1.0"
+    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+    
 <portlet id="IngridClearLayout">
     <portlet-name>IngridClearLayout</portlet-name>
     <display-name>Layout for Ingrid Portal Using Velocity, no layout decoration</display-name>
@@ -37,7 +42,7 @@ limitations under the License.
     </init-param>
     <init-param>
       <name>layoutType</name>
-      <value>OneColumns</value>
+      <value>OneColumn</value>
     </init-param>
     <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
@@ -124,10 +129,40 @@ limitations under the License.
     <resource-bundle>de.ingrid.portal.resources.PortalLayoutResources</resource-bundle>
 </portlet>
 
-<portlet id="VelocityOneColumn">
-    <portlet-name>VelocityOneColumn</portlet-name>
-    <display-name>One Column Layout Using Velocity</display-name>
+  <portlet id="SimpleLayoutPortlet">
+    <description>The SimpleLayoutPortlet requires a ViewPage layout template set through the portlet preferences
+      which provides its own layout algorithm</description>
+    <portlet-name>SimpleLayout</portlet-name>
+    <display-name>Simple readonly fixed Layout</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.LayoutPortlet</portlet-class>
     <init-param>
+      <name>ViewPage</name>
+      <value>columns</value>
+    </init-param>
+    <init-param>
+      <name>MaxPage</name>
+      <value>maximized</value>
+    </init-param>
+    <expiration-cache>0</expiration-cache>    
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>view</portlet-mode>
+    </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
+    <portlet-info>
+      <title>SimpleLayoutPortlet</title>
+      <short-title>SimpleLayout</short-title>
+    </portlet-info>
+  </portlet>
+  
+  <portlet id="VelocityOneColumn">
+    <portlet-name>VelocityOneColumn</portlet-name>
+    <display-name>One Column</display-name>
+    <display-name xml:lang="ja">Velocityを利用した 1 列レイアウト</display-name>
+    <display-name xml:lang="zh">基于Velocity的单列布局</display-name>
+    <display-name xml:lang="zh-TW">基於Velocity的單列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
+   <init-param>
       <name>ViewPage</name>
       <value>columns</value>
     </init-param>
@@ -147,7 +182,6 @@ limitations under the License.
       <name>layoutType</name>
       <value>OneColumn</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
@@ -155,15 +189,24 @@ limitations under the License.
       <portlet-mode>edit</portlet-mode>
       <portlet-mode>help</portlet-mode>      
     </supports>
+    <supports>
+      <mime-type>text/vnd.wap.wml</mime-type>      
+      <portlet-mode>view</portlet-mode>    
+    </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityOneColumn</title>
+      <title>One Column</title>
       <short-title>OneColumn</short-title>
     </portlet-info>
 </portlet>
 
 <portlet id="VelocityOneColumnTable">
     <portlet-name>VelocityOneColumnTable</portlet-name>
-    <display-name>One Column Layout Using Velocity And Tables</display-name>
+    <display-name>One Column with Tables</display-name>
+    <display-name xml:lang="ja">Velocity とテーブルを利用した 1 列レイアウト</display-name>
+    <display-name xml:lang="zh">基于Velocity表格的单列布局</display-name>
+    <display-name xml:lang="zh-TW">基於Velocity表格的單列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>tcolumns</value>
@@ -184,7 +227,6 @@ limitations under the License.
       <name>layoutType</name>
       <value>OneColumn</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
@@ -192,15 +234,20 @@ limitations under the License.
       <portlet-mode>edit</portlet-mode>
       <portlet-mode>help</portlet-mode>      
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityOneColumnTable</title>
+      <title>One Column with Tables</title>
       <short-title>OneColumnTable</short-title>
     </portlet-info>
 </portlet>
 
 <portlet id="VelocityTwoColumns">
     <portlet-name>VelocityTwoColumns</portlet-name>
-    <display-name>Two Columns Layout Using Velocity</display-name>
+    <display-name>Two Columns</display-name>
+    <display-name xml:lang="ja">Velocity を利用した 2 列レイアウト</display-name>
+    <display-name xml:lang="zh">基于Velocity的双列布局</display-name>
+    <display-name xml:lang="zh-TW">基於Velocity的雙列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>columns</value>
@@ -221,7 +268,10 @@ limitations under the License.
       <name>layoutType</name>
       <value>TwoColumns</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
+    <!-- <init-param>
+      <name>editorType</name>
+      <value>desktop</value>
+    </init-param> -->
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
@@ -229,15 +279,20 @@ limitations under the License.
       <portlet-mode>edit</portlet-mode>
       <portlet-mode>help</portlet-mode>      
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityTwoColumns</title>
+      <title>Two Columns</title>
       <short-title>TwoColumns</short-title>
     </portlet-info>
 </portlet>
 
 <portlet id="VelocityTwoColumnsSmallLeft">
     <portlet-name>VelocityTwoColumnsSmallLeft</portlet-name>
-    <display-name>Two Columns with a small Left column for navigation controls using Velocity</display-name>
+    <display-name>Two Columns (15%/85%)</display-name>
+    <display-name xml:lang="ja">Velocity を利用した左側にナビゲーションコントロール用の小さな列を持つ 2 列</display-name>
+    <display-name xml:lang="zh">基于Velocity，导航栏较窄的双列布局</display-name>
+    <display-name xml:lang="zh-TW">基於Velocity，導航欄較窄的雙列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>columns</value>
@@ -258,7 +313,6 @@ limitations under the License.
       <name>layoutType</name>
       <value>TwoColumns</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
@@ -266,16 +320,21 @@ limitations under the License.
       <portlet-mode>edit</portlet-mode>
       <portlet-mode>help</portlet-mode>      
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityTwoColumnsSmallLeft</title>
-      <short-title>TwoColumnsSmallLeft</short-title>
+      <title>Two Columns (15%/85%)</title>
+      <short-title>Two Columns (15%/85%)</short-title>
     </portlet-info>
 </portlet>
 
 
 <portlet id="VelocityThreeColumns">
     <portlet-name>VelocityThreeColumns</portlet-name>
-    <display-name>Three Columns Layout Using Velocity</display-name>
+    <display-name>Three Columns</display-name>
+    <display-name xml:lang="ja">Velocity を利用した 3 列レイアウト</display-name>
+    <display-name xml:lang="zh">基于Velocity的3列布局</display-name>
+    <display-name xml:lang="zh-TW">基於Velocity的3列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>columns</value>
@@ -296,7 +355,6 @@ limitations under the License.
       <name>layoutType</name>
       <value>ThreeColumns</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
@@ -304,15 +362,20 @@ limitations under the License.
       <portlet-mode>edit</portlet-mode>
       <portlet-mode>help</portlet-mode>      
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityThreeColumns</title>
+      <title>Three Columns</title>
       <short-title>ThreeColumns</short-title>
     </portlet-info>
 </portlet>
 
 <portlet id="VelocityThreeColumnsTable">
     <portlet-name>VelocityThreeColumnsTable</portlet-name>
-    <display-name>Three Columns Layout Using Velocity And Tables</display-name>
+    <display-name>Three Columns with Tables</display-name>
+    <display-name xml:lang="ja">Velocity とテーブルを利用した 3 列レイアウト</display-name>
+    <display-name xml:lang="zh">基于Velocity表格的3列布局</display-name>
+    <display-name xml:lang="zh-TW">基於Velocity表格的3列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>tcolumns</value>
@@ -333,7 +396,6 @@ limitations under the License.
       <name>layoutType</name>
       <value>ThreeColumns</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
@@ -341,15 +403,20 @@ limitations under the License.
       <portlet-mode>edit</portlet-mode>
       <portlet-mode>help</portlet-mode>      
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityThreeColumnsTable</title>
+      <title>Three Columns with Tables</title>
       <short-title>ThreeColumnsTable</short-title>
     </portlet-info>
 </portlet>
 
 <portlet id="VelocityOneColumnNoActions">
     <portlet-name>VelocityOneColumnNoActions</portlet-name>
-    <display-name>One Column Layout Using Velocity with No Page Actions allowed</display-name>
+    <display-name>One Column - No Actions</display-name>
+    <display-name xml:lang="ja">ページアクションのない Velocity を利用した 1 列レイアウト</display-name>
+    <display-name xml:lang="zh">没有页面状态、基于Velocity的单列布局</display-name>
+    <display-name xml:lang="zh-TW">沒有頁面狀態、基於Velocity的單列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>columns</value>
@@ -370,21 +437,29 @@ limitations under the License.
       <name>layoutType</name>
       <value>OneColumn</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
     </supports>
+    <supports>
+      <mime-type>text/vnd.wap.wml</mime-type>      
+      <portlet-mode>view</portlet-mode>    
+    </supports>    
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityOneColumn</title>
-      <short-title>OneColumn</short-title>
+      <title>One Column - No Actions</title>
+      <short-title>OneColumnNoActions</short-title>
     </portlet-info>
 </portlet>
 
 <portlet id="VelocityTwoColumnsNoActions">
     <portlet-name>VelocityTwoColumnsNoActions</portlet-name>
-    <display-name>Two Columns Layout Using Velocity with No Page Actions allowed</display-name>
+    <display-name>Two Columns Layout - No Actions</display-name>
+    <display-name xml:lang="ja">ページアクションのない Velocity を利用した 2 列レイアウト</display-name>
+    <display-name xml:lang="zh">没有页面状态、基于Velocity的双列布局</display-name>
+    <display-name xml:lang="zh-TW">沒有頁面狀態、基於Velocity的雙列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>columns</value>
@@ -405,21 +480,25 @@ limitations under the License.
       <name>layoutType</name>
       <value>TwoColumns</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityTwoColumns</title>
-      <short-title>TwoColumns</short-title>
+      <title>Two Columns - No Actions</title>
+      <short-title>TwoColumnsNoActions</short-title>
     </portlet-info>
 </portlet>
 
 <portlet id="VelocityThreeColumnsNoActions">
     <portlet-name>VelocityThreeColumnsNoActions</portlet-name>
-    <display-name>Three Columns Layout Using Velocity with No Actions allowed</display-name>
+    <display-name>Three Columns - No Actions</display-name>
+    <display-name xml:lang="ja">ページアクションのない Velocity を利用した 3 列レイアウト</display-name>
+    <display-name xml:lang="zh">没有页面状态、基于Velocity的3列布局</display-name>
+    <display-name xml:lang="zh-TW">沒有頁面狀態、基於Velocity的3列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>columns</value>
@@ -440,20 +519,24 @@ limitations under the License.
       <name>layoutType</name>
       <value>ThreeColumns</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityThreeColumns</title>
-      <short-title>ThreeColumns</short-title>
+      <title>Three Columns - No Actions</title>
+      <short-title>ThreeColumnsNoActions</short-title>
     </portlet-info>
 </portlet>
 <portlet id="VelocityTwoColumns2575NoActions">
     <portlet-name>VelocityTwoColumns2575NoActions</portlet-name>
-    <display-name>Two Columns Layout Using Velocity with No Page Actions allowed</display-name>
+    <display-name>Two Columns (25%/75%) No Actions</display-name>
+    <display-name xml:lang="ja">ページアクションのない Velocity を利用した 2 列レイアウト</display-name>
+    <display-name xml:lang="zh">没有页面状态、基于Velocity的双列布局</display-name>
+    <display-name xml:lang="zh-TW">沒有頁面狀態、基於Velocity的雙列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>columns</value>
@@ -474,21 +557,25 @@ limitations under the License.
       <name>layoutType</name>
       <value>TwoColumns</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityTwoColumns2575NoActions</title>
+      <title>Two Columns (25%/75%) No Actions</title>
       <short-title>VelocityTwoColumns2575NoActions</short-title>
     </portlet-info>
 </portlet>
 
 <portlet id="VelocityTwoColumns2575">
     <portlet-name>VelocityTwoColumns2575</portlet-name>
-    <display-name>25/75 Two Columns Layout Using Velocity</display-name>
+    <display-name>Two Columns (25%/75%)</display-name>
+    <display-name xml:lang="ja">Velocity を利用した 25/75 の 2 列レイアウト</display-name>
+    <display-name xml:lang="zh">基于Velocity的双列布局</display-name>
+    <display-name xml:lang="zh-TW">基於Velocity的雙列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>columns</value>
@@ -509,7 +596,6 @@ limitations under the License.
       <name>layoutType</name>
       <value>TwoColumns</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
@@ -517,15 +603,20 @@ limitations under the License.
       <portlet-mode>edit</portlet-mode>
       <portlet-mode>help</portlet-mode>      
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityTwoColumns2575NoActions</title>
-      <short-title>VelocityTwoColumns2575NoActions</short-title>
+      <title>Two Columns (25%/75%)</title>
+      <short-title>VelocityTwoColumns2575</short-title>
     </portlet-info>
 </portlet>
 
 <portlet id="VelocityTwoColumnsSmallLeftNoActions">
     <portlet-name>VelocityTwoColumnsSmallLeftNoActions</portlet-name>
-    <display-name>Two Columns with a small Left column for navigation controls using Velocity and No Actions</display-name>
+    <display-name>Two Columns (15%,85%) No Actions</display-name>
+    <display-name xml:lang="ja">アクションのない Velocity を利用した左側にナビゲーションコントロール用の小さな列を持つ 2 列</display-name>
+    <display-name xml:lang="zh">没有页面状态、基于Velocity，导航栏较窄的单列布局</display-name>
+    <display-name xml:lang="zh-TW">沒有頁面狀態、基於Velocity，導航欄較窄的雙列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>columns</value>
@@ -546,56 +637,25 @@ limitations under the License.
       <name>layoutType</name>
       <value>TwoColumns</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
       <portlet-mode>view</portlet-mode>
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityTwoColumnsSmallLeftNoActions</title>
-      <short-title>TwoColumnsSmallLeftNoActions</short-title>
-    </portlet-info>
-</portlet>
-
-<portlet id="FrameLayoutPortlet">
-    <portlet-name>FrameLayoutPortlet</portlet-name>
-    <display-name>Frame Layout Portlet</display-name>
-    <init-param>
-      <name>ViewPage</name>
-      <value>frames</value>
-    </init-param>
-    <init-param>
-      <name>MaxPage</name>
-      <value>maximized</value>
-    </init-param>
-    <init-param>
-      <name>columns</name>
-      <value>2</value>
-    </init-param>
-    <init-param>
-      <name>sizes</name>
-      <value>25%,75%</value>
-    </init-param>
-    <init-param>
-      <name>layoutType</name>
-      <value>Frame</value>
-    </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
-    <expiration-cache>0</expiration-cache>
-    <supports>
-      <mime-type>text/html</mime-type>
-      <portlet-mode>view</portlet-mode>
-    </supports>
-    <portlet-info>
-      <title>Frame Layout Portlet</title>
-      <short-title>Frame Layout</short-title>
+      <title>Two Columns (15%,85%) No Actions</title>
+      <short-title>2 Columns 15,85 No Actions</short-title>
     </portlet-info>
 </portlet>
 
 <portlet id="VelocityTwoColumnsTable">
     <portlet-name>VelocityTwoColumnsTable</portlet-name>
-    <display-name>Two Columns Layout Using Velocity And Tables</display-name>
+    <display-name>Two Columns with Tables</display-name>
+    <display-name xml:lang="ja">Velocity とテーブルを利用した 2 列レイアウト</display-name>
+    <display-name xml:lang="zh">基于Velocity表格的双列布局</display-name>
+    <display-name xml:lang="zh-TW">基於Velocity表格的雙列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <init-param>
       <name>ViewPage</name>
       <value>tcolumns</value>
@@ -616,7 +676,6 @@ limitations under the License.
       <name>layoutType</name>
       <value>TwoColumns</value>
     </init-param>
-    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
     <expiration-cache>0</expiration-cache>
     <supports>
       <mime-type>text/html</mime-type>
@@ -624,11 +683,52 @@ limitations under the License.
       <portlet-mode>edit</portlet-mode>
       <portlet-mode>help</portlet-mode>      
     </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
     <portlet-info>
-      <title>VelocityTwoColumnsTable</title>
-      <short-title>TwoColumnsTable</short-title>
+      <title>Two Columns with Tables</title>
+      <short-title>Two Columns Tables</short-title>
     </portlet-info>
 </portlet>
 
+<portlet id="VelocityFourColumns">
+    <portlet-name>VelocityFourColumns</portlet-name>
+    <display-name>Four Columns</display-name>
+    <display-name xml:lang="zh">基于Velocity表格的4列布局</display-name>
+    <display-name xml:lang="zh-TW">基於Velocity表格的4列佈局</display-name>
+    <portlet-class>org.apache.jetspeed.portlets.layout.MultiColumnPortlet</portlet-class>
+    <init-param>
+      <name>ViewPage</name>
+      <value>columns</value>
+    </init-param>
+    <init-param>
+      <name>MaxPage</name>
+      <value>maximized</value>
+    </init-param>
+    <init-param>
+      <name>columns</name>
+      <value>4</value>
+    </init-param>
+    <init-param>
+      <name>sizes</name>
+      <value>20%,30%,30%,20%</value>
+    </init-param>
+    <init-param>
+      <name>layoutType</name>
+      <value>FourColumns</value>
+    </init-param>
+    <expiration-cache>0</expiration-cache>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>view</portlet-mode>
+      <portlet-mode>edit</portlet-mode>
+      <portlet-mode>help</portlet-mode>      
+    </supports>
+    <resource-bundle>org.apache.jetspeed.portlets.layout.resources.LayoutResource</resource-bundle>
+    <portlet-info>
+      <title>Four Columns</title>
+      <short-title>FourColumns</short-title>
+    </portlet-info>
+</portlet>
+    
 </portlet-app>
 
