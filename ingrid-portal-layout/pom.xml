@@ -15,6 +15,7 @@
     <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/branches/ingrid-portal-3.5_REDMINE-304_JetspeedMigration/ingrid-portal-layout</developerConnection>
   </scm>
   <dependencies>
+    <!-- Overlay ! jetspeed-layouts will be extracted to this war ! -->
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-layouts</artifactId>
