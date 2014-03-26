@@ -5,6 +5,12 @@
 		<author email="joachim@wemove.com">Joachim Müller</author>
 	</properties>
 	<body>
+		<release version="3.5.0-SNAPSHOT" date="????-??-??"
+			<action type="fix" dev="wemove" issue="REDMINE-3367">
+				Portal: Fix SERVICE parameter of GetCapabilities in detail view (if not INSPIRE conform in CSW).
+			</action>
+ 		</release>
+       
 		<release version="3.4.0" date="2014-02-25"
 			description="Release InGrid 3.4">
 			<action type="add" dev="wemove" issue="REDMINE-134,REDMINE-136">
