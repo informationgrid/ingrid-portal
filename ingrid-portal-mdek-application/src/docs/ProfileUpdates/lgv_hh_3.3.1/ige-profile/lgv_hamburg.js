@@ -295,3 +295,27 @@ if (openDataKeyword) {
     var hhKeyword = openDataKeyword.addElementAsSibling("gmd:keyword");
     hhKeyword.addElement("gco:CharacterString").addText("#opendata_hh#");
 }
+
+// ========================================================================================================================
+// Zusätzlicher Javascript Code für "Open Data"-Checkbox (REDMINE-315)
+// ========================================================================================================================
+// ------------------------
+// JS
+// ------------------------
+dojo.subscribe("/afterInitDialog/LinksDialog", function() {
+
+    var handleRequiredOfFileFormat = function(typeName) {
+        var typeKey = UtilSyslist.getSyslistEntryKey(2000, typeName);
+        var container = dojo.byId("uiElement2240");
+
+        // If "Datendownload" then make it required
+        if (typeKey == 9990) {
+            dojo.addClass(container, "required");
+        } else {
+            dojo.removeClass(container, "required");
+        }
+    };
+
+    dojo.connect(dijit.byId("linksFromFieldName"), "onChange", handleRequiredOfFileFormat);
+
+});
