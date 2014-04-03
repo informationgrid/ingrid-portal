@@ -10,14 +10,17 @@
 
 <script type="text/javascript">
 
-//dojo.connect(_container_, "onLoad", function() {
-	var address = _container_.customParams.data;
+    var address = _container_.customParams.data;
 
-	var addressDiv = dojo.byId("addressPreviewContent");
-	var displayText = "";
+    var addressDiv = dojo.byId("addressPreviewContent");
+    var displayText = "";
 
-	addressDiv.innerHTML = detailHelper.renderAddressEntry(address).replace(/\n/g, '<br />');
-//});
+    addressDiv.innerHTML = detailHelper.renderAddressEntry(address).replace(/\n/g, '<br />');
+    
+    dojo.connect(_container_, "onLoad", function() {
+        console.log("Publishing event: '/afterInitDialog/AddressPreview'");
+        dojo.publish("/afterInitDialog/AddressPreview");
+    });
 
 </script>
 </head>

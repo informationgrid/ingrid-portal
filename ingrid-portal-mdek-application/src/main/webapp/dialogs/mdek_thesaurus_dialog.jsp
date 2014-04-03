@@ -42,6 +42,9 @@
                 init();
                 
                 dijit.byId("thesSearch").focus();
+
+                console.log("Publishing event: '/afterInitDialog/Thesaurus'");
+                dojo.publish("/afterInitDialog/Thesaurus");
             });
             
             function showLoadingZone(){
@@ -270,6 +273,8 @@
             //
             // This function copies the descriptor list to the main mdek searchtopic list
             acceptTopicList = function(){
+                if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/Thesaurus")) return;
+
                 var destGrid = null;//dijit.byId("thesaurusTerms").store;
                 
                 // get the correct store from the parameter of this widget

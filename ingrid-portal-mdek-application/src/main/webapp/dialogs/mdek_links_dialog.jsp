@@ -13,10 +13,6 @@
             
             var scriptScope = _container_;
             
-            var generalUiInputElements = [["linksFromFieldName", "linksFromFieldNameLabel"]];
-            var objUiInputElements = [["linksToObjectName", "linksToObjectNameLabel"], ["linksToObjectClass", "linksToObjectClassLabel"]];
-            var urlUiInputElements = [["linksToURLName", "linksToURLNameLabel"], ["linksToURL", "linksToURLLabel"]];
-            
             // All the possible values for the select box "Verweisbeziehungen"
             var syslist2000Map = [];
 
@@ -34,6 +30,8 @@
                 def.then(function(syslistData) {
                     syslist2000Map = UtilSyslist.convertSysListToTableData(syslistData);
                     init();
+                    console.log("Publishing event: '/afterInitDialog/LinksDialog'")
+                    dojo.publish("/afterInitDialog/LinksDialog");
                 });
             }
 
@@ -201,27 +199,19 @@
             // marks fields if wrong input
             validateInputElements = function() {
                 var valid = true;
-                var objSelected = dojo.byId("linksLinkType1").checked;
-                var validate = function(widgetLabelList) {
-                    for (var i in widgetLabelList) {
-                        var val = dijit.byId(widgetLabelList[i][0]).getValue();
-                        if (!val || val == "") {
-                            dojo.addClass(dojo.byId(widgetLabelList[i][1]), "important");
-                            valid = false;
-                        }
+                
+                var visibleRequiredElements = dojo.query(".header .required .dijitTextBox, .header .required .dijitSelect, #linkToObject:not(.hide) .required .dijitTextBox, #linkToObject:not(.hide) .required .dijitSelect, #linkToURL:not(.hide) .required .dijitTextBox, #linkToURL:not(.hide) .required .dijitSelect", "pageDialog").map(function(item) {return item.getAttribute("widgetid");});
+
+                dojo.forEach(visibleRequiredElements, function(id){
+                    var value = dijit.byId(id).get("value");
+                    if (!value || value === "") {
+                        valid = false;
+                        setErrorLabel(id);
                     }
-                }
-                
-                validate(generalUiInputElements);
-                
-                if (objSelected) {
-                    validate(objUiInputElements);
-                }
-                else {
-                    validate(urlUiInputElements);
-                }
+                });
+
                 return valid;
-            }
+            };
 
             // Initialises the 'linksFromFieldName' select box depending on the current obj class and the filter id
             function initReferenceWidget(filter){
@@ -283,6 +273,12 @@
             }
 
             saveLink = function(){
+                var params = { abort: false };
+                // do some externally defined actions which can abort the closing of the dialog
+                console.log("Publishing event: '/onBeforeDialogAccept/LinksDialog' with parameter 'abort'");
+                dojo.publish("/onBeforeDialogAccept/LinksDialog", [params]);
+                if (params.abort) return;
+
                 var objSelected = dojo.byId("linksLinkType1").checked;
 
                 // validate input !
@@ -405,14 +401,14 @@
             
             function selectLinkType(e) {
                 if (this.id == "linksLinkType2" || e == "url") {
-                    document.getElementById("linkToObject").style.display = "none";
-                    document.getElementById("linkToURL").style.display = "block";
+                    dojo.addClass("linkToObject", "hide");
+                    dojo.removeClass("linkToURL", "hide");
                     document.getElementById("linksLinkType1").checked = false;
                     document.getElementById("linksLinkType2").checked = true;
-                }
-                else {
-                    document.getElementById("linkToObject").style.display = "block";
-                    document.getElementById("linkToURL").style.display = "none";
+
+                } else {
+                    dojo.removeClass("linkToObject", "hide");
+                    dojo.addClass("linkToURL", "hide");
                     document.getElementById("linksLinkType1").checked = true;
                     document.getElementById("linksLinkType2").checked = false;
                 }
@@ -468,7 +464,7 @@
                                 <fmt:message key="dialog.links.source" />
                             </label>
                         </span>
-                        <div class="outlined">
+                        <div class="outlined header">
                             <span class="outer">
                                 <div>
                                     <span class="label">
@@ -489,7 +485,7 @@
                                         </label>
                                     </span>
                                     <span class="input">
-                                        <input id="linksFromFieldName" style="width: 100%;" maxLength="255">
+                                        <input id="linksFromFieldName" style="width: 100%;" maxLength="255" required="true">
                                     </span>
                                 </div>
                             </span>
@@ -542,7 +538,7 @@
                                             <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="assignObjectDialogLink" href="javascript:void(0);" onClick="javascript:showAssignObjectDialog();" title="<fmt:message	key="dialog.links.selectObject" /> [Popup]"><fmt:message key="dialog.links.selectObject" /></a>
                                         </span>
                                         <span class="input">
-                                            <input type="text" id="linksToObjectName" name="linksToObjectName" disabled="true" dojoType="dijit.form.ValidationTextBox" style="width: 100%;" />
+                                            <input type="text" id="linksToObjectName" name="linksToObjectName" disabled="true" dojoType="dijit.form.ValidationTextBox" style="width: 100%;"  required="true" />
                                         </span>
                                     </div>
                                 </span>
@@ -554,7 +550,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" id="linksToObjectClass" name="linksToObjectClass" style="width:100%;" disabled="true" />
+                                            <input type="text" id="linksToObjectClass" name="linksToObjectClass" style="width:100%;" disabled="true" required="true"/>
                                         </span>
                                     </div>
                                 </span>
@@ -582,7 +578,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxlength="255" id="linksToURLName" name="linksToURLName" dojoType="dijit.form.ValidationTextBox" style="width:100%;" />
+                                            <input type="text" maxlength="255" id="linksToURLName" name="linksToURLName" dojoType="dijit.form.ValidationTextBox" style="width:100%;" required="true"/>
                                         </span>
                                     </div>
                                 </span>
@@ -594,7 +590,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxLength="255" id="linksToURL" name="linksToURL" dojoType="dijit.form.ValidationTextBox" style="width:100%;" />
+                                            <input type="text" maxLength="255" id="linksToURL" name="linksToURL" dojoType="dijit.form.ValidationTextBox" style="width:100%;" required="true" />
                                         </span>
                                     </div>
                                 </span>

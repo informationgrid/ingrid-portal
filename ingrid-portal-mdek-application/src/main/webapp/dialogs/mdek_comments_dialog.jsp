@@ -58,6 +58,9 @@ scriptScope.init = function() {
 	
 		var setDirtyFlag = function(){ dirtyFlag = true; }
 		dojo.connect(UtilGrid.getTable("commentCommentsTable"), "onDataChanged", setDirtyFlag);
+
+        console.log("Publishing event: '/afterInitDialog/Comments'");
+        dojo.publish("/afterInitDialog/Comments");
 };
 
 scriptScope.addComment = function() {

@@ -18,6 +18,9 @@
             dojo.connect(_container_, "onLoad", function(){
                 dijit.byId("spatialAssistCS").setStore(dijit.byId("spatialRefLocationSelect").store);// spatialReferenceStore
                 resetRequiredElements();
+
+                console.log("Publishing event: '/afterInitDialog/SpatialAssistant'");
+                dojo.publish("/afterInitDialog/SpatialAssistant");
             });
             dojo.addOnUnload(function(){
             
@@ -60,6 +63,8 @@ resetRequiredElements = function() {
             }
             
             scriptScope.addLocation = function(){
+                if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/SpatialAssistant")) return;
+
                 if (!validateInput()) {
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.fillAllFieldsHint' />", dialog.WARNING);
                     return;

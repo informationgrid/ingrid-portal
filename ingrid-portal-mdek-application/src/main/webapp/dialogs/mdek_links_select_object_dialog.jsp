@@ -118,6 +118,8 @@ init = function() {
 };
 
 assignObject = function() {
+    if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/SelectObject")) return;
+
 	var node = dijit.byId("treeAssignObj").selectedNode;
 	if (node) {
 		var retVal = {};
@@ -133,6 +135,9 @@ assignObject = function() {
 
 dojo.addOnLoad(function() {
 	init();
+
+    console.log("Publishing event: '/afterInitDialog/SelectObject'");
+    dojo.publish("/afterInitDialog/SelectObject");
 });
 dojo.addOnUnload(function() {
 	// If the dialog was cancelled via the dialogs close button

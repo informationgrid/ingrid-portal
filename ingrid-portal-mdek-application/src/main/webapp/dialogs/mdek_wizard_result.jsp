@@ -10,6 +10,9 @@
     dojo.connect(_container_, "onLoad", function(){
         scopeWizardResults.hideResults();
         scopeWizardResults.createDOMElements();
+
+        console.log("Publishing event: '/afterInitDialog/WizardResults'");
+        dojo.publish("/afterInitDialog/WizardResults");
     });
     
     scopeWizardResults.createDOMElements = function() {
@@ -412,6 +415,8 @@
     }
 
     scopeWizardResults.addValuesToObject = function(/*boolean*/applyAll) {
+        if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/WizardResults")) return;
+
         // close dialog in the beginning before other popups prevent this!
         this.closeThisDialog();
 

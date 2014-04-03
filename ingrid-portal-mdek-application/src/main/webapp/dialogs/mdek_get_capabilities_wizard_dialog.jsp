@@ -54,6 +54,9 @@ dojo.connect(_container_, "onLoad", function() {
         var checkedValue = dijit.byId("assistantCheckAll").checked;
         scopeWizardResults.checkAll( checkedValue );
     } );
+
+    console.log("Publishing event: '/afterInitDialog/CapabilitiesWizard'");
+    dojo.publish("/afterInitDialog/CapabilitiesWizard");
 });
 
 

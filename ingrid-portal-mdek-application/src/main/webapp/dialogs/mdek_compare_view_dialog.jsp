@@ -13,7 +13,12 @@ dojo.connect(_container_, "onLoad", function(){
 
 	ObjectService.getPublishedNodeData(nodeOld.id,
 		{
-			callback:function(res) { renderNodeData(res, nodeDataNew); },
+			callback:function(res) {
+                renderNodeData(res, nodeDataNew);
+
+                console.log("Publishing event: '/afterInitDialog/ObjectCompare'");
+                dojo.publish("/afterInitDialog/ObjectCompare");
+            },
 			errorHandler:function(message) {console.debug("Error in mdek_compare_view_dialog.jsp: Error while waiting for published nodeData: " + message); displayErrorMessage(message);}
 		}
 	);

@@ -11,7 +11,10 @@
 <script type="text/javascript">
 var scriptScope = this;
 
-//dojo.addOnLoad(function() {});
+dojo.connect(_container_, "onLoad", function() {
+	console.log("Publishing event: '/afterInitDialog/ChooseWizard'");
+    dojo.publish("/afterInitDialog/ChooseWizard");
+});
 
 openWizard = function() {
 	var generalWizardSelected = dojo.byId("assistantRadioSelect1").checked;

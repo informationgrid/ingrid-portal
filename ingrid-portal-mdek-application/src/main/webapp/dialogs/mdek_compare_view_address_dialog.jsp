@@ -11,7 +11,12 @@ dojo.connect(_container_, "onLoad", function() {
 
 	AddressService.getPublishedAddressData(nodeOld.id,
 		{
-			callback:function(res) { renderNodeData(res, nodeDataNew); },
+			callback:function(res) {
+				renderNodeData(res, nodeDataNew);
+
+	            console.log("Publishing event: '/afterInitDialog/AddressCompare'");
+	            dojo.publish("/afterInitDialog/AddressCompare");
+			},
 			errorHandler:function(message) {console.debug("Error in mdek_compare_view_address_dialog.jsp: Error while waiting for published nodeData: " + message); displayErrorMessage(message); }
 		}
 	);

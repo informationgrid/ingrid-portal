@@ -35,6 +35,8 @@ html> /**/ body .bottomRight {
                 }
             }
         );
+        console.log("Publishing event: '/afterInitDialog/SpatialNavigator'");
+        dojo.publish("/afterInitDialog/SpatialNavigator");
     });
 //});
 
@@ -183,7 +185,7 @@ findLocationTopics = function() {
 // 'Add Button' onClick function
 // This function adds the location topics to the main geothesaurus table
 addLocationTopics = function() {
-	//var store = dijit.byId("spatialRefAdminUnit").store;
+	if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/SpatialNavigator")) return;
 
 	dojo.forEach(checkboxArray, function(item) {
 		if (!item.checked) {

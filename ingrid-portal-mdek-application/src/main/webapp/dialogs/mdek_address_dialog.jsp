@@ -56,6 +56,9 @@
                 dojo.connect(dojo.byId("addressSearchFirstname"), "onkeypress", startSearchOnEnter);
                 
                 dijit.byId("addressSearchUnit").focus();
+
+                console.log("Publishing event: '/afterInitDialog/Addresses'");
+                dojo.publish("/afterInitDialog/Addresses");
             });
             
             function loadAddressData(node, callback_function){
@@ -206,6 +209,8 @@
             }
             
             addSelectedAddressFromTree = function(){
+                if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/AddressesFromTree")) return;
+
                 var selectedItem = dijit.byId("treeAdr").selectedNode.item;
                 
                 if (selectedItem) {
@@ -221,6 +226,8 @@
             }
             
             addSelectedAddress = function(){
+                if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/Addresses")) return;
+
                 var selectedNodes = UtilGrid.getSelectedData("addressSearchResultsTable");//dijit.byId("addressSearchResultsTable").selection.getSelected();
                 
                 if (selectedNodes.length > 0) {

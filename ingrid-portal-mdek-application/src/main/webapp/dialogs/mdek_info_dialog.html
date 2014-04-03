@@ -19,6 +19,9 @@ dojo.connect(_container_, "onLoad", function() {
         callback: function(res) { setBackendVersionInformation(res); },
         errorHandler: function(message) { console.debug("Error: " + message); }
     });
+
+    console.log("Publishing event: '/afterInitDialog/Info'");
+    dojo.publish("/afterInitDialog/Info");
 });
 
 function setVersionInformation(ver) {

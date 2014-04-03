@@ -66,6 +66,9 @@ dojo.connect(_container_, "onLoad", function(){
 	//addressClassWidget.dataProvider.setData(valueList);
 	UtilStore.updateWriteStore("addressClassSelect", valueList, {label:'0', identifier:'1'});
 	addressClassWidget.setValue(valueList[0][1]);
+
+    console.log("Publishing event: '/afterInitDialog/AddressSelectClass'");
+    dojo.publish("/afterInitDialog/AddressSelectClass");
 });
 
 dojo.connect(_container_, "onUnload", function(){
@@ -79,6 +82,7 @@ dojo.connect(_container_, "onUnload", function(){
 
 // 'Yes Button' onClick function
 scriptScope.yesButtonFunc = function() {
+	if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/AddressSelectClass")) return;
 	// Callback with selected address class
 	var caller = this.customParams.resultHandler;
     var value = parseInt(dijit.byId("addressClassSelect").getValue());

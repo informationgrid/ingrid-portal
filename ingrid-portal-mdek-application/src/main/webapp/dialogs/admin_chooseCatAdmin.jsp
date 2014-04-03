@@ -27,7 +27,11 @@
         var usersChoiceStore = new dojo.data.ItemFileWriteStore(
             {data: {items: preparedData, identifier: 'id',label: 'label'}}
         );
-        //usersChoice.setStore(newStore);
+        
+        dojo.connect(_container_, "onLoad", function() {
+            console.log("Publishing event: '/afterInitDialog/ChooseCatAdmin'");
+            dojo.publish("/afterInitDialog/ChooseCatAdmin");
+        });
         
         function prepareData(users) {
             var data = [];

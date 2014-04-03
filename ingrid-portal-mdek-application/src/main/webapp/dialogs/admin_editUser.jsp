@@ -36,6 +36,11 @@
             dojo.byId("edit_login").disabled = false;
             
         }
+
+        dojo.connect(_container_, "onLoad", function() {
+            console.log("Publishing event: '/afterInitDialog/EditUser'");
+            dojo.publish("/afterInitDialog/EditUser");
+        });
         
         function updateUser() {
             var user = {};

@@ -64,6 +64,9 @@ init = function() {
 
 dojo.addOnLoad(function() {
 	init();
+
+    console.log("Publishing event: '/afterInitDialog/ThesaurusAssistant'");
+    dojo.publish("/afterInitDialog/ThesaurusAssistant");
 });
 
 function showLoadingZone() {
@@ -172,6 +175,8 @@ removeAll = function() {
 //
 // This function copies the descriptor list to the main mdek topic list
 applyChanges = function() {
+    if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/ThesaurusAssistant")) return;
+
 	var resultTopics = UtilGrid.getTableData("resultList");
 
 	if (resultTopics) {

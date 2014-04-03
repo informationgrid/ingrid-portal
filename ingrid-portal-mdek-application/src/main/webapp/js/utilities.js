@@ -2679,3 +2679,13 @@ UtilThesaurus.addInspireTopics = function(inspireTopics) {
 		console.debugShallow(error);
 	}
 }
+
+var UtilEvents = {};
+
+UtilEvents.publishAndContinue = function(evt) {
+	var params = { abort: false };
+    // do some externally defined actions which can abort the closing of the dialog
+    console.log("Publishing event: '" + evt + "' with parameter 'abort'");
+    dojo.publish(evt, [params]);
+    return !params.abort;
+}

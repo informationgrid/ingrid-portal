@@ -56,6 +56,9 @@ dojo.connect(_container_, "onLoad", function() {
             this.refreshView();
         }));
     }
+
+    console.log("Publishing event: '/afterInitDialog/AddressDetail'");
+    dojo.publish("/afterInitDialog/AddressDetail");
 });
 
 scriptScopeDetailViewAddr.refreshView = function() {

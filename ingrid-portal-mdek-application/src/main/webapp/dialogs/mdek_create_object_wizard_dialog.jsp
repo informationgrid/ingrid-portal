@@ -32,6 +32,9 @@ new dojox.layout.ContentPane({
     } else {*/
         dojo.connect(thisDialog, "onLoad", function(){
             init();
+
+            console.log("Publishing event: '/afterInitDialog/CreateObjectWizard'");
+            dojo.publish("/afterInitDialog/CreateObjectWizard");
         });
     //}
 //});

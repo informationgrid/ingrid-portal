@@ -36,6 +36,9 @@ dojo.connect(operationsScriptScope, "onLoad", function(){
     var def = createDOMElements();
 	def.then(init);
 	def.then(disableGUIOnWrongPermission);
+
+    console.log("Publishing event: '/afterInitDialog/Operations'");
+    dojo.publish("/afterInitDialog/Operations");
 });
 
 /*
@@ -326,6 +329,8 @@ isValidOperation = function(op) {
 // Save/Add Button onClick function
 //
 saveOperation = function() {
+    if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/Operations")) return;
+
 	var operation = getOperation();
 	if (!isValidOperation(operation)) {
   		dialog.show("<fmt:message key='general.error' />", "<fmt:message key='links.fillRequiredFieldsHint' />", dialog.WARNING);

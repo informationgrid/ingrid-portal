@@ -58,6 +58,9 @@ dojo.connect(_container_, "onLoad", function() {
     dojo.connect(dijit.byId("showSubTree"),             "onClick", dojo.hitch(this, "refreshView"));
     dojo.connect(dijit.byId("showDetailedView"),        "onClick", dojo.hitch(this, "refreshView"));
     dojo.connect(dijit.byId("showSubordinateObjects"),  "onClick", dojo.hitch(this, "refreshView"));
+
+    console.log("Publishing event: '/afterInitDialog/ObjectDetail'");
+    dojo.publish("/afterInitDialog/ObjectDetail");
 });
 
 scriptScopeDetailView.refreshView = function() {

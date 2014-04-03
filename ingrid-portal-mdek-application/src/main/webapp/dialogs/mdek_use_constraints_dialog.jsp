@@ -14,6 +14,9 @@ var constraintsScriptScope = _container_;
 dojo.connect(constraintsScriptScope, "onLoad", function(){
     var def = createDOMElements();
     def.then(init);
+
+    console.log("Publishing event: '/afterInitDialog/UseConstraints'");
+    dojo.publish("/afterInitDialog/UseConstraints");
 });
 
 function createDOMElements() {
