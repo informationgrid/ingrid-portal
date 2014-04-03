@@ -223,41 +223,65 @@ function applyRuleOpenData() {
         }
     });
     
-    dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
+    // TODO: change to onClick!!! otherwise it will be called when object is loaded!
+    dojo.connect(dijit.byId("isOpenData"), "onClick", function(isChecked) {
         // get link for use constraints which will be changed depending on the
         // state of the open data checkbox
         var link = dojo.byId("availabilityUseConstraintsLink");
         var onclickValue = link.attributes.onclick.nodeValue;
         
-        if (isChecked) {
-            // automatically add access constraint 
-            var data = UtilGrid.getTableData('availabilityAccessConstraints');
-            var entryExists = dojo.some(data, function(item) {
-                if (item.title == "keine") return true;
-            });
-            if (!entryExists) {
-                data.push({title: "keine"});
-                UtilGrid.setTableData('availabilityAccessConstraints', data);
+        if (this.checked) {
+            var def = new dojo.Deferred();
+            var self = this;
+            if (dojo.cookie(COOKIE_HIDE_OPEN_DATA_HINT) !== "true") {
+                dialog.show(message.get("dialog.general.info"), message.get("hint.selectOpenData"), dialog.INFO,  
+                    [
+                        { caption: message.get("general.ok.hide.next.time"), type: "checkbox", 
+                            action: function(newValue) {
+                                console.debug("cookie: " + newValue);
+                                dojo.cookie(COOKIE_HIDE_OPEN_DATA_HINT, newValue, {expires: 730});
+                            }
+                        },
+                        { caption: message.get("general.cancel"),
+                            action: function() {
+                                // reset checkbox state
+                                self.set("checked", false);
+                            }
+                        },
+                        { caption: message.get("general.ok"),
+                            action: function() {
+                                def.resolve();
+                            }
+                        }
+                    ]);
+            } else {
+                def.resolve();
             }
-            
-            // change codelist for 'availabilityUseConstraints'
-            link.attributes.onclick.nodeValue = onclickValue.replace(/(listId:).*'}/, "$1 '6500'}");
-            
-            // show categories
-            dojo.removeClass("uiElement6020", "hide");
-            
-            // make field mandatory
-            dojo.addClass("uiElement6020", "required");
-            
-            // add check for url reference of type download when publishing
-            // we check name and not id cause is combo box ! id not adapted yet if not saved !
-            openDataLinkCheck = dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
-                // get name of codelist entry for entry-id "9990" = "Download of data"/"Datendownload"
-                var entryNameDownload = UtilSyslist.getSyslistEntryName(2000, 9990);
-                var data = UtilGrid.getTableData("linksTo");
-                var containsDownloadLink = dojo.some(data, function(item) { if (item.relationTypeName == entryNameDownload) return true; });
-                if (!containsDownloadLink)
-                    notPublishableIDs.push("linksTo");
+
+            def.then(function() {
+                // automatically replace access constraint with "keine"
+                var data = [{title: UtilSyslist.getSyslistEntryName(6010, 1) }];
+                UtilGrid.setTableData('availabilityAccessConstraints', data);
+                
+                // change codelist for 'availabilityUseConstraints'
+                link.attributes.onclick.nodeValue = onclickValue.replace(/(listId:).*'}/, "$1 '6500'}");
+                
+                // show categories
+                dojo.removeClass("uiElement6020", "hide");
+                
+                // make field mandatory
+                dojo.addClass("uiElement6020", "required");
+                
+                // add check for url reference of type download when publishing
+                // we check name and not id cause is combo box ! id not adapted yet if not saved !
+                openDataLinkCheck = dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
+                    // get name of codelist entry for entry-id "9990" = "Download of data"/"Datendownload"
+                    var entryNameDownload = UtilSyslist.getSyslistEntryName(2000, 9990);
+                    var data = UtilGrid.getTableData("linksTo");
+                    var containsDownloadLink = dojo.some(data, function(item) { if (item.relationTypeName == entryNameDownload) return true; });
+                    if (!containsDownloadLink)
+                        notPublishableIDs.push("linksTo");
+                });
             });
         } else {
             // change codelist for 'availabilityUseConstraints'

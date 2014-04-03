@@ -5,6 +5,7 @@
 var menuEventHandler = {};
 
 var COOKIE_HIDE_COPY_HINT = "ingrid.ige.copy.hint";
+var COOKIE_HIDE_OPEN_DATA_HINT = "ingrid.open.data.hint";
 
 // Singleton
 // menuEventHandler = new function MenuEventHandler() {}

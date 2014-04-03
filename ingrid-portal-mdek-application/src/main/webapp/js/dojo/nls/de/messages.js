@@ -1025,6 +1025,7 @@
     "hint.datasetUpdatedFromCapabilities":"Der Datensatz wurde erfolgreich aktualisiert.",
     "hint.noEntriesFromParent":"Keine neuen Eintr&auml;ge vom &uuml;bergeordneten Objekt!",
     "hint.addressFromParentAdded":"Adressdaten von übergeordneter Adresse übernommen!",
+    "hint.selectOpenData":"Wird diese Auswahl gewählt, so werden alle Zugangsbeschränkungen entfernt und durch 'keine' ersetzt. Möchten Sie fortfahren?",
     
     "warning.address.inherit":"Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Land</li></ul>",
     "warning.address.inherit.to.children":"Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?",
