@@ -90,7 +90,7 @@ Local = {
         tGebuehren : { en: 'Fees', de: 'Geb&uuml;hren' },
         tHilfe : { en: 'Help', de: 'Hilfe' },
         tHinweis : { en: 'Hint', de: 'Hinweis' },
-        tHintZoomToView : { en: '<p class="hint">You may have to zoom into the map to see the layers of the external service. The provider of the service is responsible for the display of the service. PortalU has no influence here.</p>', de: '<p class="hint">Nutzen Sie zur Darstellung einzelner Layer die Zoom-Funktion. F&uuml;r die Inhalte des Dienstes ist der jeweilige Betreiber verantwortlich.</p>' },
+        tHintZoomToView : { en: '<p class="hint">You may have to zoom into the map to see the layers of the external service. The provider of the service is responsible for the display of the service. GeoPortal.WSV has no influence here.</p>', de: '<p class="hint">Nutzen Sie zur Darstellung einzelner Layer die Zoom-Funktion. F&uuml;r die Inhalte des Dienstes ist der jeweilige Betreiber verantwortlich.</p>' },
 		tHinzufuegen : { en: 'Add', de:'Hinzuf&uuml;gen'},
 		tIdAuswaehlen : { en: 'Select an ID of an administrative unit', de: 'ID einer Administrativen Einheit ausw&auml;hlen' },
         tInfo : { en: 'Info', de: 'Info' },
