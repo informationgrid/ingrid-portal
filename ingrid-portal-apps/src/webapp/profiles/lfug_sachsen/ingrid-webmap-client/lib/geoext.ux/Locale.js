@@ -142,7 +142,7 @@ Local = {
         tStadt : { en: 'City', de: 'Stadt' },
         tStrecke : { en: 'Distance', de: 'Strecke' },
         tSuccessMapSaved : { en: 'The map has been saved.', de: 'Die Karte wurde gespeichert.' },
-        tSuccessSearching : { en: 'Search successful.', de: 'Suche erfolgreich.' },
+        tSuccessSearching : { en: 'Search successful.', de: 'Suche wurde ausgef&uuml;hrt.' },
         tSuchbegriffEingeben : { en: '<p>Enter search query</p>', de: '<p><b>Suchraum:</b> <br>Neben den unter "Themen" und "Anbieter" eingebundenen Kartendiensten werden auch Angaben zu Kartendiensten aus Umweltdatenkataloge bei der Suche berücksichtigt.</p>' },
         tSuche : { en: 'Search', de: 'Suche' },
         tSuchergebnisseLoeschen : { en: 'Delete search results', de: 'Suchergebnisse l&ouml;schen' },
@@ -235,7 +235,8 @@ Local = {
 		tLoadingServiceTaskTitle: {en: 'Service seems to be unresponsive.', de: 'Dienst evtl. nicht erreichbar.'},
 		tLoadingServiceTaskMessage: {en: 'Cancel loading capabilities?', de: 'M&ouml;chten Sie den Ladenvorgang abbrechen?'},
 		tFullScreen: {en: 'Open map client on full screen', de: 'Darstellung der Kartenkomponente im Vollbildschirm'},
-		tPortal: {en: 'Open SachsenPortalU', de: 'SachsenPortalU &ouml;ffnen'}
+		tPortal: {en: 'Open SachsenPortalU', de: 'SachsenPortalU &ouml;ffnen'},
+		tKeineTreffer: {en: '<p>No hits</p>', de: '<p>Keine Treffer</p>'}
     }
 }
 
