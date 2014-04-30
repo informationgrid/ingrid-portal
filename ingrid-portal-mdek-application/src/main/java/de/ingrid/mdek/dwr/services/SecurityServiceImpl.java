@@ -248,7 +248,9 @@ public class SecurityServiceImpl implements SecurityService {
 		try {
 			securityRequestHandler.deleteUser(userId);
 			UserData user = MdekSecurityUtils.deleteUserDataForAddress(addressUuid);
-			authProvider.removeIgeUser(user.getPortalLogin());
+			if (user != null) {
+			    authProvider.removeIgeUser(user.getPortalLogin());
+			}
 			
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
