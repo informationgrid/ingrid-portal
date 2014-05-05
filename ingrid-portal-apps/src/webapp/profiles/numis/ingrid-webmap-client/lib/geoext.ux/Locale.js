@@ -236,7 +236,17 @@ Local = {
 		tLoadingServiceTaskMessage: {en: 'Cancel loading capabilities?', de: 'M&ouml;chten Sie den Ladenvorgang abbrechen?'},
 		tFullScreen: {en: 'Open map client on full screen', de: 'Darstellung der Kartenkomponente im Vollbildschirm'},
 		tPortal: {en: 'Open NUMIS', de: 'NUMIS &ouml;ffnen'},
-		tKeineTreffer: {en: '<p>No hits</p>', de: '<p>Keine Treffer</p>'}
+		tKeineTreffer: {en: '<p>No hits</p>', de: '<p>Keine Treffer</p>'},
+		tInKarteAnzeigen: {en: 'Show in map', de: 'In Karte anzeigen'},
+		tMarkerEntfernen: {en: 'Hide in map', de: 'In Karte entfernen'},
+		tPositionErmitteln: {en: 'Get point', de: 'Position ermitteln'},
+		tPositionInfo: {en: 'Get coordinates', de: 'Koordinaten ermitteln'},
+		tSchliessen: {en: 'Close', de: 'Schlie&szlig;en'},
+		tKoordinatenZentrieren: {en: 'Center', de: 'Zentrieren'},
+		tPositionAnzeigen: {en: 'Show coordinates', de: 'Zeige Koordinaten'},
+		tPositionGK: {en: 'Rechtswert / Hochwert', de: 'Rechtswert / Hochwert'},
+		tPositionUTM: {en: 'East / North', de: 'East / North'},
+		tPositionWGS: {en: 'Breite / L&auml;nge', de: 'Breite / L&auml;nge'}
     }
 }
 

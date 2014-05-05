@@ -25,7 +25,6 @@ import org.xml.sax.SAXException;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsMapServiceManager;
 
 public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsHeaderPhase {
@@ -165,6 +164,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/WelcomeDialog.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/LegendDialog.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SearchPanel.js\"></script>"+
+				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/PositionDialog.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/Workspace.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/main.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash.js\"></script>"+
