@@ -12,6 +12,12 @@
 			<action type="fix" dev="wemove" issue="REDMINE-3367">
 				Portal: Fix SERVICE parameter of GetCapabilities in detail view (if not INSPIRE conform in CSW).
 			</action>
+			<action type="add" dev="wemove" issue="REDMINE-291">
+				WebMapClient: Add coordinate toogle.
+			</action>
+			<action type="add" dev="wemove" issue="REDMINE-292">
+				WebMapClient: Default definition of 'Active Service' panel.
+			</action>
 			<action type="add" dev="wemove" issue="REDMINE-100">
 				WebMapClient: Add new color picker for redlining features.
 			</action>
