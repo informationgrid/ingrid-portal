@@ -3705,8 +3705,10 @@ igeEvents.setLinksToRelationTypeFilterContent = function(fullObjectClass) {
             var idList = [];
             dojo.forEach(syslist2000Items, function(entry) {
                 // "data" of list item contains relevant classes
-                var containsClass = dojo.indexOf(entry.data.split(','), objectClass) !== -1;
-                if (containsClass) idList.push(entry.entryId);
+                if (entry.data) {
+                    var containsClass = dojo.indexOf(entry.data.split(','), objectClass) !== -1;
+                    if (containsClass) idList.push(entry.entryId);
+                }
             });
 
             var initialItems = [ {
