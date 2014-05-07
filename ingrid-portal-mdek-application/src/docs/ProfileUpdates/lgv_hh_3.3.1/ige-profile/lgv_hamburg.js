@@ -203,7 +203,8 @@ if ( contentLabel && contentLabel.size() > 0) {
 // JS
 // ------------------------
 var openDataAddressCheck = null;
-dojo.connect(dijit.byId("isOpenData"), "onClick", function() {
+
+dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
     
     if (this.checked) {
         // add check for address of type publisher (Herausgeber) when publishing
@@ -218,14 +219,7 @@ dojo.connect(dijit.byId("isOpenData"), "onClick", function() {
             if (!containsPublisher)
                 notPublishableIDs.push("generalAddress");
         });
-
-        // set publication condition to Internet
-        dijit.byId("extraInfoPublishArea").attr("value", 1, true);
-
-        // set Nutzungsbedingungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
-        var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
-        dijit.byId("availabilityUseConstraints").attr("value", entryNameLicense, true);
-
+        
         // SHOW mandatory fields ONLY IF EXPANDED !
         dojo.addClass("uiElement5064", "showOnlyExpanded"); // INSPIRE-Themen
         dojo.addClass("uiElement3520", "showOnlyExpanded"); // Fachliche Grundlage
@@ -237,27 +231,11 @@ dojo.connect(dijit.byId("isOpenData"), "onClick", function() {
         dojo.addClass("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
         dojo.addClass("uiElementN024", "showOnlyExpanded"); // Konformität
         dojo.addClass("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
-
+        
     } else {
         // unregister from check for publisher address
         if (openDataAddressCheck)
             dojo.unsubscribe(openDataAddressCheck);
-
-        // remove "keine" from access constraints
-        var data = UtilGrid.getTableData('availabilityAccessConstraints');
-        var posToRemove = 0;
-        var entryExists = dojo.some(data, function(item) {
-            if (item.title == "keine") {
-                return true;
-            }
-            posToRemove++;
-        });
-        if (entryExists) {
-            UtilGrid.removeTableDataRow('availabilityAccessConstraints', [posToRemove]);
-        }
-
-        // remove license set when open data was clicked
-        dijit.byId("availabilityUseConstraints").attr("value", "");
 
         // ALWAYS SHOW mandatory fields !
         dojo.removeClass("uiElement5064", "showOnlyExpanded"); // INSPIRE-Themen
@@ -273,6 +251,36 @@ dojo.connect(dijit.byId("isOpenData"), "onClick", function() {
 
         // Tab containers may be rendered for the first time and needs to be layouted
         igeEvents.refreshTabContainers();
+    }
+    
+});
+
+dojo.connect(dijit.byId("isOpenData"), "onClick", function() {
+    
+    if (this.checked) {
+        // set publication condition to Internet
+        dijit.byId("extraInfoPublishArea").attr("value", 1, true);
+
+        // set Nutzungsbedingungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
+        var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
+        dijit.byId("availabilityUseConstraints").attr("value", entryNameLicense, true);
+
+    } else {
+        // remove "keine" from access constraints
+        var data = UtilGrid.getTableData('availabilityAccessConstraints');
+        var posToRemove = 0;
+        var entryExists = dojo.some(data, function(item) {
+            if (item.title == "keine") {
+                return true;
+            }
+            posToRemove++;
+        });
+        if (entryExists) {
+            UtilGrid.removeTableDataRow('availabilityAccessConstraints', [posToRemove]);
+        }
+
+        // remove license set when open data was clicked
+        dijit.byId("availabilityUseConstraints").attr("value", "");
     }
 });
 
