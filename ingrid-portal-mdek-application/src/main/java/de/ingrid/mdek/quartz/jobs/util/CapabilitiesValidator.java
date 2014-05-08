@@ -39,6 +39,7 @@ public class CapabilitiesValidator extends URLValidator {
     		// TODO: implement more content checks!?
 	    }
 
+	    responseString = null;
 
 		long endTime = System.currentTimeMillis();
 		if (log.isDebugEnabled()) {
