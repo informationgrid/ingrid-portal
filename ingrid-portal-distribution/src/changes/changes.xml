@@ -12,6 +12,9 @@
 			<action type="fix" dev="wemove">
 				IGE: Fix localization resources, also for partner profiles (HH).
 			</action>
+			<action type="update" dev="wemove">
+				Portal: Make iFrame Portlets editable by admin-portal user (WSV), new portal database version 3.4.1.
+			</action>
 			<action type="fix" dev="wemove" issue="REDMINE-3367">
 				Portal: Fix SERVICE parameter of GetCapabilities in detail view (if not INSPIRE conform in CSW).
 			</action>
