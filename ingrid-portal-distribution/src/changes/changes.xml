@@ -12,7 +12,7 @@
 			<action type="update" dev="wemove">
 				Portal: Make iFrame Portlets editable by admin-portal user (WSV), new portal database version 3.4.1.
 			</action>
-			<action type="update" dev="wemove" dev="REDMINE-97">
+			<action type="update" dev="wemove" issue="REDMINE-97">
 				Portal: Update detail view for profiles (WSV).
 			</action>
 			<action type="fix" dev="wemove" issue="REDMINE-337">
