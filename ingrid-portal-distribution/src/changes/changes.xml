@@ -8,7 +8,7 @@
 		<release version="3.5.0-SNAPSHOT" date="????-??-??">
  		</release>
 
-		<release version="3.4.1" date="2014-05-13" description="Release InGrid 3.4.1">
+		<release version="3.4.1" date="2014-05-14" description="Release InGrid 3.4.1">
 			<action type="update" dev="wemove">
 				Portal: Make iFrame Portlets editable by admin-portal user (WSV), new portal database version 3.4.1.
 			</action>
@@ -56,6 +56,9 @@
 			</action>
 			<action type="add" dev="wemove" issue="REDMINE-315">
 				IGE: Added events for dialogs to execute additional javascript code on init and on save (if needed).
+			</action>
+			<action type="fix" dev="wemove">
+				IGE: Fix transformation of coordinates (new url of service).
 			</action>
 			<action type="fix" dev="wemove">
 				IGE: Fix localization resources, also for partner profiles (HH).
