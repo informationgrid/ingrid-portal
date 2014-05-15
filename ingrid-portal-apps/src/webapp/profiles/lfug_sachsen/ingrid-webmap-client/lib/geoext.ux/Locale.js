@@ -246,7 +246,11 @@ Local = {
 		tPositionAnzeigen: {en: 'Show coordinates', de: 'Zeige Koordinaten'},
 		tPositionGK: {en: 'Rechtswert / Hochwert', de: 'Rechtswert / Hochwert'},
 		tPositionUTM: {en: 'East / North', de: 'East / North'},
-		tPositionWGS: {en: 'Breite / L&auml;nge', de: 'Breite / L&auml;nge'}
+		tPositionWGS: {en: 'Breite / L&auml;nge', de: 'Breite / L&auml;nge'},
+		tGetCapabilitiesMetadata: {en: 'GetCapabilities', de: 'GetCapabilities'},
+		tGetCapabilitiesBasedOnMetadata: {en: 'Based on', de: 'Basierend auf'},
+		tIdentifierMetadata: {en: 'Identifier', de: 'Identifier'},
+		tQuelleMetadata: {en: 'Resource', de: 'Quelle'}
     }
 }
 
