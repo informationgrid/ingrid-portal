@@ -299,7 +299,8 @@ if (!(sourceRecord instanceof DatabaseSourceRecord)) {
 //var id = sourceRecord.get(DatabaseSourceRecord.ID);
 // add "#opendata_hh#" keyword if opendata keyword set ! (opendata keyword is set if checkbox Open Data activated !
 var openDataKeyword = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[gco:CharacterString='opendata']");
-if (openDataKeyword) {
+var openDataKeywordHH = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[gco:CharacterString='#opendata_hh#']");
+if (openDataKeyword && !openDataKeywordHH) {
     var hhKeyword = openDataKeyword.addElementAsSibling("gmd:keyword");
     hhKeyword.addElement("gco:CharacterString").addText("#opendata_hh#");
 }
