@@ -101,45 +101,50 @@ function spatialRefLocationValidation(){
 
 function minMaxBoundingBoxValidation(val) {
 	var error = false;
-	var row = UtilGrid.getTableData("spatialRefLocation")[val.row];
+	var grid = UtilGrid.getTable("spatialRefLocation");
+	var row = val.row;
+	var rowAll = grid.getData()[row];
     var value = val.item;
+    var column = val.cell;
     var gridId = "spatialRefLocation";
     var corrCell = -1;
 	
-    if (val.cell == 0) return;
+    if (column == 0) return;
     
-	if (!val || val == NaN) 
+	if (!value || value == NaN) 
 		error = true;
 	else {
 		// we need to check if columns exist since it might be a new empty row
 		// which does not have the properties
-		if (val.cell == 1) {
-			if (row.longitude2 && value.longitude1 > row.longitude2) {
+		if (column == 1) {
+			if (rowAll.longitude2 && value.longitude1 > rowAll.longitude2) {
 				error = true;
 			}
             corrCell = 3;
-		} else if (val.cell == 2) {
-    		if (row.latitude2 && value.latitude1 > row.latitude2) {
+		} else if (column == 2) {
+    		if (rowAll.latitude2 && value.latitude1 > rowAll.latitude2) {
     			error = true;
     		}
             corrCell = 4;
-    	} else if (val.cell == 3) {
-			if (row.longitude1 && value.longitude2 < row.longitude1) {
+    	} else if (column == 3) {
+			if (rowAll.longitude1 && value.longitude2 < rowAll.longitude1) {
 				error = true;
 			}
             corrCell = 1;
-		} else if (val.cell == 4) {
-			if (row.latitude1 && value.latitude2 < row.latitude1) {
+		} else if (column == 4) {
+			if (rowAll.latitude1 && value.latitude2 < rowAll.latitude1) {
 				error = true;
 			}
             corrCell = 2;
 		}
 	}
-    var cellDom1 = dojo.query("#"+gridId+" .slick-row[row$="+val.row+"] .c"+val.cell)[0];
-    var cellDom2 = dojo.query("#"+gridId+" .slick-row[row$="+val.row+"] .c"+corrCell)[0];
+    var cellDom1 = dojo.query("#"+gridId+" .slick-row[row$="+row+"] .c"+column)[0];
+    var cellDom2 = dojo.query("#"+gridId+" .slick-row[row$="+row+"] .c"+corrCell)[0];
 	if (error) {
         dojo.addClass(cellDom1, "importantBackground");
         dojo.addClass(cellDom2, "importantBackground");
+	    grid.addInvalidCell({row: row, column: column});
+	    grid.addInvalidCell({row: row, column: corrCell});
 		// show tooltip
 		var toolTip = dojo.string.substitute(message.get("validation.minmax"), [message.get("validation.latLon2"), message.get("validation.latLon1")]);
 		showToolTip("spatialRefLocation", toolTip);
@@ -147,7 +152,10 @@ function minMaxBoundingBoxValidation(val) {
 	} else {
         dojo.removeClass(cellDom1, "importantBackground");
         dojo.removeClass(cellDom2, "importantBackground");
+	    grid.removeInvalidCell({row: row, column: column});
+	    grid.removeInvalidCell({row: row, column: corrCell});
     }
+	
 	return val;
 }
 

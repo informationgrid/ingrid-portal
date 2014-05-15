@@ -246,7 +246,7 @@ scriptScopeResearchTh.findTopic = function() {
 
 	dijit.byId("researchThesaurusTabContainer").selectChild("thesaurusResultPane");
 
-	SNSService.findTopics(queryTerm, {
+	SNSService.findTopics(queryTerm, userLocale, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback:function(result) {

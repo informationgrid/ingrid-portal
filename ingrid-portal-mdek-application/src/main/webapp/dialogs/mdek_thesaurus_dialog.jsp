@@ -33,12 +33,6 @@
             var selectedButton = null;
             dojo.connect(_container_, "onLoad", function(){
                 this.service = SNSService;
-                if (scriptScopeThesaurusDlg.customParams.service == "rdf") {
-                	this.service = RDFService;
-                	// hide search components
-                	dojo.query(".search, div[widgetid='thesResultTabContainer_tablist_thesResultPane']").forEach(function(item) { dojo.addClass(item, "hide"); })
-                }
-                    
                 init();
                 
                 dijit.byId("thesSearch").focus();
@@ -73,8 +67,6 @@
             
             function createDOMElements(){
                 var service = "sns";
-                if (scriptScopeThesaurusDlg.customParams.service)
-                    service = scriptScopeThesaurusDlg.customParams.service;
                 
                 thesTreeWidget = new ingrid.dijit.ThesaurusTree({
                     domId: "thesTree", 
@@ -199,7 +191,7 @@
                 var resultPane = dijit.byId("thesResultPane");
                 dijit.byId("thesResultTabContainer").selectChild(resultPane);
 
-                scriptScopeThesaurusDlg.service.findTopics(queryTerm, {
+                scriptScopeThesaurusDlg.service.findTopics(scriptScopeThesaurusDlg.customParams.rootUrl, queryTerm, userLocale, {
                     preHook: function(){
                         showLoadingZone();
                     },
@@ -240,7 +232,7 @@
                     })) 
                         return;
                     
-                    if (!selectedNode || selectedNode.item.type[0] != "DESCRIPTOR") {
+                    if (!selectedNode) { // || selectedNode.item.type[0] != "DESCRIPTOR") {
                         return;
                     }
                     else {

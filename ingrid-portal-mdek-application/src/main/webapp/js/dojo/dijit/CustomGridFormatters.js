@@ -38,16 +38,19 @@ function LocalizeString(row, cell, value, columnDef, dataContext) {
 }
 
 function emptyOrNullValidation(gridId, row, cell, value, columnDef, dataContext){
+    var grid = UtilGrid.getTable( gridId );
     if (!UtilGeneral.hasValue(value)) {
         value = "";
+        grid.addInvalidCell( {row: row, column: cell} );
         setTimeout(function() {
             var cellDom = dojo.query("#"+gridId+" .slick-row[row$="+row+"] .c"+cell)[0];
-            dojo.addClass(cellDom, "importantBackground");
+            if (cellDom) dojo.addClass(cellDom, "importantBackground");
         }, 500);
     } else {
+        grid.removeInvalidCell( {row: row, column: cell} );
         setTimeout(function() {
             var cellDom = dojo.query("#"+gridId+" .slick-row[row$="+row+"] .c"+cell)[0];
-            dojo.removeClass(cellDom, "importantBackground");
+            if (cellDom) dojo.removeClass(cellDom, "importantBackground");
         }, 500);
     }
     return value;

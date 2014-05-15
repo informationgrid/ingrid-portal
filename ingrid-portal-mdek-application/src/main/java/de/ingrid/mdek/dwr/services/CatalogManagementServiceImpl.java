@@ -8,18 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -137,7 +130,8 @@ public class CatalogManagementServiceImpl {
 
 		List<MdekDataBean> resultList = new ArrayList<MdekDataBean>();
 		if (result != null) {
-			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
+			@SuppressWarnings("unchecked")
+            List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			if (objs != null) {
 				for (IngridDocument objEntity : objs) {
 					if (isDuplicate(objEntity, objs)) {
@@ -167,51 +161,8 @@ public class CatalogManagementServiceImpl {
 		return false;
 	}
 
-	public void startSNSUpdateJob(FileTransfer fileTransfer) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
-		if (fileTransfer.getFilename() == null || fileTransfer.getFilename().length() == 0) {
-			mdekJobHandler.startSNSUpdateJob(null, null, new String[0]);
-
-		} else {
-			List<String[]> topicIds = extractTopicsFromFile(fileTransfer);
-			mdekJobHandler.startSNSUpdateJob(topicIds.get(0), topicIds.get(1), topicIds.get(2));
-		}
-	}
-
-	// Extracts the changed, new and expired topics from a given XML file
-	// The entries are returned as String arrays in a List (of size 3)
-	// The first array contains all changed topic IDs, the second all new topic IDs and
-	// the third all expired topic IDs
-	private List<String[]> extractTopicsFromFile(FileTransfer fileTransfer) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
-		List<String[]> resultList = new ArrayList<String[]>(3);
-
-		XPath xpath = XPathFactory.newInstance().newXPath();
-		DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder documentBuilder;
-		documentBuilder = documentFactory.newDocumentBuilder();
-		Document doc = documentBuilder.parse(fileTransfer.getInputStream());
-
-		NodeList changedList = (NodeList) xpath.evaluate("//changed/@topicID", doc, XPathConstants.NODESET);
-		String[] changedTopics = new String[changedList.getLength()];
-		for (int index = 0; index < changedList.getLength(); ++index) {
-			changedTopics[index] = changedList.item(index).getTextContent();
-		}
-		resultList.add(changedTopics);
-
-		NodeList newList = (NodeList) xpath.evaluate("//new/@topicID", doc, XPathConstants.NODESET);
-		String[] newTopics = new String[newList.getLength()];
-		for (int index = 0; index < newList.getLength(); ++index) {
-			newTopics[index] = newList.item(index).getTextContent();
-		}
-		resultList.add(newTopics);
-
-		NodeList expiredList = (NodeList) xpath.evaluate("//expired/@topicID", doc, XPathConstants.NODESET);
-		String[] expiredTopics = new String[expiredList.getLength()];
-		for (int index = 0; index < expiredList.getLength(); ++index) {
-			expiredTopics[index] = expiredList.item(index).getTextContent();
-		}
-		resultList.add(expiredTopics);
-
-		return resultList;
+	public void startSNSUpdateJob(String locale) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
+			mdekJobHandler.startSNSUpdateJob(locale);
 	}
 
 	public void stopSNSUpdateJob() {
@@ -231,14 +182,8 @@ public class CatalogManagementServiceImpl {
 	}
 
 
-	public void startSNSLocationUpdateJob(FileTransfer fileTransfer) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
-		if (fileTransfer.getFilename() == null || fileTransfer.getFilename().length() == 0) {
-			mdekJobHandler.startSNSLocationUpdateJob(null, null, new String[0]);
-
-		} else {
-			List<String[]> topicIds = extractTopicsFromFile(fileTransfer);
-			mdekJobHandler.startSNSLocationUpdateJob(topicIds.get(0), topicIds.get(1), topicIds.get(2));
-		}
+	public void startSNSLocationUpdateJob(String locale) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+		mdekJobHandler.startSNSLocationUpdateJob(locale);
 	}
 
 	public void stopSNSLocationUpdateJob() {

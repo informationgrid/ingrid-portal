@@ -33,7 +33,7 @@ function createDOMElements(){
 scriptScopeLocations.startSNSLocationUpdateJob = function() {
 	var file = dwr.util.getValue("snsLocationUpdateFile");
 
-	CatalogManagementService.startSNSLocationUpdateJob(file, {
+	CatalogManagementService.startSNSLocationUpdateJob(userLocale, {
 		preHook: showLoadingZone,
         postHook: hideLoadingZone,        
 		callback: function() {
@@ -157,35 +157,17 @@ scriptScopeLocations.downloadAsCSV = function() {
 <body>
 
 <!-- CONTENT START -->
-	<div id="contentSection" class="contentBlockWhite top">
+	<div id="contentSection" class="contentBlockWhite">
 		<div id="spacialRefContent" class="content">
 
 			<!-- INFO START -->
-			<div class="inputContainer grey field">
-				<div id="winNavi" style="top:0;">
-	               <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-8#overall-catalog-management-8', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
-	           </div>
-				<span class="label">
-					<label for="importFile" onclick="javascript:dialog.showContextHelp(arguments[0], 8057)">
-						<fmt:message key="dialog.admin.catalog.management.locations.selectUpdateDataset" />
-					</label>
-				</span>
-				<span>
-					<input type="file" id="snsLocationUpdateFile" size="80" style="width:100%;"/>
-				</span>
-				<br />
-				<br />
-				<span><fmt:message key="dialog.admin.catalog.management.locations.updateHint" /></span>
-			</div>
-
+			<div id="winNavi" style="top:0;">
+               <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-8#overall-catalog-management-8', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+           </div>
 			<div class="inputContainer" style="padding-bottom: 10px;">
-				<span class="button">
-					<span style="float:right;">
-						<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.locations.startUpdate" />" onClick="javascript:scriptScopeLocations.startSNSLocationUpdateJob();"><fmt:message key="dialog.admin.catalog.management.locations.startUpdate" /></button>
-					</span>
-					<span id="snsLocationUpdateLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
-						<img src="img/ladekreis.gif" />
-					</span>
+				<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.locations.startUpdate" />" onClick="javascript:scriptScopeLocations.startSNSLocationUpdateJob();"><fmt:message key="dialog.admin.catalog.management.locations.startUpdate" /></button>
+				<span id="snsLocationUpdateLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
+					<img src="img/ladekreis.gif" />
 				</span>
 			</div>
 

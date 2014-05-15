@@ -2056,12 +2056,13 @@ UtilSyslist.getSyslistEntryKey = function(syslist, value) {
 UtilSyslist.getSyslistEntryData = function(syslist, value) {
     if (value == undefined) return null;
     
-    var result = value+"";
+    var result = null;
+    var valueStr = value+"";
     
     var list = sysLists[syslist];
     if (list != undefined) {
         dojo.some(list, function(item) {
-            if (item[0] == result) {
+            if (item[0] == valueStr) {
                 result = item[3];
                 return true;
             }
@@ -2295,6 +2296,7 @@ UtilGrid.removeTableDataRow = function(grid, itemIndexes) {
         // get items to delete from filtered store !
         dojo.forEach(itemIndexes, function(rowIndex) {
             deletedData.push(data[rowIndex]);
+            table.removeInvalidRow(rowIndex);
         });
     
         UtilGrid._removeItemsFromTable(grid, deletedData);
@@ -2304,6 +2306,7 @@ UtilGrid.removeTableDataRow = function(grid, itemIndexes) {
         var decr = 0; // when removing an element the selected row moved up!
         dojo.forEach(sortedIndexes, function(rowNr) {
             deletedData.push(data.splice(rowNr-(decr++),1)[0]);
+            table.removeInvalidRow(rowNr);
         });
         if (refresh) this.getTableData(grid).refresh();
 	}
@@ -2449,7 +2452,7 @@ UtilThesaurus.parseQueryTerm = function(queryTerm) {
 // Callback to find sns topics for a given topic (SNSService.findTopcis)
 UtilThesaurus.findTopicsDef = function(term) {
 	var def = new dojo.Deferred();
-	SNSService.findTopics(term, {
+	SNSService.findTopics(term, userLocale, {
 		callback: function(res) {
 			UtilList.addSNSTopicLabels(res);
 			UtilUI.updateBlockerDivInfo( "keywords" );
@@ -2624,7 +2627,7 @@ UtilThesaurus.addDescriptorsToGrid = function(descriptors, grid) {
 //Callback to find an sns descriptor for a synonym (nonDescriptor)
 UtilThesaurus.getTopicsForTopicDef = function(topicId) {
 	var def = new dojo.Deferred();
-	SNSService.getTopicsForTopic(topicId, {
+	SNSService.getTopicsForTopic(topicId, userLocale, {
 		preHook: UtilDWR.enterLoadingState,
 		postHook: UtilDWR.exitLoadingState,
 		callback: function(res) {

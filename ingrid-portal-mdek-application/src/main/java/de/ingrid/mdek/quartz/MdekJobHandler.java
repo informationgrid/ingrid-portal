@@ -154,11 +154,11 @@ public class MdekJobHandler implements BeanFactoryAware {
 	}
 
 
-	public void startSNSUpdateJob(String[] changedTopics, String[] newTopics, String[] expiredTopics) {
+	public void startSNSUpdateJob(String lang) {
 		MdekJob job = new SNSUpdateJob(
 				connectionFacade,
 				(SNSService) beanFactory.getBean("snsService"),
-				changedTopics, newTopics, expiredTopics);
+				lang);
 
 		try {
 			boolean jobStarted = job.start(scheduler);
@@ -185,11 +185,11 @@ public class MdekJobHandler implements BeanFactoryAware {
 	}
 
 
-	public void startSNSLocationUpdateJob(String[] changedTopics, String[] newTopics, String[] expiredTopics) {
+	public void startSNSLocationUpdateJob(String lang) {
 		MdekJob job = new SNSLocationUpdateJob(
 				connectionFacade,
 				(SNSService) beanFactory.getBean("snsService"),
-				changedTopics, newTopics, expiredTopics);
+				lang);
 
 		try {
 			boolean jobStarted = job.start(scheduler);

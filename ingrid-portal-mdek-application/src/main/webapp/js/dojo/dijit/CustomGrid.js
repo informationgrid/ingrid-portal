@@ -153,6 +153,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 		this.activeRow = this.activeCell = this.activeCellNode = null;
         this.headers = new Object();
         this.invalidRows = [];
+        this.invalidCells = {};
     },
     
     postCreate: function() {
@@ -406,6 +407,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
     
     setData: function(newData, scrollToTop, noRender) {
         this.resetInvalidRows();
+        this.resetInvalidCells();
         this.invalidateAllRows();
         this.data = newData;
         if (scrollToTop)
@@ -663,6 +665,17 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
              if (row === this.activeRow && i === this.activeCell) {
                  cellCss += (" active");
              }
+             
+             // a formatter can have influence on the cell itself, so we have to call it before we request invalidCells
+             var content;
+             if (d) {
+                 content = this.getFormatter(row, m)(row, i, d[m.field], m, d);
+             }
+             
+             // check for invalid cells
+             if (this.invalidCells[row] && dojo.indexOf(this.invalidCells[row], i) != -1) {
+                 cellCss += " importantBackground";
+             } 
 
              // TODO:  merge them together in the setter
              for (var key in this.cellCssClasses) {
@@ -675,7 +688,7 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
 
              // if there is a corresponding row (if not, this is the Add New row or this data hasn't been loaded yet)
              if (d) {
-                 stringArray.push(this.getFormatter(row, m)(row, i, d[m.field], m, d));
+                 stringArray.push(content);
              }
 
              stringArray.push("</div>");
@@ -2270,8 +2283,49 @@ dojo.declare("ingrid.dijit.CustomGrid", [dijit._Widget], {
          this.invalidate();
      },
      
+     removeInvalidRow: function(/*int*/row, /*boolean*/refresh) {
+         this.invalidRows.splice(row, 1);
+         delete this.invalidCells[row];
+         if (refresh) this.invalidate();
+     },
+     
      resetInvalidRows: function() {
          this.invalidRows = [];
+         this.invalidate();
+     },
+     
+     /**
+      * The invalid cells are defined as follows: 
+      * { row_m: [column_a,...], row_n: [column_b,...]}
+      */
+     setInvalidCells: function(/*hash of objects*/cells) {
+         this.invalidCells = cells;
+         this.invalidate();
+     },
+     
+     addInvalidCell: function(/*object*/cell, /*boolean*/refresh) {
+         if (!this.invalidCells[cell.row]) {
+             this.invalidCells[cell.row] = [];
+         }
+         // only add cells that aren't yet contained
+         if (dojo.indexOf(this.invalidCells[cell.row], cell.column) === -1) {
+             this.invalidCells[cell.row].push(cell.column);
+             if (refresh) this.invalidate();
+         }
+     },
+     
+     removeInvalidCell: function(/*object*/cell, /*boolean*/refresh) {
+         var invalidCells = this.invalidCells[cell.row];
+         if (invalidCells) {
+             var index = invalidCells.indexOf(cell.column);
+             if (index != -1)
+                 invalidCells.splice(index, 1);
+         }
+         if (refresh) this.invalidate();
+     },
+     
+     resetInvalidCells: function() {
+         this.invalidCells = {};
          this.invalidate();
      },
      

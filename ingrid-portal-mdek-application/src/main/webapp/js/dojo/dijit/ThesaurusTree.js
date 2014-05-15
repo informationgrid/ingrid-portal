@@ -18,10 +18,8 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
         if (args.showLoadingZone) this.showLoadingZone = args.showLoadingZone;
         if (args.hideLoadingZone) this.hideLoadingZone = args.hideLoadingZone;
         if (args.showStatus) this.showStatus = args.showStatus;
-        if (args.service == "rdf") {
-        	this.service = RDFService;
-        	this.rootUrl = args.rootUrl;
-        }
+        if (args.rootUrl) this.rootUrl = args.rootUrl;
+
         createCustomTree(this.domId, null, this.nodeId, this.nodeLabel, dojo.hitch(this, this._loadSNSData));
         this.treeWidget = dijit.byId(this.domId);
     },
@@ -55,13 +53,13 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
                     _this.showStatus("<fmt:message key='sns.connectionError' />");
                 }
             };
-            if (this.service == RDFService)
-            	this.service.getRootTopics(this.rootUrl, serviceCallbacks);
+            if (this.rootUrl)
+            	this.service.getRootTopics(this.rootUrl, userLocale, serviceCallbacks);
             else
-            	this.service.getRootTopics(serviceCallbacks);
+            	this.service.getRootTopics(userLocale, serviceCallbacks);
         }
         else {
-            this.service.getSubTopics(node.item.topicId[0], '2', 'down', {
+            this.service.getSubTopics(this.rootUrl, node.item.topicId[0], '2', 'down', userLocale, {
                 preHook: function(){
                     _this.showLoadingZone();
                 },
@@ -124,21 +122,15 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
     // The function adds the topics in 'topicList' as children to the tree 
     _handleRootTopics: function(topicList) {
         for (var i in topicList) {
-        	if (this.service === RDFService) {
-        		topicList[i].isFolder = (topicList[i].children.length > 0);
-        		// remove children since they are fetched again correctly (with their children)
-        		// when they were opened
-        		topicList[i].children = [];
-        	} else
-        		topicList[i].isFolder = true;
+    		topicList[i].isFolder = (topicList[i].children.length > 0);
+    		// remove children since they are fetched again correctly (with their children)
+    		// when they were opened
+    		topicList[i].children = [];
             topicList[i].nodeDocType = topicList[i].type;
             // Top Terms are not selectable. Add the proper class to make them grey
             // this is not valid for terms coming from RDF!
-            if (this.service === SNSService)
-            	topicList[i].labelClass = "TreeNodeNotSelectable";
-            else {
-            	topicList[i].label = topicList[i].title;
-            }
+           	topicList[i].label = topicList[i].title;
+
             topicList[i].uniqueId = topicList[i].topicId;
             
             this.treeWidget.model.store.newItem(topicList[i]);
@@ -151,7 +143,7 @@ dojo.declare("ingrid.dijit.ThesaurusTree", null, {
         var def = new dojo.Deferred();
         var treePane = this.treeWidget;
         var _this = this;
-        this.service.getSubTopicsWithRoot(topicID, '0', 'up', {
+        this.service.getSubTopicsWithRoot(this.rootUrl, topicID, '0', 'up', userLocale, {
             preHook: function(){
                 _this.showLoadingZone();
             },

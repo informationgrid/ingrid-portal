@@ -229,18 +229,18 @@ init = function() {
     
 	// Init table validators
     dojo.connect(UtilGrid.getTable("operationsParameter"), "onDataChanged", function(msg) {
+        var self = this;
+    
         var checkIfEmpty = function(value, row, col) {
             var cell = dojo.query(".slick-row[row$="+row+"] .c"+col, "operationsParameter")[0];
             if (value == undefined || dojo.trim(value+"") == "") {
                 // mark cell as missing input
-                dojo.addClass(cell, "importantBackground");
-            } else {
-                dojo.removeClass(cell, "importantBackground");
+                self.addInvalidCell( { row: row, column: col }, true );
             }
         };
+        
+        this.resetInvalidCells();
         dojo.forEach(this.getData(), function(item, i) {
-            // make sure the row is not in the buffer but visible!
-            this.scrollRowIntoView(i);
             checkIfEmpty(item.name, i, 0);
             checkIfEmpty(item.optional, i, 3);
             checkIfEmpty(item.multiple, i, 4);

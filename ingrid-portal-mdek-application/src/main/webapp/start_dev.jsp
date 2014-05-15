@@ -44,7 +44,6 @@
 		<script src='dwr/interface/AddressService.js'></script>
 		<script src='dwr/interface/SecurityService.js'></script>
 		<script src='dwr/interface/SNSService.js'></script>
-        <script src='dwr/interface/RDFService.js'></script>
 		<script src='dwr/interface/QueryService.js'></script>
 		<script src='dwr/interface/HelpService.js'></script>
 		<script src='dwr/interface/CTService.js'></script>

@@ -48,9 +48,6 @@
 		<create creator="spring" javascript="SNSService">
 			<param name="beanName" value="snsService" />
 		</create>
-        <create creator="spring" javascript="RDFService">
-            <param name="beanName" value="rdfService" />
-        </create>
 		<create creator="spring" javascript="CTService">
 			<param name="beanName" value="ctService" />
 		</create>

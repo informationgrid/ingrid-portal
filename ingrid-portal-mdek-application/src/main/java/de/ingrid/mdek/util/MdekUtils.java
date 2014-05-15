@@ -586,7 +586,7 @@ public class MdekUtils {
 	}
 	
 	public static Locale getLocaleFromSession() {
-	    WebContext wctx = WebContextFactory.get();
+        WebContext wctx = WebContextFactory.get();
         return (Locale)wctx.getSession().getAttribute(Config.FMT_LOCALE + ".session");
 	}
 }

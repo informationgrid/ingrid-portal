@@ -23,6 +23,7 @@ public class SNSTopic {
 	private List<SNSTopic> parents;
 	private List<SNSTopic> synonyms;
 	private List<SNSTopic> descriptors;
+	private boolean isExpired;
 
 	private List<String> inspireList;
 
@@ -39,6 +40,7 @@ public class SNSTopic {
 		this.synonyms 		= null;
 		this.descriptors	= null;
 		this.inspireList 	= new ArrayList<String>();
+		this.setExpired( false );
 	}
 
 	public SNSTopic(Type typ, Source source, String id, String title,
@@ -54,6 +56,7 @@ public class SNSTopic {
 		this.synonyms 		= new ArrayList<SNSTopic>();
 		this.descriptors	= new ArrayList<SNSTopic>();
 		this.inspireList 	= new ArrayList<String>();
+		this.setExpired( false );
 	}
 
 	public void setType(Type type) {
@@ -148,4 +151,12 @@ public class SNSTopic {
 	public void setAlternateTitle(String alternateTitle) {
 		this.alternateTitle = alternateTitle;
 	}
+
+    public boolean isExpired() {
+        return isExpired;
+    }
+
+    public void setExpired( boolean expired ) {
+        this.isExpired = expired;
+    }
 }

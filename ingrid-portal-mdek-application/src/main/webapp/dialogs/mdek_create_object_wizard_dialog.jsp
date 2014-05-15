@@ -335,7 +335,7 @@ function handleError(autoClassifyResult, getHtmlContentResult) {
 function autoClassifyUrl(url, numWords) {
 	var def = new dojo.Deferred();
 
-	SNSService.autoClassifyURL(url, numWords, null, false, null, 100, {
+	SNSService.autoClassifyURL(url, numWords, null, false, null, 100, userLocale, {
 		callback: function(topicMap) {
 			def.callback(topicMap);
 		},

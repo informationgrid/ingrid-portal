@@ -215,7 +215,7 @@
 	            <div id="catalogueAdminFields" class="content">
 	            <!-- LEFT HAND SIDE CONTENT START -->
                     <div class="inputContainer">
-                        <button dojoType="dijit.form.Button" title="<fmt:message key="ui.dashboard.update" />" onClick="javascript:updateDashboard();"><fmt:message key="ui.dashboard.update" /></button>
+                        <button id="btnUpdateDashboard" dojoType="dijit.form.Button" title="<fmt:message key="ui.dashboard.update" />" onClick="javascript:updateDashboard();"><fmt:message key="ui.dashboard.update" /></button>
                     </div>
 	               	<div class="infoboxWidth field">
 	               		<div class="infobox">

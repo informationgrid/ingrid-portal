@@ -3,8 +3,6 @@ package de.ingrid.mdek.dwr.services.sns;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.slb.taxi.webservice.xtm.stubs.TopicMapFragmentIndexedDocument;
-
 public class IndexedDocument {
 	private String title;
 	private String description;
@@ -15,7 +13,7 @@ public class IndexedDocument {
 	private String from;
 	private String to;
 
-	public IndexedDocument(TopicMapFragmentIndexedDocument doc) {
+	/*public IndexedDocument(TopicMapFragmentIndexedDocument doc) {
 		this.title = doc.getTitle();
 		this.description = doc.get_abstract();
 		this.uri = doc.getUri();
@@ -24,7 +22,7 @@ public class IndexedDocument {
 		this.at = doc.getAt();
 		this.from = doc.getFrom();
 		this.to = doc.getTo();
-	}
+	}*/
 
 	public IndexedDocument(de.ingrid.external.om.IndexedDocument doc) {
 		this.title = doc.getTitle();

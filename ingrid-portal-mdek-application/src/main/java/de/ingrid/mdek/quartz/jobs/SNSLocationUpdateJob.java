@@ -1,9 +1,10 @@
 package de.ingrid.mdek.quartz.jobs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 import org.quartz.InterruptableJob;
@@ -45,6 +46,9 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 	// Flag that signals if the job execution should be interrupted
 	private boolean cancelJob;
 
+	private Locale locale;
+
+    private String urlGazetteer;
 
 	// No args constructor is required for the job to be scheduled by quartz
 	public SNSLocationUpdateJob() {
@@ -54,26 +58,25 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		this.cancelJob = false;
 	}
 
-	public SNSLocationUpdateJob(ConnectionFacade connectionFacade, SNSService snsService, String[] changedTopics, String[] newTopics, String[] expiredTopics) {
+	public SNSLocationUpdateJob(ConnectionFacade connectionFacade, SNSService snsService, String lang) {
 		this.plugId = connectionFacade.getCurrentPlugId();
 		jobName = createJobName(plugId);
-		jobDetail = createJobDetail(connectionFacade, snsService, changedTopics, newTopics, expiredTopics);
+		jobDetail = createJobDetail(connectionFacade, snsService, lang);
 	}
 
 	public static String createJobName(String plugId) {
 		return (JOB_BASE_NAME + plugId);
 	}
 
-	private JobDetail createJobDetail(ConnectionFacade connectionFacade, SNSService snsService, String[] changedTopics, String[] newTopics, String[] expiredTopics) {
+	private JobDetail createJobDetail(ConnectionFacade connectionFacade, SNSService snsService, String lang) {
 		JobDetail jobDetail = new JobDetail(jobName, Scheduler.DEFAULT_GROUP, SNSLocationUpdateJob.class);
 		JobDataMap jobDataMap = new JobDataMap();
-		jobDataMap.put("CHANGED_TOPICS", changedTopics);
-		jobDataMap.put("NEW_TOPICS", newTopics);
-		jobDataMap.put("EXPIRED_TOPICS", expiredTopics);
 		jobDataMap.put("SNS_SERVICE", snsService);
 		jobDataMap.put("CONNECTION_FACADE", connectionFacade);
 		jobDataMap.put("PLUG_ID", connectionFacade.getCurrentPlugId());
 		jobDataMap.put("USER_ID", MdekSecurityUtils.getCurrentUserUuid());
+		jobDataMap.put("LOCALE", new Locale( lang ));
+		jobDataMap.put("URL_GAZETTEER", ResourceBundle.getBundle("sns").getString("sns.serviceURL.gazetteer"));
 		jobDetail.setJobDataMap(jobDataMap);
 
 		return jobDetail;
@@ -97,41 +100,32 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 			throws JobExecutionException {
 		
 		JobDataMap mergedJobDataMap = jobExecutionContext.getMergedJobDataMap();
-		String[] changedTopics = (String[]) mergedJobDataMap.get("CHANGED_TOPICS");
-		String[] newTopics = (String[]) mergedJobDataMap.get("NEW_TOPICS");
-		String[] expiredTopics = (String[]) mergedJobDataMap.get("EXPIRED_TOPICS");
 		SNSService snsService = (SNSService) mergedJobDataMap.get("SNS_SERVICE");
 		ConnectionFacade connectionFacade = (ConnectionFacade) mergedJobDataMap.get("CONNECTION_FACADE");
 		String plugId = mergedJobDataMap.getString("PLUG_ID");
 		String userId = mergedJobDataMap.getString("USER_ID");
+		locale = (Locale) mergedJobDataMap.get("LOCALE");
+		urlGazetteer = mergedJobDataMap.getString("URL_GAZETTEER");
 
 		log.debug("Starting sns location update...");
 		long startTime = System.currentTimeMillis();
 		List<SNSLocationTopic> snsTopics = fetchSNSLocationTopics(connectionFacade.getMdekCallerCatalog(), plugId, userId);
-		List<SNSLocationTopic> topicsToCheck = filter(snsTopics, changedTopics);
 
 		jobExecutionContext.put("NUM_PROCESSED", new Integer(0));
-		jobExecutionContext.put("NUM_TOTAL", topicsToCheck.size());
+		jobExecutionContext.put("NUM_TOTAL", snsTopics.size());
+
+		log.debug("changed topic matches: " + snsTopics.size());
+		List<SNSLocationTopic> snsTopicsResult = updateChangedTopics(snsService, snsTopics, jobExecutionContext);
 
 
-		if (changedTopics != null) {
-			log.debug("total changed topics: " + changedTopics.length);
-		}
-		log.debug("changed topic matches: " + topicsToCheck.size());
-		List<SNSLocationTopic> snsTopicsResult = updateChangedTopics(snsService, topicsToCheck, jobExecutionContext);
-
-
-		List<SNSLocationTopic> snsTopicsToExpire = filter(snsTopics, expiredTopics);
-		if (expiredTopics != null) {
-			log.debug("total expired topics: " + expiredTopics.length);
-		}
+		List<SNSLocationTopic> snsTopicsToExpire = filterExpired(snsTopics);
 		log.debug("expired topic matches: " + snsTopicsToExpire.size());
 
 		long endTime = System.currentTimeMillis();
 		log.debug("SNS Location Update took "+(endTime - startTime)+" ms.");
 
 		if (!cancelJob) {
-			JobResult jobResult = createJobResult(topicsToCheck, snsTopicsResult, snsTopicsToExpire);
+			JobResult jobResult = createJobResult(snsTopics, snsTopicsResult, snsTopicsToExpire);
 			jobExecutionContext.setResult(jobResult);
 
 			// TODO Send result to backend
@@ -146,7 +140,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		}
 	}
 
-	private static List<IngridDocument> mapFromSNSLocationTopics(List<SNSLocationTopic> topics) {
+    private static List<IngridDocument> mapFromSNSLocationTopics(List<SNSLocationTopic> topics) {
 		List<IngridDocument> resultDocs = new ArrayList<IngridDocument>();
 
 		if (topics != null) {
@@ -159,6 +153,14 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 					topicDoc.put(MdekKeys.LOCATION_CODE, topic.getNativeKey());
 					topicDoc.put(MdekKeys.LOCATION_SNS_ID, topic.getTopicId());
 					topicDoc.put(MdekKeys.SNS_TOPIC_TYPE, topic.getTypeId());
+					
+					// only write expired date if location is expired!
+					// the backend does not check if the date has already been passed
+					if (topic.isExpired()) {
+					    topicDoc.put(MdekKeys.LOCATION_EXPIRED_AT, topic.getExpiredDate());
+					}
+
+					topicDoc.put(MdekKeys.SUCCESSORS, mapFromSNSLocationTopics( topic.getSuccessors() ));
 
 					float[] boundingBox = topic.getBoundingBox();
 					if (boundingBox != null && boundingBox.length == 4) {
@@ -224,20 +226,18 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		return resultList;
 	}
 
-	private List<SNSLocationTopic> filter(List<SNSLocationTopic> snsTopics, String[] topicIds) {
-		if (snsTopics != null && topicIds != null) {
+	private List<SNSLocationTopic> filterExpired(List<SNSLocationTopic> snsTopics) {
+		if (snsTopics != null) {
 			List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
-			List<String> topicIdList = Arrays.asList(topicIds);
 			for (SNSLocationTopic topic : snsTopics) {
-				if (topicIdList.contains(topic.getTopicId())) {
+				if (topic.isExpired()) {
 					resultList.add(topic);
 				}
 			}
 			return resultList;
 
-		} else {
-			return snsTopics;
 		}
+		return null;
 	}
 
 	private List<SNSLocationTopic> updateChangedTopics(SNSService snsService, List<SNSLocationTopic> snsTopics, JobExecutionContext jobExecutionContext) {
@@ -249,21 +249,24 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 
 			SNSLocationTopic newTopic;
 			try {
-				newTopic = findTopicById(snsService, oldTopic.getTopicId());
+			    String topicId = oldTopic.getTopicId();
+			    if (!topicId.startsWith( "http" )) {
+			        topicId = urlGazetteer + topicId;
+			    }
+				newTopic = findTopicById(snsService, topicId);
 
 				// If the topic was not found, query by name and find a 'best match'
 				// 1. a topic with the same name, native key and type id
 				// 2. a topic with the same name
 				if (newTopic == null) {
-					log.debug("no topic found for id '" + oldTopic.getTopicId() + "'");
+					log.debug("no topic found for id '" + topicId + "'");
 					List<SNSLocationTopic> topics = findTopicsByName(snsService, oldTopic.getName());
 
 					// Find a 'best match' from the returned topics
 					for (SNSLocationTopic topic : topics) {
 						newTopic = topic;
-						if (topic.getNativeKey() != null && topic.getNativeKey().equals(oldTopic.getNativeKey()) &&
-								topic.getTypeId() != null && topic.getTypeId().equals(oldTopic.getTypeId())) {
-							log.debug("found topic with same name, type id and native key");
+						if (topic.getNativeKey() != null && topic.getNativeKey().equals(oldTopic.getNativeKey())) {// && topic.getTypeId() != null && topic.getTypeId().equals(oldTopic.getTypeId())) {
+							log.debug("found topic with same name and native key");
 							break;
 
 						} else {
@@ -278,6 +281,13 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 				log.error("Error querying the snsService for topic " + oldTopic + ".", e);
 				newTopic = oldTopic;
 			}
+			
+			// flatten all successors, in case several references of expired topics occurred
+			if (newTopic != null) {
+    			List<SNSLocationTopic> validSuccessors = getNonExpiredSuccessors( newTopic );
+    			newTopic.setSuccessors( validSuccessors );
+			}
+			
 			log.debug("old topic: " + oldTopic);
 			log.debug("new topic: " + newTopic);
 			newTopics.add(newTopic);
@@ -286,17 +296,41 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		return newTopics;
 	}
 
-	// Find a topic by the given topicId
+	private List<SNSLocationTopic> getNonExpiredSuccessors( SNSLocationTopic newTopic ) {
+	    List<SNSLocationTopic> successors = newTopic.getSuccessors();
+	    if (successors == null) return null;
+	    
+	    List<SNSLocationTopic> topics = new ArrayList<SNSLocationTopic>();
+	    for (SNSLocationTopic successor : successors) {
+            // only add successor that is not expired AND that is not a reference to itself!!!
+	        if (!successor.isExpired() && !successor.getTopicId().equals( newTopic.getTopicId() )) {
+                topics.add( successor );
+            }
+	        
+	        // include successors of a successor
+	        List<SNSLocationTopic> moreSuccessors = getNonExpiredSuccessors( successor );
+	        if (moreSuccessors != null) {
+	            topics.addAll( moreSuccessors );
+	        }
+        }
+        
+	    // do not add empty lists!
+	    if (topics.isEmpty()) return null;
+	    
+        return topics;
+    }
+
+    // Find a topic by the given topicId
 	// Return null iff no topic for the given id could be found
 	// Throws an Exception if there was an error querying the SNS Service (connection timeout, etc.)
-	private static SNSLocationTopic findTopicById(SNSService snsService, String topicId) throws Exception {
-		return snsService.getLocationPSI(topicId);
+	private SNSLocationTopic findTopicById(SNSService snsService, String topicId) throws Exception {
+		return snsService.getLocationPSI(topicId, locale, null);
 	}
 
 	// Find a topic for the given topicName
 	// Return an empty list if no topics with the given name could be found
-	private static List<SNSLocationTopic> findTopicsByName(SNSService snsService, String topicName) {
-		List<SNSLocationTopic> topics = snsService.getLocationTopics(topicName, null, null);
+	private List<SNSLocationTopic> findTopicsByName(SNSService snsService, String topicName) {
+		List<SNSLocationTopic> topics = snsService.getLocationTopics(topicName, null, null, locale);
 
 		for (Iterator<SNSLocationTopic> iterator = topics.iterator(); iterator.hasNext();) {
 			SNSLocationTopic topic = (SNSLocationTopic) iterator.next();

@@ -150,7 +150,7 @@ findAssociatedLocations = function(topicId) {
 	deleteComboboxWidgets();
 	showLoading();
 
-	SNSService.getLocationTopicsById(topicId, {
+	SNSService.getLocationTopicsById(topicId, userLocale, {
 		preHook: function() { showLoadingZone(); disableUiElements(); },
 		postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:setResultList,
@@ -173,7 +173,7 @@ findLocationTopics = function() {
 	deleteComboboxWidgets();
 	showLoading();
 	
-	SNSService.getLocationTopics(queryTerm, "beginsWith", null, {
+	SNSService.getLocationTopics(queryTerm, "beginsWith", null, userLocale, {
 		preHook: function() { showLoadingZone(); disableUiElements(); },
 		postHook: function() { hideLoadingZone(); enableUiElements(); },
 		callback:setResultList,

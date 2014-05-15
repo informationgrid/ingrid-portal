@@ -306,7 +306,7 @@ scriptScopeResearchExtObj.findTopics = function() {
 
 	clearThesaurusResults();
 
-	SNSService.findTopics(term, {
+	SNSService.findTopics(term, userLocale, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback:function(topics) {
@@ -409,7 +409,7 @@ function findAssociatedTopics(descriptor) {
 
 	clearThesaurusResults();
 
-	SNSService.getTopicsForTopic(descriptor.topicId, {
+	SNSService.getTopicsForTopic(descriptor.topicId, userLocale, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback:function(topic) {
@@ -498,7 +498,7 @@ scriptScopeResearchExtObj.findLocationTopics = function() {
 
 	clearLocationResults();
 
-	SNSService.getLocationTopics(queryTerm, "beginsWith", null, {
+	SNSService.getLocationTopics(queryTerm, "beginsWith", null, userLocale, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: setLocationResultList,
@@ -555,7 +555,7 @@ function addLocationTopicCheckbox(topic) {
 function findAssociatedLocations(topicId) {
 	clearLocationResults();
 
-	SNSService.getLocationTopicsById(topicId, {
+	SNSService.getLocationTopicsById(topicId, userLocale, {
 		preHook: showLoadingZone,
 		postHook: hideLoadingZone,
 		callback: setLocationResultList,

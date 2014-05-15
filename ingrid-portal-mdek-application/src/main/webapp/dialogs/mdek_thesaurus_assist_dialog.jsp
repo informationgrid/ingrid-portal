@@ -29,8 +29,7 @@ init = function() {
 			}
 	});
 
-//	SNSService.getSimilarDescriptors(queryTerm, {
-	SNSService.getTopicsForText(queryTerm, 100, {
+	SNSService.getTopicsForText(queryTerm, 100, userLocale, {
 		//preHook:disableUiElements,
 		//postHook:enableUiElements,
 		callback:function(res) {

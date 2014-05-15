@@ -1,5 +1,7 @@
 package de.ingrid.mdek.dwr.services.sns;
 
+import java.util.List;
+
 public class SNSLocationTopic {
 
 	private String topicId;
@@ -8,6 +10,9 @@ public class SNSLocationTopic {
 	private String name;
 	private String qualifier;
 	private String nativeKey;
+	private boolean isExpired;
+	private String expiredDate;
+	private List<SNSLocationTopic> successors;
 	
 	// The coordinates are stored as:
 	// 		lower left corner longitude, lower left corner latitude, 
@@ -79,4 +84,22 @@ public class SNSLocationTopic {
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
 	}
+    public boolean isExpired() {
+        return isExpired;
+    }
+    public void setExpired( boolean isExpired ) {
+        this.isExpired = isExpired;
+    }
+    public String getExpiredDate() {
+        return expiredDate;
+    }
+    public void setExpiredDate( String expiredDate ) {
+        this.expiredDate = expiredDate;
+    }
+    public List<SNSLocationTopic> getSuccessors() {
+        return successors;
+    }
+    public void setSuccessors( List<SNSLocationTopic> successors ) {
+        this.successors = successors;
+    }
 }

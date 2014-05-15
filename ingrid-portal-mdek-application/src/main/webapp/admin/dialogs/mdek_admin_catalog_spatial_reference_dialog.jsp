@@ -106,7 +106,7 @@
                 resetResultDiv();
                 showLoading();
                 
-                SNSService.getLocationTopicsById(topicId, {
+                SNSService.getLocationTopicsById(topicId, userLocale, {
                     preHook: function(){
                         showLoadingZone();
                         disableUiElements();
@@ -134,7 +134,7 @@
                 resetResultDiv();
                 showLoading();
                 
-                SNSService.getLocationTopics(queryTerm, "beginsWith", "/location/admin", {
+                SNSService.getLocationTopics(queryTerm, "beginsWith", "/location/admin", userLocale, {
                     preHook: function(){
                         showLoadingZone();
                         disableUiElements();
