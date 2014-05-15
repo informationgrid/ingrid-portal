@@ -64,7 +64,25 @@
     </resources>
   </build>
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
-  <!-- <dependencyManagement><dependencies><dependency><groupId>opensymphony</groupId><artifactId>quartz</artifactId><version>1.7.3</version></dependency></dependencies></dependencyManagement>-->
+  <dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>de.ingrid</groupId>
+			<artifactId>ingrid-iplug-sns</artifactId>
+			<version>3.5.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.ingrid</groupId>
+			<artifactId>ingrid-external-services-api</artifactId>
+			<version>3.5.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.ingrid</groupId>
+			<artifactId>ingrid-external-service-sns</artifactId>
+			<version>3.5.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+  </dependencyManagement>
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
     <dependency>
@@ -428,6 +446,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug-sns</artifactId>
+      <version>3.5.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>de.ingrid</groupId>
@@ -436,16 +455,6 @@
         <exclusion>
           <groupId>commons-el</groupId>
           <artifactId>commons-el</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-external-service-sns</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-external-services-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -733,11 +742,12 @@
     <dependency>
       <groupId>xerces</groupId>
       <artifactId>xercesImpl</artifactId>
+      <version>2.10.0</version>
     </dependency>
     <dependency>
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis</artifactId>
-      <version>1.0.b2</version>
+      <version>1.4.01</version>
     </dependency>
     <dependency>
       <groupId>jstl</groupId>

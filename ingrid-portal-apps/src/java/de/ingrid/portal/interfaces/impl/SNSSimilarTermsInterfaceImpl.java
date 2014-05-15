@@ -130,7 +130,8 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
     public IngridHit[] getTopicSimilarLocationsFromTopic(String topicId, Locale language) {
         try {
-        	IngridQuery query = QueryStringParser.parse(topicId);
+            String marshTopicId = SNSUtil.marshallTopicId( topicId );
+        	IngridQuery query = QueryStringParser.parse(marshTopicId); 
             query.addField(new FieldQuery(true, false, "datatype", IDataTypes.SNS));
             query.putInt(Topic.REQUEST_TYPE, Topic.SIMILARLOCATIONS_FROM_TOPIC);
 
