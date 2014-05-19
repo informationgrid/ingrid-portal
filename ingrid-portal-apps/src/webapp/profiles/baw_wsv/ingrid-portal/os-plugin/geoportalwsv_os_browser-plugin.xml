@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+    <ShortName>GeoPortal.WSV Suche</ShortName>
+    <Description>Suche im GeoPortal.WSV, dem Geoportal der Wasser- und Schifffahrtsverwaltung</Description>
+    <Url type="text/html" method="get" template="https://geoportalqs.wsv.bvbs.bund.de/freitextsuche?action=doSearch&amp;q={searchTerms}&amp;ds=1&amp;grouping=domain" />
+    <Image width="16" height="16">https://geoportalqs.wsv.bvbs.bund.de/os-plugin/geoportalwsv_os.ico</Image>
+    <InputEncoding>UTF-8</InputEncoding>
+    <moz:SearchForm>https://geoportalqs.wsv.bvbs.bund.de/startseite</moz:SearchForm>
+    <moz:UpdateUrl>https://geoportalqs.wsv.bvbs.bund.de/os-plugin/geoportal_wsv_os_browser-plugin.xml</moz:UpdateUrl>
+    <moz:IconUpdateUrl>https://geoportalqs.wsv.bvbs.bund.de/os-plugin/geoportalwsv_os.ico</moz:IconUpdateUrl>
+    <moz:UpdateInterval>7</moz:UpdateInterval>
+</OpenSearchDescription>
