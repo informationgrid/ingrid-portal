@@ -15,6 +15,9 @@
 			<action type="fix" dev="wemove">
 				Portal: Clean up ingrid-portal-apps.properties, removed wms stuff.
 			</action>
+			<action type="fix" dev="wemove">
+				Portal: Clean up portalu profile resources, removed localization resources not needed.
+			</action>
  		</release>
 
 		<release version="3.4.1" date="2014-05-14" description="Release InGrid 3.4.1">
