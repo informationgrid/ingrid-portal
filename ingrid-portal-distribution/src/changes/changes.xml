@@ -12,6 +12,9 @@
 			<action type="update" dev="wemove" issue="REDMINE-365">
 				Portal: Update browser "search plugin" for profile GeoPortal.WSV
 			</action>
+			<action type="fix" dev="wemove">
+				Portal: Clean up ingrid-portal-apps.properties, removed wms stuff.
+			</action>
  		</release>
 
 		<release version="3.4.1" date="2014-05-14" description="Release InGrid 3.4.1">
