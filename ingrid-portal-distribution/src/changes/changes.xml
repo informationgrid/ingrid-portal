@@ -18,6 +18,9 @@
 			<action type="fix" dev="wemove">
 				Portal: Clean up portalu profile resources, removed localization resources not needed.
 			</action>
+			<action type="fix" dev="wemove">
+				IGE: Fix length of input of URLs (now > 255).
+			</action>
  		</release>
 
 		<release version="3.4.1" date="2014-05-14" description="Release InGrid 3.4.1">

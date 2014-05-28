@@ -590,7 +590,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxLength="255" id="linksToURL" name="linksToURL" dojoType="dijit.form.ValidationTextBox" style="width:100%;" required="true" />
+                                            <input type="text" id="linksToURL" name="linksToURL" dojoType="dijit.form.ValidationTextBox" style="width:100%;" required="true" />
                                         </span>
                                     </div>
                                 </span>
