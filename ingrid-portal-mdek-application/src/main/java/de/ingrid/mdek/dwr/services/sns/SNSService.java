@@ -211,7 +211,7 @@ public class SNSService {
     	
     	// TODO: use "contains" here since exact only delivers one term! CHECK!!!
     	Term[] terms = thesaurusService.findTermsFromQueryTerm(url, queryTerm,
-    			de.ingrid.external.ThesaurusService.MatchingType.CONTAINS, true, locale);
+    			de.ingrid.external.ThesaurusService.MatchingType.EXACT, true, locale);
 
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	for (Term term : terms) {
