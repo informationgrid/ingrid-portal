@@ -1,0 +1,166 @@
+<div class="portlet-section-body">
+        <div id="divNominatimMap"></div>
+        <div id="divNominatimInfo"></div>
+
+        <div id="divNominatimUrl" style="display:none"></div>
+
+        <div id="divNominatimNoResults" style="display:none">
+            <p>$MESSAGES.getString('searchNominatim.noResult.text')</p>
+        </div>
+
+        <div id="divNominatimResults" style="display:none"></div>
+</div>
+
+<script type="text/javascript">
+// extract velocity context variables
+var nominatimQuery = '$nominatimQuery';
+var nominatimBaseURL = '$nominatimURL';
+var getMapURL = '$getMapURL';
+var getMapWIDTH = '$getMapWIDTH';
+var getMapBBOXDelta = '$getMapBBOXDelta';
+
+var nominatimURL = nominatimBaseURL + '&json_callback=processNominatimSearch&q=' + nominatimQuery;
+
+window.onload = function() {
+// DEBUG: Activate if needed ! Shows Nominatim URL !
+//    showNominatimSearchUrl();
+
+    doNominatimSearch();
+};
+
+function doNominatimSearch() {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = nominatimURL;
+    document.body.appendChild(script);
+};
+
+function processNominatimSearch(response) {
+    // render first result as map with info !
+    renderNominatimInfo(response);
+    renderNominatimMap(response);
+    
+    // render NO results if no results
+    renderNominatimNoResults(response);
+
+// DEBUG: Activate if needed ! Shows all results of nominatim request !
+//    renderNominatimAllResults(response);
+}
+
+function renderNominatimInfo(response) {
+    var html = '';
+    var divDisplay = "none";
+
+    if (response && response.length > 0){
+        var result = response[0];
+
+        if(result.display_name){
+            html += "<p>" + result.display_name + "</p>";
+
+            divDisplay = "";
+        }
+    }
+
+    document.getElementById('divNominatimInfo').style.display = divDisplay;
+    document.getElementById('divNominatimInfo').innerHTML = html;
+};
+
+function renderNominatimMap(response) {
+    var html = '';
+    var divDisplay = "none";
+
+    if (response && response.length > 0){
+        var result = response[0];
+
+        if(result.boundingbox){
+            // extract bbox
+            // NOMINATIM is [latMin, latMax, longMin, longMax] = [yMin, yMax, xMin, xMax];
+            // GetMap is [xMin, yMin, xMax, yMax]
+
+            var bboxDelta = parseFloat(getMapBBOXDelta);
+            var GET_MAP_BBOX = (parseFloat(result.boundingbox[2]) - bboxDelta) + ",";
+            GET_MAP_BBOX += (parseFloat(result.boundingbox[0]) - bboxDelta) + ",";
+            GET_MAP_BBOX += (parseFloat(result.boundingbox[3]) + bboxDelta) + ",";
+            GET_MAP_BBOX += (parseFloat(result.boundingbox[1]) + bboxDelta);
+
+            // image width height
+            var GET_MAP_WIDTH = getMapWIDTH;
+            var GET_MAP_HEIGHT = getMapWIDTH;
+
+            var html = "<a href=\"/kartendienste?SRS=EPSG:4326&amp;BBOX=" + GET_MAP_BBOX + "\" style=\"padding: 0 0 0 0;\">";
+            html += "<img style=\"display: block; margin: 0 auto;\" src=\"" + getMapURL;
+            html += "&amp;WIDTH=" + GET_MAP_WIDTH;
+            html += "&amp;HEIGHT=" + GET_MAP_HEIGHT;
+            html += "&amp;BBOX=" + GET_MAP_BBOX;
+            html += "\" width=\"" + GET_MAP_WIDTH + "\" height=\"" + GET_MAP_HEIGHT + "\">";
+            html += "</a>";
+
+            divDisplay = "";
+        }
+    }
+
+    document.getElementById('divNominatimMap').style.display = divDisplay;
+    document.getElementById('divNominatimMap').innerHTML = html;
+};
+
+function renderNominatimNoResults(response) {
+    var divDisplay = "";
+
+    if (response && response.length > 0){
+        divDisplay = "none";
+    }
+
+    document.getElementById('divNominatimNoResults').style.display = divDisplay;
+};
+
+// DEBUG: Output Nominatim request (URL). Call is commented, see above !
+function showNominatimSearchUrl() {
+    document.getElementById('divNominatimUrl').style.display = "";
+    document.getElementById('divNominatimUrl').innerHTML = nominatimURL.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+};
+
+// DEBUG: Output all results from nominatim. Call is commented, see above !
+function renderNominatimAllResults(response) {
+    var html = '';
+    var divDisplay = "none";
+
+    if (response && response.length > 0){
+        html += '<table><tr><th colspan="5">Search Results</th></tr>'
+        html += '<tr><td><b>#</b></td><td><b>Type</b></td><td style="min-width:150px;"><b>Name</b></td><td><b>Lat/Long</b></td><td><b>Fields</b></td></tr>';
+        html += '<tbody>'
+        
+        for(var i =0; i < response.length; i++){
+            var result = response[i];
+            var resultNum = i+1;            
+            
+            html += "<tr valign=\"top\">";
+            html += "<td>" + resultNum + "</td>";
+            html += "<td>" + result.type + "</td>";
+            
+            html += "<td>";
+            if(result.display_name){
+                var new_display_name = result.display_name.replace(/,/g, ",<br />");
+                html += new_display_name;               
+            }
+            html += "</td>";
+            
+            html += "<td>" + result.lat + ", " + result.lon + "</td>";
+            
+            html += "<td>"
+            if(result){
+                for (var obj in result){
+                    var f = result[obj];
+                    html += "<b>" + obj + ":</b> " + f + "<br/>";                   
+                }
+            }
+            html += "</td></tr>";
+        }       
+        html += '</tbody></table>';        
+
+        divDisplay = "";
+    }
+
+    document.getElementById('divNominatimResults').style.display = divDisplay;
+    document.getElementById('divNominatimResults').innerHTML = html;
+}
+</script>

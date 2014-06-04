@@ -9,8 +9,11 @@
  		</release>
 
 		<release version="3.4.x-SNAPSHOT" date="????-??-??">
+			<action type="add" dev="wemove" issue="REDMINE-293">
+				Portal: Add Portlet for searching Nominatim and showing first hit as map (Profile GeoPortal.WSV).
+			</action>
 			<action type="update" dev="wemove" issue="REDMINE-365">
-				Portal: Update browser "search plugin" for profile GeoPortal.WSV
+				Portal: Update browser "search plugin" (Profile GeoPortal.WSV).
 			</action>
 			<action type="fix" dev="wemove">
 				Portal: Clean up ingrid-portal-apps.properties, removed wms stuff.
