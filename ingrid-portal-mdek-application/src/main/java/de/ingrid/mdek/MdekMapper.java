@@ -54,7 +54,8 @@ public class MdekMapper implements DataMapperInterface {
     // Init Method is called by the Spring Framework on initialization
     public void init() throws Exception {
         // Fetch the sns resource bundle for location topic type mapping
-        snsResourceBundle = ResourceBundle.getBundle("sns");
+        // this bundle is included in the external-service-sns lib!
+        snsResourceBundle = ResourceBundle.getBundle("mapping");
     }
 
 
@@ -1833,8 +1834,8 @@ public class MdekMapper implements DataMapperInterface {
         // The sns resource bundle is used to resolve the different types
         // If the type can not be resolved, null is returned
         try {
-            return snsResourceBundle.getString("sns.topic.ref."+topicTypeId);
-
+            return snsResourceBundle.getString( "gazetteer.de." + topicTypeId );
+            
         } catch (Exception e) {
             return null;
         }
