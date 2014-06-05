@@ -39,5 +39,6 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>
     <security-constraints-ref>admin</security-constraints-ref>
+    <security-constraints-ref>admin-portal</security-constraints-ref>
   </security-constraints>
 </page>
