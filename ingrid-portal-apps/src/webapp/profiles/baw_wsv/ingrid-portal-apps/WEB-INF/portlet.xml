@@ -1393,7 +1393,7 @@
             <!-- GetMap Delta to be applied to Nominatim BBox ! Nominatim BBox will be expanded with this delta (or reduced if negative) -->
             <preference>
                 <name>getMapBBOXDelta</name>
-                <value>0.05</value>
+                <value>0.005</value>
             </preference>
             <!-- Should this portlet display INFO Information if no query passed (empty search). Pass true if wanted. -->
             <preference>
