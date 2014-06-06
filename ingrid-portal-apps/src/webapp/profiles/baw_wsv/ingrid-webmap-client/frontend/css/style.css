@@ -430,6 +430,10 @@ ul .x-tree-node-ct li .x-tree-node {
 	font: normal 11px/16px verdana !important;
 }
 
+.font-nominatim h1 span {
+	font: normal 11px/16px verdana !important;
+}
+
 #nominatim {
 	font: normal 11px/16px verdana !important;
 }
