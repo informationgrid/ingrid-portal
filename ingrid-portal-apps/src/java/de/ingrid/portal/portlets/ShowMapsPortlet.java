@@ -125,6 +125,8 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Locale.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/utils/FileSaver/FileSaver.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/GeocoderComboBox.js\"></script>"+
+				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/BWaStrLocatorComboBox.js\"></script>"+
+				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/PortalSearchComboBox.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/FormatStore.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Export.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Import.js\"></script>"+
@@ -165,7 +167,8 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/WelcomeDialog.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/LegendDialog.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SearchPanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/PositionDialog.js\"></script>"+
+				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/BWaStrDialog.js\"></script>"+
+				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/BWaStrPanelResult.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/Workspace.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/main.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash.js\"></script>"+
