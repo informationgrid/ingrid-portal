@@ -148,6 +148,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/SessionState.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/Service.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/MapUtils.js\"></script>"+
+				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/BWaStrUtils.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ActiveServicesPanel.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ServiceCategoryPanel.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SearchCategoryPanel.js\"></script>"+
@@ -215,7 +216,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
 				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel-min.css\" />"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/proj4js/lib/proj4js-compressed.js\"></script>"+
 				
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style-min.css\" />"+
+				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style.css\" />"+
 				
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/frontend-all-min.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash-min.js\"></script>"+
