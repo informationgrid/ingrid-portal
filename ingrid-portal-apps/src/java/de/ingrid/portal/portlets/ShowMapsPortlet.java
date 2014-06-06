@@ -127,6 +127,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet implements SupportsH
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/GeocoderComboBox.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/BWaStrLocatorComboBox.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/PortalSearchComboBox.js\"></script>"+
+				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/AllSearchComboBox.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/FormatStore.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Export.js\"></script>"+
 				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Import.js\"></script>"+
