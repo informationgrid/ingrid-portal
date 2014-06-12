@@ -279,7 +279,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		if (snsTopics != null) {
 			List<SNSTopic> resultList = new ArrayList<SNSTopic>();
 			for (SNSTopic topic : snsTopics) {
-				if (topic.isExpired()) {
+				if (topic != null && topic.isExpired()) {
 					resultList.add(topic);
 				}
 			}
