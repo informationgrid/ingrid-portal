@@ -2284,15 +2284,9 @@
 				 mit der neusten Version des SNS überprüft und ggf. angepasst werden. Dies kann der 
 				 Katalogadministrator automatisch über die Funktion <i>Suchbegriffe</i> im Menüpunkt 
 				 <i>Gesamtkatalogmanagement</i> durchführen.</p>
-				 <p>Die Aktualisierung der Suchbegriffe im IGC kann <b>offline</b> über eine vom SNS 
-				 gelieferte Datei durchgeführt werden. Hierzu laden Sie die Datei über den Button 
-				 <i>Durchsuchen</i> und starten den Vorgang über den Button <i>Aktualisierung 
-				 starten</i>.</p>
-				 <p>Alternativ können Sie den Aktualisierungsvorgang auch <b>online</b> durchführen, indem 
-				 Sie den Button <i>Aktualisierung starten</i> anklicken, ohne vorher eine Datei geladen zu 
-				 haben. In diesem Fall wird SNS online über das Netz abgefragt. Diese Methode hat den 
-				 Vorteil, dass vorher keine Datei vom Umweltbundesamt oder der KST PortalU zur Verfügung 
-				 gestellt werden müssen, dauert aber je nach Netzauslastung evtl. etwas länger.</p>
+				 <p>Der Aktualisierungsvorgang wird <b>online</b> durchgeführt, indem 
+				 Sie den Button <i>Aktualisierung starten</i> anklicken. In diesem Fall wird SNS 
+                 online über das Netz abgefragt.</p>
 				 <p>Nach der Aktualisierung werden einige Informationen zum letzten Prozess in dem 
 				 Informationskasten angezeigt.</p>
 				 <p>Detaillierte Informationen zu jeder Veränderung werden in der darunter stehenden 

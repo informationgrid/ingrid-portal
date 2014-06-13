@@ -1548,8 +1548,7 @@
 				 of the Federal Environment Agency (Umweltbundesamt).</p>
                  <p>The thesaurus descriptors are stored in the IGC not only as SNS-IDs but also as terms. Not only the UMTHES but also the GEMET too are being maintained and developed further. For this reason the SNS too receives regular updating.  </p>
 				 <p>After every updating of the SNS, the data base of the IGC has to be checked for consistency with the newest version of SNS and, if necessary, adapted. The catalogue administrator can do this automatically via the <i>Search Terms</i> function in the <i>Catalogue Management</i> menu item.</p>
-				 <p>The updating of the search terms in the IGC can be carried out <b>offline</b> via a file delivered by SNS. To do this you load the file via the <i>Browse</i> button and start the operation via the <i>Start Update</i> button.</p>
-				 <p>As an alternative, you can also carry out the updating operation <b>online</b> by clicking on the <i>Start Update</i> button without previously loading a file. In this case, SNS is interrogated online via the net. This method has the advantage that no file from the Federal Ministry of the Environment or the KST PortalU has to be made available before. Depending on the net capacity utilisation, the update process can take somewhat longer. </p>
+				 <p>The updating operation is executed <b>online</b> by clicking on the <i>Start Update</i> button. In this case, SNS is interrogated online via the net. Depending on the net capacity utilisation, the update process can take somewhat longer.</p>
 				 <p>After updating, some <i>Information about the last update process</i> is displayed in the information box.</p>
 				 <p>Detailed information on every change is provided in the table below it. In the first column the original <i>Description</i> of the search term is displayed. The <i>Type</i> of the term follows. The following types can appear:</p>
 				 <ul>
