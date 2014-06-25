@@ -11,6 +11,8 @@
         <div id="divNominatimResults" style="display:none"></div>
 </div>
 
+#set ($nominatimTooltip = $MESSAGES.getString('searchNominatim.tooltip'))
+
 <script type="text/javascript">
 function nominatimAjaxCall(url, cfunc) {
     var xmlhttp;
@@ -128,7 +130,8 @@ function renderNominatimMap(response) {
             var GET_MAP_WIDTH = nominatimGetMapWIDTH;
             var GET_MAP_HEIGHT = nominatimGetMapWIDTH;
 
-            var html = "<a href=\"/kartendienste?SRS=EPSG:4326&amp;BBOX=" + GET_MAP_BBOX + "\" style=\"padding: 0 0 0 0;\">";
+            var html = "<a title=\"" + '$nominatimTooltip' + "\" ";
+            html += "href=\"/kartendienste?SRS=EPSG:4326&amp;BBOX=" + GET_MAP_BBOX + "\" style=\"padding: 0 0 0 0;\">";
             html += "<img style=\"display: block; margin: 0 auto;\" src=\"" + nominatimGetMapURL;
             html += "&amp;WIDTH=" + GET_MAP_WIDTH;
             html += "&amp;HEIGHT=" + GET_MAP_HEIGHT;

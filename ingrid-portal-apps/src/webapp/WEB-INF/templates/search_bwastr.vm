@@ -11,7 +11,7 @@
         <div id="divBwastrResults" style="display:none"></div>
 </div>
 
-
+#set ($bwastrTooltip = $MESSAGES.getString('searchBwastr.tooltip'))
 
 <script type="text/javascript">
 function bwastrAjaxCall(url, method, cfunc) {
@@ -191,7 +191,8 @@ function renderBwastrMap(bbox) {
     var yLength = bbox[3] - bbox[1];
     GET_MAP_HEIGHT = (yLength / xLength) * GET_MAP_WIDTH;
 
-    var html = "<a href=\"/kartendienste?SRS=EPSG:4326&amp;BBOX=" + GET_MAP_BBOX + "\" style=\"padding: 0 0 0 0;\">";
+    var html = "<a title=\"" + '$bwastrTooltip' + "\" ";
+    html += "href=\"/kartendienste?SRS=EPSG:4326&amp;BBOX=" + GET_MAP_BBOX + "\" style=\"padding: 0 0 0 0;\">";
     html += "<img style=\"display: block; margin: 0 auto;\" src=\"" + bwastrGetMapURL;
     html += "&amp;WIDTH=" + GET_MAP_WIDTH;
     html += "&amp;HEIGHT=" + GET_MAP_HEIGHT;
