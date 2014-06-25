@@ -59,7 +59,8 @@ body {
 }
 
 .iconMapPin {
-	background-image: url(../../shared/images/icon_map_pin.png);
+	background-image: url(../../shared/images/icon_pin_green.png);
+	background-size: 16px auto;
 }
 
 .iconZoom {
