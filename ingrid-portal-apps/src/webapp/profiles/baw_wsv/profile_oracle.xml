@@ -305,22 +305,43 @@
         <!-- Use ingrid_lookup table for temporary values (sub fragment) CAUSE CAN'T DO SUBSELECTS ON SAME TABLE (MySQL) !!! -->
         <!-- Remember id of sub fragment, ALSO ADD ID cause maybe no trigger set on null id ! -->
         <execute>
-            <![CDATA[INSERT INTO ingrid_lookup (id\, item_key\, item_value) values (0\, 'tmp_id'\, '0')]]>
+            <![CDATA[INSERT INTO ingrid_lookup (id\, item_key\, item_value) values (0\, 'tmp_layout_fragment_id'\, '0')]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE ingrid_lookup SET item_value = (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'jetspeed-layouts::IngridTwoColumns') WHERE item_key='tmp_id']]>
+            <![CDATA[UPDATE ingrid_lookup SET item_value = (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'jetspeed-layouts::IngridTwoColumns') WHERE item_key='tmp_layout_fragment_id']]>
         </execute>
         <!-- Change decorator in sub fragment -->
         <execute>
-            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet']]>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id') AND name = 'ingrid-portal-apps::InfoPortlet']]>
         </execute>
         <!-- Also replace info portlet with SearchNominatim portlet. Preferences can be kept (infoTemplate, titleKey), not used. -->
         <execute>
-            <![CDATA[UPDATE fragment SET name = 'ingrid-portal-apps::SearchNominatim' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet']]>
+            <![CDATA[UPDATE fragment SET name = 'ingrid-portal-apps::SearchNominatim' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id') AND name = 'ingrid-portal-apps::InfoPortlet']]>
         </execute>
+        <!-- Add NEW SearchBWaStr portlet with preferences ? NOTICE: We add +10 to new IDs from Sequence due to Problems with IDs when manipulated per profiler above (max_key match highest ID !) !??? -->
+<!--
+        <execute>
+            <![CDATA[INSERT INTO fragment (FRAGMENT_ID\, PARENT_ID\, PAGE_ID\, NAME\, TITLE\, SHORT_TITLE\, TYPE\, SKIN\, DECORATOR\, STATE\, PMODE\, LAYOUT_ROW\, LAYOUT_COLUMN\, LAYOUT_SIZES\, LAYOUT_X\, LAYOUT_Y\, LAYOUT_Z\, LAYOUT_WIDTH\, LAYOUT_HEIGHT\, EXT_PROP_NAME_1\, EXT_PROP_VALUE_1\, EXT_PROP_NAME_2\, EXT_PROP_VALUE_2\, OWNER_PRINCIPAL) VALUES ((SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT')\,(SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id')\, NULL\, 'ingrid-portal-apps::SearchBWaStr'\, NULL\, NULL\, 'portlet'\, NULL\, 'ingrid-marginal-teaser'\, NULL\, NULL\, 1\, 1\, NULL\, -1\, -1\, -1\, -1\, -1\, NULL\, NULL\, NULL\, NULL\, NULL)]]>
+        </execute>
+        <execute>
+            <![CDATA[INSERT INTO fragment_pref (PREF_ID\, FRAGMENT_ID\, NAME\, IS_READ_ONLY) VALUES ((SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF')\,(SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT')\, 'showInfoOnEmptyQuery'\, 0)]]>
+        </execute>
+        <execute>
+            <![CDATA[INSERT INTO fragment_pref_value (PREF_VALUE_ID\, PREF_ID\, VALUE_ORDER\, VALUE) VALUES ((SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE')\,(SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF')\, 0\, 'false')]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE ojb_hl_seq SET max_key=max_key+grab_size\, version=version+1 WHERE tablename='SEQ_FRAGMENT']]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE ojb_hl_seq SET max_key=max_key+grab_size\, version=version+1 WHERE tablename='SEQ_FRAGMENT_PREF']]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE ojb_hl_seq SET max_key=max_key+grab_size\, version=version+1 WHERE tablename='SEQ_FRAGMENT_PREF_VALUE']]>
+        </execute>
+-->
         <!-- Remove temporary values from ingrid_lookup table -->
         <execute>
-            <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_id']]>
+            <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id']]>
         </execute>
         <!-- Revert feature page as default for about page -->
         <execute>

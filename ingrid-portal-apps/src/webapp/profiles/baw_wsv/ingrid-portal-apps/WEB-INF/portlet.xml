@@ -1376,6 +1376,9 @@
             <preference>
                 <name>nominatimURL</name>
                 <value>https://geoportalqs.wsv.bvbs.bund.de/nominatim/search?format=json&amp;countrycodes=de</value>
+<!--
+                <value>http://nominatim.openstreetmap.org/search?format=json&amp;countrycodes=de</value>
+-->
             </preference>
             <!-- GetMap URL rendering map ! BBOX parameter added from nominatim result. -->
             <preference>
@@ -1388,7 +1391,7 @@
             <!-- GetMap WIDTH Parameter. Also used as HEIGHT cause Nominatim BBox is always Quad -->
             <preference>
                 <name>getMapWIDTH</name>
-                <value>230</value>
+                <value>150</value>
             </preference>
             <!-- GetMap Delta to be applied to Nominatim BBox ! Nominatim BBox will be expanded with this delta (or reduced if negative) -->
             <preference>
@@ -1399,6 +1402,61 @@
             <preference>
                 <name>showInfoOnEmptyQuery</name>
                 <value>true</value>
+            </preference>
+            <!-- Template for displaying INFO Information. NOTICE: Resources have to include localization keys for content of template ! -->
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/search_simple_info.vm</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <portlet id="SearchBWaStr">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_bwastr.vm</value>
+        </init-param>
+        <portlet-name>SearchBWaStr</portlet-name>
+        <display-name>Bundeswasserstraßensuche</display-name>
+        <description>This portlet searches in BWaStr locator and displays the first result in a map.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchBWaStrPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.SearchBWaStrResources</resource-bundle>
+        <portlet-preferences>
+            <!-- BWaStr URL requesting results, query = terms in ingrid query or full ingrid query if no terms ! -->
+            <preference>
+                <name>bwastrLocatorURL</name>
+                <value>https://geoportalqs.wsv.bvbs.bund.de/ingrid-webmap-client/rest/jsonCallback/query?searchID=searchterm&amp;url=http://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/rest/bwastrinfo/query?limit=200%26searchfield=all</value>
+            </preference>
+            <!-- BWaStr URL requesting coordinates ! -->
+            <preference>
+                <name>bwastrGeokodierungURL</name>
+                <value>https://geoportalqs.wsv.bvbs.bund.de/ingrid-webmap-client/rest/jsonCallback/queryPost?url=http://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/rest/geokodierung/query</value>
+            </preference>
+            <!-- GetMap URL rendering map ! BBOX parameter computed from BWaStr Geokodierung. -->
+            <preference>
+                <name>getMapURL</name>
+                <value>http://wsvmapserv.wsv.bund.de/wms_bwastr?LAYERS=Gewaessernetz&amp;FORMAT=image/png&amp;TRANSPARENT=TRUE&amp;VERSION=1.1.1&amp;SERVICE=WMS&amp;REQUEST=GetMap&amp;STYLES=&amp;SRS=EPSG:4326</value>
+            </preference>
+            <!-- GetMap WIDTH Parameter. HEIGHT will be computed according to BBox. -->
+            <preference>
+                <name>getMapWIDTH</name>
+                <value>150</value>
+            </preference>
+            <!-- GetMap Delta to be applied to BWaStr BBox ! BWaStr BBox will be expanded with this delta (or reduced if negative) -->
+            <preference>
+                <name>getMapBBOXDelta</name>
+                <value>0.0</value>
+            </preference>
+            <!-- Should this portlet display INFO Information if no query passed (empty search). Pass true if wanted. -->
+            <preference>
+                <name>showInfoOnEmptyQuery</name>
+                <value>false</value>
             </preference>
             <!-- Template for displaying INFO Information. NOTICE: Resources have to include localization keys for content of template ! -->
             <preference>

@@ -9,6 +9,9 @@
  		</release>
 
 		<release version="3.4.x-SNAPSHOT" date="????-??-??">
+			<action type="add" dev="wemove" issue="REDMINE-367">
+				Portal: Add Portlet for searching BWaStr locator and showing first hit as map (Profile GeoPortal.WSV).
+			</action>
 			<action type="add" dev="wemove" issue="REDMINE-293">
 				Portal: Add Portlet for searching Nominatim and showing first hit as map (Profile GeoPortal.WSV).
 			</action>

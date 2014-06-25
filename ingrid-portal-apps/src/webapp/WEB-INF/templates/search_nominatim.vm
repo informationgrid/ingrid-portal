@@ -12,27 +12,68 @@
 </div>
 
 <script type="text/javascript">
+function nominatimAjaxCall(url, cfunc) {
+    var xmlhttp;
+    if (window.XMLHttpRequest){
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            var jsonResponse = JSON.parse(xmlhttp.responseText);
+            cfunc(jsonResponse);
+        }
+    };
+    cfunc;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.send();
+}
+
 // extract velocity context variables
 var nominatimQuery = '$nominatimQuery';
 var nominatimBaseURL = '$nominatimURL';
-var getMapURL = '$getMapURL';
-var getMapWIDTH = '$getMapWIDTH';
-var getMapBBOXDelta = '$getMapBBOXDelta';
+var nominatimGetMapURL = '$getMapURL';
+var nominatimGetMapWIDTH = '$getMapWIDTH';
+var nominatimGetMapBBOXDelta = '$getMapBBOXDelta';
 
-var nominatimURL = nominatimBaseURL + '&json_callback=processNominatimSearch&q=' + nominatimQuery;
+// Use this function to add onLoad functionality ! So existing onLoad function is not overridden !
+function nominatimAddLoadEvent(func) {
+  var oldonload = window.onload;
+  if (typeof window.onload != 'function') {
+    window.onload = func;
+  } else {
+    window.onload = function() {
+      if (oldonload) {
+        oldonload();
+      }
+      func();
+    }
+  }
+}
 
-window.onload = function() {
-// DEBUG: Activate if needed ! Shows Nominatim URL !
-//    showNominatimSearchUrl();
-
+nominatimAddLoadEvent(function() {
     doNominatimSearch();
-};
+});
 
 function doNominatimSearch() {
+//    var nominatimURL = nominatimBaseURL + '&json_callback=processNominatimSearch&q=' + nominatimQuery;
+    var nominatimURL = nominatimBaseURL + '&q=' + nominatimQuery;
+
+// DEBUG: Activate if needed ! Shows Nominatim URL !
+//    showNominatimUrl(nominatimURL);
+
+    nominatimAjaxCall(nominatimURL, function(jsonResponse) {
+        processNominatimSearch(jsonResponse);
+    });
+/*
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = nominatimURL;
     document.body.appendChild(script);
+*/
 };
 
 function processNominatimSearch(response) {
@@ -77,18 +118,18 @@ function renderNominatimMap(response) {
             // NOMINATIM is [latMin, latMax, longMin, longMax] = [yMin, yMax, xMin, xMax];
             // GetMap is [xMin, yMin, xMax, yMax]
 
-            var bboxDelta = parseFloat(getMapBBOXDelta);
+            var bboxDelta = parseFloat(nominatimGetMapBBOXDelta);
             var GET_MAP_BBOX = (parseFloat(result.boundingbox[2]) - bboxDelta) + ",";
             GET_MAP_BBOX += (parseFloat(result.boundingbox[0]) - bboxDelta) + ",";
             GET_MAP_BBOX += (parseFloat(result.boundingbox[3]) + bboxDelta) + ",";
             GET_MAP_BBOX += (parseFloat(result.boundingbox[1]) + bboxDelta);
 
             // image width height
-            var GET_MAP_WIDTH = getMapWIDTH;
-            var GET_MAP_HEIGHT = getMapWIDTH;
+            var GET_MAP_WIDTH = nominatimGetMapWIDTH;
+            var GET_MAP_HEIGHT = nominatimGetMapWIDTH;
 
             var html = "<a href=\"/kartendienste?SRS=EPSG:4326&amp;BBOX=" + GET_MAP_BBOX + "\" style=\"padding: 0 0 0 0;\">";
-            html += "<img style=\"display: block; margin: 0 auto;\" src=\"" + getMapURL;
+            html += "<img style=\"display: block; margin: 0 auto;\" src=\"" + nominatimGetMapURL;
             html += "&amp;WIDTH=" + GET_MAP_WIDTH;
             html += "&amp;HEIGHT=" + GET_MAP_HEIGHT;
             html += "&amp;BBOX=" + GET_MAP_BBOX;
@@ -114,9 +155,9 @@ function renderNominatimNoResults(response) {
 };
 
 // DEBUG: Output Nominatim request (URL). Call is commented, see above !
-function showNominatimSearchUrl() {
+function showNominatimUrl(myUrl) {
     document.getElementById('divNominatimUrl').style.display = "";
-    document.getElementById('divNominatimUrl').innerHTML = nominatimURL.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    document.getElementById('divNominatimUrl').innerHTML = myUrl.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 };
 
 // DEBUG: Output all results from nominatim. Call is commented, see above !

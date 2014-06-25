@@ -1,0 +1,246 @@
+<div class="portlet-section-body">
+        <div id="divBwastrMap"></div>
+        <div id="divBwastrInfo"></div>
+
+        <div id="divBwastrURL" style="display:none"></div>
+
+        <div id="divBwastrNoResults" style="display:none">
+            <p>$MESSAGES.getString('searchBwastr.noResult.text')</p>
+        </div>
+
+        <div id="divBwastrResults" style="display:none"></div>
+</div>
+
+
+
+<script type="text/javascript">
+function bwastrAjaxCall(url, method, cfunc) {
+    var xmlhttp;
+    if (window.XMLHttpRequest){
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            var jsonResponse = JSON.parse(xmlhttp.responseText);
+            cfunc(jsonResponse);
+        }
+    };
+    cfunc;
+    xmlhttp.open(method,url,true);
+    xmlhttp.send();
+}
+
+// extract velocity context variables
+var bwastrQuery = '$bwastrQuery';
+var bwastrLocatorURL = '$bwastrLocatorURL';
+var bwastrGeokodierungURL = '$bwastrGeokodierungURL';
+var bwastrGetMapURL = '$getMapURL';
+var bwastrGetMapWIDTH = '$getMapWIDTH';
+var bwastrGetMapBBOXDelta = '$getMapBBOXDelta';
+
+// Use this function to add onLoad functionality ! So existing onLoad function is not overridden !
+function bwastrAddLoadEvent(func) {
+  var oldonload = window.onload;
+  if (typeof window.onload != 'function') {
+    window.onload = func;
+  } else {
+    window.onload = function() {
+      if (oldonload) {
+        oldonload();
+      }
+      func();
+    }
+  }
+}
+
+bwastrAddLoadEvent(function() {
+    doBwastrSearch();
+});
+
+function doBwastrSearch() {
+    var bwastrDoSearchURL = bwastrLocatorURL + '&searchterm=' + bwastrQuery;
+
+// DEBUG: Activate if needed ! Shows URL !
+//    showBwastrURL(bwastrDoSearchURL);
+
+    bwastrAjaxCall(bwastrDoSearchURL, "GET", function(jsonResponse) {
+        processBwastrSearch(jsonResponse);
+    });
+};
+
+function processBwastrSearch(response) {
+    // render info of first result !
+    renderBwastrInfo(response);
+    
+    // render NO results if no results
+    renderBwastrNoResults(response);
+
+// DEBUG: Activate if needed ! Shows all results of nominatim request !
+//    renderBwastrAllResults(response);
+
+    // render map
+    doBwastrMap(response);
+}
+
+function renderBwastrInfo(response) {
+    var html = '';
+    var divDisplay = "none";
+
+    if (response && response.result && response.result.length > 0){
+        var result = response.result[0];
+
+        if(result.concat_name){
+            html += "<p>" + result.concat_name + "</p>";
+
+            divDisplay = "";
+        }
+    }
+
+    document.getElementById('divBwastrInfo').style.display = divDisplay;
+    document.getElementById('divBwastrInfo').innerHTML = html;
+};
+
+function renderBwastrNoResults(response) {
+    var divDisplay = "";
+
+    if (response && response.result && response.result.length > 0){
+        divDisplay = "none";
+    }
+
+    document.getElementById('divBwastrNoResults').style.display = divDisplay;
+};
+
+function doBwastrMap(response) {
+    if (response && response.result && response.result.length > 0){
+        var result = response.result[0];
+
+        var bwastrCallGeokodierungURL = bwastrGeokodierungURL + '&json_callback=processBwastrGeokodierung';
+        bwastrCallGeokodierungURL += '&data={"limit":200,"queries":[{"qid":1,"bwastrid":"' + result.bwastrid;
+        bwastrCallGeokodierungURL += '","stationierung":{"km_von":' + result.km_von;
+        bwastrCallGeokodierungURL += ',"km_bis":' + result.km_bis;
+        bwastrCallGeokodierungURL += '},"spatialReference":{"wkid":4326}}]}';
+
+    // DEBUG: Activate if needed ! Shows URL !
+//        showBwastrURL(bwastrCallGeokodierungURL);
+
+        bwastrAjaxCall(bwastrCallGeokodierungURL, "GET", function(jsonResponse) {
+            processBwastrGeokodierung(jsonResponse);
+        });
+    }
+};
+
+function processBwastrGeokodierung(response) {
+    // compute BBox from coordinates !
+    if (response && response.result && response.result.length > 0){
+        var result = response.result[0];
+
+        if (result.geometry && result.geometry.coordinates){
+            var minX = null;
+            var minY = null;
+            var maxX = null;
+            var maxY = null;
+    
+            for(var i=0; i < result.geometry.coordinates.length; i++){
+                var myCoords = result.geometry.coordinates[i];
+                
+                for(var j=0; j < myCoords.length; j++){
+                    var myCoord = myCoords[j];
+                    
+                    // Bwastr Coord is [longitude, latitude] = [x, y];
+                    var myX = parseFloat(myCoord[0]);
+                    var myY = parseFloat(myCoord[1]);
+    
+                    if (minX == null) {
+                        minX = maxX = myX;
+                        minY = maxY = myY;
+                        continue;
+                    }
+                    
+                    if (myX < minX) minX = myX;
+                    if (myX > maxX) maxX = myX;
+                    if (myY < minY) minY = myY;
+                    if (myY > maxY) maxY = myY;
+                }
+            }
+
+            // render map
+//            alert("" + minX + "," + minY + "," + maxX + "," + maxY);
+            renderBwastrMap([minX, minY, maxX, maxY]);
+        }
+    }
+}
+
+// bbox is [longMin, latMin, longMax, latMax] = [xMin, yMin, xMax, yMax];
+function renderBwastrMap(bbox) {
+    var bboxDelta = parseFloat(bwastrGetMapBBOXDelta);
+    var GET_MAP_BBOX = (bbox[0] - bboxDelta) + ",";
+    GET_MAP_BBOX += (bbox[1] - bboxDelta) + ",";
+    GET_MAP_BBOX += (bbox[2] + bboxDelta) + ",";
+    GET_MAP_BBOX += (bbox[3] + bboxDelta);
+
+    // image width
+    var GET_MAP_WIDTH = bwastrGetMapWIDTH;
+    
+    // compute HEIGHT according to BBOX to avoid scaling !
+    var GET_MAP_HEIGHT;
+    var xLength = bbox[2] - bbox[0];
+    var yLength = bbox[3] - bbox[1];
+    GET_MAP_HEIGHT = (yLength / xLength) * GET_MAP_WIDTH;
+
+    var html = "<a href=\"/kartendienste?SRS=EPSG:4326&amp;BBOX=" + GET_MAP_BBOX + "\" style=\"padding: 0 0 0 0;\">";
+    html += "<img style=\"display: block; margin: 0 auto;\" src=\"" + bwastrGetMapURL;
+    html += "&amp;WIDTH=" + GET_MAP_WIDTH;
+    html += "&amp;HEIGHT=" + GET_MAP_HEIGHT;
+    html += "&amp;BBOX=" + GET_MAP_BBOX;
+    html += "\" width=\"" + GET_MAP_WIDTH + "\" height=\"" + GET_MAP_HEIGHT + "\">";
+    html += "</a>";
+
+    document.getElementById('divBwastrMap').style.display = "";
+    document.getElementById('divBwastrMap').innerHTML = html;
+};
+
+// DEBUG: Output Bwastr URL. Call is commented, see above !
+function showBwastrURL(myURL) {
+    document.getElementById('divBwastrURL').style.display = "";
+    document.getElementById('divBwastrURL').innerHTML = myURL.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+};
+
+// DEBUG: Output all results from Bwastr. Call is commented, see above !
+function renderBwastrAllResults(response) {
+    var html = '';
+    var divDisplay = "none";
+
+    if (response && response.result && response.result.length > 0){
+        html += '<table><tr><th colspan="2">Search Results</th></tr>'
+        html += '<tr><td><b>#</b></td><td><b>Fields</b></td></tr>';
+        html += '<tbody>'
+        
+        for(var i =0; i < response.result.length; i++){
+            var result = response.result[i];
+            var resultNum = i+1;            
+            
+            html += "<tr valign=\"top\">";
+            html += "<td>" + resultNum + "</td>";
+                        
+            html += "<td>"
+            if(result){
+                for (var obj in result){
+                    var f = result[obj];
+                    html += "<b>" + obj + ":</b> " + f + "<br/>";                   
+                }
+            }
+            html += "</td></tr>";
+        }       
+        html += '</tbody></table>';        
+
+        divDisplay = "";
+    }
+
+    document.getElementById('divBwastrResults').style.display = divDisplay;
+    document.getElementById('divBwastrResults').innerHTML = html;
+}
+</script>

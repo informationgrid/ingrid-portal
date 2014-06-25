@@ -24,20 +24,28 @@
               <value>search-results-1</value>
             </preference>
           </fragment>
-          <fragment id="main-search-info" type="portlet" decorator="ingrid-marginal-header" name="ingrid-portal-apps::InfoPortlet">
+<!-- Nominatim Portlet (Ortssuche) used with main-search-info id for easy switching (SQL) -->
+          <fragment id="main-search-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::SearchNominatim">
             <property layout="TwoColumns" name="row" value="0" />
             <property layout="TwoColumns" name="column" value="1" />
-            <preference name="infoTemplate" readOnly="false">
-              <value>/WEB-INF/templates/search_simple_info.vm</value>
-            </preference>
-            <preference name="titleKey" readOnly="false">
-              <value>searchSimple.info.title</value>
+            <preference name="showInfoOnEmptyQuery" readOnly="false">
+              <value>true</value>
             </preference>
           </fragment>
           <fragment id="main-search-similar" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchSimilar">
             <property layout="TwoColumns" name="row" value="1"/>
             <property layout="TwoColumns" name="column" value="0"/>
           </fragment>                                
+<!-- BWaStr Portlet (BWaStrsuche) -->
+<!--
+          <fragment id="main-search-bwastr" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::SearchBWaStr">
+            <property layout="TwoColumns" name="row" value="1" />
+            <property layout="TwoColumns" name="column" value="1" />
+            <preference name="showInfoOnEmptyQuery" readOnly="false">
+              <value>false</value>
+            </preference>
+          </fragment>
+-->
         </fragment>
         <fragment id="main-search-one-column" type="layout" name="jetspeed-layouts::IngridOneColumn">
           <property layout="OneColumn" name="row" value="1"/>

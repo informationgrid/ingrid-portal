@@ -334,22 +334,26 @@
         <!-- Use ingrid_lookup table for temporary values (sub fragment) CAUSE CAN'T DO SUBSELECTS ON SAME TABLE (MySQL) !!! -->
         <!-- Remember id of sub fragment -->
         <execute>
-            <![CDATA[INSERT INTO ingrid_lookup (item_key\, item_value) values ('tmp_id'\, '0');]]>
+            <![CDATA[INSERT INTO ingrid_lookup (item_key\, item_value) values ('tmp_layout_fragment_id'\, '0');]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE ingrid_lookup SET item_value = (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'jetspeed-layouts::IngridTwoColumns') WHERE item_key='tmp_id';]]>
+            <![CDATA[UPDATE ingrid_lookup SET item_value = (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'jetspeed-layouts::IngridTwoColumns') WHERE item_key='tmp_layout_fragment_id';]]>
         </execute>
         <!-- Replace SearchNominatim portlet (BAW) with info portlet. Preferences still there (infoTemplate, titleKey). -->
         <execute>
-            <![CDATA[UPDATE fragment SET name = 'ingrid-portal-apps::InfoPortlet' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::SearchNominatim';]]>
+            <![CDATA[UPDATE fragment SET name = 'ingrid-portal-apps::InfoPortlet' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id') AND name = 'ingrid-portal-apps::SearchNominatim';]]>
         </execute>
         <!-- then decorator -->
         <execute>
-            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <!-- REMOVE SearchBWaStr portlet. NOTICE: We keep orphaned fragment preferences, should not matter. -->
+        <execute>
+            <![CDATA[DELETE FROM fragment WHERE NAME = 'ingrid-portal-apps::SearchBWaStr' AND PARENT_ID = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id');]]>
         </execute>
         <!-- Remove temporary values from ingrid_lookup table -->
         <execute>
-            <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_id';]]>
+            <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id';]]>
         </execute>
         <!-- Set feature page as default for about page -->
         <execute>
