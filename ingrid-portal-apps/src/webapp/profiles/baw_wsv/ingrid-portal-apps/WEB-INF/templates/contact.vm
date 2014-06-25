@@ -18,6 +18,7 @@ $contactIntroPostEmail
 				<option value="lehre" #getSelectedFlag('activity' 'lehre')>$MESSAGES.getString('contact.report.email.area.of.profession.lehre')</option>
 				<option value="univ" #getSelectedFlag('activity' 'univ')>$MESSAGES.getString('contact.report.email.area.of.profession.univ')</option>
 				<option value="medi" #getSelectedFlag('activity' 'medi')>$MESSAGES.getString('contact.report.email.area.of.profession.medi')</option>
+                <option value="map" #getSelectedFlag('activity' 'map')>$MESSAGES.getString('contact.report.email.area.of.profession.map')</option>
 				<option value="ande" #getSelectedFlag('activity' 'ande')>$MESSAGES.getString('contact.report.email.area.of.profession.ande')</option>
 			</select>  
 			<span class="clearer"></span>

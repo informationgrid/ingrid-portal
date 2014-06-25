@@ -15,6 +15,9 @@
 			<action type="add" dev="wemove" issue="REDMINE-293">
 				Portal: Add Portlet for searching Nominatim and showing first hit as map (Profile GeoPortal.WSV).
 			</action>
+			<action type="update" dev="wemove" issue="REDMINE-386">
+				Portal: Update contact form topics (Profile GeoPortal.WSV).
+			</action>
 			<action type="update" dev="wemove" issue="REDMINE-365">
 				Portal: Update browser "search plugin" (Profile GeoPortal.WSV).
 			</action>
