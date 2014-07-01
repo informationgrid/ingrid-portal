@@ -4,7 +4,7 @@
 	|
 	<a href="$renderResponse.encodeURL('/portal/privacy.psml')" title="$MESSAGES.getString('footer.privacy.policy.tooltip')">$MESSAGES.getString('footer.privacy.policy')</a>
 	|
-	<a href="mailto:gdi-wsv.support@dlz-it-bvbs.bund.de" title="$MESSAGES.getString('footer.webmaster.tooltip')">$MESSAGES.getString('footer.webmaster')</a>
+	<a href="mailto:gdi-wsv.support@ba-dlz-it.bund.de" title="$MESSAGES.getString('footer.webmaster.tooltip')">$MESSAGES.getString('footer.webmaster')</a>
 #end
 
 </div>
