@@ -26,7 +26,7 @@ define(["dojo/_base/declare",
     "ingrid/message"
 ], function(declare, array, lang, topic, on, aspect, dom, domClass, query, string, registry, UtilGrid, UtilUI, UtilSyslist, UtilGeneral, message) {
 
-    return declare(null, {
+    var Validators = declare(null, {
 
         constructor: function() {
             globalValidation.unmarkGridCells = UtilUI.unmarkGridCells;
@@ -385,7 +385,7 @@ define(["dojo/_base/declare",
             var intervalUnitWidget = registry.byId("timeRefIntervalUnit");
 
             on(intervalNumWidget, "KeyUp", function() {
-                var unitVal = registry.byId("timeRefIntervalUnit").getValue();
+                var unitVal = registry.byId("timeRefIntervalUnit").get("value");
                 var unitEmpty = (unitVal === null || unitVal.length === 0);
 
                 if (unitEmpty) {
@@ -405,7 +405,7 @@ define(["dojo/_base/declare",
 
             on(intervalUnitWidget, "Change", function() {
                 var numWidget = registry.byId("timeRefIntervalNum");
-                if (this.getValue() != "")
+                if (this.get("value") != "")
                     numWidget.required = true;
                 else {
                     if (numWidget.get("displayedValue") == "") {
@@ -447,7 +447,7 @@ define(["dojo/_base/declare",
         },
 
         availabilityAccessPublishable: function(notPublishableIDs) {
-            var objClass = registry.byId("objectClass").getValue().substr(5, 1);
+            var objClass = registry.byId("objectClass").get("value").substr(5, 1);
             if (objClass != "0") {
                 if (array.some(UtilGrid.getTableData("availabilityAccessConstraints"), function(ad) {
                     return (typeof(ad.title) == "undefined" || ad.title === null || lang.trim(ad.title + "").length === 0);
@@ -459,7 +459,7 @@ define(["dojo/_base/declare",
         },
 
         generalAddressPublishable: function(notPublishableIDs) {
-            var objClass = registry.byId("objectClass").getValue().substr(5, 1);
+            var objClass = registry.byId("objectClass").get("value").substr(5, 1);
             var addressData = UtilGrid.getTableData("generalAddress");
             // Check if all entries in the address table have valid reference types
             if (array.some(addressData, function(addressRef) {
@@ -481,7 +481,7 @@ define(["dojo/_base/declare",
         },
 
         extraInfoConformityPublishable: function(notPublishableIDs) {
-            var objClass = registry.byId("objectClass").getValue().substr(5, 1);
+            var objClass = registry.byId("objectClass").get("value").substr(5, 1);
             if ((objClass == "1") || (objClass == "3")) {
                 // Check if the conformity table contains valid input (both level and specification must contain data)
                 if (array.some(UtilGrid.getTableData("extraInfoConformityTable"), function(conf) {
@@ -494,7 +494,7 @@ define(["dojo/_base/declare",
         },
 
         dqTablesPublishable: function(notPublishableIDs) {
-            var objClass = registry.byId("objectClass").getValue().substr(5, 1);
+            var objClass = registry.byId("objectClass").get("value").substr(5, 1);
             if (objClass == "1") {
                 var dqUiTableElements = query("#ref1ContentDQTables span:not(.hide) .ui-widget", "contentFrameBodyObject").map(function(item) {
                     return item.id;
@@ -532,7 +532,7 @@ define(["dojo/_base/declare",
         },
 
         ref3OperationPublishable: function(notPublishableIDs) {
-            var objClass = registry.byId("objectClass").getValue().substr(5, 1);
+            var objClass = registry.byId("objectClass").get("value").substr(5, 1);
             if (objClass == "3") {
                 // Check if the operation table contains valid input (name has to be set)
                 // NOTICE: Name may be reset to "" if serviceType is changed !!!
@@ -568,7 +568,7 @@ define(["dojo/_base/declare",
         applyBeforeObjectPublishValidation: function() {
             var self = this;
             topic.subscribe("/onBeforeObjectPublish", function( /*Array*/ notPublishableIDs) {
-                var objClass = registry.byId("objectClass").getValue().substr(5, 1);
+                var objClass = registry.byId("objectClass").get("value").substr(5, 1);
                 var addressData = UtilGrid.getTableData("generalAddress");
 
                 // Check if the timeRef table contains valid input (both date and type must contain data)
@@ -707,4 +707,24 @@ define(["dojo/_base/declare",
 
     })();
 
+    // add global function objects for backward compatibility
+    addressValidation = Validators.addressValidation;
+    titleDateValidation = Validators.titleDateValidation;
+    emptyRowValidation = Validators.emptyRowValidation;
+    applyRef6UrlListValidation = Validators.applyRef6UrlListValidation;
+    addServiceUrlValidation = Validators.addServiceUrlValidation;
+    minMaxBoundingBoxValidation = Validators.minMaxBoundingBoxValidation;
+    addMinMaxValidation = Validators.addMinMaxValidation;
+    spatialRefLocationValidation = Validators.spatialRefLocationValidation;
+    applyTimeRefIntervalValidation = Validators.applyTimeRefIntervalValidation;
+
+    generalAddressPublishable = Validators.generalAddressPublishable;
+    timeRefTablePublishable = Validators.timeRefTablePublishable;
+    dqTablesPublishable = Validators.dqTablesPublishable;
+    ref3OperationPublishable = Validators.ref3OperationPublishable;
+    spatialRefAdminUnitPublishable = Validators.spatialRefAdminUnitPublishable;
+    extraInfoConformityPublishable = Validators.extraInfoConformityPublishable;
+    availabilityAccessPublishable = Validators.availabilityAccessPublishable;
+
+    return Validators;
 });

@@ -493,6 +493,7 @@ define({
 	"ui.toolbar.ShowCommentsCaption":"Kommentar ansehen/hinzufügen",
 	"ui.toolbar.discardDeleteCaption":"Löschen Verwerfen",
 	"ui.toolbar.finalDeleteCaption":"Ausgewähltes Objekt/Teilbaum endgültig löschen",
+    "ui.toolbar.showErrorCaption":"Zeige nächsten Fehler",
 	"ui.pageNav.zeroHits":"keine Treffer",
 	"ui.pageNav.beginEndTotalHit":"${0}-${1} von ${2} Treffer",
 	"ui.pageNav.beginEndTotalHits":"${0}-${1} von ${2} Treffern",

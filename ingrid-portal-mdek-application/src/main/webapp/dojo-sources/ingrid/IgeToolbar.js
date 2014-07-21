@@ -74,7 +74,7 @@ define([
             this._createToolbarButtons(toolbar, entries, false);
 
             this._createToolbarButtons(toolbar, entriesRight, true);
-            
+
             // add another button which is displayed when a validation error occured
             // when trying to save or publish
             toolbar.addChild(this._createErrorButton());
@@ -85,7 +85,7 @@ define([
         _createErrorButton: function() {
             var errorButton = new Button({
                 id: "bShowNextError",
-                label: "Show Next Error",
+                label: message.get("ui.toolbar.showErrorCaption"),
                 style: "background-color:#F0A000;border: 1px solid black; visibility: hidden; float: right;"
             });
             errorButton.pos = 0;

@@ -19,7 +19,8 @@ define([
     "ingrid/utils/Dom",
     "ingrid/utils/Syslist"
 ], function(declare, array, lang, on, wnd, query, string, dom, domClass, style, construct, geometry, registry, Tooltip, message, dialog, UtilGrid, UtilDOM, UtilSyslist) {
-    return declare(null, {
+    // make var global for backward compatibility
+    UtilUI = declare(null, {
         // This variable serves as a cache to store whether ui elements
         // have been activated or not
         _uiElementsActive: true,
@@ -396,4 +397,6 @@ define([
         }
 
     } )();
+
+    return UtilUI;
 } );

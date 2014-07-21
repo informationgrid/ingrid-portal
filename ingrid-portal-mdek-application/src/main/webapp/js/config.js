@@ -7,7 +7,7 @@ if (!this.isRelease) {
     //dojo.registerModulePath("ingrid", ingridJsPath+"dojo");
     dojoConfig = {
         async: true,
-        debug: true,
+        isDebug: true,
         parseOnLoad: false,
         selectorEngine: "acme",
         useDeferredInstrumentation: true,
@@ -26,10 +26,10 @@ if (!this.isRelease) {
     //dojo.registerModulePath("ingrid", ingridJsPath+"dojo");
     dojoConfig = {
         async: true,
-        debug: true,
+        isDebug: false,
         parseOnLoad: false,
         selectorEngine: "acme",
-        useDeferredInstrumentation: true,
+        useDeferredInstrumentation: false,
         locale: this.userLocale,
         packages: [
             //{ name: "ingrid", location: ingridJsPath+"dojo" }

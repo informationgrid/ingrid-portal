@@ -5,7 +5,9 @@ define([
     "ingrid/dialog",
     "ingrid/message"
 ], function(declare, array, aspect, dialog, message) {
-    return declare(null, {
+
+    // make var global for backward compatibility
+    UtilGrid = declare(null, {
 
         getTable: function(grid) {
             return gridManager[grid];
@@ -309,4 +311,6 @@ define([
             });
         }
     })();
+
+    return UtilGrid;
 });

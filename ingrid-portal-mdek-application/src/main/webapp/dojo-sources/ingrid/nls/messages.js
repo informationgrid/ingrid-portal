@@ -494,6 +494,7 @@ define({
 	"ui.toolbar.ShowCommentsCaption":"Show/Edit comments",
 	"ui.toolbar.discardDeleteCaption":"Discard delete flag",
 	"ui.toolbar.finalDeleteCaption":"Finally delete Dataset/Subtree",
+    "ui.toolbar.showErrorCaption":"Show Next Error",
 	"ui.pageNav.zeroHits":"no hits",
 	"ui.pageNav.beginEndTotalHit":"${0}-${1} of ${2} hit",
 	"ui.pageNav.beginEndTotalHits":"${0}-${1} of ${2} hits",
