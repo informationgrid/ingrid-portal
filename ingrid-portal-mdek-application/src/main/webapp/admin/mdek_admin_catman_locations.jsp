@@ -4,153 +4,166 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
-var scriptScopeLocations = _container_;
+var pageLocations = _container_;
 
-var resultsPerPage = 20;
-var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("snsLocationUpdateResultInfo"), pagingSpan:dojo.byId("snsLocationUpdateResultPaging") });
-
-var snsLocationUpdateResult = [];
-
-createDOMElements();
-
-dojo.connect(_container_, "onLoad", function(){
-	refreshSNSLocationUpdateProcessInfo();
-	dojo.connect(pageNav, "onPageSelected", updateSNSLocationTable);
-});
-
-
-function createDOMElements(){
-	var locationsResultTableStructure = [
-		{field: 'title',name: "<fmt:message key='dialog.admin.catalog.management.locations.spatialRef' />",width: '370px', editable: true},
-		{field: 'code',name: "<fmt:message key='dialog.admin.catalog.management.locations.id' />",width: '80px', editable: true},
-		{field: 'action',name: "<fmt:message key='dialog.admin.catalog.management.locations.action' />",width: '454px', editable: true},
-		{field: 'objects',name: "<fmt:message key='dialog.admin.catalog.management.locations.objects' />",width: 'auto', editable: true}
-	];
+require([
+    "dojo/on",
+    "dojo/aspect",
+    "dojo/dom",
+    "ingrid/layoutCreator",
+    "ingrid/utils/LoadingZone",
+    "ingrid/utils/Store",
+    "ingrid/utils/PageNavigation",
+    "ingrid/utils/List",
+    "ingrid/utils/UI",
+    "ingrid/dialog"
+], function(on, aspect, dom, layoutCreator, LoadingZone, UtilStore, navigation, UtilList, UtilUI, dialog) {
     
-    createDataGrid("locationsResultTable", null, locationsResultTableStructure, null);
-}
-
-scriptScopeLocations.startSNSLocationUpdateJob = function() {
-	var file = dwr.util.getValue("snsLocationUpdateFile");
-
+        var resultsPerPage = 20;
+        var pageNav = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dom.byId("snsLocationUpdateResultInfo"), pagingSpan:dom.byId("snsLocationUpdateResultPaging") });
+        
+        var snsLocationUpdateResult = [];
+        
+        createDOMElements();
+        
+        on(_container_, "Load", function(){
+        	refreshSNSLocationUpdateProcessInfo();
+        	aspect.after(pageNav, "onPageSelected", updateSNSLocationTable);
+        });
+        
+        
+        function createDOMElements(){
+        	var locationsResultTableStructure = [
+        		{field: 'title',name: "<fmt:message key='dialog.admin.catalog.management.locations.spatialRef' />",width: '370px', editable: true},
+        		{field: 'code',name: "<fmt:message key='dialog.admin.catalog.management.locations.id' />",width: '80px', editable: true},
+        		{field: 'action',name: "<fmt:message key='dialog.admin.catalog.management.locations.action' />",width: '454px', editable: true},
+        		{field: 'objects',name: "<fmt:message key='dialog.admin.catalog.management.locations.objects' />",width: 'auto', editable: true}
+        	];
+            
+            layoutCreator.createDataGrid("locationsResultTable", null, locationsResultTableStructure, null);
+        }
+        
+        pageLocations.startSNSLocationUpdateJob = function() {
+        	var file = dwr.util.getValue("snsLocationUpdateFile");
+        
 	CatalogManagementService.startSNSLocationUpdateJob(userLocale, {
-		preHook: showLoadingZone,
-        postHook: hideLoadingZone,        
-		callback: function() {
-			setTimeout("refreshSNSLocationUpdateProcessInfo()", 1000);
-			dialog.show("<fmt:message key='general.hint' />", "<fmt:message key='dialog.admin.catalog.management.locations.jobStartHint' />", dialog.INFO);
-		},
-		errorHandler: function(errMsg, err) {
-		    displayErrorMessage(err);
-			console.debug("error: " + errMsg);
-		}
-	});
-}
-
-scriptScopeLocations.cancelSNSLocationUpdateJob = function() {
-	CatalogManagementService.stopSNSLocationUpdateJob( {
-		callback: function() {
-			console.debug("Job stopped.");
-		},
-		errorHandler: function(errMsg, err) {
-		    displayErrorMessage(err);
-			console.debug("error: " + errMsg);
-		}
-	});
-}
-
-
-refreshSNSLocationUpdateProcessInfo = function() {
-	CatalogManagementService.getSNSLocationUpdateJobInfo( {
-        preHook: showLoadingZone,
-        postHook: hideLoadingZone,
-		callback: function(jobInfo){
-			updateSNSLocationUpdateJobInfo(jobInfo);
-			if (!jobFinished(jobInfo)) {
-				setTimeout("refreshSNSLocationUpdateProcessInfo()", 1000);
-			}
-		},
-		errorHandler: function(message, err) {
-		    displayErrorMessage(err);
-			console.log("Error: "+ message);
-			// If there's a timeout try again
-			if (err.message != "USER_LOGIN_ERROR") {
-			    setTimeout("refreshSNSLocationUpdateProcessInfo()", 1000);
-			}
-		}
-	});
-};
-
-function updateSNSLocationUpdateJobInfo(jobInfo) {
-	if (jobFinished(jobInfo)) {
-		hideLoadingZone();
-
-		dojo.byId("snsLocationUpdateProcessInfo").innerHTML = "<fmt:message key='dialog.admin.catalog.management.locations.updateLastProcessInfo' />";
-		//dojo.html.setVisibility("cancelSNSLocationUpdateProcessButton", false);
-        dojo.byId("cancelSNSLocationUpdateProcessButton").style.visibility = "hidden";
-
-		if (jobInfo.startTime == null) {
-			// Job was never executed
-			dojo.byId("snsLocationUpdateProcessStart").innerHTML = "";
-			dojo.byId("snsLocationUpdateProcessEnd").innerHTML = "";
-			dojo.byId("snsLocationUpdateProcessNumEntities").innerHTML = "";
-
-		} else {
-			dojo.byId("snsLocationUpdateProcessStart").innerHTML = jobInfo.startTime;
-			dojo.byId("snsLocationUpdateProcessEnd").innerHTML = jobInfo.endTime;
-			dojo.byId("snsLocationUpdateProcessNumEntities").innerHTML = jobInfo.numEntities;
-		}
-
-		// TODO Remove test code
-		var numTerms = jobInfo.snsUpdateResults.length;
-		snsLocationUpdateResult = jobInfo.snsUpdateResults;
-
-		pageNav.reset();
-		pageNav.setTotalNumHits(numTerms);
-		updateSNSLocationTable();
-
-	} else {
-		showLoadingZone();
-		//dojo.html.setVisibility("cancelSNSLocationUpdateProcessButton", true);
-        dojo.byId("cancelSNSLocationUpdateProcessButton").style.visibility = "visible";
-		dojo.byId("snsLocationUpdateProcessInfo").innerHTML = "<fmt:message key='dialog.admin.catalog.management.locations.updateCurrentProcessInfo' />";
-		dojo.byId("snsLocationUpdateProcessStart").innerHTML = jobInfo.startTime;
-		dojo.byId("snsLocationUpdateProcessEnd").innerHTML = "";
-		dojo.byId("snsLocationUpdateProcessNumEntities").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
-	}
-}
-
-function jobFinished(jobInfo) {
-	return (jobInfo.startTime == null || jobInfo.endTime != null || jobInfo.exception != null);
-}
-
-function showLoadingZone() {
-    //dojo.html.setVisibility("snsLocationUpdateLoadingZone", true);
-    dojo.byId("snsLocationUpdateLoadingZone").style.visibility = "visible";
-}
-
-function hideLoadingZone() {
-    //dojo.html.setVisibility("snsLocationUpdateLoadingZone", false);
-    dojo.byId("snsLocationUpdateLoadingZone").style.visibility = "hidden";
-}
-
-// Paging
-function updateSNSLocationTable() {
-	var startHit = pageNav.getStartHit();
-	var currentView = snsLocationUpdateResult.slice(startHit, startHit + resultsPerPage);
-	//dijit.byId("locationsResultTable").store.setData(currentView);
-	UtilStore.updateWriteStore("locationsResultTable", currentView);
-	pageNav.updateDomNodes();
-}
-
-scriptScopeLocations.downloadAsCSV = function() {
-	CatalogManagementService.getSNSLocationUpdateResultAsCSV({
-		callback: function(csvFile) {
-			dwr.engine.openInDownload(csvFile);
-		}
-	});
-}
-
+        		preHook: showLoadingZone,
+                postHook: hideLoadingZone,        
+        		callback: function() {
+        			setTimeout(refreshSNSLocationUpdateProcessInfo, 1000);
+        			dialog.show("<fmt:message key='general.hint' />", "<fmt:message key='dialog.admin.catalog.management.locations.jobStartHint' />", dialog.INFO);
+        		},
+        		errorHandler: function(errMsg, err) {
+        		    displayErrorMessage(err);
+        			console.debug("error: " + errMsg);
+        		}
+        	});
+        }
+        
+        pageLocations.cancelSNSLocationUpdateJob = function() {
+        	CatalogManagementService.stopSNSLocationUpdateJob( {
+        		callback: function() {
+        			console.debug("Job stopped.");
+        		},
+        		errorHandler: function(errMsg, err) {
+        		    displayErrorMessage(err);
+        			console.debug("error: " + errMsg);
+        		}
+        	});
+        }
+        
+        
+        function refreshSNSLocationUpdateProcessInfo() {
+        	CatalogManagementService.getSNSLocationUpdateJobInfo( {
+                preHook: showLoadingZone,
+                postHook: hideLoadingZone,
+        		callback: function(jobInfo){
+        			updateSNSLocationUpdateJobInfo(jobInfo);
+        			if (!jobFinished(jobInfo)) {
+        				setTimeout(refreshSNSLocationUpdateProcessInfo, 1000);
+        			}
+        		},
+        		errorHandler: function(message, err) {
+        		    displayErrorMessage(err);
+        			console.log("Error: "+ message);
+        			// If there's a timeout try again
+        			if (err.message != "USER_LOGIN_ERROR") {
+        			    setTimeout(refreshSNSLocationUpdateProcessInfo, 1000);
+        			}
+        		}
+        	});
+        };
+        
+        function updateSNSLocationUpdateJobInfo(jobInfo) {
+        	if (jobFinished(jobInfo)) {
+        		hideLoadingZone();
+        
+        		dom.byId("snsLocationUpdateProcessInfo").innerHTML = "<fmt:message key='dialog.admin.catalog.management.locations.updateLastProcessInfo' />";
+        		//dojo.html.setVisibility("cancelSNSLocationUpdateProcessButton", false);
+                dom.byId("cancelSNSLocationUpdateProcessButton").style.visibility = "hidden";
+        
+        		if (jobInfo.startTime == null) {
+        			// Job was never executed
+        			dom.byId("snsLocationUpdateProcessStart").innerHTML = "";
+        			dom.byId("snsLocationUpdateProcessEnd").innerHTML = "";
+        			dom.byId("snsLocationUpdateProcessNumEntities").innerHTML = "";
+        
+        		} else {
+        			dom.byId("snsLocationUpdateProcessStart").innerHTML = jobInfo.startTime;
+        			dom.byId("snsLocationUpdateProcessEnd").innerHTML = jobInfo.endTime;
+        			dom.byId("snsLocationUpdateProcessNumEntities").innerHTML = jobInfo.numEntities;
+        		}
+        
+        		// TODO Remove test code
+        		var numTerms = jobInfo.snsUpdateResults.length;
+        		snsLocationUpdateResult = jobInfo.snsUpdateResults;
+        
+        		pageNav.reset();
+        		pageNav.setTotalNumHits(numTerms);
+        		updateSNSLocationTable();
+        
+        	} else {
+        		showLoadingZone();
+        		//dojo.html.setVisibility("cancelSNSLocationUpdateProcessButton", true);
+                dom.byId("cancelSNSLocationUpdateProcessButton").style.visibility = "visible";
+        		dom.byId("snsLocationUpdateProcessInfo").innerHTML = "<fmt:message key='dialog.admin.catalog.management.locations.updateCurrentProcessInfo' />";
+        		dom.byId("snsLocationUpdateProcessStart").innerHTML = jobInfo.startTime;
+        		dom.byId("snsLocationUpdateProcessEnd").innerHTML = "";
+        		dom.byId("snsLocationUpdateProcessNumEntities").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
+        	}
+        }
+        
+        function jobFinished(jobInfo) {
+        	return (jobInfo.startTime == null || jobInfo.endTime != null || jobInfo.exception != null);
+        }
+        
+        function showLoadingZone() {
+            //dojo.html.setVisibility("snsLocationUpdateLoadingZone", true);
+            dom.byId("snsLocationUpdateLoadingZone").style.visibility = "visible";
+        }
+        
+        function hideLoadingZone() {
+            //dojo.html.setVisibility("snsLocationUpdateLoadingZone", false);
+            dom.byId("snsLocationUpdateLoadingZone").style.visibility = "hidden";
+        }
+        
+        // Paging
+        function updateSNSLocationTable() {
+        	var startHit = pageNav.getStartHit();
+        	var currentView = snsLocationUpdateResult.slice(startHit, startHit + resultsPerPage);
+        	//registry.byId("locationsResultTable").store.setData(currentView);
+        	UtilStore.updateWriteStore("locationsResultTable", currentView);
+        	pageNav.updateDomNodes();
+        }
+        
+        pageLocations.downloadAsCSV = function() {
+        	CatalogManagementService.getSNSLocationUpdateResultAsCSV({
+        		callback: function(csvFile) {
+        			dwr.engine.openInDownload(csvFile);
+        		}
+        	});
+        }
+});
 </script>
 </head>
 
@@ -161,21 +174,21 @@ scriptScopeLocations.downloadAsCSV = function() {
 		<div id="spacialRefContent" class="content">
 
 			<!-- INFO START -->
-			<div id="winNavi" style="top:0;">
-               <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-8#overall-catalog-management-8', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
-           </div>
+				<div id="winNavi" style="top:0;">
+	               <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-8#overall-catalog-management-8', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+	           </div>
 			<div class="inputContainer" style="padding-bottom: 10px;">
-				<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.locations.startUpdate" />" onClick="javascript:scriptScopeLocations.startSNSLocationUpdateJob();"><fmt:message key="dialog.admin.catalog.management.locations.startUpdate" /></button>
-				<span id="snsLocationUpdateLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
-					<img src="img/ladekreis.gif" />
-				</span>
+						<button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.admin.catalog.management.locations.startUpdate" />" onclick="pageLocations.startSNSLocationUpdateJob()"><fmt:message key="dialog.admin.catalog.management.locations.startUpdate" /></button>
+					<span id="snsLocationUpdateLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden">
+						<img src="img/ladekreis.gif" />
+					</span>
 			</div>
 
 			<div class="inputContainer noSpaceBelow">
 				<div id="spacialRefInfo" class="infobox">
 					<span class="icon"><img src="img/ic_info.gif" width="16" height="16" alt="Info" /></span>
 					<span class="title" id="snsLocationUpdateProcessInfo"></span>
-					<a href="javascript:toggleInfo('spacialRefInfo');" title="<fmt:message key="general.info.open" />"><img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
+					<a href="#" onclick="require('ingrid/utils/UI').toggleInfo('spacialRefInfo')" title="<fmt:message key="general.info.open" />"><img src="img/ic_info_deflate.gif" width="8" height="8" alt="Pfeil" /></a>
 					<div id="spacialRefInfoContent">
 						<table cellspacing="0">
 							<tr>
@@ -193,7 +206,7 @@ scriptScopeLocations.downloadAsCSV = function() {
 						</table>
 						<span id="cancelSNSLocationUpdateProcessButton" class="button">
 							<span style="float:right;">
-								<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.locations.cancel" />" onClick="javascript:scriptScopeLocations.cancelSNSLocationUpdateJob();"><fmt:message key="dialog.admin.catalog.management.locations.cancel" /></button>
+								<button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.admin.catalog.management.locations.cancel" />" onclick="pageLocations.cancelSNSLocationUpdateJob()"><fmt:message key="dialog.admin.catalog.management.locations.cancel" /></button>
 							</span>
 						</span>
 					</div>
@@ -206,7 +219,7 @@ scriptScopeLocations.downloadAsCSV = function() {
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div class="inputContainer">
 				<div class="inputContainer">
-					<span class="functionalLink" style="margin-top:0;"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScopeLocations.downloadAsCSV();" title="<fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" /></a></span>
+					<span class="functionalLink" style="margin-top:0;"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="pageLocations.downloadAsCSV()" title="<fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" /></a></span>
 
 					<div class="listInfo">
 						<span id="snsLocationUpdateResultInfo" class="searchResultsInfo">&nbsp;</span>

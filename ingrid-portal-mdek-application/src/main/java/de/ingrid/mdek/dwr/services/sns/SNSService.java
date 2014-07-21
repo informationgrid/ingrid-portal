@@ -295,17 +295,16 @@ public class SNSService {
     	return result;
     }
 
-    public List<SNSTopic> getSimilarTerms(String[] queryTerms) {
-    	return getSimilarTerms(queryTerms, MAX_NUM_RESULTS);
+    public List<SNSTopic> getSimilarTerms(String[] queryTerms, Locale locale) {
+    	return getSimilarTerms(queryTerms, MAX_NUM_RESULTS, locale);
     }
 
-    private List<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults) {
-    	Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    private List<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults, Locale locale) {
     	log.debug("     !!!!!!!!!! thesaurusService.getSimilarTermsFromNames() from " +
-    			queryTerms + ", true, " + sessionLocale.getLanguage());
+    			queryTerms + ", true, " + locale.getLanguage());
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	
-    	Term[] terms = thesaurusService.getSimilarTermsFromNames(queryTerms, true, sessionLocale);
+    	Term[] terms = thesaurusService.getSimilarTermsFromNames(queryTerms, true, locale);
 
     	int count = 0;
     	for (Term term : terms) {

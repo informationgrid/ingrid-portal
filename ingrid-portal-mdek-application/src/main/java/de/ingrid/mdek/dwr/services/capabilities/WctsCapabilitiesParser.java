@@ -47,6 +47,9 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
 
     private final static String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
     private final static String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    
+    private final static String XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetResourceByID']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private final static String XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetResourceByID']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
     private final static String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeCRS']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
     private final static String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeCRS']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
@@ -194,6 +197,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
         }
 
         // Operation - DescribeTransformation
+        // TODO: Does this operation still exists???
         OperationBean describeTransformationOp = mapToOperationBean(doc,
                 new String[]{ XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF, XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF },
                 new Integer[]{ ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_POST });
@@ -208,6 +212,23 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
             paramList.add(new OperationParameterBean("Transformations=urn:ogc:def:coordinateOperation:EPSG:6.3:19916", "Identifier URIs of one or more coordinate operations, comma-separated list", "", false, false));
             describeTransformationOp.setParamList(paramList);
             operations.add(describeTransformationOp);
+        }
+        
+        // Operation - DescribeTransformation
+        OperationBean getResourceByIdOp = mapToOperationBean(doc,
+        		new String[]{ XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_GET_HREF, XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_POST_HREF },
+        		new Integer[]{ ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_POST });
+        if (!getResourceByIdOp.getAddressList().isEmpty()) {
+        	getResourceByIdOp.setName("GetResourceById");
+        	getResourceByIdOp.setMethodCall("GetResourceByID");
+        	
+        	List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+        	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
+        	paramList.add(new OperationParameterBean("request=GetResourceByID", "Operation name", "", false, false));
+        	paramList.add(new OperationParameterBean("version=0.0.0", "Specification and schema version for this operation", "", false, false));
+        	paramList.add(new OperationParameterBean("ResourceID=urn:ogc:def:coordinateOperation:EPSG:6.3:19916,AB4345,AC4598", "Identifier URIs of one or more coordinate operations, comma-separated list", "", false, false));
+        	getResourceByIdOp.setParamList(paramList);
+        	operations.add(getResourceByIdOp);
         }
         
         // Operation - DescribeCRS

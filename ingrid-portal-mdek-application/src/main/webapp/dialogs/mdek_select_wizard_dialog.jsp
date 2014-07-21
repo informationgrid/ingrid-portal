@@ -9,29 +9,37 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
-var scriptScope = this;
+var pageCreateWizard = this;
 
-dojo.connect(_container_, "onLoad", function() {
-	console.log("Publishing event: '/afterInitDialog/ChooseWizard'");
-    dojo.publish("/afterInitDialog/ChooseWizard");
-});
+require(["dojo/on", "dojo/dom", "dojo/topic", "ingrid/dialog", "dijit/registry"],
+    function(on, dom, topic, dialog, registry) {
+		on(_container_, "Load", function() {
+			console.log("Publishing event: '/afterInitDialog/ChooseWizard'");
+		    topic.publish("/afterInitDialog/ChooseWizard");
+		});
 
-openWizard = function() {
-	var generalWizardSelected = dojo.byId("assistantRadioSelect1").checked;
+        function openWizard() {
+            var generalWizardSelected = dom.byId("assistantRadioSelect1").checked;
 
-	scriptScope.closeThisDialog();
-	if (generalWizardSelected) {
-		dialog.showPage("<fmt:message key='dialog.wizard.create.title' />", "dialogs/mdek_create_object_wizard_dialog.jsp", 755, 750, true);
+            closeThisDialog();
+            if (generalWizardSelected) {
+                dialog.showPage("<fmt:message key='dialog.wizard.create.title' />", "dialogs/mdek_create_object_wizard_dialog.jsp", 755, 750, true);
 
-	} else {
-		//_container_.closeWindow();
-		dialog.showPage("<fmt:message key='dialog.wizard.getCap.title' />", "dialogs/mdek_get_capabilities_wizard_dialog.jsp", 755, 750, true);
-	}
-}
+            } else {
+                //_container_.closeWindow();
+                dialog.showPage("<fmt:message key='dialog.wizard.getCap.title' />", "dialogs/mdek_get_capabilities_wizard_dialog.jsp", 755, 750, true);
+            }
+        }
 
-closeThisDialog = function() {
-	dijit.byId("pageDialog").hide();
-}
+        function closeThisDialog() {
+            registry.byId("pageDialog").hide();
+        }
+
+        pageCreateWizard.openWizard = openWizard;
+        pageCreateWizard.closeThisDialog = closeThisDialog;
+
+    }
+);
 
 </script>
 </head>
@@ -59,8 +67,8 @@ closeThisDialog = function() {
     		</span>
     		
 			<div id="dialogButtonBar" class="dijitDialogPaneActionBar inputContainer grey" style="height:37px;">
-		        <span style="float:right; padding:5px 0;"><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.wizard.select.cancel" />" onClick="javascript:closeThisDialog();"><fmt:message key="dialog.wizard.select.cancel" /></button></span>
-		        <span style="float:left; padding:5px 0;"><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.wizard.select.continue" />" onClick="javascript:openWizard();"><fmt:message key="dialog.wizard.select.continue" /></button></span>
+		        <span style="float:right; padding:5px 0;"><button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.wizard.select.cancel" />" onclick="pageCreateWizard.closeThisDialog()"><fmt:message key="dialog.wizard.select.cancel" /></button></span>
+		        <span style="float:left; padding:5px 0;"><button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.wizard.select.continue" />" onclick="pageCreateWizard.openWizard()"><fmt:message key="dialog.wizard.select.continue" /></button></span>
 			</div>
 	  	</div>
 	</div>

@@ -7,11 +7,6 @@
 		<script type="text/javascript" src="../generated/dynamicJS.js?lang=de&debug=true"></script>
 
         <script type="text/javascript">
-            dojo.require("dijit.Menu");
-            dojo.require("dijit.form.CheckBox");
-            dojo.require("dijit.form.SimpleTextarea");
-            dojo.require("dijit.form.DateTextBox");
-            dojo.require("dijit.form.NumberTextBox");
             
             function getLocalizedTitle(title) { return title; }
             

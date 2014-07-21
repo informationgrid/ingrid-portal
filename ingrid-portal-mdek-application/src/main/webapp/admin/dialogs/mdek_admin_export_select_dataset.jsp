@@ -9,90 +9,56 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
-dojo.require("ingrid.dijit.tree.LazyTreeStoreModel");
-dojo.require("ingrid.dijit.CustomTree");
 
-var scriptScope = this;
+var pageSelectDataset = _container_;
 
-dojo.connect(_container_, "onLoad", function(){
-	init();
+require(["dojo/on", "dijit/registry", "ingrid/tree/MetadataTree"], function(on, registry, MetadataTree) {
+    
+    on(_container_, "Load", function() {
+        init();
+    });
+    
+    on(_container_, "UnLoad", function(){
+        // If the dialog was cancelled via the dialogs close button
+        // we need to signal an error (cancel action)
+        if (registry.byId("pageDialog").customParams.resultHandler.fired == -1) {
+            registry.byId("pageDialog").customParams.resultHandler.reject();
+        }
+    });
+    
+    function init() {
+        // Deferred object which is called when the Tree has been initialized.
+        // After the tree has been initialized, the tree is expanded to the targetNode
+        // specified in the customParameter 'jumpToNode' 
+        new MetadataTree({showRoot:false, treeType:"ObjectsAndAddresses"}, "selectDatasetTree");
+    
+    }
+    
+    pageSelectDataset.selectDatasetForExport = function() {
+        var node = registry.byId("selectDatasetTree").selectedNode.item;
+        if (node) {
+            var retVal = {};
+            retVal.uuid = node.id;
+            retVal.title = node.title;
+            retVal.nodeAppType = node.nodeAppType;
+    
+            registry.byId("pageDialog").customParams.resultHandler.resolve(retVal);
+        }
+    
+        registry.byId("pageDialog").hide();
+    };
 });
-
-dojo.connect(_container_, "onUnLoad", function(){
-	// If the dialog was cancelled via the dialogs close button
-	// we need to signal an error (cancel action)
-	if (dijit.byId("pageDialog").customParams.resultHandler.fired == -1) {
-		dijit.byId("pageDialog").customParams.resultHandler.errback();
-	}
-});
-
-function init() {
-	// Deferred object which is called when the Tree has been initialized.
-	// After the tree has been initialized, the tree is expanded to the targetNode
-	// specified in the customParameter 'jumpToNode' 
-	createCustomTree("selectDatasetTree", null, "id", "title", loadTreeData);
-
-};
-
-function loadTreeData(node, callback_function) {
-	var parentItem = node.item;
-	var prefix = "export_";
-	var store = dijit.byId("selectDatasetTree").model.store;
-	var def = UtilTree.getSubTree(parentItem, prefix.length);
-	
-	def.addCallback(function(data){
-	    if (parentItem.root) {
-			dojo.forEach(data, function(entry){
-				entry.uuid = entry.id;
-				entry.id = prefix + entry.id;
-		        store.newItem(entry);
-			});
-	    }
-	    else {
-	        dojo.forEach(data, function(entry){
-				entry.uuid = entry.id;
-				entry.id = prefix+entry.id;
-	            store.newItem(entry, {
-	                parent: parentItem,
-	                attribute: "children"
-	            });
-	        });
-	    }
-	    callback_function();
-	});
-	def.addErrback(function(res){
-	    dialog.show("<fmt:message key='general.error' />", "<fmt:message key='tree.loadError' />", dialog.WARNING);
-	    console.debug(res);
-	    return res;
-	});
-	return def;
-}
-
-scriptScope.selectDatasetForExport = function() {
-	var node = dijit.byId("selectDatasetTree").selectedNode.item;
-	if (node) {
-		var retVal = {};
-		retVal.uuid = node.uuid[0];
-		retVal.title = node.title[0];
-		retVal.nodeAppType = node.nodeAppType[0];
-
-		dijit.byId("pageDialog").customParams.resultHandler.callback(retVal);
-	}
-
-	dijit.byId("pageDialog").hide(); 
-}
-
 </script>
 </head>
 
 <body>
 
-    <div id="winNavi" style="top:0px; height: 18px;">
+    <div id="winNavi">
         <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=import-export-1#import-export-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
     </div>
         <!-- CONTENT START -->
         <div class="inputContainer grey">
-            <div dojoType="dijit.layout.ContentPane" id="treeContainerAssignObj" style="height:350px;">
+            <div data-dojo-type="dijit/layout/ContentPane" id="treeContainerAssignObj" style="height:350px;">
                 <div id="selectDatasetTree">
                 </div>
             </div>
@@ -105,7 +71,7 @@ scriptScope.selectDatasetForExport = function() {
         <div class="inputContainer">
             <span class="button transparent">
                 <span style="float:right;">
-                    <button dojoType="dijit.form.Button" onClick="javascript:scriptScope.selectDatasetForExport()">
+                    <button data-dojo-type="dijit/form/Button" onclick="pageSelectDataset.selectDatasetForExport()">
                         <fmt:message key="dialog.admin.export.selectNode.select" />
                     </button>
                 </span>

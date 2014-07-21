@@ -10,10 +10,10 @@ var scriptScope = this;
 	createTableContextMenu();
 	initTableData();
 	
-	dojo.connect(_container_, "onLoad", function(){
+	on(_container_, "onLoad", function(){
 		if (this.customParams && this.customParams.resultHandler) {
 			if (this.customParams.resultHandler.fired == -1) {
-				this.customParams.resultHandler.errback();
+				this.customParams.resultHandler.reject();
 			}
 		}
 	});
@@ -36,12 +36,12 @@ function createTableContextMenu() {
 		onClick: menuEventHandler.removeClickedRow
 	}));
 	
-	dijit.byId("fieldsTable").onRowContextMenu = onRowEvent;
+	registry.byId("fieldsTable").onRowContextMenu = onRowEvent;
 }
 
 function initTableData() {
-	if (dijit.byId("pageDialog").customParams && dijit.byId("pageDialog").customParams.listEntries) {
-		var listEntries = dijit.byId("pageDialog").customParams.listEntries;
+	if (registry.byId("pageDialog").customParams && registry.byId("pageDialog").customParams.listEntries) {
+		var listEntries = registry.byId("pageDialog").customParams.listEntries;
 		var tableData = UtilList.listToTableData(listEntries);
 		//UtilList.addTableIndices(tableData);
 		//dijit("fieldsTable").store.setData(tableData);
@@ -50,13 +50,13 @@ function initTableData() {
 }
 
 scriptScope.saveEntries = function() {
-	if (dijit.byId("pageDialog").customParams && dijit.byId("pageDialog").customParams.resultHandler) {
-		var resultHandler = dijit.byId("pageDialog").customParams.resultHandler;
-		var tableData = UtilStore.convertItemsToJS(dijit.byId("fieldsTable").store, dijit.byId("fieldsTable").store._arrayOfTopLevelItems);
+	if (registry.byId("pageDialog").customParams && registry.byId("pageDialog").customParams.resultHandler) {
+		var resultHandler = registry.byId("pageDialog").customParams.resultHandler;
+		var tableData = UtilStore.convertItemsToJS(registry.byId("fieldsTable").store, registry.byId("fieldsTable").store._arrayOfTopLevelItems);
 		var resultList = UtilList.tableDataToList(tableData);
-		resultHandler.callback(resultList);
+		resultHandler.resolve(resultList);
 	}
-	dijit.byId("pageDialog").hide();
+	registry.byId("pageDialog").hide();
 }
 
 </script>
@@ -73,7 +73,7 @@ scriptScope.saveEntries = function() {
 				<div id="fieldsTable" minRows="6" class="hideTableHeader"></div>
 			</div>
 			<span style="float:right;">
-				<button dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.management.additionalFields.apply" />" onClick="javascript:scriptScope.saveEntries();"><fmt:message key="dialog.admin.catalog.management.additionalFields.apply" /></button>
+				<button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.admin.catalog.management.additionalFields.apply" />" onclick="javascript:scriptScope.saveEntries();"><fmt:message key="dialog.admin.catalog.management.additionalFields.apply" /></button>
 			</span>
 			<!-- CONTENT END -->
 		</div>

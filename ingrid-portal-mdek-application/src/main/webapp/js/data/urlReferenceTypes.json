@@ -1,9 +1,4 @@
-{
-	label: "label",
-	identifier: "abbreviation",
-	items: [
-		{label:" ", abbreviation:""},
-		{label:"Internet",abbreviation:"1"},
-		{label:"Intranet",abbreviation:"2"}
-	]
-}
+[
+	{"label":"Internet","abbreviation":"1"},
+	{"label":"Intranet","abbreviation":"2"}
+]

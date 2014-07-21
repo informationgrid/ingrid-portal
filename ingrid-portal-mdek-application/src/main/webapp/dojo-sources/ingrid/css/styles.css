@@ -1,0 +1,234 @@
+@import "../../dijit/themes/claro/claro.css";
+@import "../../dojo/resources/dojo.css";
+@import "../../dijit/themes/claro/Common.css";
+@import "../../dijit/themes/claro/form/Common.css";
+@import "../../dojox/layout/resources/FloatingPane.css";
+@import "../../dojox/layout/resources/ResizeHandle.css";
+@import "../../dojox/highlight/resources/highlight.css";
+
+@import "main.css";
+@import "tree.css";
+
+
+body,html {
+    font-family: helvetica, arial, sans-serif; /*font-size:90%;*/
+}
+
+.dojoxGrid table {
+    margin: 0;
+}
+
+html,body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+/* remove inactive vertical scrollbar in IE7 */
+html { 
+    overflow: auto; 
+}
+
+.error {
+    background-color: #ffcaca; 
+    color: #c21130;
+    padding: 10px;
+    border: 1px solid #C21130;
+}
+
+.myGrid {
+    width: 100%;
+    height: 100px;
+}
+
+.contentSection {
+    width: 100%;
+    height: 100%;
+}
+
+/* LOGO */
+.claro { font: 11px/16px Verdana,Helvetica,Arial,sans-serif; }
+.claro #logo { float:left; padding-right:10px; }
+.claro #title { float:left; }
+.claro #languageBox { float: right; margin: 5px !important; margin-left: 10px; font-size: 9px; }
+.claro #logoPane { padding: 0; background:#5d9ccd; }
+.claro #headMenu { color:#C2E3FC; padding-right:20px;padding-top:8px; font-size: 90%; font-weight: normal; }
+/*.claro #logoContainer { background-color: #146da9; background-image: none; border: 1px solid #B5BCC7; margin: 0; padding: 0; }*/
+.iconDashboard { margin: -2px 0 0;}
+
+/* MENUBAR */
+.claro #menubarPane { height: 32px; top: 29px; left: 0px; right: 0px; bottom: 21px; background: none repeat scroll 0% 0%; /*min-width:1130px;*/}
+.claro #menubarInfoPane { background-color: #ADD9F9; color: lightGrey; font-weight: bold; padding-left: 10px; padding-top: 1px; }
+.claro .dijitMenuBar { background-color: #146da9; background-image: none;  border-bottom: 1px solid #FFFFFF; border-top: 1px solid #FFFFFF; margin: 0; padding: 1px 0px; }
+.claro .dijitMenuBar .dijitMenuItem { background-position: 0 100px; color: #FFFFFF; margin: -1px; padding: 6px 10px 7px; font-weight: bold; }
+
+/* MAINMENU */
+.claro .dijitMenuPassive .dijitMenuItemHover, .claro .dijitMenuPassive .dijitMenuItemSelected { background-color: #ADD9F9; background-position: 0 0; border-bottom: 0px solid #FFFFFF; color: #000000; padding: 6px 10px 7px; border: 0px;}
+.claro .dijitMenuActive .dijitMenuItemHover, .claro .dijitMenuActive .dijitMenuItemSelected { background-color: #9DCFFF; border: 0 solid #769DC0; }
+
+/* SUBMENU */
+.tabContainerSubNavi { background-color: #156496; border-bottom: 1px solid #999999; clear: both; margin-top: 0px; padding: 4px 0px; position: absolute; width: 100%; }
+.tabContainerSubNavi ul { list-style: none outside none; margin: 0; padding: 2px 0; }
+.tabContainerSubNavi ul li a {color: #FFFFFF; font: 10px/12px Verdana,Helvetica,Arial,sans-serif; padding: 5px; /*text-decoration: none;*/ }
+
+/* SPACE */
+.spacer { padding: 10px; }
+.spacerEEE { background-color: #EEEEEE; padding: 10px; }
+
+/* TREE */
+#dataTree { padding-left:10px; height: 589px; overflow: auto; width: 190px; }
+
+/* TOOLBAR */
+.claro .dijitToolbar { height: 24px; padding-left: 10px; }
+
+/* TAB */
+.dijitTabPane, .tab { padding: 0px !important; }
+.claro .dijitTabContent { border: 0px solid #B5BCC7; }
+.claro .dijitTabContainerTop-tabs .dijitTabChecked .dijitTabContent { background-color: #82c4ed; color: #0c3753; padding-bottom: 4px; padding-top: 6px; }
+.claro .dijitTabContainerTop-tabs .dijitTabContent { background-image: none; background-position: 0 0; border-color: #848484 #848484 transparent; border-width: 1px 1px 0; border-style: solid solid none; min-width: 60px; padding: 3px 8px 3px 4px; text-align: center; }
+.claro .dijitTabContainerTop-tabs .dijitTab { margin-right: 2px; padding-top: 3px; top: 1px; }
+
+/* CONTENT */
+.dijitTabContainerBottom-container, .dijitTabContainerTop-container, .dijitTabContainerLeft-container, .dijitTabContainerRight-container { border: 1px solid black; }
+div .dijitDialogPaneContent .dijitTabContainerBottom-container, .dijitTabContainerTop-container, .dijitTabContainerLeft-container, .dijitTabContainerRight-container { /*border: 0px solid black;*/ }
+div .dijitDialogPaneContent div.dijitContentPane { padding: 0px; } 
+
+/* TABLE */
+/*.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { color: #FFFFFF; font-weight: normal; }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { background: none repeat-x scroll 50% 50% #E6E6E6; border: 1px solid #D3D3D3; color: #FFFFFF; font-weight: bold; background-color: #156496; }*/
+/*.slick-cell { font-weight: normal; padding-left: 4px; padding-right: 4px; }*/
+.slick-cell {border-color: transparent transparent transparent #156496; border-style: solid; /*padding: 0px 4px; border-width: 0 0 0 1px;*/ }
+.slick-cell.selected {background-color: #9a9a9a;}
+.slick-header-columns, .slick-header-column {background: none; color: #0c3753; font-weight: bold; background-color: #82c4ed; font-size:10px;}
+.tableContainer { background-color: #EEEEEE; }
+.note { background-color: #EEEEEE; font: 10px/11px Verdana,Helvetica,Arial,sans-serif; }
+.div #import td label { padding-top:5px; padding-right: 10px; }
+div #adminExport td label { padding-top:5px; padding-right: 10px; }
+div .infobox td { padding-left: 16px; padding-right: 10px; padding-top:2px; padding-bottom:2px; min-width: 200px; }
+#hierarchyContent .infobox td { min-width: 0; }
+div #import table.inputContainer { border-spacing:10px ;padding-top:5px; }
+div #import div.inputContainer table { border-spacing:10px ;padding-top:5px; }
+div #adminExport div.content table.inputContainer { border-spacing:10px ;padding-top:5px; }
+table.sectionTopTable{ padding: 5px 5px 2px 3px; }
+
+/* CELL */
+.slick-header-column.ui-state-default { border-left: 1px solid #6b7bea; border-right: 0px; padding: 2px 3px 1px 4px; font-size: 10px;}
+.slick-header-columns  div:first-child { border-left: 1px solid transparent; }
+/*.slick-cell, .slick-headerrow-column { border-color: #156496; padding: 1px 2px 2px 3px; }*/
+.slick-header { border: none; }
+.sectionTopTable tr td.label { padding-left:5px; }
+.sectionTopTable tr td { padding-right: 5px; padding-bottom: 1px; }
+.sectionTopTable tr td.note { padding: 5px 5px 3px; }
+
+/* LABEL */
+.content span.label { font-size: 12px; }
+.checkboxContainer { display:block; margin-bottom:10.5px; }
+.checkboxContainer label { padding:0 10px 0 5px; font-size:11px; font-weight: normal; vertical-align: bottom; }
+.checkboxContainer label.inActive { padding: 0; }
+.checkboxContainer label.inActive .dijitCheckBox { margin-right: 5px; }
+.checkboxContainer label.noRightMargin { padding:0 0 0 3px; }
+div .inputContainer h2 { padding-bottom: 5px; }
+
+/* BUTTONS */
+.contentBlockWhite span.button { background: none repeat scroll 0 0 #C6C6C6; border-bottom: 0px solid #999999; display: block; height: 29px; margin-top: 4px; padding: 2px 5px 0 0; text-align: right; }
+.claro .dijitButton .dijitButtonNode, .claro .dijitDropDownButton .dijitButtonNode, .claro .dijitComboButton .dijitButtonNode, .claro .dijitToggleButton .dijitButtonNode { background-color: #c5e4f6; background-image: none; padding: 2px 4px 4px; }
+.claro .dijitButton .dijitButtonNode:hover, .claro .dijitDropDownButton .dijitButtonNode:hover, .claro .dijitComboButton .dijitButtonNode:hover, .claro .dijitToggleButton .dijitButtonNode:hover { background-color: #ADD9F9; background-image: none; padding: 2px 4px 4px; }
+.dijitButtonContents { outline-color: transparent; }
+.claro .dijitButtonDisabled .dijitButtonNode, .claro .dijitButtonDisabled .dijitButtonNode:hover { background-color: #E3E3E3; }
+.claro .dijitButtonText { /*color: #156496;*/ padding: 0 0.8em; text-align: center; font-weight: normal; }
+.claro .dijitSelect .dijitButtonText { /*color: #000000;*/ padding: 0 5px 2px; font-size: 10px; }
+.dijitToggleButton, .dijitButton, .dijitDropDownButton, .dijitComboButton { margin: 2px 5px 2px 5px; }
+.contentBlockWhite .field { padding: 12px; }
+div #toolbarPane .dijitToolbar .dijitButtonNode { background-color: rgba(171, 214, 255, 0); padding: 2px; color:#000000; border:0;}
+div #toolbarPane .dijitToolbar .dijitButtonNode:hover { background-color: #ADD9F9; padding: 2px; color:#000000; border:0; }
+
+/* INPUT */
+.inputButtonInLineLeft { float:left; width: 80%; }
+.inputButtonInLineRight { padding-left:30px; }
+.claro .dijitTextBox .dijitInputField { padding-left:4px; padding-right:4px; }
+
+/* INFO */
+.infobox { background-color:#E6F0F5; border-bottom: 2px solid #156496; border-top: 2px solid #156496;  margin: 3px 0 11px 4px; padding: 0 16px 10px 6px; position: relative; width:700px; }
+.infoboxImage { width:16px; height:16px; padding-left: 16px; padding-top: 5px; }
+.infoboxWidth { width: 700px; padding-right: 16px; } 
+.contentBlockWhite div.listInfo { background: none repeat scroll 0 0 #ECECEC !important; clear: both; margin: 4px 0; padding-left: 15px; }
+.contentBlockWhite span.searchResultsInfo { float: left; font-size: 10px; padding: 4px 16px; }
+.contentBlockWhite .wide { width: 100%; }
+
+/* HELP */
+#winNavi { padding-bottom:20px; }
+
+div #treeSearchThesaurus { padding:5px; }
+div #thesaurusResultContainer { padding:5px; }
+
+/* COLOR */
+.bgBlue { background: #156496; } 
+
+/* HIERARCHY */
+div #hierarchyContent div .infobox .input { padding-right: 0px; padding-left: 0px; margin-right:-5px; } 
+div #ref5MethodTabContainer div .input { padding-right: 2px; }
+/* div #centerContent div.contentContainer div.contentBlock div.content { padding: 5px 10px; } */
+div #hierarchyContent span.outer { background:#E6F0F5; }
+div #hierarchyContent div.rubric { background:#E6F0F5; padding-bottom: 15px; }
+div #hierarchyContent div.tableContainer { background:#E6F0F5; }
+
+/* LINKS */
+div #headMenu a { color: #C2E3FC; text-decoration: none; }
+div #headMenu a:hover { color: #FFFFFF; }
+
+.claro .dijitBorderContainer { padding: 0; }
+.claro .dijitSplitContainer-child, .claro .dijitBorderContainer-child { border: 0px solid #B5BCC7; background:#EEEEEE; }
+
+/* FORM_FIELDS*/
+.legacyControl { border-left: 1px solid #156496; border-right: 1px solid #156496; }
+.claro span.controlLabel { margin:9px 0 0 0; }
+.claro span.rubricButtons span.dijitButton { margin:2px; } 
+.claro .rubricButtons .dijitButtonNode { background-color:transparent; border:0; -moz-box-shadow: none; }
+.claro .rubricButtons .dijitButtonNode:hover { background-color:#ADD9F9; border:0; }
+.claro div.rubricButtons .dijitButtonNode { background-color:transparent; border:0; padding: 3px ; margin:-8px 0px 0px 0px; }
+.claro .rubricDiv div.rubricButtons { visibility:visible; width:150px; }
+.claro .rubricDiv div.rubricButtons span.dijitButton { margin:2px; } 
+.claro .rubricDiv div.rubricLabel { width:90%; }
+#catalogueFormFields .row_even, #catalogueFormFields .row_odd { display: none;}
+#catalogueFormFields .expanded .row_even, #catalogueFormFields .expanded .row_odd { display: block;}
+#catalogueFormFields .rubricBottom.hideSub span {display: none;}
+#catalogueFormFields .tooltip {padding-left: 10px;color: #A8CF4F;font-weight: bold;}
+
+#formFields .form_fields_top { background: #C6C6C6; border-top:1px solid #FFFFFF; padding: 3px 28px 3px 15px; }
+#formFieldsToolBar span.dijitButton span.dijitButtonNode { background-color: #156496; color: #FFFFFF; padding: 2px 4px 4px; margin: 0px 8px 0 0; border: 1px solid #769DC0; }
+#formFieldsToolBar span.dijitButton span.dijitButtonNode:hover { background-color: #ADD9F9;}
+#formFieldsToolBar span.dijitButton span.dijitButtonText { color: #FFFFFF; }
+#formFieldsToolBar span.dijitToggleButton { background-color: #FFFFFF; }
+#formFieldsToolBar span.dijitToggleButton span.dijitButtonText { background-color: #156496; }
+
+.form_fields_bottom { background-color: #C6C6C6; border-bottom: 1px solid #ADD9F9; border-left: 1px solid #156496; border-right: 1px solid #156496; height: 40px; margin: 0 35px 20px 20px;  padding: 0 10px; }
+div.rubricBottom { background: #F4F4F4; border-top: 1px solid #b5bcc7; border-left: 1px solid #156496; border-right: 1px solid #156496; border-bottom: 1px solid #ADD9F9; margin-bottom: 20px; padding: 5px 0; }
+div.rubricBottom span.controlLabel { width:250px; padding-right: 90px; margin:5px 0 0 0; }
+div.rubricBottom span.rubricButtons .dijitButtonNode { background: #156496; border: 0; width: 100%; margin: -5px 0px 0px 0px; border: 1px solid #769DC0; }
+div.rubricBottom span.rubricButtons .dijitButtonNode:hover { background-color:#ADD9F9; }
+.row_odd { background-color:#F0F0F0; }
+.row_even { background-color:#FFFFFF; }
+.row_add { background-color:#ADD9F9; }
+.border_left_right { border-left: 1px solid #156496; border-right: 1px solid #156496; }
+
+
+
+
+.slick-cell .dijitInputField {box-sizing: border-box; -webkit-box-sizing: border-box; padding: 0 !important;}
+.slick-cell .dijitTextBox, .slick-cell .dijitComboBox {border: none; height:19px !important; position: absolute; outline-width:0px;}
+.slick-cell .dijitComboBoxFocused .dijitButtonNode { padding: 0px !important; }
+.slick-cell.active.editable {padding: 0px;}
+.slick-cell .dijitComboBox .dijitButtonNode, .slick-cell .dijitComboBox .dijitButtonNode input {height:100% !important;}
+.slick-row {height:20px;}
+
+/* styles for displaying a hierarchical structure with css print/detail view! */
+.h_line {
+    border-bottom: 1px #ccc dashed;
+    overflow:visible;
+    height:9px;        
+    margin: 5px 5px 3px 0;
+    display: inline-block;
+}
+.v_line {
+    border-left: 1px #ccc dashed;
+}

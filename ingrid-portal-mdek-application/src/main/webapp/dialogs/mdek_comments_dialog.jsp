@@ -9,73 +9,93 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
-var dirtyFlag = null;
 
-var scriptScope = _container_;
+var dialogComments = null;
 
-dojo.connect(scriptScope, "onLoad", function(){
-    var def = scriptScope.createDOMElements();
-    def.then(scriptScope.init);
-});
+require([
+    "dojo/on",
+    "dojo/aspect",
+    "dojo/dom",
+    "dojo/dom-class",
+    "dijit/registry",
+    "dojo/topic",
+    "dojo/string",
+    "dojo/_base/lang",
+    "ingrid/hierarchy/dirty",
+    "ingrid/layoutCreator",
+    "ingrid/grid/CustomGridFormatters",
+    "ingrid/utils/Grid",
+    "ingrid/utils/Store",
+    "ingrid/utils/Address",
+    "ingrid/utils/General",
+    "ingrid/utils/Security"
+],
+    function(on, aspect, dom, domClass, registry, topic, string, lang, dirty, layoutCreator, GridFormatters, UtilGrid, UtilStore, UtilAddress, UtilGeneral, UtilSecurity) {
 
-dojo.connect(scriptScope, "onUnload", function(){
-    dirtyFlag ? udkDataProxy.setDirtyFlag() : udkDataProxy.resetDirtyFlag();
-});
+        var global = this;
 
-scriptScope.createDOMElements = function() {
-    var commentCommentsTableStructure = [
-        {field: 'date',name: "<fmt:message key='dialog.comments.date'/>",width: '120px', formatter: DateCellFormatter},
-        {field: 'title',name: "<fmt:message key='dialog.comments.user'/>",width: '185px'},
-        {field: 'comment',name: "<fmt:message key='dialog.comments.comment'/>",width: '670px'}
-    ];
-    var def = createDataGrid("commentCommentsTable", null, commentCommentsTableStructure, null);
-    return def;
-}
+        on(_container_, "Load", function(){
+            createDOMElements().then(init);
+        });
 
-scriptScope.init = function() {
-		dirtyFlag = udkDataProxy.dirtyFlag;
-	
-		var srcStore = commentStore;
-		
-		// Set the comment table title
-		var nodeTitle = "";
-		if (currentUdk.nodeAppType == "O") {
-			nodeTitle = dijit.byId("objectName").getValue();
-		} else if (currentUdk.nodeAppType == "A") {
-			nodeTitle = dijit.byId("addressTitle").getValue();	
-		}
-		dojo.byId("commentTableLabel").innerHTML = dojo.string.substitute("<fmt:message key='dialog.commentTitle' />", [nodeTitle]);
-		//dstStore.setData(srcStore.getData());
-		UtilStore.updateWriteStore("commentCommentsTable", srcStore);
-	
-		if (!currentUdk.writePermission) {
-			dijit.byId("addCommentButton").setDisabled(true);
-			dijit.byId("commentNewComment").setDisabled(true);
-			dojo.addClass(dijit.byId("commentCommentsTable").domNode, "readonly");
-			dojo.removeClass(dijit.byId("commentCommentsTable").domNode, "interactive");
-			//dijit.byId("commentCommentsTable").removeContextMenu();
-		}
-	
-		var setDirtyFlag = function(){ dirtyFlag = true; }
-		dojo.connect(UtilGrid.getTable("commentCommentsTable"), "onDataChanged", setDirtyFlag);
+        function createDOMElements() {
+            var commentCommentsTableStructure = [
+                {field: 'date',name: "<fmt:message key='dialog.comments.date'/>",width: '120px', formatter: GridFormatters.DateCellFormatter},
+                {field: 'title',name: "<fmt:message key='dialog.comments.user'/>",width: '185px'},
+                {field: 'comment',name: "<fmt:message key='dialog.comments.comment'/>",width: '670px'}
+            ];
+            return layoutCreator.createDataGrid("commentCommentsTable", null, commentCommentsTableStructure, null);
+        }
 
-        console.log("Publishing event: '/afterInitDialog/Comments'");
-        dojo.publish("/afterInitDialog/Comments");
-};
+        function init() {
+            var srcStore = global.currentUdk.commentStore;
+            
+            // Set the comment table title
+            var nodeTitle = "";
+            if (global.currentUdk.nodeAppType == "O") {
+                nodeTitle = registry.byId("objectName").getValue();
+            } else if (global.currentUdk.nodeAppType == "A") {
+                nodeTitle = registry.byId("addressTitle").getValue();
+            }
+            dom.byId("commentTableLabel").innerHTML = string.substitute("<fmt:message key='dialog.commentTitle' />", [nodeTitle]);
+            //dstStore.setData(srcStore.getData());
+            UtilStore.updateWriteStore("commentCommentsTable", srcStore);
+        
+            if (!global.currentUdk.writePermission) {
+                registry.byId("addCommentButton").setDisabled(true);
+                registry.byId("commentNewComment").setDisabled(true);
+                domClass.add(registry.byId("commentCommentsTable").domNode, "readonly");
+                domClass.remove(registry.byId("commentCommentsTable").domNode, "interactive");
+                //registry.byId("commentCommentsTable").removeContextMenu();
+            }
+        
+            aspect.after(UtilGrid.getTable("commentCommentsTable"), "onDataChanged", lang.hitch(dirty, dirty.setDirtyFlag));
 
-scriptScope.addComment = function() {
-	var newComment = dijit.byId("commentNewComment").getValue();
-	newComment = dojo.trim(newComment);
+            console.log("Publishing event: '/afterInitDialog/Comments'");
+            topic.publish("/afterInitDialog/Comments");
+        }
 
-	if (UtilGeneral.hasValue(newComment)) {
-		var userName = UtilAddress.createAddressTitle(currentUser.address);
-		var newCommentBean = {comment: newComment, date: new Date(), user: {uuid: currentUser.addressUuid}, title: userName};
+        function addComment() {
+            var newComment = registry.byId("commentNewComment").getValue();
+            newComment = lang.trim(newComment);
 
-		UtilGrid.addTableDataRow("commentCommentsTable", newCommentBean);
-		dijit.byId("commentNewComment").setValue("");
-	}
-}
+            if (UtilGeneral.hasValue(newComment)) {
+                var userName = UtilAddress.createAddressTitle(UtilSecurity.currentUser.address);
+                var newCommentBean = {comment: newComment, date: new Date(), user: {uuid: UtilSecurity.currentUser.addressUuid}, title: userName};
 
+                UtilGrid.addTableDataRow("commentCommentsTable", newCommentBean);
+                registry.byId("commentNewComment").set("value", "");
+            }
+        }
+
+        /**
+         * PUBLIC METHODS
+         */
+        dialogComments = {
+            addComment: addComment
+        };
+
+    });
 
 </script>
 </head>
@@ -88,26 +108,26 @@ scriptScope.addComment = function() {
         <!-- CONTENT START -->
         <div class="inputContainer">
             <div id="winNavi" style="top:0px;">
-                <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-10#maintanance-of-objects-10', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                <a href="#" onclick="window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-10#maintanance-of-objects-10', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
             </div>
             <span id="commentTableLabel" class="label">
             </span>
-            <div class="input tableContainer">
+            <div class="input tableContainer spaceBelow">
                 <div id="commentCommentsTable" autoHeight="8">
                 </div>
             </div>
             <div class="inputContainer">
                 <span class="label">
-                    <label for="commentNewComment" onclick="javascript:dialog.showContextHelp(arguments[0], 7043)">
+                    <label for="commentNewComment" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7043)">
                         <fmt:message key="dialog.comments.newComment" />
                     </label>
                 </span>
                 <span class="input field grey">
-                    <input type="text" id="commentNewComment" dojoType="dijit.form.SimpleTextarea" class="textAreaFull"/>
+                    <input type="text" id="commentNewComment" data-dojo-type="dijit/form/SimpleTextarea" class="textAreaFull"/>
                 </span>
                 <span class="button">
                     <span style="float:right;">
-                        <button type="button" dojoType="dijit.form.Button" title="<fmt:message key="dialog.comments.addComment" />" id="addCommentButton" onClick="scriptScope.addComment">
+                        <button type="button" data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.comments.addComment" />" id="addCommentButton" onclick="dialogComments.addComment()">
                             <fmt:message key="dialog.comments.addComment" />
                         </button>
                     </span>

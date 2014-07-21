@@ -8,136 +8,147 @@
         <meta name="author" content="wemove digital solutions" />
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <script type="text/javascript">
-        	dojo.require("dijit.form.ValidationTextBox");
-			
-            var scriptScope = _container_;
+            var dialogSpatialAssist;
 
-            // coordinates not mandatory, see INGRID-2089 
-            var requiredElements = [["spatialAssistRef", "spatialAssistRefLabel"]];
+            require([
+                "dojo/_base/array",
+                "dojo/on",
+                "dojo/dom",
+                "dojo/dom-class",
+                "dojo/topic",
+                "dijit/registry",
+                "dojo/store/Memory",
+                "ingrid/dialog",
+                "ingrid/utils/Grid",
+                "ingrid/utils/Events",
+                "ingrid/utils/General",
+                "ingrid/grid/CustomGrid"
+            ], function(array, on, dom, domClass, topic, registry, Memory, dialog, UtilGrid, UtilEvents, UtilGeneral, CustomGrid) {
 
-            dojo.connect(_container_, "onLoad", function(){
-                dijit.byId("spatialAssistCS").setStore(dijit.byId("spatialRefLocationSelect").store);// spatialReferenceStore
-                resetRequiredElements();
+                    // coordinates not mandatory, see INGRID-2089 
+                    var requiredElements = [
+                        ["spatialAssistRef", "spatialAssistRefLabel"]
+                    ];
 
-                console.log("Publishing event: '/afterInitDialog/SpatialAssistant'");
-                dojo.publish("/afterInitDialog/SpatialAssistant");
-            });
-            dojo.addOnUnload(function(){
-            
-            });
-            
-            
-resetRequiredElements = function() {
-    dojo.forEach(requiredElements, function(element) {
-        dojo.removeClass(dojo.byId(element[1]), "important");       
-    });
-}
+                    on(_container_, "Load", function() {
+                        registry.byId("spatialAssistCS").setStore(registry.byId("spatialRefLocationSelect").store); // spatialReferenceStore
+                        resetRequiredElements();
 
-            function validateInput(){
-                resetRequiredElements();
+                        console.log("Publishing event: '/afterInitDialog/SpatialAssistant'");
+                        topic.publish("/afterInitDialog/SpatialAssistant");
+                    });
 
-                var valid = true;
-                dojo.forEach(requiredElements, function(element) {
-                    var widget = dijit.byId(element[0]);
-                    if (!(widget instanceof ingrid.dijit.CustomGrid)) {
-                        var val = widget.getValue();
-                        if (!UtilGeneral.hasValue(val)) {
-                            dojo.addClass(dojo.byId(element[1]), "important");
-                            valid = false;
-                        }
+                    function resetRequiredElements() {
+                        array.forEach(requiredElements, function(element) {
+                            domClass.remove(dom.byId(element[1]), "important");
+                        });
                     }
-                });
 
-                return valid;
-/*                
-                if (dijit.byId("spatialAssistCS").getValue() == "" ||
-                dijit.byId("spatialAssistRef").getValue() == "" ||
-                !dijit.byId("spatialAssistLon1").isValid() ||
-                !dijit.byId("spatialAssistLat1").isValid() ||
-                !dijit.byId("spatialAssistLon2").isValid() ||
-                !dijit.byId("spatialAssistLat2").isValid()) 
-                    return false;
-                
-                return true;
-*/
-            }
-            
-            scriptScope.addLocation = function(){
-                if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/SpatialAssistant")) return;
+                    function validateInput() {
+                        resetRequiredElements();
 
-                if (!validateInput()) {
-                    dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.fillAllFieldsHint' />", dialog.WARNING);
-                    return;
-                }
-                
-                var location = dijit.byId("spatialAssistRef").getValue();
-                var fromSRS = dijit.byId("spatialAssistCS").getValue();
-                var toSRS = "GEO_WGS84";
-                var coords = {
-                    longitude1: dijit.byId("spatialAssistLon1").getValue(),
-                    latitude1: dijit.byId("spatialAssistLat1").getValue(),
-                    longitude2: dijit.byId("spatialAssistLon2").getValue(),
-                    latitude2: dijit.byId("spatialAssistLat2").getValue()
-                };
-
-                if (UtilGeneral.hasValue(fromSRS) &&
-                    (UtilGeneral.hasValue(coords.longitude1) ||
-                     UtilGeneral.hasValue(coords.latitude1) ||
-                     UtilGeneral.hasValue(coords.longitude2) ||
-                     UtilGeneral.hasValue(coords.latitude2)))
-                {
-                    CTService.getCoordinates(fromSRS, toSRS, coords, {
-                        preHook: showLoadingZone,
-                        postHook: hideLoadingZone,
-                        
-                        callback: function(res){
-                            if (res.coordinate) {
-                                UtilGrid.addTableDataRow("spatialRefLocation", {
-                                    name: location,
-                                    longitude1: res.coordinate.longitude1,
-                                    latitude1: res.coordinate.latitude1,
-                                    longitude2: res.coordinate.longitude2,
-                                    latitude2: res.coordinate.latitude2
-                                });
-                            }
-                            else {
-                                if (res.errorMsg) {
-                                    dialog.show("<fmt:message key='general.error' />", res.errorMsg, dialog.WARNING);
-                                } else {
-                                    dialog.show("<fmt:message key='general.error' />", "<fmt:message key='cts.transformError' />", dialog.WARNING);
+                        var valid = true;
+                        array.forEach(requiredElements, function(element) {
+                            var widget = registry.byId(element[0]);
+                            if (!(widget instanceof CustomGrid)) {
+                                var val = widget.getValue();
+                                if (!UtilGeneral.hasValue(val)) {
+                                    domClass.add(dom.byId(element[1]), "important");
+                                    valid = false;
                                 }
                             }
-                            dijit.byId("pageDialog").hide();
-                            
-                        },
-                        timeout: 8000,
-                        errorHandler: function(err){
-                            console.debug("Error: " + err);
-                            dialog.show("<fmt:message key='general.error' />", "<fmt:message key='cts.serviceError' />", dialog.WARNING, null, 300, 170);
-                            dijit.byId("pageDialog").hide();
+                        });
+
+                        return valid;
+                    }
+
+                    function addLocation() {
+                        if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/SpatialAssistant")) return;
+
+                        if (!validateInput()) {
+                            dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.fillAllFieldsHint' />", dialog.WARNING);
+                            return;
                         }
-                    });
-                } else {
-                    UtilGrid.addTableDataRow("spatialRefLocation", {
-                        name: location,
-                        longitude1: "",
-                        latitude1: "",
-                        longitude2: "",
-                        latitude2: ""
-                    });
-                    dijit.byId("pageDialog").hide();
+
+                        var location = registry.byId("spatialAssistRef").getValue();
+                        var fromSRS = registry.byId("spatialAssistCS").getValue();
+                        var toSRS = "GEO_WGS84";
+                        var coords = {
+                            longitude1: registry.byId("spatialAssistLon1").getValue(),
+                            latitude1: registry.byId("spatialAssistLat1").getValue(),
+                            longitude2: registry.byId("spatialAssistLon2").getValue(),
+                            latitude2: registry.byId("spatialAssistLat2").getValue()
+                        };
+
+                        if (UtilGeneral.hasValue(fromSRS) &&
+                            (UtilGeneral.hasValue(coords.longitude1) ||
+                                UtilGeneral.hasValue(coords.latitude1) ||
+                                UtilGeneral.hasValue(coords.longitude2) ||
+                                UtilGeneral.hasValue(coords.latitude2))) {
+
+                            CTService.getCoordinates(fromSRS, toSRS, coords, {
+                                preHook: showLoadingZone,
+                                postHook: hideLoadingZone,
+
+                                callback: function(res) {
+                                    if (res.coordinate) {
+                                        UtilGrid.addTableDataRow("spatialRefLocation", {
+                                            name: location,
+                                            longitude1: res.coordinate.longitude1,
+                                            latitude1: res.coordinate.latitude1,
+                                            longitude2: res.coordinate.longitude2,
+                                            latitude2: res.coordinate.latitude2
+                                        });
+                                    } else {
+                                        if (res.errorMsg) {
+                                            dialog.show("<fmt:message key='general.error' />", res.errorMsg, dialog.WARNING);
+                                        } else {
+                                            dialog.show("<fmt:message key='general.error' />", "<fmt:message key='cts.transformError' />", dialog.WARNING);
+                                        }
+                                    }
+                                    registry.byId("pageDialog").hide();
+
+                                },
+                                timeout: 8000,
+                                errorHandler: function(err) {
+                                    console.debug("Error: " + err);
+                                    dialog.show("<fmt:message key='general.error' />", "<fmt:message key='cts.serviceError' />", dialog.WARNING, null, 300, 170);
+                                    registry.byId("pageDialog").hide();
+                                }
+                            });
+                        } else {
+                            UtilGrid.addTableDataRow("spatialRefLocation", {
+                                name: location,
+                                longitude1: "",
+                                latitude1: "",
+                                longitude2: "",
+                                latitude2: ""
+                            });
+                            registry.byId("pageDialog").hide();
+                        }
+                    }
+
+                    function showLoadingZone() {
+                        dom.byId('ctsLoadingZone').style.visibility = "visible";
+                        registry.byId("addSpatial").set("disabled", true);
+                    }
+
+                    function hideLoadingZone() {
+                        dom.byId('ctsLoadingZone').style.visibility = "hidden";
+                        registry.byId("addSpatial").set("disabled", false);
+                    }
+
+                    /**
+                     * PUBLIC METHODS
+                     */
+                    
+                    dialogSpatialAssist = {
+                        addLocation: addLocation
+                    };
+
                 }
-            }
-            
-            function showLoadingZone(){
-                dojo.byId('ctsLoadingZone').style.visibility = "visible";
-                dijit.byId("addSpatial").set("disabled", true);
-            }
-            
-            function hideLoadingZone(){
-                dojo.byId('ctsLoadingZone').style.visibility = "hidden";
-                dijit.byId("addSpatial").set("disabled", false);
-            }
+            );
+
         </script>
     </head>
     <body>
@@ -152,69 +163,69 @@ resetRequiredElements = function() {
                         <tbody>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label id="spatialAssistRefLabel" for="spatialAssistRef" onclick="javascript:dialog.showContextHelp(arguments[0], 7023)">
+                                    <label id="spatialAssistRefLabel" for="spatialAssistRef" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7023)">
                                         <fmt:message key="dialog.spatialAssist.customLocation" />
                                     </label>
                                 </td>
                                 <td colspan="2">
-                                    <input type="text" dojoType="dijit.form.ValidationTextBox" id="spatialAssistRef" style="width:100%;" />
+                                    <input type="text" data-dojo-type="dijit/form/ValidationTextBox" id="spatialAssistRef" style="width:100%;" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistLon1" onclick="javascript:dialog.showContextHelp(arguments[0], 7024)">
+                                    <label for="spatialAssistLon1" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7024)">
                                         <fmt:message key="dialog.spatialAssist.longitude1" />
                                     </label>
                                 </td>
                                 <td colspan="2">
-                                    <input type="text" dojoType="dijit.form.NumberTextBox" id="spatialAssistLon1" style="width:100%;" />
+                                    <input type="text" data-dojo-type="dijit/form/NumberTextBox" id="spatialAssistLon1" style="width:100%;" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistLat1" onclick="javascript:dialog.showContextHelp(arguments[0], 7025)">
+                                    <label for="spatialAssistLat1" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7025)">
                                         <fmt:message key="dialog.spatialAssist.latitude1" />
                                     </label>
                                 </td>
                                 <td colspan="2" nowrap="nowrap">
-                                    <input type="text" dojoType="dijit.form.NumberTextBox" id="spatialAssistLat1" style="width:100%;" />
+                                    <input type="text" data-dojo-type="dijit/form/NumberTextBox" id="spatialAssistLat1" style="width:100%;" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistLon2" onclick="javascript:dialog.showContextHelp(arguments[0], 7026)">
+                                    <label for="spatialAssistLon2" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7026)">
                                         <fmt:message key="dialog.spatialAssist.longitude2" />
                                     </label>
                                 </td>
                                 <td colspan="2">
-                                    <input type="text" dojoType="dijit.form.NumberTextBox" id="spatialAssistLon2" style="width:100%;" />
+                                    <input type="text" data-dojo-type="dijit/form/NumberTextBox" id="spatialAssistLon2" style="width:100%;" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistLat2" onclick="javascript:dialog.showContextHelp(arguments[0], 7027)">
+                                    <label for="spatialAssistLat2" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7027)">
                                         <fmt:message key="dialog.spatialAssist.latitude2" />
                                     </label>
                                 </td>
                                 <td colspan="2">
-                                    <input type="text" dojoType="dijit.form.NumberTextBox" id="spatialAssistLat2" style="width:100%;" />
+                                    <input type="text" data-dojo-type="dijit/form/NumberTextBox" id="spatialAssistLat2" style="width:100%;" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label" nowrap="nowrap">
-                                    <label for="spatialAssistCS" onclick="javascript:dialog.showContextHelp(arguments[0], 7028)">
+                                    <label for="spatialAssistCS" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7028)">
                                         <fmt:message key="dialog.spatialAssist.coordSys" />
                                     </label>
                                 </td>
                                 <td colspan="2">
-                               	<div dojoType="dojo.data.ItemFileReadStore" jsId="spatialReferenceStore"></div>
-                                <div id="spatialAssistCS" dojoType="dijit.form.Select" toggle="plain" store="spatialReferenceStore" style="width:100%;" />
+                               	<div data-dojo-type="dojo/store/Memory" jsId="spatialReferenceStore"></div>
+                                <div id="spatialAssistCS" data-dojo-type="dijit/form/Select" toggle="plain" data-dojo-props="store:spatialReferenceStore, labelAttr:'label'" style="width:100%;" />
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <span style="float:right;">
-                        <button dojoType="dijit.form.Button" id="addSpatial" title="<fmt:message key="dialog.spatialAssist.add" />" onClick="javascript:scriptScope.addLocation();">
+                        <button data-dojo-type="dijit/form/Button" id="addSpatial" title="<fmt:message key="dialog.spatialAssist.add" />" onclick="dialogSpatialAssist.addLocation()">
                             <fmt:message key="dialog.spatialAssist.add" />
                         </button>
                     </span><span id="ctsLoadingZone" style="float:right; margin-top:1px; z-index: 100; visibility:hidden;"><img src="img/ladekreis.gif" /></span>

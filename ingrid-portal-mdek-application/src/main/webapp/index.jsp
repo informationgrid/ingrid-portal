@@ -6,8 +6,9 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
+<script type='text/javascript' src='dwr/engine.js'></script>
+<script type='text/javascript' src='dwr/util.js'></script>
 <script src='dwr/interface/SecurityService.js'></script>
-<script src='dwr/engine.js'></script>
 
 <script>
 // Example: http://localhost:8080/ingrid-portal-mdek-application/index.jsp?nodeType=O&nodeId=7937CA1A-3F3A-4D36-9EBA-E2F55190811A

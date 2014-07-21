@@ -10,372 +10,444 @@
 
 
 <script type="text/javascript">
-var operationsScriptScope = _container_;
+    var pageOperationsDlg = null;
 
-var isNewOperation = false;
+    require([
+        "dojo/_base/array",
+        "dojo/_base/lang",
+        "dojo/on",
+        "dojo/aspect",
+        "dojo/query",
+        "dojo/Deferred",
+        "dojo/dom",
+        "dojo/topic",
+        "dojo/dom-style",
+        "dojo/dom-class",
+        "dijit/registry",
+        "dijit/form/ValidationTextBox",
+        "dijit/form/ComboBox",
+        "dijit/form/SimpleTextarea",
+        "ingrid/grid/CustomGrid",
+        "ingrid/layoutCreator",
+        "ingrid/dialog",
+        "ingrid/grid/CustomGridEditors",
+        "ingrid/grid/CustomGridFormatters",
+        "ingrid/utils/Syslist",
+        "ingrid/utils/Store",
+        "ingrid/utils/Grid",
+        "ingrid/utils/Events"
+    ], function(array, lang, on, aspect, query, Deferred, dom, topic, style, domClass,
+            registry, ValidationTextBox, ComboBox, SimpleTextarea, CustomGrid,
+            layoutCreator, dialog, GridEditors, GridFormatters,
+            UtilSyslist, UtilStore, UtilGrid, UtilEvents) {
 
-var inputElements = 
-	["operationsName", "operationsNameSelect", "operationsDescription", "operationsPlatform", "operationsCall",
-	 "operationsParameter", "operationsAddress", "operationsDependencies", "saveButton"];//, "cancelButton"];
+            var isNewOperation = false;
 
-// NOTICE: "operationsName" OR "operationsNameSelect" dependent from type of service is added below !
-var requiredElements = [["operationsPlatform", "operationsPlatformLabel"],
-					    ["operationsAddress", "operationsAddressLabel"]];
+            var inputElements =
+                ["operationsName", "operationsNameSelect", "operationsDescription", "operationsPlatform", "operationsCall",
+                "operationsParameter", "operationsAddress", "operationsDependencies", "saveButton"
+            ]; //, "cancelButton"];
 
-var _opNameIsTextInput = null;
+            // NOTICE: "operationsName" OR "operationsNameSelect" dependent from type of service is added below !
+            var requiredElements = [
+                ["operationsPlatform", "operationsPlatformLabel"],
+                ["operationsAddress", "operationsAddressLabel"]
+            ];
 
-// data passed by caller of this dialog
-var caller = {};
+            var _opNameIsTextInput = null;
 
-dojo.connect(operationsScriptScope, "onLoad", function(){
-    // take over passed data
-    if (operationsScriptScope.customParams) {
-        caller = operationsScriptScope.customParams;
-    }
+            // data passed by caller of this dialog
+            var caller = {};
 
-    var def = createDOMElements();
-	def.then(init);
-	def.then(disableGUIOnWrongPermission);
+            var customParams = null;
 
-    console.log("Publishing event: '/afterInitDialog/Operations'");
-    dojo.publish("/afterInitDialog/Operations");
-});
+            var global = this;
 
-/*
-dojo.connect(operationsScriptScope, "onUnload", function(){
-	UtilGrid.getTable(caller.gridId).invalidate();
-});
-*/
+            on(_container_, "Load", function() {
+                customParams = this.customParams;
 
-function createDOMElements() {
-	var storeProps = {data: {identifier: '1',label: '0'}};
-	var def = createSelectBox("operationsNameSelect", null, storeProps, initOperationNameInput);
-	
-	var operationsPlatformStructure = [
-		{field: 'title',name: "<fmt:message key='dialog.operation.opName' />",width: 340-scrollBarWidth+'px',
-            type: SelectboxEditor,
-            options: [],
-            values: [],
-            editable: true,
-            listId: 5180,
-            formatter: dojo.partial(SyslistCellFormatter, 5180)
-        }
-	];
-    createDataGrid("operationsPlatform", null, operationsPlatformStructure, null);
-	
-	var operationsParameterStructure = [
-		{field: 'name',name: "<fmt:message key='dialog.operation.name' />",width: '105px', editable: true},
-		{field: 'direction',name: "<fmt:message key='dialog.operation.direction' />",width: '100px',
-			type: SelectboxEditor,
-	        options: ["Eingabe", "Ausgabe", "Ein- und Ausgabe"],
-            values: ["Eingabe", "Ausgabe", "Ein- und Ausgabe"],
-	        editable: true
-		},
-		{field: 'description',name: "<fmt:message key='dialog.operation.description' />",width: '210px', editable: true},
-		{field: 'optional',name: "<fmt:message key='dialog.operation.optional' />",width: '65px',
-			type: SelectboxEditor,
-	        options: ["Nein", "Ja"], // will be filled later, when syslists are loaded
-	        values: [0,1],
-	        editable: true,
-			formatter: ListCellFormatter
-		},
-		{field: 'multiple',name: "<fmt:message key='dialog.operation.multiplicity' />",width: 213-scrollBarWidth+'px',
-			type: SelectboxEditor,
-	        options: ["Nein", "Ja"], // will be filled later, when syslists are loaded
-	        values: [0,1],
-	        editable: true,
-			formatter: ListCellFormatter
-		}
-	];
-    createDataGrid("operationsParameter", null, operationsParameterStructure, null);
+                // take over passed data
+                if (customParams) {
+                    caller = customParams;
+                }
 
-	var operationsAddressStructure = [
-		{field: 'title',name: "<fmt:message key='dialog.operation.opName' />",width: 340-scrollBarWidth+'px', editable: true}
-	];
-    createDataGrid("operationsAddress", null, operationsAddressStructure, null);
-    createDataGrid("operationsDependencies", null, operationsAddressStructure, null);
-	
-	return def;
-}
+                createDOMElements()
+                .then(init)
+                .then(disableGUIOnWrongPermission);
 
-initOperationNameInput = function() {
-	var def = new dojo.Deferred();
-	var serviceTypeWidget = dijit.byId("ref3ServiceType");
-	var serviceType = ""+serviceTypeWidget.getValue();
+                console.log("Publishing event: '/afterInitDialog/Operations'");
+                topic.publish("/afterInitDialog/Operations");
+            });
 
-    console.debug("serviceType = " + serviceType);
+            function createDOMElements() {
+                var storeProps = {
+                    data: {
+                        identifier: '1',
+                        label: '0'
+                    }
+                };
+                var def = layoutCreator.createSelectBox("operationsNameSelect", null, storeProps, initOperationNameInput);
 
-	if (serviceType != "5" && serviceType != "6") {
-		dijit.byId("operationsName").domNode.style.display = "none";
-		requiredElements.push(["operationsNameSelect", "operationsNameLabel"]);
+                var operationsPlatformStructure = [{
+                    field: 'title',
+                    name: "<fmt:message key='dialog.operation.opName' />",
+                    width: "340px",
+                    type: GridEditors.SelectboxEditor,
+                    options: [],
+                    values: [],
+                    editable: true,
+                    listId: 5180,
+                    formatter: dojo.partial(GridFormatters.SyslistCellFormatter, 5180)
+                }];
+                layoutCreator.createDataGrid("operationsPlatform", null, operationsPlatformStructure, null);
 
-		var listId = getSysListIdForServiceType(serviceType);
-        var def2 = UtilSyslist.readSysListData(listId);
-        def2.then(function(syslistData) {
-            // add empty item at the beginning
-            var emptyData = [["",-1]];
-            def.callback(emptyData.concat(syslistData));
-        });
-		_opNameIsTextInput = false;
-	} else {
-		dojo.style("operationsNameSelect", "display", "none");
-		requiredElements.push(["operationsName", "operationsNameLabel"]);
-		_opNameIsTextInput = true;
-		def.callback([]);
-	}
-	return def;
-}
+                var operationsParameterStructure = [{
+                    field: 'name',
+                    name: "<fmt:message key='dialog.operation.name' />",
+                    width: '105px',
+                    editable: true
+                }, {
+                    field: 'direction',
+                    name: "<fmt:message key='dialog.operation.direction' />",
+                    width: '100px',
+                    type: GridEditors.SelectboxEditor,
+                    options: ["Eingabe", "Ausgabe", "Ein- und Ausgabe"],
+                    values: ["Eingabe", "Ausgabe", "Ein- und Ausgabe"],
+                    editable: true
+                }, {
+                    field: 'description',
+                    name: "<fmt:message key='dialog.operation.description' />",
+                    width: '210px',
+                    editable: true
+                }, {
+                    field: 'optional',
+                    name: "<fmt:message key='dialog.operation.optional' />",
+                    width: '65px',
+                    type: GridEditors.SelectboxEditor,
+                    options: ["Nein", "Ja"], // will be filled later, when syslists are loaded
+                    values: [0, 1],
+                    editable: true,
+                    formatter: GridFormatters.ListCellFormatter
+                }, {
+                    field: 'multiple',
+                    name: "<fmt:message key='dialog.operation.multiplicity' />",
+                    width: "213px",
+                    type: GridEditors.SelectboxEditor,
+                    options: ["Nein", "Ja"], // will be filled later, when syslists are loaded
+                    values: [0, 1],
+                    editable: true,
+                    formatter: GridFormatters.ListCellFormatter
+                }];
+                layoutCreator.createDataGrid("operationsParameter", null, operationsParameterStructure, null);
 
-getSysListIdForServiceType = function(serviceType) {
-    var listId = 5110;
-    if (serviceType == "1")         // CSW
-        listId = 5105;
-    else if (serviceType == "2")    // WMS
-        listId = 5110;
-    else if (serviceType == "3")    // WFS
-        listId = 5120;
-    else if (serviceType == "4")    // WCTS
-        listId = 5130;
-    return listId;
-}
+                var operationsAddressStructure = [{
+                    field: 'title',
+                    name: "<fmt:message key='dialog.operation.opName' />",
+                    width: "340px",
+                    editable: true
+                }];
+                layoutCreator.createDataGrid("operationsAddress", null, operationsAddressStructure, null);
+                layoutCreator.createDataGrid("operationsDependencies", null, operationsAddressStructure, null);
 
-resetRequiredElements = function() {
-	dojo.forEach(requiredElements, function(element) {
-		dojo.removeClass(dojo.byId(element[1]), "important");		
-	});
-}
-
-disableGUIOnWrongPermission = function() {
-	if (currentUdk.writePermission == false) {
-        disableInputElements();
-		dijit.byId("saveButton").setDisabled(true);
-//		dijit.byId("cancelButton").disable();
-	} else {
-        enableInputElements();
-    }
-}
-
-disableInputElements = function() {
-	dojo.forEach(inputElements, function(item) {
-		var widget = dijit.byId(item);
-		if (widget instanceof ingrid.dijit.CustomGrid)
-			UtilGrid.updateOption(item, 'editable', false);
-		else
-			widget.setDisabled(true);
-	});
-}
-
-enableInputElements = function() {
-	dojo.forEach(inputElements, function(item) {
-		var widget = dijit.byId(item);
-		if (widget instanceof ingrid.dijit.CustomGrid) {
-            UtilGrid.updateOption(item, 'editable', true);
-        }
-        else {
-            widget.setDisabled(false);
-        }
-	});
-}
-
-resetInputElements = function() {
-	resetRequiredElements();
-	
-	isNewOperation = true;
-	dojo.forEach(inputElements, function(item) {
-		var widget = dijit.byId(item);
-		if (widget instanceof dijit.form.ValidationTextBox
-		 || widget instanceof dijit.form.ComboBox
-		 || widget instanceof dijit.form.SimpleTextarea) {
-			widget.setValue("");
-		} else if (widget instanceof ingrid.dijit.CustomGrid) {//instanceof ingrid.dijit.CustomDataGrid) {
-			UtilGrid.setTableData(item, []);
-		}
-	});	
-}
-
-displayOperation = function(op) {
-	if (_opNameIsTextInput)
-		dijit.byId("operationsName").setValue(op.name);
-	else {
-		var selectWidget = dijit.byId("operationsNameSelect");
-		selectWidget.set('value', UtilSyslist.getSyslistEntryKey(getSysListIdForServiceType(dijit.byId("ref3ServiceType").get("value")), op.name));
-	}
-	
-	dijit.byId("operationsDescription").setValue(op.description);
-	UtilStore.updateWriteStore("operationsPlatform", op.platform);
-	dijit.byId("operationsCall").setValue(op.methodCall);
-	UtilStore.updateWriteStore("operationsParameter", op.paramList);
-	UtilStore.updateWriteStore("operationsAddress", op.addressList);
-	UtilStore.updateWriteStore("operationsDependencies", op.dependencies);
-}
-
-init = function() {
-    // adapt GUI and data dependent from passed data (create new op or edit op ?)
-    if (caller.selectedRow) {
-        // EDIT ROW !
-
-        // we clone row, so edit process does not affect original row (cancel may be clicked)
-        displayOperation(dojo.clone(caller.selectedRow));
-        isNewOperation = false;
-        dijit.byId("saveButton").setLabel("<fmt:message key='dialog.links.apply' />");
-
-    } else {
-        // NEW ROW !
-
-        resetInputElements();
-        isNewOperation = true;
-        dijit.byId("saveButton").setLabel("<fmt:message key='general.add' />");
-    }
-    
-	// Init table validators
-    dojo.connect(UtilGrid.getTable("operationsParameter"), "onDataChanged", function(msg) {
-        var self = this;
-    
-        var checkIfEmpty = function(value, row, col) {
-            var cell = dojo.query(".slick-row[row$="+row+"] .c"+col, "operationsParameter")[0];
-            if (value == undefined || dojo.trim(value+"") == "") {
-                // mark cell as missing input
-                self.addInvalidCell( { row: row, column: col }, true );
+                return def;
             }
-        };
-        
-        this.resetInvalidCells();
-        dojo.forEach(this.getData(), function(item, i) {
-            checkIfEmpty(item.name, i, 0);
-            checkIfEmpty(item.optional, i, 3);
-            checkIfEmpty(item.multiple, i, 4);
-        }, this);
-    });
-}
 
-getOperation = function() {
-	var operation = {};
-	if (_opNameIsTextInput)
-		operation.name = dijit.byId("operationsName").getValue();
-	else {
-        var selectWidget = dijit.byId("operationsNameSelect");
-        // NOTICE: getValue() delivers id and is null if nothing selected
-		operation.nameId = selectWidget.getValue();
-        if (operation.nameId) {
-            // and this one is the label displayed and is set as name in op.
-            // NOTICE: causes NPE if nothing selected !!!!!
-            operation.name = selectWidget.get("displayedValue");
-        }
-	}
-	operation.description = dijit.byId("operationsDescription").getValue();
-	operation.platform = UtilGrid.getTableData("operationsPlatform");
-	
-	operation.methodCall = dijit.byId("operationsCall").getValue();
-	operation.paramList = UtilGrid.getTableData("operationsParameter");
-	
-	operation.addressList = UtilGrid.getTableData("operationsAddress");
-	
-	operation.dependencies = UtilGrid.getTableData("operationsDependencies");
-	
-	return operation;
-}
+            function initOperationNameInput() {
+                var def = new Deferred();
+                var serviceTypeWidget = registry.byId("ref3ServiceType");
+                var serviceType = "" + serviceTypeWidget.getValue();
 
-isValidOperation = function(op) {
-	resetRequiredElements();
+                console.debug("serviceType = " + serviceType);
 
-	var valid = true;
+                if (serviceType != "5" && serviceType != "6") {
+                    registry.byId("operationsName").domNode.style.display = "none";
+                    requiredElements.push(["operationsNameSelect", "operationsNameLabel"]);
 
-    // check for validation errors
-    if (dojo.query(".importantBackground", "operations").length > 0)
-        valid = false;
-
-	dojo.forEach(requiredElements, function(element) {
-        var widget = dijit.byId(element[0]);
-        if (!(widget instanceof ingrid.dijit.CustomGrid)) {
-            var val = widget.getValue();
-            if (!val || val == "") {
-                dojo.addClass(dojo.byId(element[1]), "important");
-                valid = false;
+                    var listId = getSysListIdForServiceType(serviceType);
+                    var def2 = UtilSyslist.readSysListData(listId);
+                    def2.then(function(syslistData) {
+                        // add empty item at the beginning
+                        var emptyData = [
+                            ["", -1]
+                        ];
+                        def.resolve(emptyData.concat(syslistData));
+                    });
+                    _opNameIsTextInput = false;
+                } else {
+                    style.set("operationsNameSelect", "display", "none");
+                    requiredElements.push(["operationsName", "operationsNameLabel"]);
+                    _opNameIsTextInput = true;
+                    def.resolve([]);
+                }
+                return def;
             }
-        }
-	});
 
-    var tmpValid = true;
-	if (op.platform.length == 0) {
-		tmpValid = false;
-	} else {
-        if (dojo.some(op.platform, function(platf) {
-                return (typeof(platf.title) == "undefined" || platf.title == null || dojo.trim(platf.title+"").length == 0); })) {
-            tmpValid = false;
-        }
-    }
-    if (!tmpValid) {
-        dojo.addClass(dojo.byId("operationsPlatformLabel"), "important");
-        valid = false;
-    }
-	
-    tmpValid = true;
-	if (op.addressList.length == 0) {
-		tmpValid = false;
-	} else {
-        if (dojo.some(op.addressList, function(addr) {
-                return (typeof(addr.title) == "undefined" || addr.title == null || dojo.trim(addr.title+"").length == 0); })) {
-            tmpValid = false;
-        }
-    }
-    if (!tmpValid) {
-        dojo.addClass(dojo.byId("operationsAddressLabel"), "important");
-        valid = false;
-    }
+            function getSysListIdForServiceType(serviceType) {
+                var listId = 5110;
+                if (serviceType == "1") // CSW
+                    listId = 5105;
+                else if (serviceType == "2") // WMS
+                    listId = 5110;
+                else if (serviceType == "3") // WFS
+                    listId = 5120;
+                else if (serviceType == "4") // WCTS
+                    listId = 5130;
+                return listId;
+            }
 
-	return valid;
-}
+            function resetRequiredElements() {
+                array.forEach(requiredElements, function(element) {
+                    domClass.remove(dom.byId(element[1]), "important");
+                });
+            }
 
-// Save/Add Button onClick function
-//
-saveOperation = function() {
+            function disableGUIOnWrongPermission() {
+                if (global.currentUdk.writePermission === false) {
+                    disableInputElements();
+                    registry.byId("saveButton").setDisabled(true);
+                    //      registry.byId("cancelButton").disable();
+                } else {
+                    enableInputElements();
+                }
+            }
+
+            function disableInputElements() {
+                array.forEach(inputElements, function(item) {
+                    var widget = registry.byId(item);
+                    if (widget instanceof CustomGrid)
+                        UtilGrid.updateOption(item, 'editable', false);
+                    else
+                        widget.setDisabled(true);
+                });
+            }
+
+            function enableInputElements() {
+                array.forEach(inputElements, function(item) {
+                    var widget = registry.byId(item);
+                    if (widget instanceof CustomGrid) {
+                        UtilGrid.updateOption(item, 'editable', true);
+                    } else {
+                        widget.setDisabled(false);
+                    }
+                });
+            }
+
+            function resetInputElements() {
+                resetRequiredElements();
+
+                isNewOperation = true;
+                array.forEach(inputElements, function(item) {
+                    var widget = registry.byId(item);
+                    if (widget instanceof ValidationTextBox || widget instanceof ComboBox || widget instanceof SimpleTextarea) {
+                        widget.setValue("");
+                    } else if (widget instanceof CustomGrid) {
+                        UtilGrid.setTableData(item, []);
+                    }
+                });
+            }
+
+            function displayOperation(op) {
+                if (_opNameIsTextInput)
+                    registry.byId("operationsName").setValue(op.name);
+                else {
+                    var selectWidget = registry.byId("operationsNameSelect");
+                    selectWidget.set('value', UtilSyslist.getSyslistEntryKey(getSysListIdForServiceType(registry.byId("ref3ServiceType").get("value")), op.name));
+                }
+
+                registry.byId("operationsDescription").setValue(op.description);
+                UtilStore.updateWriteStore("operationsPlatform", op.platform);
+                registry.byId("operationsCall").setValue(op.methodCall);
+                UtilStore.updateWriteStore("operationsParameter", op.paramList);
+                UtilStore.updateWriteStore("operationsAddress", op.addressList);
+                UtilStore.updateWriteStore("operationsDependencies", op.dependencies);
+            }
+
+            function init() {
+                // adapt GUI and data dependent from passed data (create new op or edit op ?)
+                if (caller.selectedRow) {
+                    // EDIT ROW !
+
+                    // we clone row, so edit process does not affect original row (cancel may be clicked)
+                    displayOperation(lang.clone(caller.selectedRow));
+                    isNewOperation = false;
+                    registry.byId("saveButton").setLabel("<fmt:message key='dialog.links.apply' />");
+
+                } else {
+                    // NEW ROW !
+
+                    resetInputElements();
+                    isNewOperation = true;
+                    registry.byId("saveButton").setLabel("<fmt:message key='general.add' />");
+                }
+
+                // Init table validators
+                aspect.after(UtilGrid.getTable("operationsParameter"), "onDataChanged", function() {
+                    var self = this;
+    
+                    var checkIfEmpty = function(value, row, col) {
+                        var cell = query(".slick-row[row$=" + row + "] .c" + col, "operationsParameter")[0];
+                        if (value === undefined || lang.trim(value + "") === "") {
+                            // mark cell as missing input
+                            domClass.add(cell, "importantBackground");
+							self.addInvalidCell( { row: row, column: col }, true );
+                        } else {
+                            domClass.remove(cell, "importantBackground");
+                        }
+                    };
+					this.resetInvalidCells();
+                    array.forEach(this.getData(), function(item, i) {
+                        checkIfEmpty(item.name, i, 0);
+                        checkIfEmpty(item.optional, i, 3);
+                        checkIfEmpty(item.multiple, i, 4);
+                    }, this);
+                });
+            }
+
+            function getOperation() {
+                var operation = {};
+                if (_opNameIsTextInput)
+                    operation.name = registry.byId("operationsName").getValue();
+                else {
+                    var selectWidget = registry.byId("operationsNameSelect");
+                    // NOTICE: getValue() delivers id and is null if nothing selected
+                    operation.nameId = selectWidget.getValue();
+                    if (operation.nameId) {
+                        // and this one is the label displayed and is set as name in op.
+                        // NOTICE: causes NPE if nothing selected !!!!!
+                        operation.name = selectWidget.get("displayedValue");
+                    }
+                }
+                operation.description = registry.byId("operationsDescription").getValue();
+                operation.platform = UtilGrid.getTableData("operationsPlatform");
+
+                operation.methodCall = registry.byId("operationsCall").getValue();
+                operation.paramList = UtilGrid.getTableData("operationsParameter");
+
+                operation.addressList = UtilGrid.getTableData("operationsAddress");
+
+                operation.dependencies = UtilGrid.getTableData("operationsDependencies");
+
+                return operation;
+            }
+
+            function isValidOperation(op) {
+                resetRequiredElements();
+
+                var valid = true;
+
+                // check for validation errors
+                if (query(".importantBackground", "operations").length > 0)
+                    valid = false;
+
+                array.forEach(requiredElements, function(element) {
+                    var widget = registry.byId(element[0]);
+                    if (widget instanceof CustomGrid) {
+                        if (!widget.validateNonEmptyRows()) valid = false;
+                        
+                    } else {
+                        var val = widget.getValue();
+                        if (!val || val === "") {
+                            domClass.add(dom.byId(element[1]), "important");
+                            valid = false;
+                        }
+                    }
+                });
+
+                var tmpValid = true;
+                if (op.platform.length === 0) {
+                    tmpValid = false;
+                } else {
+                    if (array.some(op.platform, function(platf) {
+                        return (typeof(platf.title) == "undefined" || platf.title === null || lang.trim(platf.title + "").length === 0);
+                    })) {
+                        tmpValid = false;
+                    }
+                }
+                if (!tmpValid) {
+                    domClass.add(dom.byId("operationsPlatformLabel"), "important");
+                    valid = false;
+                }
+
+                tmpValid = true;
+                if (op.addressList.length === 0) {
+                    tmpValid = false;
+                } else {
+                    if (array.some(op.addressList, function(addr) {
+                        return (typeof(addr.title) == "undefined" || addr.title === null || lang.trim(addr.title + "").length === 0);
+                    })) {
+                        tmpValid = false;
+                    }
+                }
+                if (!tmpValid) {
+                    domClass.add(dom.byId("operationsAddressLabel"), "important");
+                    valid = false;
+                }
+
+                return valid;
+            }
+
+            // Save/Add Button onClick function
+            //
+            function saveOperation() {
     if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/Operations")) return;
 
-	var operation = getOperation();
-	if (!isValidOperation(operation)) {
-  		dialog.show("<fmt:message key='general.error' />", "<fmt:message key='links.fillRequiredFieldsHint' />", dialog.WARNING);
-		return;
-	} else {
-        if (isNewOperation) {
-            // add NEW operation
-            // No checks if the store already contains the current element.
-            UtilGrid.addTableDataRow(caller.gridId, operation);
+                var operation = getOperation();
+                if (!isValidOperation(operation)) {
+                    dialog.show("<fmt:message key='general.error' />", "<fmt:message key='links.fillRequiredFieldsHint' />", dialog.WARNING);
+                    return;
+                } else {
+                    if (isNewOperation) {
+                        // add NEW operation
+                        // No checks if the store already contains the current element.
+                        UtilGrid.addTableDataRow(caller.gridId, operation);
 
-        } else {
-            // EDIT existing operation
-            var oldOp = caller.selectedRow;
-            for (i in operation) {
-                oldOp[i] = operation[i];
+                    } else {
+                        // EDIT existing operation
+                        var oldOp = caller.selectedRow;
+                        var i;
+                        for (i in operation) {
+                            oldOp[i] = operation[i];
+                        }
+                    }
+
+                    var callerGrid = UtilGrid.getTable(caller.gridId);
+                    callerGrid.invalidate();
+                    callerGrid.notifyChangedData({});
+
+                    // save also closes dialog !
+                    closeThisDialog();
+                }
             }
-        }
 
-        var callerGrid = UtilGrid.getTable(caller.gridId);
-        callerGrid.invalidate();
-        callerGrid.notifyChangedData({});
+            // Cancel Button onClick function
+            //
+            function resetDialog() {
+                closeThisDialog();
+            }
 
-        // save also closes dialog !
-        closeThisDialog();
-	}
-}
+            function closeThisDialog() {
+                registry.byId("pageDialog").hide();
+            }
 
-// Cancel Button onClick function
-//
-resetDialog = function() {
-	closeThisDialog();
-}
+            /**
+             * PUBLIC METHODS
+             */
 
-closeThisDialog = function() {
-	dijit.byId("pageDialog").hide();
-}
+            pageOperationsDlg = {
+                resetDialog: resetDialog,
+                saveOperation: saveOperation
+            };
 
-</script> 
+        });
+
+    </script> 
 </head>
 
 <body>
 
   <div id="operations" class="">
     <div id="winNavi" style="top:0; height:20px;">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-9#maintanance-of-objects-9', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+			<a href="javascript:void(0);" onclick="window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-9#maintanance-of-objects-9', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no')" title="<fmt:message key="general.help" />">[?]</a>
 	  </div>
 	  <div id="operationsContent" class="content">
 
@@ -383,22 +455,22 @@ closeThisDialog = function() {
       <div id="operationForm">
           <div class="inputContainer field">
             <span class="outer required"><div>
-            <span class="label"><label id="operationsNameLabel" for="operationsName" onclick="javascript:dialog.showContextHelp(arguments[0], 5201)"><fmt:message key="dialog.operation.opName" />*</label></span>
+            <span class="label"><label id="operationsNameLabel" for="operationsName" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5201)"><fmt:message key="dialog.operation.opName" />*</label></span>
     		<span class="input">
     			<input id="operationsNameSelect" required="true" style="width:100%;"/>
-    			<input type="text" maxLength="255" id="operationsName" style="width:100%;" dojoType="dijit.form.ValidationTextBox"/>
+    			<input type="text" maxLength="255" id="operationsName" style="width:100%;" data-dojo-type="dijit/form/ValidationTextBox"/>
     		</span>
             </div></span>
             
             <div class="inputContainer">
               <span class="outer halfWidth required"><div>
-                <span class="label"><label id="operationsAddressLabel" for="operationsAddress" onclick="javascript:dialog.showContextHelp(arguments[0], 5206)"><fmt:message key="dialog.operation.address" />*</label></span>
+                <span class="label"><label id="operationsAddressLabel" for="operationsAddress" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5206)"><fmt:message key="dialog.operation.address" />*</label></span>
                 <div class="tableContainer">
     			  <div id="operationsAddress" autoHeight="3" interactive="true" class="hideTableHeader"></div>
                 </div></div>
               </span>
               <span class="outer halfWidth required"><div>
-                <span class="label"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="javascript:dialog.showContextHelp(arguments[0], 5203)"><fmt:message key="dialog.operation.platforms" />*</label></span>
+                <span class="label"><label id="operationsPlatformLabel" for="operationsPlatform" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5203)"><fmt:message key="dialog.operation.platforms" />*</label></span>
                 <div class="tableContainer">
     			  <div id="operationsPlatform" autoHeight="3" interactive="true" class="hideTableHeader"></div>
                 </div></div>
@@ -408,7 +480,7 @@ closeThisDialog = function() {
             
             <div class="inputContainer">
               <span class="outer"><div>
-              <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="javascript:dialog.showContextHelp(arguments[0], 5205)"><fmt:message key="dialog.operation.parameter" /></label></span>
+              <span class="label"><label id="operationsParameterLabel" for="operationsParameter" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5205)"><fmt:message key="dialog.operation.parameter" /></label></span>
               <div class="tableContainer">
     			<div id="operationsParameter" interactive="true"></div>
               </div></div>
@@ -416,19 +488,19 @@ closeThisDialog = function() {
             </div>
     
             <span class="outer"><div>
-            <span class="label"><label for="operationsCall" onclick="javascript:dialog.showContextHelp(arguments[0], 5204)"><fmt:message key="dialog.operation.call" /></label></span>
-            <span class="input"><input type="text" maxLength="255" id="operationsCall" name="operationsCall" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+            <span class="label"><label for="operationsCall" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5204)"><fmt:message key="dialog.operation.call" /></label></span>
+            <span class="input"><input type="text" maxLength="255" id="operationsCall" name="operationsCall" style="width:100%;" data-dojo-type="dijit/form/ValidationTextBox" /></span>
             </div></span>
 
             <div class="inputContainer">
               <span class="outer halfWidth"><div>
-                <span class="label"><label for="operationsDescription" onclick="javascript:dialog.showContextHelp(arguments[0], 5202)"><fmt:message key="dialog.operation.description" /></label></span>
+                <span class="label"><label for="operationsDescription" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5202)"><fmt:message key="dialog.operation.description" /></label></span>
                 <span class="input">
-                    <input type="text" id="operationsDescription" rows="3" style="width:100%;" dojoType="dijit.form.SimpleTextarea" />            
+                    <input type="text" id="operationsDescription" rows="4" style="width:100%;" data-dojo-type="dijit/form/SimpleTextarea" />            
                 </span></div>
               </span>
               <span class="outer halfWidth"><div>
-                <span class="label"><label for="operationsDependencies" onclick="javascript:dialog.showContextHelp(arguments[0], 5207)"><fmt:message key="dialog.operation.dependencies" /></label></span>
+                <span class="label"><label for="operationsDependencies" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5207)"><fmt:message key="dialog.operation.dependencies" /></label></span>
                 <div class="tableContainer">
     			  <div id="operationsDependencies" autoHeight="3" interactive="true" class="hideTableHeader"></div>
                 </div></div>
@@ -438,8 +510,8 @@ closeThisDialog = function() {
     
           <div class="inputContainer">
             <span class="button" style="height:20px !important;">
-            	<span style="float:right;"><button dojoType="dijit.form.Button" id="cancelButton" onClick="resetDialog"><fmt:message key="dialog.operation.cancel" /></button></span>
-            	<span style="float:right;"><button dojoType="dijit.form.Button" type="button" id="saveButton" onClick="saveOperation();"><fmt:message key="dialog.operation.add" /></button></span>
+            	<span style="float:right;"><button data-dojo-type="dijit/form/Button" id="cancelButton" onclick="pageOperationsDlg.resetDialog()"><fmt:message key="dialog.operation.cancel" /></button></span>
+            	<span style="float:right;"><button data-dojo-type="dijit/form/Button" type="button" id="saveButton" onclick="pageOperationsDlg.saveOperation()"><fmt:message key="dialog.operation.add" /></button></span>
             </span>
       	  </div>
       	  <div class="fill"></div>

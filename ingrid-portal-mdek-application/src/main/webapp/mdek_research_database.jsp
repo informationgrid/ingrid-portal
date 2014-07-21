@@ -5,122 +5,146 @@
 <head>
 
 <script type="text/javascript">
-dojo.require("dijit.form.ValidationTextBox");
-dojo.require("dijit.form.SimpleTextarea");
 
-var scriptScopeResearchDb = _container_;
+    var pageResearchDb = _container_;
 
-var resultsPerPage = 20;
-var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dojo.byId("searchDatabaseResultsInfo"), pagingSpan:dojo.byId("searchDatabaseResultsPaging") });
+    require([
+        "dojo/aspect",
+        "dojo/_base/lang",
+        "dojo/on",
+        "dojo/has",
+        "dojo/dom",
+        "dojo/dom-style",
+        "dojo/string",
+        "dijit/registry",
+        "ingrid/layoutCreator",
+        "ingrid/utils/Grid",
+        "ingrid/utils/List",
+        "ingrid/utils/Address",
+        "ingrid/utils/PageNavigation"
+    ], function(aspect, lang, on, has, dom, style, string, registry, layoutCreator, UtilGrid, UtilList, UtilAddress, navigation) {
 
-var currentQuery = null;
+            var resultsPerPage = 20;
+            var pageNav = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dom.byId("searchDatabaseResultsInfo"), pagingSpan:dom.byId("searchDatabaseResultsPaging") });
 
-dojo.connect(_container_, "onLoad", function() {
-    createDOMElements();
-	dojo.connect(pageNav, "onPageSelected", function() { startSearch(); });
-});
+            var currentQuery = null;
 
-function createDOMElements() {
-    var datbaseSearchResultsStructure = [
-       {field: 'icon',name: '&nbsp;',width: '23px'},
-       {field: 'linkLabel',name: "<fmt:message key='dialog.research.db.name' />",width: '600px'}
-    ];
-    createDataGrid("datbaseSearchResults", null, datbaseSearchResultsStructure, null);
-}
+            on(_container_, "Load", function() {
+                createDOMElements();
+                aspect.after(pageNav, "onPageSelected", function() { startSearch(); });
+            });
 
-
-function updateResultTable(res) {
-//	dojo.debugShallow(res);
-	var resultList = [];
-
-	if (res.objectSearchResult != null) {
-		// Objects found
-//		dojo.debugShallow(res.objectSearchResult);
-		resultList = res.objectSearchResult.resultList;
-		UtilList.addObjectLinkLabels(resultList);  
-
-	} else if (res.addressSearchResult != null) {
-		// Addresses found
-//		dojo.debugShallow(res.addressSearchResult);
-		resultList = res.addressSearchResult.resultList;
-		UtilList.addAddressTitles(resultList);
-		UtilList.addAddressLinkLabels(resultList);  
-	}
-
-	UtilList.addIcons(resultList);
-
-	UtilGrid.setTableData("datbaseSearchResults", resultList);
-}
+            function createDOMElements() {
+                var datbaseSearchResultsStructure = [
+                    {field: 'icon',name: '&nbsp;',width: '23px'},
+                    {field: 'linkLabel',name: "<fmt:message key='dialog.research.db.name' />",width: '600px'}
+                ];
+                layoutCreator.createDataGrid("datbaseSearchResults", null, datbaseSearchResultsStructure, null);
+            }
 
 
-// starts a database search with the given input
-function startSearch() {
-	if (currentQuery == null)
-		return;
+            function updateResultTable(res) {
+            //  dojo.debugShallow(res);
+                var resultList = [];
 
-	QueryService.queryHQL(currentQuery, pageNav.getStartHit(), resultsPerPage, {
-		preHook: showLoadingZone,
-		postHook: hideLoadingZone,
-		callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
-		errorHandler: function(errMsg, err) {
-			displayErrorMessage(err);
-//			dialog.show("<fmt:message key='general.error' />", dojo.string.substituteParams("<fmt:message key='dialog.generalError' />", errMsg), dialog.WARNING);				
-		}		
-	});
-}
+                if (res.objectSearchResult !== null) {
+                    // Objects found
+            //      dojo.debugShallow(res.objectSearchResult);
+                    resultList = res.objectSearchResult.resultList;
+                    UtilList.addObjectLinkLabels(resultList);
 
-// Button onClick function
-// Reads the input field, resets the navigation and starts a new query
-scriptScopeResearchDb.startNewSearch = function() {
-	currentQuery = dojo.trim(dijit.byId("databaseSearch").getValue());
-	pageNav.reset();
-	startSearch();
-}
+                } else if (res.addressSearchResult !== null) {
+                    // Addresses found
+            //      dojo.debugShallow(res.addressSearchResult);
+                    resultList = res.addressSearchResult.resultList;
+                    UtilAddress.addAddressTitles(resultList);
+                    UtilList.addAddressLinkLabels(resultList);
+                }
 
-function updatePageNavigation(res) {
-	if (res.objectSearchResult != null) {
-		// Objects found
-		pageNav.setTotalNumHits(res.objectSearchResult.totalNumHits);
+                UtilList.addIcons(resultList);
 
-	} else if (res.addressSearchResult != null) {
-		// Addresses found
-		pageNav.setTotalNumHits(res.addressSearchResult.totalNumHits);
-	}
-
-	pageNav.updateDomNodes();
-}
+                UtilGrid.setTableData("datbaseSearchResults", resultList);
+            }
 
 
-// Save as CSV values link 'onclick' function
-scriptScopeResearchDb.saveAsCSV = function() {
-	if (currentQuery == null)
-		return;
-	
-	if (dojo.isIE) {
-		var query = currentQuery.replace(/\s/g, " ");
-		window.open("mdek_download_csv_ie.html?query="+query, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=0,menubar=0');
+            // starts a database search with the given input
+            function startSearch() {
+                if (currentQuery === null)
+                    return;
 
-	} else {				
-		QueryService.queryHQLToCSV(currentQuery, {
-			preHook: showLoadingZone,
-			postHook: hideLoadingZone,
-			callback: function(data) {
-				dwr.engine.openInDownload(data);
-			},
-			errorHandler: function(errMsg, err) {
-				displayErrorMessage(err);
-			}		
-		});
-	}
-}
+                QueryService.queryHQL(currentQuery, pageNav.getStartHit(), resultsPerPage, {
+                    preHook: showLoadingZone,
+                    postHook: hideLoadingZone,
+                    callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
+                    errorHandler: function(errMsg, err) {
+                        displayErrorMessage(err);
+            //          dialog.show("<fmt:message key='general.error' />", string.substituteParams("<fmt:message key='dialog.generalError' />", errMsg), dialog.WARNING);              
+                    }
+                });
+            }
 
-function showLoadingZone() {
-    dojo.style("databaseSearchLoadingZone", "visibility", "visible");
-}
+            // Button onClick function
+            // Reads the input field, resets the navigation and starts a new query
+            function startNewSearch() {
+                currentQuery = lang.trim(registry.byId("databaseSearch").getValue());
+                pageNav.reset();
+                startSearch();
+            }
 
-function hideLoadingZone() {
-    dojo.style("databaseSearchLoadingZone", "visibility", "hidden");
-}
+            function updatePageNavigation(res) {
+                if (res.objectSearchResult !== null) {
+                    // Objects found
+                    pageNav.setTotalNumHits(res.objectSearchResult.totalNumHits);
+
+                } else if (res.addressSearchResult !== null) {
+                    // Addresses found
+                    pageNav.setTotalNumHits(res.addressSearchResult.totalNumHits);
+                }
+
+                pageNav.updateDomNodes();
+            }
+
+
+            // Save as CSV values link 'onclick' function
+            function saveAsCSV() {
+                if (currentQuery === null)
+                    return;
+                
+                if (has("ie")) {
+                    var query = currentQuery.replace(/\s/g, " ");
+                    window.open("mdek_download_csv_ie.html?query="+query, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=0,menubar=0');
+
+                } else {
+                    QueryService.queryHQLToCSV(currentQuery, {
+                        preHook: showLoadingZone,
+                        postHook: hideLoadingZone,
+                        callback: function(data) {
+                            dwr.engine.openInDownload(data);
+                        },
+                        errorHandler: function(errMsg, err) {
+                            displayErrorMessage(err);
+                        }
+                    });
+                }
+            }
+
+            function showLoadingZone() {
+                style.set("databaseSearchLoadingZone", "visibility", "visible");
+            }
+
+            function hideLoadingZone() {
+                style.set("databaseSearchLoadingZone", "visibility", "hidden");
+            }
+
+            /**
+             * PUBLIC METHODS
+             */
+            
+            pageResearchDb.saveAsCSV = saveAsCSV;
+            pageResearchDb.startNewSearch = startNewSearch;
+
+        }
+    );
 
 </script>
 </head>
@@ -131,41 +155,41 @@ function hideLoadingZone() {
   
     <div id="researchDatabaseContentSection" class="contentBlockWhite">
       <div id="winNavi" style="top:0;">
-		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=search-3#search-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
-  	  </div>
-  	  <div class="content">
+        <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=search-3#search-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+      </div>
+      <div class="content">
 
         <!-- LEFT HAND SIDE CONTENT START -->
-        <span class="label"><label for="databaseSearch" onclick="javascript:dialog.showContextHelp(arguments[0], 7064)"><fmt:message key="dialog.research.db.title" /></label></span>
+        <span class="label"><label for="databaseSearch" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7064)"><fmt:message key="dialog.research.db.title" /></label></span>
         <div class="inputContainer field grey">
-          <span class="input"><input type="text" rows="10" mode="textarea" id="databaseSearch" style="width:100%;" dojoType="dijit.form.SimpleTextarea" /></span> 
+          <span class="input"><input type="text" rows="10" mode="textarea" id="databaseSearch" style="width:100%;" data-dojo-type="dijit/form/SimpleTextarea" /></span> 
 
         <div class="inputContainer">
           <span class="button">
             <span style="float:right;">
-              <button dojoType="dijit.form.Button" id="researchDbSearch" title="<fmt:message key="dialog.research.db.search" />" onClick="javascript:scriptScopeResearchDb.startNewSearch();"><fmt:message key="dialog.research.db.search" /></button>
-    		</span>
-			<span id="databaseSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
-				<img src="img/ladekreis.gif" />
-			</span>
-    	  </span>
-    	</div>
+              <button data-dojo-type="dijit/form/Button" id="researchDbSearch" title="<fmt:message key="dialog.research.db.search" />" onclick="pageResearchDb.startNewSearch()"><fmt:message key="dialog.research.db.search" /></button>
+            </span>
+            <span id="databaseSearchLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden">
+                <img src="img/ladekreis.gif" />
+            </span>
+          </span>
+        </div>
 
         <!-- SEARCH RESULT LIST START -->
         <div class="spacer"></div>
         <div id="results" class="inputContainer">
           <span class="label"><fmt:message key="dialog.research.db.result" /></span>
-          <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="javascript:scriptScopeResearchDb.saveAsCSV();" title="<fmt:message key="dialog.research.db.saveAsCSV" />"><fmt:message key="dialog.research.db.saveAsCSV" /></a></span>
+          <span class="functionalLink"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="pageResearchDb.saveAsCSV()" title="<fmt:message key="dialog.research.db.saveAsCSV" />"><fmt:message key="dialog.research.db.saveAsCSV" /></a></span>
           <div class="listInfo">
             <span id="searchDatabaseResultsInfo" class="searchResultsInfo">&nbsp;</span>
             <span id="searchDatabaseResultsPaging" class="searchResultsPaging">&nbsp;</span>
-        	<div class="fill"></div>
+            <div class="fill"></div>
           </div>
 
-			<div class="tableContainer">
-			    <div id="datbaseSearchResults" autoHeight="20" contextMenu="none" defaultHideScrollbar="true"></div>
-			</div>
-	   	  </div>
+            <div class="tableContainer">
+                <div id="datbaseSearchResults" autoHeight="20" contextMenu="none" defaultHideScrollbar="true"></div>
+            </div>
+          </div>
         <!-- SEARCH RESULT LIST END -->
 
         <!-- LEFT HAND SIDE CONTENT END -->

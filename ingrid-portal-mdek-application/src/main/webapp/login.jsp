@@ -24,7 +24,7 @@
 
 <html dir="ltr">
     <head>
-        <link rel="stylesheet" type="text/css" href="css/admin.css"></link>
+        <link rel="stylesheet" type="text/css" href="dojo-sources/release/lib/ingrid/css/admin.css"></link>
         <script type='text/javascript' src='dwr/engine.js'></script>
         <script type='text/javascript' src='dwr/util.js'></script>
         <script src='dwr/interface/SecurityService.js'></script>

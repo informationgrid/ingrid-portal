@@ -7,8 +7,9 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
+<script type='text/javascript' src='dwr/engine.js'></script>
+<script type='text/javascript' src='dwr/util.js'></script>
 <script src='dwr/interface/SecurityService.js'></script>
-<script src='dwr/engine.js'></script>
 </head>
 
 <%

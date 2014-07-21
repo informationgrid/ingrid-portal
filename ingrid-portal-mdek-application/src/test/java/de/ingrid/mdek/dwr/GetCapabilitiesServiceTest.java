@@ -639,7 +639,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getOperations().get(1).getName(), is("Transform"));
         assertThat(result.getOperations().get(2).getName(), is("IsTransformable"));
         //assertThat(result.getOperations().get(3).getName(), is("GetTransformation"));
-        assertThat(result.getOperations().get(3).getName(), is("DescribeTransformation"));
+        assertThat(result.getOperations().get(3).getName(), is("GetResourceById"));
         //assertThat(result.getOperations().get(5).getName(), is("DescribeCRS"));
         //assertThat(result.getOperations().get(6).getName(), is("DescribeMethod"));
     }

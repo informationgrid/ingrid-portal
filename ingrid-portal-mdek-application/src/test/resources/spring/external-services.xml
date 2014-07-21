@@ -4,10 +4,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
     default-init-method="init" default-destroy-method="destroy">
 
-    <bean id="thesaurusRDFService" class="de.ingrid.rdf.SNSServiceRDF">
-        <property name="thesaurusRootURI" value="http://data.uba.de/umt/de/concepts/_00049251" />
-    </bean>
-
     <!-- PortalU -->
     <bean id="thesaurusService" class="de.ingrid.external.sns.SNSService" />
     <bean id="gazetteerService" class="de.ingrid.external.sns.SNSService" />

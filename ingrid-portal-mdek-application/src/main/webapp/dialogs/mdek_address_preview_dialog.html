@@ -10,16 +10,16 @@
 
 <script type="text/javascript">
 
-    var address = _container_.customParams.data;
+	var address = _container_.customParams.data;
 
-    var addressDiv = dojo.byId("addressPreviewContent");
-    var displayText = "";
+	var addressDiv = dom.byId("addressPreviewContent");
+	var displayText = "";
 
-    addressDiv.innerHTML = detailHelper.renderAddressEntry(address).replace(/\n/g, '<br />');
-    
-    dojo.connect(_container_, "onLoad", function() {
+	addressDiv.innerHTML = detailHelper.renderAddressEntry(address).replace(/\n/g, '<br />');
+
+    on(_container_, "Load", function() {
         console.log("Publishing event: '/afterInitDialog/AddressPreview'");
-        dojo.publish("/afterInitDialog/AddressPreview");
+        topic.publish("/afterInitDialog/AddressPreview");
     });
 
 </script>

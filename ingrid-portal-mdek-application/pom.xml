@@ -54,7 +54,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>2.4</version>
         <configuration>
-          <warSourceExcludes>start_dev.jsp,TEST_*.*,test_*.*,dev_*.*,dojo-release-1.6.0/**,dojo-src/util/**,dojo-src/dojo/**,dojo-src/dijit/**,dojo-src/dojox/**</warSourceExcludes>
+          <warSourceExcludes>start_dev.jsp,TEST_*.*,test_*.*,dev_*.*,dojo-sources/util/**,dojo-sources/dojo/**,dojo-sources/dijit/**,dojo-sources/dojox/**,dojo-sources/ingrid/**</warSourceExcludes>
           <!-- NOTICE: supply log4j.jar and commons-logging.jar in war, SO log4j.properties IS READ FROM WEBAPP !!!! -->
           <!-- Tomcat is configured for log4j, so if NO log4j.jar is supplied in war, log4j.properties is read from tomcat/common/classes, ignoring the one in the war !!! -->
           <packagingExcludes>**/ingrid-utils.jar,**/ingrid-mdek-api*.jar,**/ehcache*.jar,**/servlet-api*.jar,**/jetspeed-api*.jar</packagingExcludes>
@@ -90,47 +90,55 @@
       </plugin>
 -->
       <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.1</version>
-            <executions>
-                <execution>
-                    <phase>prepare-package</phase>
-                    <goals>
-                        <goal>exec</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <!-- <executable>src/main/webapp/dojo-src/util/buildscripts/myBuild.bat</executable>-->
-                <executable>java</executable>
-                <classpathScope>runtime</classpathScope>
-                <arguments>
-                    <argument>-Dmyproperty=myvalue</argument>
-                    <argument>-classpath</argument>
-                    <argument>../shrinksafe/shrinksafe.jar</argument>
-                    <argument>org.mozilla.javascript.tools.shell.Main</argument>
-                    <argument>build.js</argument>
-                    <argument>profile=ingrid</argument>
-                    <argument>action=clean,release </argument>
-                    <argument>cssOptimize=comments.keepLines</argument>
-                    <argument>optimize=shrinkSafe</argument>
-                    <argument>version=1.5.2-ingrid</argument>
-                </arguments>
-                <!-- optional -->
-                <workingDirectory>src/main/webapp/dojo-src/util/buildscripts</workingDirectory>
-            </configuration>
-        </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-changes-plugin</artifactId>
-            <version>2.9</version>
-            <configuration>
-                <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
-                <smtpHost>localhost</smtpHost>
-                <toAddresses />
-            </configuration>
-        </plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>java</executable>
+          <classpathScope>runtime</classpathScope>
+          <arguments>
+            <argument>-cp</argument>
+            <argument>"../shrinksafe/js.jar";"../closureCompiler/compiler.jar";"../shrinksafe/shrinksafe.jar"</argument>
+            <argument>org.mozilla.javascript.tools.shell.Main</argument>
+            <argument>../../dojo/dojo.js</argument>
+            <argument>baseUrl=../../dojo</argument>
+            <argument>load=build</argument>
+            <argument>--profile</argument>
+            <argument>profiles/ingrid.profile.js</argument>
+          </arguments>
+          <!-- optional -->
+          <workingDirectory>src/main/webapp/dojo-sources/util/buildscripts</workingDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+          <smtpHost>localhost</smtpHost>
+          <toAddresses />
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>src/main/webapp/dojo-sources/release</directory>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -190,6 +198,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-ige</artifactId>
+      <version>3.5.0_dojo2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
@@ -327,7 +336,7 @@
       <groupId>org.directwebremoting</groupId>
       <artifactId>dwr</artifactId>
       <!-- <version>3.0.dev-02.03.11</version> problem with converting bean SelectControl! -->
-      <version>3.0.dev</version>
+      <version>3.0.rc2</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -407,13 +416,10 @@
       <name>InGrid Repo Maven</name>
       <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
     </repository>
-    <!-- <repository>
-      <id>apache-repo-releases</id>
-      <url>https://repository.apache.org/content/repositories/releases/</url>
-      <releases>
-       <enabled>true</enabled>
-      </releases>
-    </repository>-->
+    <repository>
+      <id>geotools</id>
+      <url>http://download.osgeo.org/webdav/geotools/</url>
+    </repository>
   </repositories>
   <profiles>
     <profile>

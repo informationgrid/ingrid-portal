@@ -17,33 +17,41 @@
 
 <head>
     <script type="text/javascript">
-        var scriptScope = _container_;
-        var isNewUser = false;
-        var iplug = scriptScope.customParams.iplug;
-        var callback = scriptScope.customParams.callback;
+    var dialogAdminChooseCatAdmin = null,
+        usersChoice;
+
+    require([
+        "dojo/_base/array",
+        "dojo/store/Memory",
+        "dojo/on"
+    ], function(array, Memory, on) {
+
+        var iplug = _container_.customParams.iplug;
+        var callback = _container_.customParams.callback;
+        var availableUsers = _container_.customParams.availableUsers;
+        var allUsers = _container_.customParams.allUsers;
         
         var preparedData = prepareData(availableUsers);
         
-        var usersChoiceStore = new dojo.data.ItemFileWriteStore(
-            {data: {items: preparedData, identifier: 'id',label: 'label'}}
+        var usersChoiceStore = new Memory(
+            {data: {items: preparedData}}
         );
-        
-        dojo.connect(_container_, "onLoad", function() {
-            console.log("Publishing event: '/afterInitDialog/ChooseCatAdmin'");
-            dojo.publish("/afterInitDialog/ChooseCatAdmin");
+
+        on(_container_, "Load", function() {
+            usersChoice.set("store", usersChoiceStore);
         });
         
         function prepareData(users) {
             var data = [];
-            dojo.forEach(users, function(user) {
-               data.push({id: user, label:formatUser(user)}); 
+            array.forEach(users, function(user) {
+                data.push({"id": user, "label":formatUser(user)});
             });
             return data;
         }
         
         function formatUser(user) {
             var formatString = "user";
-            dojo.some(allUsers, function(u) {
+            array.some(allUsers, function(u) {
                 if (u.login == user) {
                     formatString = u.surname + ", " + u.firstName + " ("+u.login+")";
                     return true;
@@ -51,10 +59,15 @@
             });
             return formatString;
         }
+
         function addCatalogueAndReload() {
             callback(iplug, usersChoice.value);
-            //window.location.reload();
         }
+
+        dialogAdminChooseCatAdmin = {
+            addCatalogueAndReload: addCatalogueAndReload
+        };
+    });
     </script>
 </head>
 
@@ -62,13 +75,13 @@
         <div>
             <div class="table container">
                 <div class="tr">
-                    <div class="td">Benutzer:</div><div class="td"><input jsId="usersChoice" dojoType="dijit.form.Select" store="usersChoiceStore"></div>
+                    <div class="td">Benutzer:</div><div class="td"><input data-dojo-id="usersChoice" data-dojo-type="dijit/form/Select" data-dojo-props="labelAttr: 'label'"></div>
                 </div>
                 
                 <div class="tr">
                     <div class="td"></div>
                     <div class="td">
-                        <input type="button" id="btn_addCatalogue" onclick="addCatalogueAndReload();" value="Katalog verbinden">
+                        <input type="button" id="btn_addCatalogue" onclick="dialogAdminChooseCatAdmin.addCatalogueAndReload()" value="Katalog verbinden">
                     </div>
                 </div>
             </div>

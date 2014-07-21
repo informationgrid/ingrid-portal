@@ -9,57 +9,66 @@
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
 <script type="text/javascript">
-var constraintsScriptScope = _container_;
 
-dojo.connect(constraintsScriptScope, "onLoad", function(){
-    var def = createDOMElements();
-    def.then(init);
+require(["dojo/dom", "dojo/on", "dojo/aspect", "dojo/dom-class", "dojo/topic", "dojo/Deferred",
+        "dijit/registry",
+        "ingrid/layoutCreator",
+        "ingrid/utils/Grid", "ingrid/utils/Syslist"
+    ], function(dom, on, aspect, domClass, topic, Deferred, registry, layoutCreator, UtilGrid, UtilSyslist) {
 
-    console.log("Publishing event: '/afterInitDialog/UseConstraints'");
-    dojo.publish("/afterInitDialog/UseConstraints");
-});
+        var customParams = _container_.customParams;
 
-function createDOMElements() {
-    var Structure = [
-        {field: 'name', name: "<fmt:message key='dialog.useConstraints.valueColumn' />", editable: false, width: 703-scrollBarWidth+'px'}
-    ];
-    createDataGrid("constraintsList", null, Structure, null);
+        on(_container_, "Load", function(){
+            createDOMElements().then(init);
 
-    var listId = constraintsScriptScope.customParams.listId;
-    console.debug("ListID: ", listId);
-    var def = UtilSyslist.getSyslistEntry(listId);
-    def.then(function(syslistData) {
-        var tableData = UtilSyslist.convertSysListToTableData(syslistData);
-        UtilGrid.setTableData("constraintsList", tableData);
-    });
+            console.log("Publishing event: '/afterInitDialog/UseConstraints'");
+            topic.publish("/afterInitDialog/UseConstraints");
+        });
 
-    return def;
-}
+        function createDOMElements() {
+            var structure = [
+                {field: 'name', name: "<fmt:message key='dialog.useConstraints.valueColumn' />", editable: false, width: '703px'}
+            ];
+            layoutCreator.createDataGrid("constraintsList", null, structure, null);
 
-function init() {
-    dojo.connect(UtilGrid.getTable("constraintsList"), "onSelectedRowsChanged", function(row) {
-        var selRowsData = UtilGrid.getSelectedData("constraintsList");
-        if (selRowsData.length == 1) {
-            // react only if not an empty row was selected
-            if (selRowsData[0] != null) {
-                if (currentUdk.writePermission) {
-                    updateUseConstraints(selRowsData[0]);
-                }
-            }
+            var listId = customParams.listId;
+            console.debug("ListID: ", listId);
+            var def = UtilSyslist.getSyslistEntry(listId)
+                .then(function(syslistData) {
+                    var tableData = UtilSyslist.convertSysListToTableData(syslistData);
+                    UtilGrid.setTableData("constraintsList", tableData);
+                });
+
+            return def;
         }
-    });
-}
 
-function updateUseConstraints(constraint) {
-    console.debug(constraint);
-    dijit.byId("availabilityUseConstraints").attr("value", constraint.name, true);
-    closeThisDialog();
-}
+        function init() {
+            var gridEvent = aspect.after(UtilGrid.getTable("constraintsList"), "onSelectedRowsChanged", function() {
+                var selRowsData = UtilGrid.getSelectedData("constraintsList");
+                if (selRowsData.length === 1) {
+                    // react only if not an empty row was selected
+                    if (selRowsData[0]) {
+                        if (currentUdk.writePermission) {
+                            gridEvent.remove();
+                            updateUseConstraints(selRowsData[0]);
+                        }
+                    }
+                }
+            });
+        }
 
-function closeThisDialog() {
-    UtilGrid.clearSelection("constraintsList");
-    dijit.byId("pageDialog").hide();
-}
+        function updateUseConstraints(constraint) {
+            console.debug(constraint);
+            registry.byId("availabilityUseConstraints").attr("value", constraint.name, true);
+            closeThisDialog();
+        }
+
+        function closeThisDialog() {
+            UtilGrid.clearSelection("constraintsList");
+            registry.byId("pageDialog").hide();
+        }
+    }
+);
 </script> 
 </head>
 

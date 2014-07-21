@@ -4,127 +4,126 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         <script type="text/javascript">
-            dojo.require("dijit.form.Select");
-			dojo.require("dijit.form.CheckBox");
-			dojo.require("dijit.form.NumberTextBox");
-			
-			// extend the typical widget to accept listIds for syslists
+        
+        var pageCatSettings = _container_;
+            
+        require([
+            "dojo/_base/array",
+            "dojo/_base/lang",
+            "dojo/Deferred",
+            "dijit/registry",
+            "dijit/form/Select",
+            "dijit/form/CheckBox",
+            "dijit/form/NumberTextBox",
+            "dojo/on",
+            "ingrid/layoutCreator",
+            "ingrid/dialog",
+            "ingrid/init",
+            "ingrid/utils/Syslist",
+            "ingrid/utils/Catalog"
+        ], function(array, lang, Deferred, registry, Select, CheckBox, NumberTextBox, on, layoutCreator, dialog, init, UtilSyslist, UtilCatalog) {
+            
+            console.log("catalog settings");
+        
+            // extend the typical widget to accept listIds for syslists
             // deprecated! used a different way now ... or?
-			dojo.extend(dijit._Widget, { listId:"0" });
-			
-            var scriptScopeCatSettings = _container_;
-			//var catalogData = null;
+            //dojo.extend(dijit._Widget, { listId:"0" });
+            
             
             // Storage for the current catalog. We need to get the uuid from somewhere
-            var currentCatalogData = null;
+            pageCatSettings.currentCatalogData = null;
             
-            dojo.connect(_container_, "onLoad", function(){
-				// create select boxes for syslists
-				var storeProps = {identifier: '1', label: '0'};
-				createSelectBox("adminCatalogCountry", null, storeProps, null);
-				createSelectBox("adminCatalogLanguage", null, storeProps, null);
-				
-                // Fill input fields with data from the current catalog
-                //var def = 
-				initSysLists();
-                console.debug("update fields");
-                if (catalogData != null) {
-                    updateInputFields(catalogData);
-                    currentCatalogData = catalogData;
-                }
-                else {
-                    reloadCatalogData();
-                }
+            on(_container_, "Load", function() {
+                try {
+                    // create select boxes for syslists
+                    var storeProps = { data: { identifier: '1', label: '0' } };
+                    layoutCreator.createSelectBox("adminCatalogCountry", null, storeProps, function() {
+                        return UtilSyslist.getSyslistEntry(6200);
+                    });
+                    layoutCreator.createSelectBox("adminCatalogLanguage", null, storeProps,  function() {
+                        return UtilSyslist.getSyslistEntry(99999999);
+                    });
+
+                    console.debug("update fields");
+                    if (UtilCatalog.catalogData !== null) {
+                        updateInputFields(UtilCatalog.catalogData);
+                        pageCatSettings.currentCatalogData = UtilCatalog.catalogData;
+                    }
+                    else {
+                        reloadCatalogData();
+                    }
+                        
+                    var checkbox = registry.byId("adminCatalogExpire");
+                    var inputField = registry.byId("adminCatalogExpiryDuration");
                     
-                var checkbox = dijit.byId("adminCatalogExpire");
-                var inputField = dijit.byId("adminCatalogExpiryDuration");
-                
-                dojo.connect(checkbox, "onClick", function(){ //!!!connectOnce
-                    checkbox.checked ? inputField.set('disabled', false) : inputField.set('disabled', true);
-                });
+                    on(checkbox, "click", function(){ //!!!connectOnce
+                        checkbox.checked ? inputField.set('disabled', false) : inputField.set('disabled', true);
+                    });
+                    
+                } catch (err) {
+                    console.error("error in init", err);
+                }
                 
             });
             
-            
-            function initSysLists(){
-                var selectWidgetIDs = ["adminCatalogLanguage", "adminCatalogCountry"];
-				
-				dojo.forEach(selectWidgetIDs, function(widgetId){
-                    var selectWidget = dijit.byId(widgetId);
-                    console.debug("adding syslist-id: ");
-                    console.debug(selectWidget.listId);
-                    var selectWidgetData = sysLists[selectWidget.listId];
-                    
-                    // Sort list by the display values
-                    /*selectWidgetData.sort(function(a, b){
-                        return UtilString.compareIgnoreCase(a[0], b[0]);
-                    });*/
-                    
-					var updatedStore = new dojo.data.ItemFileReadStore({
-						data: {	identifier: '1', label: '0', items: dojo.clone(selectWidgetData) }
-					});
-					selectWidget.setStore(updatedStore);
-                });
-            }
-            
-            function updateInputFields(catalogData){
-                dijit.byId("adminCatalogName").setValue(catalogData.catalogName);
-                dijit.byId("adminCatalogNamespace").setValue(catalogData.catalogNamespace);
-                dijit.byId("adminCatalogPartnerName").setValue(catalogData.partnerName);
-                dijit.byId("adminCatalogProviderName").setValue(catalogData.providerName);
-                dijit.byId("adminCatalogCountry").setValue(catalogData.countryCode);
-                dijit.byId("adminCatalogLanguage").setValue(catalogData.languageCode);
-                dijit.byId("adminCatalogSpatialRef").setValue(catalogData.location.name);
-                dijit.byId("adminCatalogSpatialRef").location = catalogData.location;
-                dijit.byId("adminCatalogAtomDownload").setValue(catalogData.atomUrl);
+            function updateInputFields(catalogData) {
+                registry.byId("adminCatalogName").setValue(catalogData.catalogName);
+                registry.byId("adminCatalogNamespace").setValue(catalogData.catalogNamespace);
+                registry.byId("adminCatalogPartnerName").setValue(catalogData.partnerName);
+                registry.byId("adminCatalogProviderName").setValue(catalogData.providerName);
+                registry.byId("adminCatalogCountry").setValue(catalogData.countryCode);
+                registry.byId("adminCatalogLanguage").setValue(catalogData.languageCode);
+                registry.byId("adminCatalogSpatialRef").setValue(catalogData.location.name);
+                registry.byId("adminCatalogSpatialRef").location = catalogData.location;
+                registry.byId("adminCatalogAtomDownload").setValue(catalogData.atomUrl);
                 if (catalogData.workflowControl == "Y") {
-                    dijit.byId("adminCatalogWorkflowControl").setValue(true);
+                    registry.byId("adminCatalogWorkflowControl").setValue(true);
                 }
                 else {
-                    dijit.byId("adminCatalogWorkflowControl").setValue(false);
+                    registry.byId("adminCatalogWorkflowControl").setValue(false);
                 }
-                if (catalogData.expiryDuration != null && catalogData.expiryDuration > 0) {
-                    dijit.byId("adminCatalogExpire").setValue(true);
-                    dijit.byId("adminCatalogExpiryDuration").set('disabled', false);
-                    dijit.byId("adminCatalogExpiryDuration").setValue(catalogData.expiryDuration);
+                if (catalogData.expiryDuration !== null && catalogData.expiryDuration > 0) {
+                    registry.byId("adminCatalogExpire").setValue(true);
+                    registry.byId("adminCatalogExpiryDuration").set('disabled', false);
+                    registry.byId("adminCatalogExpiryDuration").setValue(catalogData.expiryDuration);
                 }
                 else {
-                    dijit.byId("adminCatalogExpire").setValue(false);
-                    dijit.byId("adminCatalogExpiryDuration").setValue("0");
-                    dijit.byId("adminCatalogExpiryDuration").set('disabled', true);
+                    registry.byId("adminCatalogExpire").setValue(false);
+                    registry.byId("adminCatalogExpiryDuration").setValue("0");
+                    registry.byId("adminCatalogExpiryDuration").set('disabled', true);
                 }
             }
             
-            scriptScopeCatSettings.reloadCatalogData = function() {
+            function reloadCatalogData() {
                 CatalogService.getCatalogData({
                     callback: function(res){
                         // Update catalog Data
                         updateInputFields(res);
-                        currentCatalogData = res;
-                        catalogData = res;
+                        pageCatSettings.currentCatalogData = res;
+                        UtilCatalog.catalogData = res;
                     },
                     errorHandler: function(mes){
                         dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.loadCatalogError' />", dialog.WARNING);
-                        console.debug(mes);
+                        console.error(mes);
                     }
                 });
             }
             
-            scriptScopeCatSettings.saveCatalogData = function(){
+            function saveCatalogData() {
                 var newCatalogData = {};
-                newCatalogData.uuid = currentCatalogData.uuid;
-                newCatalogData.catalogName = dijit.byId("adminCatalogName").getValue();
-                newCatalogData.catalogNamespace = dijit.byId("adminCatalogNamespace").getValue();
-                newCatalogData.partnerName = dijit.byId("adminCatalogPartnerName").getValue();
-                newCatalogData.providerName = dijit.byId("adminCatalogProviderName").getValue();
-                newCatalogData.countryCode = dijit.byId("adminCatalogCountry").getValue();
-                newCatalogData.languageCode = dijit.byId("adminCatalogLanguage").getValue();
-                newCatalogData.location = dijit.byId("adminCatalogSpatialRef").location;
-                newCatalogData.atomUrl = dijit.byId("adminCatalogAtomDownload").getValue();
+                newCatalogData.uuid = pageCatSettings.currentCatalogData.uuid;
+                newCatalogData.catalogName = registry.byId("adminCatalogName").getValue();
+                newCatalogData.catalogNamespace = registry.byId("adminCatalogNamespace").getValue();
+                newCatalogData.partnerName = registry.byId("adminCatalogPartnerName").getValue();
+                newCatalogData.providerName = registry.byId("adminCatalogProviderName").getValue();
+                newCatalogData.countryCode = registry.byId("adminCatalogCountry").getValue();
+                newCatalogData.languageCode = registry.byId("adminCatalogLanguage").getValue();
+                newCatalogData.location = registry.byId("adminCatalogSpatialRef").location;
+                newCatalogData.atomUrl = registry.byId("adminCatalogAtomDownload").getValue();
                 // add a slash at the end
-                if (dojo.lastIndexOf(newCatalogData.atomUrl, "/") != newCatalogData.atomUrl.length-1) newCatalogData.atomUrl += "/"; 
-                newCatalogData.expiryDuration = (dijit.byId("adminCatalogExpire").checked ? dijit.byId("adminCatalogExpiryDuration").getValue() : "0");
-                newCatalogData.workflowControl = dijit.byId("adminCatalogWorkflowControl").checked ? "Y" : "N";
+                if (dojo.lastIndexOf(newCatalogData.atomUrl, "/") != newCatalogData.atomUrl.length-1) newCatalogData.atomUrl += "/";
+                newCatalogData.expiryDuration = (registry.byId("adminCatalogExpire").checked ? registry.byId("adminCatalogExpiryDuration").getValue() : "0");
+                newCatalogData.workflowControl = registry.byId("adminCatalogWorkflowControl").checked ? "Y" : "N";
                 console.debug("validating");
                 if (!isValidCatalog(newCatalogData)) {
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.catalog.requiredFieldsHint' />", dialog.WARNING);
@@ -135,13 +134,14 @@
                     callback: function(res){
                         // Update catalog Data
                         updateInputFields(res);
-                        catalogData = res;
-                        currentCatalogData = res;
-                        initPageHeader();
+                        UtilCatalog.catalogData = res;
+                        pageCatSettings.currentCatalogData = res;
+                        // init.initPageHeader();
+                        init.initCatalogData();
                         dialog.show("<fmt:message key='general.hint' />", "<fmt:message key='dialog.admin.catalog.saveSuccess' />", dialog.INFO);
                         
                     },
-                    errorHandler: function(errMsg, err){
+                    errorHandler: function(errMsg) {
                         if (errMsg.indexOf("USER_HAS_NO_PERMISSION_ON_ENTITY") != -1) {
                             dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.catalog.permissionError' />", dialog.WARNING);
                             
@@ -150,148 +150,159 @@
                             dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.storeCatalogError' />", dialog.WARNING);
                         }
                         
-                        console.debug(errMsg);
+                        console.error(errMsg);
                     }
                 });
             }
             
-            scriptScopeCatSettings.selectSpatialReference = function(){
-                var def = new dojo.Deferred();
+            function selectSpatialReference() {
+                var def = new Deferred();
                 dialog.showPage("<fmt:message key='dialog.admin.catalog.selectLocation.title' />", "admin/dialogs/mdek_admin_catalog_spatial_reference_dialog.jsp", 530, 230, true, {
                     resultHandler: def
                 });
                 
-                def.addCallback(function(result){
-                    var spatialRefWidget = dijit.byId("adminCatalogSpatialRef");
+                def.then(function(result){
+                    var spatialRefWidget = registry.byId("adminCatalogSpatialRef");
                     spatialRefWidget.setValue(result.name);
                     spatialRefWidget.location = result;
                 });
             }
             
-            function isValidCatalog(cat){
-            	if(cat.location.name) // can be undefined now
-                return (dojo.trim(cat.countryCode).length != 0 &&
-                dojo.trim(cat.languageCode).length != 0 &&
-                dojo.trim(cat.location.name).length != 0 &&
-                dojo.trim(cat.catalogNamespace).length != 0/* &&
-                dojo.validate.isInteger(cat.expiryDuration) &&
-                dojo.validate.isInRange(cat.expiryDuration, {
-                    min: 0,
-                    max: 2147483647
-                })*/);
-            	else
-            		return false;
+            function isValidCatalog(cat) {
+                if(cat.location.name) // can be undefined now
+                    return (lang.trim(cat.countryCode).length !== 0 &&
+                    lang.trim(cat.languageCode).length !== 0 &&
+                    lang.trim(cat.location.name).length !== 0 &&
+                    lang.trim(cat.catalogNamespace).length !== 0/* &&
+                    dojo.validate.isInteger(cat.expiryDuration) &&
+                    dojo.validate.isInRange(cat.expiryDuration, {
+                        min: 0,
+                        max: 2147483647
+                    })*/);
+                else
+                    return false;
             }
+
+            /*
+             *  PUBLIC METHODS
+             */
+            pageCatSettings = {
+                selectSpatialReference: selectSpatialReference,
+                saveCatalogData: saveCatalogData,
+                reloadCatalogData: reloadCatalogData
+            };
+        
+        });
             
         </script>
     </head>
     <body>
         <!-- CONTENT START -->
-        <!--<div dojoType="dijit.layout.ContentPane" layoutAlign="client">-->
+        <!--<div data-dojo-type="dijit/layout/ContentPane" layoutAlign="client">-->
             <div id="contentSection" class="contentBlockWhite">
                 <div id="adminCatalog" class="content">
                     <!-- LEFT HAND SIDE CONTENT START -->
                     <div class="inputContainer field grey noSpaceBelow">
                         <div id="winNavi" style="top:0;">
-                            <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=catalog-administration-1#catalog-administration-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+                            <a href="javascript:void(0);" onclick="window.open('mdek_help.jsp?lang='+userLocale+'&hkey=catalog-administration-1#catalog-administration-1', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no')" title="<fmt:message key="general.help" />">[?]</a>
                         </div>
                         <span class="outer"><div>
                         <span class="label">
-                            <label for="adminCatalogName" onclick="javascript:dialog.showContextHelp(arguments[0], 8001)">
+                            <label for="adminCatalogName" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8001)">
                                 <fmt:message key="dialog.admin.catalog.catalogName" />
                             </label>
                         </span>
-						<span class="input"><input type="text" id="adminCatalogName" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
+                        <span class="input"><input type="text" id="adminCatalogName" style="width:100%;" data-dojo-type="dijit/form/ValidationTextBox" /></span>
                         </div></span>
                         <span class="outer"><div>
                         <span class="label">
-                            <label for="adminCatalogNamespace" onclick="javascript:dialog.showContextHelp(arguments[0], 8100)">
+                            <label for="adminCatalogNamespace" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8100)">
                                 <fmt:message key="dialog.admin.catalog.catalogNamespace" />*
                             </label>
                         </span>
-                        <span class="input"><input type="text" id="adminCatalogNamespace" style="width:100%;" required="true" tooltipPosition="below" dojoType="dijit.form.ValidationTextBox" /></span>
+                        <span class="input"><input type="text" id="adminCatalogNamespace" style="width:100%;" required="true" tooltipPosition="below" data-dojo-type="dijit/form/ValidationTextBox" /></span>
                         </div></span>
-						<span class="outer"><div>
-						    <span class="label">
-                            <label for="adminCatalogPartnerName" onclick="javascript:dialog.showContextHelp(arguments[0], 8002)">
+                        <span class="outer"><div>
+                            <span class="label">
+                            <label for="adminCatalogPartnerName" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8002)">
                                 <fmt:message key="dialog.admin.catalog.partnerName" />
                             </label>
                         </span>
-						<span class="input"><input type="text" id="adminCatalogPartnerName" style="width:100%;" dojoType="dijit.form.ValidationTextBox" />
-						</span>
+                        <span class="input"><input type="text" id="adminCatalogPartnerName" style="width:100%;" data-dojo-type="dijit/form/ValidationTextBox" />
+                        </span>
                         </div></span>
-						<span class="outer"><div>
-						    <span class="label">
-                            <label for="adminCatalogProviderName" onclick="javascript:dialog.showContextHelp(arguments[0], 8003)">
+                        <span class="outer"><div>
+                            <span class="label">
+                            <label for="adminCatalogProviderName" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8003)">
                                 <fmt:message key="dialog.admin.catalog.providerName" />
                             </label>
                         </span>
-						<span class="input"><input type="text" id="adminCatalogProviderName" style="width:100%;" dojoType="dijit.form.ValidationTextBox" /></span>
-						</div></span>
+                        <span class="input"><input type="text" id="adminCatalogProviderName" style="width:100%;" data-dojo-type="dijit/form/ValidationTextBox" /></span>
+                        </div></span>
                         <span class="outer"><div>
-						    <span class="label required">
-                            <label for="adminCatalogCountry" onclick="javascript:dialog.showContextHelp(arguments[0], 8004)">
+                            <span class="label required">
+                            <label for="adminCatalogCountry" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8004)">
                                 <fmt:message key="dialog.admin.catalog.state" />*
                             </label>
                         </span>
                         <span class="input">
-							<div id="adminCatalogCountry" listId="6200" required="true" style="width:100%;" maxHeight="150"></div>
-							<!--<div dojoType="dojo.data.ItemFileWriteStore" jsId="storeCountry" data="countryData"></div>
-							<input class="spaceBelow" dojoType="dijit.form.Select" store="storeCountry" required="true" style="width:100%;" maxHeight="150" listId="6200" id="adminCatalogCountry" />-->
-						</span>
-						</div></span>
+                            <div id="adminCatalogCountry" listId="6200" required="true" style="width:100%;" maxHeight="150"></div>
+                            <!--<div data-dojo-type="dojo.data.ItemFileWriteStore" jsId="storeCountry" data="countryData"></div>
+                            <input class="spaceBelow" data-dojo-type="dijit/form/Select" store="storeCountry" required="true" style="width:100%;" maxHeight="150" listId="6200" id="adminCatalogCountry" />-->
+                        </span>
+                        </div></span>
                         <span class="outer"><div>
-						    <span class="label required">
-                            <label for="adminCatalogLanguage" onclick="javascript:dialog.showContextHelp(arguments[0], 8005)">
+                            <span class="label required">
+                            <label for="adminCatalogLanguage" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8005)">
                                 <fmt:message key="dialog.admin.catalog.language" />*
                             </label>
                         </span>
-						<span class="input">
-							<div id="adminCatalogLanguage" listId="99999999" required="true" style="width:100%;" maxHeight="150" disabled="true"></div>
-							<!--<div dojoType="dojo.data.ItemFileWriteStore" jsId="storeLanguage" data="langData"></div>
-							<input class="spaceBelow" dojoType="dijit.form.Select" store="storeLanguage" required="true" style="width:100%;" maxHeight="150" disabled="true" listId="99999999" id="adminCatalogLanguage" />-->
-						</span>
+                        <span class="input">
+                            <div id="adminCatalogLanguage" listId="99999999" required="true" style="width:100%;" maxHeight="150" disabled="true"></div>
+                            <!--<div data-dojo-type="dojo.data.ItemFileWriteStore" jsId="storeLanguage" data="langData"></div>
+                            <input class="spaceBelow" data-dojo-type="dijit/form/Select" store="storeLanguage" required="true" style="width:100%;" maxHeight="150" disabled="true" listId="99999999" id="adminCatalogLanguage" />-->
+                        </span>
                         </div></span>
-						<span class="outer"><div>
-						    <span class="label required left">
-                            <label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 8006)">
+                        <span class="outer"><div>
+                            <span class="label required left">
+                            <label for="adminCatalogSpatialRef" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8006)">
                                 <fmt:message key="dialog.admin.catalog.location" />*
                             </label>
                         </span>
-						<span class="functionalLink marginRight">
-							<img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
-							<a href="javascript:void(0);" onClick="javascript:scriptScopeCatSettings.selectSpatialReference();" title="<fmt:message key="dialog.admin.catalog.locationLink" /> [Popup]"><fmt:message key="dialog.admin.catalog.locationLink" /></a>
-						</span>
-						<span class="input">
-							<input type="text" required="true" id="adminCatalogSpatialRef" style="width:100%;" disabled="true" dojoType="dijit.form.ValidationTextBox" />
-						</span>
+                        <span class="functionalLink marginRight">
+                            <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
+                            <a href="javascript:void(0);" onclick="pageCatSettings.selectSpatialReference();" title="<fmt:message key="dialog.admin.catalog.locationLink" /> [Popup]"><fmt:message key="dialog.admin.catalog.locationLink" /></a>
+                        </span>
+                        <span class="input">
+                            <input type="text" required="true" id="adminCatalogSpatialRef" style="width:100%;" disabled="true" data-dojo-type="dijit/form/ValidationTextBox" />
+                        </span>
                         </div></span>
-						<span class="outer">
+                        <span class="outer">
                             <div>
-    						    <span class="label left">
-                                    <label for="adminCatalogSpatialRef" onclick="javascript:dialog.showContextHelp(arguments[0], 8091)">
+                                <span class="label left">
+                                    <label for="adminCatalogSpatialRef" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8091)">
                                         <fmt:message key="dialog.admin.catalog.atomDownloadService" />
                                     </label>
                                 </span>
-        						<span class="input">
-        							<input type="text" required="false" id="adminCatalogAtomDownload" style="width:100%;" dojoType="dijit.form.ValidationTextBox" />
-        						</span>
+                                <span class="input">
+                                    <input type="text" required="false" id="adminCatalogAtomDownload" style="width:100%;" data-dojo-type="dijit/form/ValidationTextBox" />
+                                </span>
                             </div>
                         </span>
                         <span class="outer "><div>
                         <div class="checkboxContainer">
                             <span class="input">
-                            	<input type="checkbox" id="adminCatalogWorkflowControl" dojoType="dijit.form.CheckBox" />
+                                <input type="checkbox" id="adminCatalogWorkflowControl" data-dojo-type="dijit/form/CheckBox" />
                                 <label for="adminCatalogWorkflowControl" class="inActive">
                                     <fmt:message key="dialog.admin.catalog.activateWorkflowControl" />
                                 </label>
                             </span>
-							<span class="input">
-								<input type="checkbox" id="adminCatalogExpire" dojoType="dijit.form.CheckBox" />
+                            <span class="input">
+                                <input type="checkbox" id="adminCatalogExpire" data-dojo-type="dijit/form/CheckBox" />
                                 <label class="inActive">
                                     <fmt:message key="dialog.admin.catalog.expireAfter" />
-									<input id="adminCatalogExpiryDuration" style="width:33px !important;" min="1" max="2147483647" maxlength="10" dojoType="dijit.form.NumberTextBox" />
-									<fmt:message key="dialog.admin.catalog.days" />
+                                    <input id="adminCatalogExpiryDuration" style="width:33px !important;" min="1" max="2147483647" maxlength="10" data-dojo-type="dijit/form/NumberTextBox" />
+                                    <fmt:message key="dialog.admin.catalog.days" />
                                 </label>
                             </span>
                         </div>
@@ -305,11 +316,11 @@
                     -->
                     <div class="inputContainer">
                         <span class="button"><span style="float:right;">
-                                <button id="adminCS_save" dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.save" />" onClick="javascript:scriptScopeCatSettings.saveCatalogData();">
+                                <button id="adminCS_save" data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.admin.catalog.save" />" onclick="pageCatSettings.saveCatalogData()" >
                                     <fmt:message key="dialog.admin.catalog.save" />
                                 </button>
                             </span><span style="float:right;">
-                                <button id="adminCS_reset" dojoType="dijit.form.Button" title="<fmt:message key="dialog.admin.catalog.reset" />" onClick="javascript:scriptScopeCatSettings.reloadCatalogData();">
+                                <button id="adminCS_reset" data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.admin.catalog.reset" />" onclick="pageCatSettings.reloadCatalogData()" >
                                     <fmt:message key="dialog.admin.catalog.reset" />
                                 </button>
                             </span><span id="adminCatalogLoadingZone" style="float:left; margin-top:1px; z-index: 100; visibility:hidden"><img src="img/ladekreis.gif" /></span></span>

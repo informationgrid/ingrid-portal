@@ -79,5 +79,9 @@
 			org.directwebremoting.servlet.DwrListener
 		</listener-class>
 	</listener>
+	
+	<!-- <session-config>
+	    <session-timeout>2</session-timeout>
+	</session-config> -->
 
  </web-app>

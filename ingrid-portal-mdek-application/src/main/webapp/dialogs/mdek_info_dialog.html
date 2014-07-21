@@ -5,56 +5,58 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
-<script src='/ingrid-portal-mdek-application/dwr/interface/VersionInformation.js'></script>
-<script src='/ingrid-portal-mdek-application/dwr/interface/BackendService.js'></script>
-
 <script type="text/javascript">
-dojo.connect(_container_, "onLoad", function() {
-    VersionInformation.get({
-        callback: function(res) { setVersionInformation(res); },
-        errorHandler: function(message) { console.debug("Error: " + message); }
-    });
 
-    BackendService.getBackendVersion({
-        callback: function(res) { setBackendVersionInformation(res); },
-        errorHandler: function(message) { console.debug("Error: " + message); }
-    });
+    require(["dojo/on", "dojo/dom", "dojo/topic",
+        "dwr/interface/VersionInformation", "dwr/interface/BackendService"],
+         function(on, dom, topic) {
+            on(_container_, "Load", function() {
+                VersionInformation.get({
+                    callback: function(res) { setVersionInformation(res); },
+                    errorHandler: function(message) { console.error("Error: " + message); }
+                });
 
-    console.log("Publishing event: '/afterInitDialog/Info'");
-    dojo.publish("/afterInitDialog/Info");
-});
+                BackendService.getBackendVersion({
+                    callback: function(res) { setBackendVersionInformation(res); },
+                    errorHandler: function(message) { console.error("Error: " + message); }
+                });
 
-function setVersionInformation(ver) {
-    var infoDiv = dojo.byId("versionInfo");
-    var displayText = "";
+                console.log("Publishing event: '/afterInitDialog/Info'");
+                topic.publish("/afterInitDialog/Info");
+            });
 
-    displayText += "Build name: "+ver.name+"<br>";
-    displayText += "Build version: "+ver.version+"<br>";
-    displayText += "Build number: "+ver.buildNumber+"<br>";
-    displayText += "Build timestamp: "+dojo.date.locale.format(ver.timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+            function setVersionInformation(ver) {
+                var infoDiv = dom.byId("versionInfo");
+                var displayText = "";
 
-    infoDiv.innerHTML = displayText;
-}
+                displayText += "Build name: "+ver.name+"<br>";
+                displayText += "Build version: "+ver.version+"<br>";
+                displayText += "Build number: "+ver.buildNumber+"<br>";
+                displayText += "Build timestamp: "+dojo.date.locale.format(ver.timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
 
-function setBackendVersionInformation(verList) {
-    var infoDiv = dojo.byId("serverVersionInfo");
-    var displayText = "";
+                infoDiv.innerHTML = displayText;
+            }
 
-    for (var i = 0; i < verList.length; ++i) {
-        displayText += "Build name: "+verList[i].name+"<br>";
-        displayText += "Build version: "+verList[i].version+"<br>";
-        if (verList[i].buildNumber) {
-            displayText += "Build number: "+verList[i].buildNumber+"<br>";
+            function setBackendVersionInformation(verList) {
+                var infoDiv = dom.byId("serverVersionInfo");
+                var displayText = "";
+
+                for (var i = 0; i < verList.length; ++i) {
+                    displayText += "Build name: "+verList[i].name+"<br>";
+                    displayText += "Build version: "+verList[i].version+"<br>";
+                    if (verList[i].buildNumber) {
+                        displayText += "Build number: "+verList[i].buildNumber+"<br>";
+                    }
+                    if (verList[i].timeStamp) {
+                        displayText += "Build timestamp: "+dojo.date.locale.format(verList[i].timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+                    }
+                    displayText += "<br>";
+                }
+
+                infoDiv.innerHTML = dojo.trim(displayText);
+            }
         }
-        if (verList[i].timeStamp) {
-            displayText += "Build timestamp: "+dojo.date.locale.format(verList[i].timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
-        }
-        displayText += "<br>";
-    }
-
-    infoDiv.innerHTML = dojo.trim(displayText);
-}
-
+    );
 </script>
 </head>
 

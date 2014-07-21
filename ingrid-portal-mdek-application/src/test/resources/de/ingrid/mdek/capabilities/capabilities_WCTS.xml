@@ -65,7 +65,7 @@
                 </ows:HTTP>
             </ows:DCP>
         </ows:Operation>
-        <ows:Operation name="DescribeTransformation">
+        <ows:Operation name="GetResourceByID">
             <ows:DCP>
                 <ows:HTTP>
                     <ows:Get xlink:href="www.lat-lon.de/transform"/>

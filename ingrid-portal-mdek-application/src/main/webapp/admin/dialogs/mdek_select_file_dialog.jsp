@@ -7,11 +7,11 @@
 <script type="text/javascript">
 var scriptScope = _container_;
 
-dojo.connect(_container_, "onUnload", function() {
+on(_container_, "onUnload", function() {
 	// If the dialog was cancelled via the dialogs close button
 	// we need to signal an error (cancel action)
 	if (_container_.customParams.resultHandler.fired == -1) {
-		_container_.customParams.resultHandler.errback();
+		_container_.customParams.resultHandler.reject();
 	}
 });
 
@@ -21,7 +21,7 @@ scriptScope.selectFile = function() {
 		var file = dwr.util.getValue("selectFileInputField");
 
 		if (file && file.textLength != 0 && file.value != "") {
-			this.customParams.resultHandler.callback(file);
+			this.customParams.resultHandler.resolve(file);
 		}
 	}
 }
@@ -33,7 +33,7 @@ scriptScope.selectFile = function() {
 
 	<div class="">
         <span class="label left">
-            <label for="selectFileInputField" onclick="javascript:dialog.showContextHelp(arguments[0], 8060)"><fmt:message key="dialog.file.selectFile" /></label>
+            <label for="selectFileInputField" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8060)"><fmt:message key="dialog.file.selectFile" /></label>
         </span>
 		<div id="winNavi" style="top:0;">
 			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=overall-catalog-management-4#overall-catalog-management-4', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
@@ -48,7 +48,7 @@ scriptScope.selectFile = function() {
 			</div>
 
 			<div class="dijitDialogPaneActionBar">
-		        <span><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.file.select" />" onClick="javascript:scriptScope.selectFile();"><fmt:message key="dialog.file.select" /></button></span>
+		        <span><button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.file.select" />" onclick="javascript:scriptScope.selectFile();"><fmt:message key="dialog.file.select" /></button></span>
 			</div>
 			<!-- LEFT HAND SIDE CONTENT END -->
 		</div>

@@ -11,17 +11,17 @@ var canceled;
 var requestInProgress;
 var cancelJob;
 
-dojo.connect(_container_, "onLoad", function() {
+on(_container_, "onLoad", function() {
 	//dojo.require("dojo.lang.timing.Timer");
 
 	requestInProgress = false;
 	cancelJob = false;
     canceled = false;
 
-    setTimeout("requestJobInfo()", 3000);
+    setTimeout(requestJobInfo, 3000);
 });
 
-dojo.connect(_container_, "onUnload", function() {
+on(_container_, "onUnload", function() {
 	// If the dialog was cancelled via the dialogs close button
 	// we need to signal an error (cancel action)
 	if (this.customParams.resultHandler.fired == -1) {
@@ -35,7 +35,7 @@ function requestCancelJob(resultHandler) {
 			callback: function() {
 				console.debug("job cancelled.");
                 canceled = true;
-				resultHandler.callback("JOB_CANCELLED");
+				resultHandler.resolve("JOB_CANCELLED");
 			},
 			timeout:10000,
 			errorHandler: function(err) {
@@ -58,23 +58,23 @@ function handleUpdatedJobInfo(jobInfo) {
 	if (jobInfo.description == null) {
 		// job done, close the dialog and call the result handler
         if (!canceled) {
-            _container_.customParams.resultHandler.callback();
+            _container_.customParams.resultHandler.resolve();
             _container_.hide();
         }
 	} else {
 		updateProgress(jobInfo);
         if (!canceled)
-            setTimeout("requestJobInfo()", 3000);
+            setTimeout(requestJobInfo, 3000);
 	}
 }
 
 function updateProgress(jobInfo) {
-	var messageDiv = dojo.byId("messageDiv");
+	var messageDiv = dom.byId("messageDiv");
 	messageDiv.innerHTML = "<fmt:message key='dialog.waitForJob.opName' />" + " "+jobInfo.description+"<br>";
 	messageDiv.innerHTML += "<fmt:message key='dialog.waitForJob.objCount' />" + " "+jobInfo.numProcessedEntities+"<br>";
 	messageDiv.innerHTML += "<fmt:message key='dialog.waitForJob.numObjects' />" + " "+jobInfo.numEntities;
 
-	var progressBar = dijit.byId("progressBar");
+	var progressBar = registry.byId("progressBar");
 	progressBar.set("maximum", jobInfo.numEntities);
 	progressBar.set("value", jobInfo.numProcessedEntities);
 
@@ -86,7 +86,7 @@ function updateProgress(jobInfo) {
 function handleError(err) {
 	// Signal an error and close the dialog
 	console.debug("Error while retrieving job info: "+err);
-	_container_.customParams.resultHandler.errback(err);
+	_container_.customParams.resultHandler.reject(err);
 	_container_.hide();
 }
 
@@ -105,10 +105,10 @@ cancelButtonFunc = function() {
 		<div id="dialogContent" class="content">
 			<div id="messageDiv" class="field grey"></div>
 
-			<div dojoType="dijit.ProgressBar" id="progressBar" width="310" height="10" class="field grey" /></div>
+			<div data-dojo-type="dijit/ProgressBar" id="progressBar" width="310" height="10" class="field grey" /></div>
 
 	  	</div>
-        <span style="float:right;"><button dojoType="dijit.form.Button" title="<fmt:message key="dialog.waitForJob.cancel" />" onClick="cancelButtonFunc"><fmt:message key="dialog.waitForJob.cancel" /></button></span>
+        <span style="float:right;"><button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.waitForJob.cancel" />" onclick="cancelButtonFunc"><fmt:message key="dialog.waitForJob.cancel" /></button></span>
 	</div>
 </body>
 </html>

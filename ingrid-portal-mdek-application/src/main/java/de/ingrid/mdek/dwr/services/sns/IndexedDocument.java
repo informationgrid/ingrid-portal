@@ -13,17 +13,6 @@ public class IndexedDocument {
 	private String from;
 	private String to;
 
-	/*public IndexedDocument(TopicMapFragmentIndexedDocument doc) {
-		this.title = doc.getTitle();
-		this.description = doc.get_abstract();
-		this.uri = doc.getUri();
-		this.lang = doc.getLang();
-		this.timeStamp = doc.getTimestamp();
-		this.at = doc.getAt();
-		this.from = doc.getFrom();
-		this.to = doc.getTo();
-	}*/
-
 	public IndexedDocument(de.ingrid.external.om.IndexedDocument doc) {
 		this.title = doc.getTitle();
 		this.description = doc.getDescription();

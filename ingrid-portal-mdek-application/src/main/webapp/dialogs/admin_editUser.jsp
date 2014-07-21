@@ -17,74 +17,76 @@
 
 <head>
     <script type="text/javascript">
-        var scriptScope = _container_;
+    var dialogAdminEditUser = _container_;
+
+    require([
+        "dojo/dom",
+        "dojo/dom-style",
+        "dojo/domReady!"
+    ], function(dom, style) {
+
         var isNewUser = false;
-        var user = scriptScope.customParams.user;
-        var callback = scriptScope.customParams.callback;
+        var user = _container_.customParams.user;
         
         if (user) {
-            dojo.byId("edit_login").value = user.login;
-            dojo.byId("edit_firstName").value = user.firstName;
-            dojo.byId("edit_surname").value = user.surname;
-            dojo.byId("edit_email").value = user.email;
-            dojo.byId("btn_addUser").style.display = "none";
+            dom.byId("edit_login").value = user.login;
+            dom.byId("edit_firstName").value = user.firstName;
+            dom.byId("edit_surname").value = user.surname;
+            dom.byId("edit_email").value = user.email;
+            style.set("btn_addUser", "display", "none");
+
         } else {
             // new user!
             isNewUser = true;
-            dojo.byId("btn_updateUser").style.display = "none";
-            dojo.byId("passwordInfo").style.display = "none";
-            dojo.byId("edit_login").disabled = false;
+            style.set("btn_updateUser", "display", "none");
+            style.set("passwordInfo", "display", "none");
+            dom.byId("edit_login").disabled = false;
             
         }
-
-        dojo.connect(_container_, "onLoad", function() {
-            console.log("Publishing event: '/afterInitDialog/EditUser'");
-            dojo.publish("/afterInitDialog/EditUser");
-        });
         
         function updateUser() {
             var user = {};
-            user.login = dojo.byId("edit_login").value;
-            user.password = dojo.byId("edit_password").value;
-            user.firstName = dojo.byId("edit_firstName").value;
-            user.surname = dojo.byId("edit_surname").value;
-            user.email = dojo.byId("edit_email").value;
+            user.login = dom.byId("edit_login").value;
+            user.password = dom.byId("edit_password").value;
+            user.firstName = dom.byId("edit_firstName").value;
+            user.surname = dom.byId("edit_surname").value;
+            user.email = dom.byId("edit_email").value;
             
-            var errors = isValidUserData(user, dojo.byId("edit_password_again").value);
+            var errors = isValidUserData(user, dom.byId("edit_password_again").value);
             
-            if (errors.length == 0) { 
+            if (errors.length === 0) {
                 UserRepoManager.updateUser(user.login, user, function(success) {
                     window.location.search="?section=user&rnd="+Math.random();
                     console.debug("success updating user: " + success);
                 });
             } else {
-                dojo.style("edit_errorAddUser", "display", "");
-                dojo.byId("edit_errorAddUser").innerHTML = errors;
+                style.set("edit_errorAddUser", "display", "");
+                dom.byId("edit_errorAddUser").innerHTML = errors;
             }
         }
         
         function addNewUser() {
             var user = {};
-            user.login = dojo.byId("edit_login").value;
-            user.password = dojo.byId("edit_password").value;
-            user.firstName = dojo.byId("edit_firstName").value;
-            user.surname = dojo.byId("edit_surname").value;
-            user.email = dojo.byId("edit_email").value;
+            user.login = dom.byId("edit_login").value;
+            user.password = dom.byId("edit_password").value;
+            user.firstName = dom.byId("edit_firstName").value;
+            user.surname = dom.byId("edit_surname").value;
+            user.email = dom.byId("edit_email").value;
             
-            var errors = isValidUserData(user, dojo.byId("edit_password_again").value);
+            var errors = isValidUserData(user, dom.byId("edit_password_again").value);
             errors += isValidNewUserData(user);
             
 
             // check if username already exists
-            if (errors.length == 0) { 
+            if (errors.length === 0) {
                 UserRepoManager.addUser(user, function(success) {
                     window.location.search="?section=user&rnd="+Math.random();
                     //window.location.reload();
                     console.debug("success adding user: " + success);
                 });
             } else {
-                dojo.style("edit_errorAddUser", "display", "");
-                dojo.byId("edit_errorAddUser").innerHTML = errors;
+                style.set("edit_errorAddUser", "display", "");
+                dom.byId("edit_errorAddUser").innerHTML = errors;
             }
         }
         
@@ -94,7 +96,7 @@
                 errors += "<p>Passwort darf nicht leer sein!</p>";
             }
             
-            if (usernameExists(user.login))
+            if (pageAdminOnly.usernameExists(user.login))
                 errors += "<p>Login schon vorhanden! Bitte ein anderes auswählen.</p>";
             
             return errors;
@@ -111,6 +113,13 @@
             
             return errors;
         }
+
+        dialogAdminEditUser = {
+            addNewUser: addNewUser,
+            updateUser: updateUser
+        };
+
+    });
     </script>
 </head>
 
@@ -140,8 +149,8 @@
                 </div>
                 <div class="tr">
                     <div class="td">
-                        <input type="button" id="btn_updateUser" onclick="updateUser()" value="Benutzer aktualisieren">
-                        <input type="button" id="btn_addUser" onclick="addNewUser()" value="Benutzer hinzufügen">
+                        <input type="button" id="btn_updateUser" onclick="dialogAdminEditUser.updateUser()" value="Benutzer aktualisieren">
+                        <input type="button" id="btn_addUser" onclick="dialogAdminEditUser.addNewUser()" value="Benutzer hinzufügen">
                     </div>
                 </div>
             </div>

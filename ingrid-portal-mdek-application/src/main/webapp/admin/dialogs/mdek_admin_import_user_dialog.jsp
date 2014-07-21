@@ -4,81 +4,86 @@
 <head>
 
 <script type="text/javascript">
-var scriptScope = this;
+    var pageImportUser;
 
-dojo.connect(_container_, "onLoad", function(){
-	var msgDiv = dojo.byId("messageDiv");
-	msgDiv.innerHTML = "<fmt:message key='dialog.admin.users.selectUser' />";
-    var storeProps = {data: {identifier: '1',label: '0'}};
-    createFilteringSelect("userList", null, storeProps, initUserList);
-	//initUserList();
-});
+    require([
+        "dojo/on",
+        "dojo/dom",
+        "dojo/dom-style",
+        "dijit/registry",
+        "dojo/Deferred",
+        "ingrid/layoutCreator",
+        "ingrid/dialog"
+    ], function(on, dom, style, registry, Deferred, layoutCreator, dialog) {
 
-dojo.connect(_container_, "onUnLoad", function(){
-	// If the dialog was cancelled via the dialogs close button
-	// we need to signal an error (cancel action)
-	if (dijit.byId("pageDialog").customParams.resultHandler.fired == -1) {
-		dijit.byId("pageDialog").customParams.resultHandler.errback();
-	}
-});
+        on(_container_, "Load", function(){
+            var msgDiv = dom.byId("messageDiv");
+            msgDiv.innerHTML = "<fmt:message key='dialog.admin.users.selectUser' />";
+            var storeProps = {data: {identifier: '1',label: '0'}};
+            layoutCreator.createFilteringSelect("userList", null, storeProps, initUserList);
+            //initUserList();
+        });
 
-function initUserList() {
-    var def = new dojo.Deferred();
+        function initUserList() {
+            var def = new Deferred();
 
-    SecurityService.getAvailableUsers( {
-        preHook: scriptScope.showLoading,
-        postHook: scriptScope.endLoading,
-		callback: function(userList) {
-			var list = [];
-			for (var i in userList) {
-				list.push([userList[i], userList[i]]);
-			}
+            SecurityService.getAvailableUsers( {
+                preHook: showLoading,
+                postHook: endLoading,
+                callback: function(userList) {
+                    var list = [];
+                    for (var i in userList) {
+                        list.push([userList[i], userList[i]]);
+                    }
 
-            def.callback(list);
-			//UtilStore.updateWriteStore("userList", list, { identifier: '1', label: '0'});
+                    def.resolve(list);
+                },
+                errorHandler: function(errMsg, err) {
+                    displayErrorMessage(err);
+                    console.debug(errMsg);
+                }
+            });
+            return def;
+        }
 
-			// make sure that nothing is selected (or appears to be) 
-			//dijit.byId("userList").setLabel("");
-		},
-		errorHandler: function(errMsg, err) {
-		    displayErrorMessage(err);
-			console.debug(errMsg);
-		}
-	});
-    return def;
-}
+        function showLoading() {
+            style.set("importUserLoadingZone", "visibility", "visible");
+            //registry.byId("userList").set("disabled", true);
+            registry.byId("importUser").set("disabled", true);
+        }
 
-scriptScope.showLoading = function() {
-    dojo.style("importUserLoadingZone", "visibility", "visible");
-    //dijit.byId("userList").set("disabled", true);
-    dijit.byId("importUser").set("disabled", true);
-}
+        function endLoading() {
+            style.set("importUserLoadingZone", "visibility", "hidden");
+            //registry.byId("userList").set("disabled", false);
+            registry.byId("importUser").set("disabled", false);
+        }
 
-scriptScope.endLoading = function() {
-    dojo.style("importUserLoadingZone", "visibility", "hidden");
-    //dijit.byId("userList").set("disabled", false);
-    dijit.byId("importUser").set("disabled", false);
-}
+        // 'Yes Button' onClick function
+        function yesButtonFunc() {
+            var selectedUser = registry.byId("userList").getValue();
 
-// 'Yes Button' onClick function
-scriptScope.yesButtonFunc = function() {
-	var selectedUser = dijit.byId("userList").getValue();
-
-	if (selectedUser != null && selectedUser != "") {
-		dijit.byId("pageDialog").customParams.resultHandler.callback(selectedUser);
-	} else {
-		dialog.show("<fmt:message key='general.hint' />", "<fmt:message key='dialog.admin.users.userNotFoundError' />", dialog.WARNING);
-		dijit.byId("pageDialog").customParams.resultHandler.errback();
-	}
-	dijit.byId("pageDialog").hide();
-}
+            if (selectedUser !== null && selectedUser !== "") {
+                pageImportUser.parameter.resultHandler.resolve(selectedUser);
+            } else {
+                dialog.show("<fmt:message key='general.hint' />", "<fmt:message key='dialog.admin.users.userNotFoundError' />", dialog.WARNING);
+                pageImportUser.parameter.resultHandler.reject();
+            }
+            registry.byId("pageDialog").hide();
+        }
 
 
-// 'No Button' onClick function
-scriptScope.noButtonFunc = function() {
-	dijit.byId("pageDialog").customParams.resultHandler.errback();
-	dijit.byId("pageDialog").hide();
-}
+        // 'No Button' onClick function
+        function noButtonFunc() {
+            registry.byId("pageDialog").hide();
+        }
+
+        pageImportUser = {
+            accept: yesButtonFunc,
+            close: noButtonFunc,
+            parameter: _container_.customParams
+        };
+    });
+
 
 </script>
 </head>
@@ -86,7 +91,7 @@ scriptScope.noButtonFunc = function() {
 
 
 <body>
-<div dojoType="dijit.layout.ContentPane" class="content grey">
+<div data-dojo-type="dijit/layout/ContentPane" class="content grey">
     <span class="outer">
         <div>
             <span class="label">
@@ -101,12 +106,12 @@ scriptScope.noButtonFunc = function() {
     </span>
     <div class="inputContainer grey" style="height:30px;">
         <span style="float:right; margin-top:5px;">
-            <button dojoType="dijit.form.Button" title="<fmt:message key="general.cancel" />" onClick="javascript:scriptScope.noButtonFunc();">
+            <button data-dojo-type="dijit/form/Button" title="<fmt:message key="general.cancel" />" onclick="pageImportUser.close()">
                 <fmt:message key="general.cancel" />
             </button>
         </span>
         <span style="float:right; margin-top:5px;">
-            <button dojoType="dijit.form.Button" id="importUser" type="button" title="<fmt:message key="general.apply" />" onClick="javascript:scriptScope.yesButtonFunc();">
+            <button data-dojo-type="dijit/form/Button" id="importUser" type="button" title="<fmt:message key="general.apply" />" onclick="pageImportUser.accept()">
                 <fmt:message key="general.apply" />
             </button>
         </span>

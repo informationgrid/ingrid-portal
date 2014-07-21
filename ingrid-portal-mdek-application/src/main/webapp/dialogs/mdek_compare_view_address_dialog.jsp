@@ -1,285 +1,305 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <script type="text/javascript">
 
-dojo.connect(_container_, "onLoad", function() {
-	var nodeDataNew = udkDataProxy._getData();
-	var nodeOld = dijit.byId(dijit.byId("pageDialog").customParams.selectedNodeId);
+require([
+    "dojo/on",
+    "dojo/dom",
+    "dojo/topic",
+    "ingrid/hierarchy/detail_helper",
+    "dijit/registry",
+    "ingrid/IgeActions",
+    "ingrid/utils/Catalog"
+], function(on, dom, topic, detailHelper, registry, IgeActions, UtilCatalog) {
 
-	AddressService.getPublishedAddressData(nodeOld.id,
-		{
-			callback:function(res) {
-				renderNodeData(res, nodeDataNew);
+        on(_container_, "Load", function() {
+            var nodeDataNew = IgeActions._getData();
+            var nodeOldId = this.customParams.selectedNodeId;
 
-	            console.log("Publishing event: '/afterInitDialog/AddressCompare'");
-	            dojo.publish("/afterInitDialog/AddressCompare");
-			},
-			errorHandler:function(message) {console.debug("Error in mdek_compare_view_address_dialog.jsp: Error while waiting for published nodeData: " + message); displayErrorMessage(message); }
-		}
-	);
-});
+            AddressService.getPublishedAddressData(nodeOldId, {
+                callback: function(res) {
+                    renderNodeData(res, nodeDataNew);
 
-function renderNodeData(nodeDataOld, nodeDataNew) {
-	renderSectionTitel("<fmt:message key='dialog.compare.address.address' />");
-	renderText(detailHelper.renderAddressEntry(nodeDataOld), detailHelper.renderAddressEntry(nodeDataNew));
-    // also compare checkbox in compare view !
-    renderTextWithTitle(nodeDataOld.hideAddress ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", nodeDataNew.hideAddress ? "<fmt:message key='general.yes' />": "<fmt:message key='general.no' />", "<fmt:message key='ui.adr.general.hideAddress' />");
+                    console.log("Publishing event: '/afterInitDialog/AddressCompare'");
+                    topic.publish("/afterInitDialog/AddressCompare");
+                },
+                errorHandler: function(message) {
+                    console.debug("Error in mdek_compare_view_address_dialog.jsp: Error while waiting for published nodeData: " + message);
+                    displayErrorMessage(message);
+                }
+            });
+        });
 
-	renderSectionTitel("<fmt:message key='ui.adr.thesaurus.title' />");
-	renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, "<fmt:message key='ui.adr.thesaurus.terms' />", "title");
+        function renderNodeData(nodeDataOld, nodeDataNew) {
+            renderSectionTitel("<fmt:message key='dialog.compare.address.address' />");
+            renderText(detailHelper.renderAddressEntry(nodeDataOld), detailHelper.renderAddressEntry(nodeDataNew));
+            // also compare checkbox in compare view !
+            renderTextWithTitle(nodeDataOld.hideAddress ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", nodeDataNew.hideAddress ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.adr.general.hideAddress' />");
 
-	// administrative data
-	renderSectionTitel("<fmt:message key='dialog.compare.address.administrative' />");
-	renderTextWithTitle(nodeDataOld.uuid, nodeDataNew.uuid, "<fmt:message key='dialog.compare.address.id' />");
-	renderTextWithTitle(catalogData.catalogName, catalogData.catalogName, "<fmt:message key='dialog.compare.address.catalog' />");
-}
+            renderSectionTitel("<fmt:message key='ui.adr.thesaurus.title' />");
+            renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, "<fmt:message key='ui.adr.thesaurus.terms' />", "title");
 
-function renderSectionTitel(val) {
-	dojo.byId("diffContent").innerHTML += "<br/><h2><u>" + val + "</u></h2><br/><br/>";
-	dojo.byId("oldContent").innerHTML += "<br/><h2><u>" + val + "</u></h2><br/><br/>";
-	dojo.byId("currentContent").innerHTML += "<br/><h2><u>" + val + "</u></h2><br/><br/>";
-}
+            // administrative data
+            renderSectionTitel("<fmt:message key='dialog.compare.address.administrative' />");
+            renderTextWithTitle(nodeDataOld.uuid, nodeDataNew.uuid, "<fmt:message key='dialog.compare.address.id' />");
+            renderTextWithTitle(UtilCatalog.catalogData.catalogName, UtilCatalog.catalogData.catalogName, "<fmt:message key='dialog.compare.address.catalog' />");
+        }
 
-function renderTextWithTitle(oldVal, newVal, title) {
-	if (!detailHelper.isValid(oldVal) && !detailHelper.isValid(newVal)) {
-		return;
-	}
+        function renderSectionTitel(val) {
+            dom.byId("diffContent").innerHTML += "<br/><h2><u>" + val + "</u></h2><br/><br/>";
+            dom.byId("oldContent").innerHTML += "<br/><h2><u>" + val + "</u></h2><br/><br/>";
+            dom.byId("currentContent").innerHTML += "<br/><h2><u>" + val + "</u></h2><br/><br/>";
+        }
 
-	if (oldVal == null) {
-		oldVal = "";
-	}
-	if (newVal == null) {
-		newVal = "";
-	}
+        function renderTextWithTitle(oldVal, newVal, title) {
+            if (!detailHelper.isValid(oldVal) && !detailHelper.isValid(newVal)) {
+                return;
+            }
 
-	oldVal += "";
-	newVal += "";
-	dojo.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p><br/>";
-	dojo.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal.replace(/\n/g, "<br />") + "</p><br/>";
-	dojo.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal.replace(/\n/g, "<br />") + "</p><br/>";
-}
+            if (oldVal === null) {
+                oldVal = "";
+            }
+            if (newVal === null) {
+                newVal = "";
+            }
 
-function renderText(oldVal, newVal) {
-	if (oldVal == null) {
-		oldVal = "";
-	}
-	if (newVal == null) {
-		newVal = "";
-	}
+            oldVal += "";
+            newVal += "";
+            dom.byId("diffContent").innerHTML += "<strong>" + title + "</strong><p>" + diffString(oldVal, newVal) + "</p><br/>";
+            dom.byId("oldContent").innerHTML += "<strong>" + title + "</strong><p>" + oldVal.replace(/\n/g, "<br />") + "</p><br/>";
+            dom.byId("currentContent").innerHTML += "<strong>" + title + "</strong><p>" + newVal.replace(/\n/g, "<br />") + "</p><br/>";
+        }
 
-	oldVal += "";
-	newVal += "";
-	var str = diffString(oldVal, newVal);
-    
-//    console.debug(oldVal);
-//    console.debug(newVal);
-//    console.debug(str);
+        function renderText(oldVal, newVal) {
+            if (oldVal === null) {
+                oldVal = "";
+            }
+            if (newVal === null) {
+                newVal = "";
+            }
 
-	// Replace newlines with <br /> and remove EOL chars
-    // and fix html tags for rendering (e.g. "&lt;strong&gt;" -> "<strong>")
-	str = str.replace(/\n/g, '<br />').replace(/&para;/g, '').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
-//    console.debug(str);
-	dojo.byId("diffContent").innerHTML += "<p>" + str + "</p><br/>";
-	dojo.byId("oldContent").innerHTML += "<p>" + oldVal.replace(/\n/g, '<br />') + "</p><br/>";
-	dojo.byId("currentContent").innerHTML += "<p>" + newVal.replace(/\n/g, '<br />') + "</p><br/>";
-}
+            oldVal += "";
+            newVal += "";
+            var str = diffString(oldVal, newVal);
 
-function diffString(oldText, newText) {
-	return WDiffString(oldText, newText);
-}
+            //    console.debug(oldVal);
+            //    console.debug(newVal);
+            //    console.debug(str);
 
-function buildListHead(title) {
-	var t = "<p>";
-	if (detailHelper.isValid(title)) {
-		t += "<strong>" + title + "</strong><br/>";
-	}
-	return t;
-}
+            // Replace newlines with <br /> and remove EOL chars
+            // and fix html tags for rendering (e.g. "&lt;strong&gt;" -> "<strong>")
+            str = str.replace(/\n/g, '<br />').replace(/&para;/g, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+            //    console.debug(str);
+            dom.byId("diffContent").innerHTML += "<p>" + str + "</p><br/>";
+            dom.byId("oldContent").innerHTML += "<p>" + oldVal.replace(/\n/g, '<br />') + "</p><br/>";
+            dom.byId("currentContent").innerHTML += "<p>" + newVal.replace(/\n/g, '<br />') + "</p><br/>";
+        }
 
-function buildListBody(list, rowProperty, renderFunction) {
-	var valList = "";
-	for (var i=0; i<list.length; i++) {
-		var val = "";
-		if (rowProperty) {
-			val = list[i][rowProperty];
-		} else {
-			val = list[i];
-		}
-		if (renderFunction) {
-			val = renderFunction.call(this, val);
-		}
-		if (val && val != "") {
-			valList += val + "<br/>";
-		}
-	}
-	return valList;
-}
+        function diffString(oldText, newText) {
+            return WDiffString(oldText, newText);
+        }
 
-function buildListBodyForDiff(diff, rowProperty, renderFunction) {
-	var diffList = diff.eq.concat(diff.ins.concat(diff.del));
+        function buildListHead(title) {
+            var t = "<p>";
+            if (detailHelper.isValid(title)) {
+                t += "<strong>" + title + "</strong><br/>";
+            }
+            return t;
+        }
 
-	var valList = "";
-	for (var i=0; i<diffList.length; i++) {
-		var val = "";
-		var prefix = "";
-		var suffix = "";
-		if (arrayContains(diff.ins, diffList[i])) {
-			prefix = "<span style='font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;'>";
-			suffix = "</span>";
-		} else if (arrayContains(diff.del, diffList[i])) {
-			prefix = "<span style='font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;'>";
-			suffix = "</span>";
-		}
+        function buildListBody(list, rowProperty, renderFunction) {
+            var valList = "";
+            for (var i = 0; i < list.length; i++) {
+                var val = "";
+                if (rowProperty) {
+                    val = list[i][rowProperty];
+                } else {
+                    val = list[i];
+                }
+                if (renderFunction) {
+                    val = renderFunction.call(this, val);
+                }
+                if (val && val != "") {
+                    valList += val + "<br/>";
+                }
+            }
+            return valList;
+        }
 
-		if (rowProperty) {
-			val = diffList[i][rowProperty];
-		} else {
-			val = diffList[i];
-		}
-		if (renderFunction) {
-			val = renderFunction.call(this, val);
-		}
-		if (val && val != "") {
-			valList += prefix + val + suffix + "<br/>";
-		}
-	}
-	return valList;
-}
+        function buildListBodyForDiff(diff, rowProperty, renderFunction) {
+            var diffList = diff.eq.concat(diff.ins.concat(diff.del));
 
-function renderList(oldList, newList, title, rowProperty, renderFunction) {
-	if (oldList && oldList.length > 0) {
-		var t = buildListHead(title);
-		var valList = buildListBody(oldList, rowProperty, renderFunction);
+            var valList = "";
+            for (var i = 0; i < diffList.length; i++) {
+                var val = "";
+                var prefix = "";
+                var suffix = "";
+                if (arrayContains(diff.ins, diffList[i])) {
+                    prefix = "<span style='font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;'>";
+                    suffix = "</span>";
+                } else if (arrayContains(diff.del, diffList[i])) {
+                    prefix = "<span style='font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;'>";
+                    suffix = "</span>";
+                }
 
-		if (valList != "") {
-			dojo.byId("oldContent").innerHTML += t + valList + "</p><br/>";
-		}
-	}	
+                if (rowProperty) {
+                    val = diffList[i][rowProperty];
+                } else {
+                    val = diffList[i];
+                }
+                if (renderFunction) {
+                    val = renderFunction.call(this, val);
+                }
+                if (val && val != "") {
+                    valList += prefix + val + suffix + "<br/>";
+                }
+            }
+            return valList;
+        }
 
-	if (newList && newList.length > 0) {
-		var t = buildListHead(title);
-		var valList = buildListBody(newList, rowProperty, renderFunction);
+        function renderList(oldList, newList, title, rowProperty, renderFunction) {
+            var t, valList;
+            if (oldList && oldList.length > 0) {
+                t = buildListHead(title);
+                valList = buildListBody(oldList, rowProperty, renderFunction);
 
-		if (valList != "") {
-			dojo.byId("currentContent").innerHTML += t + valList + "</p><br/>";
-		}
-	}	
+                if (valList != "") {
+                    dom.byId("oldContent").innerHTML += t + valList + "</p><br/>";
+                }
+            }
 
-	var diff = compareTable(oldList, newList, rowProperty);
+            if (newList && newList.length > 0) {
+                t = buildListHead(title);
+                valList = buildListBody(newList, rowProperty, renderFunction);
 
-	if ((oldList && oldList.length > 0) || (newList && newList.length > 0)) {
-		var t = buildListHead(title);
-		var valList = buildListBodyForDiff(diff, rowProperty, renderFunction);
+                if (valList != "") {
+                    dom.byId("currentContent").innerHTML += t + valList + "</p><br/>";
+                }
+            }
 
-		if (valList != "") {
-			dojo.byId("diffContent").innerHTML += t + valList + "</p><br/>";
-		}
-	}
-}
+            var diff = compareTable(oldList, newList, rowProperty);
 
-// Compare two tables containing objects with 'properties'.
-// The result is returned as an object containing the following information:
-// { eq:  array of objects that are in table1 and table2,
-//   ins: array of objects that are in table2 but not in table1,
-//   del: array of objects that are in table1 but not in table2 } 
-function compareTable(table1, table2, properties) {
-	var diff = {eq:[], ins:[], del:[]};
+            if ((oldList && oldList.length > 0) || (newList && newList.length > 0)) {
+                t = buildListHead(title);
+                valList = buildListBodyForDiff(diff, rowProperty, renderFunction);
 
-	// Iterate over all objects in table1 and compare them to the objects in table2
-	// If a match is found, add the object to diff.eq
-	// Otherwise add it to diff.del
-	for (var i in table1) {
-		obj1 = table1[i];
-		var found = false;
+                if (valList != "") {
+                    dom.byId("diffContent").innerHTML += t + valList + "</p><br/>";
+                }
+            }
+        }
 
-		for (var j in table2) {
-			var obj2 = table2[j];
-			if (!arrayContains(diff.eq, obj2) && compareObj(obj2, obj1, properties)) {
-				diff.eq.push(obj2);
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			diff.del.push(obj1);
-		}
-	}
+        // Compare two tables containing objects with 'properties'.
+        // The result is returned as an object containing the following information:
+        // { eq:  array of objects that are in table1 and table2,
+        //   ins: array of objects that are in table2 but not in table1,
+        //   del: array of objects that are in table1 but not in table2 } 
+        function compareTable(table1, table2, properties) {
+            var diff = {
+                eq: [],
+                ins: [],
+                del: []
+            };
 
-	// All remaining elements that have not been added to diff.eq or diff.del are new
-	// objects and have to be added to diff.ins
-	for (var j in table2) {
-		var obj = table2[j];
-		if (!arrayContains(diff.eq, obj)) {
-			diff.ins.push(obj);
-		}
-	}
+            // Iterate over all objects in table1 and compare them to the objects in table2
+            // If a match is found, add the object to diff.eq
+            // Otherwise add it to diff.del
+            var i, j;
+            for (i in table1) {
+                var obj1 = table1[i];
+                var found = false;
 
-	return diff;
-}
+                for (j in table2) {
+                    var obj2 = table2[j];
+                    if (!arrayContains(diff.eq, obj2) && compareObj(obj2, obj1, properties)) {
+                        diff.eq.push(obj2);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    diff.del.push(obj1);
+                }
+            }
 
-// Compare two objects according to their properties
-function compareObj(obj1, obj2, properties) {
-	if (properties == null) {
-		return (obj1+"" == obj2+"");
-	}
-	if (typeof(properties) == "string") {
-		properties = [properties];
-	}
+            // All remaining elements that have not been added to diff.eq or diff.del are new
+            // objects and have to be added to diff.ins
+            for (j in table2) {
+                var obj = table2[j];
+                if (!arrayContains(diff.eq, obj)) {
+                    diff.ins.push(obj);
+                }
+            }
 
-	for (var i in properties) {
-		var prop1 = obj1[properties[i]];
-		var prop2 = obj2[properties[i]];
-		// Compare as strings so date objects are handled properly
-		if (prop1+"" != prop2+"") {
-			return false;
-		}
-	}
-	return true;
-}
+            return diff;
+        }
 
-// Returns whether the array 'arr' contains the object 'obj'
-function arrayContains(arr, obj) {
-	var len = arr.length;
-	for (var i = 0; i < len; i++){
-		if(arr[i]===obj){return true;}
-	}
-	return false;
-}
+        // Compare two objects according to their properties
+        function compareObj(obj1, obj2, properties) {
+            if (properties === null) {
+                return (obj1 + "" == obj2 + "");
+            }
+            if (typeof(properties) == "string") {
+                properties = [properties];
+            }
+
+            for (var i in properties) {
+                var prop1 = obj1[properties[i]];
+                var prop2 = obj2[properties[i]];
+                // Compare as strings so date objects are handled properly
+                if (prop1 + "" != prop2 + "") {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Returns whether the array 'arr' contains the object 'obj'
+        function arrayContains(arr, obj) {
+            var len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if (arr[i] === obj) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    });
 
 </script>
 </head>
 
 <body>
-  <div dojoType="dijit.layout.ContentPane" class="">
+  <div data-dojo-type="dijit/layout/ContentPane" class="">
       <div id="winNavi">
-			<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=hierarchy-maintenance-3#hierarchy-maintenance-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
-  	  </div>
+            <a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=hierarchy-maintenance-3#hierarchy-maintenance-3', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
+      </div>
         <!-- MAIN TAB CONTAINER START -->
-      	<div id="compareViews" dojoType="dijit.layout.TabContainer" selectedChild="diffView" style="height:600px; width:100%;" >
+        <div id="compareViews" data-dojo-type="dijit/layout/TabContainer" selectedChild="diffView" style="height:600px; width:100%;" >
           <!-- MAIN TAB 1 START -->
-      		<div id="diffView" dojoType="dijit.layout.ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.compare" />">
+            <div id="diffView" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.compare" />">
               <div id="diffContent" class="inputContainer field grey"></div>
               <div id="diffContentLegend" class="inputContainer field grey"><span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.insertedText" /><br/>
-			  			<span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.deletedText" /></div>
-      		</div>
+                        <span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.deletedText" /></div>
+            </div>
           <!-- MAIN TAB 1 END -->
-      		
+            
           <!-- MAIN TAB 2 START -->
-      		<div id="oldView" dojoType="dijit.layout.ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.original" />">
+            <div id="oldView" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.original" />">
               <div id="oldContent" class="inputContainer field grey"></div>
-      		</div>
+            </div>
           <!-- MAIN TAB 2 END -->
 
           <!-- MAIN TAB 3 START -->
-      		<div id="currentView" dojoType="dijit.layout.ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.modified" />">
+            <div id="currentView" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.modified" />">
               <div id="currentContent" class="inputContainer field grey"></div>
-      		</div>
+            </div>
           <!-- MAIN TAB 3 END -->
 
-      	</div>
+        </div>
         <!-- MAIN TAB CONTAINER END -->
   </div>
   <!-- CONTENT END -->
