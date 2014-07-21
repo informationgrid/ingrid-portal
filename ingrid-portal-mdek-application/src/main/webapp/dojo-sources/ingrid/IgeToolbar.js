@@ -72,11 +72,12 @@ define([
             ];
 
             this._createToolbarButtons(toolbar, entries, false);
+
+            this._createToolbarButtons(toolbar, entriesRight, true);
+            
             // add another button which is displayed when a validation error occured
             // when trying to save or publish
             toolbar.addChild(this._createErrorButton());
-
-            this._createToolbarButtons(toolbar, entriesRight, true);
 
             this.addToolbarEvents(isQAActive, isUserQA);
         },
@@ -85,7 +86,7 @@ define([
             var errorButton = new Button({
                 id: "bShowNextError",
                 label: "Show Next Error",
-                style: "background-color:#B00000;border: 1px solid black; visibility: hidden;"
+                style: "background-color:#F0A000;border: 1px solid black; visibility: hidden; float: right;"
             });
             errorButton.pos = 0;
             errorButton.onClick = function() {
