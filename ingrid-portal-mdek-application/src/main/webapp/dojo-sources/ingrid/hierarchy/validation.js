@@ -114,7 +114,7 @@ define(["dojo/_base/declare",
         },
 
         minMaxBoundingBoxValidation: function(res, args) {
-            var val = args[0];
+            var val = args instanceof Array ? args[0] : args;
             var error = false;
             var grid = UtilGrid.getTable("spatialRefLocation");
             var row = val.row;
@@ -182,31 +182,10 @@ define(["dojo/_base/declare",
             return val;
         },
 
-        /*emptyRowValidation: function(gridId) {
-            var error = false;
-            var data = this.getData();
-
-            globalValidation.unmarkGridCells(gridId);
-
-            // check for each row that it's not empty (row should be deleted to prevent null data!)
-            if (data.length > 0) {
-                var rowPos = 0;
-                array.some(data, function(row) {
-                    var colPos = 0;
-                    for (var key in row) {
-                        if (row[key] == null || lang.trim(row[key] + "") == "") {
-                            error = true;
-                            UtilUI.markCells("ERROR", gridId, rowPos, [colPos]);
-                            return true;
-                        }
-                        colPos++;
-                    }
-                    rowPos++;
-                });
-            }
-
-            return !error;
-        },*/
+        emptyRowValidation: function(gridId) {
+            var grid = UtilGrid.getTable( gridId );
+            return grid.validateNonEmptyRows();
+        },
 
         titleDateValidation: function(gridId) {
             var error = false;
@@ -713,7 +692,7 @@ define(["dojo/_base/declare",
     emptyRowValidation = Validators.emptyRowValidation;
     applyRef6UrlListValidation = Validators.applyRef6UrlListValidation;
     addServiceUrlValidation = Validators.addServiceUrlValidation;
-    minMaxBoundingBoxValidation = Validators.minMaxBoundingBoxValidation;
+    minMaxBoundingBoxValidation = lang.partial(Validators.minMaxBoundingBoxValidation, null);
     addMinMaxValidation = Validators.addMinMaxValidation;
     spatialRefLocationValidation = Validators.spatialRefLocationValidation;
     applyTimeRefIntervalValidation = Validators.applyTimeRefIntervalValidation;
