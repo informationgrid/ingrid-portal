@@ -62,7 +62,6 @@ require([
             allErrorUrlsTitle = registry.byId("urlList2").title;
             summaryErrorUrlsTitle = registry.byId("urlList3").title;
             capabilitiesUrlsTitle = registry.byId("urlListCap").title;
-        	//dojo.html.hide(dom.byId("urlsProgressBarContainer"));
         	style.set("urlsProgressBarContainer", "display", "none");
         	refreshUrlProcessInfo();
         });

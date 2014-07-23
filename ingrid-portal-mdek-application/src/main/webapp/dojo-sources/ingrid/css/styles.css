@@ -84,9 +84,9 @@ html {
 /* TAB */
 .dijitTabPane, .tab { padding: 0px !important; }
 .claro .dijitTabContent { border: 0px solid #B5BCC7; }
-.claro .dijitTabContainerTop-tabs .dijitTabChecked .dijitTabContent { background-color: #82c4ed; color: #0c3753; padding-bottom: 4px; padding-top: 6px; }
 .claro .dijitTabContainerTop-tabs .dijitTabContent { background-image: none; background-position: 0 0; border-color: #848484 #848484 transparent; border-width: 1px 1px 0; border-style: solid solid none; min-width: 60px; padding: 3px 8px 3px 4px; text-align: center; }
 .claro .dijitTabContainerTop-tabs .dijitTab { margin-right: 2px; padding-top: 3px; top: 1px; }
+.claro .dijitTabContainerTop-tabs .dijitTabChecked { background-color: #82c4ed; color: #0c3753; padding-bottom: 4px; padding-top: 6px; }
 
 /* CONTENT */
 .dijitTabContainerBottom-container, .dijitTabContainerTop-container, .dijitTabContainerLeft-container, .dijitTabContainerRight-container { border: 1px solid black; }
@@ -178,6 +178,8 @@ div #headMenu a:hover { color: #FFFFFF; }
 
 .claro .dijitBorderContainer { padding: 0; }
 .claro .dijitSplitContainer-child, .claro .dijitBorderContainer-child { border: 0px solid #B5BCC7; background:#EEEEEE; }
+
+#contentPane { background-color: white; }
 
 /* FORM_FIELDS*/
 .legacyControl { border-left: 1px solid #156496; border-right: 1px solid #156496; }

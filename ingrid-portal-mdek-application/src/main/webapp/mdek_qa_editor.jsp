@@ -11,6 +11,7 @@ require([
     "dojo/html",
     "dojo/dom",
     "dojo/Deferred",
+    "dojo/DeferredList",
     "dojo/_base/array",
     "dijit/registry",
     "ingrid/utils/Grid",
@@ -23,7 +24,7 @@ require([
     /*for toggleInfo*/"ingrid/utils/UI",
     "ingrid/utils/Catalog",
     "ingrid/grid/CustomGridFormatters"
-], function(on, aspect, html, dom, Deferred, array, registry, UtilGrid, layoutCreator, navigation, UtilList, message, UtilStore, UtilAddress, UtilsUI, UtilCatalog, GridFormatters) {
+], function(on, aspect, html, dom, Deferred, DeferredList, array, registry, UtilGrid, layoutCreator, navigation, UtilList, message, UtilStore, UtilAddress, UtilsUI, UtilCatalog, GridFormatters) {
 
         // display 10 datasets per page
         var resultsPerPage = 10;

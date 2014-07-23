@@ -108,7 +108,7 @@ define([
 
                 this.createReferences();
                 console.debug("initAdditionalFields");
-                this.initAdditionalFields();
+                var defAddFields = this.initAdditionalFields();
                 console.debug("connect dirty flags");
                 this.connectDirtyFlagsEvents();
                 console.debug("init CTS");
@@ -117,10 +117,10 @@ define([
 
                 // apply special validation for necessary components
                 console.debug("apply Validations");
-                this.applyDefaultConnections();
+                defAddFields.then(this.applyDefaultConnections)
+                .then(setVisibilityOfFields);
 
-                console.debug("visibility!");
-                setVisibilityOfFields();
+                // console.debug("visibility!");
 
                 // update view according to initial chosen class
                 console.debug("select class");
@@ -2094,17 +2094,13 @@ define([
             },
 
             initAdditionalFields: function() {
-                var def = new Deferred();
-
-                //var language = UtilCatalog.getCatalogLanguage();
-
                 console.debug("call function to create dynamic additional fields");
-                createAdditionalFieldsDynamically();
-
-                // remember additional fields for data handling
                 var self = this;
-                query(".additionalField").forEach(function(item) {
-                    self.additionalFieldWidgets.push(registry.getEnclosingWidget(item));
+                var def = createAdditionalFieldsDynamically().then(function() {
+                    // remember additional fields for data handling
+                    query(".additionalField").forEach(function(item) {
+                        self.additionalFieldWidgets.push(registry.getEnclosingWidget(item));
+                    });
                 });
 
                 return def;
