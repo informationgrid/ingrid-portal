@@ -305,7 +305,8 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
             // behavior when the checkbox is actively clicked by a user
             // only actions that shall modify data once and has nothing to do with the view!
             var rules = this;
-            on(registry.byId("isOpenData"), "Click", function(isChecked) {
+            on(registry.byId("isOpenData"), "Click", function(/*evnt*/) {
+                var isChecked = this.checked;
                 if (isChecked) {
                     var def = new Deferred();
                     var self = this;

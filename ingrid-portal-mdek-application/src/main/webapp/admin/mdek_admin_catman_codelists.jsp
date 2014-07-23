@@ -1187,7 +1187,7 @@
                                             <!-- </div> -->
                                             <!-- <div data-dojo-type="dijit/layout/ContentPane" region="center" class="grey"> -->
                                                 <div class="tableContainer">
-                                                    <div id="freeEntryTable" autoHeight="16" forceGridHeight="true" multiSelect="false" class="hideTableHeader"></div>
+                                                    <div id="freeEntryTable" autoHeight="16" contextMenu="none" forceGridHeight="true" multiSelect="false" class="hideTableHeader"></div>
                                                 </div>
                                             <!-- </div> -->
                                          <!-- </div> -->
@@ -1211,7 +1211,7 @@
                                     <div data-dojo-type="dijit/layout/ContentPane" region="right"  class="innerPadding" style="width:370px;">
                                         <span class="label" style="height:37px;"><fmt:message key="dialog.admin.catalog.management.codelists.listContent" /></span>
                                         <div class="tableContainer">
-                                            <div id="freeEntryCodelistTable" autoHeight="16" forceGridHeight="true" multiSelect="false" class="hideTableHeader"></div>
+                                            <div id="freeEntryCodelistTable" autoHeight="16" contextMenu="none" forceGridHeight="true" multiSelect="false" class="hideTableHeader"></div>
                                         </div>
                                     </div>
                                 <div>
