@@ -132,12 +132,12 @@
 
                     }
 
-                    function resultTextClicked(topicId) {
+                    function resultTextClicked() {
                         if (selectedTextNode) {
                             domClass.remove(selectedTextNode, "selected");
                         }
 
-                        selectedTextNode = dom.byId("_resultText_" + topicId);
+                        selectedTextNode = this;
                         domClass.add(selectedTextNode, "selected");
                     }
 
@@ -185,9 +185,7 @@
                                 if (term.type == "DESCRIPTOR") {
                                     domClass.add(linkElement, "resultText");
                                     linkElement.setAttribute("id", "_resultText_" + term.topicId);
-                                    linkElement.onclick = function() {
-                                        resultTextClicked(term.topicId);
-                                    };
+                                    linkElement.onclick = lang.hitch( linkElement, resultTextClicked );
                                     linkElement.setAttribute("href", "#");
 
                                     linkElement.setAttribute("title", "Begriff auswaehlen");
@@ -222,7 +220,7 @@
                         registry.byId("thesResultTabContainer").selectChild(resultPane);
 
                         var service = registry.byId("thesTree").getService();
-                        service.findTopics(queryTerm, userLocale, {
+                        service.findTopicsContains(queryTerm, userLocale, {
                             preHook: showLoadingZone,
                             postHook: hideLoadingZone,
                             callback: function(result) {

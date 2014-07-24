@@ -17,6 +17,7 @@ import de.ingrid.external.FullClassifyService;
 import de.ingrid.external.GazetteerService;
 import de.ingrid.external.GazetteerService.QueryType;
 import de.ingrid.external.ThesaurusService;
+import de.ingrid.external.ThesaurusService.MatchingType;
 import de.ingrid.external.om.Event;
 import de.ingrid.external.om.FullClassifyResult;
 import de.ingrid.external.om.Location;
@@ -27,7 +28,6 @@ import de.ingrid.external.om.Term.TermType;
 import de.ingrid.external.om.TreeTerm;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
-import de.ingrid.mdek.util.MdekUtils;
 
 @Qualifier("sns")
 public class SNSService {
@@ -189,19 +189,30 @@ public class SNSService {
     }
 
     /**
-     * Find all topics for a given query string
+     * Find all topics for a given query string which does an exact search.
      * @param queryTerm topic name to search for
      * @param locale 
      * @return All topics returned by the SNS, converted to SNSTopics 
      */
     public List<SNSTopic> findTopics(String queryTerm, Locale locale) {
-    	return findTopics(null, queryTerm, locale);
+    	return findTopics(null, queryTerm, locale, MatchingType.EXACT);
     }
     
-    public List<SNSTopic> findTopics(String url, String queryTerm, Locale locale) {
+    /**
+     * Find all topics containing the given query string. 
+     * @param url
+     * @param queryTerm
+     * @param locale
+     * @return
+     */
+    public List<SNSTopic> findTopicsContains(String queryTerm, Locale locale) {
+    	return findTopics( null, queryTerm, locale, MatchingType.CONTAINS );
+    }
+    
+    public List<SNSTopic> findTopics(String url, String queryTerm, Locale locale, MatchingType searchType) {
     	// Locale sessionLocale = MdekUtils.getLocaleFromSession();
     	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from "
-    		+ queryTerm + ", EXACT, true, " + locale.getLanguage());
+    		+ queryTerm + ", " + searchType + ", true, " + locale.getLanguage());
 
     	if (url != null) {
     		// if the rootUrl actually is a sub term then split the root url
@@ -211,7 +222,7 @@ public class SNSService {
     	
     	// TODO: use "contains" here since exact only delivers one term! CHECK!!!
     	Term[] terms = thesaurusService.findTermsFromQueryTerm(url, queryTerm,
-    			de.ingrid.external.ThesaurusService.MatchingType.EXACT, true, locale);
+    			searchType, true, locale);
 
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
     	for (Term term : terms) {
