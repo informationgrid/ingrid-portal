@@ -20,8 +20,9 @@
             "ingrid/dialog",
             "ingrid/init",
             "ingrid/utils/Syslist",
+            "ingrid/utils/List",
             "ingrid/utils/Catalog"
-        ], function(array, lang, Deferred, registry, Select, CheckBox, NumberTextBox, on, layoutCreator, dialog, init, UtilSyslist, UtilCatalog) {
+        ], function(array, lang, Deferred, registry, Select, CheckBox, NumberTextBox, on, layoutCreator, dialog, init, UtilSyslist, UtilList, UtilCatalog) {
             
             console.log("catalog settings");
         
@@ -163,7 +164,8 @@
                 
                 def.then(function(result){
                     var spatialRefWidget = registry.byId("adminCatalogSpatialRef");
-                    spatialRefWidget.setValue(result.name);
+                    UtilList.addSNSLocationLabels([result]);
+                    spatialRefWidget.setValue(result.label);
                     spatialRefWidget.location = result;
                 });
             }
