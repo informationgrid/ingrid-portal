@@ -11,7 +11,7 @@
         #if($akey && $akey.length() > 0)
             <a name="$akey"></a>
         #end
-        <h1>$!jetspeed.getTitle($jetspeed.getPortletEntity($f), $f)</h1>
+        <h1>$!jetspeed.getTitle($f)</h1>
         <span class="portlet_info">
         #set($hkey = $jetspeed.getPreferenceFirstValue($f, "helpKey")) 
         #if($hkey && $hkey.length() > 0)
