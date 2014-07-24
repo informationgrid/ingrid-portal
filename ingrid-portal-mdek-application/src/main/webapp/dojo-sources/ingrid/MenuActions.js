@@ -882,7 +882,9 @@ define([
 
             // check for changes first, since we do not want to do any refresh with
             // any unsaved changes. After the refresh, the clicked node will be selected.
-            UtilTree.selectNode("dataTree", tree.lastLoadedNode.item.id);
+            if (tree.lastLoadedNode) {
+                UtilTree.selectNode("dataTree", tree.lastLoadedNode.item.id);
+            }
             
             IgeActions.checkForUnsavedChanges().then(function() {
                 if (node) {

@@ -503,7 +503,7 @@ define(["dojo/_base/declare",
 
             // Check if one of the spatial references is expired
             if (array.some(UtilGrid.getTableData("spatialRefAdminUnit"), function(item) {
-                return item.locationExpiredAt !== null;
+                return item.locationExpiredAt !== null && item.locationExpiredAt !== undefined;
             })) {
                 console.debug("The spatial reference table must not contain expired entries.");
                 notPublishableIDs.push("spatialRefAdminUnit");
