@@ -2,13 +2,13 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-base-pom</artifactId>
-    <version>3.5.0-SNAPSHOT</version>
+    <version>3.5.0-SNAPSHOT-R304</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>3.5.0-SNAPSHOT</version>
+  <version>3.5.0-SNAPSHOT-R304</version>
   <name>Ingrid Portal</name>
   <scm>
     <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/branches/ingrid-portal-3.5_REDMINE-304_JetspeedMigration</connection>
@@ -28,36 +28,36 @@
 <!--
     <org.apache.portals.jetspeed.version>2.2.2</org.apache.portals.jetspeed.version>
 -->
-    <org.apache.pluto.version>2.0.3</org.apache.pluto.version>
-    <org.apache.portals.applications.apa-logging.version>1.0</org.apache.portals.applications.apa-logging.version>
-    <ccpp.version>1.0</ccpp.version>
-    <org.apache.portals.bridges.common.version>2.0</org.apache.portals.bridges.common.version>
-    <geronimo-servlet_2.4_spec.version>1.1.1</geronimo-servlet_2.4_spec.version>
-    <portals.portlet2-api-spec.version>1.0</portals.portlet2-api-spec.version>
-    <javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
-    <portal.context.name>jetexpress</portal.context.name>
-    <org.apache.jetspeed.server.home>/opt/apache-tomcat-6.0.33/</org.apache.jetspeed.server.home>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
   <dependencyManagement>
     <dependencies>
-<!-- JETSPEED -->
-      <dependency>
-        <groupId>org.apache.portals</groupId>
-        <artifactId>portlet-api_2.0_spec</artifactId>
-        <version>${portals.portlet2-api-spec.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.geronimo.specs</groupId>
-        <artifactId>geronimo-servlet_2.4_spec</artifactId>
-        <version>${geronimo-servlet_2.4_spec.version}</version>
-      </dependency>
 <!-- INGRID -->
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-portal-utils</artifactId>
-        <version>3.5.0-SNAPSHOT</version>
+        <version>3.4.0-SNAPSHOT</version>
+<!-- Activate if no errors anymore
+        <version>3.5.0-SNAPSHOT-R304</version>
+-->
+      </dependency>
+<!-- JETSPEED -->
+<!-- Explicitly use jetspeed dependency management ! So we use the versions jetspeed uses ! -->
+      <dependency>
+        <groupId>org.apache.portals.jetspeed-2</groupId>
+        <artifactId>jetspeed-2</artifactId>
+        <version>${org.apache.portals.jetspeed.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+<!-- Then import our ingrid dependency versions ! Only versions not defined yet will be used (former jetspeed import has higher priority) ! -->
+      <dependency>
+        <groupId>de.ingrid</groupId>
+        <artifactId>ingrid-import-pom</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
