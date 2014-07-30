@@ -29,7 +29,7 @@ define([
             var domItem = dom.byId(item);
             if (domItem != null) {
                 for (i = 0; i < domItem.attributes.length; i++) {
-                    parameter[this._replaceAttribute(domItem.attributes[i].nodeName)] = domItem.attributes[i].nodeValue;
+                    parameter[this._replaceAttribute(domItem.attributes[i].nodeName)] = domItem.attributes[i].value;
                 }
             }
             return parameter;

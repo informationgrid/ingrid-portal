@@ -92,8 +92,7 @@ function displayErrorMessage(err) {
                 dialog.show(message.get("general.error"), message.get("operation.error.parentHasSmallerPublicationConditionError"), dialog.WARNING);
             
             } else if (err.message.indexOf("USER_LOGIN_ERROR") != -1) {
-                //dialog.show(message.get("general.error"), message.get("dialog.sessionTimeoutError"), dialog.WARNING);
-                window.onbeforeunload = function() {};
+                eventWindowUnload.remove();
                 document.location.href = "session_expired.jsp";
             } else if (err.message.indexOf("REFERENCED_ADDRESSES_NOT_PUBLISHED") != -1) {
                 Exceptions.handleAddressNeverPublishedException(err);
