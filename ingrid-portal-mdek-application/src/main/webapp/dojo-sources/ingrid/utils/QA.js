@@ -1,6 +1,7 @@
 define([
-    "dojo/_base/declare"
-], function(declare) {
+    "dojo/_base/declare",
+    "ingrid/utils/Catalog"
+], function(declare, UtilCatalog) {
     return declare(null, {
 
         global: this,
@@ -8,9 +9,9 @@ define([
         // Utility functions needed for workflow control
         // Returns whether workflow control is activated for the current catalog
         isQAActive: function() {
-            if (this.global.catalogData
-                && typeof(this.global.catalogData.workflowControl) != "undefined"
-                && this.global.catalogData.workflowControl == "Y") {
+            if (UtilCatalog.catalogData
+                && typeof(UtilCatalog.catalogData.workflowControl) != "undefined"
+                && UtilCatalog.catalogData.workflowControl == "Y") {
                 return true;
             
             } else {

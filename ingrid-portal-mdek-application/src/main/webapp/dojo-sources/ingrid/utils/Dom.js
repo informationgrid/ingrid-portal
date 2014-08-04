@@ -4,6 +4,11 @@ define([
     "dojo/dom-class",
     "ingrid/utils/Tree"
 ], function(declare, dom, domClass, UtilTree) {
+
+    // backward compatibility
+    if (!dojo.addClass) dojo.addClass = domClass.add;
+    if (!dojo.removeClass) dojo.removeClass = domClass.remove;
+
     return declare(null, {
 
         attributeReplacerMap: {

@@ -1716,20 +1716,20 @@ define([
                 if (nodeData.timeRefDate2) {
                     registry.byId("timeRefDate1").attr("value", nodeData.timeRefDate2, true);
                 } else {
-                    registry.byId("timeRefDate1").attr("value", "", true);
+                    registry.byId("timeRefDate1").reset();
                 }
-                registry.byId("timeRefDate2").attr("value", "", true);
+                registry.byId("timeRefDate2").reset();
 
             } else {
                 if (nodeData.timeRefDate1) {
                     registry.byId("timeRefDate1").attr("value", nodeData.timeRefDate1, true);
                 } else {
-                    registry.byId("timeRefDate1").attr("value", "", true);
+                    registry.byId("timeRefDate1").reset();
                 }
                 if (nodeData.timeRefType == "von" && nodeData.timeRefDate2) {
                     registry.byId("timeRefDate2").attr("value", nodeData.timeRefDate2, true);
                 } else {
-                    registry.byId("timeRefDate2").attr("value", "", true);
+                    registry.byId("timeRefDate2").reset();
                 }
             }
 

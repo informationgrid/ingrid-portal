@@ -6,9 +6,14 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
-<script type="text/javascript" src="js/detail_helper.js"></script>
-
 <script type="text/javascript">
+
+require([
+    "dojo/on",
+    "dojo/topic",
+    "dojo/dom",
+    "ingrid/hierarchy/detail_helper"
+], function(on, topic, dom, detailHelper) {
 
 	var address = _container_.customParams.data;
 
@@ -21,6 +26,9 @@
         console.log("Publishing event: '/afterInitDialog/AddressPreview'");
         topic.publish("/afterInitDialog/AddressPreview");
     });
+
+});
+
 
 </script>
 </head>

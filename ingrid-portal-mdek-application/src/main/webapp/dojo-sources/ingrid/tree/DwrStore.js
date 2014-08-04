@@ -66,7 +66,7 @@ define([
                             // mem.data.push( child );//, options );                        
                         });
                         return children;
-                    });
+                    }, displayErrorMessage);
             }
             return QueryResults(queryDef);
         },

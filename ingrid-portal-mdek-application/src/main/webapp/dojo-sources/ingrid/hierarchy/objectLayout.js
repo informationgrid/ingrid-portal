@@ -2173,7 +2173,7 @@ define([
                 aspect.after(UtilGrid.getTable("ref4PMLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["generalAddress"])));
                 aspect.after(UtilGrid.getTable("ref2LocationLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["generalAddress"])));
 
-                aspect.after(UtilGrid.getTable("linksTo"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["ref1BasisLink", "ref1SymbolsLink", "ref1KeysLink)",
+                aspect.after(UtilGrid.getTable("linksTo"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["ref1BasisLink", "ref1SymbolsLink", "ref1KeysLink",
                     /*"ref1ServiceLink",*/
                     "ref1DataBasisLink", "ref1ProcessLink",
                     "ref2BaseDataLink", /*"ref3BaseDataLink",*/ "ref5KeysLink",

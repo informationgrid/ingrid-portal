@@ -31,7 +31,7 @@ define([
     UtilUI, UtilList, UtilAddress, UtilSyslist, UtilCatalog, UtilGrid, UtilThesaurus, UtilGeneral, UtilString,
     rules, dirty, message, dialog) {
 
-    return declare(null, {
+    var lib = declare(null, {
 
         previousClass: null,
 
@@ -879,8 +879,10 @@ define([
                 var idList = [];
                 array.forEach(syslist2000Items, function(entry) {
                     // "data" of list item contains relevant classes
-                    var containsClass = array.indexOf(entry.data.split(','), objectClass) !== -1;
-                    if (containsClass) idList.push(entry.entryId);
+                    if (entry.data) {
+                        var containsClass = array.indexOf(entry.data.split(','), objectClass) !== -1;
+                        if (containsClass) idList.push(entry.entryId);
+                    }
                 });
 
                 var initialItems = [{
@@ -937,4 +939,11 @@ define([
             UtilGrid.getTable("linksTo").invalidate();
         }
     })();
+
+    // backward compatibility
+    igeEvents = {
+        refreshTabContainers: lib.refreshTabContainers
+    };
+
+    return lib;
 });

@@ -64,50 +64,90 @@ throw new IllegalArgumentException("Record is no DatabaseRecord!");
 // get contact email address
 var email = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:contact//gmd:electronicMailAddress/gco:CharacterString").getElement().getTextContent();
 
+// determine object class
+var objId = sourceRecord.get(DatabaseSourceRecord.ID);
+var objRows = SQL.all("SELECT * FROM t01_object WHERE id=?", [objId]);
+var objClass = "-1", i;
+for (i=0; i<objRows.size(); i++) {
+	var objRow = objRows.get(i);
+	objClass = objRow.get("obj_class");
+}
+
 // extract domain as an array ... convert to JS-String first!!!
-var domain = (email.substring(email.indexOf("@")+1)+"").split(".");
+var extractSubDomain = function(email) {
+	var domainSplitted = (email.substring(email.indexOf("@")+1)+"").split(".");
+	if (domainSplitted.length > 2) {
+		return domainSplitted[domainSplitted.length - 3];
+	} else {
+		return null;
+	}
+};
+// helper function to append the sub-domain at the right place
+var appendDomain = function(uuid, domain) {
+	var end = uuid.indexOf("#");
+	if (end == -1) {
+		return uuid + "/" + domain;
+	}
+	return uuid.substring(0, end) + "/" + domain + uuid.substring(end);
+};
+
+// modify namespace e.g.: //gmd:identificationInfo/gmd:MD_DataIdentification/@uuid="http://portalu.de/igc_bb#45C506E5-3E9D-4DE2-9073-C3DB636CE7CF
+var elIdent = DOM.getElement(idfDoc, "//gmd:identificationInfo/gmd:MD_DataIdentification");
+if (objClass.equals("3")) {
+	elIdent = DOM.getElement(idfDoc, "//gmd:identificationInfo/srv:SV_ServiceIdentification");
+}
+
+var subDomain = extractSubDomain(email);
 
 // if 3rd level domain exists
-if ( domain.length > 2 ) {
-	
-	var appendDomain = function(uuid, domain) {
-		var end = uuid.indexOf("#");
-		if (end == -1) {
-			return uuid + "/" + domain
-		}
-		return uuid.substring(0, end) + "/" + domain + uuid.substring(end);
-	};
-	
-	// extract third level domain
-	var tlDomain = domain[domain.length - 3];
-	
-	// determine object class
-	var objId = sourceRecord.get(DatabaseSourceRecord.ID);
-	var objRows = SQL.all("SELECT * FROM t01_object WHERE id=?", [objId]);
-	var objClass = "-1", i;
-	for (i=0; i<objRows.size(); i++) {
-	    var objRow = objRows.get(i);
-	    objClass = objRow.get("obj_class");
-	}
-
-	// modify namespace e.g.: //gmd:identificationInfo/gmd:MD_DataIdentification/@uuid="http://portalu.de/igc_bb#45C506E5-3E9D-4DE2-9073-C3DB636CE7CF
-	var el = DOM.getElement(idfDoc, "//gmd:identificationInfo/gmd:MD_DataIdentification");
-	if (objClass.equals("3")) {
-		el = DOM.getElement(idfDoc, "//gmd:identificationInfo/srv:SV_ServiceIdentification");
-	}
+if ( subDomain ) {
 	
 	var uuid = null;
-	if (el) {
-		uuid = el.getElement().getAttribute( "uuid" );
-		var newUuid = appendDomain( uuid, tlDomain );
-		el.getElement().setAttribute( "uuid", newUuid );
+	if (elIdent) {
+		uuid = elIdent.getElement().getAttribute( "uuid" );
+		var newUuid = appendDomain( uuid, subDomain );
+		elIdent.getElement().setAttribute( "uuid", newUuid );
 	}
 	
 	// modify namespace e.g.: //gmd:identificationInfo/gmd:MD_DataIdentification/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString = "http://portalu.de/igc_bb#45C506E5-3E9D-4DE2-9073-C3DB636CE7CF
-	if (el) el = DOM.getElement(el, "//gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString");
-	if (el) { // 
-		uuid = el.getElement().getTextContent();
-		var newUuid = appendDomain( uuid, tlDomain );
-		el.getElement().setTextContent( newUuid );
+	var elIdentCode = DOM.getElement(elIdent, "//gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString");
+	if (elIdentCode) {
+		uuid = elIdentCode.getElement().getTextContent();
+		var newUuid = appendDomain( uuid, subDomain );
+		elIdentCode.getElement().setTextContent( newUuid );
+	}
+	
+	// modify namespace of coupled resource
+	var elCoupled = DOM.getElement(elIdent, "srv:coupledResource/srv:SV_CoupledResource/srv:identifier/gco:CharacterString");
+	if (elCoupled) {
+		uuid = elCoupled.getElement().getTextContent();
+		var newUuid = appendDomain( uuid, subDomain );
+		elCoupled.getElement().setTextContent( newUuid );
+	}
+
+}
+
+// also adapt references in operatesOn!
+if (objClass.equals("3")) {
+	var operatesOn = DOM.getElement( elIdent, "srv:operatesOn" );
+	while (operatesOn) {
+		var refUuid = operatesOn.getElement().getAttribute( "uuidref" );
+		// get email contact from referenced dataset which is needed to modify metadata identifier
+		var responsibleObj = SQL.first("SELECT responsible_uuid FROM t01_object WHERE obj_uuid=? AND work_state='V'", [refUuid]);
+		var emailObj = SQL.first("SELECT comm_value FROM  t02_address adr, t021_communication comm WHERE  adr.adr_uuid=? AND adr.id=comm.adr_id AND commtype_key=3", [responsibleObj.get("responsible_uuid")]);
+		var subDomain = extractSubDomain( emailObj.get("comm_value") );
+		if ( subDomain ) {
+			var operatesHref = operatesOn.getElement().getAttribute( "xlink:href" );
+			var newUuid = appendDomain( operatesHref, subDomain );
+			operatesOn.getElement().setAttribute( "xlink:href", newUuid );
+		}
+		
+		// get next operatesOn element
+		var next = operatesOn.getElement().getNextSibling();
+		if (next) {
+			operatesOn = DOM.getElement( next, "." );
+		} else {
+			operatesOn = null;
+		}
 	}
 }

@@ -61,7 +61,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
         applyRule3: function(value) {
             console.debug("apply rule 3");
             if (value.indexOf("von") === 0) {
-                style.set("timeRefDate2Editor", "display", "block");
+                domClass.remove("timeRefDate2Editor", "hide");
                 var dateValue = registry.byId("timeRefDate1").get("value");
                 var date2Widget = registry.byId("timeRefDate2");
                 //date2Widget.attr("value", dateValue);
@@ -71,7 +71,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 }
                 date2Widget.validate();
             } else {
-                style.set("timeRefDate2Editor", "display", "none");
+                domClass.add("timeRefDate2Editor", "hide");
                 // reset constraints for min/max date
                 delete(registry.byId("timeRefDate1").constraints.max); // = null;
                 delete(registry.byId("timeRefDate2").constraints.min); // = null;
@@ -261,7 +261,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 // get link for use constraints which will be changed depending on the
                 // state of the open data checkbox
                 var link = dom.byId("availabilityUseConstraintsLink");
-                var onclickValue = link.attributes.onclick.nodeValue;
+                var onclickValue = link.attributes.onclick.value;
 
                 if (isChecked) {
 
@@ -272,7 +272,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                     domClass.add("uiElement6020", "required");
 
                     // change codelist for 'availabilityUseConstraints'
-                    link.attributes.onclick.nodeValue = onclickValue.replace(/(listId:).*'}/, "$1 '6500'}");
+                    link.attributes.onclick.value = onclickValue.replace(/(listId:).*'}/, "$1 '6500'}");
 
                     // add check for url reference of type download when publishing
                     // we check name and not id cause is combo box ! id not adapted yet if not saved !
@@ -288,7 +288,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                     });
                 } else {
                     // change codelist for 'availabilityUseConstraints'
-                    link.attributes.onclick.nodeValue = onclickValue.replace(/(listId:).*'}/, "$1 '6020'}");
+                    link.attributes.onclick.value = onclickValue.replace(/(listId:).*'}/, "$1 '6020'}");
 
                     // hide categories
                     domClass.add("uiElement6020", "hide");
