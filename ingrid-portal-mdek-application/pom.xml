@@ -64,6 +64,12 @@
 					<classesClassifier />
 					<!-- CONFIG-FILES needed at runtime in classes-path, so keep all underneath WEB-INF/classes and DO NOT bundle as .jar in war file -->
 					<archiveClasses>false</archiveClasses>
+					<webResources>
+			            <resource>
+			                <!-- this is relative to the pom.xml directory -->
+			                <directory>target/dojo-release</directory>
+			            </resource>
+			          </webResources>
 				</configuration>
 			</plugin>
 			<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
@@ -84,17 +90,6 @@
 					<runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
 					<smtpHost>localhost</smtpHost>
 					<toAddresses />
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>src/main/webapp/dojo-sources/release</directory>
-						</fileset>
-					</filesets>
 				</configuration>
 			</plugin>
 		</plugins>

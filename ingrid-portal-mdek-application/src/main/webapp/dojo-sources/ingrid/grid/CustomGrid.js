@@ -2142,8 +2142,10 @@ define([
                 rule = this.findCssRule("." + this.uid + " .c" + i);
                 var newWidth = (w - this.cellWidthDiff) < 0 ? 0 : (w - this.cellWidthDiff);
                 // if it's the last column
-                if (i === this.columns.length-1) {
-                    newWidth = this.viewportW - x - scrollbarDimensions.width - this.cellWidthDiff;
+                var lastVisibleColumn = this._getLastVisibleColumn();
+                if (i === lastVisibleColumn) {
+                    var currentViewportWidth = parseFloat(style.get(this.container, "width"));
+                    newWidth = currentViewportWidth - x - scrollbarDimensions.width - this.cellWidthDiff;
                     var lastHeader = this.headers.children[this.headers.children.length-1];
                     style.set(lastHeader, "width", newWidth + "px");//this.columns[i].width - this.headerColumnWidthDiff + "px");
                     // adapt rowWidth

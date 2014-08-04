@@ -1,7 +1,7 @@
 var profile = (function(){
     return {
         basePath: "../../..",
-        releaseDir: "./release",
+        releaseDir: "../../../../target/dojo-release/dojo-sources/release",
         releaseName: "lib",
         action: "release",
         layerOptimize: "closure",
@@ -74,6 +74,7 @@ var profile = (function(){
         layers: {
             "ingrid/ingrid": {
                 include: ["dojo/dojo", "dijit/layout/TabContainer", "ingrid/grid/CustomGrid", "ingrid/init"],
+                //exclude: [ "ingrid/IgeActions", "ingrid/IgeEvents", "ingrid/hierarchy/rules", "ingrid/hierarchy/validation", "ingrid/hierarchy/requiredChecks" ],
                 customBase: true,
                 boot: true
             }/*,

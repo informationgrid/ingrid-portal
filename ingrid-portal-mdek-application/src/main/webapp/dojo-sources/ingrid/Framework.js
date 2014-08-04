@@ -89,7 +89,7 @@ define([
         // UtilGrid.getTableData
         getTableData: function(id) {
             return UtilGrid.getTableData( id );
-        },
+        }
 
         // dqTablesPublishable, ref3OperationPublishable, generalAddressPublishable, spatialRefAdminUnitPublishable, timeRefTablePublishable, extraInfoConformityPublishable, availabilityAccessPublishable
         // applyRef6UrlListValidation, addServiceUrlValidation, minMaxBoundingBoxValidation, spatialRefLocationValidation, addMinMaxValidation, applyTimeRefIntervalValidation, 

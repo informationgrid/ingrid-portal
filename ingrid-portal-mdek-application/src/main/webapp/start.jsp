@@ -1,6 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<% request.getSession(true).setAttribute("isDebug", request.getParameter("debug") == null ? false : true);%>
 <% request.getSession(true).setAttribute("currLang", request.getParameter("lang") == null ? "de" : request.getParameter("lang")); %>
 
 
@@ -30,7 +32,14 @@
 
         <!-- Application files -->
         <script type="text/javascript" src="dojo-sources/release/lib/global/config.js"></script>
-        <script type="text/javascript" src="dojo-sources/release/lib/ingrid/ingrid.js"></script>
+<c:choose>
+    <c:when test="${isDebug}">
+        <script type="text/javascript" src="dojo-sources/release/lib/ingrid/ingrid.js.uncompressed.js"></script>
+    </c:when>
+    <c:otherwise>
+      <script type="text/javascript" src="dojo-sources/release/lib/ingrid/ingrid.js"></script>
+   </c:otherwise>
+</c:choose>
         <script type="text/javascript" src="js/error_handler.js"></script>
 
         <!-- DWR Services -->
@@ -99,4 +108,3 @@
 		<div id="blockInputDiv" style="position: absolute; top: 0px; left: 0px; width: 100%; height:100%; z-index: 99; visibility:hidden"></div>
     </body>
 </html>
-	
