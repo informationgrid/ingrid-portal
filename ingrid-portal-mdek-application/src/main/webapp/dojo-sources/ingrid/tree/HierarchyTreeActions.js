@@ -238,12 +238,12 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/_base/lang", "dojo/Defer
                         if (i.id == "menuItemNew" || i.id == "menuItemPaste" ||
                             i.id == "menuItemReload" || i.id == "menuItemSeparator") {
                             domClass.remove(i.domNode, "hidden");
-                            if (i.id != "menuItemSeparator") i.setDisabled(false);
+                            if (i.id != "menuItemSeparator") i.set("disabled", false);
                         } else {
                             domClass.add(i.domNode, "hidden");
                         }
                         if (i.id == "menuItemPaste") {
-                            enablePaste ? i.setDisabled(false) : i.setDisabled(true);
+                            enablePaste ? i.set("disabled", false) : i.set("disabled", true);
                         }
                     });
                 } else { // for all child nodes of the objects and addresses
@@ -262,37 +262,37 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/_base/lang", "dojo/Defer
                         }
                         if (clickedNode.item.nodeAppType == "A" && (clickedNode.item.objectClass == 2 || clickedNode.item.objectClass == 3)) {
                             if (i.id == "menuItemNew")
-                                i.setDisabled(true);
+                                i.set("disabled", true);
                             else
-                                i.setDisabled(false);
+                                i.set("disabled", false);
                         } else {
-                            i.setDisabled(false);
+                            i.set("disabled", false);
                         }
                         if (i.id == "menuItemPaste")
-                            enablePaste ? i.setDisabled(false) : i.setDisabled(true);
+                            enablePaste ? i.set("disabled", false) : i.set("disabled", true);
 
                         if (clickedNode.item.userWriteTreePermission && (clickedNode.item.userWriteTreePermission === false)) {
                             if (i.id == "menuItemCut")
-                                i.setDisabled(true);
+                                i.set("disabled", true);
 
                             if (!clickedNode.item.userWriteSubTreePermission && !clickedNode.item.userWriteSubNodePermission && (i.id == "menuItemNew" || i.id == "menuItemPaste")) {
                                 console.debug(clickedNode.item);
-                                i.setDisabled(true);
+                                i.set("disabled", true);
                             }
                         }
 
                         if (!clickedNode.item.userMovePermission && (i.id == "menuItemMove" || i.id == "menuItemCut" || i.id == "menuItemDetach")) {
-                            i.setDisabled(true);
+                            i.set("disabled", true);
                         }
 
                         if (!isAddressNode) {
                             if (clickedNode.item.publicationCondition && clickedNode.item.publicationCondition) {
                                 if (i.id.indexOf("PublicationCondition") != -1) {
                                     domClass.remove(i.domNode, "hidden");
-                                    i.setDisabled(false);
+                                    i.set("disabled", false);
                                 }
                                 if (i.id == "menuItemPublicationCondition" + clickedNode.item.publicationCondition) {
-                                    i.setDisabled(true);
+                                    i.set("disabled", true);
                                 }
                             } else {
                                 if (i.id.indexOf("PublicationCondition") != -1) {
@@ -306,7 +306,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/_base/lang", "dojo/Defer
                         }
 
                         if (i.id == "menuItemInheritAddress" && clickedNode.item.isFolder !== true) {
-                            i.setDisabled(true);
+                            i.set("disabled", true);
                         }
 
                         // only enable these menu entries on multi selection
@@ -316,7 +316,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/_base/lang", "dojo/Defer
                                 // do not modify state, since they already should have the right one!
                             } else {
                                 // disable all other entries
-                                i.setDisabled(true);
+                                i.set("disabled", true);
                             }
                         }
                     });

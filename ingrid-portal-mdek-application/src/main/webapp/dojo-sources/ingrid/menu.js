@@ -380,26 +380,26 @@ define([
 
                         array.forEach(menu.getChildren(), function(i) {
                             // reset item to active first!
-                            if (!(i instanceof MenuSeparator)) i.setDisabled(false);
+                            if (!(i instanceof MenuSeparator)) i.set("disabled", false);
 
                             if (!somethingIsSelected) {
-                                if (i.id.indexOf("menuDeselectAll") != -1) i.setDisabled(true);
-                                if (i.id.indexOf("menuRemoveSelected") != -1) i.setDisabled(true);
+                                if (i.id.indexOf("menuDeselectAll") != -1) i.set("disabled", true);
+                                if (i.id.indexOf("menuRemoveSelected") != -1) i.set("disabled", true);
                             }
                             if (!clickedSlickGrid.getData()[clickedRow]) {
-                                if (i.id.indexOf("menuRemoveClicked") != -1) i.setDisabled(true);
-                                if (i.id.indexOf("menuEditClicked") != -1) i.setDisabled(true);
-                                if (i.id.indexOf("menuShowAddress") != -1) i.setDisabled(true);
-                                if (i.id.indexOf("menuCopyAddress") != -1) i.setDisabled(true);
+                                if (i.id.indexOf("menuRemoveClicked") != -1) i.set("disabled", true);
+                                if (i.id.indexOf("menuEditClicked") != -1) i.set("disabled", true);
+                                if (i.id.indexOf("menuShowAddress") != -1) i.set("disabled", true);
+                                if (i.id.indexOf("menuCopyAddress") != -1) i.set("disabled", true);
                             }
                             if (!somethingIsCopied) {
-                                if (i.id.indexOf("menuPasteAddress") != -1) i.setDisabled(true);
+                                if (i.id.indexOf("menuPasteAddress") != -1) i.set("disabled", true);
                             }
                         });
                     } else {
                         array.forEach(menu.getChildren(), function(i) {
                             if (i.declaredClass != "MenuSeparator")
-                                i.setDisabled(true);
+                                i.set("disabled", true);
                         });
                     }
                 });
@@ -478,7 +478,7 @@ define([
                             return;
                         }
                         var rowData = clickedSlickGrid.getData()[clickedRow];
-                        ingridObjectLayout.openLinkDialog({
+                        self.openLinkDialog({
                             gridId: clickedSlickGridProperties.id,
                             filter: clickedSlickGridProperties.relation_filter,
                             selectedRow: rowData
@@ -600,6 +600,11 @@ define([
             return deferred.then(function() {
                 registry.byId("dataFormContainer").resize();
             });
+        },
+
+        // called now via context menu
+        openLinkDialog: function(dialogData) {
+            dialog.showPage(message.get("dialog.links.title.edit"), 'dialogs/mdek_links_dialog.jsp?c=' + userLocale, 1010, 680, true, dialogData);
         }
 
     })();

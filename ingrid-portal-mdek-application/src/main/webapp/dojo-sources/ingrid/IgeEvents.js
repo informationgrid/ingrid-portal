@@ -910,7 +910,7 @@ define([
                         items: newItems
                     }
                 };
-                registry.byId("linksToRelationTypeFilter").setStore(new Memory(storeProps));
+                registry.byId("linksToRelationTypeFilter").set("store", new Memory(storeProps));
                 //            console.debug("/onObjectClassChange -> New items for relation type filter");
                 //            console.debug(newItems);
             });

@@ -10,9 +10,29 @@
         <script type="text/javascript">
 
         var pageLinksDialog = _container_;
-        require(["dojo/_base/lang", "dojo/_base/array", "dojo/on", "dojo/Deferred", "dojo/DeferredList", "dojo/dom", "dojo/topic", "dojo/dom-class", "dojo/dom-style", "dojo/query", "dijit/registry", "dojo/data/ItemFileWriteStore", "ingrid/layoutCreator", "ingrid/dialog",
-            "ingrid/utils/Syslist", "ingrid/utils/String", "ingrid/utils/Store", "ingrid/utils/UDK", "ingrid/utils/List", "ingrid/utils/Grid", "ingrid/utils/UI", "ingrid/hierarchy/requiredChecks"],
-            function(lang, array, on, Deferred, DeferredList, dom, topic, domClass, style, query, registry, ItemFileWriteStore, layoutCreator, dialog, UtilSyslist, UtilString, UtilStore, UtilUdk, UtilList, UtilGrid, UtilUI, checks) {
+        require(["dojo/_base/lang",
+            "dojo/_base/array",
+            "dojo/on",
+            "dojo/Deferred",
+            "dojo/promise/all",
+            "dojo/dom",
+            "dojo/topic",
+            "dojo/dom-class",
+            "dojo/dom-style",
+            "dojo/query",
+            "dijit/registry",
+            "dojo/data/ItemFileWriteStore",
+            "ingrid/layoutCreator",
+            "ingrid/dialog",
+            "ingrid/utils/Syslist",
+            "ingrid/utils/String",
+            "ingrid/utils/Store",
+            "ingrid/utils/UDK",
+            "ingrid/utils/List",
+            "ingrid/utils/Grid",
+            "ingrid/utils/UI",
+            "ingrid/hierarchy/requiredChecks"
+        ], function(lang, array, on, Deferred, all, dom, topic, domClass, style, query, registry, ItemFileWriteStore, layoutCreator, dialog, UtilSyslist, UtilString, UtilStore, UtilUdk, UtilList, UtilGrid, UtilUI, checks) {
 
                 var curSelectedObject = {};
                 var curSelectedUrl = {};
@@ -52,8 +72,8 @@
                     resetRequiredInputElements();
 
                     // Init static data
-                    var objectName = registry.byId("objectName").getValue();
-                    registry.byId("linksFromObjectName").setValue(objectName);
+                    var objectName = registry.byId("objectName").get("value");
+                    registry.byId("linksFromObjectName").set("value", objectName);
 
                     // initialize type widget dependent from passed filter 
                     var referenceWidget = registry.byId("linksFromFieldName");
@@ -69,7 +89,7 @@
                     } else {
                         // set values from syslist dependent from object class
                         // initReferenceWidget();
-                        referenceWidget.setValue("");
+                        referenceWidget.set("value", "");
                     }
 
                     // adapt UI and data dependent from passed data (create new link or edit link ?)
@@ -84,11 +104,11 @@
                         if (UtilString.hasValue(caller.selectedRow.objectClass)) {
                             curSelectedObject = lang.clone(caller.selectedRow);
                             selectLinkType("obj");
-                            setObjectData(curSelectedObject);
+                            def.then(lang.partial(setObjectData, curSelectedObject));
                         } else {
                             curSelectedUrl = lang.clone(caller.selectedRow);
                             selectLinkType("url");
-                            setUrlData(curSelectedUrl);
+                            def.then(lang.partial(setUrlData, curSelectedUrl));
                         }
 
                         // Update the 'save' button text
@@ -158,42 +178,39 @@
                     };
                     defs.push(layoutCreator.createSelectBox("linksToObjectClass", null, storeProps, null, "js/data/objectclasses.json"));
 
-                    return new DeferredList(defs);
+                    return all(defs);
                 }
 
                 function setObjectData(objectData) {
                     var typeWidget = registry.byId("linksFromFieldName");
                     if (objectData.relationType == -1) {
-                        typeWidget.setValue(objectData.relationTypeName);
+                        typeWidget.set("value", objectData.relationTypeName);
                     } else {
                         var def = UtilStore.getItemByAttribute(typeWidget.store, "entryId", objectData.relationType);
                         def.then(function(item) {
                             typeWidget.set("item", item);
                         });
                     }
-                    registry.byId("linksToObjectName").setValue(objectData.title);
-                    registry.byId("linksToObjectClass").setValue("Class" + objectData.objectClass);
-                    registry.byId("linksToObjectDescription").setValue(objectData.relationDescription);
+                    registry.byId("linksToObjectName").set("value", objectData.title);
+                    registry.byId("linksToObjectClass").set("value", "Class" + objectData.objectClass);
+                    registry.byId("linksToObjectDescription").set("value", objectData.relationDescription);
                 }
 
-                function setUrlData(urlData) {
-                    //                console.debug("setUrlData:");
-                    //                console.debug(urlData);
-
+                function setUrlData(urlData, res, res2) {
                     var typeWidget = registry.byId("linksFromFieldName");
                     if (urlData.relationType == -1) {
-                        typeWidget.setValue(urlData.relationTypeName);
+                        typeWidget.set("value", urlData.relationTypeName);
                     } else {
                         var def = UtilStore.getItemByAttribute(typeWidget.store, "entryId", urlData.relationType);
                         def.then(function(item) {
                             typeWidget.set("item", item);
                         });
                     }
-                    registry.byId("linksToURL").setValue(urlData.url);
-                    registry.byId("linksToURLName").setValue(urlData.name);
-                    registry.byId("linksToDataType").setValue(urlData.datatype);
-                    registry.byId("linksToURLType").setValue(urlData.urlType);
-                    registry.byId("linksToUrlDescription").setValue(urlData.description);
+                    registry.byId("linksToURL").set("value" , urlData.url);
+                    registry.byId("linksToURLName").set("value" , urlData.name);
+                    registry.byId("linksToDataType").set("value" , urlData.datatype);
+                    registry.byId("linksToURLType").set("value" , urlData.urlType);
+                    registry.byId("linksToUrlDescription").set("value" , urlData.description);
                 }
 
                 function disableInputElementsOnWrongPermission() {
@@ -300,7 +317,7 @@
                     } else {
                         // widen left input field and hide field and clean data
                         style.set("uiElement2200", "width", "80%");
-                        registry.byId("linksToDataType").setValue("");
+                        registry.byId("linksToDataType").set("value", "");
                         UtilUI.setHide(dom.byId("uiElement2240"));
                     }
                 }
@@ -336,16 +353,16 @@
                         // NOTICE: The curSelectedObject was selected by object tree dialog and already has all object data !
                         currentLink = curSelectedObject;
                         // this is the only field that can be changed after selection !
-                        currentLink.relationDescription = registry.byId("linksToObjectDescription").getValue();
+                        currentLink.relationDescription = registry.byId("linksToObjectDescription").get("value");
                         UtilList.addObjectLinkLabels([currentLink]);
                     } else {
                         // Take the current selected url and add the values that were entered in the ui fields
                         currentLink = curSelectedUrl;
-                        currentLink.url = registry.byId("linksToURL").getValue();
-                        currentLink.name = registry.byId("linksToURLName").getValue();
-                        currentLink.datatype = registry.byId("linksToDataType").getValue();
-                        currentLink.urlType = registry.byId("linksToURLType").getValue();
-                        currentLink.description = registry.byId("linksToUrlDescription").getValue();
+                        currentLink.url = registry.byId("linksToURL").get("value");
+                        currentLink.name = registry.byId("linksToURLName").get("value");
+                        currentLink.datatype = registry.byId("linksToDataType").get("value");
+                        currentLink.urlType = registry.byId("linksToURLType").get("value");
+                        currentLink.description = registry.byId("linksToUrlDescription").get("value");
                         UtilList.addUrlLinkLabels([currentLink]);
                     }
                     // then take over stuff for both OBJECT and URL !
@@ -411,8 +428,8 @@
                     var setSelectedObject = function(obj) {
                         if (obj.uuid != "objectRoot") {
                             curSelectedObject = obj;
-                            registry.byId("linksToObjectName").setValue(curSelectedObject.title);
-                            registry.byId("linksToObjectClass").setValue("Class" + curSelectedObject.objectClass);
+                            registry.byId("linksToObjectName").set("value", curSelectedObject.title);
+                            registry.byId("linksToObjectClass").set("value", "Class" + curSelectedObject.objectClass);
                         }
                     };
 
@@ -453,17 +470,17 @@
 
                     if (!caller.filter) {
                         registry.byId("linksFromFieldName").setDisabled(false);
-                        registry.byId("linksFromFieldName").setValue("");
+                        registry.byId("linksFromFieldName").set("value", "");
                     }
 
-                    registry.byId("linksToObjectName").setValue("");
-                    registry.byId("linksToObjectClass").setValue("");
-                    registry.byId("linksToObjectDescription").setValue("");
-                    registry.byId("linksToURL").setValue("http://");
-                    registry.byId("linksToURLName").setValue("");
-                    registry.byId("linksToDataType").setValue("");
-                    registry.byId("linksToURLType").setValue("");
-                    registry.byId("linksToUrlDescription").setValue("");
+                    registry.byId("linksToObjectName").set("value", "");
+                    registry.byId("linksToObjectClass").set("value", "");
+                    registry.byId("linksToObjectDescription").set("value", "");
+                    registry.byId("linksToURL").set("value", "http://");
+                    registry.byId("linksToURLName").set("value", "");
+                    registry.byId("linksToDataType").set("value", "");
+                    registry.byId("linksToURLType").set("value", "");
+                    registry.byId("linksToUrlDescription").set("value", "");
                 }
 
                 // Cancel Button onClick function

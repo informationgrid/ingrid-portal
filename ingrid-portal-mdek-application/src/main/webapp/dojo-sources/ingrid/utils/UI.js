@@ -14,13 +14,12 @@ define([
     "dijit/registry",
     "dijit/Tooltip",
     "ingrid/message",
-    "ingrid/dialog",
     "ingrid/utils/Grid",
     "ingrid/utils/Dom",
     "ingrid/utils/Syslist"
-], function(declare, array, lang, on, wnd, query, string, dom, domClass, style, construct, geometry, registry, Tooltip, message, dialog, UtilGrid, UtilDOM, UtilSyslist) {
-    // make var global for backward compatibility
-    UtilUI = declare(null, {
+], function(declare, array, lang, on, wnd, query, string, dom, domClass, style, construct, geometry, registry, Tooltip, message, UtilGrid, UtilDOM, UtilSyslist) {
+    
+    var lib = declare(null, {
         // This variable serves as a cache to store whether ui elements
         // have been activated or not
         _uiElementsActive: true,
@@ -398,5 +397,8 @@ define([
 
     } )();
 
-    return UtilUI;
+    // make var global for backward compatibility
+    UtilUI = lib;
+
+    return lib;
 } );

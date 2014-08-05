@@ -1967,10 +1967,7 @@ define([
                 }];
                 layoutCreator.createDataGrid("linksFrom", null, linksFromStructure, null);
             },
-            // called now via context menue
-            openLinkDialog: function(dialogData) {
-                dialog.showPage(message.get("dialog.links.title.edit"), 'dialogs/mdek_links_dialog.jsp?c=' + userLocale, 1010, 680, true, dialogData);
-            },
+            
             // called now via context menue
             // openOperationDialog: function(dialogData) {
             //     dialog.showPage(message.get("dialog.operations.title"), 'dialogs/mdek_operation_dialog.jsp?c=' + userLocale, 735, 745, true, dialogData);

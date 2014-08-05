@@ -11,15 +11,13 @@ define([
             getItemByAttribute: function(store, attr, value) {
                 var def = new Deferred();
                 
-                var gotItems = function(items, request) {
-                    array.forEach(items, function(item) {
-                        if (item[attr] == value) {
-                            def.resolve(item);
-                            return;
-                        }
-                    });
-                };
-                store.fetch({onComplete: gotItems});
+                array.some( store.data, function(item) {
+                    if (item[attr] == value) {
+                        def.resolve(item);
+                        return true;
+                    }
+                });
+
                 return def;
             },
 

@@ -160,139 +160,6 @@ define([
                 });
                 return result;
             },
-            /*
-        function createDataGrid(id, node, structure, initDataCallback, gridProperties, url) {
-            var deferred;
-            
-            //if (!gridProperties)
-            //   gridProperties = UtilDOM.getHTMLAttributes(id);
-            gridProperties = {};
-               
-            if (url) {
-                deferred = new Deferred();
-                dojo.xhrGet({
-                    url: url,
-                    handleAs: "json",
-                    load: function(data){
-                        deferred.resolve(data.items);
-                    }
-                });
-            }
-            
-            // if a function is given to fill grid with initial data then use it
-            // otherwise use an empty entry
-            var storeProps = {};
-            
-                if (!url) {
-                    if (initDataCallback == null) {
-                        deferred = getEmptyData();
-                    }
-                    else {
-                        deferred = initDataCallback();
-                    }
-                }
-                deferred.then(function(data) {
-                    var struct = [];
-                    var sortable = false;
-                    require(["dgrid/OnDemandGrid", "dojo/store/Memory", "dgrid/Keyboard", "dgrid/Selection", "dojo/_base/declare", "dgrid/editor" ], 
-                            function( OnDemandGrid, Memory, Keyboard, Selection, declare, editor ) {
-                    array.forEach(structure, function(item) {
-                        var params = lang.clone(item);//{};
-                        var editorType = item.editor ? item.editor : mapGridCellType(item.type);
-                        params.label = item.name;
-                        params.field = item.field;
-                        //col.name = item.name;
-                        //col.field = item.field;
-                        //col.formatter = item.formatter;
-                        //col.options = item.options;
-                        //col.values = item.values;
-                        //col.sortable = item.sortable; // needs more stuff to do (see example13!)
-                        if (params.sortable == true)
-                            sortable = true;
-                        
-                        params.cannotTriggerInsert = params.unselectable = item.editable ? false : true;
-                        
-                        //if (item.listId)
-                        //    col.listId = item.listId;
-                        
-                        if (item.width == "auto")
-                            params.width = 100;
-                        else
-                            params.width = parseInt(item.width,10);
-                            
-                        if ( item.editable === true ) {
-                            col = editor( params, editorType, "click" );
-                        } else {
-                            col = params;
-                        }
-                        struct.push(col);
-                    });
-        
-                    
-                        var options = {headerHeight:18, rowHeight: 22, editable: false,
-                            enableCellNavigation: true,asyncEditorLoading: false,
-                            autoEdit: false, forceFitColumns: false, autoHeight:true};
-                        
-                        if (gridProperties.autoedit == "true") options.autoEdit = true;
-                        
-                        if (gridProperties.autoHeight)
-                            options.visibleRowsInViewport = gridProperties.autoHeight;
-                        if (gridProperties.interactive) {
-                            options.enableAddRow = gridProperties.interactive == "true";
-                            options.editable = true;
-                        }
-                        if (gridProperties.forceGridHeight) {
-                            options.forceGridHeight = gridProperties.forceGridHeight == "true";
-                        }
-                        if (gridProperties.defaultHideScrollbar) {
-                            options.defaultHideScrollbar = gridProperties.defaultHideScrollbar == "true";
-                        }
-                        if (gridProperties.moveRows) {
-                            options.enableMoveRows = gridProperties.moveRows == "true";
-                        }
-                        
-                        //if (sortable)
-                        //    prepareGridForSort();
-             
-                        //var myDataGrid = new ingrid.dijit.CustomGrid({id: id, data: data, columns: struct, customOptions: options}, id);
-        
-                        
-                                // create a store from the data
-                                var store = new Memory( {
-                                    data: data
-                                });
-                                var myDataGrid = new (declare([OnDemandGrid, Keyboard, Selection])) ({
-                                    store: store,
-                                    columns: struct
-                                }, id);
-                                myDataGrid.startup();
-        
-                                //createContextMenu(myDataGrid, id, gridProperties);
-                                
-                                gridManager[id] = myDataGrid;
-                            }
-                        );
-                    });
-                
-                return deferred;
-        }
-        
-        function mapGridCellType(type) {
-            if (type == undefined)
-                return "text";
-                
-            if (type.prototype.declaredClass == "dojox.grid.cells.ComboBox")
-                return ComboboxEditor;
-            else if (type.prototype.declaredClass == "dojox.grid.cells.Select")
-                return SelectboxEditor;
-            else if (type.prototype.declaredClass == "ingrid.dijit.GridDateTextBox")
-                return DateCellEditor;
-            else if (type.prototype.declaredClass == "dojox.grid.cells._Widget")
-                return IntegerCellEditor;
-            else
-                return type;
-        }
-        */
 
             createDataGridWidget: function(id, structure, gridProperties) {
                 var storeProps = {};
@@ -352,8 +219,8 @@ define([
              */
             createFilteringSelect: function(id, node, storeProps, initDataCallback, url) {
                 var selectProperties = UtilDOM.getHTMLAttributes(id);
-
-                var def = this.getFileStoreInit("combo", storeProps, initDataCallback, url)
+                var def2 = new Deferred();
+                this.getFileStoreInit("combo", storeProps, initDataCallback, url)
                 .then(function(store) {
 
                     // add store to params
@@ -370,8 +237,9 @@ define([
                     }
 
                     mySelect.startup();
+                    def2.resolve();
                 });
-                return def;
+                return def2;
             },
 
 
@@ -401,11 +269,10 @@ define([
             },
 
             getFileStoreInit: function(storeType, storeProps, initDataCallback, url) {
-                var deferred2;
                 // use two deferreds here, otherwise the callback of the
                 // sub function messes up the order
                 var deferred;
-                deferred2 = new Deferred();
+                var deferred2 = new Deferred();
 
                 if (url) {
                     deferred = new Deferred();
@@ -433,7 +300,6 @@ define([
                     // otherwise it might be overwritten
                     var newProps = lang.clone(storeProps);
 
-
                     if (url)
                         newProps.url = url;
 
@@ -447,7 +313,6 @@ define([
                     // newProps.clearOnClose = true;
                     var store = new Memory(newProps);
 
-                    
                     deferred2.resolve(store);
                 });
 

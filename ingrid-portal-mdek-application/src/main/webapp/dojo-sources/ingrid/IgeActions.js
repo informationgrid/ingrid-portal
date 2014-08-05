@@ -1737,7 +1737,7 @@ define([
             registry.byId("timeRefPeriodicity").attr("value", nodeData.timeRefPeriodicity, true);
             registry.byId("timeRefIntervalNum").attr("value", nodeData.timeRefIntervalNum, true);
             // TODO Temporarily read the display value from the db till it is changed in the backend
-            registry.byId("timeRefIntervalUnit").attr("displayedValue", UtilString.emptyIfNull(nodeData.timeRefIntervalUnit), false); //attr("value", timeRefValue);
+            registry.byId("timeRefIntervalUnit").attr("displayedValue", UtilString.emptyIfNull(nodeData.timeRefIntervalUnit), true); // must be TRUE here for correct validation
 
 
             registry.byId("timeRefExplanation").attr("value", nodeData.timeRefExplanation, true);
@@ -2202,16 +2202,16 @@ define([
             if (parentUuid != "objectRoot") {
                 nodeData.parentUuid = parentUuid;
             }
-            nodeData.objectOwner = registry.byId("objectOwner").getValue();
+            nodeData.objectOwner = registry.byId("objectOwner").get("value");
 
             // ------------------ Header ------------------
-            nodeData.objectName = registry.byId("objectName").getValue();
+            nodeData.objectName = registry.byId("objectName").get("value");
 
             // ------------------ Object Content ------------------
             // --- General ---
-            nodeData.generalShortDescription = registry.byId("generalShortDesc").getValue();
-            nodeData.generalDescription = registry.byId("generalDesc").getValue();
-            nodeData.objectClass = registry.byId("objectClass").getValue().substr(5, 1); // Value is a string: "Classx" where x is the class
+            nodeData.generalShortDescription = registry.byId("generalShortDesc").get("value");
+            nodeData.generalDescription = registry.byId("generalDesc").get("value");
+            nodeData.objectClass = registry.byId("objectClass").get("value").substr(5, 1); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
             // Comments
             nodeData.commentTable = currentUdk.commentStore;
@@ -2227,9 +2227,9 @@ define([
             nodeData.spatialRefExplanation = registry.byId("spatialRefExplanation").get("value");
 
             // -- Time --
-            nodeData.timeRefType = registry.byId("timeRefType").getValue();
-            var timeFrom = registry.byId("timeRefDate1").getValue();
-            var timeTo = registry.byId("timeRefDate2").getValue();
+            nodeData.timeRefType = registry.byId("timeRefType").get("value");
+            var timeFrom = registry.byId("timeRefDate1").get("value");
+            var timeTo = registry.byId("timeRefDate2").get("value");
 
             if (nodeData.timeRefType == "bis") {
                 if (timeFrom !== "") {
@@ -2255,23 +2255,23 @@ define([
                 }
             }
 
-            nodeData.timeRefStatus = registry.byId("timeRefStatus").getValue();
-            nodeData.timeRefPeriodicity = registry.byId("timeRefPeriodicity").getValue();
+            nodeData.timeRefStatus = registry.byId("timeRefStatus").get("value");
+            nodeData.timeRefPeriodicity = registry.byId("timeRefPeriodicity").get("value");
             nodeData.timeRefIntervalNum = registry.byId("timeRefIntervalNum").get("displayedValue"); // will be mapped to String
             // TODO Temporarily store the display value in the database till it is changed in the backend
             nodeData.timeRefIntervalUnit = registry.byId("timeRefIntervalUnit").get("displayedValue");
 
-            nodeData.timeRefExplanation = registry.byId("timeRefExplanation").getValue();
+            nodeData.timeRefExplanation = registry.byId("timeRefExplanation").get("value");
             nodeData.timeRefTable = this._getTableData("timeRefTable");
 
             // -- Extra Info --
-            nodeData.extraInfoLangMetaDataCode = registry.byId("extraInfoLangMetaData").getValue();
-            nodeData.extraInfoLangDataCode = registry.byId("extraInfoLangData").getValue();
-            nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishArea").getValue();
-            nodeData.extraInfoCharSetDataCode = registry.byId("extraInfoCharSetData").getValue();
+            nodeData.extraInfoLangMetaDataCode = registry.byId("extraInfoLangMetaData").get("value");
+            nodeData.extraInfoLangDataCode = registry.byId("extraInfoLangData").get("value");
+            nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishArea").get("value");
+            nodeData.extraInfoCharSetDataCode = registry.byId("extraInfoCharSetData").get("value");
             nodeData.extraInfoConformityTable = this._getTableData("extraInfoConformityTable");
-            nodeData.extraInfoPurpose = registry.byId("extraInfoPurpose").getValue();
-            nodeData.extraInfoUse = registry.byId("extraInfoUse").getValue();
+            nodeData.extraInfoPurpose = registry.byId("extraInfoPurpose").get("value");
+            nodeData.extraInfoUse = registry.byId("extraInfoUse").get("value");
 
             nodeData.extraInfoXMLExportTable = UtilList.tableDataToList(this._getTableData("extraInfoXMLExportTable"));
             // var valuesExtraInfoLegalBasicsTable =
@@ -2280,9 +2280,9 @@ define([
             // -- Availability --
             //  nodeData.availabilityUsageLimitationTable = this._getTableData("availabilityUsageLimitationTable");
             nodeData.availabilityAccessConstraints = UtilList.tableDataToList(this._getTableData("availabilityAccessConstraints"));
-            nodeData.availabilityUseConstraints = registry.byId("availabilityUseConstraints").getValue();
+            nodeData.availabilityUseConstraints = registry.byId("availabilityUseConstraints").get("value");
 
-            nodeData.availabilityOrderInfo = registry.byId("availabilityOrderInfo").getValue();
+            nodeData.availabilityOrderInfo = registry.byId("availabilityOrderInfo").get("value");
             nodeData.availabilityDataFormatTable = this._getTableData("availabilityDataFormat");
             nodeData.availabilityMediaOptionsTable = this._getTableData("availabilityMediaOptions");
 
