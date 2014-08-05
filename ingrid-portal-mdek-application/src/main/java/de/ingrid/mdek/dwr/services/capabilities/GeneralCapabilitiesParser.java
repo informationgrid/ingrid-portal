@@ -401,6 +401,13 @@ public class GeneralCapabilitiesParser {
                 resultBean.setUuid( objects.get( 0 ).getString( "oNode.objUuid" ) );
                 resultBean.setTitle( objects.get( 0 ).getString( "obj.objName" ) );
                 return resultBean;
+            } else {
+            	// if no dataset was found then try another search if a namespace exists in the id
+            	// In this case remove the namespace search again (INGRID34-6)
+            	int seperatorPos = id.indexOf( "#" );
+            	if (seperatorPos != -1) {
+            		return checkForCoupledResource( id.substring( seperatorPos + 1 ) );
+            	}
             }
         }
         
