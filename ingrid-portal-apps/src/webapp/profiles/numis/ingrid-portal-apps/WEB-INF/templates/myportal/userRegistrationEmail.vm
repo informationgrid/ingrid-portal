@@ -1,6 +1,6 @@
 Hallo $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
 
-Willkommen bei PortalU! 
+Willkommen im NUMIS-Portal! 
 Vielen Dank für Ihre Anmeldung.
 
 Bitte verifizieren Sie Ihre Anmeldung durch den nachfolgenden Link.
