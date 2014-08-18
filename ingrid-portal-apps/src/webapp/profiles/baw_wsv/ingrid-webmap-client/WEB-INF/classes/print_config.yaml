@@ -43,7 +43,7 @@ hosts:
 # the list of layouts
 #===========================================================================
 layouts:
-  A4:
+  A4 (hoch):
     metaData:
       author: 'InGrid Map Client'
       creator: 'MapFish'
@@ -74,8 +74,193 @@ layouts:
         - !legends
           maxHeight: 0
           maxWidth: 0
-          maxIconWidth: 0
-          maxIconHeight: 0
+          maxIconWidth: 250 
+          maxIconHeight: 300
+          defaultScale: 0
+          classIndentation: 0
+          layerSpace: 5
+          classSpace: 2
+          layerFont: Helvetica
+          layerFontSize: 8
+          classFont: Helvetica
+          classFontSize: 8
+          fontEncoding: Cp1252
+        - !text
+          font: Helvetica
+          fontEncoding: Cp1252
+          text: '${comment}'
+      footer:
+        height: 30
+        items:
+          - !columns
+            items:
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: left
+                text: '${now MM.dd.yyyy}'
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: right
+                text: 'Seite ${pageNum} von ${pageTot}'
+  A4 (quer):
+    metaData:
+      author: 'InGrid Map Client'
+      creator: 'MapFish'
+    mainPage:
+      pageSize: A4
+      rotation: true
+      landscape: true
+      header:
+        height: 50
+        items:
+          - !text
+            font: Helvetica
+            fontEncoding: Cp1252
+            fontSize: 30
+            align: center
+            text: '${mapTitle}'
+      items:
+        - !map
+          spacingAfter: 30
+          width: 483
+          height: 400
+        - !scalebar
+          type: bar
+          units: m
+          maxSize: 100
+          barBgColor: white
+          fontSize: 8
+          align: right
+        - !legends
+          maxHeight: 0
+          maxWidth: 0
+          maxIconWidth: 200
+          maxIconHeight: 150
+          defaultScale: 0
+          classIndentation: 0
+          layerSpace: 5
+          classSpace: 2
+          layerFont: Helvetica
+          layerFontSize: 8
+          classFont: Helvetica
+          classFontSize: 8
+          fontEncoding: Cp1252
+        - !text
+          font: Helvetica
+          fontEncoding: Cp1252
+          text: '${comment}'
+      footer:
+        height: 30
+        items:
+          - !columns
+            items:
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: left
+                text: '${now MM.dd.yyyy}'
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: right
+                text: 'Seite ${pageNum} von ${pageTot}'
+  A3 (hoch):
+    metaData:
+      author: 'InGrid Map Client'
+      creator: 'MapFish'
+    mainPage:
+      pageSize: A3
+      rotation: true
+      header:
+        height: 50
+        items:
+          - !text
+            font: Helvetica
+            fontEncoding: Cp1252
+            fontSize: 30
+            align: center
+            text: '${mapTitle}'
+      items:
+        - !map
+          spacingAfter: 30
+          width: 650
+          height: 750
+        - !scalebar
+          type: bar
+          units: m
+          maxSize: 100
+          barBgColor: white
+          fontSize: 8
+          align: right
+        - !legends
+          maxHeight: 0
+          maxWidth: 0
+          maxIconWidth: 250
+          maxIconHeight: 300
+          defaultScale: 0
+          classIndentation: 0
+          layerSpace: 5
+          classSpace: 2
+          layerFont: Helvetica
+          layerFontSize: 8
+          classFont: Helvetica
+          classFontSize: 8
+          fontEncoding: Cp1252
+        - !text
+          font: Helvetica
+          fontEncoding: Cp1252
+          text: '${comment}'
+      footer:
+        height: 30
+        items:
+          - !columns
+            items:
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: left
+                text: '${now MM.dd.yyyy}'
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: right
+                text: 'Seite ${pageNum} von ${pageTot}'
+  A3 (quer):
+    metaData:
+      author: 'InGrid Map Client'
+      creator: 'MapFish'
+    mainPage:
+      pageSize: A3
+      rotation: true
+      landscape: true
+      header:
+        height: 50
+        items:
+          - !text
+            font: Helvetica
+            fontEncoding: Cp1252
+            fontSize: 30
+            align: center
+            text: '${mapTitle}'
+      items:
+        - !map
+          spacingAfter: 30
+          width: 750
+          height: 650
+        - !scalebar
+          type: bar
+          units: m
+          maxSize: 100
+          barBgColor: white
+          fontSize: 8
+          align: right
+        - !legends
+          maxHeight: 0
+          maxWidth: 0
+          maxIconWidth: 300
+          maxIconHeight: 250
           defaultScale: 0
           classIndentation: 0
           layerSpace: 5
