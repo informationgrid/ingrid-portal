@@ -71,6 +71,11 @@ body {
 	background-image: url(../../shared/images/icon_delete.png);
 }
 
+.iconErase {
+	background-image: url(../../shared/images/icon_erase.png);
+	background-size: 14px auto;
+}
+
 .iconRemoveAll {
 	background-image: url(../../shared/images/icon_deleteall.png);
 }
