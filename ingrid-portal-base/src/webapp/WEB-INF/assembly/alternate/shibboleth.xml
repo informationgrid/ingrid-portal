@@ -24,7 +24,7 @@
         <!-- the login names that shall have get jetspeed admin rights -->
         <!-- define multiple login names by separating them with ";" -->
         <entry key='adminname'>
-          <value>datkatindex@dlz-it-bvbs.bund.de</value>
+          <value>geoportal.admin@ba-dlz-it.bund.de</value>
         </entry>
         <!-- the roles (found under 'rolename') that shall be mapped to admin-portal  -->
         <!-- define multiple role names by separating them with ";" -->
