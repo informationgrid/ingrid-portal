@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-  <!-- <bean id="PortalConfiguration" class="org.apache.jetspeed.administration.PortalConfigurationImpl">
-    <constructor-arg>
-      <ref bean="portal_configuration" />
-    </constructor-arg>
-  </bean> -->
-  
-  
-  <bean id="org.apache.jetspeed.security.shibboleth.ShibbolethConfiguration" class="org.apache.jetspeed.security.impl.shibboleth.ShibbolethConfiguration">
+  <bean id="org.apache.jetspeed.security.shibboleth.ShibbolethConfiguration"
+    class="org.apache.jetspeed.security.impl.shibboleth.ShibbolethConfiguration">
     <!-- map of common jetspeed-security principals to shibboleth headers -->
     <constructor-arg index='0'>
       <map>
@@ -38,7 +32,7 @@
       <value type="boolean">false</value>
     </constructor-arg>
     <constructor-arg index='2'>
-      <ref bean="portal_configuration" />
+      <ref bean="PortalConfiguration" />
     </constructor-arg>
   </bean>
   

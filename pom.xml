@@ -38,7 +38,8 @@
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-portal-utils</artifactId>
         <version>3.4.0-SNAPSHOT</version>
-<!-- Activate if no errors anymore
+<!-- TODO: include ingrid-portal-utils.3.5.0-SNAPSHOT-R304 when ready -->
+<!--
         <version>3.5.0-SNAPSHOT-R304</version>
 -->
       </dependency>

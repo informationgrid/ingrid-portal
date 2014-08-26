@@ -18,7 +18,7 @@ package org.apache.jetspeed.security.impl.shibboleth;
 
 import java.util.Map;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.jetspeed.administration.PortalConfiguration;
 import org.apache.jetspeed.administration.PortalConfigurationConstants;
 
 
@@ -33,8 +33,7 @@ public class ShibbolethConfiguration
     private boolean authenticate;
     private String guestUser;
     
-    //public ShibbolethConfiguration(Map<String, String> headerMapping, boolean authenticate, PortalConfiguration config)
-    public ShibbolethConfiguration(Map<String, String> headerMapping, boolean authenticate, PropertiesConfiguration config)
+    public ShibbolethConfiguration(Map<String, String> headerMapping, boolean authenticate, PortalConfiguration config)
     {
         this.headerMapping = headerMapping;
         this.authenticate = authenticate;

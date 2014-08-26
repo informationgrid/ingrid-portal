@@ -16,11 +16,21 @@
  */
 package org.apache.jetspeed.security.impl.shibboleth;
 
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Set;
+import org.apache.jetspeed.Jetspeed;
+import org.apache.jetspeed.PortalReservedParameters;
+import org.apache.jetspeed.administration.PortalAuthenticationConfiguration;
+import org.apache.jetspeed.audit.AuditActivity;
+import org.apache.jetspeed.cache.UserContentCacheManager;
+import org.apache.jetspeed.components.ComponentManager;
+import org.apache.jetspeed.container.session.PortalSessionValidationFilter;
+import org.apache.jetspeed.login.LoginConstants;
+import org.apache.jetspeed.login.filter.PortalRequestWrapper;
+import org.apache.jetspeed.security.AuthenticationProvider;
+import org.apache.jetspeed.security.SecurityException;
+import org.apache.jetspeed.security.SubjectHelper;
+import org.apache.jetspeed.security.User;
+import org.apache.jetspeed.security.UserManager;
+import org.apache.jetspeed.security.UserSubjectPrincipal;
 
 import javax.security.auth.Subject;
 import javax.servlet.Filter;
@@ -31,32 +41,15 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.security.Principal;
 
-import org.apache.jetspeed.Jetspeed;
-import org.apache.jetspeed.PortalReservedParameters;
-import org.apache.jetspeed.components.ComponentManager;
-import org.apache.jetspeed.login.LoginConstants;
-import org.apache.jetspeed.login.filter.PortalRequestWrapper;
-import org.apache.jetspeed.security.AuthenticationProvider;
-import org.apache.jetspeed.security.SecurityException;
-import org.apache.jetspeed.security.User;
-import org.apache.jetspeed.security.UserManager;
-import org.apache.jetspeed.security.UserPrincipal;
-import org.apache.jetspeed.security.UserSubjectPrincipal;
-import org.apache.jetspeed.security.impl.UserPrincipalImpl;
-import org.apache.log4j.Logger;
-
+// TODO Extend this 2.3 ShibbolethPortalFilter with former functionality (first UPDATE this 2.3 one to most current !)
 
 public class ShibbolethPortalFilter implements Filter
 {
-	private static final Logger log = Logger.getLogger(ShibbolethPortalFilter.class);
 	protected String userNameHeader;
-	protected String roleNameHeader;
-	protected String[] adminNameHeader;
-	protected String[] roleNamesToMapToAdminPortal;
-	
 	protected Object sem = new Object();
-	
 
 	public void init(FilterConfig filterConfig) throws ServletException
 	{
@@ -65,47 +58,26 @@ public class ShibbolethPortalFilter implements Filter
 	public void doFilter(ServletRequest sRequest, ServletResponse sResponse, FilterChain filterChain) throws IOException, ServletException
 	{
         ComponentManager cm = Jetspeed.getComponentManager();
-		AuthenticationProvider authProvider = (AuthenticationProvider) cm.getComponent("org.apache.jetspeed.security.AuthenticationProvider");
+		AuthenticationProvider authProvider = cm.lookupComponent("org.apache.jetspeed.security.AuthenticationProvider");
 		if (sRequest instanceof HttpServletRequest)
 		{
 			HttpServletRequest request = (HttpServletRequest) sRequest;
+            HttpSession httpSession = PortalSessionValidationFilter.getValidSession(request);
 			if (userNameHeader == null)
 			{
 				synchronized (sem)
 				{
-					ShibbolethConfiguration config = (ShibbolethConfiguration) cm.getComponent(
-							"org.apache.jetspeed.security.shibboleth.ShibbolethConfiguration");
+					ShibbolethConfiguration config = cm.lookupComponent("org.apache.jetspeed.security.shibboleth.ShibbolethConfiguration");
 					userNameHeader = config.getHeaderMapping().get(ShibbolethConfiguration.USERNAME);
-					roleNameHeader = config.getHeaderMapping().get(ShibbolethConfiguration.ROLENAME);
-					adminNameHeader = config.getHeaderMapping().get(ShibbolethConfiguration.ADMINNAME).split(";");
-					roleNamesToMapToAdminPortal = config.getHeaderMapping().get(ShibbolethConfiguration.ROLENAMESTOMAP).split(";");
 				}
 			}
 			String username = request.getHeader(userNameHeader);
-			
-			if (username != null && !username.isEmpty() && isAdminUser(username))
+			if (username != null)
 			{
-				if (log.isDebugEnabled()) {
-					log.debug("username found which will be matched to admin: " + username);
-				}
-				UserManager userManager = (UserManager) cm.getComponent("org.apache.jetspeed.security.UserManager");
-				UserPrincipal admin = new UserPrincipalImpl("admin");
-				Subject subject;
-				try {
-					subject = userManager.getUser("admin").getSubject();
-					sRequest = wrapperRequest(request, subject, admin);
-				} catch (SecurityException e) {
-					log.error("Could not get subject of user 'admin'!", e);
-				}				
-			} 
-			else if (username != null)
-			{
-				log.debug("username found: " + username);
-				
 				Subject subject = (Subject) request.getSession().getAttribute(PortalReservedParameters.SESSION_KEY_SUBJECT);
 				if (subject != null)
 				{
-					Principal principal = getPrincipal(subject, UserSubjectPrincipal.class);
+					Principal principal = SubjectHelper.getPrincipal(subject, UserSubjectPrincipal.class);
 					if (principal != null)
 					{
 						if (principal.getName().equals(username))
@@ -119,18 +91,19 @@ public class ShibbolethPortalFilter implements Filter
 						}
 					}
 				}
-				UserManager userManager = (UserManager) cm.getComponent("org.apache.jetspeed.security.UserManager");
-				ShibbolethConfiguration config = (ShibbolethConfiguration) cm.getComponent(
+				UserManager userManager = cm.lookupComponent("org.apache.jetspeed.security.UserManager");
+				AuditActivity audit = cm.lookupComponent("org.apache.jetspeed.audit.AuditActivity");
+				ShibbolethConfiguration config = cm.lookupComponent(
 						"org.apache.jetspeed.security.shibboleth.ShibbolethConfiguration");
 				boolean success = false;
 				if (config.isAuthenticate())
 				{
 					try
 					{
-						//!!!authProvider.authenticate(username, username);
+						authProvider.authenticate(username, username);
 						success = true;
 					}
-					catch (Exception e) //(SecurityException e)
+					catch (SecurityException e)
 					{
 						throw new ServletException();
 					}
@@ -143,29 +116,29 @@ public class ShibbolethPortalFilter implements Filter
 						User user = userManager.getUser(username);
 						if (user != null)
 						{
-							subject = user.getSubject();
+							subject = userManager.getSubject(user);
 						}
 						success = true;
 					}
 					catch (SecurityException sex)
 					{
 						success = false;
-						sRequest = wrapperRequest(request, subject, null);
 					}
 				}
 				if (success)
 				{
-					/*PortalAuthenticationConfiguration authenticationConfiguration = (PortalAuthenticationConfiguration)
-							cm.getComponent("org.apache.jetspeed.administration.PortalAuthenticationConfiguration");
-					if (authenticationConfiguration.isCreateNewSessionOnLogin())
+					audit.logUserActivity(username, request.getRemoteAddr(), AuditActivity.AUTHENTICATION_SUCCESS, "ShibbolethFilter");
+					PortalAuthenticationConfiguration authenticationConfiguration =
+							cm.lookupComponent("org.apache.jetspeed.administration.PortalAuthenticationConfiguration");
+					if (authenticationConfiguration.isCreateNewSessionOnLogin() && httpSession != null && !httpSession.isNew())
 					{
 						request.getSession().invalidate();
 					}
 					else
 					{
-                        //UserContentCacheManager userContentCacheManager = (UserContentCacheManager)cm.getComponent("userContentCacheManager");
-                        //userContentCacheManager.evictUserContentCache(username, request.getSession().getId());
-					}*/
+                        UserContentCacheManager userContentCacheManager = cm.lookupComponent("userContentCacheManager");
+                        userContentCacheManager.evictUserContentCache(username, request.getSession().getId());
+					}
 					subject = null;
 					try
 					{
@@ -173,13 +146,13 @@ public class ShibbolethPortalFilter implements Filter
 						User user = userManager.getUser(username);
 						if (user != null)
 						{
-							subject = user.getSubject();
+							subject = userManager.getSubject(user);
 						}
 					}
 					catch (SecurityException sex)
 					{
 					}
-					Principal principal = getPrincipal(subject, UserPrincipal.class);
+					Principal principal = SubjectHelper.getPrincipal(subject, User.class);
 					sRequest = wrapperRequest(request, subject, principal);
 					request.getSession().removeAttribute(LoginConstants.ERRORCODE);
 					HttpSession session = request.getSession(true);
@@ -187,24 +160,17 @@ public class ShibbolethPortalFilter implements Filter
 				}
 				else
 				{
+					audit.logUserActivity(username, request.getRemoteAddr(), AuditActivity.AUTHENTICATION_FAILURE, "ShibbolethFilter");
 					request.getSession().setAttribute(LoginConstants.ERRORCODE, LoginConstants.ERROR_INVALID_PASSWORD);
 				}
 			}
 			else
 			{
-				if (log.isDebugEnabled()) {
-					String header = "";
-                    Enumeration headerNames = request.getHeaderNames();
-                    while (headerNames.hasMoreElements()) 
-                        header += headerNames.nextElement() + ";";
-					log.debug("username not found! Header: " + header);
-				}
-				
 				Subject subject = (Subject) request.getSession().getAttribute(PortalReservedParameters.SESSION_KEY_SUBJECT);
 				if (subject != null)
 				{
-					Principal principal = getPrincipal(subject, UserPrincipal.class);
-					ShibbolethConfiguration config = (ShibbolethConfiguration) Jetspeed.getComponentManager().getComponent(
+					Principal principal = SubjectHelper.getPrincipal(subject, User.class);
+					ShibbolethConfiguration config = Jetspeed.getComponentManager().lookupComponent(
 							"org.apache.jetspeed.security.shibboleth.ShibbolethConfiguration");
 					if (principal != null && principal.getName().equals(config.getGuestUser()))
 					{
@@ -216,48 +182,12 @@ public class ShibbolethPortalFilter implements Filter
 				}
 			}
 			sRequest.setAttribute(PortalReservedParameters.PORTAL_FILTER_ATTRIBUTE, "true");
-			if (username != null) {
-				sRequest.setAttribute("de.ingrid.user.auth.info", username);
-				sRequest.setAttribute("de.ingrid.user.auth.isAdminPartner", checkForAdminPortalRole(request));
-			}
-			if (log.isDebugEnabled()) {
-				showRequestHeader(request);
-			}
 		}
 
 		if (filterChain != null)
 		{
 			filterChain.doFilter(sRequest, sResponse);
 		}
-	}
-
-	private void showRequestHeader(HttpServletRequest request) {
-		Enumeration headerNames = request.getHeaderNames();
-        log.debug("HEADER INFORMATION");
-		while (headerNames.hasMoreElements()) { 
-            String header = (String) headerNames.nextElement();
-            String value = request.getHeader(header);
-            log.debug(header + ": " + value);
-        }
-		
-	}
-
-	private Boolean checkForAdminPortalRole(HttpServletRequest request) {
-		String rolesInRequest = request.getHeader(roleNameHeader);
-		if (rolesInRequest == null) return false; 
-		
-		for (String role : roleNamesToMapToAdminPortal) {
-			if (role.equals(rolesInRequest))
-				return true;
-		}
-		return false;
-	}
-
-	private boolean isAdminUser(String username) {
-		for (String name: this.adminNameHeader) {
-			if (username.equals(name)) return true;
-		}
-		return false;
 	}
 
 	private ServletRequest wrapperRequest(HttpServletRequest request, Subject subject, Principal principal)
@@ -269,36 +199,4 @@ public class ShibbolethPortalFilter implements Filter
 	public void destroy()
 	{
 	}
-	
-	
-	
-	/**
-     * <p>
-     * Given a subject, finds the first principal of the given classe for that subject. If a
-     * principal of the given classe is not found, null is returned.
-     * </p>
-     * 
-     * @param subject The subject supplying the principals.
-     * @param classe A class or interface derived from java.security.InternalPrincipal.
-     * @return The first principal matching a principal classe parameter.
-     */
-    private static Principal getPrincipal(Subject subject, Class/*<? extends Principal>*/ classe)
-    {
-        Principal principal = null;
-        Set<Principal> principalList = subject.getPrincipals();
-        if (principalList != null)
-        { 
-        	Iterator<Principal> principals = subject.getPrincipals().iterator();
-	        while (principals.hasNext())
-	        {
-	            Principal p = principals.next();
-	            if (classe.isInstance(p))
-	            {
-	                principal = p;
-	                break;
-	            }
-	        }
-        }
-        return principal;
-    }
 }
