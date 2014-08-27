@@ -438,9 +438,15 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         // check codelists for matching entryIds
         for (String item : crs) {
             SpatialReferenceSystemBean srsBean = new SpatialReferenceSystemBean();
-            Integer itemId = Integer.valueOf(item.split(":")[1]);
+            Integer itemId = null;
+            String value = null;
+            try {
+                itemId = Integer.valueOf(item.split(":")[1]);
+                value = syslistCache.getValueFromListId(100, itemId, false);
+            } catch (NumberFormatException e) {
+                // the id of the CRS is not an integer and will be set to unknown
+            }
             
-            String value = syslistCache.getValueFromListId(100, itemId, false);
             if (value == null || value.isEmpty()) {
                 srsBean.setId(-1);
                 srsBean.setName(item);            
