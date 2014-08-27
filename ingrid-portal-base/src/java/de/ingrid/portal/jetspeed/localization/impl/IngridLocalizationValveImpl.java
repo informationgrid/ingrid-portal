@@ -5,8 +5,6 @@ package de.ingrid.portal.jetspeed.localization.impl;
 
 import java.util.Locale;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.Jetspeed;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.cache.JetspeedCache;
@@ -15,6 +13,8 @@ import org.apache.jetspeed.pipeline.valve.AbstractValve;
 import org.apache.jetspeed.pipeline.valve.LocalizationValve;
 import org.apache.jetspeed.pipeline.valve.ValveContext;
 import org.apache.jetspeed.request.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Ingrid Valve handling ingrid localization for Jetspeed Pipeline.
@@ -23,14 +23,15 @@ import org.apache.jetspeed.request.RequestContext;
  * @author Joachim Müller
  */
 public class IngridLocalizationValveImpl extends AbstractValve implements LocalizationValve {
-    private static final Log log = LogFactory.getLog(IngridLocalizationValveImpl.class);
+
+    private static final Logger log = LoggerFactory.getLogger(IngridLocalizationValveImpl.class);
 
     private static final String INGRID_LOCALE__REQUEST_KEY = "lang";
 
     private JetspeedCache contentCache;
 
     public IngridLocalizationValveImpl() {
-        this.contentCache = (JetspeedCache) Jetspeed.getComponentManager().getComponent("portletContentCache");
+        this.contentCache = Jetspeed.getComponentManager().lookupComponent("portletContentCache");
     }
 
     /**
@@ -86,5 +87,10 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
 
         // Pass control to the next Valve in the Pipeline
         context.invokeNext(request);
+    }
+
+    public String toString()
+    {
+        return "IngridLocalizationValve";
     }
 }

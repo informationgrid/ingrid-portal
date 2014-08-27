@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.jetspeed.om.page.ContentFragment;
 import org.apache.jetspeed.om.page.ContentPage;
-import org.apache.jetspeed.om.page.Fragment;
+import org.apache.jetspeed.page.PageManager;
 import org.apache.jetspeed.pipeline.PipelineException;
 import org.apache.jetspeed.pipeline.valve.ValveContext;
 import org.apache.jetspeed.pipeline.valve.impl.CleanupValveImpl;
@@ -27,6 +27,9 @@ import org.apache.jetspeed.request.RequestContext;
  */
 public class InGridCleanupValveImpl extends CleanupValveImpl {
 
+    public InGridCleanupValveImpl(PageManager pageManager) {
+        super(pageManager);
+    }
 
 	/* (non-Javadoc)
 	 * @see org.apache.jetspeed.pipeline.valve.impl.CleanupValveImpl#invoke(org.apache.jetspeed.request.RequestContext, org.apache.jetspeed.pipeline.valve.ValveContext)
@@ -35,7 +38,7 @@ public class InGridCleanupValveImpl extends CleanupValveImpl {
 		super.invoke(request, context);
 		ContentPage page = request.getPage();
 		if (page != null) {
-			Fragment f = page.getRootFragment();
+			ContentFragment f = page.getRootFragment();
 			cleanFragmentsTree(f);
 		}
 	}
@@ -45,19 +48,17 @@ public class InGridCleanupValveImpl extends CleanupValveImpl {
 	 * 
 	 * @param f parent fragment
 	 */
-	private void cleanFragmentsTree(Fragment f) {
+	private void cleanFragmentsTree(ContentFragment f) {
 		if (f != null) {
-			List<Fragment> fragments = (List<Fragment>)f.getFragments();
+			List<ContentFragment> fragments = f.getFragments();
 			if (fragments != null && fragments.size() > 0) {
 				//Process child fragments
-				for (Fragment child : fragments) {
+				for (ContentFragment child : fragments) {
 					cleanFragmentsTree(child);
 				}
 			}
 			//Clean the given fragment
-			if (f instanceof ContentFragment) {
-				((ContentFragment)f).setPortletContent(null);
-			}
+			f.setPortletContent(null);
 		}
 	}	
 }
