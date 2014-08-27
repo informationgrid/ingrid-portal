@@ -447,7 +447,8 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
             };
 
             // react when inspire topics has been added
-            aspect.after(UtilGrid.getTable("thesaurusInspire"), "onCellChange", function(msg) {
+            aspect.after(UtilGrid.getTable("thesaurusInspire"), "onCellChange", function(result, args) {
+            	var msg = args[0];
                 var objClass = registry.byId("objectClass").get("value");
                 // only react if class == 1
                 if (objClass == "Class1") {
@@ -461,7 +462,8 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
             });
 
             // remove specific entry from conformity table when inspire topic was deleted
-            aspect.after(UtilGrid.getTable("thesaurusInspire"), "onDeleteItems", function(msg) {
+            aspect.after(UtilGrid.getTable("thesaurusInspire"), "onDeleteItems", function(result, args) {
+            	var msg = args[0];
                 var objClass = registry.byId("objectClass").get("value");
                 // only react if class == 1
                 if (objClass == "Class1") {

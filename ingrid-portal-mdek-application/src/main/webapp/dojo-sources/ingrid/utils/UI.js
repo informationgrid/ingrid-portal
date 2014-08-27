@@ -256,14 +256,10 @@ define([
 
         setComboBySyslistValue: function(boxId, entryId) {
             var box = registry.byId( boxId );
-            box.store.fetch( {
-                onComplete: function(data) {
-                    dojo.some( data, function(item) {
-                        if (item[1] == entryId) {
-                            box.set( 'value', item[0] );
-                            return true;
-                        }
-                    } );
+            box.store.data.some( function(item) {
+                if (item[1] == entryId) {
+                    box.set( 'value', item[0] );
+                    return true;
                 }
             } );
         },
