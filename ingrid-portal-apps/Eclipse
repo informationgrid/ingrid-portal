@@ -1,0 +1,12 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Invalid task 'eclipse:': you must specify a valid lifecycle phase, or a goal in the format plugin:goal or pluginGroupId:pluginArtifactId:pluginVersion:goal
+[INFO] ------------------------------------------------------------------------
+[INFO] For more information, run Maven with the -e switch
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: < 1 second
+[INFO] Finished at: Mon May 19 10:53:41 CEST 2014
+[INFO] Final Memory: 5M/123M
+[INFO] ------------------------------------------------------------------------
