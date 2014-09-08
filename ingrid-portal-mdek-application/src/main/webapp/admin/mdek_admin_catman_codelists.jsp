@@ -994,9 +994,7 @@
                         var displayText = "<fmt:message key='dialog.admin.catalog.management.codelist.importHint' />";
                         dialog.show("<fmt:message key='general.hint' />", displayText, dialog.INFO, [{
                             caption: "<fmt:message key='general.no' />",
-                            action: function(){
-                                askUserDef.reject("CANCEL");
-                            }
+                            action: function(){}
                         }, {
                             caption: "<fmt:message key='general.yes' />",
                             action: function(){

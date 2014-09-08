@@ -33,11 +33,11 @@ require([
             };
 
             on(_container_, "Load", function() {
+                registry.byId("contentPane").resize();
                 createDOMElements();
                 initDuplicatesTable();
                 // Load duplicates info on startup
                 pageDuplicates.startDuplicatesJob();
-                registry.byId("contentPane").resize();
             });
 
             function initDuplicatesTable() {
@@ -48,9 +48,11 @@ require([
             }
 
             function fillData(data) {
-                registry.byId("duplicatesObjectName").setValue(data.title);
-                registry.byId("duplicatesObjectDescription").setValue(data.generalDescription);
-                registry.byId("duplicatesObjectClass").setValue(UtilSyslist.getSyslistEntryName(8000, data.objectClass));
+            	if (data) {
+                    registry.byId("duplicatesObjectName").set("value", data.title);
+                    registry.byId("duplicatesObjectDescription").set("value", data.generalDescription);
+                    registry.byId("duplicatesObjectClass").set("value", UtilSyslist.getSyslistEntryName(8000, data.objectClass));            		
+            	}
             }
 
             // Switch to the tree view and select the node referenced by the menu action
@@ -154,9 +156,10 @@ require([
             };
 
             function clearInputFields() {
-                registry.byId("duplicatesObjectName").setValue("");
-                registry.byId("duplicatesObjectDescription").setValue("");
-                registry.byId("duplicatesObjectClass").setValue("");
+                registry.byId("duplicatesObjectName").set("value", "");
+                registry.byId("duplicatesObjectDescription").set("value", "");
+                registry.byId("duplicatesObjectClass").set("value", "");
+                registry.byId("duplicatesListTable").setSelectedRows([]);
             }
 
             pageDuplicates.saveChanges = function() {
@@ -239,9 +242,9 @@ require([
 		<!-- LEFT HAND SIDE CONTENT START -->
 		<div id="duplicatesListContainer" data-dojo-type="dijit/layout/ContentPane" region="leading" class="inputContainer" style="padding:5px;">
 			<div id="duplicatesLists" data-dojo-type="dijit/layout/TabContainer" style="width: 270px; height: 100%;" selectedChild="duplicatesList1">
-                <span class="outer required"><div><span class="label" style="height:12px;"><fmt:message key="dialog.admin.catalog.management.duplicates.result" /></span></div></span>
 				<!-- TAB 1 START -->
 				<div id="duplicatesList1" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.admin.catalog.management.duplicates.list" />">
+                    <h3><fmt:message key="dialog.admin.catalog.management.duplicates.result" /></h3>
 					<div class="tableContainer">
 						<div id="duplicatesListTable" autoHeight="13" forceGridHeight="false" class="hideTableHeader" contextMenu="DUPLICATE_GRID"></div>
 					</div>

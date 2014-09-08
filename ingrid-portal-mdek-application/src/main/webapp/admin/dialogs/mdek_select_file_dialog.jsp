@@ -7,14 +7,6 @@
 <script type="text/javascript">
 var scriptScope = _container_;
 
-on(_container_, "onUnload", function() {
-	// If the dialog was cancelled via the dialogs close button
-	// we need to signal an error (cancel action)
-	if (_container_.customParams.resultHandler.fired == -1) {
-		_container_.customParams.resultHandler.reject();
-	}
-});
-
 scriptScope.selectFile = function() {
     this.hide();
 	if (this.customParams.resultHandler) {

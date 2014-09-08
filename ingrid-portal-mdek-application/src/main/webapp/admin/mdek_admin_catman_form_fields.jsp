@@ -72,11 +72,11 @@ require([
             var b = registry.byId("checkBoxLegacyFieldsButton");
             if (!b.get("checked")) {
                 query(".legacyControl").forEach(function(element) {
-                    element.style.display = "";
+                	domClass.remove( element, "hide" );
                 });
             } else {
                 query(".legacyControl").forEach(function(element) {
-                    element.style.display = "none";
+                	domClass.add( element, "hide" );
                 });
             }
         }
@@ -91,15 +91,15 @@ require([
             var allRubrics = query(".rubricDiv");
             array.forEach(allRubrics, function(rubric) {
                 var rubricParent = rubric.parentNode;
-                var nonLegacyChildren = query("> div:not(.legacyControl)", rubricParent).length;
+                var nonLegacyChildren = query("> .dijitContentPane:not(.hide)", rubricParent).length;
                 
-                if (nonLegacyChildren == 1 && b.get("checked")) {
-                    style.set(rubricParent, "display", "none");
+                if (nonLegacyChildren === 0 && b.get("checked")) {
+                    domClass.add(rubricParent, "hide");
                     // also hide "add new control" row!
-                    style.set(rubricParent.nextSibling, "display", "none");
+                    domClass.add(rubricParent.nextSibling, "hide");
                 } else {
-                    style.set(rubricParent, "display", "block");
-                    style.set(rubricParent.nextSibling, "display", "block");
+                	domClass.remove(rubricParent, "hide");
+                	domClass.remove(rubricParent.nextSibling, "hide");
                 }
             });
         }
