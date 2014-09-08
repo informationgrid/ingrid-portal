@@ -33,6 +33,7 @@ require([
             };
 
             on(_container_, "Load", function() {
+            	console.log("Page loaded: " + this.id);
                 registry.byId("contentPane").resize();
                 createDOMElements();
                 initDuplicatesTable();
@@ -45,6 +46,10 @@ require([
                 aspect.after(duplicatesTable, "onSelectedRowsChanged", function() {
                     fillData(UtilGrid.getSelectedData("duplicatesListTable")[0]);
                 });
+                // grid needs to be resized after page layout is ready
+                setTimeout(function() {
+                	duplicatesTable.reinitLastColumn(true);
+                }, 300);
             }
 
             function fillData(data) {
