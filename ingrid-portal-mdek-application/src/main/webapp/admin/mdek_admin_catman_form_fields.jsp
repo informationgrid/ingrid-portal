@@ -79,6 +79,8 @@ require([
                 	domClass.add( element, "hide" );
                 });
             }
+            // combine with other checkbox
+            hideEmtyRubrics();
         }
         
         /**
@@ -738,19 +740,21 @@ require([
             </div>
         </div>
         <div data-dojo-type="dijit/layout/ContentPane" region="bottom" class="form_fields_bottom">
-            <div data-dojo-type="dijit/layout/ContentPane" style="top:30px; padding: 5px 0;">
-                <button data-dojo-type="dijit/form/Button" onclick="pageAdditionalFields.addRubric()" style="float:right;">
-                            <fmt:message key="dialog.admin.additionalfields.btnNewRubric" />
-                        </button>
-                    <button id="btnSaveProfileBottom" data-dojo-type="dijit/form/Button" onclick="pageAdditionalFields.saveProfile()" style="float:right;">
-                            <fmt:message key="dialog.admin.additionalfields.btnSave" />
+            <div data-dojo-type="dijit/layout/ContentPane" style="top: 30px; padding: 5px 0;">
+                <button data-dojo-type="dijit/form/Button" onclick="pageAdditionalFields.addRubric()"
+                    style="float: right;">
+                    <fmt:message key="dialog.admin.additionalfields.btnNewRubric" />
                 </button>
-                         <button data-dojo-type="dijit/form/Button" onclick="pageAdditionalFields.reload(true)" style="float:right;">
-                            <fmt:message key="dialog.admin.additionalfields.btnReload" />
-                        </button>
-                <div id="infoFormFields" style="float: right;color: grey;line-height: 27px;"></div>
+                <button id="btnSaveProfileBottom" data-dojo-type="dijit/form/Button"
+                    onclick="pageAdditionalFields.saveProfile()" style="float: right;">
+                    <fmt:message key="dialog.admin.additionalfields.btnSave" />
+                </button>
+                <button data-dojo-type="dijit/form/Button" onclick="pageAdditionalFields.reload(true)"
+                    style="float: right;">
+                    <fmt:message key="dialog.admin.additionalfields.btnReload" />
+                </button>
+                <div id="infoFormFields" style="float: right; color: grey; line-height: 27px;"></div>
             </div>
-            
         </div>
     </div>
 

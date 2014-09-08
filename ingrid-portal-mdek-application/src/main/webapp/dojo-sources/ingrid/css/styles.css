@@ -203,7 +203,7 @@ div #headMenu a:hover { color: #FFFFFF; }
 #formFieldsToolBar span.dijitToggleButton { background-color: #FFFFFF; }
 #formFieldsToolBar span.dijitToggleButton span.dijitButtonText { background-color: #156496; }
 
-.form_fields_bottom { background-color: #C6C6C6; border-bottom: 1px solid #ADD9F9; border-left: 1px solid #156496; border-right: 1px solid #156496; height: 40px; margin: 0 35px 20px 20px;  padding: 0 10px; }
+.form_fields_bottom { background-color: #C6C6C6 !important; height: 40px; padding: 0 23px !important; }
 div.rubricBottom { background: #F4F4F4; border-top: 1px solid #b5bcc7; border-left: 1px solid #156496; border-right: 1px solid #156496; border-bottom: 1px solid #ADD9F9; margin-bottom: 20px; padding: 5px 0; }
 div.rubricBottom span.controlLabel { width:250px; padding-right: 90px; margin:5px 0 0 0; }
 div.rubricBottom span.rubricButtons .dijitButtonNode { background: #156496; border: 0; width: 100%; margin: -5px 0px 0px 0px; border: 1px solid #769DC0; }

@@ -46,10 +46,6 @@ require([
                 aspect.after(duplicatesTable, "onSelectedRowsChanged", function() {
                     fillData(UtilGrid.getSelectedData("duplicatesListTable")[0]);
                 });
-                // grid needs to be resized after page layout is ready
-                setTimeout(function() {
-                	duplicatesTable.reinitLastColumn(true);
-                }, 300);
             }
 
             function fillData(data) {
