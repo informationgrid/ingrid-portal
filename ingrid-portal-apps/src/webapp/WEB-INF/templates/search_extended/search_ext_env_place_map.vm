@@ -1,5 +1,5 @@
 <script type="text/javascript">
-
+	var kml = null;
 mapClientCallbackHooks = {bboxSelected: function(x1, x2, y1, y2) {
 
 	document.env_place_map.x1.value = x1;
