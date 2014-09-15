@@ -9,6 +9,30 @@ define(["./has!dom-addeventlistener?:./aspect", "./_base/kernel", "./sniff"], fu
 		has.add("event-focusin", function(global, doc, element){
 			return 'onfocusin' in element;
 		});
+		
+		if(has("touch")){
+			has.add("touch-can-modify-event-delegate", function(){
+				// This feature test checks whether deleting a property of an event delegate works
+				// for a touch-enabled device. If it works, event delegation can be used as fallback
+				// for browsers such as Safari in older iOS where deleting properties of the original
+				// event does not work.
+				var EventDelegate = function(){};
+				EventDelegate.prototype =
+					document.createEvent("MouseEvents"); // original event
+				// Attempt to modify a property of an event delegate and check if
+				// it succeeds. Depending on browsers and on whether dojo/on's
+				// strict mode is stripped in a Dojo build, there are 3 known behaviors:
+				// it may either succeed, or raise an error, or fail to set the property
+				// without raising an error.
+				try{
+					var eventDelegate = new EventDelegate;
+					eventDelegate.target = null;
+					return eventDelegate.target === null;
+				}catch(e){
+					return false; // cannot use event delegation
+				}
+			});
+		}
 	}
 	var on = function(target, type, listener, dontFix){
 		// summary:
@@ -232,7 +256,9 @@ define(["./has!dom-addeventlistener?:./aspect", "./_base/kernel", "./sniff"], fu
 				// call select to see if we match
 				var eventTarget = select(event.target);
 				// if it matches we call the listener
-				return eventTarget && listener.call(eventTarget, event);
+				if (eventTarget) {
+					return listener.call(eventTarget, event);
+				}
 			});
 		};
 	};
@@ -495,7 +521,7 @@ define(["./has!dom-addeventlistener?:./aspect", "./_base/kernel", "./sniff"], fu
 		};
 	}
 	if(has("touch")){ 
-		var Event = function(){};
+		var EventDelegate = function(){};
 		var windowOrientation = window.orientation; 
 		var fixTouchListener = function(listener){ 
 			return function(originalEvent){ 
@@ -509,20 +535,22 @@ define(["./has!dom-addeventlistener?:./aspect", "./_base/kernel", "./sniff"], fu
 				if(!event){
 					var type = originalEvent.type;
 					try{
-						delete originalEvent.type; // on some JS engines (android), deleting properties make them mutable
+						delete originalEvent.type; // on some JS engines (android), deleting properties makes them mutable
 					}catch(e){} 
 					if(originalEvent.type){
-						// deleting properties doesn't work (older iOS), have to use delegation
-						if(has('mozilla')){
-							// Firefox doesn't like delegated properties, so we have to copy
-							var event = {};
+						// Deleting the property of the original event did not work (this is the case of
+						// browsers such as older Safari iOS), hence fallback:
+						if(has("touch-can-modify-event-delegate")){
+							// If deleting properties of delegated event works, use event delegation:
+							EventDelegate.prototype = originalEvent;
+							event = new EventDelegate;
+						}else{
+							// Otherwise last fallback: other browsers, such as mobile Firefox, do not like
+							// delegated properties, so we have to copy
+							event = {};
 							for(var name in originalEvent){
 								event[name] = originalEvent[name];
 							}
-						}else{
-							// old iOS branch
-							Event.prototype = originalEvent;
-							var event = new Event;
 						}
 						// have to delegate methods to make them work
 						event.preventDefault = function(){

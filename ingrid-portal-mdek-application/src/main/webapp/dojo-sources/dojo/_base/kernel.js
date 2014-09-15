@@ -10,6 +10,7 @@ define(["../has", "./config", "require", "module"], function(has, config, requir
 
 		// create dojo, dijit, and dojox
 		// FIXME: in 2.0 remove dijit, dojox being created by dojo
+		global = (function () { return this; })(),
 		dijit = {},
 		dojox = {},
 		dojo = {
@@ -18,7 +19,7 @@ define(["../has", "./config", "require", "module"], function(has, config, requir
 
 			// notice dojo takes ownership of the value of the config module
 			config:config,
-			global:this,
+			global:global,
 			dijit:dijit,
 			dojox:dojox
 		};
@@ -67,7 +68,7 @@ define(["../has", "./config", "require", "module"], function(has, config, requir
 		item = scopeMap[p];
 		item[1]._scopeName = item[0];
 		if(!config.noGlobals){
-			this[item[0]] = item[1];
+			global[item[0]] = item[1];
 		}
 	}
 	dojo.scopeMap = scopeMap;
@@ -79,7 +80,7 @@ define(["../has", "./config", "require", "module"], function(has, config, requir
 	dojo.isAsync = !has("dojo-loader") || require.async;
 	dojo.locale = config.locale;
 
-	var rev = "$Rev: e124479 $".match(/[0-9a-f]{7,}/);
+	var rev = "$Rev: 2bde291 $".match(/[0-9a-f]{7,}/);
 	dojo.version = {
 		// summary:
 		//		Version number of the Dojo Toolkit
@@ -92,7 +93,7 @@ define(["../has", "./config", "require", "module"], function(has, config, requir
 		//		- flag: String: Descriptor flag. If total version is "1.2.0beta1", will be "beta1"
 		//		- revision: Number: The Git rev from which dojo was pulled
 
-		major: 1, minor: 10, patch: 0, flag: "",
+		major: 1, minor: 10, patch: 1, flag: "",
 		revision: rev ? rev[0] : NaN,
 		toString: function(){
 			var v = dojo.version;

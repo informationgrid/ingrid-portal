@@ -248,8 +248,6 @@ define([
 
 				// Each cell has an associated integer value representing it's date
 				var dateVal = date.valueOf();
-				if(idx==0)
-					console.log("setting date2cell[" + dateVal + "]");
 				this._date2cell[dateVal] = template;
 				template.dijitDateValue = dateVal;
 
@@ -351,6 +349,7 @@ define([
 			//		protected
 
 			var connect = lang.hitch(this, function(nodeProp, part, amount){
+				this[nodeProp].dojoClick = true;
 				return on(this[nodeProp], "click", lang.hitch(this, function(){
 					this._setCurrentFocusAttr(this.dateModule.add(this.currentFocus, part, amount));
 				}));
