@@ -9,8 +9,6 @@ if (XPATH.nodeExists( idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/srv:SV
 }
 
 
-
-
 // ------------------------
 // IDF - REDMINE-354
 // ------------------------
@@ -118,11 +116,22 @@ if ( subDomain ) {
 	}
 	
 	// modify namespace of coupled resource
-	var elCoupled = DOM.getElement(elIdent, "srv:coupledResource/srv:SV_CoupledResource/srv:identifier/gco:CharacterString");
-	if (elCoupled) {
-		uuid = elCoupled.getElement().getTextContent();
-		var newUuid = appendDomain( uuid, subDomain );
-		elCoupled.getElement().setTextContent( newUuid );
+	var elCoupled = DOM.getElement(elIdent, "srv:coupledResource");
+	while (elCoupled) {
+		var content = DOM.getElement(elCoupled, "srv:SV_CoupledResource/srv:identifier/gco:CharacterString");
+		if (content) {
+			uuid = content.getElement().getTextContent();
+			var newUuid = appendDomain( uuid, subDomain );
+			content.getElement().setTextContent( newUuid );
+		}
+		
+		// get next coupled resource element
+		var next = elCoupled.getElement().getNextSibling();
+		if (next && next.getNodeName() == "srv:coupledResource" ) {
+			elCoupled = DOM.getElement( next, "." );
+		} else {
+			elCoupled = null;
+		}
 	}
 
 }
