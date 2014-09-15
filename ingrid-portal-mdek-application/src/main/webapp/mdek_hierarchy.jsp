@@ -81,7 +81,7 @@
                         new ContentPane({
                             id: "centerContent",
                             region: "center",
-                            style: "width:740px;"
+                            style: "width:740px !important;"
                         }).placeAt(objectPane.domNode);
 
                         construct.place("loadBlockDiv", objectPane.domNode);
