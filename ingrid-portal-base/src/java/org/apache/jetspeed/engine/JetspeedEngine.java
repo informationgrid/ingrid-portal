@@ -1,9 +1,10 @@
 /*
- * Copyright 2000-2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,31 +16,29 @@
  */
 package org.apache.jetspeed.engine;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Map;
-
-import javax.servlet.ServletConfig;
-
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.jetspeed.JetspeedPortalContext;
 import org.apache.jetspeed.PortalContext;
 import org.apache.jetspeed.PortalReservedParameters;
+import org.apache.jetspeed.administration.PortalConfiguration;
+import org.apache.jetspeed.administration.PortalConfigurationImpl;
 import org.apache.jetspeed.components.ComponentManager;
 import org.apache.jetspeed.exception.JetspeedException;
+import org.apache.jetspeed.factory.PortletFactory;
 import org.apache.jetspeed.pipeline.Pipeline;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.jetspeed.request.RequestContextComponent;
 import org.apache.jetspeed.statistics.PortalStatistics;
 import org.apache.ojb.broker.util.ClassHelper;
-import org.apache.pluto.PortletContainer;
-import org.apache.pluto.PortletContainerException;
-import org.apache.pluto.factory.Factory;
-import org.apache.pluto.services.ContainerService;
-import org.apache.pluto.services.factory.FactoryManagerService;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.apache.pluto.container.PortletContainer;
+import org.apache.pluto.container.PortletContainerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletConfig;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Map;
 
 
 /**
@@ -62,10 +61,15 @@ public class JetspeedEngine implements Engine
     private Map pipelineMapper ;
     private PortalStatistics statistics;
     
-    protected static final Log log = LogFactory.getLog(JetspeedEngine.class);
+    protected static final Logger log = LoggerFactory.getLogger(JetspeedEngine.class);
     protected String defaultPipelineName;    
 
     public JetspeedEngine(Configuration configuration, String applicationRoot, ServletConfig config, ComponentManager componentManager )
+    {
+        this(new PortalConfigurationImpl(configuration), applicationRoot, config, componentManager);
+    }
+    
+    public JetspeedEngine(PortalConfiguration configuration, String applicationRoot, ServletConfig config, ComponentManager componentManager )
     {
         this.componentManager = componentManager;
         this.context = new JetspeedPortalContext(this, configuration, applicationRoot);
@@ -74,7 +78,7 @@ public class JetspeedEngine implements Engine
         context.setConfiguration(configuration);           
 
         defaultPipelineName = configuration.getString(PIPELINE_DEFAULT, "jetspeed-pipeline");
-        configuration.setProperty(JetspeedEngineConstants.APPLICATION_ROOT_KEY, applicationRoot);
+        configuration.setString(JetspeedEngineConstants.APPLICATION_ROOT_KEY, applicationRoot);
         
         // Make these availble as beans to Spring
         componentManager.addComponent("Engine", this);
@@ -88,11 +92,6 @@ public class JetspeedEngine implements Engine
      * Initializes the engine with a commons configuration, starting all early
      * initable services.
      * 
-     * @param configuration
-     *                  a commons <code>Configuration</code> set
-     * @param applicationRoot
-     *                  a <code>String</code> path to the application root for
-     *                  resources
      * @param
      * @throws JetspeedException
      *                   when the engine fails to initilialize
@@ -111,17 +110,23 @@ public class JetspeedEngine implements Engine
             ClassHelper.setClassLoader(ploader2);
             
             //Start the ComponentManager
-            componentManager.start();               
-            pipelineMapper = (Map)componentManager.getComponent("pipeline-map");
+            componentManager.start();
+            pipelineMapper = componentManager.lookupComponent("pipeline-map");
+            componentManager.<PortletFactory>lookupComponent("portletFactory").setPortalContext(context);
             try
             {
-                statistics = (PortalStatistics)componentManager.getComponent("PortalStatistics");
+                statistics = componentManager.lookupComponent("PortalStatistics");
             }
             catch (Exception e)
             {
                 // silenty ignore, its not configured
                 // TODO: statistics as an AOP advice
             }
+            // TODO: complete this work for JSP (https://issues.apache.org/jira/browse/JS2-711)
+            // I think config.getServletName is incorrect, need to fix this and change this name to jetspeed-layouts:: when looking up in registry
+            // but not when dispatching, still trying to figure that out
+            //PortletApplicationManagement pam = (PortletApplicationManagement)componentManager.getComponent("PAM");
+            //pam.startInternalApplication(config.getServletName());                
             
         }
         catch (Throwable e)
@@ -157,11 +162,16 @@ public class JetspeedEngine implements Engine
     
         try
         {
-            PortletContainer container = (PortletContainer) componentManager
-                    .getComponent(PortletContainer.class);
+            PortletContainer container = null;
+            
+            if (componentManager.containsComponent(PortletContainer.class))
+            {
+                container = componentManager.lookupComponent(PortletContainer.class);
+            }
+            
             if (container != null)
             {
-                container.shutdown();
+                container.destroy();
             }
     
             componentManager.stop();
@@ -177,28 +187,25 @@ public class JetspeedEngine implements Engine
     {        
         long start = System.currentTimeMillis();
         String targetPipeline = null;
-        String requestPipeline = context
-                .getRequestParameter(PortalReservedParameters.PIPELINE);
+        String requestPipeline = (String)context.getAttribute(PortalReservedParameters.PIPELINE);                
         if (null == requestPipeline)
         {
-            targetPipeline = (String)context.getAttribute(PortalReservedParameters.PIPELINE);                
-            if (null == targetPipeline)
+            String pipelineKey = context.getRequest().getServletPath();                    
+            if (null != pipelineKey)
             {
-                String pipelineKey = context.getRequest().getServletPath();                    
-                if (null != pipelineKey)
-                {
-                    if (pipelineKey.equals("/portal"))
-                        targetPipeline = this.defaultPipelineName;
-                    else
-                        targetPipeline = (String)pipelineMapper.get(pipelineKey); 
-                    // System.out.println("pipeline = " + targetPipeline);
-                }
-                else
-                {
+                if (pipelineKey.equals("/portal"))
                     targetPipeline = this.defaultPipelineName;
-                }
+                else
+                    targetPipeline = (String)pipelineMapper.get(pipelineKey); 
+                // System.out.println("pipeline = " + targetPipeline);
+            }
+            else
+            {
+                targetPipeline = this.defaultPipelineName;
             }
         } else {
+        	// wemove: we explicitly check whether pipeline from request can be mapped (we removed pipelines) !
+        	// to avoid exceptions ?
         	if (pipelineMapper.containsValue(requestPipeline)) {
         		targetPipeline = requestPipeline;
         	}
@@ -263,7 +270,7 @@ public class JetspeedEngine implements Engine
     
     public Pipeline getPipeline( String pipelineName )
     {
-        return (Pipeline) componentManager.getComponent(pipelineName);
+        return componentManager.lookupComponent(pipelineName);
     }
 
     public Pipeline getPipeline()
@@ -276,8 +283,7 @@ public class JetspeedEngine implements Engine
      */
     public RequestContext getCurrentRequestContext()
     {
-        RequestContextComponent contextComponent = (RequestContextComponent) getComponentManager()
-            .getComponent(RequestContextComponent.class);
+        RequestContextComponent contextComponent = getComponentManager().lookupComponent(RequestContextComponent.class);
         return contextComponent.getRequestContext();
     }
 
@@ -285,44 +291,4 @@ public class JetspeedEngine implements Engine
     {
         return this.componentManager;
     }
-    /**
-     * <p>
-     * getFactory
-     * </p>
-     *
-     * @see org.apache.pluto.services.factory.FactoryManagerService#getFactory(java.lang.Class)
-     * @param theClass
-     * @return
-     */
-    public Factory getFactory( Class theClass )
-    {        
-        return (Factory) getComponentManager().getComponent(theClass);
-    }
-    /**
-     * <p>
-     * getContainerService
-     * </p>
-     *
-     * @see org.apache.pluto.services.PortletContainerEnvironment#getContainerService(java.lang.Class)
-     * @param service
-     * @return
-     */
-    public ContainerService getContainerService( Class service )
-    {
-        if(service.equals(FactoryManagerService.class))
-        {
-            return this;
-        }
-
-        try
-        {
-            return (ContainerService) getComponentManager().getComponent(service);
-        }
-        catch (NoSuchBeanDefinitionException e)
-        {
-            log.warn("No ContainerService defined for "+service.getName());
-            return null;
-        }
-    }
-
 }
