@@ -1375,7 +1375,7 @@
             <!-- Nominatim URL requesting results, query = terms in ingrid query or full ingrid query if no terms ! -->
             <preference>
                 <name>nominatimURL</name>
-                <value>https://geoportalqs.wsv.bvbs.bund.de/nominatim/search?format=json&amp;countrycodes=de</value>
+                <value>https://geoportal.wsv.bvbs.bund.de/nominatim/search?format=json&amp;countrycodes=de</value>
 <!--
                 <value>http://nominatim.openstreetmap.org/search?format=json&amp;countrycodes=de</value>
 -->
@@ -1431,12 +1431,12 @@
             <!-- BWaStr URL requesting results, query = terms in ingrid query or full ingrid query if no terms ! -->
             <preference>
                 <name>bwastrLocatorURL</name>
-                <value>https://geoportalqs.wsv.bvbs.bund.de/ingrid-webmap-client/rest/jsonCallback/query?searchID=searchterm&amp;url=http://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/rest/bwastrinfo/query?limit=200%26searchfield=all</value>
+                <value>https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/rest/jsonCallback/query?searchID=searchterm&amp;url=http://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/rest/bwastrinfo/query?limit=200%26searchfield=all</value>
             </preference>
             <!-- BWaStr URL requesting coordinates ! -->
             <preference>
                 <name>bwastrGeokodierungURL</name>
-                <value>https://geoportalqs.wsv.bvbs.bund.de/ingrid-webmap-client/rest/jsonCallback/queryPost?url=http://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/rest/geokodierung/query</value>
+                <value>https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/rest/jsonCallback/queryPost?url=http://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/rest/geokodierung/query</value>
             </preference>
             <!-- GetMap URL rendering map ! BBOX parameter computed from BWaStr Geokodierung. -->
             <preference>
