@@ -62,7 +62,7 @@ nominatimAddLoadEvent(function() {
 
 function doNominatimSearch() {
 //    var nominatimURL = nominatimBaseURL + '&json_callback=processNominatimSearch&q=' + nominatimQuery;
-    var nominatimURL = nominatimBaseURL + '&q=' + nominatimQuery;
+    var nominatimURL = nominatimBaseURL + '&q=' + encodeURIComponent(nominatimQuery);
 
 // DEBUG: Activate if needed ! Shows Nominatim URL !
 //    showNominatimUrl(nominatimURL);
