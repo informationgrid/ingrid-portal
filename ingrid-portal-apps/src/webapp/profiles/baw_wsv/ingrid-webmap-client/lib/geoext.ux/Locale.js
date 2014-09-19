@@ -230,7 +230,7 @@ Local = {
 		tLoeschen: {en: 'Delete', de: 'L&ouml;schen'},
 		tZoomToLayerExtent: {en: 'Zoom to layer', de: 'Zoom auf Layer'},
 		tExternServicePanel: {en: 'External Service', de: 'Externer Dienst'},
-		tUrlEingabe: {en: 'Add URL', de: 'GetCapabilties-URL hinzufügen'},
+		tUrlEingabe: {en: 'Add URL', de: 'WMS-URL hinzufügen'},
 		tSuchbegriff: {en: 'Add search term', de: 'Suchbegriff hinzufügen'},
 		tPfichtfeld: {en: 'This field is required', de: 'Pflichtfeld'},
 		tOptionen: {en: 'Menu', de: 'Menü'},
