@@ -176,7 +176,11 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
 	        headerResource.addHeaderInfo(
         		"<!-- start output header phase -->" +
 				"<!-- Styles -->" +
-        		"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
+        		"<link id=\"theme-access\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-access.css\" />"+
+				"<link id=\"theme-neptune\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-neptune.css\" />"+
+				"<link id=\"theme-gray\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-gray.css\" />"+
+				"<link id=\"theme-all\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
+				
 				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style.css\" />"+
 				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel.css\" />"+
 				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/css/feature-editing.css\" />"+  
@@ -282,10 +286,14 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
 	        headerResource.addHeaderInfo(
 				"<!-- start output header phase -->" +
 				"<!-- Styles -->" +
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/css/feature-editing.css\" />"+  
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel-min.css\" />"+
+				"<link id=\"theme-access\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-access.css\" />"+
+				"<link id=\"theme-neptune\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-neptune.css\" />"+
+				"<link id=\"theme-gray\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-gray.css\" />"+
+				"<link id=\"theme-all\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
+				
 				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style.css\" />"+
+				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/css/feature-editing.css\" />"+  
+				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel-min.css\" />"+
 				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash-min.css\" />"+		
 
 				"<script type=\"text/javascript\">var languageCode = '"+languageString+"';</script>" +

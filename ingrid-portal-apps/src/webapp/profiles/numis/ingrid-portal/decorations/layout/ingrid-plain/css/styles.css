@@ -53,7 +53,6 @@ h3 { font-family: Arial, Verdana, Helvetica, sans-serif; font-size:80%; line-hei
 table.border { border-collapse:collapse; border-top: 1px solid #E2EBF0; border-left: 1px solid #E2EBF0; border-right: 1px solid #E2EBF0; }
 table.fullwidth { width:100%; }
 th {font-size: 75%; vertical-align:top; padding:3px;}
-td {font-size: 75%; vertical-align:top; padding-left:3px;}
 table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
 td.iconwidth { width:9px; }
 table.layout td {font-size: 100%}
