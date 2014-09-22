@@ -77,7 +77,7 @@
                   <destFileName>jetspeed-layouts.war</destFileName>
                   <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/deploy/local</outputDirectory>
                 </artifactItem>
-<!-- TODO include ingrid-portal-apps + ingrid-portal-mdek wars when ready -->
+<!-- TODO mm include ingrid-portal-apps + ingrid-portal-mdek wars when ready -->
 <!--
                 <artifactItem>
                   <groupId>de.ingrid.portal</groupId>

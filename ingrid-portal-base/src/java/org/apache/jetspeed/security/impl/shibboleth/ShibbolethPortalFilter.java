@@ -44,7 +44,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.Principal;
 
-// TODO Extend this 2.3 ShibbolethPortalFilter with former functionality (first UPDATE this 2.3 one to most current !)
+// TODO mm Extend this 2.3 ShibbolethPortalFilter with former functionality (first UPDATE this 2.3 one to most current !)
 
 public class ShibbolethPortalFilter implements Filter
 {
