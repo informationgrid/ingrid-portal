@@ -34,7 +34,7 @@
 
 #* include identity component *#
 #macro (includeIdentityArea)
-  #set($currentPage = $site.getPage().url)
+  #set($currentPage = $site.getPageOrTemplate().url)
   #set($langCode = '')
   #if($preferedLocale.toString().startsWith('en'))
     #set($langCode = "en_")
@@ -133,7 +133,7 @@
 
 #* include main navigation component *#
 #macro (includeMainNavigation $_menu)
-    #set($currentPage = $site.getPage().url)
+    #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #set($tabTitle = $element.getTitle($preferedLocale))
@@ -201,7 +201,7 @@
 
 #* include sub navigation component *#
 #macro (includeSubNavigation $_menu $_attached)
-    #set($currentPage = $site.getPage().url)
+    #set($currentPage = $site.getPageOrTemplate().url)
     #if ($_attached)
         <div class="float_left">
     #else
@@ -316,7 +316,7 @@
 
 ## include service navigation component
 #macro (includeServiceNavigation $_menu)
-    #set($currentPage = $site.getPage().url)
+    #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #if($lastType && $lastType != "separator")
