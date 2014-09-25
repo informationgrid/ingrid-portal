@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<script> if (document.documentMode == 7) alert($MESSAGES.getString('ingrid.page.compatibility')) </script>
+<script> if (document.documentMode == 7) alert("$MESSAGES.getString('ingrid.page.compatibility')") </script>
 
 </div>
 <!--  END: layout/html/portalu/decorator.vm -->

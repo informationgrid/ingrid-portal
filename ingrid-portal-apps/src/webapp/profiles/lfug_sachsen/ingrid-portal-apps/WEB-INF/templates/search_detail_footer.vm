@@ -56,7 +56,7 @@
 <!-- End Piwik Tag -->
 #end
 
-<script> if (document.documentMode == 7) alert($MESSAGES.getString('ingrid.page.compatibility')) </script>
+<script> if (document.documentMode == 7) alert("$MESSAGES.getString('footer.compatibility')") </script>
 
 </body>
 </html>
