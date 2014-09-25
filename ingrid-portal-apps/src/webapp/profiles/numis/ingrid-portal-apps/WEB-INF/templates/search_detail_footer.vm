@@ -53,5 +53,7 @@
 #end
 <!-- End Piwik Tag -->
 
+<script> if (document.documentMode == 7) alert($MESSAGES.getString('ingrid.page.compatibility')) </script>
+
 </body>
 </html>

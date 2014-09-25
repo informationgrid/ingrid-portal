@@ -22,7 +22,6 @@ span.smaller {font-size: 83%}
 ul { list-style-type:square; padding-left:0px; margin: 0 0 0 0; }
 p { margin-top:0; margin-bottom:1em; font-size:12px; }
 strong {font-weight:bold}
-.section textarea, .section select, input { border: 1px solid #999999 !important; }
 div.line { border: 0; height: 0px; margin:10px 0 0 0; padding:0; border-bottom: 1px dotted #B4B4B4; }
 div.line_form { border: 0; background-color: #CCCCCC; height: 1px; margin:10px 0 10px 0; padding:0}
 /* for CSS1 browsers */ 

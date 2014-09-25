@@ -46,6 +46,7 @@ if(domain == "portalu.de" || domain=="www.portalu.de"){
 </script><noscript><p><img src="http://portalu.de/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tag -->
 
+<script> if (document.documentMode == 7) alert($MESSAGES.getString('ingrid.page.compatibility')) </script>
 
 </body>
 </html>
