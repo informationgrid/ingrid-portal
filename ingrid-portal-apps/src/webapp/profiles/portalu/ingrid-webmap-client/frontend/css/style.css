@@ -239,7 +239,6 @@ p.load_icon_webmap{   background-color: transparent;
 	
 }
 .mapclientLegendPanel {
-	padding-top:15px; 
 	background-color: #FFFFFF;
 }
 /*
@@ -562,4 +561,8 @@ label.x-form-item-label {
 
 .x-tree-noicon .x-grid-tree-node-leaf .x-tree-elbow-img {
 	display: none;
+}
+
+.dialogToolbarBottom {
+	background: #FFFFFF;
 }
