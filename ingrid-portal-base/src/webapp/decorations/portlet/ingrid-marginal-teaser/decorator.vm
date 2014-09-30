@@ -4,7 +4,7 @@
 #set($actions = $decoration.actions)
 #set($_actions = $layoutDecoration.actions)
 
-<!-- Begin: Fragment: ${f.id} Decoration: ${decoratorId} -->
+## Begin: Fragment: ${f.id} Decoration: ${decoratorId}
 <div class="portlet">
   <div class="section-header" id="marginal_header">
     <h1 class="float_left">$!jetspeed.getTitle($f)</h1>
@@ -26,6 +26,6 @@
     $f.renderedContent
     #end
 </div>
-<!-- END: Fragment: ${f.id} Decoration: ${decoratorId} -->
+## END: Fragment: ${f.id} Decoration: ${decoratorId}
 
 
