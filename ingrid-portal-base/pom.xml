@@ -185,8 +185,8 @@
 <!--
   <dependencyManagement>
     <dependencies>
-        <dependency>
-        </dependency>
+      <dependency>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 -->
@@ -203,7 +203,13 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-portal-utils</artifactId>
-      <scope>provided</scope>
+      <!-- NOT provided anymore (tomcat shared/lib), we need it in our webapp because of dependency to jetspeed-security jar at runtime ! -->
+      <!-- We have to set jetspeed-api as provided to avoid inclusion in webapp and problems with redundant classes ! -->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.portals.jetspeed-2</groupId>
+      <artifactId>jetspeed-api</artifactId>
+      <scope>provided</scope>      
     </dependency>
 
 <!-- JETSPEED -->
