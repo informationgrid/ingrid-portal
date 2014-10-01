@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.security.Principal;
 
 // TODO mm Extend this 2.3 ShibbolethPortalFilter with former functionality (first UPDATE this 2.3 one to most current !)
+// TODO mm NOTICE: Already fully adapted, see ShibbolethPortalFilter.java.js23Adapted. Use when testing !
 
 public class ShibbolethPortalFilter implements Filter
 {
