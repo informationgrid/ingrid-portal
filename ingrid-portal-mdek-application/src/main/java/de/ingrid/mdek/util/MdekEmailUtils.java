@@ -12,8 +12,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -51,6 +53,12 @@ public class MdekEmailUtils {
 	private static String MAIL_SENDER;
 	private static String MAIL_RECEIVER;
 	private static String MAIL_SMTP_HOST;
+	private static String MAIL_SMTP_USER;
+	private static String MAIL_SMTP_PASSWORD;
+	private static String MAIL_SMTP_PORT;
+	private static boolean MAIL_SMTP_SSL;
+	private static String MAIL_SMTP_PROTOCOL;
+	
 	private static String MDEK_DIRECT_LINK;
 
 	private final static String MAIL_SUBJECT = "[MDEK] Information";
@@ -72,6 +80,11 @@ public class MdekEmailUtils {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("mdek");
 		MAIL_SENDER = resourceBundle.getString("workflow.mail.sender");
 		MAIL_SMTP_HOST = resourceBundle.getString("workflow.mail.smtp");
+		MAIL_SMTP_USER = resourceBundle.getString("workflow.mail.smtp.user");
+		MAIL_SMTP_PASSWORD = resourceBundle.getString("workflow.mail.smtp.password");
+		MAIL_SMTP_PORT = resourceBundle.getString("workflow.mail.smtp.port");
+		MAIL_SMTP_SSL = Boolean.parseBoolean(resourceBundle.getString("workflow.mail.smtp.ssl"));
+		MAIL_SMTP_PROTOCOL = resourceBundle.getString("workflow.mail.smtp.protocol");
 		MDEK_DIRECT_LINK = resourceBundle.getString("mdek.directLink");
 
 		// Check if a receiver email was specified.
@@ -318,11 +331,36 @@ public class MdekEmailUtils {
 
 	public static void sendEmail(String content, String from, String[] to) {
 		Properties props = (Properties)System.getProperties().clone();
-
+		Session session;
+		
 	    // Setup mail server
 	    props.put("mail.smtp.host", MAIL_SMTP_HOST);
+	    if(MAIL_SMTP_PORT != null && !MAIL_SMTP_PORT.equals("")){
+			props.put("mail.smtp.port", MAIL_SMTP_PORT);
+		}
+	    
+	    if(MAIL_SMTP_PROTOCOL != null && !MAIL_SMTP_PROTOCOL.equals("")){
+	    	props.put("mail.transport.protocol", MAIL_SMTP_PROTOCOL);
+		}
+	    
+		if(MAIL_SMTP_SSL){
+			props.put("mail.smtp.starttls.enable","true");
+		    props.put("mail.smtp.socketFactory.port", MAIL_SMTP_PORT);
+		    props.put("mail.smtp.ssl.enable", true);
+		    props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+		    props.put("mail.smtp.socketFactory.fallback", "false"); 
+		}
 
-		Session session = Session.getDefaultInstance(props, null);
+		if(MAIL_SMTP_USER != null && !MAIL_SMTP_USER.equals("") && MAIL_SMTP_PASSWORD != null && !MAIL_SMTP_PASSWORD.equals("")){
+			props.put("mail.smtp.auth", "true");
+			Authenticator auth = new MailAuthenticator(MAIL_SMTP_USER, MAIL_SMTP_PASSWORD);
+			// create some properties and get the default Session
+			session = Session.getDefaultInstance(props, auth);
+		}else{
+			// create some properties and get the default Session
+			session = Session.getDefaultInstance(props, null);
+		}
+		
 		if (log.isDebugEnabled()) {
 			session.setDebug(true);
 		}
@@ -689,5 +727,19 @@ public class MdekEmailUtils {
 
 	public void setConnectionFacade(ConnectionFacade connectionFacade) {
 		this.connectionFacade = connectionFacade;
+	}
+}
+
+class MailAuthenticator extends Authenticator {
+	private String user; 
+	private String password;
+	
+	public MailAuthenticator(String user, String password) {
+		this.user = user;
+		this.password = password;
+	}
+
+	public PasswordAuthentication getPasswordAuthentication() {
+		return new PasswordAuthentication(this.user, this.password);
 	}
 }

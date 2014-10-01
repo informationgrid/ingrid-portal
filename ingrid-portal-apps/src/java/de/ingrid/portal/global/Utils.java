@@ -26,9 +26,11 @@ import java.util.Set;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -424,12 +426,43 @@ public class Utils {
 
 		boolean debug = log.isDebugEnabled();
 		boolean emailSent = false;
-
+		Session session;
+		
 		Properties props = new Properties();
 		props.put("mail.smtp.host", PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_SERVER, "localhost"));
+		
+		String port = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_PORT, "");
+		if(!port.equals("")){
+			props.put("mail.smtp.port", port);
+		}
+		
+		String protocol = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_PROTOCOL, "");
+		if(!protocol.equals("")){
+			props.put("mail.transport.protocol", protocol);
+		}
+		
+		boolean ssl = PortalConfig.getInstance().getBoolean(PortalConfig.EMAIL_SMTP_SSL, false);
+		if(ssl){
+			props.put("mail.smtp.starttls.enable","true");
+		    props.put("mail.smtp.socketFactory.port", port);
+		    props.put("mail.smtp.ssl.enable", true);
+			props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+		    props.put("mail.smtp.socketFactory.fallback", "false"); 
+		}
 
-		// create some properties and get the default Session
-		Session session = Session.getDefaultInstance(props, null);
+		String user = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_USER, "");
+		String password = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_PASSWORD, "");
+		
+		if(!user.equals("") && !password.equals("")){
+			props.put("mail.smtp.auth", "true");
+		    Authenticator auth = new MailAuthenticator(user, password);
+			// create some properties and get the default Session
+			session = Session.getDefaultInstance(props, auth);
+		}else{
+			// create some properties and get the default Session
+			session = Session.getDefaultInstance(props, null);
+		}
+		
 		session.setDebug(debug);
 
 		// create a message
@@ -661,6 +694,20 @@ public class Utils {
 		}
 		
 		return url + serviceParam;
+	}
+}
+
+class MailAuthenticator extends Authenticator {
+	private String user; 
+	private String password;
+	
+	public MailAuthenticator(String user, String password) {
+		this.user = user;
+		this.password = password;
+	}
+
+	public PasswordAuthentication getPasswordAuthentication() {
+		return new PasswordAuthentication(this.user, this.password);
 	}
 }
 
