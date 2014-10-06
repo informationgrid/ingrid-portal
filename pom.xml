@@ -61,10 +61,26 @@
 
 	<!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
-    <!-- Provided Dependencies -->
+    <!-- Provided Dependencies (e.g. needed in portal-base and portal-apps) -->
     <dependency>
       <groupId>org.apache.portals</groupId>
       <artifactId>portlet-api_2.0_spec</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.portals.jetspeed-2</groupId>
+      <artifactId>jetspeed-api</artifactId>
+      <!-- Set provided in top pom to avoid inclusion in webapp and problems with redundant classes ! -->
+      <scope>provided</scope>      
+    </dependency>
+    <dependency>
+      <groupId>org.apache.portals.pluto</groupId>
+      <artifactId>pluto-container-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.portals.jetspeed-2</groupId>
+      <artifactId>jetspeed-commons</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
