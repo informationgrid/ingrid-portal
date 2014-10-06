@@ -333,7 +333,7 @@
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
 
-	<portlet id="MyPortalEditAboutInfoPortlet">
+    <portlet id="MyPortalEditAboutInfoPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
@@ -798,7 +798,7 @@
         </portlet-preferences>
     </portlet>
 
-	<portlet id="WeatherTeaser">
+    <portlet id="WeatherTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
@@ -1267,7 +1267,7 @@
         <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
 
-	<portlet id="ShowMapsPortlet">
+    <portlet id="ShowMapsPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>

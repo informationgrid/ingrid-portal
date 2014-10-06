@@ -60,15 +60,9 @@
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ServiceTeaser</name>
-                </portlet>
-                <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::MeasuresTeaser</name>
-                </portlet>
-				<portlet col="1" row="3">
                     <name>ingrid-portal-apps::ChronicleTeaser</name>
                 </portlet>
-                <portlet col="1" row="4">
+                <portlet col="1" row="2">
                     <name>ingrid-portal-apps::WeatherTeaser</name>
                 </portlet>
             </portlets>
@@ -90,13 +84,10 @@
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
                 </portlet>
                 <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::MeasuresTeaser</name>
-                </portlet>
-				<portlet col="1" row="3">
-                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+                    <name>ingrid-portal-apps::WeatherTeaser</name>
                 </portlet>
             </portlets>
         </page>
@@ -117,13 +108,25 @@
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ServiceTeaser</name>
+                    <name>ingrid-portal-apps::ChronicleTeaser</name>
                 </portlet>
                 <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::MeasuresTeaser</name>
+                    <name>ingrid-portal-apps::WeatherTeaser</name>
                 </portlet>
-				<portlet col="1" row="3">
-                    <name>ingrid-portal-apps::ChronicleTeaser</name>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/myportal-edit-account.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::MyPortalEditAccountPortlet</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::MyPortalEditAboutInfoPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::MyPortalEditAdvancedInfoPortlet</name>
                 </portlet>
             </portlets>
         </page>

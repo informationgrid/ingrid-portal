@@ -17,7 +17,22 @@
         </page>
         <page>
             <name>main-features.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>_role/user/myportal-edit-account.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::MyPortalEditAccountPortlet</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::MyPortalEditAboutInfoPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::MyPortalEditAdvancedInfoPortlet</name>
+                </portlet>
+            </portlets>
         </page>
         <page>
             <name>default-page.psml</name>

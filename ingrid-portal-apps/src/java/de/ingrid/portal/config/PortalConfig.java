@@ -49,7 +49,12 @@ public class PortalConfig extends PropertiesConfiguration {
     public final static String EMAIL_REGISTRATION_CONFIRMATION_SENDER = "email.registration.confirmation.sender";
 
     public static final String EMAIL_SMTP_SERVER = "email.smtp.server";
-
+    public static final String EMAIL_SMTP_USER = "email.smtp.user";
+    public static final String EMAIL_SMTP_PASSWORD = "email.smtp.password";
+    public static final String EMAIL_SMTP_PORT = "email.smtp.port";
+    public static final String EMAIL_SMTP_SSL = "email.smtp.ssl";
+    public static final String EMAIL_SMTP_PROTOCOL = "email.smtp.protocol";
+   
     public static final String EMAIL_WEBMASTER = "email.webmaster";
 
     public static final String EMAIL_CONTACT_FORM_RECEIVER = "email.contact.form.receiver";

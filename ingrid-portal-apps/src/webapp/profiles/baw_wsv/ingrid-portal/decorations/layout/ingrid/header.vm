@@ -82,7 +82,7 @@ if (!xmlhttp && window.createRequest) {
 	}
 }
 if (xmlhttp) {
-    xmlhttp.open('GET', '$jetspeed.getAbsoluteUrl('/detect-js.psml?js=1')', true);
+    xmlhttp.open('GET', '/portal/detect-js.psml?js=1', true);
     xmlhttp.onreadystatechange = function () {};
     xmlhttp.send(null);
 }	
@@ -92,7 +92,7 @@ if (xmlhttp) {
   </head>
   <body class="#PageBaseCSSClass() claro">
     <noscript>
-	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
+	  <iframe src="/portal/detect-js.psml" style="display:none"></iframe>
     </noscript>
 <!--  BEGIN: layout/html/portalu/decorator.vm -->
     <div class="#PageBaseCSSClass()">

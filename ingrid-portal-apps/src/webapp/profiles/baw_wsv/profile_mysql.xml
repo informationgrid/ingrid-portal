@@ -32,6 +32,21 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>_role/user/myportal-edit-account.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::MyPortalEditAccountPortlet</name>
+                </portlet>
+                <portlet col="1" row="0">
+                    <name>ingrid-portal-apps::MyPortalEditAboutInfoPortlet</name>
+                </portlet>
+                <portlet col="1" row="1">
+                    <name>ingrid-portal-apps::MyPortalEditAdvancedInfoPortlet</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
             <name>cms/cms-0.psml</name>
             <hidden>false</hidden>
         </page>
@@ -86,7 +101,7 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>
                     <preference name="SRC">
-                    	<value>http://wsvmapserv.wsv.bvbs.bund.de/xml2wms2/webapp/</value>
+                    	<value>https://atlas.wsv.bvbs.bund.de/visualist/</value>
                     </preference>
                     <preference name="HEIGHT">
                     	<value>900</value>
@@ -107,7 +122,7 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>
                     <preference name="SRC">
-                    	<value>http://bwastr-locator.wsv.bund.de/wfsgui/</value>
+                    	<value>https://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/</value>
                     </preference>
                     <preference name="HEIGHT">
                     	<value>450</value>
@@ -128,7 +143,7 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>
                     <preference name="SRC">
-                    	<value>http://10.140.110.140/wadaba/client/</value>
+                    	<value>https://atlas.wsv.bvbs.bund.de/wadaba-qs/map/</value>
                     </preference>
                     <preference name="HEIGHT">
                     	<value>640</value>
@@ -270,76 +285,100 @@
         </execute>
         <!-- Set decorator to ingrid-marginal-teaser -->
         <execute>
-            <![CDATA[CREATE TABLE IF NOT EXISTS `tmp_table` (`id` bigint(20) NOT NULL AUTO_INCREMENT\, `item_key` varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, `item_value` varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, `item_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP\, PRIMARY KEY (`id`));]]>
+            <![CDATA[CREATE TABLE IF NOT EXISTS tmp_table (id bigint(20) NOT NULL AUTO_INCREMENT\, item_key varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, item_value varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, item_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP\, PRIMARY KEY (id));]]>
         </execute>
         <execute>
-            <![CDATA[INSERT INTO tmp_table (`item_key`\, `item_value`) values ('tmp_id'\, '0');]]>
+            <![CDATA[INSERT INTO tmp_table (item_key\, item_value) values ('tmp_id'\, '0');]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-chronicle.psml')) WHERE `item_key`='tmp_id';]]>
-        </execute>
-        <execute>
-            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
-        </execute>
-        <execute>
-            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-measures.psml')) WHERE `item_key`='tmp_id';]]>
+            <![CDATA[UPDATE tmp_table SET item_value = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-chronicle.psml')) WHERE item_key='tmp_id';]]>
         </execute>
         <execute>
             <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-environment.psml')) WHERE `item_key`='tmp_id';]]>
+            <![CDATA[UPDATE tmp_table SET item_value = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-measures.psml')) WHERE item_key='tmp_id';]]>
         </execute>
         <execute>
             <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-service.psml')) WHERE `item_key`='tmp_id';]]>
+            <![CDATA[UPDATE tmp_table SET item_value = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-environment.psml')) WHERE item_key='tmp_id';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET item_value = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-service.psml')) WHERE item_key='tmp_id';]]>
         </execute>
         <execute>
             <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-search.psml')) WHERE `item_key`='tmp_id';]]>
+            <![CDATA[UPDATE tmp_table SET item_value = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-search.psml')) WHERE item_key='tmp_id';]]>
+        </execute>
+        <!-- Use ingrid_lookup table for temporary values (sub fragment) CAUSE CAN'T DO SUBSELECTS ON SAME TABLE (MySQL) !!! -->
+        <!-- Remember id of sub fragment -->
+        <execute>
+            <![CDATA[INSERT INTO ingrid_lookup (item_key\, item_value) values ('tmp_layout_fragment_id'\, '0');]]>
         </execute>
         <execute>
-            <![CDATA[INSERT INTO ingrid_lookup (`item_key`\, `item_value`) values ('tmp_id'\, '0');]]>
+            <![CDATA[UPDATE ingrid_lookup SET item_value = (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'jetspeed-layouts::IngridTwoColumns') WHERE item_key='tmp_layout_fragment_id';]]>
+        </execute>
+        <!-- Change decorator in sub fragment -->
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <!-- Also replace info portlet with SearchNominatim portlet. Preferences can be kept (infoTemplate, titleKey), not used. -->
+        <execute>
+            <![CDATA[UPDATE fragment SET name = 'ingrid-portal-apps::SearchNominatim' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <!-- Add NEW SearchBWaStr portlet with preferences ? NOTICE: We add +10 to new IDs from Sequence due to Problems with IDs when manipulated per profiler above (max_key match highest ID !) !??? -->
+<!--
+        <execute>
+            <![CDATA[INSERT INTO fragment (FRAGMENT_ID\, PARENT_ID\, PAGE_ID\, NAME\, TITLE\, SHORT_TITLE\, TYPE\, SKIN\, DECORATOR\, STATE\, PMODE\, LAYOUT_ROW\, LAYOUT_COLUMN\, LAYOUT_SIZES\, LAYOUT_X\, LAYOUT_Y\, LAYOUT_Z\, LAYOUT_WIDTH\, LAYOUT_HEIGHT\, EXT_PROP_NAME_1\, EXT_PROP_VALUE_1\, EXT_PROP_NAME_2\, EXT_PROP_VALUE_2\, OWNER_PRINCIPAL) VALUES ((SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT')\,(SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id')\, NULL\, 'ingrid-portal-apps::SearchBWaStr'\, NULL\, NULL\, 'portlet'\, NULL\, 'ingrid-marginal-teaser'\, NULL\, NULL\, 1\, 1\, NULL\, -1\, -1\, -1\, -1\, -1\, NULL\, NULL\, NULL\, NULL\, NULL);]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE ingrid_lookup SET `item_value` = (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'jetspeed-layouts::IngridTwoColumns') WHERE `item_key`='tmp_id';]]>
+            <![CDATA[INSERT INTO fragment_pref (PREF_ID\, FRAGMENT_ID\, NAME\, IS_READ_ONLY) VALUES ((SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF')\,(SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT')\, 'showInfoOnEmptyQuery'\, 0);]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-teaser' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+            <![CDATA[INSERT INTO fragment_pref_value (PREF_VALUE_ID\, PREF_ID\, VALUE_ORDER\, VALUE) VALUES ((SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE')\,(SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF')\, 0\, 'false');]]>
         </execute>
         <execute>
-            <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_id';]]>
+            <![CDATA[UPDATE ojb_hl_seq SET max_key=max_key+grab_size\, version=version+1 WHERE tablename='SEQ_FRAGMENT';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE ojb_hl_seq SET max_key=max_key+grab_size\, version=version+1 WHERE tablename='SEQ_FRAGMENT_PREF';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE ojb_hl_seq SET max_key=max_key+grab_size\, version=version+1 WHERE tablename='SEQ_FRAGMENT_PREF_VALUE';]]>
+        </execute>
+-->
+        <!-- Remove temporary values from ingrid_lookup table -->
+        <execute>
+            <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id';]]>
         </execute>
         <!-- Revert feature page as default for about page -->
         <execute>
-            <![CDATA[UPDATE tmp_table SET `item_value` = (SELECT menu_id FROM folder_menu WHERE name = 'main-menu') WHERE `item_key`='tmp_id';]]>
+        	<![CDATA[INSERT INTO tmp_table (item_key\, item_value) values ('main-menu_id'\,  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')); ]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE folder_menu SET OPTIONS = '/main-about.psml' WHERE OPTIONS = '/main-features.psml' AND parent_id  = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') ;]]>
-        </execute>
-        <execute>
-            <![CDATA[DROP TABLE tmp_table;]]>
+            <![CDATA[UPDATE folder_menu SET OPTIONS = '/main-about.psml' WHERE OPTIONS = '/main-features.psml' AND parent_id  = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id') ;]]>
         </execute>
         <execute>
             <![CDATA[UPDATE page SET title = 'ingrid.page.features.tooltip'\, short_title = 'ingrid.page.features' WHERE path = '/main-features.psml';]]>
         </execute>
         <!-- Replace main-menu option "main-search" with "default-page" -->
         <execute>
-        	<![CDATA[INSERT INTO ingrid_lookup (`item_key`\, `item_value`) values ('tmp_id'\,  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')); ]]>
-        </execute>
-        <execute>
-        	<![CDATA[UPDATE folder_menu SET options = '/default-page.psml' WHERE options = '/main-search.psml' AND parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_id');]]>
-        </execute>
-        <execute>
-        	<![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_id';]]>
+        	<![CDATA[UPDATE folder_menu SET options = '/default-page.psml' WHERE options = '/main-search.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id');]]>
         </execute>
         <!-- Set folder from hidden to display -->
         <execute>
-        	<![CDATA[UPDATE folder SET is_hidden = "0" WHERE path = '/cms';]]>
+        	<![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/cms';]]>
+        </execute>
+        <!-- DONE with tmp_table -->
+        <execute>
+            <![CDATA[DROP TABLE tmp_table;]]>
         </execute>
     </sql>
 </profile>

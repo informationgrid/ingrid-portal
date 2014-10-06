@@ -1,0 +1,480 @@
+body {
+	font-family:helvetica,tahoma,verdana,sans-serif;
+	font-size:13px;
+}
+
+.iconInfo {
+	background-image: url(../../shared/images/icon_objektinformationen.png);
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+.iconZoomPrev {
+	background-image: url(../../shared/images/icon_zoom_prev.png);
+	width: 18px !important;
+}
+
+.iconZoomNext {
+	background-image: url(../../shared/images/icon_zoom_next.png);
+	width: 18px !important;
+}
+
+.iconMeassure {
+	background-image: url(../../shared/images/icon_meassure.png);
+}
+
+.iconMap {
+	background-image: url(../../shared/images/icon_map.png);
+}
+
+.iconLayer {
+	background-image: url(../../shared/images/icon_layer.png);
+}
+
+.iconPrint {
+	background-image: url(../../shared/images/icon_print.png);
+}
+
+.iconLoad {
+	background-image: url(../../shared/images/icon_load.png);
+}
+
+.iconSave {
+	background-image: url(../../shared/images/icon_save.png);
+}
+
+.iconHelp {
+	background-image: url(../../shared/images/icon_help.png);
+}
+
+.iconAdd {
+	background-image: url(../../shared/images/icon_add.png);
+}
+
+.iconMenu {
+	background-image: url(../../shared/images/icon_menu.png);
+	height: 11px !important;
+	width: 11px !important; 
+}
+
+.iconMapPin {
+	background-image: url(../../shared/images/icon_pin_green.png);
+	background-size: 16px auto;
+}
+
+.iconZoom {
+	background-image: url(../../shared/images/icon_world.png);
+}
+
+.iconRemove {
+	background-image: url(../../shared/images/icon_delete.png);
+}
+
+.iconErase {
+	background-image: url(../../shared/images/icon_erase.png);
+	background-size: 14px auto;
+}
+
+.iconRemoveAll {
+	background-image: url(../../shared/images/icon_deleteall.png);
+}
+.iconZoomLayerExtent {
+	background-image: url(../../shared/images/icon_zoomLayerExtent.png);
+}
+.iconTransparency {
+	background-image: url(../../shared/images/icon_transparency.png);
+}
+.iconSelectCoordinates{
+	background-image:url(../../shared/images/icon_shape.png);
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+	}
+
+.iconMetadata {
+	background-image: url(../../shared/images/icon_metadata.png);
+}
+
+.iconLink {
+	background-image: url(../../shared/images/link_go.png);
+}
+
+.iconMail {
+	background-image: url(../../shared/images/icon_mail.png);
+	width: 16px;
+	height: 16px;
+}
+
+.iconDownload {
+	background-image: url(../../shared/images/icon_download.png);
+}
+
+.iconExpand {
+	background-image: url(../../shared/images/icon_expand.png);
+}
+
+.iconDefault {
+	background-image: url(../../shared/images/icon_arrow.png);
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+.iconLegend {
+	background-image: url(../../shared/images/icon_legende.png);
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+	font: bold 12px verdana !important;
+	color: #1B78B1 !important;
+}
+
+.iconSettings {
+	background-image: url(../../shared/images/icon_einstellungen.png);
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+	font: bold 12px verdana !important;
+	color: #1B78B1 !important;
+}
+
+.iconCollapse {
+	background-image: url(../../lib/extjs/resources/images/default/panel/tool-sprites.gif);
+	background-position: 0 -180px !important;
+	height: 15px !important;
+	width: 15px !important;
+}
+
+.iconExpand {
+	background-image: url(../../lib/extjs/resources/images/default/panel/tool-sprites.gif);
+	background-position: 0 -165px !important;
+	height: 15px !important;
+	width: 15px !important;
+}
+
+.iconFullScreen {
+	background-image: url(../../shared/images/icon_full.png);
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+.iconDrag {
+	background-image: url(../../shared/images/icon_drag.png);
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+.iconPortal {
+	background-image: url(../../shared/images/favicon.ico);
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+.icon {
+	width: 16px;
+	height: 16px;
+}
+
+.gx-tree-layer-icon { display:none; }
+
+.x-window-header-text {
+	display: block;
+	height: 13px;
+	overflow: hidden;
+}
+
+.metaDataTable {
+	width: 100%;
+}
+
+.metaDataTable td { 
+	font-weight: bold !important;
+	font-size:9px;
+	vertical-align:top;
+	min-width: 150px; 
+	/* width: 155px; */
+}
+p.load_icon_webmap{   background-color: transparent;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    width: 100%;
+    height: 1px;
+    overflow: visible;
+    visibility: visible;
+    display: block;}
+.webmapclient_searchpanel{margin:0px -150px;min-width:150px;}
+.olControlOverviewMapElement {
+  background: #d9e7f8;
+  border: 1px solid #8db2e3;
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  padding: 5px 21px 0 5px ;
+}
+.olMap {
+  border-width: 1px 1px 0 !important;
+}
+#olControlOverviewMapMaximizeButton_innerImage{bottom:-80px;}
+.x-item-disabled{opacity: .25 !important;}
+.x-tree-node-loading a span {
+font-style: inherit;
+}
+.x-tree-node a span, .x-dd-drag-ghost a span {
+padding: 1px 3px 1px 3px;
+}
+.mapclientLegendPanel div div div label {
+	background-color: #D0DEF0;
+}
+.mapclientLegendPanel div div div img {
+	
+}
+.mapclientLegendPanel {
+	padding-top:15px; 
+	background-color: #FFFFFF;
+}
+/*
+    Ext.ux.Notification
+*/
+.x-icon-error{background-image:url(../../shared/images/exclamation.gif) ! important;}
+.x-icon-information{background-image:url(../../shared/images/information.gif) ! important;}
+.x-notification .x-window-body{margin: 0;padding:1em ! important; width: auto ! important;}
+.x-notification .x-tool-close{display: none}
+.x-notification.fixed .x-tool-close{display: block}
+.x-notification p{margin: 0;padding:0;}
+.olControlScaleLine {bottom:22px !important;}
+.olControlMousePosition{bottom: 2px !important;left: 8px;display: block;position: absolute !important;font-family: Arial;font-size: 12px !important;}
+
+.x-combo-list-item {
+	white-space: normal !important;
+}
+
+.olCopyrightPosition{
+    font-size: 12px !important;
+    text-align: right;
+    bottom: 0px;
+    display: block;
+    font-family: Arial;
+    font-size: smaller;
+    position: absolute;
+    right: 25px;
+    padding:0 5px;
+    height:16px;
+    background: none repeat scroll 0 0 #D9E7F8;
+    border: 1px solid #8DB2E3;
+    z-index: 1100;
+}
+
+.x-tree-node .x-tree-node-select a span{
+	font-weight:bold !important;
+}
+
+.x-tree-node .x-tree-node-select-disabled a span{
+	font-weight:bold !important;
+	color:gray !important;
+}
+
+#welcomePage {font: normal 100%/120% Verdana, Arial, sans-serif; }
+#welcomePage h1 { color: rgb(23, 103, 152); font-size: 15px; font-weight: bold; margin-bottom: 10px; }
+#welcomePage .welcomeFooter, .welcomeHeader { background: rgb(217, 234, 250); margin: 5px; padding: 15px;}
+#welcomePage .odd { background-color: #EEE;}
+#welcomePage .iconTable { width: 16px; height: 16px; background-repeat: no-repeat;}
+#welcomePage .info_img {position: absolute;right: 12px !important;margin: 0px;top: 6px !important;}
+#welcomePage .info_link { margin-bottom: 0.5em !important; font-size: 12px; }
+#welcomePage .title_extra_text {margin-top: 10px; color: rgb(100, 100, 100); font-size: 13px; }
+#welcomePage .welcomeTable { width: 100%; }
+#welcomePage .welcomeTable tr td { padding: 3px; font-size: 100%; }
+#welcomePage #tipsPanel .x-panel-body { padding: 10px; font-size: 14px; line-height: 18px; }
+#welcomePage a {color: rgb(23, 103, 152); text-decoration: none;}
+
+.x-panel .x-accordion-hd .x-tool {
+	background-image: url(../../shared/images/arrow_down.png);
+}
+
+.x-panel .x-accordion-hd .x-tool-toggle {
+	background-position: 0;
+}
+
+.x-panel .x-panel-collapsed .x-accordion-hd  .x-tool {
+	background-image: url(../../shared/images/arrow_right.png);
+}
+
+.x-panel-collapsed .x-accordion-hd .x-tool-toggle {
+	background-position: 0;
+}
+
+.x-tree-root-node li .x-tree-node {
+	
+}
+
+ul .x-tree-node-ct li .x-tree-node {
+	border: 0px solid #000000;
+}
+
+.x-accordion-hd{
+	font: bold 12px verdana;
+	color: #1C5679;
+}
+
+.x-panel-collapsed .x-accordion-hd{
+	font: bold 12px verdana;
+	color: #1B78B1;
+}
+
+.x-tree-node {
+	color: #000000;
+	font: normal 12px/19px verdana;
+}
+
+.x-tree-node-el {
+	padding: 5px 0px 5px 5px;
+}
+
+.x-tree-arrows {
+	border-bottom: 1px solid #b4b4b4;
+}
+
+.x-tree-arrows > .x-tree-root-node > .x-tree-node > .x-tree-node-expanded {
+	border-top: 1px solid #b4b4b4;
+	border-bottom: 1px solid #b4b4b4;
+}
+
+.x-tree-node .x-tree-selected {
+	background: #ffffff;
+}
+
+.x-tree-node .x-tree-node-over {
+	background: #f4f4f4;
+}
+
+.x-tree-arrows > .x-tree-root-node > .x-tree-node > .x-tree-node-collapsed {
+	border-top: 1px solid #b4b4b4;
+}
+
+.x-tree-arrows .x-tree-elbow-plus {
+	background-image: url(../../shared/images/arrow_small_right.png);
+	background-position: 5px 6px;
+}
+
+.x-tree-arrows .x-tree-elbow-minus {
+	background-image: url(../../shared/images/arrow_small_down.png);
+	background-position: 5px 6px;
+}
+
+.x-tree-arrows .x-tree-elbow-end-plus {
+	background-image: url(../../shared/images/arrow_small_right.png);
+	background-position: 5px 6px;
+}
+
+.x-tree-arrows .x-tree-elbow-end-minus {
+	background-image: url(../../shared/images/arrow_small_down.png);
+	background-position: 5px 6px;
+}
+
+.x-tree-arrows .x-tree-ec-over .x-tree-elbow-plus, .x-tree-arrows .x-tree-ec-over .x-tree-elbow-end-plus, .x-tree-arrows .x-tree-ec-over .x-tree-elbow-minus, .x-tree-arrows .x-tree-ec-over .x-tree-elbow-end-minus {
+	background-position: 5px 6px;
+}
+
+.x-tree-node a span:hover {
+	text-decoration: none;
+}
+
+.x-tree-node-add a.x-tree-node-anchor span {
+	text-decoration: none;
+}
+
+
+.x-tree-node-add a.x-tree-node-anchor span:hover {
+	text-decoration: underline;
+}
+
+.x-hoveractions-outer {
+    float:left;
+}
+
+.x-hoveractions-img {
+	height: 16px;
+    width: 16px;
+    cursor: pointer;
+    border: 0px;
+    padding: 2px;
+    background-color: transparent;
+}
+
+.img-placeholder {
+	padding: 0 0 0 2px;	
+}
+
+.buttonSpan {
+	height: 16px;
+	float:left;
+	padding: 2px 5px 0px 0px;
+}
+
+.background {
+	background-color: #DFE8F6;
+}
+
+.hint {
+	color: #A8A8A8;
+}
+
+.font {
+	font: normal 12px/19px verdana;
+}
+
+.font-menu {
+	font: normal 11px/16px verdana !important;
+	color: #000 !important;
+}
+
+.font-nominatim {
+	font: normal 11px/16px verdana !important;
+}
+
+.font-nominatim h1 span {
+	font: bold 11px/16px verdana !important;
+}
+
+#nominatim {
+	font: normal 11px/16px verdana !important;
+}
+
+#servicePanel .x-panel-header {
+	padding: 10px 10px;	
+}
+
+#searchResults .x-panel-header {
+	font: bold 12px/19px verdana;
+	color: #000000;
+    background: #FFFFFF;
+    border-bottom: 1px solid #000000;
+}
+
+.x-tree-placeholder{
+	width: 10px;
+}
+
+.x-hoveractions-outer table td { 
+	padding: 0px 2px; 
+}
+
+.x-tree-node-anchor {
+	text-decoration: none !important;
+}
+
+.smaller-leaf-padding .x-tree-node-ct .x-tree-node .x-tree-node-el, #searchResults .smaller-leaf-padding .x-tree-node .x-tree-node-el { 
+	padding: 3px 0px 3px 5px
+}
+
+.loadingDialogIcon {
+	padding: 0 2px;
+}
+
+.tbspacer_centerToolbar {
+	width: 10px !important;
+}

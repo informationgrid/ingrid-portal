@@ -36,7 +36,7 @@
 	var xmlHttp = new XMLHttpRequest;
 
 	if (xmlHttp) {
-        xmlHttp.open('GET', '$jetspeed.getAbsoluteUrl('/detect-js.psml?js=1')', true);
+        xmlHttp.open('GET', '/portal/detect-js.psml?js=1', true);
         xmlHttp.onreadystatechange = function () {
         };
         xmlHttp.send(null);
@@ -46,7 +46,7 @@
   </head>
   <body class="#PageBaseCSSClass()">
     <noscript>
-	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
+	  <iframe src="/portal/detect-js.psml" style="display:none"></iframe>
     </noscript>
 <!--  BEGIN: layout/html/portalu/decorator.vm -->
     <div class="#PageBaseCSSClass()">

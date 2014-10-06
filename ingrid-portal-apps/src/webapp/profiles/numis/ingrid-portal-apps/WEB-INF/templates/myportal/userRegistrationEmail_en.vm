@@ -1,6 +1,6 @@
 Hello $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
 
-Welcome to PortalU! 
+Welcome to NUMIS-Portal! 
 Thank you for registering.
 
 Please confirm your registration by following the link below.
