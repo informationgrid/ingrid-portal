@@ -15,7 +15,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!-- TODO mm Extend this 2.3 security-managers.xml with former functionality ? (first UPDATE this 2.3 one to most current) -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
@@ -28,12 +27,10 @@
         <bean class="org.apache.jetspeed.security.spi.impl.FragmentPermission$Factory" />
         <bean class="org.apache.jetspeed.security.spi.impl.PagePermission$Factory" />
         <bean class="org.apache.jetspeed.security.spi.impl.PortletPermission$Factory" />
-<!-- TODO mm Include Ingrid...Permission Factorys when ingrid-portal-utils.jar 3.5 is linked -->
-<!--
+<!-- TODO mm Test Ingrid...Permission Factorys (from ingrid-portal-utils....jar) -->
         <bean class="de.ingrid.portal.security.permission.IngridPortalPermission$Factory" />
         <bean class="de.ingrid.portal.security.permission.IngridPartnerPermission$Factory" />
         <bean class="de.ingrid.portal.security.permission.IngridProviderPermission$Factory" />
--->
       </list>
     </constructor-arg>
     <constructor-arg index="1">

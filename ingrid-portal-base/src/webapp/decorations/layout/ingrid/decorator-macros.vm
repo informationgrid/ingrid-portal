@@ -329,7 +329,8 @@
         <li><a href="$linkUrl" target="_new" title="$linkTitle">${linkName}</a>$postfix</li>
     </noscript>
   #elseif($linkTitle == "ingrid.page.language")
-    $jetspeed.renderPortletEntity("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
+## TODO mm noch testen ! renderPortletWindow statt renderPortletEntity
+    $jetspeed.renderPortletWindow("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
   #else
     <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
   #end  
