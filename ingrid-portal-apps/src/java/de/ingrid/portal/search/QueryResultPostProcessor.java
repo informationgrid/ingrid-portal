@@ -101,7 +101,7 @@ public class QueryResultPostProcessor {
         // THIS IS THE iPlugClass from PD !!! :(
         if (tmpString.contains("dsc") && tmpString.contains("search")) {
             processDSCHit(hit, detail, ds);
-        } else if (tmpString.equals("de.ingrid.iplug.se.nutchsearcher")) {
+        } else if (tmpString.equals("de.ingrid.iplug.se.nutchsearcher") || tmpString.equals("de.ingrid.iplug.se.seiplug")) {
             hit.put(Settings.RESULT_KEY_TYPE, "www-style");
         } else if (tmpString.equals("de.ingrid.iplug.tamino.taminosearcher")) {
             hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
