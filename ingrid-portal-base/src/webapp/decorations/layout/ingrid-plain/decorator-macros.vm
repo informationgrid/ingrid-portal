@@ -115,8 +115,8 @@
 <!-- logged on message -->
 #if($jetspeed.getLoggedOn())
     #set($userAttributes = $jetspeed.getUserProperties())
-    #set($userNameGiven = $userAttributes.get("user.name.given", null))
-    #set($userNameFamily = $userAttributes.get("user.name.family", null))
+    #set($userNameGiven = $userAttributes.get("user.name.given"))
+    #set($userNameFamily = $userAttributes.get("user.name.family"))
     
     #if($userNameGiven)
     #set ($salutation = " $userNameGiven")
