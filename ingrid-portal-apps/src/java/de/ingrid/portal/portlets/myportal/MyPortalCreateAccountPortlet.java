@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.prefs.Preferences;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -26,6 +25,7 @@ import javax.portlet.RenderResponse;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.PortalAdministration;
 import org.apache.jetspeed.exception.JetspeedException;
+import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
@@ -150,10 +150,13 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             User user = null;
             try {
                 user = userManager.getUser(userName);
-                Preferences pref = user.getUserAttributes();
-                String userConfirmId = pref.get("user.custom.ingrid.user.confirmid", "invalid");
+            	Map<String, String> pref = user.getInfoMap();
+                String userConfirmId = pref.get("user.custom.ingrid.user.confirmid");
+                userConfirmId = (userConfirmId == null ? "invalid" : userConfirmId);
                 if (userConfirmId.equals(newUserGUID)) {
-                    userManager.setPasswordEnabled(userName, true);
+                	PasswordCredential pwc = userManager.getPasswordCredential(user);
+                    pwc.setEnabled(true);
+                    userManager.storePasswordCredential(pwc);
                     context.put("success", "true");
                     response.setTitle(messages.getString("account.confirmed.title"));
                     request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_DONE);
@@ -258,8 +261,11 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
 
+            User user = userManager.getUser(userName);
             // TODO set this to false in production env
-            userManager.setPasswordEnabled(userName, false);
+            PasswordCredential pwc = userManager.getPasswordCredential(user);
+            pwc.setEnabled(false);
+            userManager.storePasswordCredential(pwc);
 
             String returnUrl = generateReturnURL(request, actionResponse, userName, confirmId);
 

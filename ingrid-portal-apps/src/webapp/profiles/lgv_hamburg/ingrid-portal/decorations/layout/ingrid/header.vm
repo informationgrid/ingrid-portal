@@ -19,7 +19,7 @@
   <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
   <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
   <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
-#set($currentPage = $site.getPage().url)
+#set($currentPage = $site.getPageOrTemplate().url)
 #if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
   <meta name="robots" content="noindex,follow" />
 #else
@@ -114,7 +114,7 @@ if (xmlhttp) {
 <!-- sub navigation -->
 <div id="subnavBack"><a name="subnav"></a>
   <div class="subnav_corner"><div class="subnav_corner_img"></div></div>
-  #set($currentPage = $site.getPage().url)
+  #set($currentPage = $site.getPageOrTemplate().url)
   #if ($currentPage.startsWith('/administration'))
 #set($subMenu = $site.getMenu("sub-menu"))
 #if($subMenu && !$subMenu.empty)

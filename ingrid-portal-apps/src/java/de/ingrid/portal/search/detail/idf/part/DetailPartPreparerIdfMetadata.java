@@ -2,6 +2,7 @@ package de.ingrid.portal.search.detail.idf.part;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.portlet.RenderRequest;
@@ -396,10 +397,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 						boolean isHidden = false;
 						
 						if(value != null){
-							ArrayList<String> hiddenKeywordList = (ArrayList<String>) PortalConfig.getInstance().getList(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
+							List hiddenKeywordList = PortalConfig.getInstance().getList(PortalConfig.PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS);
 							if(hiddenKeywordList != null){
 								for(int h=0; h < hiddenKeywordList.size(); h++){
-									String hiddenValue = hiddenKeywordList.get(h);
+									String hiddenValue = (String) hiddenKeywordList.get(h);
 									if(value.toLowerCase().equals(hiddenValue.toLowerCase())){
 										isHidden = true; 
 										break;

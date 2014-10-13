@@ -18,6 +18,7 @@
     <finalName>ingrid-portal-apps</finalName>
     <sourceDirectory>src/java</sourceDirectory>
     <plugins>
+
       <!-- "DISABLE" WAGON PLUGIN TO AVOID EMPTY UPLOAD DIRECTORIES FROM SUBMODULES -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -27,6 +28,7 @@
           <url>/dev/null</url>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -35,6 +37,7 @@
           <archiveClasses>false</archiveClasses>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
@@ -45,8 +48,7 @@
           <toAddresses />
         </configuration>
       </plugin>
-      <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-      <!-- HACK: Upload JAR file WITHOUT "-classes" in name, so MAVEN1 can handle it (no classifier "classes" possible in maven1) !!! -->
+
     </plugins>
     <resources>
       <resource>
@@ -60,64 +62,28 @@
           <include>**/*.xsd</include>
         </includes>
       </resource>
-      <!-- Copy xml files in java folders to target (Hibernate mapping files) -->
     </resources>
   </build>
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
-  <!-- <dependencyManagement><dependencies><dependency><groupId>opensymphony</groupId><artifactId>quartz</artifactId><version>1.7.3</version></dependency></dependencies></dependencyManagement>-->
+<!--
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+-->
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
-    <dependency>
-      <groupId>portlet-api</groupId>
-      <artifactId>portlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>javamail</groupId>
-      <artifactId>javamail</artifactId>
-      <version>1.3.3</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.portals.bridges</groupId>
-      <artifactId>portals-bridges-common</artifactId>
-      <version>1.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.portals.bridges</groupId>
-      <artifactId>portals-bridges-velocity</artifactId>
-      <version>1.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.portals.jetspeed-2</groupId>
-      <artifactId>jetspeed-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.portals.jetspeed-2</groupId>
-      <artifactId>jetspeed-commons</artifactId>
-      <version>${jetspeed.version}</version>
-      <scope>provided</scope>
-    </dependency>
+
+<!-- Jetspeed / Apache Portals -->
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-portal</artifactId>
-      <version>${jetspeed.version}</version>
       <exclusions>
         <exclusion>
-          <groupId>ehcache</groupId>
-          <artifactId>ehcache</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
+          <groupId>org.apache.portals.jetspeed-2</groupId>
+          <artifactId>jetspeed-rdbms</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.apache.portals.jetspeed-2</groupId>
@@ -125,10 +91,6 @@
         </exclusion>
         <exclusion>
           <groupId>org.apache.portals.jetspeed-2</groupId>
-          <artifactId>jetspeed-prefs</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.portals.jetspeed-2</groupId>
           <artifactId>jetspeed-registry</artifactId>
         </exclusion>
         <exclusion>
@@ -136,27 +98,70 @@
           <artifactId>jetspeed-security</artifactId>
         </exclusion>
         <exclusion>
+          <groupId>org.apache.portals.jetspeed-2</groupId>
+          <artifactId>jetspeed-page-layout</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.portals.pluto</groupId>
+          <artifactId>pluto-container</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>taglibs</groupId>
           <artifactId>random</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>javax.mail</groupId>
-          <artifactId>mail</artifactId>
+          <groupId>org.apache.geronimo.specs</groupId>
+          <artifactId>geronimo-javamail_1.4_spec</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.geronimo.javamail</groupId>
+          <artifactId>geronimo-javamail_1.4_provider</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jaxen</groupId>
+          <artifactId>jaxen</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>cglib</groupId>
+          <artifactId>cglib</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context-support</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.ws.rs</groupId>
+          <artifactId>jsr311-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.cxf</groupId>
+          <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-jaxrs</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-xc</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openid4java</groupId>
+          <artifactId>openid4java-consumer</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.portals.jetspeed-2</groupId>
+          <artifactId>com-google-step2-common</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-page-manager</artifactId>
-      <version>${jetspeed.version}</version>
       <exclusions>
         <exclusion>
-          <groupId>castor</groupId>
-          <artifactId>castor</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
+          <groupId>org.apache.portals.jetspeed-2</groupId>
+          <artifactId>jetspeed-rdbms</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.apache.portals.jetspeed-2</groupId>
@@ -164,73 +169,32 @@
         </exclusion>
         <exclusion>
           <groupId>org.apache.portals.jetspeed-2</groupId>
-          <artifactId>jetspeed-registry</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.portals.jetspeed-2</groupId>
           <artifactId>jetspeed-security</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.castor</groupId>
+          <artifactId>castor</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
+    <!-- Portals Bridges Common provides the GenericServletPortlet -->
     <dependency>
-      <groupId>org.apache.portals.jetspeed-2</groupId>
-      <artifactId>jetspeed-web-content</artifactId>
-      <version>${jetspeed.version}</version>
-    </dependency>
-    <!-- ================================================== -->
-    <!-- NEEDED FOR TESTCASES -->
-    <dependency>
-      <groupId>org.apache.portals.jetspeed-2</groupId>
-      <artifactId>jetspeed-rdbms</artifactId>
-      <version>${jetspeed.version}</version>
+      <groupId>org.apache.portals.bridges</groupId>
+      <artifactId>portals-bridges-common</artifactId>
       <scope>provided</scope>
     </dependency>
-    <!-- ================================================== -->
     <dependency>
-      <groupId>org.apache.pluto</groupId>
-      <artifactId>pluto</artifactId>
-      <version>1.0.1</version>
-      <scope>provided</scope>
+      <groupId>org.apache.portals.bridges</groupId>
+      <artifactId>portals-bridges-velocity</artifactId>
     </dependency>
-    <!--dependency><groupId>org.apache.portals.jetspeed-2</groupId><artifactId>portals-gems</artifactId><version>2.0</version><type>jar</type><properties><war.bundle>true</war.bundle></properties></dependency-->
+    <!-- provides the IFramePortlet -->
     <dependency>
-      <groupId>velocity</groupId>
-      <artifactId>velocity</artifactId>
-      <version>1.4</version>
-      <exclusions>
-        <exclusion>
-          <groupId>velocity</groupId>
-          <artifactId>velocity-dep</artifactId>
-        </exclusion>
-      </exclusions>
+        <groupId>org.apache.portals.applications</groupId>
+        <artifactId>apa-webcontent-jar</artifactId>
+        <version>1.3</version>
     </dependency>
-    <dependency>
-      <groupId>velocity-tools</groupId>
-      <artifactId>velocity-tools</artifactId>
-      <version>1.2</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-digester</groupId>
-      <artifactId>commons-digester</artifactId>
-      <version>1.5</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>commons-beanutils</groupId>
-      <artifactId>commons-beanutils</artifactId>
-      <version>1.6.1</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+
+<!-- InGrid -->
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
@@ -247,36 +211,36 @@
           <groupId>org.springframework</groupId>
           <artifactId>spring-core</artifactId>
         </exclusion>
-        <exclusion>
-          <groupId>com.thoughtworks.xstream</groupId>
-          <artifactId>xstream</artifactId>
-        </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.googlecode.json-simple</groupId>
-      <artifactId>json-simple</artifactId>
-      <version>1.1</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-portal-utils</artifactId>
-      <scope>provided</scope>
+      <!-- NOT provided anymore (tomcat shared/lib), we need it in our webapp because of dependency to jetspeed-security jar at runtime ! -->
       <exclusions>
         <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
+          <groupId>org.apache.portals.jetspeed-2</groupId>
+          <artifactId>jetspeed-rdbms</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.apache.portals.jetspeed-2</groupId>
-          <artifactId>jetspeed-security</artifactId>
+          <artifactId>jetspeed-serializer</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.ldap</groupId>
+          <artifactId>spring-ldap</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
-    <!-- <dependency><groupId>de.ingrid</groupId><artifactId>ingrid-ibus</artifactId><version>3.1.0</version></dependency>-->
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus-client</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>net.sf.ehcache</groupId>
+          <artifactId>ehcache</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
@@ -325,10 +289,6 @@
           <artifactId>jsp-2.1</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>commons-fileupload</groupId>
-          <artifactId>commons-fileupload</artifactId>
-        </exclusion>
-        <exclusion>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-lang3</artifactId>
         </exclusion>
@@ -375,8 +335,8 @@
           <artifactId>ojdbc</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>lucene</groupId>
-          <artifactId>lucene</artifactId>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-analyzers</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -395,6 +355,10 @@
         <exclusion>
           <groupId>htmlparser</groupId>
           <artifactId>htmlparser</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -446,6 +410,14 @@
         <exclusion>
           <groupId>de.ingrid</groupId>
           <artifactId>ingrid-external-services-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>axis</groupId>
+          <artifactId>axis-wsdl4j</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -524,58 +496,26 @@
           <artifactId>spring</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>com.thoughtworks.xstream</groupId>
-          <artifactId>xstream</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.jettison</groupId>
-      <artifactId>jettison</artifactId>
-      <version>1.1</version>
-      <exclusions>
-        <exclusion>
           <groupId>stax</groupId>
           <artifactId>stax-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib-nodep</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-    </dependency>
-    <!-- Commons logging is replaced by SLF4J !!! -->
-    <!--<dependency><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId><version>${commons.logging.version}</version><type>jar</type><url>http://jakarta.apache.org/commons/logging.html</url><properties><war.bundle>${commons.logging.include}</war.bundle></properties></dependency>-->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.6.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <version>1.6.1</version>
-    </dependency>
+
+<!-- Diverses -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>1.6.1</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>xstream</groupId>
-      <artifactId>xstream</artifactId>
-      <version>1.2</version>
-      <!-- <scope>provided</scope>-->
-      <exclusions>
-        <exclusion>
-          <groupId>xpp3</groupId>
-          <artifactId>xpp3_min</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>javamail</groupId>
+      <artifactId>javamail</artifactId>
+      <version>1.3.3</version>
+    </dependency>
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib-nodep</artifactId>
     </dependency>
     <dependency>
       <groupId>hibernate</groupId>
@@ -614,95 +554,20 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
-      <version>1.4.1</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>backport-util-concurrent</groupId>
-          <artifactId>backport-util-concurrent</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>antlr</groupId>
-      <artifactId>antlr</artifactId>
-      <version>2.7.2</version>
-    </dependency>
-    <dependency>
       <groupId>commons-pool</groupId>
       <artifactId>commons-pool</artifactId>
-      <version>1.2</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>commons-dbcp</groupId>
       <artifactId>commons-dbcp</artifactId>
-      <version>1.2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>dom4j</groupId>
-      <artifactId>dom4j</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>jaxen</groupId>
-          <artifactId>jaxen</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>saxpath</groupId>
-          <artifactId>saxpath</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>msv</groupId>
-          <artifactId>msv</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>relaxngDatatype</groupId>
-          <artifactId>relaxngDatatype</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>isorelax</groupId>
-          <artifactId>isorelax</artifactId>
-        </exclusion>
-      </exclusions>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>jta</groupId>
       <artifactId>jta</artifactId>
       <version>1.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-configuration</groupId>
-      <artifactId>commons-configuration</artifactId>
-      <version>1.2</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-beanutils</groupId>
-          <artifactId>commons-beanutils-core</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.2</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.1</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>opensymphony</groupId>
@@ -710,121 +575,8 @@
       <version>1.7.3</version>
     </dependency>
     <dependency>
-      <groupId>servletapi</groupId>
-      <artifactId>servletapi</artifactId>
-      <version>2.3</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>rome</groupId>
       <artifactId>rome</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>jal</groupId>
-      <artifactId>jal</artifactId>
-      <version>0.4</version>
-    </dependency>
-    <dependency>
-      <groupId>jdom</groupId>
-      <artifactId>jdom</artifactId>
-      <version>b10</version>
-    </dependency>
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>xml-apis</groupId>
-      <artifactId>xml-apis</artifactId>
-      <version>1.0.b2</version>
-    </dependency>
-    <dependency>
-      <groupId>jstl</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.0.6</version>
-    </dependency>
-    <dependency>
-      <groupId>taglibs</groupId>
-      <artifactId>request</artifactId>
-      <version>1.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.activation</groupId>
-      <artifactId>activation</artifactId>
-      <version>1.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>xpp3</groupId>
-      <artifactId>xpp3</artifactId>
-      <version>1.1.2a</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-httpclient</groupId>
-      <artifactId>commons-httpclient</artifactId>
-      <version>3.0.1</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>uba</groupId>
-      <artifactId>xtmStubs</artifactId>
-      <version>3.0.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>axis</groupId>
-      <artifactId>axis</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>axis</groupId>
-          <artifactId>axis-wsdl4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>wsdl4j</groupId>
-      <artifactId>wsdl4j</artifactId>
-      <version>1.6.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.axis</groupId>
-      <artifactId>axis-saaj</artifactId>
-      <version>1.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.axis</groupId>
-      <artifactId>axis-jaxrpc</artifactId>
-      <version>1.4</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-discovery</groupId>
-      <artifactId>commons-discovery</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>xalan</groupId>
-      <artifactId>xalan</artifactId>
     </dependency>
     <dependency>
       <groupId>com.octo.captcha</groupId>
@@ -843,18 +595,11 @@
           <groupId>com.jhlabs</groupId>
           <artifactId>imaging</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+        </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.9.5</version>
     </dependency>
   </dependencies>
   <repositories>

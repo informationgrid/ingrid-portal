@@ -27,24 +27,24 @@ public class UtilsSecurity {
 
     private final static Logger log = LoggerFactory.getLogger(UtilsSecurity.class);
 
-    public final static IngridPortalPermission ADMIN_INGRID_PORTAL_PERMISSION = new IngridPortalPermission("admin", "*");
+    public final static IngridPortalPermission ADMIN_INGRID_PORTAL_PERMISSION = new IngridPortalPermission.Factory().newPermission("admin", "*");
 
-    public final static IngridPortalPermission ADMIN_PORTAL_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
+    public final static IngridPortalPermission ADMIN_PORTAL_INGRID_PORTAL_PERMISSION = new IngridPortalPermission.Factory().newPermission(
             "admin.portal", "*");
 
-    public final static IngridPortalPermission ADMIN_PORTAL_STAR_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
+    public final static IngridPortalPermission ADMIN_PORTAL_STAR_INGRID_PORTAL_PERMISSION = new IngridPortalPermission.Factory().newPermission(
             "admin.portal.*", "*");
 
-    public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
+    public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION = new IngridPortalPermission.Factory().newPermission(
             "admin.portal.partner", "*");
 
-    public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_STAR_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
+    public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_STAR_INGRID_PORTAL_PERMISSION = new IngridPortalPermission.Factory().newPermission(
             "admin.portal.partner.*", "*");
 
-    public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
+    public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION = new IngridPortalPermission.Factory().newPermission(
             "admin.portal.partner.provider.index", "*");
 
-    public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION = new IngridPortalPermission(
+    public final static IngridPortalPermission ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION = new IngridPortalPermission.Factory().newPermission(
             "admin.portal.partner.provider.catalog", "*");
 
     /**

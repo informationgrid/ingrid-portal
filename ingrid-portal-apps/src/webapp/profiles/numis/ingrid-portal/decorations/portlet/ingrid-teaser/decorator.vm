@@ -4,14 +4,14 @@
 #set($actions = $decoration.actions)
 #set($_actions = $layoutDecoration.actions)
 
-<!-- Begin: Fragment: ${f.id} Decoration: ${decoratorId} -->
+## Begin: Fragment: ${f.id} Decoration: ${decoratorId}
 <div id="${f.id}" class="section">
 	<div class="section-header">
 		#set($akey = $jetspeed.getPreferenceFirstValue($f, "titleKey")) 
 		#if($akey && $akey.length() > 0)
 			<a name="$akey"></a>
 		#end
-	  	<h1>$!jetspeed.getTitle($jetspeed.getPortletEntity($f), $f)</h1>
+	  	<h1>$!jetspeed.getTitle($f)</h1>
 	    <span class="portlet_info">
 		#set($hkey = $jetspeed.getPreferenceFirstValue($f, "helpKey")) 
 		#if($hkey && $hkey.length() > 0)
@@ -36,4 +36,4 @@
 	$f.renderedContent
 	#end
 </div>
-<!-- END: Fragment: ${f.id} Decoration: ${decoratorId} -->
+## END: Fragment: ${f.id} Decoration: ${decoratorId}

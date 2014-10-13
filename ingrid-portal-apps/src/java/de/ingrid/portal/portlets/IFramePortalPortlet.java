@@ -19,6 +19,7 @@ import javax.portlet.RenderResponse;
 
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.om.page.Fragment;
+import org.apache.portals.applications.webcontent.portlet.IFrameGenericPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -31,7 +32,7 @@ import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridFragmentPref;
 import de.ingrid.portal.om.IngridFragmentPrefValue;
 
-public class IFramePortalPortlet extends org.apache.jetspeed.portlet.IFrameGenericPortlet {
+public class IFramePortalPortlet extends IFrameGenericPortlet {
 
 	private final static Logger log = LoggerFactory.getLogger(IFramePortalPortlet.class);
 	

@@ -41,7 +41,7 @@
 
   #* our decorator macros, see ./decorator-macros.vm *#
   #decoratorIncludeJavaScriptForHead()
-#set($currentPage = $site.getPage().url)
+#set($currentPage = $site.getPageOrTemplate().url)
 #if($currentPage == "/main-search.psml")
 	<script src="/ingrid-portal-apps/javascript/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
     <script type="text/javascript">
@@ -120,7 +120,7 @@ if (xmlhttp) {
   #includeSubNavigation($subMenu)
 #else
   ## HACK: check current site and render "global" sub menue dependent from site ! -> thus we don't have to restructure pages in subfolders !
-  #set($currentPage = $site.getPage().url)
+  #set($currentPage = $site.getPageOrTemplate().url)
   #if($currentPage.startsWith('/search-') || $currentPage.startsWith('/main-search'))
 	#set($subMenu = $site.getMenu("sub-menu-search"))
 	#if($subMenu && !$subMenu.empty)

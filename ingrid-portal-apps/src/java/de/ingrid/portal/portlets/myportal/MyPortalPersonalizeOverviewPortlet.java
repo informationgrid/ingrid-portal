@@ -59,7 +59,7 @@ public class MyPortalPersonalizeOverviewPortlet extends GenericVelocityPortlet {
         ArrayList portletTitleKeys = new ArrayList();
         try {
             Page myPage = pageManager.getPage("_role/user/myportal-personalize.psml");
-            Fragment root = myPage.getRootFragment();
+            Fragment root = (Fragment) myPage.getRootFragment();
             fragments = root.getFragments();
             for (int i=0; i<fragments.size(); i++) {
                 Fragment f = (Fragment)fragments.get(i);

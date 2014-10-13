@@ -22,7 +22,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
-import org.apache.pluto.core.impl.PortletSessionImpl;
 import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1185,7 +1184,7 @@ public class UtilsFacete {
 	/***************************** Funktionen ****************************************/
 	
 	private static void removeAttributeFromSession(PortletRequest request, String key){
-		request.getPortletSession().removeAttribute(key, PortletSessionImpl.APPLICATION_SCOPE);
+		request.getPortletSession().removeAttribute(key, PortletSession.APPLICATION_SCOPE);
 	}
 	
 	public static void setAttributeToSession(PortletRequest request, String key, Object value){
@@ -1215,7 +1214,7 @@ public class UtilsFacete {
 			}
 		}
 		
-		request.getPortletSession().setAttribute("faceteSessionKeys", faceteSessionKeys, PortletSessionImpl.APPLICATION_SCOPE);
+		request.getPortletSession().setAttribute("faceteSessionKeys", faceteSessionKeys, PortletSession.APPLICATION_SCOPE);
 		if(isSelection){
 			ArrayList<HashMap> faceteLastSelection = (ArrayList<HashMap>) request.getPortletSession().getAttribute("faceteLastSelection");
 			if(faceteLastSelection == null){
@@ -1227,13 +1226,13 @@ public class UtilsFacete {
 			faceteLastSelection.add(lastSelection);
 			setAttributeToSession(request, "faceteLastSelection", faceteLastSelection);
 			// Set selection flag of facet to session 
-			request.getPortletSession().setAttribute("isSelection", true, PortletSessionImpl.APPLICATION_SCOPE);
+			request.getPortletSession().setAttribute("isSelection", true, PortletSession.APPLICATION_SCOPE);
 		}
-		request.getPortletSession().setAttribute(key, value, PortletSessionImpl.APPLICATION_SCOPE);
+		request.getPortletSession().setAttribute(key, value, PortletSession.APPLICATION_SCOPE);
 	}
 	
 	private static Object getAttributeFromSession(PortletRequest request, String key){
-		return request.getPortletSession().getAttribute(key, PortletSessionImpl.APPLICATION_SCOPE);
+		return request.getPortletSession().getAttribute(key, PortletSession.APPLICATION_SCOPE);
 	}
 	
 	private static void general(ActionRequest request) {
@@ -1379,12 +1378,12 @@ public class UtilsFacete {
 			facetSelectionState = new HashMap<String, Boolean>();
 		}
 		facetSelectionState.put(key, value);
-		ps.setAttribute("facetSelectionState", facetSelectionState, PortletSessionImpl.APPLICATION_SCOPE);
+		ps.setAttribute("facetSelectionState", facetSelectionState, PortletSession.APPLICATION_SCOPE);
 	}
 	
 	private static HashMap<String, Boolean> getFacetSelectionState(PortletRequest request){
 		PortletSession ps = request.getPortletSession();
-		HashMap<String, Boolean> facetSelectionState = (HashMap<String, Boolean>) ps.getAttribute("facetSelectionState", PortletSessionImpl.APPLICATION_SCOPE);
+		HashMap<String, Boolean> facetSelectionState = (HashMap<String, Boolean>) ps.getAttribute("facetSelectionState", PortletSession.APPLICATION_SCOPE);
 		return facetSelectionState;
 	}
 	

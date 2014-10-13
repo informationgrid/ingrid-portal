@@ -91,7 +91,7 @@ public class MyPortalOverviewPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         if (user != null) {
-            context.put("userAttributes", user.getUserAttributes());
+            context.put("userAttributes", user.getInfoMap());
         }
 
         super.doView(request, response);

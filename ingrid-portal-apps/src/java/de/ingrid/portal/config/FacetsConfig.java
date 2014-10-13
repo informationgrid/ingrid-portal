@@ -4,10 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration.Node;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +46,7 @@ public class FacetsConfig {
 			instance = getInstance();
 		}
 		
-		return extractFacets((ArrayList<Node>) instance.getRoot().getChildren("facet"), null);
+		return extractFacets(instance.getRoot().getChildren("facet"), null);
 	}
 	
 	/**
@@ -53,11 +55,11 @@ public class FacetsConfig {
 	 * @param facets
 	 * @return
 	 */
-	private static ArrayList<IngridFacet> extractFacets(ArrayList<Node> facet, IngridFacet parentFacet){
+	private static ArrayList<IngridFacet> extractFacets(List<ConfigurationNode> facet, IngridFacet parentFacet){
 		ArrayList<IngridFacet> ingridFacets = new ArrayList<IngridFacet>();
 		
 		if(facet != null){
-			for(Node facetNode : facet){
+			for(ConfigurationNode facetNode : facet){
 				IngridFacet ingridFacet = new IngridFacet();
 				if(facetNode.getChildren("id").size() > 0){
 					Node node = (Node) facetNode.getChildren("id").get(0);
@@ -186,7 +188,7 @@ public class FacetsConfig {
 						
 						Node facetsNode = (Node) facetNode.getChildren("facets").get(0);
 						if(facetNode != null){
-							ArrayList<Node> subFacet = (ArrayList<Node>) facetsNode.getChildren("facet"); 
+							List<ConfigurationNode> subFacet = facetsNode.getChildren("facet"); 
 							if(subFacet != null){
 								ingridFacet.setFacets(extractFacets(subFacet, ingridFacet));							
 							}

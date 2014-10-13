@@ -8,8 +8,8 @@ import java.io.IOException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 
-import org.apache.pluto.core.impl.PortletSessionImpl;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
@@ -122,7 +122,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
                             hits[i].put("topic_ref", href.substring(href.lastIndexOf("#")+1));
                         }
                     }
-                    request.getPortletSession().setAttribute(TOPICS, hits, PortletSessionImpl.PORTLET_SCOPE);
+                    request.getPortletSession().setAttribute(TOPICS, hits, PortletSession.PORTLET_SCOPE);
                 } else {
                     f.setError("", "searchExtEnvPlaceGeothesaurus.error.no_term_found");
                     request.getPortletSession().removeAttribute(TOPICS);
@@ -190,7 +190,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
                 for (int i=0; i<hits.length; i++) {
                     String tid = UtilsSearch.getDetailValue(hits[i], "topicID");
                     if (tid != null && tid.equals(topicId)) {
-                        request.getPortletSession().setAttribute(CURRENT_TOPIC, hits[i], PortletSessionImpl.PORTLET_SCOPE);
+                        request.getPortletSession().setAttribute(CURRENT_TOPIC, hits[i], PortletSession.PORTLET_SCOPE);
                         IngridHit[] similarHits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicSimilarLocationsFromTopic(topicId, request.getLocale());
                         if (similarHits == null) {
                             SearchExtEnvPlaceGeothesaurusForm f = (SearchExtEnvPlaceGeothesaurusForm) Utils.getActionForm(request, SearchExtEnvPlaceGeothesaurusForm.SESSION_KEY, SearchExtEnvPlaceGeothesaurusForm.class);
@@ -203,7 +203,7 @@ public class SearchExtEnvPlaceGeothesaurusPortlet extends SearchExtEnvPlace {
                                 similarHits[j].put("topic_ref", href.substring(href.lastIndexOf("#")+1));
                             }
                         }
-                        request.getPortletSession().setAttribute(SIMILAR_TOPICS, similarHits, PortletSessionImpl.PORTLET_SCOPE);            
+                        request.getPortletSession().setAttribute(SIMILAR_TOPICS, similarHits, PortletSession.PORTLET_SCOPE);            
                         break;
                     }
                 }

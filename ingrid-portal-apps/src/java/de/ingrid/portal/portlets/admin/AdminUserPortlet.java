@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.prefs.Preferences;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,17 +43,20 @@ import org.apache.jetspeed.om.folder.InvalidFolderException;
 import org.apache.jetspeed.page.PageManager;
 import org.apache.jetspeed.page.document.NodeException;
 import org.apache.jetspeed.profiler.Profiler;
-import org.apache.jetspeed.security.BasePrincipal;
 import org.apache.jetspeed.security.GroupManager;
 import org.apache.jetspeed.security.InvalidPasswordException;
 import org.apache.jetspeed.security.JSSubject;
+import org.apache.jetspeed.security.JetspeedPermission;
+import org.apache.jetspeed.security.JetspeedPrincipal;
+import org.apache.jetspeed.security.JetspeedPrincipalQueryContext;
 import org.apache.jetspeed.security.PasswordAlreadyUsedException;
+import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.jetspeed.security.PermissionManager;
 import org.apache.jetspeed.security.Role;
 import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
-import org.apache.jetspeed.security.UserPrincipal;
+import org.apache.jetspeed.security.UserManager;
 import org.apache.velocity.context.Context;
 import org.hibernate.CacheMode;
 import org.hibernate.Query;
@@ -77,9 +79,6 @@ import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridJetspeedPermission;
 import de.ingrid.portal.om.IngridNewsletterData;
 import de.ingrid.portal.portlets.security.SecurityResources;
-import de.ingrid.portal.portlets.security.SecurityUtil;
-import de.ingrid.portal.security.JetspeedPrincipalQueryContext;
-import de.ingrid.portal.security.UserManager;
 import de.ingrid.portal.security.permission.IngridPartnerPermission;
 import de.ingrid.portal.security.permission.IngridPortalPermission;
 import de.ingrid.portal.security.permission.IngridProviderPermission;
@@ -465,23 +464,27 @@ public class AdminUserPortlet extends ContentPortlet {
             // iterate over all users
             JetspeedPrincipalQueryContext qc = new JetspeedPrincipalQueryContext("", 0, Integer.MAX_VALUE);
             long start = 0;
+/*
             long fetchUsers = 0;
             long fetchRoles = 0;
             long fetchPermission = 0;
             long fetchUserDetails = 0;
-
+*/
             if (log.isDebugEnabled()) {
                 start = System.currentTimeMillis();
             }
             ContentBrowserState state = getBrowserState(request);
             Session session = HibernateUtil.currentSession();
             Map<String, String> filterCriteria = state.getFilterCriteria();
+// TODO mm: FIX SQL ??? better do it JS 23 way !
             StringBuilder selectString = new StringBuilder("SELECT DISTINCT usr.fullPath, prefName.propertyValue, prefLastName.propertyValue, cred.securityLastAuthDate");
             StringBuilder fromString = new StringBuilder("FROM IngridJetspeedPrincipal usr, IngridJetspeedCredential cred, IngridJetspeedPrefsNode prefs, IngridJetspeedPrefsNode prefsUserInfo, IngridJetspeedPrefsPropertyValue prefName, IngridJetspeedPrefsPropertyValue prefLastName");
             StringBuilder whereString = new StringBuilder("WHERE usr.isEnabled=true AND usr.principalId=cred.securityPrincipalId AND prefs.fullPath=usr.fullPath AND prefsUserInfo.parentNodeId=prefs.nodeId AND prefsUserInfo.nodeName='userinfo' AND prefName.nodeId=prefsUserInfo.nodeId AND prefName.propertyName='"+SecurityResources.USER_NAME_GIVEN+"' AND prefLastName.nodeId=prefsUserInfo.nodeId AND prefLastName.propertyName='"+SecurityResources.USER_NAME_FAMILY+"'");
             StringBuilder orderString = new StringBuilder("order by usr.fullPath");
             if (filterCriteria.get("filterCriteriaId") != null && filterCriteria.get("filterCriteriaId").length() > 0) {
-                whereString.append(" AND usr.fullPath like '"+BasePrincipal.PREFS_USER_ROOT+filterCriteria.get("filterCriteriaId").replaceAll("\\*", "\\%").replaceAll("\\.", "/")+"'");
+// TODO mm Keine Pfade mehr in DB -> BasePrincipal.PREFS_USER_ROOT (= "/user/") gibt's nicht mehr !!! 
+//                whereString.append(" AND usr.fullPath like '"+BasePrincipal.PREFS_USER_ROOT+filterCriteria.get("filterCriteriaId").replaceAll("\\*", "\\%").replaceAll("\\.", "/")+"'");
+                whereString.append(" AND usr.fullPath like '"+filterCriteria.get("filterCriteriaId").replaceAll("\\*", "\\%").replaceAll("\\.", "/")+"'");
             }
             if (filterCriteria.get("filterCriteriaFirstName") != null && filterCriteria.get("filterCriteriaFirstName").length() > 0) {
                 whereString.append(" AND prefName.propertyValue like '"+filterCriteria.get("filterCriteriaFirstName").replaceAll("\\*", "\\%")+"'");
@@ -491,7 +494,9 @@ public class AdminUserPortlet extends ContentPortlet {
             }
             if (filterCriteria.get("filterCriteriaRole") != null && filterCriteria.get("filterCriteriaRole").length() > 0) {
                 fromString.append(", IngridJetspeedUserRole usrRole, IngridJetspeedPrincipal role");
-                whereString.append(" AND usr.principalId=usrRole.userId AND role.principalId=usrRole.roleId AND role.fullPath like '"+BasePrincipal.PREFS_ROLE_ROOT+filterCriteria.get("filterCriteriaRole").replaceAll("\\*", "\\%")+"'");
+// TODO mm Keine Pfade mehr in DB -> BasePrincipal.PREFS_ROLE_ROOT (= "/role/") gibt's nicht mehr !!! 
+//                whereString.append(" AND usr.principalId=usrRole.userId AND role.principalId=usrRole.roleId AND role.fullPath like '"+BasePrincipal.PREFS_ROLE_ROOT+filterCriteria.get("filterCriteriaRole").replaceAll("\\*", "\\%")+"'");
+                whereString.append(" AND usr.principalId=usrRole.userId AND role.principalId=usrRole.roleId AND role.fullPath like '"+filterCriteria.get("filterCriteriaRole").replaceAll("\\*", "\\%")+"'");
             }
             if (filterCriteria.get("filterCriteriaEmail") != null && filterCriteria.get("filterCriteriaEmail").length() > 0) {
                 fromString.append(", IngridJetspeedPrefsPropertyValue prefEmail");
@@ -516,10 +521,13 @@ public class AdminUserPortlet extends ContentPortlet {
                     userInfo.setFullPath((String)prinipalInfo[0]);
                     userInfos.put((String)prinipalInfo[0], userInfo);
                 }
+// TODO mm: FIX SQL ??? better do it JS 23 way !
                 q = session.createQuery("SELECT DISTINCT role.fullPath FROM IngridJetspeedPrincipal usr, IngridJetspeedUserRole usrRole, IngridJetspeedPrincipal role WHERE usr.fullPath='"+prinipalInfo[0]+"' AND usr.principalId=usrRole.userId AND role.principalId=usrRole.roleId");
                 List<String> roleList = q.list();
                 for (String roleStr : roleList) {
-                    userInfo.addRole(roleStr.substring(BasePrincipal.PREFS_ROLE_ROOT.length()));
+// TODO mm Keine Pfade mehr in DB -> BasePrincipal.PREFS_ROLE_ROOT (= "/role/") gibt's nicht mehr !!! 
+//                    userInfo.addRole(roleStr.substring(BasePrincipal.PREFS_ROLE_ROOT.length()));
+                    userInfo.addRole(roleStr);
                 }
                 userInfo.setFirstName((String)prinipalInfo[1]);
                 userInfo.setLastName((String)prinipalInfo[2]);
@@ -529,11 +537,13 @@ public class AdminUserPortlet extends ContentPortlet {
                 } else {
                     userInfo.setLastLogin("");
                 }
+// TODO mm: FIX SQL ??? better do it JS 23 way !
                 q = session.createQuery("SELECT DISTINCT perm FROM IngridJetspeedPrincipal usr, IngridJetspeedUserRole usrRole, IngridJetspeedPrincipal role, IngridJetspeedPrincipalPermission usrPerms, IngridJetspeedPrincipalPermission rolePerms, IngridJetspeedPermission perm WHERE usr.fullPath='"+prinipalInfo[0]+"' AND usr.principalId=usrRole.userId AND role.principalId=usrRole.roleId AND role.principalId=rolePerms.principalId AND usr.principalId=usrPerms.principalId AND perm.className like 'de.ingrid.portal.security.permission.%' AND (usrPerms.permissionId=perm.permissionId OR rolePerms.permissionId=perm.permissionId)");
                 List<IngridJetspeedPermission> permList = q.list();
                 for (IngridJetspeedPermission perm : permList) {
                     userInfo.addPermission(perm);
                 }
+// TODO mm: FIX SQL ??? better do it JS 23 way !
                 q = session.createQuery("SELECT DISTINCT prefEmail.propertyValue FROM IngridJetspeedPrincipal usr, IngridJetspeedPrefsNode prefs, IngridJetspeedPrefsNode prefsUserInfo, IngridJetspeedPrefsPropertyValue prefEmail WHERE usr.fullPath='"+prinipalInfo[0]+"' AND prefs.fullPath=usr.fullPath AND prefsUserInfo.parentNodeId=prefs.nodeId AND prefsUserInfo.nodeName='userInfo' AND prefEmail.nodeId=prefsUserInfo.nodeId AND prefEmail.propertyName='user.business-info.online.email'");
                 List<String> emails = q.list();
                 userInfo.setEmail(emails.size() > 0 ? emails.get(0):"");
@@ -556,12 +566,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 log.debug("Matching principals: " + (System.currentTimeMillis() - start));
             }
             
-/*            
-            
-            
-            
-            
-            
+/*          
             if (log.isDebugEnabled()) {
                 start = System.currentTimeMillis();
             }
@@ -642,13 +647,14 @@ public class AdminUserPortlet extends ContentPortlet {
                 }
             }
             */
+/*
             if (log.isDebugEnabled()) {
                 log.debug("fetchUsers: " + fetchUsers);
                 log.debug("fetchRoles: " + fetchRoles);
                 log.debug("fetchPermission: " + fetchPermission);
                 log.debug("fetchUserDetails: " + fetchUserDetails);
             }
-            
+*/
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("Error getting entities!", e);
@@ -682,7 +688,9 @@ public class AdminUserPortlet extends ContentPortlet {
         public void setFullPath(String fullPath) {
             this.put("fullPath", fullPath);
             // replace '/' by '.' since Jetspeed replaces '.' in login names with '/'. The character '/' is not allowed in log in ids. 
-            this.put("id", fullPath.substring(BasePrincipal.PREFS_USER_ROOT.length()).replaceAll("/", "."));
+// TODO mm Keine Pfade mehr in DB -> BasePrincipal.PREFS_USER_ROOT (= "/user/") gibt's nicht mehr !!! 
+//            this.put("id", fullPath.substring(BasePrincipal.PREFS_USER_ROOT.length()).replaceAll("/", "."));
+            this.put("id", fullPath.replaceAll("/", "."));
         }
         
         public String getFirstName() {
@@ -788,7 +796,7 @@ public class AdminUserPortlet extends ContentPortlet {
         return buffer.toString();
     }
 
-    
+/*
     private class DummyUserPrincipal implements UserPrincipal {
 
         String name = null;
@@ -816,7 +824,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
     }
-
+*/
     /**
      * Create a 'normal' portal user with the role "user". If the creator has
      * the permission "admin.portal.partner", the created user will get:
@@ -908,7 +916,7 @@ public class AdminUserPortlet extends ContentPortlet {
                     return;
                 }
                 // get principal
-                Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
+                //Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
 
                 // add
                 // IngridPartnerPermissions("partner.<partner_of_auth_user>") to
@@ -919,11 +927,11 @@ public class AdminUserPortlet extends ContentPortlet {
                 while (it.hasNext()) {
                     String partner = (String) it.next();
                     // add IngridPartnerPermissions for specified partner
-                    createAndGrantPermission(userPrincipal, new IngridPartnerPermission("partner." + partner));
+                    createAndGrantPermission(user, new IngridPartnerPermission.Factory().newPermission("partner." + partner));
                 }
 
                 // add provider role
-                roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PROVIDER);
+                roleManager.addRoleToUser(user.getName(), IngridRole.ROLE_ADMIN_PROVIDER);
             }
 
             // send confirmation email
@@ -1019,7 +1027,7 @@ public class AdminUserPortlet extends ContentPortlet {
 			userRoles = roleManager.getRolesForUser(authUserPrincipal.getName());
             List<String> userRoleNames = new ArrayList<String>();
             for (Role r : userRoles) {
-                userRoleNames.add(r.getPrincipal().getName());
+                userRoleNames.add(r.getName());
             }
 			isAdmin = includeUserByRoleAndPermission(authUserPermissions, userRoleNames, userPermissions);
 		} catch (SecurityException e1) {
@@ -1047,7 +1055,7 @@ public class AdminUserPortlet extends ContentPortlet {
 
             if (f.getInput(AdminUserForm.FIELD_TAB).equals("1")) {
 
-                Preferences userAttributes = user.getUserAttributes();
+            	Map<String, String> userAttributes = user.getInfoMap();
                 userAttributes.put("user.name.prefix", f.getInput(AdminUserForm.FIELD_SALUTATION));
                 userAttributes.put("user.name.given", f.getInput(AdminUserForm.FIELD_FIRSTNAME));
                 userAttributes.put("user.name.family", f.getInput(AdminUserForm.FIELD_LASTNAME));
@@ -1065,13 +1073,17 @@ public class AdminUserPortlet extends ContentPortlet {
                         .getInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER));
                 try {
                     // update password only if a old password was provided
+            		String oldPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_OLD);
+            		String newPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_NEW);
                 	if(isAdmin){
-                		userManager.setPassword(userName, null, f.getInput(AdminUserForm.FIELD_PASSWORD_NEW));
+                		PasswordCredential credential = userManager.getPasswordCredential(user);
+                		credential.setPassword(null, newPassword);
+                		userManager.storePasswordCredential(credential);
                 	}else{
-                		String oldPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_OLD);
                         if (oldPassword != null && oldPassword.length() > 0) {
-                            userManager.setPassword(userName, f.getInput(AdminUserForm.FIELD_PASSWORD_OLD), 
-						                            f.getInput(AdminUserForm.FIELD_PASSWORD_NEW));
+                    		PasswordCredential credential = userManager.getPasswordCredential(user);
+                    		credential.setPassword(oldPassword, newPassword);
+                    		userManager.storePasswordCredential(credential);
                         }
                 	}
                 } catch (PasswordAlreadyUsedException e) {
@@ -1085,80 +1097,67 @@ public class AdminUserPortlet extends ContentPortlet {
                     return;
                 }
             } else if (f.getInput(AdminUserForm.FIELD_TAB).equals("2")) {
-                Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
+//                Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
 
                 // update the admin.portal permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PORTAL)) {
-                    permissionManager.grantPermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION);
-                    roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PORTAL);
+                    permissionManager.grantPermission(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION, user);
+                    roleManager.addRoleToUser(user.getName(), IngridRole.ROLE_ADMIN_PORTAL);
 
                     // remove all other roles and permissions
-                    permissionManager.revokePermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION);
-                    roleManager.removeRoleFromUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PARTNER);
+                    permissionManager.revokePermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION, user);
+                    roleManager.removeRoleFromUser(user.getName(), IngridRole.ROLE_ADMIN_PARTNER);
                     
-                    permissionManager.revokePermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION);
+                    permissionManager.revokePermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION, user);
                     
-                    permissionManager.revokePermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION);
+                    permissionManager.revokePermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION, user);
                 
                 } else {
-                    permissionManager.revokePermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION);
-                    roleManager.removeRoleFromUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PORTAL);
+                    permissionManager.revokePermission(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION, user);
+                    roleManager.removeRoleFromUser(user.getName(), IngridRole.ROLE_ADMIN_PORTAL);
                 }
 
                 // update the admin.portal.partner permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PARTNER)) {
-                    permissionManager.grantPermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION);
-                    roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PARTNER);
+                    permissionManager.grantPermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION, user);
+                    roleManager.addRoleToUser(user.getName(), IngridRole.ROLE_ADMIN_PARTNER);
 
                     // remove all other roles and permissions
-                    permissionManager.revokePermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION);
+                    permissionManager.revokePermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION, user);
                     
-                    permissionManager.revokePermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION);
+                    permissionManager.revokePermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION, user);
 
                     
                 } else {
-                    permissionManager.revokePermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION);
-                    roleManager.removeRoleFromUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PARTNER);
+                    permissionManager.revokePermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION, user);
+                    roleManager.removeRoleFromUser(user.getName(), IngridRole.ROLE_ADMIN_PARTNER);
                 }
 
                 // update the admin.portal.partner.provider.index permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)) {
-                    permissionManager.grantPermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION);
+                    permissionManager.grantPermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION, user);
                 } else {
-                    permissionManager.revokePermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION);
+                    permissionManager.revokePermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION, user);
                 }
 
                 // update the admin.portal.partner.provider.catalog permission
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)) {
-                    permissionManager.grantPermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION);
+                    permissionManager.grantPermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION, user);
                 } else {
-                    permissionManager.revokePermission(userPrincipal,
-                            UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION);
+                    permissionManager.revokePermission(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION, user);
                 }
 
                 // remove all IngridPartnerPermissions, they will be reset if a
                 // provider or partner permission was granted
                 // special: DO RESET the partner if the auth user is
                 // "admin.portal.partner"
-                revokePermissionsByClass(userPrincipal, IngridPartnerPermission.class);
+                revokePermissionsByClass(user, IngridPartnerPermission.class);
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PARTNER)
                         || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)
                         || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)
                         || f.getInput(AdminUserForm.FIELD_LAYOUT_PERMISSION).equals("admin.portal.partner")) {
                     // add IngridPartnerPermissions for specified partner
-                    createAndGrantPermission(userPrincipal, new IngridPartnerPermission("partner."
+                    createAndGrantPermission(user, new IngridPartnerPermission.Factory().newPermission("partner."
                             + f.getInput(AdminUserForm.FIELD_PARTNER)));
                 } else {
                     f.clearInput(AdminUserForm.FIELD_PARTNER);
@@ -1166,24 +1165,24 @@ public class AdminUserPortlet extends ContentPortlet {
 
                 // remove all IngridProviderPermissions, they will be reset if a
                 // provider permission was granted
-                revokePermissionsByClass(userPrincipal, IngridProviderPermission.class);
+                revokePermissionsByClass(user, IngridProviderPermission.class);
                 // set providers if any provider permission was granted
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_CATALOG)
                         || f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_INDEX)) {
                     // add IngridProviderPermissions for specified partner
                     String[] providers = f.getInputAsArray(AdminUserForm.FIELD_PROVIDER);
                     for (int i = 0; i < providers.length; i++) {
-                        createAndGrantPermission(userPrincipal,
-                                new IngridProviderPermission("provider." + providers[i]));
+                        createAndGrantPermission(user,
+                                new IngridProviderPermission.Factory().newPermission("provider." + providers[i]));
                     }
                     // add provider role
-                    roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PROVIDER);
+                    roleManager.addRoleToUser(user.getName(), IngridRole.ROLE_ADMIN_PROVIDER);
                 } else {
                     f.clearInput(AdminUserForm.FIELD_PROVIDER);
                     // DO NOT remove admin-provider permission if the auth user
                     // is "admin.portal.partner"
                     if (!f.getInput(AdminUserForm.FIELD_LAYOUT_PERMISSION).equals("admin.portal.partner")) {
-                        roleManager.removeRoleFromUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PROVIDER);
+                        roleManager.removeRoleFromUser(user.getName(), IngridRole.ROLE_ADMIN_PROVIDER);
                     }
                 }
             }
@@ -1202,14 +1201,14 @@ public class AdminUserPortlet extends ContentPortlet {
      * @param principal
      * @param permissionClass
      */
-    private void revokePermissionsByClass(Principal principal, Class permissionClass) {
+    private void revokePermissionsByClass(JetspeedPrincipal principal, Class permissionClass) {
         try {
             Permissions partnerPermissions = permissionManager.getPermissions(principal);
-            Enumeration en = partnerPermissions.elements();
+            Enumeration<Permission> en = partnerPermissions.elements();
             while (en.hasMoreElements()) {
-                Permission p = (Permission) en.nextElement();
+                Permission p = en.nextElement();
                 if (permissionClass.isInstance(p)) {
-                    permissionManager.revokePermission(principal, p);
+                    permissionManager.revokePermission((JetspeedPermission) p, principal);
                 }
             }
         } catch (Exception e) {
@@ -1219,12 +1218,12 @@ public class AdminUserPortlet extends ContentPortlet {
         }
     }
 
-    private void createAndGrantPermission(Principal principal, Permission permission) {
+    private void createAndGrantPermission(JetspeedPrincipal principal, JetspeedPermission permission) {
         try {
             if (!permissionManager.permissionExists(permission)) {
                 permissionManager.addPermission(permission);
             }
-            permissionManager.grantPermission(principal, permission);
+            permissionManager.grantPermission(permission, principal);
         } catch (SecurityException e) {
             if (log.isErrorEnabled()) {
                 log.error("Problems create or grant permission (" + permission.toString() + ").", e);
@@ -1245,7 +1244,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 final String innerUserName = ids[i];
                 final PageManager innerPageManager = pageManager;
                 User powerUser = userManager.getUser("admin");
-                JetspeedException pe = (JetspeedException) JSSubject.doAsPrivileged(powerUser.getSubject(),
+                JetspeedException pe = (JetspeedException) JSSubject.doAsPrivileged(userManager.getSubject(powerUser),
                         new PrivilegedAction() {
                             public Object run() {
                                 try {
@@ -1453,11 +1452,11 @@ public class AdminUserPortlet extends ContentPortlet {
 
     private static String getLayoutPermission(Permissions editorPermissions) {
         String result = null;
-        if (editorPermissions.implies(new IngridPortalPermission("admin"))) {
+        if (editorPermissions.implies(new IngridPortalPermission.Factory().newPermission("admin"))) {
             result = "admin";
-        } else if (editorPermissions.implies(new IngridPortalPermission("admin.portal"))) {
+        } else if (editorPermissions.implies(new IngridPortalPermission.Factory().newPermission("admin.portal"))) {
             result = "admin.portal";
-        } else if (editorPermissions.implies(new IngridPortalPermission("admin.portal.partner"))) {
+        } else if (editorPermissions.implies(new IngridPortalPermission.Factory().newPermission("admin.portal.partner"))) {
             result = "admin.portal.partner";
         } else {
             result = "admin.user";
@@ -1502,26 +1501,26 @@ public class AdminUserPortlet extends ContentPortlet {
             User user = userManager.getUser(editId);
 
             // put all user attributes into form
-            Preferences userAttributes = user.getUserAttributes();
+            Map<String, String> userAttributes = user.getInfoMap();
             f.setInput(AdminUserForm.FIELD_ID, editId);
-            f.setInput(AdminUserForm.FIELD_SALUTATION, userAttributes.get("user.name.prefix", ""));
-            f.setInput(AdminUserForm.FIELD_FIRSTNAME, userAttributes.get("user.name.given", ""));
-            f.setInput(AdminUserForm.FIELD_LASTNAME, userAttributes.get("user.name.family", ""));
-            f.setInput(AdminUserForm.FIELD_EMAIL, userAttributes.get("user.business-info.online.email", ""));
-            f.setInput(AdminUserForm.FIELD_STREET, userAttributes.get("user.business-info.postal.street", ""));
-            f.setInput(AdminUserForm.FIELD_POSTALCODE, userAttributes.get("user.business-info.postal.postalcode", ""));
-            f.setInput(AdminUserForm.FIELD_CITY, userAttributes.get("user.business-info.postal.city", ""));
+            f.setInput(AdminUserForm.FIELD_SALUTATION, replaceNull(userAttributes.get("user.name.prefix")));
+            f.setInput(AdminUserForm.FIELD_FIRSTNAME, replaceNull(userAttributes.get("user.name.given")));
+            f.setInput(AdminUserForm.FIELD_LASTNAME, replaceNull(userAttributes.get("user.name.family")));
+            f.setInput(AdminUserForm.FIELD_EMAIL, replaceNull(userAttributes.get("user.business-info.online.email")));
+            f.setInput(AdminUserForm.FIELD_STREET, replaceNull(userAttributes.get("user.business-info.postal.street")));
+            f.setInput(AdminUserForm.FIELD_POSTALCODE, replaceNull(userAttributes.get("user.business-info.postal.postalcode")));
+            f.setInput(AdminUserForm.FIELD_CITY, replaceNull(userAttributes.get("user.business-info.postal.city")));
 
-            f.setInput(AdminUserForm.FIELD_AGE, userAttributes.get("user.custom.ingrid.user.age.group", ""));
-            f.setInput(AdminUserForm.FIELD_ATTENTION, userAttributes.get("user.custom.ingrid.user.attention.from", ""));
-            f.setInput(AdminUserForm.FIELD_INTEREST, userAttributes.get("user.custom.ingrid.user.interest", ""));
-            f.setInput(AdminUserForm.FIELD_PROFESSION, userAttributes.get("user.custom.ingrid.user.profession", ""));
-            f.setInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER, userAttributes.get(
-                    "user.custom.ingrid.user.subscribe.newsletter", ""));
+            f.setInput(AdminUserForm.FIELD_AGE, replaceNull(userAttributes.get("user.custom.ingrid.user.age.group")));
+            f.setInput(AdminUserForm.FIELD_ATTENTION, replaceNull(userAttributes.get("user.custom.ingrid.user.attention.from")));
+            f.setInput(AdminUserForm.FIELD_INTEREST, replaceNull(userAttributes.get("user.custom.ingrid.user.interest")));
+            f.setInput(AdminUserForm.FIELD_PROFESSION, replaceNull(userAttributes.get("user.custom.ingrid.user.profession")));
+            f.setInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER, replaceNull(userAttributes.get(
+                    "user.custom.ingrid.user.subscribe.newsletter")));
 
             // get permissions of the user
-            Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
-            Permissions userPermissions = SecurityHelper.getMergedPermissions(userPrincipal, permissionManager,
+            //Principal userPrincipal = SecurityUtil.getPrincipal(user.getSubject(), UserPrincipal.class);
+            Permissions userPermissions = SecurityHelper.getMergedPermissions(user, permissionManager,
                     roleManager);
 
             // get partner from permissions, set to context
@@ -1561,6 +1560,11 @@ public class AdminUserPortlet extends ContentPortlet {
         } catch (Exception e) {
         }
 
+    }
+
+    /** Replaces the input with "" if input is null. */
+    private String replaceNull(String input) {
+    	return input == null ? "" : input;
     }
 
     protected List getInitParameterList(PortletConfig config, String ipName) {

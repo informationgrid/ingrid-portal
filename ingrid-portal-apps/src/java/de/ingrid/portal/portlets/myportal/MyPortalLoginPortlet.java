@@ -4,7 +4,6 @@
 package de.ingrid.portal.portlets.myportal;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,13 +23,13 @@ import org.apache.jetspeed.administration.PortalAdministration;
 import org.apache.jetspeed.administration.RegistrationException;
 import org.apache.jetspeed.components.portletregistry.PortletRegistry;
 import org.apache.jetspeed.login.LoginConstants;
+import org.apache.jetspeed.om.portlet.InitParam;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.jetspeed.security.PermissionManager;
 import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.SecurityException;
-import org.apache.jetspeed.security.UserPrincipal;
-import org.apache.pluto.om.common.Parameter;
-import org.apache.pluto.om.common.ParameterSet;
+import org.apache.jetspeed.security.User;
+import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.app.FieldMethodizer;
@@ -43,8 +42,6 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsSecurity;
-import de.ingrid.portal.portlets.security.SecurityUtil;
-import de.ingrid.portal.security.UserManager;
 import de.ingrid.portal.security.role.IngridRole;
 
 /**
@@ -225,7 +222,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
             throw new PortletException("Failed to find the User Manager on portlet initialization");
         }
         
-        Principal userPrincipal = SecurityUtil.getPrincipal(userManager.getUser(username).getSubject(), UserPrincipal.class);
+        User userPrincipal = userManager.getUser(username);
         RoleManager roleManager = (RoleManager) getPortletContext().getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
         if (null == roleManager) {
             throw new PortletException("Failed to find the Role Manager on portlet initialization");
@@ -234,16 +231,16 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         if (permissionManager == null) {
             throw new PortletException("Could not get instance of portal permission manager component");
         }
-        permissionManager.grantPermission(userPrincipal, UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION);
+        permissionManager.grantPermission(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION, userPrincipal);
         roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PORTAL);
         
     }
 
-    private List<String> getInitialParameterFromOtherPortlet(String parameter) {
+    private List<String> getInitialParameterFromOtherPortlet(String paramName) {
     	PortletRegistry registry = (PortletRegistry) getPortletContext().getAttribute(CommonPortletServices.CPS_REGISTRY_COMPONENT);
-    	ParameterSet initParams = registry.getPortletDefinitionByIdentifier("MyPortalCreateAccountPortlet").getInitParameterSet();
+    	InitParam initParam = registry.getPortletDefinitionByUniqueName("MyPortalCreateAccountPortlet").getInitParam(paramName);
     	
-    	return getInitParameterList(initParams, parameter);
+    	return getInitParamAsList(initParam);
 	}
 
 	private Map<String, String> getUserAttributes(ActionRequest request) {
@@ -269,12 +266,13 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         return userAttributes;
     }
     
-    private List<String> getInitParameterList(ParameterSet initParams, String ipName) {
-        Parameter parameter = initParams.get(ipName);
-        if (parameter == null)
+    private List<String> getInitParamAsList(InitParam initParam) {
+        if (initParam == null)
             return new ArrayList<String>();
         
-        String temp = parameter.getValue();
+        String temp = initParam.getParamValue();
+        if (temp == null)
+            return new ArrayList<String>();
 
         String[] temps = temp.split("\\,");
         for (int ix = 0; ix < temps.length; ix++)

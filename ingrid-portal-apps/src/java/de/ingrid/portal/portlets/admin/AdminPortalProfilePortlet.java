@@ -22,11 +22,10 @@ import javax.portlet.RenderResponse;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.ConversionException;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.components.portletregistry.PortletRegistry;
 import org.apache.jetspeed.om.folder.Folder;
+import org.apache.jetspeed.om.page.Fragment;
 import org.apache.jetspeed.om.page.Page;
 import org.apache.jetspeed.om.preference.FragmentPreference;
 import org.apache.jetspeed.page.PageManager;
@@ -35,6 +34,8 @@ import org.apache.jetspeed.page.document.NodeException;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -140,11 +141,11 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                     List portletNames = profile.getList("pages.page(" + i + ").portlets.portlet.name");
                     if (portletNames != null && portletNames.size() > 0) {
                         // defragmentation
-                        UtilsPageLayout.defragmentLayoutColumn(p.getRootFragment(), 0);
-                        UtilsPageLayout.defragmentLayoutColumn(p.getRootFragment(), 1);
+                        UtilsPageLayout.defragmentLayoutColumn((Fragment) p.getRootFragment(), 0);
+                        UtilsPageLayout.defragmentLayoutColumn((Fragment) p.getRootFragment(), 1);
                         // remove all fragments
-                        UtilsPageLayout.removeAllFragmentsInColumn(p, p.getRootFragment(), 0);
-                        UtilsPageLayout.removeAllFragmentsInColumn(p, p.getRootFragment(), 1);
+                        UtilsPageLayout.removeAllFragmentsInColumn(p, (Fragment) p.getRootFragment(), 0);
+                        UtilsPageLayout.removeAllFragmentsInColumn(p, (Fragment) p.getRootFragment(), 1);
                         for (int j = 0; j < portletNames.size(); j++) {
                             String portletName = (String) portletNames.get(j);
                             //portletRegistry.getPortletDefinitionByIdentifier("IngridInformPortlet").getPreferenceSet();//portletRegistry.getAllPortletDefinitions();
@@ -162,14 +163,14 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                                 		// set the name of the preference
                                 		f.setName((String)portletPrefsNames.get(k));
                                 		// get the values for this preference
-                                		List<String> pl = profile.getList("pages.page(" + i + ").portlets.portlet("+j+").preference("+k+").value");
+                                		List<String> pl = (List<String>)(List<?>) profile.getList("pages.page(" + i + ").portlets.portlet("+j+").preference("+k+").value");
                                 		f.setValueList(pl);
                                 		prefs.add(f);
                                 	}
                                 } catch (Exception e) {
                                 	log.error(e.toString());
                                 }
-                                UtilsPageLayout.positionPortletOnPage(pageManager, p, p.getRootFragment(), portletName,
+                                UtilsPageLayout.positionPortletOnPage(pageManager, p, (Fragment) p.getRootFragment(), portletName,
                                         row, col, prefs);
                             } catch (ConversionException e) {
                                 log.warn("No 'x' or 'y' attribute found for portlet '" + portletName + "' on page '"

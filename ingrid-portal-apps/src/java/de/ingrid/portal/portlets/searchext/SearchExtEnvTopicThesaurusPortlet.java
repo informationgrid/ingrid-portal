@@ -15,7 +15,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.apache.pluto.core.impl.PortletSessionImpl;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
@@ -298,9 +297,9 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
             String topicID = request.getParameter("topicID");
             Topic currentTopic = getTopicFromTree(similarRoot, topicID);
-            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
+            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSession.PORTLET_SCOPE);
             IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID, request.getLocale());
-            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, Arrays.asList(assocTopics), PortletSessionImpl.PORTLET_SCOPE);
+            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, Arrays.asList(assocTopics), PortletSession.PORTLET_SCOPE);
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
@@ -319,9 +318,9 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             hit.setTopicID(topicID);
             
             Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit, "/thesa", request.getLocale());
-            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
+            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSession.PORTLET_SCOPE);
             IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID, request.getLocale());
-            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, Arrays.asList(assocTopics), PortletSessionImpl.PORTLET_SCOPE);
+            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, Arrays.asList(assocTopics), PortletSession.PORTLET_SCOPE);
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_BROWSE);
@@ -340,7 +339,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             hit.setTopicID(topicID);
             
             Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit, "/thesa", request.getLocale());
-            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSessionImpl.PORTLET_SCOPE);
+            request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSession.PORTLET_SCOPE);
             IngridHit[] assocTopics = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromTopic(topicID, request.getLocale());
             ArrayList descriptors = new ArrayList();
             for (int i=0; i<assocTopics.length; i++) {
@@ -350,7 +349,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
                     descriptors.add(t);
                 }
             }
-            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, descriptors, PortletSessionImpl.PORTLET_SCOPE);
+            request.getPortletSession().setAttribute(ASSOCIATED_TOPICS, descriptors, PortletSession.PORTLET_SCOPE);
 
             // redirect to same page with view param setting view !
             String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_VIEW_SYNONYM);

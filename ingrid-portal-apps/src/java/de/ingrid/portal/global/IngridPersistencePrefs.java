@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -103,12 +103,12 @@ public class IngridPersistencePrefs {
      *            The name of the principal.
      * @return an HashMap containing the deserialized preference objects.
      */
-    public static HashMap getPrefs(String principalName) {
+    public static HashMap<String, String> getPrefs(String principalName) {
         // get xml from db
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
         List prefs = null;
-        HashMap result = new HashMap();
+        HashMap<String, String> result = new HashMap<String, String>();
         try {
             tx = session.beginTransaction();
             prefs = session.createCriteria(IngridPrincipalPreference.class).add(
