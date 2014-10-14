@@ -642,10 +642,6 @@
                 <name>cmsKey</name>
                 <value>portalu.teaser.inform</value>
             </preference>
-            <preference>
-                <name>helpKey</name>
-                <value>ingrid-inform-1</value>
-            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -829,6 +825,7 @@
             </preference>
         </portlet-preferences>
     </portlet>
+
     <!-- *********************** -->
     <!-- Top Menue (Service)     -->
     <!-- *********************** -->
@@ -1096,8 +1093,6 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
     </portlet>
-
-
 
     <!-- *********************** -->
     <!-- Main Menue              -->
