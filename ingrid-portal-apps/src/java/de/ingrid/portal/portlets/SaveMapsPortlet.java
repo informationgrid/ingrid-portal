@@ -79,7 +79,7 @@ public class SaveMapsPortlet extends GenericVelocityPortlet {
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 		try {
 			// add localization recources to the context
-			IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()));
+			IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()), request.getLocale());
 			Context context = getContext(request);
 			context.put("MESSAGES", messages);
 			context.put(CONTEXT_UTILS_STRING, new UtilsString());

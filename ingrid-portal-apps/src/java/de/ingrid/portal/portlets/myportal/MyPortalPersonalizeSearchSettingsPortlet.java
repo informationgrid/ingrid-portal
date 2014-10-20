@@ -38,7 +38,7 @@ public class MyPortalPersonalizeSearchSettingsPortlet extends GenericVelocityPor
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
         
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()));
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         String partnerRestriction = PortalConfig.getInstance().getString(

@@ -70,7 +70,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         }
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
         
         // when using shibboleth authentication just show a page to create a profile

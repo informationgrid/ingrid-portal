@@ -25,7 +25,7 @@ public class WeatherTeaserPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
         
         context.put("DWD_PATH", PortalConfig.getInstance().getString(PortalConfig.TEASER_WEATHER_DWD_PATH, ""));

@@ -41,7 +41,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         String[] hideIPlugIdList = PortalConfig.getInstance().getStringArray(PortalConfig.HIDE_IPLUG_ID_LIST);

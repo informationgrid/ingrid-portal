@@ -139,7 +139,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
         try {
             // add localization recources to the context
             IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                    request.getLocale()));
+                    request.getLocale()), request.getLocale());
             Context context = getContext(request);
             context.put("MESSAGES", messages);
             context.put(CONTEXT_UTILS_STRING, new UtilsString());

@@ -1891,7 +1891,7 @@ public class UtilsFacete {
 					facet.setSort("SORT_BY_VALUE_DESC");
 					CodeListService codelistService = CodeListServiceFactory.instance();
 					ResourceBundle bundle = ResourceBundle.getBundle("de.ingrid.portal.resources.EnvironmentSearchResources", Locale.GERMAN);
-					IngridResourceBundle resources = new IngridResourceBundle(bundle);
+					IngridResourceBundle resources = new IngridResourceBundle(bundle, Locale.GERMAN);
 					List<IngridEnvTopic> topics = UtilsDB.getEnvTopics(resources);
 					for(IngridEnvTopic topic : topics){
 						IngridFacet tmpFacet = new IngridFacet();

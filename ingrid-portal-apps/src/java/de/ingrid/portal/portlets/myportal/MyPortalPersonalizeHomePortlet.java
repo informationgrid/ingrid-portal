@@ -31,7 +31,7 @@ public class MyPortalPersonalizeHomePortlet extends ConfigureHomepagePortlet {
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
 
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", "searchSettings.title.rankingAndGrouping");

@@ -45,7 +45,7 @@ public class SearchSettingsPortlet extends AbstractVelocityMessagingPortlet {
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
         
         String partnerRestriction = PortalConfig.getInstance().getString(

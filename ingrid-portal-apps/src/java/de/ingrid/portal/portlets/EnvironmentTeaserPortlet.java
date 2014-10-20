@@ -28,7 +28,7 @@ public class EnvironmentTeaserPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         PortletPreferences prefs = request.getPreferences();

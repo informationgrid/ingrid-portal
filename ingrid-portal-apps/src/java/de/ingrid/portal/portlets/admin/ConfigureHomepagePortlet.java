@@ -98,7 +98,7 @@ public abstract class ConfigureHomepagePortlet extends GenericVelocityPortlet {
                 Fragment f = (Fragment) fragments.get(i);
                 String resourceBundle = registry.getPortletDefinitionByUniqueName(f.getName()).getResourceBundle();
                 IngridResourceBundle res = new IngridResourceBundle(PropertyResourceBundle.getBundle(resourceBundle,
-                        request.getLocale()));
+                        request.getLocale()), request.getLocale());
                 HashMap portletProperties = new HashMap();
                 portletProperties.put("fragment", f);
                 List fragmentPrefs = f.getPreferences();
@@ -223,7 +223,7 @@ public abstract class ConfigureHomepagePortlet extends GenericVelocityPortlet {
                 int defaultPos = Integer.parseInt((String) p.getValues().get(0));
                 String resourceBundle = portlet.getResourceBundle();
                 IngridResourceBundle res = new IngridResourceBundle(PropertyResourceBundle.getBundle(resourceBundle,
-                        request.getLocale()));
+                        request.getLocale()), request.getLocale());
                 p = portlet.getPortletPreferences().getPortletPreference("titleKey");
                 String portletTitle = res.getString((String) p.getValues().get(0));
                 if (type.equals("ingrid-home")) {

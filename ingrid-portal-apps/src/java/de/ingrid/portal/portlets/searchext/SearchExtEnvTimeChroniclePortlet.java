@@ -59,7 +59,7 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
             throws PortletException, IOException {
         Context context = getContext(request);
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         SearchExtEnvTimeChronicleForm f = (SearchExtEnvTimeChronicleForm) Utils.getActionForm(request,
@@ -107,7 +107,7 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
             f.populate(request);
             if (f.validate()) {
                 Locale locale = request.getLocale();
-                IngridResourceBundle resources = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale));
+                IngridResourceBundle resources = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale), locale);
 
                 String searchTerm = f.getInput(SearchExtEnvTimeChronicleForm.FIELD_SEARCH_TERM);
                 IngridQuery query = null;

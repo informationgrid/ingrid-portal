@@ -139,7 +139,7 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 		mailData.put("JOB", job);
 		ResourceBundle resources = ResourceBundle.getBundle("de.ingrid.portal.resources.AdminPortalResources",
 				Locale.GERMAN);
-		mailData.put("MESSAGES", new IngridResourceBundle(resources));
+		mailData.put("MESSAGES", new IngridResourceBundle(resources, Locale.GERMAN));
 
 		URL url = Thread.currentThread().getContextClassLoader().getResource(
 				"../templates/administration/monitor_alert_email.vm");
@@ -206,7 +206,7 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
         ResourceBundle resources = ResourceBundle.getBundle(
                 "de.ingrid.portal.resources.AdminPortalResources",
                 Locale.GERMAN);
-        mailData.put("MESSAGES", new IngridResourceBundle(resources));
+        mailData.put("MESSAGES", new IngridResourceBundle(resources, Locale.GERMAN));
         
         String text = Utils.mergeTemplate(templatePath, mailData, "map");
         

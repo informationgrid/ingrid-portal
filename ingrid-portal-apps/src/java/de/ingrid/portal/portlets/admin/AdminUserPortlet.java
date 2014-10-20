@@ -890,7 +890,7 @@ public class AdminUserPortlet extends ContentPortlet {
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
 
             IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                    request.getLocale()));
+                    request.getLocale()), request.getLocale());
 
             HashMap userInfo = new HashMap(userAttributes);
             // map coded stuff

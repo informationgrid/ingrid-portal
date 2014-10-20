@@ -62,7 +62,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         // ----------------------------------
@@ -152,7 +152,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         Locale locale = request.getLocale();
-        IngridResourceBundle resources = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale));
+        IngridResourceBundle resources = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale), locale);
 
         String searchURLBase = ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest()
                 .getContextPath()

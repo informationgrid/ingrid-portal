@@ -28,7 +28,7 @@ public class AdminHomepagePortlet extends ConfigureHomepagePortlet {
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         
         // set localized title for this page
         response.setTitle(messages.getString("personalize.home.title"));

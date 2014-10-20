@@ -46,7 +46,7 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
             throws PortletException, IOException {
         Context context = getContext(request);
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         context.put("UtilsString", new UtilsString());

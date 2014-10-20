@@ -138,7 +138,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         CreateAccountForm f = (CreateAccountForm) Utils.getActionForm(request, CreateAccountForm.SESSION_KEY,
@@ -208,7 +208,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             IOException {
 
         Locale locale = request.getLocale();
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale));
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale), locale);
 
         actionResponse.setRenderParameter("cmd", request.getParameter("cmd"));
 

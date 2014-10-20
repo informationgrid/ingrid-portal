@@ -67,7 +67,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         setDefaultViewPage(TEMPLATE_FORM_INPUT);
@@ -202,7 +202,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
                 if (isResponseCorrect || !enableCaptcha){
                 	 try {
                          IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                                 request.getLocale()));
+                                 request.getLocale()), request.getLocale());
 
                          HashMap mailData = new HashMap();
                          mailData.put("user.name.given", cf.getInput(ContactForm.FIELD_FIRSTNAME));

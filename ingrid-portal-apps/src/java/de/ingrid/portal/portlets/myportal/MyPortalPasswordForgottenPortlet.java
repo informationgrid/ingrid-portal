@@ -86,7 +86,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         PasswordForgottenForm f = (PasswordForgottenForm) Utils.getActionForm(request,
@@ -151,7 +151,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
             userAttributes.put(CTX_USER_NAME, userName);
             // map coded stuff
             Locale locale = request.getLocale();
-            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale));
+            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale), locale);
             String salutationFull = messages.getString("account.edit.salutation.option", (String) userAttributes
                     .get("user.name.prefix"));
             userAttributes.put("user.custom.ingrid.user.salutation.full", salutationFull);

@@ -86,7 +86,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 
 		IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-				request.getLocale()));
+				request.getLocale()), request.getLocale());
 		Context context = getContext(request);
 		context.put("MESSAGES", messages);
 		context.put("UtilsString", new UtilsString());
@@ -342,7 +342,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		// ------------------doExport-------------------------
         } else if (request.getParameter("doExport") != null) {
             IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                    request.getLocale()));
+                    request.getLocale()), request.getLocale());
             // export jobs to a csv file
             jobHandler.exportJobs(request, messages);
             response.setRenderParameter("mode", "exportCSV");

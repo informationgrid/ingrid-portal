@@ -35,7 +35,7 @@ public class RssNewsPortlet extends GenericVelocityPortlet
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         Session session = HibernateUtil.currentSession();
