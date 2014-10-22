@@ -575,6 +575,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML files to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="CMSPortlet">
@@ -1151,6 +1154,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML files to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
     <portlet id="ServiceResult">
         <init-param>
@@ -1186,6 +1192,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle>
+<!-- supported-locale needed with JS 2.3 and PSML files to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
     <portlet id="MeasuresResult">
         <init-param>
@@ -1221,6 +1230,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
+<!-- supported-locale needed with JS 2.3 and PSML files to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
     <portlet id="EnvironmentResult">
         <init-param>
@@ -1300,6 +1312,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML files to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
     <portlet id="ChronicleResult">
         <init-param>
