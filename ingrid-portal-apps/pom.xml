@@ -123,6 +123,17 @@
       <groupId>org.apache.velocity</groupId>
       <artifactId>velocity-tools</artifactId>
     </dependency>
+    <!-- Needed for dom4j ! Why no transitive dependency ??? -->
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>saxpath</groupId>
+      <artifactId>saxpath</artifactId>
+      <scope>runtime</scope>
+    </dependency>
 
 <!-- InGrid -->
     <dependency>
