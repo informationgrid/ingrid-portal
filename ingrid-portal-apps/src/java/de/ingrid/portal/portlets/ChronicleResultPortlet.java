@@ -13,11 +13,11 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
@@ -115,13 +115,13 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         if (numberOfHits == 0) {
-            // TODO Chronik keine Eintr�ge, WAS ANZEIGEN ??? -> Layouten
+            // TODO Chronik keine Einträge, WAS ANZEIGEN ??? -> Layouten
             setDefaultViewPage(TEMPLATE_NO_RESULT);
             super.doView(request, response);
             return;
         }
 
-        // adapt settings of page nagihation
+        // adapt settings of page navigation
         HashMap pageNavigation = UtilsSearch.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
@@ -244,7 +244,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                          */
                         // type
                         String urlWithType = (String) detail.getArrayList(DetailedTopic.INSTANCE_OF).get(0);
-                        String type = urlWithType.split("#")[1].split("Type")[0];
+                        String type = urlWithType.substring(urlWithType.lastIndexOf('/') + 1);
                         topic.put("type", resources.getString(type));
 
                         // Definitions: URL's and titles

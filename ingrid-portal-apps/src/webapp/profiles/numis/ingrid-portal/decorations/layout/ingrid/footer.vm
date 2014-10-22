@@ -47,5 +47,7 @@ if(domain == "213.144.28.243" || domain=="213.144.28.243"){
 </script><noscript><p><img src="http:/213.144.28.243/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tag -->
 
+<script> if (document.documentMode == 7) alert("$MESSAGES.getString('ingrid.page.compatibility')") </script>
+
 </body>
 </html>

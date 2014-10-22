@@ -65,14 +65,25 @@
     </resources>
   </build>
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
-<!--
   <dependencyManagement>
-    <dependencies>
-      <dependency>
-      </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>de.ingrid</groupId>
+			<artifactId>ingrid-iplug-sns</artifactId>
+			<version>3.5.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.ingrid</groupId>
+			<artifactId>ingrid-external-services-api</artifactId>
+			<version>3.5.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.ingrid</groupId>
+			<artifactId>ingrid-external-service-sns</artifactId>
+			<version>3.5.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
   </dependencyManagement>
--->
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
 
@@ -341,24 +352,6 @@
         <exclusion>
           <groupId>commons-el</groupId>
           <artifactId>commons-el</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-external-service-sns</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-external-services-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>axis</groupId>
-          <artifactId>axis-wsdl4j</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

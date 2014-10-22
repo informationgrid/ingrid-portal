@@ -47,7 +47,6 @@ h3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size:80%; line-hei
 table.border { border-collapse:collapse; }
 table.fullwidth { width:100%; }
 th {font-size: 75%; vertical-align:top; padding:3px;}
-td {font-size: 75%; vertical-align:top; padding-left:3px;}
 table.formtable td {font-size: 75%; vertical-align:middle; margin:0;}
 td.iconwidth { width:9px; }
 table.layout td {font-size: 100%}

@@ -478,3 +478,7 @@ ul .x-tree-node-ct li .x-tree-node {
 .tbspacer_centerToolbar {
 	width: 10px !important;
 }
+
+.olControlOverviewMapElement { 
+	background-color: #D9E7F8 !important; border: 1px solid #8DB2E3 !important; padding: 7px 21px 0 5px !important; 
+}

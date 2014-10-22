@@ -8,17 +8,17 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.slb.taxi.webservice.xtm.stubs.FieldsType;
-import com.slb.taxi.webservice.xtm.stubs.SearchType;
-import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
-import com.slb.taxi.webservice.xtm.stubs.xtm.Topic;
+import com.hp.hpl.jena.rdf.model.NodeIterator;
+import com.hp.hpl.jena.rdf.model.Resource;
 
+import de.ingrid.external.FullClassifyService.FilterType;
+import de.ingrid.external.sns.RDFUtils;
 import de.ingrid.external.sns.SNSClient;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.utils.queryparser.ParseException;
@@ -85,16 +85,16 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 						PortalConfig.COMPONENT_MONITOR_SNS_LOGIN, "ms"), PortalConfig.getInstance().getString(
 						PortalConfig.COMPONENT_MONITOR_SNS_PASSWORD, "m3d1asyl3"), "de");
 			} else {
-				snsClient = new SNSClient("ms", "m3d1asyl3", "de", new URL(serviceUrl));
+				snsClient = new SNSClient("ms", "m3d1asyl3", "de", new URL(serviceUrl), null, null);
 			}
 			snsClient.setTimeout(timeout);
-			TopicMapFragment mapFragment = snsClient.findTopics(query, "/thesa/descriptor", SearchType.exact,
-					FieldsType.captors, 0, 20, "de", false);
-			Topic[] topics = null;
+			Resource mapFragment = snsClient.findTopics(query, FilterType.ONLY_TERMS, "exact",
+					null, 0, 20, "de", false);
+			NodeIterator topics = null;
 			if (null != mapFragment) {
-				topics = mapFragment.getTopicMap().getTopic();
+			    topics = RDFUtils.getResults( mapFragment );
 			}
-			if (topics == null) {
+			if (!topics.hasNext()) {
 				status = STATUS_ERROR;
 				statusCode = STATUS_CODE_ERROR_NO_HITS;
 			} else {
