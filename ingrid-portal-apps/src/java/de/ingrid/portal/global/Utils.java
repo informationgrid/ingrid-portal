@@ -345,7 +345,7 @@ public class Utils {
 	 * @return True for JavaScript enabled, false for not.
 	 */
 	public static boolean isJavaScriptEnabled(PortletRequest request) {
-		String hasJavaScriptStr = (String) request.getPortletSession().getAttribute(Settings.MSG_HAS_JAVASCRIPT);
+		String hasJavaScriptStr = (String) request.getPortletSession().getAttribute(Settings.MSG_HAS_JAVASCRIPT, PortletSession.APPLICATION_SCOPE);
 		if (hasJavaScriptStr != null && hasJavaScriptStr.equals(Settings.MSGV_TRUE)) {
 			return true;
 		} else {

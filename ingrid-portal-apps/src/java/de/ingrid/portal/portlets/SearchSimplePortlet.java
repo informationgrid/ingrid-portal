@@ -1,8 +1,8 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -12,7 +12,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
-import org.apache.jetspeed.om.page.Page;
+import org.apache.jetspeed.om.page.ContentPage;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
@@ -352,8 +352,8 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
        
         // Set up query 
         if(Utils.isJavaScriptEnabled(request)){
-        	Page page = (Page) request.getAttribute("org.apache.jetspeed.Page");
-            HashMap params = (HashMap) request.getParameterMap();
+        	ContentPage page = (ContentPage) request.getAttribute("org.apache.jetspeed.Page");
+            Map<String, String[]> params = request.getParameterMap();
             if(page != null && (params != null && params.size() == 0)){
             	if(Settings.PAGE_SEARCH_RESULT.indexOf(page.getPath()) > 0 && queryString != null && queryString.length() > 0){
             		if(af != null){
