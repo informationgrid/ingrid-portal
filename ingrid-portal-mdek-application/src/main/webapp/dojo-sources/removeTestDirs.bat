@@ -59,6 +59,7 @@ rmdir /Q /S dojox\uuid\tests
 rmdir /Q /S dojox\validate\tests
 rmdir /Q /S dojox\widget\tests
 rmdir /Q /S dojox\widget\DocTester
+del /Q /S dojox\widget\DocTester.js
 rmdir /Q /S dojox\wire\tests
 rmdir /Q /S dojox\xml\tests
 rmdir /Q /S dojox\xmpp\tests
