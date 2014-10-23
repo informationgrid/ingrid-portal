@@ -19,8 +19,10 @@
     xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
     xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
     <context:component-scan base-package="de.ingrid" />
     
     <!-- Import hibernate bean definitions -->
@@ -41,7 +43,7 @@
 	<bean id="mdekDataMapper"
 		class="de.ingrid.mdek.MdekMapper">
 		<property name="sysListMapper">
-			<ref local="sysListMapper" />
+			<ref bean="sysListMapper" />
 		</property>
  	</bean>
 
@@ -67,7 +69,7 @@
 	<bean id="sysListMapper"
 		class="de.ingrid.mdek.SysListCache">
 		<property name="connectionFacade">
-			<ref local="connectionFacade" />
+			<ref bean="connectionFacade" />
 		</property>
 	</bean>
 
@@ -75,25 +77,25 @@
 	<bean id="mdekObjectUtils"
 		class="de.ingrid.mdek.util.MdekObjectUtils">
 		<property name="dataMapper">
-			<ref local="mdekDataMapper" />
+			<ref bean="mdekDataMapper" />
 		</property>
 	</bean>
 	<bean id="mdekAddressUtils"
 		class="de.ingrid.mdek.util.MdekAddressUtils">
 		<property name="dataMapper">
-			<ref local="mdekDataMapper" />
+			<ref bean="mdekDataMapper" />
 		</property>
 	</bean>
 	<bean id="mdekEmailUtils"
 		class="de.ingrid.mdek.util.MdekEmailUtils">
 		<property name="connectionFacade">
-			<ref local="connectionFacade" />
+			<ref bean="connectionFacade" />
 		</property>
  	</bean>
 	<bean id="mdekErrorUtils"
 		class="de.ingrid.mdek.util.MdekErrorUtils">
 		<property name="dataMapper">
-			<ref local="mdekDataMapper" />
+			<ref bean="mdekDataMapper" />
 		</property>
  	</bean>
 	<bean id="mdekSecurityUtils"
@@ -106,69 +108,69 @@
 	<bean id="addressService"
 		class="de.ingrid.mdek.dwr.services.AddressServiceImpl">
 		<property name="addressRequestHandler">
-			<ref local="addressRequestHandler" />
+			<ref bean="addressRequestHandler" />
 		</property>
 	</bean>
 	<bean id="backendService"
 		class="de.ingrid.mdek.dwr.services.BackendServiceImpl">
 		<property name="generalRequestHandler">
-			<ref local="generalRequestHandler" />
+			<ref bean="generalRequestHandler" />
 		</property>
 	</bean>
 	<bean id="catalogService"
 		class="de.ingrid.mdek.dwr.services.CatalogServiceImpl">
 		<property name="catalogRequestHandler">
-			<ref local="catalogRequestHandler" />
+			<ref bean="catalogRequestHandler" />
 		</property>
 	</bean>
 	<bean id="catalogManagementService"
 		class="de.ingrid.mdek.dwr.services.CatalogManagementServiceImpl">
 		<property name="mdekJobHandler">
-			<ref local="mdekJobHandler" />
+			<ref bean="mdekJobHandler" />
 		</property>
 		<property name="connectionFacade">
-			<ref local="connectionFacade" />
+			<ref bean="connectionFacade" />
 		</property>
 		<property name="catalogRequestHandler">
-			<ref local="catalogRequestHandler" />
+			<ref bean="catalogRequestHandler" />
 		</property>
-		<property name="codelistService"><ref local="codeListService" /></property>
+		<property name="codelistService"><ref bean="codeListService" /></property>
 	</bean>
 
 	<bean id="exportService"
 		class="de.ingrid.mdek.dwr.services.ExportServiceImpl">
 		<property name="catalogRequestHandler">
-			<ref local="catalogRequestHandler" />
+			<ref bean="catalogRequestHandler" />
 		</property>
 	</bean>
 	<bean id="importService"
 		class="de.ingrid.mdek.dwr.services.ImportServiceImpl">
 		<property name="catalogRequestHandler">
-			<ref local="catalogRequestHandler" />
+			<ref bean="catalogRequestHandler" />
 		</property>
 		<property name="dataMapperFactory">
-			<ref local="dataMapperFactory" />
+			<ref bean="dataMapperFactory" />
 		</property>
 		<property name="protocolFactory">
-			<ref local="protocolFactory" />
+			<ref bean="protocolFactory" />
 		</property>
 	</bean>
 	<bean id="objectService"
 		class="de.ingrid.mdek.dwr.services.ObjectServiceImpl">
 		<property name="objectRequestHandler">
-			<ref local="objectRequestHandler" />
+			<ref bean="objectRequestHandler" />
 		</property>
 	</bean>
 	<bean id="queryService"
 		class="de.ingrid.mdek.dwr.services.QueryServiceImpl">
 		<property name="queryRequestHandler">
-			<ref local="queryRequestHandler" />
+			<ref bean="queryRequestHandler" />
 		</property>
 	</bean>
 	<bean id="securityService"
 		class="de.ingrid.mdek.dwr.services.SecurityServiceImpl">
 		<property name="securityRequestHandler">
-			<ref local="securityRequestHandler" />
+			<ref bean="securityRequestHandler" />
 		</property>
         <property name="authProvider">
             <ref bean="authenticationProvider" />
@@ -177,10 +179,10 @@
 	<bean id="treeService"
 		class="de.ingrid.mdek.dwr.services.TreeServiceImpl">
 		<property name="objectRequestHandler">
-			<ref local="objectRequestHandler" />
+			<ref bean="objectRequestHandler" />
 		</property>
 		<property name="addressRequestHandler">
-			<ref local="addressRequestHandler" />
+			<ref bean="addressRequestHandler" />
 		</property>
 	</bean>
 	
@@ -195,37 +197,37 @@
 	<bean id="addressRequestHandler"
 		class="de.ingrid.mdek.handler.AddressRequestHandlerImpl">
 		<property name="connectionFacade">
-			<ref local="connectionFacade" />
+			<ref bean="connectionFacade" />
 		</property>
 	</bean>
 	<bean id="catalogRequestHandler"
 		class="de.ingrid.mdek.handler.CatalogRequestHandlerImpl">
 		<property name="connectionFacade">
-			<ref local="connectionFacade" />
+			<ref bean="connectionFacade" />
 		</property>
 	</bean>
 	<bean id="generalRequestHandler"
 		class="de.ingrid.mdek.handler.GeneralRequestHandlerImpl">
 		<property name="connectionFacade">
-			<ref local="connectionFacade" />
+			<ref bean="connectionFacade" />
 		</property>
 	</bean>
 	<bean id="objectRequestHandler"
 		class="de.ingrid.mdek.handler.ObjectRequestHandlerImpl">
 		<property name="connectionFacade">
-			<ref local="connectionFacade" />
+			<ref bean="connectionFacade" />
 		</property>
 	</bean>
 	<bean id="queryRequestHandler"
 		class="de.ingrid.mdek.handler.QueryRequestHandlerImpl">
 		<property name="connectionFacade">
-			<ref local="connectionFacade" />
+			<ref bean="connectionFacade" />
 		</property>
 	</bean>
 	<bean id="securityRequestHandler"
 		class="de.ingrid.mdek.handler.SecurityRequestHandlerImpl">
 		<property name="connectionFacade">
-			<ref local="connectionFacade" />
+			<ref bean="connectionFacade" />
 		</property>
 	</bean>
 
@@ -233,10 +235,10 @@
 	<bean id="mdekJobHandler"
 		class="de.ingrid.mdek.quartz.MdekJobHandler">
 		<property name="scheduler">
-			<ref local="scheduler" />
+			<ref bean="scheduler" />
 		</property>
 		<property name="connectionFacade">
-			<ref local="connectionFacade" />
+			<ref bean="connectionFacade" />
 		</property>
 	</bean>
 
@@ -253,7 +255,7 @@
 		<property name="jobClass" value="de.ingrid.mdek.quartz.jobs.CheckForExpiredDatasetsJob" />
 		<property name="jobDataAsMap">
 			<map>
-				<entry key="connectionFacade"><ref local="connectionFacade"/></entry>
+				<entry key="connectionFacade"><ref bean="connectionFacade"/></entry>
 				<entry key="notifyDaysBeforeExpiry"><value>${workflow.notifyDaysBeforeExpiry}</value></entry>
 				<entry key="numAddressesMax"><value>${workflow.mail.numAddressesMax}</value></entry>
 				<entry key="numObjectsMax"><value>${workflow.mail.numObjectsMax}</value></entry>
@@ -312,15 +314,15 @@
 	<bean id="scriptImportDataMapper" class="de.ingrid.mdek.mapping.ScriptImportDataMapper">
 		<property name="mapperScript" value="classpath:import/mapper/ArcGIS_to_ingrid_igc.js" />
 		<property name="template" value="classpath:import/templates/igc_template.xml" />
-		<property name="dataProvider"><ref local="importDataProvider" /></property>
-        <property name="codeListService"><ref local="codeListService" /></property>
+		<property name="dataProvider"><ref bean="importDataProvider" /></property>
+        <property name="codeListService"><ref bean="codeListService" /></property>
 	</bean>
 
     <bean id="csw202ScriptImportDataMapper" class="de.ingrid.mdek.mapping.ScriptImportDataMapper">
         <property name="mapperScript" value="classpath:import/mapper/csw202_to_ingrid_igc.js" />
         <property name="template" value="classpath:import/templates/igc_template_csw202.xml" />
-        <property name="dataProvider"><ref local="importDataProvider" /></property>
-        <property name="codeListService"><ref local="codeListService" /></property>
+        <property name="dataProvider"><ref bean="importDataProvider" /></property>
+        <property name="codeListService"><ref bean="codeListService" /></property>
     </bean>
 
 	
@@ -328,14 +330,14 @@
 	
 	<bean id="importDataProvider" class="de.ingrid.mdek.mapping.ImportDataProviderImpl">
 		<property name="sysListMapper">
-			<ref local="sysListMapper" />
+			<ref bean="sysListMapper" />
 		</property>
 	</bean>
     
     <!-- Beans for codelist access and synchronisation -->
     
     <bean id="igePersistency" class="de.ingrid.codelists.persistency.IgeCodeListPersistency">
-        <property name="connectionFacade"><ref local="connectionFacade" /></property>
+        <property name="connectionFacade"><ref bean="connectionFacade" /></property>
     </bean>
     <bean id="codeListService" class="de.ingrid.codelists.CodeListService">
         <property name="persistencies">
@@ -357,7 +359,7 @@
         <property name="repeatInterval" value="1800000" />
         <property name="jobDataAsMap">
             <map>
-                <entry key="connectionFacade"><ref local="connectionFacade" /></entry>
+                <entry key="connectionFacade"><ref bean="connectionFacade" /></entry>
             </map>
         </property>
     </bean>
