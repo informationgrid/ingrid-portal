@@ -570,7 +570,7 @@
                 var input = registry.byId(tabId).get("value");
                 var globalVariables = (tabId == "formJsScript") ? globalJSVariables : globalIDFVariables;
                 var result = JSLINT.jslint(input, globalVariables);
-                var errors = JSLINT.jslint.report(true);
+                var errors = JSLINT.error_report(JSLINT.data());
                 if (errors == "") {
                     dom.byId("jsLintOutput").innerHTML = "OK";
                 } else {

@@ -46,5 +46,5 @@ if (!this.isRelease) {
 
 // predefined global variables and options for java script syntax check of additional fields
 // options see http://www.jslint.com/lint.html#options
-var globalJSVariables  = {predef: ["require", "currentUdk"], sloppy:true, white:true, eqeq:true, vars:true};
+var globalJSVariables  = {predef: ["require", "currentUdk", "framework"], sloppy:true, white:true, eqeq:true, vars:true};
 var globalIDFVariables = {predef: ["importPackage", "Packages", "sourceRecord", "DatabaseSourceRecord", "IllegalArgumentException", "XPATHUtils", "igcProfileControlNode", "SQL", "XPATH", "idfDoc", "DOM", "log"], sloppy:true, white:true, eqeq:true, vars:true};
