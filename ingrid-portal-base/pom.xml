@@ -187,18 +187,18 @@
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-portal</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <!-- <dependency><groupId>torque</groupId><artifactId>maven-torque-plugin</artifactId><version>3.2-rc2-dev</version><type>plugin</type></dependency>-->
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>ant-tasks</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-cm</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -217,109 +217,109 @@
     <dependency>
       <artifactId>jetspeed-components</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-deploy-tools</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-rdbms</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-prefs</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-search</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-security</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-registry</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-id-generator</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-file-cache</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-api</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-commons</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-locator</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-capability</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-profiler</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-page-manager</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-portal-site</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-portlet-factory</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-sso</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-statistics</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-header-resource</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <dependency>
       <artifactId>jetspeed-webapp-logging</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <!-- taglib stuff -->
     <dependency>
@@ -374,7 +374,7 @@
     <dependency>
       <artifactId>jetspeed-serializer</artifactId>
       <groupId>org.apache.portals.jetspeed-2</groupId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -385,6 +385,7 @@
     <dependency>
       <artifactId>portlet-api</artifactId>
       <groupId>portlet-api</groupId>
+      <version>1.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -437,6 +438,7 @@
     <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache</artifactId>
+      <version>1.4.1</version>
     </dependency>
     <!-- jakarta commons and other misc. jakarta projects -->
     <dependency>
@@ -448,6 +450,7 @@
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
     </dependency>
     <dependency>
       <groupId>oro</groupId>

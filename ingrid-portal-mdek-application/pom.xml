@@ -147,6 +147,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
 			<!-- LOG4J PROVIDED to avoid classloader conflicts ! Tomcat logging has to be configured (log4j.jar in common/lib) -->
 			<!-- NO !!! LOG4J has to be in webapp, otherwise log4j.properties is read from tomcat/common/classes !!! no classloader conflicts ! -->
 			<!-- errors are thrown during IGE startup ... logging still can be configured within webapp! -->
@@ -155,6 +156,7 @@
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
+			<version>1.4.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -220,6 +222,7 @@
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
+			<version>1.4</version>
 			<exclusions>
 				<!-- xml-apis already included in java 1.6 -->
 				<!-- leads to eclipse compiler problems -->
@@ -232,6 +235,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
+			<version>3.2.5.ga</version>
 			<!-- Because of asm version conflicts with cglib spring, we can't use 
 				the normal cglib dependency of hibernate Rather we use the cglib-nodep lib, 
 				which has its own implementation of asm. -->
@@ -253,6 +257,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
+			<version>3.2.1.ga</version>
 			<exclusions>
 				<exclusion>
 					<groupId>asm</groupId>
@@ -274,6 +279,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -290,10 +296,12 @@
 			<groupId>org.apache.portals.jetspeed-2</groupId>
 			<artifactId>jetspeed-api</artifactId>
 			<scope>provided</scope>
+			<version>2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>opensymphony</groupId>
 			<artifactId>quartz</artifactId>
+			<version>1.6.5</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -349,18 +357,22 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.opencsv</groupId>

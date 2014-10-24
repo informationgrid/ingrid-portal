@@ -88,6 +88,7 @@
     <dependency>
       <groupId>portlet-api</groupId>
       <artifactId>portlet-api</artifactId>
+      <version>1.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -98,10 +99,12 @@
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
+      <version>1.2.2</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
+      <version>1.4</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.bridges</groupId>
@@ -116,18 +119,19 @@
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-api</artifactId>
+      <version>2.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-commons</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-portal</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
       <exclusions>
         <exclusion>
           <groupId>ehcache</groupId>
@@ -166,7 +170,7 @@
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-page-manager</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
       <exclusions>
         <exclusion>
           <groupId>castor</groupId>
@@ -193,14 +197,14 @@
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-web-content</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
     </dependency>
     <!-- ================================================== -->
     <!-- NEEDED FOR TESTCASES -->
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-rdbms</artifactId>
-      <version>${jetspeed.version}</version>
+      <version>2.1</version>
       <scope>provided</scope>
     </dependency>
     <!-- ================================================== -->
@@ -552,10 +556,12 @@
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib-nodep</artifactId>
+   	  <version>2.1_3</version>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
     </dependency>
     <!-- Commons logging is replaced by SLF4J !!! -->
     <!--<dependency><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId><version>${commons.logging.version}</version><type>jar</type><url>http://jakarta.apache.org/commons/logging.html</url><properties><war.bundle>${commons.logging.include}</war.bundle></properties></dependency>-->
@@ -656,6 +662,7 @@
     <dependency>
       <groupId>dom4j</groupId>
       <artifactId>dom4j</artifactId>
+      <version>1.4</version>
       <exclusions>
         <exclusion>
           <groupId>jaxen</groupId>
@@ -787,6 +794,7 @@
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
+      <version>1.4</version>
     </dependency>
     <dependency>
       <groupId>uba</groupId>
@@ -796,6 +804,7 @@
     <dependency>
       <groupId>axis</groupId>
       <artifactId>axis</artifactId>
+      <version>1.4</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -825,6 +834,7 @@
     <dependency>
       <groupId>commons-discovery</groupId>
       <artifactId>commons-discovery</artifactId>
+      <version>0.2</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -835,6 +845,7 @@
     <dependency>
       <groupId>xalan</groupId>
       <artifactId>xalan</artifactId>
+      <version>2.7.0</version>
     </dependency>
     <dependency>
       <groupId>com.octo.captcha</groupId>
