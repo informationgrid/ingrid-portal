@@ -33,6 +33,9 @@
 			<action type="fix" dev="wemove">
 				IGE: Fix length of input of URLs (now > 255).
 			</action>
+			<action type="fix" dev="wemove">
+				IGE: Prevent caching of profile data, when requested from Server.
+			</action>
  		</release>
 
 		<release version="3.4.1" date="2014-05-14" description="Release InGrid 3.4.1">
@@ -100,7 +103,7 @@
 				IGE: Fixed OOM when analyzing URLs.
 			</action>
  		</release>
-       
+
 		<release version="3.4.0" date="2014-02-25"
 			description="Release InGrid 3.4">
 			<action type="add" dev="wemove" issue="REDMINE-134,REDMINE-136">
@@ -155,7 +158,7 @@
 			<action type="add" dev="wemove" issue="REDMINE-135">
 				Portal: Define keywords to hide on detail view.
 			</action>
-			
+
 			<action type="update" dev="wemove" issue="REDMINE-137">
 				WebMapClient: Update frontend layout and UI.
 			</action>
