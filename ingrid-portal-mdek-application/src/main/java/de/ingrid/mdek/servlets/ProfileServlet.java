@@ -1,7 +1,5 @@
 package de.ingrid.mdek.servlets;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -36,6 +34,10 @@ public class ProfileServlet extends HttpServlet {
             // type and encoding has to be set BEFORE writer is fetched!!!
             response.setContentType("text/javascript");
             response.setCharacterEncoding("UTF-8");
+            // DO NOT CACHE THIS CONTENT!!!
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+            response.setDateHeader("Expires", 0); // Proxies.
             out = response.getWriter();
         } catch (IOException e) {
             // log.error("Could not open PrintWriter.", e);
