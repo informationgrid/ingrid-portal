@@ -1148,6 +1148,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 	
 	public String getPublishId(String value) {
+		if (value == null) {
+			return null;
+		}
 		String publishId = "1";
 		if (value.length() > 0) {
 			if (value.equals("unclassified")) {
