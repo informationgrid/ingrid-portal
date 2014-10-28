@@ -8,11 +8,6 @@ import java.io.IOException;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
-import org.apache.jetspeed.headerresource.HeaderResource;
-import org.apache.jetspeed.portlet.PortletHeaderRequest;
-import org.apache.jetspeed.portlet.PortletHeaderResponse;
-import org.apache.jetspeed.portlet.SupportsHeaderPhase;
-
 /**
  * This portlet is the abstract base class of all "wizard" portlets in the EnvironmentInfo/Place
  * tab of the extended search. Encapsulates common stuff.

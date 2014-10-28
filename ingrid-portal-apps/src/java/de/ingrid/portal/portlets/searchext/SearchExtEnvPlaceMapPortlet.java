@@ -4,23 +4,21 @@
 package de.ingrid.portal.portlets.searchext;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.security.Principal;
 import java.util.Collection;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
-import org.apache.jetspeed.headerresource.HeaderResource;
-import org.apache.jetspeed.portlet.PortletHeaderRequest;
-import org.apache.jetspeed.portlet.PortletHeaderResponse;
-import org.apache.jetspeed.portlet.SupportsHeaderPhase;
-import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Element;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtEnvPlaceMapForm;
@@ -36,7 +34,7 @@ import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
  * 
  * @author martin@wemove.com
  */
-public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements SupportsHeaderPhase{
+public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
 
     private final static Logger log = LoggerFactory.getLogger(SearchExtEnvPlaceMapPortlet.class);
 
@@ -156,173 +154,161 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace  implements S
             processTab(actionResponse, newTab);
         }
     }
-    public void doHeader(PortletHeaderRequest request, PortletHeaderResponse response)
-			throws PortletException {
-        // this is an UGLY hack but otherwise I do not see how to access the 
-        // locale of the request. It is used to set the language code for the
-        // map client.
-        Field f;
-        String languageString = null;
-        try {
-            f = request.getClass().getDeclaredField("requestContext");
-            f.setAccessible(true);
-            RequestContext requestContext = (RequestContext) f.get(request);
-            languageString = requestContext.getLocale().getLanguage();
-        } catch (Exception e) {
-            log.warn("Error accessing request context in header phase.", e);
-        }
-    	HeaderResource headerResource = response.getHeaderResource();
-    	if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_WEBMAPCLIENT_DEBUG, false)){
-	        headerResource.addHeaderInfo(
-        		"<!-- start output header phase -->" +
-				"<!-- Styles -->" +
-        		"<link id=\"theme-access\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-access.css\" />"+
-				"<link id=\"theme-neptune\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-neptune.css\" />"+
-				"<link id=\"theme-gray\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-gray.css\" />"+
-				"<link id=\"theme-all\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
-				
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style.css\" />"+
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel.css\" />"+
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/css/feature-editing.css\" />"+  
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash.css\" />"+
-				
-				"<!-- Script -->" +
-        		"<script type=\"text/javascript\">var languageCode = '"+languageString+"';</script>" +
-                "<script type=\"text/javascript\">var viewConfiguration = 'search';</script>" +
-                "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/auth\"></script>" +
-                
-				"<!-- Extjs -->" +
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all-debug.js\"></script>" +
-				
-				"<!-- OpenLayers -->" +
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers.js\"></script>" +
-				
-				"<!-- GeoExt -->" +
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/loader.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers/Lang/"+languageString+".js\"></script>" +
-				"<script type=\"text/javascript\">OpenLayers.Lang.setCode('"+languageString+"');</script>"+ 
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/lang/"+languageString+".js\"></script>"+
-				
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs.ux/plugins/CustomTreeFeature.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/proj4js/lib/proj4js-compressed.js\"></script>"+
-				"<!-- openlayers extensions -->"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers.addins/LoadingPanel.js\"></script>"+
-				"<!-- extjs extensions -->\r\n" + 
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs.ux/Extjs.ux.Notification.js\"></script>\r\n" + 
-				"<!-- geoext extensions -->"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/SimplePrint.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Locale.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/BWaStrLocatorComboBox.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/PortalSearchComboBox.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/AllSearchComboBox.js\"></script>"+
-				
-				"<!-- custom code -->"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/utils/FileSaver/FileSaver.js\"></script>"+
-				
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/FormatStore.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Export.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Import.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerExportPanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerImportPanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerWindow.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerExportWindow.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Styler/ux/LayerStyleManager.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Styler/ux/widgets/StyleSelectorComboBox.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Styler/ux/widgets/StyleSelectorPalette.js\"></script>"+
-				
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/FeatureEditingControler.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/form/FeatureEditingPanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/form/RedLiningPanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/form/FeaturePanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/plugins/ExportFeature.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/plugins/CloseFeatureDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/plugins/ExportFeatures.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/plugins/ImportFeatures.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/data/FeatureEditingDefaultStyleStore.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/util/Clone.js\"></script>"+
-				
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/config.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/Message.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/Configuration.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/data/StoreHelper.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/model/WmsProxy.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/Session.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/SessionState.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/Service.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/MapUtils.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/BWaStrUtils.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/ServiceContainer.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/data/WMSCapabilitiesReader.js\"></script>" + 
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ActiveServicesPanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ServiceCategoryPanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ServiceTreeLayerNodeView.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ServiceTreeLayerNode.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/ServiceTreeLoader.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SearchCategoryPanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SettingsDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/OpacityDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/NewServicePanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/MetaDataDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/FeatureInfoControl.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/FeatureInfoDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/LoadDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SaveDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/DownloadDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/PrintDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/WelcomeDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/LegendDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/SearchPanel.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/PositionDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/BWaStrDialog.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/controls/BWaStrPanelResult.js\"></script>"+
-				
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/Workspace.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/main.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash.js\"></script>"+
-				"<!-- end output header phase -->"
-        );
+
+    /**
+     * @see javax.portlet.GenericPortlet#doHeaders(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+     */
+    protected void doHeaders(RenderRequest  request, RenderResponse  response) {
+        String languageString = request.getLocale().getLanguage();
+
+		// Styles
+		setLinkHeader(response, "theme-access", "/ingrid-webmap-client/lib/extjs/resources/css/ext-all-access.css");
+		setLinkHeader(response, "theme-neptune", "/ingrid-webmap-client/lib/extjs/resources/css/ext-all-neptune.css");
+		setLinkHeader(response, "theme-gray", "/ingrid-webmap-client/lib/extjs/resources/css/ext-all-gray.css");
+		setLinkHeader(response, "theme-all", "/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css");
+
+		setLinkHeader(response, "", "/ingrid-webmap-client/frontend/css/style.css");
+		setLinkHeader(response, "", "/ingrid-webmap-client/lib/openlayers.addins/loadingpanel.css");
+		setLinkHeader(response, "", "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/css/feature-editing.css");
+		setLinkHeader(response, "", "/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash.css");
+
+        // JScript
+        setScriptHeader(response, "", "var languageCode = '"+languageString+"';");
+        setScriptHeader(response, "", "var viewConfiguration = 'search';");
+        setScriptHeader(response, "/ingrid-webmap-client/auth", "");
+        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/Locale.js", "");
+
+
+		if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_WEBMAPCLIENT_DEBUG, false)) {
+	        // Extjs
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/extjs/ext-all-debug.js", "");
+
+	        // OpenLayers
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/openlayers/lib/OpenLayers.js", "");
+
+	        // GeoExt
+	        setScriptHeader(response, "/ingrid-webmap-client/shared/js/loader.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/openlayers/lib/OpenLayers/Lang/"+languageString+".js", "");
+	        setScriptHeader(response, "", "OpenLayers.Lang.setCode('"+languageString+"');");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/lang/"+languageString+".js", "");
+
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/extjs.ux/plugins/CustomTreeFeature.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/proj4js/lib/proj4js-compressed.js", "");
+	        // openlayers extensions
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/openlayers.addins/LoadingPanel.js", "");
+	        // extjs extensions
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/extjs.ux/Extjs.ux.Notification.js", "");
+	        // geoext extensions
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/SimplePrint.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/BWaStrLocatorComboBox.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/PortalSearchComboBox.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/AllSearchComboBox.js", "");
+	        // custom code
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/utils/FileSaver/FileSaver.js", "");
+	        
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/FormatStore.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Export.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/data/Import.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerExportPanel.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerImportPanel.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerWindow.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/LayerManager/ux/widgets/LayerManagerExportWindow.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/Styler/ux/LayerStyleManager.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/Styler/ux/widgets/StyleSelectorComboBox.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/Styler/ux/widgets/StyleSelectorPalette.js", "");
+
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/FeatureEditingControler.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/form/FeatureEditingPanel.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/form/RedLiningPanel.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/form/FeaturePanel.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/plugins/ExportFeature.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/plugins/CloseFeatureDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/plugins/ExportFeatures.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/widgets/plugins/ImportFeatures.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/data/FeatureEditingDefaultStyleStore.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/ux/util/Clone.js", "");
+
+	        setScriptHeader(response, "/ingrid-webmap-client/shared/js/config.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/shared/js/Message.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/shared/js/Configuration.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/shared/js/data/StoreHelper.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/shared/js/model/WmsProxy.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/data/Session.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/data/SessionState.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/data/Service.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/data/MapUtils.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/data/BWaStrUtils.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/data/ServiceContainer.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/data/WMSCapabilitiesReader.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/ActiveServicesPanel.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/ServiceCategoryPanel.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/ServiceTreeLayerNodeView.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/ServiceTreeLayerNode.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/ServiceTreeLoader.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/SearchCategoryPanel.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/SettingsDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/OpacityDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/NewServicePanel.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/MetaDataDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/FeatureInfoControl.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/FeatureInfoDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/LoadDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/SaveDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/DownloadDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/PrintDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/WelcomeDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/LegendDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/SearchPanel.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/PositionDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/BWaStrDialog.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/controls/BWaStrPanelResult.js", "");
+
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/Workspace.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/main.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash.js", "");
+
 	//path: /ingrid-webmap-client/frontend/
-		}else{
-	        headerResource.addHeaderInfo(
-				"<!-- start output header phase -->" +
-				"<!-- Styles -->" +
-				"<link id=\"theme-access\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-access.css\" />"+
-				"<link id=\"theme-neptune\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-neptune.css\" />"+
-				"<link id=\"theme-gray\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all-gray.css\" />"+
-				"<link id=\"theme-all\" rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/extjs/resources/css/ext-all.css\" />"+
-				
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/frontend/css/style.css\" />"+
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/css/feature-editing.css\" />"+  
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/openlayers.addins/loadingpanel-min.css\" />"+
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash-min.css\" />"+		
+		} else {
+	        // Extjs
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/extjs/ext-all.js", "");
 
-				"<script type=\"text/javascript\">var languageCode = '"+languageString+"';</script>" +
-				"<script type=\"text/javascript\">var viewConfiguration = 'search';</script>" +
-                "<script type=\"text/javascript\" src=\"/ingrid-webmap-client/auth\"></script>" +
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/Locale.js\"></script>" +
-				
-				"<!-- Extjs -->" +
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs/ext-all.js\"></script>" +
-				
-				"<!-- OpenLayers -->" +
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/OpenLayers.js\"></script>" +
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/openlayers/lib/OpenLayers/Lang/"+languageString+".js\"></script>" +
-				
-				"<!-- GeoExt -->" +
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/shared/js/loader-min.js\"></script>"+
-				"<script type=\"text/javascript\">OpenLayers.Lang.setCode('"+languageString+"');</script>"+ 
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/lang/"+languageString+".js\"></script>"+
-				
-				"<!-- Plugins -->" +
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/extjs.ux/plugins/CustomTreeFeature.js\"></script>"+
+	        // OpenLayers
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/openlayers/OpenLayers.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/openlayers/lib/OpenLayers/Lang/"+languageString+".js", "");
 
-				"<!-- FileSaver -->" +
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/utils/FileSaver/FileSaver.js\"></script>"+
-
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/proj4js/lib/proj4js-compressed.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/frontend/js/frontend-all-min.js\"></script>"+
-				"<script type=\"text/javascript\" src=\"/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash-min.js\"></script>"+
-				"<!-- end output header phase -->");
+	        // GeoExt
+	        setScriptHeader(response, "/ingrid-webmap-client/shared/js/loader-min.js", "");
+	        setScriptHeader(response, "", "OpenLayers.Lang.setCode('"+languageString+"');");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/geoext.ux/FeatureEditing/resources/lang/"+languageString+".js", "");
+	        // Plugins
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/extjs.ux/plugins/CustomTreeFeature.js", "");
+	        // FileSaver
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/utils/FileSaver/FileSaver.js", "");
+	        
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/proj4js/lib/proj4js-compressed.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/frontend/js/frontend-all-min.js", "");
+	        setScriptHeader(response, "/ingrid-webmap-client/lib/flashmessage1.1.1/Ext.ux.MessageBox.flash-min.js", "");
 		}
 	}
+
+    private void setLinkHeader(RenderResponse response, String idAttribute, String hrefAttribute) {
+        Element elem = response.createElement("link");
+        if (idAttribute != null && idAttribute.length() > 0) {
+            elem.setAttribute("id", idAttribute);
+        }
+        elem.setAttribute("rel", "stylesheet");
+        elem.setAttribute("type", "text/css");
+        elem.setAttribute("href", hrefAttribute);
+        response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, elem);
+    }
+
+    private void setScriptHeader(RenderResponse response, String srcAttribute, String textContent) {
+        Element elem = response.createElement("script");
+        elem.setAttribute("type", "text/javascript");
+        if (srcAttribute != null && srcAttribute.length() > 0) {
+	        elem.setAttribute("src", srcAttribute);        	
+        }
+        elem.setTextContent(textContent);
+        response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, elem);
+    }
 }
