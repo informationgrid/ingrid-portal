@@ -17,6 +17,7 @@ define("ingrid/tree/ThesaurusTree", [
             var memoryStore = new SnsStore ( {
                 data: [],
                 serviceType: this.service,
+                rootUrl: this.rootUrl,
                 getChildren: function(object){
                     // Add a getChildren() method to store for the data model where
                     // children objects point to their parent (aka relational model)
