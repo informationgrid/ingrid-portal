@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -374,7 +375,6 @@ public class UtilsFacete {
 				}
 				// Set last selection
 				if(lastSelection != null){
-					removeAttributeFromSession(request, "lastConfigSelection");
 					setAttributeToSession(request, "lastConfigSelection", lastSelection, true);
 				}
 				// Set flag for selection
@@ -1193,42 +1193,34 @@ public class UtilsFacete {
 	
 	@SuppressWarnings("rawtypes")
 	private static void setAttributeToSession(PortletRequest request, String key, Object value, boolean isSelection){
-		ArrayList<String> faceteSessionKeys = (ArrayList<String>) request.getPortletSession().getAttribute("faceteSessionKeys");
+		Set<String> faceteSessionKeys =
+			(Set<String>) getAttributeFromSession(request, "faceteSessionKeys");
 		
 		if(faceteSessionKeys == null){
-			faceteSessionKeys = new ArrayList<String>();
+			faceteSessionKeys = new HashSet<String>();
+			request.getPortletSession().setAttribute("faceteSessionKeys", faceteSessionKeys, PortletSession.APPLICATION_SCOPE);
 		}
-		if(faceteSessionKeys.size() == 0){
-			faceteSessionKeys.add(key);
-		}else{
-			boolean isFound = false;
-			for(int i=0; i < faceteSessionKeys.size(); i++){
-				String faceteSessionKey = faceteSessionKeys.get(i);
-				if(faceteSessionKey.equals(key)){
-					isFound = true;
-					break;
-				}
-			}
-			if(!isFound){
-				faceteSessionKeys.add(key);
-			}
-		}
-		
-		request.getPortletSession().setAttribute("faceteSessionKeys", faceteSessionKeys, PortletSession.APPLICATION_SCOPE);
+
+		// remember all our set keys
+		faceteSessionKeys.add(key);
+		// and set in session
+		request.getPortletSession().setAttribute(key, value, PortletSession.APPLICATION_SCOPE);
+
+		// remember last facet selection in special way
 		if(isSelection){
-			ArrayList<HashMap> faceteLastSelection = (ArrayList<HashMap>) request.getPortletSession().getAttribute("faceteLastSelection");
+			ArrayList<HashMap> faceteLastSelection =
+				(ArrayList<HashMap>) getAttributeFromSession(request, "faceteLastSelection");
 			if(faceteLastSelection == null){
 				faceteLastSelection = new ArrayList<HashMap>();
+				setAttributeToSession(request, "faceteLastSelection", faceteLastSelection);
 			}
 			
 			HashMap lastSelection = new HashMap();
 			lastSelection.put(key, value);
 			faceteLastSelection.add(lastSelection);
-			setAttributeToSession(request, "faceteLastSelection", faceteLastSelection);
 			// Set selection flag of facet to session 
-			request.getPortletSession().setAttribute("isSelection", true, PortletSession.APPLICATION_SCOPE);
+			setAttributeToSession(request, "isSelection", true);
 		}
-		request.getPortletSession().setAttribute(key, value, PortletSession.APPLICATION_SCOPE);
 	}
 	
 	private static Object getAttributeFromSession(PortletRequest request, String key){
@@ -1250,22 +1242,22 @@ public class UtilsFacete {
 	}
 	
 	private static void removeAllFaceteSelections(PortletRequest request){
-		ArrayList<String> faceteSessionKeys = (ArrayList<String>) request.getPortletSession().getAttribute("faceteSessionKeys");
-		if(faceteSessionKeys != null){
-			for(int i=0; i < faceteSessionKeys.size(); i++){
-				removeAttributeFromSession(request, faceteSessionKeys.get(i));
+		Set<String> faceteSessionKeys = 
+			(Set<String>) getAttributeFromSession(request, "faceteSessionKeys");
+		if (faceteSessionKeys != null) {
+			for (String sessionKey : faceteSessionKeys) {
+				removeAttributeFromSession(request, sessionKey);
 			}
 		}
 		removeAttributeFromSession(request, "faceteSessionKeys");
-		removeAttributeFromSession(request, "faceteLastSelection");
-		removeAttributeFromSession(request, "facetSelectionState");
 		removeFaceteElementsFromSession(request);
 	}
 	
 	@SuppressWarnings("rawtypes")
 	private static void removeLastFaceteSelection(ActionRequest request) {
 
-		ArrayList<HashMap>  faceteLastSelection = (ArrayList<HashMap>) request.getPortletSession().getAttribute("faceteLastSelection");
+		ArrayList<HashMap>  faceteLastSelection =
+			(ArrayList<HashMap>) getAttributeFromSession(request, "faceteLastSelection");
 		if(faceteLastSelection != null){
 			HashMap lastSelection = faceteLastSelection.get(faceteLastSelection.size() - 1);
 			if(lastSelection != null){
@@ -1372,18 +1364,18 @@ public class UtilsFacete {
 	
 	private static void setFacetSelectionState(Context context, PortletRequest request, String key, boolean value) {
 		context.put(key, value);
-		PortletSession ps = request.getPortletSession();
-		HashMap<String, Boolean> facetSelectionState = (HashMap<String, Boolean>) ps.getAttribute("facetSelectionState");
+		HashMap<String, Boolean> facetSelectionState =
+			(HashMap<String, Boolean>) getAttributeFromSession(request, "facetSelectionState");
 		if(facetSelectionState == null){
 			facetSelectionState = new HashMap<String, Boolean>();
+			setAttributeToSession(request, "facetSelectionState", facetSelectionState);
 		}
 		facetSelectionState.put(key, value);
-		ps.setAttribute("facetSelectionState", facetSelectionState, PortletSession.APPLICATION_SCOPE);
 	}
 	
 	private static HashMap<String, Boolean> getFacetSelectionState(PortletRequest request){
-		PortletSession ps = request.getPortletSession();
-		HashMap<String, Boolean> facetSelectionState = (HashMap<String, Boolean>) ps.getAttribute("facetSelectionState", PortletSession.APPLICATION_SCOPE);
+		HashMap<String, Boolean> facetSelectionState =
+			(HashMap<String, Boolean>) getAttributeFromSession(request, "facetSelectionState");
 		return facetSelectionState;
 	}
 	
