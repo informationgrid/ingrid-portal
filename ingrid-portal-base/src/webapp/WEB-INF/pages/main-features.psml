@@ -21,9 +21,11 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
   <fragment id="main-features" type="layout" name="jetspeed-layouts::IngridOneColumn">
     <fragment id="main-features-1" type="portlet" decorator="ingrid-teaser" name="ingrid-portal-apps::ShowFeaturesPortlet">
       <property layout="OneColumn" name="row" value="0" />
+<!--
       <preference name="helpKey" readOnly="false">
         <value>feature-1</value>
       </preference>
+-->
     </fragment>
   </fragment>
 
