@@ -140,6 +140,7 @@
     </constructor-arg>
   </bean>
 
+<!-- Used in pipeline-map -->
 <!-- Use ingridLocalizationValve, ingridCleanUpValve -->
   <bean id="jetspeed-pipeline" class="org.apache.jetspeed.pipeline.JetspeedPipeline" init-method="initialize">
     <meta key="j2:cat" value="default" />
@@ -220,7 +221,8 @@
     </constructor-arg>
   </bean>
 
-<!-- USED (via java) ? see JS23 PortalReservedParameters.PORTLET_PIPELINE -->
+<!-- Used in pipeline-map -->
+<!-- ALSO USED (via java) ? see JS23 PortalReservedParameters.PORTLET_PIPELINE -->
 <!-- Use ingridLocalizationValve, ingridCleanUpValve -->
   <bean id="portlet-pipeline" class="org.apache.jetspeed.pipeline.JetspeedPipeline" init-method="initialize">
     <meta key="j2:cat" value="default" />
@@ -264,6 +266,10 @@
     <meta key="j2:cat" value="default" />
     <constructor-arg>
       <map>
+        <!-- Needed ! Was added to AbstractPortalURL ! see JS2-1295 -->
+        <entry key='/portlet'>
+          <value>portlet-pipeline</value>
+        </entry>
         <entry key='/portal'>
           <value>jetspeed-pipeline</value>
         </entry>
