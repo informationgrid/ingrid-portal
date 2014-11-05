@@ -17,12 +17,14 @@ ALTER TABLE custom_window_state DROP COLUMN description;
 ALTER TABLE custom_window_state RENAME COLUMN description2 TO description;
 
 PROMPT ! Change ingrid_principal_pref.pref_value from CLOB to VARCHAR2(4000 CHAR) ...
+--PROBLEMS WITH PORTALU: is > 4000 !? comment if necessary
 ALTER TABLE ingrid_principal_pref ADD pref_value2 VARCHAR2(4000 CHAR);
 UPDATE ingrid_principal_pref SET pref_value2 = pref_value;
 ALTER TABLE ingrid_principal_pref DROP COLUMN pref_value;
 ALTER TABLE ingrid_principal_pref RENAME COLUMN pref_value2 TO pref_value;
 
 -- NOTICE: Keep CLOB if description > 4000 in Feed wanted ! BUT THEN ojdbc6.jar DRIVER HAS TO BE USED FOR Oracle 11g !
+--PROBLEMS WITH PORTALU: is > 4000 !? comment if necessary
 PROMPT ! Change ingrid_rss_store.description from CLOB to VARCHAR2(4000 CHAR) ...
 ALTER TABLE ingrid_rss_store ADD description2 VARCHAR2(4000 CHAR);
 UPDATE ingrid_rss_store SET description2 = description;
@@ -83,6 +85,8 @@ UPDATE INGRID_RSS_STORE SET link2 = link;
 ALTER TABLE INGRID_RSS_STORE DROP COLUMN link;
 ALTER TABLE INGRID_RSS_STORE RENAME COLUMN link2 TO link;
 
+commit;
+
 PROMPT ! CHANGE COLUMN CONSTRAINTS (columns nullable, ...)
 PROMPT ---------------------------------------------------
 
@@ -96,6 +100,7 @@ ALTER TABLE SECURITY_CREDENTIAL MODIFY LAST_AUTH_DATE DEFAULT NULL;
 ALTER TABLE INGRID_RSS_SOURCE MODIFY (LASTUPDATE null);
 
 -- for avoiding Error at startup with version 3.2.0d
+--PROBLEMS WITH PORTALU: already nullable, solved with 3.3.1 ? comment if necessary
 ALTER TABLE PARAMETER MODIFY (PARAMETER_VALUE null);
 
 commit;
