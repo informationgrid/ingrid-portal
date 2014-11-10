@@ -75,11 +75,11 @@
 			<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 			<!-- HACK: Upload JAR file WITHOUT "-classes" in name, so MAVEN1 can handle it (no classifier "classes" possible in maven1) !!! -->
 			<!-- NOT NEEDED ANYMORE: Now MAVEN2, so we use classifier "classes" in dependencies ! So always ingrid-portal-mdek-application-XXX-classes.jar -->
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>wagon-maven-plugin</artifactId> 
-				<version>1.0-beta-1</version> <executions> <execution> <id>upload-jar</id> 
-				<phase>deploy</phase> <goals> <goal>upload-single</goal> </goals> <configuration> 
-				<fromFile>target/${project.artifactId}-classes.jar</fromFile> <url>file:///srv/www/htdocs/ingrid/maven2/de/ingrid/portal/${project.artifactId}/${project.version}</url> 
-				<toFile>${project.artifactId}-${project.version}.jar</toFile> </configuration> 
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>wagon-maven-plugin</artifactId>
+				<version>1.0-beta-1</version> <executions> <execution> <id>upload-jar</id>
+				<phase>deploy</phase> <goals> <goal>upload-single</goal> </goals> <configuration>
+				<fromFile>target/${project.artifactId}-classes.jar</fromFile> <url>file:///srv/www/htdocs/ingrid/maven2/de/ingrid/portal/${project.artifactId}/${project.version}</url>
+				<toFile>${project.artifactId}-${project.version}.jar</toFile> </configuration>
 				</execution> </executions> </plugin> -->
 
 			<plugin>
@@ -92,6 +92,18 @@
 					<toAddresses />
 				</configuration>
 			</plugin>
+			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>license-maven-plugin</artifactId>
+		        <configuration>
+		        	<excludes>
+		        		<exclude>**/webapp/dojo-sources/dijit/**</exclude>
+		        		<exclude>**/webapp/dojo-sources/dojo/**</exclude>
+		        		<exclude>**/webapp/dojo-sources/dojox/**</exclude>
+		        		<exclude>**/webapp/dojo-sources/util/**</exclude>
+		          	</excludes>
+		        </configuration>
+		    </plugin>
 		</plugins>
 	</build>
 
@@ -241,8 +253,8 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
 			<version>3.2.5.ga</version>
-			<!-- Because of asm version conflicts with cglib spring, we can't use 
-				the normal cglib dependency of hibernate Rather we use the cglib-nodep lib, 
+			<!-- Because of asm version conflicts with cglib spring, we can't use
+				the normal cglib dependency of hibernate Rather we use the cglib-nodep lib,
 				which has its own implementation of asm. -->
 			<exclusions>
 				<exclusion>
@@ -421,7 +433,7 @@
 			<artifactId>ingrid-utils-geo</artifactId>
 		</dependency>
 		<!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
-		<!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId> 
+		<!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>
 			<version>1.1.3</version> </dependency> -->
 	</dependencies>
 	<repositories>
@@ -558,11 +570,11 @@
 					</plugin>
 				</plugins>
 			</build>
-			<!-- NO SEPARATE REPO LIBS FOR GSSOIL ! WE EXTRACT EVERYTHING FROM ZIP 
-				FILE (see above, "thesaurus-gazetteer-libs") ! SO WE CAN JUST UPDATE LIBS 
-				FROM EDISOFT DELIVERIES ! <dependencies> <dependency> <groupId>net.htmlparser.jericho</groupId> 
-				<artifactId>jericho-html</artifactId> <version>3.1</version> </dependency> 
-				</dependencies> <repositories> <repository> <id>ibiblio</id> <name>iBiblio.or.</name> 
+			<!-- NO SEPARATE REPO LIBS FOR GSSOIL ! WE EXTRACT EVERYTHING FROM ZIP
+				FILE (see above, "thesaurus-gazetteer-libs") ! SO WE CAN JUST UPDATE LIBS
+				FROM EDISOFT DELIVERIES ! <dependencies> <dependency> <groupId>net.htmlparser.jericho</groupId>
+				<artifactId>jericho-html</artifactId> <version>3.1</version> </dependency>
+				</dependencies> <repositories> <repository> <id>ibiblio</id> <name>iBiblio.or.</name>
 				<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url> </repository> </repositories> -->
 		</profile>
 	</profiles>
