@@ -61,7 +61,7 @@
         <include>ojdbc:ojdbc</include>
         <include>org.apache.pluto:pluto</include>
         <include>org.apache.portals.bridges:portals-bridges-common</include>
-        <include>portlet-api:portlet-api</include>
+        <include>org.apache.portals:portlet-api_2.0_spec</include>
         <include>xpp3:xpp3_min</include>
         <include>com.thoughtworks.xstream:xstream</include>
         <include>backport-util-concurrent:backport-util-concurrent</include>

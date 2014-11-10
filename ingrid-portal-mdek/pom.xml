@@ -72,36 +72,17 @@
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
     <dependency>
-      <groupId>portlet-api</groupId>
-      <artifactId>portlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>  
-    <dependency>
       <groupId>org.apache.portals.bridges</groupId>
       <artifactId>portals-bridges-common</artifactId>
-      <version>1.0.1</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.bridges</groupId>
       <artifactId>portals-bridges-velocity</artifactId>
-      <version>1.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.portals.jetspeed-2</groupId>
-      <artifactId>jetspeed-api</artifactId>
-      <version>${jetspeed.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.portals.jetspeed-2</groupId>
-      <artifactId>jetspeed-commons</artifactId>
-      <version>${jetspeed.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-portal</artifactId>
-      <version>${jetspeed.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.portals.jetspeed-2</groupId>
@@ -160,7 +141,6 @@
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-page-manager</artifactId>
-      <version>${jetspeed.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.portals.jetspeed-2</groupId>
@@ -183,12 +163,6 @@
           <artifactId>jetspeed-file-cache</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pluto</groupId>
-      <artifactId>pluto</artifactId>
-      <version>1.0.1</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>commons-digester</groupId>
@@ -439,10 +413,12 @@
       <name>InGrid Repo Maven</name>
       <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
     </repository>
+<!--
     <repository>
       <id>maven.repo</id>
       <name>Maven Repo Default</name>
       <url>http://maven.jahia.org/maven2</url>
     </repository>
+-->
   </repositories>
 </project>

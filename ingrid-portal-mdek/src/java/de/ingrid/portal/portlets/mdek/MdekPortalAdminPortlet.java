@@ -8,7 +8,6 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -317,11 +316,10 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
     private List<String> getUnconnectedUserList() throws PortletException {
         try {
-        	Iterator<String> users = userManager.getUserNames("");
+        	List<String> users = userManager.getUserNames("");
             List<String> userNameList = new ArrayList<String>();
 
-            while (users.hasNext()) {
-                String user = (String) users.next();
+            for (String user : users) {
                 if (canBecomeCatalogAdmin(user)) {
                 	log.debug("User '"+user+"' can become catAdmin.");
                 	userNameList.add(user);

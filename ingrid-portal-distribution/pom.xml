@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>de.ingrid</groupId>
 			<artifactId>ingrid-webmap-client</artifactId>
-            <version>${project.version}</version>
+            <version>3.5.0-SNAPSHOT</version>
             <type>war</type>
 		</dependency>
         <dependency>
@@ -76,11 +76,10 @@
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-api</artifactId>
-      <version>${jetspeed.version}</version>
     </dependency>
     <dependency>
-      <groupId>portlet-api</groupId>
-      <artifactId>portlet-api</artifactId>
+      <groupId>org.apache.portals</groupId>
+      <artifactId>portlet-api_2.0_spec</artifactId>
     </dependency>
     <dependency>
       <groupId>net.sf.ehcache</groupId>
@@ -89,12 +88,10 @@
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-commons</artifactId>
-      <version>${jetspeed.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.bridges</groupId>
       <artifactId>portals-bridges-common</artifactId>
-      <version>1.0.1</version>
     </dependency>
     <!-- Needed for assembly to be copied into tomcat/lib, see assembly descriptor assembly/bin.xml -->
     <dependency>
