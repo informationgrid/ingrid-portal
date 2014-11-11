@@ -19,6 +19,8 @@ Setup Portal mit neuem Jetspeed
 
 - Portal anpassen:
     - derby Datenbank rein unter top portal directory als "_derby" (_derby.zip)
+        - ACHTUNG: folgende Änderungen vorgenommen:
+            - alle INGRID Tabellen, Quartz rüber kopiert, auch HIBERNATE_UNIQUE_KEY wurde gebraucht
     - portal-apps:
         - auf derby umstellen in Datei /src/java/hibernate.cfg.xml
             <!--    <property name="dialect">org.hibernate.dialect.MySQLDialect</property> -->
@@ -32,6 +34,6 @@ Setup Portal mit neuem Jetspeed
                 page-manager.xml
 
 - Tomcat aufsetzen:
-    - tomcat kopieren
-    - lib/shared wie in zip
-    - context files wie in zip und anpassen (ROOT.xml, ingrid-portal-apps.xml)
+    - tomcat aus zip nehmen
+        - ACHTUNG: Dieser ist modifiziert, z.B. conf/server.xml beinhaltet Listener, um logging directory für jetspeed zu setzen ("deployed Apache Portals Jetspeed/APA listener to initialize logging directory system property")...
+    - context files anpassen (ROOT.xml, ingrid-portal-apps.xml)
