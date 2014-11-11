@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  **************************************************-
+  Ingrid Portal Apps
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
@@ -60,7 +83,7 @@
 				The information provided is being continually added to with the aim of 
 				capturing all official providers of environment information over the long term.</p>
                 <p>The EU environment guideline of 2003 and the planned INSPIRE guideline played an important role in the conception of PortalU. These guidelines lay down new standards for the public dissemination of official environment information respectively the construction of the information technology infrastructures necessary for this. In future, signficantly more authorities and organisations than heretofore will be obliged to provide data relevant to the environment in a clear understandable and easily accessible form</p>
-                <p> PortalU and the software especially developed for the construction of the portal ”InGrid<sup>®</sup>” were especially conceived as tools to support the authorities in implementing the guidelines. </p>
+                <p> PortalU and the software especially developed for the construction of the portal �?InGrid<sup>®</sup>�? were especially conceived as tools to support the authorities in implementing the guidelines. </p>
             </content>
         </section>
         <section help-key="about-2">
@@ -1079,7 +1102,7 @@
         <section help-key="search-catalog-2">
             <header>Thesaurus-Navigator</header>
             <content>
-                <p>The representation of the body of words in the Thesaurus takes place in a tree structure, starting with the top terms in SNS. When a Thesaurus term (descriptor) is selected (clicked), the metadata sets of the catalogues (object- and/or address-iPlugs) available are represented, which have been given keywords with the descriptor selected ,in a ‟result list” located next to the hierarchy tree. The listing of the metadatasets is grouped according to the catalogues in this list. The detailed representation of a metadataset only takes place after a query, i.e. by clicking on its title, just as in the list of the search results in the free search. Switching between “environment information” (<i>Objects</i>) and <i>Addresses </i>takes place in the area of the result list.</p>
+                <p>The representation of the body of words in the Thesaurus takes place in a tree structure, starting with the top terms in SNS. When a Thesaurus term (descriptor) is selected (clicked), the metadata sets of the catalogues (object- and/or address-iPlugs) available are represented, which have been given keywords with the descriptor selected ,in a ‟result list�? located next to the hierarchy tree. The listing of the metadatasets is grouped according to the catalogues in this list. The detailed representation of a metadataset only takes place after a query, i.e. by clicking on its title, just as in the list of the search results in the free search. Switching between “environment information�? (<i>Objects</i>) and <i>Addresses </i>takes place in the area of the result list.</p>
             </content>
         </section>
     </chapter>
