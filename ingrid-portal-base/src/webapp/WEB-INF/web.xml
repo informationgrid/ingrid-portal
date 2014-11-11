@@ -207,15 +207,15 @@ limitations under the License.
   -->
 
   <filter-mapping>
+    <filter-name>ServletRequestCleanupFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>    
+
+  <filter-mapping>
     <filter-name>ShibbolethPortalFilter</filter-name>
     <url-pattern>/*</url-pattern>    
   </filter-mapping>
 
-  <filter-mapping>
-    <filter-name>ServletRequestCleanupFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>    
-  
   <filter-mapping>
     <filter-name>XXSUrlAttackFilter</filter-name>
     <url-pattern>/*</url-pattern>
