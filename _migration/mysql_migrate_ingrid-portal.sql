@@ -2,9 +2,9 @@
 -- Update 2.1 to 2.1.2
 -- =========================
 
------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------
 -- ADMIN_ACTIVITY
------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------
 drop table if exists ADMIN_ACTIVITY;
 
 CREATE TABLE ADMIN_ACTIVITY
@@ -20,9 +20,9 @@ CREATE TABLE ADMIN_ACTIVITY
   ATTR_VALUE_AFTER VARCHAR(80),
   DESCRIPTION VARCHAR(128));
 
------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------
 -- USER_ACTIVITY
------------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------
 drop table if exists USER_ACTIVITY;
 
 CREATE TABLE USER_ACTIVITY
@@ -40,4 +40,21 @@ CREATE TABLE USER_ACTIVITY
 
 -- Update 2.1.2 to 2.1.3
 -- =========================
+
+-- Schon vorhanden !?
+-- CREATE INDEX IX_PREFS_NODE_1 ON PREFS_NODE (PARENT_NODE_ID);
+-- CREATE INDEX IX_PREFS_NODE_2 ON PREFS_NODE (FULL_PATH);
+-- CREATE INDEX IX_FKPPV_1 ON PREFS_PROPERTY_VALUE (NODE_ID);
+
+ALTER TABLE PREFS_NODE ADD CONSTRAINT FK_PREFS_NODE_1 FOREIGN KEY (PARENT_NODE_ID) REFERENCES PREFS_NODE (NODE_ID) ON DELETE CASCADE;
+ALTER TABLE PREFS_PROPERTY_VALUE ADD CONSTRAINT FK_PREFS_PROPERTY_VALUE_1 FOREIGN KEY (NODE_ID) REFERENCES PREFS_NODE (NODE_ID) ON DELETE CASCADE;
+
+
+-- Update 2.1.3 to 2.1.4
+-- =========================
+
+ALTER TABLE PARAMETER MODIFY PARAMETER_VALUE MEDIUMTEXT NULL;
+
+ALTER TABLE FRAGMENT ADD FRAGMENT_STRING_ID VARCHAR(80);
+ALTER TABLE FRAGMENT ADD UNIQUE (FRAGMENT_STRING_ID);
 

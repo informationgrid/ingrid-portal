@@ -6,13 +6,15 @@ Ermittlung SQL:
 SQL erzeugen via jetspeed, also Datenbank anlegen
 
 - JS 2.1
-    - auf maven 1 umstellen, s. C:\wemove\ingrid\dev\help\README.txt
+    - auf maven 1 umstellen ..., s. C:\wemove\ingrid\dev\help\README.txt
     - Manual:
         - http://portals.apache.org/jetspeed-2.1.3/devguide/j2-maven-plugin.html
         - http://portals.apache.org/jetspeed-2.1.3/devguide/m1-getting-started-source.html
     - build.properties anpassen (mysql, oracle)
     - bauen, erzeugt DDL in target (nach C:\wemove\ingrid\dev\jetspeed\JETSPEED-RELEASE-2.1\_ddl_from_target verschoben)
         maven j2:portal.conf.sql
+
+- JS 2.1.3, 2.1.4 wie JS 2.1
     
 - JS TRUNK
     - minimale production MySQL Datenbank
