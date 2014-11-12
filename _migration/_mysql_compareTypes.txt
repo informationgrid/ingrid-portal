@@ -1,0 +1,49 @@
+
+lokale MySQL 5.5.8:
+
+js2_trunk Datenbank (von js2 angelegt)
+---------------
+
+MySQL Export:
+    CREATE TABLE user_statistics (
+      IPADDRESS varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
+      USER_NAME varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
+      TIME_STAMP datetime DEFAULT NULL,
+      `STATUS` int(11) DEFAULT NULL,
+      ELAPSED_TIME bigint(20) DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;  
+
+DDL in target:
+    CREATE TABLE USER_STATISTICS
+    (
+        IPADDRESS VARCHAR(80) NULL,
+        USER_NAME VARCHAR(80) NULL,
+        TIME_STAMP DATETIME,
+        STATUS INTEGER,
+        ELAPSED_TIME BIGINT
+    ) ;
+
+
+JS 2.1 ddl in target (maven j2:portal.conf.sql)
+---------------
+
+CREATE TABLE USER_STATISTICS
+(
+    IPADDRESS VARCHAR(80),
+    USER_NAME VARCHAR(80),
+    TIME_STAMP TIMESTAMP,
+    STATUS MEDIUMINT,
+    ELAPSED_TIME BIGINT);
+  
+  
+ingrid-portal (aktuell)
+---------------
+
+MySQL Export:
+    CREATE TABLE user_statistics (
+      IPADDRESS varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
+      USER_NAME varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
+      TIME_STAMP timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      `STATUS` mediumint(9) DEFAULT NULL,
+      ELAPSED_TIME bigint(20) DEFAULT NULL
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
