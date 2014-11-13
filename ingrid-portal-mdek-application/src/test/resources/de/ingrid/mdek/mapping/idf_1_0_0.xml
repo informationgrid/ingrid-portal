@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  **************************************************-
+  Ingrid Portal MDEK Application
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+
+<idf:html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	idf-version="3.3.4"
+	xsi:schemaLocation="http://www.portalu.de/IDF/1.0 ingrid_detail_data_schema.xsd"
+	xmlns:idf="http://www.portalu.de/IDF/1.0">
+	<idf:head />
+	<idf:body>
+		<idf:idfMdMetadata xmlns:gco="http://www.isotc211.org/2005/gco"
+			xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml"
+			xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:srv="http://www.isotc211.org/2005/srv"
+			xmlns:xlink="http://www.w3.org/1999/xlink"
+			xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+			<gmd:fileIdentifier>
+				<gco:CharacterString>9F291C41-5E67-4328-81AB-175282267317
+				</gco:CharacterString>
+			</gmd:fileIdentifier>
+			<gmd:language>
+				<gmd:LanguageCode
+					codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#LanguageCode"
+					codeListValue="bul">bul</gmd:LanguageCode>
+			</gmd:language>
+			<gmd:characterSet>
+				<gmd:MD_CharacterSetCode
+					codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
+					codeListValue="utf8" />
+			</gmd:characterSet>
+			<gmd:hierarchyLevel>
+				<gmd:MD_ScopeCode
+					codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+					codeListValue="dataset">dataset</gmd:MD_ScopeCode>
+			</gmd:hierarchyLevel>
+			<gmd:contact>
+				<idf:idfResponsibleParty type="100"
+					uuid="9CC64149-770D-458A-B5F1-5FA419871AFF">
+					<gmd:contactInfo>
+						<gmd:CI_Contact>
+							<gmd:address>
+								<gmd:CI_Address>
+									<gmd:electronicMailAddress>
+										<gco:CharacterString>andre.wallat@wemove.com</gco:CharacterString>
+									</gmd:electronicMailAddress>
+								</gmd:CI_Address>
+							</gmd:address>
+						</gmd:CI_Contact>
+					</gmd:contactInfo>
+					<gmd:role>
+						<gmd:CI_RoleCode
+							codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+							codeListValue="pointOfContact" />
+					</gmd:role>
+				</idf:idfResponsibleParty>
+			</gmd:contact>
+			<gmd:dateStamp>
+				<gco:Date>2014-02-13</gco:Date>
+			</gmd:dateStamp>
+			<gmd:metadataStandardName>
+				<gco:CharacterString>ISO19115</gco:CharacterString>
+			</gmd:metadataStandardName>
+			<gmd:metadataStandardVersion>
+				<gco:CharacterString>2003/Cor.1:2006</gco:CharacterString>
+			</gmd:metadataStandardVersion>
+			<gmd:referenceSystemInfo>
+				<gmd:MD_ReferenceSystem>
+					<gmd:referenceSystemIdentifier>
+						<gmd:RS_Identifier>
+							<gmd:code>
+								<gco:CharacterString>EPSG 25834: ETRS89 / UTM Zone 34N</gco:CharacterString>
+							</gmd:code>
+							<gmd:codeSpace>
+								<gco:CharacterString>EPSG</gco:CharacterString>
+							</gmd:codeSpace>
+						</gmd:RS_Identifier>
+					</gmd:referenceSystemIdentifier>
+				</gmd:MD_ReferenceSystem>
+			</gmd:referenceSystemInfo>
+			<gmd:contentInfo>
+				<gmd:MD_FeatureCatalogueDescription>
+					<gmd:includedWithDataset>
+						<gco:Boolean>false</gco:Boolean>
+					</gmd:includedWithDataset>
+					<gmd:featureTypes>
+						<gco:LocalName>test</gco:LocalName>
+					</gmd:featureTypes>
+					<gmd:featureCatalogueCitation>
+						<gmd:CI_Citation>
+							<gmd:title>
+								<gco:CharacterString>von Drachenfels 94</gco:CharacterString>
+							</gmd:title>
+							<gmd:date>
+								<gmd:CI_Date>
+									<gmd:date>
+										<gco:DateTime>2014-02-11T00:00:00</gco:DateTime>
+									</gmd:date>
+									<gmd:dateType>
+										<gmd:CI_DateTypeCode
+											codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+											codeListValue="creation" />
+									</gmd:dateType>
+								</gmd:CI_Date>
+							</gmd:date>
+							<gmd:edition>
+								<gco:CharacterString>1.2</gco:CharacterString>
+							</gmd:edition>
+						</gmd:CI_Citation>
+					</gmd:featureCatalogueCitation>
+				</gmd:MD_FeatureCatalogueDescription>
+			</gmd:contentInfo>
+			<gmd:distributionInfo>
+				<gmd:MD_Distribution>
+					<gmd:distributionFormat>
+						<gmd:MD_Format>
+							<gmd:name>
+								<gco:CharacterString>Protected Sites - Full GML Application Schema</gco:CharacterString>
+							</gmd:name>
+							<gmd:version gco:nilReason="unknown" />
+							<gmd:specification gco:nilReason="unknown" />
+						</gmd:MD_Format>
+					</gmd:distributionFormat>
+					<gmd:distributor>
+						<gmd:MD_Distributor>
+							<gmd:distributorContact>
+								<gmd:CI_ResponsibleParty>
+									<gmd:role>
+										<gmd:CI_RoleCode
+											codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+											codeListValue="distributor" />
+									</gmd:role>
+								</gmd:CI_ResponsibleParty>
+							</gmd:distributorContact>
+							<gmd:distributionOrderProcess>
+								<gmd:MD_StandardOrderProcess>
+									<gmd:orderingInstructions>
+										<gco:CharacterString>bestell</gco:CharacterString>
+									</gmd:orderingInstructions>
+								</gmd:MD_StandardOrderProcess>
+							</gmd:distributionOrderProcess>
+						</gmd:MD_Distributor>
+					</gmd:distributor>
+					<gmd:transferOptions>
+						<gmd:MD_DigitalTransferOptions>
+							<gmd:onLine>
+								<idf:idfOnlineResource>
+									<gmd:linkage>
+										<gmd:URL>http://download.me</gmd:URL>
+									</gmd:linkage>
+									<gmd:name>
+										<gco:CharacterString>Download url</gco:CharacterString>
+									</gmd:name>
+									<gmd:function>
+										<gmd:CI_OnLineFunctionCode
+											codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+											codeListValue="Download of data">Download of data</gmd:CI_OnLineFunctionCode>
+									</gmd:function>
+									<idf:attachedToField entry-id="9990"
+										list-id="2000">Datendownload</idf:attachedToField>
+								</idf:idfOnlineResource>
+							</gmd:onLine>
+						</gmd:MD_DigitalTransferOptions>
+					</gmd:transferOptions>
+					<gmd:transferOptions>
+						<gmd:MD_DigitalTransferOptions>
+							<gmd:onLine>
+								<gmd:CI_OnlineResource>
+									<gmd:linkage>
+										<gmd:URL>http://www.umweltkarten-niedersachsen.de/arcgis/services/Natur_wms/MapServer/WMSServer?</gmd:URL>
+									</gmd:linkage>
+								</gmd:CI_OnlineResource>
+							</gmd:onLine>
+						</gmd:MD_DigitalTransferOptions>
+					</gmd:transferOptions>
+					<gmd:transferOptions>
+						<gmd:MD_DigitalTransferOptions>
+							<gmd:onLine>
+								<gmd:CI_OnlineResource>
+									<gmd:linkage>
+										<gmd:URL>http://mapWithCapabilities.com/download</gmd:URL>
+									</gmd:linkage>
+								</gmd:CI_OnlineResource>
+							</gmd:onLine>
+						</gmd:MD_DigitalTransferOptions>
+					</gmd:transferOptions>
+					<gmd:transferOptions>
+						<gmd:MD_DigitalTransferOptions>
+							<gmd:onLine>
+								<gmd:CI_OnlineResource>
+									<gmd:linkage>
+										<gmd:URL>http://mapWithCapabilities.com/download</gmd:URL>
+									</gmd:linkage>
+								</gmd:CI_OnlineResource>
+							</gmd:onLine>
+						</gmd:MD_DigitalTransferOptions>
+					</gmd:transferOptions>
+					<gmd:transferOptions>
+						<gmd:MD_DigitalTransferOptions>
+							<gmd:onLine>
+								<gmd:CI_OnlineResource>
+									<gmd:linkage>
+										<gmd:URL>http://more-invalid-url.com</gmd:URL>
+									</gmd:linkage>
+								</gmd:CI_OnlineResource>
+							</gmd:onLine>
+						</gmd:MD_DigitalTransferOptions>
+					</gmd:transferOptions>
+					<gmd:transferOptions>
+						<gmd:MD_DigitalTransferOptions>
+							<gmd:onLine>
+								<gmd:CI_OnlineResource>
+									<gmd:linkage>
+										<gmd:URL>http://mapWithCapabilities.com/download</gmd:URL>
+									</gmd:linkage>
+								</gmd:CI_OnlineResource>
+							</gmd:onLine>
+						</gmd:MD_DigitalTransferOptions>
+					</gmd:transferOptions>
+				</gmd:MD_Distribution>
+			</gmd:distributionInfo>
+			<gmd:dataQualityInfo>
+				<gmd:DQ_DataQuality>
+					<gmd:scope>
+						<gmd:DQ_Scope>
+							<gmd:level>
+								<gmd:MD_ScopeCode
+									codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+									codeListValue="dataset" />
+							</gmd:level>
+						</gmd:DQ_Scope>
+					</gmd:scope>
+					<gmd:report>
+						<gmd:DQ_CompletenessOmission>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Rate of missing items</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification>
+								<gmd:MD_Identifier>
+									<gmd:code>
+										<gco:CharacterString>7</gco:CharacterString>
+									</gmd:code>
+								</gmd:MD_Identifier>
+							</gmd:measureIdentification>
+							<gmd:measureDescription>
+								<gco:CharacterString>completeness omission (rec_grade)</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit>
+										<gml:UnitDefinition
+											gml:id="unitDefinition_ID_383f1b06-12cc-4b42-ae4b-1d31325a9b77">
+											<gml:identifier codeSpace="" />
+											<gml:name>percent</gml:name>
+											<gml:quantityType>completeness omission</gml:quantityType>
+											<gml:catalogSymbol>%</gml:catalogSymbol>
+										</gml:UnitDefinition>
+									</gmd:valueUnit>
+									<gmd:value>
+										<gco:Record>12</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_CompletenessOmission>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_AbsoluteExternalPositionalAccuracy>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Mean value of positional uncertainties (1D)</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification>
+								<gmd:MD_Identifier>
+									<gmd:code>
+										<gco:CharacterString>28</gco:CharacterString>
+									</gmd:code>
+								</gmd:MD_Identifier>
+							</gmd:measureIdentification>
+							<gmd:measureDescription>
+								<gco:CharacterString>vertical</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit>
+										<gml:UnitDefinition
+											gml:id="unitDefinition_ID_8019f610-dcd7-4393-b95d-465cb0c67ae8">
+											<gml:identifier codeSpace="" />
+											<gml:name>meter</gml:name>
+											<gml:quantityType>absolute external positional accuracy, vertical accuracy</gml:quantityType>
+											<gml:catalogSymbol>m</gml:catalogSymbol>
+										</gml:UnitDefinition>
+									</gmd:valueUnit>
+									<gmd:value>
+										<gco:Record>500</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_AbsoluteExternalPositionalAccuracy>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_AbsoluteExternalPositionalAccuracy>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Mean value of positional uncertainties (2D)</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification>
+								<gmd:MD_Identifier>
+									<gmd:code>
+										<gco:CharacterString>28</gco:CharacterString>
+									</gmd:code>
+								</gmd:MD_Identifier>
+							</gmd:measureIdentification>
+							<gmd:measureDescription>
+								<gco:CharacterString>geographic</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit>
+										<gml:UnitDefinition
+											gml:id="unitDefinition_ID_139f653e-729d-4a6f-b4e6-186a7e43347d">
+											<gml:identifier codeSpace="" />
+											<gml:name>meter</gml:name>
+											<gml:quantityType>absolute external positional accuracy, geographic accuracy</gml:quantityType>
+											<gml:catalogSymbol>m</gml:catalogSymbol>
+										</gml:UnitDefinition>
+									</gmd:valueUnit>
+									<gmd:value>
+										<gco:Record>400</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_AbsoluteExternalPositionalAccuracy>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_DomainConsistency>
+							<gmd:result>
+								<gmd:DQ_ConformanceResult>
+									<gmd:specification>
+										<gmd:CI_Citation>
+											<gmd:title>
+												<gco:CharacterString>INSPIRE Richtlinie</gco:CharacterString>
+											</gmd:title>
+											<gmd:date>
+												<gmd:CI_Date>
+													<gmd:date>
+														<gco:Date>2007-03-14</gco:Date>
+													</gmd:date>
+													<gmd:dateType>
+														<gmd:CI_DateTypeCode
+															codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+															codeListValue="publication">publication</gmd:CI_DateTypeCode>
+													</gmd:dateType>
+												</gmd:CI_Date>
+											</gmd:date>
+										</gmd:CI_Citation>
+									</gmd:specification>
+									<gmd:explanation>
+										<gco:CharacterString />
+									</gmd:explanation>
+									<gmd:pass>
+										<gco:Boolean>true</gco:Boolean>
+									</gmd:pass>
+								</gmd:DQ_ConformanceResult>
+							</gmd:result>
+						</gmd:DQ_DomainConsistency>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_DomainConsistency>
+							<gmd:result>
+								<gmd:DQ_ConformanceResult>
+									<gmd:specification>
+										<gmd:CI_Citation>
+											<gmd:title>
+												<gco:CharacterString>INSPIRE Data Specification on Addresses – Guidelines</gco:CharacterString>
+											</gmd:title>
+											<gmd:date>
+												<gmd:CI_Date>
+													<gmd:date>
+														<gco:Date>2010-05-03</gco:Date>
+													</gmd:date>
+													<gmd:dateType>
+														<gmd:CI_DateTypeCode
+															codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+															codeListValue="publication">publication</gmd:CI_DateTypeCode>
+													</gmd:dateType>
+												</gmd:CI_Date>
+											</gmd:date>
+										</gmd:CI_Citation>
+									</gmd:specification>
+									<gmd:explanation>
+										<gco:CharacterString />
+									</gmd:explanation>
+									<gmd:pass>
+										<gco:Boolean>false</gco:Boolean>
+									</gmd:pass>
+								</gmd:DQ_ConformanceResult>
+							</gmd:result>
+						</gmd:DQ_DomainConsistency>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_CompletenessCommission>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Number of duplicate feature instances</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification>
+								<gmd:MD_Identifier>
+									<gmd:code>
+										<gco:CharacterString>4</gco:CharacterString>
+									</gmd:code>
+								</gmd:MD_Identifier>
+							</gmd:measureIdentification>
+							<gmd:measureDescription>
+								<gco:CharacterString>ein parameter</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit gco:nilReason="inapplicable" />
+									<gmd:value>
+										<gco:Record>12</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_CompletenessCommission>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_ConceptualConsistency>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Compliance rate with the rules of the conceptual schema</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureDescription>
+								<gco:CharacterString>ab</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit gco:nilReason="unknown" />
+									<gmd:value>
+										<gco:Record>20</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_ConceptualConsistency>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_DomainConsistency>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Value domain non conformance rate</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification>
+								<gmd:MD_Identifier>
+									<gmd:code>
+										<gco:CharacterString>17</gco:CharacterString>
+									</gmd:code>
+								</gmd:MD_Identifier>
+							</gmd:measureIdentification>
+							<gmd:measureDescription>
+								<gco:CharacterString>bc</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit>
+										<gml:UnitDefinition
+											gml:id="unitDefinition_ID_75e904a8-e9c2-4c41-9ffa-f5b83a96cb1e">
+											<gml:identifier codeSpace="" />
+											<gml:name>percent</gml:name>
+											<gml:quantityType>domain consistency</gml:quantityType>
+											<gml:catalogSymbol>%</gml:catalogSymbol>
+										</gml:UnitDefinition>
+									</gmd:valueUnit>
+									<gmd:value>
+										<gco:Record>30</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_DomainConsistency>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_FormatConsistency>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Physical structure conflict rate</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification>
+								<gmd:MD_Identifier>
+									<gmd:code>
+										<gco:CharacterString>20</gco:CharacterString>
+									</gmd:code>
+								</gmd:MD_Identifier>
+							</gmd:measureIdentification>
+							<gmd:measureDescription>
+								<gco:CharacterString>ggi</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit>
+										<gml:UnitDefinition
+											gml:id="unitDefinition_ID_d8d95041-95d1-4824-ba1e-f863526c8abe">
+											<gml:identifier codeSpace="" />
+											<gml:name>percent</gml:name>
+											<gml:quantityType>format consistency</gml:quantityType>
+											<gml:catalogSymbol>%</gml:catalogSymbol>
+										</gml:UnitDefinition>
+									</gmd:valueUnit>
+									<gmd:value>
+										<gco:Record>40</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_FormatConsistency>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_TopologicalConsistency>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Number of invalid slivers</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification>
+								<gmd:MD_Identifier>
+									<gmd:code>
+										<gco:CharacterString>25</gco:CharacterString>
+									</gmd:code>
+								</gmd:MD_Identifier>
+							</gmd:measureIdentification>
+							<gmd:measureDescription>
+								<gco:CharacterString>safaf</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit gco:nilReason="inapplicable" />
+									<gmd:value>
+										<gco:Record>50</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_TopologicalConsistency>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_TemporalConsistency>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Percentage of items that are correctly events ordered</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification
+								gco:nilReason="missing" />
+							<gmd:measureDescription>
+								<gco:CharacterString>cd</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit>
+										<gml:UnitDefinition
+											gml:id="unitDefinition_ID_93112539-3c5f-4095-bc6c-b56bf1de14b7">
+											<gml:identifier codeSpace="" />
+											<gml:name>percent</gml:name>
+											<gml:quantityType>temporal consistency</gml:quantityType>
+											<gml:catalogSymbol>%</gml:catalogSymbol>
+										</gml:UnitDefinition>
+									</gmd:valueUnit>
+									<gmd:value>
+										<gco:Record>60</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_TemporalConsistency>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_ThematicClassificationCorrectness>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Misclassification rate</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification>
+								<gmd:MD_Identifier>
+									<gmd:code>
+										<gco:CharacterString>61</gco:CharacterString>
+									</gmd:code>
+								</gmd:MD_Identifier>
+							</gmd:measureIdentification>
+							<gmd:measureDescription>
+								<gco:CharacterString>safe</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit>
+										<gml:UnitDefinition
+											gml:id="unitDefinition_ID_5af592fd-635b-4ace-a40a-dff78bc7a3ea">
+											<gml:identifier codeSpace="" />
+											<gml:name>percent</gml:name>
+											<gml:quantityType>thematic classification correctness</gml:quantityType>
+											<gml:catalogSymbol>%</gml:catalogSymbol>
+										</gml:UnitDefinition>
+									</gmd:valueUnit>
+									<gmd:value>
+										<gco:Record>70</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_ThematicClassificationCorrectness>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_NonQuantitativeAttributeAccuracy>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Number of incorrect attribute values</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification>
+								<gmd:MD_Identifier>
+									<gmd:code>
+										<gco:CharacterString>67</gco:CharacterString>
+									</gmd:code>
+								</gmd:MD_Identifier>
+							</gmd:measureIdentification>
+							<gmd:measureDescription>
+								<gco:CharacterString>de</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit>
+										<gml:UnitDefinition
+											gml:id="unitDefinition_ID_2fdebb7e-4e96-43b7-bef2-366ebdf1013c">
+											<gml:identifier codeSpace="" />
+											<gml:name>percent</gml:name>
+											<gml:quantityType>non quantitative attribute accuracy</gml:quantityType>
+											<gml:catalogSymbol>%</gml:catalogSymbol>
+										</gml:UnitDefinition>
+									</gmd:valueUnit>
+									<gmd:value>
+										<gco:Record>80</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_NonQuantitativeAttributeAccuracy>
+					</gmd:report>
+					<gmd:report>
+						<gmd:DQ_QuantitativeAttributeAccuracy>
+							<gmd:nameOfMeasure>
+								<gco:CharacterString>Attribute value uncertainty at 95 % significance level</gco:CharacterString>
+							</gmd:nameOfMeasure>
+							<gmd:measureIdentification>
+								<gmd:MD_Identifier>
+									<gmd:code>
+										<gco:CharacterString>71</gco:CharacterString>
+									</gmd:code>
+								</gmd:MD_Identifier>
+							</gmd:measureIdentification>
+							<gmd:measureDescription>
+								<gco:CharacterString>vhhvj</gco:CharacterString>
+							</gmd:measureDescription>
+							<gmd:result>
+								<gmd:DQ_QuantitativeResult>
+									<gmd:valueUnit gco:nilReason="inapplicable" />
+									<gmd:value>
+										<gco:Record>90</gco:Record>
+									</gmd:value>
+								</gmd:DQ_QuantitativeResult>
+							</gmd:result>
+						</gmd:DQ_QuantitativeAttributeAccuracy>
+					</gmd:report>
+					<gmd:lineage>
+						<gmd:LI_Lineage>
+							<gmd:statement>
+								<gco:CharacterString>asasad</gco:CharacterString>
+							</gmd:statement>
+							<gmd:processStep>
+								<gmd:LI_ProcessStep>
+									<gmd:description>
+										<gco:CharacterString>herstellung</gco:CharacterString>
+									</gmd:description>
+								</gmd:LI_ProcessStep>
+							</gmd:processStep>
+							<gmd:source>
+								<gmd:LI_Source>
+									<gmd:description>
+										<gco:CharacterString>grundlage</gco:CharacterString>
+									</gmd:description>
+								</gmd:LI_Source>
+							</gmd:source>
+						</gmd:LI_Lineage>
+					</gmd:lineage>
+				</gmd:DQ_DataQuality>
+			</gmd:dataQualityInfo>
+			<gmd:applicationSchemaInfo>
+				<gmd:MD_ApplicationSchemaInformation>
+					<gmd:name>
+						<gmd:CI_Citation>
+							<gmd:title>
+								<gco:CharacterString>Protected Sites - Full GML Application Schema</gco:CharacterString>
+							</gmd:title>
+							<gmd:date>
+								<gmd:CI_Date>
+									<gmd:date>
+										<gco:DateTime>2010-04-26T00:00:00</gco:DateTime>
+									</gmd:date>
+									<gmd:dateType>
+										<gmd:CI_DateTypeCode
+											codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+											codeListValue="publication" />
+									</gmd:dateType>
+								</gmd:CI_Date>
+							</gmd:date>
+						</gmd:CI_Citation>
+					</gmd:name>
+					<gmd:schemaLanguage>
+						<gco:CharacterString>GML</gco:CharacterString>
+					</gmd:schemaLanguage>
+					<gmd:constraintLanguage>
+						<gco:CharacterString>OCL</gco:CharacterString>
+					</gmd:constraintLanguage>
+				</gmd:MD_ApplicationSchemaInformation>
+			</gmd:applicationSchemaInfo>
+			<idf:subordinatedReference uuid="0C741AC8-1D02-4F0C-B7E6-854227FCB09A">
+				<idf:objectName>0_testcase_bug124</idf:objectName>
+				<idf:objectType>0</idf:objectType>
+			</idf:subordinatedReference>
+			<idf:crossReference direction="IN"
+				uuid="760B47F4-5AF5-4495-BEB7-5DF7F2739B2A">
+				<idf:objectName>Übernahme aus übergeordneten Objekten
+				</idf:objectName>
+				<idf:objectType>0</idf:objectType>
+				<idf:attachedToField entry-id="9990" list-id="2000">Datendownload
+				</idf:attachedToField>
+				<idf:description>try to download this</idf:description>
+			</idf:crossReference>
+			<idf:crossReference direction="IN"
+				uuid="301F6734-9D08-4BD9-80BD-7E8CE1F78611">
+				<idf:objectName>test sonderzeichen origId</idf:objectName>
+				<idf:objectType>3</idf:objectType>
+				<idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte
+					Daten</idf:attachedToField>
+			</idf:crossReference>
+			<idf:crossReference direction="IN"
+				uuid="2B495EED-E8AA-4E5A-89C3-F9A90A6E686C">
+				<idf:objectName>PortalU Metadatenkatalogdienst</idf:objectName>
+				<idf:objectType>3</idf:objectType>
+				<idf:attachedToField entry-id="3600" list-id="2000">Gekoppelte
+					Daten</idf:attachedToField>
+				<idf:serviceType>view</idf:serviceType>
+				<idf:serviceOperation>GetCapabilities</idf:serviceOperation>
+				<idf:serviceUrl>http://www.umweltkarten-niedersachsen.de/arcgis/services/Natur_wms/MapServer/WMSServer?
+				</idf:serviceUrl>
+			</idf:crossReference>
+			<idf:exportCriteria>hallo</idf:exportCriteria>
+			<idf:abstract>
+				<gco:CharacterString>asadsa</gco:CharacterString>
+			</idf:abstract>
+		</idf:idfMdMetadata>
+	</idf:body>
+</idf:html>

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  **************************************************-
+  Ingrid Portal MDEK Application
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+
+<MD_Metadata xmlns="http://www.isotc211.org/2005/gmd" xmlns:iso19119="http://www.isotc211.org/2005/srv" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- BE/BB zusätzlich verpflichtend:   Angabe eines eindeutigen Metadatensatz-Identifikators in Form einer "UUID"  -->
+	<fileIdentifier>
+		<gco:CharacterString>3015c0d7-c476-4047-8bb2-f090ec638b5b</gco:CharacterString>
+	</fileIdentifier>
+	<!-- Part B 10 METADATEN ÜBER METADATEN (METADATA ON METADATA) -->
+	<!-- Part B 10.3 Metadata Language (Sprache der Metadaten) -->
+	<language>
+		<LanguageCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#LanguageCode" codeListValue="ger">ger</LanguageCode>
+	</language>
+	<characterSet>
+		<MD_CharacterSetCode codeList="MD_CharacterSetCode" codeListValue="utf8"/>
+	</characterSet>
+	<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+	<!-- Part B 1.3 Resource type (Ressourcenart) -->
+	<hierarchyLevel>
+		<MD_ScopeCode codeList="MD_ScopeCode" codeListValue="service"/>
+	</hierarchyLevel>
+	<hierarchyLevelName>
+		<gco:CharacterString>Geobasisdaten</gco:CharacterString>
+	</hierarchyLevelName>
+	<contact>
+		<CI_ResponsibleParty>
+			<!-- Part B 10 METADATEN ÜBER METADATEN (METADATA ON METADATA) -->
+			<!-- Part B 10.1 Metadata Contact (Kontakt für die Metadaten) -->
+			<organisationName>
+				<gco:CharacterString>Landesvermessung und Geobasisinformation Brandenburg (LGB)</gco:CharacterString>
+			</organisationName>
+			<contactInfo>
+				<CI_Contact>
+					<address>
+						<CI_Address>
+							<electronicMailAddress>
+								<gco:CharacterString>metadaten@geobasis-bb.de</gco:CharacterString>
+							</electronicMailAddress>
+						</CI_Address>
+					</address>
+				</CI_Contact>
+			</contactInfo>
+			<role>
+				<CI_RoleCode codeList="CI_RoleCode" codeListValue="pointOfContact"/>
+			</role>
+		</CI_ResponsibleParty>
+	</contact>
+	<!-- Part B 10 METADATEN ÜBER METADATEN (METADATA ON METADATA) -->
+	<!-- Part B 10.2 Metadata Date (Datum der Metadaten) -->
+	<dateStamp>
+		<gco:DateTime>2010-07-01T13:37:23</gco:DateTime>
+	</dateStamp>
+	<!-- BE/BB zusätzlich verpflichtend:   Angabe des verwendeten Metadatenstandards inklusive der Version  -->
+	<metadataStandardName>
+		<gco:CharacterString>ISO 19115:2003/Cor 1:2006, 19119:2005/Amd 1:2008 (BE/BB)</gco:CharacterString>
+	</metadataStandardName>
+	<metadataStandardVersion>
+		<gco:CharacterString>2.1.0</gco:CharacterString>
+	</metadataStandardVersion>
+	<identificationInfo>
+		<iso19119:SV_ServiceIdentification>
+			<citation>
+				<CI_Citation>
+					<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+					<!-- Part B 1.1 Resource title (Ressourcenbezeichnung) -->
+					<title>
+						<gco:CharacterString>WMS-BB-Transportwege</gco:CharacterString>
+					</title>
+					<!-- TEMPORAL REFERENCE (ZEITBEZUG) -->
+					<!-- Part B 5.3 Ddate of last revision (Datum der letzten Überarbeitung)  alternativ:
+						Part B 5.4 Date of creation (Erstellungsdatum)   oder 
+						Part B 5.2 Date of publication (Datum der Veröffentlichung)    -->
+					<date>
+						<CI_Date>
+							<date>
+								<gco:DateTime>2009-08-27T00:00:00</gco:DateTime>
+							</date>
+							<dateType>
+								<CI_DateTypeCode codeList="CI_DateTypeCode" codeListValue="revision"/>
+							</dateType>
+						</CI_Date>
+					</date>
+				</CI_Citation>
+			</citation>
+			<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+			<!-- Part B 1.2 Resource Abstract (Ressourcenüberblick) -->
+			<abstract>
+				<gco:CharacterString>Der Web Map Service WMS-DNM stellt die Transportwege zur Verfügung.</gco:CharacterString>
+			</abstract>
+			<!-- Part B 9 ORGANISATIONS RESPONSIBLE FOR THE ESTABLISHMENT, MANAGEMENT, MAINTENANCE AND DISTRIBUTION OF SPATIAL DATA SETS AND SERVICES (FÜR DIE SCHAFFUNG, VERWALTUNG, ERHALTUNG UND VERBREITUNG VON GEODATENSÄTZEN UND -DIENSTEN ZUSTÄNDIGE STELLE)  -->
+			<pointOfContact>
+				<CI_ResponsibleParty>
+					<!-- Part B 9.1 Responsible party (Zuständige Stelle) -->
+					<organisationName>
+						<gco:CharacterString>Landesvermessung und Geobasisinformation Brandenburg (LGB)</gco:CharacterString>
+					</organisationName>
+					<contactInfo>
+						<CI_Contact>
+							<address>
+								<CI_Address>
+									<electronicMailAddress>
+										<gco:CharacterString>kundenservice@geobasis-bb.de</gco:CharacterString>
+									</electronicMailAddress>
+								</CI_Address>
+							</address>
+						</CI_Contact>
+					</contactInfo>
+					<!-- Part B 9.2 Responsible party role (Funktion der zuständigen Stelle) -->
+					<role>
+						<CI_RoleCode codeList="CI_RoleCode" codeListValue="pointOfContact"/>
+					</role>
+				</CI_ResponsibleParty>
+			</pointOfContact>
+			<!-- Part B 3 KEYWORD (SCHLÜSSELWORT) -->
+			<descriptiveKeywords>
+				<MD_Keywords>
+					<!-- Part B 3.1 Keyword Value aus INSPIRE-Liste (noch kein Thesaurus seitens INSPIRE definiert) !!! -->
+					<keyword>
+						<gco:CharacterString>infoMapAccessService</gco:CharacterString>
+					</keyword>
+					<type>
+						<MD_KeywordTypeCode codeList="MD_KeywordTypeCode" codeListValue="theme"/>
+					</type>
+				</MD_Keywords>
+			</descriptiveKeywords>
+			<descriptiveKeywords>
+				<MD_Keywords>
+					<!-- BE/BB zusätzlich verpflichtend:   mindestens ein Schlüsselwort aus der BE/BB Schlagwortliste  -->
+					<!-- Part B 3.1 Keyword Value (Wert des Schlüsselworts) -->
+					<keyword>
+						<gco:CharacterString>Vermessung</gco:CharacterString>
+					</keyword>
+					<keyword>
+						<gco:CharacterString>Verkehr</gco:CharacterString>
+					</keyword>
+					<type>
+						<MD_KeywordTypeCode codeList="MD_KeywordTypeCode" codeListValue="theme"/>
+					</type>
+					<!-- Part B 3.2. Originating controlled vocabulary (Herkunft des kontrollierten Vokabulars) -->
+					<thesaurusName>
+						<CI_Citation>
+							<title>
+								<gco:CharacterString>BE/BB Schlagwortliste, Version 1.0</gco:CharacterString>
+							</title>
+							<date>
+								<CI_Date>
+									<date>
+										<gco:DateTime>2004-06-25T00:00:00</gco:DateTime>
+									</date>
+									<dateType>
+										<CI_DateTypeCode codeList="CI_DateTypeCode" codeListValue="publication"/>
+									</dateType>
+								</CI_Date>
+							</date>
+						</CI_Citation>
+					</thesaurusName>
+				</MD_Keywords>
+			</descriptiveKeywords>
+			<!-- Part B 8 CONSTRAINT RELATED TO ACCESS AND USE (ZUGANGS- UND NUTZUNGSBESCHRÄNKUNGEN) -->
+			<resourceConstraints>
+				<MD_LegalConstraints>
+					<!-- Part B 8.1 Conditions applying to access and use (Bedingungen für den Zugang und die Nutzung) -->
+					<useLimitation>
+						<gco:CharacterString>http://www.geobasis-bb.de/GeoPortal1/pdf/AGNB.pdf</gco:CharacterString>
+					</useLimitation>
+					<!-- Part B 8.2 Limitations on public access (Beschränkungen des öffentlichen Zugangs) -->
+					<accessConstraints>
+						<MD_RestrictionCode codeList="MD_RestrictionCode" codeListValue="otherRestrictions"/>
+					</accessConstraints>
+					<otherConstraints>
+						<gco:CharacterString>Zugang erfordert Registrierung</gco:CharacterString>
+					</otherConstraints>
+				</MD_LegalConstraints>
+			</resourceConstraints>
+			<!-- Part B 2.2 Spatial data service type (Art des Geodatendienstes) -->
+			<iso19119:serviceType>
+				<gco:LocalName>view</gco:LocalName>
+			</iso19119:serviceType>
+			<!-- BE/BB zusätzlich verpflichtend: Angabe der OGC-Bezeichnung und der dazugehörigen Version  -->
+			<iso19119:serviceTypeVersion>
+				<gco:CharacterString>OGC:WMS 1.1.1</gco:CharacterString>
+			</iso19119:serviceTypeVersion>
+			<iso19119:accessProperties>
+				<MD_StandardOrderProcess>
+					<fees>
+						<gco:CharacterString>siehe Zugriffsbedingungen, für kommerzielle Nutzung auf Anfrage</gco:CharacterString>
+					</fees>
+				</MD_StandardOrderProcess>
+			</iso19119:accessProperties>
+			<iso19119:extent>
+				<EX_Extent>
+					<geographicElement>
+						<EX_GeographicBoundingBox>
+							<!-- BE/BB zusätzlich verpflichtend: Angabe ob inner- oder außerhalb des Begrenzungsrechteckes
+			(notwendig aufgrund der Insellage Berlins innerhalb von Brandenburg für eindeutige Beschreibung)
+			   Boolean: innerhalb = true/ 1, außerhalb= false/ 0 -->
+							<extentTypeCode>
+								<gco:Boolean>1</gco:Boolean>
+							</extentTypeCode>
+							<!-- Part B 1 GEOGRAPHIC LOCATION (GEOGRAFISCHER STANDORT) -->
+							<!-- Part B 1.7 Geographic bounding box (Geografisches Begrenzungsrechteck) -->
+							<westBoundLongitude>
+								<gco:Decimal>11.2</gco:Decimal>
+							</westBoundLongitude>
+							<eastBoundLongitude>
+								<gco:Decimal>14.8</gco:Decimal>
+							</eastBoundLongitude>
+							<southBoundLatitude>
+								<gco:Decimal>51.3</gco:Decimal>
+							</southBoundLatitude>
+							<northBoundLatitude>
+								<gco:Decimal>53.5</gco:Decimal>
+							</northBoundLatitude>
+						</EX_GeographicBoundingBox>
+					</geographicElement>
+				</EX_Extent>
+			</iso19119:extent>
+			<!-- Layer des Dienstes mit den dazugehörigen Funktionen und gekoppelten Daten -->
+			<iso19119:coupledResource>
+				<iso19119:SV_CoupledResource>
+					<iso19119:operationName>
+						<gco:CharacterString>GetMap</gco:CharacterString>
+					</iso19119:operationName>
+					<!-- UUID des "idenifiers" des gekoppelten Datensatzes, hier: Autobahnen der LGB -->
+					<iso19119:identifier>
+						<gco:CharacterString>bb3011cf-d40d-4123-8e75-4246fb717735</gco:CharacterString>
+					</iso19119:identifier>
+					<gco:ScopedName>Autobahn</gco:ScopedName>
+				</iso19119:SV_CoupledResource>
+			</iso19119:coupledResource>
+			<!-- Mandated by ISO 19119: Kopplungstyp -->
+			<iso19119:couplingType>
+				<iso19119:SV_CouplingType codeList="http://schemas.opengis.net/iso19119/couplingType" codeListValue="tight"/>
+			</iso19119:couplingType>
+			<!-- Mandated by ISO 19119: mögliche Operationen des Dienstes -->
+			<iso19119:containsOperations>
+				<iso19119:SV_OperationMetadata>
+					<iso19119:operationName>
+						<gco:CharacterString>GetCapabilities</gco:CharacterString>
+					</iso19119:operationName>
+					<iso19119:DCP>
+						<iso19119:DCPList codeList="#DCPList" codeListValue="WebService"/>
+					</iso19119:DCP>
+					<iso19119:operationDescription>
+						<gco:CharacterString>application/vnd.ogc.wms_xml</gco:CharacterString>
+					</iso19119:operationDescription>
+					<iso19119:connectPoint>
+						<CI_OnlineResource>
+							<linkage>
+								<URL>http://isk.geobasis-bb.de/ows/dnm.php</URL>
+							</linkage>
+						</CI_OnlineResource>
+					</iso19119:connectPoint>
+				</iso19119:SV_OperationMetadata>
+			</iso19119:containsOperations>
+			<iso19119:containsOperations>
+				<iso19119:SV_OperationMetadata>
+					<iso19119:operationName>
+						<gco:CharacterString>GetMap</gco:CharacterString>
+					</iso19119:operationName>
+					<iso19119:DCP>
+						<iso19119:DCPList codeList="#DCPList" codeListValue="WebService"/>
+					</iso19119:DCP>
+					<iso19119:operationDescription>
+						<gco:CharacterString>image/png, image/png; mode=24bit</gco:CharacterString>
+					</iso19119:operationDescription>
+					<iso19119:connectPoint>
+						<CI_OnlineResource>
+							<linkage>
+								<URL>http://isk.geobasis-bb.de/ows/dnm.php</URL>
+							</linkage>
+						</CI_OnlineResource>
+					</iso19119:connectPoint>
+				</iso19119:SV_OperationMetadata>
+			</iso19119:containsOperations>
+			<!-- Part B 1.6 Gekoppelte Ressource (Coupled Resource) -->
+			<!--  gekoppelter Datensatz: VG  über   <MD_DataIdentification uuid="........">   -->
+			<iso19119:operatesOn xlink:href="http://isk.geobasis-bb.de/ows/csw.php#bb3011cf-d40d-4123-8e75-4246fb717735"/>
+		</iso19119:SV_ServiceIdentification>
+	</identificationInfo>
+	<distributionInfo>
+		<MD_Distribution>
+			<transferOptions>
+				<MD_DigitalTransferOptions>
+					<onLine>
+						<CI_OnlineResource>
+							<!-- Part B 1 IDENTIFICATION (IDENTIFIZIERUNG) -->
+							<!-- Part B 1.4 Resource locator (Ressourcenverweis) -->
+							<linkage>
+								<URL>http://isk.geobasis-bb.de/ows/dnm.php</URL>
+							</linkage>
+						</CI_OnlineResource>
+					</onLine>
+				</MD_DigitalTransferOptions>
+			</transferOptions>
+		</MD_Distribution>
+	</distributionInfo>
+	<!-- 		
+	<dataQualityInfo>
+        <DQ_DataQuality>
+            <scope>
+                <DQ_Scope>
+                    <level>
+                        <MD_ScopeCode codeList="MD_ScopeCode" codeListValue="service"/>
+                    </level>
+                </DQ_Scope>
+            </scope>
+-->
+	<!-- Part B 7 CONFORMITY (ÜBEREINSTIMMUNG)  -->
+	<!-- 		<report>
+				<DQ_DomainConsistency>
+					<measureIdentification>
+						<MD_Identifier>
+							<code>
+								<gco:CharacterString>?????????????</gco:CharacterString>							
+							</code>
+						</MD_Identifier>					
+					</measureIdentification>
+					<result>
+						<DQ_ConformanceResult>
+	-->
+	<!-- Part B 7.1 Specification (Spezifikation)  -->
+	<!--					<specification>							
+								<citation>
+									<CI_Citation>
+										<title>
+											<gco:CharacterString>CharacterString>Technical Guidance to implement INSPIRE View Services</gco:CharacterString>
+										</title>
+										<date>
+											<CI_Date>
+												<date>
+													<gco:DateTime>2009-07-20T00:00:00</gco:DateTime>
+												</date>
+												<dateType>
+													<CI_DateTypeCode codeList="CI_DateTypeCode" codeListValue="publication"/>
+												</dateType>
+											</CI_Date>
+										</date>					
+									</CI_Citation>
+								</citation>							
+							</specification>							
+							<explanation>
+								<gco:CharacterString>See the referenced specification</gco:CharacterString>
+							</explanation>
+	-->
+	<!-- Part B 7.2 Degree (Grad) -->
+	<!--					<pass>
+								<gco:Boolean>true</gco:Boolean>							
+							</pass>
+						</DQ_ConformanceResult>					
+					</result>
+				</DQ_DomainConsistency>					
+			</report>				
+		</DQ_DataQuality>
+    </dataQualityInfo>     	
+	-->
+</MD_Metadata>

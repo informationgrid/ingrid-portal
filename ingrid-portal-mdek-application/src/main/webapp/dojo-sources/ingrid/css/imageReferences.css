@@ -1,0 +1,334 @@
+/*
+ * **************************************************-
+ * Ingrid Portal MDEK Application
+ * ==================================================
+ * Copyright (C) 2014 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+.image18px, .controlImage { height: 18px; width: 18px; background-image: url('../images/iconGroup18.gif') !important; }
+.formFieldsWhite { height: 16px; width: 16px; background-image: url('../images/formFields_white.gif') !important; }
+.formFieldsBlue { height: 16px; width: 16px; background-image: url('../images/formFields_blue.gif') !important; }
+.formFieldsImage { height: 16px; width: 18px; background-image: url('../images/formFields_types.gif') !important; float: left; margin-left: 10px; }
+
+/********************************************************************************************/
+/* Toolbar Icons */
+/********************************************************************************************/
+.tabIconNewDoc       {background-position: -306px;}
+.tabIconPrintDoc     {background-position: -342px;}
+.tabIconCut          {background-position: -126px;}
+.tabIconCopy         {background-position:  -18px;}
+.tabIconCopySubTree  {background-position:  -90px;}
+.tabIconPaste        {background-position: -450px;}
+.tabIconSave         {background-position: -360px;}
+.tabIconUndo         {background-position: -468px;}
+.tabIconDiscard      {background-position: -180px;}
+.tabIconFinalSave    {background-position: -378px;}
+.tabIconreassign     {background-position: -396px;}
+.tabIconassignToQa   {background-position: -432px;}
+.tabIconmarkDeleted  {background-position: -144px;}
+.tabIconDelSubTree   {background-position: -144px;}
+.tabIconShowChanges  {background-position: -324px;}
+.tabIconShowComments {background-position:    0px;}
+.tabIconHelp         {background-position: -270px;}
+
+/* disabled icons */
+.dijitDisabled .dijitIcon, .IconDisabled { opacity: 0.3; filter: alpha(opacity=30);}
+
+.titleIcon           {background-position: -198px; position:relative; top:2px; left:4px; float:left; }
+.expanded .titleIcon {background-position: -234px;}
+
+.tabIconExpand       {background-position: -216px;}
+.tabIconExpandOn     {background-position: -252px;}
+
+.iconDashboard       {background-position: -630px !important;}
+/********************************************************************************************/
+/* Additional Fields */
+/********************************************************************************************/
+.controlImage { float: left; }
+
+.datecontrol     {background-position: -18px;}
+.legacycontrol   {background-position: 0px;}
+.numbercontrol   {background-position: -72px;}
+.selectcontrol   {background-position: 0px;}
+.tablecontrol    {background-position: -36px;}
+.textcontrol     {background-position: -54px;}
+.checkboxcontrol {background-position: -90px;}
+
+.upArrow       {background-position: -612px;}
+.downArrow     {background-position: -594px;}
+
+.formFieldsUp  {background-position: -590px;}
+.formFieldsDown  {background-position: -604px;}
+.formFieldsEdit  {background-position: -553px;}
+.formFieldsDelete  {background-position: -572px;}
+
+/********************************************************************************************/
+/* Splitter */
+/********************************************************************************************/
+.claro .dijitSplitterV {
+	width: 15px;
+	border:1px solid lightGrey;
+	/*background-color: lightSteelBlue;*/
+	background: url("../images/split_sizer_bg.gif") repeat-y scroll left center transparent;
+}
+
+
+/********************************************************************************************/
+/* CSS for TreeDocIconExtension */
+/********************************************************************************************/
+
+/* long vertical line under docIcon, connecting w/ children */
+.TreeStateChildrenYes-ExpandOpen .TreeIconContent {
+    background-image : url('../images/InGridTree/i_long.gif');
+    background-repeat : no-repeat;
+    background-position: 18px 9px;
+}
+
+/* close has higher priority */
+.TreeStateChildrenYes-ExpandClosed .TreeIconContent {
+    background-image : url();
+}
+
+/* higher priotity: same length and appear after background-definition */
+.TreeStateChildrenNo-ExpandLeaf .TreeIconContent {
+    background-image : url();
+}
+
+.TreeStateChildrenNo-ExpandClosed .TreeIconContent {
+    background-image : url();
+}
+
+.TreeStateChildrenNo-ExpandOpen .TreeIconContent {
+    background-image : url();
+}
+
+
+/* highest priority */
+
+/* normal */
+.TreeIconCatalog {background-position: -464px;}
+.TreeIconObjects {background-position: -480px;}
+.TreeIconAddresses {background-position: -448px;}
+
+.TreeIconClass0, .TreeIconClass0_V {background-position: -496px;}
+.TreeIconClass1, .TreeIconClass1_V {background-position: -608px;}
+.TreeIconClass2, .TreeIconClass2_V {background-position: -720px;}
+.TreeIconClass3, .TreeIconClass3_V {background-position: -1184px;}
+.TreeIconClass4, .TreeIconClass4_V {background-position: -944px;}
+.TreeIconClass5, .TreeIconClass5_V {background-position: -1056px;}
+.TreeIconClass6, .TreeIconClass6_V {background-position: -832px;}
+.TreeIconClass7, .TreeIconClass7_V {background-position: -1296px;}
+.TreeIconInstitution {background-position: -112px;}
+.TreeIconInstitutionUnit {background-position: -336px;}
+.TreeIconInstitutionPerson {background-position: -224px;}
+.TreeIconPersonAddress {background-position: 0px;}
+
+/* status b */
+.TreeIconClass0_B {background-position: -512px;}
+.TreeIconClass1_B {background-position: -624px;}
+.TreeIconClass2_B {background-position: -736px;}
+.TreeIconClass3_B {background-position: -1200px;}
+.TreeIconClass4_B {background-position: -960px;}
+.TreeIconClass5_B {background-position: -1072px;}
+.TreeIconClass6_B {background-position: -848px;}
+.TreeIconClass7_B {background-position: -1312px;}
+.TreeIconInstitution_B {background-position: -128px;}
+.TreeIconInstitutionUnit_B {background-position: -352px;}
+.TreeIconInstitutionPerson_B {background-position: -240px;}
+.TreeIconPersonAddress_B {background-position: -16px;}
+
+/* status bv */
+.TreeIconClass0_BV {background-position: -528px;}
+.TreeIconClass1_BV {background-position: -640px;}
+.TreeIconClass2_BV {background-position: -752px;}
+.TreeIconClass3_BV {background-position: -1216px;}
+.TreeIconClass4_BV {background-position: -976px;}
+.TreeIconClass5_BV {background-position: -1088px;}
+.TreeIconClass6_BV {background-position: -864px;}
+.TreeIconClass7_BV {background-position: -1328px;}
+.TreeIconInstitution_BV {background-position: -144px;}
+.TreeIconInstitutionUnit_BV {background-position: -368px;}
+.TreeIconInstitutionPerson_BV {background-position: -256px;}
+.TreeIconPersonAddress_BV {background-position: -32px;}
+
+
+/* status q */
+.TreeIconClass0_Q {background-position: -544px;}
+.TreeIconClass1_Q {background-position: -656px;}
+.TreeIconClass2_Q {background-position: -768px;}
+.TreeIconClass3_Q {background-position: -1232px;}
+.TreeIconClass4_Q {background-position: -992px;}
+.TreeIconClass5_Q {background-position: -1104px;}
+.TreeIconClass6_Q {background-position: -880px;}
+.TreeIconClass7_Q {background-position: -1344px;}
+.TreeIconInstitution_Q {background-position: -160px;}
+.TreeIconInstitutionUnit_Q {background-position: -384px;}
+.TreeIconInstitutionPerson_Q {background-position: -272px;}
+.TreeIconPersonAddress_Q {background-position: -48px;}
+
+/* status qv */
+.TreeIconClass0_QV {background-position: -560px;}
+.TreeIconClass1_QV {background-position: -672px;}
+.TreeIconClass2_QV {background-position: -784px;}
+.TreeIconClass3_QV {background-position: -1248px;}
+.TreeIconClass4_QV {background-position: -1008px;}
+.TreeIconClass5_QV {background-position: -1120px;}
+.TreeIconClass6_QV {background-position: -896px;}
+.TreeIconClass7_QV {background-position: -1360px;}
+.TreeIconInstitution_QV {background-position: -176px;}
+.TreeIconInstitutionUnit_QV {background-position: -400px;}
+.TreeIconInstitutionPerson_QV {background-position: -288px;}
+.TreeIconPersonAddress_QV {background-position: -56px;}
+
+/* status r */
+.TreeIconClass0_R {background-position: -576px;}
+.TreeIconClass1_R {background-position: -688px;}
+.TreeIconClass2_R {background-position: -800px;}
+.TreeIconClass3_R {background-position: -1264px;}
+.TreeIconClass4_R {background-position: -1024px;}
+.TreeIconClass5_R {background-position: -1136px;}
+.TreeIconClass6_R {background-position: -912px;}
+.TreeIconClass7_R {background-position: -1376px;}
+.TreeIconInstitution_R {background-position: -192px;}
+.TreeIconInstitutionUnit_R {background-position: -416px;}
+.TreeIconInstitutionPerson_R {background-position: -304px;}
+.TreeIconPersonAddress_R {background-position: -72px;}
+
+/* status rv */
+.TreeIconClass0_RV {background-position: -592px;}
+.TreeIconClass1_RV {background-position: -704px;}
+.TreeIconClass2_RV {background-position: -816px;}
+.TreeIconClass3_RV {background-position: -1280px;}
+.TreeIconClass4_RV {background-position: -1040px;}
+.TreeIconClass5_RV {background-position: -1152px;}
+.TreeIconClass6_RV {background-position: -928px;}
+.TreeIconClass7_RV {background-position: -1392px;}
+.TreeIconInstitution_RV {background-position: -208px;}
+.TreeIconInstitutionUnit_RV {background-position: -432px;}
+.TreeIconInstitutionPerson_RV {background-position: -320px;}
+.TreeIconPersonAddress_RV {background-position: -88px;}
+
+/* user */
+.TreeIconKatalogAdmin {background-image: url('../images/user_katalog_admin.gif') !important;}
+.TreeIconMDAdmin {background-image: url('../images/user_md_admin.gif') !important;}
+.TreeIconMDAutor {background-image: url('../images/user_md_autor.gif') !important;}
+
+/* sns tree */
+.TreeIconTOP_TERM {
+	background-image: url('../images/UDK/catalog.gif');
+}
+.TreeIconNODE_LABEL {
+/*	background-image: url('../images/UDK/udk_class2.gif');	*/
+    width: 0px !important;
+    height: 16px;
+    float: left;
+    display: inline;
+    background-repeat : no-repeat;
+}
+.TreeIconDESCRIPTOR {
+/*	background-image: url('../images/UDK/udk_class0.gif');	*/
+    width: 0px !important;
+    height: 16px;
+    float: left;
+    display: inline;
+    background-repeat : no-repeat;
+}
+
+/* defaults */
+.TreeIconFolder {
+  /*  background-image: url('../images/UDK/udk_class3.gif'); */
+}
+.TreeIconDocument {
+  /*  background-image: url('../images/UDK/udk_class5.gif'); */
+}
+
+/* generic class for docIcon */
+.TreeIcon {
+    width: 16px;
+    height: 16px;
+    background-repeat : no-repeat;
+    float: left;
+    background-image:url("../images/iconsUDK.gif");
+    border: none !important;
+}
+
+/* generic class for preIcon */
+.TreePreIcon {
+    width: 3px;
+    height: 3px;
+    float: left;
+    margin-top: 13px;
+    border: none !important;
+}
+/* specials for preIcon, 1=internet, 2=intranet, 3=internal */
+.TreePreIcon1 {}
+.TreePreIcon2 {background-color: #176798;}
+.TreePreIcon3 {background-color: #C31200;}
+
+/* overwrite/add treeNode display of theme CLARO to show connecting lines */
+
+.claro .dijitTreeNode {
+	background-image:url("../../dijit/themes/tundra/images/i.gif");
+	background-repeat:repeat-y;
+}
+
+/*.claro .dijitTreeIsRoot {
+	background-image:none;
+	margin-left:0;
+}*/
+
+.claro .dijitTreeExpandoLeaf {
+	background-image:url("../../dijit/themes/tundra/images/treeExpand_leaf.gif");
+}
+
+.claro .dijitTreeExpando {
+	height:16px;
+	width:16px;
+	float: left;
+}
+
+.claro .dijitTreeRow {
+	background-image:none;
+	white-space: normal;
+	padding:4px 1px 4px 0;
+}
+
+.claro .dijitTreeRowHover, .claro .dijitTreeRowSelected, .claro .dijitTreeRowActive {
+	padding:3px 1px 3px 0;
+}
+
+.dijitTreeContent {
+	white-space: normal;
+}
+
+div.TreeContent {
+/*	margin-left: 20px;	*/
+}
+
+.claro .dojoxGridScrollbox {
+	/*background-image:url("../images/datagrid.gif");*/
+}
+
+.cell-reorder {
+    cursor: move;
+    background: url("../images/drag-handle.png") no-repeat center center;
+}
+
+.claro .dijitDialogCloseIcon, .dojoxFloatingCloseIcon {background: url("../images/dialogCloseIcon.png");}
+
+.importantBackground {background-image: url('../images/error.png') !important;}

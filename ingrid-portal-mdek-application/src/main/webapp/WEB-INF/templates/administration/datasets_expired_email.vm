@@ -1,0 +1,22 @@
+#set($EXP_DS_LIST = $map.get("expiredDatasetList"))
+#set($DIRECT_LINK = $map.get("directLink"))
+Dies ist eine Meldung von der Metadatenerfassungskomponente der InGrid® Software.
+Die Verfallszeitspanne folgender Datensätze ist abgelaufen: 
+
+#foreach($expDS in $EXP_DS_LIST)
+Titel: $expDS.title
+Uuid: $expDS.uuid
+Typ: $expDS.type
+
+Geändert am: $expDS.lastModified
+
+Geändert von: $expDS.lastModifiedBy
+
+#if( $expDS.type.toString() == "OBJECT")
+Direkter Link: ${DIRECT_LINK}?nodeType=O&nodeId=$expDS.uuid
+#else
+Direkter Link: ${DIRECT_LINK}?nodeType=A&nodeId=$expDS.uuid
+#end
+
+
+#end

@@ -1,0 +1,81 @@
+/*
+ * **************************************************-
+ * Ingrid Portal MDEK Application
+ * ==================================================
+ * Copyright (C) 2014 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+/* the node is selected */
+.TreeNodeSelect {
+    border: none;
+    color: #C21100 !important;
+    margin-left:0;
+	font-weight: bold !important;
+}
+
+.dijitTreeNode {
+    color: #000000;
+    font-weight: normal;
+}
+
+/*.dijitTreeRowHover, .dijitTreeRowHover .dijitTreeContent {
+    cursor: pointer;
+}*/
+ 
+/* the node is not selectable */
+.TreeNodeNotSelectable {
+    border: none;
+    color: #666666;
+/*     margin-left:0; */
+}
+
+.TreeContent .RichTextEditable, .TreeContent .RichTextEditable iframe {
+    background-color: #ffc;
+    color: black;
+}
+
+/* don't use :focus due to opera's lack of support on div's */
+.TreeLabelFocused {
+    outline: none;
+}
+
+input.treeCheckbox {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    height: 12px;
+    vertical-align: middle;
+    border: none;
+    background: none;
+}
+
+.dijitTreeLabel {
+    outline: none;
+}
+
+/* when a tree node is cut, the node gets a new color */
+.nodeCut .dijitTreeLabel { color: #888888; }
+
+.claro .dijitTreeRowHover {
+    background-color: inherit;
+}
+
+.claro .dijitTreeRowSelected {
+    background-color: #ABD6FF;
+    color: inherit;
+}

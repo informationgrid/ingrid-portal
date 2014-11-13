@@ -1,0 +1,22 @@
+{
+    "indent": 4,
+    
+
+    "undef": true,
+    "unused": true,
+    "devel": true,
+    "browser": true,
+    "dojo": true,
+    "trailing": true,
+    "globals": {
+        "userLocale": true,
+        "currentUser": true,
+        "sysLists": true,
+        "catalogData": true,
+        "displayErrorMessage": true,
+        "_container_": true,
+        "UtilityService": true,
+        "CatalogService": true,
+        "SecurityService": true
+    }
+}

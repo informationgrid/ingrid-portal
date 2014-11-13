@@ -1,0 +1,91 @@
+<!--
+  **************************************************-
+  Ingrid Portal MDEK Application
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+
+<script type="text/javascript">
+
+    require(["dojo/on", "dojo/dom", "dojo/topic",
+        "dwr/interface/VersionInformation", "dwr/interface/BackendService"],
+         function(on, dom, topic) {
+            on(_container_, "Load", function() {
+                VersionInformation.get({
+                    callback: function(res) { setVersionInformation(res); },
+                    errorHandler: function(message) { console.error("Error: " + message); }
+                });
+
+                BackendService.getBackendVersion({
+                    callback: function(res) { setBackendVersionInformation(res); },
+                    errorHandler: function(message) { console.error("Error: " + message); }
+                });
+
+                console.log("Publishing event: '/afterInitDialog/Info'");
+                topic.publish("/afterInitDialog/Info");
+            });
+
+            function setVersionInformation(ver) {
+                var infoDiv = dom.byId("versionInfo");
+                var displayText = "";
+
+                displayText += "Build name: "+ver.name+"<br>";
+                displayText += "Build version: "+ver.version+"<br>";
+                displayText += "Build number: "+ver.buildNumber+"<br>";
+                displayText += "Build timestamp: "+dojo.date.locale.format(ver.timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+
+                infoDiv.innerHTML = displayText;
+            }
+
+            function setBackendVersionInformation(verList) {
+                var infoDiv = dom.byId("serverVersionInfo");
+                var displayText = "";
+
+                for (var i = 0; i < verList.length; ++i) {
+                    displayText += "Build name: "+verList[i].name+"<br>";
+                    displayText += "Build version: "+verList[i].version+"<br>";
+                    if (verList[i].buildNumber) {
+                        displayText += "Build number: "+verList[i].buildNumber+"<br>";
+                    }
+                    if (verList[i].timeStamp) {
+                        displayText += "Build timestamp: "+dojo.date.locale.format(verList[i].timeStamp, {formatLength:"short", datePattern:"dd.MM.yyyy", timePattern:"HH:mm"})+"<br>";
+                    }
+                    displayText += "<br>";
+                }
+
+                infoDiv.innerHTML = dojo.trim(displayText);
+            }
+        }
+    );
+</script>
+</head>
+
+<body>
+    <div id="versionInfo">
+    </div>
+    <br>
+    <div id="serverVersionInfo">
+    </div>
+</body>

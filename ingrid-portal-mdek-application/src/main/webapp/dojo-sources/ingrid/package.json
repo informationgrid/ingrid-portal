@@ -1,0 +1,10 @@
+{
+	"name": "InGrid Editor",
+	"version":"1.10.0",
+	"directories": {
+		"lib": "."
+	},
+	"main": "main",
+	"description": "...",
+	"dojoBuild": "ingrid.profile.js"
+}

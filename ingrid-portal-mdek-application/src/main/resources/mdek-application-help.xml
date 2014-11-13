@@ -1,0 +1,1692 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  **************************************************-
+  Ingrid Portal MDEK Application
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+
+<?xml-stylesheet type="text/xsl" href="IGE-application-help.xsl" ?>
+<help>
+    <chapter>
+        <header>Help for InGridEditor</header>
+        <section help-key="index">
+            <header>Help topics</header>
+            <content>
+                <ul>
+                    <li>
+                        <a href="?hkey=md-concept-1">Metadata Concept</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=editor-design-1">Structure of Editor</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=hierarchy-maintenance-1">Hierarchy &amp; Acquisition</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=search-1">Research</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=quality-assurance-0">Quality Assurance</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=statistic-1">Statistics</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=catalog-administration-1">Administration function: Catalogue</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=user-administration-1">Administration function: User Administration</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=overall-catalog-management-1">Administration function: Catalogue Management</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=import-export-1">Administration function: Import/Export</a>
+                    </li>
+                </ul>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Metadata Concept</header>
+        <section help-key="md-concept-1">
+            <header>Aims and realisation</header>
+            <content>
+			<p> The search for data on geographical and environment-/soil related topics does not always prove easy, especially if it is not known whether such data has even been collected, by whom it was collected and where it can be obtained. InGridCatalog (IGC) helps to find geographical data inventories relevant to the environment and soil, and to use them. </p>
+			<p> Similar to a library catalogue, InGridCatalog registers all data bases, without really containing it; it is therefore an information system about inventories of information. In IGC the databases are described on the basis of defined characteristics and respectively identified with the address of an associated contact person. Specialists, who collect the data, fill the IGC with contents and update it; through this the data description is of the best quality possible reached. An internal User Management function regulates the write and update permissions in IGC.</p>
+			<p> The significant <b>tasks and advantages</b> of the InGridCatalog are accordingly the following:</p>
+			<ul>
+			<li> As complete as possible an overview of the large numbers of geographical and environment/ground relevant databases collected and stored by authorities and institutions  </li>
+			<li> A precise description of the data quality of these databases</li> 
+			<li> Standardisation of the description of data sources according to international standards such as the ISO 19115, the ISO 19119 and INSPIRE</li> 
+			<li> Provision of metadata via internationally standardised interfaces such as OGC-compliant Catalog Service Web (CSW) or OpenSearch</li> 
+			<li> Access to data via metdata such as, for example, on maps recorded by the OGC-compliant Web Mapping Service (WMS)</li> 
+			<li> An information instrument for the public in the sense of the Environment Information Law (EIL), the EU-guideline on the free access to environment information and the European guideline on the construction of a geodata infrastructure (INSPIRE)</li> 
+			</ul>
+			<p> InGridEditor is the component for the capture and maintenance of the metadata.</p>
+            </content>
+        </section>
+        <section help-key="md-concept-2">
+            <header>Objects and Addresses</header>
+            <content>
+
+			<p> InGridCatalog (IGC) is a  <b>meta-information system</b>,
+			i.e. an information system about information inventories. In IGC therefore no original databases are administered but – as the name <i>catalog</i> already suggests – only information about these. IGC should make the large mass of geographical or environmentally relevant data digestible and available, thus rendering it useful. </p>
+
+			<p>The central component part of IGC are the so-called "(metadata) objects". They contain the metainformation on the geographical or environment/ground-related databases.     </p>
+
+			<p> What is metainformation? Real objects in the environment/on the ground around us (such as, for example, meadows, woods, rivers, lakes, air and ground) are measured, observed and/or assessed. From this we obtain databases or data objects, such as, for example, biotop mappings, series of readings from the water and air monitoring systems, ground data from drilling bores and many others. For every database or object a description can be written. This metainformation is designated as a metadata object, it describes the data object unambiguously; that is, metadata objects provide information about the measurement process applied or about the type of data harvesting, where and when these data were recorded and in what form – digital, analogue, as maps or similar – the data objects are available. The metadata objects therefore contain the metainformation on the environment/ground data objects. </p>
+
+			<p>As already indicated, it is not sufficient to know by which scientific methods a data object was collected. In order to be able to make a correct statement with the aid of a data object or to draw a conclusion, one also needs information on the location and time the data was collected; otherwise the data set is worthless. It is, for example, important to know whether the measuring station of an air monitoring system takes its readings in the inner city or in a rural area or when a certain biotop was mapped.  </p>
+
+			<p>The databases are not always compatible with the classical concept of measuring data so that the metadata objects are classified into different object classes. In so doing, it is taken as basis that data can be classified.  </p>
+
+			<p> Seven object classes are differentiated:</p>
+			<ul>
+			<li> Organisational Unit / Task</li> 
+			<li> Geoinformation / Map</li> 
+			<li> Document / Report / Literature</li> 
+			<li> Geo-Service</li>
+			<li> Enterprise / Project / Program</li>
+			<li> Data Pooling / Data Base</li>
+			<li> Service / Application / Information System </li>
+			</ul>
+			<p> Metadata objects contain details on the subject reference as well as spatial and temporal reference of a data object. The subject reference makes statements about the type and manner of data collection and its accuracy; spatial and temporal reference state where and when the data object was obtained.</p>
+
+			<p>Each object is assigned at least one address (e.g. address of the custodian or of the point of contact). Through these assignment possiblities (references) the addresses must only be entered or maintained once in the IGC address management.</p>
+			<p>The addresses are divided into four categories:</p>
+			<ul>
+			<li> Institutions</li>
+			<li> Units that belong to an institution</li>
+			<li> Persons, who are employed in an institution or a unit</li>
+			<li> free addresses, which can be for persons without a hierarchical connection</li>
+			</ul>
+			The totality of the objects and addresses, that is the metadata inventory, is designated as the catalogue.
+
+            </content>
+        </section>
+
+        <section help-key="md-concept-3">
+            <header>The arrangement of InGridCatalog (IGC) (Structure tree)</header>
+            <content>
+
+			<p>In IGC a catalogue includes not only objects but also addresses. The addresses are differentiated according to whether they are for institutions, units, persons and free addresses. Under institutions are arranged other institutions, associated units or persons. Under the units their associated units or persons are arranged.</p>
+
+			<p>The set of objects can also be arranged hierarchically on basis of a so-called structure tree. Based on the catalogue the structure tree branches off in different widths and depths according to need. A subset of the structure tree is called a sub tree. Here one need to make sure that a sub tree also again possesses exactly one root object.</p>
+
+			<p>Beneath the catalogue lies the objects level. The structure of the objects is normally divided into three further levels:</p>
+			<ul>
+			<li> Organisational structure</li>
+			<li> Subject structure</li>
+			<li> Data objects  </li>
+			</ul>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Structure of Editor</header>
+        <section help-key="editor-design-1">
+            <header>Metadata recording and management functions</header>
+            <content>
+			<p>InGridEditor (IGE) is divided into two components, the metadata capture component and the administrative component. Both applications are started separately from InGrid Portal via <i>Ingrid Editor</i> and <i>Administration</i> buttons. You will <b>only</b> see the <i><b>Administration</b></i> button if you have <b>administration rights</b>.</p>
+			<p>The main menu for both components differs fundamentally. In the administration component the number and type of the functions available are dependent on the permissions of the administrator active.</p>
+			<p>Every <a href="?hkey=editor-design-2">main menu</a> can contain further 
+			<a href="?hkey=editor-design-3">submenus</a>. Furthermore, a 
+			<a href="?hkey=editor-design-4">function bar</a> can exist for individual menu items in addition.</p>
+			<p>At the top right edge at the head of IGE there is a 
+			<a href="?hkey=editor-design-1a">navigation bar</a>, which is identical for both components.</p>
+            </content>
+        </section>
+        <section help-key="editor-design-1a">
+            <header>Navigation bar</header>
+            <content>
+			<p> The navigation bar is situated in the top right-hand corner of Editor. It is the same for all components and all menu items and consists of the following items:</p>
+			<ul>
+			<li> <u>	Information on the user active</u>: name of the user in the address administration. Role of the user. Name of the metadata catalogue.</li>
+			<li> <u>	Help</u>: reference to the help texts on InGridEditor</li>
+			<li> <u>	Disclaimer</u>: reference to the Portal’s legal details</li>
+			<li> <u>	Language</u>: switch to the German language user interface of Editor</li>
+			<li> <u>	Info</u>: reference to information on Editor (e.g. the version number of the application)</li>
+			<li> <u>	Close</u>: closes the application</li>
+			</ul>
+            </content>
+        </section>
+        <section help-key="editor-design-2">
+            <header>Main menu</header>
+            <content>
+			<p>The main menu breaks down into that for the capture of metadata (Ingrid Editor) and that for the administrative functions</p>
+			<p>The menu items for  <b>Ingrid Editor </b> are:</p>
+
+                <ul>
+                     <li>
+                        <a href="?hkey=dashboard-1">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=hierarchy-maintenance-1">Hierarchy &amp; Acquisition</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=search-1">Research</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=quality-assurance-1">Quality Assurance</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=statistic-1">Statistics</a>
+                    </li>
+                </ul>
+			<p>The menu items for  <b>Administration</b> are:</p>
+                <ul>
+                    <li>
+                        <a href="?hkey=catalog-administration-1">Catalogue</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=user-administration-1">User Administration</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=overall-catalog-management-1">Catalogue Management</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=import-export-1">Import/Export</a>
+                    </li>
+                </ul>
+                  <p>Das Dashboard ist die Einstiegseite für den InGrid-Editor und zeigt eine Zusammenfassung der gerade
+                	in Bearbeitung befindlichen Objekte und Adressen, abhängig vom eingeloggten Benutzer.</p>
+                	<p>The whole catalogue management and import/export menu items can only be seen and accessed by the catalogue administrator.</p>
+            </content>
+        </section>
+        <section help-key="editor-design-3">
+            <header>Submenus</header>
+            <content>
+                 <p>Submenus are dependent on the respective main menu item. You will find a help text on one submenu item below the associated main menu item.</p>
+            </content>
+        </section>
+        <section help-key="editor-design-4">
+            <header>Function bar</header>
+            <content>
+                 <p>Function bars are only available for a few menu items. You will find a help text on a function bar underneath the associated main menu item.</p>
+            </content>
+        </section>
+        <section help-key="editor-design-5">
+            <header>Help settings in information gathering</header>
+            <content>
+                 <p>You will find a help text on every submenu item and on every dialogue window. It can, should there be a function bar available, be called up via the button marked with a ‘<b>?</b>’.If there is no function bar available, then a reference behind the <b>[?]</b> symbol is advisable by means of which the help text can also be called up.</p>
+				 <p>You will also receive assistance in filling in the individual fields when you move the mouse pointer over the heading of the respective field. It then changes its shape to a combination of pointer and question mark. A simple click with the left mouse button opens a dialogue field displaying a specific help text on the associated field.</p>
+            </content>
+        </section>
+        <section help-key="editor-design-6">
+            <header>Features for tables</header>
+            <content>
+                 <p>In edit mode of an entry field you normally get into the respective field by a simple click with the left mouse button.</p>
+				 <p>In tables, a simple click highlights the row in which the mouse pointer is located. You can highlight several rows by holding down the shift key or the ctrl key simultaneously with a simple click of the left mouse key. Simultanously pressing the ctrl key highlights a row without removing the highlighting of the rows already highlighted. Simultaneously pressing the shift key highlights all rows between the last one highlighted up to the row clicked on.</p>
+				 <p>With the right mouse button a context menu can be opened by means of which you can edit the highlighted rows (e.g. delete).</p>
+				 <p>In order to enter the edit mode of a field within a table, you have to double-click with the left mouse button on the desired field. The same applies, for example, to the entering of date details in a table.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Dashboard</header>
+        <section help-key="dashboard-1">
+            <header>Description</header>
+            <content>
+                <p>The dashboard gives an overview of the catalogue in form of some general information and 
+                two lists of recently edited objects. The first tab lists all objects of the actual user, 
+                the second tab lists all objects of the whole catalogue that have been edited recently. 
+                Clicking on one of the objects opens the editor view. A gray colour for an 
+                object/address indicates that the user has no write permissions for this object/address.</p>
+                <br />
+                <p>The content of the dashboard can be refresehd with the "Update"-button.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Hierarchy &amp; Acquisition</header>
+        <section help-key="hierarchy-maintenance-1">
+            <header>Arranging the metadata (Structure tree)</header>
+            <content>
+                 <p>In the <b>left window</b> are displayed the objects and addresses and their position in the hierarchy of the catalogue. Navigation in the object- or address hierarchy takes place analogous to the Windows Explorer function, i.e., opening and closing of individual sub-trees of the hierarcy is done via the "plus-" and "minus"-boxes on the left next to the rows.</p>
+                 <p>With the objects you see the object name and the icon of the object class, with addresses the address title and the icon of the address type.</p>
+                 <p>The icons show the respective editing state:</p>
+				 <ul>
+				 <li><b>Blue</b> means that the object or the address is published, i.e., it is researchable.</li>
+				 <li><b>Red</b> means that the object or the address is being edited.</li>
+				 <li>If a <b>blue</b> icon is overlaid with <b>red</b> then there is a published version of the object or the address and an edited one.</li>
+				 </ul>
+				 <p>The red icons have the letters B, Q, R:</p>
+				 <ul>
+				 <li><b>’B’</b> means ‘not yet finished being edited’.</li>
+				 <li><b>’Q’</b> means ’sent for quality assurance’.</li>
+				 <li><b>’R’</b> means ‘referred by quality assurance back to the editor’, i.e. the editor still has to make improvements.</li>
+				 </ul>
+				 <p>Selected ’current’ objects or addresses are shown in red. The information on the object or the address is displayed in the <b>right-hand window</b>.</p>
+				 <p>The window split between right and left windows can be changed by dragging the central bar.</p>
+				 <p>Some functions can be opened directly from the context menu, which is opened via the right mouse key. The functions always relate to the object or the address just clicked on. The functions available are the following:</p>
+				 <p><b>New</b></p>
+				 <p>Install a new object or a new address under the current object or the current address.</p>
+				 <p><b>Print Preview</b></p>
+				 <p>In the <i>Print Preview</i> window you can view the arrangement of the object or address information as it looks in the printed version. The arrangement of the information is not alterable. With one click on <i>[Print]</i> you reach the print menu of the operating system.</p>
+                 <p>Besides the detail view of a single object/address, it is also possible to view the detail information of the whole subtree. If the checkboxes <i>detail view</i> and <i>include sub objects</i> are selected, then all objects/addresses of the subtree will be printed. If there are many objects to print this procedure can take a while. It is however possible to cancel the operation at any time.</p>
+                 <p>Is the checkbox <i>Detail view</i> deselected, then instead of a detail view, only a short version is displayed. Only the title is being displayed within a hierachical order.</p>     
+                 <p>Leave the <i>Print Preview</i> window by clicking on the cross top right in the corner of the window.</p>
+				 <p>This function is not available for the <i>Objects</i>, <i>Addresses</i> and <i>Free Addresses</i> levels.</p>
+				 <p><b>Cut Object/Address/Sub tree</b></p>
+				 <p>To assign another position in the hierarchy of the current catalogue to an object, an address or a sub tree first cut these out in order to past them under another object or another address by means of the <i><b>Paste</b></i> function.</p>
+				 <p>The object or address to be edited must be highlighted before being cut out. In order to cut out a sub tree (i.e. an object with all the objects coming under it hierarchically), the topmost object in the hierarchy must be highlighted. It is not possible to highlight all the objects concerned with the sub tree unfolded.</p>
+				 <p>This function is not available for the <i>Objects</i>, <i>Addresses</i> and <i>Free Addresses</i> levels.</p>
+				 <p><b>Copy Object/Address</b></p>
+				 <p>A highlighted object or a highlighted address is copied into the buffer with this function. Use the <i><b>Paste</b></i> function to get the copy into the position desired in the hierarchy.</p>
+				 <p>This function is not available for the <i>Objects</i>, <i>Addresses</i> and <i>Free Addresses</i> levels.</p>
+				 <p><b>Copy Sub tree</b></p>
+				 <p>In order to copy a sub tree (i.e. an object or an address with all the objects or addresses lying under it hierarchically), the topmost object (or address) in the hierarchy has to be highlighted. It is not possible to highlight all objects concerned when the sub tree is unfolded. In order to place the copy in the place desired in the hierarchy, use the <i><b>Paste</b></i> function.</p>
+				 <p>This function is not available for the <i>Objects</i>, <i>Addresses</i> and <i>Free Addresses</i> levels.</p>
+				 <p><b>Paste</b></p>
+				 <p>Highlight the object or the address, which is hierarchically above the object or sub tree or address to be pasted in. The arrangement within a hierarchy level is done alphabetically and can not be altered by dragging or pasting.</p> 
+				 <p><b>Reload Sub tree</b></p>
+				 <p>The sub tree under the object or address clicked is refreshed. </p> 
+				 <p>For the <i>Objects</i>, <i>Addresses</i> and <i>Free Addresses</i> 
+				 levels the function is called <i>Reload</i>.</p>
+				 <p><b>Delete</b></p>
+				 <p>If the <a href="?hkey=quality-assurance-0">workflow control</a> is activated and you are <b>not</b> the quality assurance official, then the sub tree including the current object or the current address are highlighted for deletion.</p> 
+				 <p>In the other cases the sub tree is finally deleted from the current object or the current address after a security prompt.</p>
+				 <p>This function is not available for the <i>Objects</i>, <i>Adressen</i> and 
+				 <i>Free Addresses</i> levels.</p>
+                 <p><b>Copy/Cut/Delete of several objects or addresses</b></p>
+                 <p>With the "Ctrl"-key it is possible to select more than one node from the hierarchy tree.
+                 If an already marked node is clicked again while pressing the "Ctrl"-key the node will be
+                 unmarked. When several nodes are marked the available operations are <i>Delete</i>, <i>Cut Objects/Addresses/Subtrees   
+                 </i>, <i>Copy Objects/Addresses</i> und <i>Copy Subtrees</i>. These operations can be accessed from
+                 the toolbar or via the context menu when right-clicking on one of the marked nodes. Is the
+                 context menu called from a non-marked node, then the marked nodes will be unmarked and only the
+                 clicked node is marked.</p>
+                 <p><b>Change to Internet/Intranet/Internal</b></p>
+                 <p>These operations in the context menu allow to change the publication condition with one click.
+                 The object will be saved or published automatically after the change is done. In case the publication
+                 condition of the sub-objects is different from the one of the selected object, a dialog will appear.
+                 If this one is accepted all sub-objects will be modified to reflect the correct publication condition.
+                 </p>
+            </content>
+        </section>
+        <section help-key="hierarchy-maintenance-2">
+            <header>Acquisition of metadata</header>
+            <content>
+				<p>In the <b>right window</b> you can see all the available fields and information on the object selected. These vary depending on the object class and address type. In the upper part of the window header and status information on the object or address is displayed with a coloured background. This display is always visible. The further information is collected in groups and which are optically marked with bars. As standard, only the obligatory fields are visible. By clicking on the 
+				<i>Show all Fields</i> button to the left of the group names you can open the additional information and close it again. 
+				An <i>Upwards</i> button on the right edge of the group bar enables you to jump into the topmost field group.</p>
+				<p>In the function bar top right you will find a <i>Show all Fields</i> button with which you can open all fields in all groups or close them again. </p>
+				<p>You receive information about the individual fields and groups by clicking on the field or group names with the mouse pointer (then with question mark on arrow).</p>
+				<p>You can obtain further information under the following help items:</p>
+                <ul>
+                    <li>
+                        <a href="?hkey=creation-of-objects-1">Creating a new object </a>
+                    </li>
+					<li>
+                        <a href="?maintanance-of-adresses-2">Creating a new address </a>
+                    </li>
+                    <li>
+                        <a href="?hkey=maintanance-of-objects-1">Maintainance objects </a>
+                    </li>
+                    <li>
+                        <a href="?hkey=maintanance-of-adresses-1">Maintenance of addresses </a>
+                    </li>
+                </ul>
+            </content>
+        </section>
+        <section help-key="hierarchy-maintenance-3">
+            <header>The function bar for Hierarchy &amp; Acquisition</header>
+            <content>
+                 <p>Individual functions can be called up to edit objects and addresses via the function bar in the submenu item 
+				 <i>Hierarchy &amp; Acquisition</i>. The functions are specifically:</p>
+				 <p><b>Create new</b></p>
+				 <p>A new object or a new address is added hierarchically always under the current object or address displayed in red font. </p>
+				 <p>To <a href="?hkey=creation-of-objects-1">add a new object</a> or a new address you can select a wizard or continue working without a wizard. The following wizards are available:</p>
+				 <ul>
+				 <li><a href="?hkey=creation-of-objects-2">Common create object wizard</a></li>
+				 <li><a href="?hkey=creation-of-objects-3">getCapabilities wizard</a></li>
+				 </ul>
+				 <p><b>Print Preview</b></p>
+				 <p>In the detail view window you can view the arrangement of the object or address 
+				 information in printout form. The arrangement of the information is not alterable. With one click on <i>[print]</i> 
+				 you will arrive at the print menu of the operating system. You leave the Print Preview by clicking on the cross in 
+				 the top right-hand corner of the window.</p>
+				 <p><b>Cut Object/Address/Sub tree</b></p>
+				 <p>In order to send an object, an address or a sub tree to another place in the hierarchy of the current catalogue, 
+				 first of all cut this out in order to paste it below another object or another address using the <i><b>Paste</b></i> 
+				 function.</p>
+				 <p>The object or the address to be edited must be highlighted before being cut out. In order to cut out a sub tree 
+				 (i.e. an object with all objects or addresses positioned underneath it hierarchically) the hierarchically topmost 
+				 object must be highlighted. Highlighting all the objects affected is not possible when the sub tree is unfolded.</p>
+				 <p>See also the <i><b>Paste</b></i> function.</p>
+				 <p><b>Copy Object/Address</b></p>
+				 <p>With this function a highlighted object or a highlighted address is copied into the cache. Use the <i><b>Paste</b></i> 
+				 function to get the copy into the position desired in the hierarchy.</p>
+				 <p><b>Copy Sub tree</b></p>
+				 <p>In order to copy a sub tree (i.e. an object or an address with all the objects or addresses hierarchically beneath it) 
+				 the hierarchically topmost object (or address) has to be highlighted. It is not possible to highlight all objects affected 
+				 when the sub tree is unfolded. Use the <i><b>Paste</b></i> function to get the copy into the position desired in the hierarchy.</p>
+				 <p><b>Paste</b></p>
+				 <p>Highlight the object or the address, which is hierarchically above the object or sub tree or address to be pasted in. 
+				 The order within a hierarchy level is done alphbetically and cannot be altered by dragging or pasting in.</p> 
+				 <p><b>Save</b></p>
+				 <p>With this function you secure amendments or entries to a newly created object or a newly created address without the object or 
+				 the address being publised, i.e. found with the search function of the portal or displayed in the structure tree of the portal. 
+				 Saving is also possible when all obligatory fields have not yet been filled in. The object or the address in the hierarchy in the 
+				 left window is shown with a red editing icon.</p>
+				 <p>In order to save an object finally, select the <i><b>Publish</b></i> function or the <i><b>Assign to QA</b></i> function.</p>
+				 <p><b>Undo</b></p>
+				 <p>The <i><b>Undo</b></i> function is active if an amendment is undertaken to entries in a field and the field is left. After a 
+				 prompt query is answered positively, <b>all</b> editing since the last caching is deleted, not only the changes undertaken in the last 
+				 field edited. In order to restore the object or the address back to the version of the last publication (should it not be a newly 
+				 created object or newly created address) use the <i><b>Discard all Changes</b></i> function.</p>
+				 <p><b>Discard all Changes</b></p>
+				 <p>With this function objects and addresses, which have already been published, will be restored to the status they had upon publication.</p>
+				 <p>The editing, also that secured with the <i><b>Save</b></i> function, is undone and deleted. In order to restore current editing to the status of the last editing, use the <i><b>Undo</b></i> function. </p>
+				 <p><b>Assign to QA</b></p>
+				 <p>In catalogue properties InGridEditor can be set such that objects and addresses have 
+				 to be checked by another editor after being created or processed before they can be publised; 
+				 this is the person responsible for quality assurance.</p>
+				 <p>If this functionality (the so-called 
+				 <a href="?hkey=quality-assurance-0">Workflow Control</a>) is activated, then an object cannot be 
+				 directly final saved by an editor but must be sent to the person responsible for quality control. 
+				 In this case only the person responsible for quality assurance can publish the object.</p>
+				 <p>This functionality is only then available if the 
+				 <a href="?hkey=quality-assurance-0">Workflow Control</a> 
+				 is activated and you are <b>not</b> the person responsible for quality control.</p>
+				 <p><b>Reassign to Author</b></p>
+				 <p>In catalogue properties InGridEditor can be set up such that objects and addresses after being created or edited have to be 
+				 checked by another editor, the person responsible for quality control, before they are published.</p>
+				 <p>If this functionality (the so-called 
+				 <a href="?hkey=quality-assurance-0">Workflow Control</a>) is activated then an object cannot be final saved directly by the 
+				 author but must be sent to the person responsible for quality control. In this case only the person responsible for quality 
+				 assurance can <i><b>Publish</b></i> the object. If the person responsible for quality assurance is of the opinion that an object or an 
+				 address has to be re-done by the editor then he chooses the function <i><b>Reassign to Author</b></i>.</p> 
+				 kann in diesem Fall nur von dem Qualitätssichernden vorgenommen werden. 
+				 <p>This functionality is only available then if the 
+				 <a href="?hkey=quality-assurance-0">Workflow Control</a> 
+				 is activated and you are the person responsible for quality assurance.</p>
+				 <p><b>Publish</b></p>
+				 <p>This function is only available to you as the person responsible for quality assurance or in catalogues without activated 
+				 <a href="?hkey=quality-assurance-0">Workflow Control</a>.</p>
+				 <p>After the <i><b>Publish</b></i> function is carried out, the object is searchable in the search function or the structure trea of the portal. 
+				 In order to successfully save an object or an address all obligatory fields have to be filled out. If obligatory fields have not 
+				 been filled in, or have been filled in wrongly, the field names are displayed in red. In order to be able to secure the editing 
+				 despite the error notification, select the <i><b>Save</b></i> function.</p>
+				 <p><b>Highlight as Deleted</b></p>
+				 <p>In catalogue properties InGridEditor can be set in such a way that objects and addresses must first be examined by another 
+				 editor, the person responsible for quality assurance, before they can be finally deleted.</p>
+				 <p>This functionality is only then available if the 
+				 <a href="?hkey=quality-assurance-0">Workflow Control</a> 
+				 is activated and you are <b>not</b> the person responsible for quality assurance.</p>
+				 <p>The object or the address are highlighted for deletion and sent to the person responsible for quality assurance for final deletion.</p>
+				 <p><b>Delete Dataset/Sub tree</b></p>
+				 <p>This function is only available to you as a person resposible for quality assurance or in catalogues without activated 
+				 <a href="?hkey=quality-assurance-0">Workflow Control</a>.</p>
+				 <p>After a security prompt the highlighted object or sub tree is finally deleted.</p>
+				 <p><b>Show Changes</b></p>
+				 <p>In a separate dialogue window <i>Compare View</i> you can view the information before an object or address is edited 
+				 (original version) and after editing (edited version). In difference view the data deleted are shown in red. The data added 
+				 are shown in green.</p>
+				 <p><b>Show/Edit comments</b></p>
+				 <p>Comments can be written for every object and every address. The comments are not published and are not shown in print view.</p>
+				 <p>The <a href="?hkey=maintanance-of-objects-10">Show/Edit Comments</a> window is opened by clicking on the button.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Creating new objects</header>
+        <section help-key="creation-of-objects-1">
+            <header>Creating a new object</header>
+            <content>
+                 <p>A new object can either be created in the structure tree via the <i><b>Create New</b></i> 
+				 button in the function bar or via the context menu of the right mouse button (<i>New</i>). In the hierarchy it is always placed under 
+				 the current object. If you want to create an object on the topmost hierarchy level then you select the <i>Objects</i> 
+				 level in the structure tree and then create a new object.</p>
+                 <p>After selecting the <i><b>Create New</b></i> function a dialogue box is displayed by means of which you can either select the 
+				 <a href="?hkey=creation-of-objects-2">Common create object wizard </a>
+				 or the <a href="?hkey=creation-of-objects-3">getCapabilities wizard</a> 
+				 for support in filling out the new object. You operate the wizard selected by means of 
+				 <i><b>Start Wizard</b></i>.</p>
+                 <p>Select <i><b>Continue without a Wizard</b></i> in order to open an empty new object. As a standard, not only the point of contact 
+				 address and the spatial reference but also the thesaurus terms are borrowed from the superordinate object in the hierarchy.</p>
+            </content>
+        </section>
+        <section help-key="creation-of-objects-2">
+            <header>Common Create Object Wizard</header>
+            <content>
+                 <p>The common create object wizard is helpful in the creation of a metadata object about an internet page. The page is analysed by the 
+				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a>
+				 of the Federal Environment Agency (Umweltbundesamt) and the  <i>Title</i>, <i>Description</i>, <i>Descriptors</i>, 
+				 <i>Spatial References</i> und <i>Temporal References </i> of a metadata object are filled in automatically as far as possible. The editor can then correct and complete the entries. </p>
+                 <p>Enter the URL of the page to be described into the free field.</p>
+                 <p>Give the  <i>Number of words to be analysed by the SNS </i> to prevent time-consuming search runs.
+                 <p>Where necessary, there is a description in the metatags of the internet page to be described. 
+				 This can be adopted as an option. </p>
+                 <p>Likewise optional, you can adopt a self-determined number of words from the internet page.</p>
+                 <p>Both pieces of information are saved in the final metadata object in the <i>Description</i> 
+				 field.</p>
+                 <p>With <i><b>Start</b></i> the internet page is analysed and the information displayed in a preview. </p> 
+                 <p>If the result does not meet your expectations then you can change the settings of the wizard and operate it out again with 
+				 <i><b>Start</b></i>.</p>
+                 <p>In order to enter the information into the fields of the new object finally, tick each piece of information that is to be 
+				 adopted. All information not ticked will be discarded.</p> 
+				 <p>Then carry out the <i><b>Apply</b></i> function at the end of the page. The wizard is then closed and you can carry on 
+				 editing the object in InGridEditor and save it.</p>
+                 <p>With the <i><b>Cancel</b></i> function at the end of the page you close the wizard and start with an empty object.
+				 </p>
+				 </p>
+            </content>
+		</section>
+        <section help-key="creation-of-objects-3">
+            <header>getCapabilties Wizard</header>
+            <content>
+                 <p>The <i>getCapabilties Wizard</i> supports the creation of services in the <i>Geo-Service</i> object class. </p> 
+                 <p>Here you state the getCapability-URL of the service.</p>
+                 <p>The wizard interrogates the service about this URL and enters all the information available in getCapability 
+				 into the metadata object. This is information such as <i>Title</i> and <i>Description</i> but, for example, also the 
+				 <i>Operations</i> made available by the service.</p>
+                 <p>The following services are supported:</p>
+				 <ul>
+                 <li>WMS</li>
+                 <li>WFS</li>
+                 <li>WCS</li>
+                 <li>WCTS</li>
+                 <li>CSW</li>
+				 </ul>
+                 <p>The wizard is started with <i><b>Start</b></i>, the information is called up from the service and a new object is 
+				 produced with the information received.</p>
+                 <p>You close the wizard with the <i><b>Cancel</b></i> function at the end of the page and start with an empty object.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Maintenance of Objects</header>
+        <section help-key="maintanance-of-objects-1">
+            <header>Construction of the Object Interface</header>
+            <content>
+                 <p>The objects are maintained in the <b>right window</b> of the <i>Hierarchy &amp; Aquisition</i>
+				 submenu item.</p>
+                 <p>In the upper part of the window the header information on the object: 
+				 <i>Object Name</i>, <i>Object Class</i> and <i>Responsible User</i>, sis displayed with a coloured background as well as 
+				 the status information <i>Created</i>, <i>Modified</i> and <i>Last Change</i>. 
+				 This display is always visible.</p>
+                 <p>Further information is collected in the following groups:</p>
+				 <ul>
+                 <li>General</li>
+                 <li>Relevance</li>
+                 <li>Spatial reference</li>
+                 <li>Temporal reference</li>
+                 <li>Additional information</li>
+                 <li>Availability</li>
+                 <li>Thesaurus</li>
+                 <li>Links</li>
+				 <li>Additional fields</li>
+				 </ul>
+                 <p>The groups are identical for all object classes with the exception of relevance, which is different for every object class. 
+				 The <i>Organisational Unit / Task</i> object class neither has a <i>Relevance</i> nor an <i>Availability</i> group.</p>
+                 <p>The individual groups are separated through bars optically from each other. As standard, only the obligatory fields are 
+				 displayed. They are identified by bold headings and a star *. An object can only then be published or assigned to quality 
+				 assurance (QA) if all obligatory fields have been filled in. If publishing or assigning is rejected on the basis of missing 
+				 obligatory entries, the headings of the fields concerned are designated in red in order to alert the user to the entries still 
+				 needed.</p>
+                 <p>By clicking on the „<i>Show all Fields</i>" icon to the left of group names, all fields where entries are optional are also 
+				 displayed. Clicking on the button once more fades these fields out again. In the function bar you will find a 
+				 „<i>Show all Fields / Show required Fields</i>" icon on the right-hand edge with which you can fade in or out all fields in all groups.</p>
+                 <p>On the right edge of the bars separating the groups there is an 
+				 „<i>Upwards</i>" icon. It enables you to jump to the uppermost field group.</p>
+                 <p>You receive help texts on the individual fields and groups when you click on the field or group names with the mouse-pointer 
+				 (then with question mark on the arrow).</p>
+                 <p>To fill in text fields just click in the field. Dropdown lists are opened up via the arrow on the right side of the field. 
+				 With tables, on the basis of the additional functionality, there are special rules for use (see also 
+				 <a href="?hkey=editor-design-6">Features for tables</a>). 
+				 Some fields can only be filled in via their own dialogue boxes. The dialogues are described in the following sub-chapters.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-2">
+            <header>Add Address</header>
+            <content>
+                 <p>InGridCatalog differentiates between metadata objects and addresses. Both are maintained in separate sub trees of the catalogue. 
+				 This has the advantage that an address maintained once can be referenced in any number of objects without any further input effort 
+				 for address details. Likewise, address changes can be altered in one place in the address administration without all objects referencing 
+				 it having to be edited.</p>
+                 <p>A reference is created to an address already added in the sub tree <i>Addresses</i> by means of 
+				 <i>Add Address</i>.</p>
+                 <p>The address can either be found and selected via a <i>Direct search</i> or the <i>Tree search</i>.</p>
+                 <p>In <i>Direct search</i> you can either search for the unit or institution, the surname, the forename or a combination 
+				 of the fields. A search is always carried out for a substring. If substrings are given in several fields, an address is only found 
+				 when all strings agree (AND linking).</p>
+                 <p>The addresses found are displayed in the <i>Results</i>. A simple click on an address highlights this. By then clicking on 
+				 <i><b>Select</b></i> the highlighted reference to the address is adopted into the object.</p>
+                 <p>You can navigate in the usual manner in the <i>>hierarchy tree</i>. A simple click on an address highlights this. By then clicking 
+				 on <i><b>Select</b></i> Select the highlighted reference to the address is adopted into the object.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-3">
+            <header>Gazetteer</header>
+            <content>
+                 <p>InGridEditor uses the Gazetteer GTU (Geo-Thesaurus Umwelt [environment]). It is made available via the 
+				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a>
+				 of the Federal Environment Agency (Umweltbundesamt).</p>
+                 <p>Just like the place index of an atlas the GTU describes the names of communities, rivers, mountains, landscapes and other geographical objects in Germany. In doing this, the GTU gives the exact spelling as well as the geographical position (coordinates) of a place.</p>
+                 <p>For practical reasons the GTU restricts itself to those places usually shown on maps from the scale 1:250,000 onwards. At present there are approx. 50,000 geographical objects listed in it.</p>
+                 <p>Enter the geographical term (or a part of the term) you are looking for into the  <i>Please enter your search criteria</i> den geografischen Begriff field. After clicking on the <i>Search in Gazetteer</i> button a search is run on this term in the SNS. A search for a substring is carried out.</p>
+                 <p>The results are listed under <i>Selection</i>. You can tick one or more terms and, 
+				 by means of the <i>Apply</i> button, add as a spatial reference to the object. For the 
+				 geographical terms for which coordinates have been lodged (such as, for example, for administrative units), 
+				 the coordinates are also adopted into the object.</p>
+                 <p>You can navigate in the Gazetteer by clicking on one of the terms displayed under <i><b>Selection</b></i> 
+				 All the associated geographical terms are then displayed.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-4">
+            <header>Add Costum Location</header>
+            <content>
+                 <p>In this dialogue box you can state a free spatial reference. In the 
+				 <i>Costum Location</i> you can state the geographical name of the spatial reference. 
+				 The eastings and northings can be given in the coordinates system selected from the 
+				 <i>Coordinate system</i> dropdown list.</p>
+				 <p>With one click on the <i>Add</i> button the details are adopted into the 
+				 <i>Costum Location</i> field of the object.</p>
+                 <p>Via the link <i>inherit</i> it is posible to inherit/copy the spatial references of the parent object. Already present spatial references (identified by name) will not be overwritten. This operation is only available for sub-objects!</p>            
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-5">
+            <header>Thesaurus Assistent</header>
+            <content>
+                 <p>For technical keywording InGridCatalog uses not only the German environment thesaurus UMTHES but also the European environment thesaurus (see also <a href="?hkey=maintanance-of-objects-6">Thesaurus-Navigator</a>).</p> 
+                 <p>Via the 
+ 				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
+				 of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau a <i>Suggestion</i> list is compiled from the text fields already filled in for thesaurus terms for keywording. </p>
+                 <p>By clicking on one or more (ctrl-mouse click) terms, you can select them and add them to the 
+				 <i>Add</i> list via the ’&gt;’ button. Via the ’&gt;&gt;’ button all terms can be adopted into the list. The 
+				 ’&lt;’ button removes the highlighted terms from the list again and the ’&lt;&lt;’ button removes all terms from the list.</p>
+				 <p>By one click on the <i>Add</i> button, all terms from the <i>Add</i> list are adopted to the object as keywords.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-6">
+            <header>Thesaurus Navigator</header>
+            <content>
+                 <p>A thesaurus is a hierarchically structured, limited list of designations taken from natural language. It should make it 
+				 possible to reproduce or to circumscribe the contents (terms, procedures, objects) of the environment/soil relevant specialist 
+				 areas with standard designations. A standard designation in turn enables a targeted search with, for the most part, complete 
+				 search results.</p>
+                 <p>InGridCatalog (IGC) uses the environment thesaurus (UMTHES) of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau. It contains more than 30,000 technical terms from the "environment" topic area. The word inventory of the European environment dictionary
+				 <a href="http://www.eionet.europa.eu/gemet" target="SNS">
+				 GEMET (GEneral Multilingual Environmental Thesaurus)</a> 
+				is an integrated subset of UMTHES.  </p>
+                 <p>UMTHES is made available via the 
+				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
+				 of the Federal Environment Agency (Umweltbundesamt).</p>
+                 <p><b>Hierarchy Tree</b></p>
+                 <p>In order to find the optimal search term in the thesaurus, you can be guided via the hierarchy tree from the generic terms 
+				 to the more specific levels. Using the hierarchy tree is as in the normal procedure for hierarchy trees, that is, by clicking 
+				 on the + or - the structure can be opened up or closed again. One click on a term colours this <b>red</b>. It can then be added to the 
+				 <i>Descriptor List</i> by means of the <i>Add</i> button.</p> 
+                 <p><u>Take care</u>: Terms that do not turn red when clicked are only defining terms and not descriptors. They can therefore not be 
+				 added to the <i>Descriptor List</i>.</p>
+                 <p><b>Results List</b></p>
+                 <p>As an alternative to the hierarchy tree you can also find a thesaurus term with a search. For this you put a search term in 
+				 the <i>Search for Descriptors</i> field. After submitting the search via <i>Search in Thesaurus</i> all thesaurus terms found will be 
+				 displayed in the <i>List</i>.</p>
+                 <p>One click on a term colours this in <b>red</b>. It can be added to the <i>Descriptor List</i> via the <i>Add</i> button. 
+				 One click on the symbol in front of the term displays it in the hierarchical context. Therefor the hierarchy tree is displayed 
+				 (see above).</p>
+                 <p><b>Apply Descriptor list</b></p>
+                 <p>Via the hierarchy tree or the search for descriptors you can find thesaurus terms and assign them to the 
+				 <i>Descriptor List</i> (see above). If you have collected together all thesaurus terms that you wish to assign to the object, 
+				 you can add them to the thesaurus terms already in the object via the <i>Apply</i> button.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-7">
+            <header>Add/Edit Link</header>
+            <content>
+                 <p>This dialogue box can either be called up via the <i>Links</i> field group or from one of the specific fields that support 
+				 references (such as, for example, the baseline data field of the object class <i>Geoinformation/ Map</i>).</p>
+				 <p>If the dialogue is summoned from a particular field, the detail 
+				 <i>Link type</i> is already filled in with the field name. In this case you cannot carry out any changes to the details.</p>
+				 <p>If you have called up the dialogue box from the general 
+				 <i>Links</i> field group, then you can select a link type from the dropdown list of the field <i>Link type</i> or enter a 
+				 free value.</p>
+				 <p>There are two targets of links:</p>
+				 <ul>
+				 <li>Cross-references between objects (link target: object)</li>
+				 <li>Reference to information in the internet (link target: URL)</li>
+				 </ul>
+				 <p><b>Link target: Object</b></p>
+				 <p>Cross-references between objects are defined via these link targets. The target object is selected via 
+				 <a href="?hkey=maintanance-of-objects-8">Select Object</a>. The obligatory details <i>Object Name</i> and <i>Object Class</i> 
+				 are automatically filled in with the corresponding data of the object selected.</p>
+				 <p>Optionally you can make a <i>Description</i> on the reference.</p>
+				 <p><b>Link target: URL</b></p>
+				 <p>By means of this reference target a reference is defined to an external data source in the internet. It is obligatory for 
+				 you to give a <i>Link Description</i> and the <i>Internet address (URL)</i>.</p>
+				 <p>Optionally you can make a <i>Description</i> on the reference.</p>
+				 <p><u>Take care</u>: <i>URL-Type</i> is also optional but will not be displayed in the representation of the metadata object 
+				 via the portal.</p>
+                 <p>If an object has a parent object, so it is possible to inherit/copy the references from it. Click on the link <i>inherit</i> and all references from the parent object are being copied to the current one. Entries already present will not be overwritten!</p>            
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-8">
+            <header>Select Object</header>
+            <content>
+                 <p>This dialogue box is called up from the <i>Add/Edit Link</i> dialogue box to create a reference to an object. 
+				 Through this one can select the object to which the link is to be made.</p>
+				 <p>Click through the structure of the objects and select the desired object with one click on the name of the 
+				 object. The object selected is displayed in <b>red</b>.</p>
+				 <p>With one click on the <i>Select</i> button, the object is adopted as the target of the link and the dialogue window closed.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-9">
+            <header>Add/edit Operations</header>
+            <content>
+                 <p>This dialogue box only appears in the field group <i>Relevance</i> of the object class <i>Geo-Service</i>. 
+				 Using this you can state the operations your service has available.</p>
+				 <p>Particularly important is the statement of the operations supported in OGC-compliant web services, 
+				 as the getCapabilities operation (e.g. for WMS or WFA) in particular is used to represent the service in map viewer.</p>
+				 <p>Further operations can be added via the <i>Add operation</i> link. You can choose an <i>Operation Name</i> from the code 
+				 list via a click on the arrow at the right side of the field. To fill in the fields of 
+				 <i>Supported Platforms</i>, <i>Parameter</i> and <i>Address</i> make a double click at first to activate the table. 
+				 The newly described operation is added to the list via the <i>Add</i> button.</p>
+                 <p>You can edit an operation by clicking on the relevant entry in the list with the right mouse button and selecting the 
+                 <i>Edit row</i> function from the context menu. A separate dialog will be opened. By clicking on the 
+				 <i>Apply</i> button you adopt the amended data back into the list.</p>
+				 <p>You can delete an operation by selecting the <i>Delete Row / Delete Selected Row</i> function from the context menu.</p>
+				 <p><u>Take care</u>: The name of the operation is dependent on the <i>Type of Service</i> selected with relevance to the object. 
+				 Only if <i>Other Service</i> or <i>Invoke Spatial Data Service</i> are selected as service classification, the name of the 
+				 operation can be freely selected. In all other cases the operations defined via the OGC for the respective service selected 
+				 are available for selecting.</p>
+				 <p><u>In order to get the best out of the full functionality of InGridCatalog, the getCapabilities operation at least 
+				 should be entered for each OGC-service.</u></p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-10">
+            <header>Show / Edit Comments</header>
+            <content>
+                 <p>Click in the lower window and write the commentary. With the <i><b>Add Comment</b></i> function you transfer the commentary 
+				 into the list itemized above. The <i>Date</i> and the <i>User</i> are automatically entered.</p>
+                 <p>Comments can be deleted from the table again via the right mouse button’s context menu.</p>
+                 <p>You exit the <i>Comments</i> window with one click on the cross top right in the corner of the window and return 
+				 to the current object or to the current address.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Maintenance of Addresses</header>
+        <section help-key="maintanance-of-adresses-1">
+            <header>Construction of the address interface</header>
+            <content>
+                 <p>Addresses are maintained in the <i>right window</i> of the
+				 <i>Hierarchy &amp; Aquisition</i> submenu item.</p>
+				 <p>In the upper part of the window the header information 
+				 <i>Address Title</i>, <i>Address Type</i> and <i>Responsible User</i> are displayed with a coloured background for the address 
+				 as well as the status information <i>Created</i>, <i>Modified</i> and <i>Last Change</i>. This display is always visible.</p>
+				 <p>Underneath – with a grey background – the name of the institution, unit or the person is displayed according to the 
+				 type of address.</p>
+                 <p>The select box "Publication condition" determines the visibility of the address. While
+                 the choice "internet" has no restriction, an address with "intranet" or "internal" will not 
+                 be published in the internet.</p>
+                 <p>The address type "person" also offers a ceckbox "Do not display data". Is this option checked
+                 the data of this address will not be used. Instead the data from the parent address is used.</p>
+				 <p>Further information is collected in the following groups:</p>
+				 <ul>
+				 <li>Address and Tasks</li>
+				 <li>Keywords</li>
+				 <li>Assigned objects</li>
+				 </ul>
+				 <p>The individual groups are separated from each other optically by bars. As standard, 
+				 only the obligatory fields are displayed. They are identified by headings in bold and a star *. 
+				 An address can only be finally saved (published) or assigned to quality assurance (QA) when all 
+				 obligatory fields are filled in. If publishing or assigning to quality assurance is rejected due 
+				 to missing obligatory entries, the headings of the relevant fields are designated in red to alert 
+				 the user to the entries needed.</p>
+				 <p>By clicking on the <i>Show all Fields</i> button to the left of the group name, all the fields 
+				 where entries are optional are also displayed. Clicking on the button once more fades these fields 
+				 out again. In the function bar you will find a  
+				 <i>Show all Fields/Show required Fields</i> button on the right-hand edge with which you can fade 
+				 in or fade out fields in all groups.</p>
+				 <p>On the right-hand edge of the bars separating the groups there is an 
+				 <i>upwards</i> button. It enables one to jump to the uppermost field group.</p>
+				 <p>You receive help texts on the individual fields and groups by clicking with the mouse pointer 
+				 (then with the question mark on the arrow) on the field or group names.</p>
+				 <p>To fill in text fields simply click in the field. Dropdown lists are opened up via the arrow on 
+				 the right side of the field. On the basis of the additional functionality there are special rules for using tables (see also 
+				 <a href="?hkey=editor-design-6">Features for tables</a>). The <i>Thesaurus Search Term</i> field can also be filled in via 
+				 its own dialogue box as described in the <a href="?hkey=maintanance-of-adresses-3">Thesaurus Navigator</a> 
+				 chapter.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-adresses-2">
+            <header>Creating a new address</header>
+            <content>
+                 <p>A new address can either be created via the <i>Create New</i> button in the function bar or via the context menu of the 
+				 right mouse button in the structure tree. In the hierarchy it is always positioned underneath the current address. 
+				 If you want to create an address on the top hierarchy level then select the 
+				 <i>Addresses</i> level in the structure tree and then create a new address. If you want to create a "free address", that is, 
+				 an address without superordinate institution and unit, then you select the <i>Free Address</i> level in the structure tree and 
+				 create a new address under it.</p>
+				 <p>First of all, you select the address type of the address to be created via a dialogue window <i>Create Address</i>.
+				 Which type of addresses are available to you for the creation of a new address depends on the type of address of the 
+				 address under which you wish to create the new address. After this the relevant mask opens up with fields to be filled in. 
+				 As standard, the person responsible is adopted from the superordinate addresse as the responsible user together with their 
+				 entry into the <i>Communication</i> field and the <i>Thesaurus Search Terms</i>.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-adresses-2a">
+            <header>Inherit address from parent</header>
+            <content>
+                 <p>Instead entering the address information all by hand, you also can receive the address information from the parent address. The following fields will be overwritten: <i>Street</i>, <i>Post code</i>, <i>City</i>, <i>P.O. Box</i>, <i>Post code (POB)</i> and <i>Country</i></p>
+                 <p>From the hierarchical tree, when calling the context menu, you can also distribute the address information of the clicked address to all its sub-addresses. Click the entry <i>Update address data in children</i> and after a dialog the changes to the sub-addresses will be propagated.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-adresses-3">
+            <header>Thesaurus Navigator</header>
+            <content>
+                 <p>A thesaurus is a hierarchically structured, limited list of designations taken from natural language. It should make it possible to reproduce or to circumscribe the contents (terms, procedures, objects) of the environment/ground relevant specialist areas with standard designations. A standard designation in turn enables a targeted search with, for the most part, complete search results </p>
+                 <p>InGridCatalog (IGC) uses the environment thesaurus (UMTHES) of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau. It contains more than 30,000 technical terms from the "environment" topic area. The word inventory of the European environment dictionary 
+				 <a href="http://www.eionet.europa.eu/gemet" target="SNS">
+				 GEMET (GEneral Multilingual Environmental Thesaurus)</a> 
+				 is an integrated subset of UMTHES. </p>
+                 <p>UMTHES is made available via the 
+				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
+				 of the Federal Environment Agency (Umweltbundesamt).</p>
+                 <p><b>Hierarchy Tree</b></p>
+                 <p>In order to find the optimal search term in the thesaurus, you can be guided via the 
+				 hierarchy tree from the generic terms to the more specific levels. Using the hierarchy tree 
+				 is as in the normal procedure for hierarchy trees, that is, by clicking on the + or - the 
+				 structure can be opened up or closed again. One click on a term colours this <b>red</b>. 
+				 It can then be added to the <i>Descriptor List</i> by means of the <i>Add</i> button.</p> 
+                 <p><u>Take care</u>: Terms that do not turn red when clicked are only defining terms and not 
+				 descriptors. They can therefore not be added to the <i>Descriptor List</i>.</p>
+                 <p><b>Results List</b></p>
+                 <p>As an alternative to the hierarchy tree you can also find a thesaurus term with a search. 
+				 For this you put a search term in the <i>Search for Descriptors</i> field. After submitting the search via 
+				 <i>Search in Thesaurus</i> all thesaurus terms found will be displayed in the <i>List</i>.</p>
+                 <p>One click on a term colours this in <b>red</b>. It can be added to the <i>Descriptor List</i> via the 
+				 <i>Add</i> button. One click on the symbol in front of the term displays it in the hierarchical context. 
+				 Therefor the hierarchy tree is displayed (see above).</p>
+                 <p><b>Apply Descriptor list</b></p>
+                 <p>Via the hierarchy tree or the search for descriptors you can find thesaurus terms and assign them to 
+				 the <i>Descriptor List</i> (see above). If you have collected together all thesaurus terms that you wish 
+				 to assign to the object, you can add them to the thesaurus terms already in the object via the <i>Apply</i> button.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Research</header>
+        <section help-key="search-1">
+            <header>Search</header>
+            <content>
+                 <p>Via the submenu item <i>Search</i> in research you can search for objects or addresses 
+				 with the aid of a keyword without knowing their positions in the catalogue hierarchy.</p>
+				 <p>You can select via the tab whether you want to work in <i>Adresses</i> or in 
+				 <i>Objects</i> in the catalogue.</p>
+				 <p>Enter any search term you like in the entry line and start the research via the <i>Search</i> button.</p>
+				 <p>All objects or addresses found are displayed in the <i>Result</i> list and can be called up with a 
+				 simple mouse click on the corresponding line for editing. After clicking, the relevant object or the 
+				 corresponding address is opened under the menu item <i>Hierarchy &amp; Aquisition</i>. You can return 
+				 to the <i>Result</i> list by selecting the menu item <i>Research</i> again.</p>
+				 <p>If you obtain only inexact or simply too many hits with the keyword search then you can further restrict the search with 
+				 <i>Advanced Search</i> in respect of <i>Theme</i>, 
+				 <i>Location</i> and <i>Time</i> by selecting the tab. The  
+				 <i>Advanced Search</i> differs according to whether you are searching for objects or addresses.</p>
+				 <p><u>Note</u>: With the <i>Reset</i> function <b>all</b> entries under all tabs are deleted and the standard settings are 
+				 re-applied.</p> 
+				 <p><b><u>Advanced Search: Objects</u></b></p>
+				 <p><b>Theme: Search Mode</b></p>
+				 <p>If you have entered several search terms, the search is standardly carried out with AND linking, 
+				 that is, the search terms must all occur in the object for it to be evaluated as a hit. You can change 
+				 this setting via the selection window so that all objects are hits, in which one of the search terms is found (OR linking).</p>
+				 <p>It is standard for a search to be run for substrings. If you therefore are looking for "water", objects containing the term 
+				 "seawater" will also be found. The search can also be limited to „<i>Full Text</i>" so that only objects will be found that contain 
+				 the search term as a single word.</p>
+				 <p><b>Theme: Object Classes</b></p>
+				 <p>The objects are divided into object classes. As a standard, a search is made in all object classes. The search can be 
+				 limited to individual object classes by means of this setting.</p>
+				 <p>The <i>Clear Selection</i> button removes all ticks. The <i>Select All</i> button places a tick in front of all object classes.</p>
+				 <p><b>Theme: Thesaurus</b></p>
+				 <p>You can also search in a targeted way for terms from the technical dictionary, that is, the UMTHES, the environment thesaurus of the Federal Environment Agency.</p>
+				 <p>To do this you enter a term under <i>Theme /Thesaurus</i>. Via the <i>Search in Thesaurus</i> button you obtain the thesaurus terms provided on this term in UMTHES. They will be displayed under <i>Similar Terms</i>. </p>
+				 <p>You can select one or more terms via the control box and, by means of the <i>Apply</i> button, add them to the list of the 
+				 <i>Search terms</i>.</p>
+				 <p>If you would like to further restrict one of the terms or make more general, then you can click on it and obtain the more specific <i>Subordinate Terms</i> available in UMTHES as well as the more general <i>Superordinate Terms</i>. The <i>Synonyms</i> available for the term will likewise be offered to you. These terms too can be selected in turn and adopted into the list of <i>Search Terms </i>via the <i>Apply</i> button.</p>
+				 <p>You can further select whether all the terms chosen should be contained (AND search) or 
+				 only one of the terms is to be contained (OR search) via the <i>Object contains</i> dropdown list.</p>
+				 <p>With one click on the <i>Search</i> button the search is started and the results displayed in the <i>Result</i> list underneath.</p>
+				 <p>The <i>Reset</i> button removes all ticks.</p>
+				 <p><b>Location: Gazeteer Location</b></p>
+				 <p>With the help of the gazetteer valid details can be found for the spatial reference as they are usually used in the InGridCatalog (IGC).</p>
+				 <p>Enter a search word for the spatial reference and call up a list of the matching spatial references with the help of the 
+				 <i>Search in Gazetteer</i> function. By ticking you can select one or several spatial references and adopt them with the 
+				 <i>Apply</i> function into the list of search terms. Via the dropdown list underneath you can select between the AND linking 
+				 and OR linking of the search terms adopted.</p>
+				 <p>If you click on <i>Custom Location</i>, you will be shown further encompassing, enclosed and bordering spatial references. 
+				 These too you can add to the <i>Search Terms</i> via the <i>Apply</i> button.</p>
+                 <p><b>Location: Custom Location</b></p>
+				 <p>In InGridCatalog under <i>Custom Location</i> are understood those geographical terms, 
+				 which are freely selected and which can be entered into InGridEditor‘s <i>Custom Location</i> field. 
+				 They are normally not available in the gazetteer.</p>
+				 <p>The free geographical terms used in the current catalogue are displayed in a dropdown box. 
+				 You can choose one of these terms and carry out a search for this term.</p>
+				 <p><u>Note</u>: The search for the custom location is also combined with the settings entered 
+				 under other tabs. If you do not receive any results then delete all settings via the <i>Reset</i> button.</p>
+				 <p><b>Time: Temporal Constraints</b></p>
+				 <p>In addition to the spatial reference you can also restrict the temporal constraints of the objects in the search. 
+				 In doing this, the time period, which is the subject of the search, is always the <i>Temporal Constraints of the data 
+				 contents</i>. You can use the following temporal constraints for the search:</p>
+				 <ul>
+				 <li>at a certain date</li>
+				 <li>since a certain data</li>
+				 <li>until a certain datam</li>
+				 <li>from a certain data to a certain date</li>
+				 </ul>
+				 <p>You can enter the date directly whereby day and month details have to be given as two digits and the year as four. 
+				 The details must be separated by full stops (DD.MM.YYYY). As an alternative, you can select a data from the calendar 
+				 (symbol on the right next to the entry bar).</p>
+				 <p>As standard, objects are searched for whose time details fall within the search timeframe given.</p>
+				 <p>Under <i>Additional Parameters</i> the setting can also be changed to the effect that the search timeframe lies 
+				 partially in the timeframe of the result objects so that the timeframes "intersect". A further setting searches for 
+				 objects in which, in contrast to the standard setting, the temporal reference goes beyond the search timeframe and so 
+				 includes this. Both settings can be selected simultaneously.</p>
+				 <p><b><u>Advanced Search: Addresses</u></b></p>
+				 <p><b>Theme: Search Mode</b></p>
+				 <p>If you have entered several search terms, as standard the search is carried out with AND linking, that is, 
+				 the search terms must all appear in the address so that it scores as a hit. You can change this setting so that 
+				 all addresses are hits in which one of the search terms is found (OR linking) via the dropdown window.</p>
+				 <p>It is standard for a search to be run for substrings. If you therefore are looking for "water", objects containing the term 
+				 "seawater" will also be found. The search can also be limited to „<i>Full Text</i>" so that only objects will be found that contain 
+				 the search term as a single word.</p>
+				 <p>As standard, InGridEditor searches in all text fields. You can, for example, enter the name of a street and all addresses 
+				 situated in this street will be found. In individual cases it can make sense to restrict the search to a subset of fields 
+				 (you are searching, for example, for a person called "Smith" but do not want any results for "Smith Street" ). 
+				 For such cases you change the <i>All Fields</i> setting to 
+				 <i>Institution, Person, Notes, Keyword</i>. InGridEditor then only looks in the <i>Institution, Person, Notes</i> and 
+				 <i>Keyword</i> fields.</p>
+				 <p><b>Location: Location Reference</b></p>
+				 <p>With the help of this function you can search for a specific <i>Street</i>, einer <i>Postcode </i>
+				 or a <i>City</i> within the addresses. All the details you enter have to be contained in the address so that they score as hits in the 
+				 <i>Result</i> list.</p>
+            </content>
+        </section>
+        <section help-key="search-2">
+            <header>Thesaurus Navigator</header>
+            <content>
+                 <p>A thesaurus is a hierarchically structured, limited list of descriptions taken from natural language. It should enable the contents (terms, processes, objects) of the environment/soil relevant topic areas to be reproduced or defined using standard descriptions. A standard descriptor in turn enables a targeted search with a search result that is, as far as is possible, complete.  </p>
+                 <p>InGridCatalog (IGC) uses the environment thesaurus (UMTHES) of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau. It contains more than 30,000 technical terms from the "environment" topic area. The word inventory of the European environment dictionary  
+				 <a href="http://www.eionet.europa.eu/gemet" target="SNS">
+				 GEMET (GEneral Multilingual Environmental Thesaurus)</a> 
+				 is an integrated subset of UMTHES.  </p>
+                 <p>UMTHES is made available via the 
+				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
+				 of the Federal Environment Agency (Umweltbundesamt).</p>
+                 <p><b>Hierarchy Tree</b></p>
+                 <p>In order to find the optimal search term in the thesaurus you can be guided via the hierarchy 
+				 tree from the superordinate terms to the more specific levels. The hierarchy tree is used in the 
+				 usual manner for hierarchy trees, that is, with one click on the symbols + or – the structure can 
+				 be opened up or closed again. One click on a term colours this <b>red</b>. A search is automatically 
+				 carried out of objects and addresses and the result displayed in the <i>Result</i> list (see below).</p> 
+                 <p><u>Take care</u>: Terms that do not turn red when clicked on are only defining terms and not descriptors. 
+				 These therefore cannot be used for a search.</p>
+                 <p><b>Result List</b></p>
+                 <p>As an alternative to the hierarchy tree you can also find a thesaurus term using a search. For this 
+				 you enter a search term in the <i>Thesaurus Search</i> field. After submitting the search via 
+				 <i>Search in Thesaurus</i> thesaurus terms found are displayed in the <i>Result List</i>.</p>
+                 <p>One click on a term colours this <b>red</b>. A search is automatically carried out in objects and addresses 
+				 and the result displayed in the <i>Result</i> list (see below).</p> 
+				 <p>One click on the symbol in front of the term shows it in the hierarchical context. 
+				 For this a switch is made to the hierarchy tree (see above).</p>
+                 <p><b>Result</b></p>
+                 <p>In the Result list the <i>Objects</i> and <i>Adresses</i> are listed separately. Using the tabs you can 
+				 switch between both lists. The objects and addresses found can be called up directly from the <i>Result</i>. 
+				 For this you make the switch in the <i>Hierarchy &amp; Acquisition</i> menu item of InGridEditor. You get back to the 
+				 <i>Result</i> by selecting the submenu item <i>Thesaurus Navigator</i>
+				 under the menu item <i>Research</i>.</p>
+            </content>
+        </section>
+        <section help-key="search-3">
+            <header>Database Search</header>
+            <content>
+                 <p>The database search is a function created with experts in mind. By means of this you can call up quite specific 
+				 informastion from the database. Changes to database contents are <u>not</u> possible.</p>
+				 <p>The database search is based on queries to the IGC database on the basis of 
+				 <a href="http://docs.jboss.org/hibernate/stable/core/reference/en/html/queryhql.html" 
+				 target="SNS">Hibernate Query Language (HQL)</a>.</p>
+				 <p>The <i>Result</i> list displayed can be saved in CSV data format.</p>
+				 <p>For the database search specialists should take account of the following points:</p>
+				 <ul>
+				 <li>The table <b>ObjectNode</b> <b><u>must</u></b> be selected as the start table for selects on objects 
+				 ("FROM ObjectNode oNode ..."). For addresses the equivalent is the <b>AddressNode</b> table ("FROM AddressNode aNode ..."). 
+				 In doing this, 'oNode' and 'aNode' are wild cards (alias), which are used for the following join operations 
+				 (<i>ObjectNode</i> or <i>AddressNode</i> refer to the concrete instance of an object/address in the editing or published version):</li>
+					 <ul>
+					 <li><u>Objects working versions:</u> 
+					 <br/><font face="Courier">JOIN oNode.t01ObjectWork obj</font></li>
+					 <li><u>Addresses working version:</u>
+					 <br/><font face="Courier">JOIN aNode.t02AddressWork addr</font></li>
+					 <li><u>Objects published version:</u> 
+					 <br/><font face="Courier">JOIN oNode.t01ObjectPublished obj</font></li>
+					 <li><u>Addresses published version:</u> 
+					 <br/><font face="Courier">JOIN aNode.t02AddressPublished addr</font></li>
+					 </ul>
+				<li>The working version is the same as the publised version when the object/address is not <i>being edited</i>.</li>
+				<li>For the HQL to be entered no columns need to be entered by "<i>select ...</i>" if the results are only to be 
+				displayed (no CSV-Export). In this case it is sufficient to start with the "<i>FROM ...</i>" clause. The class 
+				and name of the objects/addresses found are always displayed.</li>
+					 <ul>
+					 <li><u>all objects:</u> <font face="Courier">FROM ObjectNode</font></li>
+					 <li><u>all addresses:</u> <font face="Courier">FROM AddressNode</font></li>
+					 </ul>
+				<li>If attributes are added via "<i>select ...</i>" then these are only relevant for the CSV export as only 
+				ever class and name are displayed in the display.</li>
+				<li>In order, for example, to export all available object names to CSV:</li>
+					 <ul>
+					 <li><u>in the current working version:</u> 
+					 <br/><font face="Courier">select distinct obj.objName FROM ObjectNode 
+					 oNode JOIN oNode.t01ObjectWork obj order by obj.objName</font></li>
+					 <li><u>in the published versi:</u> 
+					 <br/><font face="Courier">select distinct obj.objName FROM ObjectNode 
+					 oNode JOIN oNode.t01ObjectPublished obj order by obj.objName</font></li>
+					 <li><b><u>Take care:</u></b> In the display the 
+					 <b><font face="Courier">'select <i>columns</i>'</font></b> statement does not play a role, this only determines 
+					 <b>what</b> is exported <b>to CSV</b>. In the search above, <b>all</b> objects <b>found</b> are therefore <b>always</b> 
+					 displayed in the display, and specifically class + name respectively. Should the same name be found in different objects 
+					 then the name is shown twice (e.g. with different object class). When exporting to CSV the name is then <b>only</b> 
+					 exported once as stated in "<b><font face="Courier">select DISTINCT</font></b>". The CSV file therefore contains fewer 
+					 entries than there are objects (as only different object names are exported). 
+					 </li>
+					 </ul>
+				</ul> 
+				<p><b><u>Example:</u></b></p>
+				<p><b>SQL on IGC pattern:</b></p>
+				<font face="Courier" size="-2">
+				<p>SELECT DISTINCT obj.id, obj.obj_uuid, obj.obj_name, obj.obj_class FROM T01_object obj
+				<br/>LEFT OUTER JOIN T08_attr T08_1 ON (obj.id = T08_1.obj_id)
+				<br/>LEFT OUTER JOIN T08_attr T08_2 ON (obj.id = T08_2.obj_id)
+				<br/>LEFT OUTER JOIN T08_attr_type T08T_1 ON (T08_1.attr_type_id = T08T_1.id)
+				<br/>LEFT OUTER JOIN T08_attr_type T08T_2 ON (T08_2.attr_type_id = T08T_2.id)
+				<br/>WHERE
+				<br/>T08T_1.name LIKE ''USE/MAINTAIN DATA'  
+				<br/>AND T08_1.data LIKE 'USE' 
+				<br/>AND T08T_2.name LIKE 'GROUP OF PEOPLE%TARGET GROUP'  
+				<br/>AND T08_2.data LIKE 'LANU INTERNAL'
+				<br/>AND T08_2.data LIKE 'LANU INTERNAL'
+				<br/>AND obj.mark_deleted != 'Y'</p>
+				</font>
+				<p><b>Conversion into HQL: </b></p>
+				<font face="Courier" size="-2">
+				<p>SELECT DISTINCT OBJNODE.objUuid, OBJ.objUuid, OBJ.objName, OBJ.objClass, 
+				T08T_1.name, T08_1.data , T08T_2.name, T08_2.data 
+				<br/>FROM 
+				<br/>ObjectNode OBJNODE 
+				<br/>JOIN OBJNODE.t01ObjectWork OBJ 
+				<br/>LEFT JOIN OBJ.t08Attrs T08_1 
+				<br/>LEFT JOIN OBJ.t08Attrs T08_2 
+				<br/>LEFT JOIN T08_1.t08AttrType T08T_1 
+				<br/>LEFT JOIN T08_2.t08AttrType T08T_2 
+				<br/>WHERE 
+				<br/>UPPER(T08T_1.name) LIKE 'USE/MAINTAIN DATA' 
+				<br/>AND UPPER(T08_1.data) LIKE 'USE' 
+				<br/>AND UPPER(T08T_2.name) LIKE 'GROUP OF PEOPLE%TARGET GROUP'  
+				<br/>AND UPPER(T08_2.data) LIKE 'LANU INTERNAL' 
+				<br/>AND OBJ.markDeleted != 'Y' 
+				<br/>ORDER BY OBJ.objName</p>
+				</font>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Quality Assurance</header>
+        <section help-key="quality-assurance-0">
+            <header>The concept of quality assurance (Workflow)</header>
+            <content>
+                 <p>The maintenance of the metadata can be controlled in InGridEditor by means of a workflow. 
+				 The decision whether a workflow is used lies with the catalogue administrator and is set by 
+				 him for the entire catalogue.</p>
+				 <p>The concept of workflow is based on ‘four eyes are better than two’ principle. This 
+				 means that the metadata are created or edited by the person responsible and then before 
+				 publication they are assessed by another editor, the person responsible for quality assurance, 
+				 and released. The purpose of the concept is to guarantee a high quality of the data and the descriptions. </p>
+				 <p>The editor responsible does not publish the amended objects and addresses himself but sends 
+				 them to the person responsible for quality assurance. This applies to all changes to the data 
+				 such as new entries, editing or deletion.</p>
+				 <p>The person responsible for quality assurance can either release all the objects and addresses 
+				 referred to him (for a piece of metadata marked for deleting this means the final deletion), 
+				 change them himself or send them back for re-editing to the person responsible. The changes to the 
+				 objects or addresses only become visible when released.</p>
+				 <p>As a further quality assurance measure, each object receives an <i>expiry data</i>. It is set 
+				 automatically after the last editing. The time span from the last editing to the expiry date is 
+				 set for the whole catalogue by the catalogue administrator. If the expiry date is exceeded then 
+				 the object or the address is displayed to the editor and he can assure himself of the currentness 
+				 of the data. Changes must in turn be referred to the person responsible for quality assurance.</p>
+				 <p>Information on the objects whose expiry date has run out, which are being edited and which 
+				 were referred to quality assurance, is displayed under the <i>Quality Assurance</i> menu item.</p>
+            </content>
+        </section>
+        <section help-key="quality-assurance-1">
+            <header>Editor/Responsible User</header>
+            <content>
+                 <p>Every editor receives this submenu when the 
+				 <a href="?hkey=quality-assurance-0">Workflow</a> is activated for the catalogue.</p>
+				 <p>An overview shows you the number of the objects and addresses whose expiry date has been reached, 
+				 which have been sent by you to quality assurance, which have been sent back to you and whose spatial units were updated.</p>
+				 <p>You also receive those objects and addresses listed in a separate table respectively,</p>
+				 <ul>
+				 <li>whose expiry period has run out</li>
+				 <li>currently being edited by you</li>
+				 <li>that were sent to quality assurance or have been sent back from quality assurance</li>
+				 <li>whose spatial references have to be updated</li>
+				 </ul>
+				 <p>The objects and addresses listed can be called up directly from the tables. In so doing, a switch is made to the 
+				 menu item <i>Hierarchy &amp; Aquisition</i> of InGridEditor. There the objects and addresses can be edited further.</p>
+				 <p><u>Note:</u> The spatial references of the objects are checked after every updating of the Semantic Network Service (SNS). If they are no longer valid, for example, after a district boundary reform, they are replaced by the next highest administrative unit and must, if necessary, be re-edited. The objects affected are listed under <i>Objects with expired Spatial References</i>.</p>
+            </content>
+        </section>
+        <section help-key="quality-assurance-2">
+            <header>Quality Assurance</header>
+            <content>
+                 <p>You receive this submenu when <a href="?hkey=quality-assurance-0">Workflow</a> 
+				 is activated for the catalogue and you have been named as the quality assurance person for 
+				 at least one sub tree of the catalogue.</p>
+				 <p>You receive the objects and addresses listed respectively in a separate table</p>
+				 <ul>
+				 <li>that were sent to you as the person responsible for quality assurance 
+				 (Objects / Addresses assigned to QA or reassigned by the QA)</li>
+				 <li>that are being edited/modified, for which you are the quality assurance person</li>
+				 <li>whose expiry period has run out, for which you are the quality assurance person</li>
+				 <li>whose spatial reference has expired, for which you are the quality assurance person</li>
+				 </ul>
+				 <p>The objects and addresses listed can be called up directly from the tables. In so doing, a switch is made to the 
+				 menu item <i>Hierarchy &amp; Acquisition</i> of InGridEditor. There, the objects and addresses can be directly edited. 
+				 It is possible that you will have to alert the person responsible, for example, to the expiry of the expiry period for 
+				 their objects.</p>
+				 <p><u>Note:</u> The spatial references of the objects are checked after every updating of the Semantic Network Service (SNS). If they are no longer valid, for example, after a district boundary reform, they are replaced by the next highest administrative unit and must, if necessary, be re-edited. The objects affected are listed under <i>Objects with expired Spatial References</i>.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Statistics</header>
+        <section help-key="statistic-1">
+            <header>Statistics</header>
+            <content>
+                 <p>Under the menu item <i>Statistics</i> you can get some quantitative statements on the catalog 
+				 or sub trees displayed.</p>
+				 <p>If you select <i>Catalog</i>, <i>Objects</i>, <i>Addresses</i> or any sub tree from 
+				 the structure tree, the node selected from the tree is represented in <b>red</b>.</p>
+				 <p>Via the tabs in the right window you can now view the following analyses:</p>
+				 <p><b>Objects/Adresses</b></p>
+				 <p>The absolute number as well as the relative number as a % of the metadata objects are displayed for every object class 
+				 or address type.</p>
+				 <p>The number of objects or addresses will continue to be displayed with reference to the respective status. In so doing, 
+				 the following meanings applies to the abbreviations:</p>
+				 <ul>
+				 <li>V–Status: published</li>
+				 <li>B–Status: modified</li>
+				 <li>Q–Status: assigned to QA</li>
+				 <li>R–Status: reassigned from QA</li>
+				 </ul>
+				 <p><b>Custom Search terms</b></p>
+				 <p>For every free search term (that is, not thesaurus search terms) the absolute number as well as the relative number 
+				 are displayed as a % of the incidence in metadata objects.</p>
+				 <p>The search terms are sorted according to the frequency of their appearance.</p>
+				 <p><b>Thesaurus Search terms</b></p>
+				 <p>For every thesaurus search term the absolute number as well as the relative number are displayed as a % of the 
+				 incidence in metadata objects.</p>
+				 <p>The search terms are sorted according to the frequency of their appearance.</p>
+				 <p><b>Printing</b></p>
+				 <p>All analyses can be printed via the <i>Print</i> at the top right corner of the display.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Administrative function: Catalogue</header>
+        <section help-key="catalog-administration-1">
+            <header>Catalogue Settings</header>
+            <content>
+			<p> The <i>Catalogue</i> menu item is only visible to the catalogue administrator. </p>
+			<p> In GridCatalog is structured in such a way that all a metadata provider’s information is collected together in a so-called catalogue. Under the menu item <i>Catalogue</i> basic settings to the current catalogue can be made. </p>
+			<p> Under the submenu item <i>Catalogue Settings</i> the catalogue administrator can set the name of the catalogue, the partner (the Federation or a federal state) and of the provider as well as the state, the catalogue language and the spatial reference (<i>State, Location</i>).</p>
+			<p> <u>Note</u>: Even if it is not obligatory to fill in all fields, it is nevertheless highly recommended that all fields are filled in. </p>
+			<p> Further, the <i> Workflow Control</i> can be switched on and also set as to whether, and after how many days, a review of the metadata objects (Expiry Data) is required (see also Concept of Quality Assurance (the workflow)).</p>
+			<p> Note: In order to guarantee a minimum of actuality in a metadata catalogue, it is recommended that the <i>Expiry Function</i> is activated and a resubmission time period of at least one year (365 days) is given.</p>
+			<p> The settings have to be closed via the <i> Save</i> button and are then immediately activated.</p>
+			</content>
+        </section>
+        <section help-key="catalog-administration-2">
+            <header>Field Settings</header>
+            <content>
+			<p>In InGridEditor (IGE) obligatory fields are always faded in as standard in the data entry mask (see <a href="?hkey=hierarchy-maintenance-1">Hierarchy &amp; Acquisition</a>). Optional fields are hidden and can be faded in via a corresponding button. </p>
+
+			<p>Under the submenu item <i>Field Settings</i> it is possible to change the standard setting for <u>optional</u> fields (the standard settings for obligatory fields can<b>not</b> be altered). </p>
+
+			<p> There are the following two possibilities to alter the standard setting for every individual optional field:</p>
+
+			<p> <b>Always fade out</b></p>
+
+			<p>With this setting the optional field is completely hidden. Thus it also can<b>not</b> be filled in. </p>
+			<p><u>Note</u>: This setting should only be selected if the filling in of a field in the concerned catalogue is explicitly not desired. </p>
+			<p><b>Always visible</b>
+ </p>
+			<p>With this setting the optional field is always displayed. It cannot be hidden by the user. </p>
+			<p><u>Note</u>: This setting should be selected when the filling of an optional field in the catalogue concerned is regarded as absolutely necessary. </p>
+			<p>The settings have to be closed via the <i>Save</i> button and are then activated immediately. </p>
+            </content>
+        </section>
+        <section help-key="catalog-administration-3">
+            <header>General Settings</header>
+            <content>
+			<p>In this submenu the following settings can be carried out for the current catalogue:</p>
+
+			<p>Activate Autosave</p>
+
+			<p>An automatic intermediate save of the changes made can be set for the catalogue. Also, the interval, after which this is performed, has to be set. The intermediate save prevents the work getting lost, e.g., by having to break off logging data due to other business.</p>
+			
+			<p>Each time the metadata object is saved in this way, an editing copy is created or the editing copy available is overwritten. Therefore, the <i>Autosave</i> function automatically carries out the same procedure that is available with the <i>Save</i> button in <a href="?hkey=hierarchy-maintenance-1">Hierarchy &amp; Acquisition</a>.</p>
+			
+			<p>Take care: The switching on of this functionality can have the undesired side effect that unwanted amendments are also automatically saved and so pre-existing editing states are overwritten. </p>
+			
+			<p>Activate Session Refresh</p>
+			
+			<p>For the catalogue an automatic refresh session can be set and the interval, after which this is performed, set. A refresh session prevents the session from being ended from the server end as long as the editor is loaded in the user’s browser. Thus this prevents work being lost (e.g. by an enforced interruption of the editing due to other business) or should it be the case that the user needs to switch on again. </p>
+			
+			<p>Note: An automatic refresh session can put more strain on the server because all the users‘ sessions are kept until they are explicitly shut down. Nevertheless, this setting is to be recommended as it makes the more critical <i>Autosave</i> setting to a large extent superfluous and considerably raises the user acceptance particularly with larger metadata acquisitions. When the server is overloaded through too many open sessions it should however be switched off. </p>
+			
+			<p>Settings must be closed down via the <i>Save</i> button and are then immediately active. </p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Administrative function: User Management</header>
+        <section help-key="user-administration-1">
+            <header>Users</header>
+            <content>
+			<p> Concept of user management in InGridEditor.</p>
+			<p> The concept of user management in InGridEditors (IGE) is based on a user fundamentally only having to register once in an external Usersystem (e.g. the portal). Therefore the user information of the external Usersystem (e.g. the portal) must be linked with those of the Editor.</p>
+			<p>This requirement makes a series of steps necessary so that a specific user obtains the permissions giving him an advantage over any guest user of the portal. </p>
+			<p> The actual permissions, which not only include writing permissions but also the permission for quality assurance, are set in <a href="?hkey=user-administration-2">Groups</a> administration. A group with corresponding permissions is assigned to every user.</p>
+			<p>The permissions for user management are set by three hierarchy levels: </p>
+				 <ol>
+				 <li>1.	<b>Catalogue Administrator</b>: There is only one user with these permissions. He has the permission to operate all administration functions and can create users on all underlying hierarchy levels with write permissions on any sub trees.</li>
+				 <li>2.	<b>Metadata Administrator</b>: Of the administration functions he may only use the user management. He may create users with the role metadata author. However, the permissions of these users may equate at the most to the permissions of the respective metadata administrator (e.g. write permissions only for one sub tree of the catalogue).</li>
+				 <li>3.	<b>Metadata Author</b>: He has write permissions for one sub tree of the catalogue but no access to the user administration or to other administrative functions.</li>
+				 </ol>
+				 <p>The catalogue administrator can install metadata authors under any metadata administrators. A metadata administrator always has the permission to administer the metadata authors subordinate to him. </p>
+				 <p><b>Add a new user</b></p>
+				 <p>The following steps are necessary before a new user and his permissions can be installed in IGE:</p>
+				 <ol>
+				 <li>1.	The user has to register himself in the external Usersystem to supply an external Login. If the external Usersystem is the Portal the user has to register himself or be registered by the administrator in the Portal.</li>
+				 <li>2.	If initially registered in the Portal the user receives an e-mail to confirm his registration. He must confirm the registration via the link contained in it.</li>
+				 <li>3.	The catalogue administrator must have set up a group in the
+				 <a href="?hkey=user-administration-2">Groups</a> administration submenu item that has the permissions the user is to receive.</li>
+				 </ol>
+				 <p>After these preliminary tasks have been completed, please proceed as follows:</p>
+				 <ol>
+				 <li>By clicking with a mouse on the left side of the window in the users’ hierarchy tree of the users, select an administrator underneath whom you wish to add the user. The name of the user selected will be highlighted. A metadata administrator can only add a user below his own entry. A catalogue administrator can install metadata administrators below his own entry or metadata authors underneath a metadata administrator. No further users can be added underneath metadata authors.</li>
+				 <li>Click on the <i>Create User</i> button. A dialogue box opens up. You can now enter the user name given in the external Usersystem (e.g. the Portal) and assign it to the catalogue user with <i>Apply</i>.
+				 <p>Note 1: By entering one or more initial letters of the user name, the dropdown list with all user names that match these letters is opened. You can now select the name.</p>
+				 <p>Note 2: Every user of the external Usersystem (e.g. every portal user) can only be assigned to one catalogue user at the most. Names of external users already assigned to one catalogue user will no longer be shown in the dropdown list and can not be re-assigned. </p>
+				 <p><i>Login</i> and <i>Role</i> are set by giving these details.</p>
+				</li>
+				 <li>Enter Name, E-Mail and address data in the given fields to add it to the user data.</li>
+				 <li>Select one or more groups from the selection list. All groups are displayed that have been installed in the Groups administration and for which you have administration rights.</li>
+				 <li>5.	<i>Save</i> the new user. It can now be used.</li>
+				 </ol>
+				 <p><b>Editing and deleting an existing user</b></p>
+				 <p>Select a user you want to edit or delete by clicking with the mouse in the hierarchy tree on the left side of the window.</p>
+				 <p>The <i>User Data</i> will be loaded in the fields on the right side of the window. You can change the <i>Login</i>, the <i>Address data</i> and the <i>Group</i>. You save the changes using <i>Save</i>.</p>
+				 <p><u>Note</u>: The administrators group is automatically always assigned to the catalogue administrator. This arrangement cannot be changed. The group is not available to other users. </p>
+				 <p>To delete the user click on the <i>Delete User</i> button and confirm the operation in the dialogue box that opens up.</p>
+				 <p></p>
+                 <p><b>Responsibility view</b></p>
+                 <p>When clicking on the tab "As responsible user", two tables are shown, listing the objects
+                 and addressed, in which the currently selected user is set as responsible. It's possible to
+                 jump directly to the object/address by clicking an entry from the table.</p>
+            </content>
+        </section>
+        <section help-key="user-administration-2">
+            <header>Groups</header>
+            <content>
+                 <p>The write permissions to objects and addresses are set via the groups as is the quality assurance permission.</p>
+				 <p>In the groups administration you can:</p>
+				 <ul>
+				 <li><u>Edit a group</u>: Click on the name of the group in the list top left in the window. You can now change the name of the group as well as the permissions for the group (see below). Changes have to be completed with <i>Save</i> and are then available immediately.</li>
+				 <li><u>Add a new group</u>: Click on the <i>Create New Group</i> button. You must give the <i>Group Name</i> and complete the process with <i>Save</i>. You can now give the permissions for the group (see below).</li>
+				 <li><u>Delete a group</u>: Click with the right mouse button on the name of the group that you want to delete. Select <i>Delete Row</i> from the context menu and confirm the operation in the dialogue box that now opens up.</li>
+				 </ul>
+				 <p><u><b>Important</b></u>: All changes to the properties of the groups (also those to the below-mentioned permissions) have to be completed via Save so that the changes become effective and are not lost.</p>
+				 <p>You can assign the following permissions for a group:</p>
+				
+				<p><b>Object permissions</b></p>
+				 <p>You can assign write permissions for objects. For this select the object under <i>Object Permissions</i> from the hierarchy tree, for which or from which you want to assign the write permission. One click on the object colours it red. Via the > button you can adopt the highlighted object into the list of the permissions.</p>
+				 <p>You have two setting possibilities for the permission per object:</p>
+				 <ul>
+				 <li><u><i>Tree</i></u>: This is the standard setting. You have a write permission for this and all subordinate objects. Underneath this object and all subordinate objects you can add new objects.</li>
+				 <li><u><i>Single:</i></u> You have a write permission only for this object, not for subordinate objects. You cannot add any new objects underneath this object. </li>
+				 </ul>
+				 <p><u>Note:</u> You cannot award any writing permissions for the <i>Objects</i> structure tree node. All sub trees of the catalogue, for which there should be a writing permission, have to be selected individually.</p>
+				 
+				 <p><b>Address permissions</b></p>
+				 <p>You can assign permissions for addresses. Choose the address for this under <i>Address Permissions</i> from the hierarchy tree for which you or from which you want to assign write authorisations. One click on the address colours it red. Via the > button you can adopt the highlighted address into the list of the authorisations.</p>
+				 <p>You have two setting possibilities for the permission per address:</p>
+				 <ul>
+				 <li><u><i>Tree</i>:</u> This is the standard setting. You have a write permission for this one and for all subordinate addresses. You can add new addresses underneath this address and all subordinate addresses.</li>
+				 <li><u><i>Single</i>:</u>You only have a write permission for this address, not for subordinate addresses. You cannot add any new addresses underneath this address. </li>
+				 </ul>
+				 <p><u>Note:</u> You cannot award any write permissions to the structure tree nodes <i>Address</i> and <i>Free Addresses</i>. All sub trees of the catalogue for which a write permission is to be in place have to be selected individually.</p>
+				
+				<p><b>Create Root Objects and Addresses</b></p>
+				 <p>This is a separate write permission. If it is given for a group, the members of this group have the permission to add new objects and addresses to the topmost level of the catalogue. You then automatically receive the write permissions for the whole sub tree of the newly added object or the newly added address. </p>
+				 <p><u>Important:</u> Through this permission the group does <b>not</b> automatically have the write permission for sub trees that already exist but for which write permissions have not been explicitly arranged. </p>		 
+				 
+				 <p><b>Quality Assurance </b></p>
+				 <p>Via the <i>Quality Assurance</i> permission the users of the group become the quality assurance persons for all objects and addresses for which they possess a write permission. They also have the permission (and also the duty) to publish or finally delete objects and addresses sent to them for publication or deletion or to send the objects or addresses back to the persons responsible if they are defective.</p>
+				 <p><u>Note:</u> This right is only effective in connection with   
+				 <a href="?hkey=quality-assurance-0">Workflow Control</a> being switched on in the 
+				 <a href="?hkey=catalog-administration-1">Catalogue Settings</a>.</p>
+				<p><b>Assigned Users</b></p>
+                 <p>On the third tab, a table shows all users that have been assigned to the selected group.</p>
+				<p><b>The special <i>administrators</i> group of the catalogue administrator</b></p>
+				 <p>The <i>Administrators</i> group is always assigned to the catalogue administrator. This assignment can <b>not</b> be changed. The group has write permission for the whole catalogue (of course including the permission to add new objects and addresses to the topmost level). The group has fixed permissions and is automatically present in every catalogue. It cannot be maintained via the group administration and is therefore not shown in the list of the groups.</p>
+            </content>
+        </section>
+        <section help-key="user-administration-3">
+            <header>Permission Overview</header>
+            <content>
+                 <p>In the <i>Permission Overview</i> all users are displayed that have write permissions for an object, an address or a sub tree or the permission to undertake quality assurance.</p>
+				 <p>Click on any object under <i>Object Permissions</i> or on any address under <i>Address Permissions</i>. The object or address selected is highlighted in red. The <i>User Names</i> and the <i>Roles</i> of all users are displayed, who have at least one of the following permissions for the object or the address:</p>
+				 <ul>
+				 <li>Write permission for the <i>Single Object</i> or the <i>Single Addres</i></li>
+				 <li>Write permission for the <i>Sub tree</i></li>
+				 <li>Permission to undertake quality assurance (<i>QA</i>)</li>
+				 </ul>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Administrative function: Catalogue Management</header>
+        <section help-key="overall-catalog-management-1">
+            <header>Analysis</header>
+            <content>
+                 <p>The <i>Catalogue Management</i> menu item is only available to the catalogue administrator. It provides special functions to maintain the catalogue.</p>
+				 <p>The <i>Analysis</i> submenu item provides a series of checks on the catalogue for internal consistency.</p>
+				 <p>Checks are made for the following defects:</p>
+				 <ul>
+				 <li>Objects that do not have address references</li>
+				 <li>Objects that have no parent-objects</li>
+				 <li>Objects that have invalid address references</li>
+				 <li>Addresses that have no parent-address</li>
+				 <li>Entries with errors in object-references </li>
+				 <li>Entries with errors in 1:n tables</li>
+				 </ul>
+				 <p>In normal operation none of these errors should arise as the internal checking mechanism of InGridEditor prevents inconsistencies in entries, saves and releasing of objects and addresses. However, the errors listed can arise, for example, if manually editing or filling the data bank.</p>
+				 <p>The test is triggered on the server via the <i>Start Check</i>. The test can last some minutes depending on the size of the catalogue.</p>
+				 <p>You can obtain <i>Information about the current process</i> in the information box.</p>
+				 <p>The errors that occurred are listed separately in the <i>Analysis Result</i> table. You will be given not only the <i>Error Message</i> but also a proposed <u>Solution</u> to eliminate the error. The error must then be corrected manually by the catalogue administrator or the person responsible for the object or address concerned. </p>
+            </content>
+        </section>
+        <section help-key="overall-catalog-management-2">
+            <header>Duplicates</header>
+            <content>
+                 <p>By <i>Duplicates</i> are understood different objects with the same object name. </p>
+				 <p>By the de-centralised maintenance of the objects in different places in the hierarchy tree it is possible that the same object names were given to objects that have different contents. In the standard case of a search being run, the object names in the result list are shown to the user after the search. The information about the position in the hierarchy tree is missing from this display. It is recommended to provide meaningful names for all objects so that users doing research get a clear idea of the found object. </p>
+				 <p>In calling up the submenu item <i>Duplicates</i> a test is run for duplicates (you can repeat this test later by clicking on the <i>Start Duplicates Check</i> button). The <i>Duplicate Check Result</i> is displayed in a <i>List</i>.  </p>
+				 <p>Choose one of the listed objects with the right mouse button click. The option "Display in Hierarchy Tree" opens the <i>Tree</i> tab and shows the location of the object in the catalogue hierarchy. The option "Open in Editor" loads the selected object in the editor where it can be edited.</p>
+				 <p>When choosing an object with the left mouse button the Name, Type and Description of the object will bedisplayed.</p>
+				 <p>Only the object name can be altered. Changes are applied when the button "Save Changes" is pressed.</p>
+            </content>
+		</section>
+        <section help-key="overall-catalog-management-3">
+            <header>URL-Validation</header>
+            <content>
+                 <p>When calling up the <i>URL-Validation</i> submenu item, a test is run on the URLs inside all objects. You can repeat this test later by clicking on the <i>Start URL check</i> button  </p>
+				 <p>The test can take some minutes depending on the size of the catalogue and the system load of the server. It can be stopped via <i>Cancel process</i>.</p>
+				 <p>You obtain <i>Information about the last process </i>in the information box.</p>
+				 <p>The <i>URL Check Result</i> is displayed in the table below this. By means of tabs you can select whether you want to see <i>All URLs</i>, <i>Invalid URLs</i>, or <i>Summary Invalid URLs</i>.</p>
+				 <p>In the <i>Status</i> column the feedback about the availability of the websites is documented. An HTTP error code will be given for errors.  </p>
+				 <p>For every <i>URL</i> the <i>Status</i>, the <i>class</i> (as icon), and the <i>Object Name</i> are listed plus a <i>Description</i> that corresponds to the field <i>Link Description</i> in the IGE.</p>
+				 <p>One or more URLs can be replaced by highlighting the URLs to be replaced in the table (select several URLs with mouse click whilst simultaneously holding down Ctrl-key) and entering a new URL in the entry field under the table. You swap the URL with the <i>Replace</i> function. A new test will then be run automatically.</p>
+            </content>
+        </section>
+        <section help-key="overall-catalog-management-4">
+            <header>Code Lists</header>
+            <content>
+                 <p>In the submenu <i>Code Lists</i> not only ISO- but also freely definable code lists can be maintained.</p>
+				 <p><b>Code List Management</b></p>
+				 <p>All the code lists used in InGridEditor (IGE) are hidden (not visible at first) in the dropdown list of the <i>Code List</i> field. Select the code list you want to edit. </p>
+				 <p>Lists that cannot be changed are marked [<i>not maintainable</i>]. You can however view these lists by selecting them. In this case the information ’<i>Hint: The entries of this code list cannot be changed</i>’ will be displayed above the list entries and the table is not editable. </p>
+				 <p>In order to alter an entry on a list, double click on the entry in the table and edit the entry. </p>
+				 <p>In order to add to a list entry, go to the end of the list. The last line is empty. By double clicking in the corresponding field, an entry field opens up in which you can make the entry desired. </p>
+				 <p>In order to delete a list entry, click the line, open the context menu with the right mouse button and select the <i>Delete Row</i> function. </p>
+				 <p>Finally, all changes have to be saved using the <i>Save</i> button.</p>
+				 <p><u><i>Set Default </i></u></p>
+				 <p>For some lists a default value can be set. Lists for which this does not apply receive the information ’<i>Hint: For this code list no default value can be set.</i>’and the option <i>Set Default</i> cannot be selected. For the other lists, after the <i>Set Default </i>option is selected, another column appears <i>Default</i> in the list of the dropdown list entries. You can now select one entry as default. When an object is created, the default value is entered in the associated field belonging to this code list. </p>
+				 <p><u><i>Import and Export</i></u></p>
+				 <p>The list of the code lists can be exported and imported. To export, click on <i>Export</i> and select the place where you would like to save the XML file. To import, click on <i>Import</i> and select the XML file you wish to import. It must have the same format as the export file. </p>
+				 
+				 <p><b>Mapping of free entries</b></p>
+				 <p>Under the tag <i>Mapping of free entries</i> free entries of given fields can be adopted into their code lists. </p>
+				 <p>For this, select the code list and the entry in the <i>Entries found in the catalogue that are not in the internal code list</i> that you would like to transfer to the code list. By clicking once on the > <i>Add</i> button it is adopted in the code list. </p>
+				 <p>One click on the >> <i>All</i> button adopts all free entries in the code list.</p>
+				 <p>You can also replace individual free entries by code list entries through selecting the entry you want to replace it in the <i>Entries found in the catalogue that are not in the internal code list</i> and selecting the entry to replace it in the Code List entries. One click on <i>Replace</i> replaces the entry selected in the field by the code list entry. </p>
+				 
+				 <p><b>Re-index</b></p>
+				 <p>In the index the entries of the fields that are maintained via code lists are saved as text of course and not as IDs. If the text was changed for individual IDs then the index is no longer consistent (in a search the old text would be found and not the new text). For this reason, a re-indexing must be triggered for the IGE’s index after an amendment has been made to the code list. </p>
+				 <p>You carry this out via one click on the <i>Start Reindex Process</i> button. Depending on the size of the catalogue and the system load of the server, reindexing can take some minutes. </p>
+            </content>
+        </section>
+        <section help-key="overall-catalog-management-5">
+            <header>Additional Fields</header>
+            <content>
+                 <p>It is possible in InGridCatalog to define <i>Additional Fields</i> in addition to the pre-set fields for each catalogue. This functionality is only accessible by the catalogue administrator.  </p>
+				 <p>Als Datenarten stehen Ihnen für Zusätzliche Felder zur Verfügung:</p>
+                 <ul><li>Textfelder</li>
+                 <li>Nummernfelder</li>
+                 <li>Datumsfelder</li>
+                 <li>Auswahllisten</li>
+                 <li>Tabellen</li></ul>
+                 <p>Tabellen können wiederum Spalten 
+                 mit den folgenden Typen enthalten:</p>
+                 <ul><li>Textfelder</li>
+                 <li>Nummernfelder</li>
+                 <li>Datumsfelder</li>
+                 <li>Auswahllisten</li></ul>
+				 <p><u>Hinweis:</u> Auch bei <i>Zusätzlichen Feldern</i> mit Auswahlliste sind freie 
+				 Einträge möglich.</p>
+				 <p>Auf der Übersichtsseite werden alle Formularelemente (für Objekte), innerhalb ihrer Rubriken
+                 angezeigt. Diese sind nicht nur zusätzlich hinzugefügte Felder, sondern auch Kernfelder, die
+                 nur in geringem Maße verändert werden können. Darunter zählt die Sichtbarkeit des Feldes,
+                 ob es ein Pflichtfeld sein soll und speziellen Javascript-Code, der Einfluss auf die Funktionsweise
+                 des Feldes haben kann.</p>
+                 <br></br>
+                 <p>Kernfelder, die nur eingeschränkt bearbeitet werden können, erkennt man daran, dass sie kein
+                 Erkennungsbild besitzen und auch keinen "Löschen"-Button zugewiesen haben. Zusätzliche Felder
+                 hingegen, kann man auch wieder "Löschen" und ihre Position beeinflussen. Wird ein zusätzliches
+                 Feld in einer vorhandenen Kernrubrik angelegt, so erscheint dieses nach dem letzten Kernfeld. Die
+                 Reihenfolge von Kernfeldern ist nicht beeinflussbar!</p>
+                 <br></br>
+                 <p>Wird auf "<b>Neu laden</b>" geklickt, so werden alle Änderungen verworfen und der zuletzt gepeicherte
+                 Zustand geladen. Zwei Checkboxen sollen dazu helfen, um Übersicht über die Zusätzlichen Felder zu
+                 bekommen. So bewirkt "<b>Kernfelder verstecken</b>", dass nur zusätzliche Felder angezeigt werden und 
+                 "Leere Rubriken verstecken", zeigt nur diese Rubriken an, die mindestens ein zusätzliches Feld
+                 beinhalten.</p>
+                 
+				 <p><u>Achtung:</u> Alle Änderungen an den <i>zusätzlichen Feldern</i> werden erst nach 
+				 dem Klick auf den Button <i>Speichern</i> durchgeführt. Sie stehen vorher nicht 
+				 zur Verfügung.</p>
+				 <p><u>Hinweis:</u> Alle gespeicherten Änderungen an den <i>zusätzlichen Feldern</i> stehen 
+				 nach dem nächsten Laden der Erfassungskomponente zur Verfügung.</p>
+                 
+                 <section help-key="overall-catalog-management-additionalfields-1">
+                    <h4>Neues Feld erstellen</h4>
+                    <content>
+                        <p>Um ein neues Formelement zu erstellen, wählt man zuerst die Rubrik aus, in welcher das
+                        Feld angelegt werden soll. Dazu befindet sich unter jeder Rubrik eine Auswahlliste, in 
+                        der das zu erstellende Feld ausgewählt wird, und ein Button "Neues Formelement", der einen
+                        entsprechenden Dialog für die Erstellung öffnet.</p>
+                        <p>Als erstes muss eine <b>eindeutige ID</b> für das neu zu erstellende Element gewählt werden.
+                        Über diese kann das Feld später auch angesprochen werden, um bspw. eine spezielle Behandlung
+                        einzuführen. Als nächstes ist es möglich, das neue Feld als <b>Pflichtfeld</b> zu deklarieren.
+                        Hierdurch wird die Beschriftung des Feldes automatisch fett gedruckt und der Inhalt des Feldes
+                        wird vor einer Veröffentlichung auf einen gültigen Wert hin überprüft (für eine spezielle Behandlung
+                        siehe weiter unten).</p>
+                        <p>Die Sichtbarkeit kann so beeinflusst werden, dass das Feld <b>optional</b> erscheint und somit nur
+                        bei einem Ausklappen der Rubrik sichtbar wird, durch <b>anzeigen</b> wird es niemals ausgeblendet und
+                        durch <b>verstecken</b> wird es permanent ausgeblendet und wird nie angezeigt.</p>
+                        <p>Weiterhin kann eine <b>Beschriftung</b> und ein <b>Hilfetext</b> für das Feld vergeben werden. Dies ist in
+                        verschiedenen Sprachen möglich, wobei ein Eintrag in der ersten Sprache (Standard: Englisch) Pflicht ist.
+                        Wird der InGrid-Editor in einer anderen Sprache als Englisch betrieben, so wird ein englischer Titel bzw.
+                        eine englische Hilfe beim Fehlen der Lokalisierung angezeigt.</p>
+                        <p>In dem Bereich Skripte unter <b>Javascript</b> kann Javascript-Funktionalität hinzugefügt werden, die
+                        beim Starten des InGrid-Editors ausgeführt werden soll. Dadurch lässt sich die Funktionalität beliebig
+                        erweitern und Sonderbehandlung für Felder können ergänzt werden. Es folgen ein paar Beispiele, die dies
+                        für ein Element mit der ID "neuesElement" veranschaulichen soll. Die ersten Beispiele beziehen sich auf 
+                        die Validierung von Feldern, welche während eines normalen Speichervorganges ausgeführt werden. Bei einem 
+                        Fehler wird das Objekt dann nicht gespeichert.</p>
+                        
+                        <br />
+                        <i>// Textelement erlaubt nur Email-Adressen</i>
+                        dijit.byId("neuesElement").regExpGen = dojox.validate.regexp.emailAddress;
+                        <br /><br />
+                        <i>// Textelement darf nicht das Wort "NO" haben</i>
+                        dijit.byId("neuesElement").validator = function(value) {<br />
+                            if (value == "NO") return false; else return true;<br />
+                        }
+                        <br /><br />
+                        <p>Möchte man die Validierung nur durchführen, wenn ein Objekt veröffentlich werden soll, so muss ein anderer
+                        Ansatz gewählt werden! Laut des Publisher/Subscriber Prinzips, meldet man sich bei einem Ereignis an. Tritt
+                        dieses Ereignis auf, wird die eigene geschriebene Funktion ebenfalls zu diesem Zeitpunkt ausgeführt. Dafür 
+                        gibt es das spezielle Ereignis "<b>/onBeforeObjectPublish</b>" und kann wie folgt verwendet werden:</p>
+                        <br />
+                        <i>// vor dem Publizieren muss das Element mehr als 5 Zeichen haben</i>
+                        dojo.subscribe("/onBeforeObjectPublish", function(invalidIDs) {<br />
+                            if (dijit.byId("neuesElement").get("value").length &lt; 5) { <br />
+                                invalidIDs.push("neuesElement"); <br />
+                            }<br />
+                        });<br />
+                        
+                        <p>In der Variablen <i>invalidIDs</i> werden die gesamten IDs von den Elementen gesammelt, die einen 
+                        Validierungsfehler aufzeigen.</p>
+                        <p>Ein weiteres verfügbares Ereignis ist "/onObjectClassChange" welches immer auftritt, wenn die Objektklasse
+                        manuell oder automatisch (durch das Laden eines anderen Objektes) sich ändert. Hierbei wird die neue Klasse als
+                        Parameter an den Subscriber übergeben!</p>
+                        <p>Für ein besseres Verständis dieser Prinzipien empfiehlt es sich die Dokumentation des DOJO-Frameworks
+                        anzuschauen! (http://dojotoolkit.org/documentation/)</p><br></br>
+                        
+                        <p>Das <b>IDF-Mapping</b> beschreibt die Abbildung dieses Feldes in das InGrid-Data-Format. Ein Beispiel folgt:</p>
+                        
+                        <br></br>
+                        
+                        <p>Der <b>Indexname</b> definiert den zu verwendenden Namen während der Indexierung des Kataloges. Wird kein
+                        Name ausgewählt, so wird dieses Feld auch nicht im Index erscheinen und ist auch nicht durchsuchbar!</p>
+                        <p>Die Breite gibt an, wieviel Platz das Element in der Zeile einnehmen soll. Die Angabe ist in Prozent, so
+                        dass "100" bedeutet, dass die gesamte Breite verwendet werden soll und "50", dass nur die Hälfte. Werden 
+                        zwei Elemente mit jeweils 50% Breite angegeben, so werden diese korrekt nebeneinander positioniert. Damit
+                        hat man eine flexible Möglichkeit das Layout individuell anzupassen.</p>
+                        <br></br>
+                        <p>Bei Textfeldern ist es möglich, die "<b>Anzahl der Zeilen</b>" anzugeben. Dadurch lassen sich mehrzeilige
+                        Textboxen erstellen, für Felder, die mehr Text beinhalten sollen.</p>
+                        <br></br>
+                        <p>Bei Nummernfeldern ist es möglich, eine "<b>Einheit</b>" mit anzugeben. Diese wird hinter der Eingabebox
+                        und sprachabhängig angezeigt.</p>
+                        <br></br>
+                        <p>Bei einer Auswahlliste lassen sich die "<b>Optionen</b>" definieren, die fest vorgeben werden sollen.
+                        Diese werden auch wieder mehrsprachig angegeben und sind über eine eigene automatisch generierte ID miteinander
+                        synchronisiert. Die anzuzeigende Reihenfolge kann ebenfalls verändert werden, indem eine Zeile über den linken
+                        "Griff" an eine beliebige Position verschoben wird. Des Weiteren ist es möglich, freie Einträge in der Auswahlliste
+                        zu erlauben. Dazu muss die Checkbox "<b>Erlaube freie Einträge</b>" angekreuzt werden.</p>
+                        
+                        <br></br>
+                        <p>Für Tabellen lassen sich die "<b>Anzahl der Reihen</b>" definieren, die initial (und leer) angezeigt werden
+                        sollen. In der Spaltendefinition lässt sich eine "<b>Neue Spalte</b>" hinzufügen, löschen oder auch bearbeiten.
+                        Eine Spalte kann vom Typ Textfeld, Nummernfeld, Datumsfeld oder Auswahlliste sein. Die Erstellung einer Spalte
+                        orientiert sich der, der anderen Elemente. Die <b>Breite</b> einer Spalte wird hier allerdings in Pixel 
+                        angegeben.</p>
+                        
+                        <br></br>
+                        <p>Nach einem Klick auf "Hinzufügen", wird das neu angelegte Feld noch nicht endgültig 
+                        gespeichert. Dazu muss auf der Übersichtsseite abschließend der "Speichern"-Button gedrückt werden!</p>
+                    </content>
+                 </section>
+                 
+                 <section help-key="overall-catalog-management-additionalfields-2">
+                    <h4>Zusätzliches Feld bearbeiten</h4>
+                    <content>
+                        <p>Das Bearbeiten eines zusätzlichen Feldes unterscheidet sich nur insofern von einem neu angelegten Feld,
+                        dass die <b>ID</b> nicht verändert werden kann. Für weitere Informationen über die verschiedenen 
+                        Einstellungen, lesen Sie bitte dazu den vorherigen Abschnitt und/oder die Kontextsensitive Hilfe zu den
+                        einzelnen Feldern.</p>
+                        
+                        <br></br>
+                        <p>Nach einem Klick auf "Aktualisieren", wird das neu angelegte Feld noch nicht endgültig 
+                        gespeichert. Dazu muss auf der Übersichtsseite abschließend der "Speichern"-Button gedrückt werden!</p>
+                    </content>
+                 </section>
+                 
+                 <section help-key="overall-catalog-management-additionalfields-3">
+                    <h4>Neue Rubrik anlegen/bearbeiten</h4>
+                    <content>
+                        <p>Eine <b>Neue Rubrik</b> wird erstellt, indem auf dem entsprechenden Button gedrückt wird. Jede Rubrik
+                        kann verschiedene zusätzliche Felder enthalten. Wird eine zusätzliche Rubrik gelöscht, werden auch alle
+                        beinhalteten zusätzliche Felder entfernt (nachdem abschließend auf "Speichern" gedrückt wurde).</p>
+                    </content>
+                 </section>
+            </content>
+        </section>
+        <section help-key="overall-catalog-management-6">
+            <header>Replace Address</header>
+            <content>
+                 <p>With this function it is possible to replace an address in all objects in which it appears. It is only accessible to the catalogue administrator. </p>
+				 <p>In case there is a change of responsibilities, the address details should be modified in the existing address of the predecessor. If, for example, the person responsible up to now, Mr Taylor, leaves and the responsibilities fall to his successor, Mr. Miller, then the simplest and correct way to change the address is to replace <i>Surname, Forename</i>, and, if necessary, <i>Communication</i> etc. in the Taylor address details. </p>
+				 <p>Sometimes the procedure described is not possible. If, for example, Mr Miller, the person so far responsible for one sub tree also has to take on the responsibilities of his colleague, Mr Meyer. In this case the <i>Replace Address</i> function is to be used.  </p>
+				 <p>Select under <i>Address to Delete</i> the address that is now to be finally deleted. All objects in which the address selected appears as the information address will be displayed, likewise all objects and addresses in which the address appears as the person responsible.  </p>
+				 <p><u>Note:</u>You can save these details tab for tab with <i>Save as CSV File</i>. </p>
+				 <p>Select a <i>New Address</i>. Some details are given on the address for information purposes. </p>
+				 <p><u>Note:</u>Only published addresses can be chosen. </p>
+				 <p>After clicking on the <i>Replace and Delete</i> button and then confirming the security prompt, the address in all objects containing the address as information will be replaced with the <i>New Address</i>.
+				 If the address is a responsible user for an object or address (IGE user) you first have to assign a new address to the IGE user (see below). Then the <i>Address to Delete</i> is removed from the catalogue. </p>
+				 <p><u>Note:</u>If an IGE user is assigned to the <i>Address to Delete</i>, you will be requested to assign another address to this IGE user. You can only carry out the <i>Replace and Delete</i> function after the user is assigned to another address. </p>
+            </content>
+        </section>
+        <section help-key="overall-catalog-management-7">
+            <header>Search Terms</header>
+            <content>
+                 <p>InGridCatalog (IGC) uses the environmental thesaurus (UMTHES) of the Federal Environment Agency (Umweltbundesamt) in Dessau. It contains more than 30,000 specialist terms from the ‘environment’ subject area. The word inventory of the European environmental thesaurus
+				 <a href="http://www.eionet.europa.eu/gemet" target="SNS">
+				 GEMET (GEneral Multilingual Environmental Thesaurus)</a> 
+				 is an integrated subset within UMTHES.  </p>
+                 <p>UMTHES is made available via the  
+				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
+				 of the Federal Environment Agency (Umweltbundesamt).</p>
+                 <p>The thesaurus descriptors are stored in the IGC not only as SNS-IDs but also as terms. Not only the UMTHES but also the GEMET too are being maintained and developed further. For this reason the SNS too receives regular updating.  </p>
+				 <p>After every updating of the SNS, the data base of the IGC has to be checked for consistency with the newest version of SNS and, if necessary, adapted. The catalogue administrator can do this automatically via the <i>Search Terms</i> function in the <i>Catalogue Management</i> menu item.</p>
+				 <p>The updating operation is executed <b>online</b> by clicking on the <i>Start Update</i> button. In this case, SNS is interrogated online via the net. Depending on the net capacity utilisation, the update process can take somewhat longer.</p>
+				 <p>After updating, some <i>Information about the last update process</i> is displayed in the information box.</p>
+				 <p>Detailed information on every change is provided in the table below it. In the first column the original <i>Description</i> of the search term is displayed. The <i>Type</i> of the term follows. The following types can appear:</p>
+				 <ul>
+				 <li><u><i>UMTHES Term</i></u>: <br/>term from the UMTHES Thesaurus</li>
+				 <li><u><i>GEMET Term</i></u>: <br/>term from the GEMET Thesaurus</li>
+				 <li><u><i>Free Term</i></u>: <br/>Free search term (no thesaurus descriptor)</li>
+				 </ul>
+				 <p>For each changed term the <i>Action</i> is shown. The following possibilities exist:</p>
+				 <ol>
+				 <li><u><i>Descriptor moved to free search term</i></u>:
+				 <br/>A thesaurus term is no longer contained in the SNS as a descriptor. It is moved from a thesaurus search term to a free search term.</li>
+				 <li><u><i>Free search term replaced by ’search term’ descriptor (UMTHES Term)
+				 </i></u>:
+				 <br/>A free search term is identified as a thesaurus descriptor and transferred from a free search term into a thesaurus(UMTHES) search term.</li>
+				 <li><u><i>Free search term enhanced with ’search term’ descriptor (UMTHES term)</i></u>:
+				 <br/>A free search term is identified as a synonym to a thesaurus descriptor. The associated thesaurus descriptor is enhanced as a thesaurus search term. The free search term is kept.</li>
+				 <li><u><i>Descriptor updated, is now ’GEMET search term’ (GEMET Term), ’UMTHES search term’ (UMTHES)</i></u>:
+				 <br/>An UMTHES search term is identified as a GEMET descriptor with the same SNS-ID but with another name. The GEMET name is added.</li>
+				 <li><u><i>5.	Descriptor REPLACED by ’GEMET search term’ (GEMET term) descriptor, ’UMTHES search term’ (UMTHES):</i></u>:
+				 <br/>The name of a thesaurus search term is identified as a GEMET descriptor with another  SNS-ID. The SNS-ID is replaced. The name of the GEMET descriptor as well as the associated UMTHES descriptor is added. </li>
+				 <li><u><i>6.	Descriptor transferred into free search term Descriptor REPLACED by  descriptor ’GEMET search term’ (GEMET term), ’UMTHES search term’ (UMTHES):</i></u>
+				 <br/>A thesaurus term in UMTHES was transferred from a descriptor into the status of a synonym. The UMTHES synonym is however a GEMET descriptor. The thesaurus term is transferred into the free search terms. The associated GEMET and UMTHES descriptors are enhanced as thesaurus search terms.</li>
+				 </ol>
+				 <p>Finally the number of the <i>Objects and Addresses</i>, in which the changed search term was used, are displayed.</p>
+				 <p>You can download the list of the changes via the <i>Save as CSV File</i> from the server.</p>
+            </content>
+        </section>
+        <section help-key="overall-catalog-management-8">
+            <header>Location Search Terms</header>
+            <content>
+                 <p>InGridCatalog (IGC) uses the Gazetteer Geo-Thesaurus Umwelt (GTU). It is made available via the 
+				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a>
+				 of the Federal Environment Agency (Umweltbundesamt).</p>
+				 <p>The GTU’s geographical terms are saved in the IGC not only as SNS-IDs but also as a term and – in as far as they are available – as coordinates. The GTU is maintained and developed further. Thus the SNS too undergoes regular updating of the geographical terms.  </p>
+				 <p>After every updating of the SNS the IGC data base has to be checked for consistency with the latest version of the SNS and, where necessary, adjusted to match. This can be done by the catalogue administrator automatically via the <i>Location Search Terms</i> function in the <i>Catalogue Management</i> menu item.</p>
+				 <p>The updating of the search terms in the IGC can be carried out <b>offline</b> via one of the files delivered by the SNS. For this load the file via the Browse button and start the operation via the <i>Start Update</i> button.</p>
+				 <p>Alternatively, you can also carry out the updating process online by clicking the <i>Start Update</i> button without having loaded a file beforehand. In this case the SNS is interrogated online via the net. This method has the advantage that no file has to be made available beforehand from the Federal Environment Agency (Umweltbundesamt) or the KST PortalU but could possibly take longer depending on capacity utilisation of the net.</p>
+				 <p>After the updating some <i>Information about the last update process</i> are displayed in the information box.</p>
+				 <p>Detailed information on every change is provided in the table underneath. In the first two columns the original designation of the <i>Spatial Reference</i> and the <i>ID</i> provided by SNS are displayed. </p>
+				 <p>For every changed term the <i>Action</i> is displayed. The following possibilities exist:</p>
+				 <ol>
+				 <li><u><i>No longer applicable:</i></u>
+				 <br/>The spatial reference was removed from SNS. It is also deleted from the IGC objects.</li>
+				 <li><u><i>New designation "…", new boundary line, new topic type "…", new topic ID "…":</i></u>
+				 <br/>The designation, the boundary line, the topic type or the topic ID have changed. Individual points or a combination of them have changed. The respective new designations or IDs are displayed.</li>
+				 </ol>
+				 <p>Finally, the number of the <i>Objects</i> is displayed in which the changed or deleted geographical term was used.</p>
+				 <p>You can download the list of the changes via the <i>Save as CSV File</i> button from the server.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Administrative function: Import/Export</header>
+        <section help-key="import-export-1">
+            <header>Export</header>
+            <content>
+                 <p>Export takes place in an XML model specific to InGridCatalog (IGC) that optimally depicts the characteristics of the IGC data model.</p>
+				 <p>There are two possibilities for export: <i>Criteria Export</i> and <i>Tree Export</i>.</p>
+				 
+				 <p><b>Criteria Export</b></p>
+				 <p>Individual objects, which were highlighted in the <i>XML Export Criteria</i> field of the <i>Additional Information </i>field group with a freely selectable string, are exported from the catalogue. All strings used are listed in the dropdown list and can be selected. As a rule, single objects without subordinate objects are exported. Addresses cannot be exported</p>
+				 <p>The export operation is triggered by one click on <i>Start Export</i>.</p>
+				 
+				 <p><b>Tree Export</b></p>
+				 <p>Via <i>Tree Export</i> entire sub trees can be exported including their structure. </p>
+				 <p>Click on <i>Select Tree Node</i>. A dialogue box opens up by means of which you can select objects as well as addresses. With one click on an object or an address this is highlighted in red. Via <i>Select</i> the highlighted object or the highlighted address is transferred into the Tree Export field. </p>
+				 <p><u>Note:</u> Click on <i>Select Tree Node</i>. A dialogue box opens up by means of which you can select objects as well as addresses. With one click on an object or an address this is highlighted in red. Via <i>Select</i> the highlighted object or the highlighted address is transferred into the Tree Export field. </p>
+				 <p>If you select the setting ‚Export the selected node only’ only the individual object or address selected will be exported and not the sub tree.</p>
+				 <p>The export operation is triggered via one click on <i>Start Export</i>.</p>
+     
+                 <p>Normally only published objects and addresses are exported. But if you want to do a full export
+                 including the working versions, then you have to check the option <i>"also export working copies"</i>.</p>            
+				 
+				 <p><b>Information about the last process</b></p>
+				 <p>In all cases export is carried out asynchronously. The process can take several minutes depending on the amount of the objects to be exported and the system load of the server. </p>
+				 <p>In the window Information about the last process information on the last export operation triggered is displayed. If the operation has ended, you can download the export file by activating the download function with a click on the button <i>Link</i>. </p>
+				 <p>It is an XML file that has been compressed in GNU zip format. You can unzip it with the relevant applications on your computer and, for example, examine in the internet browser. </p>
+            </content>
+        </section>
+        <section help-key="import-export-2">
+            <header>Import</header>
+            <content>
+                 <p><b>Import-File</b></p>
+				 <p>State an import file. The file must (like the export file) be an XML file that has been compressed in the GNU zip format. It is selected via the <i>Browse</i> button in the local computer. With this a dialogue box is opened as it is customary in the internet browser you use. </p>
+				 <p><b>Import-Typ</b></p>
+				 <p>There are three different formats that can be imported:</p>
+				 <p><u>InGrid Catalog:</u> the import takes place in the same format as the 
+				 <a href="?hkey=import-export-1">Export</a>.</p> 
+				 <p><u>CSW 2.0.2 AP ISO 1.0 (Single Metadata file):</u> The import file must consist of a valid XML document in the OGC format of the Catalog Service Web (CSW) in the 2.0.2 version and be in accordance with the ISO 1.0 definition of the application profile. In so doing only one file can be imported that contains exactly one metadata set in this format.</p>
+				 <p><u>ArcGIS ISO-Editor:</u> Import of an XML file produced with the help of ArcGIS. The document must have been saved out of ArcGIS in the ISO format</p>
+				 
+				 <p><b>Publish Imported Datasets </b></p>
+                 <p>This option is only available for the import types <i>CSW</i> and <i>ArcGIS</i>!</p>            
+				 <p>As a default, all imported objects and addresses are cached in a working version, that is, they are not yet published. With the <i>Publish Imported Datasets</i> setting you can instigate an immediate publication without the datasets being subject to a further checking and being ’manually’ published. </p>
+				 <p><u>Note:</u>The setting <i>Publish Imported Datasets</i> is overwritten if obligatory details are missing in the objects and addresses. In this case the object or address is imported as a working version only and has to be revisited before publication.</p>
+				 
+                 <p><b>Overwrite identical metadata</b></p>
+                 <p>With the unique identification key of a metadata it's possible to identify same metadatas, which come from an import.
+                 With this option activated, all identical metadata from the catalogue are overwritten with the data from the import. It
+                 can also happen that the position of the object or address in the hierarchy tree changed after the import.</p>
+                 
+				 <p><b>Only add imported datasets under the selected import nodes</b></p>
+				 <p>The objects and addresses of InGridCatalog (IGC) have a unique identifier (UUID). If objects are imported into IGC from external systems, the identifier supplied with them by the external system will be additionally saved in the object as the original identifier (OID).</p>
+				 <p>As a default, an object to be imported (or an address to be imported) is identified by the UUID and OID in the database. If it already exists then it is overwritten with the details to be imported. In so doing, the location under the structure tree will be kept. The import nodes (see below) are ignored in this case.</p>
+				 <p>You can overwrite the default setting by selecting Create datasets solely under the import nodes. In this case, the objects, even when they ought to already exist in the catalogue, will be saved underneath the import node given (see below). (In doing so, a new UUID will be given).</p>
+				 
+				 <p><b>Sub Tree Import</b></p>
+				 <p>To carry out an import, the giving of a <i>Parent Object</i> and a <i>Parent Address</i> is always necessary. All objects and addresses that do not yet exist are filed underneath these import nodes. In so doing a structure of the objects or addresses supplied in the import file is kept if necessary.</p>
+				 <p><u>Note:</u>The details <i>Parent Object</i> and <i>Parent Address</i> are then necessary if they are not used for the specially selected import file (because, for example, only objects or addresses already in existence are imported). In such a case simply select two dummy details.  </p>
+				 
+				 <p><b>Information about the last process</b></p>
+				 <p>The import operation is carried out asynchronously. The process can take several minutes according to the amount of the objects to be imported and the system load of the server. </p>
+				 <p>In the Information about the last process window information is displayed on the last operation triggered. If the operation has finished then a <i>Link</i> is displayed under about the last process.</p>
+				 <p>Click on the <i>Link </i>and thus download the file log.txt from the server. In it is contained the information on the import operation (operation messages, warnings and error messages). You can view them with a normal editor, such as, for example, WordPad.</p>
+            </content>
+        </section>
+    </chapter>
+</help>

@@ -1,0 +1,386 @@
+<!--
+  **************************************************-
+  Ingrid Portal MDEK Application
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+<ProfileIGC>
+    <supportedLanguages>en,de</supportedLanguages>
+    <layoutRubric isLegacy="true">
+        <id>general</id>
+        <controls>
+            <numberControl>
+                <id>addNumber</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Eine Zahl</localizedLabel>
+                <localizedLabel lang="en">A number</localizedLabel>
+                <localizedLabelPostfix lang="de">
+                </localizedLabelPostfix>
+                <localizedLabelPostfix lang="en">
+                </localizedLabelPostfix>
+                <localizedHelp lang="de">Bitte eine Zahl eingeben</localizedHelp>
+                <localizedHelp lang="en">Enter a number please</localizedHelp>
+                <scriptedCswMapping>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedCswMapping>
+                <indexName>aNumber</indexName>
+                <layoutWidth>100</layoutWidth>
+            </numberControl>
+        </controls>
+    </layoutRubric>
+    <layoutRubric isLegacy="false">
+        <id>contentDiv2</id>
+        <localizedLabel lang="de">Zusätzliche Eigenschaften</localizedLabel>
+        <localizedLabel lang="en">Additional Properties</localizedLabel>
+        <localizedHelp lang="de">Diese Rubrik enthält alles Zusätzliche.</localizedHelp>
+        <localizedHelp lang="en">This rubric contains all additional data.</localizedHelp>
+        <controls>
+            <legacyControl>
+                <id>Object_TimeReference_Status</id>
+                <localizedLabel lang="de">Alte Eigenschaft</localizedLabel>
+                <localizedLabel lang="en">Legacy Element</localizedLabel>
+                <isVisible>false</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                        JavaScript Code
+                    ]]>
+                </scriptedProperties>
+            </legacyControl>
+            <textControl>
+                <id>text1</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Farbe</localizedLabel>
+                <localizedLabel lang="en">Color</localizedLabel>
+                <localizedLabelPostfix lang="de">Farbliste
+                    0815
+            </localizedLabelPostfix>
+                <localizedLabelPostfix lang="en">Colorlist
+                    0815
+            </localizedLabelPostfix>
+                <localizedHelp lang="de">Bitte wählen Sie hier Ihre
+                    Farbe
+                    aus der Liste</localizedHelp>
+                <localizedHelp lang="en">Please choose your color
+                </localizedHelp>
+                <scriptedCswMapping>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedCswMapping>
+                <indexName>color</indexName>
+                <layoutWidth>50</layoutWidth>
+                <layoutNumLines>1</layoutNumLines>
+            </textControl>
+            <textControl>
+                <id>text2</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Gewicht</localizedLabel>
+                <localizedLabel lang="en">Weight</localizedLabel>
+                <localizedLabelPostfix lang="de">kg
+                </localizedLabelPostfix>
+                <localizedLabelPostfix lang="en">pounds
+                </localizedLabelPostfix>
+                <localizedHelp lang="de">Bitte wählen Sie hier Ihr
+                    Gewicht
+                    aus der Liste</localizedHelp>
+                <localizedHelp lang="en">Please choose your weight
+                </localizedHelp>
+                <scriptedCswMapping>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedCswMapping>
+                <indexName>weight</indexName>
+                <layoutWidth>50</layoutWidth>
+                <layoutNumLines>1</layoutNumLines>
+            </textControl>
+            <numberControl>
+                <id>number1</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Alter</localizedLabel>
+                <localizedLabel lang="en">Age</localizedLabel>
+                <localizedLabelPostfix lang="de">
+                </localizedLabelPostfix>
+                <localizedLabelPostfix lang="en">
+                </localizedLabelPostfix>
+                <localizedHelp lang="de">Alter eingeben</localizedHelp>
+                <localizedHelp lang="en">Enter age</localizedHelp>
+                <scriptedCswMapping>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedCswMapping>
+                <indexName>number</indexName>
+                <layoutWidth>100</layoutWidth>
+            </numberControl>
+            <textControl>
+                <id>textarea1</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Beschreibung</localizedLabel>
+                <localizedLabel lang="en">Description</localizedLabel>
+                <localizedLabelPostfix lang="de">
+                </localizedLabelPostfix>
+                <localizedLabelPostfix lang="en">
+                </localizedLabelPostfix>
+                <localizedHelp lang="de"></localizedHelp>
+                <localizedHelp lang="en"></localizedHelp>
+                <scriptedCswMapping>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedCswMapping>
+                <indexName>descr</indexName>
+                <layoutWidth>66</layoutWidth>
+                <layoutNumLines>6</layoutNumLines>
+            </textControl>
+            <textControl>
+                <id>text3</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Datum</localizedLabel>
+                <localizedLabel lang="en">Date</localizedLabel>
+                <localizedLabelPostfix lang="de">
+                </localizedLabelPostfix>
+                <localizedLabelPostfix lang="en">
+                </localizedLabelPostfix>
+                <localizedHelp lang="de">Bitte wählen Sie hier Ihr
+                    Datum
+                    aus der Liste</localizedHelp>
+                <localizedHelp lang="en">Please choose your date
+                </localizedHelp>
+                <scriptedCswMapping>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedCswMapping>
+                <indexName>date</indexName>
+                <layoutWidth>34</layoutWidth>
+                <layoutNumLines>1</layoutNumLines>
+            </textControl>
+            <textControl>
+                <id>text4</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Zeit</localizedLabel>
+                <localizedLabel lang="en">Time</localizedLabel>
+                <localizedLabelPostfix lang="de">
+                </localizedLabelPostfix>
+                <localizedLabelPostfix lang="en">
+                </localizedLabelPostfix>
+                <localizedHelp lang="de">Bitte wählen Sie hier Ihre
+                    Zeit</localizedHelp>
+                <localizedHelp lang="en">Please choose your time
+                </localizedHelp>
+                <scriptedCswMapping>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedCswMapping>
+                <indexName>times</indexName>
+                <layoutWidth>34</layoutWidth>
+                <layoutNumLines>1</layoutNumLines>
+            </textControl>
+            <textControl>
+                <id>text5</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Zeit2</localizedLabel>
+                <localizedLabel lang="en">Time2</localizedLabel>
+                <localizedLabelPostfix lang="de">
+                </localizedLabelPostfix>
+                <localizedLabelPostfix lang="en">
+                </localizedLabelPostfix>
+                <localizedHelp lang="de">Bitte wählen Sie hier Ihre
+                    Zeit</localizedHelp>
+                <localizedHelp lang="en">Please choose your time
+                </localizedHelp>
+                <scriptedCswMapping>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedCswMapping>
+                <indexName>times2</indexName>
+                <layoutWidth>34</layoutWidth>
+                <layoutNumLines>1</layoutNumLines>
+            </textControl>
+        </controls>
+    </layoutRubric>
+    <layoutRubric isLegacy="false">
+        <id>contentDiv3</id>
+        <localizedLabel lang="de">Ein paar Tabellen</localizedLabel>
+        <localizedLabel lang="en">Some tables</localizedLabel>
+        <localizedHelp lang="de">Diese Rubrik enthält ein paar Tabellen.</localizedHelp>
+        <localizedHelp lang="en">This rubric contains some tables.</localizedHelp>
+        <controls>
+            <tableControl>
+                <id>Rubric4_CustomerColorAgeBirthdayTable</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Kunden Farb-Alter-Geburtstags Tabelle</localizedLabel>
+                <localizedLabel lang="en">Customer Color-Age-Birthday Table</localizedLabel>
+                <localizedHelp lang="de">In dieser Tabelle können
+                    Sie die Lieblingsfarbe, Alter und Geburtstag Ihrer
+                    Kunden eingeben.</localizedHelp>
+                <localizedHelp lang="en">This table contains the
+                    favourite color, age and birthday of the customers.
+                </localizedHelp>
+                <scriptedCswMapping>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedCswMapping>
+                <layoutNumLines>4</layoutNumLines>
+                <layoutWidth>100</layoutWidth>
+                <columns>
+                    <textControl>
+                        <id>CustomerColorColumn</id>
+                        <localizedLabel lang="de">Farbe</localizedLabel>
+                        <localizedLabel lang="en">Color</localizedLabel>
+                        <indexName>customer_color</indexName>
+                        <layoutWidth>200</layoutWidth>
+                    </textControl>
+                    <numberControl>
+                        <id>CustomerAgeColumn</id>
+                        <localizedLabel lang="de">Alter</localizedLabel>
+                        <localizedLabel lang="en">Age</localizedLabel>
+                        <indexName>customer_age</indexName>
+                        <layoutWidth>100</layoutWidth>
+                    </numberControl>
+                    <dateControl>
+                        <id>CustomerBirthdayColumn</id>
+                        <localizedLabel lang="de">Geburtstag</localizedLabel>
+                        <localizedLabel lang="en">Birthday</localizedLabel>
+                        <indexName>customer_birthday</indexName>
+                        <layoutWidth>50</layoutWidth>
+                    </dateControl>
+                    <selectControl>
+                        <id>ParticipateColumn</id>
+                        <localizedLabel lang="de">Teilnahme</localizedLabel>
+                        <localizedLabel lang="en">Participate</localizedLabel>
+                        <indexName>participate</indexName>
+                        <layoutWidth>50</layoutWidth>
+                        <selectionList isExtendable="false">
+                            <items lang="de">
+                                <item>ja</item>
+                                <item>nein</item>
+                            </items>
+                            <items lang="en">
+                                <item>yes</item>
+                                <item>no</item>
+                            </items>
+                        </selectionList>
+                    </selectControl>
+                </columns>
+            </tableControl>
+            
+            <selectControl>
+                <id>typeList</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Typ wählen:</localizedLabel>
+                <localizedLabel lang="en">Choose your type:</localizedLabel>
+                <localizedHelp lang="de">Bitte wählen Sie hier Ihren Typ</localizedHelp>
+                <localizedHelp lang="en">Please choose your type</localizedHelp>
+                <indexName>type</indexName>
+                <layoutWidth>100</layoutWidth>
+                <selectionList isExtendable="false">
+                    <items lang="de">
+                        <item>Android</item>
+                        <item>iOS</item>
+                        <item>Symbian</item>
+                    </items>
+                    <items lang="en">
+                        <item>Android</item>
+                        <item>iOS</item>
+                        <item>Symbian</item>
+                    </items>
+                </selectionList>
+            </selectControl>
+            <dateControl>
+                <id>date1</id>
+                <isVisible>true</isVisible>
+                <scriptedProperties>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedProperties>
+                <localizedLabel lang="de">Datum</localizedLabel>
+                <localizedLabel lang="en">Date</localizedLabel>
+                <localizedLabelPostfix lang="de"></localizedLabelPostfix>
+                <localizedLabelPostfix lang="en"></localizedLabelPostfix>
+                <localizedHelp lang="de">Bitte Datum wählen</localizedHelp>
+                <localizedHelp lang="en">Please choose date</localizedHelp>
+                <scriptedCswMapping>
+                    <![CDATA[
+                      JavaScript Code
+                    ]]>
+                </scriptedCswMapping>
+                <indexName>date</indexName>
+                <layoutWidth>50</layoutWidth>
+            </dateControl>
+        </controls>
+    </layoutRubric>
+</ProfileIGC>

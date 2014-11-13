@@ -1,0 +1,678 @@
+/*
+ * **************************************************-
+ * Ingrid Portal MDEK Application
+ * ==================================================
+ * Copyright (C) 2014 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+/*** general ***/
+/*html, body {
+    color: #000000;
+    font: 11px/16px Verdana,Helvetica,Arial,sans-serif;
+}*/
+
+.dijitTextBox, .dijitSelect {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.dj_webkit .dijitTextBoxDisabled INPUT { color: #818181; }
+
+div { margin:0; padding:0; }
+img { border:0; }
+strong { font-weight:bold; }
+label { cursor:help; }
+label.inActive { cursor:default; }
+p { margin:0; padding:0; font:normal 12px/19px Verdana, Helvetica, Arial, sans-serif; }
+.note { font:normal 10px/11px Verdana, Helvetica, Arial, sans-serif; }
+h1 { margin:0; padding:0; font:bold 14px/16px Verdana, Helvetica, Arial, sans-serif; }
+h2 { margin:0; padding:0; font:bold 12px/16px Verdana, Helvetica, Arial, sans-serif; }
+a { color: #156496; text-decoration: none;}
+a:HOVER { text-decoration: underline;}
+a.disabled { color: #818181; }
+
+a img { padding-right: 5px; }
+
+.clear { clear: both; }
+.left { float: left; }
+.right { float: right; }
+
+
+input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Arial,sans-serif;}
+.dijitInputInner {font: normal 10px Verdana,Helvetica,Arial,sans-serif !important;}
+
+.claro textarea.dijitTextBox { padding: 5px !important; }
+
+
+.hidden { display:none !important; }
+.importantBackground { 
+	/*background-color:#E9AFAF !important;*/	
+	border: solid #D46363 1px !important;
+	background-repeat: no-repeat !important;
+	background-position: right top !important;
+}
+.importantIgnore { color:black !important; }
+.attention .dijitButtonNode {background-color: #bd0d00 !important;}
+.attention .dijitButtonText {color: #FFF !important;}
+
+.transparent { background:transparent !important; }
+
+.blocker {
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	position: absolute;
+	opacity: 0.8;
+	filter: alpha(opacity=80);
+	z-index: 99;
+}
+
+.blockerFull {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.innerPadding { padding: 5px !important; }
+
+.pageSection {width: 750px;padding: 10px;}
+.claro .dijitToolbar {height: 24px;}
+.dijitToolbarSeparator {margin-top:3px;}
+#toolbarPane { padding-bottom: 0px; }
+
+/********************************************************************************************/
+/* Splitter */
+/********************************************************************************************/
+.claro .dijitSplitterV .dijitSplitterThumb {
+	left: 49%;
+	width: 0px; /* remove old splitter */
+}
+
+/********************************************************************************************/
+/* Tree */
+/********************************************************************************************/
+/*.claro .dijitTreeRowHover,
+.claro .dijitTreeNodeHover {
+	border:1px solid #ff0000 !important;
+	color:#000000;
+	margin-left:0;
+}*/
+
+.claro .dijitContentPane {
+	padding: 0;
+}
+
+.hidden {
+	display: none;
+}
+
+#formListOptions .dojoxGridSortWrapper { display:none !important; }
+
+#contentSection {min-width:900px;}
+#winNavi { position: relative; top:8px; right:0; text-align:right; float:right; z-index: 50;}
+#winNavi {position: relative;top: 0px;right: 0;text-align: right;height: 0px;}
+.modal #winNavi, .wideBlock #winNavi, .fullBlock #winNavi { right:15px; }
+#winNavi a { margin-left:13px; font-size:11px; }
+/*#winNavi a:hover { text-decoration:underline; }*/
+#winNavi a img { margin-right:3px; }
+
+.inputContainer { /*width:676px; */clear:both; /*margin-bottom:10.5px;*/ display:block; }
+.contentBlockWhite {padding: 15px !important;}
+.contentBlockWhite .inputContainer { /*width:668px;*/ clear:both; /*margin-bottom:10.5px;*/ display:block; }
+
+.content { /*padding:6px 15px; font-size:12px;*/ }
+.content span.functionalLink { float:right; color:#156496; font-size:11px; /*margin-top:-19px;*/}
+.content span.functionalLink.disabled { opacity: 0.4; }
+.content span.onTab { position: relative; right:1px; display:block; height:0px; text-align:right; /* top: 14px; */ z-index:99; }
+.content span.functionalLink img { padding-left:13px; }
+.content span.functionalLink a { /*text-decoration:none; color:#156496;*/ margin-left:6px; }
+/*.content span.functionalLink a:hover { text-decoration:underline; }*/
+.content span.functionalLink a.current:hover { text-decoration:none; }
+.content span.label, .rubric span.label { display:block; height:21px; line-height:16px; margin-left:1px;}
+/*.content span.required { font-weight:bold; }*/
+.content span.input { display:block; }
+.content span.note { font-size:11px; }
+.content span.marginRight { /*margin-right:20px;*/ }
+/*.content span.marginRightColumn { margin-right:366px; }*/
+
+.required .label {
+	font-weight:bold;
+}
+
+.required {
+	display: block !important;
+}
+
+.optional {
+    display: none;
+/*    visibility: hidden;*/
+}
+
+.expanded .optional {
+	display: block;
+/*	visibility: visible;*/
+}
+
+.show {
+	display: block;
+}
+
+/* used when mandatory fields should be NOT visible ! */
+.showOnlyExpanded {
+    display: none !important;
+/*    visibility: hidden;*/
+}
+
+.expanded .showOnlyExpanded {
+    display: block !important;
+/*  visibility: visible;*/
+}
+
+/* used to mark input fields when input is missing on publish ! should be below upper classes to have highest prio concerning display (fields become visible if input is missing) ! */
+.important { color:#bd0d00 !important; display: block !important; }
+
+/* this one has HIGHEST prio against all other classes above ! so we can hide fields with missing input (e.g. when open data checkbox unclicked !) */
+.hide, .alwaysHidden {
+    display: none !important;
+}
+
+.grey { background:#ececec !important; }
+
+.noSpaceBelow { margin-bottom:0 !important; padding-bottom:0 !important; }
+.spaceBelow { margin-bottom:10.5px !important; }
+
+.contentBlockWhite .field { padding:16px; }/* 16px 0 16px 16px; }*/
+.contentBlockWhite .inTabWithMenu { padding-top:24px; }
+
+.contentBlockWhite .wide { width:955px; }
+.contentBlockWhite .full { width:684px; }
+.contentBlockWhite .fullField { width:668px; }
+.contentBlockWhite .half { width:325px; }
+.contentBlockWhite .third { width:264px; }
+
+.contentBlockWhite span.button { display:block; margin-top:4px; padding: 2px 0 0; background:#C6C6C6; text-align:right; height:29px; border-bottom: 1px solid #999;}
+.contentBlockWhite span.buttonLeft { display:block; margin-top:4px; padding:4px 20px 6px 0; background:#C6C6C6; text-align:left; }
+.contentBlockWhite span.buttonNoBg { display:block; padding:4px 0 6px 0; text-align:right; }
+
+/* Page navigation */
+.contentBlockWhite span.searchResultsInfo { font-size:10px; padding:2px 0; float:left; }
+.contentBlockWhite span.searchResultsPaging { font-size:10px; float:right; color:#848484; padding:2px 16px; }
+.contentBlockWhite span.searchResultsPaging em { color:#000; font-style:normal; }
+.twoLines { width:100%; }
+.contentBlockWhite div.listInfo { margin:4px 0; background:#ececec !important; clear:both;}
+.contentBlockWhite div.listInfo a { color:#156496; }
+
+/* odd rows color */
+.claro .dojoxGridRowOdd .dojoxGridRowTable tr {
+	background-color: #E5E5E5;
+}
+.claro .dojoxGridRowSelected tr {
+	background-color:#CAD9EF !important;
+}
+
+.claro .dojoxGrid {
+	border: 1px solid #B5BCC7;
+}
+
+.dojoxGridRowTable .dojoxGridCell {
+	border-width: 0px !important;
+	border-right: 1px solid #B5BCC7 !important;
+}
+/* do not show a right border of the last column */
+.dojoxGridRowTable .dojoxGridCell:last-child {
+    border-right: 0px !important;
+}
+
+.fill { position:relative; clear:both; height:0; line-height:0; height:0; margin:0; padding:0; white-space:nowrap; }
+.spacerField { display:block; height:16px; }
+
+/********************************************************************
+  popup dialogues
+*********************************************************************/
+
+/* .claro .dijitDialogPaneActionBar { */
+/* 	margin: 0; */
+/* 	padding: 0;	 */
+/* } */
+
+/* .claro .dijitDialogPaneContentArea { */
+/* 	margin: -10px 0px; */
+/* 	padding: 10px 0px; */
+/* } */
+
+/* DIALOG */
+.claro .dijitDialogTitle { color: #FFFFFF; }
+.claro .dijitDialogTitleBar, .dojoxFloatingPaneTitle { background-color: #156496;background-image: none; border: none; padding: 5px 7px 4px; }
+.dojoxFloatingPane {border: 1px solid #769DC0; z-index: 999 !important;}
+.dojoxFloatingPane .dijitTitleNode {text-overflow: ellipsis; width:95%; overflow: hidden; color: white;}
+.dojoxFloatingPaneCanvas {overflow: auto}
+/* .claro .dijitDialogPaneContent, .dojoxFloatingPaneContent { padding: 20px 15px; width: auto; height: auto;} */
+.claro .dijitDialogPaneContent .inputContainer { padding: 0 !important; }
+.claro .dijitDialogPaneContent .inputContainerFooter { padding: 0px !important; background: #C6C6C6; float: left; margin: 2px 0 0; width: 100%; }
+.claro #ContextHelpDlg .dijitDialogPaneContent { padding: 10px; }
+.claro #ContextHelpDlg p { margin-bottom: 10px; }
+
+#InfoDialog .dijitDialogPaneContentArea {
+	padding: 20px;	
+}
+
+#InfoDialog .info {
+}
+
+#InfoDialog .warning {
+	background-color: #ffcaca; 
+	color: #c21130;
+}
+
+span.buttons { display:block; position:absolute; bottom:8px; right:7px; }
+
+div.popupWarning { display:block; height:20px; padding-left:4px; font-weight:bold; line-height:20px; background-color:#ffcaca; color:#c21130; }
+div.popupContent { /*height: 160px; */overflow: auto; margin:0; /*padding:0 0 15px;*/ font:10px/12px Verdana,Helvetica,Arial,sans-serif;}
+div.popupContent h1 {font-size:11px;}
+div.popupContent h2 {font-size:10px;}
+
+span.buttons { display:block; position:absolute; bottom:8px; right:7px; }
+
+
+/*** layout width ***/
+.full { width:675px; }
+.half { width:320px; float:left; }
+.halfInside { width:312px; float:left; }
+.third1 { width:210px; float:left; }
+.third2 { width:446px; float:left; }
+.thirdInside { width:194px; float:left; }
+.thirdInside2 { width:430px; }
+
+
+/* IGE */
+/*prevent Mozilla scrollbar from hiding cell content*/
+/* div.tableContainer td:last-child {padding-right: 20px;} */
+.tableContainer {
+	/*font-size: 16px;*/
+	/*padding: 5px;*/
+	background-color: #EEEEEE; font: 10px/14px Verdana,Helvetica,Arial,sans-serif; 
+}
+
+/* hide table headers */
+.hideTableHeader .dojoxGridMasterHeader { display: none !important; }
+.hideTableHeader .slick-header { display: none !important; }
+
+/*.ui-datepicker { width: 19em; }*/
+/* TextCellEditor, DateCellEditor */
+input.editor-text {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    background: white;
+    outline: 0;
+    padding: 0;
+}
+
+.ui-widget {
+	border: 1px solid #B5BCC7;
+}
+.slick-cell {line-height: 17px;}
+
+.ui-datepicker-trigger {
+    margin-top: 2px;
+    padding: 0;
+    vertical-align: top;
+}
+
+/*.grid-header {
+    border: 1px solid gray;
+    border-bottom: 0;
+    border-top: 0;
+    background: url('../images/header-bg.gif') repeat-x center top;
+    color: black;
+    height: 20px;
+    line-height: 20px;
+}   
+.grid-header label {
+    display: inline-block;
+    font-weight: bold;
+    margin: auto auto auto 6px;
+}
+.grid-header .ui-icon {
+    margin: 4px 4px auto 6px;
+    background-color: transparent;
+    border-color: transparent;
+}
+.grid-header .ui-icon.ui-state-hover {
+    background-color: white;
+}
+.grid-header #txtSearch {
+    margin: 0 4px 0 4px;
+    padding: 2px 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border: 1px solid silver;
+}*/
+.options-panel {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border: 1px solid silver;
+    background: #f0f0f0;    
+    padding: 4px;       
+    margin-bottom: 20px;
+}
+
+/* do not show inactive scrollbar for some tables */
+#spatialRefAdminUnitCoords .slick-viewport, #spatialRefLocationCoords .slick-viewport {
+	overflow: auto !important;
+}
+
+/*.slick-header-columns { background: url('../images/header-columns-bg.gif') repeat-x center bottom; border-bottom: 1px solid silver;}
+.slick-header-column {background: url('../images/header-columns-bg.gif') repeat-x center bottom;border-right: 1px solid silver;}
+.slick-header-column:hover, .slick-header-column-active {background: white url('../images/header-columns-over-bg.gif') repeat-x center bottom;}*/
+.slick-headerrow {background: #fafafa;}
+.slick-headerrow-column {background: #fafafa;border-bottom: 0;height: 100%;}
+.slick-row.ui-state-active {background: #F5F7D7;}
+.slick-row {position: absolute;background: white;border: 0px;line-height: 20px;}
+.slick-row div:first-child { border-left: 1px solid transparent;  }
+
+.slick-row.selected {z-index: 10;background: #838383;}
+.slick-cell {padding-left: 4px;padding-right: 4px; font-size:10px;}
+/*.slick-cell.active.editable {padding: inherit;}*/
+.slick-cell.selected {background-color: #838383; color: white;}
+.slick-cell.active {border-color: gray;border-style: solid;}
+.slick-sortable-placeholder {background: silver!important;}
+.slick-row[row$="1"], .slick-row[row$="3"], .slick-row[row$="5"], .slick-row[row$="7"], .slick-row[row$="9"] {
+    background: #F0F0F0;
+}
+.slick-cell, .slick-headerrow-column {border-bottom-color: transparent; border-right-color: transparent;} /* change row border here */
+	
+.slick-row.ui-state-active {background: #F5F7D7;}
+.slick-row.loading {opacity: 0.5;filter: alpha(opacity=50);}
+.slick-cell.invalid {/*border-color: red;*/}
+.slick-row:hover {background-color: #C5C5C5;}
+.slick-cell .dijitInputField {height:14px;}
+.disabled .slick-row.even { background-color: #ddd; }
+.disabled .slick-row, .disabled .slick-row a { color: #818181; }
+
+/* Table presentation for detail/print preview */
+table.filteringTable, table.filteringTableBlue { top:0; left:0; font:normal 10px/14px Verdana, Helvetica, Arial, sans-serif; border: 1px solid #B5BCC7; cursor:default; }
+table.relativePos { position:relative !important; } 
+
+table.filteringTable thead th, table.filteringTableBlue thead th { padding:3px 0 3px 4px; font-weight:bold; font-size:10px; color:#0C3753; background:#82C4ED; text-align:left; border-left: 1px solid rgb(107, 123, 234);}
+table.filteringTable thead th:first-child, table.filteringTableBlue thead th:first-child { border-left: 1px solid transparent; }
+table.lightHead thead th { background:#e6f0f5 !important; color:#000; border-left:1px solid #156496; }
+table.lightHead thead th:first-child { border:none; }
+
+table.filteringTable .selectedUp, table.filteringTableBlue .selectedUp { background:#65A3D1; }
+table.filteringTable .selectedDown, table.filteringTableBlue .selectedDown { background:#65A3D1; }
+
+table.filteringTable tbody, table.filteringTableBlue tbody { overflow-x:hidden; overflow-y:auto; }
+table.filteringTable tbody tr td { height:22px; padding:0 1px 0 4px; line-height:20px; background:#fff; border-left:1px solid #156496; }
+table.filteringTableBlue tbody tr td { height:22px; padding:0 1px 0 4px; line-height:20px; background:#e6f0f5; border-left:1px solid #156496; border-top:1px solid #156496 !important; }
+table.filteringTable tbody tr td img { vertical-align:middle; }
+table.filteringTable tbody tr td:first-child, table.filteringTableBlue tbody tr td:first-child { border:none; }
+table.filteringTable tbody tr.alt td { background:#efefef; }
+
+
+/*.sectionTopTable { margin:8px 0 0 12px; padding:0; }*/
+/*.sectionTop td { height:28px; padding:0; }*/
+.sectionTop td.col1 { width:115px; }
+.sectionTop td.col2 { width:400px; }
+.sectionTop td.col3 { width:151px; }
+.sectionTop td.first { font-weight:bold; color:#fff; }
+.sectionTop td img { vertical-align:middle; }
+.sectionTop td.label { font-weight:bold; color:#fff; }
+.sectionTop td.note { font-size:10px; color:#fff; /*height:27px;*/ }
+.sectionBottom { position:relative; top:0; overflow:auto; width:730px !important; }
+.sectionBottomContent { position:relative; width:720px; background-color: Gainsboro; }
+.sectionTop input.noEdit { background:#156496 !important; color:#ffffff !important }
+
+.titleBar { position:relative; height:20px; margin-bottom:3px; background:#156496; clear:both; padding-left: 11px;}
+.titleCaption { position:relative; top:2px; left:7px; font-weight:bold; font-size:12px; color:#fff; float:left; cursor:help; }
+.titleUp { position:relative; top:1px; right:16px; float:right; padding:6px 0 0 0; line-height:0px; }
+
+.sectionTop { width:720px; background:#156496;}
+.sectionTop img { vertical-align:middle; }
+.sectionTop label { font-weight:bold; color:#fff; }
+.sectionTop .note { font-size:10px; color:#fff; }
+.sectionTop .note span { margin-left: 3px;}
+
+.defaultContainer {
+	clear: both;
+	display: block;
+	margin-bottom: 10.5px;
+	width: 676px;
+}
+
+.outlined {
+	border: 1px solid black;
+    padding: 10px;
+}
+
+.fixedLeftDistance150 {
+	float:left;
+	left:150px;
+	position:absolute;
+	font-weight: normal;
+}
+
+.definition {
+	font-weight: bold;
+}
+
+.textAreaFull {
+	/*border: none;*/
+	height: 100%;
+	width: 100% !important;
+	/*padding: 0 !important;*/
+}
+
+.buttonCol { display:block; padding:0; margin:20px -4px 0 -4px; text-align:center; width: 60px;}
+.buttonCol a.buttonGrey { margin:8px 0; padding:0; display:block; width:37px; height:30px; line-height:30px; }
+
+/*#listThesaurus, #listLinks {
+	position:absolute;
+	right:29px;
+	top:19px;
+	width:264px;
+}*/
+
+#pageDialog .dijitDialogPaneContent { height: 100% !important; }
+/* fix with conflicting dijit.Dialog close button */
+.claro .dijitDialogCloseIconHover { background-position: -21px 50% !important; }
+
+/*.dojoxDialogPaneContent { padding: 5px 0 !important; }*/
+
+iframe {
+	position: absolute;
+}
+
+.outer {
+	width: 100%;
+	/*width: 720px;*/
+	float: left;
+}
+
+.outer > div {
+    padding: 5px !important;    
+}
+
+.fullWidth {
+    width: 100% !important;
+}
+
+.halfWidth {
+    width: 50% !important;
+    /*width: 360px !important;*/
+}
+
+.titleBar .titleIcon {
+    cursor: pointer;
+}
+
+/* in IE select boxes aren't rendered correctly (too wide!)*/
+/*.halfWidth .dijitSelect{
+    width: 50% !important;
+}*/
+
+/* administration page of form elements */
+.rubricLabel, .controlLabel {
+	float: left;
+	margin: 5px 0px;
+}
+
+.rubricDiv {
+	background-color: #156496;
+	color: #FFFFFF;
+    padding-left: 5px;
+}
+
+/* IE7 fix to make rubric name visible */
+.rubricLabel {
+	font-weight: bold;
+	background-color: #156496;
+}
+
+#adminFormFields hr {
+	margin-bottom: 0px;
+}
+
+.rubricButtons {
+	float: left;
+    margin: 5px 0 6px 0;
+	width:147px;
+	min-width: 147px;
+}
+
+#formColumnsContent .rubricButtons {
+	text-align: right;
+	width: initial;
+	min-width: initial;
+}
+
+.controlLabel > span {
+	padding-left: 5px;
+	vertical-align:middle;
+}
+
+.controlLabel span img {
+	float: left;
+    padding-left: 20px;
+}
+
+.comment {
+	color: gray;
+	font-size: 10px;
+	padding-left: 5px;
+}
+
+#catalogueFormFields div div:hover, #span_formColumns div div:hover{
+	background-color: #DDD;
+}
+
+#catalogueFormFields div.dijitContentPane div.rubricDiv:hover {
+	background-color: #156496;
+}
+
+#catalogueFormFields div.dijitContentPane div.rubricDiv div.rubricButtons:hover {
+	background-color: #156496;
+}
+
+
+#menubarInfoPane {
+	font-weight: bold;
+	background-color: gray;
+	color: lightGrey;
+}
+
+.contentContainer {
+	background-color:#EDEDED;
+}
+
+.dijitTabPane, .tab {
+    padding: 5px !important;
+}
+
+.expandContent {
+    font-size: 11px;
+    padding: 3px;
+}
+
+/*.expandContent a {
+    color: #156496;
+    text-decoration: none;
+}*/
+
+/* Tabcontainer Sub Navigation */
+.tabContainerSubNavi {
+    clear: both;
+    /*left: 3px;*/
+    position: absolute;
+    width: 100%;
+	padding: 3px 0px;
+	background-color: #C6C6C6;
+	border-bottom: 1px solid #999;
+	margin-top: 1px;
+}
+
+.tabContainerSubNavi ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+
+.tabContainerSubNavi ul li {
+    display: inline;
+    font: bold 11px/13px Verdana,Helvetica,Arial,sans-serif;
+    margin: 0;
+    padding: 0 10px 0 0;
+}
+
+.tabContainerSubNavi ul li a {
+    color: #FFFFFF;
+    font: 10px/12px Verdana,Helvetica,Arial,sans-serif;
+    /*text-decoration: none;*/
+}
+
+/*** expandable extra info ***/
+.infobox { position:relative; margin:3px 0px 11px 0; padding:3px 5px 6px 14px; border-top:2px solid #156496; border-bottom:2px solid #156496; background:#e6f0f5; }
+.infobox span.icon { position:relative; top:3px; margin-right:15px; }
+.infobox span.title { font-weight:normal; font-size:11px; }
+.infobox span.title a { color:#000; /*text-decoration:none;*/ }
+.infobox span.title img { padding:0 0 1px 5px; }
+.infobox table { margin:7px 0 -6px -14px; padding:0; overflow:hidden; }
+.infobox p { margin:12px 0 0 35px; padding:0; font-size:10px; }
+/*.infobox p a, .infobox span.processInfo a { color:#156496; text-decoration:none; }*/
+/*.infobox p a:hover, .infobox span.processInfo a:hover { text-decoration:underline; }*/
+.infobox table { margin:12px 0 0 35px; }
+.infobox table tr td { padding:0 10px 3px 0; font-size:10px; }
+.infobox span.processInfo { position:absolute; top:-1px; right:0; font-size:10px; padding-right:34px; }
+.infobox span.processInfo img { position:relative; top:6px; left:15px; }
+.infobox span.button { margin-top:-27px !important; background:transparent !important; }
+
+.requiredSign { display:none; }
+.required .requiredSign { display:inline !important; font-weight: bold;}
+
+#waitInfo {
+	/* width: 200px;
+	height: 50px; */
+	padding: 20px;
+	border: 1px lightgray solid;
+	background-color: #EDEDED;
+	margin: 100px auto;
+	text-align: center;
+	line-height: 50px;
+}
+
+.selectEntryBtn { float: left; width:54px; margin:90px 12px -64px 8px; }
