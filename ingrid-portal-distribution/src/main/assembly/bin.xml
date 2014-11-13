@@ -7,8 +7,8 @@
 	<includeBaseDirectory>false</includeBaseDirectory>
 	<fileSets>
 		<fileSet>
-			<directory>src/main/resources/apache-tomcat-6.0.35</directory>
-			<outputDirectory>distribution/apache-tomcat-6.0.35</outputDirectory>
+			<directory>src/main/resources/apache-tomcat-7.0.56</directory>
+			<outputDirectory>distribution/apache-tomcat-7.0.56</outputDirectory>
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/conf</directory>
@@ -16,7 +16,7 @@
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/conf/tomcat</directory>
-			<outputDirectory>distribution/apache-tomcat-6.0.35/conf/Catalina/localhost</outputDirectory>
+			<outputDirectory>distribution/apache-tomcat-7.0.56/conf/Catalina/localhost</outputDirectory>
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/sql</directory>
@@ -33,7 +33,7 @@
 	</fileSets>
   <dependencySets>
     <dependencySet>
-      <outputDirectory>distribution/apache-tomcat-6.0.35/lib</outputDirectory>
+      <outputDirectory>distribution/apache-tomcat-7.0.56/lib</outputDirectory>
       <unpack>false</unpack>
       <scope>runtime</scope>
       <includes>
@@ -44,7 +44,7 @@
       </includes>
     </dependencySet>
     <dependencySet>
-      <outputDirectory>distribution/apache-tomcat-6.0.35/shared/lib</outputDirectory>
+      <outputDirectory>distribution/apache-tomcat-7.0.56/shared/lib</outputDirectory>
       <unpack>false</unpack>
       <scope>runtime</scope>
       <includes>
@@ -59,7 +59,10 @@
         <include>org.apache.portals.jetspeed-2:jetspeed-commons</include>
         <include>mysql:mysql-connector-java</include>
         <include>ojdbc:ojdbc</include>
-        <include>org.apache.pluto:pluto</include>
+        <include>org.apache.portals.pluto:pluto-taglib</include> 
+        <include>org.apache.portals.pluto:pluto-container-api</include> 
+        <include>javax.ccpp:ccpp</include> 
+        <include>org.apache.derby:derby</include> 
         <include>org.apache.portals.bridges:portals-bridges-common</include>
         <include>org.apache.portals:portlet-api_2.0_spec</include>
         <include>xpp3:xpp3_min</include>
@@ -69,7 +72,7 @@
     </dependencySet>
     <dependencySet>
       <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
-      <outputDirectory>distribution/apache-tomcat-6.0.35/webapps</outputDirectory>
+      <outputDirectory>distribution/apache-tomcat-7.0.56/webapps</outputDirectory>
       <unpack>false</unpack>  
       <scope>runtime</scope>      
       <includes>

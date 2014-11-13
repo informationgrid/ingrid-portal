@@ -12,7 +12,7 @@
     <!-- =============================================
     	 = PROPERTIES								 =
     	 ============================================= -->
-    <property name="tomcat-artifact"               value="apache-tomcat-6.0.35"/>
+    <property name="tomcat-artifact"               value="apache-tomcat-7.0.56"/>
     <property name="installedTomcatContextDir"     value="${installDir}/${tomcat-artifact}/conf/Catalina/localhost"/>
     
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.6.jar"/>
