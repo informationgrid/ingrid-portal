@@ -24,7 +24,6 @@ package de.ingrid.mdek.security;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -64,10 +63,9 @@ public class PortalAuthenticationProvider implements AuthenticationProvider {
         try {
             UserManager userManager = (UserManager) ctx.getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
             RoleManager roleManager = (RoleManager) ctx.getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
-            Iterator<String> users = userManager.getUserNames("");
+            List<String> users = userManager.getUserNames("");
 
-            while (users.hasNext()) {
-                String user = users.next();
+            for (String user : users) {
                 if (!user.equals("admin") && !user.equals("guest") && !user.equals("devmgr")
                      && !roleManager.isUserInRole(user, "admin")
                      && !roleManager.isUserInRole(user, "admin-portal")
