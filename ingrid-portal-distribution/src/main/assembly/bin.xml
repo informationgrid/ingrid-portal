@@ -54,7 +54,6 @@
         <include>de.ingrid:ingrid-communication</include>
         <include>de.ingrid:ingrid-communication-authentication</include>
         <include>de.ingrid.mdek:ingrid-mdek-api</include>
-        <include>de.ingrid:ingrid-portal-utils</include>
         <include>org.apache.portals.jetspeed-2:jetspeed-api</include>
         <include>org.apache.portals.jetspeed-2:jetspeed-commons</include>
         <include>mysql:mysql-connector-java</include>

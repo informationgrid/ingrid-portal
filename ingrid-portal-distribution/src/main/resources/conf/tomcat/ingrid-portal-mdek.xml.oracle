@@ -17,14 +17,6 @@ limitations under the License.
          docBase="ingrid-portal-mdek" 
          crossContext="true">
 
-  <Realm className="org.apache.catalina.realm.JAASRealm"
-         appName="Jetspeed"
-         userClassNames="org.apache.jetspeed.security.impl.UserPrincipalImpl"
-         roleClassNames="org.apache.jetspeed.security.impl.RolePrincipalImpl"
-         useContextClassLoader="true"
-         debug="0"/>
-
-
   <Resource name="jdbc/mdek" auth="Container"
           factory="org.apache.commons.dbcp.BasicDataSourceFactory"
           type="javax.sql.DataSource" username="MDEK" password="MDEK"

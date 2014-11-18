@@ -17,11 +17,4 @@ limitations under the License.
          docBase="ingrid-portal-mdek-application"
          crossContext="true">
 	
-  <Realm className="org.apache.catalina.realm.JAASRealm"
-         appName="Jetspeed"
-         userClassNames="org.apache.jetspeed.security.impl.UserPrincipalImpl"
-         roleClassNames="org.apache.jetspeed.security.impl.RolePrincipalImpl"
-         useContextClassLoader="true"
-         debug="0"/>
-
 </Context>

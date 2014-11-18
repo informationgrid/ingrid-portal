@@ -66,10 +66,6 @@
       <type>war</type>
     </dependency>
     <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-portal-utils</artifactId>
-    </dependency>
-    <dependency>
       <groupId>de.ingrid.mdek</groupId>
       <artifactId>ingrid-mdek-api</artifactId>
     </dependency>

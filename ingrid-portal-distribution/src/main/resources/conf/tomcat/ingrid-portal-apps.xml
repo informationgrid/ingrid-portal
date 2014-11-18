@@ -17,14 +17,6 @@ limitations under the License.
          docBase="ingrid-portal-apps" 
          crossContext="true">
 
-  <Realm className="org.apache.catalina.realm.JAASRealm"
-         appName="Jetspeed"
-         userClassNames="org.apache.jetspeed.security.impl.UserPrincipalImpl"
-         roleClassNames="org.apache.jetspeed.security.impl.RolePrincipalImpl"
-         useContextClassLoader="true"
-         debug="0"/>
-
-
   <Resource name="jdbc/jetspeed" auth="Container"
           factory="org.apache.commons.dbcp.BasicDataSourceFactory"
           type="javax.sql.DataSource" username="root" password=""

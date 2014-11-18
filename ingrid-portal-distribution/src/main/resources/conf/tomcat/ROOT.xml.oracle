@@ -19,8 +19,8 @@ limitations under the License.
 
   <Realm className="org.apache.catalina.realm.JAASRealm"
          appName="Jetspeed"
-         userClassNames="org.apache.jetspeed.security.impl.UserPrincipalImpl"
-         roleClassNames="org.apache.jetspeed.security.impl.RolePrincipalImpl"
+         userClassNames="org.apache.jetspeed.security.impl.UserImpl,org.apache.jetspeed.security.impl.TransientUser,org.apache.jetspeed.security.UserSubjectPrincipalImpl"
+         roleClassNames="org.apache.jetspeed.security.impl.RoleImpl,org.apache.jetspeed.security.impl.TransientRole"
          useContextClassLoader="true"
          debug="0"/>
 

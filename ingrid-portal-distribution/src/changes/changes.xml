@@ -6,6 +6,9 @@
 	</properties>
 	<body>
 		<release version="3.5.0-SNAPSHOT" date="????-??-??"
+			<action type="update" dev="wemove" issue="REDMINE-304">
+				Portal: Update to Jetspeed 2.3, Tomcat 7, Java 8.
+			</action>
  		</release>
 
 		<release version="3.4.1-SNAPSHOT" date="????-??-??"
