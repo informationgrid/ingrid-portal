@@ -102,9 +102,12 @@
                         <exclude>**/webapp/dojo-sources/dojox/**</exclude>
                         <exclude>**/webapp/dojo-sources/util/**</exclude>
                         <exclude>**/webapp/dojo-sources/release/**</exclude>
+                        <exclude>**/templates/**</exclude>
+                        <exclude>**/nls/**</exclude>
                         <exclude>**/log4j.properties</exclude>
                         <exclude>**/*.json</exclude>
                         <exclude>**/*.sql</exclude>
+                        <exclude>**/ingrid.profile.js</exclude>
                     </excludes>
                 </configuration>
             </plugin>
