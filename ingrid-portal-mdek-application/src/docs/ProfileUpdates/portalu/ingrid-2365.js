@@ -34,7 +34,6 @@ while (elPOC) {
                 if (nodeBeforeInsert) { break; }
             }
             // add administrativeArea
-            // add administrativeArea
             var elAArea;
             if (nodeBeforeInsert) {
                 elAArea = nodeBeforeInsert.addElementAsSibling("gmd:administrativeArea");
