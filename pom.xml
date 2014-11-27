@@ -152,5 +152,15 @@
       <name>Maven Repo InGrid</name>
       <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
     </repository>
+	<repository>
+      <id>apache.snapshots</id>
+      <url>https://repository.apache.org/content/repositories/snapshots</url>
+    </repository>
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>apache.snapshots</id>
+      <url>https://repository.apache.org/content/repositories/snapshots</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>
