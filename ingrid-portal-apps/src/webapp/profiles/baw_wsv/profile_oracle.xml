@@ -376,6 +376,9 @@
         <execute>
         	<![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/cms']]>
         </execute>
+        <execute>
+        	<![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/application']]>
+        </execute>
         <!-- DONE with tmp_table -->
         <execute>
             <![CDATA[DROP TABLE tmp_table]]>
