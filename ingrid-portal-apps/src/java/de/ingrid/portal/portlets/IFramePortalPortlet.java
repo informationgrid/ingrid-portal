@@ -1,43 +1,48 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.ReadOnlyException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.PortalReservedParameters;
+import org.apache.jetspeed.om.page.BaseFragmentElement;
+import org.apache.jetspeed.om.page.ContentPage;
 import org.apache.jetspeed.om.page.Fragment;
+import org.apache.jetspeed.om.page.Page;
+import org.apache.jetspeed.om.preference.FragmentPreference;
+import org.apache.jetspeed.page.PageManager;
+import org.apache.jetspeed.page.PageNotFoundException;
+import org.apache.jetspeed.page.document.NodeException;
 import org.apache.portals.applications.webcontent.portlet.IFrameGenericPortlet;
 import org.apache.velocity.context.Context;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.om.IngridFragmentPref;
-import de.ingrid.portal.om.IngridFragmentPrefValue;
 
 public class IFramePortalPortlet extends IFrameGenericPortlet {
 
 	private final static Logger log = LoggerFactory.getLogger(IFramePortalPortlet.class);
 	
+	private PageManager pageManager;
+	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);
+		 pageManager = (PageManager)getPortletContext().getAttribute(CommonPortletServices.CPS_PAGE_MANAGER_COMPONENT);
+	        if (null == pageManager)
+	        {
+	            throw new PortletException("Failed to find the Page Manager on portlet initialization");
+	        }
 	}
 
 	/* (non-Javadoc)
@@ -57,22 +62,24 @@ public class IFramePortalPortlet extends IFrameGenericPortlet {
         String myTitleKey = prefs.getValue("titleKey", "");
         response.setTitle(messages.getString(myTitleKey));
         
-        // get fragment id
-        Fragment pw = (Fragment) request.getAttribute(PortalReservedParameters.FRAGMENT_ATTRIBUTE);
-        String fragmentId = pw.getId().toString();
-        
-        // read portlet preferences from fragment preferences 
-        if(fragmentId != null){
-        	Session session = HibernateUtil.currentSession();
-            List entities = UtilsDB.getValuesFromDB(session.createCriteria(IngridFragmentPref.class).add(Restrictions.eq("fragmentId", Long.parseLong(fragmentId))), session, null, true);
-            for(int i=0; i<entities.size();i++){
-            	IngridFragmentPref pref = (IngridFragmentPref) entities.get(i);
-            	Long prefId = pref.getId();
-            	String prefName = pref.getFragmentName();
-            	readIFramePrefsParams(prefId, prefName, request);
-            }
-            
-            request.getPortletSession().setAttribute("fragmentIdIFrame", fragmentId);
+        // Use fragment_pref instead of portlet_preference
+        ContentPage pw = (ContentPage) request.getAttribute(PortalReservedParameters.PAGE_ATTRIBUTE);
+        Page myPage = null;
+		try {
+			myPage = pageManager.getPage(pw.getPath());
+			Fragment root = (Fragment) myPage.getRootFragment();
+			List<BaseFragmentElement> fragments = root.getFragments();
+			 for (int i = 0; i < fragments.size(); i++) {
+	                Fragment f = (Fragment) fragments.get(i);
+	                for (int j = 0; j < f.getPreferences().size(); j++) {
+						FragmentPreference fp = f.getPreferences().get(j);
+						prefs.setValue(fp.getName(), fp.getValueList().get(0));
+					};
+			 }
+		} catch (PageNotFoundException e) {
+            log.error("Error page not found '" + pw.getPath() + "'", e);
+        } catch (NodeException e) {
+            log.error("Error getting page '" + pw.getPath() + "'", e);
         }
         
         super.doView(request, response);
@@ -97,7 +104,6 @@ public class IFramePortalPortlet extends IFrameGenericPortlet {
         
 		response.setContentType("text/html");
         doPreferencesEdit(request, response);
-        
     }
 	
 	/* (non-Javadoc)
@@ -105,88 +111,30 @@ public class IFramePortalPortlet extends IFrameGenericPortlet {
 	 */
 	public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
 		
-		// change fragment preferences
-        String fragmentId = (String) request.getPortletSession().getAttribute("fragmentIdIFrame");
-        if(fragmentId != null){
-        	Session session = HibernateUtil.currentSession();
-            List entities = UtilsDB.getValuesFromDB(session.createCriteria(IngridFragmentPref.class).add(Restrictions.eq("fragmentId", Long.parseLong(fragmentId))), session, null, true);
-            for(int i=0; i<entities.size();i++){
-            	IngridFragmentPref pref = (IngridFragmentPref) entities.get(i);
-            	Long prefId = pref.getId();
-            	String prefName = pref.getFragmentName();
-            	editIFramePrefsParams(prefId, prefName, request);
-            }
-            
+		// Edit fragment_pref 
+        ContentPage pw = (ContentPage) request.getAttribute(PortalReservedParameters.PAGE_ATTRIBUTE);
+        Page myPage = null;
+		try {
+			myPage = pageManager.getPage(pw.getPath());
+			Fragment root = (Fragment) myPage.getRootFragment();
+			List<BaseFragmentElement> fragments = root.getFragments();
+			 for (int i = 0; i < fragments.size(); i++) {
+	                Fragment f = (Fragment) fragments.get(i);
+	                for (int j = 0; j < f.getPreferences().size(); j++) {
+						FragmentPreference fp = f.getPreferences().get(j);
+						Map<String, String[]> map = request.getParameterMap();
+						List<String> l = new ArrayList<String>();
+						l.add(map.get(fp.getName())[0]);
+						fp.setValueList(l);
+					};
+			 }
+			 pageManager.updatePage(myPage);
+		} catch (PageNotFoundException e) {
+            log.error("Error page not found '" + pw.getPath() + "'", e);
+        } catch (NodeException e) {
+            log.error("Error getting page '" + pw.getPath() + "'", e);
         }
-		
         processPreferencesAction(request, actionResponse);
-	}
-
-	/**
-	 * Edit IFrame preferences as user "admin" and save preferences into table "fragment_prefs_value"
-	 * 
-	 * @param prefId
-	 * @param prefName
-	 * @param request
-	 */
-	private void editIFramePrefsParams(Long prefId, String prefName, PortletRequest request) {
-
-		Session session = HibernateUtil.currentSession();
-		IngridFragmentPrefValue prefValue = (IngridFragmentPrefValue) session.load(IngridFragmentPrefValue.class, prefId);
-		HashMap params = (HashMap) request.getParameterMap();
-		
-		if(prefValue != null){
-			String[] values = (String[]) params.get(prefName);
-			prefValue.setPrefValue(values[0]);
-			UtilsDB.updateDBObject(prefValue);
-		}
-	}
-	
-	/**
-	 * Read IFrame preferences from table "fragment_prefs_value" and set it to portlet preferences.
-	 * 
-	 * @param prefId
-	 * @param prefName
-	 * @param request
-	 */
-	private void readIFramePrefsParams(Long prefId, String prefName, RenderRequest request) {
-		
-		Session session = HibernateUtil.currentSession();
-		PortletPreferences prefs = request.getPreferences();
-		IngridFragmentPrefValue prefValue = (IngridFragmentPrefValue) session.load(IngridFragmentPrefValue.class, prefId);
-		
-		if(prefs != null && prefValue != null){
-				try {
-					if(prefName.equals("SRC")){
-						String url = prefValue.getPrefValue().trim();
-						HashMap map = (HashMap) request.getParameterMap();
-						if(map.size() > 0){
-							if(url.indexOf("?") < 0){
-								url = url + "?";
-							}
-							if(!url.endsWith("?")){
-								url = url + "&";
-							}
-							Set set = new TreeSet(map.keySet());
-							for (Iterator<String> iterator = set.iterator(); iterator.hasNext();) {
-								String key = iterator.next();
-								String value = request.getParameter(key);
-								url = url + "" + key + "=" + value; 
-								if(iterator.hasNext()){
-									url = url + "&";
-								}
-							}
-						}
-						prefs.setValue(prefName, url.trim());
-					}else{
-						prefs.setValue(prefName, prefValue.getPrefValue());						
-					}
-				} catch (ReadOnlyException e) {
-					log.error("Error by setting portlet prefences: " + e);
-					e.printStackTrace();
-				}
-		}
-		
 	}
 }
 	
