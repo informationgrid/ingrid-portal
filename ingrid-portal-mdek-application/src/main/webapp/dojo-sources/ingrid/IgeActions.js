@@ -2554,9 +2554,9 @@ define([
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
-            nodeData.ref3ServiceType = registry.byId("ref3ServiceType").getValue();
+            nodeData.ref3ServiceType = registry.byId("ref3ServiceType").get("value");
             nodeData.ref3AtomDownload = registry.byId("ref3IsAtomDownload").checked ? true : false;
-            nodeData.ref3CouplingType = registry.byId("ref3CouplingType").getValue();
+            nodeData.ref3CouplingType = registry.byId("ref3CouplingType").get("value");
             nodeData.ref3SystemEnv = registry.byId("ref3SystemEnv").getValue();
             nodeData.ref3History = registry.byId("ref3History").getValue();
             nodeData.ref3BaseDataText = registry.byId("ref3BaseDataText").getValue();

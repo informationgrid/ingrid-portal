@@ -64,6 +64,7 @@
         <script type='text/javascript' src='dwr/interface/AddressService.js'></script>
         <script type='text/javascript' src='dwr/interface/QueryService.js'></script>
         <script type='text/javascript' src='dwr/interface/SNSService.js'></script>
+        <script type='text/javascript' src='dwr/interface/RDFService.js'></script>
         <script type='text/javascript' src='dwr/interface/HelpService.js'></script>
         <script type='text/javascript' src='dwr/interface/TreeService.js'></script>
         <script type='text/javascript' src='dwr/interface/GetCapabilitiesService.js'></script>

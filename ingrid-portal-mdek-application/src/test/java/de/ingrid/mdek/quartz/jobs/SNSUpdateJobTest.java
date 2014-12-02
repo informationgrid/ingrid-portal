@@ -131,7 +131,7 @@ public class SNSUpdateJobTest {
         jdm.put( "PLUG_ID", "test-plug-id");
         jdm.put( "USER_ID", "test-user-id");
         jdm.put( "LOCALE", new Locale("de"));
-        jdm.put( "URL_THESAURUS", ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus"));
+        //jdm.put( "URL_THESAURUS", ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus"));
         when(context.getMergedJobDataMap()).thenReturn( jdm );
         
         // CHECK RESULTS
@@ -142,7 +142,7 @@ public class SNSUpdateJobTest {
                 List newTerms = (List) args[2];
                 assertThat( (String)((IngridDocument)old.get( 0 )).get( "term-sns-id" ), is( "uba_thes_10065" ));
                 assertThat( (String)((IngridDocument)old.get( 0 )).get( "term-name" ), is( "Forschungspolitik old" ));
-                assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-sns-id" ), is( "http://umthes.innoq.com/_00010065" ));
+                assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-sns-id" ), is( "uba_thes_10065" ));
                 assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-name" ), is( "Forschungspolitik" ));
                 
                 return null;
@@ -166,15 +166,15 @@ public class SNSUpdateJobTest {
         jdm.put( "PLUG_ID", "test-plug-id");
         jdm.put( "USER_ID", "test-user-id");
         jdm.put( "LOCALE", new Locale("de"));
-        jdm.put( "URL_THESAURUS", ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus"));
+        //jdm.put( "URL_THESAURUS", ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus"));
         when(context.getMergedJobDataMap()).thenReturn( jdm );
         
         when(callerCatalog.getSearchTerms( "test-plug-id", new SearchtermType[] { SearchtermType.UMTHES, SearchtermType.GEMET }, "test-user-id" )).thenReturn( getTestSnsTerms()  );
         when(callerCatalog.getSearchTerms( "test-plug-id", new SearchtermType[] { SearchtermType.FREI },                         "test-user-id" )).thenReturn( getTestFreeTerms() );
         
-        SNSTopic expiredTopic = new SNSTopic(SNSTopic.Type.DESCRIPTOR, SNSTopic.Source.UMTHES, "http://umthes.innoq.com/_00010065", "Forschungspolitik", null, null);
+        SNSTopic expiredTopic = new SNSTopic(SNSTopic.Type.DESCRIPTOR, SNSTopic.Source.UMTHES, "uba_thes_10065", "Forschungspolitik", null, null);
         expiredTopic.setExpired( true );
-        when(serviceMock.getPSI( "http://umthes.innoq.com/_00010065", new Locale("de"))).thenReturn( expiredTopic  );
+        when(serviceMock.getPSI( "uba_thes_10065", new Locale("de"))).thenReturn( expiredTopic  );
         
      // CHECK RESULTS
         Mockito.doAnswer( new Answer() {

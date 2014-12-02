@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 import org.quartz.InterruptableJob;
@@ -70,7 +69,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 
 	private Locale locale;
 
-    private String urlGazetteer;
+    //private String urlGazetteer;
 
 	// No args constructor is required for the job to be scheduled by quartz
 	public SNSLocationUpdateJob() {
@@ -98,7 +97,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		jobDataMap.put("PLUG_ID", connectionFacade.getCurrentPlugId());
 		jobDataMap.put("USER_ID", MdekSecurityUtils.getCurrentUserUuid());
 		jobDataMap.put("LOCALE", new Locale( lang ));
-		jobDataMap.put("URL_GAZETTEER", ResourceBundle.getBundle("sns").getString("sns.serviceURL.gazetteer"));
+		//jobDataMap.put("URL_GAZETTEER", ResourceBundle.getBundle("sns").getString("sns.serviceURL.gazetteer"));
 		jobDetail.setJobDataMap(jobDataMap);
 
 		return jobDetail;
@@ -127,7 +126,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		String plugId = mergedJobDataMap.getString("PLUG_ID");
 		String userId = mergedJobDataMap.getString("USER_ID");
 		locale = (Locale) mergedJobDataMap.get("LOCALE");
-		urlGazetteer = mergedJobDataMap.getString("URL_GAZETTEER");
+		//urlGazetteer = mergedJobDataMap.getString("URL_GAZETTEER");
 
 		log.debug("Starting sns location update...");
 		long startTime = System.currentTimeMillis();
@@ -205,7 +204,8 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		}
 	}
 
-	private List<SNSLocationTopic> fetchSNSLocationTopics(IMdekCallerCatalog mdekCallerCatalog, String plugId, String userId) {
+	@SuppressWarnings("unchecked")
+    private List<SNSLocationTopic> fetchSNSLocationTopics(IMdekCallerCatalog mdekCallerCatalog, String plugId, String userId) {
 		IngridDocument response = mdekCallerCatalog.getSpatialReferences(
 				plugId,
 				new SpatialReferenceType[] { SpatialReferenceType.GEO_THESAURUS },
@@ -272,9 +272,9 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 			SNSLocationTopic newTopic;
 			try {
 			    String topicId = oldTopic.getTopicId();
-			    if (!topicId.startsWith( "http" )) {
-			        topicId = urlGazetteer + topicId;
-			    }
+//			    if (!topicId.startsWith( "http" )) {
+//			        topicId = urlGazetteer + topicId;
+//			    }
 				newTopic = findTopicById(snsService, topicId);
 
 				// If the topic was not found, query by name and find a 'best match'
@@ -441,7 +441,8 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 
 	// Retrieves the current JobExecutionContext
 	// If the job is not running, null is returned
-	private JobExecutionContext getJobExecutionContext() {
+	@SuppressWarnings("unchecked")
+    private JobExecutionContext getJobExecutionContext() {
 		try {
 			if (scheduler != null) {
 				List<JobExecutionContext> executionContextList = scheduler.getCurrentlyExecutingJobs();
