@@ -646,12 +646,14 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
         
         portalFormat.applyPattern("yyyy-MM-dd H:mm:ss");
         
-        if (trigger.getPreviousFireTime()!=null) {
-	        lastExec = portalFormat.format(trigger.getPreviousFireTime());
-	        lastOkExec = dataMap.getString(IngridAbstractStateJob.PARAM_LAST_ERRORFREE_RUN);
+        if (trigger != null) {
+            if (trigger.getPreviousFireTime()!=null) {
+    	        lastExec = portalFormat.format(trigger.getPreviousFireTime());
+    	        lastOkExec = dataMap.getString(IngridAbstractStateJob.PARAM_LAST_ERRORFREE_RUN);
+            }
+            
+            nextExec = portalFormat.format(trigger.getNextFireTime()); //  portalFormat.format((Date) dataMap.get(IngridMonitorAbstractJob.PARAM_NEXT_CHECK));
         }
-        
-        nextExec = portalFormat.format(trigger.getNextFireTime()); //  portalFormat.format((Date) dataMap.get(IngridMonitorAbstractJob.PARAM_NEXT_CHECK));
 		
 		cf.setInput(AdminComponentMonitorForm.FIELD_LAST_EXECUTION, lastExec);
 		cf.setInput(AdminComponentMonitorForm.FIELD_NEXT_EXECUTION, nextExec);
