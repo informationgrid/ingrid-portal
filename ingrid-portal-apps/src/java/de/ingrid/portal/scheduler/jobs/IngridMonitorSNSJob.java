@@ -1,4 +1,26 @@
 /*
+ * **************************************************-
+ * Ingrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+/*
  * Copyright (c) 2007 wemove digital solutions. All rights reserved.
  */
 package de.ingrid.portal.scheduler.jobs;
@@ -8,17 +30,17 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.hp.hpl.jena.rdf.model.NodeIterator;
-import com.hp.hpl.jena.rdf.model.Resource;
+import com.slb.taxi.webservice.xtm.stubs.FieldsType;
+import com.slb.taxi.webservice.xtm.stubs.SearchType;
+import com.slb.taxi.webservice.xtm.stubs.TopicMapFragment;
+import com.slb.taxi.webservice.xtm.stubs.xtm.Topic;
 
-import de.ingrid.external.FullClassifyService.FilterType;
-import de.ingrid.external.sns.RDFUtils;
 import de.ingrid.external.sns.SNSClient;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.utils.queryparser.ParseException;
@@ -85,16 +107,16 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 						PortalConfig.COMPONENT_MONITOR_SNS_LOGIN, "ms"), PortalConfig.getInstance().getString(
 						PortalConfig.COMPONENT_MONITOR_SNS_PASSWORD, "m3d1asyl3"), "de");
 			} else {
-				snsClient = new SNSClient("ms", "m3d1asyl3", "de", new URL(serviceUrl), null, null);
+				snsClient = new SNSClient("ms", "m3d1asyl3", "de", new URL(serviceUrl));
 			}
 			snsClient.setTimeout(timeout);
-			Resource mapFragment = snsClient.findTopics(query, FilterType.ONLY_TERMS, "exact",
-					null, 0, 20, "de", false);
-			NodeIterator topics = null;
-			if (null != mapFragment) {
-			    topics = RDFUtils.getResults( mapFragment );
-			}
-			if (!topics.hasNext()) {
+			TopicMapFragment mapFragment = snsClient.findTopics(query, "/thesa/descriptor", SearchType.exact,
+                    FieldsType.captors, 0, 20, "de", false);
+            Topic[] topics = null;
+            if (null != mapFragment) {
+                topics = mapFragment.getTopicMap().getTopic();
+            }
+            if (topics == null) {
 				status = STATUS_ERROR;
 				statusCode = STATUS_CODE_ERROR_NO_HITS;
 			} else {
