@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.forms.AdminUserForm;
 import de.ingrid.portal.forms.EditAccountForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
@@ -158,22 +159,29 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             return;
         }
 
-        Map<String, String> userAttributes = user.getInfoMap();
-        userAttributes.put("user.name.prefix", f.getInput(EditAccountForm.FIELD_SALUTATION));
-        userAttributes.put("user.name.given", f.getInput(EditAccountForm.FIELD_FIRSTNAME));
-        userAttributes.put("user.name.family", f.getInput(EditAccountForm.FIELD_LASTNAME));
-        userAttributes.put("user.business-info.online.email", f.getInput(EditAccountForm.FIELD_EMAIL));
-        userAttributes.put("user.business-info.postal.street", f.getInput(EditAccountForm.FIELD_STREET));
-        userAttributes.put("user.business-info.postal.postalcode", f.getInput(EditAccountForm.FIELD_POSTALCODE));
-        userAttributes.put("user.business-info.postal.city", f.getInput(EditAccountForm.FIELD_CITY));
+        try {
+            user.getSecurityAttributes().getAttribute("user.name.prefix", true).setStringValue(f.getInput(AdminUserForm.FIELD_SALUTATION));
+            user.getSecurityAttributes().getAttribute("user.name.given", true).setStringValue(f.getInput(AdminUserForm.FIELD_FIRSTNAME));
+            user.getSecurityAttributes().getAttribute("user.name.family", true).setStringValue(f.getInput(AdminUserForm.FIELD_LASTNAME));
+            user.getSecurityAttributes().getAttribute("user.business-info.online.email", true).setStringValue(f.getInput(AdminUserForm.FIELD_EMAIL));
+            user.getSecurityAttributes().getAttribute("user.business-info.postal.street", true).setStringValue(f.getInput(AdminUserForm.FIELD_STREET));
+            user.getSecurityAttributes().getAttribute("user.business-info.postal.postalcode", true).setStringValue(f.getInput(AdminUserForm.FIELD_POSTALCODE));
+            user.getSecurityAttributes().getAttribute("user.business-info.postal.city", true).setStringValue(f.getInput(AdminUserForm.FIELD_CITY));
 
-        // theses are not PLT.D values but ingrid specifics
-        userAttributes.put("user.custom.ingrid.user.age.group", f.getInput(EditAccountForm.FIELD_AGE));
-        userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(EditAccountForm.FIELD_ATTENTION));
-        userAttributes.put("user.custom.ingrid.user.interest", f.getInput(EditAccountForm.FIELD_INTEREST));
-        userAttributes.put("user.custom.ingrid.user.profession", f.getInput(EditAccountForm.FIELD_PROFESSION));
-        userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f
-                .getInput(EditAccountForm.FIELD_SUBSCRIBE_NEWSLETTER));
+            // theses are not PLT.D values but ingrid specifics
+            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.age.group", true).setStringValue(f.getInput(AdminUserForm.FIELD_AGE));
+            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.attention.from", true).setStringValue(f.getInput(AdminUserForm.FIELD_ATTENTION));
+            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.interest", true).setStringValue(f.getInput(AdminUserForm.FIELD_INTEREST));
+            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.profession", true).setStringValue(f.getInput(AdminUserForm.FIELD_PROFESSION));
+            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.subscribe.newsletter", true).setStringValue(f.getInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER));
+
+            userManager.updateUser(user);
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems saving user.", e);
+            }
+        }
+
         try {
             // update password only if a old password was provided
             String oldPassword = f.getInput(EditAccountForm.FIELD_PASSWORD_OLD);

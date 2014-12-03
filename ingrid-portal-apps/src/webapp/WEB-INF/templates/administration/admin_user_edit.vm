@@ -5,7 +5,6 @@
 	<ul>			
 $action.setParameter('action','doChangeTab')
 $action.setParameter('id',$actionForm.getInput("id"))
-$action.setParameter('layoutPermission',$actionForm.getInput("layoutPermission"))
 #if($tab=='1')
 		<li><a class="selected">$MESSAGES.getString('account.edit.tab1')</a></li>
 #else
@@ -155,119 +154,12 @@ $action.setParameter('tab','2')
 #end	
 	</br>
 #elseif($tab=='2')
-	
-	
-#if($actionForm.getInput('layoutPermission') == "admin.portal" || $actionForm.getInput('layoutPermission') == "admin")
 	<p>
 		<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.admin.portal')</label>
 		<input type="checkbox" id="admin_portal" name="admin_portal" value="1" #getChecked('admin_portal' '1') onchange="adapt()"/>
 		<p class="clearer"></p>
 	</p>
-	<p>
-		<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.admin.partner')</label>
-		<input type="checkbox" id="admin_partner" name="admin_partner" value="1" #getChecked('admin_partner' '1')  onchange="adapt()"/>
-		<p class="clearer"></p>
-	</p>
-	<p>
-		<label class="float_left col2left alignleft" for="partner">#displayFieldLabel('partner' "$MESSAGES.getString('account.edit.assigned.partner')")</label>
-		<select class="float_left inputstyle" size="1" id="partner" name="partner">
-		<option value="" #getSelectedFlag('partner' '')>---</option>
-		#foreach ($partner in $partnerlist)
-            #set($pident = $partner.ident)
-			<option value="$pident" #getSelectedFlag("partner" "$pident")>$partner.name</option>
-		#end	
-		</select>
-	</p>
-	&nbsp;&nbsp;
-	#renderInputButtonClass("$MESSAGES.getString('account.edit.update.provider')" "" "doRefresh" "" "float_left")
-	<p class="clearer"></p>
-#elseif($actionForm.getInput('layoutPermission') == "admin.portal.partner")
-	<input type="hidden" name="admin_portal" value="#if($actionForm.isCurrentInput('admin_portal','1'))1#end"/>
-	<input type="hidden" name="admin_partner" value="#if($actionForm.isCurrentInput('admin_partner','1'))1#end"/>
-	<input type="hidden" name="partner" value="$actionForm.getInput('partner')"/>
-	<p>
-		<label class="float_left col2left alignleft" for="partner">$MESSAGES.getString('account.edit.assigned.partner'):</label>$actionForm.getInput('partner_name')
-		<p class="clearer"></p>
-	</p>
 #end
-	<p>
-		<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.admin.index')</label>
-		<input type="checkbox" id="admin_index" name="admin_index" value="1" #getChecked('admin_index' '1') />
-		<p class="clearer"></p>
-	</p>
-	<p>
-		<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.admin.catalog')</label>
-		<input type="checkbox" id="admin_catalog" name="admin_catalog" value="1" #getChecked('admin_catalog' '1') />
-		<p class="clearer"></p>
-	</p>
-	<p>
-		<label class="float_left col2left alignleft" for="provider">#displayFieldLabel('provider' 'zugeordnete Anbieter')</label>
-#if($actionForm.hasInput('partner'))
-		<select class="float_left inputstyle" size="10" id="provider" name="provider" multiple="multiple">
-		<option value="*" #getSelectedFlag('provider' '*')>$MESSAGES.getString('account.edit.select.all')</option>
-		#foreach ($provider in $providerlist)
-			<option value="$provider.ident" #getSelectedFlag('provider' $provider.ident) title="$provider.name">$UtilsString.cutString($provider.name, 50, 50)</option>
-		#end	
-		</select>
-		
-		
-#else
-	$MESSAGES.getString('account.edit.select.partner')
-#end		
-
-	<script type="text/javascript">
-		
-		function adapt() {
-			if (document.frmEditUser.admin_portal.checked == true) {
-				if (document.frmEditUser.admin_partner) {
-					document.frmEditUser.admin_partner.checked = false;
-					document.frmEditUser.admin_partner.disabled = true;
-				}	
-				if (document.frmEditUser.partner) {
-					document.frmEditUser.partner.disabled = true;
-				}
-			} else {
-				if (document.frmEditUser.admin_partner) {
-					document.frmEditUser.admin_partner.disabled = false;
-				}
-				if (document.frmEditUser.partner) {
-					document.frmEditUser.partner.disabled = false;
-				}
-			}
-			if (document.frmEditUser.admin_portal.checked == true || document.frmEditUser.admin_partner.checked == true) {
-				document.frmEditUser.admin_index.checked = false;
-				document.frmEditUser.admin_catalog.checked = false;
-				
-				document.frmEditUser.admin_index.disabled = true;
-				document.frmEditUser.admin_catalog.disabled = true;
-				if (document.frmEditUser.provider) {
-					document.frmEditUser.provider.disabled = true;
-				}
-				document.frmEditUser.doRefresh.style.display = "none";
-				document.getElementById('doRefresh left').style.display = "none";
-				document.getElementById('doRefresh right').style.display = "none";
-			} else {
-				document.frmEditUser.admin_index.disabled = false;
-				document.frmEditUser.admin_catalog.disabled = false;
-				if (document.frmEditUser.provider) {
-					document.frmEditUser.provider.disabled = false;
-				}
-				document.frmEditUser.doRefresh.style.display = "inline";
-				document.getElementById('doRefresh left').style.display = "inline";
-				document.getElementById('doRefresh right').style.display = "inline";
-			}
-		}
-
-		window.onload = adapt();
-	
-	</script>
-		
-		<p class="clearer"></p>
-	</p>
-	<p class="clearer"></p>
-	</br>
-#end
-
 	</div>
 #renderDBEditFooter($mode)
 </form>

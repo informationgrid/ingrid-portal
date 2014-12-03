@@ -25,7 +25,6 @@ import org.apache.jetspeed.components.portletregistry.PortletRegistry;
 import org.apache.jetspeed.login.LoginConstants;
 import org.apache.jetspeed.om.portlet.InitParam;
 import org.apache.jetspeed.request.RequestContext;
-import org.apache.jetspeed.security.PermissionManager;
 import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
@@ -41,7 +40,6 @@ import de.ingrid.portal.forms.LoginForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsSecurity;
 import de.ingrid.portal.security.role.IngridRole;
 
 /**
@@ -227,13 +225,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         if (null == roleManager) {
             throw new PortletException("Failed to find the Role Manager on portlet initialization");
         }
-        PermissionManager permissionManager = (PermissionManager) getPortletContext().getAttribute(CommonPortletServices.CPS_PERMISSION_MANAGER);
-        if (permissionManager == null) {
-            throw new PortletException("Could not get instance of portal permission manager component");
-        }
-        permissionManager.grantPermission(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION, userPrincipal);
         roleManager.addRoleToUser(userPrincipal.getName(), IngridRole.ROLE_ADMIN_PORTAL);
-        
     }
 
     private List<String> getInitialParameterFromOtherPortlet(String paramName) {

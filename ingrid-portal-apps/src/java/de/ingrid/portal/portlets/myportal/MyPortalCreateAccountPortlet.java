@@ -262,7 +262,6 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
 
             User user = userManager.getUser(userName);
-            // TODO set this to false in production env
             PasswordCredential pwc = userManager.getPasswordCredential(user);
             pwc.setEnabled(false);
             userManager.storePasswordCredential(pwc);

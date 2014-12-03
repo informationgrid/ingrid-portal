@@ -4,9 +4,8 @@
 package de.ingrid.portal.portlets.admin;
 
 import java.io.IOException;
-import java.security.Permissions;
-import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -17,7 +16,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.apache.jetspeed.CommonPortletServices;
-import org.apache.jetspeed.security.PermissionManager;
 import org.apache.jetspeed.security.RoleManager;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -27,10 +25,10 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.global.UtilsSecurity;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.om.IngridPartner;
+import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.search.DisplayTreeNode;
-import de.ingrid.portal.security.util.SecurityHelper;
 import de.ingrid.utils.PlugDescription;
 
 /**
@@ -40,8 +38,6 @@ import de.ingrid.utils.PlugDescription;
  */
 public class AdminIPlugPortlet extends GenericVelocityPortlet {
 
-    private PermissionManager permissionManager;
-
     private RoleManager roleManager;
 
     /**
@@ -49,12 +45,6 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
      */
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
-
-        permissionManager = (PermissionManager) getPortletContext().getAttribute(
-                CommonPortletServices.CPS_PERMISSION_MANAGER);
-        if (permissionManager == null) {
-            throw new PortletException("Could not get instance of portal permission manager component");
-        }
 
         roleManager = (RoleManager) getPortletContext().getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
         if (null == roleManager) {
@@ -81,77 +71,51 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
         
         PortletSession session = request.getPortletSession();
         DisplayTreeNode treeRoot = (DisplayTreeNode) session.getAttribute("treeRoot");
-        Principal authUserPrincipal = request.getUserPrincipal();
-        Permissions authUserpermissions = SecurityHelper.getMergedPermissions(authUserPrincipal, permissionManager,
-                roleManager);
         if (treeRoot == null) {
-            treeRoot = getPartnerProviderIPlugs(authUserpermissions, messages, plugs);
+            treeRoot = getPartnerProviderIPlugs(messages, plugs);
             session.setAttribute("treeRoot", treeRoot);
         }
 
         context.put("tree", treeRoot);
 
         // get iplug-se iplugs
-        context.put("SEIplugs", getSEIPlugs(authUserpermissions, plugs));
+        context.put("SEIplugs", getSEIPlugs(plugs));
         
         // get iplug-se indexer iplugs the user has permissions for
-        context.put("SEIndexIplugs", getSEIndexIPlugs(authUserpermissions, plugs));
+        context.put("SEIndexIplugs", getSEIndexIPlugs(plugs));
 
         // check, get for ibus
-        context.put("ibusURL", getIBusAdminURL(authUserpermissions));
+        context.put("ibusURL", PortalConfig.getInstance().getString("ibus.admin.url", ""));
 
         super.doView(request, response);
     }
 
-    private String getIBusAdminURL(Permissions permissions) {
-        String result = null;
-        if (permissions.implies(UtilsSecurity.ADMIN_INGRID_PORTAL_PERMISSION)
-                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION)) {
-            result = PortalConfig.getInstance().getString("ibus.admin.url", "");
-        }
-
-        return result;
-    }
-
-    private ArrayList getSEIndexIPlugs(Permissions permissions, PlugDescription[] plugs) {
+    private ArrayList getSEIndexIPlugs(PlugDescription[] plugs) {
         ArrayList result = new ArrayList();
-        if (permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_CATALOG_INGRID_PORTAL_PERMISSION)
-                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_PROVIDER_INDEX_INGRID_PORTAL_PERMISSION)
-                || permissions.implies(UtilsSecurity.ADMIN_INGRID_PORTAL_PERMISSION)
-                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION)
-                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_PARTNER_INGRID_PORTAL_PERMISSION)) {
-            for (int i = 0; i < plugs.length; i++) {
-                PlugDescription plug = plugs[i];
-                // only include activated index engine iplugs
-                if (plug.isActivate() && plug.getIPlugClass() != null &&
-                		(plug.getIPlugClass().equals("de.ingrid.iplug.se.IndexIPlug") || plug.getIPlugClass().equals("de.ingrid.admin.object.IndexSePlug"))) {
-                    result.add(plug);
-                }
+        for (int i = 0; i < plugs.length; i++) {
+            PlugDescription plug = plugs[i];
+            // only include activated index engine iplugs
+            if (plug.isActivate() && plug.getIPlugClass() != null &&
+            		(plug.getIPlugClass().equals("de.ingrid.iplug.se.IndexIPlug") || plug.getIPlugClass().equals("de.ingrid.admin.object.IndexSePlug"))) {
+                result.add(plug);
             }
         }
         return result;
     }
 
     
-    private ArrayList getSEIPlugs(Permissions permissions, PlugDescription[] plugs) {
+    private ArrayList getSEIPlugs(PlugDescription[] plugs) {
         ArrayList result = new ArrayList();
-        if (permissions.implies(UtilsSecurity.ADMIN_INGRID_PORTAL_PERMISSION)
-                || permissions.implies(UtilsSecurity.ADMIN_PORTAL_INGRID_PORTAL_PERMISSION)) {
-	        for (int i = 0; i < plugs.length; i++) {
-	            PlugDescription plug = plugs[i];
-	            // do not include search engine iplugs
-	            if (plug.isActivate() && plug.getIPlugClass() != null &&
-	            		plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
-	                result.add(plug);
-	            }
-	        }
+        for (int i = 0; i < plugs.length; i++) {
+            PlugDescription plug = plugs[i];
+            // do not include search engine iplugs
+            if (plug.isActivate() && plug.getIPlugClass() != null &&
+            		plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
+                result.add(plug);
+            }
         }
         return result;
     }
-    
-    
-    
-    
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
@@ -190,16 +154,16 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
      * @param principal
      * @return
      */
-    private DisplayTreeNode getPartnerProviderIPlugs(Permissions permissions, IngridResourceBundle messages, PlugDescription[] plugs) {
+    private DisplayTreeNode getPartnerProviderIPlugs(IngridResourceBundle messages, PlugDescription[] plugs) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
-        ArrayList partners = UtilsSecurity.getPartnersFromPermissions(permissions, false);
-        ArrayList providers = UtilsSecurity.getProvidersFromPermissions(permissions, false);
+        List<IngridPartner> partners = UtilsDB.getPartners();
+        List<IngridProvider> providers = UtilsDB.getProviders();
         for (int i = 0; i < partners.size(); i++) {
-            String partnerId = (String) partners.get(i);
+            String partnerId = partners.get(i).getIdent();
             DisplayTreeNode partnerNode = new DisplayTreeNode(partnerId, UtilsDB.getPartnerFromKey(partnerId), false);
             for (int j = 0; j < providers.size(); j++) {
-                String providerId = (String) providers.get(j);
+                String providerId = providers.get(j).getIdent();
                 // check if the provider fits to the partner
                 if (providerId.startsWith(Utils.normalizePartnerKey(partnerId, true).concat("_"))) {
                     DisplayTreeNode providerNode = new DisplayTreeNode(providerId, UtilsDB

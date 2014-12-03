@@ -64,5 +64,6 @@ public interface SecurityResources
     /** user attribute keys **/
     public final static String USER_NAME_GIVEN = "user.name.given";
     public final static String USER_NAME_FAMILY = "user.name.family";
+    public final static String USER_EMAIL = "user.business-info.online.email";
     
 }
