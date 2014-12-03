@@ -27,6 +27,8 @@ SQL erzeugen via jetspeed, also Datenbank anlegen
             mvn jetspeed:mvn -Dtarget=min-db
     - Oracle entsprechend, nur den user vorher in Oracle DB erzeugen !
     - DDL aus target verschoben nach C:\wemove\ingrid\dev\jetspeed\JETSPEED_trunk\_ddl_from_target
+    - Auﬂerdem noch Schema zum Vergleich z.B. mit 222 Version in:
+        C:\wemove\ingrid\dev\jetspeed\JETSPEED_trunk\trunk\jetspeed-portal-resources\src\main\ddl-schema
 
 
 -------------------------
