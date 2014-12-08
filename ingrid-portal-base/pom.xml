@@ -718,10 +718,10 @@
               </execution>
             </executions>
             <configuration>
-              <executable>/opt/portalu/ingrid/maven/maven-1.1/bin/maven</executable>
+              <executable>/opt/ingrid/apache-maven-1.1/bin/maven</executable>
               <environmentVariables>
-                <PATH>/bin:/opt/portalu/ingrid/maven/maven-1.1/bin</PATH>
-                <MAVEN_HOME>/opt/portalu/ingrid/maven/maven-1.1</MAVEN_HOME>
+                <PATH>/bin:/opt/ingrid/apache-maven-1.1/bin</PATH>
+                <MAVEN_HOME>/opt/ingrid/apache-maven-1.1</MAVEN_HOME>
               </environmentVariables>
               <arguments>
                 <argument>j2:portal.genapp.minimal</argument>
