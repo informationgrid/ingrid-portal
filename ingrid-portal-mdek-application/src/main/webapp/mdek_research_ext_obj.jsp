@@ -536,7 +536,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
         
             clearLocationResults();
         
-            SNSService.getLocationTopics(queryTerm, "beginsWith", null, userLocale, {
+            SNSService.getLocationTopics(queryTerm, "contains", null, userLocale, {
                 preHook: LoadingZone.show,
                 postHook: LoadingZone.hide,
                 callback: setLocationResultList,

@@ -213,7 +213,7 @@ html> /**/ body .bottomRight {
                 deleteComboboxWidgets();
                 showLoading();
 
-                SNSService.getLocationTopics(queryTerm, "beginsWith", null, userLocale, {
+                SNSService.getLocationTopics(queryTerm, "contains", null, userLocale, {
                     preHook: function() {
                         showLoadingZone();
                         disableUiElements();
