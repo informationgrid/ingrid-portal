@@ -9,7 +9,7 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal</artifactId>
   <packaging>pom</packaging>
-  <name>Ingrid Portal Distribution</name>
+  <name>InGrid Portal Distribution</name>
 
   <!-- !!!!!!!!!!!!!!!!!!!!!! -->
   <!-- NOTICE !: -->
@@ -272,7 +272,7 @@
       <snapshots />
       <id>de.ingrid.all</id>
       <name>Maven Repo InGrid</name>
-      <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
+      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
   </repositories>
 </project>

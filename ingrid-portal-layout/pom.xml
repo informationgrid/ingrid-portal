@@ -9,10 +9,10 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-layout</artifactId>
   <packaging>war</packaging>
-  <name>Ingrid Portal Layout</name>
+  <name>InGrid Portal Layout</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-layout</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-layout</developerConnection>
+    <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-layout</connection>
+    <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-layout</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal-layout</finalName>
@@ -231,7 +231,7 @@
     <repository>
       <id>de.ingrid.all</id>
       <name>InGrid Repo Maven</name>
-      <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
+      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
     <repository>
       <id>maven.repo</id>

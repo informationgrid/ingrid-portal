@@ -9,10 +9,10 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-base</artifactId>
   <packaging>war</packaging>
-  <name>Ingrid Portal Base</name>
+  <name>InGrid Portal Base</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-base</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/trunk/ingrid-portal-base</developerConnection>
+    <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-base</connection>
+    <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-base</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal</finalName>
@@ -692,7 +692,7 @@
     <repository>
       <id>de.ingrid.all</id>
       <name>InGrid Repo Maven</name>
-      <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
+      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
     <repository>
       <id>maven.repo</id>
