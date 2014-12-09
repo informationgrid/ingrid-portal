@@ -97,7 +97,7 @@ public class SNSService {
     		rootUrl = rootUrl.substring(0, rootUrl.lastIndexOf("/")); 
     	}
     	
-    	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(rootUrl, doc, locale);
+    	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(doc, locale);
 
     	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<TreeTerm>(new TermComparator( locale ));
     	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
@@ -128,7 +128,7 @@ public class SNSService {
     	if (url == null)
     		treeTerms = thesaurusService.getHierarchyNextLevel(topicID, locale);
     	else
-    		treeTerms = thesaurusService.getHierarchyNextLevel(url, topicID, locale);
+    		treeTerms = thesaurusService.getHierarchyNextLevel(topicID, locale);
 
     	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<TreeTerm>(new TermComparator( locale ));
     	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
@@ -155,7 +155,7 @@ public class SNSService {
     		+topicID+", "+depth+", "+direction+", " + locale.getLanguage());
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
     	
-    	TreeTerm lastTerm = thesaurusService.getHierarchyPathToTop(url, topicID, locale);
+    	TreeTerm lastTerm = thesaurusService.getHierarchyPathToTop(topicID, locale);
 
     	// Notice we have to build different structure for return list !
     	// parent is encapsulated in CHILD list on every level
@@ -243,7 +243,7 @@ public class SNSService {
     	}
     	
     	// TODO: use "contains" here since exact only delivers one term! CHECK!!!
-    	Term[] terms = thesaurusService.findTermsFromQueryTerm(url, queryTerm,
+    	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm,
     			searchType, true, locale);
 
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
@@ -293,14 +293,14 @@ public class SNSService {
 		    result = new SNSLocationTopic();
 		    // empty and marked if expired !
 		    if (location.getIsExpired()) {
-		        result.setExpiredDate( location.getExpiredDate() );
+		        //result.setExpiredDate( location.getExpiredDate() );
 		        result.setExpired( true );
 		    } else {
 		        result = convertLocationToSNSLocationTopic(location);
 		    }
 		        
 		    // check for successors
-            String[] successorIds = location.getSuccessorIds();
+            String[] successorIds = new String[0]; //location.getSuccessorIds();
             List<SNSLocationTopic> successorTopics = new ArrayList<SNSLocationTopic>();
             for (String successorId : successorIds) {
                 // call me again with the successor

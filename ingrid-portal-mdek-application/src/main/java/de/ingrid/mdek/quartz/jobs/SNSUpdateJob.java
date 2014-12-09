@@ -69,7 +69,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 
     private Locale locale;
 
-    private String urlThesaurus;
+    //private String urlThesaurus;
 
 
 	// No args constructor is required for the job to be scheduled by quartz
@@ -78,7 +78,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		this.jobName = null;
 		this.jobDetail = null;
 		this.cancelJob = false;
-		this.urlThesaurus = ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus");
+		//this.urlThesaurus = ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus");
 	}
 
 	public SNSUpdateJob(ConnectionFacade connectionFacade, SNSService snsService, String lang) {
@@ -99,7 +99,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		jobDataMap.put("PLUG_ID", connectionFacade.getCurrentPlugId());
 		jobDataMap.put("USER_ID", MdekSecurityUtils.getCurrentUserUuid());
 		jobDataMap.put("LOCALE", new Locale( lang ));
-		jobDataMap.put("URL_THESAURUS", ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus"));
+		//jobDataMap.put("URL_THESAURUS", ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus"));
 		jobDetail.setJobDataMap(jobDataMap);
 
 		return jobDetail;
@@ -129,7 +129,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			String plugId = mergedJobDataMap.getString("PLUG_ID");
 			String userId = mergedJobDataMap.getString("USER_ID");
 			locale = (Locale) mergedJobDataMap.get("LOCALE");
-			urlThesaurus = mergedJobDataMap.getString("URL_THESAURUS");
+			//urlThesaurus = mergedJobDataMap.getString("URL_THESAURUS");
 			List<String> freeTerms = fetchFreeTopics(connectionFacade.getMdekCallerCatalog(), plugId, userId);
 	
 			log.debug("Starting sns update...");
@@ -242,7 +242,8 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		Iterator<SNSTopic> topicsIt = topics.iterator();
 
 		while (freeTermsIt.hasNext()) {
-			String freeTerm = freeTermsIt.next();
+			@SuppressWarnings("unused")
+            String freeTerm = freeTermsIt.next();
 			SNSTopic topic = topicsIt.next();
 			if (topic == null) {
 				freeTermsIt.remove();
@@ -281,7 +282,8 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		return fetchTopics(mdekCallerCatalog, plugId, userId, new SearchtermType[] { SearchtermType.UMTHES, SearchtermType.GEMET });
 	}
 
-	private List<SNSTopic> fetchTopics(IMdekCallerCatalog mdekCallerCatalog, String plugId, String userId, SearchtermType[] termTypes) {
+	@SuppressWarnings("unchecked")
+    private List<SNSTopic> fetchTopics(IMdekCallerCatalog mdekCallerCatalog, String plugId, String userId, SearchtermType[] termTypes) {
 		IngridDocument response = mdekCallerCatalog.getSearchTerms(
 				plugId,
 				termTypes,
@@ -322,9 +324,9 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			SNSTopic newTopic;
 			try {
 			    String topicId = oldTopic.getTopicId();
-			    if (!topicId.startsWith( "http" )) {
-			        topicId = urlThesaurus + "_000" + topicId.substring( topicId.lastIndexOf( "_" ) + 1 );
-			    }
+//			    if (!topicId.startsWith( "http" )) {
+//			        topicId = urlThesaurus + "_000" + topicId.substring( topicId.lastIndexOf( "_" ) + 1 );
+//			    }
 				newTopic = getSNSTopicForTopicId(snsService, topicId);
 	
 				if (newTopic == null) {
@@ -399,7 +401,8 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 
 	// Retrieves the current JobExecutionContext
 	// If the job is not running, null is returned
-	private JobExecutionContext getJobExecutionContext() {
+	@SuppressWarnings("unchecked")
+    private JobExecutionContext getJobExecutionContext() {
 		try {
 			if (scheduler != null) {
 				List<JobExecutionContext> executionContextList = scheduler.getCurrentlyExecutingJobs();

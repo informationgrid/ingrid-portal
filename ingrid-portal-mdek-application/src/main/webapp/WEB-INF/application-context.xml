@@ -82,6 +82,18 @@
         </property>
     </bean>
     
+    <bean id="rdfService" class="de.ingrid.mdek.dwr.services.sns.RDFService">
+        <property name="thesaurusService">
+            <ref bean="thesaurusRDFService" />
+        </property>
+        <property name="gazetteerService">
+            <ref bean="gazetteerService" />
+        </property>
+        <property name="fullClassifyService">
+            <ref bean="fullClassifyService" />
+        </property>
+    </bean>
+    
 	<bean id="ctService" class="de.ingrid.mdek.dwr.services.cts.CoordinateTransformationServiceImpl" />
 	<bean id="getCapabilitiesService" class="de.ingrid.mdek.dwr.services.GetCapabilitiesService" />
 	<bean id="httpService" class="de.ingrid.mdek.dwr.services.HttpService" />

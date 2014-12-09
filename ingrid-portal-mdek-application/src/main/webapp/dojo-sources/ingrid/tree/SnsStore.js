@@ -48,6 +48,10 @@ define([
 
         constructor: function() {
             this.idProperty = "topicId";
+            
+            if ( this.serviceType === "rdf" ) {
+            	this.service = RDFService;
+            }
         },
 
         query: function(query, options) {
