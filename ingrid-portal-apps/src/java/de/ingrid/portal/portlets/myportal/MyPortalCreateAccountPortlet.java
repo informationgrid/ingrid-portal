@@ -123,7 +123,12 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
         List values = getInitParameterList(config, IP_RULES_VALUES);
         rules = new HashMap();
         for (int ix = 0; ix < ((names.size() < values.size()) ? names.size() : values.size()); ix++) {
-            rules.put(names.get(ix), values.get(ix));
+        // jetspeed 2.3 reads rule key/values vice versa than Jetspeed 2.1 !!!
+        // see PortalAdministrationImpl.registerUser
+        // 2.1: ProfilingRule rule = profiler.getRule((String)entry.getKey());
+        // 2.3: ProfilingRule rule = profiler.getRule(entry.getValue());
+//            rules.put(names.get(ix), values.get(ix));
+            rules.put(values.get(ix), names.get(ix));
         }
 
         this.returnUrlPath = config.getInitParameter(IP_RETURN_URL);

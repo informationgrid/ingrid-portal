@@ -61,7 +61,6 @@ import de.ingrid.portal.forms.AdminUserForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridNewsletterData;
@@ -177,7 +176,12 @@ public class AdminUserPortlet extends ContentPortlet {
         List values = getInitParameterList(config, IP_RULES_VALUES);
         rules = new HashMap();
         for (int ix = 0; ix < ((names.size() < values.size()) ? names.size() : values.size()); ix++) {
-            rules.put(names.get(ix), values.get(ix));
+        // jetspeed 2.3 reads rule key/values vice versa than Jetspeed 2.1 !!!
+        // see PortalAdministrationImpl.registerUser
+        // 2.1: ProfilingRule rule = profiler.getRule((String)entry.getKey());
+        // 2.3: ProfilingRule rule = profiler.getRule(entry.getValue());
+//            rules.put(names.get(ix), values.get(ix));
+            rules.put(values.get(ix), names.get(ix));
         }
 
         this.emailTemplate = config.getInitParameter(IP_EMAIL_TEMPLATE);
