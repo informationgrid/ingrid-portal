@@ -5,17 +5,21 @@
 	<ul>			
 $action.setParameter('action','doChangeTab')
 $action.setParameter('id',$actionForm.getInput("id"))
+$action.setParameter('layoutPermission',$actionForm.getInput("layoutPermission"))
 #if($tab=='1')
 		<li><a class="selected">$MESSAGES.getString('account.edit.tab1')</a></li>
 #else
 $action.setParameter('tab','1')
         <li><a href="$action">$MESSAGES.getString('account.edit.tab1')</a></li>
 #end
+## only show permission tab if we are "admin"
+#if($actionForm.getInput('layoutPermission') == "admin")
 #if($tab=='2')
 		<li><a class="selected">$MESSAGES.getString('account.edit.tab2')</a></li>
 #else
 $action.setParameter('tab','2')
         <li><a href="$action">$MESSAGES.getString('account.edit.tab2')</a></li>
+#end
 #end
      </ul>
 	 <br class="clearer" />
@@ -154,11 +158,14 @@ $action.setParameter('tab','2')
 #end	
 	</br>
 #elseif($tab=='2')
+## only show content of permission tab if we are "admin"
+#if($actionForm.getInput('layoutPermission') == "admin")
 	<p>
 		<label class="float_left col2left alignleft">$MESSAGES.getString('account.edit.admin.portal')</label>
 		<input type="checkbox" id="admin_portal" name="admin_portal" value="1" #getChecked('admin_portal' '1') onchange="adapt()"/>
 		<p class="clearer"></p>
 	</p>
+#end
 #end
 	</div>
 #renderDBEditFooter($mode)

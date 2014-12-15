@@ -317,6 +317,9 @@ public class AdminUserPortlet extends ContentPortlet {
                 start = System.currentTimeMillis();
             }
 
+            // check for admin 
+            boolean isAdmin = "admin".equals(request.getUserPrincipal().getName());
+
             // get filter criteria
             ContentBrowserState state = getBrowserState(request);
             Map<String, String> filterCriteria = state.getFilterCriteria();
@@ -353,15 +356,30 @@ public class AdminUserPortlet extends ContentPortlet {
 
             // iterate over all users
     		for (User user : ul.getResults()) {
+    			
+    			// do not show admin user if not logged in as admin (superadmin) !
+    			if (!isAdmin && "admin".equals(user.getName())) {
+    				continue;
+    			}
+    			
     			// and create UserInfo for view
                 UserInfo userInfo = new UserInfo();
                 userInfo.setId(user.getName());
                 
                 // get the user roles
                 Collection<Role> userRoles = roleManager.getRolesForUser(user.getName());
+                boolean userIsAdminPortal = false;
                 for (Role r : userRoles) {
+                	// skip all admin-portal users if not logged in as admin (superadmin) !
+                	if (IngridRole.ROLE_ADMIN_PORTAL.equals(r.getName())) {
+                		userIsAdminPortal = true;
+                	}
                 	userInfo.addRole(r.getName());
                 }
+    			// do not show admin-portal user if not logged in as admin (superadmin) !
+    			if (!isAdmin && userIsAdminPortal) {
+    				continue;
+    			}
 
                 userInfo.setFirstName(user.getInfoMap().get(SecurityResources.USER_NAME_GIVEN));
                 userInfo.setLastName(user.getInfoMap().get(SecurityResources.USER_NAME_FAMILY));
@@ -619,9 +637,8 @@ public class AdminUserPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
     protected void doActionUpdate(ActionRequest request) {
-    	// always admin ! With Jetspeed 2.3 we drop "admin-partner", "admin-provider" ... so all users having access
-    	// to user administration have full access ("admin" or "admin-portal").
-    	boolean isAdmin = true;
+    	// is super admin ?
+        boolean isAdmin = "admin".equals(request.getUserPrincipal().getName());
     	
     	AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
         f.clearErrors();
@@ -684,7 +701,8 @@ public class AdminUserPortlet extends ContentPortlet {
                     f.setError("", "account.edit.error.wrong.password");
                     return;
                 }
-            } else if (f.getInput(AdminUserForm.FIELD_TAB).equals("2")) {
+            // also check for superadmin to be sure !
+            } else if (f.getInput(AdminUserForm.FIELD_TAB).equals("2") && isAdmin) {
                 // update the admin-portal role
                 if (f.hasInput(AdminUserForm.FIELD_CHK_ADMIN_PORTAL)) {
                     roleManager.addRoleToUser(user.getName(), IngridRole.ROLE_ADMIN_PORTAL);
@@ -963,6 +981,15 @@ public class AdminUserPortlet extends ContentPortlet {
                     f.setInput(AdminUserForm.FIELD_CHK_ADMIN_PORTAL, "1");
             	}
             }
+
+            // set type of layout 
+        	// superadmin can apply role "admin-portal" to user !
+            String layoutPermission = "";
+            if ("admin".equals(request.getUserPrincipal().getName())) {
+            	layoutPermission = "admin";
+            }
+            f.setInput(AdminUserForm.FIELD_LAYOUT_PERMISSION, layoutPermission);
+
 
         } catch (Exception e) {
         	log.error("Problems fetching user data.", e);
