@@ -3,3 +3,5 @@
 /jetspeed-components.xml
 /core-build.xml
 /full-portal.xml
+/work
+/*.log*
