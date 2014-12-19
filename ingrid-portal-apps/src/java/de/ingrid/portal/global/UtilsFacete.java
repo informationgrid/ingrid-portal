@@ -465,6 +465,9 @@ public class UtilsFacete {
 									if(ingridFacet != null){
 										if(ingridFacet.getFacets() != null){
 											String facetSubkey = key.replace(facetKey + ":", "");
+											if(facetSubkey.indexOf(":") > -1){
+												facetSubkey = facetSubkey.split(":")[1];
+											}
 											String queryType = ingridFacet.getQueryType();
 											IngridFacet facet = getFacetById(ingridFacet.getFacets(), facetSubkey);
 											if(facet != null){
