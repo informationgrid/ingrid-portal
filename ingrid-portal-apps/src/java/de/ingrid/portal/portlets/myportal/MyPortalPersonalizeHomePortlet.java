@@ -14,6 +14,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.apache.jetspeed.om.folder.Folder;
+import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.portlets.admin.ConfigureHomepagePortlet;
@@ -30,8 +31,11 @@ public class MyPortalPersonalizeHomePortlet extends ConfigureHomepagePortlet {
      *      javax.portlet.RenderResponse)
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+        Context context = getContext(request);
+
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
+        context.put("MESSAGES", messages);
 
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", "searchSettings.title.rankingAndGrouping");
