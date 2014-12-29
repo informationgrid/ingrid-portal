@@ -47,6 +47,13 @@
       <outputDirectory>distribution/apache-tomcat-7.0.56/shared/lib</outputDirectory>
       <unpack>false</unpack>
       <scope>runtime</scope>
+<!--
+ehcache: needed for initialization of MdekClientCaller (mdek-api.jar).
+jsr107cache: transitive dependency of ehcache, needed !?
+xstream / xpp3_min: transitive dependencies of ingrid-utils, e.g. needed in ingrid-mdek webapp.
+dom4j: otherwise problems in portal-base and portal-app webapp, when writing PSML file of new user to file system (when PSML not in database mode) !?:
+       java.lang.ClassCastException: org.dom4j.DocumentFactory cannot be cast to org.dom4j.DocumentFactory
+-->
       <includes>
         <include>de.ingrid:ingrid-utils</include>
         <include>net.sf.ehcache:ehcache</include>
@@ -67,6 +74,10 @@
         <include>xpp3:xpp3_min</include>
         <include>com.thoughtworks.xstream:xstream</include>
         <include>backport-util-concurrent:backport-util-concurrent</include>
+<!-- commented again, cause works with PSML in database, see comment above -->
+<!--
+        <include>dom4j:dom4j</include>
+-->
       </includes>
     </dependencySet>
     <dependencySet>
