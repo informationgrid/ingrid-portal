@@ -5,11 +5,8 @@ package de.ingrid.portal.portlets.admin;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.security.Permission;
-import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +44,6 @@ import com.thoughtworks.xstream.XStream;
 import de.ingrid.portal.global.IngridPersistencePrefs;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsString;
-import de.ingrid.portal.security.permission.IngridPermission;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -148,30 +144,15 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
                     HashMap<String, Object> userMap = new HashMap<String, Object>();
                     userList.add(userMap);
                     String password = "";
-                    Iterator<Object> it = userManager.getSubject(user).getPrivateCredentials().iterator();
-                    while (it.hasNext()) {
-                        PasswordCredential pc = (PasswordCredential) it.next();
-                        if (pc.getPassword() != null && pc.getPassword().length() > 0) {
-                            password = new String(pc.getPassword());
-                            break;
-                        }
+                    PasswordCredential pc = userManager.getPasswordCredential(user);
+                    if (pc.getPassword() != null && pc.getPassword().length() > 0) {
+                        password = new String(pc.getPassword());
                     }
                     userMap.put("userPasswordCredential", password);
 
                     // userMap.put("userSubject", user.getSubject());
                     //Principal userPrincipal = SecurityUtil.getPrincipal(userManager.getSubject(user), User.class);
                     userMap.put("userPrincipalName", user.getName());
-
-                    Permissions userPermissions = permissionManager.getPermissions(user);
-                    List<IngridPermission> ingridPermissionList = new ArrayList<IngridPermission>();
-                    Enumeration<Permission> el = userPermissions.elements();
-                    while (el.hasMoreElements()) {
-                        Permission p = el.nextElement();
-                        if (p instanceof IngridPermission) {
-                            ingridPermissionList.add((IngridPermission) p);
-                        }
-                    }
-                    userMap.put("userPermissions", ingridPermissionList);
 
                     HashMap<String, String> userAttribs = new HashMap<String, String>();
                     Map<String, String> prefs = user.getInfoMap();
@@ -210,7 +191,6 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
                 log.error("Error serializing data", e);
             }
         } else if (action != null && action.equals("doImport")) {
-            context.put("sqlStatements", request.getPortletSession().getAttribute("sqlStatements"));
         }
         super.doView(request, response);
     }
@@ -223,8 +203,10 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
         if (request.getParameter("doExport") != null) {
             response.setRenderParameter("action", "doExport");
         } else if (request.getParameter("doImport") != null) {
-// TODO mm : ? User Import (Creation) better according to JS23 UserManagerService.createUser ?
             String path = request.getParameter("path");
+            if (path == null || path.trim().length() == 0) {
+                return;
+            }
             FileInputStream fis = new FileInputStream(path);
             int x = fis.available();
             byte b[] = new byte[x];
@@ -234,42 +216,29 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
             Object obj = xstream.fromXML(xmlData);
             if (obj instanceof HashMap) {
                 Map<String, Object> map = (Map<String, Object>) obj;
-                List<String> sqlStatements = new ArrayList<String>();
                 List<Map<String, Object>> users = (List<Map<String, Object>>) map.get("users");
                 for (Map<String, Object> userMap : users) {
                     String userName = (String) userMap.get("userPrincipalName");
                     String oldPassword = (String) userMap.get("userPasswordCredential");
                     if (!userManager.userExists(userName) && oldPassword != null && oldPassword.length() > 0) {
-                        String password = "geheim";
-// TODO mm: FIX SQL ??? better do it JS 23 way !
-                        String passwordUpdateSql = "UPDATE security_credential, security_principal SET security_credential.COLUMN_VALUE=\""
-                                + oldPassword
-                                + "\" WHERE security_principal.FULL_PATH=\"/user/"
-                                + userName
-                                + "\" AND security_principal.PRINCIPAL_ID=security_credential.PRINCIPAL_ID;";
-                        sqlStatements.add(passwordUpdateSql);
+                        String password = null;
                         Map<String, String> userAttributes = (Map<String, String>) userMap.get("userAttributes");
                         List<String> roles = (List<String>) userMap.get("userRoles");
                         List<String> groups = (List<String>) userMap.get("userGroups");
                         Map<String, String> rules = (Map<String, String>) userMap.get("userRules");
-                        List<IngridPermission> userPermissions = (List<IngridPermission>) userMap.get("userPermissions");
                         Map<String, String> ingridPrefs = (Map<String, String>) userMap.get("userIngridPrefs");
 
                         try {
                             // create user
                             admin.registerUser(userName, password, roles, groups, userAttributes, rules, null);
-
                             User user = userManager.getUser(userName);
+
+                            PasswordCredential pwc = userManager.getPasswordCredential(user);
+                            pwc.setPassword(oldPassword, true);
+                            userManager.storePasswordCredential(pwc);
+
                             // activate user
                             user.setEnabled(true);
-
-                            // create ingrid specific permissions
-                            for (IngridPermission userPermission : userPermissions) {
-                                if (!permissionManager.permissionExists(userPermission)) {
-                                    permissionManager.addPermission(userPermission);
-                                }
-                                permissionManager.grantPermission(userPermission, user);
-                            }
 
                             // create ingrid specific user preferences
                             Set<Entry<String, String>> ingridPrefKeys = ingridPrefs.entrySet();
@@ -280,7 +249,6 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
                                 IngridPersistencePrefs.setPref(userName, entry.getKey(), xstream.fromXML(prefValue));
                             }
 
-                            request.getPortletSession().setAttribute("sqlStatements", sqlStatements);
                             response.setRenderParameter("action", "doImport");
 
                         } catch (Exception e) {
