@@ -71,12 +71,30 @@ Vorgehen Migration von Portal Datenbank von blunt (Jetspeed 2.1) nach Jetspeed 2
         Import via phpMyAdmin
 
     Oracle:
-        Export via SQL Developer:
-            - Extras -> Datenbankexport
-                - Verbindung "ingrid_portalu" / "Schema anzeigen" AUS / "Speichern unter": export_ingrid.sql
-                - "Objekte angeben": mehr... / Typ: Table / ingrid_* + qrtz_* Tabellen auf rechte Seite
-                - Fertig stellen
-        Import via SQL Developer:
-            - Datei -> Öffnen -> export_ingrid.sql
-            - "Skript ausführen" -> Verbindung "ingrid_portalu_js222"
-            - commit
+        - DDL und Daten müssen separat exportiert und importiert werden.
+          DDL-Export berücksichtigt auch Trigger, Sequenzen, Indexe.
+          Daten-Export beinhaltet auch CLOBS (nur via datapump ! "normaler" export mit Daten beinhaltet KEINE CLOBS !).
+        - DDL export / import via SQL:
+            Export via SQL Developer:
+                - Extras -> Datenbankexport
+                    - Verbindung "ingrid_portalu" / "Schema anzeigen" AUS / "Daten exportieren" AUS / "Speichern unter": export_ingrid_ddl.sql
+                    - "Objekte angeben": mehr... / Typ: Table / ingrid_* + qrtz_* Tabellen auf rechte Seite
+                    - Fertig stellen
+            Import via SQL Developer:
+                - Datei -> Öffnen -> export_ingrid_ddl.sql
+                - "Skript ausführen" -> Verbindung "ingrid_portalu_js222"
+                - commit
+        - Daten export / import via datapump:
+            Export via SQL Developer:
+                - Ansicht -> DBA
+                - Data Pump -> Exportjobs Kontext: "Assistent Data Pump-Export"
+                    - Verbindung "ingrid_portalu" / "Nur Daten"
+                    - "Tabellendaten": nur ingrid_* + qrtz_* Tabellen nach unten
+                    - Rest beibehalten (export Dateiname etc.)
+            Import via SQL Developer:
+                - Ansicht -> DBA
+                - Data Pump -> Importjobs Kontext: "Assistent Data Pump-Import"
+                    - Verbindung "ingrid_portalu_js222" / "Nur Daten" / gleiche Datei wie beim Export
+                    - Filter: ingrid_* + qrtz_* Tabellen aus .dmp File werden angezeigt -> nach rechts klicken !
+                    - Erneute Zuordnung: "Schemas neu zuordnen" -> "Zeile hinzufügen" -> Quelle "INGRID_PORTALU", Ziel: "INGRID_PORTALU_JS222" (Schema mappen, ist im dmp mit drin)
+                    - Rest beibehalten (export Dateiname etc.)
