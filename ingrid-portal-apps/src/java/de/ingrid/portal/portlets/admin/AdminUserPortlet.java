@@ -345,8 +345,9 @@ public class AdminUserPortlet extends ContentPortlet {
             String sortOrder = null;
 
             // fetch users, filtering via QueryContext
+            // NOTICE: fetch max 10000 users ! Integer.MAX_VALUE leads to exception with Oracle DB !!!
             JetspeedPrincipalQueryContext qc = new JetspeedPrincipalQueryContext(
-            	userId, 0, Integer.MAX_VALUE, sortOrder, roles, null, null, attributeMap);
+            	userId, 0, 10000, sortOrder, roles, null, null, attributeMap);
 
             UserResultList ul = userManager.getUsersExtended(qc);
 

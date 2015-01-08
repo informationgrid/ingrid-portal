@@ -5,6 +5,7 @@ package de.ingrid.portal.portlets.myportal;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -145,7 +146,8 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
     		credential.setPassword(null, newPassword);
     		userManager.storePasswordCredential(credential);
 
-    		Map<String, String> userAttributes = user.getInfoMap();
+    		Map<String, String> userAttributes = new HashMap<String, String>();
+    		userAttributes.putAll(user.getInfoMap());
             // special attributes
             userAttributes.put(CTX_NEW_PASSWORD, newPassword);
             userAttributes.put(CTX_USER_NAME, userName);
