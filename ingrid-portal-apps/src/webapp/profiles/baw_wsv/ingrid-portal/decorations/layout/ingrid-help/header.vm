@@ -15,6 +15,7 @@
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   
   <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_descr"), "")" />
   <meta name="version" content="#SiteVersionTag()" />
   <meta name="author" content="wemove digital solutions" />
