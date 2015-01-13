@@ -348,24 +348,24 @@ ul .x-tree-node-ct li .x-tree-node {
 }
 
 .x-header-text {
-	font: bold 12px verdana;
+	font: bold 12px verdana, Arial, sans-serif;
 	color: #1C5679;
 }
 
 .x-panel-header-collapsed .x-header-text {
-	font: bold 12px verdana;
+	font: bold 12px verdana, Arial, sans-serif;
 	color: #1B78B1;
 }
 
 .x-tree-node-text {
 	color: #000000;
-	font: normal 12px/19px verdana;
+	font: normal 12px/19px verdana, Arial, sans-serif;
 	text-decoration: none;
 }
 
 #activeServices .x-tree-node-text {
 	color: #000000;
-	font: normal 12px/19px verdana;
+	font: normal 12px/19px verdana, Arial, sans-serif;
 	text-decoration: none;
 }
 
@@ -495,24 +495,24 @@ ul .x-tree-node-ct li .x-tree-node {
 }
 
 .font {
-	font: normal 12px/19px verdana;
+	font: normal 12px/19px verdana, Arial, sans-serif;
 }
 
 .font-menu {
-	font: normal 11px/16px verdana !important;
+	font: normal 11px/16px verdana, Arial, sans-serif !important;
 	color: #000 !important;
 }
 
 .font-nominatim {
-	font: normal 11px/16px verdana !important;
+	font: normal 11px/16px verdana, Arial, sans-serif !important;
 }
 
 .x-boundlist h1 span {
-	font: bold 11px/16px verdana !important;
+	font: bold 11px/16px verdana, Arial, sans-serif !important;
 }
 
 #nominatim {
-	font: normal 11px/16px verdana !important;
+	font: normal 11px/16px verdana, Arial, sans-serif !important;
 }
 
 #servicePanel .x-panel-header {
@@ -520,7 +520,7 @@ ul .x-tree-node-ct li .x-tree-node {
 }
 
 #searchResults .x-panel-header {
-	font: bold 12px/19px verdana;
+	font: bold 12px/19px verdana, Arial, sans-serif;
 	color: #000000;
     background: #FFFFFF;
     border-bottom: 1px solid #000000;
@@ -577,7 +577,7 @@ label.x-form-item-label {
 }
 
 #centerPanel span.x-btn-inner {
-	font: bold 12px verdana !important;
+	font: bold 12px verdana, Arial, sans-serif !important;
 	color: #1B78B1 !important;
 }
 
