@@ -112,7 +112,12 @@ define([
             });
             errorButton.pos = 0;
             errorButton.onClick = function() {
-                UtilUI.showNextError(this.invalidIds[this.pos++ % this.invalidIds.length]);
+                var id = this.invalidIds[this.pos++ % this.invalidIds.length];
+                if (id instanceof Array) {
+                    UtilUI.showNextError(id[0]);
+                } else {
+                    UtilUI.showNextError(id);
+                }
             };
             return errorButton;
         },

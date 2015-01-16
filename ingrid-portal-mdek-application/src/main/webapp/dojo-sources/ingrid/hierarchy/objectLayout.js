@@ -196,7 +196,7 @@ define([
                 }, "generalShortDesc");
 
                 new SimpleTextarea({
-                    //required: true,
+                    required: true,
                     rows: 10,
                     style: "width: 100%;"
                 }, "generalDesc");
