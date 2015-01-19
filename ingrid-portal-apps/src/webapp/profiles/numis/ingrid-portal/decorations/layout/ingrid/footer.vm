@@ -32,8 +32,8 @@
 <!-- Piwik -->
 <script type="text/javascript">
 var domain = document.domain;
-if(domain == "213.144.28.243" || domain=="213.144.28.243"){
-	var pkBaseURL = (("https:" == document.location.protocol) ? "https://213.144.28.243/piwik/" : "http://213.144.28.243/piwik/");
+if(domain == "numis.niedersachsen.de" || domain=="numis.niedersachsen.de"){
+	var pkBaseURL = (("https:" == document.location.protocol) ? "https://numis.niedersachsen.de/piwik/" : "http://numis.niedersachsen.de/piwik/");
 	document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 }
 </script>
@@ -44,7 +44,7 @@ if(domain == "213.144.28.243" || domain=="213.144.28.243"){
 		piwikTracker.enableLinkTracking();
 	} catch( err ) {
 	}
-</script><noscript><p><img src="http:/213.144.28.243/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+</script><noscript><p><img src="http:/numis.niedersachsen.de/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tag -->
 
 <script> if (document.documentMode == 7) alert("$MESSAGES.getString('ingrid.page.compatibility')") </script>

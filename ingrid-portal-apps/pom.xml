@@ -9,10 +9,10 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-apps</artifactId>
   <packaging>war</packaging>
-  <name>Ingrid Portal Apps</name>
+  <name>InGrid Portal Apps</name>
   <scm>
-    <connection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/branches/ingrid-portal-3.5_REDMINE-304_JetspeedMigration/ingrid-portal-apps</connection>
-    <developerConnection>scm:svn:https://harrison.its-technidata.de/svn/ingrid/ingrid-portal/branches/ingrid-portal-3.5_REDMINE-304_JetspeedMigration/ingrid-portal-apps</developerConnection>
+    <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-apps</connection>
+    <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-apps</developerConnection>
   </scm>
   <build>
     <finalName>ingrid-portal-apps</finalName>
@@ -305,28 +305,6 @@
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-fpn</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-iplug-admin-step1-webservice</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-el</groupId>
-          <artifactId>commons-el</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>htmlparser</groupId>
-          <artifactId>htmlparser</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>xml-apis</groupId>
-          <artifactId>xml-apis</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug-se</artifactId>
       <version>3.3.0.1</version>
       <exclusions>
@@ -377,32 +355,6 @@
         <exclusion>
           <groupId>commons-el</groupId>
           <artifactId>commons-el</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-tamino</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-iplug-admin-step1</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-iplug-admin-step2-tamino</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-el</groupId>
-          <artifactId>commons-el</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-ibus</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>TaminoAPI4J</groupId>
-          <artifactId>TaminoAPI4J</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -551,7 +503,7 @@
     <repository>
       <id>de.ingrid.all</id>
       <name>InGrid Repo Maven</name>
-      <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
+      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
     <repository>
       <id>maven.repo</id>

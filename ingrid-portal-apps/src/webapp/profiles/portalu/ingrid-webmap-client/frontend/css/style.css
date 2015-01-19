@@ -1,3 +1,28 @@
+<<<<<<< HEAD
+=======
+/*
+ * **************************************************-
+ * Ingrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+>>>>>>> master
 body {
 	color: #111111 !important;
     font: 100%/120% Verdana,Arial,sans-serif !important;
@@ -326,24 +351,40 @@ ul .x-tree-node-ct li .x-tree-node {
 }
 
 .x-header-text {
+<<<<<<< HEAD
 	font: bold 12px verdana;
+=======
+	font: bold 12px verdana, Arial, sans-serif;
+>>>>>>> master
 	color: #1C5679;
 }
 
 .x-panel-header-collapsed .x-header-text {
+<<<<<<< HEAD
 	font: bold 12px verdana;
+=======
+	font: bold 12px verdana, Arial, sans-serif;
+>>>>>>> master
 	color: #1B78B1;
 }
 
 .x-tree-node-text {
 	color: #000000;
+<<<<<<< HEAD
 	font: normal 12px/19px verdana;
+=======
+	font: normal 12px/19px verdana, Arial, sans-serif;
+>>>>>>> master
 	text-decoration: none;
 }
 
 #activeServices .x-tree-node-text {
 	color: #000000;
+<<<<<<< HEAD
 	font: normal 12px/19px verdana;
+=======
+	font: normal 12px/19px verdana, Arial, sans-serif;
+>>>>>>> master
 	text-decoration: none;
 }
 
@@ -473,15 +514,24 @@ ul .x-tree-node-ct li .x-tree-node {
 }
 
 .font {
+<<<<<<< HEAD
 	font: normal 12px/19px verdana;
 }
 
 .font-menu {
 	font: normal 11px/16px verdana !important;
+=======
+	font: normal 12px/19px verdana, Arial, sans-serif;
+}
+
+.font-menu {
+	font: normal 11px/16px verdana, Arial, sans-serif !important;
+>>>>>>> master
 	color: #000 !important;
 }
 
 .font-nominatim {
+<<<<<<< HEAD
 	font: normal 11px/16px verdana !important;
 }
 
@@ -491,6 +541,17 @@ ul .x-tree-node-ct li .x-tree-node {
 
 #nominatim {
 	font: normal 11px/16px verdana !important;
+=======
+	font: normal 11px/16px verdana, Arial, sans-serif !important;
+}
+
+.x-boundlist h1 span {
+	font: bold 11px/16px verdana, Arial, sans-serif !important;
+}
+
+#nominatim {
+	font: normal 11px/16px verdana, Arial, sans-serif !important;
+>>>>>>> master
 }
 
 #servicePanel .x-panel-header {
@@ -498,7 +559,11 @@ ul .x-tree-node-ct li .x-tree-node {
 }
 
 #searchResults .x-panel-header {
+<<<<<<< HEAD
 	font: bold 12px/19px verdana;
+=======
+	font: bold 12px/19px verdana, Arial, sans-serif;
+>>>>>>> master
 	color: #000000;
     background: #FFFFFF;
     border-bottom: 1px solid #000000;
@@ -555,7 +620,11 @@ label.x-form-item-label {
 }
 
 #centerPanel span.x-btn-inner {
+<<<<<<< HEAD
 	font: bold 12px verdana !important;
+=======
+	font: bold 12px verdana, Arial, sans-serif !important;
+>>>>>>> master
 	color: #1B78B1 !important;
 }
 

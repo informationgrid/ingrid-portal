@@ -1,3 +1,25 @@
+<!--
+  **************************************************-
+  Ingrid Portal Distribution
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
 <project name="Oracle Configuration">
     <description>
         Oracle Configuration Build Script
@@ -30,6 +52,7 @@
     <property name="updateOracle320c" location="${installDir}/sql/update_3.2.0c_oracle.sql"/>
     <property name="updateOracle320d" location="${installDir}/sql/update_3.2.0d_oracle.sql"/>
     <property name="updateOracle331" location="${installDir}/sql/update_3.3.1_oracle.sql"/>
+    <property name="updateOracle341" location="${installDir}/sql/update_3.4.1_oracle.sql"/>
     
 
     <!-- oracle ige imports -->
@@ -160,6 +183,7 @@
             <transaction src="${updateOracle320c}"/>
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
+            <transaction src="${updateOracle341}"/>
         </sql>
         
         <sql    driver    ="${oracleDriverClass}"
@@ -196,6 +220,7 @@
             <transaction src="${updateOracle320c}"/>
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
+            <transaction src="${updateOracle341}"/>
         </sql>
     </target>
     
@@ -219,6 +244,7 @@
             <transaction src="${updateOracle320c}"/>
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
+            <transaction src="${updateOracle341}"/>
         </sql>
     </target>
     
@@ -241,6 +267,7 @@
             <transaction src="${updateOracle320c}"/>
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
+            <transaction src="${updateOracle341}"/>
         </sql>
     </target>
     
@@ -259,6 +286,25 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle331}"/>
+            <transaction src="${updateOracle341}"/>
+        </sql>
+    </target>
+    
+    <target name="PortalDbUpdateFrom331" if="useOracle">
+        <echo>Oracle-Portal Daten importieren (ab 3.3.1)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateOracle341}"/>
         </sql>
     </target>
     

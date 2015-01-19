@@ -1,1788 +1,1904 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  **************************************************-
+  Ingrid Portal Distribution
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+
+  http://ec.europa.eu/idabc/eupl5
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+
 <document>
-	<properties>
-		<title>Changes Ingrid Portal</title>
-		<author email="joachim@wemove.com">Joachim Müller</author>
-	</properties>
-	<body>
-		<release version="3.5.0-SNAPSHOT" date="????-??-??"
-			<action type="update" dev="wemove" issue="REDMINE-304">
-				Portal: Update to Jetspeed 2.3, Tomcat 7, Java 8.
-			</action>
- 		</release>
+    <properties>
+        <title>Changes Ingrid Portal</title>
+        <author email="joachim@wemove.com">Joachim Müller</author>
+    </properties>
+    <body>
+        <release version="3.5.0-SNAPSHOT" date="????-??-??">
+            <action type="add" dev="wemove" issue="REDMINE-524">
+                Added license header to all source files for Open Source migration.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-304">
+                Portal: Update to Jetspeed 2.3, Tomcat 7, Java 8.
+            </action>
+        </release>
 
-		<release version="3.4.1-SNAPSHOT" date="????-??-??"
-			<action type="fix" dev="wemove" issue="REDMINE-3367">
-				Portal: Fix SERVICE parameter of GetCapabilities in detail view (if not INSPIRE conform in CSW).
-			</action>
- 		</release>
+        <release version="3.4.x-SNAPSHOT" date="????-??-??">
+            <action type="add" dev="wemove" issue="REDMINE-367">
+                Portal: Add Portlet for searching BWaStr locator and showing first hit as map (Profile GeoPortal.WSV).
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-293">
+                Portal: Add Portlet for searching Nominatim and showing first hit as map (Profile GeoPortal.WSV).
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-386">
+                Portal: Update contact form topics (Profile GeoPortal.WSV).
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-365">
+                Portal: Update browser "search plugin" (Profile GeoPortal.WSV).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-266">
+                Portal: Update profiles, so portal URLs are generated relatively ONLY in GeoPortal.WSV profile to avoid wrong URL in user confirm email (no problem in GeoPortal.WSV due to SSO).
+            </action>
+            <action type="fix" dev="wemove">
+                Portal: Clean up ingrid-portal-apps.properties, removed wms stuff.
+            </action>
+            <action type="fix" dev="wemove">
+                Portal: Clean up portalu profile resources, removed localization resources not needed.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fix length of input of URLs (now > 255).
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Prevent caching of profile data, when requested from Server.
+            </action>
+        </release>
 
-		<release version="3.4.0" date="2014-02-25"
-			description="Release InGrid 3.4">
-			<action type="add" dev="wemove" issue="REDMINE-134,REDMINE-136">
-				WebMapClient: Activate layers by using "Zeige Karte" function and defined layer
-				identifier.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-138">
-				WebMapClient: Add capabilities Update-Checker.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-185">
-				WebMapClient: Add setting and function to send saved maps as mail.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-188">
-				WebMapClient: Add capabilities URL to metadata dialog.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-2302,INGRID-2303">
-				IGE: Added behavior to automatically fill some fields when INSPIRE topic
-				was chosen.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-132">
-				IGE: Added new relation type "Nutzungsbedingungen". Added relation type
-				filter for table "references to".
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-131">
-				IGE: Added a dialog to inform the user when copying a metadata. This dialog can be hidden by a checkbox by setting a cookie value.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-126">
-				IGE: Use Service-Url instead of getCapabilities-Url and append
-				parameters automatically.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-130">
-				IGE: Check for invalid getCapabilities and possibility to replace them.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-129">
-				IGE: Updated all views to use labels of object classes from codelist repository.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-125,REDMINE-127">
-				IGE: GetCapabilities-Assistant extension.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-192">
-				IGE: Add checkbox to available additional field.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-2241">
-				IGE: Add checkbox to available additional field.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-258">
-				WebMapClient: Save active service tree state into session.
-			</action>
-			<action type="add" dev="wemove">
-				WebMapClient: Add Identifier to metadata info dialog.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-135">
-				Portal: Define keywords to hide on detail view.
-			</action>
-			
-			<action type="update" dev="wemove" issue="REDMINE-137">
-				WebMapClient: Update frontend layout and UI.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID34-5">
-				WebMapClient: Update load saved services dialog.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2316">
-				WebMapClient: Remove permalink function.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2327">
-				WebMapClient: Closing the searcher info dialog does not show it anymore until clear browser cookie.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID34-3">
-				WebMapClient: Localization of Admin-GUI.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID34-4">
-				WebMapClient: Localization of message buttons. (Admin-GUI)
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2324">
-				WebMapClient: Update Admin-GUI layout and configuration order.
-			</action>
-			<action type="update" dev="wemove">
-				WebMapClient: Get initial map projection from configuration parameter "projections".
-			</action>
-			<action type="update" dev="wemove">
-				WebMapClient: Get maxExtent from capabilities entry "BoundingBox".
-			</action>
-			<action type="update" dev="wemove">
-				WebMapClient: Update Admin-GUI to save copyright, baselayer, featureInfo URL with one button.
-			</action>
-			<action type="update" dev="wemove" issue="REDMINE-121">
-				Portal: Update detail view to flexible order of content.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update WebMapClient localization for portal profiles.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update Sachsen profile.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update Hamburg profile.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update DLZ-IT profile.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2321,INGRID-2334">
-				IGE: Import: Fix import of CSW Resource-Identifier. More robust mapping
-				of INSPIRE keywords to codelist entries.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2307,REDMINE-181">
-				WebMapClient: Fix outside definition of map extent at the admin-gui.
-			</action>
-			<action type="fix" dev="wemove" issue="REDMINE-182">
-				WebMapClient: Fix to move services on layer tree by icon.
-			</action>
-			<action type="fix" dev="wemove">
-				WebMapClient: Fix feature info dialog height.
-			</action>
-		</release>
+        <release version="3.4.1" date="2014-05-14" description="Release InGrid 3.4.1">
+            <action type="update" dev="wemove">
+                Portal: Make iFrame Portlets editable by admin-portal user (WSV), new portal database version 3.4.1.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-97">
+                Portal: Update detail view for profiles (WSV).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-337">
+                Portal: Fix SERVICE parameter of GetCapabilities in detail view (if not INSPIRE conform in CSW).
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-291">
+                WebMapClient: Add coordinate picker.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-292">
+                WebMapClient: Default definition of 'Active Service' panel.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-100">
+                WebMapClient: Add new color picker for redlining features.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-100">
+                WebMapClient: Drag map tool by using redling.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-252">
+                WebMapClient: Run client standalone.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-290">
+                WebMapClient: Change order of services in 'Active Service' so first service is rendered last (on top).
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-100">
+                WebMapClient: Remove downloadify (Flash) and used FileSaver (JS).
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-346">
+                WebMapClient: Edit search message.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2346">
+                WebMapClient: Update welcome text.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-346">
+                WebMapClient: Redlining localization.
+            </action>
+            <action type="fix" dev="wemove" issue="">
+                WebMapClient: Add favicon.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-314">
+                IGE: Show dialog when open data checkbox is selected.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-315">
+                IGE: Added events for dialogs to execute additional javascript code on init and on save (if needed).
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fix transformation of coordinates (new url of service).
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fix localization resources, also for partner profiles (HH).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-358">
+                IGE: Fixed error with filter select box at the references table, when using Oracle DB.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-359">
+                IGE: Fixed behavior when switching open data checkbox.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-361">
+                IGE: Fixed OOM when analyzing URLs.
+            </action>
+        </release>
 
-		<release version="3.3.2.2" date="2014-02-14"
-			description="Bugfix Release InGrid 3.3.2.2">
-			<action type="fix" dev="wemove">
-				IGE: Fix url validation if a proxy has to be used on the installed
-				system.
-			</action>
-		</release>
-		<release version="3.3.2.1" date="2014-01-28"
-			description="Bugfix Release InGrid 3.3.2.1">
-			<action type="update" dev="wemove" issue="REDMINE-266">
-				Reconfigure portal so protocol is preserved in all portal urls (keep https
-				protocol in GeoPortal.WSV where secured frontend is used).
-			</action>
-			<action type="fix" dev="wemove">
-				Fix sql scripts for oracle (installer).
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2332">
-				IGE: Fix import of ISO data (converted IGE format had wrong version).
-			</action>
-			<action type="fix" dev="wemove">
-				Profile SachsenPortalU: Fixed images and content.
-			</action>
-		</release>
-		<release version="3.3.2" date="2014-01-17" description="Release InGrid 3.3.2">
-			<action type="add" dev="wemove" issue="REDMINE-266">
-				Profile GeoPortal.WSV: Switched base url in header to HTTPS.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-230">
-				IGE: Added ATOM Url to catalog settings and checkbox to set metadata for
-				ATOM download.
-			</action>
-			<action type="fix" dev="wemove">
-				Profiles: Fixed typo on error page. Updated NUMIS facets definition. Removed
-				webmap client configuration from profiles.
-			</action>
-			<action type="fix" dev="wemove" issue="REDMINE-255">
-				Portal: Fix reset facets if no search results.
-			</action>
-			<action type="fix" dev="wemove">
-				Fixed SQL scripts for Oracle (now drop table before creation via PL/SQL).
-			</action>
-			<action type="fix" dev="wemove">
-				WebMapClient: Support of non WGS-84 services as base layer.
-			</action>
-			<action type="fix" dev="wemove">
-				WebMapClient: Get maxExtent from base layer.
-			</action>
-			<action type="fix" dev="wemove">
-				WebMapClient: Split nominatim and minimap settings for viewer and searcher.
-			</action>
-			<action type="fix" dev="wemove">
-				WebMapClient: Get title for feature info not depend on service "OnlineResource"
-				tag.
-			</action>
-			<action type="fix" dev="wemove">
-				WebMapClient: Restore selected layers from session.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Fixed wrong icons in dashboard for published objects.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Fixed UI problems introduced by new versions of firefox and chrome.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Mark table cells if they have empty rows (which should be deleted
-				to prevent null-values in database).
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Url for ATOM download service is not required anymore.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Fixed a bug where object-/address-tree could not be selected
-				anymore.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: If there are more than one use constraints in database, then they
-				will be merged into one text field.
-			</action>
-		</release>
+        <release version="3.4.0" date="2014-02-25"
+            description="Release InGrid 3.4">
+            <action type="add" dev="wemove" issue="REDMINE-134,REDMINE-136">
+                WebMapClient: Activate layers by using "Zeige Karte" function and defined layer
+                identifier.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-138">
+                WebMapClient: Add capabilities Update-Checker.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-185">
+                WebMapClient: Add setting and function to send saved maps as mail.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-188">
+                WebMapClient: Add capabilities URL to metadata dialog.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-2302,INGRID-2303">
+                IGE: Added behavior to automatically fill some fields when INSPIRE topic
+                was chosen.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-132">
+                IGE: Added new relation type "Nutzungsbedingungen". Added relation type
+                filter for table "references to".
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-131">
+                IGE: Added a dialog to inform the user when copying a metadata. This dialog can be hidden by a checkbox by setting a cookie value.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-126">
+                IGE: Use Service-Url instead of getCapabilities-Url and append
+                parameters automatically.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-130">
+                IGE: Check for invalid getCapabilities and possibility to replace them.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-129">
+                IGE: Updated all views to use labels of object classes from codelist repository.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-125,REDMINE-127">
+                IGE: GetCapabilities-Assistant extension.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-192">
+                IGE: Add checkbox to available additional field.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-2241">
+                IGE: Add checkbox to available additional field.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-258">
+                WebMapClient: Save active service tree state into session.
+            </action>
+            <action type="add" dev="wemove">
+                WebMapClient: Add Identifier to metadata info dialog.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-135">
+                Portal: Define keywords to hide on detail view.
+            </action>
 
-		<release version="3.3.1" date="2013-11-05" description="Release InGrid 3.3.1">
-			<action type="add" dev="wemove" issue="REDMINE-117">
-				IGE: Added scripting and IDF mapping templates for profile of LGV HH.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-128">
-				IGE: Added "Open data" checkbox and Categories.
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-192">
-				IGE: Added new additional field: "Checkbox".
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-118">
-				IGE: When editing link and relation is "Download of data" then new input
-				field "file format".
-			</action>
-			<action type="add" dev="wemove" issue="REDMINE-115">
-				IGE: Added overview of published objects on user entry page (dashboard).
-			</action>
-			<action type="add" dev="wemove" issue="GEOPORTALWSV-37">
-				WebMapClient: Add Nominatim-Search to the frontend of the WebMapClient menu bar.
-			</action>
-			<action type="add" dev="wemove">
-				WebMapClient: Add configurations for other portal profiles.
-			</action>
-			<action type="add" dev="wemove">
-				Portal: Add Localization file to profiles for the InGrid-WebMapClient.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2298">
-				WebMapClient: Update content of Welcome Dialog.
-			</action>
-			<action type="update" dev="wemove" issue="AF-00203, AF-00209, AF-00261">
-				Portal: Update GeoPortal.WSV profile: Localization issues. Hide info
-				portlet on disclaimer page. Slideshow. MyPortal.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2242">
-				Portal: Update NUMIS profile for InGrid 3.3.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2260">
-				IGE: Update of help texts.
-			</action>
-			<action type="fix" dev="wemove" issue="AF-00211">
-				Portal: Fix fetching of RSS news when link differs although same news (e.g.
-				due to changing ad-parameter in link).
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2276">
-				Portal: Fix facet problem with providers when partner is selected.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2286">
-				Portal: Fix link to wemove page in content of Impressum.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2301">
-				IGE: fixed bug that save dialog appeared without reason.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2311">
-				IGE: Fixed a bug where IE8/9 could not inherit address data to its
-				children.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2308">
-				IGE: Fix group administration when setting permissions to more than
-				visible entries in table.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2300">
-				IGE: Fix display of import/export exception.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2294">
-				IGE: Paging of associated objects in an address working again.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2295">
-				IGE: Extended Search of objects in Research startup issue.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2278">
-				Portal: Switching to different profiles now also runs on Oracle.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2265">
-				Portal: Added missing oracle scripts for updating mdek database.
-			</action>
-			<action type="fix" dev="wemove" issue="REDMINE-149">
-				WebMapClient: Fix format of image in GetMap request, now dependent from content
-				in GetCap.
-			</action>
-			<action type="fix" dev="wemove" issue="REDMINE-179">
-				WebMapClient: Fix decoding of response of GetFeatureInfo.
-			</action>
-			<action type="fix" dev="wemove">
-				WebMapClient: Transformation coordinates to WGS-84 by search area.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Fixed scrolling of info dialog.
-			</action>
-		</release>
+            <action type="update" dev="wemove" issue="REDMINE-137">
+                WebMapClient: Update frontend layout and UI.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID34-5">
+                WebMapClient: Update load saved services dialog.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2316">
+                WebMapClient: Remove permalink function.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2327">
+                WebMapClient: Closing the searcher info dialog does not show it anymore until clear browser cookie.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID34-3">
+                WebMapClient: Localization of Admin-GUI.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID34-4">
+                WebMapClient: Localization of message buttons. (Admin-GUI)
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2324">
+                WebMapClient: Update Admin-GUI layout and configuration order.
+            </action>
+            <action type="update" dev="wemove">
+                WebMapClient: Get initial map projection from configuration parameter "projections".
+            </action>
+            <action type="update" dev="wemove">
+                WebMapClient: Get maxExtent from capabilities entry "BoundingBox".
+            </action>
+            <action type="update" dev="wemove">
+                WebMapClient: Update Admin-GUI to save copyright, baselayer, featureInfo URL with one button.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-121">
+                Portal: Update detail view to flexible order of content.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update WebMapClient localization for portal profiles.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update Sachsen profile.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update Hamburg profile.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update DLZ-IT profile.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2321,INGRID-2334">
+                IGE: Import: Fix import of CSW Resource-Identifier. More robust mapping
+                of INSPIRE keywords to codelist entries.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2307,REDMINE-181">
+                WebMapClient: Fix outside definition of map extent at the admin-gui.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-182">
+                WebMapClient: Fix to move services on layer tree by icon.
+            </action>
+            <action type="fix" dev="wemove">
+                WebMapClient: Fix feature info dialog height.
+            </action>
+        </release>
 
-		<release version="3.3.0.1" date="2013-03-15"
-			description="Bugfix Release InGrid 3.3.0.1">
-			<action type="add" dev="wemove" issue="INGRID-2231">
-				Portal: Show "XML"-Link on search result list only if the hit has an ID and
-				if is a metadata.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-2206">
-				WebMapClient: Add Servlet to load created WMS services outside of tomcat.
-			</action>
-			<action type="add" dev="wemove">
-				Add handling of new iPlug Type IPLUG_DSC_MAPCLIENT.
-			</action>
-			<action type="update" dev="wemove">
-				Update DWD Warnmodule flash file.
-			</action>
-			<action type="update" dev="wemove" issue="GEOPORTALWSV-35, GEOPORTALWSV-45">
-				Portal: Update "baw_wsv" profile for facets, map integration, detail view
-				and search result list.
-			</action>
-			<action type="fix" dev="wemove">
-				WebMapClient: Add "fullmap" configuration for other portal profiles.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2233">
-				IGE: Increased speed when using IE8
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2230">
-				Fixed sorting of columns in job overview.
-			</action>
-			<action type="fix" dev="wemove">
-				WebmapClient: Zoom-To-Layer should now zoom to correct scale, where the layer can
-				be actually seen.
-			</action>
-		</release>
+        <release version="3.3.2.2" date="2014-02-14"
+            description="Bugfix Release InGrid 3.3.2.2">
+            <action type="fix" dev="wemove">
+                IGE: Fix url validation if a proxy has to be used on the installed
+                system.
+            </action>
+        </release>
+        <release version="3.3.2.1" date="2014-01-28"
+            description="Bugfix Release InGrid 3.3.2.1">
+            <action type="update" dev="wemove" issue="REDMINE-266">
+                Reconfigure portal so protocol is preserved in all portal urls (keep https
+                protocol in GeoPortal.WSV where secured frontend is used).
+            </action>
+            <action type="fix" dev="wemove">
+                Fix sql scripts for oracle (installer).
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2332">
+                IGE: Fix import of ISO data (converted IGE format had wrong version).
+            </action>
+            <action type="fix" dev="wemove">
+                Profile SachsenPortalU: Fixed images and content.
+            </action>
+        </release>
+        <release version="3.3.2" date="2014-01-17" description="Release InGrid 3.3.2">
+            <action type="add" dev="wemove" issue="REDMINE-266">
+                Profile GeoPortal.WSV: Switched base url in header to HTTPS.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-230">
+                IGE: Added ATOM Url to catalog settings and checkbox to set metadata for
+                ATOM download.
+            </action>
+            <action type="fix" dev="wemove">
+                Profiles: Fixed typo on error page. Updated NUMIS facets definition. Removed
+                webmap client configuration from profiles.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-255">
+                Portal: Fix reset facets if no search results.
+            </action>
+            <action type="fix" dev="wemove">
+                Fixed SQL scripts for Oracle (now drop table before creation via PL/SQL).
+            </action>
+            <action type="fix" dev="wemove">
+                WebMapClient: Support of non WGS-84 services as base layer.
+            </action>
+            <action type="fix" dev="wemove">
+                WebMapClient: Get maxExtent from base layer.
+            </action>
+            <action type="fix" dev="wemove">
+                WebMapClient: Split nominatim and minimap settings for viewer and searcher.
+            </action>
+            <action type="fix" dev="wemove">
+                WebMapClient: Get title for feature info not depend on service "OnlineResource"
+                tag.
+            </action>
+            <action type="fix" dev="wemove">
+                WebMapClient: Restore selected layers from session.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fixed wrong icons in dashboard for published objects.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fixed UI problems introduced by new versions of firefox and chrome.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Mark table cells if they have empty rows (which should be deleted
+                to prevent null-values in database).
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Url for ATOM download service is not required anymore.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fixed a bug where object-/address-tree could not be selected
+                anymore.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: If there are more than one use constraints in database, then they
+                will be merged into one text field.
+            </action>
+        </release>
 
-		<release version="3.3.0" date="2013-03-06" description="Release InGrid 3.3">
-			<action type="add" dev="wemove">
-				MapClient: Add support for resizing tiles while zooming.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-5">
-				IGE: Codelist spatial references can have extra data now, which is
-				interpreted
-				as Bounding-Box-Parameters. These will be inserted automatically when
-				a
-				spatial reference is selected.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-6">
-				IGE: References and spatial references can be inherited from the parent
-				object now.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-7">
-				IGE: Addresses within objects can now be copied and pasted.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-8">
-				IGE: By holding "Ctrl"-Key, you can select more than one node in the
-				hierarchy tree.
-				You can then copy, move and delete several objects/addresses at once.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-10">
-				IGE: Notes field has been removed from the address form. Previous data
-				has been moved
-				to the comments.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-11">
-				IGE: Address information can be inherited from the parent address now.
-				It's also possible
-				to save an address information to all sub-addresses via the context
-				menu.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-12">
-				IGE: Addresses now have a field showing the publication condition.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-13">
-				IGE: Instead of printing one object/address, you also can print the
-				whole sub-tree with all
-				information or only the title, which is then shown in a hierarchical order.
-				It's also possible to print search results now.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-14">
-				IGE: In the user administration a new tab shows the objects/address a
-				user is responsible of.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-15">
-				IGE: In the group administration all users of a group can be seen now.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-16">
-				IGE: The import and export was extended to also handle working versions,
-				which allows a full backup.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-17">
-				IGE: When checking for duplicates a link directs you to the object now,
-				where it can be edited.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-18">
-				IGE: The dashboard also shows the last globally modified objects and
-				addresses.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-20">
-				IGE: All objects can add a preview image, which is show in the search
-				results and the detail view.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-2225">
-				In Detail view: Map hierarchyLevel value 'tile' to
-				'Geoinformation/Karte'. Default to 'Geoinformation/Karte' for
-				unknown hierarchyLevels.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID33-22">
-				An "XML"-Button next to a search result and within the detail
-				information requests the CSW-interface to show the IDF-document.
-			</action>
+        <release version="3.3.1" date="2013-11-05" description="Release InGrid 3.3.1">
+            <action type="add" dev="wemove" issue="REDMINE-117">
+                IGE: Added scripting and IDF mapping templates for profile of LGV HH.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-128">
+                IGE: Added "Open data" checkbox and Categories.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-192">
+                IGE: Added new additional field: "Checkbox".
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-118">
+                IGE: When editing link and relation is "Download of data" then new input
+                field "file format".
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-115">
+                IGE: Added overview of published objects on user entry page (dashboard).
+            </action>
+            <action type="add" dev="wemove" issue="GEOPORTALWSV-37">
+                WebMapClient: Add Nominatim-Search to the frontend of the WebMapClient menu bar.
+            </action>
+            <action type="add" dev="wemove">
+                WebMapClient: Add configurations for other portal profiles.
+            </action>
+            <action type="add" dev="wemove">
+                Portal: Add Localization file to profiles for the InGrid-WebMapClient.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2298">
+                WebMapClient: Update content of Welcome Dialog.
+            </action>
+            <action type="update" dev="wemove" issue="AF-00203, AF-00209, AF-00261">
+                Portal: Update GeoPortal.WSV profile: Localization issues. Hide info
+                portlet on disclaimer page. Slideshow. MyPortal.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2242">
+                Portal: Update NUMIS profile for InGrid 3.3.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2260">
+                IGE: Update of help texts.
+            </action>
+            <action type="fix" dev="wemove" issue="AF-00211">
+                Portal: Fix fetching of RSS news when link differs although same news (e.g.
+                due to changing ad-parameter in link).
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2276">
+                Portal: Fix facet problem with providers when partner is selected.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2286">
+                Portal: Fix link to wemove page in content of Impressum.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2301">
+                IGE: fixed bug that save dialog appeared without reason.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2311">
+                IGE: Fixed a bug where IE8/9 could not inherit address data to its
+                children.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2308">
+                IGE: Fix group administration when setting permissions to more than
+                visible entries in table.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2300">
+                IGE: Fix display of import/export exception.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2294">
+                IGE: Paging of associated objects in an address working again.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2295">
+                IGE: Extended Search of objects in Research startup issue.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2278">
+                Portal: Switching to different profiles now also runs on Oracle.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2265">
+                Portal: Added missing oracle scripts for updating mdek database.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-149">
+                WebMapClient: Fix format of image in GetMap request, now dependent from content
+                in GetCap.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-179">
+                WebMapClient: Fix decoding of response of GetFeatureInfo.
+            </action>
+            <action type="fix" dev="wemove">
+                WebMapClient: Transformation coordinates to WGS-84 by search area.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fixed scrolling of info dialog.
+            </action>
+        </release>
 
-			<action type="update" dev="wemove" issue="INGRID-2218">
-				Update GeoExt to Version 1.1 for IE9 print support in map client.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2154, INGRID-2158">
-				Update BAW-WSV Profile.
-			</action>
-			<action type="udpate" dev="wemove">
-				Create facet by configuration XML "facets-config.xml".
-			</action>
-			<action type="udpate" dev="wemove" issue="INGRID32-199">
-				Update NUMIS profile/layout to InGrid Portal Version 3.2.
-			</action>
+        <release version="3.3.0.1" date="2013-03-15"
+            description="Bugfix Release InGrid 3.3.0.1">
+            <action type="add" dev="wemove" issue="INGRID-2231">
+                Portal: Show "XML"-Link on search result list only if the hit has an ID and
+                if is a metadata.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-2206">
+                WebMapClient: Add Servlet to load created WMS services outside of tomcat.
+            </action>
+            <action type="add" dev="wemove">
+                Add handling of new iPlug Type IPLUG_DSC_MAPCLIENT.
+            </action>
+            <action type="update" dev="wemove">
+                Update DWD Warnmodule flash file.
+            </action>
+            <action type="update" dev="wemove" issue="GEOPORTALWSV-35, GEOPORTALWSV-45">
+                Portal: Update "baw_wsv" profile for facets, map integration, detail view
+                and search result list.
+            </action>
+            <action type="fix" dev="wemove">
+                WebMapClient: Add "fullmap" configuration for other portal profiles.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2233">
+                IGE: Increased speed when using IE8
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2230">
+                Fixed sorting of columns in job overview.
+            </action>
+            <action type="fix" dev="wemove">
+                WebmapClient: Zoom-To-Layer should now zoom to correct scale, where the layer can
+                be actually seen.
+            </action>
+        </release>
 
-			<action type="fix" dev="wemove">
-				Added missing fixes to SQL skript to be executed manually when migrating
-				from MySQL to Oracle.
-			</action>
-			<action type="fix" dev="wemove">
-				Do not overwrite map client configuration if it already exists.
-			</action>
-			<action type="fix" dev="wemove">
-				Fix problem with finding localization from profile resources introduced
-				with GSSOIL code.
-			</action>
-			<action type="fix" dev="wemove">
-				Further improve robustness of RSS fetcher using special timeout thread for
-				RSS connections.
-			</action>
-			<action type="fix" dev="wemove" issue="2204">
-				Fixed wrong handling of parameters when using getCapabilities assistant.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2192">
-				Do NOT render institution field in title of address search results for
-				persons. Change order to firstname lastname.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2184">
-				When importing syslists manually reset timestamp for synchronisation
-				with codelist repository.
-				So all codelists are synchronized with repo to avoid loss of entries
-				after manual import.
-			</action>
-			<action type="fix" dev="wemove">
-				Change JDBC connection pooling properties in tomcat context files to avoid
-				broken database connections.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2188">
-				MapClient: Fixed problem when loading an external service and enabling all
-				layers (error tiles).
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID33-19">
-				Catalogues: Fixed jumping to head, when reloading page on opening/closing node.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2177">
-				MapClient: fix problems searching for terms with special characters.
-			</action>
-		</release>
+        <release version="3.3.0" date="2013-03-06" description="Release InGrid 3.3">
+            <action type="add" dev="wemove">
+                MapClient: Add support for resizing tiles while zooming.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-5">
+                IGE: Codelist spatial references can have extra data now, which is
+                interpreted
+                as Bounding-Box-Parameters. These will be inserted automatically when
+                a
+                spatial reference is selected.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-6">
+                IGE: References and spatial references can be inherited from the parent
+                object now.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-7">
+                IGE: Addresses within objects can now be copied and pasted.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-8">
+                IGE: By holding "Ctrl"-Key, you can select more than one node in the
+                hierarchy tree.
+                You can then copy, move and delete several objects/addresses at once.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-10">
+                IGE: Notes field has been removed from the address form. Previous data
+                has been moved
+                to the comments.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-11">
+                IGE: Address information can be inherited from the parent address now.
+                It's also possible
+                to save an address information to all sub-addresses via the context
+                menu.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-12">
+                IGE: Addresses now have a field showing the publication condition.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-13">
+                IGE: Instead of printing one object/address, you also can print the
+                whole sub-tree with all
+                information or only the title, which is then shown in a hierarchical order.
+                It's also possible to print search results now.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-14">
+                IGE: In the user administration a new tab shows the objects/address a
+                user is responsible of.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-15">
+                IGE: In the group administration all users of a group can be seen now.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-16">
+                IGE: The import and export was extended to also handle working versions,
+                which allows a full backup.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-17">
+                IGE: When checking for duplicates a link directs you to the object now,
+                where it can be edited.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-18">
+                IGE: The dashboard also shows the last globally modified objects and
+                addresses.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-20">
+                IGE: All objects can add a preview image, which is show in the search
+                results and the detail view.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-2225">
+                In Detail view: Map hierarchyLevel value 'tile' to
+                'Geoinformation/Karte'. Default to 'Geoinformation/Karte' for
+                unknown hierarchyLevels.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID33-22">
+                An "XML"-Button next to a search result and within the detail
+                information requests the CSW-interface to show the IDF-document.
+            </action>
 
-		<release version="3.2.1" date="2012-09-27"
-			description="Fix + Update Release InGrid 3.2.1">
-			<action type="update" dev="wemove" issue="INGRID-2140">
-				Update tomcat to apache-tomcat-6.0.35 (from apache-tomcat-5.5.26)
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2139">
-				Update Dojo to version 1.5.2 to support IE9.
-			</action>
-			<action type="fix" dev="wemove">
-				Map-Client: Fixed metadialog display of layer abstract.
-			</action>
-			<action type="fix" dev="wemove">
-				Map-Client: Fixed epsg compare in add service method, we lowercase before
-				comparison now.
-			</action>
-			<action type="fix" dev="wemove">
-				Map-Client: Fixed bug in checked layers, works now with tree view.
-			</action>
-			<action type="fix" dev="wemove">
-				Map-Client: Fixed settings dialog, it doesnt disappear on resizing panel
-				anymore.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID32-171">
-				Map-Client: Fixed SRS check, checks now for SRS property in bbox aswell.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID32-178">
-				Map-Client: Fixed bug in search, we check results for consistency now
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID32-166">
-				Portal: Fixed bug showing all results of an iplug which is shown on the
-				right (unranked) side
-			</action>
-		</release>
+            <action type="update" dev="wemove" issue="INGRID-2218">
+                Update GeoExt to Version 1.1 for IE9 print support in map client.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2154, INGRID-2158">
+                Update BAW-WSV Profile.
+            </action>
+            <action type="udpate" dev="wemove">
+                Create facet by configuration XML "facets-config.xml".
+            </action>
+            <action type="udpate" dev="wemove" issue="INGRID32-199">
+                Update NUMIS profile/layout to InGrid Portal Version 3.2.
+            </action>
 
-		<release version="3.2.0" date="2012-07-19" description="Release InGrid 3.2">
-			<action type="add" dev="wemove" issue="INGRID32-81">
-				IGE: Added coupling type for service objects.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID32-36">
-				IGE: Separated addresses of users to hidden addresses not visible in
-				IGE. In user management no IGC address for user, instead direct
-				input of user address data.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID32-35">
-				IGE: Separation from the portal now possible. If the IGE is installed
-				without the portal then the user has to login on a
-				separate page. An administrator can manage available users and all connected
-				catalogues.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID32-75">
-				Add sql file for new page (data source) and new sub menus ("Catalog"
-				and "About Portal"). Update headers images. Add new portlet for
-				data sources.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID32-24">
-				Added access to a codelist repository, where all codelists are managed.
-				These codelists are used inside the portal
-				and the IGE frontend. Synchronization is done by a quartz job and
-				written to the database (IGE) and XML-file (portal).
-			</action>
-			<action type="add" dev="wemove" issue="INGRID32-73">
-				WEBMAP-CLIENT: Installer now installs the webmap-client as well.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID32-31">
-				IGE: Visualize publication condition and write permission in tree nodes.
-				Add entity class and publication condition as tooltip.
-				Change publication condition via context menue in tree.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID32-37">
-				IGE: Add checkbox "Do not display data" to address class "Person" for
-				not showing address data in portal, CSW.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-2078">
-				Portal: Add new IFrame portlets for BAW to display application overview
-				with html pages. Add new sub menu (sub-menu-start) for BAW.
-				Add new CMS portlet pages for BAW.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID32-30">
-				IGE: Add "Catalogue namespace" to "Catalogue settings" used when
-				exporting data (CSW, Open Search).
-				Add button for generating UUID for "Identifikator der Datenquelle".
-			</action>
-			<action type="add" dev="wemove" issue="INGRID32-23">
-				Improve user manager performance. Add filter capabilities to user and
-				provider manager. Use new pagination in portal administration
-				tables.
-				REQUIRES PORTAL DATABASE CHANGES. SEE UPDATE_3.2.0-XXX.SQL!
-			</action>
-			<action type="add" dev="wemove">
-				Add edit mode to iFrame Portlet to change default preferences like
-				WIDTH, HEIGHT.
-			</action>
-			<action type="add" dev="wemove">
-				Add iFrame portlet to display external web services.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-2022, INGRID-2018">
-				ingrid-portal-apps.properties: Add property "portal.rss.news.number"
-				to define number of rss news on start page.
-				Add properties to enable/disable displaying of cms item on admin
-				content page.
-				Add properties to enable/disable optional links on search portlet.
-				Add properties to enable/disable datasource selection on search
-				portlet.
-				Update properties for PortalU.
-			</action>
-			<action type="add" dev="wemove">
-				BAW: Add new profile (baw_wsv) for BAW.
-				Add CMS items key to "portal.teaser.shortcut" and
-				"portal.teaser.shortcut.query" for BAW to define shortcut query and
-				application access.
-				Add application pages for BAW to display internal applications (with
-				iFrame Portlet) inclusive application resources files.
-			</action>
-			<action type="update" dev="wemove">
-				PORTAL: Do not use feed date as fallback for RSS entries anymore. Entries
-				without a valid date will be ignored.
-			</action>
-			<action type="update" dev="wemove">
-				Update DWD warn modul.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2100">
-				Update topic, measure and service page for NUMIS profile.
-			</action>
-			<action type="update" dev="wemove">
-				Update tomcat config. (manager.xml and tomcat-users.xml)
-			</action>
-			<action type="update" dev="wemove" issue="INGRID32-57">
-				PORTAL: Changed portal database tables "ingrid_rss_source" and
-				"ingrid_rss_store" by setting title, description and author to
-				VARCHAR (1023).
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2103">
-				IGE: Original object identifier now transfered from backend to show in
-				detail/compare view.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2004">
-				IGE: Capabilities-Assistant, also add keywords when creating new object.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2089">
-				IGE: Allow free spatial references without coordinates if at least one
-				spatial reference has bbox.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID32-26">
-				IGE: Changed process and popup dialog for adding/editing operations.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID32-27">
-				IGE: Changed process and popup dialog for adding/editing references
-				(links).
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2054">
-				NUMIS: Update NUMIS profile for InGrid 3.1.
-			</action>
-			<action type="update" dev="wemove" issue="GSSOIL-22">
-				GS Soil: Update properties at GS Soil portal profile.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-2039">
-				Update dwd sources for weather portlet.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Updated Sql File changed TYPE to ENGINE, resolved compatibility
-				issue in MySql in version 5.5.X
-			</action>
-			<action type="update" dev="wemove" issue="INGRID32-62">
-				IGE: Allow empty value in selection "Zeichensatz des Datensatzes",
-				initial value is empty.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID32-46">
-				IGE: Changed names of object address relations according to INSPIRE.
-				Also change behaviour: only one referenced address necessary, no
-				matter which reference type.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID32-50">
-				IGE: Move field "Geoinformation/Karte - Sachdaten/Attributinformation"
-				next to "Schlüsselkatalog", on Input make "Schlüsselkatalog"
-				mandatory.
-				Add new control "Datensammlung/Datenbank - Objektartenkatalog" with
-				same behaviour as "Schlüsselkatalog".
-			</action>
-			<action type="update" dev="wemove" issue="INGRID32-48">
-				IGE: Move fields "Datendefizit", "Lagegenauigkeit" and
-				"Höhengenauigkeit" to rubric "Datenqualität", delete DQ tables
-				"Datendefizit" and "Absolute Positionsgenauigkeit".
-				Also in Portal display of IDF.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID32-43, INGRID32-44">
-				IGE: Changed behaviour and positions of controls and rubrics. Behaviour
-				set via JavaScript in Profile.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID32-28, INGRID32-47">
-				IGE: "Conformity - Specification of Conformity" is now ComboBox with new
-				syslist, free entries can be transfered in Catalogue management.
-				Syslist contains now metadata in syslist entries not shown in IGE
-				but mapped in IDF (publish date at end of syslist entry).
-			</action>
-			<action type="update" dev="wemove" issue="INGRID32-28, INGRID32-45">
-				IGE: "Availability - Usage Limitations" changed from table to textarea
-				with separate dialog for selection from new syslist.
-				Free entries can be transfered in Catalogue management.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID31-22">
-				Full Removal of field "environmental categories" from all IGE and portal
-				backend STRUCTURES !!! (catalog, portal database ...).
-			</action>
-			<action type="update" dev="wemove">
-				Remove registry signs for PortalU.
-			</action>
-			<action type="update" dev="wemove">
-				Update styles and resource files to display sitemap and chronicle portlet
-				for all profiles correctly.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2107">
-				Portal detail view: Map (IDF) and render correct GetCapabilities link in
-				detail view and change style of rendering.
-			</action>
-			<action type="fix" dev="wemove">
-				Fix password forgotten functionality for user with '.' in login id. Add
-				check for invalid login IDs.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2079">
-				Fix handling of wrong requests, e.g. when requesting old portlet
-				actions. Causes now error response without exception logging.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID32-144">
-				IGE: If no default language set in language syslist then use catalog
-				language. Fixes import error when no default language set.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Read GetCapabilities now in UTF-8 format to read special UTF-8
-				characters.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID32-69">
-				IGE: Fix user management as mdAdministrator, couldn't create any users
-				(mdAuthors).
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Fix display of context sensitive help of additional fields (defined
-				in profile) on IE. Also fix help when different browser language
-				(not "de" or "en").
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID32-64">
-				IGE: Fix comments dialog in IE.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2091">
-				IGE: Fix input of 0 number values (not interpreted as "false" anymore).
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID31-28">
-				IGE: Fix help of "Basisdaten" and missing/wrong help from 3.0.1
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2080">
-				IGE: Transforming of coordinates, show now error from service when
-				coordinate transformation service fails.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2037">
-				IGE: Fix display of "from-object-references" which were deleted in
-				working version but still exist in published version, now displayed
-				again with color gray !
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2045">
-				IGE: Fix export via export criteria and display of progress bar.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2015">
-				IGE: Fix address compare view ("Show Changes"). Further make
-				object/address detail/compare view more robust (e.g. handling empty
-				fields).
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2030">
-				IGE: Fix address print/detail view on IE7.
-			</action>
-			<action type="fix" dev="wemove">
-				Portal is now more robust in Admin iPlugs/iBus when iPlugs are configured
-				falsely (missing props in PD).
-			</action>
-			<action type="fix" dev="wemove">
-				Fix display error pages without styles in IE7.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID31-23">
-				Logged in users have now per default same start page as anonymous users
-				(newest resources\sql\*.sql have to be applied).
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1990">
-				Fix display of SVN version of InGrid sub-projects (apps, base, mdek) at
-				"About PortalU" logged as portal admin.
-			</action>
-			<action type="fix" dev="wemove">
-				GS Soil: Extend languages in serialized codelists for Metadata
-				Language / Dataset Language and fix display in detail view if chosen
-				language is different than en/de (ingrid-utils).
-			</action>
-			<action type="fix" dev="wemove">
-				Fix thesaurus tree bugs. Add missing search field to query for search
-				terms in English and fix reloading of thesaurus tree.
-			</action>
-			<action type="fix" dev="wemove">
-				Add velocity macro to PortalU profile to show correct PortalU profile
-				by switching profiles.
-			</action>
-			<action type="fix" dev="wemove">
-				Fix provider table error for substring blanks at URL links.
-			</action>
-			<action type="fix" dev="wemove">
-				Fix detail view bugs. Remove hit information like environment topics
-				and support HTML tags on hit description.
-			</action>
-			<action type="fix" dev="wemove">
-				Do not display links to capabilities url and show maps link in detail
-				view if the URL was empty.
-			</action>
-		</release>
+            <action type="fix" dev="wemove">
+                Added missing fixes to SQL skript to be executed manually when migrating
+                from MySQL to Oracle.
+            </action>
+            <action type="fix" dev="wemove">
+                Do not overwrite map client configuration if it already exists.
+            </action>
+            <action type="fix" dev="wemove">
+                Fix problem with finding localization from profile resources introduced
+                with GSSOIL code.
+            </action>
+            <action type="fix" dev="wemove">
+                Further improve robustness of RSS fetcher using special timeout thread for
+                RSS connections.
+            </action>
+            <action type="fix" dev="wemove" issue="2204">
+                Fixed wrong handling of parameters when using getCapabilities assistant.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2192">
+                Do NOT render institution field in title of address search results for
+                persons. Change order to firstname lastname.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2184">
+                When importing syslists manually reset timestamp for synchronisation
+                with codelist repository.
+                So all codelists are synchronized with repo to avoid loss of entries
+                after manual import.
+            </action>
+            <action type="fix" dev="wemove">
+                Change JDBC connection pooling properties in tomcat context files to avoid
+                broken database connections.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2188">
+                MapClient: Fixed problem when loading an external service and enabling all
+                layers (error tiles).
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID33-19">
+                Catalogues: Fixed jumping to head, when reloading page on opening/closing node.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2177">
+                MapClient: fix problems searching for terms with special characters.
+            </action>
+        </release>
 
-		<release version="3.1.2" date="2012-01-03"
-			description="FIX + Update Release for InGrid 3.1.1">
-			<action type="update" dev="wemove" issue="INGRID-2054">
-				Update NUMIS profile to InGrid 3.1.0. (Adaptation of layout)
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-2069">
-				FIX Error when installing portal with database from scratch !!! Import
-				missing sql scripts "update_3.0.1_mysql.sql",
-				"update_3.1.0_mysql.sql" !
-			</action>
-		</release>
+        <release version="3.2.1" date="2012-09-27"
+            description="Fix + Update Release InGrid 3.2.1">
+            <action type="update" dev="wemove" issue="INGRID-2140">
+                Update tomcat to apache-tomcat-6.0.35 (from apache-tomcat-5.5.26)
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2139">
+                Update Dojo to version 1.5.2 to support IE9.
+            </action>
+            <action type="fix" dev="wemove">
+                Map-Client: Fixed metadialog display of layer abstract.
+            </action>
+            <action type="fix" dev="wemove">
+                Map-Client: Fixed epsg compare in add service method, we lowercase before
+                comparison now.
+            </action>
+            <action type="fix" dev="wemove">
+                Map-Client: Fixed bug in checked layers, works now with tree view.
+            </action>
+            <action type="fix" dev="wemove">
+                Map-Client: Fixed settings dialog, it doesnt disappear on resizing panel
+                anymore.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID32-171">
+                Map-Client: Fixed SRS check, checks now for SRS property in bbox aswell.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID32-178">
+                Map-Client: Fixed bug in search, we check results for consistency now
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID32-166">
+                Portal: Fixed bug showing all results of an iplug which is shown on the
+                right (unranked) side
+            </action>
+        </release>
 
-		<release version="3.1.1" date="2011-11-07"
-			description="Update Release for InGrid 3.1.0">
-			<action type="update" dev="wemove" issue="INGRID31-22">
-				Remove field "environmental categories" from IGE and portal, selection now
-				only via "environmental topics" (menue "topics").
-			</action>
-		</release>
+        <release version="3.2.0" date="2012-07-19" description="Release InGrid 3.2">
+            <action type="add" dev="wemove" issue="INGRID32-81">
+                IGE: Added coupling type for service objects.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID32-36">
+                IGE: Separated addresses of users to hidden addresses not visible in
+                IGE. In user management no IGC address for user, instead direct
+                input of user address data.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID32-35">
+                IGE: Separation from the portal now possible. If the IGE is installed
+                without the portal then the user has to login on a
+                separate page. An administrator can manage available users and all connected
+                catalogues.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID32-75">
+                Add sql file for new page (data source) and new sub menus ("Catalog"
+                and "About Portal"). Update headers images. Add new portlet for
+                data sources.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID32-24">
+                Added access to a codelist repository, where all codelists are managed.
+                These codelists are used inside the portal
+                and the IGE frontend. Synchronization is done by a quartz job and
+                written to the database (IGE) and XML-file (portal).
+            </action>
+            <action type="add" dev="wemove" issue="INGRID32-73">
+                WEBMAP-CLIENT: Installer now installs the webmap-client as well.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID32-31">
+                IGE: Visualize publication condition and write permission in tree nodes.
+                Add entity class and publication condition as tooltip.
+                Change publication condition via context menue in tree.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID32-37">
+                IGE: Add checkbox "Do not display data" to address class "Person" for
+                not showing address data in portal, CSW.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-2078">
+                Portal: Add new IFrame portlets for BAW to display application overview
+                with html pages. Add new sub menu (sub-menu-start) for BAW.
+                Add new CMS portlet pages for BAW.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID32-30">
+                IGE: Add "Catalogue namespace" to "Catalogue settings" used when
+                exporting data (CSW, Open Search).
+                Add button for generating UUID for "Identifikator der Datenquelle".
+            </action>
+            <action type="add" dev="wemove" issue="INGRID32-23">
+                Improve user manager performance. Add filter capabilities to user and
+                provider manager. Use new pagination in portal administration
+                tables.
+                REQUIRES PORTAL DATABASE CHANGES. SEE UPDATE_3.2.0-XXX.SQL!
+            </action>
+            <action type="add" dev="wemove">
+                Add edit mode to iFrame Portlet to change default preferences like
+                WIDTH, HEIGHT.
+            </action>
+            <action type="add" dev="wemove">
+                Add iFrame portlet to display external web services.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-2022, INGRID-2018">
+                ingrid-portal-apps.properties: Add property "portal.rss.news.number"
+                to define number of rss news on start page.
+                Add properties to enable/disable displaying of cms item on admin
+                content page.
+                Add properties to enable/disable optional links on search portlet.
+                Add properties to enable/disable datasource selection on search
+                portlet.
+                Update properties for PortalU.
+            </action>
+            <action type="add" dev="wemove">
+                BAW: Add new profile (baw_wsv) for BAW.
+                Add CMS items key to "portal.teaser.shortcut" and
+                "portal.teaser.shortcut.query" for BAW to define shortcut query and
+                application access.
+                Add application pages for BAW to display internal applications (with
+                iFrame Portlet) inclusive application resources files.
+            </action>
+            <action type="update" dev="wemove">
+                PORTAL: Do not use feed date as fallback for RSS entries anymore. Entries
+                without a valid date will be ignored.
+            </action>
+            <action type="update" dev="wemove">
+                Update DWD warn modul.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2100">
+                Update topic, measure and service page for NUMIS profile.
+            </action>
+            <action type="update" dev="wemove">
+                Update tomcat config. (manager.xml and tomcat-users.xml)
+            </action>
+            <action type="update" dev="wemove" issue="INGRID32-57">
+                PORTAL: Changed portal database tables "ingrid_rss_source" and
+                "ingrid_rss_store" by setting title, description and author to
+                VARCHAR (1023).
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2103">
+                IGE: Original object identifier now transfered from backend to show in
+                detail/compare view.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2004">
+                IGE: Capabilities-Assistant, also add keywords when creating new object.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2089">
+                IGE: Allow free spatial references without coordinates if at least one
+                spatial reference has bbox.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID32-26">
+                IGE: Changed process and popup dialog for adding/editing operations.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID32-27">
+                IGE: Changed process and popup dialog for adding/editing references
+                (links).
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2054">
+                NUMIS: Update NUMIS profile for InGrid 3.1.
+            </action>
+            <action type="update" dev="wemove" issue="GSSOIL-22">
+                GS Soil: Update properties at GS Soil portal profile.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-2039">
+                Update dwd sources for weather portlet.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Updated Sql File changed TYPE to ENGINE, resolved compatibility
+                issue in MySql in version 5.5.X
+            </action>
+            <action type="update" dev="wemove" issue="INGRID32-62">
+                IGE: Allow empty value in selection "Zeichensatz des Datensatzes",
+                initial value is empty.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID32-46">
+                IGE: Changed names of object address relations according to INSPIRE.
+                Also change behaviour: only one referenced address necessary, no
+                matter which reference type.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID32-50">
+                IGE: Move field "Geoinformation/Karte - Sachdaten/Attributinformation"
+                next to "Schlüsselkatalog", on Input make "Schlüsselkatalog"
+                mandatory.
+                Add new control "Datensammlung/Datenbank - Objektartenkatalog" with
+                same behaviour as "Schlüsselkatalog".
+            </action>
+            <action type="update" dev="wemove" issue="INGRID32-48">
+                IGE: Move fields "Datendefizit", "Lagegenauigkeit" and
+                "Höhengenauigkeit" to rubric "Datenqualität", delete DQ tables
+                "Datendefizit" and "Absolute Positionsgenauigkeit".
+                Also in Portal display of IDF.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID32-43, INGRID32-44">
+                IGE: Changed behaviour and positions of controls and rubrics. Behaviour
+                set via JavaScript in Profile.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID32-28, INGRID32-47">
+                IGE: "Conformity - Specification of Conformity" is now ComboBox with new
+                syslist, free entries can be transfered in Catalogue management.
+                Syslist contains now metadata in syslist entries not shown in IGE
+                but mapped in IDF (publish date at end of syslist entry).
+            </action>
+            <action type="update" dev="wemove" issue="INGRID32-28, INGRID32-45">
+                IGE: "Availability - Usage Limitations" changed from table to textarea
+                with separate dialog for selection from new syslist.
+                Free entries can be transfered in Catalogue management.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID31-22">
+                Full Removal of field "environmental categories" from all IGE and portal
+                backend STRUCTURES !!! (catalog, portal database ...).
+            </action>
+            <action type="update" dev="wemove">
+                Remove registry signs for PortalU.
+            </action>
+            <action type="update" dev="wemove">
+                Update styles and resource files to display sitemap and chronicle portlet
+                for all profiles correctly.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2107">
+                Portal detail view: Map (IDF) and render correct GetCapabilities link in
+                detail view and change style of rendering.
+            </action>
+            <action type="fix" dev="wemove">
+                Fix password forgotten functionality for user with '.' in login id. Add
+                check for invalid login IDs.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2079">
+                Fix handling of wrong requests, e.g. when requesting old portlet
+                actions. Causes now error response without exception logging.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID32-144">
+                IGE: If no default language set in language syslist then use catalog
+                language. Fixes import error when no default language set.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Read GetCapabilities now in UTF-8 format to read special UTF-8
+                characters.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID32-69">
+                IGE: Fix user management as mdAdministrator, couldn't create any users
+                (mdAuthors).
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fix display of context sensitive help of additional fields (defined
+                in profile) on IE. Also fix help when different browser language
+                (not "de" or "en").
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID32-64">
+                IGE: Fix comments dialog in IE.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2091">
+                IGE: Fix input of 0 number values (not interpreted as "false" anymore).
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID31-28">
+                IGE: Fix help of "Basisdaten" and missing/wrong help from 3.0.1
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2080">
+                IGE: Transforming of coordinates, show now error from service when
+                coordinate transformation service fails.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2037">
+                IGE: Fix display of "from-object-references" which were deleted in
+                working version but still exist in published version, now displayed
+                again with color gray !
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2045">
+                IGE: Fix export via export criteria and display of progress bar.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2015">
+                IGE: Fix address compare view ("Show Changes"). Further make
+                object/address detail/compare view more robust (e.g. handling empty
+                fields).
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2030">
+                IGE: Fix address print/detail view on IE7.
+            </action>
+            <action type="fix" dev="wemove">
+                Portal is now more robust in Admin iPlugs/iBus when iPlugs are configured
+                falsely (missing props in PD).
+            </action>
+            <action type="fix" dev="wemove">
+                Fix display error pages without styles in IE7.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID31-23">
+                Logged in users have now per default same start page as anonymous users
+                (newest resources\sql\*.sql have to be applied).
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1990">
+                Fix display of SVN version of InGrid sub-projects (apps, base, mdek) at
+                "About PortalU" logged as portal admin.
+            </action>
+            <action type="fix" dev="wemove">
+                GS Soil: Extend languages in serialized codelists for Metadata
+                Language / Dataset Language and fix display in detail view if chosen
+                language is different than en/de (ingrid-utils).
+            </action>
+            <action type="fix" dev="wemove">
+                Fix thesaurus tree bugs. Add missing search field to query for search
+                terms in English and fix reloading of thesaurus tree.
+            </action>
+            <action type="fix" dev="wemove">
+                Add velocity macro to PortalU profile to show correct PortalU profile
+                by switching profiles.
+            </action>
+            <action type="fix" dev="wemove">
+                Fix provider table error for substring blanks at URL links.
+            </action>
+            <action type="fix" dev="wemove">
+                Fix detail view bugs. Remove hit information like environment topics
+                and support HTML tags on hit description.
+            </action>
+            <action type="fix" dev="wemove">
+                Do not display links to capabilities url and show maps link in detail
+                view if the URL was empty.
+            </action>
+        </release>
 
-		<release version="3.1.0" date="2011-09-15" description="Release InGrid 3.1">
-			<action type="add" dev="wemove">
-				Short virtual paths. The portal is now reachable from the root, so no
-				ingrid-portal context is needed anymore. Attention: Please update
-				the files https.conf and sites-enables/default to ensure the correct
-				redirection of the paths!
-			</action>
-			<action type="add" dev="wemove">
-				For each page a title, description and keywords were added.
-			</action>
-			<action type="add" dev="wemove">
-				Most links received a tooltip now, which gives more explanation, where
-				the links leads to.
-			</action>
-			<action type="add" dev="wemove">
-				A Google-Sitemap was added.
-			</action>
-			<action type="add" dev="wemove">
-				A 404- and 503 error page was added.
-			</action>
-			<action type="add" dev="wemove">
-				Renaming of words "Umweltchronik"->"Chronik", "Umweltthemen"->"Themen" and
-				"Datenkataloge"->"Kataloge". The latter one
-				also was moved from the search sub menu to its own main menu item.
-			</action>
-			<action type="add" dev="wemove">
-				Introduction of a feature page, which explains all the search functions.
-			</action>
-			<action type="add" dev="wemove">
-				General mayor changes in layout and design.
-			</action>
-			<action type="fix" dev="wemove">
-				Exchanged commons-logging with slf4j library, which fixes a class loader
-				exception when accessing another
-				webapp which also uses commons-logging (jetspeed!).
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1958">
-				IGE: Removing of double scrollbars in some tables.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Ref1Scale table checks inputs for correkt numbers now.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-1994">
-				IGE: Changing of a tooltip.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1989">
-				Added support for CSW 2.0.2 in job monitor.
-			</action>
-			<action type="fix" dev="wemove"
-				issue="INGRID-1981,INGRID-2005,INGRID-2006,INGRID-2007">
-				IGE: Several small fixes including date boxes in tables fixed month
-				switch, button fix for thesaurus search, fixed
-				inconsistency when adding a new entry for additional select field.
-			</action>
-		</release>
+        <release version="3.1.2" date="2012-01-03"
+            description="FIX + Update Release for InGrid 3.1.1">
+            <action type="update" dev="wemove" issue="INGRID-2054">
+                Update NUMIS profile to InGrid 3.1.0. (Adaptation of layout)
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-2069">
+                FIX Error when installing portal with database from scratch !!! Import
+                missing sql scripts "update_3.0.1_mysql.sql",
+                "update_3.1.0_mysql.sql" !
+            </action>
+        </release>
 
-		<release version="3.0.1.2" date="2011-08-24"
-			description="Update Release for InGrid 3.0.1.1">
-			<action type="update" dev="wemove">
-				Update detail view styles for NUMIS.
-			</action>
-		</release>
+        <release version="3.1.1" date="2011-11-07"
+            description="Update Release for InGrid 3.1.0">
+            <action type="update" dev="wemove" issue="INGRID31-22">
+                Remove field "environmental categories" from IGE and portal, selection now
+                only via "environmental topics" (menue "topics").
+            </action>
+        </release>
 
-		<release version="3.0.1.1" date="2011-08-16"
-			description="Update/Bugfix Release for InGrid 3.0.1">
-			<action type="add" dev="wemove" issue="INGRIDII-209">
-				Update ORACLE support (mdek SQL scripts, jdbc driver, context files).
-			</action>
-			<action type="update" dev="wemove">
-				Update detail view styles for HMDK Hamburg.
-			</action>
-			<action type="update" dev="wemove">
-				Update detail view styles for PortalUSachsen.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Various fixes (additional text area not possible to make it
-				required, prevent creation of additional field ids with spaces, fix
-				when cat admin user was changed, fixed label size of additional
-				fields, prevent null pointer exception when an address has no email
-				value).
-			</action>
-		</release>
+        <release version="3.1.0" date="2011-09-15" description="Release InGrid 3.1">
+            <action type="add" dev="wemove">
+                Short virtual paths. The portal is now reachable from the root, so no
+                ingrid-portal context is needed anymore. Attention: Please update
+                the files https.conf and sites-enables/default to ensure the correct
+                redirection of the paths!
+            </action>
+            <action type="add" dev="wemove">
+                For each page a title, description and keywords were added.
+            </action>
+            <action type="add" dev="wemove">
+                Most links received a tooltip now, which gives more explanation, where
+                the links leads to.
+            </action>
+            <action type="add" dev="wemove">
+                A Google-Sitemap was added.
+            </action>
+            <action type="add" dev="wemove">
+                A 404- and 503 error page was added.
+            </action>
+            <action type="add" dev="wemove">
+                Renaming of words "Umweltchronik"->"Chronik", "Umweltthemen"->"Themen" and
+                "Datenkataloge"->"Kataloge". The latter one
+                also was moved from the search sub menu to its own main menu item.
+            </action>
+            <action type="add" dev="wemove">
+                Introduction of a feature page, which explains all the search functions.
+            </action>
+            <action type="add" dev="wemove">
+                General mayor changes in layout and design.
+            </action>
+            <action type="fix" dev="wemove">
+                Exchanged commons-logging with slf4j library, which fixes a class loader
+                exception when accessing another
+                webapp which also uses commons-logging (jetspeed!).
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1958">
+                IGE: Removing of double scrollbars in some tables.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Ref1Scale table checks inputs for correkt numbers now.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-1994">
+                IGE: Changing of a tooltip.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1989">
+                Added support for CSW 2.0.2 in job monitor.
+            </action>
+            <action type="fix" dev="wemove"
+                issue="INGRID-1981,INGRID-2005,INGRID-2006,INGRID-2007">
+                IGE: Several small fixes including date boxes in tables fixed month
+                switch, button fix for thesaurus search, fixed
+                inconsistency when adding a new entry for additional select field.
+            </action>
+        </release>
 
-		<release version="3.0.1" date="2011-07-05"
-			description="Add-Ons + Bugfixes for InGrid 3.0">
-			<action type="add" dev="wemove" issue="INGRID-1900">
-				Added support for login-restricted update-server (set username and
-				password in ingrid-portal-apps.properties).
-			</action>
-			<action type="add" dev="wemove" issue="GSSOIL-18">
-				Always search English topic terms with the thesaurus browser (property
-				thesaurus.search.add.en.term in ingrid-portal-apps.properties,
-				enabled in GS Soil profile).
-			</action>
-			<action type="add" dev="wemove" issue="INGRID23-60">
-				IGE: Allow multiple spatial systems ("Raumbezugssystem"), now 1:n
-				association (also updated in Portal Detail-view of result).
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: On CSW import error in preparation phase, do not offer to import
-				data while showing the error.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID23-219">
-				IGE: Fix display when switching languages.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1950">
-				IGE: Fix new operation in operation dialog.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1953">
-				IGE: Fix behaviour of cursor keys within tables.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1953">
-				IGE: Fix url replace function in catalog management.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID23-173">
-				IGE: Fix caching of additional fields and caching of localization.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1943">
-				IGE: Find user when typing username.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID23-269">
-				IGE: Do not show user management for meta authors.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1959">
-				Portal: Fixed handling of URLs as IDs of objects.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1949">
-				Portal: Show delivery point label only by post box at portal detail view
-				page.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID23-263">
-				Portal: Add nodes useconstraints and accessconstraints to "Access
-				restrictions" and "Usage restrictions" at portal detail view page.
-			</action>
-			<action type="add" dev="wemove">
-				Portal: Add portal POM version and SVN revision number to manifest file and
-				show information at page "About PortalU" as user admin.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID23-207">
-				Portal: Fix group hits length for unranked hits.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update dojo sources for detail view.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1939">
-				Portal: Add weather portlet for DWD Application.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID23-59">
-				IGE: Fix mapping of CSW vertical reference system to IGE Import format.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID23-231">
-				IGE: Fix mapping of CSW ReferenceSystem to IGE Import format, now
-				handled for all classes (now part of "spatial-domain" in import
-				format 3.0.1 ).
-			</action>
-			<action type="update" dev="wemove">
-				IGE: Updated help file with examples for IDF-mapping and Javascripting
-				for additional fields.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update IDF detail view for additional legacy fields to default tabs
-				("General", "Reference",...) by id.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update GS Soil profile for Thesaurus-Browser, CMS-Items,
-				Localisation, images, hiding of newsletter content, adjust of the GS
-				Soil layout.
-			</action>
-		</release>
+        <release version="3.0.1.2" date="2011-08-24"
+            description="Update Release for InGrid 3.0.1.1">
+            <action type="update" dev="wemove">
+                Update detail view styles for NUMIS.
+            </action>
+        </release>
 
-		<release version="3.0.0" date="2011-05-06" description="Release InGrid3.0">
-			<action type="update" dev="wemove">
-				Portal: Update login view for IGE. Remove dashboard for IGE-users.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update localization resources for PortalU.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update help messages resources and images for PortalU.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID23-57">
-				Portal: Update print view (CSS) for printing all information of a detail
-				view .
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1916">
-				Portal: Add datatype "dsc_csw" to search catalog thesaurus result.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update dojo project to version 1.6.0 (using for new dojo tabs in
-				detail view).
-			</action>
-			<action type="add" dev="wemove" issue="INGRID23-69">
-				Portal: Allow to show XHTML data in detail view.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID23-68">
-				Portal: Show Detaildata based on IDF (InGrid Detaildata Format).
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update cms item content for page "contact" at profile PortalU.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID23-83">
-				IGE: "Zeichensatz des Datensatzes" only mandatory in class 1 and only
-				shown in classes 1,2,5
-			</action>
-			<action type="update" dev="wemove">
-				Add Parameter selenium for executing selenium tests.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update German info box content for PortalU.
-			</action>
-		</release>
-		<release version="2.3.1" date="2011-01-24"
-			description="Release InGrid 2.3.1, NEEDS UPDATE OF IGC schema (2.3.1.1), IGE iPlug 2.3.1, ...">
-			<action type="update" dev="wemove">
-				Portal: Update German info box content for PortalU and if title for
-				link-URL is not set then hide link (incl. link icon) in info box.
-			</action>
-			<action type="add" dev="wemove">
-				Portal: Add css styles for NUMIS to display buttons correctly (without
-				border).
-			</action>
-			<action type="add" dev="wemove">
-				Portal: Add Piwik functionality for profile NUMIS.
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update InGrid detail view: adaptation of print preview.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1898">
-				IGE: Importing of ISO datasets with hierarchyLevel "application" will be
-				ignored.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1898">
-				IGE: A problem with UUID generation for addresses has been fixed. (ISO
-				address-identifier detection was broken)
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Update NUMIS profile (help messages, profile properties and
-				ingrid-portal-apps properties) and add specific files to NUMIS
-				profile (WMS properties, quartz_job.xml).
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Improve wms url detection in search result view and detail view
-			</action>
-			<action type="add" dev="wemove" issue="INGRID23-8">
-				Portal: Add new detail view with tab constructur.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1884">
-				IGE: Fix detail view and compare view of record when data is missing in
-				tables.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID23-54">
-				IGE: Input "INSPIRE-Theme" now only mandatory in class 1
-				("Geo-Information/Karte").
-			</action>
-			<action type="update" dev="wemove" issue="INGRID23-33">
-				IGE: Input "Spatial System" now only mandatory in class 1
-				("Geo-Information/Karte") and 3 ("Geodatendienst").
-			</action>
-			<action type="add" dev="wemove" issue="INGRID23-46">
-				IGE: Add new permission "write-subnode" for creating direct subnode and
-				then nodes underneath created subnode (IGC Schema 2.3.1.1).
-			</action>
-			<action type="add" dev="wemove" issue="INGRID23-48">
-				IGE: User can be assigned to more than one group (IGC Schema 2.3.1.1).
-			</action>
-		</release>
+        <release version="3.0.1.1" date="2011-08-16"
+            description="Update/Bugfix Release for InGrid 3.0.1">
+            <action type="add" dev="wemove" issue="INGRIDII-209">
+                Update ORACLE support (mdek SQL scripts, jdbc driver, context files).
+            </action>
+            <action type="update" dev="wemove">
+                Update detail view styles for HMDK Hamburg.
+            </action>
+            <action type="update" dev="wemove">
+                Update detail view styles for PortalUSachsen.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Various fixes (additional text area not possible to make it
+                required, prevent creation of additional field ids with spaces, fix
+                when cat admin user was changed, fixed label size of additional
+                fields, prevent null pointer exception when an address has no email
+                value).
+            </action>
+        </release>
 
-		<release version="2.3.0.1" date="2010-12-22" description="Bugfix Release InGrid 2.3.0">
-			<action type="fix" dev="wemove">
-				Portal: Fix logo in detail view of HH Profile.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Fix check of INSPIRE fields when publishing. Now only relevant in
-				classes 1 ("Geo-Information/Karte") and 3 ("Geodatendienst").
-			</action>
-			<action type="fix" dev="wemove">
-				Portal: Fix display of catalogs in catalog browser.
-			</action>
-			<action type="fix" dev="wemove">
-				Portal: Fix piwik and JavaScript detection.
-			</action>
-		</release>
+        <release version="3.0.1" date="2011-07-05"
+            description="Add-Ons + Bugfixes for InGrid 3.0">
+            <action type="add" dev="wemove" issue="INGRID-1900">
+                Added support for login-restricted update-server (set username and
+                password in ingrid-portal-apps.properties).
+            </action>
+            <action type="add" dev="wemove" issue="GSSOIL-18">
+                Always search English topic terms with the thesaurus browser (property
+                thesaurus.search.add.en.term in ingrid-portal-apps.properties,
+                enabled in GS Soil profile).
+            </action>
+            <action type="add" dev="wemove" issue="INGRID23-60">
+                IGE: Allow multiple spatial systems ("Raumbezugssystem"), now 1:n
+                association (also updated in Portal Detail-view of result).
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: On CSW import error in preparation phase, do not offer to import
+                data while showing the error.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID23-219">
+                IGE: Fix display when switching languages.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1950">
+                IGE: Fix new operation in operation dialog.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1953">
+                IGE: Fix behaviour of cursor keys within tables.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1953">
+                IGE: Fix url replace function in catalog management.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID23-173">
+                IGE: Fix caching of additional fields and caching of localization.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1943">
+                IGE: Find user when typing username.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID23-269">
+                IGE: Do not show user management for meta authors.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1959">
+                Portal: Fixed handling of URLs as IDs of objects.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1949">
+                Portal: Show delivery point label only by post box at portal detail view
+                page.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID23-263">
+                Portal: Add nodes useconstraints and accessconstraints to "Access
+                restrictions" and "Usage restrictions" at portal detail view page.
+            </action>
+            <action type="add" dev="wemove">
+                Portal: Add portal POM version and SVN revision number to manifest file and
+                show information at page "About PortalU" as user admin.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID23-207">
+                Portal: Fix group hits length for unranked hits.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update dojo sources for detail view.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1939">
+                Portal: Add weather portlet for DWD Application.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID23-59">
+                IGE: Fix mapping of CSW vertical reference system to IGE Import format.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID23-231">
+                IGE: Fix mapping of CSW ReferenceSystem to IGE Import format, now
+                handled for all classes (now part of "spatial-domain" in import
+                format 3.0.1 ).
+            </action>
+            <action type="update" dev="wemove">
+                IGE: Updated help file with examples for IDF-mapping and Javascripting
+                for additional fields.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update IDF detail view for additional legacy fields to default tabs
+                ("General", "Reference",...) by id.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update GS Soil profile for Thesaurus-Browser, CMS-Items,
+                Localisation, images, hiding of newsletter content, adjust of the GS
+                Soil layout.
+            </action>
+        </release>
 
-		<release version="2.3.0" date="2010-12-15"
-			description="Release InGrid 2.3 static changes (Portal version adapted to InGrid version). NEEDS UPDATE OF IGC schema (2.3.0) + IGE iPlug (2.3.0)">
-			<action type="add" dev="wemove" issue="INGRID23-47">
-				InGrid 2.3: The functionality "replace address" in the administration is
-				extended, so that not only addresses of type 'point of contact' will
-				be replaced. Instead all address types are taken into account when
-				exchanging one address with another.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1854">
-				ISO addresses with organization and individual address will be imported
-				as two addresses. The organization is imported as parent of the
-				individual address. The name of the organization will be used for
-				the address records identification and data.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID23-52">
-				InGrid 2.3: Introduce input of INSPIRE Encoding (data format) (IGC Schema
-				2.3.0).
-			</action>
-			<action type="add" dev="wemove" issue="INGRID23-31">
-				InGrid 2.3: Introduce input of Data Quality in "Geoinformation/Karte" (IGC
-				Schema 2.3.0).
-			</action>
-			<action type="fix" dev="wemove">
-				Fix problem: spatial references were not displayed on detail view in
-				portal.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1875">
-				Update admin user management: Admin can change password of user without
-				enter old password, add property to define number of rows in a table
-				view, add to user table view
-				column "last login" for display the last login date of a user (User
-				"guest" is not displaying now.).
-			</action>
-			<action type="update" dev="wemove">
-				Fix portal login with tomcat 6.
-			</action>
-			<action type="update" dev="wemove">
-				Update DB connection parameter to prevent connection loss after a long
-				period of inactivity.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID23-22">
-				InGrid 2.3: Split object class "Dienst/Anwendung/Informationssystem" into
-				classes "Geodatendienst" and "Informationssystem/Dienst/Anwendung"
-				(IGC Schema 1.0.9).
-			</action>
-			<action type="add" dev="wemove" issue="INGRID23-3">
-				InGrid 2.3: Split access - and user-constraints in IGE, Portal detail view
-				etc. (IGC Schema 1.0.8)
-			</action>
-			<action type="add" dev="wemove">
-				Überprüfung Kompatibilität von "IGE- Frontend" / "IGE-iPlug" / "IGC Datenbank".
-				Kompatibilitätsprobleme werden im Frontend dargestellt (in den IGE
-				Einstiegsseiten).
-			</action>
-			<action type="update" dev="wemove">
-				Better logging/display of Exceptions from IGE Backend.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1840">
-				Fixed service-type and service-classification in import/export format
-				(was interchanged).
-			</action>
-		</release>
+        <release version="3.0.0" date="2011-05-06" description="Release InGrid3.0">
+            <action type="update" dev="wemove">
+                Portal: Update login view for IGE. Remove dashboard for IGE-users.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update localization resources for PortalU.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update help messages resources and images for PortalU.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID23-57">
+                Portal: Update print view (CSS) for printing all information of a detail
+                view .
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1916">
+                Portal: Add datatype "dsc_csw" to search catalog thesaurus result.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update dojo project to version 1.6.0 (using for new dojo tabs in
+                detail view).
+            </action>
+            <action type="add" dev="wemove" issue="INGRID23-69">
+                Portal: Allow to show XHTML data in detail view.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID23-68">
+                Portal: Show Detaildata based on IDF (InGrid Detaildata Format).
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update cms item content for page "contact" at profile PortalU.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID23-83">
+                IGE: "Zeichensatz des Datensatzes" only mandatory in class 1 and only
+                shown in classes 1,2,5
+            </action>
+            <action type="update" dev="wemove">
+                Add Parameter selenium for executing selenium tests.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update German info box content for PortalU.
+            </action>
+        </release>
+        <release version="2.3.1" date="2011-01-24"
+            description="Release InGrid 2.3.1, NEEDS UPDATE OF IGC schema (2.3.1.1), IGE iPlug 2.3.1, ...">
+            <action type="update" dev="wemove">
+                Portal: Update German info box content for PortalU and if title for
+                link-URL is not set then hide link (incl. link icon) in info box.
+            </action>
+            <action type="add" dev="wemove">
+                Portal: Add css styles for NUMIS to display buttons correctly (without
+                border).
+            </action>
+            <action type="add" dev="wemove">
+                Portal: Add Piwik functionality for profile NUMIS.
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update InGrid detail view: adaptation of print preview.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1898">
+                IGE: Importing of ISO datasets with hierarchyLevel "application" will be
+                ignored.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1898">
+                IGE: A problem with UUID generation for addresses has been fixed. (ISO
+                address-identifier detection was broken)
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Update NUMIS profile (help messages, profile properties and
+                ingrid-portal-apps properties) and add specific files to NUMIS
+                profile (WMS properties, quartz_job.xml).
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Improve wms url detection in search result view and detail view
+            </action>
+            <action type="add" dev="wemove" issue="INGRID23-8">
+                Portal: Add new detail view with tab constructur.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1884">
+                IGE: Fix detail view and compare view of record when data is missing in
+                tables.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID23-54">
+                IGE: Input "INSPIRE-Theme" now only mandatory in class 1
+                ("Geo-Information/Karte").
+            </action>
+            <action type="update" dev="wemove" issue="INGRID23-33">
+                IGE: Input "Spatial System" now only mandatory in class 1
+                ("Geo-Information/Karte") and 3 ("Geodatendienst").
+            </action>
+            <action type="add" dev="wemove" issue="INGRID23-46">
+                IGE: Add new permission "write-subnode" for creating direct subnode and
+                then nodes underneath created subnode (IGC Schema 2.3.1.1).
+            </action>
+            <action type="add" dev="wemove" issue="INGRID23-48">
+                IGE: User can be assigned to more than one group (IGC Schema 2.3.1.1).
+            </action>
+        </release>
 
-		<release version="1.3.6" date="2010-10-14" description="Fix Release">
-			<action type="update" dev="wemove">
-				Do not display inactive indexer iPlugs in Portals iPlug-Admin-Gui.
-			</action>
-			<action type="fix" dev="wemove">
-				Änderung der Funktion openNodesUntilHierarchyLevel um den Parameter
-				Root-Node, um beim automatischen Öffnen eines Node untergeordente
-				Nodes eindeutige Node-IDs zu vergeben.
-				Die Funktion getNextId() kann nur auf Bezug zum Root-Node verwendet
-				werden, da diese die Node-ID alles Nodes verwaltet.
-			</action>
-		</release>
+        <release version="2.3.0.1" date="2010-12-22" description="Bugfix Release InGrid 2.3.0">
+            <action type="fix" dev="wemove">
+                Portal: Fix logo in detail view of HH Profile.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fix check of INSPIRE fields when publishing. Now only relevant in
+                classes 1 ("Geo-Information/Karte") and 3 ("Geodatendienst").
+            </action>
+            <action type="fix" dev="wemove">
+                Portal: Fix display of catalogs in catalog browser.
+            </action>
+            <action type="fix" dev="wemove">
+                Portal: Fix piwik and JavaScript detection.
+            </action>
+        </release>
 
-		<release version="1.3.5" date="2010-09-22" description="Release">
-			<action type="fix" dev="wemove">
-				Disable xml validation of quartz job description, works now when offline.
-			</action>
-			<action type="fix" dev="wemove">
-				Fix regression bug: could not save provider.
-			</action>
-			<action type="fix" dev="wemove">
-				Add timeout for URLConnection that reads a RSS feed (should fix
-				deadlock of RSS).
-			</action>
-			<action type="fix" dev="wemove">
-				Fix logging of tomcat and webapps (commons-logging into common/lib and
-				log4j into webapps).
-			</action>
-		</release>
+        <release version="2.3.0" date="2010-12-15"
+            description="Release InGrid 2.3 static changes (Portal version adapted to InGrid version). NEEDS UPDATE OF IGC schema (2.3.0) + IGE iPlug (2.3.0)">
+            <action type="add" dev="wemove" issue="INGRID23-47">
+                InGrid 2.3: The functionality "replace address" in the administration is
+                extended, so that not only addresses of type 'point of contact' will
+                be replaced. Instead all address types are taken into account when
+                exchanging one address with another.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1854">
+                ISO addresses with organization and individual address will be imported
+                as two addresses. The organization is imported as parent of the
+                individual address. The name of the organization will be used for
+                the address records identification and data.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID23-52">
+                InGrid 2.3: Introduce input of INSPIRE Encoding (data format) (IGC Schema
+                2.3.0).
+            </action>
+            <action type="add" dev="wemove" issue="INGRID23-31">
+                InGrid 2.3: Introduce input of Data Quality in "Geoinformation/Karte" (IGC
+                Schema 2.3.0).
+            </action>
+            <action type="fix" dev="wemove">
+                Fix problem: spatial references were not displayed on detail view in
+                portal.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1875">
+                Update admin user management: Admin can change password of user without
+                enter old password, add property to define number of rows in a table
+                view, add to user table view
+                column "last login" for display the last login date of a user (User
+                "guest" is not displaying now.).
+            </action>
+            <action type="update" dev="wemove">
+                Fix portal login with tomcat 6.
+            </action>
+            <action type="update" dev="wemove">
+                Update DB connection parameter to prevent connection loss after a long
+                period of inactivity.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID23-22">
+                InGrid 2.3: Split object class "Dienst/Anwendung/Informationssystem" into
+                classes "Geodatendienst" and "Informationssystem/Dienst/Anwendung"
+                (IGC Schema 1.0.9).
+            </action>
+            <action type="add" dev="wemove" issue="INGRID23-3">
+                InGrid 2.3: Split access - and user-constraints in IGE, Portal detail view
+                etc. (IGC Schema 1.0.8)
+            </action>
+            <action type="add" dev="wemove">
+                Überprüfung Kompatibilität von "IGE- Frontend" / "IGE-iPlug" / "IGC Datenbank".
+                Kompatibilitätsprobleme werden im Frontend dargestellt (in den IGE
+                Einstiegsseiten).
+            </action>
+            <action type="update" dev="wemove">
+                Better logging/display of Exceptions from IGE Backend.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1840">
+                Fixed service-type and service-classification in import/export format
+                (was interchanged).
+            </action>
+        </release>
 
-		<release version="1.3.4" date="2010-09-13" description="Fix Release">
-			<action type="add" dev="wemove" issue="INGRID21-235">
-				Fix "Zeige Punktkoordinaten" for different coordinate systems.
-			</action>
-			<action type="update" dev="wemove">
-				NUMIS: Finalization of "NUMIS" Profil
-			</action>
-		</release>
+        <release version="1.3.6" date="2010-10-14" description="Fix Release">
+            <action type="update" dev="wemove">
+                Do not display inactive indexer iPlugs in Portals iPlug-Admin-Gui.
+            </action>
+            <action type="fix" dev="wemove">
+                Änderung der Funktion openNodesUntilHierarchyLevel um den Parameter
+                Root-Node, um beim automatischen Öffnen eines Node untergeordente
+                Nodes eindeutige Node-IDs zu vergeben.
+                Die Funktion getNextId() kann nur auf Bezug zum Root-Node verwendet
+                werden, da diese die Node-ID alles Nodes verwaltet.
+            </action>
+        </release>
 
-		<release version="1.3.3" date="2010-09-02"
-			description="Release FIXes + Import Improvements">
-			<action type="add" dev="wemove" issue="INGRID-1862">
-				Add search function with using text field for service and measures.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1849">
-				IGE Import: Import of ZIP/GZIP files.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1850">
-				IGE Import: Show mapping protocol before import of CSW or ArcGIS data
-				format.
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-1851">
-				IGE Import: Move import status information to the top.
-			</action>
-			<action type="update" dev="wemove">
-				GSSoil: add french localization
-			</action>
-			<action type="update" dev="wemove">
-				Finalization of "NUMIS" Profil
-			</action>
-			<action type="update" dev="wemove" issue="INGRID21-232">
-				Update PortalU help messages.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1859">
-				Remove Bulletpoints in info portlets.
-			</action>
-			<action type="fix" dev="wemove">
-				Localization: Fix encoding of Java resource bundles (ISO-8859-15)
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1861">
-				Secure File Handling (upload / download)
-			</action>
-		</release>
-		<release version="1.3.2" date="2010-08-02" description="Release FIX !">
-			<action type="fix" dev="wemove">
-				USE ALL NEWEST DEPENDENCIES including communication for reconnecting
-				with iBus on iBus shutdown / startup.
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1815">
-				Keep portal locale in session during login and logout.
-			</action>
-			<action type="update" dev="wemove" issue="">
-				Portal: detect new iPlug-SE Indexer plugins (2.0.0) in iPlug administration
-			</action>
-			<action type="update" dev="wemove" issue="">
-				IGE: ISO Import, do not import links without linkage URLs.
-			</action>
-		</release>
-		<release version="1.3.1" date="2010-07-28" description="Release with communication fix">
-			<action type="add" dev="wemove" issue="INGRID-1830">
-				Add csv export for all monitors/jobs.
-			</action>
-			<action type="add" dev="wemove">
-				Reduce memory footprint for portal requests.
-			</action>
-			<action type="update" dev="wemove">
-				Prevent too large pages in thesarus navigator: Close other top tree nodes
-				when opening a node, prevent duplicate nodes in path.
-			</action>
-			<action type="update" dev="wemove">
-				Localization: Default Resources are now in english. Separated differences in
-				Profiles now in new ProfileResources_xx.properties.
-			</action>
-			<action type="fix" dev="wemove">
-				Include newest communication fixing reconnection with iBus.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Fix ISO Import, do not import addresses with empty role.
-			</action>
-			<action type="fix" dev="wemove">
-				Fixing error output in velocity templates.
-			</action>
-		</release>
-		<release version="1.3.0" date="2010-07-19" description="Release">
-			<action type="add" dev="wemove">
-				Neues Profil "NUMIS"
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1839">
-				Neues Profil "LGV Hamburg"
-			</action>
-			<action type="update" dev="wemove" issue="">
-				IGE: Beim Import von CSW Daten (Adressen) wird nun zwischen Organisation
-				und Personen unterschieden.
-			</action>
-			<action type="fix" dev="wemove" issue="">
-				Portal: Fix Link zur Detailanzeige bei in der Marginalspalte angezeigten
-				CSW-DSC iPlug Treffern
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1794">
-				Portal: Suche nach IGC Objekten in "Umweltthemen" funktioniert jetzt
-			</action>
-			<action type="update" dev="wemove" issue="INGRID-1824">
-				Erweiterte Suche / Fachwörterbuch: Gleichlautende Fachwörter zum Suchbegriff
-				werden nicht mehr gefiltert
-			</action>
-			<action type="update" dev="wemove">
-				Logging im mitgelieferten Tomcat jetzt per log4j in
-				/common/classes/log4j.properties
-			</action>
-			<action type="update" dev="wemove">
-				Portal: Detaildaten des Tamino-iPlugs werden jetzt in generischer
-				Darstellung angezeigt. Das iPlug wird nicht mehr als UDK5 DSC iPlug
-				erkannt.
-			</action>
-			<action type="add" dev="wemove">
-				IGE: SNS-Funktionalität jetzt hinter
-				Thesaurus-/Gazetteer-/FullClassifyService API gekapselt und per
-				Spring injizierbar (GS Soil). In Portal "SNS" Aufrufe jetzt immer
-				sprachbezogen !
-			</action>
-			<action type="add" dev="wemove">
-				Tracking Site Access via Piwik request in footer of pages (only PortalU, GS
-				Soil)
-			</action>
-			<action type="add" dev="wemove">
-				IGE: Import von CSW ISO Daten und ArcGis Exportdaten in den IGE
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1775">
-				"Korrupte" Datenkataloge in Katalogbrowser (Suche / Datenkataloge)
-				ausschließen
-			</action>
-			<action type="fix" dev="wemove">
-				Lokalisierung von Administration Untermenüs
-			</action>
-			<action type="fix" dev="wemove">
-				Layout CSS korrigiert, springt bei Rollover nicht mehr.
-			</action>
-			<action type="add" dev="wemove" issue="GSSOIL-2">
-				Neues Profil "GS Soil"
-			</action>
-			<action type="add" dev="wemove">
-				IGE: Importer schreibt detailliertere Messages in Import Protokoll (z.B.
-				bei fehlerhaftem ArcGis Import)
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1740">
-				IGE: Institutionen von Adressen in Objekten in der Druckvorschau korrekt
-				darstellen
-			</action>
-			<action type="add" dev="wemove" issue="GSSOIL-1">
-				Erweiterung der Sprachauswahl im Portal unter Verwendung einer Auswahlliste
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1741">
-				Sortierung der Such-/Verweisliste in der Druckansicht (IGE) und
-				Portaldetailansicht
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1597">
-				Hinzufügung der Eingabe eines Sicherheitscode (jCaptcha) in der Kontaktanfrage
-				(jCaptcha Image bleibt bei falscher Eingabe erhalten)
-			</action>
-			<action type="add" dev="wemove" issue="INGRID21-2">
-				Feste URL zu einem konkreten Kartenausschnitt
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1756">
-				Anmeldung im Portal: Textfelder werden zurückgesetzt
-			</action>
-			<action type="fix" dev="wemove" issue="GSSOIL-7">
-				Das Lesen UND Löschen von RSS News wird nun durch einen Parameter
-				(rss.history.days) bestimmt
-			</action>
-			<action type="fix" dev="wemove" issue="GSSOIL-4">
-				Die Default-Sprache wird durch den Tomcat festgelegt
-				(-Duser.language="de")
-			</action>
-			<action type="fix" dev="wemove">
-				Kleine Darstellungsfehler in der Portal-Detailansicht
-			</action>
-			<action type="fix" dev="wemove" issue="INGRIDII-387">
-				IGE: zu langes ServiceMenü verschiebt andere Menüs
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1765">
-				IGE: Begriffe vom Thesaurus-Navigator wurden nicht in Adressen
-				übernommen
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: fehlender Hilfetext hinzugefügt
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: URLs ersetzen auf max. 100 beschränken, da manche Browser
-				Zeitüberschreitungen bei der Darstellung bekommen
-			</action>
-			<action type="add" dev="wemove" issue="INGRID21-47">
-				Darstellung von binärer Daten in der Detailansicht
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: IE8 Layout bugfixes
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Detaildarstellung funktionierte bei diversen Objekten nicht
-			</action>
-			<action type="fix" dev="wemove">
-				Links zur Detaildarstellung in den Suchergebnissen werden jetzt absolut
-				gerendert (ausgehend vom Kontextpfad)
-			</action>
-			<action type="fix" dev="wemove" issue="INGRID-1789">
-				Thesaurus-Navigator verwendet nun URLs, die den Zustand der Seite wiederherstellen
-				können.
-			</action>
-			<action type="add" dev="wemove" issue="INGRID-1789">
-				Im Thesaurus-Navigator wird ein neuer Link angezeigt, der einen
-				ausgewählten Begriff auf der Suchseite anzeigt.
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: Bugfixes und Verbesserungen bei der Benutzerverwaltung
-			</action>
-		</release>
+        <release version="1.3.5" date="2010-09-22" description="Release">
+            <action type="fix" dev="wemove">
+                Disable xml validation of quartz job description, works now when offline.
+            </action>
+            <action type="fix" dev="wemove">
+                Fix regression bug: could not save provider.
+            </action>
+            <action type="fix" dev="wemove">
+                Add timeout for URLConnection that reads a RSS feed (should fix
+                deadlock of RSS).
+            </action>
+            <action type="fix" dev="wemove">
+                Fix logging of tomcat and webapps (commons-logging into common/lib and
+                log4j into webapps).
+            </action>
+        </release>
 
-		<release version="1.2.1" date="2009-07-24" description="Release">
-			<action type="add" dev="wemove">
-				Neue Form der Versionshistorie (changes.xml). Historie wird als HTML
-				generiert.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Möglichkeit die Newsletterfunktion auszublenden (Portlets über
-				profile.xml, Referenzen von anderen Portlets über
-				ingrid-portal-apps.properties)
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: IE7 konnte Strings mit Arrayschreibweise nicht analysieren ->
-				Verwendung von substr-Methode (bei searchterm)
-			</action>
-			<action type="fix" dev="wemove">
-				IGE: vertikaler Schiebebalken ließ sich nicht mehr verschieben, wenn man
-				auf den nebenliegenden blauen Bereich geklickt hat
-			</action>
-		</release>
+        <release version="1.3.4" date="2010-09-13" description="Fix Release">
+            <action type="add" dev="wemove" issue="INGRID21-235">
+                Fix "Zeige Punktkoordinaten" for different coordinate systems.
+            </action>
+            <action type="update" dev="wemove">
+                NUMIS: Finalization of "NUMIS" Profil
+            </action>
+        </release>
 
-		<release version="1.2.0" date="2009-06-02" description="Release">
-			<action type="add" dev="wemove">
-				Installationsversion wird nun per Maven2 gebaut
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Anzeige eines neuen Portlets für den Portal Administrator auf der
-				Seite "Metadaten", das es erlaubt sich als einen beliebigen
-				MDEK-Benutzer beim IGE einzuloggen.
-			</action>
-			<action type="add" dev="101tec">
-				PORTAL: Verwendung eines Caches für Anfragen an den iBus (realisiert über
-				den iBusClient, der zusätzlich einen iBus liefert, der alle Aufrufe
-				in einen Cache ablegt)
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Anzeigen unranked iPlugs ohne Treffer in unranked Suchergebnissen
-				(rechte Spalte) per Konfiguration (properties).
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Ausblenden der unranked Suchergebnisse (rechte Spalte) per
-				Konfiguration (properties).
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Performance Verbesserung bei Kommunikation mit iBus (Caching,
-				Zusammenfassen von einzelnen Anfragen in ein Anfrage).
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Kartenkomponente wird nun innerhalb der Portal Applikation und
-				nicht mehr im neuen Fenster angezeigt.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Administration: Die Nutzerverwaltung zeigt nun 100 Eintrüge statt
-				10 pro Tabellenseite.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Detaildatendarstellung verwendet Titel und Beschreibung der
-				Detaildaten für das die HTML-Seiten Eigenschaften Title und
-				Description.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Administration: Neue Funktionalität Anbietertest (Report von neuen
-				Anbietern, Anbieter aus untergeodneten InGrid Instanzen werden
-				automatisch synchronisiert).
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Administration: Neue Spalten für die Tabelle ingrid_rss_source
-				(error, lastUpdate, numLastCount).
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Administration: Neue Monitore für iBus, RSS Feeds.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Administration: geändertes Job (Monitor) Handling (aktive/inaktive
-				Jobs, durchschnittliche Ausführungszeit, nächste Ausführung, Import
-				von Monitor Jobs überarbeitet).
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: URls für Detailansichten benutzt nun die UUID statt der bei
-				Indexierung wechselnden DOCID; Permanenten Links zu Detailseiten nun
-				möglich.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Änderungen am Profil: SachsenPortalU; dabei Anpassung von
-				Auswahlbox "Bund/Länder" in "Service", "Messwerte" und
-				"Umweltthemen".
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Email Adressen werden kodiert dargestellt (SPAM protection).
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Links für SE-search Administrationsoberfläche werden nur noch für
-				Portal Administratoren angezeigt.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Vorbereitung für den Einsatz eines neuen MapBender Releases
-				(MapBender Version 2.5 basiert)
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Die Beschreibung in der Detailansicht erlaubt nun nur noch folgende
-				Tags: b, i, u, p, br, strong, ul, ol, li. Zeilenumbrüche werden
-				korrekt umgesetzt.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Detailansicht des Portals zeigt auch Daten aus IDC Katalogen 1.0.2,
-				1.0.3 (INSPIRE Erweiterung), 1.0.4 und 1.0.5 an.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Integration des IGE (InGrid Editor). Konfiguration und Zugang
-				erfolgt ueber das Hauptmenü für registrierte Benutzer.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: veraenderte Erweiterte Suche/Zeit: Suche "seit" bzw. "bis" möglich
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Änderung des Portalverhaltens: Neu Laden eines Seitenverzeichnisses
-				laedt immer eine Default-Seite statt die letzte annavigierte Seite
-				des Verzeichnisses.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Bei Einschränkungen auf einen Partner wird die Kopfanzeige der
-				Ergebnisliste nun bei Service, Umwelt und Messwerte mit den in der
-				Anbieter-Einschraenkung selektierten Werten synchronisiert.
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: Änderung im Deployment/Installation: Tomcat 5.5.26 wird in der
-				Distribution mitgeliefert
-			</action>
-			<action type="add" dev="wemove">
-				PORTAL: MySQL Skript f. Version 1.1.8 und 1.2.0
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: IE8 kompatibel (include Pfad von ingrid.js korrigiert)
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: CSS style für ol-Elemente waren nicht definiert
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: Umweltereignisse des aktuellen Jahres werden nun ignoriert
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: "Alle Ergebnisse für ..."-Text hat falschen Anbieter
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: Stabilieres Verhalten von Jobs: RSS Feed und Umweltchronik Jobs
-				werden nun persistent in der Datenbank gespeichert.
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: Detailansicht: Große Mengen von Adress-Objekt-Relationen werden nun
-				nicht sofort dargestellt und können nachgeladen werden.
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: Links zu den Administrationsoberflächen der SE-iPlugs sind nur für
-				Portal Administratoren einsehbar.
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: Abschicken des Login Formulars nun auch per RETURN Taste möglich
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: Umbenennung des Menüeintrages "Überwachung" in "Jobs"
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: Änderung des DEFAULT_LAYOUT_DECORATOR in der page-Tabelle für
-				search-detail.psml zu ingrid-clear
-			</action>
-			<action type="fix" dev="wemove">
-				PORTAL: Änderung des DEFAULT_LAYOUT_DECORATOR und DEFAULT_PORTLET_DECORATOR
-				in der page-Tabelle für main-maps.psml zu ingrid und ingrid-teaser
-				(Karte wird nun im gleichen Fenster geöffnet).
-			</action>
-			<action type="update" dev="wemove">
-				PORTAL ACHTUNG: PORTAL DATENBANK ERWEITERT -> UPDATE NÖTIG (SKRIPT S.
-				DISTRIBUTION)
-			</action>
-			<action type="update" dev="wemove">
-				PORTAL ACHTUNG: FÜR DIE NEUE VERSION WIRD JAVA6 BENÖTIGT.
-			</action>
-			<action type="update" dev="wemove">
-				PORTAL ACHTUNG: GEÄNDERTE DISTRIBUTION: VORKONFIGURIERTER TOMCAT WIRD
-				MITGELIEFERT, KEINE INTEGRATION IN BESTEHENDE TOMCAT MEHR VORGESEHEN
-			</action>
-			<action type="update" dev="wemove">
-				PORTAL ACHTUNG: PORTAL PROPERTIES ERWEITERT -> EIGENE ÄNDERUNGEN MÜSSEN IN
-				NEUE PROPERTIES DATEI ÜBERNOMMEN WERDEN!
-				(ingrid-portal-apps.properties)
-			</action>
-			<action type="add" dev="wemove">
-				IGE: Integration des IGE in vollem Funktionsumfang.
-			</action>
-			<action type="add" dev="wemove">
-				IGE: UMTHES, GEMET und Inspire-Themen erfassen.
-			</action>
-			<action type="add" dev="wemove">
-				IGE: Überprüfung des Browsers, bevor Zugang zum IGE oder zur
-				Kotalogverwaltung gewährt wird (unterstützte Browser: Firefox 2/3
-				und IE7).
-			</action>
-			<action type="add" dev="wemove">
-				IGE: Katalogmanagement mit folgenden Funktionen: Analyse, Dubletten,
-				URL-Pflege, Auswahl-/ISO-Codelistenpflege, Zusätzliche Felder,
-				Adresse ersetzen, Suchbegriffe, Raumbezüge.
-			</action>
-			<action type="add" dev="wemove">
-				IGE: Import/Export von Datensätzen.
-			</action>
-		</release>
+        <release version="1.3.3" date="2010-09-02"
+            description="Release FIXes + Import Improvements">
+            <action type="add" dev="wemove" issue="INGRID-1862">
+                Add search function with using text field for service and measures.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1849">
+                IGE Import: Import of ZIP/GZIP files.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1850">
+                IGE Import: Show mapping protocol before import of CSW or ArcGIS data
+                format.
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-1851">
+                IGE Import: Move import status information to the top.
+            </action>
+            <action type="update" dev="wemove">
+                GSSoil: add french localization
+            </action>
+            <action type="update" dev="wemove">
+                Finalization of "NUMIS" Profil
+            </action>
+            <action type="update" dev="wemove" issue="INGRID21-232">
+                Update PortalU help messages.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1859">
+                Remove Bulletpoints in info portlets.
+            </action>
+            <action type="fix" dev="wemove">
+                Localization: Fix encoding of Java resource bundles (ISO-8859-15)
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1861">
+                Secure File Handling (upload / download)
+            </action>
+        </release>
+        <release version="1.3.2" date="2010-08-02" description="Release FIX !">
+            <action type="fix" dev="wemove">
+                USE ALL NEWEST DEPENDENCIES including communication for reconnecting
+                with iBus on iBus shutdown / startup.
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1815">
+                Keep portal locale in session during login and logout.
+            </action>
+            <action type="update" dev="wemove" issue="">
+                Portal: detect new iPlug-SE Indexer plugins (2.0.0) in iPlug administration
+            </action>
+            <action type="update" dev="wemove" issue="">
+                IGE: ISO Import, do not import links without linkage URLs.
+            </action>
+        </release>
+        <release version="1.3.1" date="2010-07-28" description="Release with communication fix">
+            <action type="add" dev="wemove" issue="INGRID-1830">
+                Add csv export for all monitors/jobs.
+            </action>
+            <action type="add" dev="wemove">
+                Reduce memory footprint for portal requests.
+            </action>
+            <action type="update" dev="wemove">
+                Prevent too large pages in thesarus navigator: Close other top tree nodes
+                when opening a node, prevent duplicate nodes in path.
+            </action>
+            <action type="update" dev="wemove">
+                Localization: Default Resources are now in english. Separated differences in
+                Profiles now in new ProfileResources_xx.properties.
+            </action>
+            <action type="fix" dev="wemove">
+                Include newest communication fixing reconnection with iBus.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fix ISO Import, do not import addresses with empty role.
+            </action>
+            <action type="fix" dev="wemove">
+                Fixing error output in velocity templates.
+            </action>
+        </release>
+        <release version="1.3.0" date="2010-07-19" description="Release">
+            <action type="add" dev="wemove">
+                Neues Profil "NUMIS"
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1839">
+                Neues Profil "LGV Hamburg"
+            </action>
+            <action type="update" dev="wemove" issue="">
+                IGE: Beim Import von CSW Daten (Adressen) wird nun zwischen Organisation
+                und Personen unterschieden.
+            </action>
+            <action type="fix" dev="wemove" issue="">
+                Portal: Fix Link zur Detailanzeige bei in der Marginalspalte angezeigten
+                CSW-DSC iPlug Treffern
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1794">
+                Portal: Suche nach IGC Objekten in "Umweltthemen" funktioniert jetzt
+            </action>
+            <action type="update" dev="wemove" issue="INGRID-1824">
+                Erweiterte Suche / Fachwörterbuch: Gleichlautende Fachwörter zum Suchbegriff
+                werden nicht mehr gefiltert
+            </action>
+            <action type="update" dev="wemove">
+                Logging im mitgelieferten Tomcat jetzt per log4j in
+                /common/classes/log4j.properties
+            </action>
+            <action type="update" dev="wemove">
+                Portal: Detaildaten des Tamino-iPlugs werden jetzt in generischer
+                Darstellung angezeigt. Das iPlug wird nicht mehr als UDK5 DSC iPlug
+                erkannt.
+            </action>
+            <action type="add" dev="wemove">
+                IGE: SNS-Funktionalität jetzt hinter
+                Thesaurus-/Gazetteer-/FullClassifyService API gekapselt und per
+                Spring injizierbar (GS Soil). In Portal "SNS" Aufrufe jetzt immer
+                sprachbezogen !
+            </action>
+            <action type="add" dev="wemove">
+                Tracking Site Access via Piwik request in footer of pages (only PortalU, GS
+                Soil)
+            </action>
+            <action type="add" dev="wemove">
+                IGE: Import von CSW ISO Daten und ArcGis Exportdaten in den IGE
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1775">
+                "Korrupte" Datenkataloge in Katalogbrowser (Suche / Datenkataloge)
+                ausschließen
+            </action>
+            <action type="fix" dev="wemove">
+                Lokalisierung von Administration Untermenüs
+            </action>
+            <action type="fix" dev="wemove">
+                Layout CSS korrigiert, springt bei Rollover nicht mehr.
+            </action>
+            <action type="add" dev="wemove" issue="GSSOIL-2">
+                Neues Profil "GS Soil"
+            </action>
+            <action type="add" dev="wemove">
+                IGE: Importer schreibt detailliertere Messages in Import Protokoll (z.B.
+                bei fehlerhaftem ArcGis Import)
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1740">
+                IGE: Institutionen von Adressen in Objekten in der Druckvorschau korrekt
+                darstellen
+            </action>
+            <action type="add" dev="wemove" issue="GSSOIL-1">
+                Erweiterung der Sprachauswahl im Portal unter Verwendung einer Auswahlliste
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1741">
+                Sortierung der Such-/Verweisliste in der Druckansicht (IGE) und
+                Portaldetailansicht
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1597">
+                Hinzufügung der Eingabe eines Sicherheitscode (jCaptcha) in der Kontaktanfrage
+                (jCaptcha Image bleibt bei falscher Eingabe erhalten)
+            </action>
+            <action type="add" dev="wemove" issue="INGRID21-2">
+                Feste URL zu einem konkreten Kartenausschnitt
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1756">
+                Anmeldung im Portal: Textfelder werden zurückgesetzt
+            </action>
+            <action type="fix" dev="wemove" issue="GSSOIL-7">
+                Das Lesen UND Löschen von RSS News wird nun durch einen Parameter
+                (rss.history.days) bestimmt
+            </action>
+            <action type="fix" dev="wemove" issue="GSSOIL-4">
+                Die Default-Sprache wird durch den Tomcat festgelegt
+                (-Duser.language="de")
+            </action>
+            <action type="fix" dev="wemove">
+                Kleine Darstellungsfehler in der Portal-Detailansicht
+            </action>
+            <action type="fix" dev="wemove" issue="INGRIDII-387">
+                IGE: zu langes ServiceMenü verschiebt andere Menüs
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1765">
+                IGE: Begriffe vom Thesaurus-Navigator wurden nicht in Adressen
+                übernommen
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: fehlender Hilfetext hinzugefügt
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: URLs ersetzen auf max. 100 beschränken, da manche Browser
+                Zeitüberschreitungen bei der Darstellung bekommen
+            </action>
+            <action type="add" dev="wemove" issue="INGRID21-47">
+                Darstellung von binärer Daten in der Detailansicht
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: IE8 Layout bugfixes
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Detaildarstellung funktionierte bei diversen Objekten nicht
+            </action>
+            <action type="fix" dev="wemove">
+                Links zur Detaildarstellung in den Suchergebnissen werden jetzt absolut
+                gerendert (ausgehend vom Kontextpfad)
+            </action>
+            <action type="fix" dev="wemove" issue="INGRID-1789">
+                Thesaurus-Navigator verwendet nun URLs, die den Zustand der Seite wiederherstellen
+                können.
+            </action>
+            <action type="add" dev="wemove" issue="INGRID-1789">
+                Im Thesaurus-Navigator wird ein neuer Link angezeigt, der einen
+                ausgewählten Begriff auf der Suchseite anzeigt.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Bugfixes und Verbesserungen bei der Benutzerverwaltung
+            </action>
+        </release>
 
-		<release version="1.1.7" date="2008-04-08" description="Release">
-			<action type="fix" dev="wemove">
-				Umbenennung "Niedersächsische Umweltministerium" in "Niedersächsisches
-				Ministerium für Umwelt und Klimaschutz"
-			</action>
-			<action type="fix" dev="wemove">
-				debug Informationen in der Detailansicht beeinflussen Detaildarstellung.
-			</action>
-			<action type="fix" dev="wemove">
-				MySQL Update Skript f. Version 1.1.7 inkompatibel mit manchen MySQL
-				Installationen
-			</action>
-		</release>
+        <release version="1.2.1" date="2009-07-24" description="Release">
+            <action type="add" dev="wemove">
+                Neue Form der Versionshistorie (changes.xml). Historie wird als HTML
+                generiert.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Möglichkeit die Newsletterfunktion auszublenden (Portlets über
+                profile.xml, Referenzen von anderen Portlets über
+                ingrid-portal-apps.properties)
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: IE7 konnte Strings mit Arrayschreibweise nicht analysieren ->
+                Verwendung von substr-Methode (bei searchterm)
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: vertikaler Schiebebalken ließ sich nicht mehr verschieben, wenn man
+                auf den nebenliegenden blauen Bereich geklickt hat
+            </action>
+        </release>
 
-		<release version="1.1.7-alpha" date="2008-03-10" description="Release">
-			<action type="add" dev="wemove">
-				Neuer Suchbereich Rechtsvorschriften
-			</action>
-			<action type="add" dev="wemove">
-				Bessere Performance beim Anzeigen von Adress-Ergebnislisten
-			</action>
-			<action type="add" dev="wemove">
-				Sprachunabhaengiges Suchen bei Messwerten und Umweltthemen
-			</action>
-			<action type="fix" dev="wemove">
-				Sortierung von Themen und Kategorien jetzt sprachspezifisch (Deutsch/English)
-			</action>
-			<action type="fix" dev="101tec">
-				Kommunikation: Erhoehung der Zuverlaessigkeit bei Reconnects
-			</action>
-			<action type="fix" dev="wemove">
-				DB Anpassungen fuer Oracle (bugfix: Leere Strings werden als NULL
-				Werte gespeichert)
-			</action>
-			<action type="fix" dev="wemove">
-				Umweltereignisse werden nun zuverlaessiger vom SNS bezogen und angezeigt
-			</action>
-			<action type="fix" dev="wemove">
-				Anonyme Benutzer konnten sich ohne Email Bestaetigung sofort nach
-				Erstellung eines Accounts anmelden
-			</action>
-			<action type="fix" dev="wemove">
-				Suche nach zusammengesetzten raeumlichen Begriffen war nicht möglich
-			</action>
-			<action type="fix" dev="wemove">
-				In Suche/Datenkataloge/Hierarchiebaum wurden untergeordnete Objekte
-				teilweise nicht gefunden ("+" icon fehlte).
-			</action>
-			<action type="fix" dev="wemove">
-				SNS Lokalisierung falsch (seeType), Lokalisierung vom Profil
-				Sachsenportalu in PortalU.
-			</action>
-			<action type="update" dev="wemove">
-				ACHTUNG: PORTAL DATENBANK ERWEITERT -> UPDATE NÖTIG (SKRIPT S. DISTRIBUTION)
-			</action>
-			<action type="update" dev="wemove">
-				ACHTUNG: PORTAL PROPERTIES ERWEITERT -> EIGENE ÄNDERUNGEN MÜSSEN IN NEUE
-				PROPERTIES DATEI ÜBERNOMMEN WERDEN! (ingrid-portal-apps.properties)
-			</action>
-		</release>
+        <release version="1.2.0" date="2009-06-02" description="Release">
+            <action type="add" dev="wemove">
+                Installationsversion wird nun per Maven2 gebaut
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Anzeige eines neuen Portlets für den Portal Administrator auf der
+                Seite "Metadaten", das es erlaubt sich als einen beliebigen
+                MDEK-Benutzer beim IGE einzuloggen.
+            </action>
+            <action type="add" dev="101tec">
+                PORTAL: Verwendung eines Caches für Anfragen an den iBus (realisiert über
+                den iBusClient, der zusätzlich einen iBus liefert, der alle Aufrufe
+                in einen Cache ablegt)
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Anzeigen unranked iPlugs ohne Treffer in unranked Suchergebnissen
+                (rechte Spalte) per Konfiguration (properties).
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Ausblenden der unranked Suchergebnisse (rechte Spalte) per
+                Konfiguration (properties).
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Performance Verbesserung bei Kommunikation mit iBus (Caching,
+                Zusammenfassen von einzelnen Anfragen in ein Anfrage).
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Kartenkomponente wird nun innerhalb der Portal Applikation und
+                nicht mehr im neuen Fenster angezeigt.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Administration: Die Nutzerverwaltung zeigt nun 100 Eintrüge statt
+                10 pro Tabellenseite.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Detaildatendarstellung verwendet Titel und Beschreibung der
+                Detaildaten für das die HTML-Seiten Eigenschaften Title und
+                Description.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Administration: Neue Funktionalität Anbietertest (Report von neuen
+                Anbietern, Anbieter aus untergeodneten InGrid Instanzen werden
+                automatisch synchronisiert).
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Administration: Neue Spalten für die Tabelle ingrid_rss_source
+                (error, lastUpdate, numLastCount).
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Administration: Neue Monitore für iBus, RSS Feeds.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Administration: geändertes Job (Monitor) Handling (aktive/inaktive
+                Jobs, durchschnittliche Ausführungszeit, nächste Ausführung, Import
+                von Monitor Jobs überarbeitet).
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: URls für Detailansichten benutzt nun die UUID statt der bei
+                Indexierung wechselnden DOCID; Permanenten Links zu Detailseiten nun
+                möglich.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Änderungen am Profil: SachsenPortalU; dabei Anpassung von
+                Auswahlbox "Bund/Länder" in "Service", "Messwerte" und
+                "Umweltthemen".
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Email Adressen werden kodiert dargestellt (SPAM protection).
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Links für SE-search Administrationsoberfläche werden nur noch für
+                Portal Administratoren angezeigt.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Vorbereitung für den Einsatz eines neuen MapBender Releases
+                (MapBender Version 2.5 basiert)
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Die Beschreibung in der Detailansicht erlaubt nun nur noch folgende
+                Tags: b, i, u, p, br, strong, ul, ol, li. Zeilenumbrüche werden
+                korrekt umgesetzt.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Detailansicht des Portals zeigt auch Daten aus IDC Katalogen 1.0.2,
+                1.0.3 (INSPIRE Erweiterung), 1.0.4 und 1.0.5 an.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Integration des IGE (InGrid Editor). Konfiguration und Zugang
+                erfolgt ueber das Hauptmenü für registrierte Benutzer.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: veraenderte Erweiterte Suche/Zeit: Suche "seit" bzw. "bis" möglich
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Änderung des Portalverhaltens: Neu Laden eines Seitenverzeichnisses
+                laedt immer eine Default-Seite statt die letzte annavigierte Seite
+                des Verzeichnisses.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Bei Einschränkungen auf einen Partner wird die Kopfanzeige der
+                Ergebnisliste nun bei Service, Umwelt und Messwerte mit den in der
+                Anbieter-Einschraenkung selektierten Werten synchronisiert.
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: Änderung im Deployment/Installation: Tomcat 5.5.26 wird in der
+                Distribution mitgeliefert
+            </action>
+            <action type="add" dev="wemove">
+                PORTAL: MySQL Skript f. Version 1.1.8 und 1.2.0
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: IE8 kompatibel (include Pfad von ingrid.js korrigiert)
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: CSS style für ol-Elemente waren nicht definiert
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: Umweltereignisse des aktuellen Jahres werden nun ignoriert
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: "Alle Ergebnisse für ..."-Text hat falschen Anbieter
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: Stabilieres Verhalten von Jobs: RSS Feed und Umweltchronik Jobs
+                werden nun persistent in der Datenbank gespeichert.
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: Detailansicht: Große Mengen von Adress-Objekt-Relationen werden nun
+                nicht sofort dargestellt und können nachgeladen werden.
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: Links zu den Administrationsoberflächen der SE-iPlugs sind nur für
+                Portal Administratoren einsehbar.
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: Abschicken des Login Formulars nun auch per RETURN Taste möglich
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: Umbenennung des Menüeintrages "Überwachung" in "Jobs"
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: Änderung des DEFAULT_LAYOUT_DECORATOR in der page-Tabelle für
+                search-detail.psml zu ingrid-clear
+            </action>
+            <action type="fix" dev="wemove">
+                PORTAL: Änderung des DEFAULT_LAYOUT_DECORATOR und DEFAULT_PORTLET_DECORATOR
+                in der page-Tabelle für main-maps.psml zu ingrid und ingrid-teaser
+                (Karte wird nun im gleichen Fenster geöffnet).
+            </action>
+            <action type="update" dev="wemove">
+                PORTAL ACHTUNG: PORTAL DATENBANK ERWEITERT -> UPDATE NÖTIG (SKRIPT S.
+                DISTRIBUTION)
+            </action>
+            <action type="update" dev="wemove">
+                PORTAL ACHTUNG: FÜR DIE NEUE VERSION WIRD JAVA6 BENÖTIGT.
+            </action>
+            <action type="update" dev="wemove">
+                PORTAL ACHTUNG: GEÄNDERTE DISTRIBUTION: VORKONFIGURIERTER TOMCAT WIRD
+                MITGELIEFERT, KEINE INTEGRATION IN BESTEHENDE TOMCAT MEHR VORGESEHEN
+            </action>
+            <action type="update" dev="wemove">
+                PORTAL ACHTUNG: PORTAL PROPERTIES ERWEITERT -> EIGENE ÄNDERUNGEN MÜSSEN IN
+                NEUE PROPERTIES DATEI ÜBERNOMMEN WERDEN!
+                (ingrid-portal-apps.properties)
+            </action>
+            <action type="add" dev="wemove">
+                IGE: Integration des IGE in vollem Funktionsumfang.
+            </action>
+            <action type="add" dev="wemove">
+                IGE: UMTHES, GEMET und Inspire-Themen erfassen.
+            </action>
+            <action type="add" dev="wemove">
+                IGE: Überprüfung des Browsers, bevor Zugang zum IGE oder zur
+                Kotalogverwaltung gewährt wird (unterstützte Browser: Firefox 2/3
+                und IE7).
+            </action>
+            <action type="add" dev="wemove">
+                IGE: Katalogmanagement mit folgenden Funktionen: Analyse, Dubletten,
+                URL-Pflege, Auswahl-/ISO-Codelistenpflege, Zusätzliche Felder,
+                Adresse ersetzen, Suchbegriffe, Raumbezüge.
+            </action>
+            <action type="add" dev="wemove">
+                IGE: Import/Export von Datensätzen.
+            </action>
+        </release>
 
-		<release version="1.1.6" date="2007-12-20" description="Release">
-			<action type="add" dev="wemove">
-				Umstellung auf SNS Version 2.1
-			</action>
-			<action type="add" dev="wemove">
-				Suche in UDKs über Thesaurus Browser
-				(Suche/Datenkataloge/Thesaurus-Navigator)
-			</action>
-			<action type="fix" dev="wemove">
-				Korrekte Darstellung Ergebnisse aus unterschiedlichen Suchbereichen
-				(Adressen und Umweltinformationen auf einer Seite).
-			</action>
-			<action type="fix" dev="wemove">
-				Anzeige vollständiger Adress-Hierarchie verbessert.
-			</action>
-			<action type="fix" dev="wemove">
-				Sitemap Aktualisierung
-			</action>
-			<action type="fix" dev="wemove">
-				Profile auf akt. Stand gebracht (CSS, Ressourcen)
-			</action>
-			<action type="update" dev="wemove">
-				ACHTUNG: PORTAL DATENBANK ERWEITERT -> UPDATE NÖTIG (SKRIPT S. DISTRIBUTION)
-			</action>
-			<action type="update" dev="wemove">
-				ACHTUNG: PORTAL PROPERTIES ERWEITERT -> EIGENE ÄNDERUNGEN MÜSSEN IN NEUE
-				PROPERTIES DATEI ÜBERNOMMEN WERDEN! (ingrid-portal-apps.properties)
-			</action>
-		</release>
+        <release version="1.1.7" date="2008-04-08" description="Release">
+            <action type="fix" dev="wemove">
+                Umbenennung "Niedersächsische Umweltministerium" in "Niedersächsisches
+                Ministerium für Umwelt und Klimaschutz"
+            </action>
+            <action type="fix" dev="wemove">
+                debug Informationen in der Detailansicht beeinflussen Detaildarstellung.
+            </action>
+            <action type="fix" dev="wemove">
+                MySQL Update Skript f. Version 1.1.7 inkompatibel mit manchen MySQL
+                Installationen
+            </action>
+        </release>
 
-		<release version="1.1.5" date="2007-11-23" description="Release">
-			<action type="add" dev="wemove">
-				Gruppierung nach Domäne (Defaulteinstellung); Defaultgruppierung auch
-				abschaltbar -> ingrid-portal-apps.properties GEÄNDERT
-				("portal.enable.default.grouping.domain=true")
-			</action>
-			<action type="add" dev="wemove">
-				Neues Profil "LfUG Sachsen"
-			</action>
-			<action type="add" dev="wemove">
-				In Ergebnis-Detaildarstellung jetzt "Zurück zu PortalU" Link wenn noch
-				keine PortalU Suche abgesetzt wurde (Eintritt via Google) + Home
-				Link auf Logo
-			</action>
-			<action type="fix" dev="wemove">
-				korrektes Image in Identity Area in "Suche / Datenkataloge" (Leuchtturm)
-			</action>
-			<action type="fix" dev="wemove">
-				Back Button funktioniert (Suchparameter werden in URL transportiert)
-			</action>
-			<action type="fix" dev="wemove">
-				Profile auf akt. Stand gebracht (CSS, Ressourcen)
-			</action>
-		</release>
+        <release version="1.1.7-alpha" date="2008-03-10" description="Release">
+            <action type="add" dev="wemove">
+                Neuer Suchbereich Rechtsvorschriften
+            </action>
+            <action type="add" dev="wemove">
+                Bessere Performance beim Anzeigen von Adress-Ergebnislisten
+            </action>
+            <action type="add" dev="wemove">
+                Sprachunabhaengiges Suchen bei Messwerten und Umweltthemen
+            </action>
+            <action type="fix" dev="wemove">
+                Sortierung von Themen und Kategorien jetzt sprachspezifisch (Deutsch/English)
+            </action>
+            <action type="fix" dev="101tec">
+                Kommunikation: Erhoehung der Zuverlaessigkeit bei Reconnects
+            </action>
+            <action type="fix" dev="wemove">
+                DB Anpassungen fuer Oracle (bugfix: Leere Strings werden als NULL
+                Werte gespeichert)
+            </action>
+            <action type="fix" dev="wemove">
+                Umweltereignisse werden nun zuverlaessiger vom SNS bezogen und angezeigt
+            </action>
+            <action type="fix" dev="wemove">
+                Anonyme Benutzer konnten sich ohne Email Bestaetigung sofort nach
+                Erstellung eines Accounts anmelden
+            </action>
+            <action type="fix" dev="wemove">
+                Suche nach zusammengesetzten raeumlichen Begriffen war nicht möglich
+            </action>
+            <action type="fix" dev="wemove">
+                In Suche/Datenkataloge/Hierarchiebaum wurden untergeordnete Objekte
+                teilweise nicht gefunden ("+" icon fehlte).
+            </action>
+            <action type="fix" dev="wemove">
+                SNS Lokalisierung falsch (seeType), Lokalisierung vom Profil
+                Sachsenportalu in PortalU.
+            </action>
+            <action type="update" dev="wemove">
+                ACHTUNG: PORTAL DATENBANK ERWEITERT -> UPDATE NÖTIG (SKRIPT S. DISTRIBUTION)
+            </action>
+            <action type="update" dev="wemove">
+                ACHTUNG: PORTAL PROPERTIES ERWEITERT -> EIGENE ÄNDERUNGEN MÜSSEN IN NEUE
+                PROPERTIES DATEI ÜBERNOMMEN WERDEN! (ingrid-portal-apps.properties)
+            </action>
+        </release>
 
-		<release version="1.1.4" date="2007-10-12" description="Release">
-			<action type="add" dev="wemove">
-				Ingrid 1.1: Ext. Recherche UDK, Navigation im Hierarchiebaum (inkl. neuem
-				Suche-Submenü und Update PSML DB)
-			</action>
-			<action type="add" dev="wemove">
-				Erweiterte Suche, Suchanfrage Löschen Button eingefügt.
-			</action>
-			<action type="add" dev="wemove">
-				Anzeige ähnliche Begriffe jetzt 50 statt 10.
-			</action>
-			<action type="fix" dev="wemove">
-				UDK Objektbeziehungen jetzt korrekt.
-			</action>
-			<action type="fix" dev="wemove">
-				Suchergebnisse, Blättern über mehrere Seiten jetzt korrekt.
-			</action>
-			<action type="fix" dev="wemove">
-				IBus Search Interface API (startHit).
-			</action>
-			<action type="fix" dev="wemove">
-				SNS Anniversary Ereignisse whitespace filter.
-			</action>
-			<action type="fix" dev="wemove">
-				Detaildarstellung Feld t019_coordinates.bezug nur wenn nicht leer.
-			</action>
-		</release>
+        <release version="1.1.6" date="2007-12-20" description="Release">
+            <action type="add" dev="wemove">
+                Umstellung auf SNS Version 2.1
+            </action>
+            <action type="add" dev="wemove">
+                Suche in UDKs über Thesaurus Browser
+                (Suche/Datenkataloge/Thesaurus-Navigator)
+            </action>
+            <action type="fix" dev="wemove">
+                Korrekte Darstellung Ergebnisse aus unterschiedlichen Suchbereichen
+                (Adressen und Umweltinformationen auf einer Seite).
+            </action>
+            <action type="fix" dev="wemove">
+                Anzeige vollständiger Adress-Hierarchie verbessert.
+            </action>
+            <action type="fix" dev="wemove">
+                Sitemap Aktualisierung
+            </action>
+            <action type="fix" dev="wemove">
+                Profile auf akt. Stand gebracht (CSS, Ressourcen)
+            </action>
+            <action type="update" dev="wemove">
+                ACHTUNG: PORTAL DATENBANK ERWEITERT -> UPDATE NÖTIG (SKRIPT S. DISTRIBUTION)
+            </action>
+            <action type="update" dev="wemove">
+                ACHTUNG: PORTAL PROPERTIES ERWEITERT -> EIGENE ÄNDERUNGEN MÜSSEN IN NEUE
+                PROPERTIES DATEI ÜBERNOMMEN WERDEN! (ingrid-portal-apps.properties)
+            </action>
+        </release>
 
-		<release version="1.1.3" date="2007-08-31" description="Release">
-			<action type="update" dev="101tec">
-				Verbesserung der Kommunikationskomponente.
-			</action>
-			<action type="update" dev="101tec">
-				ProxyUser und ProxyPassword werden jetzt über Konfigurationsdatei gesetzt.
-			</action>
-			<action type="update" dev="101tec">
-				Eine Http-Proxy Verbindung kann auch ohne Username und Password
-				aufgebaut werden.
-			</action>
-			<action type="update" dev="wemove">
-				Die generelle API Parameter Interpretation in iBus search Schnittstelle
-				hat sich geändert. (betrifft Fachwörterbuch, begriffliche
-				Raumeinschränkung und die Suche nach Zeitbezügen in der erweiterten
-				Suche)
-			</action>
-		</release>
+        <release version="1.1.5" date="2007-11-23" description="Release">
+            <action type="add" dev="wemove">
+                Gruppierung nach Domäne (Defaulteinstellung); Defaultgruppierung auch
+                abschaltbar -> ingrid-portal-apps.properties GEÄNDERT
+                ("portal.enable.default.grouping.domain=true")
+            </action>
+            <action type="add" dev="wemove">
+                Neues Profil "LfUG Sachsen"
+            </action>
+            <action type="add" dev="wemove">
+                In Ergebnis-Detaildarstellung jetzt "Zurück zu PortalU" Link wenn noch
+                keine PortalU Suche abgesetzt wurde (Eintritt via Google) + Home
+                Link auf Logo
+            </action>
+            <action type="fix" dev="wemove">
+                korrektes Image in Identity Area in "Suche / Datenkataloge" (Leuchtturm)
+            </action>
+            <action type="fix" dev="wemove">
+                Back Button funktioniert (Suchparameter werden in URL transportiert)
+            </action>
+            <action type="fix" dev="wemove">
+                Profile auf akt. Stand gebracht (CSS, Ressourcen)
+            </action>
+        </release>
 
-		<release version="1.1.2" date="2007-08-21" description="Release">
-			<action type="fix" dev="wemove">
-				Ergebnisliste der Katalogseiten (Messwertseiten, Themenseiten, Serviceseiten)
-				wiederholt sich.
-			</action>
-			<action type="fix" dev="wemove">
-				Umweltchronik (Teaser) zeigt keine Einträge.
-			</action>
-		</release>
+        <release version="1.1.4" date="2007-10-12" description="Release">
+            <action type="add" dev="wemove">
+                Ingrid 1.1: Ext. Recherche UDK, Navigation im Hierarchiebaum (inkl. neuem
+                Suche-Submenü und Update PSML DB)
+            </action>
+            <action type="add" dev="wemove">
+                Erweiterte Suche, Suchanfrage Löschen Button eingefügt.
+            </action>
+            <action type="add" dev="wemove">
+                Anzeige ähnliche Begriffe jetzt 50 statt 10.
+            </action>
+            <action type="fix" dev="wemove">
+                UDK Objektbeziehungen jetzt korrekt.
+            </action>
+            <action type="fix" dev="wemove">
+                Suchergebnisse, Blättern über mehrere Seiten jetzt korrekt.
+            </action>
+            <action type="fix" dev="wemove">
+                IBus Search Interface API (startHit).
+            </action>
+            <action type="fix" dev="wemove">
+                SNS Anniversary Ereignisse whitespace filter.
+            </action>
+            <action type="fix" dev="wemove">
+                Detaildarstellung Feld t019_coordinates.bezug nur wenn nicht leer.
+            </action>
+        </release>
 
-		<release version="1.1.1" date="2007-08-09" description="Release">
-			<action type="fix" dev="wemove">
-				UDK-Adressdetail konnte nicht von UDK-Objekt Detailansicht aus angezeigt werden.
-			</action>
-			<action type="fix" dev="wemove">
-				Anpassung default Konfiguration der communication an KST PortalU
-				Installationsszenario.
-			</action>
-		</release>
+        <release version="1.1.3" date="2007-08-31" description="Release">
+            <action type="update" dev="101tec">
+                Verbesserung der Kommunikationskomponente.
+            </action>
+            <action type="update" dev="101tec">
+                ProxyUser und ProxyPassword werden jetzt über Konfigurationsdatei gesetzt.
+            </action>
+            <action type="update" dev="101tec">
+                Eine Http-Proxy Verbindung kann auch ohne Username und Password
+                aufgebaut werden.
+            </action>
+            <action type="update" dev="wemove">
+                Die generelle API Parameter Interpretation in iBus search Schnittstelle
+                hat sich geändert. (betrifft Fachwörterbuch, begriffliche
+                Raumeinschränkung und die Suche nach Zeitbezügen in der erweiterten
+                Suche)
+            </action>
+        </release>
 
-		<release version="1.1.0" date="2007-08-01" description="Release">
-			<action type="update" dev="101tec">
-				Austausch JXTA-Kommunikation gegen TCP/IP-Kommunikation
-			</action>
-		</release>
-	</body>
+        <release version="1.1.2" date="2007-08-21" description="Release">
+            <action type="fix" dev="wemove">
+                Ergebnisliste der Katalogseiten (Messwertseiten, Themenseiten, Serviceseiten)
+                wiederholt sich.
+            </action>
+            <action type="fix" dev="wemove">
+                Umweltchronik (Teaser) zeigt keine Einträge.
+            </action>
+        </release>
+
+        <release version="1.1.1" date="2007-08-09" description="Release">
+            <action type="fix" dev="wemove">
+                UDK-Adressdetail konnte nicht von UDK-Objekt Detailansicht aus angezeigt werden.
+            </action>
+            <action type="fix" dev="wemove">
+                Anpassung default Konfiguration der communication an KST PortalU
+                Installationsszenario.
+            </action>
+        </release>
+
+        <release version="1.1.0" date="2007-08-01" description="Release">
+            <action type="update" dev="101tec">
+                Austausch JXTA-Kommunikation gegen TCP/IP-Kommunikation
+            </action>
+        </release>
+    </body>
 </document>
