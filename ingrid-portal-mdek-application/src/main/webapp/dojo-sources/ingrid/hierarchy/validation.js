@@ -120,6 +120,7 @@ define(["dojo/_base/declare",
                     isOk = false;
                     if (!UtilGeneral.hasValue(item.name)) {
                         UtilUI.markCells("ERROR", "spatialRefLocation", row, [0]);
+                        UtilGrid.getTable("spatialRefLocation").message = message.get("validation.error.missing.spatial.name");
                     } else {
                         if (item.longitude1 > item.longitude2) UtilUI.markCells("ERROR", "spatialRefLocation", row, [1, 3]);
                         if (item.latitude1 > item.latitude2) UtilUI.markCells("ERROR", "spatialRefLocation", row, [2, 4]);
@@ -127,6 +128,7 @@ define(["dojo/_base/declare",
                         if (!UtilGeneral.hasValue(item.longitude2)) UtilUI.markCells("ERROR", "spatialRefLocation", row, [3]);
                         if (!UtilGeneral.hasValue(item.latitude1)) UtilUI.markCells("ERROR", "spatialRefLocation", row, [2]);
                         if (!UtilGeneral.hasValue(item.latitude2)) UtilUI.markCells("ERROR", "spatialRefLocation", row, [4]);
+                        UtilGrid.getTable("spatialRefLocation").message = message.get("validation.error.spatial.bounding.box");
                     }
                 } else {
                     UtilUI.markCells("VALID", "spatialRefLocation", row, [0, 1, 2, 3, 4]);
@@ -135,7 +137,8 @@ define(["dojo/_base/declare",
             return isOk;
         },
 
-        minMaxBoundingBoxValidation: function(res, args) {
+        minMaxBoundingBoxValidation: function(res, args, args2) {
+            if (!args) args = args2[0];
             var val = args instanceof Array ? args[0] : args;
             var error = false;
             var grid = UtilGrid.getTable("spatialRefLocation");
@@ -272,20 +275,20 @@ define(["dojo/_base/declare",
                 var cell;
                 array.forEach(data, function(item, i) {
                     if (typeof(item.uuid) == "undefined") {
-                        UtilGrid.getTable("generalAddress").scrollRowIntoView(i);
+                        this.scrollRowIntoView(i);
                         cell = query(".slick-row[row$=" + i + "] .c2", "generalAddress")[0];
                         domClass.add(cell, "importantBackground");
                         result = false;
                     }
                     if (forPublish) {
                         if (typeof(item.nameOfRelation) == "undefined" || item.nameOfRelation == "") {
-                            UtilGrid.getTable("generalAddress").scrollRowIntoView(i);
+                            this.scrollRowIntoView(i);
                             cell = query(".slick-row[row$=" + i + "] .c0", "generalAddress")[0];
                             domClass.add(cell, "importantBackground");
                             result = false;
                         }
                     }
-                });
+                }, this);
                 return result;
             };
 
@@ -443,20 +446,21 @@ define(["dojo/_base/declare",
                     timeRef.date === null ||
                     lang.trim(timeRef.date + "").length === 0);
             })) {
-                notPublishableIDs.push("timeRefTable");
+                notPublishableIDs.push( ["timeRefTable", message.get("validation.error.time.reference")] );
             }
         },
 
+        // Attention: this is already validated by the general check for empty table rows!
         availabilityAccessPublishable: function(notPublishableIDs) {
-            var objClass = registry.byId("objectClass").get("value").substr(5, 1);
+            /*var objClass = registry.byId("objectClass").get("value").substr(5, 1);
             if (objClass != "0") {
                 if (array.some(UtilGrid.getTableData("availabilityAccessConstraints"), function(ad) {
                     return (typeof(ad.title) == "undefined" || ad.title === null || lang.trim(ad.title + "").length === 0);
                 })) {
-                    notPublishableIDs.push("availabilityAccessConstraints");
+                    notPublishableIDs.push( ["availabilityAccessConstraints", "validation.error.availability.access.constraints"] );
                     console.debug("All entries in the availabilityAccessConstraints table must contain data.");
                 }
-            }
+            }*/
         },
 
         generalAddressPublishable: function(notPublishableIDs) {
@@ -468,7 +472,7 @@ define(["dojo/_base/declare",
             })) {
                 console.debug("All entries in the address table must have valid references.");
                 registry.byId("generalAddress").invalidMessage = "All entries in the address table must have valid references.";
-                notPublishableIDs.push("generalAddress");
+                notPublishableIDs.push( ["generalAddress", message.get("validation.error.missing.address.user")] );
             }
 
             // Check if at least one entry exists
@@ -477,7 +481,7 @@ define(["dojo/_base/declare",
             if (!anyAddress) {
                 console.debug("At least one referenced address has to be set");
                 registry.byId("generalAddress").invalidMessage = message.get("validation.error.addressType");
-                notPublishableIDs.push("generalAddress");
+                notPublishableIDs.push( ["generalAddress", message.get("validation.error.missing.address")] );
             }
         },
 
@@ -489,7 +493,7 @@ define(["dojo/_base/declare",
                     return (typeof(conf.level) == "undefined" || conf.level === null || lang.trim(conf.level + "").length === 0 || typeof(conf.specification) == "undefined" || conf.specification === null || lang.trim(conf.specification + "").length === 0);
                 })) {
                     console.debug("All entries in the conformity table must have a valid level and specification.");
-                    notPublishableIDs.push("extraInfoConformityTable");
+                    notPublishableIDs.push( ["extraInfoConformityTable", message.get("validation.error.conformity.table")] );
                 }
             }
         },
@@ -506,7 +510,7 @@ define(["dojo/_base/declare",
                     array.forEach(dqRows, function(dqRow) {
                         if (!UtilGeneral.hasValue(dqRow.nameOfMeasure) || !UtilGeneral.hasValue(dqRow.resultValue)) {
                             console.debug("NameOfMeasure + ResultValue needs to be filled.");
-                            notPublishableIDs.push(dqTableId);
+                            notPublishableIDs.push( [dqTableId, message.get("validation.error.dq.table")] );
                         }
                     });
                 });
@@ -520,7 +524,7 @@ define(["dojo/_base/declare",
             };
             if (!(array.some(UtilGrid.getTableData("spatialRefAdminUnit"), hasBB) || array.some(UtilGrid.getTableData("spatialRefLocation"), hasBB))) {
                 console.debug("At least one 'spatial' table has to contain an entry with a BB.");
-                notPublishableIDs.push("spatialRefAdminUnit", "spatialRefLocation");
+                notPublishableIDs.push( ["spatialRefAdminUnit", message.get("validation.error.spatial.no.entry")], "spatialRefLocation");
             }
 
             // Check if one of the spatial references is expired
@@ -528,7 +532,7 @@ define(["dojo/_base/declare",
                 return item.locationExpiredAt !== null && item.locationExpiredAt !== undefined;
             })) {
                 console.debug("The spatial reference table must not contain expired entries.");
-                notPublishableIDs.push("spatialRefAdminUnit");
+                notPublishableIDs.push( ["spatialRefAdminUnit", message.get("validation.error.spatial.no.expired")] );
             }
         },
 
@@ -554,14 +558,14 @@ define(["dojo/_base/declare",
                 if (newInvalidRows.length > 0) {
                     grid.setInvalidRows(newInvalidRows);
                     console.debug("All entries in the operation table must have a valid name.");
-                    notPublishableIDs.push("ref3Operation");
+                    notPublishableIDs.push( ["ref3Operation", message.get( "validation.error.invalid.operation.name" )] );
                 }
 
                 // at least one GetCapabilities entry has been entered
                 // only check for certain serviceTypes (2==Darstellungsdienste)!
                 // see email AW: Operationen zum Pflichtfeld (03.04.2013 14:48)
                 if ((serviceType === "2") && !hasCapabilitiesOperation)
-                    notPublishableIDs.push("ref3Operation");
+                    notPublishableIDs.push( ["ref3Operation", message.get( "validation.error.missing.capabilities.entry" )]);
 
             }
         },

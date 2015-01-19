@@ -58,6 +58,16 @@ html {
     border: 1px solid #C21130;
 }
 
+.errorInfoBlock {
+    clear: both;
+}
+
+.errorInfoBlock div {
+    border: 1px solid #EBCCD1;
+    background-color: #F2DEDE;
+    padding: 10px;
+}
+
 .myGrid {
     width: 100%;
     height: 100px;

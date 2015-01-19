@@ -306,7 +306,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                             if (item.relationTypeName == entryNameDownload) return true;
                         });
                         if (!containsDownloadLink)
-                            notPublishableIDs.push("linksTo");
+                            notPublishableIDs.push( ["linksTo", message.get("validation.error.missing.download.link")] );
                     });
                 } else {
                     // change codelist for 'availabilityUseConstraints'
