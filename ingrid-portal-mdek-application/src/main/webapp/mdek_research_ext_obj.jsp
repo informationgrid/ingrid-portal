@@ -536,7 +536,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
         
             clearLocationResults();
         
-            SNSService.getLocationTopics(queryTerm, "contains", null, userLocale, {
+            SNSService.getLocationTopics(queryTerm, "exact", null, userLocale, {
                 preHook: LoadingZone.show,
                 postHook: LoadingZone.hide,
                 callback: setLocationResultList,
@@ -849,6 +849,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
           <div class="input spaceBelow">
             <span class="inputButtonInLineLeft">
               <input type="text" id="objLocationTopic" data-dojo-type="dijit/form/ValidationTextBox" style="width:100%;"/>
+              <p class="comment"><fmt:message key="dialog.spatialNavigator.searchHint" /></p>
             </span>
 
             <span class="inputButtonInLineRight">
