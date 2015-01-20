@@ -213,7 +213,7 @@ html> /**/ body .bottomRight {
                 deleteComboboxWidgets();
                 showLoading();
 
-                SNSService.getLocationTopics(queryTerm, "contains", null, userLocale, {
+                SNSService.getLocationTopics(queryTerm, "exact", null, userLocale, {
                     preHook: function() {
                         showLoadingZone();
                         disableUiElements();
@@ -323,14 +323,16 @@ html> /**/ body .bottomRight {
         <div id="spatialRefContent" class="content">
             <!-- CONTENT START -->
             <div class="inputContainer">
-                <span class="outer halfWidth"><div>
-                    <span class="label"><label for="locationTextBox" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7021)"><fmt:message key="dialog.spatialNavigator.title" /></label></span>
-                    <div class="input">
-                        <input type="text" id="locationTextBox" size="20" name="locationTextBox" style="width:100%;" data-dojo-type="dijit/form/ValidationTextBox" />
-                    </div>
+                <span class="outer" style="width:60%;">
+                    <div>
+                        <span class="label"><label for="locationTextBox" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7021)"><fmt:message key="dialog.spatialNavigator.title" /></label></span>
+                        <div class="input">
+                            <input type="text" id="locationTextBox" size="20" name="locationTextBox" style="width:100%;" data-dojo-type="dijit/form/ValidationTextBox" />
+                        </div>
+                        <p class="comment"><fmt:message key="dialog.spatialNavigator.searchHint" /></p>
                     </div>
                 </span>
-                <span class="outer halfWidth"><div>
+                <span class="outer" style="width:40%;"><div>
                     <span class="label">&nbsp;</span>
                     <div class="input" style="float:right;">
                         <button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.spatialNavigator.search" />" id="findLocationTopicsButton" style="margin:0;" onclick="pageSpatialDlg.findLocationTopics" type="button"><fmt:message key="dialog.spatialNavigator.search" /></button>
@@ -346,7 +348,7 @@ html> /**/ body .bottomRight {
                     </span>
                     </div>
                 </span>
-                <span class="outer" style="width:40%; margin-top:53px;"><div>
+                <span class="outer" style="width:40%; position:absolute; bottom: 10px; right: 5px;"><div>
                     <span class="input">
                         <button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.spatialNavigator.apply" />" style="float:right;" id="addLocationTopicsButton" onclick="pageSpatialDlg.addLocationTopics()">
                             <fmt:message key="dialog.spatialNavigator.apply" />
