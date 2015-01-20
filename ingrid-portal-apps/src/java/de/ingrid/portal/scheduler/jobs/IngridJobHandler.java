@@ -137,6 +137,10 @@ public class IngridJobHandler {
 	 * @param plugIds, is an array of strings containing all to be removed jobs
 	 */
 	public void removeJob(String[] jobIds) {
+		if (jobIds == null) {
+			return;
+		}
+
 		for (int i = 0; i < jobIds.length; i++) {
 			String jobId = jobIds[i];
 			monitor.deleteJob(jobId);

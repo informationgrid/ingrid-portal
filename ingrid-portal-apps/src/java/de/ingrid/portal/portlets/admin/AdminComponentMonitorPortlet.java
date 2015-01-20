@@ -124,7 +124,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		context.put("actionFormUpdate", cfUpdate);
 
 		String action = request.getParameter(Settings.PARAM_ACTION);
-		if (action == null) {
+		if (action == null || action.length() == 0) {
 	        // check if upgrade-job already exists, otherwise create it
 		    // do it here, so that this function isn't called so often
 		    checkForUpgradeClient();
