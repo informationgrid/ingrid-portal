@@ -190,7 +190,7 @@
     <!-- =============================================
          = MAIN TARGETS                              =
          ============================================= -->
-    <target name="InstallPortal" depends="UnzipInstaller">
+    <target name="InstallPortal" depends="UnzipInstaller" unless="copyOracleDump">
         <!-- complete or without IGE -->
         <if>
             <equals arg1="${configMdek}" arg2="true" />
@@ -211,6 +211,14 @@
         <property name="ige.installed" value="true" />
         <property name="only.ige.installation" value="true" />
     </target>
+	
+    <target name="copyOracleDump">
+        <copy toDir="${installDir}">
+            <fileset dir="${basedir}/distribution/sql">
+                <include name="ingrid_portal_35_oracle_10_2.dmp"/>
+            </fileset>
+        </copy>
+	</target>
 
     <target name="StartInstallation" depends="configureProperties,configurePropertiesFromFiles">
         <runtarget target="MoveFiles" />
@@ -660,21 +668,45 @@
     <target name="cleanuptarget">
         <delete file="${mysqlDbDriverInApache}"/>
         <delete file="${oracleDbDriverInApache}"/>
-        <echo>
-=================
-Weiteres Vorgehen
-=================
+        
+        <if>
+            <equals arg1="${dbChoice}" arg2="copyOracleDump" />
+            <then>
+                <echo>
+                =================
+                Weiteres Vorgehen
+                =================
 
-        </echo>
-        <echo>
-Gehen Sie ins Verzeichnis:
-${installDir}/${tomcat-artifact}
-und rufen sie von der Kommandozeile folgendes auf
-"bin/startup.sh", um den TomCat/Portal zu starten.
+                </echo>
+                <echo>
+                Gehen Sie ins Verzeichnis:
+                ${installDir}
+                und importieren Sie den vorliegenden Oracle-Dump in Ihre
+                Datenbank.
 
-Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
-"http://www.kst.portalu.de/wiki/index.php/Portal".
-        </echo>
+                Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
+                "http://www.kst.portalu.de/wiki/index.php/Portal".
+                </echo>
+            </then>
+            <else>
+                <echo>
+                =================
+                Weiteres Vorgehen
+                =================
+
+                        </echo>
+                        <echo>
+                Gehen Sie ins Verzeichnis:
+                ${installDir}/${tomcat-artifact}
+                und rufen sie von der Kommandozeile folgendes auf
+                "bin/startup.sh", um den TomCat/Portal zu starten.
+
+                Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
+                "http://www.kst.portalu.de/wiki/index.php/Portal".
+                        </echo>
+            </else>
+        </if>
+        
     </target>
 
 </project>
