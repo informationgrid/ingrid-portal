@@ -342,6 +342,10 @@
           <groupId>commons-el</groupId>
           <artifactId>commons-el</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-external-service-wfs</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>

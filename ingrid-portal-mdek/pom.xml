@@ -267,6 +267,10 @@
         </exclusion>
         <exclusion>
           <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-external-service-wfs</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>de.ingrid</groupId>
           <artifactId>ingrid-codelist-service</artifactId>
         </exclusion>
         <exclusion>
