@@ -204,7 +204,9 @@ fi
 if [ "$CATALINA_BASE" != "$CATALINA_HOME" ] && [ -r "$CATALINA_BASE/bin/tomcat-juli.jar" ] ; then
   CLASSPATH="$CLASSPATH""$CATALINA_BASE"/bin/tomcat-juli.jar:"$CATALINA_HOME"/bin/bootstrap.jar
 else
-  CLASSPATH="$CLASSPATH""$CATALINA_HOME"/bin/bootstrap.jar
+# wemove: Also add tomcat-juli.jar to avoid exception at startup -> NoClassDefFoundError: org/apache/juli/logging/LogFactory
+  CLASSPATH="$CLASSPATH""$CATALINA_HOME"/bin/tomcat-juli.jar:"$CATALINA_HOME"/bin/bootstrap.jar
+#  CLASSPATH="$CLASSPATH""$CATALINA_HOME"/bin/bootstrap.jar
 fi
 
 #CLASSPATH="$CLASSPATH""$CATALINA_HOME"/bin/bootstrap.jar

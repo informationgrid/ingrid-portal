@@ -36,7 +36,7 @@
     <property name="mySqlDbDriver"                 location="${basedir}/mysql-connector-java-5.1.6.jar"/>
     
     <!-- mysql portal imports -->
-    <property name="importMySQL"     location="${installDir}/sql/ingrid-portal-mysql40.sql"/>
+    <property name="importMySQL"     location="${installDir}/sql/ingrid_portal_35_mysql_558.sql"/>
     <property name="updateMySQL114"  location="${installDir}/sql/update_1.1.4_mysql.sql"/>
     <property name="updateMySQL116"  location="${installDir}/sql/update_1.1.6_mysql.sql"/>
     <property name="updateMySQL117"  location="${installDir}/sql/update_1.1.7_mysql.sql"/>
@@ -169,21 +169,6 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${importMySQL}"/>
-            <transaction src="${updateMySQL114}"/>
-            <transaction src="${updateMySQL116}"/>
-            <transaction src="${updateMySQL117}"/>
-            <transaction src="${updateMySQL118}"/>
-            <transaction src="${updateMySQL120}"/>
-            <transaction src="${updateMySQL130}"/>
-            <transaction src="${updateMySQL300}"/>
-            <transaction src="${updateMySQL301}"/>
-            <transaction src="${updateMySQL310}"/>
-            <transaction src="${updateMySQL320a}"/>
-            <transaction src="${updateMySQL320b}"/>
-            <transaction src="${updateMySQL320c}"/>
-            <transaction src="${updateMySQL320d}"/>
-            <transaction src="${updateMySQL331}"/>
-            <transaction src="${updateMySQL341}"/>
         </sql>
     </target>
     
