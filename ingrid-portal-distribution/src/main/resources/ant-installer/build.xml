@@ -382,9 +382,9 @@
     	<move toDir="${installDir}/${tomcat-artifact}">
             <fileset dir="${basedir}/distribution/${tomcat-artifact}"/>
         </move>
-        <move toDir="${installDir}/sql">
+        <copy toDir="${installDir}/sql">
             <fileset dir="${basedir}/distribution/sql"/>
-        </move>
+        </copy>
         
         <chmod dir="${installDir}/${tomcat-artifact}/bin" perm="755" includes="**/*.sh"/>
         <mkdir dir="${installDir}/${tomcat-artifact}/logs"/>
@@ -483,6 +483,23 @@
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" />
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" />
     </target>
+    
+    <target name="copyMigrationTools">
+        <echo>=========================================================
+            Die Portal-Datenbank muss manuell zu 3.5 migriert werden!
+            Siehe im Installationsverzeichnis unter "migration_35"
+            =========================================================
+        </echo>
+        <copy toDir="${installDir}">
+            <fileset dir="${basedir}/distribution/sql">
+                <include name="ingrid_portal_35_oracle_10_2.dmp"/>
+                <include name="**/migration_35/*"/>
+            </fileset>
+        </copy>
+        <copy file="${installDir}/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.6.jar"  todir="${installDir}/migration_35"/>
+        <copy file="${installDir}/${tomcat-artifact}/shared/lib/ojdbc14.jar" todir="${installDir}/migration_35"/>
+        <property name="migrateManual" value="true" />
+    </target>
 
     <target name="updatePortalDb" if="portal.installed">
         <echo>Konfiguration des Portals
@@ -492,6 +509,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFromInitial"/> 
                 <runtarget target="oracle.UpdateDbManually"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         <elseif>
             <equals arg1="${portal.version}" arg2=",1" />
@@ -499,6 +517,7 @@
                 <!-- import was executed but no patches installed yet -->
                 <runtarget target="mysql.PortalDbUpdateFromInitial"/>
                 <runtarget target="oracle.PortalDbUpdateFromInitial"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
@@ -506,6 +525,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom300"/>
                 <runtarget target="oracle.PortalDbUpdateFrom300"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
@@ -513,6 +533,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom301"/>
                 <runtarget target="oracle.PortalDbUpdateFrom301"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
@@ -520,6 +541,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom310"/>
                 <runtarget target="oracle.PortalDbUpdateFrom310"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
@@ -527,6 +549,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom320d"/>
                 <runtarget target="oracle.PortalDbUpdateFrom320d"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
@@ -534,10 +557,19 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom331"/>
                 <runtarget target="oracle.PortalDbUpdateFrom331"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
             <equals arg1="${portal.version}" arg2=",3.4.1" />
+            <then>
+                <runtarget target="mysql.PortalDbUpdateFrom341"/>
+                <runtarget target="oracle.PortalDbUpdateFrom341"/>
+                <runtarget target="copyMigrationTools"/>
+            </then>
+        </elseif>
+        <elseif>
+            <equals arg1="${portal.version}" arg2=",3.5.0" />
             <then>
                 <echo>Ihre Datenbank ist aktuell!</echo>
             </then>
@@ -547,6 +579,7 @@
             </echo>
         </else>
         </if>
+        
         <!--<runtarget target="oracle.UpdateDbManually"/>-->
     </target>
 
@@ -669,41 +702,49 @@
         <delete file="${mysqlDbDriverInApache}"/>
         <delete file="${oracleDbDriverInApache}"/>
         
+        <echo>
+        =================
+        Weiteres Vorgehen
+        =================
+
+        </echo>
         <if>
             <equals arg1="${dbChoice}" arg2="copyOracleDump" />
             <then>
                 <echo>
-                =================
-                Weiteres Vorgehen
-                =================
-
-                </echo>
-                <echo>
-                Gehen Sie ins Verzeichnis:
-                ${installDir}
-                und importieren Sie den vorliegenden Oracle-Dump in Ihre
-                Datenbank.
-
-                Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
-                "http://www.kst.portalu.de/wiki/index.php/Portal".
+                    Gehen Sie ins Verzeichnis:
+                    ${installDir}
+                    und importieren Sie den vorliegenden Oracle-Dump in Ihre
+                    Datenbank.
+    
+                    Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
+                    "http://www.kst.portalu.de/wiki/index.php/Portal".
                 </echo>
             </then>
+            <elseif>
+                <equals arg1="${migrateManual}" arg2="true" />
+                <then>
+                    <echo>
+                        Bevor Sie das Portal nutzen können, muss die Datenbank manuell migriert werden.
+                        Gehen Sie in das Verzeichnis: ${installDir}/migration_35
+                        und starten Sie das Skript mit:
+                        sh migrate.sh
+                        Es wird eine Verbindung zum Internet benötigt!
+                        Bei weiteren Fragen sehen sie hier für weitere Informationen:
+                        "http://..."
+                    </echo>
+                </then>
+            </elseif>
             <else>
                 <echo>
-                =================
-                Weiteres Vorgehen
-                =================
-
-                        </echo>
-                        <echo>
-                Gehen Sie ins Verzeichnis:
-                ${installDir}/${tomcat-artifact}
-                und rufen sie von der Kommandozeile folgendes auf
-                "bin/startup.sh", um den TomCat/Portal zu starten.
-
-                Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
-                "http://www.kst.portalu.de/wiki/index.php/Portal".
-                        </echo>
+                    Gehen Sie ins Verzeichnis:
+                    ${installDir}/${tomcat-artifact}
+                    und rufen sie von der Kommandozeile folgendes auf
+                    "bin/startup.sh", um den TomCat/Portal zu starten.
+    
+                    Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
+                    "http://www.kst.portalu.de/wiki/index.php/Portal".
+                </echo>
             </else>
         </if>
         

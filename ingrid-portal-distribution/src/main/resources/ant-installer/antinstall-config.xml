@@ -48,7 +48,7 @@
         <target-select
             property      ="updateOrNew"
             displayText   ="Neu oder Update"
-            defaultValue  ="Neuinstallation">
+            defaultValue  ="">
             <option value="setUpdateProperty" text="Update (Einstellungen bleiben erhalten)"/>
             <option value="setInstallProperty" text="Neuinstallation"/>
         </target-select>
@@ -63,7 +63,7 @@
         <target-select
             property     ="portalChoice"
             displayText  ="Installationswahl"
-            defaultValue ="InstallPortal">
+            defaultValue ="">
             <option text ="Portal installieren"            value="InstallPortal"/>
             <option text ="Nur InGrid Editor installieren" value="InstallOnlyIge"/>
         </target-select>
@@ -78,7 +78,7 @@
         <target-select
             property     ="dbChoice"
             displayText  ="Datenbankkonfiguration"
-            defaultValue ="copyOracleDump">
+            defaultValue ="">
             <option text ="MySQL"  value="setMySqlProperty"/>
             <option text ="Oracle (vorhandene DBs)" value="setOracleProperty"/>
             <option text ="Oracle (ohne DBs)" value="copyOracleDump"/>
@@ -162,7 +162,7 @@
         <comment bold="true" displayText="" explanatoryText="Dem angebenen Benutzer werden automatisch die Rechte an der neuen Datenbank erteilt! Für diese Operationen wird ein Datenbankadministrator vorausgesetzt, der weiter unten eingegeben werden muss."/>            
         <text property="dbUser"     displayText="MySQL Benutzername:"      defaultValue="ingrid"/>
         <text property="dbPassword" displayText="MySQL Benutzer-Passwort:" defaultValue=""/>
-        <text property="dbUrl"      displayText="MySQL Datenbank-URL:"     defaultValue="jdbc:mysql://localhost/ingrid-portal"/>
+        <text property="dbUrl"      displayText="MySQL Datenbank-URL:"     defaultValue="jdbc:mysql://localhost/ingrid_portal"/>
 
         <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt! Bitte geben Sie diesen hier an."/>
         <text property="adminUser"         displayText="MySQL Administrator:"           defaultValue="root"/>
