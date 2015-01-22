@@ -36,7 +36,7 @@
     <property name="oracleDbDriver"                location="./ojdbc14.jar"/>
     
     <!-- mysql portal imports -->
-    <property name="importOracle"  location="${basedir}/distribution/sql/ingrid-portal-oracle_10_2_user_ingrid.dmp"/>
+    <property name="importOracle"  location="${basedir}/distribution/sql/ingrid_portal_35_oracle_10_2.dmp"/>
     <property name="updateOracle114"  location="${installDir}/sql/update_1.1.4_oracle.sql"/>
     <property name="updateOracle116"  location="${installDir}/sql/update_1.1.6_oracle.sql"/>
     <property name="updateOracle117"  location="${installDir}/sql/update_1.1.7_oracle.sql"/>
@@ -169,34 +169,7 @@
 
             <!-- use default-character-set=utf8 -->
             <!--<transaction src="${importOracle}"/>-->
-            <transaction src="${updateOracle114}"/>
-            <transaction src="${updateOracle116}"/>
-            <transaction src="${updateOracle117}"/>
-            <transaction src="${updateOracle118}"/>
-            <transaction src="${updateOracle120}"/>
-            <transaction src="${updateOracle130}"/>
-            <transaction src="${updateOracle300}"/>
-            <transaction src="${updateOracle301}"/>
-            <transaction src="${updateOracle310}"/>
-            <transaction src="${updateOracle320a}"/>
-            <transaction src="${updateOracle320b}"/>
-            <transaction src="${updateOracle320c}"/>
-            <transaction src="${updateOracle320d}"/>
-            <transaction src="${updateOracle331}"/>
-            <transaction src="${updateOracle341}"/>
-        </sql>
-        
-        <sql    driver    ="${oracleDriverClass}"
-                classpath ="${oracleDbDriver}"
-                url       ="${_dbUrl}"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                delimiter ="/"
-                >
-
-            <transaction src="${updateOracle130Trigger}"/>
-        </sql>
+        </sql>        
     </target>
     
     <target name="PortalDbUpdateFrom300" if="useOracle">
