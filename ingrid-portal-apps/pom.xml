@@ -370,40 +370,6 @@
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-dsc</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>ant</groupId>
-          <artifactId>ant</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-el</groupId>
-          <artifactId>commons-el</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>hsqldb</groupId>
-          <artifactId>hsqldb</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-utils-geo</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>mysql</groupId>
-          <artifactId>mysql-connector-java</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ojdbc</groupId>
-          <artifactId>ojdbc</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>lucene</groupId>
-          <artifactId>lucene</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug-se</artifactId>
       <version>3.3.0.1</version>
       <exclusions>
@@ -437,38 +403,6 @@
         <exclusion>
           <groupId>de.ingrid</groupId>
           <artifactId>ingrid-iplug-admin-step1-sns</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-el</groupId>
-          <artifactId>commons-el</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-g2k</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-iplug-admin-step1-webservice</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-el</groupId>
-          <artifactId>commons-el</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-csw</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-iplug-admin-step1-webservice</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ant</groupId>
-          <artifactId>ant</artifactId>
         </exclusion>
         <exclusion>
           <groupId>commons-el</groupId>
