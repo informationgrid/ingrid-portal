@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorCSWJob;
-import de.ingrid.portal.scheduler.jobs.IngridMonitorG2KJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorRSSCheckerJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorSNSJob;
@@ -142,7 +141,6 @@ public class AdminComponentMonitorForm extends ActionForm {
 				allOk = false;
 			}
 			if (getInput(FIELD_TYPE).equals(IngridMonitorIPlugJob.COMPONENT_TYPE)
-					|| getInput(FIELD_TYPE).equals(IngridMonitorG2KJob.COMPONENT_TYPE)
 					|| getInput(FIELD_TYPE).equals(IngridMonitorCSWJob.COMPONENT_TYPE)
 					|| getInput(FIELD_TYPE).equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {
 				if (!hasInput(FIELD_QUERY)) {
@@ -154,8 +152,7 @@ public class AdminComponentMonitorForm extends ActionForm {
 				}
 			}
 			if (!hasInput(FIELD_SERVICE_URL)
-					&& (getInput(FIELD_TYPE).equals(IngridMonitorG2KJob.COMPONENT_TYPE) 
-					|| getInput(FIELD_TYPE).equals(IngridMonitorCSWJob.COMPONENT_TYPE)
+					&& (getInput(FIELD_TYPE).equals(IngridMonitorCSWJob.COMPONENT_TYPE)
 					|| getInput(FIELD_TYPE).equals(IngridMonitorRSSCheckerJob.COMPONENT_TYPE))) {
 				setError(FIELD_SERVICE_URL, "component.monitor.form.error.invalid.serviceurl");
 				allOk = false;
