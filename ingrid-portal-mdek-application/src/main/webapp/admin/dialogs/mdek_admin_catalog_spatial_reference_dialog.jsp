@@ -150,7 +150,7 @@
                 resetResultDiv();
                 showLoading();
                 
-                SNSService.getLocationTopics(queryTerm, "contains", "/location/admin", userLocale, {
+                SNSService.getLocationTopics(queryTerm, "exact", "/location/admin", userLocale, {
                     preHook: function() {
                         showLoadingZone();
                         disableUiElements();
@@ -261,19 +261,32 @@
             <div id="spatialRefContent" class="content">
                 <!-- CONTENT START -->
                 <div class="inputContainer">
-                    <span class="label">
-                        <label for="locationTextBox" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8008)">
-                            <fmt:message key="dialog.admin.catalog.selectLocation.setLocation" />
-                        </label>
-                    </span>
+                    
                     <div class="input">
-                        <span style="position:relative; float:left; width:292px;">
-                            <input type="text" id="locationTextBox" size="20" name="locationTextBox" style="width:292px;" data-dojo-type="dijit/form/ValidationTextBox" />
+                        <span class="outer" style="width:60%;">
+                            <div>
+                                <span class="label">
+                                    <label for="locationTextBox" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8008)">
+                                        <fmt:message key="dialog.admin.catalog.selectLocation.setLocation" />
+                                    </label>
+                                </span>
+                                <div class="input">
+                                    <input type="text" id="locationTextBox" size="20" name="locationTextBox" style="width:292px;" data-dojo-type="dijit/form/ValidationTextBox" />
+                                </div>
+                                <p class="comment"><fmt:message key="dialog.spatialNavigator.searchHint" /></p>
+                            </div>
                         </span>
-                        <span style="float:right;">
-                            <button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.admin.catalog.selectLocation.search" />" id="findLocationTopicsButton" onclick="dialogCatalogSpatial.findLocationTopics()" type="button">
-                                <fmt:message key="dialog.admin.catalog.selectLocation.search" />
-                            </button>
+                        <span class="outer" style="width:40%;">
+                            <div>
+                                <span style="float:right;">
+                                    <span class="label">&nbsp;</span>
+                                    <div class="input" style="float: right;">
+                                        <button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.admin.catalog.selectLocation.search" />" id="findLocationTopicsButton" onclick="dialogCatalogSpatial.findLocationTopics()" type="button">
+                                            <fmt:message key="dialog.admin.catalog.selectLocation.search" />
+                                        </button>
+                                    </div>
+                                </span>
+                            </div>
                         </span>
                     </div>
                     <div>

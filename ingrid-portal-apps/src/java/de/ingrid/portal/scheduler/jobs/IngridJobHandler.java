@@ -42,8 +42,6 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -51,10 +49,11 @@ import org.quartz.JobExecutionContext;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.forms.AdminComponentMonitorForm;
 import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridRSSSource;
@@ -358,8 +357,6 @@ public class IngridJobHandler {
 		String type = cf.getInput(AdminComponentMonitorForm.FIELD_TYPE);
 		if (type.equals(IngridMonitorIPlugJob.COMPONENT_TYPE)) {
 			jobClass = IngridMonitorIPlugJob.class;
-		} else if (type.equals(IngridMonitorG2KJob.COMPONENT_TYPE)) {
-			jobClass = IngridMonitorG2KJob.class;
 		} else if (type.equals(IngridMonitorCSWJob.COMPONENT_TYPE)) {
 			jobClass = IngridMonitorCSWJob.class;
 		} else	if (type.equals(IngridMonitorSNSJob.COMPONENT_TYPE)) {
