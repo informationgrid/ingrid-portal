@@ -48,7 +48,7 @@
         <target-select
             property      ="updateOrNew"
             displayText   ="Neu oder Update"
-            defaultValue  ="true">
+            defaultValue  ="">
             <option value="setUpdateProperty" text="Update (Einstellungen bleiben erhalten)"/>
             <option value="setInstallProperty" text="Neuinstallation"/>
         </target-select>
@@ -63,7 +63,7 @@
         <target-select
             property     ="portalChoice"
             displayText  ="Installationswahl"
-            defaultValue ="true">
+            defaultValue ="">
             <option text ="Portal installieren"            value="InstallPortal"/>
             <option text ="Nur InGrid Editor installieren" value="InstallOnlyIge"/>
         </target-select>
@@ -78,10 +78,12 @@
         <target-select
             property     ="dbChoice"
             displayText  ="Datenbankkonfiguration"
-            defaultValue ="true">
+            defaultValue ="">
             <option text ="MySQL"  value="setMySqlProperty"/>
-            <option text ="Oracle" value="setOracleProperty"/>
+            <option text ="Oracle (vorhandene DBs)" value="setOracleProperty"/>
+            <option text ="Oracle (ohne DBs)" value="copyOracleDump"/>
         </target-select>
+        <comment displayText="" bold="true" explanatoryText="Wenn Oracle als Datenbanksystem verwendet wird, so muss unterschieden werden, ob die InGrid-Datenbanken schon vorhanden sind oder erst noch erzeugt werden müssen. Das Erzeugen der Datenbanken muss bei Oracle manuell erfolgen! Wählt man die Option 'ohne DBs' so wird der einzuspielende Dump im Installationsordner bereitgestellt. Nachdem die Datenbanken erstellt wurden, kann mit der anderen Oracle Option 'vorhandene DBs' fortgesetzt werden." />
         <checkbox
             property     ="configMdek"
             displayText  ="InGrid-Editor"
@@ -100,8 +102,24 @@
             displayText  ="Datenbankkonfiguration"
             defaultValue ="true">
             <option text ="MySQL"  value="setMySqlProperty"/>
-            <option text ="Oracle" value="setOracleProperty"/>
+            <option text ="Oracle (vorhandene DBs)" value="setOracleProperty"/>
+            <option text ="Oracle (ohne DBs)" value="copyOracleDump"/>
+            <comment displayText="" bold="true" explanatoryText="Wenn Oracle als Datenbanksystem verwendet wird, so muss unterschieden werden, ob die InGrid-Datenbanken schon vorhanden sind oder erst noch erzeugt werden müssen. Das Erzeugen der Datenbanken muss bei Oracle manuell erfolgen! Wählt man die Option 'ohne DBs' so wird der einzuspielende Dump im Installationsordner bereitgestellt. Nachdem die Datenbanken erstellt wurden, kann mit der anderen Oracle Option 'vorhandene DBs' fortgesetzt werden." />
         </target-select>
+    </page>
+    
+    <page
+            ifTarget    ="copyOracleDump"
+            type        ="input"
+            overflow    ="true"
+            name        ="properties"
+            displayText ="Installationsverzeichnis, wohin der Oracle-Dump kopiert werden soll">
+        <directory
+                property        ="installDir"
+                defaultValue    ="/opt/ingrid/ingrid-portal"
+                defaultValueWin ="${env.ProgramFiles}\ingrid-portal"
+                displayText     ="Installationsverzeichnis"
+                create          ="true"/>
     </page>
     
     <page
@@ -144,7 +162,7 @@
         <comment bold="true" displayText="" explanatoryText="Dem angebenen Benutzer werden automatisch die Rechte an der neuen Datenbank erteilt! Für diese Operationen wird ein Datenbankadministrator vorausgesetzt, der weiter unten eingegeben werden muss."/>            
         <text property="dbUser"     displayText="MySQL Benutzername:"      defaultValue="ingrid"/>
         <text property="dbPassword" displayText="MySQL Benutzer-Passwort:" defaultValue=""/>
-        <text property="dbUrl"      displayText="MySQL Datenbank-URL:"     defaultValue="jdbc:mysql://localhost/ingrid-portal"/>
+        <text property="dbUrl"      displayText="MySQL Datenbank-URL:"     defaultValue="jdbc:mysql://localhost/ingrid_portal"/>
 
         <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt! Bitte geben Sie diesen hier an."/>
         <text property="adminUser"         displayText="MySQL Administrator:"           defaultValue="root"/>
@@ -167,7 +185,7 @@
     </page>
 
     <page
-            ifProperty  ="(${configMdek}==true) || (${portalChoice}==InstallOnlyIge)"
+            ifProperty  ="(${dbChoice}!=copyOracleDump) AND (${configMdek}==true) || (${portalChoice}==InstallOnlyIge)"
             type        ="input"
             overflow    = "true"
             name        ="igeOptions"
@@ -183,6 +201,7 @@
 
     <page
             ifTarget    ="InstallOnlyIge"
+            ifProperty  ="(${dbChoice}!=copyOracleDump)"
             type        ="input"
             overflow    = "true"
             name        ="igeOptions"
@@ -194,6 +213,7 @@
     
     <page
             ifTarget    ="InstallPortal"
+            ifProperty  ="(${dbChoice}!=copyOracleDump)"
             type        ="input"
             overflow    = "true"
             name        ="iBusOptions"
@@ -208,6 +228,7 @@
     
     <page
             ifTarget    ="InstallPortal"
+            ifProperty  ="(${dbChoice}!=copyOracleDump)"
             overflow    ="true"
             type        ="input"
             name        ="webmapOptions"
@@ -235,7 +256,7 @@
     </page>
     
     <page
-        ifProperty  ="(${configMdek}==true) || (${portalChoice}==InstallOnlyIge)"
+        ifProperty  ="(${dbChoice}!=copyOracleDump) AND (${configMdek}==true) || (${portalChoice}==InstallOnlyIge)"
         type        ="input"
         overflow    = "true"
         name        ="codelistRepoOptions"
@@ -248,6 +269,7 @@
     
     <page
         ifTarget    ="InstallPortal"
+        ifProperty  ="(${dbChoice}!=copyOracleDump)"
         type        ="input"
         overflow    = "true"
         name        ="otherOptions"
@@ -258,6 +280,7 @@
     
     <page
             ifTarget    ="setInstallProperty"
+            ifProperty  ="(${dbChoice}!=copyOracleDump)"
             type        ="input"
             overflow    = "true"
             name        ="properties"

@@ -271,4 +271,24 @@
       <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
   </repositories>
+  <profiles>
+    <profile>
+        <id>update-installer</id>
+        <build>
+            <plugins>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-antrun-plugin</artifactId>
+                  <configuration>
+                      <tasks>
+                        <jar destfile="target/${project.build.finalName}-installer.jar" update="true">
+                          <fileset dir="src/main/resources/ant-installer" />
+                        </jar>
+                      </tasks>
+                  </configuration>
+              </plugin>
+            </plugins>
+        </build>
+    </profile>
+  </profiles>
 </project>

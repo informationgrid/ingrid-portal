@@ -1,0 +1,2 @@
+DELETE FROM principal_permission WHERE PERMISSION_ID IN (SELECT PERMISSION_ID FROM security_permission WHERE CLASSNAME LIKE 'de.ingrid.portal.security.permission%');
+DELETE FROM security_permission WHERE CLASSNAME LIKE 'de.ingrid.portal.security.permission%';

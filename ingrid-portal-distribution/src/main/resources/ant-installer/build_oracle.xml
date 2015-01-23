@@ -281,6 +281,13 @@
         </sql>
     </target>
     
+    <target name="PortalDbUpdateFrom341" if="useOracle">
+        <echo>Oracle-Portal Daten importieren (ab 3.4.1)
+            
+            Bitte manuell tätigen!
+        </echo>
+    </target>
+    
     <!-- =============================================
          = IGE MDEK DATABASE                         =
          ============================================= -->
