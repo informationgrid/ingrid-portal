@@ -1,4 +1,7 @@
 
+    Beispielvorgehen für Migration Portaldatenbank von InGrid 3.4 nach InGrid 3.5
+    =============================================================================
+
 Vorgehen Migration von Portal Datenbank von blunt (Jetspeed 2.1) nach Jetspeed 2.1.4 nach Jetspeed 2.2.2 (gleiches Schema wie 2.3):
     http://portals.apache.org/jetspeed-2/guide-migration.html
     http://portals.apache.org/jetspeed-2/guide-etl-migration.html
@@ -35,7 +38,7 @@ Vorgehen Migration von Portal Datenbank von blunt (Jetspeed 2.1) nach Jetspeed 2
             UPDATE capability SET CAPABILITY = 'HTML_PLUGIN_' WHERE CAPABILITY_ID = 23;
             UPDATE client_to_capability SET CAPABILITY_ID = 21 WHERE CAPABILITY_ID = 23;
 
-    Weiterhin alle InGrid Permission löschen !!! Diese können zwar exportiert, aber nicht importiert werden !!!
+- Weiterhin alle InGrid Permission löschen !!! Diese können zwar exportiert, aber nicht importiert werden (und werden nicht mehr benötigt) !
 
         DELETE FROM principal_permission WHERE PERMISSION_ID IN (SELECT PERMISSION_ID FROM security_permission WHERE CLASSNAME LIKE 'de.ingrid.portal.security.permission%');
         DELETE FROM security_permission WHERE CLASSNAME LIKE 'de.ingrid.portal.security.permission%';
@@ -52,7 +55,7 @@ Vorgehen Migration von Portal Datenbank von blunt (Jetspeed 2.1) nach Jetspeed 2
         - lokalen Treiber wählen:
             C:\wemove\ingrid\dev\svn\ingrid-portal\branches\ingrid-portal-3.5_REDMINE-304_JetspeedMigration\_migration\etl_21_to_22\mysql-connector-java-5.1.6.jar
 
-- MySQL Datenbank ingrid_portalu_js222 erzeugen (lokale ingrid_portal DB wurde nach js2_import_222 migriert !)
+- Neue MySQL Datenbank erzeugen (im Bsp. ingrid_portalu_js222)
             > mysql -u root -p
             > CREATE DATABASE ingrid_portalu_js222 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
             > quit
