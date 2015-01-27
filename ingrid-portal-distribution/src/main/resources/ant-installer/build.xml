@@ -216,6 +216,8 @@
         <copy toDir="${installDir}">
             <fileset dir="${basedir}/distribution/sql">
                 <include name="ingrid_portal_35_oracle_10_2.dmp"/>
+                <include name="ingrid_portal_35_oracle_10_2.log"/>
+                <include name="_README.txt"/>
             </fileset>
         </copy>
 	</target>
@@ -718,7 +720,7 @@
                     Datenbank.
     
                     Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
-                    "http://www.kst.portalu.de/wiki/index.php/Portal".
+                    "http://informationgrid.github.io"
                 </echo>
             </then>
             <elseif>
@@ -727,11 +729,13 @@
                     <echo>
                         Bevor Sie das Portal nutzen können, muss die Datenbank manuell migriert werden.
                         Gehen Sie in das Verzeichnis: ${installDir}/migration_35
-                        und starten Sie das Skript mit:
+                        Für MySQL starten Sie das Skript mit:
                         sh migrate.sh
                         Es wird eine Verbindung zum Internet benötigt!
+                        Weitere Infos finden sich in der README Datei.
+
                         Bei weiteren Fragen sehen sie hier für weitere Informationen:
-                        "http://..."
+                        "http://informationgrid.github.io"
                     </echo>
                 </then>
             </elseif>
@@ -743,7 +747,7 @@
                     "bin/startup.sh", um den TomCat/Portal zu starten.
     
                     Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
-                    "http://www.kst.portalu.de/wiki/index.php/Portal".
+                    "http://informationgrid.github.io"
                 </echo>
             </else>
         </if>
