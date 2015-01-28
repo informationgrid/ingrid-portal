@@ -33,6 +33,10 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tngtech.configbuilder.ConfigBuilder;
+
+import de.ingrid.portal.Configuration;
+
 /**
  * Provides access to the ingrid portal preferences.
  * 
@@ -269,8 +273,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     // private stuff
     private static PortalConfig instance = null;
-    
-    
+
+    private static Configuration config = null;
 
     private final static Logger log = LoggerFactory.getLogger(PortalConfig.class);
 
@@ -279,6 +283,8 @@ public class PortalConfig extends PropertiesConfiguration {
         if (instance == null) {
             try {
                 instance = new PortalConfig();
+                config = new ConfigBuilder<Configuration>(Configuration.class).build();
+                config.initialize();
             } catch (Exception e) {
                 if (log.isErrorEnabled()) {
                     log.error(
@@ -293,11 +299,10 @@ public class PortalConfig extends PropertiesConfiguration {
     private PortalConfig() throws Exception {
         super("ingrid-portal-apps.properties");
         //this.setReloadingStrategy(ReloadingStrategy)
-        URL url = this.getClass().getResource("/ingrid-portal-apps_user.properties");
+        URL url = this.getClass().getResource("/ingrid-portal-apps.override.properties");
         if (url != null) {
             File f = new File(url.getPath());
             PropertiesConfiguration userConfig = new PropertiesConfiguration(f);
-            @SuppressWarnings("unchecked")
             Iterator<String> it = userConfig.getKeys();
             while (it.hasNext()) {
                 String key = it.next();

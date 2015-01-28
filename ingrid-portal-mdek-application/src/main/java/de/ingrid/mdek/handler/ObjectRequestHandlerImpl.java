@@ -25,6 +25,8 @@ package de.ingrid.mdek.handler;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekKeys;
@@ -51,11 +53,13 @@ import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
+@Service("objectRequestHandler")
 public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 
 	private final static Logger log = Logger.getLogger(ObjectRequestHandlerImpl.class);
 
 	// Injected by Spring
+	@Autowired
 	private ConnectionFacade connectionFacade;
 
 

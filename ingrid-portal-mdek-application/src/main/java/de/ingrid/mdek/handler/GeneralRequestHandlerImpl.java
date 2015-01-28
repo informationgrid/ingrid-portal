@@ -25,6 +25,8 @@ package de.ingrid.mdek.handler;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.VersionInformation;
@@ -33,11 +35,14 @@ import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
+@Service("generalRequestHandler")
 public class GeneralRequestHandlerImpl implements GeneralRequestHandler {
 
-	private final static Logger log = Logger.getLogger(GeneralRequestHandlerImpl.class);
+	@SuppressWarnings("unused")
+    private final static Logger log = Logger.getLogger(GeneralRequestHandlerImpl.class);
 
 	// Injected by Spring
+	@Autowired
 	private ConnectionFacade connectionFacade;
 
 	// Initialized by spring through the init method

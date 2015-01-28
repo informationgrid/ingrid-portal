@@ -27,8 +27,10 @@ import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import de.ingrid.mdek.caller.IMdekCaller;
+import de.ingrid.mdek.Config;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
@@ -44,6 +46,7 @@ import de.ingrid.mdek.caller.MdekCallerSecurity;
 import de.ingrid.mdek.caller.MdekClientCaller;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 
+@Service( "connectionFacade" )
 public class ConnectionFacadeImpl implements ConnectionFacade {
 
 	private final static Logger log = Logger.getLogger(ConnectionFacadeImpl.class);
@@ -55,13 +58,15 @@ public class ConnectionFacadeImpl implements ConnectionFacade {
 	private IMdekCallerCatalog mdekCallerCatalog;
 	private IMdekCallerSecurity mdekCallerSecurity;
 
-	public ConnectionFacadeImpl(File communicationProperties) {
-		if (communicationProperties == null || !(communicationProperties instanceof File)) {
-			throw new IllegalStateException(
-					"Please specify the location of the communication.properties file via the Property 'mdekClientCaller.properties' in /src/resources/mdek.properties");
-		}
+	@Autowired
+	public ConnectionFacadeImpl(Config config) {
+//		if (communicationProperties == null || !(communicationProperties instanceof File)) {
+//			throw new IllegalStateException(
+//					"Please specify the location of the communication.properties file via the Property 'mdekClientCaller.properties' in /src/resources/mdek.properties");
+//		}
+		
 		log.debug("Initializing MdekCaller...");
-		MdekClientCaller.initialize(communicationProperties);
+		MdekClientCaller.initialize(new File(config.communicationLocation));
 		log.debug("MdekCaller initialized.");
 		mdekClientCaller = MdekClientCaller.getInstance();
 

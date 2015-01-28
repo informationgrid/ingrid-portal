@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import de.ingrid.mdek.DataMapperInterface;
 import de.ingrid.mdek.EnumUtil;
 import de.ingrid.mdek.MdekKeys;
@@ -39,10 +42,16 @@ import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 import de.ingrid.mdek.beans.query.StatisticsBean;
 import de.ingrid.utils.IngridDocument;
 
+@Service
 public class MdekAddressUtils {
 
 	// Injected via Spring
 	private static DataMapperInterface dataMapper;
+	
+	@Autowired
+    public MdekAddressUtils(DataMapperInterface mapper) {
+	    MdekAddressUtils.dataMapper = mapper;
+    }
 	
 	public static IngridDocument convertFromAddressRepresentation(MdekAddressBean adr) {
 		return (IngridDocument) dataMapper.convertFromAddressRepresentation(adr);

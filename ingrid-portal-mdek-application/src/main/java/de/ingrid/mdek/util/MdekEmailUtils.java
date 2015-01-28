@@ -47,6 +47,8 @@ import javax.mail.internet.MimeMessage;
 import org.apache.log4j.Logger;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
@@ -56,17 +58,17 @@ import de.ingrid.mdek.beans.SNSLocationUpdateResult;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.security.User;
+import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.caller.IMdekCallerAddress;
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekCallerSecurity;
-import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.quartz.jobs.util.ExpiredDataset;
 import de.ingrid.utils.IngridDocument;
 
-
+@Service
 public class MdekEmailUtils {
 
 	private final static Logger log = Logger.getLogger(MdekEmailUtils.class);
@@ -91,6 +93,11 @@ public class MdekEmailUtils {
 	private static IMdekCallerQuery mdekCallerQuery;
 	private static IMdekCallerObject mdekCallerObject;
 	private static IMdekCallerAddress mdekCallerAddress;
+	
+	@Autowired
+	public MdekEmailUtils(ConnectionFacade connFacade) {
+	    MdekEmailUtils.connectionFacade = connFacade;
+	}
 
 	public void init() {
 		mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();

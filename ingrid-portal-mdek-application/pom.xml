@@ -159,6 +159,11 @@
     <!-- ==================== DEPENDENCIES ==================== -->
     <dependencies>
         <dependency>
+            <groupId>com.tngtech.java</groupId>
+            <artifactId>config-builder</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.14</version>
