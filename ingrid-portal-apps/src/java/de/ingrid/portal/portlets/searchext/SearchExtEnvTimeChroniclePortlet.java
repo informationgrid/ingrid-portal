@@ -160,7 +160,9 @@ public class SearchExtEnvTimeChroniclePortlet extends AbstractVelocityMessagingP
                             topic = (Topic) results[i];
                             detail = null;
                             if (results[i].getHitDetail() != null) {
-                                detail = (DetailedTopic) results[i].getHitDetail();
+                            	if (results[i].getHitDetail() instanceof DetailedTopic) {
+                                    detail = (DetailedTopic) results[i].getHitDetail();                            		
+                            	}
                             }
 
                             if (topic == null) {
