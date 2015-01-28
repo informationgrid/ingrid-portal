@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.MdekUtils.PublishType;
@@ -64,13 +66,17 @@ import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 import de.ingrid.utils.IngridDocument;
 import edu.emory.mathcs.backport.java.util.Arrays;
 
+@Service
 public class MdekMapper implements DataMapperInterface {
 
     private final static Logger log = Logger.getLogger(MdekMapper.class);
     // this constant is used to get the correct codelist for mapping "object use", which
     // can be one of two different codelists, depending on open data checkbox state
     private static final String USE_TERMS_OF_LICENCE_KEY = "use-terms-of-licence-key";
+    
+    @Autowired
     private SysListCache sysListMapper;
+
     private ResourceBundle snsResourceBundle;
 
     // Init Method is called by the Spring Framework on initialization

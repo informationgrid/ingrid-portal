@@ -35,7 +35,8 @@ import de.ingrid.mdek.handler.ObjectRequestHandler;
 
 public class TreeServiceImpl {
 
-	private final static Logger log = Logger.getLogger(TreeServiceImpl.class);	
+	@SuppressWarnings("unused")
+    private final static Logger log = Logger.getLogger(TreeServiceImpl.class);	
 
 	// Injected by Spring
 	private ObjectRequestHandler objectRequestHandler;

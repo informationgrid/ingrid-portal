@@ -51,7 +51,7 @@
         <target-select
             property      ="updateOrNew"
             displayText   ="Neu oder Update"
-            defaultValue  ="">
+            defaultValue  ="setInstallProperty">
 <!--
             <option value="setUpdateProperty" text="Update (Einstellungen bleiben erhalten)"/>
 -->
@@ -182,7 +182,7 @@
             type        ="input"
             name        ="oracleOptions"
             displayText ="Einstellungen für die Portal Oracle-Datenbank">
-        <text property="adminUser"  displayText="Oracle Benutzername:"      defaultValue="ingrid-portal"/>
+        <text property="adminUser"  displayText="Oracle Benutzername:"      defaultValue="ingrid_portal"/>
         <text property="adminPassword"  displayText="Oracle Benutzer-Passwort:" defaultValue=""/>
         <text property="dbUrl"      displayText="Oracle Datenbank-URL:"     defaultValue="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
 

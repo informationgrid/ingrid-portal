@@ -29,6 +29,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.MdekUtils.CsvRequestType;
 import de.ingrid.mdek.MdekUtils.MdekSysList;
@@ -52,11 +54,13 @@ import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
+@Service("catalogRequestHandler")
 public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
     private final static Logger log = Logger.getLogger(CatalogRequestHandlerImpl.class);
 
     // Injected by Spring
+    @Autowired
     private ConnectionFacade connectionFacade;
 
     // Initialized by spring through the init method
@@ -192,7 +196,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
                 keyValues.add(genericValue.getValue());
             }
     
-            IngridDocument response = mdekCallerCatalog.storeSysGenericKeys(
+            mdekCallerCatalog.storeSysGenericKeys(
                     connectionFacade.getCurrentPlugId(),
                     keyNames.toArray(new String[]{}),
                     keyValues.toArray(new String[]{}),

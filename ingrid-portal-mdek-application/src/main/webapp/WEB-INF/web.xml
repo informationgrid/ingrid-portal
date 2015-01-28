@@ -87,6 +87,10 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/application-context.xml</param-value>
 	</context-param>
+	<context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>http</param-value>
+	</context-param>
 	<listener>
 		<listener-class>
 			org.springframework.web.util.WebAppRootListener

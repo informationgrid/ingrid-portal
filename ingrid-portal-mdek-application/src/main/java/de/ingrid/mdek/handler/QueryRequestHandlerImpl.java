@@ -23,6 +23,8 @@
 package de.ingrid.mdek.handler;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressExtSearchParamsBean;
@@ -38,11 +40,13 @@ import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
+@Service("queryRequestHandler")
 public class QueryRequestHandlerImpl implements QueryRequestHandler {
 
 	private final static Logger log = Logger.getLogger(QueryRequestHandlerImpl.class);
 
 	// Injected by Spring
+	@Autowired
 	private ConnectionFacade connectionFacade;
 
 	// Initialized by spring through the init method

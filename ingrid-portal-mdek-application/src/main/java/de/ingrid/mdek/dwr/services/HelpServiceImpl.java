@@ -32,7 +32,6 @@ import de.ingrid.mdek.services.persistence.db.IDaoFactory;
 import de.ingrid.mdek.services.persistence.db.IEntity;
 import de.ingrid.mdek.services.persistence.db.IGenericDao;
 
-
 public class HelpServiceImpl {
 
 	private final static Logger log = Logger.getLogger(HelpServiceImpl.class);	
