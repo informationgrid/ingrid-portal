@@ -25,6 +25,8 @@ package de.ingrid.mdek.handler;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.beans.security.Group;
 import de.ingrid.mdek.beans.security.Permission;
@@ -34,11 +36,15 @@ import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
+@Service("securityRequestHandler")
 public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 
-	private final static Logger log = Logger.getLogger(SecurityRequestHandlerImpl.class);
+	@SuppressWarnings("unused")
+    private final static Logger log = Logger.getLogger(SecurityRequestHandlerImpl.class);
 
 	// Injected by Spring
+	    
+	@Autowired
 	private ConnectionFacade connectionFacade;
 
 	// Initialized by spring through the init method

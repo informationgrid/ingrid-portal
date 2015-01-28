@@ -71,6 +71,7 @@ public class CatalogManagementServiceImpl {
 			.getLogger(CatalogManagementServiceImpl.class);
 
 	private MdekJobHandler mdekJobHandler;
+
 	private CatalogRequestHandler catalogRequestHandler;
 
 	private ConnectionFacade connectionFacade;

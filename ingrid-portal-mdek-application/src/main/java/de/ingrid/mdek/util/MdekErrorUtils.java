@@ -26,12 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.DataMapperInterface;
 import de.ingrid.mdek.MdekError;
+import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekKeysSecurity;
-import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.exception.AddressNeverPublishedException;
@@ -43,6 +45,7 @@ import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.utils.IngridDocument;
 
+@Service
 public class MdekErrorUtils {
 
 	private final static Logger log = Logger.getLogger(MdekErrorUtils.class);
@@ -50,6 +53,10 @@ public class MdekErrorUtils {
 	// Injected via Spring
 	private static DataMapperInterface dataMapper;
 
+	@Autowired
+    public MdekErrorUtils(DataMapperInterface mapper) {
+	    MdekErrorUtils.dataMapper = mapper;
+    }
 
 	public static void handleError(IngridDocument response) throws RuntimeException {
 		String errorMessage = getErrorMsgFromResponse(response);

@@ -383,7 +383,7 @@ public class SecurityServiceImpl implements SecurityService {
     public boolean authenticate(String username, String password) {
         boolean isValid = false; 
         if ("admin".equals(username)) {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle("igeAdminUser");
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("mdek");
             String pw = resourceBundle.getString("admin.password");
             if (password.equals(pw)) {
                 isValid = true;

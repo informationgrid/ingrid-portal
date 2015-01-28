@@ -35,6 +35,8 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.caller.IMdekCallerCatalog;
 import de.ingrid.mdek.handler.ConnectionFacade;
@@ -42,11 +44,13 @@ import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.utils.IngridDocument;
 
+@Service
 public class SysListCache {
 
 	private final static Logger log = Logger.getLogger(SysListCache.class);
 
 	// Injected by Spring
+	@Autowired
 	private ConnectionFacade connectionFacade;
 
 	// Initialized by spring through the init method

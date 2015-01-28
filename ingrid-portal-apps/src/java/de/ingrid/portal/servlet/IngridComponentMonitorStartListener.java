@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.quartz.SchedulerException;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
 
@@ -50,6 +51,8 @@ public class IngridComponentMonitorStartListener implements ServletContextListen
     public void contextInitialized(ServletContextEvent arg0) {
         // start ibus communication
         try {
+            // initialize config and write necessary configuration files
+            PortalConfig.getInstance();
             IBUSInterfaceImpl.getInstance();
         } catch (Exception e) {
             log.error("Failed to start iBus communication.", e);

@@ -34,6 +34,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.security.AuthenticationProvider;
@@ -41,6 +44,7 @@ import de.ingrid.mdek.services.persistence.db.IDaoFactory;
 import de.ingrid.mdek.services.persistence.db.IEntity;
 import de.ingrid.mdek.services.persistence.db.IGenericDao;
 
+@Service
 public class MdekSecurityUtils {
 
 	private final static Logger log = Logger.getLogger(MdekSecurityUtils.class);
@@ -50,6 +54,12 @@ public class MdekSecurityUtils {
 
 	// Injected by Spring
 	private static AuthenticationProvider authProvider;
+	
+	@Autowired
+	public MdekSecurityUtils(@Value("#{daoFactory}") IDaoFactory dao, AuthenticationProvider authProvider) {
+	    MdekSecurityUtils.daoFactory = dao;
+	    MdekSecurityUtils.authProvider = authProvider;
+	}
 
 	public static UserData getCurrentPortalUserData() {
 	    return getCurrentPortalUserData(null);

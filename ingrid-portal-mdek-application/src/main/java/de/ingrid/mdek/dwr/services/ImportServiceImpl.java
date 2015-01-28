@@ -41,6 +41,8 @@ import java.util.zip.ZipInputStream;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.ProtocolInfoBean;
@@ -53,6 +55,7 @@ import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 
+@Service
 public class ImportServiceImpl {
 
 	private final static Logger log = Logger.getLogger(ImportServiceImpl.class);	
@@ -62,8 +65,11 @@ public class ImportServiceImpl {
     byte[] buffer = new byte[2048];
     
 	// Injected by Spring
+    @Autowired
 	private CatalogRequestHandler catalogRequestHandler;
+    @Autowired
 	private DataMapperFactory dataMapperFactory;
+    @Autowired
 	private ProtocolFactory protocolFactory;
 	
 	private static Map<String,ProtocolInfoBean> controlMap = new ConcurrentHashMap<String, ProtocolInfoBean>();
