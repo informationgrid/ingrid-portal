@@ -40,7 +40,6 @@
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.6.jar"/>
     <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc14.jar"/>
 
-    <property name="prop-config"                   value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/config.override.properties"/>
     <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties"/>
     <property name="xml-hibernate-portal-apps"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/hibernate.cfg.xml"/>
     <property name="xml-hibernate-portal-mdek"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/classes/hibernate.cfg.xml"/>
@@ -393,8 +392,8 @@
     <target name="configurePortal">
     	<echo>Schreibe iBus Konfiguration in config.override.properties (Ingrid-Portal-Apps)
         </echo>
-        <touch file="${prop-config}"/>
-        <propertyfile file="${prop-config}">
+        <touch file="${prop-ingrid-portal-apps}"/>
+        <propertyfile file="${prop-ingrid-portal-apps}">
             <entry key="communication.clientName" value="${clientName}" />
             <entry key="communications.ibus" value="${serverName},${serverIp},${serverPort}" />
         </propertyfile>
