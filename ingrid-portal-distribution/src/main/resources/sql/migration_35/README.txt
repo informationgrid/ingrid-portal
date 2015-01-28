@@ -1,30 +1,58 @@
 
-    Beispielvorgehen für Migration Portaldatenbank von InGrid 3.4 nach InGrid 3.5
-    =============================================================================
+    Beispielvorgehen für Migration Portaldatenbank von InGrid 3.4 (Jetspeed 2.1) nach InGrid 3.5 (Jetspeed 2.3)
+    ===========================================================================================================
 
-Vorgehen Migration von Portal Datenbank von blunt (Jetspeed 2.1) nach Jetspeed 2.1.4 nach Jetspeed 2.2.2 (gleiches Schema wie 2.3):
+Nachfolgende Dokumentation orientiert sich an der ausgeführten Migration der PortalU Datenbank (blunt).
+
+Genaue Dokumentation der Jetspeed Tools findet sich hier:
     http://portals.apache.org/jetspeed-2/guide-migration.html
     http://portals.apache.org/jetspeed-2/guide-etl-migration.html
+    
+Für MySQL existiert das Script:
+    migrate.sh
+das die nachfolgenden Migrationsschritte automatisiert ausführt.
+Für Oracle ist eine Automatisierung schwer möglich (Erzeugung neue User etc.), hier bitte die nachfolgend beschriebenen Schritte ausführen (Orientierung auch über migrate.sh).
 
-- von blunt nach lokal einlesen
-    - auf blunt exportieren:
-        mysqldump -u root -p --add-drop-table ingrid-portal > ingrid-portal_20141203.sql
-    - lokal Datenbank erzeugen:
-        mysql -u root -p
-        CREATE DATABASE ingrid_portalu DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-        quit
-    - lokal einspielen (windows):
-        mysql -u root -p ingrid_portalu < ingrid-portal_20141203.sql > mysql_import_ingrid-portal_out.txt
 
-- Portal Datenbank mit InGrid Script auf ingrid_lookup 3.4.1 heben, wenn noch nicht geschehen (update_3.4.1_mysql.sql)
-        
-- Portal Datenbank mit sql Skripten auf Jetspeed Version 214 migrieren (mysql_migrate_ingrid-portal.sql, oracle_migrate_ingrid-portal.sql)
+Migrationsschritte:
+-------------------
 
+  (- Spezialfall für blunt !
+    - PortalU Datenbank von blunt nach lokal einlesen
+        - auf blunt exportieren:
+            mysqldump -u root -p --add-drop-table ingrid-portal > ingrid-portal_20141203.sql
+        - lokal Datenbank erzeugen:
+            mysql -u root -p
+            CREATE DATABASE ingrid_portalu DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+            quit
+        - lokal einspielen (windows):
+            mysql -u root -p ingrid_portalu < ingrid-portal_20141203.sql > mysql_import_ingrid-portal_out.txt
+  )
+
+-------------------
+- Portal Datenbank mit InGrid Skript auf ingrid_lookup 3.4.1 heben, wenn noch nicht geschehen.
+    Skript: update_3.4.1_mysql.sql
+
+-------------------
+- Portal Datenbank mit sql Skript auf Jetspeed Version 214 migrieren.
+    Beim Ausführen des Skripts können Fehler auftreten, falls Indexe etc. schon angelegt wurden (eventuell manuell).
+    In der Skriptausgabe wird auf mögliche Fehler vor der Ausführung hingewiesen.
+    Diese können dann ignoriert werden.
+
+    Skript (MySQL, Oracle):
+        mysql_migrate_ingrid-portal.sql
+        oracle_migrate_ingrid-portal.sql)
+
+-------------------
 - Vorbereitung Export der Datenbank via Jetspeed Tools:
   - Aus der Portal Datenbank alle InGrid Permissions löschen !!! Diese können zwar exportiert, aber nicht importiert werden (und werden nicht mehr benötigt) !
 
-        DELETE FROM principal_permission WHERE PERMISSION_ID IN (SELECT PERMISSION_ID FROM security_permission WHERE CLASSNAME LIKE 'de.ingrid.portal.security.permission%');
-        DELETE FROM security_permission WHERE CLASSNAME LIKE 'de.ingrid.portal.security.permission%';
+    Skript:
+        delete_permissions.sql
+        
+            Inhalt:
+            DELETE FROM principal_permission WHERE PERMISSION_ID IN (SELECT PERMISSION_ID FROM security_permission WHERE CLASSNAME LIKE 'de.ingrid.portal.security.permission%');
+            DELETE FROM security_permission WHERE CLASSNAME LIKE 'de.ingrid.portal.security.permission%';
 
   (- Spezialfall für blunt !
      Die blunt ingrid-portal Datenbank ist korrupt ! Der Export (nä. Schritt) wirft Fehler beim Erzeugen der Clients !
@@ -45,13 +73,20 @@ Vorgehen Migration von Portal Datenbank von blunt (Jetspeed 2.1) nach Jetspeed 2
             UPDATE client_to_capability SET CAPABILITY_ID = 21 WHERE CAPABILITY_ID = 23;
   )
 
-- Mit JS 2.1.4 Installer die Datenbank exportieren
-  s. http://portals.apache.org/jetspeed-2/guide-etl-migration.html
+-------------------
+- Mit JS 2.1.4 Installer die Datenbank in externe Files exportieren
+    Download Installer
+      s. http://ftp.fau.de/apache/portals/jetspeed-2/binaries/jetspeed-2.1.4-installer.jar
+    Manual "Exporting a Jetspeed database"
+      s. http://portals.apache.org/jetspeed-2/guide-etl-migration.html
 
-    java -jar jetspeed-2.1.4-installer.jar
+    > java -jar jetspeed-2.1.4-installer.jar
         ...
-        - lokalen Treiber wählen: mysql-connector-java-5.1.6.jar
+        - lokalen Treiber wählen:
+            MySQL: mysql-connector-java-5.1.6.jar
+            Oracle: ojdbc14.jar
 
+-------------------
 - Neue Portal Datenbank erzeugen (im Bsp. ingrid_portal_new)
     MySQL:
         > mysql -u root -p
@@ -60,13 +95,23 @@ Vorgehen Migration von Portal Datenbank von blunt (Jetspeed 2.1) nach Jetspeed 2
     Oracle:
         Neuen Benutzer "ingrid_portal_new" anlegen
 
-- mit JS 2.2.* Installer bestehende leere Datenbank initialisieren
-    java -jar jetspeed-installer-2.2.2.jar
+-------------------
+- mit JS 2.2.2 Installer bestehende leere Datenbank initialisieren
+    Download Installer
+      s. http://ftp.fau.de/apache/portals/jetspeed-2/binaries/jetspeed-installer-2.2.2.jar
+    Manual "Initializing a Jetspeed database"
+      s. http://portals.apache.org/jetspeed-2/guide-etl-migration.html
 
-- mit JS 2.2.* Installer die exportierten Daten importieren
+    > java -jar jetspeed-installer-2.2.2.jar
 
-    - java -jar jetspeed-installer-2.2.2.jar
+-------------------
+- mit JS 2.2.2 Installer die exportierten Daten importieren
+    Manual "Importing a Jetspeed database"
+      s. http://portals.apache.org/jetspeed-2/guide-etl-migration.html
 
+    > java -jar jetspeed-installer-2.2.2.jar
+
+-------------------
 - Ingrid Tabellen exportieren und importieren !
     MySQL:
         Export z.B. via phpMyAdmin (ingrid_* + qrtz_* Tabellen)

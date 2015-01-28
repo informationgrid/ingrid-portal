@@ -1,6 +1,6 @@
 
--- Update 2.1 to 2.1.2
--- =========================
+-- Update Jetspeed 2.1 to 2.1.2
+-- ============================
 
 -- ---------------------------------------------------------------------------
 -- ADMIN_ACTIVITY
@@ -38,8 +38,8 @@ CREATE TABLE USER_ACTIVITY
   DESCRIPTION VARCHAR(128));
 
 
--- Update 2.1.2 to 2.1.3
--- =========================
+-- Update Jetspeed 2.1.2 to 2.1.3
+-- ==============================
 
 -- Schon vorhanden !?
 -- CREATE INDEX IX_PREFS_NODE_1 ON PREFS_NODE (PARENT_NODE_ID);
@@ -50,8 +50,8 @@ ALTER TABLE PREFS_NODE ADD CONSTRAINT FK_PREFS_NODE_1 FOREIGN KEY (PARENT_NODE_I
 ALTER TABLE PREFS_PROPERTY_VALUE ADD CONSTRAINT FK_PREFS_PROPERTY_VALUE_1 FOREIGN KEY (NODE_ID) REFERENCES PREFS_NODE (NODE_ID) ON DELETE CASCADE;
 
 
--- Update 2.1.3 to 2.1.4
--- =========================
+-- Update Jetspeed 2.1.3 to 2.1.4
+-- ==============================
 
 ALTER TABLE PARAMETER MODIFY PARAMETER_VALUE MEDIUMTEXT NULL;
 
