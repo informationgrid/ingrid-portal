@@ -30,8 +30,8 @@
 	<includeBaseDirectory>false</includeBaseDirectory>
 	<fileSets>
 		<fileSet>
-			<directory>src/main/resources/apache-tomcat-7.0.56</directory>
-			<outputDirectory>distribution/apache-tomcat-7.0.56</outputDirectory>
+			<directory>src/main/resources/apache-tomcat</directory>
+			<outputDirectory>distribution/apache-tomcat</outputDirectory>
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/conf</directory>
@@ -39,7 +39,7 @@
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/conf/tomcat</directory>
-			<outputDirectory>distribution/apache-tomcat-7.0.56/conf/Catalina/localhost</outputDirectory>
+			<outputDirectory>distribution/apache-tomcat/conf/Catalina/localhost</outputDirectory>
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/sql</directory>
@@ -56,7 +56,7 @@
 	</fileSets>
   <dependencySets>
     <dependencySet>
-      <outputDirectory>distribution/apache-tomcat-7.0.56/lib</outputDirectory>
+      <outputDirectory>distribution/apache-tomcat/lib</outputDirectory>
       <unpack>false</unpack>
       <scope>runtime</scope>
       <includes>
@@ -67,7 +67,7 @@
       </includes>
     </dependencySet>
     <dependencySet>
-      <outputDirectory>distribution/apache-tomcat-7.0.56/shared/lib</outputDirectory>
+      <outputDirectory>distribution/apache-tomcat/shared/lib</outputDirectory>
       <unpack>false</unpack>
       <scope>runtime</scope>
 <!--
@@ -105,7 +105,7 @@ dom4j: otherwise problems in portal-base and portal-app webapp, when writing PSM
     </dependencySet>
     <dependencySet>
       <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
-      <outputDirectory>distribution/apache-tomcat-7.0.56/webapps</outputDirectory>
+      <outputDirectory>distribution/apache-tomcat/webapps</outputDirectory>
       <unpack>false</unpack>  
       <scope>runtime</scope>      
       <includes>
