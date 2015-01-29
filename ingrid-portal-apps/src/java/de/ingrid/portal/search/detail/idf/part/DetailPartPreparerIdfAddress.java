@@ -34,6 +34,7 @@ import org.apache.velocity.context.Context;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsVelocity;
@@ -97,9 +98,23 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
 	
 	public ArrayList<HashMap<String, Object>> getReference(String xpathExpression, boolean isObject) {
 		ArrayList<HashMap<String, Object>> linkList = new ArrayList<HashMap<String, Object>>();
+		
+		int limitReferences = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_VIEW_LIMIT_REFERENCES, 100);
+		
 		if(XPathUtils.nodeExists(rootNode, xpathExpression)){
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			for (int i=0; i<nodeList.getLength();i++){
+				
+				if (i >= limitReferences){
+					if (linkList.size() >= limitReferences){
+						HashMap<String, Object> link = new HashMap<String, Object>();
+			        	link.put("type", "html");
+			        	link.put("body", messages.getString("info_limit_references"));
+			        	linkList.add(link);
+					}
+					break;
+				}
+				
 				Node node = nodeList.item(i);
 				String uuid = "";
 				String title = "";

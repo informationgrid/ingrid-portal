@@ -271,6 +271,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS = "portal.detail.view.hidden.keywords";
     
+    public static final String PORTAL_DETAIL_VIEW_LIMIT_REFERENCES = "portal.detail.view.limit.references";
+    
     // private stuff
     private static PortalConfig instance = null;
 

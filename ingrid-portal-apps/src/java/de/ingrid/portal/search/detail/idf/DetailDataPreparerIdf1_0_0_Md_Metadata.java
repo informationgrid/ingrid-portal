@@ -1195,7 +1195,21 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			ArrayList linkList = new ArrayList();
 			ArrayList linkListCoupledData = new ArrayList();
+			
+			int limitReferences = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_VIEW_LIMIT_REFERENCES, 100);
+			
 			for (int i=0; i<nodeList.getLength();i++){
+				
+				if (i >= limitReferences){
+					if (linkList.size() >= limitReferences){
+						HashMap<String, Object> link = new HashMap<String, Object>();
+			        	link.put("type", "html");
+			        	link.put("body", messages.getString("info_limit_references"));
+			        	linkList.add(link);
+					}
+					break;
+				}
+				
 				Node node = nodeList.item(i);
 				String uuid = "";
 				String title = "";
