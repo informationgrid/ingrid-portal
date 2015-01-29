@@ -86,7 +86,7 @@ public class SearchCatalogThesaurusPortlet extends SearchCatalog {
             throws PortletException, IOException {
 
     	IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                 request.getLocale()));
+                 request.getLocale()), request.getLocale());
     	
 		Context context = getContext(request);
 		if(request.getParameter("scrollTop") != null)

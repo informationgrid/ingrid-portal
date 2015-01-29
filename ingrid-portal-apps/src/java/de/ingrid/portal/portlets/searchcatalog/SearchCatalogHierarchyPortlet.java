@@ -64,7 +64,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             throws PortletException, IOException {
         
     	IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
        
     	Context context = getContext(request);
 

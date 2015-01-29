@@ -121,7 +121,7 @@ self.focus();
 #if($lang && $lang.toString() == 'en')
 	#set($langCode = "en_")
 #end
-#set($currentPage = $site.getPage().url)
+#set($currentPage = $site.getPageOrTemplate().url)
 ##if($currentPage == "/main-maps.psml")
 ##<div id="identity" class="motiv_karten">
 ###elseif($currentPage == "/search-detail.psml")

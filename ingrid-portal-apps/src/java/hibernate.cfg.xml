@@ -42,7 +42,7 @@
         <!-- Do NOT use Oracle10gDialect, not supported in Portal -->
 <!--    <property name="dialect">org.hibernate.dialect.OracleDialect</property> -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-
+<!--	<property name="dialect">org.hibernate.dialect.DerbyDialect</property> -->
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>
 
@@ -61,14 +61,5 @@
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridCMSItem.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridCMS.hbm.xml"/>
         <mapping resource="de/ingrid/portal/hibernate/resources/IngridTinyUrlSource.hbm.xml"/>
-		<mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedCredential.hbm.xml"/>
-        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPermission.hbm.xml"/>
-        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPrefsNode.hbm.xml"/>
-        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPrefsPropertyValue.hbm.xml"/>
-        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPrincipal.hbm.xml"/>
-        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedPrincipalPermission.hbm.xml"/>
-        <mapping resource="de/ingrid/portal/hibernate/resources/IngridJetspeedUserRole.hbm.xml"/>
-		<mapping resource="de/ingrid/portal/hibernate/resources/IngridFragmentPref.hbm.xml"/>
-		<mapping resource="de/ingrid/portal/hibernate/resources/IngridFragmentPrefValue.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

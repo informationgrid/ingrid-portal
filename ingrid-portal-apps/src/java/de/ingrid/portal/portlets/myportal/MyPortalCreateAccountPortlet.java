@@ -34,7 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.prefs.Preferences;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -48,6 +47,7 @@ import javax.portlet.RenderResponse;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.PortalAdministration;
 import org.apache.jetspeed.exception.JetspeedException;
+import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
@@ -145,7 +145,12 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
         List values = getInitParameterList(config, IP_RULES_VALUES);
         rules = new HashMap();
         for (int ix = 0; ix < ((names.size() < values.size()) ? names.size() : values.size()); ix++) {
-            rules.put(names.get(ix), values.get(ix));
+        // jetspeed 2.3 reads rule key/values vice versa than Jetspeed 2.1 !!!
+        // see PortalAdministrationImpl.registerUser
+        // 2.1: ProfilingRule rule = profiler.getRule((String)entry.getKey());
+        // 2.3: ProfilingRule rule = profiler.getRule(entry.getValue());
+//            rules.put(names.get(ix), values.get(ix));
+            rules.put(values.get(ix), names.get(ix));
         }
 
         this.returnUrlPath = config.getInitParameter(IP_RETURN_URL);
@@ -160,7 +165,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         CreateAccountForm f = (CreateAccountForm) Utils.getActionForm(request, CreateAccountForm.SESSION_KEY,
@@ -172,10 +177,13 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             User user = null;
             try {
                 user = userManager.getUser(userName);
-                Preferences pref = user.getUserAttributes();
-                String userConfirmId = pref.get("user.custom.ingrid.user.confirmid", "invalid");
+            	Map<String, String> pref = user.getInfoMap();
+                String userConfirmId = pref.get("user.custom.ingrid.user.confirmid");
+                userConfirmId = (userConfirmId == null ? "invalid" : userConfirmId);
                 if (userConfirmId.equals(newUserGUID)) {
-                    userManager.setPasswordEnabled(userName, true);
+                	PasswordCredential pwc = userManager.getPasswordCredential(user);
+                    pwc.setEnabled(true);
+                    userManager.storePasswordCredential(pwc);
                     context.put("success", "true");
                     response.setTitle(messages.getString("account.confirmed.title"));
                     request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_ACCOUNT_CONFIRM_DONE);
@@ -227,7 +235,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             IOException {
 
         Locale locale = request.getLocale();
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale));
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale), locale);
 
         actionResponse.setRenderParameter("cmd", request.getParameter("cmd"));
 
@@ -280,8 +288,10 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
 
-            // TODO set this to false in production env
-            userManager.setPasswordEnabled(userName, false);
+            User user = userManager.getUser(userName);
+            PasswordCredential pwc = userManager.getPasswordCredential(user);
+            pwc.setEnabled(false);
+            userManager.storePasswordCredential(pwc);
 
             String returnUrl = generateReturnURL(request, actionResponse, userName, confirmId);
 

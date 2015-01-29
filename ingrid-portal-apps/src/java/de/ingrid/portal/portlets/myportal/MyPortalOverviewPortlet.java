@@ -77,7 +77,7 @@ public class MyPortalOverviewPortlet extends AbstractVelocityMessagingPortlet {
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         // check for just logged in users
@@ -113,7 +113,7 @@ public class MyPortalOverviewPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         if (user != null) {
-            context.put("userAttributes", user.getUserAttributes());
+            context.put("userAttributes", user.getInfoMap());
         }
 
         super.doView(request, response);

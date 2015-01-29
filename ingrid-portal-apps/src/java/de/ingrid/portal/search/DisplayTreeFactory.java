@@ -217,7 +217,10 @@ public class DisplayTreeFactory {
             topic = (Topic) results[i];
             DisplayTreeNode node = new DisplayTreeNode("" + i, topic.getTopicName(), false);
             node.setType(DisplayTreeNode.GENERIC);
-            node.setParent(root);
+            // NO LEADS TO java.lang.StackOverflowError !!! Why ?
+            // Executed like this in various trees in portal (e.g. tree in SearchCatalogThesaurusPortlet ...) !
+            // seems to cause endless "reference loop": child <-> parent !?
+//            node.setParent(root);
             node.put("topic", results[i]);
             root.addChild(node);
         }

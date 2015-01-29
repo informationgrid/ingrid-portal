@@ -24,6 +24,8 @@ package de.ingrid.mdek.dwr.services;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressExtSearchParamsBean;

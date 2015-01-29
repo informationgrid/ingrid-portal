@@ -32,6 +32,9 @@
             <action type="add" dev="wemove" issue="REDMINE-524">
                 Added license header to all source files for Open Source migration.
             </action>
+            <action type="update" dev="wemove" issue="REDMINE-304">
+                Portal: Update to Jetspeed 2.3, Tomcat 7, Java 8.
+            </action>
         </release>
 
         <release version="3.4.x-SNAPSHOT" date="????-??-??">

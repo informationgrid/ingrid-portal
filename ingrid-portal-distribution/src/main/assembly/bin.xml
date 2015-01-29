@@ -30,8 +30,8 @@
 	<includeBaseDirectory>false</includeBaseDirectory>
 	<fileSets>
 		<fileSet>
-			<directory>src/main/resources/apache-tomcat-6.0.35</directory>
-			<outputDirectory>distribution/apache-tomcat-6.0.35</outputDirectory>
+			<directory>src/main/resources/apache-tomcat</directory>
+			<outputDirectory>distribution/apache-tomcat</outputDirectory>
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/conf</directory>
@@ -39,7 +39,7 @@
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/conf/tomcat</directory>
-			<outputDirectory>distribution/apache-tomcat-6.0.35/conf/Catalina/localhost</outputDirectory>
+			<outputDirectory>distribution/apache-tomcat/conf/Catalina/localhost</outputDirectory>
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/sql</directory>
@@ -56,7 +56,7 @@
 	</fileSets>
   <dependencySets>
     <dependencySet>
-      <outputDirectory>distribution/apache-tomcat-6.0.35/lib</outputDirectory>
+      <outputDirectory>distribution/apache-tomcat/lib</outputDirectory>
       <unpack>false</unpack>
       <scope>runtime</scope>
       <includes>
@@ -67,9 +67,16 @@
       </includes>
     </dependencySet>
     <dependencySet>
-      <outputDirectory>distribution/apache-tomcat-6.0.35/shared/lib</outputDirectory>
+      <outputDirectory>distribution/apache-tomcat/shared/lib</outputDirectory>
       <unpack>false</unpack>
       <scope>runtime</scope>
+<!--
+ehcache: needed for initialization of MdekClientCaller (mdek-api.jar).
+jsr107cache: transitive dependency of ehcache, needed !?
+xstream / xpp3_min: transitive dependencies of ingrid-utils, e.g. needed in ingrid-mdek webapp.
+dom4j: otherwise problems in portal-base and portal-app webapp, when writing PSML file of new user to file system (when PSML not in database mode) !?:
+       java.lang.ClassCastException: org.dom4j.DocumentFactory cannot be cast to org.dom4j.DocumentFactory
+-->
       <includes>
         <include>de.ingrid:ingrid-utils</include>
         <include>net.sf.ehcache:ehcache</include>
@@ -77,22 +84,28 @@
         <include>de.ingrid:ingrid-communication</include>
         <include>de.ingrid:ingrid-communication-authentication</include>
         <include>de.ingrid.mdek:ingrid-mdek-api</include>
-        <include>de.ingrid:ingrid-portal-utils</include>
         <include>org.apache.portals.jetspeed-2:jetspeed-api</include>
         <include>org.apache.portals.jetspeed-2:jetspeed-commons</include>
         <include>mysql:mysql-connector-java</include>
         <include>ojdbc:ojdbc</include>
-        <include>org.apache.pluto:pluto</include>
+        <include>org.apache.portals.pluto:pluto-taglib</include> 
+        <include>org.apache.portals.pluto:pluto-container-api</include> 
+        <include>javax.ccpp:ccpp</include> 
+        <include>org.apache.derby:derby</include> 
         <include>org.apache.portals.bridges:portals-bridges-common</include>
-        <include>portlet-api:portlet-api</include>
+        <include>org.apache.portals:portlet-api_2.0_spec</include>
         <include>xpp3:xpp3_min</include>
         <include>com.thoughtworks.xstream:xstream</include>
         <include>backport-util-concurrent:backport-util-concurrent</include>
+<!-- commented again, cause works with PSML in database, see comment above -->
+<!--
+        <include>dom4j:dom4j</include>
+-->
       </includes>
     </dependencySet>
     <dependencySet>
       <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
-      <outputDirectory>distribution/apache-tomcat-6.0.35/webapps</outputDirectory>
+      <outputDirectory>distribution/apache-tomcat/webapps</outputDirectory>
       <unpack>false</unpack>  
       <scope>runtime</scope>      
       <includes>

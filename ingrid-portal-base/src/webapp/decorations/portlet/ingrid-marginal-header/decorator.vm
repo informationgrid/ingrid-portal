@@ -4,12 +4,12 @@
 #set($actions = $decoration.actions)
 #set($_actions = $layoutDecoration.actions)
 
-<!-- Begin: Fragment: ${f.id} Decoration: ${decoratorId} -->
+## Begin: Fragment: ${f.id} Decoration: ${decoratorId}
 <div class="portlet">
   	#if (!$jetspeed.isHidden($f) || $jetspeed.WindowState != "minimized")
     $f.renderedContent
     #end
 </div>
-<!-- END: Fragment: ${f.id} Decoration: ${decoratorId} -->
+## END: Fragment: ${f.id} Decoration: ${decoratorId}
 
 

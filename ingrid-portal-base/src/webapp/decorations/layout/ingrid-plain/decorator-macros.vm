@@ -34,7 +34,7 @@
 
 #* include identity component *#
 #macro (includeIdentityArea)
-  #set($currentPage = $site.getPage().url)
+  #set($currentPage = $site.getPageOrTemplate().url)
   #set($langCode = '')
   #if($preferedLocale.toString().startsWith('en'))
     #set($langCode = "en_")
@@ -115,8 +115,8 @@
 <!-- logged on message -->
 #if($jetspeed.getLoggedOn())
     #set($userAttributes = $jetspeed.getUserProperties())
-    #set($userNameGiven = $userAttributes.get("user.name.given", null))
-    #set($userNameFamily = $userAttributes.get("user.name.family", null))
+    #set($userNameGiven = $userAttributes.get("user.name.given"))
+    #set($userNameFamily = $userAttributes.get("user.name.family"))
     
     #if($userNameGiven)
     #set ($salutation = " $userNameGiven")
@@ -133,7 +133,7 @@
 
 #* include main navigation component *#
 #macro (includeMainNavigation $_menu)
-    #set($currentPage = $site.getPage().url)
+    #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #set($tabTitle = $element.getTitle($preferedLocale))
@@ -201,7 +201,7 @@
 
 #* include sub navigation component *#
 #macro (includeSubNavigation $_menu $_attached)
-    #set($currentPage = $site.getPage().url)
+    #set($currentPage = $site.getPageOrTemplate().url)
     #if ($_attached)
         <div class="float_left">
     #else
@@ -308,7 +308,7 @@
         <li><a href="$linkUrl" target="_new" title="$linkTitle">${linkName}</a>$postfix</li>
     </noscript>
   #elseif($linkTitle == "ingrid.page.language")
-    $jetspeed.renderPortletEntity("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
+    $jetspeed.renderPortletWindow("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
   #else
     <li><a href="$linkUrl" title="$!linkTitle">${linkName}</a>$postfix</li>
   #end  
@@ -316,7 +316,7 @@
 
 ## include service navigation component
 #macro (includeServiceNavigation $_menu)
-    #set($currentPage = $site.getPage().url)
+    #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #if($lastType && $lastType != "separator")

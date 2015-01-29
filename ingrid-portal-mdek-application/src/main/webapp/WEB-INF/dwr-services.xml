@@ -1,0 +1,106 @@
+<beans default-init-method="init" default-destroy-method="destroy" 
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+                
+    <!-- Services -->
+    
+    <bean id="ctService" class="de.ingrid.mdek.dwr.services.cts.CoordinateTransformationServiceImpl" />
+    <bean id="getCapabilitiesService" class="de.ingrid.mdek.dwr.services.GetCapabilitiesService" />
+    <bean id="httpService" class="de.ingrid.mdek.dwr.services.HttpService" />
+    <bean id="utilityService" class="de.ingrid.mdek.dwr.services.UtilityServiceImpl" />
+    <bean id="versionInformation" class="de.ingrid.mdek.beans.VersionInformation" />
+    
+    <bean id="addressService"
+        class="de.ingrid.mdek.dwr.services.AddressServiceImpl">
+        <property name="addressRequestHandler">
+            <ref bean="addressRequestHandler" />
+        </property>
+    </bean>
+    <bean id="backendService"
+        class="de.ingrid.mdek.dwr.services.BackendServiceImpl">
+        <property name="generalRequestHandler">
+            <ref bean="generalRequestHandler" />
+        </property>
+    </bean>
+    <bean id="catalogService"
+        class="de.ingrid.mdek.dwr.services.CatalogServiceImpl">
+        <property name="catalogRequestHandler">
+            <ref bean="catalogRequestHandler" />
+        </property>
+    </bean>
+    <bean id="catalogManagementService"
+        class="de.ingrid.mdek.dwr.services.CatalogManagementServiceImpl">
+        <property name="mdekJobHandler">
+            <ref bean="mdekJobHandler" />
+        </property>
+        <property name="connectionFacade">
+            <ref bean="connectionFacade" />
+        </property>
+        <property name="catalogRequestHandler">
+            <ref bean="catalogRequestHandler" />
+        </property>
+        <property name="codelistService"><ref bean="codeListService" /></property>
+    </bean>
+
+    <bean id="exportService"
+        class="de.ingrid.mdek.dwr.services.ExportServiceImpl">
+        <property name="catalogRequestHandler">
+            <ref bean="catalogRequestHandler" />
+        </property>
+    </bean>
+    <bean id="importService"
+        class="de.ingrid.mdek.dwr.services.ImportServiceImpl">
+        <property name="catalogRequestHandler">
+            <ref bean="catalogRequestHandler" />
+        </property>
+        <property name="dataMapperFactory">
+            <ref bean="dataMapperFactory" />
+        </property>
+        <property name="protocolFactory">
+            <ref bean="protocolFactory" />
+        </property>
+    </bean>
+    <bean id="objectService"
+        class="de.ingrid.mdek.dwr.services.ObjectServiceImpl">
+        <property name="objectRequestHandler">
+            <ref bean="objectRequestHandler" />
+        </property>
+    </bean>
+    <bean id="queryService"
+        class="de.ingrid.mdek.dwr.services.QueryServiceImpl">
+        <property name="queryRequestHandler">
+            <ref bean="queryRequestHandler" />
+        </property>
+    </bean>
+    <bean id="securityService"
+        class="de.ingrid.mdek.dwr.services.SecurityServiceImpl">
+        <property name="securityRequestHandler">
+            <ref bean="securityRequestHandler" />
+        </property>
+        <property name="authProvider">
+            <ref bean="authenticationProvider" />
+        </property>
+    </bean>
+    <bean id="treeService"
+        class="de.ingrid.mdek.dwr.services.TreeServiceImpl">
+        <property name="objectRequestHandler">
+            <ref bean="objectRequestHandler" />
+        </property>
+        <property name="addressRequestHandler">
+            <ref bean="addressRequestHandler" />
+        </property>
+    </bean>
+    
+    <bean id="helpService"
+        class="de.ingrid.mdek.dwr.services.HelpServiceImpl">
+        <property name="daoFactory">
+            <ref bean="daoFactory" />
+        </property>
+    </bean>
+                
+</beans>

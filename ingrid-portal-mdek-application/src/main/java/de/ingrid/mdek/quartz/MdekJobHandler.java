@@ -31,6 +31,8 @@ import org.quartz.SchedulerException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
@@ -47,6 +49,7 @@ import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.utils.IngridDocument;
 
+@Service
 public class MdekJobHandler implements BeanFactoryAware {
 
 	private final static Logger log = Logger.getLogger(MdekJobHandler.class);
@@ -54,8 +57,12 @@ public class MdekJobHandler implements BeanFactoryAware {
 	// Spring Bean Factory for lookup of job specific dependencies
 	private BeanFactory beanFactory;
 
+	@Autowired
 	private Scheduler scheduler;
+	
+	@Autowired
 	private ConnectionFacade connectionFacade;
+	
 	private Map<String, MdekJob> jobMap;
 
 	public enum JobType { URL_VALIDATOR, SNS_UPDATE, SNS_LOCATION_UPDATE }

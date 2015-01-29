@@ -35,7 +35,7 @@ limitations under the License.
         #set($decorator = $myFragment.getDecorator())
  #end
  
-<!-- Decorator  $decorator  ${decoTop} - ${decoBottom}-->
+## Decorator  $decorator  ${decoTop} - ${decoBottom}
 #parse($myFragment.decoration.header)
 
 #set($layoutType =$portletConfig.getInitParameter("layoutType"))

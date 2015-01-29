@@ -27,12 +27,9 @@ package de.ingrid.portal.portlets.myportal;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.prefs.Preferences;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -41,17 +38,17 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.AdministrationEmailException;
 import org.apache.jetspeed.administration.PortalAdministration;
+import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
-import org.apache.jetspeed.security.UserPrincipal;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.PasswordForgottenForm;
@@ -112,7 +109,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         PasswordForgottenForm f = (PasswordForgottenForm) Utils.getActionForm(request,
@@ -164,26 +161,21 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         }
 
         try {
-            String userName = getUserName(user);
+            String userName = user.getName();
             String newPassword = admin.generatePassword();
-            userManager.setPassword(userName, null, newPassword);
 
-            Preferences pref = user.getUserAttributes();
-            String[] keys = pref.keys();
-            Map userAttributes = new HashMap();
-            if (keys != null) {
-                for (int ix = 0; ix < keys.length; ix++) {
-                    // TODO: how the hell do i tell the pref type
-                    // ASSuming they are all strings (sigh)
-                    userAttributes.put(keys[ix], pref.get(keys[ix], ""));
-                }
-            }
+            PasswordCredential credential = userManager.getPasswordCredential(user);
+    		credential.setPassword(null, newPassword);
+    		userManager.storePasswordCredential(credential);
+
+    		Map<String, String> userAttributes = new HashMap<String, String>();
+    		userAttributes.putAll(user.getInfoMap());
             // special attributes
             userAttributes.put(CTX_NEW_PASSWORD, newPassword);
             userAttributes.put(CTX_USER_NAME, userName);
             // map coded stuff
             Locale locale = request.getLocale();
-            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale));
+            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale), locale);
             String salutationFull = messages.getString("account.edit.salutation.option", (String) userAttributes
                     .get("user.name.prefix"));
             userAttributes.put("user.custom.ingrid.user.salutation.full", salutationFull);
@@ -224,19 +216,4 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         }
 
     }
-
-    protected String getUserName(User user) {
-        Principal principal = null;
-        Iterator principals = user.getSubject().getPrincipals().iterator();
-        while (principals.hasNext()) {
-            Object o = principals.next();
-            if (o instanceof UserPrincipal) {
-                principal = (Principal) o;
-                return principal.toString();
-            }
-
-        }
-        return null;
-    }
-
 }

@@ -1,25 +1,3 @@
-/*
- * **************************************************-
- * Ingrid Portal Apps
- * ==================================================
- * Copyright (C) 2014 wemove digital solutions GmbH
- * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
- * approved by the European Commission - subsequent versions of the
- * EUPL (the "Licence");
- * 
- * You may not use this work except in compliance with the Licence.
- * You may obtain a copy of the Licence at:
- * 
- * http://ec.europa.eu/idabc/eupl5
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the Licence is distributed on an "AS IS" basis,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the Licence for the specific language governing permissions and
- * limitations under the Licence.
- * **************************************************#
- */
 function i18n(key, arrInsertValues) {
     return Local.getLocalizedString(key, Local.languageCode, arrInsertValues);
 }
@@ -196,7 +174,7 @@ Local = {
         tWelcomeTextExpand: { en: 'Open and close all layers in the tree structure by one click', de: 'a) Klappt alle Dienste eines <strong>Partners</strong> oder eines <strong>Themas</strong> auf / zu<br/>b) Klappt die  Layer aller  <strong>Aktiven Dienste</strong> auf / zu'},
         tWelcomeTextZoomLayerExtent: { en: 'Zoom to a layer’s visible area', de: 'Zoomt auf den sichtbaren Bereich eines Kartendienstes oder Layers'},
         
-        tWelcomeTextInfo: { en: 'A click on the map reveals all available information for that location', de: 'Zeigt die Objektinformationen aller aktiven Layer für einen Standort auf der Karte an'},
+        tWelcomeTextInfo: { en: 'A click on the map reveals all available information for that location', de: 'Zeigt die Objektinformationen aller aktiven Layer f&uuml;r einen Standort auf der Karte an'},
         tWelcomeTextZoomPrev: { en: 'Go back to the previous extent', de: 'Nimmt schrittweise die vorangegangenen Aktionen zur&uuml;ck'},
         tWelcomeTextZoomNext: { en: 'Go forward to the next extent', de: 'F&uuml;hrt eine zur&uuml;ckgenommene Aktion erneut aus'},
         tWelcomeTextZoom: { en: 'Zoom to the full extent of the map', de: 'Zoomt auf die Originalgr&ouml;&szlig;e der Hintergrundkarte'},

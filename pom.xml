@@ -8,7 +8,7 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>3.5.0-SNAPSHOT</version>
+  <version>3.5.0-SNAPSHOT-R304</version>
   <name>InGrid Portal</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git</connection>
@@ -22,19 +22,79 @@
     <module>ingrid-portal-mdek-application</module>
     <module>ingrid-portal-distribution</module>
   </modules>
+
+  <properties>
+    <org.apache.portals.jetspeed.version>2.3.0-SNAPSHOT</org.apache.portals.jetspeed.version>
+<!--
+    <org.apache.portals.jetspeed.version>2.2.2</org.apache.portals.jetspeed.version>
+-->
+  </properties>
+
+    <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
+  <dependencyManagement>
+    <dependencies>
+<!-- INGRID -->
+      <dependency>
+        <groupId>de.ingrid</groupId>
+        <artifactId>ingrid-portal-utils</artifactId>
+        <version>3.5.0-SNAPSHOT-R304</version>
+      </dependency>
+<!-- JETSPEED -->
+<!-- Explicitly use jetspeed dependency management ! So we use the versions jetspeed uses ! -->
+      <dependency>
+        <groupId>org.apache.portals.jetspeed-2</groupId>
+        <artifactId>jetspeed-2</artifactId>
+        <version>${org.apache.portals.jetspeed.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+<!-- Then import our ingrid dependency versions ! Only versions not defined yet will be used (former jetspeed import has higher priority) ! -->
+      <dependency>
+        <groupId>de.ingrid</groupId>
+        <artifactId>ingrid-import-pom</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+	<!-- ==================== DEPENDENCIES ==================== -->
+  <dependencies>
+    <!-- Provided Dependencies (e.g. needed in portal-base and portal-apps) -->
+    <dependency>
+      <groupId>org.apache.portals</groupId>
+      <artifactId>portlet-api_2.0_spec</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.portals.jetspeed-2</groupId>
+      <artifactId>jetspeed-api</artifactId>
+      <!-- Set provided in top pom to avoid inclusion in webapp and problems with redundant classes ! -->
+      <scope>provided</scope>      
+    </dependency>
+    <dependency>
+      <groupId>org.apache.portals.pluto</groupId>
+      <artifactId>pluto-container-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.portals.jetspeed-2</groupId>
+      <artifactId>jetspeed-commons</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
   <issueManagement>
     <!-- Use JIRA instead of Redmine since the url is wrong generated otherwise! -->
     <system>JIRA</system>
     <url>https://redmine.wemove.com/issues/</url>
   </issueManagement>
-	<!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
-	<dependencyManagement>
-		<dependencies>
-            <!-- ADD TO base pom when 3.3.0 RELEASE process finished ! -->
-
-		</dependencies>
-	</dependencyManagement>
-	<!-- ==================== DEPENDENCIES ==================== -->
   <build>
     <finalName>ingrid-portal-project-${project.version}</finalName>
     <!-- <resources><resource><directory>src/main/resources</directory><excludes><exclude>*.xml</exclude><exclude>*.properties</exclude><exclude>*.bak</exclude></excludes></resource></resources>-->
@@ -92,5 +152,15 @@
       <name>Maven Repo InGrid</name>
       <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
+	<repository>
+      <id>apache.snapshots</id>
+      <url>https://repository.apache.org/content/repositories/snapshots</url>
+    </repository>
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>apache.snapshots</id>
+      <url>https://repository.apache.org/content/repositories/snapshots</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>

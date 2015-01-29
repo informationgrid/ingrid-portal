@@ -108,7 +108,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 
 		IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-				request.getLocale()));
+				request.getLocale()), request.getLocale());
 		Context context = getContext(request);
 		context.put("MESSAGES", messages);
 		context.put("UtilsString", new UtilsString());
@@ -124,7 +124,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		context.put("actionFormUpdate", cfUpdate);
 
 		String action = request.getParameter(Settings.PARAM_ACTION);
-		if (action == null) {
+		if (action == null || action.length() == 0) {
 	        // check if upgrade-job already exists, otherwise create it
 		    // do it here, so that this function isn't called so often
 		    checkForUpgradeClient();
@@ -364,7 +364,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		// ------------------doExport-------------------------
         } else if (request.getParameter("doExport") != null) {
             IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                    request.getLocale()));
+                    request.getLocale()), request.getLocale());
             // export jobs to a csv file
             jobHandler.exportJobs(request, messages);
             response.setRenderParameter("mode", "exportCSV");

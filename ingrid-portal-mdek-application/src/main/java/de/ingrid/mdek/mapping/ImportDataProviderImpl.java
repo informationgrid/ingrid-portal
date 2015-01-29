@@ -22,12 +22,17 @@
  */
 package de.ingrid.mdek.mapping;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 
+@Service
 public class ImportDataProviderImpl implements ImportDataProvider {
 
 	// Injected by Spring
+    @Autowired
 	private SysListCache sysListMapper;
 	
 	public void setSysListMapper(SysListCache sysListMapper) {

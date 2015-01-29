@@ -22,11 +22,11 @@
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="0" />
     </fragment>
-    <fragment id="main-service-info" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
+    <fragment id="main-service-info" type="portlet" decorator="ingrid-marginal-header" name="ingrid-portal-apps::InfoPortlet">
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/service_info.vm</value>
+        <value>/WEB-INF/templates/service_info_new.vm</value>
       </preference>
       <preference name="titleKey" readOnly="false">
         <value>serviceSearch.info.title</value>

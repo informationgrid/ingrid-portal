@@ -1,5 +1,5 @@
-#set ($userNameGiven = $userAttributes.get("user.name.given", null))
-#set ($userNameFamily = $userAttributes.get("user.name.family", null))
+#set ($userNameGiven = $userAttributes.get("user.name.given"))
+#set ($userNameFamily = $userAttributes.get("user.name.family"))
 #set ($externalLogin = $renderRequest.getAttribute('de.ingrid.user.auth.info'))
 
 #if($userNameGiven)

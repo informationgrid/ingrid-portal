@@ -3,7 +3,7 @@
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
     <!-- <artifactId>ingrid-base-pom</artifactId>-->
-    <version>3.5.0-SNAPSHOT</version>
+    <version>3.5.0-SNAPSHOT-R304</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -24,11 +24,7 @@
 		<dependency>
 			<groupId>de.ingrid</groupId>
 			<artifactId>ingrid-webmap-client</artifactId>
-            <version>${project.version}</version>
-			<!-- NO submodule ! So we have to hardcode version for release ! -->
-<!--
-            <version>3.5</version>
--->
+            <version>3.5.0-SNAPSHOT</version>
             <type>war</type>
 		</dependency>
         <dependency>
@@ -70,37 +66,28 @@
       <type>war</type>
     </dependency>
     <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-portal-utils</artifactId>
-    </dependency>
-    <dependency>
       <groupId>de.ingrid.mdek</groupId>
       <artifactId>ingrid-mdek-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-api</artifactId>
-      <version>2.1</version>
     </dependency>
     <dependency>
-      <groupId>portlet-api</groupId>
-      <artifactId>portlet-api</artifactId>
-	  <version>1.0</version>
+      <groupId>org.apache.portals</groupId>
+      <artifactId>portlet-api_2.0_spec</artifactId>
     </dependency>
     <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache</artifactId>
-	  <version>1.4.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-commons</artifactId>
-      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.portals.bridges</groupId>
       <artifactId>portals-bridges-common</artifactId>
-      <version>1.0.1</version>
     </dependency>
     <!-- Needed for assembly to be copied into tomcat/lib, see assembly descriptor assembly/bin.xml -->
     <dependency>
@@ -111,17 +98,26 @@
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-	  <version>1.2.14</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.pluto</groupId>
-      <artifactId>pluto</artifactId>
-      <version>1.0.1</version>
+      <groupId>org.apache.portals.pluto</groupId>
+      <artifactId>pluto-taglib</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.portals.pluto</groupId>
+      <artifactId>pluto-container-api</artifactId>
+    </dependency>
+	<dependency>
+	  <groupId>javax.ccpp</groupId>
+	  <artifactId>ccpp</artifactId>
+	</dependency>
+	<dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+	</dependency>
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-	  <version>5.1.6</version>
     </dependency>
   </dependencies>
   <build>
@@ -275,4 +271,24 @@
       <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
   </repositories>
+  <profiles>
+    <profile>
+        <id>update-installer</id>
+        <build>
+            <plugins>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-antrun-plugin</artifactId>
+                  <configuration>
+                      <tasks>
+                        <jar destfile="target/${project.build.finalName}-installer.jar" update="true">
+                          <fileset dir="src/main/resources/ant-installer" />
+                        </jar>
+                      </tasks>
+                  </configuration>
+              </plugin>
+            </plugins>
+        </build>
+    </profile>
+  </profiles>
 </project>

@@ -34,22 +34,19 @@
     <!-- =============================================
     	 = PROPERTIES								 =
     	 ============================================= -->
-    <property name="tomcat-artifact"               value="apache-tomcat-6.0.35"/>
+    <property name="tomcat-artifact"               value="apache-tomcat"/>
     <property name="installedTomcatContextDir"     value="${installDir}/${tomcat-artifact}/conf/Catalina/localhost"/>
     
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.6.jar"/>
     <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc14.jar"/>
 
-    <property name="xml-communication-apps"        value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/communication.xml"/>
-    <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties"/>
+    <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties"/>
     <property name="xml-hibernate-portal-apps"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/hibernate.cfg.xml"/>
     <property name="xml-hibernate-portal-mdek"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/classes/hibernate.cfg.xml"/>
+    
     <property name="mdek-app-class-path"           value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/classes"/>
-    <property name="prop-mdek-apps"                value="${mdek-app-class-path}/mdek.properties"/>
+    <property name="prop-mdek-apps"                value="${mdek-app-class-path}/mdek.override.properties"/>
     <property name="prop-datasource-mdek-apps"     value="${mdek-app-class-path}/default-datasource.properties"/>
-    <property name="xml-communication-mdek-apps"   value="${mdek-app-class-path}/communication.xml"/>
-    <property name="i-prop-mdek-igeAdminUser"      value="${mdek-app-class-path}/igeAdminUser.properties"/>
-    <property name="spring-xml"                    value="${mdek-app-class-path}/../configurations.xml"/>
     
     <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties"/>
     <property name="i-config-ingrid-webmap-client" value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/ingrid_webmap_client_config.xml"/>
@@ -58,7 +55,7 @@
     <property name="libraryDir"         value="${tomcat-artifact}/webapps/ROOT/META-INF" />
     <property name="libraryIdent"       value="MANIFEST.MF" />
     <property name="versionsWithConfigurations"  value="" />
-    <property name="minSupportedVersion" value="3.3.0" />
+    <property name="minSupportedVersion" value="3.5.0" />
 
     <import file="build-installer-utils.xml"  as="utils" />
     <import file="build-patch.xml"            as="patch" />
@@ -190,7 +187,7 @@
     <!-- =============================================
          = MAIN TARGETS                              =
          ============================================= -->
-    <target name="InstallPortal" depends="UnzipInstaller">
+    <target name="InstallPortal" depends="UnzipInstaller" unless="copyOracleDump">
         <!-- complete or without IGE -->
         <if>
             <equals arg1="${configMdek}" arg2="true" />
@@ -211,6 +208,16 @@
         <property name="ige.installed" value="true" />
         <property name="only.ige.installation" value="true" />
     </target>
+	
+    <target name="copyOracleDump">
+        <copy toDir="${installDir}">
+            <fileset dir="${basedir}/distribution/sql">
+                <include name="ingrid_portal_35_oracle_10_2.dmp"/>
+                <include name="ingrid_portal_35_oracle_10_2.log"/>
+                <include name="_README.txt"/>
+            </fileset>
+        </copy>
+	</target>
 
     <target name="StartInstallation" depends="configureProperties,configurePropertiesFromFiles">
         <runtarget target="MoveFiles" />
@@ -374,28 +381,30 @@
     	<move toDir="${installDir}/${tomcat-artifact}">
             <fileset dir="${basedir}/distribution/${tomcat-artifact}"/>
         </move>
-        <move toDir="${installDir}/sql">
+        <copy toDir="${installDir}/sql">
             <fileset dir="${basedir}/distribution/sql"/>
-        </move>
+        </copy>
         
         <chmod dir="${installDir}/${tomcat-artifact}/bin" perm="755" includes="**/*.sh"/>
         <mkdir dir="${installDir}/${tomcat-artifact}/logs"/>
     </target>
 
     <target name="configurePortal">
-    	<echo>Schreibe iBus Konfiguration in communication.xml (Ingrid-Portal-Apps)
+    	<echo>Schreibe iBus Konfiguration in config.override.properties (Ingrid-Portal-Apps)
         </echo>
-        <xmlproperty  file="${xml-communication-apps}" prefix="ipaXML"/>
-        <replace      file="${xml-communication-apps}" token="${ipaXML.communication.client(name)}"                           value="${clientName}"/>
-        <replace      file="${xml-communication-apps}" token="${ipaXML.communication.client.connections.server(name)}"        value="${serverName}"/>
-        <replace      file="${xml-communication-apps}" token="${ipaXML.communication.client.connections.server.socket(ip)}"   value="${serverIp}"/>
-        <replace      file="${xml-communication-apps}" token="${ipaXML.communication.client.connections.server.socket(port)}" value="${serverPort}"/>
+        <touch file="${prop-ingrid-portal-apps}"/>
+        <propertyfile file="${prop-ingrid-portal-apps}">
+            <entry key="communication.clientName" value="${clientName}" />
+            <entry key="communications.ibus" value="${serverName},${serverIp},${serverPort}" />
+        </propertyfile>
 
-        <echo>Schreibe iBus Admin-URL and CSW-Schnittstelle-URL in ingrid-portal-apps.xml (Ingrid-Portal-Apps)
+        <echo>Schreibe iBus Admin-URL und CSW-Schnittstelle-URL in ingrid-portal-apps.override.xml (Ingrid-Portal-Apps)
         </echo>
-        <property file="${prop-ingrid-portal-apps}" prefix="appPROP"/>
-        <replace  file="${prop-ingrid-portal-apps}" token="${appPROP.ibus.admin.url}"     value="http://${serverIp}/ibus-gui/"/>
-        <replace  file="${prop-ingrid-portal-apps}" token="${appPROP.csw.interface.url}"  value="${cswUrl}"/>
+        <touch file="${prop-ingrid-portal-apps}"/>
+        <propertyfile file="${prop-ingrid-portal-apps}">
+            <entry key="ibus.admin.url" value="http://${serverIp}/ibus-gui/" />
+            <entry key="csw.interface.url" value="${cswUrl}" />
+        </propertyfile>
         
         <!-- Writing username and password into xml files -->
         <xmlproperty  file="${installedTomcatContextDir}/ROOT.xml" prefix="cipXML"/>
@@ -426,9 +435,11 @@
     <target name="configureIge">
     	<echo>Schreibe Ingrid-Editor Konfiguration
         </echo>
-        <xmlproperty  file="${xml-communication-mdek-apps}" prefix="ipmaXML"/>
-        <replace      file="${xml-communication-mdek-apps}" token="${ipmaXML.communication.server(name)}"         value="/ingrid-group:ige-ibus"/>
-        <replace      file="${xml-communication-mdek-apps}" token="${ipmaXML.communication.server.socket(port)}"  value="${mdekServerPort}"/>
+        <touch file="${prop-mdek-apps}"/>
+        <propertyfile file="${prop-mdek-apps}">
+            <entry key="communication.server.name" value="/ingrid-group:ige-ibus" />
+            <entry key="communication.server.port" value="${mdekServerPort}" />
+        </propertyfile>
 
         <property file="${prop-datasource-mdek-apps}" prefix="madataPROP"/>
         <replace  file="${prop-datasource-mdek-apps}" token='driverClass=${madataPROP.hibernate.driverClass}' value='driverClass=${usedDriver}' />
@@ -437,10 +448,11 @@
         <replace  file="${prop-datasource-mdek-apps}" token='user=${madataPROP.hibernate.user}' value='user=${_mdekUser}'/>
         <replace  file="${prop-datasource-mdek-apps}" token='password=${madataPROP.hibernate.password}' value='password=${_mdekPassword}'/>
 
-        <property file="${prop-mdek-apps}" prefix="mdekPROP"/>
-        <replace  file="${prop-mdek-apps}" token="${mdekPROP.workflow.mail.smtp}"   value="${mdekMailSmtp}"/>
-        <replace  file="${prop-mdek-apps}" token="${mdekPROP.workflow.mail.sender}" value="${mdekMailSender}"/>
-        <replace  file="${prop-mdek-apps}" token="${mdekPROP.mdek.directLink}"      value="http://${mdekDirectLink}/ingrid-portal-mdek-application/index.jsp"/>
+        <propertyfile file="${prop-mdek-apps}">
+            <entry key="workflow.mail.smtp" value="${mdekMailSmtp}" />
+            <entry key="workflow.mail.sender" value="${mdekMailSender}" />
+            <entry key="mdek.directLink" value="http://${mdekDirectLink}/ingrid-portal-mdek-application/index.jsp" />
+        </propertyfile>
 
         <xmlproperty  file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" prefix="cipmXML"/>
         <replace      file="${installedTomcatContextDir}/ingrid-portal-mdek.xml" token='username="${cipmXML.Context.Resource(username)}"' value='username="${_mdekUser}"'/>
@@ -457,23 +469,45 @@
     <target name="writeCodelistConfig" if="ige.installed">
         <echo>Schreiben der Codelist-Repository Informationen in configurations.xml
         </echo>
-        <replace file="${spring-xml}" token="@URL@"      value="${clUrl}" />
-        <replace file="${spring-xml}" token="@USERNAME@" value="${clUsername}" />
-        <replace file="${spring-xml}" token="@PASSWORD@" value="${clPassword}" />
-        
-        <chmod dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF" perm="600" includes="configurations.xml"/>
+        <touch file="${prop-mdek-apps}"/>
+        <propertyfile file="${prop-mdek-apps}">
+            <entry key="codelist.requestUrl" value="${clUrl}" />
+            <entry key="codelist.username" value="${clUsername}" />
+            <entry key="codelist.password" value="${clPassword}" />
+        </propertyfile>
     </target>
 
     <target name="configureIgeOnly">
     	<echo>Konfiguriere Standalone-IGE und setze Administrator-Passwort fuer IGE Verwaltung
         </echo>
-        <replace file="${spring-xml}"               token="portal-user-services.xml"  value="tomcat-user-services.xml" />
-        <replace file="${i-prop-mdek-igeAdminUser}" token="@ADMINPASS@"               value="${igeAdminPassword}" />
+        <touch file="${prop-mdek-apps}"/>
+        <propertyfile file="${prop-mdek-apps}">
+            <entry key="admin.password" value="${igeAdminPassword}" />
+            <entry key="installation.standalone" value="true" />
+        </propertyfile>
         
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal.war" />
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war" />
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" />
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" />
+    </target>
+    
+    <target name="copyMigrationTools">
+        <echo>=========================================================
+            Die Portal-Datenbank muss manuell zu 3.5 migriert werden!
+            Siehe im Installationsverzeichnis unter "migration_35"
+            =========================================================
+        </echo>
+        <copy toDir="${installDir}">
+            <fileset dir="${basedir}/distribution/sql">
+                <include name="ingrid_portal_35_oracle_10_2.dmp"/>
+                <include name="**/migration_35/*"/>
+            </fileset>
+        </copy>
+        <copy file="${basedir}/distribution/sql/_README.txt" todir="${installDir}"/>
+        <copy file="${installDir}/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.6.jar"  todir="${installDir}/migration_35"/>
+        <copy file="${installDir}/${tomcat-artifact}/shared/lib/ojdbc14.jar" todir="${installDir}/migration_35"/>
+        <property name="migrateManual" value="true" />
     </target>
 
     <target name="updatePortalDb" if="portal.installed">
@@ -484,6 +518,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFromInitial"/> 
                 <runtarget target="oracle.UpdateDbManually"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         <elseif>
             <equals arg1="${portal.version}" arg2=",1" />
@@ -491,6 +526,7 @@
                 <!-- import was executed but no patches installed yet -->
                 <runtarget target="mysql.PortalDbUpdateFromInitial"/>
                 <runtarget target="oracle.PortalDbUpdateFromInitial"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
@@ -498,6 +534,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom300"/>
                 <runtarget target="oracle.PortalDbUpdateFrom300"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
@@ -505,6 +542,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom301"/>
                 <runtarget target="oracle.PortalDbUpdateFrom301"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
@@ -512,6 +550,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom310"/>
                 <runtarget target="oracle.PortalDbUpdateFrom310"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
@@ -519,6 +558,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom320d"/>
                 <runtarget target="oracle.PortalDbUpdateFrom320d"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
@@ -526,10 +566,19 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom331"/>
                 <runtarget target="oracle.PortalDbUpdateFrom331"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
             <equals arg1="${portal.version}" arg2=",3.4.1" />
+            <then>
+                <runtarget target="mysql.PortalDbUpdateFrom341"/>
+                <runtarget target="oracle.PortalDbUpdateFrom341"/>
+                <runtarget target="copyMigrationTools"/>
+            </then>
+        </elseif>
+        <elseif>
+            <equals arg1="${portal.version}" arg2=",3.5.0" />
             <then>
                 <echo>Ihre Datenbank ist aktuell!</echo>
             </then>
@@ -539,6 +588,7 @@
             </echo>
         </else>
         </if>
+        
         <!--<runtarget target="oracle.UpdateDbManually"/>-->
     </target>
 
@@ -660,21 +710,55 @@
     <target name="cleanuptarget">
         <delete file="${mysqlDbDriverInApache}"/>
         <delete file="${oracleDbDriverInApache}"/>
+        
         <echo>
-=================
-Weiteres Vorgehen
-=================
+        =================
+        Weiteres Vorgehen
+        =================
 
         </echo>
-        <echo>
-Gehen Sie ins Verzeichnis:
-${installDir}/${tomcat-artifact}
-und rufen sie von der Kommandozeile folgendes auf
-"bin/startup.sh", um den TomCat/Portal zu starten.
+        <if>
+            <equals arg1="${dbChoice}" arg2="copyOracleDump" />
+            <then>
+                <echo>
+                    Gehen Sie ins Verzeichnis:
+                    ${installDir}
+                    und importieren Sie den vorliegenden Oracle-Dump in Ihre
+                    Datenbank.
+    
+                    Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
+                    "http://informationgrid.github.io"
+                </echo>
+            </then>
+            <elseif>
+                <equals arg1="${migrateManual}" arg2="true" />
+                <then>
+                    <echo>
+                        Bevor Sie das Portal nutzen können, muss die Datenbank manuell migriert werden.
+                        Gehen Sie in das Verzeichnis: ${installDir}/migration_35
+                        Für MySQL starten Sie das Skript mit:
+                        sh migrate.sh
+                        Es wird eine Verbindung zum Internet benötigt!
+                        Weitere Infos finden sich in der README Datei.
 
-Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
-"http://www.kst.portalu.de/wiki/index.php/Portal".
-        </echo>
+                        Bei weiteren Fragen sehen sie hier für weitere Informationen:
+                        "http://informationgrid.github.io"
+                    </echo>
+                </then>
+            </elseif>
+            <else>
+                <echo>
+                    Gehen Sie ins Verzeichnis:
+                    ${installDir}/${tomcat-artifact}
+                    und rufen sie von der Kommandozeile folgendes auf
+                    "bin/startup.sh", um den TomCat/Portal zu starten.
+    
+                    Bitte lesen Sie bzgl. weiteren Vorgehen die Kapitel unter
+                    "http://informationgrid.github.io"
+                </echo>
+            </else>
+        </if>
+        
     </target>
 
 </project>

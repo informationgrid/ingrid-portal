@@ -44,6 +44,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;
@@ -89,7 +90,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         setDefaultViewPage(TEMPLATE_FORM_INPUT);
@@ -151,14 +152,16 @@ public class ContactPortlet extends GenericVelocityPortlet {
     	boolean uploadEnable = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_CONTACT_UPLOAD_ENABLE, Boolean.FALSE);
         int uploadSize = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_CONTACT_UPLOAD_SIZE, 10); 
         
-    	if(ServletFileUpload.isMultipartContent((HttpServletRequest) request)){
+        RequestContext requestContext = (RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV);
+        HttpServletRequest servletRequest = requestContext.getRequest();
+        if(ServletFileUpload.isMultipartContent(servletRequest)){
     		DiskFileItemFactory factory = new DiskFileItemFactory();
 
     		// Set factory constraints
     		factory.setSizeThreshold(uploadSize * 1000 * 1000);
     		File file = new File(".");
     		factory.setRepository(file);
-    		ServletFileUpload.isMultipartContent((HttpServletRequest) request);
+    		ServletFileUpload.isMultipartContent(servletRequest);
     		// Create a new file upload handler
     		ServletFileUpload upload = new ServletFileUpload(factory);
 
@@ -167,7 +170,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
     		// Parse the request
     		try {
-				items = upload.parseRequest((HttpServletRequest) request);
+				items = upload.parseRequest(servletRequest);
 			} catch (FileUploadException e) {
 				// TODO Auto-generated catch block
 			}
@@ -224,7 +227,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
                 if (isResponseCorrect || !enableCaptcha){
                 	 try {
                          IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                                 request.getLocale()));
+                                 request.getLocale()), request.getLocale());
 
                          HashMap mailData = new HashMap();
                          mailData.put("user.name.given", cf.getInput(ContactForm.FIELD_FIRSTNAME));

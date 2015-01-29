@@ -26,7 +26,7 @@
 package de.ingrid.portal.portlets.myportal;
 
 import java.io.IOException;
-import java.util.prefs.Preferences;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -35,21 +35,23 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.PortalAdministration;
 import org.apache.jetspeed.exception.JetspeedException;
 import org.apache.jetspeed.security.InvalidPasswordException;
 import org.apache.jetspeed.security.PasswordAlreadyUsedException;
+import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.forms.AdminUserForm;
 import de.ingrid.portal.forms.EditAccountForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
@@ -95,7 +97,7 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         response.setTitle(messages.getString(messages.getString("account.edit.title")));
@@ -111,24 +113,22 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             User user;
             try {
                 user = userManager.getUser(userName);
-                Preferences userAttributes = user.getUserAttributes();
-                f.setInput(EditAccountForm.FIELD_SALUTATION, userAttributes.get("user.name.prefix", ""));
-                f.setInput(EditAccountForm.FIELD_FIRSTNAME, userAttributes.get("user.name.given", ""));
-                f.setInput(EditAccountForm.FIELD_LASTNAME, userAttributes.get("user.name.family", ""));
-                f.setInput(EditAccountForm.FIELD_EMAIL, userAttributes.get("user.business-info.online.email", ""));
-                f.setInput(EditAccountForm.FIELD_STREET, userAttributes.get("user.business-info.postal.street", ""));
-                f.setInput(EditAccountForm.FIELD_POSTALCODE, userAttributes.get("user.business-info.postal.postalcode",
-                        ""));
-                f.setInput(EditAccountForm.FIELD_CITY, userAttributes.get("user.business-info.postal.city", ""));
+                Map<String, String> userAttributes = user.getInfoMap();
+                f.setInput(EditAccountForm.FIELD_SALUTATION, replaceNull(userAttributes.get("user.name.prefix")));
+                f.setInput(EditAccountForm.FIELD_FIRSTNAME, replaceNull(userAttributes.get("user.name.given")));
+                f.setInput(EditAccountForm.FIELD_LASTNAME, replaceNull(userAttributes.get("user.name.family")));
+                f.setInput(EditAccountForm.FIELD_EMAIL, replaceNull(userAttributes.get("user.business-info.online.email")));
+                f.setInput(EditAccountForm.FIELD_STREET, replaceNull(userAttributes.get("user.business-info.postal.street")));
+                f.setInput(EditAccountForm.FIELD_POSTALCODE, replaceNull(userAttributes.get("user.business-info.postal.postalcode")));
+                f.setInput(EditAccountForm.FIELD_CITY, replaceNull(userAttributes.get("user.business-info.postal.city")));
 
-                f.setInput(EditAccountForm.FIELD_AGE, userAttributes.get("user.custom.ingrid.user.age.group", ""));
-                f.setInput(EditAccountForm.FIELD_ATTENTION, userAttributes.get(
-                        "user.custom.ingrid.user.attention.from", ""));
-                f.setInput(EditAccountForm.FIELD_INTEREST, userAttributes.get("user.custom.ingrid.user.interest", ""));
-                f.setInput(EditAccountForm.FIELD_PROFESSION, userAttributes.get("user.custom.ingrid.user.profession",
-                        ""));
-                f.setInput(EditAccountForm.FIELD_SUBSCRIBE_NEWSLETTER, userAttributes.get(
-                        "user.custom.ingrid.user.subscribe.newsletter", ""));
+                f.setInput(EditAccountForm.FIELD_AGE, replaceNull(userAttributes.get("user.custom.ingrid.user.age.group")));
+                f.setInput(EditAccountForm.FIELD_ATTENTION, replaceNull(userAttributes.get(
+                        "user.custom.ingrid.user.attention.from")));
+                f.setInput(EditAccountForm.FIELD_INTEREST, replaceNull(userAttributes.get("user.custom.ingrid.user.interest")));
+                f.setInput(EditAccountForm.FIELD_PROFESSION, replaceNull(userAttributes.get("user.custom.ingrid.user.profession")));
+                f.setInput(EditAccountForm.FIELD_SUBSCRIBE_NEWSLETTER, replaceNull(userAttributes.get(
+                        "user.custom.ingrid.user.subscribe.newsletter")));
 
             } catch (SecurityException e) {
                 f.setError("", "account.edit.error.user.notfound");
@@ -147,6 +147,11 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
         // show question options
         context.put("enableAccountQuestion", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ACCOUNT_QUESTION, Boolean.TRUE));
         super.doView(request, response);
+    }
+
+    /** Replaces the input with "" if input is null. */
+    private String replaceNull(String input) {
+    	return input == null ? "" : input;
     }
 
     /**
@@ -176,28 +181,36 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             return;
         }
 
-        Preferences userAttributes = user.getUserAttributes();
-        userAttributes.put("user.name.prefix", f.getInput(EditAccountForm.FIELD_SALUTATION));
-        userAttributes.put("user.name.given", f.getInput(EditAccountForm.FIELD_FIRSTNAME));
-        userAttributes.put("user.name.family", f.getInput(EditAccountForm.FIELD_LASTNAME));
-        userAttributes.put("user.business-info.online.email", f.getInput(EditAccountForm.FIELD_EMAIL));
-        userAttributes.put("user.business-info.postal.street", f.getInput(EditAccountForm.FIELD_STREET));
-        userAttributes.put("user.business-info.postal.postalcode", f.getInput(EditAccountForm.FIELD_POSTALCODE));
-        userAttributes.put("user.business-info.postal.city", f.getInput(EditAccountForm.FIELD_CITY));
+        try {
+            user.getSecurityAttributes().getAttribute("user.name.prefix", true).setStringValue(f.getInput(AdminUserForm.FIELD_SALUTATION));
+            user.getSecurityAttributes().getAttribute("user.name.given", true).setStringValue(f.getInput(AdminUserForm.FIELD_FIRSTNAME));
+            user.getSecurityAttributes().getAttribute("user.name.family", true).setStringValue(f.getInput(AdminUserForm.FIELD_LASTNAME));
+            user.getSecurityAttributes().getAttribute("user.business-info.online.email", true).setStringValue(f.getInput(AdminUserForm.FIELD_EMAIL));
+            user.getSecurityAttributes().getAttribute("user.business-info.postal.street", true).setStringValue(f.getInput(AdminUserForm.FIELD_STREET));
+            user.getSecurityAttributes().getAttribute("user.business-info.postal.postalcode", true).setStringValue(f.getInput(AdminUserForm.FIELD_POSTALCODE));
+            user.getSecurityAttributes().getAttribute("user.business-info.postal.city", true).setStringValue(f.getInput(AdminUserForm.FIELD_CITY));
 
-        // theses are not PLT.D values but ingrid specifics
-        userAttributes.put("user.custom.ingrid.user.age.group", f.getInput(EditAccountForm.FIELD_AGE));
-        userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(EditAccountForm.FIELD_ATTENTION));
-        userAttributes.put("user.custom.ingrid.user.interest", f.getInput(EditAccountForm.FIELD_INTEREST));
-        userAttributes.put("user.custom.ingrid.user.profession", f.getInput(EditAccountForm.FIELD_PROFESSION));
-        userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f
-                .getInput(EditAccountForm.FIELD_SUBSCRIBE_NEWSLETTER));
+            // theses are not PLT.D values but ingrid specifics
+            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.age.group", true).setStringValue(f.getInput(AdminUserForm.FIELD_AGE));
+            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.attention.from", true).setStringValue(f.getInput(AdminUserForm.FIELD_ATTENTION));
+            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.interest", true).setStringValue(f.getInput(AdminUserForm.FIELD_INTEREST));
+            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.profession", true).setStringValue(f.getInput(AdminUserForm.FIELD_PROFESSION));
+            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.subscribe.newsletter", true).setStringValue(f.getInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER));
+
+            userManager.updateUser(user);
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems saving user.", e);
+            }
+        }
+
         try {
             // update password only if a old password was provided
             String oldPassword = f.getInput(EditAccountForm.FIELD_PASSWORD_OLD);
             if (oldPassword != null && oldPassword.length() > 0) {
-                userManager.setPassword(userName, f.getInput(EditAccountForm.FIELD_PASSWORD_OLD), f
-                        .getInput(EditAccountForm.FIELD_PASSWORD_NEW));
+        		PasswordCredential credential = userManager.getPasswordCredential(user);
+        		credential.setPassword(oldPassword, f.getInput(EditAccountForm.FIELD_PASSWORD_NEW));
+        		userManager.storePasswordCredential(credential);
             }
         } catch (PasswordAlreadyUsedException e) {
             f.setError(EditAccountForm.FIELD_PASSWORD_NEW, "account.edit.error.password.in.use");

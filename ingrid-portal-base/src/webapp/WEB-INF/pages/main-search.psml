@@ -28,7 +28,7 @@
             <property layout="TwoColumns" name="row" value="0" />
             <property layout="TwoColumns" name="column" value="1" />
             <preference name="infoTemplate" readOnly="false">
-              <value>/WEB-INF/templates/search_simple_info.vm</value>
+              <value>/WEB-INF/templates/search_simple_info_new.vm</value>
             </preference>
             <preference name="titleKey" readOnly="false">
               <value>searchSimple.info.title</value>

@@ -35,8 +35,6 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.dom4j.Document;
@@ -45,6 +43,8 @@ import org.dom4j.io.DocumentResult;
 import org.dom4j.io.DocumentSource;
 import org.dom4j.io.SAXReader;
 import org.dom4j.tree.DefaultElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
@@ -65,7 +65,7 @@ public class HelpPortlet extends GenericVelocityPortlet {
         Context context = getContext(request);
         
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()));
+                request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
         // find help file according to the language
@@ -91,7 +91,7 @@ public class HelpPortlet extends GenericVelocityPortlet {
         try {
             doc = xmlReader.read(filePath);
         } catch (Exception e) {
-            log.error("Error reading help source file!", e);
+            log.error("Error reading help source file: " + filePath, e);
         }
 
         // get the help chapter
@@ -99,7 +99,15 @@ public class HelpPortlet extends GenericVelocityPortlet {
         if (helpKey == null) {
             helpKey = "index";
         }
-        Object chapterObj = doc.selectSingleNode( "//section[@help-key='" + helpKey + "']/ancestor::chapter" );
+
+        // read help chapter
+        Object chapterObj = null;
+        String myPath = "//section[@help-key='" + helpKey + "']/ancestor::chapter";
+        try {
+            chapterObj = doc.selectSingleNode(myPath);
+        } catch (Throwable t) {
+            log.error("Error reading '" + myPath + "' from help source file: " + filePath, t);
+        }
 
         // transform the xml content to valid html using xslt
         if (chapterObj == null) {

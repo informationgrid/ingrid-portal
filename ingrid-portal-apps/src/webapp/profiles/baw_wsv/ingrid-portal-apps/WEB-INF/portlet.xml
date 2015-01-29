@@ -598,6 +598,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="CMSPortlet">
@@ -664,10 +667,6 @@
             <preference>
                 <name>cmsKey</name>
                 <value>portalu.teaser.inform</value>
-            </preference>
-            <preference>
-                <name>helpKey</name>
-                <value>ingrid-inform-1</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -746,7 +745,7 @@
                 <value>portal.teaser.shortcut</value>
             </preference>
         </portlet-preferences>
-    </portlet>    
+    </portlet>
 
     <!-- *********************** -->
     <!-- Top Menue (Service)     -->
@@ -768,6 +767,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="ContactNewsletterPortlet">
@@ -786,6 +788,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ContactNewsletterResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
 
@@ -805,6 +810,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="MyPortalOverviewPortlet">
@@ -823,6 +831,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="MyPortalCreateAccountPortlet">
@@ -836,36 +847,35 @@
            <name>returnURL</name>
                 <!-- the current system simply return the user to the default page where this portlet provides feedback --> 
            <value>/myportal-create-account.psml</value>
-        </init-param>   
+        </init-param>
         <init-param>
             <description>This is the template in which you setup an email to be sent after user exists</description>
             <name>emailTemplate</name>
             <value>/WEB-INF/templates/myportal/userRegistrationEmail.vm</value>
-        </init-param> 
+        </init-param>
 <!--
         This overrides the settings in jetspeed.properties
         <init-param>
             <description>This option defines the roles a new user will be registered with</description>
             <name>roles</name>
             <value>user</value>
-        </init-param>   
+        </init-param>
         <init-param>
             <description>This option defines the groups a new user will be registered with</description>
             <name>groups</name>
             <value></value>
-        </init-param>   
+        </init-param>
 -->
         <init-param>
             <description>This option defines the rule names a new user will be registered with</description>
             <name>rulesNames</name>
             <value>user-role-fallback</value>
-        </init-param>   
+        </init-param>
         <init-param>
             <description>This option defines the rule values a new user will be registered with</description>
             <name>rulesValues</name>
             <value>page</value>
-        </init-param>   
-        
+        </init-param>
         <portlet-name>MyPortalCreateAccountPortlet</portlet-name>
         <display-name>MyPortalCreateAccountPortlet</display-name>
         <description>This portlet displays the myportal create account dialog.</description>
@@ -876,6 +886,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="MyPortalEditAccountPortlet">
@@ -895,6 +908,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="MyPortalPasswordForgottenPortlet">
@@ -919,6 +935,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="MyPortalPersonalizeOverviewPortlet">
@@ -938,6 +957,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="MyPortalPersonalizeHomePortlet">
@@ -957,6 +979,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
     
     <portlet id="MyPortalPersonalizePartnerPortlet">
@@ -976,6 +1001,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="MyPortalPersonalizeSourcesPortlet">
@@ -995,6 +1023,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
     <portlet id="MyPortalPersonalizeSearchSettingsPortlet">
@@ -1014,9 +1045,10 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
-
-
 
     <!-- *********************** -->
     <!-- Main Menue              -->
@@ -1038,6 +1070,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ShowPartnerPortletResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
     
     <portlet id="ShowDataSourcePortlet">
@@ -1056,6 +1091,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ShowDataSourcePortletResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
         
     <!-- NOTICE: uses SearchSimple from Home -->
@@ -1075,6 +1113,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
     <portlet id="ServiceResult">
         <init-param>
@@ -1110,6 +1151,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle>
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
     <portlet id="MeasuresResult">
         <init-param>
@@ -1145,6 +1189,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
     <portlet id="EnvironmentResult">
         <init-param>
@@ -1224,6 +1271,9 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>            
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
     <portlet id="ChronicleResult">
         <init-param>
@@ -2015,6 +2065,9 @@
             <short-title>FeatureInfo</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.FeaturesResources</resource-bundle> 
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
     </portlet>
 
 	<portlet id="IFramePortalPortlet">
