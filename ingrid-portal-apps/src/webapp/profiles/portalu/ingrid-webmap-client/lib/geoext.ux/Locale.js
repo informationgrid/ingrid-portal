@@ -159,7 +159,7 @@ Local = {
         tRegistrierendeStelle: { en: 'Registering authority', de: 'Registrierende Stelle' },
         tRequestingData: { en: 'Requesting data', de: 'Daten werden angefordert' },
         tServiceAlreadyAdded: { en: 'Service was already added.', de: 'Der Dienst wurde bereits hinzugef&uuml;gt.' },
-        tSollDieKarteGeloeschtWerden: { en: 'Really delete map?', de: 'Soll die Karte wirklich gelöscht werden?' },
+        tSollDieKarteGeloeschtWerden: { en: 'Really delete map?', de: 'Soll die Karte wirklich gel&ouml;scht werden?' },
         tSpeichern : { en: 'Save', de: 'Speichern' },
         tStadt : { en: 'City', de: 'Stadt' },
         tStrecke : { en: 'Distance', de: 'Strecke' },
