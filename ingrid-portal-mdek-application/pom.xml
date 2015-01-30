@@ -97,6 +97,10 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
                     <excludes>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/*.json</exclude>
+                        <exclude>**/*.sql</exclude>
+                        <exclude>**/*.xml</exclude>
                         <exclude>**/webapp/dojo-sources/dijit/**</exclude>
                         <exclude>**/webapp/dojo-sources/dojo/**</exclude>
                         <exclude>**/webapp/dojo-sources/dojox/**</exclude>
@@ -104,9 +108,6 @@
                         <exclude>**/webapp/dojo-sources/release/**</exclude>
                         <exclude>**/templates/**</exclude>
                         <exclude>**/nls/**</exclude>
-                        <exclude>**/log4j.properties</exclude>
-                        <exclude>**/*.json</exclude>
-                        <exclude>**/*.sql</exclude>
                         <exclude>**/ingrid.profile.js</exclude>
                     </excludes>
                 </configuration>
