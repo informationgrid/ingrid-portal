@@ -100,6 +100,7 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 		    parameters.put("target", docTarget);
 		    parameters.put("protocolHandler", protocolHandler);
 		    parameters.put("codeListService", codeListService);
+		    parameters.put("javaVersion", System.getProperty( "java.version" ));
 		    // the template represents only one object!
 		    // Better if docTarget is only header and footer where
 		    // new objects made from template will be put into?

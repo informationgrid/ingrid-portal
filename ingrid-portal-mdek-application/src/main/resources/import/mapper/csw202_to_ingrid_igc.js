@@ -45,6 +45,9 @@
  *		protocol.addMessage(protocol.getCurrentFilename() + ": Debug message");
  * }
  */
+if (javaVersion.indexOf( "1.8" ) === 0) {
+    load("nashorn:mozilla_compat.js");
+}
 
 importPackage(Packages.de.ingrid.utils.udk);
 importPackage(Packages.de.ingrid.utils.xml);
@@ -1874,23 +1877,25 @@ function hasValue(val) {
 
 function call_f(f,args)
 {
-  f.call_self = function(ars)
-  {
-    var callstr = "";
-    if (hasValue(ars)) {
-	    for(var i = 0; i < ars.length; i++)
-	    {
-	      callstr += "ars["+i+"]";
-	      if(i < ars.length - 1)
-	      {
-	        callstr += ',';
-	      }
-	    }
-	}
-    return eval("this("+callstr+")");
-  };
-
-  return f.call_self(args);
+  if (hasValue(args)) {
+    if (args.length === 0)
+      return f();
+    else if (args.length === 1)
+      return f(args[0]);
+    else if (args.length === 2)
+      return f(args[0], args[1]);
+    else if (args.length === 3)
+      return f(args[0], args[1], args[2]);
+    else if (args.length === 4)
+      return f(args[0], args[1], args[2], args[3]);
+    else if (args.length === 5)
+        return f(args[0], args[1], args[2], args[3], args[4]);
+    else
+      log.error("Function call does not support number of arguments: " + args.length);
+          
+  } else {
+    return f();
+  }
 }
 
 
