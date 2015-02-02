@@ -7,12 +7,12 @@
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-  
+
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-  
+
   http://ec.europa.eu/idabc/eupl5
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,80 +22,7 @@
   -->
 <project name="Ingrid-Portal Patches">
 
-    <target name="patchFromVersion3.3.0">
-        <compareVersion value1="${oldVersion}" value2="3.3.0" prop="compResult"/>
-        <if>
-            <not>
-                <equals arg1="${compResult}" arg2="1" />
-            </not>
-            <then>
-                <echo>Patching ingrid-portal-apps.properties</echo>
-                <patchFile patchFile="patches/3.3.0.1/ingrid-portal-apps.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties" />
-                <patchFile patchFile="patches/3.3.0.1/application.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties" />
-            </then>
-        </if>
-    </target>
-
-    <target name="patchFromVersion3.3.0.1">
-        <compareVersion value1="${oldVersion}" value2="3.3.0.1" prop="compResult"/>
-        <if>
-            <not>
-                <equals arg1="${compResult}" arg2="1" />
-            </not>
-            <then>
-                <echo>Patching ingrid-portal-apps.properties</echo>
-                <patchFile patchFile="patches/3.3.1/ingrid-portal-apps.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties" />
-                <patchFile patchFile="patches/3.3.1/application.properties.patch" originalFile="${installDir}/apache-tomcat-6.0.35/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties" />
-                <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
-                <echo>Patching ingrid_webmap_client_config.xml in directory: ${webmapPROP.administration.file}</echo>
-                <patchFile patchFile="patches/3.3.1/ingrid_webmap_client_config.xml.patch" originalFile="${webmapPROP.administration.file}" />
-            </then>
-        </if>
-    </target>
-
-    <target name="patchFromVersion3.3.1">
-        <compareVersion value1="${oldVersion}" value2="3.3.1" prop="compResult"/>
-        <if>
-            <not>
-                <equals arg1="${compResult}" arg2="1" />
-            </not>
-            <then>
-                <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
-                <echo>Patching ingrid_webmap_client_config.xml in directory: ${webmapPROP.administration.file}</echo>
-                <patchFile patchFile="patches/3.3.2/ingrid_webmap_client_config.xml.patch" originalFile="${webmapPROP.administration.file}" />
-            </then>
-        </if>
-    </target>
-	
-	<target name="patchFromVersion3.3.2">
-        <compareVersion value1="${oldVersion}" value2="3.3.2" prop="compResult"/>
-        <if>
-            <not>
-                <equals arg1="${compResult}" arg2="1" />
-            </not>
-            <then>
-                <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
-                <echo>Patching ingrid_webmap_client_config.xml in directory: ${webmapPROP.administration.file}</echo>
-                <patchFile patchFile="patches/3.3.2.2/ingrid_webmap_client_config.xml.patch" originalFile="${webmapPROP.administration.file}" />
-            </then>
-        </if>
-    </target>
-
-	<target name="patchFromVersion3.3.2.2">
-        <compareVersion value1="${oldVersion}" value2="3.3.2.2" prop="compResult"/>
-        <if>
-            <not>
-                <equals arg1="${compResult}" arg2="1" />
-            </not>
-            <then>
-                <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
-                <echo>Patching ingrid_webmap_client_config.xml in directory: ${webmapPROP.administration.file}</echo>
-                <patchFile patchFile="patches/3.4.0/ingrid_webmap_client_config.xml.patch" originalFile="${webmapPROP.administration.file}" />
-            </then>
-        </if>
-    </target>
-	
-    <target name="patchFiles" depends="StartInstallation,patchFromVersion3.3.0,patchFromVersion3.3.0.1,patchFromVersion3.3.1,patchFromVersion3.3.2,patchFromVersion3.3.2.2">
+    <target name="patchFiles" depends="StartInstallation">
         <!-- patch order determined through depends-order -->
     </target>
 </project>
