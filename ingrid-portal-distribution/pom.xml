@@ -18,11 +18,23 @@
   <!-- instead uses versions from base pom dependency management if not defined here ! -->
   <!-- !!!!!!!!!!!!!!!!!!!!!! -->
 <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
-  <!-- <dependencyManagement>
+  <dependencyManagement>
     <dependencies>
-
+        <dependency>
+          <groupId>de.ingrid.portal</groupId>
+          <artifactId>ingrid-portal-base</artifactId>
+                <!-- "Dynamic" VERSION replaced with release version cause submodule ! -->
+                <version>${project.version}</version>
+                <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>de.ingrid.portal</groupId>
+          <artifactId>ingrid-portal-mdek-application</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+        </dependency>
     </dependencies>
-  </dependencyManagement> -->
+  </dependencyManagement>
 
 <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
@@ -240,6 +252,15 @@
           <preparationGoals>clean verify deploy changes:changes-report assembly:assembly wagon:upload -Dproject.url=</preparationGoals>
           <goals>changes:announcement-mail -Dproject.url= --non-recursive</goals>
         </configuration>
+      </plugin>
+      <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <configuration>
+            <roots>
+              <root>src/main/resources/ant-installer</root>
+            </roots>
+          </configuration>
       </plugin>
     </plugins>
   </build>

@@ -28,16 +28,13 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="3.5.0-SNAPSHOT" date="????-??-??">
+        <release version="3.5.0" date="2015-02-02">
             <action type="add" dev="wemove" issue="REDMINE-524">
                 Added license header to all source files for Open Source migration.
             </action>
             <action type="update" dev="wemove" issue="REDMINE-304">
                 Portal: Update to Jetspeed 2.3, Tomcat 7, Java 8.
             </action>
-        </release>
-
-        <release version="3.4.x-SNAPSHOT" date="????-??-??">
             <action type="add" dev="wemove" issue="REDMINE-367">
                 Portal: Add Portlet for searching BWaStr locator and showing first hit as map (Profile GeoPortal.WSV).
             </action>
@@ -49,6 +46,12 @@
             </action>
             <action type="update" dev="wemove" issue="REDMINE-365">
                 Portal: Update browser "search plugin" (Profile GeoPortal.WSV).
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-551">
+                Portal/IGE: Use the WFS-Service of the BKG as a gazetteer service.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-302">
+                IGE: Update Dojo to version 1.10.2.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-266">
                 Portal: Update profiles, so portal URLs are generated relatively ONLY in GeoPortal.WSV profile to avoid wrong URL in user confirm email (no problem in GeoPortal.WSV due to SSO).
