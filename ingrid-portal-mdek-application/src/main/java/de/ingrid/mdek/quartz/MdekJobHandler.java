@@ -57,7 +57,7 @@ public class MdekJobHandler implements BeanFactoryAware {
 	// Spring Bean Factory for lookup of job specific dependencies
 	private BeanFactory beanFactory;
 
-	@Autowired
+	// Spring injected
 	private Scheduler scheduler;
 	
 	@Autowired
@@ -67,6 +67,7 @@ public class MdekJobHandler implements BeanFactoryAware {
 
 	public enum JobType { URL_VALIDATOR, SNS_UPDATE, SNS_LOCATION_UPDATE }
 
+	@Autowired
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
 		this.jobMap = new HashMap<String, MdekJob>();
