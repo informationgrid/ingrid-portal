@@ -162,6 +162,13 @@ body {
 	width: 15px !important;
 }
 
+.iconFullScreen {
+	background-image: url(../../shared/images/icon_full.png);
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
 .iconDrag {
 	background-image: url(../../shared/images/icon_drag.png);
 	background-repeat: no-repeat;
