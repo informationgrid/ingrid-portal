@@ -237,7 +237,8 @@
             overflow    ="true"
             type        ="input"
             name        ="webmapOptions"
-            displayText ="Einstellungen für den Kartenclient">
+            displayText ="Einstellungen für den Kartenclient"
+            target      ="writeMapClientProps">
 
         <comment displayText="" explanatoryText="Geben Sie die Url der Opensearchschnittstelle an. Es reicht die Basis-Url wie im default angegeben, der Rest der Anfrage wird dynamisch hinzugefügt."/>
         <text property="openSearchUrl" displayText="Opensearch Url:" defaultValue="http://www.portalu.de/opensearch/query"/>
@@ -250,13 +251,6 @@
                 defaultValueWin ="${env.ProgramFiles}"
                 displayText     ="Webmapdatenverzeichnis"
                 create          ="true"/>    
-        <target-select
-            property     ="webmapChoice"
-            displayText  ="Konfiguration überschreiben?"
-            defaultValue ="true">
-            <option text="Ja"   value="OverwriteMapData"/>
-            <option text="Nein" value="KeepMapData"/>
-        </target-select>
 
     </page>
     

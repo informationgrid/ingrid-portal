@@ -49,7 +49,6 @@
     <property name="prop-datasource-mdek-apps"     value="${mdek-app-class-path}/default-datasource.properties"/>
     
     <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties"/>
-    <property name="i-config-ingrid-webmap-client" value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/ingrid_webmap_client_config.xml"/>
 
     <!-- THIS PORPERTIES ARE NECESSARY FOR UPDATES -->
     <property name="libraryDir"         value="${tomcat-artifact}/webapps/ROOT/META-INF" />
@@ -150,15 +149,6 @@
         <runtarget target="oracle.CheckDbs"/>-->
     </target>
 
-    <target name="KeepMapData">
-        <property name="KeepMapData" value="true" />
-    </target>
-
-    <target name="OverwriteMapData">
-        <property name="OverwriteMapData" value="true" />
-    </target>
-
-
     <target name="UnzipInstaller">
     	 <unzip src="${antinstaller.jar}" dest="${basedir}">
             <patternset>
@@ -243,8 +233,6 @@
                 <runtarget target="configureIge"/>
                 <runtarget target="updatePortalDb"/>
                 <runtarget target="updateIgeDb"/>
-                <runtarget target="KeepMapDataImpl"/>
-                <runtarget target="OverwriteMapDataImpl"/>
             </then>
             <elseif>
                 <equals arg1="${installType}" arg2="portalOnly" />
@@ -254,8 +242,6 @@
                     <runtarget target="configurePortal"/>
                     <runtarget target="updatePortalDb"/>
                     <runtarget target="configurePortalOnly"/>
-                    <runtarget target="KeepMapDataImpl"/>
-                    <runtarget target="OverwriteMapDataImpl"/>
                  </then>
             </elseif>
             <elseif>
@@ -283,11 +269,6 @@
         </if>
     </target>
     
-    <target name="UpdateWebMapClient" if="portal.installed">
-        <runtarget target="KeepMapDataImpl"/>
-        <runtarget target="OverwriteMapDataImpl"/>    
-    </target>
-
     <!-- =============================================
          = WORKER                                    =
          ============================================= -->
@@ -317,7 +298,6 @@
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client">
             <patternset>
                 <exclude name="WEB-INF/classes/application.properties" />
-                <exclude name="WEB-INF/classes/ingrid_webmap_client_config.xml" />
             </patternset>
         </unwar>
         <move toDir="${installDir}/${tomcat-artifact}/webapps">
@@ -610,58 +590,6 @@
          = MAPCLIENT                                 =
          ============================================= -->
 		 
-    <target name="KeepMapDataImpl" description="" if="KeepMapData">
-        <!-- write the application.properties file-->
-        <runtarget target="writeMapClientProps"/>
-		<if>
-    		<available file="${WebmapDataDir}/WebmapClientData"/>
-    	    <then>
-    	    	<if>
-					<available file="${WebmapDataDir}/WebmapClientData/data/wms"/>
-					<then>
-						<echo>Keep existing web map client services.</echo>
-					</then>
-					<else>
-						<mkdir dir="${WebmapDataDir}/WebmapClientData/data/wms"/>         
-						<copy todir="${WebmapDataDir}/WebmapClientData/data/wms" >
-							<fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/wms">
-								<include name="**/*.xml"/>
-							</fileset>
-						</copy>
-					</else>
-				</if>
-				<if>
-					<available file="${WebmapDataDir}/WebmapClientData/data/tmp"/>
-					<then>
-						<echo>Keep existing web map client tmp data.</echo>
-					</then>
-					<else>
-						<mkdir dir="${WebmapDataDir}/WebmapClientData/data/tmp"/>         
-					</else>
-				</if>
-				<if>
-					<available file="${WebmapDataDir}/WebmapClientData/data/users"/>
-					<then>
-						<echo>Keep existing web map client users data.</echo>
-					</then>
-					<else>
-						<mkdir dir="${WebmapDataDir}/WebmapClientData/data/users"/>         
-					</else>
-				</if>
-   	        </then>
-			<else>
-				<runtarget target="createMapDataDirectory"/>
-			</else>
-   	    </if>
-    </target>
-
-    <target name="OverwriteMapDataImpl"  description="" if="OverwriteMapData">
-        <!-- write the application.properties file-->
-        <runtarget target="writeMapClientProps"/>
-        <!-- create the data dir and move the config file there-->
-        <runtarget target="createMapDataDirectory"/>
-    </target>    
-
     <target name="writeMapClientProps" description="">
         <echo>Schreibe Webmap-Client Konfigration
             </echo>
@@ -678,35 +606,6 @@
 		<replace file="${i-prop-ingrid-webmap-client}" token="\" value="/"/>
     </target>
 
-	<target name="createMapDataDirectory" description="">
-		<mkdir dir="${WebmapDataDir}/WebmapClientData"/>
-        <mkdir dir="${WebmapDataDir}/WebmapClientData/data/tmp"/>
-        <mkdir dir="${WebmapDataDir}/WebmapClientData/data/users"/>
-		<if>
-    		<available file="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
-    	    <then>
-    	    	<echo>Keep existing web map client config.</echo>
-   	        </then>
-    		<else>
-                <move file="${i-config-ingrid-webmap-client}" tofile="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>    
-   			</else>
-   	    </if>
-		<if>
-    		<available file="${WebmapDataDir}/WebmapClientData/data/wms"/>
-    	    <then>
-    	    	<echo>Keep existing web map client services.</echo>
-   	        </then>
-    		<else>
-				<mkdir dir="${WebmapDataDir}/WebmapClientData/data/wms"/>         
-				<copy todir="${WebmapDataDir}/WebmapClientData/data/wms" >
-					<fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/wms">
-						<include name="**/*.xml"/>
-					</fileset>
-				</copy>
-   			</else>
-   	    </if>
-	</target>
-	
     <target name="cleanuptarget">
         <delete file="${mysqlDbDriverInApache}"/>
         <delete file="${oracleDbDriverInApache}"/>
