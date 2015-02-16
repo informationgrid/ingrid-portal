@@ -237,8 +237,7 @@
             overflow    ="true"
             type        ="input"
             name        ="webmapOptions"
-            displayText ="Einstellungen für den Kartenclient"
-            target      ="writeMapClientProps">
+            displayText ="Einstellungen für den Kartenclient">
 
         <comment displayText="" explanatoryText="Geben Sie die Url der Opensearchschnittstelle an. Es reicht die Basis-Url wie im default angegeben, der Rest der Anfrage wird dynamisch hinzugefügt."/>
         <text property="openSearchUrl" displayText="Opensearch Url:" defaultValue="http://www.portalu.de/opensearch/query"/>

@@ -284,6 +284,8 @@
         </move>
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps"/>
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek"/>
+        
+        <runtarget target="writeMapClientProps"/>
     </target>
 
     <target name="ExtractPortalForUpdate" if="portal.installed">
