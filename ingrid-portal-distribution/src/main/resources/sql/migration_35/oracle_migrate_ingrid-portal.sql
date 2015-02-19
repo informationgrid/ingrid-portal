@@ -68,3 +68,9 @@ ALTER TABLE FRAGMENT ADD CONSTRAINT FRAGMENT_STRING_ID_UNIQUE UNIQUE (FRAGMENT_S
 -- Substitute empty string to avoid treatment as null with Oracle
 -- (leads to error: Einfügen von NULL in (."FRAGMENT_PREF_VALUE"."VALUE") nicht möglich
 UPDATE FRAGMENT_PREF_VALUE SET VALUE = '""' where VALUE=' ';
+
+
+-- Already update InGrid Portal Database Version (though not finished yet)
+-- =======================================================================
+
+UPDATE ingrid_lookup SET item_value = '3.5.0', item_date = SYSDATE WHERE ingrid_lookup.item_key ='ingrid_db_version';

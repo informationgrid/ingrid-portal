@@ -57,3 +57,9 @@ ALTER TABLE PARAMETER MODIFY PARAMETER_VALUE MEDIUMTEXT NULL;
 
 ALTER TABLE FRAGMENT ADD FRAGMENT_STRING_ID VARCHAR(80);
 ALTER TABLE FRAGMENT ADD UNIQUE (FRAGMENT_STRING_ID);
+
+
+-- Already update InGrid Portal Database Version (though not finished yet)
+-- =======================================================================
+
+UPDATE ingrid_lookup SET item_value = '3.5.0', item_date = NOW() WHERE ingrid_lookup.item_key ='ingrid_db_version';
