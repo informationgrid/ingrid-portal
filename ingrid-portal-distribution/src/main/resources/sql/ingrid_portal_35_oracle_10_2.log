@@ -1,0 +1,154 @@
+;;; 
+Export: Release 10.2.0.1.0 - Production on Dienstag, 20 Januar, 2015 18:55:50
+
+Copyright (c) 2003, 2005, Oracle.  All rights reserved.
+;;; 
+Angemeldet bei: Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production
+"INGRID_PORTAL"."SYS_EXPORT_SCHEMA_01":  INGRID_PORTAL/******** DUMPFILE=ingrid_portal_35_oracle_10_2.dmp LOGFILE=ingrid_portal_35_oracle_10_2.log VERSION=10.2  wird gestartet
+Schätzung erfolgt mit Methode BLOCKS...
+Objekttyp SCHEMA_EXPORT/TABLE/TABLE_DATA wird verarbeitet
+Gesamte Schätzung mit BLOCKS Methode: 7.937 MB
+Objekttyp SCHEMA_EXPORT/USER wird verarbeitet
+Objekttyp SCHEMA_EXPORT/SYSTEM_GRANT wird verarbeitet
+Objekttyp SCHEMA_EXPORT/ROLE_GRANT wird verarbeitet
+Objekttyp SCHEMA_EXPORT/DEFAULT_ROLE wird verarbeitet
+Objekttyp SCHEMA_EXPORT/PRE_SCHEMA/PROCACT_SCHEMA wird verarbeitet
+Objekttyp SCHEMA_EXPORT/SEQUENCE/SEQUENCE wird verarbeitet
+Objekttyp SCHEMA_EXPORT/TABLE/TABLE wird verarbeitet
+Objekttyp SCHEMA_EXPORT/TABLE/INDEX/INDEX wird verarbeitet
+Objekttyp SCHEMA_EXPORT/TABLE/CONSTRAINT/CONSTRAINT wird verarbeitet
+Objekttyp SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/INDEX_STATISTICS wird verarbeitet
+Objekttyp SCHEMA_EXPORT/TABLE/COMMENT wird verarbeitet
+Objekttyp SCHEMA_EXPORT/TABLE/CONSTRAINT/REF_CONSTRAINT wird verarbeitet
+Objekttyp SCHEMA_EXPORT/TABLE/TRIGGER wird verarbeitet
+Objekttyp SCHEMA_EXPORT/TABLE/STATISTICS/TABLE_STATISTICS wird verarbeitet
+. . "INGRID_PORTAL"."FRAGMENT"                  46.03 KB     237 Zeilen exportiert
+. . "INGRID_PORTAL"."SECURITY_ATTRIBUTE"        6.445 KB      12 Zeilen exportiert
+. . "INGRID_PORTAL"."FRAGMENT_PREF_VALUE"       12.53 KB     155 Zeilen exportiert
+. . "INGRID_PORTAL"."FRAGMENT_PREF"             9.398 KB     155 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE"                      25.14 KB      70 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_RSS_STORE"          10.28 KB       3 Zeilen exportiert
+. . "INGRID_PORTAL"."FOLDER"                    11.66 KB      11 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_CMS_ITEM"           25.61 KB      22 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_PROVIDER"           49.19 KB     483 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE_METADATA"             12.44 KB     102 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_JOB_DETAILS"          10.96 KB       4 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_TRIGGERS"             10.32 KB       4 Zeilen exportiert
+. . "INGRID_PORTAL"."SECURITY_CREDENTIAL"       10.19 KB       1 Zeilen exportiert
+. . "INGRID_PORTAL"."SECURITY_PRINCIPAL"        8.718 KB      13 Zeilen exportiert
+. . "INGRID_PORTAL"."CAPABILITY"                6.062 KB      43 Zeilen exportiert
+. . "INGRID_PORTAL"."CLIENT"                    8.125 KB      18 Zeilen exportiert
+. . "INGRID_PORTAL"."CLIENT_TO_CAPABILITY"      6.328 KB     107 Zeilen exportiert
+. . "INGRID_PORTAL"."CLIENT_TO_MIMETYPE"        5.539 KB      27 Zeilen exportiert
+. . "INGRID_PORTAL"."FOLDER_CONSTRAINT"         6.914 KB       1 Zeilen exportiert
+. . "INGRID_PORTAL"."FOLDER_CONSTRAINTS_REF"    6.070 KB       6 Zeilen exportiert
+. . "INGRID_PORTAL"."FOLDER_MENU"               17.10 KB      64 Zeilen exportiert
+. . "INGRID_PORTAL"."FOLDER_METADATA"           6.265 KB       2 Zeilen exportiert
+. . "INGRID_PORTAL"."FRAGMENT_CONSTRAINT"       6.968 KB       3 Zeilen exportiert
+. . "INGRID_PORTAL"."FRAGMENT_CONSTRAINTS_REF"  5.984 KB       3 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_ANNIVERSARY"        12.07 KB      18 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_CHRON_EVENTTYPES"   6.210 KB      10 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_CMS"                6.882 KB      11 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_ENV_TOPIC"            6.5 KB      21 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_LOOKUP"             5.953 KB       1 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_MEASURES_RUBRIC"    6.054 KB       4 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_PARTNER"            6.375 KB      17 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_RSS_SOURCE"         7.625 KB       1 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_SERVICE_RUBRIC"     6.039 KB       3 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_SYS_CODELIST"       6.492 KB      16 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_SYS_CODELIST_DOMAIN"  36.93 KB     440 Zeilen exportiert
+. . "INGRID_PORTAL"."JETSPEED_SERVICE"          6.312 KB      29 Zeilen exportiert
+. . "INGRID_PORTAL"."LANGUAGE"                  13.54 KB     123 Zeilen exportiert
+. . "INGRID_PORTAL"."LINK"                      11.12 KB       2 Zeilen exportiert
+. . "INGRID_PORTAL"."LOCALIZED_DESCRIPTION"     29.40 KB     180 Zeilen exportiert
+. . "INGRID_PORTAL"."LOCALIZED_DISPLAY_NAME"     20.5 KB     147 Zeilen exportiert
+. . "INGRID_PORTAL"."MEDIA_TYPE"                6.476 KB       5 Zeilen exportiert
+. . "INGRID_PORTAL"."MEDIATYPE_TO_MIMETYPE"     5.335 KB       5 Zeilen exportiert
+. . "INGRID_PORTAL"."MIMETYPE"                  5.375 KB       6 Zeilen exportiert
+. . "INGRID_PORTAL"."OJB_HL_SEQ"                8.195 KB      40 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE_CONSTRAINTS_REF"      8.156 KB      92 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE_SEC_CONSTRAINT_DEF"   7.148 KB       8 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE_SEC_CONSTRAINTS_DEF"  5.765 KB       8 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE_SEC_CONSTRAINTS_REF"  5.945 KB       1 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE_SECURITY"             8.734 KB       1 Zeilen exportiert
+. . "INGRID_PORTAL"."PA_METADATA_FIELDS"        6.546 KB       9 Zeilen exportiert
+. . "INGRID_PORTAL"."PARAMETER"                 24.90 KB     181 Zeilen exportiert
+. . "INGRID_PORTAL"."PD_METADATA_FIELDS"        6.835 KB      15 Zeilen exportiert
+. . "INGRID_PORTAL"."PORTLET_APPLICATION"       7.960 KB       3 Zeilen exportiert
+. . "INGRID_PORTAL"."PORTLET_DEFINITION"        22.80 KB     103 Zeilen exportiert
+. . "INGRID_PORTAL"."PORTLET_PREFERENCE"        10.64 KB      51 Zeilen exportiert
+. . "INGRID_PORTAL"."PORTLET_PREFERENCE_VALUE"  7.445 KB      51 Zeilen exportiert
+. . "INGRID_PORTAL"."PORTLET_SUPPORTS"          9.265 KB     105 Zeilen exportiert
+. . "INGRID_PORTAL"."PRINCIPAL_PERMISSION"      5.515 KB      24 Zeilen exportiert
+. . "INGRID_PORTAL"."PRINCIPAL_RULE_ASSOC"      34.14 KB     771 Zeilen exportiert
+. . "INGRID_PORTAL"."PROFILING_RULE"            7.218 KB      11 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_LOCKS"                5.023 KB       5 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_SIMPLE_TRIGGERS"        6.5 KB       4 Zeilen exportiert
+. . "INGRID_PORTAL"."RULE_CRITERION"            8.312 KB      31 Zeilen exportiert
+. . "INGRID_PORTAL"."SECURITY_DOMAIN"           6.335 KB       2 Zeilen exportiert
+. . "INGRID_PORTAL"."SECURITY_PERMISSION"       6.804 KB      24 Zeilen exportiert
+. . "INGRID_PORTAL"."SECURITY_PRINCIPAL_ASSOC"  5.687 KB       4 Zeilen exportiert
+. . "INGRID_PORTAL"."ADMIN_ACTIVITY"                0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."CLUBS"                         0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."CUSTOM_PORTLET_MODE"           0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."CUSTOM_WINDOW_STATE"           0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."EVENT_ALIAS"                   0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."EVENT_DEFINITION"              0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."FILTERED_PORTLET"              0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."FILTER_LIFECYCLE"              0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."FILTER_MAPPING"                0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."FOLDER_MENU_METADATA"          0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."FOLDER_ORDER"                  0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."FRAGMENT_PROP"                 0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_NEWSLETTER_DATA"        0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_PRINCIPAL_PREF"         0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."INGRID_TINY_URL"               0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."LINK_CONSTRAINT"               0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."LINK_CONSTRAINTS_REF"          0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."LINK_METADATA"                 0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."LOCALE_ENCODING_MAPPING"       0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."MEDIATYPE_TO_CAPABILITY"       0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."NAMED_PARAMETER"               0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."OJB_DLIST"                     0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."OJB_DLIST_ENTRIES"             0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."OJB_DMAP"                      0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."OJB_DSET"                      0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."OJB_DSET_ENTRIES"              0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."OJB_LOCKENTRY"                 0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."OJB_NRM"                       0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE_CONSTRAINT"               0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE_MENU"                     0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE_MENU_METADATA"            0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PAGE_STATISTICS"               0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PARAMETER_ALIAS"               0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PA_SECURITY_CONSTRAINT"        0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PORTLET_FILTER"                0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PORTLET_LISTENER"              0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PORTLET_STATISTICS"            0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PROCESSING_EVENT"              0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PROFILE_PAGE_ASSOC"            0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PUBLIC_PARAMETER"              0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."PUBLISHING_EVENT"              0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_BLOB_TRIGGERS"            0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_CALENDARS"                0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_CRON_TRIGGERS"            0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_FIRED_TRIGGERS"           0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_JOB_LISTENERS"            0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_PAUSED_TRIGGER_GRPS"      0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_SCHEDULER_STATE"          0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."QRTZ_TRIGGER_LISTENERS"        0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."RUNTIME_OPTION"                0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."RUNTIME_VALUE"                 0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."SECURED_PORTLET"               0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."SECURITY_ROLE"                 0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."SECURITY_ROLE_REFERENCE"       0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."SSO_SITE"                      0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."USER_ACTIVITY"                 0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."USER_ATTRIBUTE"                0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."USER_ATTRIBUTE_REF"            0 KB       0 Zeilen exportiert
+. . "INGRID_PORTAL"."USER_STATISTICS"               0 KB       0 Zeilen exportiert
+Master-Tabelle "INGRID_PORTAL"."SYS_EXPORT_SCHEMA_01" erfolgreich geladen/entladen
+******************************************************************************
+Für INGRID_PORTAL.SYS_EXPORT_SCHEMA_01 festgelegte Dump-Datei ist:
+  E:\ORACLE\APP\ORACLE\ADMIN\XE\DPDUMP\INGRID_PORTAL_35_ORACLE_10_2.DMP
+Job "INGRID_PORTAL"."SYS_EXPORT_SCHEMA_01" erfolgreich um 18:56:46 abgeschlossen 

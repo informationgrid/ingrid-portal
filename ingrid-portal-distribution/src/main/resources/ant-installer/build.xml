@@ -483,6 +483,7 @@
         <copy toDir="${installDir}">
             <fileset dir="${basedir}/distribution/sql">
                 <include name="ingrid_portal_35_oracle_10_2.dmp"/>
+                <include name="ingrid_portal_35_oracle_10_2.log"/>
                 <include name="**/migration_35/*"/>
             </fileset>
         </copy>
