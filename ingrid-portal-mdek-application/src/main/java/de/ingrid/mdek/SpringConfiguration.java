@@ -23,6 +23,7 @@
 package de.ingrid.mdek;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +36,7 @@ import de.ingrid.codelists.CodeListService;
 import de.ingrid.codelists.comm.HttpCLCommunication;
 import de.ingrid.codelists.comm.ICodeListCommunication;
 import de.ingrid.codelists.comm.IngridCLCommunication;
+import de.ingrid.codelists.persistency.ICodeListPersistency;
 import de.ingrid.mdek.persistence.db.DaoFactory;
 import de.ingrid.mdek.security.AuthenticationProvider;
 import de.ingrid.mdek.security.PortalAuthenticationProvider;
@@ -79,9 +81,10 @@ public class SpringConfiguration {
     }
 
     @Bean
-    public CodeListService codeListService( ICodeListCommunication communication, Config config ) {
+    public CodeListService codeListService( ICodeListCommunication communication, Config config, List<ICodeListPersistency> persistencies ) {
         CodeListService service = new CodeListService();
-
+        
+        service.setPersistencies( persistencies );
         service.setComm( communication );
         service.setDefaultPersistency( config.codelistDefaultPersistency );
         return service;

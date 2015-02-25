@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import de.ingrid.codelists.model.CodeList;
 import de.ingrid.codelists.model.CodeListEntry;
@@ -43,11 +45,13 @@ import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
+@Service
 public class IgeCodeListPersistency implements ICodeListPersistency {
     
     private final static Logger log = Logger.getLogger(IgeCodeListPersistency.class);
     
-    // injected by Spring    
+    // injected by Spring
+    @Autowired
     private ConnectionFacade connectionFacade;
 
     /**
