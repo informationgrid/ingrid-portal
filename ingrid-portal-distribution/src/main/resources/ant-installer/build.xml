@@ -233,6 +233,9 @@
                 <runtarget target="configureIge"/>
                 <runtarget target="updatePortalDb"/>
                 <runtarget target="updateIgeDb"/>
+                <!-- make sure that the metadata menu is visible -->
+                <runtarget target="mysql.showMetadataMenu"/>
+                <runtarget target="oracle.showMetadataMenu"/>
             </then>
             <elseif>
                 <equals arg1="${installType}" arg2="portalOnly" />

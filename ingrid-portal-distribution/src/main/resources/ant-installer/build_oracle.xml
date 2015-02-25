@@ -361,5 +361,21 @@
             </transaction>
         </sql>
     </target>
+    
+    <target name="showMetadataMenu" if="useOracle">
+        <echo>Schreibe Ingrid-Editor Konfiguration - Enabling Metadata Menu
+        </echo>
+        <!-- hide the "Metadata"-tab in menu -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                >
+            <transaction>
+                UPDATE page SET IS_HIDDEN = '0' WHERE PATH ='/mdek/mdek_portal_admin.psml' OR PATH ='/mdek/mdek_entry.psml'
+            </transaction>
+        </sql>
+    </target>
 
 </project>
