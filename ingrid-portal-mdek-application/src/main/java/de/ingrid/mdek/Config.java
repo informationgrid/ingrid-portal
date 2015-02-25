@@ -88,7 +88,7 @@ public class Config {
     public String codelistCommunicationType;
 
     @PropertyValue("codelist.defaultPersistency")
-    @DefaultValue("-1")
+    @DefaultValue("0")
     public int codelistDefaultPersistency;
 
     @PropertyValue("installation.standalone")
