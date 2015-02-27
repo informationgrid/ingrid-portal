@@ -634,7 +634,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
         }
         
         function showErrorResults() {
-            addLocationResultTextElement("<fmt:message key='sns.error' />");
+            addLocationResultTextElement("<fmt:message key='sns.connectionError' />");
             style.set("objExtSearchAddLocationTopicButtonSpan", "display", "none");
         }
         

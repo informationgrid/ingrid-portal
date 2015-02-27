@@ -189,11 +189,11 @@ define([
 
             // check if the preview was called via the context menu or directly via the menu button
             if (has("ie")) {
-                if (msg.srcElement.className.indexOf("dijitMenuItemLabel") == -1) {
+                if (msg.srcElement.className.indexOf("dijitMenuItemLabel") == -1 || msg.srcElement.className.indexOf("dijitMenuItem") == -1) {
                     useDirtyData = true;
                 }
             } else {
-                if (!msg.target.classList.contains("dijitMenuItemLabel")) {
+                if (!(msg.target.classList.contains("dijitMenuItemLabel") || msg.target.classList.contains("dijitMenuItem"))) {
                     useDirtyData = true;
                 }
             }
