@@ -168,7 +168,7 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
                     
                     component.addExtraInfo(IngridComponent.PARTNER_INFO, getTranslatedPartner(allIngridPartnerInDB, pd.getPartners()));
                     component.addExtraInfo(IngridComponent.PROVIDER_INFO, getTranslatedProvider(allIngridProviderInDB, pd.getProviders()));
-                    component.setVersion(pd.getMetadata().getVersion());
+                    component.setVersion(pd.getMetadata() != null ? pd.getMetadata().getVersion() : "UNKNOWN");
                     // add a suffix for address-iPlugs (DSCs)
                     if (pd.getPlugId().endsWith("_addr"))
                         component.setName(pd.getDataSourceName() + "(address)");
@@ -368,15 +368,8 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             return builder.parse(input);
-        } catch (SAXException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            
-            // TODO Auto-generated catch block
+        } catch (Exception e) {
+            log.error( "Error building document from upgrade client response", e );
             e.printStackTrace();
         }
         return null;
