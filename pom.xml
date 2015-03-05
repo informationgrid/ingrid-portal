@@ -34,6 +34,12 @@
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
   <dependencyManagement>
     <dependencies>
+<!-- Problems with driver 5.1.6 on MySQL 5.6 -->
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.34</version>
+      </dependency>
 <!-- JETSPEED -->
 <!-- Explicitly use jetspeed dependency management ! So we use the versions jetspeed uses ! -->
       <dependency>
