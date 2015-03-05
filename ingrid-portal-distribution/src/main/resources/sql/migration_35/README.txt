@@ -83,7 +83,7 @@ Migrationsschritte:
     > java -jar jetspeed-2.1.4-installer.jar
         ...
         - lokalen Treiber wählen:
-            MySQL: mysql-connector-java-5.1.6.jar
+            MySQL: mysql-connector-java-*.jar
             Oracle: ojdbc14.jar
 
 -------------------

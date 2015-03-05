@@ -37,7 +37,7 @@
     <property name="tomcat-artifact"               value="apache-tomcat"/>
     <property name="installedTomcatContextDir"     value="${installDir}/${tomcat-artifact}/conf/Catalina/localhost"/>
     
-    <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.6.jar"/>
+    <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"/>
     <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc14.jar"/>
 
     <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties"/>
@@ -491,7 +491,7 @@
             </fileset>
         </copy>
         <copy file="${basedir}/distribution/sql/_README.txt" todir="${installDir}"/>
-        <copy file="${installDir}/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.6.jar"  todir="${installDir}/migration_35"/>
+        <copy file="${installDir}/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"  todir="${installDir}/migration_35"/>
         <copy file="${installDir}/${tomcat-artifact}/shared/lib/ojdbc14.jar" todir="${installDir}/migration_35"/>
         <property name="migrateManual" value="true" />
     </target>
