@@ -50,5 +50,5 @@ define([
             }
             dialog.show(message.get("general.error"), string.substitute(message.get("operation.hint.addressNotPublishedHint"), [addresses.join(",")]), dialog.WARNING, null, 320, 300);
         }
-    });
+    })();
 });
