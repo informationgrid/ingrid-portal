@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 import org.quartz.InterruptableJob;
@@ -303,7 +302,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		if (snsTopics != null) {
 			List<SNSTopic> resultList = new ArrayList<SNSTopic>();
 			for (SNSTopic topic : snsTopics) {
-				if (topic.isExpired()) {
+				if (topic != null && topic.isExpired()) {
 					resultList.add(topic);
 				}
 			}
@@ -376,6 +375,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 					log.debug("Found synonym: " + topic);
 					SNSTopic descriptorForSynonym = snsService.getTopicsForTopic(topic.getTopicId(), locale);
 					log.debug("Descriptor for synonym: " + descriptorForSynonym);
+					descriptorForSynonym.setTitle( topic.getTitle() );
 					return descriptorForSynonym;
 				}
 			}
