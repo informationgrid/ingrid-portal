@@ -34,20 +34,44 @@
 
 var dialogSelectObject;
 
-require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/topic", "dojo/Deferred",
+require(["dojo/dom",
+         "dojo/on",
+         "dojo/query",
+         "dojo/keys",
+         "dojo/dom-class",
+         "dojo/topic",
+         "dojo/Deferred",
         "dijit/registry",
         "ingrid/tree/MetadataTree",
-        "ingrid/utils/Events"
-    ], function(dom, on, domClass, topic, Deferred, registry, MetadataTree, UtilEvents) {
+        "ingrid/utils/Events",
+        "dojox/validate"
+    ], function(dom, on, query, keys, domClass, topic, Deferred, registry, MetadataTree, UtilEvents) {
 
         var customParams = _container_.customParams;
         var dlgContainer = _container_;
+        
+        var btnAnalyze, recordUrl;
 
         on(_container_, "Load", function() {
+            btnAnalyze = registry.byId("btn_analyze");
+            recordUrl = registry.byId("recordUrl");
+            
             init();
 
             console.log("Publishing event: '/afterInitDialog/SelectObject'");
             topic.publish("/afterInitDialog/SelectObject");
+            
+            registry.byId("tabContainerLinkDlg").watch("selectedChildWidget", function(name, oldVal, newVal){
+                if (newVal.id === "tabRemote") {
+                    domClass.remove(btnAnalyze.domNode, "hide");
+                    updateAssignButton();
+                    recordUrl.focus();
+                } else {
+                    domClass.add(btnAnalyze.domNode, "hide");
+                    registry.byId("btn_assign").set("disabled", true);
+                    registry.byId("treeAssignObj").set("selectedNodes", [])
+                }
+            });
         });
 
         function init() {
@@ -72,6 +96,18 @@ require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/topic", "dojo/Deferred",
             if (customParams.additionalText) {
                 dom.byId("additionalText").innerHTML = customParams.additionalText;
             }
+            
+            on(recordUrl, "keyup", function(key) {
+                debugger;
+                if (recordUrl.validate()) {
+                    btnAnalyze.set("disabled", false);
+                    if (key.keyCode == keys.ENTER) analyzeUrl(recordUrl.get("value"));
+                } else {
+                    btnAnalyze.set("disabled", true);
+                }
+            });
+            
+            on(btnAnalyze, "Click", function() { analyzeUrl(recordUrl.get("value")); });
         }
 
         function createTree() {
@@ -117,6 +153,30 @@ require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/topic", "dojo/Deferred",
 
             dlgContainer.hide();
         }
+        
+        function updateAssignButton() {
+            registry.byId("btn_assign").set("disabled", true);
+        }
+        
+        function analyzeUrl(url) {
+            console.log("Analyzing URL ...");
+            // hide all error messages
+            query(".errors .error").addClass("hide");
+            
+            GetCapabilitiesService.getRecordById(url, function(result) {
+                console.log("received record:", result);
+                if (!result) {
+                    domClass.remove("errorWrongUrl", "hide");
+                    return;
+                }
+                if (!result.identifier) domClass.remove("errorNoId", "hide");
+                if (!result.hasDownloadData) domClass.remove("errorNoData", "hide");
+                
+                dom.byId("recordId").innerHTML = result.identifier;
+                dom.byId("recordTitle").innerHTML = result.title;
+                dom.byId("recordDownloadData").innerHTML = result.downloadData;
+            });
+        }
 
         /**
          * PUBLIC METHODS
@@ -133,29 +193,70 @@ require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/topic", "dojo/Deferred",
 
 <body>
 
-  <div id="catalogueObject" class="">
-    <div id="winNavi" style="top:0;">
-		<a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-8#maintanance-of-objects-8', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key="general.help" />">[?]</a>
-	  </div>
-	  <div id="objectContent" class="content">
-
-      <!-- CONTENT START -->
-      <div class="inputContainer">
-      	<div data-dojo-type="dijit/layout/ContentPane" id="treeContainerAssignObj" style="height:413px;">
-      		<div id="treeAssignObj" style="height:100%;"></div>
+    <div id="catalogueObject" class="">
+        <div id="winNavi" style="top: 0;">
+            <a href="javascript:void(0);"
+                onclick="javascript:window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-8#maintanance-of-objects-8', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');"
+                title="<fmt:message key="general.help" />">[?]</a>
         </div>
-      </div>
-      <div class="inputContainer">
-        <span id="additionalText"></span>
-        <span class="button transparent">
-		  <span style="float:right;"><button id="btn_assign" data-dojo-type="dijit/form/Button" disabled="disabled" onclick="dialogSelectObject.assignObject()"><fmt:message key="dialog.links.select.assign" /></button></span>
-        </span>
-  	  </div>
-  	  <div class="fill"></div>
-      <!-- CONTENT END -->
 
+        <div id="tabContainerLinkDlg" data-dojo-type="dijit/layout/TabContainer" style="height: 510px; overflow: visible;" selectedChild="tabLocal">
+            <div id="tabLocal" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.links.local" />">
+                <div id="objectContent" class="content">
+
+                    <!-- CONTENT START -->
+                    <div class="inputContainer">
+                        <div data-dojo-type="dijit/layout/ContentPane" id="treeContainerAssignObj" style="height: 413px;">
+                            <div id="treeAssignObj" style="height: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="inputContainer">
+                        <span id="additionalText"></span>
+                        <%-- <span class="button transparent">
+                            <span style="float: right;">
+                                <button id="btn_assign" data-dojo-type="dijit/form/Button" disabled="disabled" onclick="dialogSelectObject.assignObject()">
+                                    <fmt:message key="dialog.links.select.assign" />
+                                </button>
+                            </span>
+                        </span> --%>
+                    </div>
+                    <div class="fill"></div>
+                    <!-- CONTENT END -->
+                </div>
+            </div>
+            <div id="tabRemote" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.links.remote" />">
+                <div class="contentBlockWhite">
+                    <span class="label">
+                        <!-- TODO: add help or remove pointer -->
+                        <label for="recordUrl" <!-- onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7017) -->">
+                            <fmt:message key="dialog.links.recordUrl" />
+                        </label>
+                    </span>
+                    <span class="input spaceBelow">
+                        <input id="recordUrl" class="dijitInputContainer" style="width:100%;" type="url" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="regExpXXX:dojox.validate.regexp.url" required />
+                    </span>
+                    <div class="errors">
+                        <div id="errorWrongUrl" class="hide error"><fmt:message key="dialog.links.error.wrongUrl" /></div>
+                        <div id="errorNoId" class="hide error"><fmt:message key="dialog.links.error.noIdentifier" /></div>
+                        <div id="errorNoData" class="hide error"><fmt:message key="dialog.links.error.noDownloadData" /></div>
+                    </div>
+                    
+                    <div id="recordResults">
+                        <div id="recordId"></div>
+                        <div id="recordTitle"></div>
+                        <div id="recordDownloadData"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dijitDialogPaneActionBar">
+            <button data-dojo-type="dijit/form/Button" type="button" class="hide" id="btn_analyze" disabled="true">
+                <fmt:message key="dialog.links.analyze" />
+            </button>
+            <button data-dojo-type="dijit/form/Button" type="submit" id="btn_assign">
+                <fmt:message key="dialog.links.select.assign" />
+            </button>
+        </div>
     </div>
-  </div>
-
 </body>
 </html>
