@@ -185,11 +185,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 		// otherwise try within distribution info or SV_OperationMetadata
 		} else if ( getUdkObjectClassType().equals("3") ) {
             String capabilitiesUrl = getCapabilityUrl();
-            capabilitiesUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilitiesUrl, ServiceType.WMS );
-        	if (capabilitiesUrl != null) {
-                // get it directly from the operation
-        		map = addBigMapLink(capabilitiesUrl, true);
-        	}
+            if(capabilitiesUrl != null){
+            	capabilitiesUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilitiesUrl, ServiceType.WMS );
+            	if (capabilitiesUrl != null) {
+                    // get it directly from the operation
+            		map = addBigMapLink(capabilitiesUrl, true);
+            	}            	
+            }
 		} else {
             // show preview image (with map link information if provided)
             xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
