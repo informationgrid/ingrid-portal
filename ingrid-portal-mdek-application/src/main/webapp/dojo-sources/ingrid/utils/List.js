@@ -63,7 +63,11 @@ define([
                             break;
                     }
                 } else if (typeof(list[i].url) != "undefined") {
-                    list[i].icon = "<img src='img/UDK/url.gif' width=\"16\" height=\"16\" alt=\"Url\" />";
+                    if (list[i].datatype == "coupled") {
+                        list[i].icon = "<img src='img/UDK/udk_class1_ext.gif' width=\"16\" height=\"16\" alt=\"Url\" />";
+                    } else {
+                        list[i].icon = "<img src='img/UDK/url.gif' width=\"16\" height=\"16\" alt=\"Url\" />";
+                    }
                 } else {
                     list[i].icon = "noIcon";
                 }

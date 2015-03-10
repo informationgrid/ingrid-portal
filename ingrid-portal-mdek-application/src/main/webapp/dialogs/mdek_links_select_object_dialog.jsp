@@ -172,7 +172,7 @@ require(["dojo/dom",
                     name: record.title,
                     relationType: "3600",
                     relationTypeName: "Gekoppelte Daten",
-                    coupled: true
+                    datatype: "coupled"
                 };
                 UtilList.addUrlLinkLabels([currentLink]);
                 UtilList.addIcons([currentLink]);
