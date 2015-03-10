@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>3.6.0-SNAPSHOT</version>
+    <version>3.5.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -13,7 +13,7 @@
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-apps</connection>
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-apps</developerConnection>
-    <tag>HEAD</tag>
+    <tag>ingrid-portal-project-3.5.0</tag>
   </scm>
   <build>
     <finalName>ingrid-portal-apps</finalName>
