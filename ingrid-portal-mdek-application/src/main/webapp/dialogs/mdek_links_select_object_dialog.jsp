@@ -44,17 +44,23 @@ require(["dojo/dom",
         "dijit/registry",
         "ingrid/tree/MetadataTree",
         "ingrid/utils/Events",
-        "dojox/validate"
-    ], function(dom, on, query, keys, domClass, topic, Deferred, registry, MetadataTree, UtilEvents) {
+        "ingrid/utils/List",
+        "ingrid/utils/Grid"
+    ], function(dom, on, query, keys, domClass, topic, Deferred, registry, MetadataTree, UtilEvents, UtilList, UtilGrid) {
 
         var customParams = _container_.customParams;
         var dlgContainer = _container_;
         
-        var btnAnalyze, recordUrl;
+        // buttons and fields
+        var btnAnalyze, btnAssign, recordUrl;
+        
+        // store the fetched record
+        var record = currentUrl = null;
 
         on(_container_, "Load", function() {
             btnAnalyze = registry.byId("btn_analyze");
-            recordUrl = registry.byId("recordUrl");
+            btnAssign  = registry.byId("btn_assign");
+            recordUrl  = registry.byId("recordUrl");
             
             init();
 
@@ -68,7 +74,7 @@ require(["dojo/dom",
                     recordUrl.focus();
                 } else {
                     domClass.add(btnAnalyze.domNode, "hide");
-                    registry.byId("btn_assign").set("disabled", true);
+                    btnAssign.set("disabled", true);
                     registry.byId("treeAssignObj").set("selectedNodes", [])
                 }
             });
@@ -98,10 +104,16 @@ require(["dojo/dom",
             }
             
             on(recordUrl, "keyup", function(key) {
-                debugger;
                 if (recordUrl.validate()) {
+                    var url = recordUrl.get("value");
                     btnAnalyze.set("disabled", false);
-                    if (key.keyCode == keys.ENTER) analyzeUrl(recordUrl.get("value"));
+                    // only reset data if the input has been changed
+                    if (url != currentUrl) {
+                        record = null;
+                        domClass.add( "recordResults", "hide" );
+                        currentUrl = url;
+                    }
+                    if (key.keyCode == keys.ENTER) analyzeUrl(url);
                 } else {
                     btnAnalyze.set("disabled", true);
                 }
@@ -131,37 +143,58 @@ require(["dojo/dom",
 
             on(tree, "Click", function(node, data) {
                 if (domClass.contains(data.labelNode, "TreeNodeNotSelectable")) {
-                    registry.byId("btn_assign").set("disabled", true);
+                    btnAssign.set("disabled", true);
                 } else {
-                    registry.byId("btn_assign").set("disabled", false);
+                    btnAssign.set("disabled", false);
                 }
             });
 
         }
 
         function assignObject() {
-            if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/SelectObject")) return;
-            var node = registry.byId("treeAssignObj").selectedNode;
-            if (node) {
-                var retVal = {};
-                retVal.uuid = node.item.id;
-                retVal.title = node.item.title;
-                retVal.objectClass = node.item.nodeDocType.substr(5, 1);
-
-                customParams.resultHandler.resolve(retVal);
+            var selectedTab = registry.byId("tabContainerLinkDlg").selectedChildWidget.id;
+            if (selectedTab == "tabLocal") {
+                if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/SelectObject")) return;
+                var node = registry.byId("treeAssignObj").selectedNode;
+                if (node) {
+                    var retVal = {};
+                    retVal.uuid = node.item.id;
+                    retVal.title = node.item.title;
+                    retVal.objectClass = node.item.nodeDocType.substr(5, 1);
+    
+                    customParams.resultHandler.resolve(retVal);
+                }
+                
+            } else {
+                //debugger;
+                var currentLink = {
+                    url: recordUrl.get("value"),
+                    name: record.title,
+                    relationType: "3600",
+                    relationTypeName: "Gekoppelte Daten",
+                    coupled: true
+                };
+                UtilList.addUrlLinkLabels([currentLink]);
+                UtilList.addIcons([currentLink]);
+                UtilGrid.addTableDataRow("ref3BaseDataLink", currentLink);
             }
 
             dlgContainer.hide();
         }
         
         function updateAssignButton() {
-            registry.byId("btn_assign").set("disabled", true);
+            if (record === null) {
+                btnAssign.set("disabled", true);
+            } else {
+                btnAssign.set("disabled", false);
+            }
         }
         
         function analyzeUrl(url) {
             console.log("Analyzing URL ...");
             // hide all error messages
             query(".errors .error").addClass("hide");
+            btnAssign.set("disabled", true);
             
             GetCapabilitiesService.getRecordById(url, function(result) {
                 console.log("received record:", result);
@@ -172,9 +205,21 @@ require(["dojo/dom",
                 if (!result.identifier) domClass.remove("errorNoId", "hide");
                 if (!result.hasDownloadData) domClass.remove("errorNoData", "hide");
                 
+                domClass.remove( "recordResults", "hide" );
+                
+                record = result;
+                
                 dom.byId("recordId").innerHTML = result.identifier;
                 dom.byId("recordTitle").innerHTML = result.title;
-                dom.byId("recordDownloadData").innerHTML = result.downloadData;
+                var downloads = "";
+                result.downloadData.forEach(function(item) {
+                    downloads += "<li>" + item + "</li>";
+                });
+                dom.byId("recordDownloadData").innerHTML = "<ul>" + downloads + "</ul>";
+                
+                if (result.identifier && result.hasDownloadData) {
+                    btnAssign.set("disabled", false);
+                }
             });
         }
 
@@ -227,8 +272,7 @@ require(["dojo/dom",
             <div id="tabRemote" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.links.remote" />">
                 <div class="contentBlockWhite">
                     <span class="label">
-                        <!-- TODO: add help or remove pointer -->
-                        <label for="recordUrl" <!-- onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7017) -->">
+                        <label for="recordUrl"  class="inActive">
                             <fmt:message key="dialog.links.recordUrl" />
                         </label>
                     </span>
@@ -241,10 +285,13 @@ require(["dojo/dom",
                         <div id="errorNoData" class="hide error"><fmt:message key="dialog.links.error.noDownloadData" /></div>
                     </div>
                     
-                    <div id="recordResults">
-                        <div id="recordId"></div>
-                        <div id="recordTitle"></div>
-                        <div id="recordDownloadData"></div>
+                    <div id="recordResults" class="hide" style="padding-top: 15px;">
+                        <label class="inActive definition"><fmt:message key="dialog.links.label.id" />:</label>
+                        <div class="spaceBelow" id="recordId"></div>
+                        <label class="inActive definition"><fmt:message key="dialog.links.label.title" />:</label>
+                        <div class="spaceBelow" id="recordTitle"></div>
+                        <label class="inActive definition"><fmt:message key="dialog.links.label.downloadData" />:</label>
+                        <div id="recordDownloadData" style="word-wrap: break-word;"></div>
                     </div>
                 </div>
             </div>
@@ -253,7 +300,7 @@ require(["dojo/dom",
             <button data-dojo-type="dijit/form/Button" type="button" class="hide" id="btn_analyze" disabled="true">
                 <fmt:message key="dialog.links.analyze" />
             </button>
-            <button data-dojo-type="dijit/form/Button" type="submit" id="btn_assign">
+            <button data-dojo-type="dijit/form/Button" type="submit" disabled="disabled" id="btn_assign" onclick="dialogSelectObject.assignObject()">
                 <fmt:message key="dialog.links.select.assign" />
             </button>
         </div>
