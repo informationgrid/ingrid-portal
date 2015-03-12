@@ -67,7 +67,7 @@ require(["dojo/dom",
             console.log("Publishing event: '/afterInitDialog/SelectObject'");
             topic.publish("/afterInitDialog/SelectObject");
             
-            registry.byId("tabContainerLinkDlg").watch("selectedChildWidget", function(name, oldVal, newVal){
+            registry.byId("tabContainerLinkDlg").watch("selectedChildWidget", function(name, oldVal, newVal) {
                 if (newVal.id === "tabRemote") {
                     domClass.remove(btnAnalyze.domNode, "hide");
                     updateAssignButton();
@@ -97,6 +97,12 @@ require(["dojo/dom",
                     resultHandler: deferred,
                     ignoreDirtyFlag: true
                 });
+            }
+            
+            if (!customParams.showExternalRef) {
+                debugger;
+                var tabCont = registry.byId("tabContainerLinkDlg");
+                tabCont.removeChild( tabCont.getChildren()[1] );
             }
 
             if (customParams.additionalText) {
@@ -195,8 +201,10 @@ require(["dojo/dom",
             // hide all error messages
             query(".errors .error").addClass("hide");
             btnAssign.set("disabled", true);
+            domClass.remove("coupledLoadingZone", "hide");
             
             GetCapabilitiesService.getRecordById(url, function(result) {
+                domClass.add("coupledLoadingZone", "hide");
                 console.log("received record:", result);
                 if (!result) {
                     domClass.remove("errorWrongUrl", "hide");
@@ -205,20 +213,19 @@ require(["dojo/dom",
                 if (!result.identifier) domClass.remove("errorNoId", "hide");
                 if (!result.hasDownloadData) domClass.remove("errorNoData", "hide");
                 
-                domClass.remove( "recordResults", "hide" );
-                
-                record = result;
-                
-                dom.byId("recordId").innerHTML = result.identifier;
-                dom.byId("recordTitle").innerHTML = result.title;
-                var downloads = "";
-                result.downloadData.forEach(function(item) {
-                    downloads += "<li>" + item + "</li>";
-                });
-                dom.byId("recordDownloadData").innerHTML = "<ul>" + downloads + "</ul>";
-                
                 if (result.identifier && result.hasDownloadData) {
                     btnAssign.set("disabled", false);
+                    
+                    record = result;
+                    
+                    dom.byId("recordId").innerHTML = result.identifier;
+                    dom.byId("recordTitle").innerHTML = result.title;
+                    var downloads = "";
+                    result.downloadData.forEach(function(item) {
+                        downloads += "<li>" + item + "</li>";
+                    });
+                    dom.byId("recordDownloadData").innerHTML = "<ul>" + downloads + "</ul>";
+                    domClass.remove( "recordResults", "hide" );
                 }
             });
         }
@@ -251,7 +258,7 @@ require(["dojo/dom",
 
                     <!-- CONTENT START -->
                     <div class="inputContainer">
-                        <div data-dojo-type="dijit/layout/ContentPane" id="treeContainerAssignObj" style="height: 413px;">
+                        <div data-dojo-type="dijit/layout/ContentPane" id="treeContainerAssignObj" style="height: 450px;">
                             <div id="treeAssignObj" style="height: 100%;"></div>
                         </div>
                     </div>
@@ -279,6 +286,12 @@ require(["dojo/dom",
                     <span class="input spaceBelow">
                         <input id="recordUrl" class="dijitInputContainer" style="width:100%;" type="url" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="regExpXXX:dojox.validate.regexp.url" required />
                     </span>
+                    <div id="coupledLoadingZone" class="hide">
+                        <span><!--  style="float:left; margin-top:1px; z-index: 100; visibility:hidden"> -->
+                            <img id="coupledImageZone" src="img/ladekreis.gif" />
+                        </span>
+                        <fmt:message key="dialog.links.label.fetching" />
+                    </div>
                     <div class="errors">
                         <div id="errorWrongUrl" class="hide error"><fmt:message key="dialog.links.error.wrongUrl" /></div>
                         <div id="errorNoId" class="hide error"><fmt:message key="dialog.links.error.noIdentifier" /></div>

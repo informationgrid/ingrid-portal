@@ -629,7 +629,8 @@ define([
                 // custom parameters
                 //additionalText: message.get("dialog.links.selectObject.coupling.info"),
                 resultHandler: def,
-                caller: caller
+                caller: caller,
+                showExternalRef: true
             });
 
             def.then(function(obj) {
