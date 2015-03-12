@@ -33,17 +33,22 @@ import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
+import de.ingrid.mdek.beans.Record;
 import de.ingrid.mdek.dwr.services.capabilities.CapabilitiesParserFactory;
 import de.ingrid.mdek.dwr.services.capabilities.ICapabilitiesParser;
+import de.ingrid.utils.xpath.XPathUtils;
 
 public class GetCapabilitiesService {
 
@@ -61,20 +66,7 @@ public class GetCapabilitiesService {
     public CapabilitiesBean getCapabilities(String urlStr) {
 
         try {
-            URL url = new URL( urlStr );
-            // get the content in UTF-8 format, to avoid "MalformedByteSequenceException: Invalid byte 1 of 1-byte UTF-8 sequence"
-            InputStream input = checkForUtf8BOMAndDiscardIfAny( url.openStream() );
-            Reader reader = new InputStreamReader( input, "UTF-8" );
-            InputSource inputSource = new InputSource( reader );
-
-            // Build a document from the xml response
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            // nameSpaceAware is false by default. Otherwise we would have to
-            // query for the correct namespace for every evaluation
-            factory.setNamespaceAware( true );
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse( inputSource );
-
+            Document doc = getDocumentFromUrl(urlStr, true);
             return getCapabilitiesData( doc );
 
         } catch (MalformedURLException e) {
@@ -113,6 +105,50 @@ public class GetCapabilitiesService {
     public CapabilitiesBean getCapabilitiesData(Document doc) throws XPathExpressionException {
         ICapabilitiesParser capDoc = CapabilitiesParserFactory.getDocument( doc, sysListMapper );
         return capDoc.getCapabilitiesData( doc );
+    }
+    
+    public Record getRecordById(String urlStr) {
+        Record record = null;
+        try {
+            
+            Document doc = getDocumentFromUrl(urlStr, false);
+            record = new Record();
+            XPathUtils xpath = new XPathUtils();
+            String id = xpath.getString( doc, "//identificationInfo/MD_DataIdentification//identifier/MD_Identifier/code/CharacterString" );
+            String title = xpath.getString( doc, "//identificationInfo/MD_DataIdentification//citation/CI_Citation/title/CharacterString" );
+
+            NodeList resources = xpath.getNodeList( doc, "//MD_DigitalTransferOptions/onLine/CI_OnlineResource/function/CI_OnLineFunctionCode");
+            for (int j = 0; j < resources.getLength(); j++) {
+                String codeListValue = resources.item( j ).getAttributes().getNamedItem( "codeListValue" ).getNodeValue();
+                if ("download".equals( codeListValue )) {
+                    String link = xpath.getString( resources.item( j ), "../../linkage/URL" );
+                    record.addDownloadData( link );
+                }
+            }
+
+            record.setIdentifier( id );
+            record.setTitle( title );
+        } catch (Exception ex) {
+            log.error( "Problem getting record by ID: " + urlStr, ex );
+        }
+        
+        return record;
+    }
+    
+    private Document getDocumentFromUrl(String urlStr, boolean namespaceAware) throws SAXException, IOException, ParserConfigurationException {
+        URL url = new URL( urlStr );
+        // get the content in UTF-8 format, to avoid "MalformedByteSequenceException: Invalid byte 1 of 1-byte UTF-8 sequence"
+        InputStream input = checkForUtf8BOMAndDiscardIfAny( url.openStream() );
+        Reader reader = new InputStreamReader( input, "UTF-8" );
+        InputSource inputSource = new InputSource( reader );
+        // Build a document from the xml response
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        // nameSpaceAware is false by default. Otherwise we would have to
+        // query for the correct namespace for every evaluation
+        factory.setNamespaceAware( namespaceAware );
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse( inputSource );
+        return doc;
     }
 
     public SysListCache getSysListMapper() {

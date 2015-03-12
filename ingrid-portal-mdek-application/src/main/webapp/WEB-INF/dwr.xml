@@ -90,6 +90,7 @@
         <convert converter="bean" match="de.ingrid.mdek.MdekError$MdekErrorType"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.AnalyzeJobInfoBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CapabilitiesBean"/>
+		<convert converter="bean" match="de.ingrid.mdek.beans.Record"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CatalogBean"/>
 		<convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.SysList"/>
