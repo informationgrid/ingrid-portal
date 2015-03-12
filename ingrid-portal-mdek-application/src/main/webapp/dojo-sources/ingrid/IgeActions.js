@@ -2296,8 +2296,7 @@ define([
             nodeData.extraInfoUse = registry.byId("extraInfoUse").get("value");
 
             nodeData.extraInfoXMLExportTable = UtilList.tableDataToList(this._getTableData("extraInfoXMLExportTable"));
-            // var valuesExtraInfoLegalBasicsTable =
-            //     nodeData.extraInfoLegalBasicsTable = UtilList.tableDataToList(this._getTableData("extraInfoLegalBasicsTable"));
+            nodeData.extraInfoLegalBasicsTable = UtilList.tableDataToList(this._getTableData("extraInfoLegalBasicsTable"));
 
             // -- Availability --
             //  nodeData.availabilityUsageLimitationTable = this._getTableData("availabilityUsageLimitationTable");
