@@ -31,6 +31,8 @@
         padding: 10px;
         margin-bottom: 20px;
     }
+    
+    #detailViewContent { background: white; }
 </style>
 <script type="text/javascript">
 
@@ -1232,35 +1234,26 @@ require([
 </head>
 
 <body>
-    <div id="contentPane" class="contentBlockWhite">
-        <div id="dialogContent" class="content">
-            <div id="printDialogSettings" class="grey">
-                <input type="checkbox" id="showDetailedView" data-dojo-type="dijit/form/CheckBox" checked=true />
-                <label for="showDetailedView" class="inActive" style="margin-right: 15px;">
-                    <fmt:message key="dialog.detail.print.showDetailedView" />
-                </label>
-                <input type="checkbox" id="showSubTree" data-dojo-type="dijit/form/CheckBox" />
-                <label for="showSubTree" class="inActive">
-                    <fmt:message key="dialog.detail.print.showSubTree" />
-                </label>
-                <input type="checkbox" id="showSubordinateObjects" data-dojo-type="dijit/form/CheckBox" style="display:none;" checked=true />
-                <label for="showSubordinateObjects" style="display:none;" class="inActive" title="<fmt:message key="dialog.detail.print.showSubordinate.tooltip" />">
-                    <fmt:message key="dialog.detail.print.showSubordinate" />
-                </label>
-                <button id="printDetailObject" data-dojo-type="dijit/form/Button" onclick="require('ingrid/utils/General').printDivContent('detailViewContent')" class="right" style="margin: -3px 0 0 10px;"><fmt:message key="dialog.detail.print" />
-                </button>
-                <span id="detailLoadingZone" style="visibility:hidden;" class="processInfo right"><img src="img/ladekreis.gif" width="20" height="20" alt="Loading" /></span>
-            </div>
-            <!-- MAIN TAB CONTAINER START -->
-            <!-- <div id="detailViewContainer" data-dojo-type="dijit/layout/TabContainer" style="height:528px; width:100%;" selectedChild="detailView"> -->
-            <div style="width:100%; clear: both;">
-                <!-- MAIN TAB 1 START -->
-                <div id="detailView" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder" style="height: 550px;" title="<fmt:message key="dialog.detail.title" />">
-                    <div id="detailViewContent" class="detailViewContentContainer" style="padding: 5px;"></div>
-                </div>
-                <!-- MAIN TAB 1 END -->
-            </div>
-            <!-- MAIN TAB CONTAINER END -->
+    <div data-dojo-type="dijit.layout.BorderContainer" gutters="true" liveSplitters="false" style="height:500px;">
+        <div data-dojo-type="dijit/layout/ContentPane" splitter="false" region="top" id="printDialogSettings">
+            <input type="checkbox" id="showDetailedView" data-dojo-type="dijit/form/CheckBox" checked=true />
+            <label for="showDetailedView" class="inActive" style="margin-right: 15px;">
+                <fmt:message key="dialog.detail.print.showDetailedView" />
+            </label>
+            <input type="checkbox" id="showSubTree" data-dojo-type="dijit/form/CheckBox" />
+            <label for="showSubTree" class="inActive">
+                <fmt:message key="dialog.detail.print.showSubTree" />
+            </label>
+            <input type="checkbox" id="showSubordinateObjects" data-dojo-type="dijit/form/CheckBox" style="display:none;" checked=true />
+            <label for="showSubordinateObjects" style="display:none;" class="inActive" title="<fmt:message key="dialog.detail.print.showSubordinate.tooltip" />">
+                <fmt:message key="dialog.detail.print.showSubordinate" />
+            </label>
+            <button id="printDetailObject" data-dojo-type="dijit/form/Button" onclick="require('ingrid/utils/General').printDivContent('detailViewContent')" class="right" style="margin: -3px 0 0 10px;"><fmt:message key="dialog.detail.print" />
+            </button>
+            <span id="detailLoadingZone" style="visibility:hidden;" class="processInfo right"><img src="img/ladekreis.gif" width="20" height="20" alt="Loading" /></span>
+        </div>
+        <div data-dojo-type="dijit/layout/ContentPane" splitter="false" region="center" id="detailView" class="inputContainer">
+            <div id="detailViewContent" class="detailViewContentContainer" style="padding: 5px;"></div>
         </div>
     </div>
   <!-- CONTENT END -->
