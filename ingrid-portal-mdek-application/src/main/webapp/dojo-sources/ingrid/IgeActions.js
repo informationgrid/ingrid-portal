@@ -2126,22 +2126,22 @@ define([
             if (parentUuid != "addressRoot" && parentUuid != "addressFreeRoot") {
                 nodeData.parentUuid = parentUuid;
             }
-            nodeData.addressOwner = registry.byId("addressOwner").getValue();
+            nodeData.addressOwner = registry.byId("addressOwner").get("value");
 
             // ------------------ Header ------------------
             nodeData.addressClass = UtilAddress.getAddressClass();
 
             // ------------------ Address and Function ------------------
-            nodeData.street = registry.byId("addressStreet").getValue();
-            nodeData.countryCode = registry.byId("addressCountry").getValue();
+            nodeData.street = registry.byId("addressStreet").get("value");
+            nodeData.countryCode = registry.byId("addressCountry").get("value");
             nodeData.countryName = registry.byId("addressCountry").get("displayedValue");
             //UtilList.getSelectDisplayValue(registry.byId("addressCountry"), registry.byId("addressCountry").get('value'));//registry.byId("addressCountry").getDisplayValue();
-            nodeData.postalCode = registry.byId("addressZipCode").getValue();
-            nodeData.city = registry.byId("addressCity").getValue();
-            nodeData.pobox = registry.byId("addressPOBox").getValue();
-            nodeData.poboxPostalCode = registry.byId("addressZipPOBox").getValue();
+            nodeData.postalCode = registry.byId("addressZipCode").get("value");
+            nodeData.city = registry.byId("addressCity").get("value");
+            nodeData.pobox = registry.byId("addressPOBox").get("value");
+            nodeData.poboxPostalCode = registry.byId("addressZipPOBox").get("value");
             //DELETED: "addressNotes" (INGRID33-10)
-            nodeData.task = registry.byId("addressTasks").getValue();
+            nodeData.task = registry.byId("addressTasks").get("value");
             nodeData.communication = this._getTableData("addressCom");
 
             // replace syslist entries with name and leave it if it's a free entry
@@ -2163,34 +2163,34 @@ define([
             // ------------------ Class specific content ------------------
             switch (nodeData.addressClass) {
                 case 0:
-                    //			nodeData.organisation = registry.byId("headerAddressType0Institution").getValue();
-                    nodeData.organisation = registry.byId("headerAddressType0Unit").getValue();
+                    //			nodeData.organisation = registry.byId("headerAddressType0Institution").get("value");
+                    nodeData.organisation = registry.byId("headerAddressType0Unit").get("value");
                     // -- Extra Info --
-                    nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress0").getValue();
+                    nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress0").get("value");
                     break;
                 case 1:
                     //			registry.byId("headerAddressType1Institution").attr("value", nodeData.organisation);
-                    nodeData.organisation = registry.byId("headerAddressType1Unit").getValue();
+                    nodeData.organisation = registry.byId("headerAddressType1Unit").get("value");
                     // -- Extra Info --
-                    nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress1").getValue();
+                    nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress1").get("value");
                     break;
                 case 2:
-                    nodeData.name = registry.byId("headerAddressType2Lastname").getValue();
-                    nodeData.givenName = registry.byId("headerAddressType2Firstname").getValue();
-                    nodeData.nameForm = registry.byId("headerAddressType2Style").getValue();
-                    nodeData.titleOrFunction = registry.byId("headerAddressType2Title").getValue();
+                    nodeData.name = registry.byId("headerAddressType2Lastname").get("value");
+                    nodeData.givenName = registry.byId("headerAddressType2Firstname").get("value");
+                    nodeData.nameForm = registry.byId("headerAddressType2Style").get("value");
+                    nodeData.titleOrFunction = registry.byId("headerAddressType2Title").get("value");
                     nodeData.hideAddress = registry.byId("headerAddressType2HideAddress").checked ? true : false; // in case value is NULL!
                     // -- Extra Info --
-                    nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress2").getValue();
+                    nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress2").get("value");
                     break;
                 case 3:
-                    nodeData.name = registry.byId("headerAddressType3Lastname").getValue();
-                    nodeData.givenName = registry.byId("headerAddressType3Firstname").getValue();
-                    nodeData.nameForm = registry.byId("headerAddressType3Style").getValue();
-                    nodeData.titleOrFunction = registry.byId("headerAddressType3Title").getValue();
-                    nodeData.organisation = registry.byId("headerAddressType3Institution").getValue();
+                    nodeData.name = registry.byId("headerAddressType3Lastname").get("value");
+                    nodeData.givenName = registry.byId("headerAddressType3Firstname").get("value");
+                    nodeData.nameForm = registry.byId("headerAddressType3Style").get("value");
+                    nodeData.titleOrFunction = registry.byId("headerAddressType3Title").get("value");
+                    nodeData.organisation = registry.byId("headerAddressType3Institution").get("value");
                     // -- Extra Info --
-                    nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress3").getValue();
+                    nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress3").get("value");
                     break;
                 default:
                     console.debug("Error in _getAddressData - Address Class must be 0, 1, 2 or 3!");
@@ -2333,7 +2333,7 @@ define([
             });
 
             // add url to preview image to url table
-            var previewUrl = registry.byId("generalPreviewImage").getValue();
+            var previewUrl = registry.byId("generalPreviewImage").get("value");
             if (previewUrl) urlLinks.push(UtilList.urlToListEntry(previewUrl));
 
             nodeData.linksToObjectTable = objLinks;
@@ -2493,16 +2493,16 @@ define([
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
-            nodeData.ref1ObjectIdentifier = registry.byId("ref1ObjectIdentifier").getValue();
-            nodeData.ref1DataSet = registry.byId("ref1DataSet").getValue();
+            nodeData.ref1ObjectIdentifier = registry.byId("ref1ObjectIdentifier").get("value");
+            nodeData.ref1DataSet = registry.byId("ref1DataSet").get("value");
             nodeData.ref1Coverage = UtilGeneral.getNumberFromDijit("ref1Coverage");
-            nodeData.ref1VFormatTopology = registry.byId("ref1VFormatTopology").getValue();
+            nodeData.ref1VFormatTopology = registry.byId("ref1VFormatTopology").get("value");
 
             nodeData.ref1AltAccuracy = UtilGeneral.getNumberFromDijit("ref1AltAccuracy");
             nodeData.ref1PosAccuracy = UtilGeneral.getNumberFromDijit("ref1PosAccuracy");
-            nodeData.ref1BasisText = registry.byId("ref1BasisText").getValue();
-            nodeData.ref1DataBasisText = registry.byId("ref1DataBasisText").getValue();
-            nodeData.ref1ProcessText = registry.byId("ref1ProcessText").getValue();
+            nodeData.ref1BasisText = registry.byId("ref1BasisText").get("value");
+            nodeData.ref1DataBasisText = registry.byId("ref1DataBasisText").get("value");
+            nodeData.ref1ProcessText = registry.byId("ref1ProcessText").get("value");
 
 
             nodeData.ref1Representation = UtilList.tableDataToList(this._getTableData("ref1Representation"));
@@ -2532,20 +2532,20 @@ define([
         _getObjectDataClass2: function(nodeData) {
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
-            nodeData.ref2Author = registry.byId("ref2Author").getValue();
-            nodeData.ref2Publisher = registry.byId("ref2Publisher").getValue();
-            nodeData.ref2PublishedIn = registry.byId("ref2PublishedIn").getValue();
-            nodeData.ref2PublishLocation = registry.byId("ref2PublishLocation").getValue();
-            nodeData.ref2PublishedInIssue = registry.byId("ref2PublishedInIssue").getValue();
-            nodeData.ref2PublishedInPages = registry.byId("ref2PublishedInPages").getValue();
-            nodeData.ref2PublishedInYear = registry.byId("ref2PublishedInYear").getValue();
-            nodeData.ref2PublishedISBN = registry.byId("ref2PublishedISBN").getValue();
-            nodeData.ref2PublishedPublisher = registry.byId("ref2PublishedPublisher").getValue();
-            nodeData.ref2LocationText = registry.byId("ref2LocationText").getValue();
-            nodeData.ref2DocumentType = registry.byId("ref2DocumentType").getValue();
-            nodeData.ref2BaseDataText = registry.byId("ref2BaseDataText").getValue();
-            nodeData.ref2BibData = registry.byId("ref2BibData").getValue();
-            nodeData.ref2Explanation = registry.byId("ref2Explanation").getValue();
+            nodeData.ref2Author = registry.byId("ref2Author").get("value");
+            nodeData.ref2Publisher = registry.byId("ref2Publisher").get("value");
+            nodeData.ref2PublishedIn = registry.byId("ref2PublishedIn").get("value");
+            nodeData.ref2PublishLocation = registry.byId("ref2PublishLocation").get("value");
+            nodeData.ref2PublishedInIssue = registry.byId("ref2PublishedInIssue").get("value");
+            nodeData.ref2PublishedInPages = registry.byId("ref2PublishedInPages").get("value");
+            nodeData.ref2PublishedInYear = registry.byId("ref2PublishedInYear").get("value");
+            nodeData.ref2PublishedISBN = registry.byId("ref2PublishedISBN").get("value");
+            nodeData.ref2PublishedPublisher = registry.byId("ref2PublishedPublisher").get("value");
+            nodeData.ref2LocationText = registry.byId("ref2LocationText").get("value");
+            nodeData.ref2DocumentType = registry.byId("ref2DocumentType").get("value");
+            nodeData.ref2BaseDataText = registry.byId("ref2BaseDataText").get("value");
+            nodeData.ref2BibData = registry.byId("ref2BibData").get("value");
+            nodeData.ref2Explanation = registry.byId("ref2Explanation").get("value");
         },
 
 
@@ -2556,10 +2556,10 @@ define([
             nodeData.ref3ServiceType = registry.byId("ref3ServiceType").get("value");
             nodeData.ref3AtomDownload = registry.byId("ref3IsAtomDownload").checked ? true : false;
             nodeData.ref3CouplingType = registry.byId("ref3CouplingType").get("value");
-            nodeData.ref3SystemEnv = registry.byId("ref3SystemEnv").getValue();
-            nodeData.ref3History = registry.byId("ref3History").getValue();
-            nodeData.ref3BaseDataText = registry.byId("ref3BaseDataText").getValue();
-            nodeData.ref3Explanation = registry.byId("ref3Explanation").getValue();
+            nodeData.ref3SystemEnv = registry.byId("ref3SystemEnv").get("value");
+            nodeData.ref3History = registry.byId("ref3History").get("value");
+            nodeData.ref3BaseDataText = registry.byId("ref3BaseDataText").get("value");
+            nodeData.ref3Explanation = registry.byId("ref3Explanation").get("value");
 
             nodeData.ref3ServiceTypeTable = UtilList.tableDataToList(this._getTableData("ref3ServiceTypeTable"));
             nodeData.ref3ServiceVersion = UtilList.tableDataToList(this._getTableData("ref3ServiceVersion"));
@@ -2585,21 +2585,21 @@ define([
                     nodeData.ref3Operation.push(operationData);
                 }
             }
-            nodeData.ref3Explanation = registry.byId("ref3Explanation").getValue();
+            nodeData.ref3Explanation = registry.byId("ref3Explanation").get("value");
             nodeData.ref3HasAccessConstraint = registry.byId("ref3HasAccessConstraint").checked;
         },
 
         _getObjectDataClass4: function(nodeData) {
-            nodeData.ref4ParticipantsText = registry.byId("ref4ParticipantsText").getValue();
-            nodeData.ref4PMText = registry.byId("ref4PMText").getValue();
-            nodeData.ref4Explanation = registry.byId("ref4Explanation").getValue();
+            nodeData.ref4ParticipantsText = registry.byId("ref4ParticipantsText").get("value");
+            nodeData.ref4PMText = registry.byId("ref4PMText").get("value");
+            nodeData.ref4Explanation = registry.byId("ref4Explanation").get("value");
         },
 
         _getObjectDataClass5: function(nodeData) {
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
-            nodeData.ref5MethodText = registry.byId("ref5MethodText").getValue();
-            nodeData.ref5Explanation = registry.byId("ref5Explanation").getValue();
+            nodeData.ref5MethodText = registry.byId("ref5MethodText").get("value");
+            nodeData.ref5Explanation = registry.byId("ref5Explanation").get("value");
 
             nodeData.ref5KeysText = this._getTableData("ref5KeysText");
             nodeData.ref5dbContent = this._getTableData("ref5dbContent");
@@ -2609,11 +2609,11 @@ define([
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false;
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
-            nodeData.ref6ServiceType = registry.byId("ref6ServiceType").getValue();
-            nodeData.ref6SystemEnv = registry.byId("ref6SystemEnv").getValue();
-            nodeData.ref6History = registry.byId("ref6History").getValue();
-            nodeData.ref6BaseDataText = registry.byId("ref6BaseDataText").getValue();
-            nodeData.ref6Explanation = registry.byId("ref6Explanation").getValue();
+            nodeData.ref6ServiceType = registry.byId("ref6ServiceType").get("value");
+            nodeData.ref6SystemEnv = registry.byId("ref6SystemEnv").get("value");
+            nodeData.ref6History = registry.byId("ref6History").get("value");
+            nodeData.ref6BaseDataText = registry.byId("ref6BaseDataText").get("value");
+            nodeData.ref6Explanation = registry.byId("ref6Explanation").get("value");
 
             console.debug("ref6ServiceVersion tabledata: " + this._getTableData("ref6ServiceVersion"));
             nodeData.ref6ServiceVersion = UtilList.tableDataToList(this._getTableData("ref6ServiceVersion"));
