@@ -35,6 +35,12 @@
             <action type="fix" dev="wemove" issue="REDMINE-38">
                 IGE: Field law basics could not be saved.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-41">
+                IGE: GetCapabilities-Assistant throws an error when handling coupled resources.
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Fixed an issue where not all decimals of a spatial reference were used during editing.
+            </action>
         </release>
         <release version="3.5.0" date="2015-02-02">
             <action type="add" dev="wemove" issue="REDMINE-524">

@@ -107,7 +107,8 @@ define([
             this.init = function() {
                 this.input = new dijit.form.NumberTextBox({
                     id: "activeCell_" + args.grid.id,
-                    style: "width: 100%; color: black; font-family: Verdana, Helvetica, Arial, sans-serif;"
+                    style: "width: 100%; color: black; font-family: Verdana, Helvetica, Arial, sans-serif;",
+                    constraints: { pattern: '###.##########' }
                 }).placeAt(args.container);
                 this.input.constraints.places = '0,10';
                 var constraints = args.column.constraints;
