@@ -369,7 +369,12 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
                     box.setLatitude2(coordinates[3]);
                     box.setLongitude2(coordinates[2]);
                     
-                    box.setName(xPathUtils.getString(layer, "Name"));
+                    // add a fallback for the name, since it's mandatory
+                    String name = xPathUtils.getString(layer, "wms:Name");
+                    if (name == null) name = xPathUtils.getString(layer, "wms:Title");
+                    if (name == null) name ="UNKNOWN";
+                    
+                    box.setName(name);
                     box.setTopicId(box.getName());
                     
                     bboxes.add(box);
