@@ -60,9 +60,17 @@ if (objClass.equals("3") || objClass.equals("6")) {
 		srvIdent = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification ");
 	}
 	var uuid = srvIdent.getElement().getAttribute( "uuid" );
-	var citationDate = DOM.getElement(srvIdent, "//gmd:CI_Citation/gmd:date");
 	
-	var MdIdent = citationDate.addElementAsSibling("gmd:identifier");
+	//find first present node from paths
+	var path = ["gmd:editionDate", "gmd:edition", "gmd:date"];
+	var nodeBeforeInsert = null;
+	for (i=0; i<path.length; i++) {
+	    // get the last occurrence of this path if any
+	    nodeBeforeInsert = DOM.getElement(srvIdent, "//gmd:CI_Citation/" + path[i]+"[last()]");
+	    if (nodeBeforeInsert) { break; }
+	}
+	
+	var MdIdent = nodeBeforeInsert.addElementAsSibling("gmd:identifier");
 	MdIdent.addElement("gmd:MD_Identifier/gmd:code/gco:CharacterString").addText( uuid );
 }
 
