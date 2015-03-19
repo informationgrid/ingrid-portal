@@ -116,6 +116,7 @@ public class GetCapabilitiesService {
             XPathUtils xpath = new XPathUtils();
             String id = xpath.getString( doc, "//identificationInfo/MD_DataIdentification//identifier/MD_Identifier/code/CharacterString" );
             String title = xpath.getString( doc, "//identificationInfo/MD_DataIdentification//citation/CI_Citation/title/CharacterString" );
+            String uuid = xpath.getString( doc, "//MD_Metadata/fileIdentifier/CharacterString" );
 
             NodeList resources = xpath.getNodeList( doc, "//MD_DigitalTransferOptions/onLine/CI_OnlineResource/function/CI_OnLineFunctionCode");
             for (int j = 0; j < resources.getLength(); j++) {
@@ -128,6 +129,7 @@ public class GetCapabilitiesService {
 
             record.setIdentifier( id );
             record.setTitle( title );
+            record.setUuid( uuid );
         } catch (Exception ex) {
             log.error( "Problem getting record by ID: " + urlStr, ex );
         }

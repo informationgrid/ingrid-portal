@@ -6,6 +6,7 @@ import java.util.List;
 public class Record {
     private String identifier;
     private String title;
+    private String uuid;
     private List<String> downloadData = new ArrayList<String>();
     private boolean hasDownloadData = false;
     
@@ -45,5 +46,13 @@ public class Record {
     public void addDownloadData(String data) {
         this.downloadData.add( data );
         this.hasDownloadData = true;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }
