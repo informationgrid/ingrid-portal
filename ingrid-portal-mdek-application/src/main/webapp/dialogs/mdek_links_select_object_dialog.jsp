@@ -51,6 +51,8 @@ require(["dojo/dom",
         var customParams = _container_.customParams;
         var dlgContainer = _container_;
         
+        var SEPARATOR = "#**#";
+        
         // buttons and fields
         var btnAnalyze, btnAssign, recordUrl;
         
@@ -176,6 +178,7 @@ require(["dojo/dom",
                 var currentLink = {
                     url: recordUrl.get("value"),
                     name: record.title,
+                    description: record.identifier + SEPARATOR + record.uuid,
                     relationType: "3600",
                     relationTypeName: "Gekoppelte Daten",
                     datatype: "coupled"
