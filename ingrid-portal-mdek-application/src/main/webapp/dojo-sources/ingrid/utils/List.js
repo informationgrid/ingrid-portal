@@ -128,7 +128,7 @@ define([
         addUrlLinkLabels: function(list) {
             for (var i = 0; i < list.length; ++i) {
                 if (list[i].url) {
-                    if (list[i].url.indexOf("http://") === 0)
+                    if (list[i].url.indexOf("http://") === 0 || list[i].url.indexOf("https://") === 0)
                         list[i].linkLabel = "<a href='" + list[i].url + "' target=\"_blank\" title='" + list[i].name + "'>" + list[i].name + "</a>";
                     else
                         list[i].linkLabel = list[i].name;
