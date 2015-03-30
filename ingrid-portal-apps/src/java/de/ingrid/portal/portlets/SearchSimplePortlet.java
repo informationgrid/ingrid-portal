@@ -427,7 +427,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         	} else {
 	        	SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, "");
 	        	SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
-	                    PortletSession.PORTLET_SCOPE);
+	                    PortletSession.APPLICATION_SCOPE);
 	        	af.setInput("q", "");
         	}
 
