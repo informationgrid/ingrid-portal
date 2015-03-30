@@ -86,7 +86,7 @@ public class SearchExtEnvAreaSourcesPortlet extends SearchExtEnvArea {
         String submittedAddToQuery = request.getParameter("submitAddToQuery");
 
         if (submittedAddToQuery != null) {
-            actionResponse.setRenderParameter("cmd", "form_sent");
+            //actionResponse.setRenderParameter("cmd", "form_sent");
             SearchExtEnvAreaSourcesForm f = (SearchExtEnvAreaSourcesForm) Utils.getActionForm(request,
                     SearchExtEnvAreaSourcesForm.SESSION_KEY, SearchExtEnvAreaSourcesForm.class);
             f.clearErrors();

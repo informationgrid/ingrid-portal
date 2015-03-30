@@ -80,7 +80,7 @@ public class SearchExtResTopicAttributesPortlet extends SearchExtResTopic {
 
         if (submittedAddToQuery != null) {
 
-            actionResponse.setRenderParameter("cmd", "form_sent");
+            //actionResponse.setRenderParameter("cmd", "form_sent");
             SearchExtResTopicAttributesForm f = (SearchExtResTopicAttributesForm) Utils.getActionForm(request,
                     SearchExtResTopicAttributesForm.SESSION_KEY, SearchExtResTopicAttributesForm.class);
             f.clearErrors();

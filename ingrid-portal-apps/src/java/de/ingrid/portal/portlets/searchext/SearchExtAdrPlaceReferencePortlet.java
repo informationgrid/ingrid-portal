@@ -79,7 +79,7 @@ public class SearchExtAdrPlaceReferencePortlet extends SearchExtAdrPlace {
         // TODO: implement functionality
         if (submittedAddToQuery != null) {
 
-            actionResponse.setRenderParameter("cmd", "form_sent");
+            //actionResponse.setRenderParameter("cmd", "form_sent");
             SearchExtAdrPlaceReferenceForm f = (SearchExtAdrPlaceReferenceForm) Utils.getActionForm(request, SearchExtAdrPlaceReferenceForm.SESSION_KEY, SearchExtAdrPlaceReferenceForm.class);        
             f.clearErrors();
             

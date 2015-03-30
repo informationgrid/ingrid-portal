@@ -78,7 +78,7 @@ public class SearchExtAdrTopicModePortlet extends SearchExtAdrTopic {
 
         if (submittedAddToQuery != null) {
 
-            actionResponse.setRenderParameter("cmd", "form_sent");
+            //actionResponse.setRenderParameter("cmd", "form_sent");
             SearchExtAdrTopicModeForm f = (SearchExtAdrTopicModeForm) Utils.getActionForm(request, SearchExtAdrTopicModeForm.SESSION_KEY, SearchExtAdrTopicModeForm.class);        
             f.clearErrors();
             
