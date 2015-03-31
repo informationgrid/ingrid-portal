@@ -117,34 +117,6 @@ if [ -f $INGRID_HOME/bin/jmx.sh ]; then
   eval `sh $INGRID_HOME/bin/jmx.sh`
 fi
 
-# changed memory parameters due to integration of gssoil thesaurus, gazetteer service in IGE !
-#CATALINA_OPTS="$CATALINA_OPTS -server -Xmx1024m -XX:MaxPermSize=256m"
-#CATALINA_OPTS="$CATALINA_OPTS -server -Xms256m -Xmx1024m -XX:PermSize=384m -XX:MaxPermSize=384m -Xss2048k"
-CATALINA_OPTS="$CATALINA_OPTS -XX:+UseG1GC -XX:NewRatio=1"
-
-# check java version
-JAVA_VERSION=`java -version 2>&1 |awk 'NR==1{ gsub(/"/,""); print $3 }'`
-JAVA_VERSION_PART_0=`echo $JAVA_VERSION | awk '{split($0, array, "-")} END{print array[1]}'`
-JAVA_VERSION_PART_1=`echo $JAVA_VERSION_PART_0 | awk '{split($0, array, "_")} END{print array[1]}'`
-JAVA_VERSION_PART_2=`echo $JAVA_VERSION_PART_0 | awk '{split($0, array, "_")} END{print array[2]}'`
-if [[ "$JAVA_VERSION_PART_1" > "1.7.0" ]]; then
-    LENGTH="${#JAVA_VERSION_PART_2}" 
-    if [[ "$LENGTH" < "2" ]]; then
-        JAVA_VERSION_PART_2="0"$JAVA_VERSION_PART_2
-    fi
-    if [[ "$JAVA_VERSION_PART_2" > "19" ]]; then
-        CATALINA_OPTS="$CATALINA_OPTS -XX:+UseStringDeduplication" 
-    elif [[ "$JAVA_VERSION_PART_1" > "1.8.0" ]]; then
-        CATALINA_OPTS="$CATALINA_OPTS -XX:+UseStringDeduplication" 
-	else
-		# Use java < 8
-		CATALINA_OPTS="$CATALINA_OPTS -server -XX:PermSize=384m -XX:MaxPermSize=384m -Xss2048k"
-    fi
-else
-	# Use java < 8
-	CATALINA_OPTS="$CATALINA_OPTS -server -XX:PermSize=384m -XX:MaxPermSize=384m -Xss2048k"
-fi
-
 # resolve links - $0 may be a softlink
 PRG="$0"
 

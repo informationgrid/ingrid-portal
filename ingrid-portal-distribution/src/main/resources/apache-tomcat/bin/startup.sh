@@ -20,7 +20,31 @@
 # -----------------------------------------------------------------------------
 
 # InGrid specific settings
-export JAVA_OPTS=""
+export JAVA_OPTS="$JAVA_OPTS -XX:+UseG1GC -XX:NewRatio=1"
+
+# check java version
+JAVA_VERSION=`java -version 2>&1 |awk 'NR==1{ gsub(/"/,""); print $3 }'`
+JAVA_VERSION_PART_0=`echo $JAVA_VERSION | awk '{split($0, array, "-")} END{print array[1]}'`
+JAVA_VERSION_PART_1=`echo $JAVA_VERSION_PART_0 | awk '{split($0, array, "_")} END{print array[1]}'`
+JAVA_VERSION_PART_2=`echo $JAVA_VERSION_PART_0 | awk '{split($0, array, "_")} END{print array[2]}'`
+if [[ "$JAVA_VERSION_PART_1" > "1.7.0" ]]; then
+    LENGTH="${#JAVA_VERSION_PART_2}" 
+    if [[ "$LENGTH" < "2" ]]; then
+        JAVA_VERSION_PART_2="0"$JAVA_VERSION_PART_2
+    fi
+    if [[ "$JAVA_VERSION_PART_2" > "19" ]]; then
+        JAVA_OPTS="$JAVA_OPTS -XX:+UseStringDeduplication" 
+    elif [[ "$JAVA_VERSION_PART_1" > "1.8.0" ]]; then
+        JAVA_OPTS="$JAVA_OPTS -XX:+UseStringDeduplication" 
+	else
+		# Use java < 8
+		JAVA_OPTS="$JAVA_OPTS -server -XX:PermSize=384m -XX:MaxPermSize=384m -Xss2048k"
+    fi
+else
+	# Use java < 8
+	JAVA_OPTS="$JAVA_OPTS -server -XX:PermSize=384m -XX:MaxPermSize=384m -Xss2048k"
+fi
+
 export CATALINA_HOME=.
 # Better OS/400 detection: see Bugzilla 31132
 os400=false
