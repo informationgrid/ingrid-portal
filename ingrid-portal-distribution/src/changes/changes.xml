@@ -47,6 +47,9 @@
             <action type="fix" dev="wemove">
                 IGE: Fixed an issue where not all decimals of a spatial reference were used during editing.
             </action>
+            <action type="fix" dev="wemove">
+                Portal: Fix Oracle migration script when migrating portal database to 3.5 (handle empty values in user preferences).
+            </action>
         </release>
         <release version="3.5.0" date="2015-02-02">
             <action type="add" dev="wemove" issue="REDMINE-524">
