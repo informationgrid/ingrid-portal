@@ -20,7 +20,7 @@
 # -----------------------------------------------------------------------------
 
 # InGrid specific settings
-export JAVA_OPTS="-Xmx512m"
+export JAVA_OPTS=""
 export CATALINA_HOME=.
 # Better OS/400 detection: see Bugzilla 31132
 os400=false
