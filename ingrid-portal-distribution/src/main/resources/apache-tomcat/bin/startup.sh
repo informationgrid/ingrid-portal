@@ -20,7 +20,7 @@
 # -----------------------------------------------------------------------------
 
 # InGrid specific settings
-export JAVA_OPTS="$JAVA_OPTS -XX:+UseG1GC -XX:NewRatio=1"
+export JAVA_OPTS="-XX:+UseG1GC -XX:NewRatio=1"
 
 # check java version
 JAVA_VERSION=`java -version 2>&1 |awk 'NR==1{ gsub(/"/,""); print $3 }'`
