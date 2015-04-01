@@ -308,8 +308,11 @@ public class QueryResultPostProcessor {
             // Capabilities Url
             tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_CAPABILITIES_URL);
             if (!doNotShowMaps && tmpArray != null && tmpArray.length > 0) {
-                if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
-                    int i = 0;
+                // check for protected access setting
+                boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail,
+                        Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y") ? true : false;
+                
+                if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                     for (String url : tmpArray) {
                         url = addCapabilitiesInformation(url);
                         // add layer information to link
