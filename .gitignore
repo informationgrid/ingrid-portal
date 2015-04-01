@@ -15,3 +15,5 @@
 /ingrid-portal-apps/.settings
 /ingrid-portal-mdek-application/.settings
 /ingrid-portal-mdek/.settings
+.project
+.settings/
