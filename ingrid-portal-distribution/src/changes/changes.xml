@@ -47,6 +47,18 @@
             <action type="fix" dev="wemove">
                 IGE: Fixed an issue where not all decimals of a spatial reference were used during editing.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-576">
+                WebMapClient: Fix KML export/import styles and labels by redlining tool.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-632">
+                WebMapClient: Fix using map extent of base layer instead of configured initial map extent on Admin-GUI.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-643">
+                WebMapClient: Fix separator handling of coordinate picker tool and coordinate handling for projection WGS-84.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-655">
+                WebMapClient: Add configuration to define zoom level of map.
+            </action>
             <action type="fix" dev="wemove">
                 Portal: Fix Oracle migration script when migrating portal database to 3.5 (handle empty values in user preferences).
             </action>
