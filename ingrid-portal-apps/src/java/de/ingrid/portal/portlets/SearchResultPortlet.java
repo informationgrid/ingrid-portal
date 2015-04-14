@@ -28,9 +28,9 @@ package de.ingrid.portal.portlets;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -54,9 +54,7 @@ import de.ingrid.portal.global.IngridHitsWrapper;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsFacete;
-import de.ingrid.portal.om.IngridProvider;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
 import de.ingrid.portal.search.SearchState;
@@ -408,11 +406,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         boolean rankedColumnHasMoreGroupedPages = true;
         if (controller.hasQueries()) {
             // fire queries
-            HashMap results = controller.search();
+            Map<Object, Object> results = controller.search();
             
             // check for zero results
             // log the result to the resource logger
-            Iterator it = results.keySet().iterator();
+            Iterator<Object> it = results.keySet().iterator();
             boolean noResults = true;
             String queryTypes = "";
             while (it.hasNext()) {
@@ -470,10 +468,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     // create and initialize if not exists
                 	// NOTICE: when grouping by domain the navigation is like ungrouped navigation, so multiple pages are rendered !
                     try {
-                        ArrayList groupedStartHits = 
-                        	(ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
+                        @SuppressWarnings("unchecked")
+                        List<Object> groupedStartHits = 
+                        	(List<Object>) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
                         if (groupedStartHits == null) {
-                            groupedStartHits = new ArrayList();
+                            groupedStartHits = new ArrayList<Object>();
                             SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
                         }
                         // set starthit of NEXT page ! ensure correct size of Array ! Notice: currentSelectorPage is 1 for first page !
@@ -513,10 +512,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 // get the grouping starthits history from session
                 // create and initialize if not exists
                 try {
-                    ArrayList groupedStartHits = 
-                    	(ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED);
+                    @SuppressWarnings("unchecked")
+                    List<Object> groupedStartHits = 
+                    	(List<Object>) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED);
                     if (groupedStartHits == null || unrankedHits == null) {
-                        groupedStartHits = new ArrayList();
+                        groupedStartHits = new ArrayList<Object>();
                         groupedStartHits.add(new Integer(0));
                         SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED,
                                 groupedStartHits);
@@ -541,7 +541,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             totalNumberOfRankedHits = (int) rankedHits.length();
         }
         // adapt settings of ranked page navigation
-        HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
+        Map<String, Object> rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
                 Settings.SEARCH_RANKED_HITS_PER_PAGE, totalNumberOfRankedHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
@@ -554,7 +554,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         }
         // adapt settings of unranked page navigation
-        HashMap unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
+        Map<String, Object> unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
                 Settings.SEARCH_UNRANKED_HITS_PER_PAGE, totalNumberOfUnrankedHits,
                 Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
 
@@ -695,7 +695,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
      * Get provider to be able to map them from their abbreviation. 
      * @return a map of short:long values of the provider
      */
-    private HashMap<String, String> getProviderMap() {
+    /*private HashMap<String, String> getProviderMap() {
         HashMap<String, String> providerMap = new HashMap<String, String>();
         List<IngridProvider> providers = UtilsDB.getProviders();
         
@@ -703,7 +703,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             providerMap.put(ingridProvider.getIdent(), ingridProvider.getName());
         }
         return providerMap;
-    }
+    }*/
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {

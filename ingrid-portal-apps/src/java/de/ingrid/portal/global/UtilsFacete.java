@@ -428,7 +428,7 @@ public class UtilsFacete {
 	public static void checkForExistingFacete(IngridHitsWrapper hits, PortletRequest request) {
 		HashMap<String, Long> elementsGeothesaurus = null;
 		HashMap<String, Long> elementsMap = null;
-		IngridDocument facets = (IngridDocument) hits.get("FACETS");
+		Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
 		if(facets != null){
 			ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
 			for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
