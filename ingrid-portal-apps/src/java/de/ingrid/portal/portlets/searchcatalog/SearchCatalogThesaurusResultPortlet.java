@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -267,7 +268,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
             IngridHits rankedHits = null;
 
             // fire queries
-            HashMap results = controller.search();
+            Map<Object, Object> results = controller.search();
 
             // post process ranked hits if exists
             boolean rankedColumnHasMoreGroupedPages = true;
@@ -320,7 +321,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
             // adapt settings of ranked page navigation
             // always grouped navigation (see below), so we can set rankedStartHit to zero
             int rankedStartHit = 0;
-            HashMap rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
+            Map<String, Object> rankedPageNavigation = UtilsSearch.getPageNavigation(rankedStartHit,
             		Settings.SEARCH_RANKED_HITS_PER_PAGE, numberOfRankedHits,
             		Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 

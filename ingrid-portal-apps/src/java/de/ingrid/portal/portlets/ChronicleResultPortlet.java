@@ -24,8 +24,8 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -144,7 +144,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // adapt settings of page navigation
-        HashMap pageNavigation = UtilsSearch.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
+        Map<String, Object> pageNavigation = UtilsSearch.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         // ----------------------------------

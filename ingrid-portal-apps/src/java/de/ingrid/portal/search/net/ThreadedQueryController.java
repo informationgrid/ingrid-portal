@@ -28,6 +28,7 @@ package de.ingrid.portal.search.net;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +71,7 @@ public class ThreadedQueryController {
      * 
      * @return Returns a HashMap with the search results.
      */
-    public HashMap search() {
+    public Map<Object, Object> search() {
 
         ArrayList mySearches = new ArrayList();
         threadMonitor = new Object();

@@ -261,14 +261,18 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	                hit = new IngridHit();
                     hit.put("alt_document_id", altDocumentId);
 	                hit.setPlugId(iplugId);
-	                hit.setDocumentId(0);
+	                hit.setDocumentId("0");
 	            
 	            } else {
-	                int documentId = Integer.parseInt(request.getParameter("docid"));
+	                String documentId = request.getParameter("docid");
 	                hit = new IngridHit();
 	                hit.setDocumentId(documentId);
 	                hit.setPlugId(iplugId);
 	                context.put("docId", documentId);
+	                // backward compatibilty where docId was integer
+	                try {
+	                    hit.putInt( 0, Integer.valueOf( documentId ) );
+	                } catch (NumberFormatException ex) { /* ignore */ }
 	            }
             }else{
             	log.error("No plugId set for detail.");
