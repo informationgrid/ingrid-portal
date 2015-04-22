@@ -76,7 +76,7 @@ public class SearchExtEnvTimeConstraintPortlet extends SearchExtEnvTime {
         String submittedAddToQuery = request.getParameter("submitAddToQuery");
 
         if (submittedAddToQuery != null) {
-            //actionResponse.setRenderParameter("cmd", "form_sent");
+            actionResponse.setRenderParameter("cmd", "form_sent");
             SearchExtEnvTimeConstraintForm f = (SearchExtEnvTimeConstraintForm) Utils.getActionForm(request, SearchExtEnvTimeConstraintForm.SESSION_KEY, SearchExtEnvTimeConstraintForm.class);        
             f.clearErrors();
             

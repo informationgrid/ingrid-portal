@@ -108,7 +108,7 @@ public class SearchExtEnvPlaceMapPortlet extends SearchExtEnvPlace {
         String submittedAddToQuery = request.getParameter("submitAddToQuery");
 
         if (submittedAddToQuery != null) {
-            //actionResponse.setRenderParameter("cmd", "form_sent");
+            actionResponse.setRenderParameter("cmd", "form_sent");
             SearchExtEnvPlaceMapForm f = (SearchExtEnvPlaceMapForm) Utils.getActionForm(request,
                     SearchExtEnvPlaceMapForm.SESSION_KEY, SearchExtEnvPlaceMapForm.class);
             f.clearErrors();
