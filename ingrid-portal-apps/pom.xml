@@ -173,6 +173,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-portal-utils</artifactId>
+      <version>3.5.0</version>
       <!-- NOT provided anymore (tomcat shared/lib), we need it in our webapp because of dependency to jetspeed-security jar at runtime ! -->
       <exclusions>
         <exclusion>
@@ -192,6 +193,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus-client</artifactId>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <groupId>net.sf.ehcache</groupId>
@@ -202,6 +204,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug</artifactId>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <groupId>jetty</groupId>
@@ -294,6 +297,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug-sns</artifactId>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <groupId>de.ingrid</groupId>
@@ -312,14 +316,17 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-communication</artifactId>
+      <version>3.5.0</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-communication-authentication</artifactId>
+      <version>3.5.0</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-codelist-service</artifactId>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
