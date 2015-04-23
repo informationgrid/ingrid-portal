@@ -29,7 +29,7 @@ elif [ -f $CATALINA_HOME/bin/env.sh ]; then
   eval `sh $CATALINA_HOME/bin/env.sh`
 fi
 
-export JAVA_OPTS="$INGRID_OPTS"
+export JAVA_OPTS="$INGRID_OPTS -XX:PermSize=384m -XX:MaxPermSize=384m"
 # Better OS/400 detection: see Bugzilla 31132
 os400=false
 darwin=false
