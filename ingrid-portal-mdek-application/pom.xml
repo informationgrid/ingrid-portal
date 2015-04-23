@@ -182,18 +182,15 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-mdek-api</artifactId>
-            <version>3.5.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils-ige</artifactId>
-            <version>3.5.0</version>
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils</artifactId>
-            <version>3.5.0</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -205,17 +202,14 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-external-service-sns</artifactId>
-            <version>3.5.0</version>
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
 			<artifactId>ingrid-external-service-wfs</artifactId>
-			<version>3.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.ingrid</groupId>
             <artifactId>ingrid-codelist-service</artifactId>
-            <version>3.5.0</version>
             <exclusions>
                 <!-- XMLConstants will be overwritten otherwise! -->
                 <exclusion>
@@ -234,7 +228,6 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-mdek-services</artifactId>
-            <version>3.5.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>ojdbc</groupId>
@@ -246,7 +239,6 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-import-export</artifactId>
-            <version>3.5.0</version>
         </dependency>
         <dependency>
             <groupId>dom4j</groupId>
@@ -439,7 +431,6 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils-geo</artifactId>
-            <version>3.5.0</version>
         </dependency>
         <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
         <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>
