@@ -54,8 +54,6 @@ import de.ingrid.mdek.quartz.jobs.util.URLState.State;
 import de.ingrid.mdek.services.catalog.dbconsistency.ErrorReport;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
-import de.ingrid.utils.udk.UtilsUDKCodeLists;
-import de.ingrid.utils.udk.UtilsUDKCodeLists.ParseType;
 
 public class MdekCatalogUtils {
 
@@ -77,8 +75,8 @@ public class MdekCatalogUtils {
         IngridDocument result = MdekUtils.getResultFromResponse(response);
         List<SysList> codelists = new ArrayList<SysList>();
         
-        List<IngridDocument> docs = result.getArrayList(MdekKeys.LST_SYSLISTS);
-        for (IngridDocument doc : docs) {
+        List<Object> docs = result.getArrayList(MdekKeys.LST_SYSLISTS);
+        for (IngridDocument doc : (List<IngridDocument>)(List<?>)docs) {
             SysList codelist = new SysList();
             codelist.setId(doc.getInt(MdekKeys.LST_ID));
             codelist.setMaintainable(doc.getInt(MdekKeys.LST_MAINTAINABLE) == 1);
@@ -99,8 +97,8 @@ public class MdekCatalogUtils {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		if (result != null) {
 			Map<Integer, List<String[]>> resultMap = new HashMap<Integer, List<String[]>>();
-			Set<String> listKeys = (Set<String>) result.keySet();
-			for (String listKey : listKeys) {
+			Set<Object> listKeys = result.keySet();
+			for (Object listKey : listKeys) {
 				IngridDocument listDocument = (IngridDocument) result.get(listKey);
 				List<String[]> resultList = new ArrayList<String[]>();
 				Integer listId = (Integer) listDocument.get(MdekKeys.LST_ID);
@@ -145,60 +143,8 @@ public class MdekCatalogUtils {
 		}
 	}
 
-	/** Remove metadata from syslist value if there is metadata. Returns cleared or unchanged value !*/
-	public static String removeMetadataFromSysListEntry(Integer listId, String entryValue) {
-		String retValue = entryValue;
-		
-		if (de.ingrid.mdek.MdekUtils.MdekSysList.OBJ_CONFORMITY_SPECIFICATION.getDbValue().equals(listId)) {
-			retValue = UtilsUDKCodeLists.parseCodeListEntryName(entryValue, ParseType.DATE_AT_END)[0];
-		}
-
-		return retValue;
-	}
-
-	/** Prepare all syslists read from backend for displaying in syslist. All metadata in syslist values is removed ! */
-	public static  Map<Integer, List<String[]>> removeMetadataFromSysLists(Map<Integer, List<String[]>> sysListsFromDB) {
-		for (Integer listId : sysListsFromDB.keySet()) {
-			List<String[]> clearedList = cloneSysListRemoveMetadata(listId, sysListsFromDB.get(listId));
-			if (clearedList != null) {
-				sysListsFromDB.put(listId, clearedList);
-			}
-		}
-		
-		return sysListsFromDB;
-	}
-
-	/** Removes metadata from syslist and returns "cleared" syslist to be used in selection lists.
-	 * NOTICE: if the list has no metadata null is returned otherwise the list without metadata.
-	 * @param listId list id determining whether list has metadata
-	 * @param inList list from database maybe containing metadata
-	 * @return null if no metadata in list, if syslist has metadata then cleared syslist is returned
-	 */
-	public static List<String[]> cloneSysListRemoveMetadata(Integer listId, List<String[]> inList) {
-		List<String[]> returnList = null;
-
-		ParseType parseType = null;
-		if (de.ingrid.mdek.MdekUtils.MdekSysList.OBJ_CONFORMITY_SPECIFICATION.getDbValue().equals(listId)) {
-			parseType = ParseType.DATE_AT_END;
-		}
-		
-		if (parseType != null) {
-			returnList = new ArrayList<String[]>();
-			for (String[] entry : inList) {
-				returnList.add(new String[] {
-						UtilsUDKCodeLists.parseCodeListEntryName(entry[0], parseType)[0],
-						entry[1],
-						entry[2],
-						entry[3]
-					});
-			}			
-		}
-
-		return returnList;
-	}
-
 	public static String convertSysListsToXML(IngridDocument resultDe, IngridDocument resultEn) {
-		Set<String> listKeys = (Set<String>) resultDe.keySet();
+		Set<String> listKeys = (Set<String>)(Set<?>) resultDe.keySet();
 		List<SysList> sysLists = new ArrayList<SysList>();
 
 		for (String listKey : listKeys) {
@@ -275,10 +221,10 @@ public class MdekCatalogUtils {
 
 		log.debug(result);
 
-		for (Map.Entry<String, String> genericValueEntry : (Set<Map.Entry<String, String>>) result.entrySet()) {
+		for (Map.Entry<Object, Object> genericValueEntry : result.entrySet()) {
 			GenericValueBean genericValue = new GenericValueBean();
-			genericValue.setKey(genericValueEntry.getKey());
-			genericValue.setValue(genericValueEntry.getValue());
+			genericValue.setKey((String) genericValueEntry.getKey());
+			genericValue.setValue((String) genericValueEntry.getValue());
 			genericValueList.add(genericValue);
 		}
 
@@ -534,7 +480,7 @@ public class MdekCatalogUtils {
 		IngridDocument analyzeResult = MdekUtils.getResultFromResponse(response);
 		List<ErrorReport> errorReports = new ArrayList<ErrorReport>();
 		if (analyzeResult != null) {
-			List<IngridDocument> errorReportDocList = analyzeResult.getArrayList(MdekKeys.VALIDATION_RESULT);
+			List<IngridDocument> errorReportDocList = (List<IngridDocument>)(List<?>)analyzeResult.getArrayList(MdekKeys.VALIDATION_RESULT);
 			if (errorReportDocList != null) {
 				for (IngridDocument errorReportDoc : errorReportDocList) {
 					ErrorReport errorReport = new ErrorReport(

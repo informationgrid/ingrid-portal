@@ -63,7 +63,7 @@ public class CatalogServiceImpl implements CatalogService {
 	public Map<Integer, List<String[]>> getSysListsRemoveMetadata(Integer[] listIds, String language) {
 		Map<Integer, List<String[]>> listMap = catalogRequestHandler.getSysLists(listIds, language);
 		
-		return MdekCatalogUtils.removeMetadataFromSysLists(listMap);
+		return listMap;
 	}
 
 	public String[] getFreeListEntries(Integer sysListId) {

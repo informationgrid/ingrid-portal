@@ -30,10 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +39,9 @@ import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.utils.IngridDocument;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 
 @Service
 public class SysListCache {
@@ -204,11 +203,7 @@ public class SysListCache {
 
 		for (String[] entry : sysList) {
 			if (entry[1].equals(entryId.toString())) {
-				if (removeMetadata) {
-					return MdekCatalogUtils.removeMetadataFromSysListEntry(listId, entry[0]);
-				} else {
-					return entry[0];
-				}
+				return entry[0];
 			}
 		}
 		
@@ -275,25 +270,12 @@ public class SysListCache {
 			sysListFromDB = addSysListToCache(listId);
 		}
 
-		// syslist may exist in "different" versions: one with metadata from datatbase (used in syslist maintenance)
-		// and one for the selection list in IGE without metadata. We check entryValue against both version !  
-		List<List<String[]>> allSysLists = new ArrayList<List<String[]>>();
-		// add the one from database (with metadata)
-		allSysLists.add(sysListFromDB);
-		// and the one without metadata if there is one !
-		List<String[]> sysListNoMetadata = MdekCatalogUtils.cloneSysListRemoveMetadata(listId, sysListFromDB);
-		if (sysListNoMetadata != null) {
-			allSysLists.add(sysListNoMetadata);
-		}
-
 		if (entryVal != null) {
-			for (List<String[]> sysList : allSysLists) {
-	    		for (String[] entry : sysList) {
-	    			if (entry[0].trim().equalsIgnoreCase(entryVal.trim())) {
-	    				return Integer.valueOf(entry[1]);
-	    			}
-	    		}
-			}
+    		for (String[] entry : sysListFromDB) {
+    			if (entry[0].trim().equalsIgnoreCase(entryVal.trim())) {
+    				return Integer.valueOf(entry[1]);
+    			}
+    		}
 		}
 		
 		log.debug("Could not find sysList/entryId for: ["+listId+", "+entryVal+"]");
@@ -356,7 +338,8 @@ public class SysListCache {
 			return addSysListToCache(listId);
 
 		} else {
-			List<String[]> sysList = (List<String[]>) e.getValue();
+			@SuppressWarnings("unchecked")
+            List<String[]> sysList = (List<String[]>) e.getValue();
 			if (sysList == null) {
 				// Reload the list since it is no longer valid
 				return addSysListToCache(listId);
