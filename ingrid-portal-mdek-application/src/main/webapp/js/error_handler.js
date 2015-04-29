@@ -124,6 +124,8 @@ function displayErrorMessage(err) {
             } else if (err.message.indexOf("REFERENCED_ADDRESSES_HAVE_SMALLER_PUBLICATION_CONDITION") != -1) {
                 var addressList = formatAddressesFromList(err.referencedConflictingAddresses);
                 dialog.show(message.get("general.error"), string.substitute(message.get("operation.error.address.referencedAddressesHaveSmallerPublicationCondition"), [addressList]), dialog.WARNING);
+            } else if (err.message.indexOf("query did not return a unique result") != -1) {
+                dialog.show(message.get("general.error"), message.get("operation.error.mdekdb.corrupt"), dialog.WARNING);
             } else {
                 dialog.show(message.get("general.error"), string.substitute(message.get("dialog.generalError"), [err.message]), dialog.WARNING, null, 800, 350);
             }

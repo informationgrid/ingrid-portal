@@ -136,7 +136,7 @@ define([
                 })
                 .then(null, function(err) {
                     console.error(err);
-                    dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING, null, null, null, err.stack);
+                    dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING, null, null, null, err ? err.stack : null);
                 });
             });
         },
