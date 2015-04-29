@@ -22,7 +22,6 @@
  */
 package de.ingrid.portal.global;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -113,7 +112,7 @@ public class UtilsMapServiceManager {
 	 * @throws ConfigurationException
 	 * @throws Exception
 	 */
-	public static String createTemporaryService(String title, List<HashMap<String, String>> coords, String fileType) throws ConfigurationException, Exception {
+	public static String createTemporaryService(String title, List<Map<String, String>> coords, String fileType) throws ConfigurationException, Exception {
 		String fileName = "";
 		
 		countTempServiceNumber();
@@ -219,7 +218,7 @@ public class UtilsMapServiceManager {
 	 * @throws ConfigurationException
 	 * @throws Exception
 	 */
-	public static String mergeTemplateKML(String path, List<HashMap<String, String>> coords, String title, String fileName) throws ConfigurationException, Exception {
+	public static String mergeTemplateKML(String path, List<Map<String, String>> coords, String title, String fileName) throws ConfigurationException, Exception {
 		
 		StringWriter sw;
 		String templatePath;
@@ -242,11 +241,11 @@ public class UtilsMapServiceManager {
 		return buffer;
 	}
 
-	public static HashMap createKmlFromIDF(String iPlugId, int documentId) throws ConfigurationException, Exception {
+	public static Map<String, Object> createKmlFromIDF(String iPlugId, String documentId) throws ConfigurationException, Exception {
 		IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
 		IngridHit ingridHit = new IngridHit();
 		String kmlFile = "";
-		HashMap data = new HashMap(); 
+		Map<String, Object> data = new HashMap<String, Object>(); 
 		Record record;
 		
 		ingridHit.setDocumentId(documentId);
@@ -262,7 +261,6 @@ public class UtilsMapServiceManager {
 				db = dbf.newDocumentBuilder();
 				Document idfDoc = db.parse(new InputSource(new StringReader(idfString)));
 				
-				Node node;
 				XPathUtils.getXPathInstance(new IDFNamespaceContext());
 				
 				Element rootNode = idfDoc.getDocumentElement();
@@ -275,7 +273,7 @@ public class UtilsMapServiceManager {
 				
 				if(data != null){
 					try {
-						kmlFile = UtilsMapServiceManager.createTemporaryService((String) data.get("coord_class"), (ArrayList) data.get("placemarks"), UtilsFileHelper.KML);
+						kmlFile = UtilsMapServiceManager.createTemporaryService((String) data.get("coord_class"), (List<Map<String, String>>) data.get("placemarks"), UtilsFileHelper.KML);
 					} catch (ConfigurationException e) {
 						log.error("ConfigurationException" + e);
 					} catch (Exception e) {
@@ -292,7 +290,7 @@ public class UtilsMapServiceManager {
 		return data;
 	}
 
-	private static void evaluateKmlNode(HashMap data, Node node) {
+	private static void evaluateKmlNode(Map<String, Object> data, Node node) {
 		
 		if(node.getNamespaceURI().equals(IDFNamespaceContext.NAMESPACE_URI_KML)){
 			Node documentNode = XPathUtils.getNode(node, "./kml:Document");
@@ -308,7 +306,7 @@ public class UtilsMapServiceManager {
 				//Placemark
 				NodeList placemarkNodeList = XPathUtils.getNodeList(documentNode, "./kml:Placemark");
 				if(placemarkNodeList != null){
-					ArrayList<HashMap<String, String>> placemarks = new ArrayList<HashMap<String, String>>();
+					List<HashMap<String, String>> placemarks = new ArrayList<HashMap<String, String>>();
 					for(int i=0; i < placemarkNodeList.getLength(); i++){
 						Node pmNode = placemarkNodeList.item(i);
 						HashMap<String, String> placemark = new HashMap<String, String>();

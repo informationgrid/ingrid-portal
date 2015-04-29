@@ -24,6 +24,7 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -71,11 +72,10 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
 
         if (request.getParameter("action") != null) {
             if (request.getParameter("action").equals("doTmpService")) {
-                HashMap kml = new HashMap();
+                Map<String, Object> kml = new HashMap<String, Object>();
 
                 try {
-                    kml = UtilsMapServiceManager.createKmlFromIDF(request.getParameter(Settings.RESULT_KEY_PLUG_ID),
-                            Integer.parseInt(request.getParameter(Settings.RESULT_KEY_DOC_ID)));
+                    kml = UtilsMapServiceManager.createKmlFromIDF(request.getParameter(Settings.RESULT_KEY_PLUG_ID), request.getParameter(Settings.RESULT_KEY_DOC_ID));
 
                     context.put("kmlUrl", kml.get("kml_url"));
                     context.put("kmlTitle", kml.get("coord_class"));
