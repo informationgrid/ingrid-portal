@@ -395,7 +395,7 @@ define([
             Tooltip.show(msg, dom.byId(gridId), ["below"], false);
             setTimeout(function() {
                 var eventWndScroll;
-                var eventWndClick = on(dom.byId("contentContainer"), "Click", function() {
+                var eventWndClick = on(dom.byId("contentContainer"), "click", function() {
                     Tooltip.hide(dom.byId(gridId));
                     eventWndClick.remove();
                     eventWndScroll.remove();
