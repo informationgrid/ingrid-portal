@@ -32,8 +32,8 @@
             <action type="add" dev="wemove" issue="REDMINE-17">
                 IGE: Added new option to add a coupled resource as an external reference.
             </action>
-            <action type="fix" dev="wemove" issue="REDMINE-37">
-                IGE: Scroll content in detail view not completely visible on lower resolutions.
+            <action type="fix" dev="wemove" issue="REDMINE-54">
+                Portal: If the access of a metadata is protected, then the links to the map won't be shown in the portal's result.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-37">
                 IGE: Scroll content in detail view not completely visible on lower resolutions.
