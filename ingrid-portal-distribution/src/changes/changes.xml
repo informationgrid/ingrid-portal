@@ -28,7 +28,7 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="3.5.1" date="2015-xx-xx">
+        <release version="3.6.0-SNAPSHOT" date="2015-xx-xx">
             <action type="add" dev="wemove" issue="REDMINE-17">
                 IGE: Added new option to add a coupled resource as an external reference.
             </action>
@@ -58,6 +58,9 @@
             </action>
             <action type="add" dev="wemove" issue="REDMINE-655">
                 WebMapClient: Add configuration to define zoom level of map.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-72">
+                Portal: Fix jCaptcha to run under OpenJDK 7 (remove com.sun packages).
             </action>
             <action type="fix" dev="wemove">
                 Portal: Fix Oracle migration script when migrating portal database to 3.5 (handle empty values in user preferences).

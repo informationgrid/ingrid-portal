@@ -410,7 +410,7 @@
     </dependency>
     <dependency>
       <groupId>com.octo.captcha</groupId>
-      <artifactId>jcaptcha</artifactId>
+      <artifactId>jcaptcha-noSunPackage</artifactId>
       <version>1.0</version>
       <exclusions>
         <exclusion>
