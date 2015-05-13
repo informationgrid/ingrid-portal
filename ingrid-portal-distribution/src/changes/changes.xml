@@ -32,6 +32,9 @@
             <action type="add" dev="wemove" issue="REDMINE-17">
                 IGE: Added new option to add a coupled resource as an external reference.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-688">
+                IGE: When publishing metadata after validation has been fixed, then IE11 threw an error.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-54">
                 Portal: If the access of a metadata is protected, then the links to the map won't be shown in the portal's result.
             </action>
