@@ -27,7 +27,7 @@ define([
     "dojo/_base/array",
     "ingrid/utils/Catalog"
 ], function(declare, Deferred, array, UtilCatalog){
-        return declare(null, {
+        var lib =  declare(null, {
         
              // Utility functions for DOM
 
@@ -142,5 +142,10 @@ define([
 
             
         })();
+        
+        // make var global for backward compatibility
+        UtilSyslist = lib;
+        
+        return lib;
     }
 );
