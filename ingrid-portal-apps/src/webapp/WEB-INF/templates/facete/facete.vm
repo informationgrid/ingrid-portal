@@ -657,7 +657,7 @@
         <h2>$MESSAGES.getString("searchResult.facete.title")</h2>
         #set ($rankedHitslenght = $rankedResultList.get("length").toString())
         #if($rankedHitslenght != "0")
-            #if($isSelection)
+            #if($enableFacetSelection > 0 || $isSelection)
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("doRemoveAll", "true")
                 <p>
