@@ -159,7 +159,7 @@ require([
         // connect all checkboxes to the behavior to select all table rows
         query( ".allSelector input" ).forEach( function( item ) {
             var descriptorCheckbox = registry.byId( item.id );
-            on( descriptorCheckbox, "click", function() {
+            on( descriptorCheckbox, "change", function() {
                 addAllFunction( item.id, item.id.substring( 0, item.id.length - 8 ) );
             } );
         } );
@@ -179,7 +179,7 @@ require([
     function addAllFunction(checkboxId, tableId) {
         // get checkbox value
         var value = registry.byId( checkboxId ).checked;
-        // get data drom the spatial store
+        // get data from the spatial store
         var data = UtilGrid.getTableData( tableId );
         array.forEach( data, function(d) {
             d.selection = value ? 1 : 0;
@@ -191,7 +191,8 @@ require([
         // click on each check box to set to wanted state 
         query("#resultContainer .dijitCheckBoxInput").forEach( function(box) {
             if (box.checked !== value) {
-                box.click();
+                //box.click();
+                registry.byId(box.id).set("value", value);
             }
         });
         

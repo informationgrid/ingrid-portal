@@ -337,7 +337,7 @@ dojo.subscribe("/afterInitDialog/LinksDialog", function() {
 
     var handleRequiredOfFileFormat = function(typeName) {
         var typeKey = UtilSyslist.getSyslistEntryKey(2000, typeName);
-        var container = dojo.byId("uiElement2240");
+        var container = require("dojo/dom").byId("uiElement2240");
 
         // If "Datendownload" then make it required
         if (typeKey == 9990) {
