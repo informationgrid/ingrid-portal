@@ -28,15 +28,22 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="3.6.0-SNAPSHOT" date="2015-xx-xx">
+        <release version="3.6.0-SNAPSHOT" date="2015-xx-xx" description="xxx">
             <action type="add" dev="wemove" issue="REDMINE-17">
                 IGE: Added new option to add a coupled resource as an external reference.
             </action>
-            <action type="fix" dev="wemove" issue="REDMINE-688">
-                IGE: When publishing metadata after validation has been fixed, then IE11 threw an error.
+            <action type="fix" dev="wemove" issue="REDMINE-701">
+                IGE: Fixed IE11 bug in GetCapabilities Wizard when clicking on "select all" checkbox.
             </action>
-            <action type="fix" dev="wemove" issue="REDMINE-54">
-                Portal: If the access of a metadata is protected, then the links to the map won't be shown in the portal's result.
+            <action type="fix" dev="wemove" issue="REDMINE-688">
+                IGE: Fixed IE11 error when publishing metadata after validation has been fixed (including "show next" functionality).
+            </action>
+            <action type="fix" dev="wemove">
+                IGE: Arbitrary fixes:
+				- Hiding of tooltip when clicked anywhere
+				- Handling of errors from backend (better error messages, alerts)
+				- Fixed waiting dialog
+				- Fixed a bug where only URLs with http where presented as links (now also https works)
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-37">
                 IGE: Scroll content in detail view not completely visible on lower resolutions.
@@ -62,8 +69,23 @@
             <action type="add" dev="wemove" issue="REDMINE-655">
                 WebMapClient: Add configuration to define zoom level of map.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-661">
+                Portal: Added handling of results from elastic search index (IDs of hits).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-691">
+                Portal: Fix facet area search (SNS). Handling of delete selection and of select areas on dialog.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-692">
+                Portal: Fix Navigation in Thesaurus (extended search).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-54">
+                Portal: If the access of a metadata is protected, then the links to the map won't be shown in the portal's result.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-72">
                 Portal: Fix jCaptcha to run under OpenJDK 7 (remove com.sun packages).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-657">
+                Portal: Fix problem with render parameters in jetspeed. Click in portlet on same page was ignored when other portlet was clicked before.
             </action>
             <action type="fix" dev="wemove">
                 Portal: Fix Oracle migration script when migrating portal database to 3.5 (handle empty values in user preferences).
