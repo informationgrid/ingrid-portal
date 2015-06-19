@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>3.6.0</version>
+    <version>3.6.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -13,7 +13,7 @@
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-layout</connection>
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-layout</developerConnection>
-    <tag>ingrid-portal-project-3.6.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <dependencies>
     <!-- Overlay ! jetspeed-layouts will be extracted to this war ! -->
