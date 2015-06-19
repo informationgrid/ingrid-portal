@@ -28,7 +28,7 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="3.6.0-SNAPSHOT" date="2015-xx-xx" description="xxx">
+        <release version="3.6.0" date="2015-06-19" description="Release 3.6.0">
             <action type="add" dev="wemove" issue="REDMINE-17">
                 IGE: Added new option to add a coupled resource as an external reference.
             </action>
@@ -91,6 +91,7 @@
                 Portal: Fix Oracle migration script when migrating portal database to 3.5 (handle empty values in user preferences).
             </action>
         </release>
+        
         <release version="3.5.0" date="2015-02-02">
             <action type="add" dev="wemove" issue="REDMINE-524">
                 Added license header to all source files for Open Source migration.
