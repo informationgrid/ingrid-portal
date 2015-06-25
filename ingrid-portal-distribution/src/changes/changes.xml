@@ -28,6 +28,11 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="3.6.1-SNAPSHOT" date="????-??-??" description="???">
+            <action type="fix" dev="wemove" issue="REDMINE-702">
+                Portal: Fix "save search" when logged in. Updated xstream to avoid error with java 1.8.
+            </action>
+        </release>
         <release version="3.6.0" date="2015-06-19" description="Release 3.6.0">
             <action type="add" dev="wemove" issue="REDMINE-17">
                 IGE: Added new option to add a coupled resource as an external reference.

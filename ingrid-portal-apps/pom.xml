@@ -332,6 +332,12 @@
     </dependency>
 
 <!-- Diverses -->
+	<!-- Version 1.4.4 causes error with Java 1.8: xstream.toXML see REDMINE-702 -->
+	<dependency>
+	  <groupId>com.thoughtworks.xstream</groupId>
+	  <artifactId>xstream</artifactId>
+	  <version>1.4.7</version>
+	</dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
