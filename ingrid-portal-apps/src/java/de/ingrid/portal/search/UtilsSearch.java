@@ -43,10 +43,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.IngridSessionPreferences;
@@ -397,6 +397,8 @@ public class UtilsSearch {
      */
     private static String getDetailValue(IngridHit detail, String key, IngridResourceBundle resources, boolean raw) {
         Object obj = detail.get(key);
+        // since elastic search index keys are lowercase, make sure to also look for those
+        if (obj == null) obj = detail.get(key.toLowerCase());
         if (obj == null) {
             return "";
         }
