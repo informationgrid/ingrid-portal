@@ -314,7 +314,6 @@
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps">
             <patternset>
                 <exclude name="WEB-INF/classes/communication.xml" />
-                <exclude name="WEB-INF/classes/ingrid-portal-apps.properties" />
                 <exclude name="WEB-INF/classes/hibernate.cfg.xml" />
             </patternset>
         </unwar>
