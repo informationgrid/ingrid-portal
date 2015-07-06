@@ -28,9 +28,12 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="3.6.1-SNAPSHOT" date="????-??-??" description="???">
+        <release version="3.6.1-SNAPSHOT" date="2015-??-??" description="Release 3.6.1">
             <action type="fix" dev="wemove" issue="REDMINE-702">
                 Portal: Fix "save search" when logged in. Updated xstream to avoid error with java 1.8.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-89">
+                Portal: Fix wrong presentation of address results (needs updated DSC-iPlug)
             </action>
         </release>
         <release version="3.6.0" date="2015-06-19" description="Release 3.6.0">
