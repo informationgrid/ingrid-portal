@@ -35,6 +35,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-89">
                 Portal: Fix wrong presentation of address results (needs updated DSC-iPlug)
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-82">
+                IGE: Fix scrollbar behavior in editor content of a grid cell (REDMINE-82)
+            </action>
         </release>
         <release version="3.6.0" date="2015-06-19" description="Release 3.6.0">
             <action type="add" dev="wemove" issue="REDMINE-17">
