@@ -8,12 +8,12 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>3.6.1-SNAPSHOT</version>
+  <version>3.6.0.2</version>
   <name>InGrid Portal</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git</connection>
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>ingrid-portal-project-3.6.0.2</tag>
   </scm>
   <modules>
     <module>ingrid-portal-apps</module>
