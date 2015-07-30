@@ -28,6 +28,11 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="3.6.1-SNAPSHOT" date="??" description="??">
+            <action type="update" dev="wemove" issue="REDMINE-109">
+                Portal: Updated to final Jetspeed 2.3.0 release.
+            </action>
+        </release>
         <release version="3.6.0.2" date="2015-07-13" description="Bugfix Release 3.6.0.2">
             <action type="fix" dev="wemove" issue="REDMINE-82">
                 IGE: Fix scrollbar behavior in editor content of a grid cell.

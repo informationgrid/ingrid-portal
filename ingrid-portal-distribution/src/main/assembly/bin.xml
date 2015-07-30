@@ -98,7 +98,7 @@ dom4j: otherwise problems in portal-base and portal-app webapp, when writing PSM
         <include>javax.ccpp:ccpp</include> 
         <include>org.apache.derby:derby</include> 
         <include>org.apache.portals.bridges:portals-bridges-common</include>
-        <include>org.apache.portals:portlet-api_2.0_spec</include>
+        <include>org.apache.portals:portlet-api_2.1.0_spec</include>
         <include>xpp3:xpp3_min</include>
         <include>com.thoughtworks.xstream:xstream</include>
         <include>backport-util-concurrent:backport-util-concurrent</include>
