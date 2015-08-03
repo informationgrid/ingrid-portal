@@ -35,8 +35,9 @@ define(["dojo/_base/declare",
         "dojo/dom-construct",
         "dijit/registry",
         "ingrid/message",
-        "ingrid/utils/Grid"],
-        function(declare, array, lang, query, topic, dom, domClass, style, domConstruct, registry, message, UtilGrid) {
+        "ingrid/utils/Grid",
+        "ingrid/utils/UI"],
+        function(declare, array, lang, query, topic, dom, domClass, style, domConstruct, registry, message, UtilGrid, UtilUI) {
     return declare(null, {
 
         resetRequiredFields: function() {
@@ -126,6 +127,11 @@ define(["dojo/_base/declare",
             if (notPublishableIDs.length > 0) {
                 publishable = false;
                 this.showErrorButton(notPublishableIDs);
+                if (notPublishableIDs[0] instanceof Array) {
+                    UtilUI.showNextError(notPublishableIDs[0][0], notPublishableIDs[0][1]);
+                } else {
+                    UtilUI.showNextError(notPublishableIDs[0]);
+                }
             }
 
             return publishable;
@@ -160,10 +166,19 @@ define(["dojo/_base/declare",
             console.debug(notPublishableIDs);
             if (notPublishableIDs.length > 0) {
                 array.forEach(notPublishableIDs, function(id){
-                    this.setErrorLabel(id);
+                    if (id instanceof Array) {
+                        this.setErrorLabel(id[0], id[1]); // [id, message]
+                    } else {
+                        this.setErrorLabel(id);
+                    }
                 }, this);
                 publishable = false;
                 this.showErrorButton(notPublishableIDs);
+                if (notPublishableIDs[0] instanceof Array) {
+                    UtilUI.showNextError(notPublishableIDs[0][0], notPublishableIDs[0][1]);
+                } else {
+                    UtilUI.showNextError(notPublishableIDs[0]);
+                }
             }
 
             return publishable;
@@ -226,7 +241,7 @@ define(["dojo/_base/declare",
             });
 
             errorButton.invalidIds = filteredIDs;
-            errorButton.pos = 0;
+            errorButton.pos = 1;
             style.set(errorButton.domNode, "visibility", "visible");
 
         },

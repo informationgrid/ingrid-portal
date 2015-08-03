@@ -392,24 +392,29 @@ define([
         },
 
         showToolTip: function(gridId, msg) {
-            Tooltip.show(msg, dom.byId(gridId), ["below"], false);
+            var grid = dom.byId(gridId);
+            
+            setTimeout(function() { Tooltip.show(msg, grid, ["below"], false) }, 0 );
             setTimeout(function() {
                 var eventWndScroll;
-                var eventWndClick = on(dom.byId("contentContainer"), "click", function() {
-                    Tooltip.hide(dom.byId(gridId));
-                    eventWndClick.remove();
-                    eventWndScroll.remove();
-                });
-                eventWndScroll = on(dom.byId("contentContainer"), (!dojo.isMozilla ? "mousewheel" : "DOMMouseScroll"), function() {
-                    Tooltip.hide(dom.byId(gridId));
-                    eventWndScroll.remove();
-                    eventWndClick.remove();
-                });
-                setTimeout(function() {
-                    Tooltip.hide(dom.byId(gridId));
+                var defaultHide = setTimeout(function() {
+                    Tooltip.hide(grid);
                     eventWndScroll.remove();
                     eventWndClick.remove();
                 }, 5000);
+                
+                var eventWndClick = on(dom.byId("contentContainer"), "click", function() {
+                    Tooltip.hide(grid);
+                    eventWndClick.remove();
+                    eventWndScroll.remove();
+                    clearTimeout( defaultHide );
+                });
+                eventWndScroll = on(dom.byId("contentContainer"), (!dojo.isMozilla ? "mousewheel" : "DOMMouseScroll"), function() {
+                    Tooltip.hide(grid);
+                    eventWndScroll.remove();
+                    eventWndClick.remove();
+                    clearTimeout( defaultHide );
+                });
             }, 500);
         }
 

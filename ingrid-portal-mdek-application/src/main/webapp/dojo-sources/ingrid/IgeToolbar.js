@@ -114,14 +114,14 @@ define([
             errorButton.onClick = function() {
                 var id = this.invalidIds[this.pos++ % this.invalidIds.length];
                 if (id instanceof Array) {
-                    UtilUI.showNextError(id[0]);
+                    UtilUI.showNextError(id[0], id[1]);
                 } else {
                     UtilUI.showNextError(id);
                 }
             };
             return errorButton;
         },
-
+        
         /**
          *
          * @param {Object} toolbar
