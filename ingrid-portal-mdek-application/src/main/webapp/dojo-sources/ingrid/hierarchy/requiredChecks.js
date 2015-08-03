@@ -92,7 +92,6 @@ define(["dojo/_base/declare",
 
             array.forEach(widgets, function(w) {
                 if (lang.trim(registry.byId(w).get("displayedValue")).length === 0) {
-                    notPublishableIDs.push(w);
                     notPublishableIDs.push( [w, message.get( "validation.error.empty.field" )] );
                 }
             });
@@ -151,13 +150,18 @@ define(["dojo/_base/declare",
 
             array.forEach(widgets, function(w) {
                 if (lang.trim(registry.byId(w).get("displayedValue")).length === 0) {
-                    notPublishableIDs.push(w);
+                    notPublishableIDs.push( [w, message.get( "validation.error.empty.field" )] );
                 }
             });
             array.forEach(grids, function(g) {
                 if (UtilGrid.getTableData(g).length === 0) {
-                    notPublishableIDs.push(g);
+                    notPublishableIDs.push( [g, message.get( "validation.error.empty.table" )] );
+                } else {
+                    // check if grid has empty rows
+                    var grid = UtilGrid.getTable(g);
+                    if (!grid.validateNonEmptyRows()) notPublishableIDs.push( [g, message.get("validation.error.empty.rows")] );
                 }
+                
             });
 
             topic.publish("/onBeforeAddressPublish", notPublishableIDs);
