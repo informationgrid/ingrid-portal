@@ -416,6 +416,22 @@ define([
                     clearTimeout( defaultHide );
                 });
             }, 500);
+        },
+        
+        selectTextInContainer: function(container) {
+            var range, selection;
+
+            if (window.getSelection && document.createRange) {
+                selection = window.getSelection();
+                range = document.createRange();
+                range.selectNodeContents(container);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            } else if (document.selection && document.body.createTextRange) {
+                range = document.body.createTextRange();
+                range.moveToElementText(container);
+                range.select();
+            }
         }
 
     } )();
