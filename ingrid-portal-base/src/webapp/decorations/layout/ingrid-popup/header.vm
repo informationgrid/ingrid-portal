@@ -8,7 +8,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
   <base href="#BaseHref()" />
-  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "PortalU")</title>
+  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "InGrid")</title>
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   
   <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
@@ -72,7 +72,7 @@ self.focus();
     <noscript>
 	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
     </noscript>
-<!--  BEGIN: layout/html/portalu/decorator.vm -->
+<!--  BEGIN: layout/html/ingrid/decorator.vm -->
     <div class="#PageBaseCSSClass()">
 
 <!-- IDENTITY AREA -->
@@ -90,7 +90,7 @@ self.focus();
 #end
   <!-- LOGO -->
   <div id="logo">
-    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/logo.gif')" width="188" height="81" alt="Logo PortalU" /></a>
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="#GetPageResource('images/ingrid_logo_icn.png')" alt="Logo InGrid" /></a>
   </div>
 </div>
 
@@ -99,4 +99,4 @@ self.focus();
   
 ## $jetspeed.include($jetspeed.currentFragment)
 
-<!--  END: layout/html/portalu/decorator.vm -->
+<!--  END: layout/html/ingrid/decorator.vm -->

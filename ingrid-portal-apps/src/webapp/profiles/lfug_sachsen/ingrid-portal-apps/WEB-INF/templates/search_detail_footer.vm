@@ -4,7 +4,7 @@
 	|
 	<a href="/ingrid-portal/portal/privacy.psml" title="$MESSAGES.getString('footer.privacy.policy')">$MESSAGES.getString('footer.privacy.policy')</a>
 	|
-	<a href="mailto:webmaster@portalu.de" title="$MESSAGES.getString('footer.webmaster')">$MESSAGES.getString('footer.webmaster')</a>
+	<a href="mailto:Poststelle.LfUG@smul.sachsen.de" title="$MESSAGES.getString('footer.webmaster')">$MESSAGES.getString('footer.webmaster')</a>
 #end
 
 </div>
@@ -32,7 +32,7 @@
 </div>
 
 #if($piwik != "")
-<!--  END: layout/html/portalu/decorator.vm -->
+<!--  END: layout/html/ingrid/decorator.vm -->
 <!-- Piwik -->
 <script type="text/javascript">
 	var pkBaseURL = '${piwik}';

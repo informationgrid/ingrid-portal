@@ -97,7 +97,7 @@
 
   <!-- LOGO -->
   <div id="logo">
-    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><img src="#GetPageResource('images/logo.gif')" width="188" height="81" alt="Logo PortalU" /></a>
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><img src="#GetPageResource('images/ingrid_logo_icn.png')" alt="Logo InGrid" /></a>
   </div>
   
   <!-- SERVICE-NAVIGATION -->

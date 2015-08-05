@@ -45,7 +45,7 @@
     <noscript>
 	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
     </noscript>
-<!--  BEGIN: layout/html/portalu/decorator.vm -->
+<!--  BEGIN: layout/html/ingrid/decorator.vm -->
     <div class="#PageBaseCSSClass()">
 
 <!-- IDENTITY AREA -->
@@ -75,4 +75,4 @@
   
 ## $jetspeed.include($jetspeed.currentFragment)
 
-<!--  END: layout/html/portalu/decorator.vm -->
+<!--  END: layout/html/ingrid/decorator.vm -->
