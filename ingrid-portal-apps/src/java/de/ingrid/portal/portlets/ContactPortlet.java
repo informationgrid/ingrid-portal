@@ -102,7 +102,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
         // contact email address
         context.put("portalEmail", UtilsString.htmlescapeAll(PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER,
-                "portalu@portalu.de")));
+                "info@informationgrid.eu")));
 
         // enable captcha 
         context.put("enableCaptcha", PortalConfig.getInstance().getBoolean("portal.contact.enable.captcha", Boolean.TRUE));
