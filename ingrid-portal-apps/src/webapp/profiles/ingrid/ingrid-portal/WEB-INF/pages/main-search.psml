@@ -1,0 +1,53 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>ingrid.page.search.tooltip</title>
+  <short-title>ingrid.page.search</short-title>
+  <metadata name="meta_title">ingrid.page.search.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.search.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.search.meta.keywords</metadata>
+
+    <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridOneColumn">
+        <fragment id="main-search-two-columns" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+          <property layout="OneColumn" name="row" value="0"/>
+          <!-- USE id="search-simple-portlet", this one will be shared across pages ! -->
+          <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
+            <property layout="TwoColumns" name="row" value="0"/>
+            <property layout="TwoColumns" name="column" value="0"/>
+            <preference name="titleKey" readOnly="false">
+              <value>searchSimple.title.result</value>
+            </preference>
+            <preference name="helpKey" readOnly="false">
+              <value>search-results-1</value>
+            </preference>
+          </fragment>
+          <fragment id="main-search-info" type="portlet" decorator="ingrid-marginal-header" name="ingrid-portal-apps::InfoPortlet">
+            <property layout="TwoColumns" name="row" value="0" />
+            <property layout="TwoColumns" name="column" value="1" />
+            <preference name="infoTemplate" readOnly="false">
+              <value>/WEB-INF/templates/search_simple_info.vm</value>
+            </preference>
+            <preference name="titleKey" readOnly="false">
+              <value>searchSimple.info.title</value>
+            </preference>
+          </fragment>
+          <fragment id="main-search-similar" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchSimilar">
+            <property layout="TwoColumns" name="row" value="1"/>
+            <property layout="TwoColumns" name="column" value="0"/>
+          </fragment>                                
+        </fragment>
+        <fragment id="main-search-one-column" type="layout" name="jetspeed-layouts::IngridOneColumn">
+          <property layout="OneColumn" name="row" value="1"/>
+          <fragment id="main-search-results" type="portlet" decorator="clear" name="ingrid-portal-apps::SearchResult">
+            <property layout="OneColumn" name="row" value="0"/>
+          </fragment>                                
+        </fragment>
+    </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>

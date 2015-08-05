@@ -1,0 +1,38 @@
+#set ($MESSAGES = $jetspeed.getIngridResourceBundle($portletConfig.getResourceBundle($renderRequest.Locale)))
+
+#* defines URL parameter string *#
+#macro (defineUrlParams)
+#set ($myParamNames = $renderRequest.getParameterNames())
+#set ($urlParams = "?")
+#foreach ($paramName in $myParamNames)
+#set ($myVals = $renderRequest.getParameterValues($paramName))
+#foreach ($val in $myVals)
+#if($urlParams!="?")#set ($urlParams = "${urlParams}&")#end
+#set ($urlParams = "${urlParams}${paramName}=${val}")
+#end
+#end
+#if($urlParams=="?")#set ($urlParams = "")#end
+#end
+
+#* include service navigation component *#
+#macro (includeFooterNavigation $_menu)
+    #foreach($element in $_menu.elements.iterator())
+      #if($element.elementType == "option")
+        #set($linkTitle = $element.getTitle($preferedLocale))
+        #set($linkName = $element.getShortTitle($preferedLocale))
+        #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+        #if($velocityCount > 1)
+           | 
+        #end
+        #if($element.isSelected($site))
+          <a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a>
+        #else
+          <a href="$linkUrl" title="$linkTitle">$linkName</a>
+        #end
+      #end
+    #end
+
+#end
+
+
+
