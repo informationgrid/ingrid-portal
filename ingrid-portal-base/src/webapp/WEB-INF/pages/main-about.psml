@@ -36,7 +36,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
       <property layout="TwoColumns" name="row" value="0" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/about_portalu_links.vm</value>
+        <value>/WEB-INF/templates/about_links.vm</value>
       </preference>
       <preference name="titleKey" readOnly="false">
         <value>about.links.title</value>
@@ -46,7 +46,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
       <property layout="TwoColumns" name="row" value="1" />
       <property layout="TwoColumns" name="column" value="1" />
       <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/about_portalu_partner.vm</value>
+        <value>/WEB-INF/templates/about_partner.vm</value>
       </preference>
       <preference name="titleKey" readOnly="false">
         <value>about.partner.title</value>
