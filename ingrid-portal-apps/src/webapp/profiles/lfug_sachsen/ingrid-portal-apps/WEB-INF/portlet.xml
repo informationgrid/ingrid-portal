@@ -360,7 +360,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/about_portalu_partner.vm</value>
+            <value>/WEB-INF/templates/about_partner.vm</value>
         </init-param>
         <portlet-name>MyPortalEditAboutInfoPortlet</portlet-name>
         <display-name>MyPortalEditAboutInfoPortlet</display-name>
@@ -622,7 +622,7 @@
         <portlet-preferences>
             <preference>
                 <name>cmsKey</name>
-                <value>portalu.cms.default</value>
+                <value>ingrid.cms.default</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -666,7 +666,7 @@
             </preference>
             <preference>
                 <name>cmsKey</name>
-                <value>portalu.teaser.inform</value>
+                <value>ingrid.teaser.inform</value>
             </preference>
         </portlet-preferences>
     </portlet>
