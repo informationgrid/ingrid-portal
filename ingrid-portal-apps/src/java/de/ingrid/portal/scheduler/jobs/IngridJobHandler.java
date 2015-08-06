@@ -20,10 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
  */
-/*
- * Copyright (c) 1997-2008 by wemove GmbH
- */
-
 package de.ingrid.portal.scheduler.jobs;
 
 import java.io.BufferedWriter;

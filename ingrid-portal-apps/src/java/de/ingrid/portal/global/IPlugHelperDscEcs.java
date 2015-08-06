@@ -20,9 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
  */
-/*
- * Copyright (c) 1997-2007 by wemove GmbH
- */
 package de.ingrid.portal.global;
 
 import java.text.Collator;
