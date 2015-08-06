@@ -1,6 +1,6 @@
 Sehr geehrte(r) $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
 
-Willkommen bei PortalU! 
+Willkommen bei InGrid! 
 
 Für Sie wurde ein Zugang angelegt:
 
@@ -10,4 +10,4 @@ Passwort: $!{map.get("password")}
 
 Mit freundlichen Grüßen,
 
-Ihr PortalU Team
+Ihr InGrid Team
