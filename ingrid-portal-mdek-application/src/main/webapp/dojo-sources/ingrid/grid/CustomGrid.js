@@ -1317,7 +1317,8 @@ define([
                 // to lose focus and commit value!
                 var clickedWidget = registry.getEnclosingWidget(evt.target);
                 var clickedOnEditor = clickedWidget && clickedWidget.id.indexOf("activeCell_") === 0;
-                if (!clickedOnEditor) {
+                // if the editor was not clicked and also not the whole popup, which contains the scrollbar (REDMINE-82)
+                if (!clickedOnEditor && evt.target.className.indexOf("dijitPopup") === -1) {
                     try {
                         if (self.getEditorLock().activeEditController && self.getEditorLock().activeEditController.fromTable == self.id) {
                             var correct = self.getEditorLock().commitCurrentEdit();

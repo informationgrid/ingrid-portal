@@ -1550,6 +1550,7 @@ define([
 
             dom.byId("addressCreationTime").innerHTML = nodeData.creationTime;
             dom.byId("addressModificationTime").innerHTML = nodeData.modificationTime;
+            dom.byId("addressUuid").innerHTML = nodeData.uuid;
 
             if (nodeData.lastEditor !== null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
                 dom.byId("addressLastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
@@ -1679,6 +1680,7 @@ define([
             dom.byId("workState").innerHTML = (nodeData.isMarkedDeleted ? workStateStr + "<br>(" + message.get("general.state.markedDeleted") + ")" : workStateStr);
             dom.byId("creationTime").innerHTML = nodeData.creationTime;
             dom.byId("modificationTime").innerHTML = nodeData.modificationTime;
+            dom.byId("uuid").innerHTML = nodeData.uuid;
 
             if (nodeData.lastEditor !== null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
                 dom.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);

@@ -51,7 +51,7 @@
     <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties"/>
 
     <!-- THIS PORPERTIES ARE NECESSARY FOR UPDATES -->
-    <property name="libraryDir"         value="${tomcat-artifact}/webapps/ROOT/META-INF" />
+    <property name="libraryDir"         value="${tomcat-artifact}/webapps/ROOT/META-INF,apache-tomcat-6.0.35/webapps/ROOT/META-INF" />
     <property name="libraryIdent"       value="MANIFEST.MF" />
     <property name="versionsWithConfigurations"  value="" />
     <property name="minSupportedVersion" value="3.5.0" />
@@ -314,7 +314,6 @@
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps">
             <patternset>
                 <exclude name="WEB-INF/classes/communication.xml" />
-                <exclude name="WEB-INF/classes/ingrid-portal-apps.properties" />
                 <exclude name="WEB-INF/classes/hibernate.cfg.xml" />
             </patternset>
         </unwar>
@@ -565,6 +564,13 @@
         </elseif>
         <elseif>
             <equals arg1="${portal.version}" arg2=",3.5.0" />
+            <then>
+                <echo>Ihre Datenbank ist aktuell!</echo>
+            </then>
+        </elseif>
+        <elseif>
+            <!-- If database was setup with 3.5 dump then version is 3.5 without third 0 digit ! -->
+            <equals arg1="${portal.version}" arg2=",3.5" />
             <then>
                 <echo>Ihre Datenbank ist aktuell!</echo>
             </then>

@@ -9,19 +9,6 @@
 #end		  
 
 
-#if($SEIndexIplugs.size() > 0)
-  <h3>$MESSAGES.getString('admin.iplug.headline.webindex')</h3>
-  #foreach($plug in $SEIndexIplugs)
-    <p style="margin-left:4.5em">
-	#if($plug.getIplugAdminGuiUrl())
-      <a target="_new" href="$plug.getIplugAdminGuiUrl()">$plug.getDataSourceName()</a>
-	#else
-	  $plug.getDataSourceName() (kein Administrationsinterface angegeben!)
-	#end	
-    </p>
-  #end
-#end		  
-
 #if($SEIplugs.size() > 0)
   <h3>$MESSAGES.getString('admin.iplug.headline.iplug.se')</h3>
   #foreach($plug in $SEIplugs)

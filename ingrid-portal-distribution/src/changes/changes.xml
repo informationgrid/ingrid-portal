@@ -28,6 +28,28 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="3.6.1-SNAPSHOT" date="??" description="??">
+            <action type="update" dev="wemove" issue="REDMINE-109">
+                Portal: Updated to final Jetspeed 2.3.0 release.
+            </action>
+        </release>
+        <release version="3.6.0.2" date="2015-07-13" description="Bugfix Release 3.6.0.2">
+            <action type="fix" dev="wemove" issue="REDMINE-82">
+                IGE: Fix scrollbar behavior in editor content of a grid cell.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-95">
+                WebMapClient: Fix change of reference system after moving map.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-90">
+                Portal: Fix installer to include "update" functionality again.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-96">
+                Portal: Fix "save search" when logged in. Updated xstream to avoid error with java 1.8.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-89">
+                Portal: Fix wrong presentation of address results (needs updated DSC-iPlug)
+            </action>
+        </release>
         <release version="3.6.0" date="2015-06-19" description="Release 3.6.0">
             <action type="add" dev="wemove" issue="REDMINE-17">
                 IGE: Added new option to add a coupled resource as an external reference.

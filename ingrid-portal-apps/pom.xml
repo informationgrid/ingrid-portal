@@ -332,6 +332,12 @@
     </dependency>
 
 <!-- Diverses -->
+	<!-- Version 1.4.4 causes error with Java 1.8: xstream.toXML see REDMINE-702 -->
+	<dependency>
+	  <groupId>com.thoughtworks.xstream</groupId>
+	  <artifactId>xstream</artifactId>
+	  <version>1.4.7</version>
+	</dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
@@ -438,10 +444,12 @@
       <name>InGrid Repo Maven</name>
       <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
+<!--
     <repository>
       <id>maven.repo</id>
       <name>Maven Repo Default</name>
       <url>http://maven.jahia.org/maven2</url>
     </repository>
+-->
   </repositories>
 </project>

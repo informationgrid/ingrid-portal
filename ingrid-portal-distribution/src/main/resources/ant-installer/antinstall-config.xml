@@ -42,19 +42,12 @@
             overflow    = "true"
             displayText ="Willkommen zur InGrid-PortalU Installation">
         <comment displayText="" bold="true" explanatoryText="Nehmen Sie Einstellungen vor, um das Portal zu konfigurieren."/>
-
-        <comment displayText="Hinweis: " bold="true"/>
-        <comment displayText="" explanatoryText="In der Version 3.5 steht ein Update eines bereits installierten Portals nicht zur Verfügung. Wegen grundlegender Änderungen des Jetspeed Frameworks muss das Portal neu installiert werden. Die Portal Einstellungen müssen manuell übertragen werden. Informationen zur Migration einer bestehenden Portal Datenbank werden am Ende des Installationsprozesses ausgegeben."/>
-<!--
         <comment displayText="" explanatoryText="Wenn dies ein Update ist, dann können die Einstellungen der vorherigen Installation verwendet werden. Dazu muss sich die Datei 'ant.install.properties' im gleichen Verzeichnis wie der Installer befinden."/>
--->
         <target-select
             property      ="updateOrNew"
             displayText   ="Neu oder Update"
             defaultValue  ="setInstallProperty">
-<!--
             <option value="setUpdateProperty" text="Update (Einstellungen bleiben erhalten)"/>
--->
             <option value="setInstallProperty" text="Neuinstallation"/>
         </target-select>
     </page>

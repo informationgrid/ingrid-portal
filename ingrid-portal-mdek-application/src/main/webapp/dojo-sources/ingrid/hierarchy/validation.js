@@ -603,7 +603,7 @@ define(["dojo/_base/declare",
                     return (typeof(adr.medium) == "undefined" || adr.medium === null || lang.trim(adr.medium + "").length === 0 || typeof(adr.value) == "undefined" || adr.value === null || lang.trim(adr.value + "").length === 0);
                 })) {
                     console.debug("All entries in the addressCom table must contain values.");
-                    notPublishableIDs.push("addressCom");
+                    notPublishableIDs.push( ["addressCom", message.get("validation.error.incomplete.tablerow")] );
                 }
 
                 // Get the string (from the syslist) that is used to identify email entries
@@ -613,7 +613,9 @@ define(["dojo/_base/declare",
                     return (lang.trim(adr.medium + "") != emailString);
                 })) {
                     console.debug("At least one entry has to be of type '" + emailString + "'.");
-                    notPublishableIDs.push("addressCom");
+                    var errorTxt = string.substitute( message.get("validation.error.email.table"), [emailString] );
+                    registry.byId("addressCom").invalidMessage = errorTxt;
+                    notPublishableIDs.push( ["addressCom", errorTxt] );
                 }
             });
         },

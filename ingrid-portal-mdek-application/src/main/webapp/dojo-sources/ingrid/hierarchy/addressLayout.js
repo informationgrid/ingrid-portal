@@ -113,6 +113,11 @@ define([
                 item.innerHTML = lang.trim(item.innerHTML) + '<span class=\"requiredSign\">*</span>';
             });
             
+            // mark all the content of a special marked container 
+            query(".oneClickMark", "dataFormContainer").on("click", function() {
+                UtilUI.selectTextInContainer( this );
+            });
+            
             console.debug("toggle");
             // show only required fields initially
             igeEvents.toggleFields(undefined, "showRequired");

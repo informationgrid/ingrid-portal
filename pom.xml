@@ -25,10 +25,7 @@
   </modules>
 
   <properties>
-    <org.apache.portals.jetspeed.version>2.3.0-SNAPSHOT</org.apache.portals.jetspeed.version>
-<!--
-    <org.apache.portals.jetspeed.version>2.2.2</org.apache.portals.jetspeed.version>
--->
+    <org.apache.portals.jetspeed.version>2.3.0</org.apache.portals.jetspeed.version>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -90,7 +87,7 @@
     <!-- Provided Dependencies (e.g. needed in portal-base and portal-apps) -->
     <dependency>
       <groupId>org.apache.portals</groupId>
-      <artifactId>portlet-api_2.0_spec</artifactId>
+      <artifactId>portlet-api_2.1.0_spec</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -179,15 +176,21 @@
       <name>Maven Repo InGrid</name>
       <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
+<!-- Remove Apache SNAPSHOT Repo ! Jetspeed 2.3.0 released ! -->
+<!--
 	<repository>
       <id>apache.snapshots</id>
       <url>https://repository.apache.org/content/repositories/snapshots</url>
     </repository>
+-->
   </repositories>
   <pluginRepositories>
+<!-- Remove Apache SNAPSHOT Repo ! Jetspeed 2.3.0 released ! -->
+<!--
     <pluginRepository>
       <id>apache.snapshots</id>
       <url>https://repository.apache.org/content/repositories/snapshots</url>
     </pluginRepository>
+-->
   </pluginRepositories>
 </project>

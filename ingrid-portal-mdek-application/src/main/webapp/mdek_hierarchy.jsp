@@ -245,7 +245,8 @@
                                 <td class="note bgBlue" colspan="3">
                                     <strong><fmt:message key="ui.obj.header.creationTime" />:</strong><span id="creationTime">26.06.1998</span>
                                     | <strong><fmt:message key="ui.obj.header.modificationTime" />:</strong><span id="modificationTime">27.09.2000</span>
-                                    | <strong><fmt:message key="ui.obj.header.modUser" />:</strong><span id="lastEditor">---</span>
+                                    | <strong><fmt:message key="ui.obj.header.uuid" />:</strong><span id="uuid" class="oneClickMark">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</span>
+                                    <br><strong><fmt:message key="ui.obj.header.modUser" />:</strong><span id="lastEditor">---</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -2143,7 +2144,8 @@
                                 <td class="note bgBlue" colspan="3">
                                     <strong><fmt:message key="ui.adr.header.creationTime" />:</strong><span id="addressCreationTime">----------</span>
                                     | <strong><fmt:message key="ui.adr.header.modificationTime" />:</strong><span id="addressModificationTime">----------</span>
-                                    | <strong><fmt:message key="ui.adr.header.modUser" />:</strong><span id="addressLastEditor">---</span>
+                                    | <strong><fmt:message key="ui.adr.header.uuid" />:</strong><span id="addressUuid" class="oneClickMark">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</span>
+                                    <br><strong><fmt:message key="ui.adr.header.modUser" />:</strong><span id="addressLastEditor">---</span>
                                 </td>
                             </tr>
                         </tbody>

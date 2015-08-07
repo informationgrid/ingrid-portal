@@ -41,7 +41,7 @@ define([
             // If no parameter is specified, the class of the currently selected address is returned
             getAddressClass : function(addressType /*optional*/) {
                 if (typeof(addressType) == "undefined") {
-                    addressType = registry.byId("addressType").getValue();
+                    addressType = registry.byId("addressType").get( "value" );
                 }
 
                 if (addressType == message.get('address.type.institution'))

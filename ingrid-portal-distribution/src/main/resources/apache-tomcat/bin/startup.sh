@@ -24,9 +24,9 @@ export CATALINA_HOME=.
 
 # include default options, i.e. debug, jmx and jvm options
 if [ -f $CATALINA_HOME/bin/env.user.sh ]; then
-  eval `sh $CATALINA_HOME/bin/env.user.sh`
+  eval "`sh $CATALINA_HOME/bin/env.user.sh`"
 elif [ -f $CATALINA_HOME/bin/env.sh ]; then
-  eval `sh $CATALINA_HOME/bin/env.sh`
+  eval "`sh $CATALINA_HOME/bin/env.sh`"
 fi
 
 export JAVA_OPTS="$INGRID_OPTS -XX:MaxPermSize=256m"
