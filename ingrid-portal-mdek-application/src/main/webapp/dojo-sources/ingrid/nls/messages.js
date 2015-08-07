@@ -400,7 +400,8 @@ define({
 	"operation.hint.forceDeleteAddressHint":"The address '${0}' is referenced by other MD-S. Do you really want to delete this address?",
 	"operation.hint.addressReferenceHint":"The address '${0}' can not be deleted because it is referenced by the following objects: ${1}",
     "operation.hint.addressNotPublishedHint":"This object cannot be published, since the following address(es) never have been published: ${0}",
-
+    "operation.error.mdekdb.corrupt":"The database could not return a unique result. The mdek-database might be corrupt. Every user must have a unique name!",
+    
 	"address.type.institution":"Institution",
 	"address.type.unit":"Unit",
 	"address.type.person":"Person",

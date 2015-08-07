@@ -335,9 +335,15 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             String docID = request.getParameter("docID");
             
             Topic hit = new Topic();
-            hit.setDocumentId(Integer.parseInt(docID));
-            hit.setPlugId(plugID);
-            hit.setTopicID(topicID);
+            if(docID != null && !docID.equals("null")){
+            	hit.setDocumentId(Integer.parseInt(docID));
+            }
+            if(plugID != null && !plugID.equals("null")){
+                hit.setPlugId(plugID);
+            }
+            if(topicID != null && !topicID.equals("null")){
+                 hit.setTopicID(topicID);
+            }
             
             Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit, "/thesa", request.getLocale());
             request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSession.PORTLET_SCOPE);
@@ -356,9 +362,15 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
             String docID = request.getParameter("docID");
             
             Topic hit = new Topic();
-            hit.setDocumentId(Integer.parseInt(docID));
-            hit.setPlugId(plugID);
-            hit.setTopicID(topicID);
+            if(docID != null && !docID.equals("null")){
+            	hit.setDocumentId(Integer.parseInt(docID));
+            }
+            if(plugID != null && !plugID.equals("null")){
+                hit.setPlugId(plugID);
+            }
+            if(topicID != null && !topicID.equals("null")){
+                 hit.setTopicID(topicID);
+            }
             
             Topic currentTopic = (Topic)SNSSimilarTermsInterfaceImpl.getInstance().getDetailsTopic(hit, "/thesa", request.getLocale());
             request.getPortletSession().setAttribute(CURRENT_TOPIC, currentTopic, PortletSession.PORTLET_SCOPE);

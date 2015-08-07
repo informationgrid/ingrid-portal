@@ -35,6 +35,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -92,7 +93,7 @@ public class UtilsSearch {
      * @param numSelectorPages
      * @return
      */
-    public static HashMap getPageNavigation(int startHit, int hitsPerPage, int numberOfHits, int numSelectorPages) {
+    public static Map<String, Object> getPageNavigation(int startHit, int hitsPerPage, int numberOfHits, int numSelectorPages) {
 
         // pageSelector
         int currentSelectorPage = 0;
@@ -149,8 +150,8 @@ public class UtilsSearch {
     /**
      * Transform "normal" page navigation to the grouped navigation dependent from grouping state !
      */
-    public static HashMap adaptRankedPageNavigationToGrouping(
-    	HashMap pageNavi,
+    public static Map<String, Object> adaptRankedPageNavigationToGrouping(
+    	Map<String, Object> pageNavi,
     	int currentPage,
     	boolean hasMoreGroupedPages,
     	int totalNumberOfHits,
@@ -262,7 +263,13 @@ public class UtilsSearch {
             }
             result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
                     ""), 400));
-            result.put(Settings.RESULT_KEY_DOC_ID, new Integer(result.getHit().getDocumentId()));
+            String documentId = result.getHit().getDocumentId();
+            if (documentId != null && !"null".equals( documentId )) {
+                result.put(Settings.RESULT_KEY_DOC_ID, documentId);
+            } else {
+                // fallback to old id (integer)
+                result.put(Settings.RESULT_KEY_DOC_ID, result.getHit().getInt(0));
+            }
             
             // use internal provider instead of one set in plugdescription
             // e.g. results from Opensearch might support partner and provider

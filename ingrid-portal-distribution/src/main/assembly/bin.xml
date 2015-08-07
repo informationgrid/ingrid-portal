@@ -53,6 +53,11 @@
 			<directory>target/installer</directory>
 			<outputDirectory>/</outputDirectory>
 		</fileSet>
+		<fileSet>
+			<directory>target/installer/resources/scripts</directory>
+			<outputDirectory>distribution/apache-tomcat/bin</outputDirectory>
+			<lineEnding>unix</lineEnding>
+		</fileSet>
 	</fileSets>
   <dependencySets>
     <dependencySet>

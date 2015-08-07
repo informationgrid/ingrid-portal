@@ -42,7 +42,8 @@ define(["dojo/_base/declare",
         resetRequiredFields: function() {
             // get all labels within object- and address form and remove class, which makes them red
             query(".important", "hierarchyContent").removeClass("important");
-            query(".errorInfoBlock", "hierarchyContent").forEach(function(item) { item.remove(); });
+            // added IE11 fix, since remove-function is not supported (REDMINE-688)
+            query(".errorInfoBlock", "hierarchyContent").forEach(function(item) { item.remove ? item.remove() : item.parentNode.removeChild(item); });
             style.set(registry.byId("bShowNextError").domNode, "visibility", "hidden");
         },
 

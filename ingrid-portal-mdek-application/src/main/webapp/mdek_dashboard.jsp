@@ -184,12 +184,18 @@
                             infoData.catalogName = res.catalogName;
                             infoData.location = res.location.name;
                             def.resolve();
+                        },
+                        errorHandler: function(mes) {
+                            def.reject();
                         }
                     });
                     SecurityService.getUserNumForPlugId(null, {
                         callback: function(res){
                             infoData.numUsers = res;
                             def2.resolve();
+                        },
+                        errorHandler: function(mes) {
+                            def.reject();
                         }
                     });
                     
@@ -235,6 +241,9 @@
                             }
                                 
                             def.resolve(res.resultList);
+                        },
+                        errorHandler: function(mes) {
+                            def.reject();
                         }
                     });
                     return def;
@@ -256,6 +265,9 @@
                             pubObjPageNav.setTotalNumHits(res.totalNumHits);
                             pubObjPageNav.updateDomNodes();
                             def.resolve(res);
+                        },
+                        errorHandler: function(mes) {
+                            def.reject();
                         }
                     });
                     return def.promise;
@@ -288,6 +300,9 @@
                             }
                             
                             def.resolve(res.resultList);
+                        },
+                        errorHandler: function(mes) {
+                            def.reject();
                         }
                     });
                     return def;

@@ -138,7 +138,7 @@
         </page>
         <page>
             <name>application/main-application-2.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
             <portlets>
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>

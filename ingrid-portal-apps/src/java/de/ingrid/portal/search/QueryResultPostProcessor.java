@@ -337,7 +337,7 @@ public class QueryResultPostProcessor {
             // determine type of hit dependent from plug description !!!
             boolean isObject = true;
             if (plugDescr != null) {
-            	List typesPlug = Arrays.asList(plugDescr.getDataTypes());
+            	List<String> typesPlug = Arrays.asList(plugDescr.getDataTypes());
             	for (int i=0; i < Settings.QVALUES_DATATYPES_ADDRESS.length; i++) {
                 	if (typesPlug.contains(Settings.QVALUES_DATATYPES_ADDRESS[i])) {
                 		isObject = false;
@@ -498,7 +498,7 @@ public class QueryResultPostProcessor {
             String cswUrl = (String) PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
             String id = (String) hit.get(Settings.RESULT_KEY_DOC_UUID);
             if(id != null){
-            	List typesPlug = Arrays.asList(plugDescr.getDataTypes());
+            	List<String> typesPlug = Arrays.asList(plugDescr.getDataTypes());
                 boolean isMetadata = false;
             	if (typesPlug.contains(Settings.QVALUE_DATATYPE_SOURCE_METADATA)) {
             		isMetadata = true;

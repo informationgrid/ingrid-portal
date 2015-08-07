@@ -60,8 +60,15 @@ layouts:
             align: center
             text: '${mapTitle}'
       items:
+        - !image
+          spacingAfter: 15
+          rotation: '${rotation}'
+          maxWidth: 30
+          maxHeight: 30
+          align: left
+          url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
         - !map
-          spacingAfter: 30
+          spacingAfter: 15
           width: 440
           height: 483
         - !scalebar
@@ -122,8 +129,15 @@ layouts:
             align: center
             text: '${mapTitle}'
       items:
+        - !image
+          spacingAfter: 15
+          rotation: '${rotation}'
+          maxWidth: 30
+          maxHeight: 30
+          align: left
+          url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
         - !map
-          spacingAfter: 30
+          spacingAfter: 15
           width: 483
           height: 400
         - !scalebar
@@ -183,8 +197,15 @@ layouts:
             align: center
             text: '${mapTitle}'
       items:
+        - !image
+          spacingAfter: 15
+          rotation: '${rotation}'
+          maxWidth: 30
+          maxHeight: 30
+          align: left
+          url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
         - !map
-          spacingAfter: 30
+          spacingAfter: 15
           width: 650
           height: 750
         - !scalebar
@@ -245,8 +266,15 @@ layouts:
             align: center
             text: '${mapTitle}'
       items:
+        - !image
+          spacingAfter: 15
+          rotation: '${rotation}'
+          maxWidth: 30
+          maxHeight: 30
+          align: left
+          url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
         - !map
-          spacingAfter: 30
+          spacingAfter: 15
           width: 750
           height: 650
         - !scalebar

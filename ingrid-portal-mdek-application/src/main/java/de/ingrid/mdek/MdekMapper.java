@@ -1807,7 +1807,7 @@ public class MdekMapper implements DataMapperInterface {
             additionalField.setListId(additionalFieldDoc.getString(MdekKeys.ADDITIONAL_FIELD_LIST_ITEM_ID));
             
             // if it's a table it must have rows
-            List<List<IngridDocument>> tableRows = additionalFieldDoc.getArrayList(MdekKeys.ADDITIONAL_FIELD_ROWS);
+            List<List<IngridDocument>> tableRows = (List<List<IngridDocument>>)(List<?>) additionalFieldDoc.getArrayList(MdekKeys.ADDITIONAL_FIELD_ROWS);
             if (tableRows != null) {
                 List<List<AdditionalFieldBean>> tableData = new ArrayList<List<AdditionalFieldBean>>();
                 for (List<IngridDocument> row : tableRows) {

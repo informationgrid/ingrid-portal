@@ -24,8 +24,8 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -33,10 +33,10 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ServiceSearchForm;
@@ -168,7 +168,7 @@ public class ServiceResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // adapt settings of page navigation
-        HashMap pageNavigation = UtilsSearch.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
+        Map<String, Object> pageNavigation = UtilsSearch.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         // ----------------------------------

@@ -428,7 +428,7 @@ public class UtilsFacete {
 	public static void checkForExistingFacete(IngridHitsWrapper hits, PortletRequest request) {
 		HashMap<String, Long> elementsGeothesaurus = null;
 		HashMap<String, Long> elementsMap = null;
-		IngridDocument facets = (IngridDocument) hits.get("FACETS");
+		Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
 		if(facets != null){
 			ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
 			for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
@@ -742,6 +742,21 @@ public class UtilsFacete {
 			        if(selectedIds == null){
 			        	selectedIds = new ArrayList<String>();
 			        }
+			        
+                	for(int i = 0; i < selectedIds.size(); i++){
+                		String selectedId = selectedIds.get(i);
+			        	IngridHit[] topics = (IngridHit[]) getAttributeFromSession(request, GEOTHESAURUS_TOPICS);
+				        if(topics != null){
+				        	for (IngridHit hit : topics){
+				        		Topic topic = (Topic) hit;
+				        		if(selectedId.equals(topic.getTopicNativeKey())){
+				        			selectedIds.remove(selectedId);
+				        			i--;
+				        		}
+				        	}
+				        }
+	        		}
+			        
 			        if(listSize != null){
 			        	for (int i=0; i< Integer.parseInt(listSize); i++) {
 			        		String chkVal = request.getParameter("chk"+(i+1));
@@ -760,6 +775,7 @@ public class UtilsFacete {
 			                }
 			            }
 			        }
+			        
 			        if(selectedIds != null){
 			        	selectedGeothesaurus.put(GEOTHESAURUS_SELECTED_TOPICS_IDS, selectedIds);
 			        }
@@ -780,7 +796,11 @@ public class UtilsFacete {
 								}
 							}
 							selectedGeothesaurus.put(GEOTHESAURUS_SELECTED_TOPICS_IDS, selectedIds);
-							setAttributeToSession(request, SELECTED_GEOTHESAURUS, selectedGeothesaurus, true);
+							if(selectedIds.size() > 0){
+								setAttributeToSession(request, SELECTED_GEOTHESAURUS, selectedGeothesaurus, true);								
+							}else{
+								removeAttributeFromSession(request, SELECTED_GEOTHESAURUS);
+							}
 						}	
 					}
 				}
@@ -863,10 +883,18 @@ public class UtilsFacete {
 	                setAttributeToSession(request, GEOTHESAURUS_LIST_SIZE, list_size);
 	            }
 	        }
-	        ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
-	        if(selectedGeothesaurus != null){
-	        	selectedGeothesaurus.put(GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopics);
-		        setAttributeToSession(request, SELECTED_GEOTHESAURUS, selectedGeothesaurus, true);
+	        
+	        if(doGeothesaurus == null){
+	        	ArrayList<HashMap<String, String>> geothesaurusSelectTopics = getSelectedGeothesaurusTopics(request);
+		        if(selectedGeothesaurus != null){
+		        	selectedGeothesaurus.put(GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopics);
+		        	ArrayList<String> selectedTopicIds = (ArrayList<String>) selectedGeothesaurus.get(GEOTHESAURUS_SELECTED_TOPICS_IDS);
+	        		if(selectedTopicIds != null && selectedTopicIds.size() > 0){
+	        			setAttributeToSession(request, SELECTED_GEOTHESAURUS, selectedGeothesaurus, true);
+	        		}else{
+	        			setAttributeToSession(request, SELECTED_GEOTHESAURUS, selectedGeothesaurus, false);
+	        		}
+		        }
 	        }
         }
 	}
@@ -1002,7 +1030,7 @@ public class UtilsFacete {
 		boolean isFound = false;
 		for(int i=0; i < allGeoThesaurusTopics.size(); i++){
 			IngridHit hit = allGeoThesaurusTopics.get(i);
-			if(ingridHit.getId()==hit.getId()){
+			if(ingridHit.get("nativeKeyOcc") == hit.get("nativeKeyOcc")){
 				isFound = true;
 				break;
 			}

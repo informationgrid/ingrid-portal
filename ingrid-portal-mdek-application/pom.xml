@@ -3,7 +3,7 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>3.6.0-SNAPSHOT</version>
+        <version>3.6.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.ingrid.portal</groupId>
@@ -182,6 +182,7 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-mdek-api</artifactId>
+            <version>3.6.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -191,6 +192,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils</artifactId>
+            <version>3.6.0</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -228,6 +230,7 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-mdek-services</artifactId>
+            <version>3.6.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>ojdbc</groupId>
@@ -239,6 +242,7 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-import-export</artifactId>
+            <version>3.6.0</version>
         </dependency>
         <dependency>
             <groupId>dom4j</groupId>

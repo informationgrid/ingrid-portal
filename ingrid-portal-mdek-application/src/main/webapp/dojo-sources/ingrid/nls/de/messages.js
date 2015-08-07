@@ -399,6 +399,7 @@ define({
 	"operation.hint.forceDeleteAddressHint":"Auf die Adresse '${0}' wird verwiesen. Wollen Sie die Adresse wirklich l&ouml;schen?",
 	"operation.hint.addressReferenceHint":"Die Adresse '${0}' kann nicht gel&ouml;scht werden, sie wird von folgenden Objekten referenziert: ${1}",
     "operation.hint.addressNotPublishedHint":"Das Objekt kann nicht publiziert werden, da die folgende(n) Adresse(n) noch nicht ver&ouml;ffentlicht worden sind: ${0}",
+    "operation.error.mdekdb.corrupt":"Die Datenbank lieferte kein eindeutiges Ergebnis zur&uuml;ck. M&ouml;glicherweise ist die mdek-Datenbank besch&auml;digt. Hier muss jeder Benutzer einen einzigartigen Benutzernamen besitzen!",
 
 	"address.type.institution":"Institution",
 	"address.type.unit":"Einheit",
