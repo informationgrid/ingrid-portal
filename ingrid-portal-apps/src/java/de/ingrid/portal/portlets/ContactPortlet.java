@@ -114,7 +114,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
         // address after email
         Session session = HibernateUtil.currentSession();
         List entities = UtilsDB.getValuesFromDB(session.createCriteria(IngridCMS.class).add(
-                Restrictions.eq("itemKey", "portalu.contact.intro.postEmail")), session, null, true);
+                Restrictions.eq("itemKey", "ingrid.contact.intro.postEmail")), session, null, true);
         if (entities.size() > 0) {
             IngridCMS entry = (IngridCMS) entities.get(0);
             String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());

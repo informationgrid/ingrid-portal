@@ -622,7 +622,7 @@
         <portlet-preferences>
             <preference>
                 <name>cmsKey</name>
-                <value>portalu.cms.default</value>
+                <value>ingrid.cms.default</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -666,7 +666,7 @@
             </preference>
             <preference>
                 <name>cmsKey</name>
-                <value>portalu.teaser.inform</value>
+                <value>ingrid.teaser.inform</value>
             </preference>
         </portlet-preferences>
     </portlet>

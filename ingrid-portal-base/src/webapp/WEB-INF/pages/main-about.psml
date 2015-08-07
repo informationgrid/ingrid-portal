@@ -26,7 +26,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
         <value>/WEB-INF/templates/default_cms.vm</value>
       </preference>
       <preference name="cmsKey" readOnly="false">
-        <value>portalu.about</value>
+        <value>ingrid.about</value>
       </preference>
       <preference name="helpKey" readOnly="false">
         <value>about-1</value>

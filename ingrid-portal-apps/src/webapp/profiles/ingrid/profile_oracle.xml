@@ -49,7 +49,7 @@
                         <value>/WEB-INF/templates/default_cms.vm</value>
                     </preference>
                     <preference name="cmsKey" readOnly="false">
-                        <value>portalu.about</value>
+                        <value>ingrid.about</value>
                     </preference>
                     <preference name="helpKey" readOnly="false">
                         <value>about-1</value>
@@ -237,7 +237,7 @@
                         <value>disclaimer.title</value>
                     </preference>
                     <preference name="cmsKey" readOnly="false">
-                        <value>portalu.disclaimer</value>
+                        <value>ingrid.disclaimer</value>
                     </preference>
                 </portlet>
                 <portlet col="1" row="0">
