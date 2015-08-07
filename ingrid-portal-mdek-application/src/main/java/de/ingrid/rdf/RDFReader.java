@@ -115,10 +115,10 @@ public class RDFReader {
     
     public ModelWrapper fetchHierarchy(String uri) {
     	URL url = null;
-    	int pos;
+    	int pos = uri.lastIndexOf( "/" );
     	try {
 			url = new URL(uri);
-			pos = uri.indexOf(url.getHost()) + url.getHost().length();
+			//pos = uri.indexOf(url.getHost()) + url.getHost().length();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
