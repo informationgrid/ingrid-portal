@@ -25,13 +25,13 @@
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
-        <header>Hilfe zu InGrid</header>
+        <header>Hilfe zu PortalU</header>
         <section help-key="index">
             <header>Hilfethemen</header>
             <content>
                 <ul>
                     <li>
-                        <a href="?hkey=about-1">Über InGrid</a>
+                        <a href="?hkey=about-1">Über PortalU</a>
                     </li>
                     <li>
                         <a href="?hkey=search-1">Suche</a>
@@ -55,10 +55,10 @@
                         <a href="?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="?hkey=ingrid-inform-1">InGrid informiert</a>
+                        <a href="?hkey=ingrid-inform-1">PortalU informiert</a>
                     </li>
                     <li>
-                        <a href="?hkey=myingrid-1">Mein InGrid</a>
+                        <a href="?hkey=myingrid-1">Mein PortalU</a>
                     </li>
                     <li>
                         <a href="?hkey=ingrid-newsletter-1">Newsletter</a>
@@ -68,24 +68,24 @@
         </section>
     </chapter>
     <chapter>
-        <header>Über InGrid</header>
+        <header>Über PortalU</header>
         <section help-key="about-1">
-            <header>Konzept und Aufgabe von InGrid</header>
+            <header>Konzept und Aufgabe von PortalU</header>
             <content>
-                <p>InGrid, das Umweltportal Deutschland, bietet einen zentralen
+                <p>PortalU, das Umweltportal Deutschland, bietet einen zentralen
                     Zugriff auf mehrere Millionen umweltrelevante Webseiten sowie über  
                     eine halbe Millionen 
                     Katalog- und Datenbankeinträge von öffentlichen Institutionen 
                     und Organisationen in Bund, Ländern und Kommunen. Mit einem Mix aus
                     aktuellen Nachrichten, Umweltmesswerten, Hintergrundinformationen,
-                    und historischen Umweltereignissen richtet sich InGrid
+                    und historischen Umweltereignissen richtet sich PortalU
                     sowohl an interessierte Laien als auch an ein versiertes 
                     Fachpublikum. Das Informationsangebot wird kontinuierlich ausgebaut 
                     mit dem Ziel, langfristig die Umweltinformationen möglichst aller
                     behördlicher Anbieter unter einem Dach recherchierbar zu machen.</p>
                 <p>Als rechtliche Grundlage spielt die europäische 
                     Umweltinformationsrichtlinie (2003/4/EG) und die europäische
-                    INSPIRE-Richtlinie (2007/2/EG) für InGrid eine zentrale Rolle. 
+                    INSPIRE-Richtlinie (2007/2/EG) für PortalU eine zentrale Rolle. 
                     Diese Richtlinien
                     setzen neue Maßstäbe für die öffentliche Verbreitung
                     behördlicher Umweltinformationen bzw. den Aufbau der dafür
@@ -94,7 +94,7 @@
                     als zuvor dazu verpflichtet, umweltrelevante Daten und
                     Informationen in einer klar verständlichen und einfach
                     zugänglichen Form bereitzustellen.</p>
-                  <p> InGrid und die eigens
+                  <p> PortalU und die eigens
                     zum Aufbau des Portals entwickelte Software
                     InGrid wurden speziell als
                     Werkzeuge zur Unterstützung der Behörden bei der Umsetzung
@@ -102,16 +102,16 @@
             </content>
         </section>
         <section help-key="about-2">
-            <header>Die Betreiber von InGrid</header>
+            <header>Die Betreiber von PortalU</header>
             <content>
                 <p> Als Nachfolgeprojekt des Umweltdatenkatalogs (UDK) und des German 
-                    Environmental Information Network (gein) wurde InGrid  
+                    Environmental Information Network (gein) wurde PortalU  
                     im Rahmen der Bund-Länder Verwaltungsvereinbarung UDK/GEIN
                     entwickelt. An dieser Verwaltungsvereinbarung sind
                     unter anderem das Umweltbundesministerium und die
-                    Umweltministerien aller 16 Länder beteiligt. InGrid wird
+                    Umweltministerien aller 16 Länder beteiligt. PortalU wird
                     technisch und inhaltlich von der Koordinierungsstelle
-                    InGrid im Niedersächsischen Ministerium für Umwelt, Energie und 
+                    PortalU im Niedersächsischen Ministerium für Umwelt, Energie und 
                     Klimaschutz in Hannover betreut.</p>
             </content>
         </section>
@@ -127,7 +127,7 @@
                     <b>Themen:</b> Schneller Einstieg in einzelne Umweltthemen von
                     A wie Abfall bis W wie Wasser.</p>  
                 <p>
-                    <b>Messwerte</b>: InGrid informiert Sie rund um die Uhr
+                    <b>Messwerte</b>: PortalU informiert Sie rund um die Uhr
                     über den aktuellen Zustand Ihrer Umwelt.</p>                                         <p>
                     <b>Service</b>: Nachrichten und Informationen über 
                     Veranstaltungen und aktuelle Publikationen im Umweltbereich.</p>
@@ -144,11 +144,11 @@
             </content>
         </section>
         <section help-key="about-4">
-            <header>Informationsquellen in InGrid</header>
+            <header>Informationsquellen in PortalU</header>
             <content>
-                <p>InGrid ist ein komfortables und benutzerfreundliches Tor zu
+                <p>PortalU ist ein komfortables und benutzerfreundliches Tor zu
                     Umweltinformationen im Internet. Im Gegensatz zu den meisten
-                    Portalen und Suchmaschinen erfasst InGrid nicht nur
+                    Portalen und Suchmaschinen erfasst PortalU nicht nur
                     Webseiten, Textdokumente und andere Internetformate, sondern
                     kann auch auf Datenbanken und Fachinformationssysteme
                     zugreifen, selbst wenn diese nicht online sind. 
@@ -156,9 +156,9 @@
             </content>
         </section>
         <section help-key="about-5">
-            <header>Wie werde ich Informationsanbieter in InGrid?</header>
+            <header>Wie werde ich Informationsanbieter in PortalU?</header>
             <content>
-                <p>In InGrid können alle behördlichen Umweltinformationen im Sinne des                    Umweltinformationsgesetzes und alle umweltrelevanten Webkataloge im  
+                <p>In PortalU können alle behördlichen Umweltinformationen im Sinne des                    Umweltinformationsgesetzes und alle umweltrelevanten Webkataloge im  
                    Sinne von INSPIRE aufgenommen werden. Zum Anbieterkreis gehören: 
                 </p>
                 <ul>
@@ -170,14 +170,14 @@
                     <li>Forschungseinrichtungen</li>
                 </ul>
                 <p>Bietet ihre Behörde oder Institution umweltrelevante behördliche 
-                   Informationen im Internet an, die noch nicht in InGrid zu finden 
-                   sind? Dann sprechen Sie uns an: <a href="mailto:kst@portalu.de" title="Schreiben Sie uns - Email Programm startet automatisch">Koordinierungsstelle InGrid</a></p>
+                   Informationen im Internet an, die noch nicht in PortalU zu finden 
+                   sind? Dann sprechen Sie uns an: <a href="mailto:kst@portalu.de" title="Schreiben Sie uns - Email Programm startet automatisch">Koordinierungsstelle PortalU</a></p>
             </content>
         </section>
         <section help-key="about-6">
-            <header>InGrid – Die Software hinter InGrid</header>
+            <header>InGrid – Die Software hinter PortalU</header>
             <content>
-                <p>Zur Umsetzung von InGrid wurde das Softwarepaket InGrid
+                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid
                     entwickelt. InGrid setzt auf eine modulare und flexible
                     Systemarchitektur auf der Basis lizenzfreier OpenSource
                     Produkte. Dadurch wird es möglich, die technische Struktur
@@ -198,7 +198,7 @@
             <content>
                 <p>Suchen ist ganz einfach. Geben Sie in das Suchfeld einen oder 
                    mehrere Begriffe ein und klicken Sie anschließend auf die 
-                   Schaltfläche <b>InGrid Suche</b>. InGrid durchsucht alle
+                   Schaltfläche <b>PortalU Suche</b>. PortalU durchsucht alle
                    eingebundenen Umweltinformationen: Webseiten, Kataloge und
                    Datenbanken, die für Ihre Suche von Interesse sind. Die 
                    Ergebnisse Ihrer Suchanfrage werden in einer 
@@ -276,7 +276,7 @@
                     </li>
                 </ul>
                 <p>Einen kurzen Überblick über die Freitextsuche finden 
-                   Sie <a href="https://dev.informationgrid.eu/funktionen?action=doSearch/" target="_new">HIER</a>. </p>
+                   Sie <a href="http://www.portalu.de/funktionen?action=doSearch/" target="_new">HIER</a>. </p>
             </content>
         </section>
     </chapter>
@@ -369,7 +369,7 @@
         <section help-key="ext-search-subject-3">
             <header>Der UMTHES</header>
                 <content>
-                    <p>In InGrid kommt der Umweltthesaurus UMTHES des 
+                    <p>In PortalU kommt der Umweltthesaurus UMTHES des 
                        Umweltbundesamtes zum Einsatz. Ein Thesaurus ist eine 
                        Sammlung von Schlagworten, die miteinander in Beziehung 
                        gesetzt werden. Zu jedem Schlagwort werden somit 
@@ -453,10 +453,10 @@
         <section help-key="ext-search-spacial-6">
             <header>Auf Karte festlegen</header>
             <content>
-                <p>Die räumliche Einschränkung der InGrid-Suche ist sowohl über 
+                <p>Die räumliche Einschränkung der PortalU-Suche ist sowohl über 
                    Ortsnamen als auch die Auswahl eines Kartenausschnitts 
                    möglich. Wenn Sie über ein Suchrechteck einen entsprechenden 
-                   Kartenausschnitt definiert haben, wird in dem über InGrid 
+                   Kartenausschnitt definiert haben, wird in dem über PortalU 
                    verfügbaren Informationsangebot gezielt nach räumlichen 
                    Begriffen (wie z.B. Städten oder Gebirgen) gesucht. </p>
                 </content>
@@ -506,7 +506,7 @@
                 <content>
                     <p>Wenn Sie einen Kartenausschnitt gewählt haben, können Sie 
                        wählen, in welcher Form die räumliche Einschränkung für 
-                       die InGrid-Suche verwendet werden soll. Folgende 
+                       die PortalU-Suche verwendet werden soll. Folgende 
                        Optionen stehen rechts unterhalb des Kartenfensters zur
                        Verfügung:</p>
                     <ul>
@@ -569,7 +569,7 @@
         <section help-key="ext-search-time-1">
             <header>Zeit</header>
             <content>
-                <p>InGrid ist in der Lage, nach den Zeitbezügen der
+                <p>PortalU ist in der Lage, nach den Zeitbezügen der
                     angeschlossenen Systeme zu suchen. Hierzu werden einerseits
                     die Daten genutzt, die der <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes aus den Webseiten als Zeitbezüge
@@ -651,7 +651,7 @@
         <section help-key="ext-search-area-2">
             <header>Datenquellen</header>
             <content>
-                <p>An InGrid sind neben Web-Servern auch Metadaten- und
+                <p>An PortalU sind neben Web-Servern auch Metadaten- und
                     Fachdatensysteme angeschlossen. Sie können wählen, ob Sie in
                     all diesen Systemen suchen wollen (Standard) oder ob Sie
                     ihre Suche gezielt auf eine oder mehrere Arten von
@@ -677,7 +677,7 @@
         <section help-key="ext-search-area-3">
             <header>Bund/Länder</header>
             <content>
-                <p>Die Datenangebote in InGrid stammen von Behörden und
+                <p>Die Datenangebote in PortalU stammen von Behörden und
                     behördennahen Organisationen aus Bund und Ländern der
                     Bundesrepublik Deutschland. Sie können für Ihre Suche das
                     Angebot auf den Bund oder einzelne Länder einschränken. Eine
@@ -695,11 +695,11 @@
         <section help-key="search-history-1">
             <header>Suchhistorie</header>
             <content>
-                <p>InGrid speichert eine Historie Ihrer Suchanfragen. Neben
+                <p>PortalU speichert eine Historie Ihrer Suchanfragen. Neben
                     dieser Historie, die automatisch für eine Sitzung 
                     vorübergehend gespeichert
                     wird, können Sie als eingeloggter Nutzer 
-                    (siehe <a href="?hkey=myingrid-1">Mein InGrid</a>) auch
+                    (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>) auch
                     Suchanfragen permanent speichern 
                     (<a href="?hkey=search-save-1">Suche Speichern</a>).</p>
                 <p>Sowohl die vorübergehenden als auch die permanent gespeicherten Suchanfragen können über den Reiter 
@@ -751,7 +751,7 @@
         <section help-key="search-settings-3">
             <header>Ähnliche Begriffe in die Suche einbeziehen</header>
             <content>
-                <p>InGrid führt nicht nur die bei Suchmaschinen übliche
+                <p>PortalU führt nicht nur die bei Suchmaschinen übliche
                     Indexierung der Seiten durch, sondern lässt den Seiteninhalt
                     auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes analysieren. Als Ergebnis dieser Analyse
@@ -775,7 +775,7 @@
                         <b>Einstellungen für die Suche</b> (<a href="?hkey=search-settings-1">Suche/Einstellungen</a>)
                         die Option <b>Ähnliche Begriffe in die Suche
                         einbeziehen</b> an. Sie können diese
-                        Einstellungen auch dauerhaft vornehmen (siehe <a href="?hkey=myingrid-1">Mein InGrid</a>).</li>
+                        Einstellungen auch dauerhaft vornehmen (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>).</li>
                     <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
                         ähnliche Begriffe, indem Sie die Funktionalität
                         <a href="?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>
@@ -808,17 +808,17 @@
                     könnten. Sie können im Suchbereich neben einem Land auch die
                     Bundesinformationen einstellen.</p>
                 <p>Sie können diese Einstellungen auch dauerhaft vornehmen
-                    (siehe <a href="?hkey=myingrid-1">Mein InGrid</a>).</p>
+                    (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
             <header>Spezielle Suchanfrage, die man nicht über die
                 erweiterte Suche formulieren kann</header>
             <content>
-                <p>InGrid erlaubt komplexe Suchanfragen  durchzuführen, die
+                <p>PortalU erlaubt komplexe Suchanfragen  durchzuführen, die
                     über die Möglichkeiten der erweiterten Suche hinausgehen
                     (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
-                    usw.). Lesen Sie hierzu in der Hilfe zu InGrid den
+                    usw.). Lesen Sie hierzu in der Hilfe zu PortalU den
                     Abschnitt <a href="?hkey=search-expert-1">Expertensuche</a>
                     und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
             </content>
@@ -960,7 +960,7 @@
       <section help-key="ext-search-law-3">
             <header>Sucbbereich  - Bund /Länder</header>
             <content>
-                  <p>Die Datenangebote in InGrid stammen von Behörden und behördennahen Organisationen 
+                  <p>Die Datenangebote in PortalU stammen von Behörden und behördennahen Organisationen 
                      aus Bund und Ländern der Bundesrepublik Deutschland. Sie können für Ihre Suche das 
                      Angebot auf den Bund oder einzelne Länder einschränken. Eine Mehrfachauswahl ist dabei möglich.</p>
                 <p>Der Bund und auch die meisten Länder haben mehrere Datenanbieter. Diese werden angezeigt,
@@ -980,7 +980,7 @@
             <content>
                 <p>Nach dem Ausführen einer Suchanfrage haben die eingeloggten
                     Nutzer (siehe <a href="?hkey=myingrid-1">Mein
-                    InGrid</a>) die Möglichkeit, den verwendeten Suchausdruck
+                    PortalU</a>) die Möglichkeit, den verwendeten Suchausdruck
                     dauerhaft zu speichern. Dies geschieht über die Funktion
                     <b>Suche speichern</b>.</p>
                 <p>Hinweis: Die zuletzt verwendeten Suchanfragen sind auch ohne
@@ -1105,7 +1105,7 @@
         <section help-key="search-expert-8">
             <header>Sonderzeichen</header>
             <content>
-                <p>Die folgenden Zeichen haben im Suchausdruck von InGrid eine
+                <p>Die folgenden Zeichen haben im Suchausdruck von PortalU eine
                     spezielle Bedeutung (z.B. in Form von Operatoren):</p>
                 <p>+ - &amp;&amp; || ! ( ) { } [ ] ^ &quot; ~ * ? : \</p>
                 <p>Sollen sie dennoch als einfache Zeichen innerhalb eines
@@ -1118,11 +1118,11 @@
         <section help-key="search-expert-9a">
             <header>Suche nach speziellen Dokumenttypen</header>
             <content>
-                <p> In InGrid kann nach verschiedenen Dokumenttypen gesucht werden. 
+                <p> In PortalU kann nach verschiedenen Dokumenttypen gesucht werden. 
                     Dazu wird die Syntax ‚fileformat:Wert’ verwandt.</p>
                 <p>Beispiel: ‚fileformat:pdf’ (Es wird nur nach
                     PDF-Dokumenten gesucht.)</p>
-                <p>Folgende Werte stehen für das Feld 'fileformat' in InGrid zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'fileformat' in PortalU zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1159,14 +1159,14 @@
         <br></br>
             <header>Suche nach speziellen Datentypen</header>
             <content>
-                <p>Der InGrid-Volltextindex gliedert sich in verschiedene
-                    Felder. Alle in InGrid verwendeten Felder lassen sich
+                <p>Der PortalU-Volltextindex gliedert sich in verschiedene
+                    Felder. Alle in PortalU verwendeten Felder lassen sich
                     gezielt einzeln durchsuchen. Dazu wird die Syntax
                     ‚Feldname:Wert’ verwandt.</p>
                 <p>Bei der Suche nach einem Datentyp ist der Feldname 'Datatype'.</p>
                 <p>Beispiel: ‚datatype:law’ (Es wird nach
                     Dokumenten gesucht, die unter Rechtsvorschriften eingeordnet sind.)</p>
-                <p>Folgende Werte stehen für das Feld 'datatype' in InGrid zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'datatype' in PortalU zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1271,7 +1271,7 @@
                 Syntax ‚topic:Wert’ verwandt.</p>
                 <p>Beispiel: ‚datatype:metadata metaclass:map’ (Es wird nach
                     Metadaten der Klasse Geo-Information/Karte gesucht.)</p>
-                <p>Folgende Werte stehen für das Feld 'metaclass' in InGrid zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'metaclass' in PortalU zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1329,7 +1329,7 @@
                 Verwaltungseinheit eingeschränkt.)</p>
                 <p>Beispiel: ‚x1:7.52 y1:50.18 x2:10.17 y2:52.73’ (Die Suche wird auf ein 
                 ausgewähltes Rechteck eingeschränkt.)</p>
-                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in InGrid zur Verfügung:</p>
+                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in PortalU zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1370,7 +1370,7 @@
                 werden. </p>
                 <p>Beispiel: ‚t1:2006-01-01 t2:2008-12-31’ (Die Suche wird auf ein 
                 ausgewähltes Zeitintervall eingeschränkt.)</p>
-                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in InGrid zur Verfügung:</p>
+                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in PortalU zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1426,7 +1426,7 @@
                    Datenquelle sowie bei Webseiten die entsprechende URL. Wenn 
                    bei einigem Katalogeintrag eine digitale Karte hinterlegt 
                    ist, können Sie sich über den Link <b>Zeige Karte</b> die 
-                   Karte direkt im <a href="?hkey=maps-1">InGrid-Kartenviewer
+                   Karte direkt im <a href="?hkey=maps-1">PortalU-Kartenviewer
                    </a> ansehen.
                 </p>
             </content>
@@ -1458,18 +1458,18 @@
                    Umweltdatenkatalogen </p>
                 <p>Karten: Suchergebnis aus der Klasse 
                    <b>Geoinformation/Karte</b> der angeschlossenen 
-                   Umweltdatenkataloge und den im InGrid-Kartenviewer 
+                   Umweltdatenkataloge und den im PortalU-Kartenviewer 
                    verzeichneten Karten. Alle Karten können Sie sich im 
-                   <a href="?hkey=maps-1">InGrid-Kartenviewer</a> ansehen.</p>
+                   <a href="?hkey=maps-1">PortalU-Kartenviewer</a> ansehen.</p>
                 <p>Rechtsvorschriften: Suchergebnis aus Informationsangeboten zu 
                    rechtsrelevanten Themen</p>                   
                 <p>Forschungsprojekte: Suchergebnis aus Informationsangeboten zu 
                    Projekten in der Umweltforschung</p> 
-                <p>Themen: Suchergebnis der InGrid-Rubrik 
+                <p>Themen: Suchergebnis der PortalU-Rubrik 
                    <a href="?hkey=search-topics-1">Themen</a> </p>                  
-                <p>Messwerte: Suchergebnis der InGrid-Rubrik 
+                <p>Messwerte: Suchergebnis der PortalU-Rubrik 
                    <a href="?hkey=search-measure-1">Messwerte</a></p>             
-                <p>Service: Suchergebnis der InGrid-Rubrik 
+                <p>Service: Suchergebnis der PortalU-Rubrik 
                    <a href="?hkey=search-service-1">Service</a></p>
                    
                 <p><b>Aktualität</b> </p>
@@ -1518,7 +1518,7 @@
                 <p>Auf der Ergebnisseite werden in der rechten Spalte weitere 
                    <b>Datenquellen</b> angezeigt. Hier werden Suchergebnisse 
                    gelistet, die aus Informationsquellen stammen, die in 
-                   InGrid nicht nach Relevanz gewichtet und sortiert werden 
+                   PortalU nicht nach Relevanz gewichtet und sortiert werden 
                    können. Die Suchergebnisse dieser Datenquellen werden daher 
                    in einer getrennten Liste nach Datenquellen geordnet 
                    angezeigt. Die Datenquellen werden dabei in der Reihenfolge 
@@ -1531,7 +1531,7 @@
         <section help-key="search-results-4">
             <header>Ähnliche Begriffe</header>
             <content>
-                <p>InGrid bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
+                <p>PortalU bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
                     eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
@@ -1564,7 +1564,7 @@
                    oder eine Adresse werden detaillierte Informationen 
                    angezeigt. </p>
                 <p> Einen anschaulichen Überblick über Recherchemöglichkeiten 
-                    in den Umweltdatenkatalogen finden Sie <a href="https://dev.informationgrid.eu/funktionen?action=doCatalog" target="_new">HIER</a>.
+                    in den Umweltdatenkatalogen finden Sie <a href="http://www.portalu.de/funktionen?action=doCatalog" target="_new">HIER</a>.
                 </p>
             </content>
         </section>
@@ -1610,12 +1610,12 @@
                    oder Bundesländer. Die Suchergebnisse können gruppiert 
                    anzeigen: entweder nach Bundesebene und Bundesländern oder 
                    nach den einzelnen Informationsanbietern.</p>
-                <p>Tipp: Wenn Sie auf der InGrid-Startseite auf ein Umweltthema 
+                <p>Tipp: Wenn Sie auf der PortalU-Startseite auf ein Umweltthema 
                    klicken (z.B. Wasser), wird Ihnen die entsprechende 
                    Ergebnisliste direkt angezeigt.</p>              
 
                 <p> Einen anschaulichen Überblick über die Umweltthemen 
-                    finden Sie <a href="https://dev.informationgrid.eu/funktionen?action=doEnvironment" target="_new">HIER</a>. </p>
+                    finden Sie <a href="http://www.portalu.de/funktionen?action=doEnvironment" target="_new">HIER</a>. </p>
                   </content>
         </section>
     </chapter>
@@ -1636,8 +1636,8 @@
                   gruppiert anzeigen: entweder nach Bundesebene und 
                   Bundesländern oder nach den einzelnen Informationsanbietern.
                 </p>
-                <p> Einen anschaulichen Überblick über die in InGrid 
-                    recherchierbaren Serviceangebote finden Sie <a href="https://dev.informationgrid.eu/funktionen?action=doService" target="_new">HIER</a>. </p>
+                <p> Einen anschaulichen Überblick über die in PortalU 
+                    recherchierbaren Serviceangebote finden Sie <a href="http://www.portalu.de/funktionen?action=doService" target="_new">HIER</a>. </p>
             </content>
         </section>
     </chapter>
@@ -1655,8 +1655,8 @@
                    Suchergebnisse können gruppiert anzeigen: entweder nach 
                    Bundesebene und Bundesländern oder nach den einzelnen 
                    Informationsanbietern.</p>
-                <p>Einen anschaulichen Überblick über Umweltmesswerte in InGrid 
-                   finden Sie <a href="https://dev.informationgrid.eu/funktionen?action=doMeasures" target="_new">HIER</a>.</p>
+                <p>Einen anschaulichen Überblick über Umweltmesswerte in PortalU 
+                   finden Sie <a href="http://www.portalu.de/funktionen?action=doMeasures" target="_new">HIER</a>.</p>
             </content>
         </section>
         
@@ -1678,7 +1678,7 @@
                    Bei Bedarf können Sie zudem einen Zeitraum oder ein Datum 
                    eingeben, um die Suche weiter einzuschränken. </p>
                 <p>Einen anschaulichen Überblick der Recherchemöglichkeiten in
-                   der Umweltchronik finden Sie <a href="https://dev.informationgrid.eu/funktionen?action=doChronicle" target="_new">HIER</a>.</p>
+                   der Umweltchronik finden Sie <a href="http://www.portalu.de/funktionen?action=doChronicle" target="_new">HIER</a>.</p>
             </content>
         </section>
     </chapter>
@@ -1687,7 +1687,7 @@
         <section help-key="maps-1">
             <header>Karten</header>
              <content>
-                <p>Mit dem InGrid-Kartenviewer können Sie sich eine Vielzahl 
+                <p>Mit dem PortalU-Kartenviewer können Sie sich eine Vielzahl 
                    umweltrelevanter Karten ansehen. Auf der linken Seite des 
                    Kartenviewers können <b>Dienste</b> hinzugeladen und die 
                    <b>Legende</b> zu den aktivierten Kartenebenen eingesehen 
@@ -1707,7 +1707,7 @@
              
                 <p>Die Karten gehen auf Kartendienste (Web Map Services) 
                    unterschiedlicher Anbieter auf Bundes- und Länderebene 
-                   zurück. Alle in InGrid eingebundenen Kartendienste sind 
+                   zurück. Alle in PortalU eingebundenen Kartendienste sind 
                    in der linken Spalte des Kartenviewers unter dem Reiter 
                    <b>Dienste</b> zu finden. Die Dienste sind zum einen nach 
                    <b>Anbietern</b> und zum anderen nach <b>Themen</b> 
@@ -1736,10 +1736,10 @@
                 <p> <b>Die Rubrik Anbieter</b></p>
 
                 <p>In der Rubrik Anbieter, die sich im unteren Bereich 
-                       der linken Spalte befindet, sind alle in InGrid 
+                       der linken Spalte befindet, sind alle in PortalU 
                        eingebundenen Kartendienste von Bund und Ländern zu 
                        finden. Um die Kartendienste eines Bundeslandes in den 
-                       InGrid-Kartenviewer zu laden, gehen Sie bitte wie folgt 
+                       PortalU-Kartenviewer zu laden, gehen Sie bitte wie folgt 
                        vor:</p>
                 <ul>
                     <li>
@@ -1763,7 +1763,7 @@
                 <p> <b>Die Rubrik Themen</b></p>
 
                     <p>In der Rubrik Themen, die sich im unteren Bereich der 
-                       linken Spalte befindet,  sind die in InGrid 
+                       linken Spalte befindet,  sind die in PortalU 
                        eingebundenen Kartendienste nach Umweltthemen sortiert. 
                        Um einen Kartendienst aus der Rubrik Themen in den 
                        Kartenviewer zu laden, gehen Sie bitte wie folgt vor: </p>
@@ -1817,7 +1817,7 @@
 
                 <p><b>Kartendienste aus angeschlossenen Katalogen</b></p>
 
-                <p>Zu den in InGrid recherchierbaren Katalogen zählen unter 
+                <p>Zu den in PortalU recherchierbaren Katalogen zählen unter 
                    anderen auch in Umweltdatenkataloge von Bund und Ländern 
                    (UDKs). In den UDKs kann für Metadaten in der Objektklasse 
                    <b>Geoinformation/Karte</b> ein Link auf einen Kartendienst 
@@ -1828,8 +1828,8 @@
                <p><b>Externen Dienst hinzufügen</b></p>
         
                <p>Als externe Dienste werden Kartendienste bezeichnet, die 
-                  derzeit nicht in InGrid eingebunden sind. Wenn Sie einen 
-                  solchen Dienst in den InGrid-Kartenviewer laden möchten 
+                  derzeit nicht in PortalU eingebunden sind. Wenn Sie einen 
+                  solchen Dienst in den PortalU-Kartenviewer laden möchten 
                   gehen Sie bitte wie folgt vor:</p>
                 <ul>
                     <li>Klicken Sie auf die Schaltfläche <b>Aktive Dienste</b> 
@@ -1950,14 +1950,14 @@
                    </p>
                    <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> <b>Laden</b>:
                       Zuvor gespeicherte Karten werden geladen. Schaltfläche ist 
-                      nur dann aktiv, wenn Sie als InGrid-Nutzer eingeloggt 
+                      nur dann aktiv, wenn Sie als PortalU-Nutzer eingeloggt 
                       sind (www.portalu.de/personalisierungsoptionen) und 
                       bereits eine Karte gespeichert haben. Näheres 
                       siehe unter <a href="?hkey=maps-7">Karte speichern</a>. 
                    </p>
                    <p><img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> <b>Speichern</b>:
                       Kartenausschnitt wird gespeichert. Schaltfläche ist nur 
-                      dann aktiv, wenn Sie als InGrid-Nutzer eingeloggt sind 
+                      dann aktiv, wenn Sie als PortalU-Nutzer eingeloggt sind 
                       (www.portalu.de/personalisierungsoptionen). Näheres siehe 
                       unter <a href="?hkey=maps-7">Karte speichern</a>. 
                    </p>
@@ -1992,9 +1992,9 @@
                   wie folgt vor:</p>
                 <ul>
                     <li>Melden Sie mit Ihrer Benutzerkennung unter 
-                        <b>Mein InGrid</b> (oben rechts in der Kopfleiste). 
+                        <b>Mein PortalU</b> (oben rechts in der Kopfleiste). 
                         Wenn Sie noch keinen Zugang haben, klicken Sie unter 
-                        <b>Mein InGrid</b> auf <b>Neuer Benutzer</b> und legen 
+                        <b>Mein PortalU</b> auf <b>Neuer Benutzer</b> und legen 
                         Sie ein neues Profil an.  
                     </li>
                     <li>Wechseln Sie dann wieder in den Bereich <b>Karten</b>.
@@ -2087,22 +2087,22 @@
         </section>
     </chapter>
 	<chapter>
-        <header>InGrid informiert</header>
+        <header>PortalU informiert</header>
         <section help-key="ingrid-inform-1">
-            <header>InGrid informiert</header>
+            <header>PortalU informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
-                    Betreiber von InGrid, die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle InGrid</a>,
+                    Betreiber von PortalU, die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle PortalU</a>,
                     bereitgestellt werden.</p>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>Mein InGrid</header>
+        <header>Mein PortalU</header>
         <section help-key="myingrid-1">
-            <header>Mein InGrid</header>
+            <header>Mein PortalU</header>
             <content>
-                <p>InGrid bietet Ihnen die Möglichkeit, eigene Einstellungen
+                <p>PortalU bietet Ihnen die Möglichkeit, eigene Einstellungen
                     dauerhaft vorzunehmen. Sie können darüber:</p>
                 <ul>
                     <li>die Startseite an Ihre Bedürfnisse anpassen</li>
@@ -2133,7 +2133,7 @@
                     <p>Alle Angaben werden strikt vertraulich behandelt und
                         dienen nur der anonymisierten statistischen Auswertung.</p>
                     <p>Wenn Sie immer die neusten Nachrichten aus dem Umfeld von
-                        InGrid erhalten möchten, so bestellen Sie den <a href="?hkey=ingrid-newsletter-1">InGrid-Newsletter</a>, indem Sie am
+                        PortalU erhalten möchten, so bestellen Sie den <a href="?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>, indem Sie am
                         Ende des Formulars <b>Ich möchte den Newsletter
                         abonnieren.</b> ankreuzen (Hinweis: Sie können ihn
                         jederzeit wieder abbestellen).</p>
@@ -2181,7 +2181,7 @@
                 <p>Alle Angaben werden strikt vertraulich behandelt und dienen
                     nur der anonymisierten statistischen Auswertung.</p>
                 <p>Wenn Sie immer die neuesten Nachrichten aus dem Umfeld von
-                    InGrid erhalten möchten, können Sie den <a href="?hkey=ingrid-newsletter-1">InGrid-Newsletter</a>
+                    PortalU erhalten möchten, können Sie den <a href="?hkey=ingrid-newsletter-1">PortalU-Newsletter</a>
                     abbonieren. Kreuzen Sie einfach am Ende des Formulars
                     <b>Ich möchte den Newsletter abonnieren</b>
                     an (Hinweis: Sie können ihn jederzeit wieder abbestellen).</p>
@@ -2207,7 +2207,7 @@
                         (schmalere Spalte auf der rechten Seite) der Startseite vorgehen.</p>
                         
                  <p>Die Einstellungen werden nicht permanent als Voreinstellung gespeichert. 
-                 Nach dem Klick auf LOGOUT kommen Sie zurück auf die Startseite von InGrid 
+                 Nach dem Klick auf LOGOUT kommen Sie zurück auf die Startseite von PortalU 
                  mit seinen Standard-Voreinstellungen. </p>
                         
                 </content>
@@ -2231,7 +2231,7 @@
             <section help-key="myingrid-11">
                 <header>Filterung nach Typen und Datenquellen</header>
                 <content>
-                    <p>An InGrid sind neben den üblichen Web-Servern auch
+                    <p>An PortalU sind neben den üblichen Web-Servern auch
                         Metadaten- und Fachdatensysteme angeschlossen. Sie
                         können nun wählen, ob Sie in allen Datenquellen suchen
                         wollen (Standard) oder ob Sie ihre Suche gezielt auf
@@ -2272,7 +2272,7 @@
                     <p>
                         <b>Ähnliche Begriffe in die Suche einbeziehen</b>
                     </p>
-                    <p>InGrid führt nicht nur die bei Suchmaschinen übliche
+                    <p>PortalU führt nicht nur die bei Suchmaschinen übliche
                         Indizierung  der Seiten durch, sondern lässt den
                         Seiteninhalt auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                         Umweltbundesamtes analysieren. Als Ergebnis dieser
@@ -2295,7 +2295,7 @@
             <header>Logout</header>
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich
-                    und kommen zurück auf die Startseite von InGrid mit seinen Standard-Voreinstellungen.</p>
+                    und kommen zurück auf die Startseite von PortalU mit seinen Standard-Voreinstellungen.</p>
             </content>
         </section>
     </chapter>
@@ -2305,7 +2305,7 @@
             <header>Newsletter</header>
             <content>
                 <p>Sie können sich über Neuigkeiten und aktuelle Entwicklungen
-                    im Umfeld von InGrid über unseren Newsletter per e-mail
+                    im Umfeld von PortalU über unseren Newsletter per e-mail
                     informieren lassen. Der Bezug des Newsletters ist kostenlos.
                     Ihre E-Mail Adresse wird nicht weitergegeben oder zu anderen
                     Zwecken als zur Zustellung des Newsletters genutzt.</p>
@@ -2317,16 +2317,16 @@
                 <p>Füllen Sie bitte die Felder des Anmeldeformulars aus und
                     senden sie die Angaben ab. Alle mit Sternchen *
                     gekennzeichneten Felder sind Pflichtfelder.</p>
-                <p>Ab der nächsten Ausgabe erhalten Sie dann den InGrid-Newsletter.</p>
+                <p>Ab der nächsten Ausgabe erhalten Sie dann den PortalU-Newsletter.</p>
             </content>
         </section>
         <section help-key="ingrid-newsletter-3">
             <header>Newsletter abbestellen</header>
             <content>
-                <p>Wenn Sie kein Interesse mehr an dem InGrid-Newsletter haben,
+                <p>Wenn Sie kein Interesse mehr an dem PortalU-Newsletter haben,
                     tragen Sie bitte Ihre Email-Adresse in das Formular ein und
                     senden es ab. Sie werden dann keine weiteren
-                    InGrid-Newsletter mehr erhalten.</p>
+                    PortalU-Newsletter mehr erhalten.</p>
             </content>
         </section>
     </chapter>
