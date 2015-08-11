@@ -72,20 +72,19 @@
         <section help-key="about-1">
             <header>Konzept und Aufgabe von InGrid</header>
             <content>
-                <p>InGrid, das Umweltportal Deutschland, bietet einen zentralen
-                    Zugriff auf mehrere Millionen umweltrelevante Webseiten sowie über  
+                <p>InGrid bietet einen zentralen
+                    Zugriff auf mehrere Millionen Webseiten sowie über  
                     eine halbe Millionen 
-                    Katalog- und Datenbankeinträge von öffentlichen Institutionen 
-                    und Organisationen in Bund, Ländern und Kommunen. Mit einem Mix aus
-                    aktuellen Nachrichten, Umweltmesswerten, Hintergrundinformationen,
-                    und historischen Umweltereignissen richtet sich InGrid
+                    Katalog- und Datenbankeinträge von Partnern und Informationsanbietern. Mit einem Mix aus
+                    aktuellen Nachrichten, Messwerten, Hintergrundinformationen,
+                    und historischen Ereignissen richtet sich InGrid
                     sowohl an interessierte Laien als auch an ein versiertes 
                     Fachpublikum. Das Informationsangebot wird kontinuierlich ausgebaut 
-                    mit dem Ziel, langfristig die Umweltinformationen möglichst aller
-                    behördlicher Anbieter unter einem Dach recherchierbar zu machen.</p>
+                    mit dem Ziel, langfristig die Informationen möglichst aller
+                    Informationsanbieter unter einem Dach recherchierbar zu machen.</p>
                 <p>Als rechtliche Grundlage spielt die europäische 
                     Umweltinformationsrichtlinie (2003/4/EG) und die europäische
-                    INSPIRE-Richtlinie (2007/2/EG) für InGrid eine zentrale Rolle. 
+                    INSPIRE-Richtlinie (2007/2/EG) für PortalU eine zentrale Rolle. 
                     Diese Richtlinien
                     setzen neue Maßstäbe für die öffentliche Verbreitung
                     behördlicher Umweltinformationen bzw. den Aufbau der dafür
@@ -94,10 +93,10 @@
                     als zuvor dazu verpflichtet, umweltrelevante Daten und
                     Informationen in einer klar verständlichen und einfach
                     zugänglichen Form bereitzustellen.</p>
-                  <p> InGrid und die eigens
+                  <p>Die eigens
                     zum Aufbau des Portals entwickelte Software
                     InGrid wurden speziell als
-                    Werkzeuge zur Unterstützung der Behörden bei der Umsetzung
+                    Werkzeuge zur Unterstützung bei der Umsetzung
                     der Richtlinien konzipiert. </p>
             </content>
         </section>
@@ -105,13 +104,13 @@
             <header>Die Betreiber von InGrid</header>
             <content>
                 <p> Als Nachfolgeprojekt des Umweltdatenkatalogs (UDK) und des German 
-                    Environmental Information Network (gein) wurde InGrid  
+                    Environmental Information Network (gein) wurde PortalU  
                     im Rahmen der Bund-Länder Verwaltungsvereinbarung UDK/GEIN
                     entwickelt. An dieser Verwaltungsvereinbarung sind
                     unter anderem das Umweltbundesministerium und die
-                    Umweltministerien aller 16 Länder beteiligt. InGrid wird
+                    Umweltministerien aller 16 Länder beteiligt. PortalU wird
                     technisch und inhaltlich von der Koordinierungsstelle
-                    InGrid im Niedersächsischen Ministerium für Umwelt, Energie und 
+                    PortalU im Niedersächsischen Ministerium für Umwelt, Energie und 
                     Klimaschutz in Hannover betreut.</p>
             </content>
         </section>
@@ -124,30 +123,29 @@
                     (<a href="?hkey=ext-search-1">erweiterten</a>) Suchfunktionen.
                 </p>
                 <p>
-                    <b>Themen:</b> Schneller Einstieg in einzelne Umweltthemen von
-                    A wie Abfall bis W wie Wasser.</p>  
+                    <b>Themen:</b> Schneller Einstieg in einzelne Themen von
+                    A bis Z.</p>  
                 <p>
                     <b>Messwerte</b>: InGrid informiert Sie rund um die Uhr
-                    über den aktuellen Zustand Ihrer Umwelt.</p>                                         <p>
-                    <b>Service</b>: Nachrichten und Informationen über 
-                    Veranstaltungen und aktuelle Publikationen im Umweltbereich.</p>
-                <p>                   
-                    <b>Kataloge</b>: Recherchieren Sie in den Umwelt- und  
-                    Geodatenkatalogen von Bund und Ländern.</p>                    
+                    über den aktuellen Zustand</p>
                 <p>
-                    <b>Karten:</b> Aufruf von digitalen Umweltkarten und 
+                    <b>Service</b>: Nachrichten und Informationen über 
+                    Veranstaltungen und aktuelle Publikationen.</p>
+                <p>                   
+                    <b>Kataloge</b>: Recherchieren Sie in den Daten- und 
+                    Geodatenkatalogen von Partnern und Informationsanbietern.</p>                    
+                <p>
+                    <b>Karten:</b> Aufruf von digitalen Karten und 
                     Angabe und Raumbezüge bei der Suche.</p>
                 <p>
-                    <b>Chronik</b>: Wann trat das Kyoto-Protokoll in
-                    Kraft? Eine Antwort auf diese und viele andere Fragen zu
-                    historischen Umweltereignissen finden Sie in der Umweltchronik.</p>
+                    <b>Chronik</b>: Historische Umweltereignissen finden Sie in der Chronik.</p>
             </content>
         </section>
         <section help-key="about-4">
             <header>Informationsquellen in InGrid</header>
             <content>
                 <p>InGrid ist ein komfortables und benutzerfreundliches Tor zu
-                    Umweltinformationen im Internet. Im Gegensatz zu den meisten
+                    Informationen im Internet. Im Gegensatz zu den meisten
                     Portalen und Suchmaschinen erfasst InGrid nicht nur
                     Webseiten, Textdokumente und andere Internetformate, sondern
                     kann auch auf Datenbanken und Fachinformationssysteme
@@ -158,7 +156,8 @@
         <section help-key="about-5">
             <header>Wie werde ich Informationsanbieter in InGrid?</header>
             <content>
-                <p>In InGrid können alle behördlichen Umweltinformationen im Sinne des                    Umweltinformationsgesetzes und alle umweltrelevanten Webkataloge im  
+                <p>In PortalU können alle behördlichen Umweltinformationen im Sinne des
+                   Umweltinformationsgesetzes und alle umweltrelevanten Webkataloge im  
                    Sinne von INSPIRE aufgenommen werden. Zum Anbieterkreis gehören: 
                 </p>
                 <ul>
@@ -170,21 +169,22 @@
                     <li>Forschungseinrichtungen</li>
                 </ul>
                 <p>Bietet ihre Behörde oder Institution umweltrelevante behördliche 
-                   Informationen im Internet an, die noch nicht in InGrid zu finden 
-                   sind? Dann sprechen Sie uns an: <a href="mailto:info@informationgrid.eu" title="Schreiben Sie uns - Email Programm startet automatisch">Koordinierungsstelle InGrid</a></p>
+                   Informationen im Internet an, die noch nicht in PortalU zu finden 
+                   sind? Dann sprechen Sie uns an: <a href="mailto:kst@portalu.de" title="Schreiben Sie uns - Email Programm startet automatisch">Koordinierungsstelle PortalU</a>
+                </p>
             </content>
         </section>
         <section help-key="about-6">
-            <header>InGrid – Die Software hinter InGrid</header>
+            <header>InGrid – Die Software hinter dem InGrid-Portal</header>
             <content>
-                <p>Zur Umsetzung von InGrid wurde das Softwarepaket InGrid
+                <p>Zur Umsetzung von InGrid-Portal wurde das Softwarepaket InGrid
                     entwickelt. InGrid setzt auf eine modulare und flexible
                     Systemarchitektur auf der Basis lizenzfreier OpenSource
                     Produkte. Dadurch wird es möglich, die technische Struktur
-                    des Umweltinformationsnetzes an sich wandelnde
+                    des Informationsnetzes an sich wandelnde
                     organisatorische Vorgaben anzupassen. So können mit InGrid
-                    bei Bedarf regionale Umweltportale, z.B. für einzelne
-                    Länder oder Kommunen, mit geringem technischem Aufwand
+                    bei Bedarf regionale Portale, z.B. für einzelne
+                    Partner oder Informationsanbieter, mit geringem technischem Aufwand
                     erstellt werden. Dank OpenSource ist die Nachnutzung der
                     Software für die Partner der VwV UDK/GEIN lizenzfrei und 
                     kostenlos.</p>
@@ -198,8 +198,8 @@
             <content>
                 <p>Suchen ist ganz einfach. Geben Sie in das Suchfeld einen oder 
                    mehrere Begriffe ein und klicken Sie anschließend auf die 
-                   Schaltfläche <b>InGrid Suche</b>. InGrid durchsucht alle
-                   eingebundenen Umweltinformationen: Webseiten, Kataloge und
+                   Schaltfläche <b>InGrid Suche</b>. InGrid-Portal durchsucht alle
+                   eingebundenen Informationen: Webseiten, Kataloge und
                    Datenbanken, die für Ihre Suche von Interesse sind. Die 
                    Ergebnisse Ihrer Suchanfrage werden in einer 
                    <a href="?hkey=search-results-1">Suchergebnisseite</a> 
@@ -212,15 +212,15 @@
                 <p>Oberhalb des Suchfeldes können Sie über entsprechende 
                    Schalflächen zwischen folgenden Suchräumen wählen. </p>
                 <ul>
-                    <li><b>Umweltinformationen</b>: behördliche Informationen 
-                        zur Umwelt</li>
+                    <li><b>Informationen</b>: Informationen 
+                        von Anbietern</li>
                     <li><b>Rechtsvorschriften</b>: Informationen zu 
                         rechtsrelevanten Themen</li>
-                    <li><b>Forschungsprojekte</b>: Projekte zur Umweltforschung</li>
+                    <li><b>Forschungsprojekte</b>: Projekte zur Forschung</li>
                     <li><b>Adressen</b>: Zuständigkeiten</li>
                 </ul>
                 <p>In der Grundeinstellung erfolgt die Suche im Suchraum 
-                   <b>Umweltinformationen</b>.</p>
+                   <b>Informationen</b>.</p>
             </content>
         </section>
 
@@ -236,7 +236,7 @@
                     </li>
                     <li>
                         <a href="?hkey=ext-search-1">Erweiterte Suche
-                            nach Umweltinformationen</a>
+                            nach Informationen</a>
                     </li>
                     <li>
                         <a href="?hkey=ext-search-law-1">Erweiterte
@@ -259,7 +259,7 @@
         <section help-key="search-4">
             <header>Weitere Themen</header>
             <content>                    
-                <p>Weitere Themen, die für die Suche von Bedeutung sind:</p>         
+                <p>Weitere Themen, die für die Suche von Bedeutung sind:</p>
                   <ul>
                     <li>
                         <a href="?hkey=search-history-1">Suchhistorie</a>
@@ -276,16 +276,16 @@
                     </li>
                 </ul>
                 <p>Einen kurzen Überblick über die Freitextsuche finden 
-                   Sie <a href="https://dev.informationgrid.eu/funktionen?action=doSearch/" target="_new">HIER</a>. </p>
+                   Sie <a href="/funktionen?action=doSearch/" target="_new">HIER</a>. </p>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>Erweiterte Suche nach Umweltinformationen</header>
+        <header>Erweiterte Suche nach Informationen</header>
         <section help-key="ext-search-1">
-            <header>Erweiterte Suche nach Umweltinformationen</header>
+            <header>Erweiterte Suche nach Informationen</header>
             <content>
-                <p>Sie können Ihre Suche nach Umweltinformationen über die
+                <p>Sie können Ihre Suche nach Informationen über die
                     <b>Erweiterte Suche</b> verfeinern.</p>
                 <p>Prinzipiell setzt sich ein Suchausdruck aus einzelnen
                     Suchbegriffen zusammen, die  mit Operatoren (UND, ODER,
@@ -456,7 +456,7 @@
                 <p>Die räumliche Einschränkung der InGrid-Suche ist sowohl über 
                    Ortsnamen als auch die Auswahl eines Kartenausschnitts 
                    möglich. Wenn Sie über ein Suchrechteck einen entsprechenden 
-                   Kartenausschnitt definiert haben, wird in dem über InGrid 
+                   Kartenausschnitt definiert haben, wird in dem über PortalU 
                    verfügbaren Informationsangebot gezielt nach räumlichen 
                    Begriffen (wie z.B. Städten oder Gebirgen) gesucht. </p>
                 </content>
@@ -604,8 +604,7 @@
             <header>Suche nach Zeitbezügen</header>
             <content>
                 <p>Wenn Sie nach einem Datum suchen, das mit einem
-                    umweltrelevanten Ereignis verbunden ist (z.B. die
-                    Klimaschutzkonferenz in Kyoto), können Sie über die Angabe
+                    Ereignis verbunden ist, können Sie über die Angabe
                     eines Suchbegriffes nach dem Ereignis in der Chronik
                     suchen. Sie bekommen alle Ereignisse angezeigt, die über die
                     Suche gefunden wurden. Über die Kopier- und Einfüge-Funktion
@@ -613,20 +612,20 @@
                     von Ihnen gewünschte Feld des Zeitbezugs einfügen.</p>
             </content>
             <section help-key="ext-search-time-5">
-                <header>Die Umweltchronik</header>
+                <header>Die Chronik</header>
                 <content>
-                    <p>Die Umweltchronik ist eine Komponenten des <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
+                    <p>Die Chronik ist eine Komponenten des <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                         Umweltbundesamtes.SNS stellt eine gemeinsame 
                         Terminologie für den Bereich Umwelt auf deutsch und 
-                        englisch zur Verfügung. Die Umweltchronik umfasst über 
-                        2.000 aktuelle und historische Ereignisse, die unsere 
-                        Umwelt wesentlich beeinflusst haben. </p>
+                        englisch zur Verfügung. Die Chronik umfasst über 
+                        2.000 aktuelle und historische Ereignisse, die uns 
+                        wesentlich beeinflusst haben. </p>
                 </content>
             </section>
             <section help-key="ext-search-time-6">
-                <header>Umweltereignisse</header>
+                <header>Ereignisse</header>
                 <content>
-                    <p>Es werden alle Umweltereignisse, die über die Suche in
+                    <p>Es werden alle Ereignisse, die über die Suche in
                         der Chronik gefunden wurden, mit Titel und Datum
                         angezeigt. Durch einen Klick auf das Ereignis oder das
                         davor stehende Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="*"></img> wird die Beschreibung des Ereignisses
@@ -642,7 +641,7 @@
             <header>Inhalte</header>
             <content>
                 <p>An dieser Stelle können Sie festlegen, ob Sie alle
-                    Umweltinformationen (auch Themen und Service)
+                    Informationen (auch Themen und Service)
                     durchsuchen wollen oder ob Sie nur in den Themen oder
                     nur in den Service-Seiten (Pressemitteilungen, Publikationen
                     und Veranstaltungen) suchen möchten.</p>
@@ -677,7 +676,7 @@
         <section help-key="ext-search-area-3">
             <header>Bund/Länder</header>
             <content>
-                <p>Die Datenangebote in InGrid stammen von Behörden und
+                <p>Die Datenangebote in PortalU stammen von Behörden und
                     behördennahen Organisationen aus Bund und Ländern der
                     Bundesrepublik Deutschland. Sie können für Ihre Suche das
                     Angebot auf den Bund oder einzelne Länder einschränken. Eine
@@ -744,14 +743,14 @@
                     Suchausdruck) oder nach Aktualität (die neusten Seiten
                     stehen vorne) sortiert anzeigen lassen.</p>
                 <p><b>Gruppierung</b> bedeutet, dass die
-                    Suchergebnisse nach Bund/Ländern, Informationsanbietern
+                    Suchergebnisse nach Partnern, Informationsanbietern
                     oder Domänen zusammengefasst angezeigt werden.</p>
             </content>
         </section>
         <section help-key="search-settings-3">
             <header>Ähnliche Begriffe in die Suche einbeziehen</header>
             <content>
-                <p>InGrid führt nicht nur die bei Suchmaschinen übliche
+                <p>PortalU führt nicht nur die bei Suchmaschinen übliche
                     Indexierung der Seiten durch, sondern lässt den Seiteninhalt
                     auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes analysieren. Als Ergebnis dieser Analyse
@@ -775,7 +774,7 @@
                         <b>Einstellungen für die Suche</b> (<a href="?hkey=search-settings-1">Suche/Einstellungen</a>)
                         die Option <b>Ähnliche Begriffe in die Suche
                         einbeziehen</b> an. Sie können diese
-                        Einstellungen auch dauerhaft vornehmen (siehe <a href="?hkey=myingrid-1">Mein InGrid</a>).</li>
+                        Einstellungen auch dauerhaft vornehmen (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>).</li>
                     <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
                         ähnliche Begriffe, indem Sie die Funktionalität
                         <a href="?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>
@@ -818,7 +817,7 @@
                 <p>InGrid erlaubt komplexe Suchanfragen  durchzuführen, die
                     über die Möglichkeiten der erweiterten Suche hinausgehen
                     (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
-                    usw.). Lesen Sie hierzu in der Hilfe zu InGrid den
+                    usw.). Lesen Sie hierzu in der Hilfe zu PortalU den
                     Abschnitt <a href="?hkey=search-expert-1">Expertensuche</a>
                     und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
             </content>
@@ -960,7 +959,7 @@
       <section help-key="ext-search-law-3">
             <header>Sucbbereich  - Bund /Länder</header>
             <content>
-                  <p>Die Datenangebote in InGrid stammen von Behörden und behördennahen Organisationen 
+                  <p>Die Datenangebote in PortalU stammen von Behörden und behördennahen Organisationen 
                      aus Bund und Ländern der Bundesrepublik Deutschland. Sie können für Ihre Suche das 
                      Angebot auf den Bund oder einzelne Länder einschränken. Eine Mehrfachauswahl ist dabei möglich.</p>
                 <p>Der Bund und auch die meisten Länder haben mehrere Datenanbieter. Diese werden angezeigt,
@@ -1105,7 +1104,7 @@
         <section help-key="search-expert-8">
             <header>Sonderzeichen</header>
             <content>
-                <p>Die folgenden Zeichen haben im Suchausdruck von InGrid eine
+                <p>Die folgenden Zeichen haben im Suchausdruck von PortalU eine
                     spezielle Bedeutung (z.B. in Form von Operatoren):</p>
                 <p>+ - &amp;&amp; || ! ( ) { } [ ] ^ &quot; ~ * ? : \</p>
                 <p>Sollen sie dennoch als einfache Zeichen innerhalb eines
@@ -1122,7 +1121,7 @@
                     Dazu wird die Syntax ‚fileformat:Wert’ verwandt.</p>
                 <p>Beispiel: ‚fileformat:pdf’ (Es wird nur nach
                     PDF-Dokumenten gesucht.)</p>
-                <p>Folgende Werte stehen für das Feld 'fileformat' in InGrid zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'fileformat' in PortalU zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1166,7 +1165,7 @@
                 <p>Bei der Suche nach einem Datentyp ist der Feldname 'Datatype'.</p>
                 <p>Beispiel: ‚datatype:law’ (Es wird nach
                     Dokumenten gesucht, die unter Rechtsvorschriften eingeordnet sind.)</p>
-                <p>Folgende Werte stehen für das Feld 'datatype' in InGrid zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'datatype' in PortalU zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1227,7 +1226,7 @@
             </content>
         </section>
         <section help-key="search-expert-10">
-            <header>Suche nach einem speziellen Umweltthema</header>
+            <header>Suche nach einem speziellen Thema</header>
             <content>
                 <p>Die Suche kann nach den Seiten eingegrenzt werden, die einem oder mehreren Umwelthemen 
                 zugeordnet sind. Dazu wird die Syntax ‚topic:Wert’ verwandt.</p>
@@ -1244,7 +1243,7 @@
             <header>Suche nach speziellen Messwertseiten</header>
             <content>
                 <p>Die Suche kann nach den Seiten eingegrenzt werden, die Messungen in speziellen
-                Umweltbereichen zugeordnet sind. Dazu wird die Syntax ‚topic:Wert’ verwandt.</p>
+                Bereichen zugeordnet sind. Dazu wird die Syntax ‚topic:Wert’ verwandt.</p>
                 <p>Beispiel: ‚datatype:measure topic:air’ (Es wird nach
                     Dokumenten gesucht, die Messungen zum Thema 'Luft' zum Inhalt haben.)</p>
                 <p> Folgende Werte sind möglich:</p>
@@ -1271,7 +1270,7 @@
                 Syntax ‚topic:Wert’ verwandt.</p>
                 <p>Beispiel: ‚datatype:metadata metaclass:map’ (Es wird nach
                     Metadaten der Klasse Geo-Information/Karte gesucht.)</p>
-                <p>Folgende Werte stehen für das Feld 'metaclass' in InGrid zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'metaclass' in PortalU zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1455,17 +1454,17 @@
                 
                 <p>Webseiten: Suchergebnis aus umweltrelevanten Webauftritten</p>
                 <p>Metadaten: Suchergebnis in den angeschlossenen 
-                   Umweltdatenkatalogen </p>
+                   Datenkatalogen </p>
                 <p>Karten: Suchergebnis aus der Klasse 
                    <b>Geoinformation/Karte</b> der angeschlossenen 
-                   Umweltdatenkataloge und den im InGrid-Kartenviewer 
+                   Datenkataloge und den im InGrid-Kartenviewer 
                    verzeichneten Karten. Alle Karten können Sie sich im 
                    <a href="?hkey=maps-1">InGrid-Kartenviewer</a> ansehen.</p>
                 <p>Rechtsvorschriften: Suchergebnis aus Informationsangeboten zu 
                    rechtsrelevanten Themen</p>                   
                 <p>Forschungsprojekte: Suchergebnis aus Informationsangeboten zu 
-                   Projekten in der Umweltforschung</p> 
-                <p>Themen: Suchergebnis der InGrid-Rubrik 
+                   Projekten in der Forschung</p> 
+                <p>Themen: Suchergebnis der PortalU-Rubrik 
                    <a href="?hkey=search-topics-1">Themen</a> </p>                  
                 <p>Messwerte: Suchergebnis der InGrid-Rubrik 
                    <a href="?hkey=search-measure-1">Messwerte</a></p>             
@@ -1486,10 +1485,9 @@
                 
                 <p>In der Kategorie <b>Anbieter</b> können Sie Ihr Suchergebnis 
                    auf einen oder mehrere Informationsanbieter einschränken. Die 
-                   Anbieter sind hierbei nach dem Bund und Ländern sortiert, so 
-                   dass eine regionale Abgrenzung (z.B. auf ein Bundesland) 
-                   möglich ist. </p>                                         
-                                      
+                   Anbieter sind hierbei nach Partnern sortiert, so 
+                   dass eine Abgrenzung möglich ist. </p>
+                
                 <p><b>Raumbezug</b> </p>
                 
                 <p>In der Kategorie <b>Raumbezug</b> können Sie Ihr Suchergebnis 
@@ -1498,7 +1496,7 @@
                    Ortsnamen einschränken. </p>
                 <p>Wenn Sie auf die Schaltfläche <b>Auf Karte festlegen</b> 
                    klicken, können Sie ein Suchrechteck auf einer 
-                   Deutschlandkarte aufziehen. Klicken Sie auf die Schaltfläche 
+                   Karte aufziehen. Klicken Sie auf die Schaltfläche 
                    <b>Auswahl anwenden</b>, um die räumliche Einschränkung für 
                    die Suchergebnisse zu übernehmen. 
                    <a href="?hkey=ext-search-spatial-6">Mehr dazu</a></p>                               <p>Sie können Ihr Suchergebnis aber auch über Ortsnamen und 
@@ -1552,19 +1550,19 @@
     <chapter>
         <header>Kataloge</header>
         <section help-key="search-catalog-1">
-            <header>Umweltmetadaten</header>
+            <header>Metadaten</header>
             <content>
-                <p>Recherchieren Sie in den Umwelt- und Geodatenkatalogen von 
-                   Bund und Ländern. Die Kataloge sind hierarchisch aufgebaut 
+                <p>Recherchieren Sie in den Daten- und Geodatenkatalogen von 
+                   Partnern und Informationsanbietern. Die Kataloge sind hierarchisch aufgebaut 
                    und können mit einem Klick auf das Ordnersymbol aufgeklappt 
-                   werden. Die Umweltinformationen werden in den Katalogen als 
+                   werden. Die Informationen werden in den Katalogen als 
                    <b>Objekte</b> bezeichnet. Als zusätzliche Information sind 
-                   im Bereich <b>Adressen</b> die jeweiligen behördlichen 
+                   im Bereich <b>Adressen</b> die jeweiligen 
                    Ansprechpartner aufgeführt. Durch einen Klick auf ein Objekt
                    oder eine Adresse werden detaillierte Informationen 
                    angezeigt. </p>
                 <p> Einen anschaulichen Überblick über Recherchemöglichkeiten 
-                    in den Umweltdatenkatalogen finden Sie <a href="https://dev.informationgrid.eu/funktionen?action=doCatalog" target="_new">HIER</a>.
+                    in den Datenkatalogen finden Sie <a href="/funktionen?action=doCatalog" target="_new">HIER</a>.
                 </p>
             </content>
         </section>
@@ -1596,26 +1594,26 @@
     <chapter>
         <header>Themen</header>
         <section help-key="search-topics-1">
-            <header>Umweltthemen</header>
+            <header>Themen</header>
             <content>
-                <p>Wenn Sie einen schnellen Überblick über ein Umweltthema 
+                <p>Wenn Sie einen schnellen Überblick über ein Thema 
                    gewinnen möchten, recherchieren Sie am besten im Bereich 
                    <b>Themen</b>. Hier finden Sie ausgewählte 
-                   Umweltinformationen, die Ihnen einen schnellen Einstieg in 
-                   21 Umweltthemen bieten. Zudem können Sie Ihre Suche auf den 
-                   Bund oder ein einzelnen Bundesland beschränken. </p>
-                <p>Wenn Sie mehrere Themen oder Bundesländer gleichzeitig 
+                   Informationen, die Ihnen einen schnellen Einstieg in 
+                   21 Themen bieten. Zudem können Sie Ihre Suche auf 
+                   einzelnen Partnern beschränken. </p>
+                <p>Wenn Sie mehrere Themen oder Partnern gleichzeitig 
                    auswählen möchten, halten Sie die Strg- bzw. Ctrl-Taste 
                    gedrückt und klicken nacheinander auf die gewünschten Themen 
-                   oder Bundesländer. Die Suchergebnisse können gruppiert 
-                   anzeigen: entweder nach Bundesebene und Bundesländern oder 
+                   oder Partnern. Die Suchergebnisse können gruppiert 
+                   anzeigen: entweder nach einzelnen Partnern oder 
                    nach den einzelnen Informationsanbietern.</p>
-                <p>Tipp: Wenn Sie auf der InGrid-Startseite auf ein Umweltthema 
+                <p>Tipp: Wenn Sie auf der InGrid-Startseite auf ein Thema 
                    klicken (z.B. Wasser), wird Ihnen die entsprechende 
                    Ergebnisliste direkt angezeigt.</p>              
 
-                <p> Einen anschaulichen Überblick über die Umweltthemen 
-                    finden Sie <a href="https://dev.informationgrid.eu/funktionen?action=doEnvironment" target="_new">HIER</a>. </p>
+                <p> Einen anschaulichen Überblick über die Themen 
+                    finden Sie <a href="/funktionen?action=doEnvironment" target="_new">HIER</a>. </p>
                   </content>
         </section>
     </chapter>
@@ -1625,38 +1623,38 @@
             <header>Pressemitteilungen, Publikationen und Veranstaltungen</header>
             <content>
                 <p>Im Bereich <b>Service</b> können Sie nach Pressemitteilungen,
-                  Publikationen und Veranstaltungen des Bundes und der Länder zum
-                  Thema Umwelt recherchieren. Die einzelnen Rubriken können 
+                  Publikationen und Veranstaltungen der Partner 
+                  recherchieren. Die einzelnen Rubriken können 
                   hierbei gemeinsam oder einzelnen durchsucht werden. Zudem 
-                  können Sie Ihre Suche auf den Bund oder ein einzelnen 
-                  Bundesland beschränken. Wenn Sie mehrere Bundesländer 
+                  können Sie Ihre Suche auf ein einzelnen 
+                  Partner beschränken. Wenn Sie mehrere Partnern 
                   gleichzeitig auswählen möchten, halten Sie die Strg- bzw. 
                   Ctrl-Taste gedrückt und klicken Sie dann nacheinander die 
-                  gewünschten Bundesländer an. Die Suchergebnisse können 
-                  gruppiert anzeigen: entweder nach Bundesebene und 
-                  Bundesländern oder nach den einzelnen Informationsanbietern.
+                  gewünschten Partnern an. Die Suchergebnisse können 
+                  gruppiert anzeigen: entweder nach Partner
+                  oder nach den einzelnen Informationsanbietern.
                 </p>
                 <p> Einen anschaulichen Überblick über die in InGrid 
-                    recherchierbaren Serviceangebote finden Sie <a href="https://dev.informationgrid.eu/funktionen?action=doService" target="_new">HIER</a>. </p>
+                    recherchierbaren Serviceangebote finden Sie <a href="/funktionen?action=doService" target="_new">HIER</a>. </p>
             </content>
         </section>
     </chapter>
     <chapter>
         <header>Messwerte</header>
         <section help-key="search-measure-1">
-            <header>Umweltmesswerte</header>
+            <header>Messwerte</header>
             <content>
-                <p>Im Bereich <b>Messwerte</b> können Sie nach Umweltmesswerten des 
-                   Bundes und der Länder suchen. Der Themenschwerpunkt liegt 
+                <p>Im Bereich <b>Messwerte</b> können Sie nach Messwerten der
+                   Partnern suchen. Der Themenschwerpunkt liegt 
                    hierbei auf den Bereichen Strahlung, Luft und Wasser. Wenn 
-                   Sie mehrere Bundesländer gleichzeitig auswählen möchten, 
+                   Sie mehrere Partnern gleichzeitig auswählen möchten, 
                    halten Sie die Strg- bzw. Ctrl-Taste gedrückt und klicken Sie 
-                   dann nacheinander die gewünschten Bundesländer an. Die 
+                   dann nacheinander die gewünschten Partnern an. Die 
                    Suchergebnisse können gruppiert anzeigen: entweder nach 
-                   Bundesebene und Bundesländern oder nach den einzelnen 
+                   Partnern oder nach den einzelnen 
                    Informationsanbietern.</p>
-                <p>Einen anschaulichen Überblick über Umweltmesswerte in InGrid 
-                   finden Sie <a href="https://dev.informationgrid.eu/funktionen?action=doMeasures" target="_new">HIER</a>.</p>
+                <p>Einen anschaulichen Überblick über Messwerte in InGrid 
+                   finden Sie <a href="/funktionen?action=doMeasures" target="_new">HIER</a>.</p>
             </content>
         </section>
         
@@ -1664,13 +1662,13 @@
     <chapter>
         <header>Chronik</header>
         <section help-key="search-chronicle-1">
-            <header>Umweltchronik</header>
+            <header>Chronik</header>
             <content>
-                <p>Die <b>Umweltchronik</b> ist eine Sammlung aktueller und 
-                   historischer Ereignisse, die unsere Umweltsituation 
+                <p>Die <b>Chronik</b> ist eine Sammlung aktueller und 
+                   historischer Ereignisse, die unsere Situation 
                    wesentlich beeinflusst haben. Neben den Eckdaten liefert 
                    die Chronik eine kurze Beschreibung der Ereignisse. Die 
-                   Umweltchronik wird über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
+                   Chronik wird über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes zur Verfügung gestellt.</p>
                 <p>Die Recherche in der Chronik ist ganz einfach. Wählen Sie 
                    einen oder mehrere Ereignistypen aus, geben einen Suchbegriff 
@@ -1678,7 +1676,7 @@
                    Bei Bedarf können Sie zudem einen Zeitraum oder ein Datum 
                    eingeben, um die Suche weiter einzuschränken. </p>
                 <p>Einen anschaulichen Überblick der Recherchemöglichkeiten in
-                   der Umweltchronik finden Sie <a href="https://dev.informationgrid.eu/funktionen?action=doChronicle" target="_new">HIER</a>.</p>
+                   der Chronik finden Sie <a href="/funktionen?action=doChronicle" target="_new">HIER</a>.</p>
             </content>
         </section>
     </chapter>
@@ -1688,7 +1686,7 @@
             <header>Karten</header>
              <content>
                 <p>Mit dem InGrid-Kartenviewer können Sie sich eine Vielzahl 
-                   umweltrelevanter Karten ansehen. Auf der linken Seite des 
+                   Karten ansehen. Auf der linken Seite des 
                    Kartenviewers können <b>Dienste</b> hinzugeladen und die 
                    <b>Legende</b> zu den aktivierten Kartenebenen eingesehen 
                    werden. Dieser Bereich lässt sich bei Bedarf durch die 
@@ -1706,8 +1704,8 @@
             <content>
              
                 <p>Die Karten gehen auf Kartendienste (Web Map Services) 
-                   unterschiedlicher Anbieter auf Bundes- und Länderebene 
-                   zurück. Alle in InGrid eingebundenen Kartendienste sind 
+                   unterschiedlicher Anbieter und Partnern.
+                   Alle in InGrid eingebundenen Kartendienste sind 
                    in der linken Spalte des Kartenviewers unter dem Reiter 
                    <b>Dienste</b> zu finden. Die Dienste sind zum einen nach 
                    <b>Anbietern</b> und zum anderen nach <b>Themen</b> 
@@ -1737,8 +1735,8 @@
 
                 <p>In der Rubrik Anbieter, die sich im unteren Bereich 
                        der linken Spalte befindet, sind alle in InGrid 
-                       eingebundenen Kartendienste von Bund und Ländern zu 
-                       finden. Um die Kartendienste eines Bundeslandes in den 
+                       eingebundenen Kartendienste von Partnern zu 
+                       finden. Um die Kartendienste eines Partners in den 
                        InGrid-Kartenviewer zu laden, gehen Sie bitte wie folgt 
                        vor:</p>
                 <ul>
@@ -1746,7 +1744,7 @@
                         Klicken Sie auf die Schaltfläche <b>Anbieter</b> (unten links)
                     </li>
                     <li>
-                        Klicken Sie auf das Kreuz vor einem Bundesland
+                        Klicken Sie auf das Kreuz vor einem Partner
                     </li>
                     <li>
                         Klicken Sie nun auf einen Kartendienst
@@ -1763,8 +1761,8 @@
                 <p> <b>Die Rubrik Themen</b></p>
 
                     <p>In der Rubrik Themen, die sich im unteren Bereich der 
-                       linken Spalte befindet,  sind die in InGrid 
-                       eingebundenen Kartendienste nach Umweltthemen sortiert. 
+                       linken Spalte befindet,  sind die in PortalU 
+                       eingebundenen Kartendienste nach Themen sortiert. 
                        Um einen Kartendienst aus der Rubrik Themen in den 
                        Kartenviewer zu laden, gehen Sie bitte wie folgt vor: </p>
                 <ul>
@@ -1817,9 +1815,7 @@
 
                 <p><b>Kartendienste aus angeschlossenen Katalogen</b></p>
 
-                <p>Zu den in InGrid recherchierbaren Katalogen zählen unter 
-                   anderen auch in Umweltdatenkataloge von Bund und Ländern 
-                   (UDKs). In den UDKs kann für Metadaten in der Objektklasse 
+                <p>In den in InGrid recherchierbaren Katalogen kann für Metadaten in der Objektklasse 
                    <b>Geoinformation/Karte</b> ein Link auf einen Kartendienst 
                    gesetzt werden, der dann durch einen Klick auf die 
                    Schaltfläche <b>Zeige in Karte</b> im Kartenviewer 
@@ -1951,14 +1947,14 @@
                    <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> <b>Laden</b>:
                       Zuvor gespeicherte Karten werden geladen. Schaltfläche ist 
                       nur dann aktiv, wenn Sie als InGrid-Nutzer eingeloggt 
-                      sind (www.portalu.de/personalisierungsoptionen) und 
+                      sind (<a href="/personalisierungsoptionen" target="_new">Personalisierungsoptionen</a>) und 
                       bereits eine Karte gespeichert haben. Näheres 
                       siehe unter <a href="?hkey=maps-7">Karte speichern</a>. 
                    </p>
                    <p><img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> <b>Speichern</b>:
                       Kartenausschnitt wird gespeichert. Schaltfläche ist nur 
                       dann aktiv, wenn Sie als InGrid-Nutzer eingeloggt sind 
-                      (www.portalu.de/personalisierungsoptionen). Näheres siehe 
+                      (<a href="/personalisierungsoptionen" target="_new">Personalisierungsoptionen</a>). Näheres siehe 
                       unter <a href="?hkey=maps-7">Karte speichern</a>. 
                    </p>
                    <p><img border="0" width="24" height="26" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> <b>Karte als WMC speichern</b>:
@@ -2070,8 +2066,7 @@
             <header>Aktuelles</header>
             <content>
                 <p>Unter <b>Aktuelles</b> werden aktuelle
-                    Meldungen zum Thema <b>Umwelt</b> aus Bundes-
-                     und Landesbehörden gelistet. Die aktuellste Meldung steht
+                    Meldungen von Informationsanbieter gelistet. Die aktuellste Meldung steht
                     dabei immer oben. Es wird jeweils nur der Titel und eine
                     Kurzbeschreibung der Meldung angezeigt. Durch einen Klick
                     auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
@@ -2081,8 +2076,8 @@
                     <b>Weitere Meldungen</b> klicken.</p>
                 <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
                     sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
-                    auf den Original-Servern der jeweiligen Bundes- oder
-                    Landesbehörde finden. Klicken Sie hierzu auf <a href="?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
+                    auf den Original-Servern der jeweiligen Informationsanbieter
+                    finden. Klicken Sie hierzu auf <a href="?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
             </content>
         </section>
     </chapter>
@@ -2092,7 +2087,7 @@
             <header>InGrid informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
-                    Betreiber von InGrid, die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle InGrid</a>,
+                    Betreiber von PortalU, die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle PortalU</a>,
                     bereitgestellt werden.</p>
             </content>
         </section>
@@ -2213,12 +2208,11 @@
                 </content>
             </section>
             <section help-key="myingrid-10">
-                <header>Filterung nach Bund/Länder oder Informationsanbieter</header>
+                <header>Filterung nach Partner oder Informationsanbieter</header>
                 <content>
                     <p>In diesem Bereich können Sie einstellen, ob sich die für
-                        Sie angezeigten Informationen nur auf den Bund und/oder
-                        einzelne Länder (z.B. Bund und Hessen) oder auf einzelne
-                        Informationsanbieter (z.B. Umweltbundesamt) einschränken sollen.</p>
+                        Sie angezeigten Informationen nur auf den Partner oder auf einzelne
+                        Informationsanbieter einschränken sollen.</p>
                     <p>Die Einstellungen beziehen sich auf die Suche, sowie auf
                         die Bereiche Themenseiten, Messwerte und Service.</p>
                     <p>Die Einstellungen werden permanent als Voreinstellungen
