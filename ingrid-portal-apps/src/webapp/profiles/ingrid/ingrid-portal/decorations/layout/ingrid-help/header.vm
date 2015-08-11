@@ -7,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
-  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "InGrid")</title>
+  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "InGrid-Portal")</title>
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   
   <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
@@ -56,7 +56,7 @@
 <div id="popupheader" class="${langCode}motiv_hilfe">
 	<!-- LOGO -->
   <div id="logo">
-    <img src="#GetPageResource('images/logo.gif')" width="188" height="81" alt="Logo InGrid" />
+    <img src="#GetPageResource('images/ingrid_logo_icn.png')" alt="Logo InGrid-Portal" />
   </div>
 </div>
 <div class="greenSeparator"></div>

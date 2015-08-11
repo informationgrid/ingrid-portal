@@ -25,13 +25,13 @@
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
-        <header>Help for PortalU</header>
+        <header>Help for InGrid-Portal</header>
         <section help-key="index">
-            <header>Help for PortalU</header>
+            <header>Help for InGrid-Portal</header>
             <content>
                 <ul>
                     <li>
-                        <a href="?hkey=about-1">About PortalU</a>
+                        <a href="?hkey=about-1">About InGrid-Portal</a>
                     </li>
                     <li>
                         <a href="?hkey=search-1">Search</a>
@@ -55,10 +55,10 @@
                         <a href="?hkey=rss-news-1">News</a>
                     </li>
                     <li>
-                        <a href="?hkey=ingrid-inform-1">PortalU informs</a>
+                        <a href="?hkey=ingrid-inform-1">InGrid-Portal info</a>
                     </li>
                     <li>
-                        <a href="?hkey=myingrid-1">My PortalU</a>
+                        <a href="?hkey=myingrid-1">My InGrid-Portal</a>
                     </li>
                     <li>
                         <a href="?hkey=ingrid-newsletter-1">Newsletter</a>
@@ -68,32 +68,32 @@
         </section>
     </chapter>
     <chapter>
-        <header>About PortalU</header>
+        <header>About InGrid-Portal</header>
         <section help-key="about-1">
-            <header>Concept and tasking of PortalU</header>
+            <header>Concept and tasking of InGrid-Portal</header>
             <content>
-                <p>PortalU, Germany’s environment portal, provides a central 
+                <p>InGrid-Portal, Germany’s environment portal, provides a central 
 				point to access several million intent pages as well as over 500.000 
 				catalogue- and data base entries of public institutions and 
 				organisations in the Federation, the Federal States and the 
 				Local Authorities. With a mix of current news, environmental 
 				readings (e.g. current ozone concentration in the air, water quality), 
-				background information and historic environment events, PortalU is aimed 
+				background information and historic environment events, InGrid-Portal is aimed 
 				at interested lay persons as well as the specialist audience. 
 				The information provided is being continually added to with the aim of 
 				capturing all official providers of environment information over the long term.</p>
-                <p>The EU environment guideline of 2003 and the planned INSPIRE guideline played an important role in the conception of PortalU. These guidelines lay down new standards for the public dissemination of official environment information respectively the construction of the information technology infrastructures necessary for this. In future, signficantly more authorities and organisations than heretofore will be obliged to provide data relevant to the environment in a clear understandable and easily accessible form</p>
-                <p> PortalU and the software especially developed for the construction of the portal �?InGrid<sup>®</sup>�? were especially conceived as tools to support the authorities in implementing the guidelines. </p>
+                <p>The EU environment guideline of 2003 and the planned INSPIRE guideline played an important role in the conception of InGrid-Portal. These guidelines lay down new standards for the public dissemination of official environment information respectively the construction of the information technology infrastructures necessary for this. In future, signficantly more authorities and organisations than heretofore will be obliged to provide data relevant to the environment in a clear understandable and easily accessible form</p>
+                <p> InGrid and the software especially developed for the construction of the InGrid-Portal were especially conceived as tools to support the authorities in implementing the guidelines. </p>
             </content>
         </section>
         <section help-key="about-2">
-            <header>The PortalU operators</header>
+            <header>The InGrid-Portal operators</header>
             <content>
-                <p> PortalU was developed as a follow-up project of the environment data catalogue (UDK) and of the German Environmental 
+                <p> InGrid-Portal was developed as a follow-up project of the environment data catalogue (UDK) and of the German Environmental 
 				    Information Network (gein) within the framework of the Federal Republic of Germany Federal States administration 
 					agreement (Verwaltungsvereinbarung UDK/GEIN). The Federal Ministry for the Environment, Nature Conservation and 
 					Nuclear Safety (BMU) and the Environment Ministries of 16 German Federal States were signatories to the administration 
-					agreement. PortalU is managed and maintained from a technical and contents point of view by the Coordination Center PortalU 
+					agreement. InGrid-Portal is managed and maintained from a technical and contents point of view by the Coordination Center InGrid-Portal 
 					in the Lower Saxony Ministry for Environment, Energy and Climate Protection in Hanover.</p>
             </content>
         </section>
@@ -101,36 +101,36 @@
             <header>Function overview</header>
             <content>
                 <p>
-                    <b>Search:</b> Central function of the Portal is the PortalU-Search (<a href="?hkey=search-1">Search</a>),
+                    <b>Search:</b> Central function of the Portal is the InGrid-Portal-Search (<a href="?hkey=search-1">Search</a>),
                     with the help of which web pages and data base entries can be searched via a customary full text 
 					search (<a href="?hkey=search-1">Simple Search</a>), but can also be searched using a differentiated specialist 
 					vocabulary  (<a href="?hkey=ext-search-1">Advanced Search</a>). </p>
                 <p>
-                    <b>Topics:</b> The PortalU topic pages provide a topic-based access to selected, particularly interesting information and 
+                    <b>Topics:</b> The InGrid-Portal topic pages provide a topic-based access to selected, particularly interesting information and 
 					data (topic pages).</p>
                 <p>
-                    <b>Data</b>: PortalU keeps you informed around the clock about the current state of your environment (environmental monitoring data).</p>
+                    <b>Data</b>: InGrid-Portal keeps you informed around the clock about the current state of your environment (environmental monitoring data).</p>
 				<p>
 				    <b>Service:</b> Here you can find news and information about events and current publications in the environment field.</p>
                 <p>
                     <b>Catalogues</b>: Here you can investigate in the environmental and geo data catalogues (e.g. Umweltdatenkataloge) from 
 					Federation and Federal States.</p>
 				<p>
-                    <b>Maps</b>: A maps viewer offers the possibility of entering spatial references for the search via interactive maps or else to display digital maps from the search results list directly in PortalU.</p>
+                    <b>Maps</b>: A maps viewer offers the possibility of entering spatial references for the search via interactive maps or else to display digital maps from the search results list directly in InGrid-Portal.</p>
                 <p>
                     <b>Almanac</b>: When did the Kyoto protocol come into effect? You can find an answer to this and many other questions on historical environment events in the environment chronicle (environment almanac)..</p>
             </content>
         </section>
         <section help-key="about-4">
-            <header>Information sources in PortalU</header>
+            <header>Information sources in InGrid-Portal</header>
             <content>
-                <p>PortalU is a convenient and user-friendly portal to environment information in the internet. In contrast to most portals and search engines, PortalU gathers not only web pages, text documents and other internet formats but can also access databases and specialist information systems, even when these are not online. </p>
+                <p>InGrid-Portal is a convenient and user-friendly portal to environment information in the internet. In contrast to most portals and search engines, InGrid-Portal gathers not only web pages, text documents and other internet formats but can also access databases and specialist information systems, even when these are not online. </p>
             </content>
         </section>
         <section help-key="about-5">
-            <header>How to become information provider in PortalU</header>
+            <header>How to become information provider in InGrid-Portal</header>
             <content>
-                <p>In PortalU all German public environmental information refering to the EU environment guideline of 2003 and all 
+                <p>In InGrid-Portal all German public environmental information refering to the EU environment guideline of 2003 and all 
 				   environmental catalogue entries refering to INSPIRE are welcome to be integrated. The following German information 
 				   providers are welcome:
                 <ul>
@@ -141,13 +141,13 @@
 					<li>Public research institutions</li>
                 </ul></p>
 				<p>If your organisation would likewise like to make environmentally relevant information available, please contact 
-				   <a href="mailto:kst@portalu.de/">the Coordination Center PortalU</a>.</p>
+				   <a href="mailto:kst@portalu.de/">the Coordination Center InGrid-Portal</a>.</p>
             </content>
         </section>
         <section help-key="about-6">
-            <header>InGrid – the software behind PortalU</header>
+            <header>InGrid – the software behind InGrid-Portal</header>
             <content>
-                <p>The InGrid<sup>®</sup> software package was developed to realise PortalU. InGrid<sup>®</sup> is positioned on modular and flexible system architecture based on licence-free open source products. This way it becomes possible to adapt the technical structure of the environment information net to changing organisational specifications. Thus, if needed, regional environment portals, e.g. for individual German Federal States or Local Authorities can be created with minimal technical expense. Thanks to Open Source the follow up use of the software is license free and free of cost for partners of the VwV UDK/GEIN.</p>
+                <p>The InGrid software package was developed to realise InGrid-Portal. InGrid is positioned on modular and flexible system architecture based on licence-free open source products. This way it becomes possible to adapt the technical structure of the environment information net to changing organisational specifications. Thus, if needed, regional environment portals, e.g. for individual German Federal States or Local Authorities can be created with minimal technical expense. Thanks to Open Source the follow up use of the software is license free and free of cost for partners of the VwV UDK/GEIN.</p>
             </content>
         </section>
     </chapter>
@@ -266,7 +266,7 @@
         <section help-key="ext-search-subject-3">
             <header>The UMTHES</header>
                 <content>
-                    <p>In PortalU the environmental thesaurus UMTHES from the German Federal environmental agency Umweltbundesamt is used. A thesaurus 
+                    <p>In InGrid-Portal the environmental thesaurus UMTHES from the German Federal environmental agency Umweltbundesamt is used. A thesaurus 
 					   consists, like a dictionary, of specialist terms on a certain subject area. In addition to the correct spelling, a thesaurus 
 					   also contains information whether and how a term can be generalised (superordinate terms), specialised (subordinate terms) or 
 					   expressed in another way (synonyms). Thesauri are used, for example, for indexing keywords and finding documents. </p>
@@ -287,7 +287,7 @@
         <section help-key="ext-search-spacial-1">
             <header>Space</header>
             <content>
-                <p>Via the <a href="#ext-search-spacial-3">Gazetteer</a> [environment] of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau, PortalU analyses for every web page, which is made available by PortalU, the according spatial reference. This spatial reference is used in PortalU whithin the framework of the area search. Therefore, the area search is not, as in most other search engines, a full text search for spatial terms.</p>
+                <p>Via the <a href="#ext-search-spacial-3">Gazetteer</a> [environment] of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau, InGrid-Portal analyses for every web page, which is made available by InGrid-Portal, the according spatial reference. This spatial reference is used in InGrid-Portal whithin the framework of the area search. Therefore, the area search is not, as in most other search engines, a full text search for spatial terms.</p>
 					<p>In the connected databases the area search takes place by browsing the area attributes entered there.</p>
             </content>
         </section>
@@ -319,7 +319,7 @@
         <section help-key="ext-search-spacial-6">
             <header>Restricting by map</header>
             <content>
-                <p>The PortalU search can be restricted spacially not only via terms but also by selecting a map section (bounding box). PortalU uses the Semantical 
+                <p>The InGrid-Portal search can be restricted spacially not only via terms but also by selecting a map section (bounding box). InGrid-Portal uses the Semantical 
 				   Network Service to connect several spatial terms within the coordinates of a defined bounding box (e.g. cities or mountains). These terms can be 
 				   considered within the search query. </p>
             </content>
@@ -353,7 +353,7 @@
             <section help-key="ext-search-spacial-9">
                 <header>Spatial constraints</header>
                 <content>
-                    <p>If you have chosen a map section you can select in which form the area restriction is to be used for the PortalU search. Here the following options are possible:</p>
+                    <p>If you have chosen a map section you can select in which form the area restriction is to be used for the InGrid-Portal search. Here the following options are possible:</p>
                     <ol>
                         <li>The spatial footprint of the result is contained in the search area</li>
                         <li>The spatial footprint of the result intersects the search area</li>
@@ -402,7 +402,7 @@
         <section help-key="ext-search-time-1">
             <header>Time</header>
             <content>
-                <p>PortalU is able to search for the time references of the connected systems. For this, on the one hand, the data are used that the  <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) has analysed from the web pages as time references. On the other hand, the time references in the databases are accessed. </p>
+                <p>InGrid-Portal is able to search for the time references of the connected systems. For this, on the one hand, the data are used that the  <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) has analysed from the web pages as time references. On the other hand, the time references in the databases are accessed. </p>
             </content>
         </section>
         <section help-key="ext-search-time-2">
@@ -453,7 +453,7 @@
         <section help-key="ext-search-area-2">
             <header>Data Sources</header>
             <content>
-                <p>In addition to web servers, metadatasystems and specialist data systems are also connected to PortalU. You can choose whether you want to search in all these systems (standard), or whether you would like to restrict your search in a targeted manner to one or several kinds of data sources.</p>
+                <p>In addition to web servers, metadatasystems and specialist data systems are also connected to InGrid-Portal. You can choose whether you want to search in all these systems (standard), or whether you would like to restrict your search in a targeted manner to one or several kinds of data sources.</p>
                 <p>If you limit your search to metadata then you also have the possibility of selecting the classes of metadata that you would like to search. The following classes are available to you:</p>
                 <ul>
 								
@@ -472,7 +472,7 @@
         <section help-key="ext-search-area-3">
             <header>Federation/Federal States</header>
             <content>
-                <p>The data provided in PortalU come from authorities and those organisations closely associated with authorities in the Federal Republic of Germany and the Federal States. You can limit the information provided for your search to the Federal Republic or individual Federal States. It is also possible to choose several items.</p>
+                <p>The data provided in InGrid-Portal come from authorities and those organisations closely associated with authorities in the Federal Republic of Germany and the Federal States. You can limit the information provided for your search to the Federal Republic or individual Federal States. It is also possible to choose several items.</p>
                 <p>The Federal Republic and also most of the Federal States have several data providers. These are displayed if you click on the plus sign <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="*"></img> Instead of the Federal Republic or a Federal State, individual providers can also be selected. In this case too, a multiple selection is possible.</p>
             </content>
         </section>
@@ -482,8 +482,8 @@
         <section help-key="search-history-1">
             <header>Search History</header>
             <content>
-                <p>PortalU stores a history of your search queries. As well as this history, which is automatically carried for one session, you can also as a logged 
-				   in user (see <a href="?hkey=myingrid-1">myPortalU</a>) save search queries permanently.</p>
+                <p>InGrid-Portal stores a history of your search queries. As well as this history, which is automatically carried for one session, you can also as a logged 
+				   in user (see <a href="?hkey=myingrid-1">myInGrid-Portal</a>) save search queries permanently.</p>
                 <p>You can call up both forms of stored search queries again via the <i>Search History</i> function.</p>
             </content>
         </section>
@@ -518,7 +518,7 @@
         <section help-key="search-settings-3">
             <header>Include similar terms in search</header>
             <content>
-                <p>PortalU not only carries out the usual indexing found in search engines but also has the page contents analysed by the 
+                <p>InGrid-Portal not only carries out the usual indexing found in search engines but also has the page contents analysed by the 
 				   <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a 
 				   result of this analysis specialist terms from the <a href="?hkey=ext-search-subject-4">Environment Thesaurus</a> are assigned to the web pages.</p>
                 <p>If you chose to include the setting <i>Include similar terms in search</i> by putting a cross, the associated similar terms will be taken into account. (Note: In most cases the number of hits will be increased by selecting this setting.)</p>
@@ -533,7 +533,7 @@
                 <p>You have three possibilities for including similar terms in the search:</p>
                 <ul>
                     <li>Automatically: In the settings for the search options form (<a href="?hkey=search-settings-1">Search/Options</a>)
-                        cross the option <i>Include similar terms in search</i>. You can also use these setting on a lasting basis (see <a href="?hkey=myingrid-1">myPortalU</a>).</li>
+                        cross the option <i>Include similar terms in search</i>. You can also use these setting on a lasting basis (see <a href="?hkey=myingrid-1">myInGrid-Portal</a>).</li>
                     <li>Before conducting a search expand your search term with similar terms by using the 
                             <i><a href="?hkey=ext-search-subject-2">Topic/Thesaurus</a></i>
                         functionality of the <i><a href="?hkey=ext-search-1">Advanced Search</a></i>.</li>
@@ -552,13 +552,13 @@
             <header>You are only interested in information about your Federal State?</header>
             <content>
                 <p>You can select your Federal State via the  <i><a href="?hkey=ext-search-area-1">Search-Area</a></i> of the search. Be aware that information at national level could also be of interest to you. You can set national information in the search area as well as a Federal State. </p>
-                <p>You can also have these settings on a lasting basis (see  <a href="?hkey=myingrid-1">myPortalU</a>).</p>
+                <p>You can also have these settings on a lasting basis (see  <a href="?hkey=myingrid-1">myInGrid-Portal</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
             <header>You have a particular search query that you can’t formulate via the advanced search?</header>
             <content>
-                <p>PortalU allows complex search queries to be carried out that go beyond the possibilities of the advanced search (e.g. grouping via bracketing or similarity search etc.). In PortalU’s help read the section <i><a href="?hkey=search-expert-1">Expert Entry</a></i>
+                <p>InGrid-Portal allows complex search queries to be carried out that go beyond the possibilities of the advanced search (e.g. grouping via bracketing or similarity search etc.). In InGrid-Portal’s help read the section <i><a href="?hkey=search-expert-1">Expert Entry</a></i>
                     and put your search term into the search field.</p>
             </content>
         </section>
@@ -652,7 +652,7 @@
       <section help-key="ext-search-law-3">
             <header>Search-Area – Federation/Federal States</header>
             <content>
-                  <p>The data on offer in PortalU stems from the authorities and closely associated organisations in the Federation and the Federal States of the Federal Republic of Germany. You can limit the range to the Federation or individual Federal States. Selecting several options is possible.</p>
+                  <p>The data on offer in InGrid-Portal stems from the authorities and closely associated organisations in the Federation and the Federal States of the Federal Republic of Germany. You can limit the range to the Federation or individual Federal States. Selecting several options is possible.</p>
                 <p>The Federation as well as most Federal States have several data providers. These are displayed if you click on the plus sign. Instead of the Federal Republic or a Land it is also possible to select individual providers. In this case it is also possible to select several providers.</p>
             </content>
         </section>
@@ -666,7 +666,7 @@
         <section help-key="search-save-1">
             <header>Save Query</header>
             <content>
-                <p>After carrying out a search query the users logged in have the possibility of saving the search term used on a long-term basis (see  <a href="?hkey=myingrid-1">myPortalU</a>) die Möglichkeit, den verwendeten Suchausdruck
+                <p>After carrying out a search query the users logged in have the possibility of saving the search term used on a long-term basis (see  <a href="?hkey=myingrid-1">myInGrid-Portal</a>) die Möglichkeit, den verwendeten Suchausdruck
                     dauerhaft zu speichern. This takes place via the <i>Save Query </i>function.</p>
                 <p>Note: The search queries last used are also accessible without saving for the session in progress via <i><a href="?hkey=search-history-1">Search History</a></i>.</p>
             </content>
@@ -747,7 +747,7 @@
         <section help-key="search-expert-8">
             <header>Special symbols</header>
             <content>
-                <p>The following symbols have a special significance in the PortalU search string (e.g. in the form of operators):</p>
+                <p>The following symbols have a special significance in the InGrid-Portal search string (e.g. in the form of operators):</p>
                 <p>+ - &amp;&amp; || ! ( ) { } [ ] ^ &quot; ~ * ? : \</p>
                 <p>SShould you however use them as simple symbols within a search term then they must be marked as such by the symbol
                     \ (Backslash).</p>
@@ -757,9 +757,9 @@
         <section help-key="search-expert-9a">
             <header>Search for special document types</header>
             <content>
-                <p> In PortalU different document types can be searched for. For this the syntax ‚fileformat:value’ is used.</p>
+                <p> In InGrid-Portal different document types can be searched for. For this the syntax ‚fileformat:value’ is used.</p>
                 <p>Example: ‚fileformat:pdf’ (only PDF documents are searched for.)</p>
-                <p>The following values are available for the 'fileformat' field in PortalU:</p>
+                <p>The following values are available for the 'fileformat' field in InGrid-Portal:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -795,11 +795,11 @@
         <section help-key="search-expert-9">
             <header>Search for special datatypes</header>
             <content>
-                <p>The PortalU full text index is organized in different fields. All fields used in PortalU can be searched individually in targeted fashion. For this the syntax
+                <p>The InGrid-Portal full text index is organized in different fields. All fields used in InGrid-Portal can be searched individually in targeted fashion. For this the syntax
                     ‚field name:value’ is used.</p>
 				<p>In searching for a data type the field name is ‚datatype’.</p>
                 <p>Example: ‚datatype:law’ (documents are searched for that are arranged under legislation.)</p>
-                <p>The following values are available for the <i>datatype</i> field in PortalU:</p>
+                <p>The following values are available for the <i>datatype</i> field in InGrid-Portal:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -888,7 +888,7 @@
             <content>
 				<p>In searching for a particular metadata class the syntax  ‚topic:Wert’ is searched for.</p>
                 <p>Example: ‚datatype:metadata metaclass:map’ (metadata of the <i>Geo-Information/Map</i> class are being searched for.)</p>
-                <p>The following values are available for the <i>metaclass</i> field in PortalU:</p>
+                <p>The following values are available for the <i>metaclass</i> field in InGrid-Portal:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -935,7 +935,7 @@
 				<p> The search can be restricted to documents that are associated with a certain spatial reference. The spatial reference can be stated via coordinates or via the area key of the administrative unit.</p>
                 <p>Example: ‚areaid: areaid:11000000’ (The search will be restricted to Berlin as administrative unit.)</p>
                 <p>Example: ‚x1:7.52 y1:50.18 x2:10.17 y2:52.73’ (The search is restricted to a selected rectangle.)</p>
-                <p>The following fields are available in PortalU for the restriction of the spatial reference:</p>
+                <p>The following fields are available in InGrid-Portal for the restriction of the spatial reference:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -974,7 +974,7 @@
             <content>
 				<p> The search can be restricted to documents that are associated with a particular temporal reference.  </p>
                 <p>Example: ‚t1:2006-01-01 t2:2008-12-31’ (The search is restricted to a selected time interval.)</p>
-                <p>The following fields are available for the restriction of the temporal references in PortalU:</p>
+                <p>The following fields are available for the restriction of the temporal references in InGrid-Portal:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1019,12 +1019,12 @@
 				<p><b>Datatypes</b> </p>
                 <p>Websites: environmental web pages</p>
                 <p>Metadata: data sets from all connected environmental data catalogues (Umweltdatenkataloge)  </p>
-                <p>Map: metadata from the class geoinformation/map from all connected environmental data catalogues and map services which are provided within the <a href="?hkey=maps-1">PortalU-map viewer</a>.</p>
+                <p>Map: metadata from the class geoinformation/map from all connected environmental data catalogues and map services which are provided within the <a href="?hkey=maps-1">InGrid-Portal-map viewer</a>.</p>
                 <p>Law: web pages refering to environmental law</p>                   
                 <p>Research Projects: information refering to environmental research projects </p> 
-                <p>Topics: web pages from the PortalU rubric <a href="?hkey=search-topics-1">topics</a>.</p>                  
-                <p>Measure: web pages from the PortalU rubric <a href="?hkey=search-measure-1">data</a></p>             
-                <p>Service: web pages from the PortalU rubric <a href="?hkey=search-service-1">service</a></p>
+                <p>Topics: web pages from the InGrid-Portal rubric <a href="?hkey=search-topics-1">topics</a>.</p>                  
+                <p>Measure: web pages from the InGrid-Portal rubric <a href="?hkey=search-measure-1">data</a></p>             
+                <p>Service: web pages from the InGrid-Portal rubric <a href="?hkey=search-service-1">service</a></p>
                    
 				<p><b>Timeliness</b> </p>
                 
@@ -1078,14 +1078,14 @@
         <section help-key="search-results-3">
             <header>Further data sources</header>
             <content>
-                <p>As well as the meta- and specialist information systems incorporated in the main result list, further environment information systems are also interrogated via PortalU. The interfaces of these systems do not allow any incorporation of the search results into the weighted main results list. The search results are therefore shown in a separate list sorted according to data sources. In doing so the data sources are listed in the order of successful responses logged. </p>
+                <p>As well as the meta- and specialist information systems incorporated in the main result list, further environment information systems are also interrogated via InGrid-Portal. The interfaces of these systems do not allow any incorporation of the search results into the weighted main results list. The search results are therefore shown in a separate list sorted according to data sources. In doing so the data sources are listed in the order of successful responses logged. </p>
                 <p>You will be guided further via the links provided either directly to the individual search results or to a search result list in the source system according to the data source. </p>
             </content>
         </section>
         <section help-key="search-results-4">
             <header>Similar terms</header>
             <content>
-                <p>PortalU offers you the possibility of expanding your search query by similar terms. For this, the search string entered by you will be analysed by the <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau and made available to them.</p>
+                <p>InGrid-Portal offers you the possibility of expanding your search query by similar terms. For this, the search string entered by you will be analysed by the <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau and made available to them.</p>
                 <p>If you click on the plus sign  <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> you will be offered the similar terms for each search entered. You can in turn get these displayed by means of the symbol
                         <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> By putting a cross next to the individual terms and clicking on the <i>Append to Query</i> button, the similar terms will be added to the associated search term each time such that a document will be found if either the search term or the similar term are contained (OR linking).</p>
             </content>
@@ -1111,7 +1111,7 @@
         <section help-key="search-topics-1">
             <header>Environmental Topics</header>
             <content>
-                <p>The information that is provided as <i>Environmental Topics</i> in PortalU are web pages and EDC-metadata objects (Environmental Data Catalogues) which are particularly relevant for a certain topic. You can select the actual topic (such as, for example, water or refuse) of the topic page wished.</p>
+                <p>The information that is provided as <i>Environmental Topics</i> in InGrid-Portal are web pages and EDC-metadata objects (Environmental Data Catalogues) which are particularly relevant for a certain topic. You can select the actual topic (such as, for example, water or refuse) of the topic page wished.</p>
                 <p>If you have arrived at a topic directly from the start page on the environmental topics, the topic chosen is already pre-loaded and only the topic pages on this topic will be shown in the results list. </p>
             </content>
         </section>
@@ -1146,7 +1146,7 @@
             <content>
                 <p>Under <i>Service </i>all the <i>Press Releases</i>, <i>Publications</i> and <i>Events</i> headings of the Federation and the of the Federal States are collected together.</p>
                 <p>From this menu item you reach the corresponding pages of the Federation- and Federal States- authorities.</p>
-                <p>If you klick at the PortalU-startside on a link in the servicebox (e.g. <i>Events</i>), the results for the chosen category (e.g. Events) are displayed directly. Here a change in the category Service takes places.</p>
+                <p>If you klick at the InGrid-Portal-startside on a link in the servicebox (e.g. <i>Events</i>), the results for the chosen category (e.g. Events) are displayed directly. Here a change in the category Service takes places.</p>
             </content>
         </section>
         <section help-key="search-service-2">
@@ -1236,14 +1236,14 @@
         <section help-key="maps-1">
             <header>Maps</header>
             <content>
-                <p>In the PortalU rubric <b>maps</b> you can select diverse web map services (WMS) relevant to the environment. The map services can be combined and viewed in the PortalU map viewer. On the left site you can add services and view the <b>legend</b> of activated map layers. With the button <img border="0" width="15" height="16" src="../decorations/layout/ingrid-help/images/image205.jpg" alt="*"></img> you can collapse the left site and enlarge the map window. Clicking the button <img border="0" width="20" height="20" src="../decorations/layout/ingrid-help/images/image206.jpg" alt="*"></img>, the list of map services and providers will be displayed again.  
+                <p>In the InGrid-Portal rubric <b>maps</b> you can select diverse web map services (WMS) relevant to the environment. The map services can be combined and viewed in the InGrid-Portal map viewer. On the left site you can add services and view the <b>legend</b> of activated map layers. With the button <img border="0" width="15" height="16" src="../decorations/layout/ingrid-help/images/image205.jpg" alt="*"></img> you can collapse the left site and enlarge the map window. Clicking the button <img border="0" width="20" height="20" src="../decorations/layout/ingrid-help/images/image206.jpg" alt="*"></img>, the list of map services and providers will be displayed again.  
                    </p>
             </content>
         </section>
             <section help-key="maps-2">
 				<header>Add Web Map Services </header>
                 <content>
-                    <p>Several WMS from Federation and German Federal State level are already integrated in the PortalU map viewer. These services are listet on the left site (flag services) provider-sorted (flag provider) as well as topic-sorted (flag topics). In order to activate one of these services, please click on a service and press afterwords the <b>Add service button</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>. The single layers of all active services (flag active services) are shown in the map viewer by activating the check box in front of the layer</p>
+                    <p>Several WMS from Federation and German Federal State level are already integrated in the InGrid-Portal map viewer. These services are listet on the left site (flag services) provider-sorted (flag provider) as well as topic-sorted (flag topics). In order to activate one of these services, please click on a service and press afterwords the <b>Add service button</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>. The single layers of all active services (flag active services) are shown in the map viewer by activating the check box in front of the layer</p>
 					<p>You can add a WMS:  </p>
 					<ul>
 						<li>
@@ -1281,7 +1281,7 @@
 				
 					<p> <b>Tab Topics</b></p>
 
-                    <p>Under the <b>flag Topics</b> you will find various map services of the Federation and Federal States sorted according to environment topics, which can be loaded into the PortalU map viewer. To add a map service from the topic list,</p>
+                    <p>Under the <b>flag Topics</b> you will find various map services of the Federation and Federal States sorted according to environment topics, which can be loaded into the InGrid-Portal map viewer. To add a map service from the topic list,</p>
 					<ul>
 						<li>
                         click (left mouse button) the tab <b>Topics</b> 
@@ -1307,7 +1307,7 @@
                    
 					<p><b>Add External Services</b></p>
         
-					<p>External services are services which are not integrated in PortalU. In order to add an external service, please switch to the flag <b>Active services</b> and click on the <b>Add service button</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>, a new window will open. Enter the GetCapabilities URL of the new service and select (by using the check box) whether you want to activate the layer of the service straight away and whether you want to zoom in to the map section of the service directly. Click afterwards the <b>Add service</b> button.</p>
+					<p>External services are services which are not integrated in InGrid-Portal. In order to add an external service, please switch to the flag <b>Active services</b> and click on the <b>Add service button</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>, a new window will open. Enter the GetCapabilities URL of the new service and select (by using the check box) whether you want to activate the layer of the service straight away and whether you want to zoom in to the map section of the service directly. Click afterwards the <b>Add service</b> button.</p>
 							
              </content>
         </section>        
@@ -1377,10 +1377,10 @@
                       Print the current map to pfd. You can set the resolution, scale and rotation of the map and in addition insert a title and comment. 
 					</p>
 					<p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> <b>Load</b>:
-                      Open an existing map (Access to this feature requires a personal account). This menu item is only active when you are logged in with a PortalU account (www.portalu.de/personalisierungsoptionen) and you’ve already saved a map. See <a href="?hkey=maps-7">Save map</a>. 
+                      Open an existing map (Access to this feature requires a personal account). This menu item is only active when you are logged in with a InGrid-Portal account (www.portalu.de/personalisierungsoptionen) and you’ve already saved a map. See <a href="?hkey=maps-7">Save map</a>. 
 					</p>
 					<p><img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> <b>Save</b>:
-                      The visible map section is saved. This menu item is only active when you are logged in with a PortalU account (www.portalu.de/personalisierungsoptionen). See <a href="?hkey=maps-7">Save map</a>. 
+                      The visible map section is saved. This menu item is only active when you are logged in with a InGrid-Portal account (www.portalu.de/personalisierungsoptionen). See <a href="?hkey=maps-7">Save map</a>. 
 					</p>
 					<p><img border="0" width="24" height="26" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> <b>Save map as WMC document</b>:
                       The visible map section is saved as WMC (Web Map Context), an XML based format. 
@@ -1400,7 +1400,7 @@
           <content>
                <p>For saving your individually arranged maps, please do the following:</p>
                 <ul>
-                    <li>Register with your PortalU user ID (above right in the main menu of the screen).  
+                    <li>Register with your InGrid-Portal user ID (above right in the main menu of the screen).  
                     </li>
                     <li>Go to the <b>map</b>.
                     </li>
@@ -1452,20 +1452,20 @@
         </section>
     </chapter>
     <chapter>
-        <header>PortalU informs</header>
+        <header>InGrid-Portal informs</header>
         <section help-key="ingrid-inform-1">
-            <header>PortalU informs</header>
+            <header>InGrid-Portal informs</header>
             <content>
-                <p>In this area you can find reports, which are provided by the operator of PortalU, the <a href="http://www.kst.portalu.de/" target="_new">Coordination Center PortalU</a>.</p>
+                <p>In this area you can find reports, which are provided by the operator of InGrid-Portal, the <a href="http://www.kst.portalu.de/" target="_new">Coordination Center InGrid-Portal</a>.</p>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>My PortalU</header>
+        <header>My InGrid-Portal</header>
         <section help-key="myingrid-1">
-            <header>My PortalU</header>
+            <header>My InGrid-Portal</header>
             <content>
-                <p>PortalU offers you the possibility of putting your own settings in place on lasting basis. Using these you can:</p>
+                <p>InGrid-Portal offers you the possibility of putting your own settings in place on lasting basis. Using these you can:</p>
                 <ul>
                     <li>Adapt the start page to your requirements</li>
                     <li>Personalise the search</li>
@@ -1484,7 +1484,7 @@
                     <p>If you do not yet have a user name and password then click on the <i>New User</i> link. This will take you to the <i>Login </i>form. </p>
                     <p>Please fill out the form. The detail fields with a star* are mandatory and must be filled in. All other details are voluntary.</p>
                     <p>All details are handled in strict confidence and are only used for anonymised statistical evaluation.</p>
-                    <p>If you would always like to receive the latest news from the PortalU arena then order the <a href="?hkey=ingrid-newsletter-1">PortalU Newsletter</a>, by putting a cross against <i>I want to subscribe to the newsletter</i> at the end of the contact form (Note: you can unsubscribe at any time).</p>
+                    <p>If you would always like to receive the latest news from the InGrid-Portal arena then order the <a href="?hkey=ingrid-newsletter-1">InGrid-Portal Newsletter</a>, by putting a cross against <i>I want to subscribe to the newsletter</i> at the end of the contact form (Note: you can unsubscribe at any time).</p>
                 </content>
             </section>
             <section help-key="myingrid-4">
@@ -1501,7 +1501,7 @@
             </section>
         </section>
         <section help-key="myingrid-6">
-            <header>Your personal PortalU start page</header>
+            <header>Your personal InGrid-Portal start page</header>
             <content>
                 <p>This link leads you to your personal start page as set up by you in the personalisation function.</p>
             </content>
@@ -1512,7 +1512,7 @@
                 <p>This link takes you to the form with your details thus far. If your details have changed, this is where you can update with these changes.</p>
                 <p>The data fields with a star * are mandatory and have to be filled in. All other details are voluntary.</p>
                 <p>All details are handled in strict confidence and are only used for anonymised statistical evaluation.</p>
-                <p>If you would always like to receive the latest news from the PortalU arena then order the <a href="?hkey=ingrid-newsletter-1">PortalU Newsletter</a>, by putting a cross against <i>I would like to subscribe to the newsletter</i> at the end of the form (Note: you can unsubscribe at any time).</p>
+                <p>If you would always like to receive the latest news from the InGrid-Portal arena then order the <a href="?hkey=ingrid-newsletter-1">InGrid-Portal Newsletter</a>, by putting a cross against <i>I would like to subscribe to the newsletter</i> at the end of the form (Note: you can unsubscribe at any time).</p>
             </content>
         </section>
         <section help-key="myingrid-8">
@@ -1521,12 +1521,12 @@
                 <p>You can set the following settings according to your wishes.</p>
             </content>
             <section help-key="myingrid-9">
-                <header>Personalisation of the PortalU Main-Page</header>
+                <header>Personalisation of the InGrid-Portal Main-Page</header>
                 <content>
                     <p>In this area you can set which contents are to be displayed in which order on your personal start page. For this you set the contents of lines 1 to 3 in the main column (on the left) of the start page via the dropdown list. If you do not set your contents at all (empty entry in the dropdown list) this is also not displayed.</p>
                     <p>You can follow the same procedure for the margin column (narrower margin on the right side) of the start page.</p>
 						
- 				 <p>The determinations are not saved permanently as presetting. After click on <i>Logout</i> you return to the startpage of PortalU with its own presettings.</p>
+ 				 <p>The determinations are not saved permanently as presetting. After click on <i>Logout</i> you return to the startpage of InGrid-Portal with its own presettings.</p>
 						
                 </content>
             </section>
@@ -1541,7 +1541,7 @@
             <section help-key="myingrid-11">
                 <header>Filter for Types and Data Sources</header>
                 <content>
-                    <p>As well as the usual web servers, metadata and specialist data systems are also connected to PortalU. You can now select whether you want to search in all data sources (standard) or whether you would like to restrict your search in a targeted manner to one or several types of data sources.</p>
+                    <p>As well as the usual web servers, metadata and specialist data systems are also connected to InGrid-Portal. You can now select whether you want to search in all data sources (standard) or whether you would like to restrict your search in a targeted manner to one or several types of data sources.</p>
                     <p>If you limit yourself to metadata then you will continue to have the possibility of selecting the classes of metadata you would like to search. The following classes are available to you:</p>
                     <ul>
 
@@ -1564,7 +1564,7 @@
                     <p>
                         <b>Include similar terms in the search </b>
                     </p>
-                    <p>PortalU not only performs the usual indexing of the pages found on search engines but gets the page contents analysed by the n <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a result of this analysis, appropriate technical terms from the <a href="?hkey=ext-search-subject-4#ext-search-subject-4">Environment-Thesaurus</a>
+                    <p>InGrid-Portal not only performs the usual indexing of the pages found on search engines but gets the page contents analysed by the n <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a result of this analysis, appropriate technical terms from the <a href="?hkey=ext-search-subject-4#ext-search-subject-4">Environment-Thesaurus</a>
                         are assigned to the web pages.</p>
                     <p>If you select the setting <i>Include similar terms in search</i> by putting a cross then these keywords will be taken account of in the search. (Note: one should assume that selecting this setting increases the number of hits.)</p>
                     <p>The settings will be effective on a lasting basis as preset settings for the display of the search result list, but can be overwritten via settings in <i>Search</i> for individual searches. </p>
@@ -1574,7 +1574,7 @@
         <section help-key="myingrid-13">
             <header>Logout</header>
             <content>
-                <p>You leave the personalised area via <i>LOGOUT</i> and return to the start page of PortalU with its standard preset settings.</p>
+                <p>You leave the personalised area via <i>LOGOUT</i> and return to the start page of InGrid-Portal with its standard preset settings.</p>
             </content>
         </section>
     </chapter>
@@ -1583,20 +1583,20 @@
         <section help-key="ingrid-newsletter-1">
             <header>Newsletter</header>
             <content>
-                <p>You can be informed about innovations and current developments in the PortalU arena via our e-mail newsletter. Receiving the newsletter is free of charge. Your e-mail address will not be passed on or used for any other purpose apart from sending the newsletter.</p>
+                <p>You can be informed about innovations and current developments in the InGrid-Portal arena via our e-mail newsletter. Receiving the newsletter is free of charge. Your e-mail address will not be passed on or used for any other purpose apart from sending the newsletter.</p>
             </content>
         </section>
         <section help-key="ingrid-newsletter-2">
             <header>Registration for new readers</header>
             <content>
                 <p>Please fill in the fields of the registraton form and submit the details. All fields marked with a star * are mandatory.</p>
-                <p>You will then receive the PortalU newsletter from the next issue onwards.</p>
+                <p>You will then receive the InGrid-Portal newsletter from the next issue onwards.</p>
             </content>
         </section>
         <section help-key="ingrid-newsletter-3">
             <header>Unsubscribe newsletter</header>
             <content>
-                <p>If you are no longer interested in the PortalU newsletter, then please enter your e-mail address in the form and send. You will then receive no further PortalU newsletters.</p>
+                <p>If you are no longer interested in the InGrid-Portal newsletter, then please enter your e-mail address in the form and send. You will then receive no further InGrid-Portal newsletters.</p>
             </content>
         </section>
     </chapter>

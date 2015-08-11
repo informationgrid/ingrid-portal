@@ -4,9 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
   #if(!$pageTitle || $pageTitle == "")
-	<title>InGrid</title>
+	<title>InGrid-Portal</title>
   #else
-	<title>$pageTitle - InGrid</title>
+	<title>$pageTitle - InGrid-Portal</title>
   #end
   <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Content-style-type" content="text/css" />   
@@ -124,7 +124,7 @@ self.focus();
 <div id="identity" class="${langCode}motiv_suche_detail">
   <!-- LOGO -->
   <div id="logo">
-    <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo InGrid" /></a>
+    <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo.gif" alt="Logo InGrid-Portal" /></a>
   </div>
 </div>
 

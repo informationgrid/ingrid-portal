@@ -16,10 +16,10 @@ UPDATE ingrid_cms SET item_key = 'ingrid.contact.intro.postEmail' WHERE item_key
 
 UPDATE link SET url = 'mailto:info@informationgrid.eu' WHERE url = 'mailto:webmaster@portalu.de';
 
-UPDATE localized_description SET description = 'InGrid Application' WHERE description = 'PortalU Application';
-UPDATE localized_display_name SET display_name = 'InGrid Application' WHERE display_name = 'PortalU Application';
+UPDATE localized_description SET description = 'InGrid-Portal Application' WHERE description = 'PortalU Application';
+UPDATE localized_display_name SET display_name = 'InGrid-Portal Application' WHERE display_name = 'PortalU Application';
 
-UPDATE page SET title = 'About InGrid', short_title = 'About InGrid' WHERE title = 'About PortalU';
+UPDATE page SET title = 'About InGrid-Portal', short_title = 'About InGrid-Portal' WHERE path = '/main-about-partner.psml';
 
 UPDATE portlet_preference_value SET pref_value = 'ingrid.cms.default' WHERE pref_value = 'portalu.cms.default';
 UPDATE portlet_preference_value SET pref_value = 'ingrid.teaser.inform' WHERE pref_value = 'portalu.teaser.inform';

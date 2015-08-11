@@ -1,6 +1,6 @@
 Dear $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
 
-Welcome to InGrid! 
+Welcome to InGrid-Portal! 
 
 An account has been created for you:
 
@@ -10,4 +10,4 @@ Password: $!{map.get("password")}
 
 Best regards,
 
-The InGrid Team.
+The InGrid-Portal Team.

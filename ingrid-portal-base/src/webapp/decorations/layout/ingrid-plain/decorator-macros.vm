@@ -95,7 +95,7 @@
 
   <!-- LOGO -->
   <div id="logo">
-    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><img src="#GetPageResource('images/ingrid_logo_icn.png')" alt="Logo InGrid" /></a>
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><img src="#GetPageResource('images/ingrid_logo_icn.png')" alt="Logo InGrid-Portal" /></a>
   </div>
   
   <!-- SERVICE-NAVIGATION -->

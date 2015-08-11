@@ -25,13 +25,13 @@
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
-        <header>Hilfe zu InGrid</header>
+        <header>Hilfe zu InGrid-Portal</header>
         <section help-key="index">
             <header>Hilfethemen</header>
             <content>
                 <ul>
                     <li>
-                        <a href="?hkey=about-1">Über InGrid</a>
+                        <a href="?hkey=about-1">Über InGrid-Portal</a>
                     </li>
                     <li>
                         <a href="?hkey=search-1">Suche</a>
@@ -55,10 +55,10 @@
                         <a href="?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="?hkey=ingrid-inform-1">InGrid informiert</a>
+                        <a href="?hkey=ingrid-inform-1">InGrid-Portal Info</a>
                     </li>
                     <li>
-                        <a href="?hkey=myingrid-1">Mein InGrid</a>
+                        <a href="?hkey=myingrid-1">Mein InGrid-Portal</a>
                     </li>
                     <li>
                         <a href="?hkey=ingrid-newsletter-1">Newsletter</a>
@@ -68,16 +68,16 @@
         </section>
     </chapter>
     <chapter>
-        <header>Über InGrid</header>
+        <header>Über InGrid-Portal</header>
         <section help-key="about-1">
-            <header>Konzept und Aufgabe von InGrid</header>
+            <header>Konzept und Aufgabe von InGrid-Portal</header>
             <content>
-                <p>InGrid bietet einen zentralen
+                <p>InGrid-Portal bietet einen zentralen
                     Zugriff auf mehrere Millionen Webseiten sowie über  
                     eine halbe Millionen 
                     Katalog- und Datenbankeinträge von Partnern und Informationsanbietern. Mit einem Mix aus
                     aktuellen Nachrichten, Messwerten, Hintergrundinformationen,
-                    und historischen Ereignissen richtet sich InGrid
+                    und historischen Ereignissen richtet sich InGrid-Portal
                     sowohl an interessierte Laien als auch an ein versiertes 
                     Fachpublikum. Das Informationsangebot wird kontinuierlich ausgebaut 
                     mit dem Ziel, langfristig die Informationen möglichst aller
@@ -95,13 +95,13 @@
                     zugänglichen Form bereitzustellen.</p>
                   <p>Die eigens
                     zum Aufbau des Portals entwickelte Software
-                    InGrid wurden speziell als
+                    InGrid-Portal wurden speziell als
                     Werkzeuge zur Unterstützung bei der Umsetzung
                     der Richtlinien konzipiert. </p>
             </content>
         </section>
         <section help-key="about-2">
-            <header>Die Betreiber von InGrid</header>
+            <header>Die Betreiber von InGrid-Portal</header>
             <content>
                 <p> Als Nachfolgeprojekt des Umweltdatenkatalogs (UDK) und des German 
                     Environmental Information Network (gein) wurde PortalU  
@@ -126,7 +126,7 @@
                     <b>Themen:</b> Schneller Einstieg in einzelne Themen von
                     A bis Z.</p>  
                 <p>
-                    <b>Messwerte</b>: InGrid informiert Sie rund um die Uhr
+                    <b>Messwerte</b>: InGrid-Portal informiert Sie rund um die Uhr
                     über den aktuellen Zustand</p>
                 <p>
                     <b>Service</b>: Nachrichten und Informationen über 
@@ -142,11 +142,11 @@
             </content>
         </section>
         <section help-key="about-4">
-            <header>Informationsquellen in InGrid</header>
+            <header>Informationsquellen in InGrid-Portal</header>
             <content>
-                <p>InGrid ist ein komfortables und benutzerfreundliches Tor zu
+                <p>InGrid-Portal ist ein komfortables und benutzerfreundliches Tor zu
                     Informationen im Internet. Im Gegensatz zu den meisten
-                    Portalen und Suchmaschinen erfasst InGrid nicht nur
+                    Portalen und Suchmaschinen erfasst InGrid-Portal nicht nur
                     Webseiten, Textdokumente und andere Internetformate, sondern
                     kann auch auf Datenbanken und Fachinformationssysteme
                     zugreifen, selbst wenn diese nicht online sind. 
@@ -154,7 +154,7 @@
             </content>
         </section>
         <section help-key="about-5">
-            <header>Wie werde ich Informationsanbieter in InGrid?</header>
+            <header>Wie werde ich Informationsanbieter in InGrid-Portal?</header>
             <content>
                 <p>In PortalU können alle behördlichen Umweltinformationen im Sinne des
                    Umweltinformationsgesetzes und alle umweltrelevanten Webkataloge im  
@@ -182,7 +182,7 @@
                     Systemarchitektur auf der Basis lizenzfreier OpenSource
                     Produkte. Dadurch wird es möglich, die technische Struktur
                     des Informationsnetzes an sich wandelnde
-                    organisatorische Vorgaben anzupassen. So können mit InGrid
+                    organisatorische Vorgaben anzupassen. So können mit InGrid-Portal
                     bei Bedarf regionale Portale, z.B. für einzelne
                     Partner oder Informationsanbieter, mit geringem technischem Aufwand
                     erstellt werden. Dank OpenSource ist die Nachnutzung der
@@ -198,7 +198,7 @@
             <content>
                 <p>Suchen ist ganz einfach. Geben Sie in das Suchfeld einen oder 
                    mehrere Begriffe ein und klicken Sie anschließend auf die 
-                   Schaltfläche <b>InGrid Suche</b>. InGrid-Portal durchsucht alle
+                   Schaltfläche <b>InGrid-Portal Suche</b>. InGrid-Portal durchsucht alle
                    eingebundenen Informationen: Webseiten, Kataloge und
                    Datenbanken, die für Ihre Suche von Interesse sind. Die 
                    Ergebnisse Ihrer Suchanfrage werden in einer 
@@ -369,7 +369,7 @@
         <section help-key="ext-search-subject-3">
             <header>Der UMTHES</header>
                 <content>
-                    <p>In InGrid kommt der Umweltthesaurus UMTHES des 
+                    <p>In InGrid-Portal kommt der Umweltthesaurus UMTHES des 
                        Umweltbundesamtes zum Einsatz. Ein Thesaurus ist eine 
                        Sammlung von Schlagworten, die miteinander in Beziehung 
                        gesetzt werden. Zu jedem Schlagwort werden somit 
@@ -453,7 +453,7 @@
         <section help-key="ext-search-spacial-6">
             <header>Auf Karte festlegen</header>
             <content>
-                <p>Die räumliche Einschränkung der InGrid-Suche ist sowohl über 
+                <p>Die räumliche Einschränkung der InGrid-Portal-Suche ist sowohl über 
                    Ortsnamen als auch die Auswahl eines Kartenausschnitts 
                    möglich. Wenn Sie über ein Suchrechteck einen entsprechenden 
                    Kartenausschnitt definiert haben, wird in dem über PortalU 
@@ -506,7 +506,7 @@
                 <content>
                     <p>Wenn Sie einen Kartenausschnitt gewählt haben, können Sie 
                        wählen, in welcher Form die räumliche Einschränkung für 
-                       die InGrid-Suche verwendet werden soll. Folgende 
+                       die InGrid-Portal-Suche verwendet werden soll. Folgende 
                        Optionen stehen rechts unterhalb des Kartenfensters zur
                        Verfügung:</p>
                     <ul>
@@ -569,7 +569,7 @@
         <section help-key="ext-search-time-1">
             <header>Zeit</header>
             <content>
-                <p>InGrid ist in der Lage, nach den Zeitbezügen der
+                <p>InGrid-Portal ist in der Lage, nach den Zeitbezügen der
                     angeschlossenen Systeme zu suchen. Hierzu werden einerseits
                     die Daten genutzt, die der <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes aus den Webseiten als Zeitbezüge
@@ -650,7 +650,7 @@
         <section help-key="ext-search-area-2">
             <header>Datenquellen</header>
             <content>
-                <p>An InGrid sind neben Web-Servern auch Metadaten- und
+                <p>An InGrid-Portal sind neben Web-Servern auch Metadaten- und
                     Fachdatensysteme angeschlossen. Sie können wählen, ob Sie in
                     all diesen Systemen suchen wollen (Standard) oder ob Sie
                     ihre Suche gezielt auf eine oder mehrere Arten von
@@ -694,11 +694,11 @@
         <section help-key="search-history-1">
             <header>Suchhistorie</header>
             <content>
-                <p>InGrid speichert eine Historie Ihrer Suchanfragen. Neben
+                <p>InGrid-Portal speichert eine Historie Ihrer Suchanfragen. Neben
                     dieser Historie, die automatisch für eine Sitzung 
                     vorübergehend gespeichert
                     wird, können Sie als eingeloggter Nutzer 
-                    (siehe <a href="?hkey=myingrid-1">Mein InGrid</a>) auch
+                    (siehe <a href="?hkey=myingrid-1">Mein InGrid-Portal</a>) auch
                     Suchanfragen permanent speichern 
                     (<a href="?hkey=search-save-1">Suche Speichern</a>).</p>
                 <p>Sowohl die vorübergehenden als auch die permanent gespeicherten Suchanfragen können über den Reiter 
@@ -807,14 +807,14 @@
                     könnten. Sie können im Suchbereich neben einem Land auch die
                     Bundesinformationen einstellen.</p>
                 <p>Sie können diese Einstellungen auch dauerhaft vornehmen
-                    (siehe <a href="?hkey=myingrid-1">Mein InGrid</a>).</p>
+                    (siehe <a href="?hkey=myingrid-1">Mein InGrid-Portal</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
             <header>Spezielle Suchanfrage, die man nicht über die
                 erweiterte Suche formulieren kann</header>
             <content>
-                <p>InGrid erlaubt komplexe Suchanfragen  durchzuführen, die
+                <p>InGrid-Portal erlaubt komplexe Suchanfragen  durchzuführen, die
                     über die Möglichkeiten der erweiterten Suche hinausgehen
                     (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
                     usw.). Lesen Sie hierzu in der Hilfe zu PortalU den
@@ -979,7 +979,7 @@
             <content>
                 <p>Nach dem Ausführen einer Suchanfrage haben die eingeloggten
                     Nutzer (siehe <a href="?hkey=myingrid-1">Mein
-                    InGrid</a>) die Möglichkeit, den verwendeten Suchausdruck
+                    InGrid-Portal</a>) die Möglichkeit, den verwendeten Suchausdruck
                     dauerhaft zu speichern. Dies geschieht über die Funktion
                     <b>Suche speichern</b>.</p>
                 <p>Hinweis: Die zuletzt verwendeten Suchanfragen sind auch ohne
@@ -1117,7 +1117,7 @@
         <section help-key="search-expert-9a">
             <header>Suche nach speziellen Dokumenttypen</header>
             <content>
-                <p> In InGrid kann nach verschiedenen Dokumenttypen gesucht werden. 
+                <p> In InGrid-Portal kann nach verschiedenen Dokumenttypen gesucht werden. 
                     Dazu wird die Syntax ‚fileformat:Wert’ verwandt.</p>
                 <p>Beispiel: ‚fileformat:pdf’ (Es wird nur nach
                     PDF-Dokumenten gesucht.)</p>
@@ -1158,8 +1158,8 @@
         <br></br>
             <header>Suche nach speziellen Datentypen</header>
             <content>
-                <p>Der InGrid-Volltextindex gliedert sich in verschiedene
-                    Felder. Alle in InGrid verwendeten Felder lassen sich
+                <p>Der InGrid-Portal-Volltextindex gliedert sich in verschiedene
+                    Felder. Alle in InGrid-Portal verwendeten Felder lassen sich
                     gezielt einzeln durchsuchen. Dazu wird die Syntax
                     ‚Feldname:Wert’ verwandt.</p>
                 <p>Bei der Suche nach einem Datentyp ist der Feldname 'Datatype'.</p>
@@ -1328,7 +1328,7 @@
                 Verwaltungseinheit eingeschränkt.)</p>
                 <p>Beispiel: ‚x1:7.52 y1:50.18 x2:10.17 y2:52.73’ (Die Suche wird auf ein 
                 ausgewähltes Rechteck eingeschränkt.)</p>
-                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in InGrid zur Verfügung:</p>
+                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in InGrid-Portal zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1369,7 +1369,7 @@
                 werden. </p>
                 <p>Beispiel: ‚t1:2006-01-01 t2:2008-12-31’ (Die Suche wird auf ein 
                 ausgewähltes Zeitintervall eingeschränkt.)</p>
-                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in InGrid zur Verfügung:</p>
+                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in InGrid-Portal zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1425,7 +1425,7 @@
                    Datenquelle sowie bei Webseiten die entsprechende URL. Wenn 
                    bei einigem Katalogeintrag eine digitale Karte hinterlegt 
                    ist, können Sie sich über den Link <b>Zeige Karte</b> die 
-                   Karte direkt im <a href="?hkey=maps-1">InGrid-Kartenviewer
+                   Karte direkt im <a href="?hkey=maps-1">InGrid-Portal-Kartenviewer
                    </a> ansehen.
                 </p>
             </content>
@@ -1457,18 +1457,18 @@
                    Datenkatalogen </p>
                 <p>Karten: Suchergebnis aus der Klasse 
                    <b>Geoinformation/Karte</b> der angeschlossenen 
-                   Datenkataloge und den im InGrid-Kartenviewer 
+                   Datenkataloge und den im InGrid-Portal-Kartenviewer 
                    verzeichneten Karten. Alle Karten können Sie sich im 
-                   <a href="?hkey=maps-1">InGrid-Kartenviewer</a> ansehen.</p>
+                   <a href="?hkey=maps-1">InGrid-Portal-Kartenviewer</a> ansehen.</p>
                 <p>Rechtsvorschriften: Suchergebnis aus Informationsangeboten zu 
                    rechtsrelevanten Themen</p>                   
                 <p>Forschungsprojekte: Suchergebnis aus Informationsangeboten zu 
                    Projekten in der Forschung</p> 
                 <p>Themen: Suchergebnis der PortalU-Rubrik 
                    <a href="?hkey=search-topics-1">Themen</a> </p>                  
-                <p>Messwerte: Suchergebnis der InGrid-Rubrik 
+                <p>Messwerte: Suchergebnis der InGrid-Portal-Rubrik 
                    <a href="?hkey=search-measure-1">Messwerte</a></p>             
-                <p>Service: Suchergebnis der InGrid-Rubrik 
+                <p>Service: Suchergebnis der InGrid-Portal-Rubrik 
                    <a href="?hkey=search-service-1">Service</a></p>
                    
                 <p><b>Aktualität</b> </p>
@@ -1516,7 +1516,7 @@
                 <p>Auf der Ergebnisseite werden in der rechten Spalte weitere 
                    <b>Datenquellen</b> angezeigt. Hier werden Suchergebnisse 
                    gelistet, die aus Informationsquellen stammen, die in 
-                   InGrid nicht nach Relevanz gewichtet und sortiert werden 
+                   InGrid-Portal nicht nach Relevanz gewichtet und sortiert werden 
                    können. Die Suchergebnisse dieser Datenquellen werden daher 
                    in einer getrennten Liste nach Datenquellen geordnet 
                    angezeigt. Die Datenquellen werden dabei in der Reihenfolge 
@@ -1529,7 +1529,7 @@
         <section help-key="search-results-4">
             <header>Ähnliche Begriffe</header>
             <content>
-                <p>InGrid bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
+                <p>InGrid-Portal bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
                     eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
@@ -1608,7 +1608,7 @@
                    oder Partnern. Die Suchergebnisse können gruppiert 
                    anzeigen: entweder nach einzelnen Partnern oder 
                    nach den einzelnen Informationsanbietern.</p>
-                <p>Tipp: Wenn Sie auf der InGrid-Startseite auf ein Thema 
+                <p>Tipp: Wenn Sie auf der InGrid-Portal-Startseite auf ein Thema 
                    klicken (z.B. Wasser), wird Ihnen die entsprechende 
                    Ergebnisliste direkt angezeigt.</p>              
 
@@ -1634,7 +1634,7 @@
                   gruppiert anzeigen: entweder nach Partner
                   oder nach den einzelnen Informationsanbietern.
                 </p>
-                <p> Einen anschaulichen Überblick über die in InGrid 
+                <p> Einen anschaulichen Überblick über die in InGrid-Portal 
                     recherchierbaren Serviceangebote finden Sie <a href="/funktionen?action=doService" target="_new">HIER</a>. </p>
             </content>
         </section>
@@ -1653,7 +1653,7 @@
                    Suchergebnisse können gruppiert anzeigen: entweder nach 
                    Partnern oder nach den einzelnen 
                    Informationsanbietern.</p>
-                <p>Einen anschaulichen Überblick über Messwerte in InGrid 
+                <p>Einen anschaulichen Überblick über Messwerte in InGrid-Portal 
                    finden Sie <a href="/funktionen?action=doMeasures" target="_new">HIER</a>.</p>
             </content>
         </section>
@@ -1685,7 +1685,7 @@
         <section help-key="maps-1">
             <header>Karten</header>
              <content>
-                <p>Mit dem InGrid-Kartenviewer können Sie sich eine Vielzahl 
+                <p>Mit dem InGrid-Portal-Kartenviewer können Sie sich eine Vielzahl 
                    Karten ansehen. Auf der linken Seite des 
                    Kartenviewers können <b>Dienste</b> hinzugeladen und die 
                    <b>Legende</b> zu den aktivierten Kartenebenen eingesehen 
@@ -1705,7 +1705,7 @@
              
                 <p>Die Karten gehen auf Kartendienste (Web Map Services) 
                    unterschiedlicher Anbieter und Partnern.
-                   Alle in InGrid eingebundenen Kartendienste sind 
+                   Alle in InGrid-Portal eingebundenen Kartendienste sind 
                    in der linken Spalte des Kartenviewers unter dem Reiter 
                    <b>Dienste</b> zu finden. Die Dienste sind zum einen nach 
                    <b>Anbietern</b> und zum anderen nach <b>Themen</b> 
@@ -1734,10 +1734,10 @@
                 <p> <b>Die Rubrik Anbieter</b></p>
 
                 <p>In der Rubrik Anbieter, die sich im unteren Bereich 
-                       der linken Spalte befindet, sind alle in InGrid 
+                       der linken Spalte befindet, sind alle in InGrid-Portal 
                        eingebundenen Kartendienste von Partnern zu 
                        finden. Um die Kartendienste eines Partners in den 
-                       InGrid-Kartenviewer zu laden, gehen Sie bitte wie folgt 
+                       InGrid-Portal-Kartenviewer zu laden, gehen Sie bitte wie folgt 
                        vor:</p>
                 <ul>
                     <li>
@@ -1815,7 +1815,7 @@
 
                 <p><b>Kartendienste aus angeschlossenen Katalogen</b></p>
 
-                <p>In den in InGrid recherchierbaren Katalogen kann für Metadaten in der Objektklasse 
+                <p>In den in InGrid-Portal recherchierbaren Katalogen kann für Metadaten in der Objektklasse 
                    <b>Geoinformation/Karte</b> ein Link auf einen Kartendienst 
                    gesetzt werden, der dann durch einen Klick auf die 
                    Schaltfläche <b>Zeige in Karte</b> im Kartenviewer 
@@ -1824,8 +1824,8 @@
                <p><b>Externen Dienst hinzufügen</b></p>
         
                <p>Als externe Dienste werden Kartendienste bezeichnet, die 
-                  derzeit nicht in InGrid eingebunden sind. Wenn Sie einen 
-                  solchen Dienst in den InGrid-Kartenviewer laden möchten 
+                  derzeit nicht in InGrid-Portal eingebunden sind. Wenn Sie einen 
+                  solchen Dienst in den InGrid-Portal-Kartenviewer laden möchten 
                   gehen Sie bitte wie folgt vor:</p>
                 <ul>
                     <li>Klicken Sie auf die Schaltfläche <b>Aktive Dienste</b> 
@@ -1946,14 +1946,14 @@
                    </p>
                    <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> <b>Laden</b>:
                       Zuvor gespeicherte Karten werden geladen. Schaltfläche ist 
-                      nur dann aktiv, wenn Sie als InGrid-Nutzer eingeloggt 
+                      nur dann aktiv, wenn Sie als InGrid-Portal-Nutzer eingeloggt 
                       sind (<a href="/personalisierungsoptionen" target="_new">Personalisierungsoptionen</a>) und 
                       bereits eine Karte gespeichert haben. Näheres 
                       siehe unter <a href="?hkey=maps-7">Karte speichern</a>. 
                    </p>
                    <p><img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> <b>Speichern</b>:
                       Kartenausschnitt wird gespeichert. Schaltfläche ist nur 
-                      dann aktiv, wenn Sie als InGrid-Nutzer eingeloggt sind 
+                      dann aktiv, wenn Sie als InGrid-Portal-Nutzer eingeloggt sind 
                       (<a href="/personalisierungsoptionen" target="_new">Personalisierungsoptionen</a>). Näheres siehe 
                       unter <a href="?hkey=maps-7">Karte speichern</a>. 
                    </p>
@@ -1988,9 +1988,9 @@
                   wie folgt vor:</p>
                 <ul>
                     <li>Melden Sie mit Ihrer Benutzerkennung unter 
-                        <b>Mein InGrid</b> (oben rechts in der Kopfleiste). 
+                        <b>Mein InGrid-Portal</b> (oben rechts in der Kopfleiste). 
                         Wenn Sie noch keinen Zugang haben, klicken Sie unter 
-                        <b>Mein InGrid</b> auf <b>Neuer Benutzer</b> und legen 
+                        <b>Mein InGrid-Portal</b> auf <b>Neuer Benutzer</b> und legen 
                         Sie ein neues Profil an.  
                     </li>
                     <li>Wechseln Sie dann wieder in den Bereich <b>Karten</b>.
@@ -2082,9 +2082,9 @@
         </section>
     </chapter>
 	<chapter>
-        <header>InGrid informiert</header>
+        <header>InGrid-Portal Info</header>
         <section help-key="ingrid-inform-1">
-            <header>InGrid informiert</header>
+            <header>InGrid-Portal Info</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
                     Betreiber von PortalU, die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle PortalU</a>,
@@ -2093,11 +2093,11 @@
         </section>
     </chapter>
     <chapter>
-        <header>Mein InGrid</header>
+        <header>Mein InGrid-Portal</header>
         <section help-key="myingrid-1">
-            <header>Mein InGrid</header>
+            <header>Mein InGrid-Portal</header>
             <content>
-                <p>InGrid bietet Ihnen die Möglichkeit, eigene Einstellungen
+                <p>InGrid-Portal bietet Ihnen die Möglichkeit, eigene Einstellungen
                     dauerhaft vorzunehmen. Sie können darüber:</p>
                 <ul>
                     <li>die Startseite an Ihre Bedürfnisse anpassen</li>
@@ -2128,7 +2128,7 @@
                     <p>Alle Angaben werden strikt vertraulich behandelt und
                         dienen nur der anonymisierten statistischen Auswertung.</p>
                     <p>Wenn Sie immer die neusten Nachrichten aus dem Umfeld von
-                        InGrid erhalten möchten, so bestellen Sie den <a href="?hkey=ingrid-newsletter-1">InGrid-Newsletter</a>, indem Sie am
+                        InGrid-Portal erhalten möchten, so bestellen Sie den <a href="?hkey=ingrid-newsletter-1">InGrid-Portal-Newsletter</a>, indem Sie am
                         Ende des Formulars <b>Ich möchte den Newsletter
                         abonnieren.</b> ankreuzen (Hinweis: Sie können ihn
                         jederzeit wieder abbestellen).</p>
@@ -2176,7 +2176,7 @@
                 <p>Alle Angaben werden strikt vertraulich behandelt und dienen
                     nur der anonymisierten statistischen Auswertung.</p>
                 <p>Wenn Sie immer die neuesten Nachrichten aus dem Umfeld von
-                    InGrid erhalten möchten, können Sie den <a href="?hkey=ingrid-newsletter-1">InGrid-Newsletter</a>
+                    InGrid-Portal erhalten möchten, können Sie den <a href="?hkey=ingrid-newsletter-1">InGrid-Portal-Newsletter</a>
                     abbonieren. Kreuzen Sie einfach am Ende des Formulars
                     <b>Ich möchte den Newsletter abonnieren</b>
                     an (Hinweis: Sie können ihn jederzeit wieder abbestellen).</p>
@@ -2202,7 +2202,7 @@
                         (schmalere Spalte auf der rechten Seite) der Startseite vorgehen.</p>
                         
                  <p>Die Einstellungen werden nicht permanent als Voreinstellung gespeichert. 
-                 Nach dem Klick auf LOGOUT kommen Sie zurück auf die Startseite von InGrid 
+                 Nach dem Klick auf LOGOUT kommen Sie zurück auf die Startseite von InGrid-Portal 
                  mit seinen Standard-Voreinstellungen. </p>
                         
                 </content>
@@ -2225,7 +2225,7 @@
             <section help-key="myingrid-11">
                 <header>Filterung nach Typen und Datenquellen</header>
                 <content>
-                    <p>An InGrid sind neben den üblichen Web-Servern auch
+                    <p>An InGrid-Portal sind neben den üblichen Web-Servern auch
                         Metadaten- und Fachdatensysteme angeschlossen. Sie
                         können nun wählen, ob Sie in allen Datenquellen suchen
                         wollen (Standard) oder ob Sie ihre Suche gezielt auf
@@ -2266,7 +2266,7 @@
                     <p>
                         <b>Ähnliche Begriffe in die Suche einbeziehen</b>
                     </p>
-                    <p>InGrid führt nicht nur die bei Suchmaschinen übliche
+                    <p>InGrid-Portal führt nicht nur die bei Suchmaschinen übliche
                         Indizierung  der Seiten durch, sondern lässt den
                         Seiteninhalt auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                         Umweltbundesamtes analysieren. Als Ergebnis dieser
@@ -2289,7 +2289,7 @@
             <header>Logout</header>
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich
-                    und kommen zurück auf die Startseite von InGrid mit seinen Standard-Voreinstellungen.</p>
+                    und kommen zurück auf die Startseite von InGrid-Portal mit seinen Standard-Voreinstellungen.</p>
             </content>
         </section>
     </chapter>
@@ -2299,7 +2299,7 @@
             <header>Newsletter</header>
             <content>
                 <p>Sie können sich über Neuigkeiten und aktuelle Entwicklungen
-                    im Umfeld von InGrid über unseren Newsletter per e-mail
+                    im Umfeld von InGrid-Portal über unseren Newsletter per e-mail
                     informieren lassen. Der Bezug des Newsletters ist kostenlos.
                     Ihre E-Mail Adresse wird nicht weitergegeben oder zu anderen
                     Zwecken als zur Zustellung des Newsletters genutzt.</p>
@@ -2311,16 +2311,16 @@
                 <p>Füllen Sie bitte die Felder des Anmeldeformulars aus und
                     senden sie die Angaben ab. Alle mit Sternchen *
                     gekennzeichneten Felder sind Pflichtfelder.</p>
-                <p>Ab der nächsten Ausgabe erhalten Sie dann den InGrid-Newsletter.</p>
+                <p>Ab der nächsten Ausgabe erhalten Sie dann den InGrid-Portal-Newsletter.</p>
             </content>
         </section>
         <section help-key="ingrid-newsletter-3">
             <header>Newsletter abbestellen</header>
             <content>
-                <p>Wenn Sie kein Interesse mehr an dem InGrid-Newsletter haben,
+                <p>Wenn Sie kein Interesse mehr an dem InGrid-Portal-Newsletter haben,
                     tragen Sie bitte Ihre Email-Adresse in das Formular ein und
                     senden es ab. Sie werden dann keine weiteren
-                    InGrid-Newsletter mehr erhalten.</p>
+                    InGrid-Portal-Newsletter mehr erhalten.</p>
             </content>
         </section>
     </chapter>

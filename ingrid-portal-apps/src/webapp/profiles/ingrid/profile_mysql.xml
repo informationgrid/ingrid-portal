@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
     <name>ingrid</name>
-    <description>Portal-Profile für InGrid</description>
+    <description>Portal-Profile für InGrid-Portal</description>
     <pages>
         <page>
             <name>main-measures.psml</name>
