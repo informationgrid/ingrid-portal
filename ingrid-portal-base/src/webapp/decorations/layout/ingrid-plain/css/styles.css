@@ -810,7 +810,7 @@ div.btn_left { float:left; background-image: url(../images/button_left.png); hei
 div.btn_right { float:left; background-image: url(../images/button_right.png); height: 33px; width: 2px; }
 div.btn_center { float:left; background-image: url("../images/button.png"); background-position: right center; }
 
-.search_query_button { padding: 0px 0px 0px 625px; }
+.search_query_button { padding: 0px 0px 0px 595px; }
 .search_query_textarea { position: absolute;  margin: 1px 0 0; }
 div#logo img { /*height: 81px; width: 188px;*/ }
 
