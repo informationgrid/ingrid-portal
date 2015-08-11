@@ -330,7 +330,12 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	
 				if (newTopic == null) {
 					log.debug("topic id not found. Querying as free term...");
-					newTopic = getSNSTopicForFreeTerm(snsService, oldTopic.getTitle());
+					String title = oldTopic.getTitle();
+					if (title == null) {
+					    newTopics.add( null );
+					    continue;
+					}
+					newTopic = getSNSTopicForFreeTerm(snsService, title);
 				}
 
 			} catch (Exception e) {
@@ -391,6 +396,10 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			}
 
 			log.debug("Find Topic for '" + freeTerm + "'...");
+			if (freeTerm == null) {
+			    foundTopics.add(null);
+			    continue;
+			}
 			SNSTopic newTopic = getSNSTopicForFreeTerm(snsService, freeTerm);
 			foundTopics.add(newTopic);
 
