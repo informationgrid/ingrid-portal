@@ -455,7 +455,7 @@ public class UtilsString {
     /**
      * Strips HTML tags but conserves AND encodes HTML entities.
      * 
-     * "&quot;<b>portalu®</b>&quot;" will result in "&quot;portalu&reg;&quot;"
+     * "&quot;<b>ingrid®</b>&quot;" will result in "&quot;ingrid&reg;&quot;"
      * 
      * @param s
      *            The input String.

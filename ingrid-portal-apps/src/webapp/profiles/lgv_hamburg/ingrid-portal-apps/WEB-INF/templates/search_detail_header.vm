@@ -4,9 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
   #if(!$pageTitle || $pageTitle == "")
-	<title>PortalU</title>
+	<title>InGrid</title>
   #else
-	<title>$pageTitle - PortalU</title>
+	<title>$pageTitle - InGrid</title>
   #end
   <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Content-style-type" content="text/css" />   
@@ -18,7 +18,7 @@
   #end
   #if($udkObjClass)
 	<meta name="igc-objektklasse" content="${udkObjClassName}" />
-	<meta name="igc-icon" content="http://www.portalu.de/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
+	<meta name="igc-icon" content="https://dev.informationgrid.eu/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
   #end
   <meta name="author" content="wemove digital solutions" />
   <meta name="keywords" content="" />
@@ -113,7 +113,7 @@ self.focus();
 	<noscript>
 	  <iframe src="/detect-js.psml" style="display:none"></iframe>
     </noscript>
-<!--  BEGIN: layout/html/portalu/decorator.vm -->
+<!--  BEGIN: layout/html/ingrid/decorator.vm -->
     <div class="layout-tigris">
 
 <!-- IDENTITY AREA -->
@@ -131,7 +131,7 @@ self.focus();
 ###end
   <!-- LOGO -->
   <div id="logo">
-    <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo PortalU" /></a>
+    <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo InGrid" /></a>
   </div>
 </div>
 
@@ -140,4 +140,4 @@ self.focus();
   
 ## $jetspeed.include($jetspeed.currentFragment)
 
-<!--  END: layout/html/portalu/decorator.vm -->
+<!--  END: layout/html/ingrid/decorator.vm -->

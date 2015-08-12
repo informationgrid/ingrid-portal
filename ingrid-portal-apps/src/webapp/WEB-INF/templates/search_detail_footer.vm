@@ -4,7 +4,7 @@
 	|
 	<a href="$renderResponse.encodeURL('/portal/privacy.psml')" title="$MESSAGES.getString('footer.privacy.policy.tooltip')">$MESSAGES.getString('footer.privacy.policy')</a>
 	|
-	<a href="mailto:webmaster@portalu.de" title="$MESSAGES.getString('footer.webmaster.tooltip')">$MESSAGES.getString('footer.webmaster')</a>
+	<a href="mailto:info@informationgrid.eu" title="$MESSAGES.getString('footer.webmaster.tooltip')">$MESSAGES.getString('footer.webmaster')</a>
 	|
 	<a href="$renderResponse.encodeURL('/portal/service-contact-newsletter.psml')" title="$MESSAGES.getString('footer.newsletter.tooltip')">$MESSAGES.getString('footer.newsletter')</a>
 #end
@@ -35,7 +35,7 @@
 </div>
 
 </div>
-<!--  END: layout/html/portalu/decorator.vm -->
+<!--  END: layout/html/ingrid/decorator.vm -->
 
 <!-- Piwik -->
 #if($piwik != "")

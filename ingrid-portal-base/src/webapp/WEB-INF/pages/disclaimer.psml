@@ -21,7 +21,7 @@
         <value>disclaimer.title</value>
       </preference>
       <preference name="cmsKey" readOnly="false">
-        <value>portalu.disclaimer</value>
+        <value>ingrid.disclaimer</value>
       </preference>
     </fragment>
     <fragment id="disclaimer-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">

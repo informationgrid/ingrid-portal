@@ -102,7 +102,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
         // contact email address
         context.put("portalEmail", UtilsString.htmlescapeAll(PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER,
-                "portalu@portalu.de")));
+                "info@informationgrid.eu")));
 
         // enable captcha 
         context.put("enableCaptcha", PortalConfig.getInstance().getBoolean("portal.contact.enable.captcha", Boolean.TRUE));
@@ -114,7 +114,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
         // address after email
         Session session = HibernateUtil.currentSession();
         List entities = UtilsDB.getValuesFromDB(session.createCriteria(IngridCMS.class).add(
-                Restrictions.eq("itemKey", "portalu.contact.intro.postEmail")), session, null, true);
+                Restrictions.eq("itemKey", "ingrid.contact.intro.postEmail")), session, null, true);
         if (entities.size() > 0) {
             IngridCMS entry = (IngridCMS) entities.get(0);
             String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());

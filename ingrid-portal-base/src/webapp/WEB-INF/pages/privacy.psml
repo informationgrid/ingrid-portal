@@ -33,7 +33,7 @@ limitations under the License.
         <value>/WEB-INF/templates/default_cms.vm</value>
       </preference>
       <preference name="cmsKey" readOnly="false">
-        <value>portalu.privacy</value>
+        <value>ingrid.privacy</value>
       </preference>
     </fragment>
   </fragment>

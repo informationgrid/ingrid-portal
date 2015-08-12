@@ -20,9 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
  */
-/*
- * Copyright (c) 2007 wemove digital solutions. All rights reserved.
- */
 package de.ingrid.portal.scheduler.jobs;
 
 import java.io.BufferedReader;

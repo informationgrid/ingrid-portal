@@ -53,7 +53,7 @@
         <value>/WEB-INF/templates/ingrid_inform_teaser.vm</value>
       </preference>
       <preference name="cmsKey" readOnly="false">
-        <value>portalu.teaser.inform</value>
+        <value>ingrid.teaser.inform</value>
       </preference>
       <preference name="helpKey" readOnly="false">
         <value>ingrid-inform-1</value>

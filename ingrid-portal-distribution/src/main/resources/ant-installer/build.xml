@@ -20,9 +20,9 @@
   limitations under the Licence.
   **************************************************#
   -->
-<project name="PortalU Installation" basedir=".">
+<project name="InGrid Installation" basedir=".">
     <description>
-        PortalU Installation Script
+        InGrid Installation Script
     </description>
 
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>

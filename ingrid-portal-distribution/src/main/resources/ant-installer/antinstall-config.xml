@@ -29,7 +29,7 @@
             verbose               ="true"
             debug                 ="false"
             lookAndFeel           ="greymetal"
-            name                  ="PortalU Installation"
+            name                  ="InGrid Installation"
             windowIcon            ="/resources/icons/logoIcon.gif"
             defaultImageResource  ="/resources/makewavesdawn.png"
             minJavaVersion        ="1.6"
@@ -40,7 +40,7 @@
             type        ="input"
             name        ="intro"
             overflow    = "true"
-            displayText ="Willkommen zur InGrid-PortalU Installation">
+            displayText ="Willkommen zur InGrid Installation">
         <comment displayText="" bold="true" explanatoryText="Nehmen Sie Einstellungen vor, um das Portal zu konfigurieren."/>
         <comment displayText="" explanatoryText="Wenn dies ein Update ist, dann können die Einstellungen der vorherigen Installation verwendet werden. Dazu muss sich die Datei 'ant.install.properties' im gleichen Verzeichnis wie der Installer befinden."/>
         <target-select
@@ -193,7 +193,7 @@
         <text property="mdekServerPort" displayText="InGridEditor Port:"    defaultValue="11000"/>
         <text property="mdekDBUrl"      displayText="InGridEditor DB-URL:"  defaultValue="jdbc:mysql://localhost/mdek"/>
         <text property="mdekMailSmtp"   displayText="SMTP-Server:"          defaultValue="localhost"/>
-        <text property="mdekMailSender" displayText="Sender Email Adresse:" defaultValue="info@portalu.de"/>
+        <text property="mdekMailSender" displayText="Sender Email Adresse:" defaultValue="info@informationgrid.eu"/>
         <text property="mdekDirectLink" displayText="Domäne:"               defaultValue="www.'meine-Adresse.de'"/>
     </page>
 
@@ -233,9 +233,9 @@
             displayText ="Einstellungen für den Kartenclient">
 
         <comment displayText="" explanatoryText="Geben Sie die Url der Opensearchschnittstelle an. Es reicht die Basis-Url wie im default angegeben, der Rest der Anfrage wird dynamisch hinzugefügt."/>
-        <text property="openSearchUrl" displayText="Opensearch Url:" defaultValue="http://www.portalu.de/opensearch/query"/>
+        <text property="openSearchUrl" displayText="Opensearch Url:" defaultValue="https://dev.informationgrid.eu/opensearch/query"/>
         <comment displayText="" explanatoryText="Geben Sie die Basis-Url für das Laden von gespeicherten Karten an."/>
-        <text property="loadMapUrl" displayText="Karten-Url:" defaultValue="http://www.portalu.de/kartendienste"/>
+        <text property="loadMapUrl" displayText="Karten-Url:" defaultValue="https://dev.informationgrid.eu/kartendienste"/>
         <comment displayText="" explanatoryText="Geben Sie ein Verzeichnis zum Speichern der Map Client Daten an."/>
         <directory
                 property        ="WebmapDataDir"
@@ -253,7 +253,7 @@
         name        ="codelistRepoOptions"
         displayText ="Einstellungen fuer das Codelist Repository">
         <comment displayText="" explanatoryText="Ignorieren Sie diese Seite wenn Sie keinen InGrid Editor (IGE) installieren bzw. installiert haben!"/>
-        <text property="clUrl"      displayText="Codelist Repository Url:" defaultValue="http://www.portalu.de/codelist-repo/rest/getCodelists" />
+        <text property="clUrl"      displayText="Codelist Repository Url:" defaultValue="https://dev.informationgrid.eu/codelist-repo/rest/getCodelists" />
         <text property="clUsername" displayText="Repository-Benutzername:" defaultValue="admin" />
         <text property="clPassword" displayText="Repository Passwort:"     defaultValue="" />
     </page>
@@ -266,7 +266,7 @@
         name        ="otherOptions"
         displayText ="Weitere Einstellungen">
         <comment displayText="" explanatoryText="Über die CSW-Schnittstelle können zusätzlich zu den Suchergebnissen, die XML Dokumente angefragt werden."/>
-        <text property="cswUrl"      displayText="CSW-Schnittstelle URL:" defaultValue="http://www.portalu.de/csw202" />
+        <text property="cswUrl"      displayText="CSW-Schnittstelle URL:" defaultValue="https://dev.informationgrid.eu/csw" />
     </page>
     
     <page

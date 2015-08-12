@@ -20,9 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
  */
-/*
- * Copyright (c) 2006 wemove digital solutions. All rights reserved.
- */
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
@@ -105,7 +102,7 @@ public class CMSPortlet extends GenericVelocityPortlet {
             context.put("cmsItemTitle", localizedItem.getItemTitle());
             context.put("cmsItemValue", localizedItem.getItemValue());
             
-        	if(myKey.equals("portalu.about")){
+        	if(myKey.equals("ingrid.about")){
         		String user = request.getRemoteUser();
                 if(user != null && user.equals("admin")){
                 	if(request.getPortalContext().getProperty("applicationRoot") != null){
@@ -113,7 +110,7 @@ public class CMSPortlet extends GenericVelocityPortlet {
                     }
                 	context.put("tool", new UtilsVelocity());
                 }
-            } else if (myKey.equals("portalu.teaser.inform")) {
+            } else if (myKey.equals("ingrid.teaser.inform")) {
                 context.put("showNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER_CMS_INFO, false));
             }
         }

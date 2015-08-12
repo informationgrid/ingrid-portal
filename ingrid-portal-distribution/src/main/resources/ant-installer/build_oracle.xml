@@ -53,6 +53,7 @@
     <property name="updateOracle320d" location="${installDir}/sql/update_3.2.0d_oracle.sql"/>
     <property name="updateOracle331" location="${installDir}/sql/update_3.3.1_oracle.sql"/>
     <property name="updateOracle341" location="${installDir}/sql/update_3.4.1_oracle.sql"/>
+    <property name="updateOracle361" location="${installDir}/sql/update_3.6.1_oracle.sql"/>
     
 
     <!-- oracle ige imports -->
@@ -194,6 +195,7 @@
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
+			<transaction src="${updateOracle361}"/>
         </sql>
     </target>
     
@@ -218,6 +220,7 @@
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
+			<transaction src="${updateOracle361}"/>
         </sql>
     </target>
     
@@ -241,6 +244,7 @@
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
+			<transaction src="${updateOracle361}"/>
         </sql>
     </target>
     
@@ -260,6 +264,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
+			<transaction src="${updateOracle361}"/>
         </sql>
     </target>
     
@@ -278,6 +283,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle341}"/>
+			<transaction src="${updateOracle361}"/>
         </sql>
     </target>
     
