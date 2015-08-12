@@ -1305,13 +1305,13 @@
 				 in der Bearbeitungs- bzw. Veröffentlichungs-Version):</li>
 					 <ul>
 					 <li><u>Arbeitsversion Objekte:</u> 
-					 <br/><font face="Courier">JOIN oNode.t01ObjectWork obj</font></li>
+					 <br/><code>JOIN oNode.t01ObjectWork obj</code></li>
 					 <li><u>Arbeitsversion Adressen:</u>
-					 <br/><font face="Courier">JOIN aNode.t02AddressWork addr</font></li>
+					 <br/><code>JOIN aNode.t02AddressWork addr</code></li>
 					 <li><u>Veröffentlichten Version Objekte:</u> 
-					 <br/><font face="Courier">JOIN oNode.t01ObjectPublished obj</font></li>
+					 <br/><code>JOIN oNode.t01ObjectPublished obj</code></li>
 					 <li><u>Veröffentlichten Version Adressen:</u> 
-					 <br/><font face="Courier">JOIN aNode.t02AddressPublished addr</font></li>
+					 <br/><code>JOIN aNode.t02AddressPublished addr</code></li>
 					 </ul>
 				<li>Die Arbeitsversion entspricht der veröffentlichten Version, wenn das Objekt/die Adresse 
 				nicht <i>in Bearbeitung</i> ist.</li>
@@ -1321,34 +1321,34 @@
 				Objekten/Adressen werden immer die Klasse 
 				und der Name angezeigt.</li>
 					 <ul>
-					 <li><u>alle Objekte:</u> <font face="Courier">FROM ObjectNode</font></li>
-					 <li><u>alle Adressen:</u> <font face="Courier">FROM AddressNode</font></li>
+					 <li><u>alle Objekte:</u> <code>FROM ObjectNode</code></li>
+					 <li><u>alle Adressen:</u> <code>FROM AddressNode</code></li>
 					 </ul>
 				<li>Werden per '<i>select ...</i>' Attribute hinzugefügt, so sind diese nur für den CSV-Export 
 				relevant, in der Anzeige werden immer nur Klasse und Name angezeigt.</li>
 				<li>Um z.B. alle vorhandenen Objekt-Namen nach CSV zu exportieren:</li>
 					 <ul>
 					 <li><u>in der akt. Bearbeitungs-Version:</u> 
-					 <br/><font face="Courier">select distinct obj.objName FROM ObjectNode 
-					 oNode JOIN oNode.t01ObjectWork obj order by obj.objName</font></li>
+					 <br/><code>select distinct obj.objName FROM ObjectNode 
+					 oNode JOIN oNode.t01ObjectWork obj order by obj.objName</code></li>
 					 <li><u>in der veröffentlichten Version:</u> 
-					 <br/><font face="Courier">select distinct obj.objName FROM ObjectNode 
-					 oNode JOIN oNode.t01ObjectPublished obj order by obj.objName</font></li>
+					 <br/><code>select distinct obj.objName FROM ObjectNode 
+					 oNode JOIN oNode.t01ObjectPublished obj order by obj.objName</code></li>
 					 <li><b><u>Achtung:</u></b> In der Anzeige spielt die 
-					 <b><font face="Courier">'select <i>Spalten</i>'</font></b> Angabe keine 
+					 <b><code>'select <i>Spalten</i>'</code></b> Angabe keine 
 					 Rolle, diese bestimmt nur, <b>was nach</b> CSV exportiert wird. Bei obiger Recherche werden 
 					 in der Anzeige also <b>immer alle</b> gefundenen Objekte angezeigt und zwar jeweils Klasse + 
 					 Name. Taucht der gleiche Name in unterschiedlichen Objekten auf, so wird der Name 
 					 doppelt angezeigt (z.B. mit unterschiedlicher Objekt-Klasse). Beim Export nach CSV 
 					 wird der Name dann <b>nur einmal</b> exportiert, da im 
-					 <b><font face="Courier">'select DISTINCT'</font></b> angegeben ist. Die 
+					 <b><code>'select DISTINCT'</code></b> angegeben ist. Die 
 					 CSV-Datei enthält also weniger Einträge als Objekte vorhanden sind (da nur 
 					 unterschiedliche Objektnamen exportiert werden).</li>
 					 </ul>
 				</ul> 
 				<p><b><u>Beispiel:</u></b></p>
 				<p><b>SQL auf IGC-Schema:</b></p>
-				<font face="Courier" size="-2">
+				<code>
 				<p>SELECT DISTINCT obj.id, obj.obj_uuid, obj.obj_name, obj.obj_class FROM T01_object obj
 				<br/>LEFT OUTER JOIN T08_attr T08_1 ON (obj.id = T08_1.obj_id)
 				<br/>LEFT OUTER JOIN T08_attr T08_2 ON (obj.id = T08_2.obj_id)
@@ -1361,9 +1361,9 @@
 				<br/>AND T08_2.data LIKE 'LANUINTERN'
 				<br/>AND T08_2.data LIKE 'LANUINTERN'
 				<br/>AND obj.mark_deleted != 'Y'</p>
-				</font>
+				</code>
 				<p><b>Umsetzung in HQL: </b></p>
-				<font face="Courier" size="-2">
+				<code>
 				<p>SELECT DISTINCT OBJNODE.objUuid, OBJ.objUuid, OBJ.objName, OBJ.objClass, 
 				T08T_1.name, T08_1.data , T08T_2.name, T08_2.data 
 				<br/>FROM 
@@ -1380,7 +1380,7 @@
 				<br/>AND UPPER(T08_2.data) LIKE 'LANUINTERN' 
 				<br/>AND OBJ.markDeleted != 'Y' 
 				<br/>ORDER BY OBJ.objName</p>
-				</font>
+				</code>
             </content>
         </section>
     </chapter>

@@ -16,13 +16,12 @@ description: "InGrid: Indexieren, Recherchieren, Visualisieren, Teilen"
         <xsl:text>&#xa;</xsl:text>
         <xsl:text>## </xsl:text><xsl:apply-templates select="header" />
         <xsl:for-each select="section">
-<xsl:text>&#xa;</xsl:text>
-<xsl:text><![CDATA[<a name="]]></xsl:text>
-<xsl:value-of select="@help-key"/>
-<xsl:text><![CDATA["></a>]]></xsl:text>
-<xsl:text>&#xa;</xsl:text>
-<xsl:text>&#xa;### </xsl:text><xsl:apply-templates select="header" />
-
+			<xsl:text>&#xa;</xsl:text>
+			<xsl:text><![CDATA[<a name="]]></xsl:text>
+			<xsl:value-of select="@help-key"/>
+			<xsl:text><![CDATA["></a>]]></xsl:text>
+			<xsl:text>&#xa;</xsl:text>
+			<xsl:text>&#xa;### </xsl:text><xsl:apply-templates select="header" />
             <xsl:apply-templates select="content"/>
         </xsl:for-each>
     </xsl:for-each>
@@ -31,6 +30,19 @@ description: "InGrid: Indexieren, Recherchieren, Visualisieren, Teilen"
 <xsl:template match="content">
   <xsl:apply-templates/>
 </xsl:template>
+
+<xsl:template match="section">
+  <xsl:apply-templates/>
+</xsl:template>
+
+
+<xsl:template match="h4">
+    <xsl:text>&#xa;</xsl:text>
+    <xsl:text>&#xa;#### </xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>&#xa;</xsl:text>
+</xsl:template>
+
 
 <xsl:template match="header">
   <xsl:value-of select="normalize-space()" />
@@ -45,16 +57,76 @@ description: "InGrid: Indexieren, Recherchieren, Visualisieren, Teilen"
   <xsl:text>&#xa;</xsl:text>
 </xsl:template>
 
+<!-- add spacing for inner text mark up, ignore if mark up follows p tag directly -->
+<xsl:template match="p[text() != '']/b">
+  <xsl:text> **</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>** </xsl:text>
+</xsl:template>
+<xsl:template match="p[text() != '']/i">
+  <xsl:text> _</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>_ </xsl:text>
+</xsl:template>
+
+<xsl:template match="p[text() != '']/u">
+  <xsl:text> **</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>** </xsl:text>
+</xsl:template>
+
+<xsl:template match="li/b">
+  <xsl:text> **</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>** </xsl:text>
+</xsl:template>
+
+
+<!--  ignore underline inside bold -->
+<xsl:template match="b/u">
+  <xsl:apply-templates/>
+</xsl:template>
+
 <xsl:template match="b">
   <xsl:text>**</xsl:text>
   <xsl:apply-templates/>
-  <xsl:text>** </xsl:text>
+  <xsl:text>**</xsl:text>
+</xsl:template>
+
+<!--  ignore italic inside code tags -->
+<xsl:template match="code/i">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="i">
+  <xsl:text>_</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>_</xsl:text>
+</xsl:template>
+
+<xsl:template match="u">
+  <xsl:text>**</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>**</xsl:text>
+</xsl:template>
+
+
+<xsl:template match="code">
+  <xsl:text>&#xa;{% highlight text %}&#xa;</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>&#xa;{% endhighlight %}&#xa;</xsl:text>
 </xsl:template>
 
 <xsl:template match="ul">
   <xsl:text>&#xa;</xsl:text>
   <xsl:apply-templates/>
 </xsl:template>
+
+<xsl:template match="ol">
+  <xsl:text>&#xa;</xsl:text>
+  <xsl:apply-templates/>
+</xsl:template>
+
 
 <xsl:template match="br">
   <xsl:text>&#xa;</xsl:text>
