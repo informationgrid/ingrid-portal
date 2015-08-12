@@ -325,7 +325,8 @@ public class MdekMapper implements DataMapperInterface {
             if (td3Map == null)
                 break;
 
-            mdekObj.setRef3ServiceType((Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY));
+            Integer serviceType = (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY);
+            mdekObj.setRef3ServiceType(serviceType);
             mdekObj.setRef3AtomDownload("Y".equals(td3Map.get(MdekKeys.HAS_ATOM_DOWNLOAD)) ? true : false);            
             mdekObj.setRef3CouplingType(td3Map.getString(MdekKeys.COUPLING_TYPE));
             mdekObj.setRef3ServiceTypeTable(mapToServiceTypeTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_TYPE2_LIST)));
@@ -333,7 +334,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
             mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
             mdekObj.setRef3BaseDataText((String) td3Map.get(MdekKeys.DATABASE_OF_SYSTEM));
-            mdekObj.setRef3ServiceVersion((List<String>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST));
+            mdekObj.setRef3ServiceVersion(mapToServiceVersionTable(serviceType, (List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST)));
             mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
             mdekObj.setRef3Scale(mapToScaleTable((List<IngridDocument>) td3Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
             mdekObj.setRef3Operation(mapToOperationTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY)));
@@ -910,8 +911,9 @@ public class MdekMapper implements DataMapperInterface {
             udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DOCUMENT, td2Map);
             break;
         case 3:
-            IngridDocument td3Map = new IngridDocument();           
-            td3Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
+            IngridDocument td3Map = new IngridDocument();    
+            Integer serviceType = data.getRef3ServiceType();
+            td3Map.put(MdekKeys.SERVICE_TYPE_KEY, serviceType);
             if (data.getRef3AtomDownload() != null) {
                 if (data.getRef3AtomDownload().booleanValue()) {
                     td3Map.put(MdekKeys.HAS_ATOM_DOWNLOAD, "Y");
@@ -929,7 +931,7 @@ public class MdekMapper implements DataMapperInterface {
             td3Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef3SystemEnv());
             td3Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef3History());
             td3Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef3BaseDataText());
-            td3Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef3ServiceVersion());
+            td3Map.put(MdekKeys.SERVICE_VERSION_LIST, mapFromServiceVersionTable(serviceType, data.getRef3ServiceVersion()));
             td3Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef3Explanation());
             td3Map.put(MdekKeys.PUBLICATION_SCALE_LIST, mapFromScaleTable(data.getRef3Scale()));
             td3Map.put(MdekKeys.SERVICE_OPERATION_LIST, mapFromOperationTable(data.getRef3Operation(), data.getRef3ServiceType()));
@@ -1698,6 +1700,23 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
+    private Object mapFromServiceVersionTable(Integer serviceType, List<String> refList) {
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        if (refList == null)
+            return resultList;
+        
+        for (String ref : refList) {
+            KeyValuePair kvp = mapFromKeyValue(MdekKeys.SERVICE_VERSION_KEY + "." + serviceType, ref);
+            if (kvp.getValue() != null || kvp.getKey() != -1) {
+                IngridDocument result = new IngridDocument();
+                result.put(MdekKeys.SERVICE_VERSION_KEY, kvp.getKey());
+                result.put(MdekKeys.SERVICE_VERSION_VALUE, kvp.getValue());
+                resultList.add(result);
+            }
+        }
+        return resultList;
+    }
+    
     /****************************************************************************
      * Mapping from the IngridDocument Structure to the Mdek gui representation *
      ****************************************************************************/
@@ -2123,6 +2142,26 @@ public class MdekMapper implements DataMapperInterface {
         }
         for (IngridDocument serviceType : serviceTypeList) {
             resultList.add((Integer) serviceType.get(MdekKeys.SERVICE_TYPE2_KEY));
+        }
+        return resultList;
+    }
+    
+    private List<String> mapToServiceVersionTable(Integer serviceType, List<IngridDocument> serviceVersionList) {
+        List<String> resultList = new ArrayList<String>();
+        if (serviceVersionList == null) {
+            return resultList;
+        }
+        for (IngridDocument serviceVersion : serviceVersionList) {
+            
+            // name of version is free entry (key=-1) or syslist entry !
+            // first set direct value (free)
+            String val = (String) serviceVersion.get(MdekKeys.SERVICE_VERSION_VALUE);
+            // then overwrite with name from syslist if syslist entry
+            Integer versionKey = (Integer) serviceVersion.get(MdekKeys.SERVICE_VERSION_KEY);
+            if (versionKey != null && versionKey != -1) {
+                val = sysListMapper.getValue(MdekKeys.SERVICE_VERSION_KEY+"."+serviceType, (Integer) serviceVersion.get(MdekKeys.SERVICE_VERSION_KEY), false);
+            }
+            resultList.add(val);
         }
         return resultList;
     }
