@@ -182,7 +182,7 @@ public class SNSUpdateJobGazetteerTest {
                 assertThat( newDoc.getString( MdekKeys.LOCATION_SNS_ID), is( "http://sns.uba.de/gazetteer/GEMEINDE0315401015" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_NAME), is( "Mariental" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_CODE), is( "03154015" ));
-                assertThat( newDoc.getString( MdekKeys.SNS_TOPIC_TYPE), is( "use6Type" ));
+                assertThat( newDoc.getString( MdekKeys.SNS_TOPIC_TYPE), is( "-location-admin-use6-" ));
                 
                 IngridDocument doc = new IngridDocument();
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
@@ -583,7 +583,7 @@ public class SNSUpdateJobGazetteerTest {
                 assertThat( newDoc.getString( MdekKeys.LOCATION_SNS_ID), is( "http://sns.uba.de/gazetteer/GEMEINDE0315401015" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_NAME), is( "Mariental" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_CODE), is( "03154015" ));
-                assertThat( newDoc.getString( MdekKeys.SNS_TOPIC_TYPE), is( "use6Type" ));
+                assertThat( newDoc.getString( MdekKeys.SNS_TOPIC_TYPE), is( "-location-admin-use6-" ));
                 
                 IngridDocument doc = new IngridDocument();
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
