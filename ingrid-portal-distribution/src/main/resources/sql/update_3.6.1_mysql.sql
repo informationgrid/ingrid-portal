@@ -23,6 +23,3 @@ UPDATE page SET title = 'About InGrid-Portal', short_title = 'About InGrid-Porta
 
 UPDATE portlet_preference_value SET pref_value = 'ingrid.cms.default' WHERE pref_value = 'portalu.cms.default';
 UPDATE portlet_preference_value SET pref_value = 'ingrid.teaser.inform' WHERE pref_value = 'portalu.teaser.inform';
-
-UPDATE prefs_property_value SET property_value = 'ingrid.cms.default' WHERE property_value = 'portalu.cms.default';
-UPDATE prefs_property_value SET property_value = 'ingrid.teaser.inform' WHERE property_value = 'portalu.teaser.inform';
