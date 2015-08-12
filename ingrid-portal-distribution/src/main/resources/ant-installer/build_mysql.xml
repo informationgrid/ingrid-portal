@@ -294,6 +294,24 @@
         </echo>
     </target>
     
+	<target name="PortalDbUpdateFrom350" if="useMysql">
+        <echo>MySQL-Portal Daten importieren (ab 3.5.0)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateMySQL361}"/>
+        </sql>
+    </target>
+	
     <!-- =============================================
          = IGE MDEK DATABASE                         =
          ============================================= -->

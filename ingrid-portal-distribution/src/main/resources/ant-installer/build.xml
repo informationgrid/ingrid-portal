@@ -565,6 +565,14 @@
         <elseif>
             <equals arg1="${portal.version}" arg2=",3.5.0" />
             <then>
+                <runtarget target="mysql.PortalDbUpdateFrom350"/>
+                <runtarget target="oracle.PortalDbUpdateFrom350"/>
+                <runtarget target="copyMigrationTools"/>
+            </then>
+        </elseif>
+		<elseif>
+            <equals arg1="${portal.version}" arg2=",3.6.0" />
+            <then>
                 <echo>Ihre Datenbank ist aktuell!</echo>
             </then>
         </elseif>
