@@ -2020,8 +2020,8 @@ define([
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, true);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
-            registry.byId("ref3ServiceType")._lastValueReported = nodeData.ref3ServiceType + "";
-            registry.byId("ref3ServiceType").set("value", nodeData.ref3ServiceType, false);
+            //registry.byId("ref3ServiceType")._lastValueReported = nodeData.ref3ServiceType + "";
+            registry.byId("ref3ServiceType").set("value", nodeData.ref3ServiceType, true);
             registry.byId("ref3IsAtomDownload").attr("value", nodeData.ref3AtomDownload, true);
             // manually call behavior to show atom checkk box or not
             // -> we've got the problem that another event wants to change metadata when service type has changed

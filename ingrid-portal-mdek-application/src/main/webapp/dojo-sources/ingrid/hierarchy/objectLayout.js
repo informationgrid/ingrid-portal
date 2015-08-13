@@ -1038,7 +1038,12 @@ define([
                     field: 'title',
                     name: 'title',
                     width: '348px',
-                    editable: true
+                    type: gridEditors.ComboboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 5152,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6400)
                 }];
                 layoutCreator.createDataGrid("ref3ServiceVersion", null, ref3ServiceVersionStructure, null);
 

@@ -504,6 +504,14 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 else if (type == 3) UtilUI.updateEntryToConformityTable(40, deleteEntry);
                 else if (type == 5) UtilUI.updateEntryToConformityTable(43, deleteEntry);
             };
+            
+            var updateSyslistServiceVersion = function(type) {
+                if (type == 1) registry.byId("ref3ServiceVersion").columns[0].listId = 5151;
+                else if (type == 2) registry.byId("ref3ServiceVersion").columns[0].listId = 5152;
+                else if (type == 3) registry.byId("ref3ServiceVersion").columns[0].listId = 5153;
+                else if (type == 4) registry.byId("ref3ServiceVersion").columns[0].listId = 5154;
+                else registry.byId("ref3ServiceVersion").columns[0].listId = null;
+            }
 
             // react when inspire topics has been added
             on(registry.byId("ref3ServiceType"), "Change", function(value) {
@@ -515,6 +523,8 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                     });
                     // add possibly new type
                     applySpecification(value, false);
+                    // change syslist of supported versions
+                    updateSyslistServiceVersion(value);
                 }
             });
 
