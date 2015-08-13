@@ -38,6 +38,9 @@
             <action type="add" dev="wemove" issue="REDMINE-19">
                 IGE: When publishing, then jump to first invalid field on error.
             </action>
+            <action type="update" dev="wemove" issue="REDMINE-47">
+                IGE: Service version now editied via comboboxes displaying GDI-DE like versions (new syslists).
+            </action>
         </release>
 
         <release version="3.6.0.2" date="2015-07-13" description="Bugfix Release 3.6.0.2">
