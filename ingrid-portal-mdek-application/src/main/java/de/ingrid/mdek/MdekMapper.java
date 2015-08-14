@@ -378,7 +378,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef6SystemEnv((String) td6Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
             mdekObj.setRef6History((String) td6Map.get(MdekKeys.SYSTEM_HISTORY));
             mdekObj.setRef6BaseDataText((String) td6Map.get(MdekKeys.DATABASE_OF_SYSTEM));
-            mdekObj.setRef6ServiceVersion((List<String>) td6Map.get(MdekKeys.SERVICE_VERSION_LIST));
+            mdekObj.setRef6ServiceVersion(mapToServiceVersionTable(null, (List<IngridDocument>) td6Map.get(MdekKeys.SERVICE_VERSION_LIST)));
             mdekObj.setRef6Explanation((String) td6Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
             mdekObj.setRef6UrlList(mapToUrlList((List<IngridDocument>)td6Map.get(MdekKeys.URL_LIST)));
 
@@ -972,7 +972,7 @@ public class MdekMapper implements DataMapperInterface {
             td6Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef6SystemEnv());
             td6Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef6History());
             td6Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef6BaseDataText());
-            td6Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef6ServiceVersion());
+            td6Map.put(MdekKeys.SERVICE_VERSION_LIST, mapFromServiceVersionTable(null, data.getRef6ServiceVersion()));
             td6Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef6Explanation());
             td6Map.put(MdekKeys.URL_LIST, mapFromUrlListTable(data.getRef6UrlList()));
             udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td6Map);
