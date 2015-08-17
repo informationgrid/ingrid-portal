@@ -316,11 +316,18 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 	                    log.debug("Read RANKED hits from CACHE !!! rankedHits=" + rankedHits);
 	                }
 	            } else {
-	                // process query, create QueryDescriptor
-	                qd = QueryPreProcessor.createRankedQueryDescriptor(request);
-	                if (qd != null) {
-	                    controller.addQuery("ranked", qd);
-	                    SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
+	                String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
+	                if(queryString == null){
+	                    rankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
+	                }
+
+	                if(rankedHits == null){
+	                    // process query, create QueryDescriptor
+	                    qd = QueryPreProcessor.createRankedQueryDescriptor(request);
+	                    if (qd != null) {
+	                        controller.addQuery("ranked", qd);
+	                        SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
+	                    }
 	                }
 	            }
 	        }
@@ -333,12 +340,19 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 	                    log.debug("Read RANKED hits from CACHE !!! rankedHits=" + rankedHits);
 	                }
                 }else{
-                	// process query, create QueryDescriptor
-	                qd = QueryPreProcessor.createRankedQueryDescriptor(request);
-	                if (qd != null) {
-	                    controller.addQuery("ranked", qd);
-	                    SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
-	                }
+                    String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
+                    if(queryString == null){
+                        rankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
+                    }
+                    
+                    if(rankedHits == null){
+                    	// process query, create QueryDescriptor
+    	                qd = QueryPreProcessor.createRankedQueryDescriptor(request);
+    	                if (qd != null) {
+    	                    controller.addQuery("ranked", qd);
+    	                    SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
+    	                }
+                    }
                 }
 			}
         }
@@ -357,20 +371,34 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 	                            log.debug("Read UNRANKED hits from CACHE !!!! unrankedHits=" + unrankedHits);
 	                        }
 	                    }else{
-	                    	// process query, create QueryDescriptor
-	                        qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
-	                        if (qd != null) {
-	                            controller.addQuery("unranked", qd);
-	                            SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
+	                        String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
+	                        if(queryString == null){
+	                            unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
+	                        }
+	                        
+	                        if(unrankedHits == null){
+    	                    	// process query, create QueryDescriptor
+    	                        qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
+    	                        if (qd != null) {
+    	                            controller.addQuery("unranked", qd);
+    	                            SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
+    	                        }
 	                        }
 	                    }
 	                }else {
-	                    // process query, create QueryDescriptor
-	                    qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
-	                    if (qd != null) {
-	                        controller.addQuery("unranked", qd);
-	                        SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
-	                    }
+	                    String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
+                        if(queryString == null){
+                            unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
+                        }
+                        
+                        if(unrankedHits == null){
+    	                    // process query, create QueryDescriptor
+    	                    qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
+    	                    if (qd != null) {
+    	                        controller.addQuery("unranked", qd);
+    	                        SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
+    	                    }
+                        }
 	                }
     			}
     		}else{
@@ -383,12 +411,19 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                             log.debug("Read UNRANKED hits from CACHE !!!! unrankedHits=" + unrankedHits);
                         }
                     }else{
-                    	// process query, create QueryDescriptor
-	                    qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
-	                    if (qd != null) {
-	                        controller.addQuery("unranked", qd);
-	                        SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
-	                    }
+                        String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
+                        if(queryString == null){
+                            unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
+                        }
+                        
+                        if(unrankedHits == null){
+                        	// process query, create QueryDescriptor
+    	                    qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
+    	                    if (qd != null) {
+    	                        controller.addQuery("unranked", qd);
+    	                        SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
+    	                    }
+                        }
                     }
     			}
             }
