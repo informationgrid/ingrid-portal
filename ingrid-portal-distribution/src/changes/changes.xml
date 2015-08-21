@@ -29,6 +29,12 @@
     </properties>
     <body>
         <release version="3.6.1-SNAPSHOT" date="2015-??-??" description="Release 3.6.1">
+            <action type="fix" dev="wemove" issue="REDMINE-115">
+                Portal: Remove "datatype:any" to display catalog hierarchy.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-14">
+                Portal: Replace "PortalU" with "InGrid-Portal".
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-109">
                 Portal: Updated to final Jetspeed 2.3.0 release.
             </action>
