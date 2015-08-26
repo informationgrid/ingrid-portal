@@ -28,6 +28,18 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="3.6.0.3" date="2015-09-11" description="Bugfix-Release 3.6.0.3">
+            <action type="fix" dev="wemove" issue="REDMINE-115">
+                Portal: Remove "datatype:any" to display catalog hierarchy.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-123">
+                IGE: Catch error on null values for syslists.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-145">
+                Portal: Fixed bug in displaying address description.
+            </action>
+        </release>
+
         <release version="3.6.0.2" date="2015-07-13" description="Bugfix Release 3.6.0.2">
             <action type="fix" dev="wemove" issue="REDMINE-82">
                 IGE: Fix scrollbar behavior in editor content of a grid cell.
