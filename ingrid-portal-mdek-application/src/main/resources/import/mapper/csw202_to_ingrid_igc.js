@@ -327,6 +327,66 @@ var mappingDescription = {"mappings":[
 		    	  				{
 		    			  			"srcXpath":".",
 		    			  			"targetNode":""
+		    			  		},
+		    	  				{
+		    			  			"conditional": {
+			    		  				"storedValue": {
+			    		  					"name":"serviceType",
+			    		  					"value":"1" // CSW
+			    		  				}
+		    			  			},
+		    			  			"srcXpath":".",
+		    			  			"targetNode":"",
+		    			  			"targetAttribute":"id",
+		    			  			"transform":{
+		        						"funct":transformToIgcDomainId,
+		        						"params":[5151, ""]
+		        					}
+		    			  		},
+		    	  				{
+		    			  			"conditional": {
+			    		  				"storedValue": {
+			    		  					"name":"serviceType",
+			    		  					"value":"2" // WMS
+			    		  				}
+		    			  			},
+		    			  			"srcXpath":".",
+		    			  			"targetNode":"",
+		    			  			"targetAttribute":"id",
+		    			  			"transform":{
+		        						"funct":transformToIgcDomainId,
+		        						"params":[5152, ""]
+		        					}
+		    			  		},
+		    	  				{
+		    			  			"conditional": {
+			    		  				"storedValue": {
+			    		  					"name":"serviceType",
+			    		  					"value":"3" // WFS
+			    		  				}
+		    			  			},
+		    			  			"srcXpath":".",
+		    			  			"targetNode":"",
+		    			  			"targetAttribute":"id",
+		    			  			"transform":{
+		        						"funct":transformToIgcDomainId,
+		        						"params":[5153, ""]
+		        					}
+		    			  		},
+		    	  				{
+		    			  			"conditional": {
+			    		  				"storedValue": {
+			    		  					"name":"serviceType",
+			    		  					"value":"4" // WCTS
+			    		  				}
+		    			  			},
+		    			  			"srcXpath":".",
+		    			  			"targetNode":"",
+		    			  			"targetAttribute":"id",
+		    			  			"transform":{
+		        						"funct":transformToIgcDomainId,
+		        						"params":[5154, ""]
+		        					}
 		    			  		}
 		    			  	]
 		    			}
