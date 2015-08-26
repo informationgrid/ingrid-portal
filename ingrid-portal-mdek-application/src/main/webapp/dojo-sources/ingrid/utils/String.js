@@ -22,9 +22,10 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/dom-construct",
     "ingrid/message",
     "ingrid/utils/General"
-], function(declare, message, UtilGeneral) {
+], function(declare, domConstruct, message, UtilGeneral) {
     return declare(null, {
 
 
@@ -100,6 +101,10 @@ define([
                 }
             }
             return connUrl;
+        },
+        
+        stripTags: function(str) { 
+            return domConstruct.create("div", { innerHTML: str }).textContent; 
         }
     })();
 });
