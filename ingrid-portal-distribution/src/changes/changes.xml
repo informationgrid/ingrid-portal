@@ -38,6 +38,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-145">
                 Portal: Fixed bug in displaying address description.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-117">
+                IGE: Remove HTML-tags from an analyzed title during object creation using a wizard.
+            </action>
         </release>
 
         <release version="3.6.0.2" date="2015-07-13" description="Bugfix Release 3.6.0.2">
