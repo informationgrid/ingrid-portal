@@ -4,7 +4,7 @@
 #openLayoutTabContainer()
 	## Allgemeines
     #openTabContentPane($MESSAGES.getString("general_tab"))
-		#set($xpathList = ["./gmd:alternateTitle"])
+		#set($xpathList = ["./gmd:positionName"])
         #if($TOOL.aNodeOfListExist($xpathList))
             ## Beschreibung
 			#renderSectionTitle($MESSAGES.getString("detail_description"))
