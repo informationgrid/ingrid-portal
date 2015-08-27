@@ -226,7 +226,7 @@ define([
             
             var button = new Button({}, "thesaurusFreeTermsAddressAddButton");
             on(button, "Click", function() {
-                var termList = UtilThesaurus.parseQueryTerm(freeTermsWidget.getValue());
+                var termList = UtilThesaurus.parseQueryTerm(freeTermsWidget.get('value'));
                 var callerInfo = { id: this.id, _termListWidget: "thesaurusTermsAddress" };
                 lang.hitch(igeEvents, igeEvents.addKeywords(termList, callerInfo));
                 freeTermsWidget.attr("value", "", true);

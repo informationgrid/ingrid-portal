@@ -53,6 +53,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-123">
                 IGE: Catch error on null values for syslists.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-125">
+                IGE: Fixed error when user has no permission to create an address.
+            </action>
         </release>
 
         <release version="3.6.0.2" date="2015-07-13" description="Bugfix Release 3.6.0.2">
