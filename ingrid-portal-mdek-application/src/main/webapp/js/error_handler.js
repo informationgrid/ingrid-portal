@@ -132,7 +132,7 @@ function displayErrorMessage(err) {
         } else {
             // Show error message if we can't determine what went wrong
             var text = err;
-            if (err instanceof Object) {
+            if (err instanceof Object && err.stackTrace) {
                 text = err.javaClassName + ": " + printStackTrace( err );
             }
             dialog.show(message.get("general.error"), message.get("dialog.undefinedError") + ": " + text, dialog.WARNING);

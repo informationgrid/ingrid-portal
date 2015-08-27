@@ -117,6 +117,7 @@ define([
             //        style(dlgId, "height", (windowHeight)+"px");
             //});
 
+            return dialogWnd;
         },
 
 

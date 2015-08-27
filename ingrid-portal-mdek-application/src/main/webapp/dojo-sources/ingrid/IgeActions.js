@@ -497,6 +497,10 @@ define([
                     preHook: UtilUI.enterLoadingState,
                     postHook: UtilUI.exitLoadingState,
                     callback: function(res) {
+                        if (res === null) {
+                            msg.resultHandler.reject(new Error("[USER_HAS_NO_PERMISSION_ON_ENTITY]"));
+                            return;
+                        }
                         res.addressClass = msg.addressClass;
                         if (res.addressClass === 0) {
                             res.nodeDocType = "Institution_B";

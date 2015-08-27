@@ -139,10 +139,12 @@ public class AddressServiceImpl implements AddressService {
 			log.error("Error while getting address data.", e);
 		}
 
-		MdekAddressUtils.setInitialValues(data);
-
-		data.setNodeAppType(ADDRESS_APPTYPE);
-		data.setUuid("newNode");
+		if (data != null) {
+    		MdekAddressUtils.setInitialValues(data);
+    
+    		data.setNodeAppType(ADDRESS_APPTYPE);
+    		data.setUuid("newNode");
+		}
 		return data;
 	}
 
