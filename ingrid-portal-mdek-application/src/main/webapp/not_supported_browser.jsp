@@ -97,7 +97,7 @@
 	<a href="/portal/privacy.psml" title="<fmt:message key="general.privacy.policy" />"><fmt:message key="general.privacy.policy" /></a>
 	<a href="mailto:info@informationgrid.eu" title="<fmt:message key="general.webmaster" />"><fmt:message key="general.webmaster" /></a>
 	<br />
-    Copyright &copy; Koordinierungsstelle PortalU im Nds. Ministerium f&uuml;r Umwelt und Klimaschutz<br />
+    Copyright &copy; Verwaltungskooperation Umweltinformationssysteme (VKoopUIS) Projekt Nr. 50<br />
 
     Alle Rechte vorbehalten<br /><br />
   </div>
