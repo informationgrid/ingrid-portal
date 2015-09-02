@@ -23,7 +23,7 @@
   -->
 
 <!-- current exchange-format will be set in ScriptImportDataMapper -->
-<igc xmlns="http://www.portalu.de/igc-import" exchange-format="x">
+<igc xmlns="http://informationgrid.eu/igc-import" exchange-format="x">
 	<data-sources>
 		<data-source>
             <data-source-instance>

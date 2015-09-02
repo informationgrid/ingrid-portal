@@ -66,7 +66,7 @@ Um den Index auch mit dem Schlagwort "#opendata_hh#" zu erweitern, auf dem dann 
 
 ingrid-portal
 -------------
-- Portal Profil wieder auf 'PortalU' zurück stellen !
+- Portal Profil wieder auf 'InGrid-Portal' zurück stellen !
 - STOPPEN DER ALTEN KOMPONENTE
 - BACKUP DER ALTEN KOMPONENTE
 - BACKUP DER DATENBANK (ingrid-portal + mdek)

@@ -91,15 +91,13 @@
 		<div id="contentContainer" class="contentSection">
 			<div id="headerContainer">
                 <div id="logoContainer">
-                    <div id="logo"><img width="119" height="24" alt="PortalU" src="img/logo.gif"></div>
+                    <div id="logo"><img width="119" height="24" alt="InGrid-Portal" src="img/logo.gif"></div>
                     <div id="title"><img width="158" height="24" alt="Metadatenerfassung" src="img/title_erfassung_<%=(String)session.getAttribute("currLang")%>.gif"></div>
                     <div id="languageBox" value="<%=(String)session.getAttribute("currLang")%>"></div>
                     <div id="headMenu">
                     	<span id="logout" style="float:right;"><a href="#dummyAnchor" onclick="window.location.href='closeWindow.jsp';" style="color: #FFF; font-weight: bold;"><fmt:message key='general.close' /></a></span>
                         <span style="float:right; padding:0px 5px 0px 5px;">|</span>
                         <span id="info" style="float:right;"><a href="javascript:void(0);" onClick="require(['ingrid/dialog'], function(dialog) { dialog.showPage('Info', 'dialogs/mdek_info_dialog.html', 365, 210, false); return false; });" title="Info"><fmt:message key='general.info' /></a></span>
-                        <span style="float:right; padding:0px 5px 0px 5px;">|</span>
-                        <span id="impressum" style="float:right;"><a href="javascript:void(0);" onclick="javascript:window.open('http://www.portalu.de:80/portal/disclaimer.psml', 'impressum', 'width=966,height=994,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key='general.imprint' />"><fmt:message key='general.imprint' /></a></span>
                         <span style="float:right; padding:0px 5px 0px 5px;">|</span>
                         <span id="help" style="float:right;"><a href="javascript:void(0);" onclick="javascript:window.open('mdek_help.jsp?c='+userLocale, 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no');" title="<fmt:message key='general.help' />"><fmt:message key='general.help' /></a></span>
 	                	<span style="float:right; padding:0px 5px 0px 5px;">|</span>

@@ -70,7 +70,6 @@ define({
     "page.breadcrumb.adminImport":"Import/Export -> Import",
     
 	"menu.general.help":"Hilfe",
-	"menu.general.disclaimer":"Impressum",
 	"menu.general.info":"Info",
 	"menu.general.closeApplication":"SCHLIESSEN",
 	"menu.main.hierarchyAcquisition":"Hierarchie & Erfassung",

@@ -71,7 +71,6 @@ define({
     "page.breadcrumb.adminImport":"Import/Export -> Import",
 	
 	"menu.general.help":"Help",
-	"menu.general.disclaimer":"Disclaimer",
 	"menu.general.info":"Info",
 	"menu.general.closeApplication":"CLOSE",
 	"menu.main.hierarchyAcquisition":"Hierarchy & Acquisition",

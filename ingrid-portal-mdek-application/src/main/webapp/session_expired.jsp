@@ -81,7 +81,7 @@
 <div id="identity" class="motiv_suche">
   <!-- LOGO -->
   <div id="logo">
-    <a href="/portal/default-page.psml"><img src="/decorations/layout/ingrid/images/logo.gif" width="168" height="60" alt="Logo PortalU" /></a>
+    <a href="/portal/default-page.psml"><img src="/decorations/layout/ingrid/images/logo.gif" width="168" height="60" alt="Logo InGrid-Portal" /></a>
   </div>
 </div>
 
@@ -105,9 +105,9 @@
     <!-- portlets go here -->
 	<a href="/portal/disclaimer.psml" title="<fmt:message key="general.imprint" />"><fmt:message key="general.imprint" /></a>
 	<a href="/portal/privacy.psml" title="<fmt:message key="general.privacy.policy" />"><fmt:message key="general.privacy.policy" /></a>
-	<a href="mailto:webmaster@portalu.de" title="<fmt:message key="general.webmaster" />"><fmt:message key="general.webmaster" /></a>
+	<a href="mailto:info@informationgrid.eu" title="<fmt:message key="general.webmaster" />"><fmt:message key="general.webmaster" /></a>
 	<br />
-    Copyright &copy; Koordinierungsstelle PortalU im Nds. Ministerium f&uuml;r Umwelt und Klimaschutz<br />
+    Copyright &copy; Verwaltungskooperation Umweltinformationssysteme (VKoopUIS) Projekt Nr. 50<br />
 
     Alle Rechte vorbehalten<br /><br />
   </div>
