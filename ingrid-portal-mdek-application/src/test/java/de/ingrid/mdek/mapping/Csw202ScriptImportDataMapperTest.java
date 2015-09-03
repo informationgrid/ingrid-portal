@@ -268,7 +268,8 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 			result = mapper.convert(data, protocolHandler);
 			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/general/title", "Gewässerflächen im Münsterland nach INSPIRE DataSpecification Hydrography"));
 			result.reset();
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/technical-domain/map/datasource-identificator", "http://www.bkg.de#_6D115576E-4813-3C7D-786C2-563760A88D8"));
+			// separate namespace and uuid with "/" !
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/technical-domain/map/datasource-identificator", "http://www.bkg.de/_6D115576E-4813-3C7D-786C2-563760A88D8"));
 			result.reset();
 			System.out.println("result: " + XMLUtils.toString(getDomFromSourceData(result)));
 		} catch (Exception e) {
