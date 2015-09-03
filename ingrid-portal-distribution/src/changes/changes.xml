@@ -44,6 +44,9 @@
             <action type="add" dev="wemove" issue="REDMINE-19">
                 IGE: When publishing, then jump to first invalid field on error.
             </action>
+            <action type="update" dev="wemove" issue="REDMINE-13">
+                IGE: Import CSW, separate namespace and resource identifier with "/" instead of "#".
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-47">
                 IGE: Service version now editied via comboboxes displaying GDI-DE like versions (new syslists).
             </action>

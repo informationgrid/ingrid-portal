@@ -1477,7 +1477,7 @@ function mapRSIdentifier(source, target)  {
 			log.debug("Found RS_Identifier: " + code);
 			var dataSourceID = "";
 			if (hasValue(codeSpace)) {
-				dataSourceID = codeSpace + "#" + code;
+				dataSourceID = codeSpace + "/" + code;
 			} else {
 				dataSourceID = code;
 			}
