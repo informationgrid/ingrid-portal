@@ -1040,6 +1040,8 @@ define({
     "validation.error.spatial.no.expired":"Der Raumbezug darf nicht abgelaufen sein.",
     "validation.error.missing.download.link":"Bei der Auswahl von 'Open Data' muss ein Verweis vom Typ 'Datendownload' angelegt werden.",
     
+    "init.error.userNotFound":"Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",
+    
     "hint.noCapabilityUrlFound":"Es konnte keine GetCapabilities-Url gefunden werden, um den Datensatz zu aktualisieren.",
     "hint.datasetUpdatedFromCapabilities":"Der Datensatz wurde erfolgreich aktualisiert.",
     "hint.noEntriesFromParent":"Keine neuen Eintr&auml;ge vom &uuml;bergeordneten Objekt!",

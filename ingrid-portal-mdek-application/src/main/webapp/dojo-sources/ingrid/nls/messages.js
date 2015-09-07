@@ -1037,6 +1037,8 @@ define({
     "validation.error.spatial.no.expired":"A spatial reference must not be expired.",
     "validation.error.missing.download.link":"When 'Open Data' is selected then there must be a link of the type 'Download' created.",
     
+    "init.error.userNotFound":"The user could not be found in the catalog. Please check the mdek-database and the used catalog.",
+    
     "hint.noCapabilityUrlFound":"No GetCapabilities-Url could be found to update this dataset.",
     "hint.datasetUpdatedFromCapabilities":"The dataset has been successfully updated.",
     "hint.noEntriesFromParent":"No new entries from parent object!",
