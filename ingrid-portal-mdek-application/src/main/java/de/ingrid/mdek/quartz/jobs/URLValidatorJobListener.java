@@ -22,6 +22,8 @@
  */
 package de.ingrid.mdek.quartz.jobs;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -68,13 +70,45 @@ public class URLValidatorJobListener implements JobListener {
 		List<URLObjectReference> capabilitiesReferences = results.get(MdekKeys.CAP_RESULT);
 
 		if (urlObjectReferences != null) {
-			log.debug("sending URL Job result to the backend.");
-			IngridDocument jobInfo = new IngridDocument();
-			jobInfo.put(MdekKeys.URL_RESULT, MdekCatalogUtils.convertFromUrlJobResult(urlObjectReferences));
-			jobInfo.put(MdekKeys.CAP_RESULT, MdekCatalogUtils.convertFromUrlJobResult(capabilitiesReferences));
-			jobInfo.put(MdekKeys.JOBINFO_START_TIME, MdekUtils.dateToTimestamp(jobExecutionContext.getFireTime()));
-			mdekCallerCatalog.setURLInfo(plugId, jobInfo, userUuid);
-			log.debug("URL Validator Job result has been stored in the DB.");
+		    int from = 0;
+		    int step = 500;
+		    int to = from + step;
+		    boolean moreData = true;
+		    while (moreData) {
+		        int fromUrl = from > urlObjectReferences.size() ? urlObjectReferences.size() : from; 
+		        int toUrl = to > urlObjectReferences.size() ? urlObjectReferences.size() : to; 
+		        List<URLObjectReference> subListUrl = urlObjectReferences.subList( fromUrl, toUrl );
+		        
+		        fromUrl = from > capabilitiesReferences.size() ? capabilitiesReferences.size() : from; 
+		        toUrl = to > capabilitiesReferences.size() ? capabilitiesReferences.size() : to; 
+		        List<URLObjectReference> subListCap = capabilitiesReferences.subList( fromUrl, toUrl );
+    			
+		        from += step;
+		        to += step;
+		        
+		        log.debug("sending URL Job result to the backend.");
+    			IngridDocument jobInfo = new IngridDocument();
+    			jobInfo.put(MdekKeys.URL_RESULT, MdekCatalogUtils.convertFromUrlJobResult(subListUrl));
+    			jobInfo.put(MdekKeys.CAP_RESULT, MdekCatalogUtils.convertFromUrlJobResult(subListCap));
+    			jobInfo.put(MdekKeys.JOBINFO_START_TIME, MdekUtils.dateToTimestamp(jobExecutionContext.getFireTime()));
+    			jobInfo.putBoolean( MdekKeys.JOBINFO_IS_UPDATE, true );
+    			// if there's no more data then we can add the finish flag
+    			if (from > urlObjectReferences.size() && from > capabilitiesReferences.size()) {
+    			    jobInfo.putBoolean( MdekKeys.JOBINFO_IS_FINISHED, true );
+    			    moreData = false;
+    			} else {
+    			    jobInfo.putBoolean( MdekKeys.JOBINFO_IS_FINISHED, false );
+    			}
+    			
+    			try {
+    	            mdekCallerCatalog.setURLInfo(plugId, jobInfo, userUuid);
+    	            if (log.isDebugEnabled()) {
+    	                log.debug("URL Validator Job result has been stored in the DB. Results " + (from-step) + " to " + (to-step));
+    	            }
+    	        } catch (Exception e) {
+    	            log.error( "Error during writing new URL analysis", e );
+    	        }
+		    }
 
 		} else {
 			log.debug("URL Validator Job result was null. Job has probably been canceled. Result will not be stored in the DB!");
