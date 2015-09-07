@@ -42,7 +42,8 @@ require([
     "ingrid/utils/String",
     "ingrid/utils/List",
     "ingrid/utils/LoadingZone",
-    "ingrid/dialog"
+    "ingrid/dialog",
+    "dijit/ProgressBar",
 ], function(on, dom, style, registry, lang, array, Deferred, UtilGrid, layoutCreator, UtilString, UtilList, LoadingZone, dialog) {
     
         // Use the same store for both tables. The First table has to be reinitialised so the new store
@@ -234,6 +235,7 @@ require([
         		style.set("urlsProgressBarContainer", "display", "none");
         		style.set("cancelUrlsProcessButton", "display", "none");
         		style.set("urlsInfoNumProcessedUrlsContainer", "display", "none");
+        		style.set(registry.byId("urlStartAnalysis").domNode, "display", "block");
         		dom.byId("urlsInfoNumProcessedUrls").innerHTML = "";
         
         		if (jobInfo.endTime) {
@@ -243,6 +245,7 @@ require([
         	} else {
         		dom.byId("urlsInfoTitle").innerHTML = "<fmt:message key='dialog.admin.management.urls.currentProcessInfo' />";
         		style.set("urlsInfoEndDateContainer", "display", "none");
+        		style.set(registry.byId("urlStartAnalysis").domNode, "display", "none");
         		style.set("cancelUrlsProcessButton", "display", "block");
         		style.set("urlsInfoNumProcessedUrlsContainer", "display", "block");
         		style.set("urlsProgressBarContainer", "display", "block");
@@ -270,7 +273,7 @@ require([
         
         function updateUrlTables(urlObjectReferenceList, capabilitiesReferenceList) {
         	if (urlObjectReferenceList) {
-        	    console.debug("list-size: " + urlObjectReferenceList.length);
+        	    //console.debug("list-size: " + urlObjectReferenceList.length);
         		UtilList.addIcons(urlObjectReferenceList);
         		UtilList.addIcons(capabilitiesReferenceList);
         		
