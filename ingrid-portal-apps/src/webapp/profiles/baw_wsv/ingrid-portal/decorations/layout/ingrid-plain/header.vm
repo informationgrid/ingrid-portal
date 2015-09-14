@@ -85,9 +85,6 @@ if (xmlhttp) {
 </script>
   </head>
   <body class="#PageBaseCSSClass()">
-    <noscript>
-	  <iframe src="/portal/detect-js.psml" style="display:none"></iframe>
-    </noscript>
 <!--  BEGIN: layout/html/ingrid/decorator.vm -->
     <div class="#PageBaseCSSClass()">
 

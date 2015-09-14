@@ -110,9 +110,6 @@ self.focus();
   </head>
   <body class="layout-tigris claro">
   <a name="top"></a>
-	<noscript>
-	  <iframe src="/detect-js.psml" style="display:none"></iframe>
-    </noscript>
 <!--  BEGIN: layout/html/ingrid/decorator.vm -->
     <div class="layout-tigris">
 

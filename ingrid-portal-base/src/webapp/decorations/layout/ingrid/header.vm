@@ -91,9 +91,6 @@ if (xmlhttp) {
 </script>
   </head>
   <body class="#PageBaseCSSClass() claro">
-    <noscript>
-      <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
-    </noscript>
 <!--  BEGIN: layout/html/ingrid/decorator.vm -->
     <div class="#PageBaseCSSClass()">
 
@@ -141,7 +138,9 @@ if (xmlhttp) {
 
 <!-- CONTENT BLOCK -->
 <div id="container">
-  
+	<noscript>
+		<p style="border: 1px solid #cecece; border-radius: 25px; text-align: center;">$MESSAGES.getString('ingrid.page.javascript.required')</p>
+	</noscript>
 ## $jetspeed.include($jetspeed.currentFragment)
 
 <!--  END: layout/html/ingrid/decorator.vm -->
