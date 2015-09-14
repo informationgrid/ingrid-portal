@@ -594,7 +594,7 @@ div.formfooter_border_style_top { border-top: 1px solid #CECECE; }
 input.btn { background: none; height: 33px; color: #FFFFFF; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; padding-bottom: 2px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0 #1C5269; }
 input.btn:hover { color: #FFFFFF; cursor: pointer;  background-image: url(../images/background-mainmenu-hover.png); }
 input.btn_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; border: 0 none !important;}
-input.btn_search { background: none; height: 33px; color: #486606; font-weight: bold; text-align: left; padding: 2px 38px 2px 9px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; }
+input.btn_search { background: none; height: 33px; color: #486606; font-weight: bold; text-align: center; padding: 2px 38px 2px 9px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; width: 185px;}
 input.btn_search:hover { color: #486606; cursor: pointer; background-image: url(../images/button_hover.png); text-shadow: 1px -1px 0px #BCE465; background-position: right center; }
 input.btn_search_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 9px; padding-right: 38px;  padding-bottom: 2px; border: 0 none !important; background-image: url(../images/background-mainmenu-hover.png); font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; }
 input.btn_gray { background: none; height: 33px; color: #1b78b1; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; padding-bottom: 2px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; /* text-shadow: 1px -1px 0 #1C5269; */ }
@@ -646,7 +646,7 @@ div.formbody input.qry_chronic {width: 29em; height: 25px; font-size: 83%; line-
 
 /*** Formular Einfache Suche Start Seite ***/
 
-div.formbody input.qrystr {width: 44em; height: 25px; font-size: 83%; line-height: 25px; border: 1px solid #999999; }
+div.formbody input.qrystr {width: 43em; height: 25px; font-size: 83%; line-height: 25px; border: 1px solid #999999; }
 
 /*** Formular Erweiterte Suche ***/
 
@@ -842,7 +842,7 @@ div.btn_gray_center { float:left; background-image: url("../images/button_gray.p
 
 .search_query_button { padding: 0px 0px 0px 595px; }
 .search_query_textarea { position: absolute;  margin: 1px 0 0; }
-div#logo img { /*height: 81px; width: 188px;*/ }
+div#logo img { height: 81px; width: 146px; background-color: #fff; padding: 0 40px 0 0; border-radius: 0 0 25px 0; }
 p.chronicle_teaser_title { float: none; width: 100%; }
 
 

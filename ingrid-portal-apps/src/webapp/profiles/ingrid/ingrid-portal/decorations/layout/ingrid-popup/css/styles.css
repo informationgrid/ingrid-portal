@@ -112,20 +112,21 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 
 div#identity { padding:0; margin:0; height: 97px; width:59.5em; background-color:#68A5D2; overflow:visible; }
 div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
-div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_karten { background-image:url(../images/01_motiv_karten.gif); background-repeat:no-repeat; }
-div.motiv_suche_detail { background-image:url(../images/01_motiv_suche_detail.png); background-repeat:no-repeat; }
+div.motiv_suche { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_karten { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_suche_detail { background-image:url(../images/01_motiv_blank.png); background-repeat:no-repeat; }
 
 div.en_motiv_blank { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
-div.en_motiv_suche { background-image:url(../images/en/en_01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_karten { background-image:url(../images/en/en_01_motiv_karten.gif); background-repeat:no-repeat; }
-div.en_motiv_suche_detail { background-image:url(../images/en/01_motiv_suche_detail.png); background-repeat:no-repeat; }
+div.en_motiv_suche { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_karten { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_suche_detail { background-image:url(../images/en/en_01_motiv_blank.png); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
 *********************************************************************/
 
 div#logo { float: left; }
+div#logo img { height: 81px; width: 146px; background-color: #fff; padding: 0 40px 0 0; border-radius: 0 0 25px 0; box-sizing: unset; }
 
 /********************************************************************
   logged on styles 
@@ -681,5 +682,3 @@ H1.print_title { background-color:#68A5D2; color:#FFFFFF; font-weight:bold; marg
 div.dojoTabPaneWrapper { border : 0px solid #6290d2; _zoom: 1; /* force IE6 layout mode so top border doesnt disappear */ display: block; clear: both; }
 br.print {display:none;}
 .print_view_visible { visibility:hidden; }
-
-div#logo img { height: 81px; width: 188px; }
