@@ -58,7 +58,7 @@
                         <a href="?hkey=ingrid-inform-1">InGrid-Portal info</a>
                     </li>
                     <li>
-                        <a href="?hkey=myingrid-1">My InGrid-Portal</a>
+                        <a href="?hkey=myingrid-1">myPortal</a>
                     </li>
                     <li>
                         <a href="?hkey=ingrid-newsletter-1">Newsletter</a>
@@ -319,7 +319,7 @@
         <section help-key="ext-search-spacial-6">
             <header>Restricting by map</header>
             <content>
-                <p>The InGrid-Portal search can be restricted spacially not only via terms but also by selecting a map section (bounding box). InGrid-Portal uses the Semantical 
+                <p>The search can be restricted spacially not only via terms but also by selecting a map section (bounding box). InGrid-Portal uses the Semantical 
 				   Network Service to connect several spatial terms within the coordinates of a defined bounding box (e.g. cities or mountains). These terms can be 
 				   considered within the search query. </p>
             </content>
@@ -353,7 +353,7 @@
             <section help-key="ext-search-spacial-9">
                 <header>Spatial constraints</header>
                 <content>
-                    <p>If you have chosen a map section you can select in which form the area restriction is to be used for the InGrid-Portal search. Here the following options are possible:</p>
+                    <p>If you have chosen a map section you can select in which form the area restriction is to be used for the search. Here the following options are possible:</p>
                     <ol>
                         <li>The spatial footprint of the result is contained in the search area</li>
                         <li>The spatial footprint of the result intersects the search area</li>
@@ -483,7 +483,7 @@
             <header>Search History</header>
             <content>
                 <p>InGrid-Portal stores a history of your search queries. As well as this history, which is automatically carried for one session, you can also as a logged 
-				   in user (see <a href="?hkey=myingrid-1">myInGrid-Portal</a>) save search queries permanently.</p>
+				   in user (see <a href="?hkey=myingrid-1">myPortal</a>) save search queries permanently.</p>
                 <p>You can call up both forms of stored search queries again via the <i>Search History</i> function.</p>
             </content>
         </section>
@@ -533,7 +533,7 @@
                 <p>You have three possibilities for including similar terms in the search:</p>
                 <ul>
                     <li>Automatically: In the settings for the search options form (<a href="?hkey=search-settings-1">Search/Options</a>)
-                        cross the option <i>Include similar terms in search</i>. You can also use these setting on a lasting basis (see <a href="?hkey=myingrid-1">myInGrid-Portal</a>).</li>
+                        cross the option <i>Include similar terms in search</i>. You can also use these setting on a lasting basis (see <a href="?hkey=myingrid-1">myPortal</a>).</li>
                     <li>Before conducting a search expand your search term with similar terms by using the 
                             <i><a href="?hkey=ext-search-subject-2">Topic/Thesaurus</a></i>
                         functionality of the <i><a href="?hkey=ext-search-1">Advanced Search</a></i>.</li>
@@ -552,7 +552,7 @@
             <header>You are only interested in information about your Federal State?</header>
             <content>
                 <p>You can select your Federal State via the  <i><a href="?hkey=ext-search-area-1">Search-Area</a></i> of the search. Be aware that information at national level could also be of interest to you. You can set national information in the search area as well as a Federal State. </p>
-                <p>You can also have these settings on a lasting basis (see  <a href="?hkey=myingrid-1">myInGrid-Portal</a>).</p>
+                <p>You can also have these settings on a lasting basis (see  <a href="?hkey=myingrid-1">myPortal</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
@@ -666,7 +666,7 @@
         <section help-key="search-save-1">
             <header>Save Query</header>
             <content>
-                <p>After carrying out a search query the users logged in have the possibility of saving the search term used on a long-term basis (see  <a href="?hkey=myingrid-1">myInGrid-Portal</a>) die Möglichkeit, den verwendeten Suchausdruck
+                <p>After carrying out a search query the users logged in have the possibility of saving the search term used on a long-term basis (see  <a href="?hkey=myingrid-1">myPortal</a>) die Möglichkeit, den verwendeten Suchausdruck
                     dauerhaft zu speichern. This takes place via the <i>Save Query </i>function.</p>
                 <p>Note: The search queries last used are also accessible without saving for the session in progress via <i><a href="?hkey=search-history-1">Search History</a></i>.</p>
             </content>
@@ -747,7 +747,7 @@
         <section help-key="search-expert-8">
             <header>Special symbols</header>
             <content>
-                <p>The following symbols have a special significance in the InGrid-Portal search string (e.g. in the form of operators):</p>
+                <p>The following symbols have a special significance in the search string (e.g. in the form of operators):</p>
                 <p>+ - &amp;&amp; || ! ( ) { } [ ] ^ &quot; ~ * ? : \</p>
                 <p>SShould you however use them as simple symbols within a search term then they must be marked as such by the symbol
                     \ (Backslash).</p>
@@ -1461,9 +1461,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>My InGrid-Portal</header>
+        <header>myPortal</header>
         <section help-key="myingrid-1">
-            <header>My InGrid-Portal</header>
+            <header>myPortal</header>
             <content>
                 <p>InGrid-Portal offers you the possibility of putting your own settings in place on lasting basis. Using these you can:</p>
                 <ul>

@@ -58,7 +58,7 @@
                         <a href="?hkey=ingrid-inform-1">InGrid-Portal Info</a>
                     </li>
                     <li>
-                        <a href="?hkey=myingrid-1">Mein InGrid-Portal</a>
+                        <a href="?hkey=myingrid-1">Mein Portal</a>
                     </li>
                     <li>
                         <a href="?hkey=ingrid-newsletter-1">Newsletter</a>
@@ -198,7 +198,7 @@
             <content>
                 <p>Suchen ist ganz einfach. Geben Sie in das Suchfeld einen oder 
                    mehrere Begriffe ein und klicken Sie anschließend auf die 
-                   Schaltfläche <b>InGrid-Portal Suche</b>. InGrid-Portal durchsucht alle
+                   Schaltfläche <b>Suche</b>. InGrid-Portal durchsucht alle
                    eingebundenen Informationen: Webseiten, Kataloge und
                    Datenbanken, die für Ihre Suche von Interesse sind. Die 
                    Ergebnisse Ihrer Suchanfrage werden in einer 
@@ -698,7 +698,7 @@
                     dieser Historie, die automatisch für eine Sitzung 
                     vorübergehend gespeichert
                     wird, können Sie als eingeloggter Nutzer 
-                    (siehe <a href="?hkey=myingrid-1">Mein InGrid-Portal</a>) auch
+                    (siehe <a href="?hkey=myingrid-1">Mein Portal</a>) auch
                     Suchanfragen permanent speichern 
                     (<a href="?hkey=search-save-1">Suche Speichern</a>).</p>
                 <p>Sowohl die vorübergehenden als auch die permanent gespeicherten Suchanfragen können über den Reiter 
@@ -807,7 +807,7 @@
                     könnten. Sie können im Suchbereich neben einem Land auch die
                     Bundesinformationen einstellen.</p>
                 <p>Sie können diese Einstellungen auch dauerhaft vornehmen
-                    (siehe <a href="?hkey=myingrid-1">Mein InGrid-Portal</a>).</p>
+                    (siehe <a href="?hkey=myingrid-1">Mein Portal</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
@@ -1988,9 +1988,9 @@
                   wie folgt vor:</p>
                 <ul>
                     <li>Melden Sie mit Ihrer Benutzerkennung unter 
-                        <b>Mein InGrid-Portal</b> (oben rechts in der Kopfleiste). 
+                        <b>Mein Portal</b> (oben rechts in der Kopfleiste). 
                         Wenn Sie noch keinen Zugang haben, klicken Sie unter 
-                        <b>Mein InGrid-Portal</b> auf <b>Neuer Benutzer</b> und legen 
+                        <b>Mein Portal</b> auf <b>Neuer Benutzer</b> und legen 
                         Sie ein neues Profil an.  
                     </li>
                     <li>Wechseln Sie dann wieder in den Bereich <b>Karten</b>.
@@ -2093,9 +2093,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>Mein InGrid-Portal</header>
+        <header>Mein Portal</header>
         <section help-key="myingrid-1">
-            <header>Mein InGrid-Portal</header>
+            <header>Mein Portal</header>
             <content>
                 <p>InGrid-Portal bietet Ihnen die Möglichkeit, eigene Einstellungen
                     dauerhaft vorzunehmen. Sie können darüber:</p>
