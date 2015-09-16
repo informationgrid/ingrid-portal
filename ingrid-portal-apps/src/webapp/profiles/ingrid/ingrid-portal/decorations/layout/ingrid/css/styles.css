@@ -1,6 +1,6 @@
 /*
  * **************************************************-
- * Ingrid Portal Apps
+ * Ingrid Portal Base
  * ==================================================
  * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
  * ==================================================
@@ -108,67 +108,67 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 
 div#identity { padding:0; margin:0; height: 97px; width:1240px; background-color:#68A5D2; overflow:visible; }
 div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
-div.motiv_start { background-image:url(../images/01_motiv_start.png); background-repeat:no-repeat; }
-div.motiv_suche { background-image:url(../images/01_motiv_suche.png); background-repeat:no-repeat; }
-div.motiv_service { background-image:url(../images/01_motiv_service.png); background-repeat:no-repeat; }
-div.motiv_messwerte { background-image:url(../images/01_motiv_messwerte.png); background-repeat:no-repeat; }
-div.motiv_umweltthemen { background-image:url(../images/01_motiv_umweltthemen.png); background-repeat:no-repeat; }
-div.motiv_karten { background-image:url(../images/01_motiv_karten.png); background-repeat:no-repeat; }
-div.motiv_umweltchronik { background-image:url(../images/01_motiv_umweltchronik.png); background-repeat:no-repeat; }
-div.motiv_topnavi { background-image:url(../images/01_motiv_topnavi.gif); background-repeat:no-repeat; }
-div.motiv_hilfe { background-image:url(../images/01_motiv_hilfe.png); background-repeat:no-repeat; }
-div.motiv_admin { background-image:url(../images/01_motiv_admin.gif); background-repeat:no-repeat; }
+div.motiv_start { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_suche { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_service { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_messwerte { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_umweltthemen { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_karten { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_umweltchronik { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_topnavi { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_hilfe { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_admin { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
 
 /*** new for ingrid 3.1.0 ****/
-div.motiv_datenschutz { background-image:url(../images/01_motiv_datenschutz.png); background-repeat:no-repeat; }
-div.motiv_funktionen { background-image:url(../images/01_motiv_funktionen.png); background-repeat:no-repeat; }
-div.motiv_impressum { background-image:url(../images/01_motiv_impressum.png); background-repeat:no-repeat; }
-div.motiv_informationsanbieter { background-image:url(../images/01_motiv_informationsanbieter.png); background-repeat:no-repeat; }
-div.motiv_inhalte { background-image:url(../images/01_motiv_inhalte.png); background-repeat:no-repeat; }
-div.motiv_katalog_hierarchie { background-image:url(../images/01_motiv_katalog_hierarchie.png); background-repeat:no-repeat; }
-div.motiv_katalog_thesaurus { background-image:url(../images/01_motiv_katalog_thesaurus.png); background-repeat:no-repeat; }
-div.motiv_kontakt { background-image:url(../images/01_motiv_kontakt.png); background-repeat:no-repeat; }
-div.motiv_mein_portal { background-image:url(../images/01_motiv_mein_portal.png); background-repeat:no-repeat; }
-div.motiv_newsletter { background-image:url(../images/01_motiv_newsletter.png); background-repeat:no-repeat; }
-div.motiv_suche_einstellungen { background-image:url(../images/01_motiv_suche_einstellungen.png); background-repeat:no-repeat; }
-div.motiv_suche_erweiterte { background-image:url(../images/01_motiv_suche_erweiterte.png); background-repeat:no-repeat; }
-div.motiv_suche_historie { background-image:url(../images/01_motiv_suche_historie.png); background-repeat:no-repeat; }
-div.motiv_treffer { background-image:url(../images/01_motiv_treffer.png); background-repeat:no-repeat; }
-div.motiv_ueber_portal { background-image:url(../images/01_motiv_ueber_portal.png); background-repeat:no-repeat; }
-div.motiv_weitere_meldungen { background-image:url(../images/01_motiv_weitere_meldungen.png); background-repeat:no-repeat; }
-div.motiv_datenquellen { background-image:url(../images/01_motiv_datenquellen.png); background-repeat:no-repeat; }
+div.motiv_datenschutz { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_funktionen { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_impressum { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_informationsanbieter { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_inhalte { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_katalog_hierarchie { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_katalog_thesaurus { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_kontakt { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_mein_portal { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_newsletter { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_suche_einstellungen { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_suche_erweiterte { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_suche_historie { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_treffer { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_ueber_portal { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_weitere_meldungen { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_datenquellen { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
 
 
 div.en_motiv_blank { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
-div.en_motiv_start { background-image:url(../images/en/01_motiv_start.png); background-repeat:no-repeat; }
-div.en_motiv_suche { background-image:url(../images/en/01_motiv_suche.png); background-repeat:no-repeat; }
-div.en_motiv_service { background-image:url(../images/en/01_motiv_service.png); background-repeat:no-repeat; }
-div.en_motiv_messwerte { background-image:url(../images/en/01_motiv_messwerte.png); background-repeat:no-repeat; }
-div.en_motiv_umweltthemen { background-image:url(../images/en/01_motiv_umweltthemen.png); background-repeat:no-repeat; }
-div.en_motiv_karten { background-image:url(../images/en/01_motiv_karten.png); background-repeat:no-repeat; }
-div.en_motiv_umweltchronik { background-image:url(../images/en/01_motiv_umweltchronik.png); background-repeat:no-repeat; }
-div.en_motiv_topnavi { background-image:url(../images/en/en_01_motiv_topnavi.gif); background-repeat:no-repeat; }
-div.en_motiv_hilfe { background-image:url(../images/en/01_motiv_hilfe.png); background-repeat:no-repeat; }
-div.en_motiv_admin { background-image:url(../images/en/en_01_motiv_admin.gif); background-repeat:no-repeat; }
+div.en_motiv_start { background-image:url(../images/en/en_01_motiv_blank.gif.png); background-repeat:no-repeat; }
+div.en_motiv_suche { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_service { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_messwerte { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_umweltthemen { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_karten { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_umweltchronik { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_topnavi { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_hilfe { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_admin { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
 
 /*** new for ingrid 3.1.0 ****/
-div.en_motiv_datenschutz { background-image:url(../images/en/01_motiv_datenschutz.png); background-repeat:no-repeat; }
-div.en_motiv_funktionen { background-image:url(../images/en/01_motiv_funktionen.png); background-repeat:no-repeat; }
-div.en_motiv_impressum { background-image:url(../images/en/01_motiv_impressum.png); background-repeat:no-repeat; }
-div.en_motiv_informationsanbieter { background-image:url(../images/en/01_motiv_informationsanbieter.png); background-repeat:no-repeat; }
-div.en_motiv_inhalte { background-image:url(../images/en/01_motiv_inhalte.png); background-repeat:no-repeat; }
-div.en_motiv_katalog_hierarchie { background-image:url(../images/en/01_motiv_katalog_hierarchie.png); background-repeat:no-repeat; }
-div.en_motiv_katalog_thesaurus { background-image:url(../images/en/01_motiv_katalog_thesaurus.png); background-repeat:no-repeat; }
-div.en_motiv_kontakt { background-image:url(../images/en/01_motiv_kontakt.png); background-repeat:no-repeat; }
-div.en_motiv_mein_portal { background-image:url(../images/en/01_motiv_mein_portal.png); background-repeat:no-repeat; }
-div.en_motiv_newsletter { background-image:url(../images/en/01_motiv_newsletter.png); background-repeat:no-repeat; }
-div.en_motiv_suche_einstellungen { background-image:url(../images/en/01_motiv_suche_einstellungen.png); background-repeat:no-repeat; }
-div.en_motiv_suche_erweiterte { background-image:url(../images/en/01_motiv_suche_erweiterte.png); background-repeat:no-repeat; }
-div.en_motiv_suche_historie { background-image:url(../images/en/01_motiv_suche_historie.png); background-repeat:no-repeat; }
-div.en_motiv_treffer { background-image:url(../images/en/01_motiv_treffer.png); background-repeat:no-repeat; }
-div.en_motiv_ueber_portal { background-image:url(../images/en/01_motiv_ueber_portal.png); background-repeat:no-repeat; }
-div.en_motiv_weitere_meldungen { background-image:url(../images/en/01_motiv_weitere_meldungen.png); background-repeat:no-repeat; }
-div.en_motiv_datenquellen { background-image:url(../images/en/01_motiv_datenquellen.png); background-repeat:no-repeat; }
+div.en_motiv_datenschutz { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_funktionen { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_impressum { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_informationsanbieter { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_inhalte { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_katalog_hierarchie { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_katalog_thesaurus { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_kontakt { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_mein_portal { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_newsletter { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_suche_einstellungen { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_suche_erweiterte { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_suche_historie { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_treffer { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_ueber_portal { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_weitere_meldungen { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_datenquellen { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
 
 
 /********************************************************************
@@ -389,7 +389,7 @@ div.resultset_nav { text-align:right; background-color:#F4F4F4; padding:0px 4px 
 div.resultset_nav a { text-decoration:underline; font-weight: bold;}
 
 div.resultset { padding:4px 10px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px; }
-div.resultset a { text-decoration:none; font-size:14px; color: #1B78B1; line-height:120%; padding: 0 15px 0 0; }
+div.resultset a { text-decoration:none; font-size:14px; color: #1B78B1; line-height:120%; padding: 0 10px 0 0; }
 div.resultset a:hover { text-decoration:underline;color: #111111;}
 div.resultset p.result_title { font-size:10px; margin: 10px 0px 10px 0px; }
 div.resultset p.result_description { font-size:11px; margin: 10px 0px 0px 0px; line-height:120%; color:#646464; }
@@ -400,6 +400,7 @@ div.resultset p.result_link { font-size:65%; color:#999999; margin:3px 0 5px 0; 
 div.resultset p.result_link img { position:relative; top:1px; }
 div.resultset p.preview_image { float: left; margin:0 5px 0 0; }
 div.resultset p.preview_image img { max-height: 100px; }
+div.resultset img.preview_image { float: left; margin:0 10px 0 0; }
 div.resultset p.result_link a { text-decoration:none; font-size: 11px; }
 div.resultset p.result_link a:hover { text-decoration:underline; }
 div.resultset span.result_title { font-size:75%; }
@@ -420,7 +421,7 @@ div.resultset_show_partner {text-decoration:none;font-size:12px; margin: 10px 0p
 
 .intendResult { font-weight: bold; left: 20px; position: relative; padding: 0 10px 0 0; }
 
-div.resultset .map_link { background-color:#D9EAFA; width: 100px; padding: 3px; margin-top: 4px; text-align: center; margin-bottom: 1px;}
+div.resultset .map_link { float:left; background-color:#D9EAFA; width: 70px; padding: 3px; margin-top: 4px; text-align: center; margin-bottom: 1px; margin-right: 10px;}
 div.resultset .map_link a { display: block; color: #1B78B1; font-size: 11px; padding: 0;}
 
 div.resultset p.coupled_resources { padding-left: 20px; margin-bottom: 5px; }
@@ -536,7 +537,9 @@ div.formbody_search div.search_line { background-image: url(../images/bg_search_
 div.formbody_search form { padding:5px 15px 10px 25px; }
 div.formbody_search div.optional-links { padding:0px 15px 12px 25px; margin:0; font-size:12px; }
 /* use formbody_border_style if need to change border style in profile (e.g. NUMIS)*/
-div.formbody_border_style { border-left: 1px solid #CECECE; border-right: 1px solid #CECECE; border-top: 1px solid #CECECE; border-bottom: 0px solid #CECECE; }
+div.formbody_border_style { border-left: 1px solid #CECECE; border-right: 1px solid #CECECE; border-top: 1px solid #CECECE; border-bottom: 
+
+0px solid #CECECE; }
 
 div.formbody_map { padding:10px 12px; }
 
@@ -591,7 +594,7 @@ div.formfooter_border_style_top { border-top: 1px solid #CECECE; }
 input.btn { background: none; height: 33px; color: #FFFFFF; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; padding-bottom: 2px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0 #1C5269; }
 input.btn:hover { color: #FFFFFF; cursor: pointer;  background-image: url(../images/background-mainmenu-hover.png); }
 input.btn_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; border: 0 none !important;}
-input.btn_search { background: none; height: 33px; color: #486606; font-weight: bold; text-align: left; padding: 2px 38px 2px 9px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; }
+input.btn_search { background: none; height: 33px; color: #486606; font-weight: bold; text-align: center; padding: 2px 38px 2px 9px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; width: 185px;}
 input.btn_search:hover { color: #486606; cursor: pointer; background-image: url(../images/button_hover.png); text-shadow: 1px -1px 0px #BCE465; background-position: right center; }
 input.btn_search_disable { background: none; height: 33px; color: #CECECE; font-weight: bold; text-align: left; padding-left: 9px; padding-right: 38px;  padding-bottom: 2px; border: 0 none !important; background-image: url(../images/background-mainmenu-hover.png); font-family: Verdana, Arial, sans-serif; text-shadow: 1px -1px 0px #BCE465; }
 input.btn_gray { background: none; height: 33px; color: #1b78b1; font-weight: bold; text-align: left; padding-left: 10px; padding-right: 10px; padding-bottom: 2px; border: 0 none !important; font-size: 12px; font-family: Verdana, Arial, sans-serif; /* text-shadow: 1px -1px 0 #1C5269; */ }
@@ -676,7 +679,7 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { margin: 0 0 0 55px; background: url(../images/logo_footer.gif) no-repeat; padding: 0 0 70px 115px; }
+div#footercontainer { margin: 0 0 0 55px; background: url(../images/ingrid_logo_icn_footer.png) no-repeat; padding: 0 0 70px 115px; }
 #footercontent { font-size: 65%; line-height: 120%; color: #B0B2B4; padding-top: 10px; }
 
 div#footermarginalcontainer { width: 1240px; margin-top: 25px; margin-bottom: 0px; padding: 0; background: #FFFFFF; height: 10px; }
@@ -839,7 +842,7 @@ div.btn_gray_center { float:left; background-image: url("../images/button_gray.p
 
 .search_query_button { padding: 0px 0px 0px 595px; }
 .search_query_textarea { position: absolute;  margin: 1px 0 0; }
-div#logo img { height: 81px; width: 188px; }
+div#logo img { height: 81px; width: 146px; background-color: #fff; padding: 0 40px 0 0; border-radius: 0 0 25px 0; }
 p.chronicle_teaser_title { float: none; width: 100%; }
 
 
@@ -994,3 +997,8 @@ div.dialog_content input.btn { text-align: center; min-width: 120px; }
 
 .tundra .dijitBorderContainer { background-color: transparent !important; }
 .tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child { border: 0px solid #CCCCCC !important; }
+
+/* InGrid Map Client*/
+
+p,label.search-ext-env{padding:2px;}
+ul.x-tab-strip-top {background-color: #CEDFF5;border-bottom-color: #8DB2E3;margin: 0 !important}
