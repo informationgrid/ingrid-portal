@@ -920,5 +920,6 @@ div#attribute a.facete_link_line { font-size:11px;font-weight: bold; }
 div#area_address a.facete_link_line { font-size:11px;font-weight: bold; }
 div.dialog_content input.btn { text-align: center; min-width: 120px; }
 
+.js-error { border: 1px solid #dfc7a7; text-align: center; padding: 5px; background-color: #f8f8f0; }
 .tundra .dijitBorderContainer { background-color: transparent !important; }
 .tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child { border: 0px solid #CCCCCC !important; }

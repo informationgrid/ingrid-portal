@@ -139,7 +139,8 @@ if (xmlhttp) {
 <!-- CONTENT BLOCK -->
 <div id="container">
 	<noscript>
-		<p style="border: 1px solid #cecece; border-radius: 25px; text-align: center;">$MESSAGES.getString('ingrid.page.javascript.required')</p>
+		<h3 class="portlet-msg-error js-error">$MESSAGES.getString('ingrid.page.javascript.required')</h3>
+		<br>
 	</noscript>
 ## $jetspeed.include($jetspeed.currentFragment)
 
