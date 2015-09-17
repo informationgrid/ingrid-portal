@@ -29,6 +29,9 @@
     </properties>
     <body>
         <release version="3.6.1-SNAPSHOT" date="2015-??-??" description="Release 3.6.1">
+            <action type="fix" dev="wemove" issue="REDMINE-56">
+                Portal: Remove JS detection with iFrames.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-115">
                 Portal: Remove "datatype:any" to display catalog hierarchy.
             </action>
