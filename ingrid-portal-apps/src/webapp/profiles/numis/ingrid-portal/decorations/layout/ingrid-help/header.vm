@@ -42,9 +42,6 @@
 
   </head>
   <body class="body-background">
-    <noscript>
-	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
-    </noscript>
 <!--  BEGIN: layout/html/ingrid/decorator.vm -->
     <div class="#PageBaseCSSClass()">
 
