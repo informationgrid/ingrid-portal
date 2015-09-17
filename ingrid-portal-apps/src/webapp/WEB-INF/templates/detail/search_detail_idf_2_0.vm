@@ -37,7 +37,9 @@
 	            #if($entry.isExtern)
 	                <img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
 	            #elseif($entry.isMapLink)
-					#if($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
+	            	#if(!$entry.get("href"))
+	            		<img class="preview" width="200" src="$entry.src"><p class="preview_label">$entry.title</p>
+					#elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
 						<a target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=${entry.get("href")}" style="text-align: center;" title="$entry.title"><img class="preview" width="200" src="$entry.src"><p class="preview_label">$entry.title</p></a>
 					#else
 						<a target="_new" href="${entry.get("href")}" style="text-align: center;" title="$entry.title"><img class="preview" width="200" src="$entry.src"><p class="preview_label">$entry.title</p></a>

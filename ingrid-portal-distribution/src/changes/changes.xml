@@ -29,6 +29,9 @@
     </properties>
     <body>
         <release version="3.6.0.3" date="2015-09-11" description="Bugfix-Release 3.6.0.3">
+            <action type="fix" dev="wemove" issue="REDMINE-151">
+                Portal: Removed "show in map" functionality when clicking preview image in detail view of service with restricted access.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-115">
                 Portal: Remove "datatype:any" to display catalog hierarchy.
             </action>
