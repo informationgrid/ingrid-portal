@@ -219,59 +219,7 @@
           </execution>
         </executions>
       </plugin>
-      <!-- Creation of report BOUND to deploy phase to avoid calling changes:changes-report in top dir ! -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>2.9</version>
-        <configuration>
-          <xmlPath>${basedir}/src/changes/changes.xml</xmlPath>
-          <outputDirectory>target/site</outputDirectory>
-        </configuration>
-        <!-- bind creation of report to deploy phase to be executed AFTER clean ! -->
-        <executions>
-            <execution>
-                <id>report-when-deploying</id>
-                <phase>deploy</phase>
-                <goals>
-                    <goal>changes-report</goal>
-                </goals>
-            </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>wagon-maven-plugin</artifactId>
-        <version>1.0-beta-4</version>
-        <configuration>
-          <fromDir>target</fromDir>
-          <includes>${project.build.finalName}-installer.jar,site*/**/*</includes>
-          <!-- NOTICE: distribution directory is "artifactId". REDEFINE in project pom if different directory needed (e.g. "ingrid-iplug-ige" instead of "ingrid-mdek" !) -->
-          <url>file:///opt/ingrid/distributions/${project.artifactId}/${project.version}</url>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.0-beta-9</version>
-        <configuration>
-          <!--
-            During release:perform, execute deploy changes:changes-report
-            assembly:assembly wagon:upload changes:announcement-mail to upload
-            the distribution to /opt/ingrid/distributions
-          -->
-          <preparationGoals>clean verify deploy changes:changes-report assembly:assembly wagon:upload -Dproject.url=</preparationGoals>
-          <goals>changes:announcement-mail -Dproject.url= --non-recursive</goals>
-        </configuration>
-      </plugin>
-      <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>license-maven-plugin</artifactId>
-          <configuration>
-            <roots>
-              <root>src/main/resources/ant-installer</root>
-            </roots>
-          </configuration>
-      </plugin>
+      
     </plugins>
   </build>
   <repositories>
@@ -301,6 +249,50 @@
               </plugin>
             </plugins>
         </build>
+    </profile>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>wagon-maven-plugin</artifactId>
+            <configuration>
+              <fromDir>target</fromDir>
+              <url>file:///opt/ingrid/distributions/${project.artifactId}/${project.version}</url>
+            </configuration>
+            <executions>
+              <execution>
+                <id>upload-to-distributions</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>upload</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-changes-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>changes-report</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>changes-report</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>changes-announcement-mail</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>announcement-mail</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 </project>

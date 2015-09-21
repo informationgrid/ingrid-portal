@@ -32,9 +32,6 @@
             <action type="fix" dev="wemove" issue="REDMINE-56">
                 Portal: Remove JS detection with iFrames.
             </action>
-            <action type="fix" dev="wemove" issue="REDMINE-115">
-                Portal: Remove "datatype:any" to display catalog hierarchy.
-            </action>
             <action type="update" dev="wemove" issue="REDMINE-14">
                 Portal: Replace "PortalU" with "InGrid-Portal".
             </action>
@@ -53,14 +50,44 @@
             <action type="update" dev="wemove" issue="REDMINE-47">
                 IGE: Service version now editied via comboboxes displaying GDI-DE like versions (new syslists).
             </action>
-            <action type="fix" dev="wemove" issue="REDMINE-117">
-                IGE: Remove HTML-tags from an analyzed title during object creation using a wizard.
+            <action type="fix" dev="wemove" issue="REDMINE-125">
+                IGE: Fixed error when user has no permission to create an address.
+            </action>
+        </release>
+        
+        <release version="3.6.0.3" date="2015-09-21" description="Bugfix-Release 3.6.0.3">
+            <action type="fix" dev="wemove" issue="REDMINE-151">
+                Portal: Removed "show in map" functionality when clicking preview image in detail view of service with restricted access.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-115">
+                Portal: Remove "datatype:any" to display catalog hierarchy.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-123">
                 IGE: Catch error on null values for syslists.
             </action>
-            <action type="fix" dev="wemove" issue="REDMINE-125">
-                IGE: Fixed error when user has no permission to create an address.
+            <action type="fix" dev="wemove" issue="REDMINE-141">
+                IGE: Fixed error during URL analysis.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-145">
+                Portal: Fixed bug in displaying address description.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-117">
+                IGE: Remove HTML-tags from an analyzed title during object creation using a wizard.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-150">
+                WebMapClient: Fixed draw lines for BWaStr Locator.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-147">
+                WebMapClient: Fixed drag and drop of services on active services accordion.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-146">
+                WebMapClient: Fix visibility of group layer selection.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-148">
+                WebMapClient: Update mapbox libary.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-149">
+                WebMapClient: Add projections for YX order on WMS 1.3.0.
             </action>
         </release>
 

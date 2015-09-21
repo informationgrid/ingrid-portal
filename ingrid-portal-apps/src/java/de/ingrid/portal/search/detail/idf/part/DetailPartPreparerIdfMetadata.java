@@ -864,17 +864,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     					elementCapabilitiesLink.put("href", urlValue);
   						element.put("body", elementCapabilitiesLink);
 
-
-  						boolean hasAccessConstraints = false;
-  						xpathExpression = "./idf:hasAccessConstraint";
-  						if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
-  							String hasAccessConstraintsValue = XPathUtils.getString(rootNode, xpathExpression).trim();
-  							if(hasAccessConstraintsValue.length() > 0){
-  								hasAccessConstraints = Boolean.parseBoolean(hasAccessConstraintsValue);	
-  							}
-  						}
-
-    					if (!hasAccessConstraints) {
+    					if (!hasAccessConstraints()) {
     						element.put("title", messages.getString("common.result.showGetCapabilityUrl"));
     						if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && (serviceType != null && serviceType.equals("view"))){
     	  			        	HashMap elementMapLink = new HashMap();
@@ -1702,12 +1692,19 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             elementMapLink.put("type", "linkLine");
             elementMapLink.put("isMapLink", new Boolean(true));
             elementMapLink.put("isExtern", new Boolean(false));
-            elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
-            if(urlEncodeHref){
-            	elementMapLink.put("href", UtilsVelocity.urlencode(urlValue));
-            }else{
-            	elementMapLink.put("href", urlValue);
+
+            if (hasAccessConstraints()) {
+                // do not render "show in map" link if the map has access constraints (no href added).
+                elementMapLink.put("title", messages.getString("common.alt.image.preview"));               
+            } else {
+                elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                if(urlEncodeHref){
+                    elementMapLink.put("href", UtilsVelocity.urlencode(urlValue));
+                }else{
+                    elementMapLink.put("href", urlValue);
+                }                
             }
+
             // use preview image if provided otherwise static image
             String imageUrl = getPreviewImageUrl(null);
             if (imageUrl == null ) imageUrl = "/ingrid-portal-apps/images/show_map.png";
@@ -1760,4 +1757,16 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 	    }
 	    return url;
 	}
+
+    private boolean hasAccessConstraints() {
+        boolean hasAccessConstraints = false;
+        String xpathExpression = "./idf:hasAccessConstraint";
+        if (XPathUtils.nodeExists(rootNode, xpathExpression)) {
+            String hasAccessConstraintsValue = XPathUtils.getString(rootNode, xpathExpression).trim();
+            if(hasAccessConstraintsValue.length() > 0){
+                hasAccessConstraints = Boolean.parseBoolean(hasAccessConstraintsValue); 
+            }
+        }
+        return hasAccessConstraints;
+    }
 }

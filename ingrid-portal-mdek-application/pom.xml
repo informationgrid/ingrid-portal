@@ -31,15 +31,6 @@
             </resource>
         </resources>
         <plugins>
-            <!-- "DISABLE" WAGON PLUGIN TO AVOID EMPTY UPLOAD DIRECTORIES FROM SUBMODULES -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>wagon-maven-plugin</artifactId>
-                <configuration>
-                    <fromDir>NOT_EXISITING_DIRECTORY</fromDir>
-                    <url>/dev/null</url>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -182,6 +173,7 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-mdek-api</artifactId>
+            <version>3.6.0.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -231,6 +223,7 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-mdek-services</artifactId>
+            <version>3.6.0.3</version>
             <exclusions>
                 <exclusion>
                     <groupId>ojdbc</groupId>
@@ -242,6 +235,7 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-import-export</artifactId>
+            <version>3.6.0.3</version>
         </dependency>
         <dependency>
             <groupId>dom4j</groupId>
