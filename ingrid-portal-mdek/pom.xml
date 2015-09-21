@@ -241,7 +241,7 @@
     <dependency>
       <groupId>de.ingrid.mdek</groupId>
       <artifactId>ingrid-mdek-api</artifactId>
-      <version>3.6.0.3</version>
+      <version>3.6.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
