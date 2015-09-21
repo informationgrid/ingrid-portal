@@ -28,7 +28,7 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="3.6.0.3" date="2015-09-11" description="Bugfix-Release 3.6.0.3">
+        <release version="3.6.0.3" date="2015-09-21" description="Bugfix-Release 3.6.0.3">
             <action type="fix" dev="wemove" issue="REDMINE-151">
                 Portal: Removed "show in map" functionality when clicking preview image in detail view of service with restricted access.
             </action>
@@ -37,6 +37,9 @@
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-123">
                 IGE: Catch error on null values for syslists.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-141">
+                IGE: Fixed error during URL analysis.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-145">
                 Portal: Fixed bug in displaying address description.
