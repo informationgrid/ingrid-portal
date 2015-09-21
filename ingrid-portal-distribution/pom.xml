@@ -153,14 +153,6 @@
             <manifestEntries>
               <ingridComponentType>PORTAL</ingridComponentType>
             </manifestEntries>
-            <manifest>
-              <mainClass>org.tp23.antinstaller.selfextract.NonExtractor</mainClass>
-            </manifest>
-            <manifestEntries>
-              <Implementation-Version>${project.version}</Implementation-Version>
-              <Implementation-Build>${buildNumber}</Implementation-Build>
-              <Build-Timestamp>${timestamp}</Build-Timestamp>
-            </manifestEntries>
           </archive>
           <descriptors>
             <descriptor>src/main/assembly/bin.xml</descriptor>
@@ -176,58 +168,7 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>unpack-installer</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>de.ingrid</groupId>
-                  <artifactId>ingrid-installer</artifactId>
-                  <type>jar</type>
-                </artifactItem>
-              </artifactItems>
-              <!-- other configurations here -->
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>unpack</id>
-            <phase>compile</phase>
-            <configuration>
-              <tasks>
-                <unjar dest="target/installer">
-                  <fileset dir="target/dependency/lib">
-                    <include name="**/*.jar" />
-                  </fileset>
-                </unjar>
-                <copy todir="target/installer/resources">
-                  <fileset dir="target/dependency/resources" />
-                </copy>
-                <copy todir="target/installer">
-                  <fileset dir="target/dependency/utils" />
-                </copy>
-              </tasks>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      
+            
     </plugins>
   </build>
   <repositories>
