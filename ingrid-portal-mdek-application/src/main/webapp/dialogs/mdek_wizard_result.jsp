@@ -53,12 +53,13 @@ require([
     "ingrid/utils/UI",
     "ingrid/utils/Events",
     "ingrid/utils/Tree",
+    "ingrid/utils/String",
     "ingrid/IgeEvents",
     "ingrid/dialog",
     "ingrid/message",
     "ingrid/MenuActions",
     "ingrid/hierarchy/dirty"
-], function(lang, array, on, topic, dom, domClass, style, query, string, Deferred, DeferredList, registry, gridFormatters, gridEditors, layoutCreator, UtilAddress, UtilSyslist, UtilStore, UtilGrid, UtilList, UtilThesaurus, UtilDOM, UtilUI, UtilEvents, UtilTree, igeEvents, dialog, message, menuEventHandler, dirty) {
+], function(lang, array, on, topic, dom, domClass, style, query, string, Deferred, DeferredList, registry, gridFormatters, gridEditors, layoutCreator, UtilAddress, UtilSyslist, UtilStore, UtilGrid, UtilList, UtilThesaurus, UtilDOM, UtilUI, UtilEvents, UtilTree, UtilString, igeEvents, dialog, message, menuEventHandler, dirty) {
 
     on(_container_, "Load", function(){
         hideResults();
@@ -286,7 +287,7 @@ require([
     
     // Updates the input fields with values from the given topic map
     function updateInputFields(topicMap, fields, isWebsite) {
-        registry.byId( "assistantHtmlTitle" ).setValue( fields.title );
+        registry.byId( "assistantHtmlTitle" ).setValue( UtilString.stripTags( fields.title ) );
         registry.byId( "assistantHtmlContent" ).setValue( fields.content );
         dialogWizardResults.isWebsite = isWebsite;
         dialogWizardResults.databean = topicMap;

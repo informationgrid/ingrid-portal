@@ -22,6 +22,8 @@
  */
 package de.ingrid.mdek.quartz;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +36,8 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.SNSLocationUpdateJobInfoBean;
 import de.ingrid.mdek.beans.SNSUpdateJobInfoBean;
@@ -84,6 +88,11 @@ public class MdekJobHandler implements BeanFactoryAware {
 			boolean jobStarted = job.start(scheduler);
 			if (jobStarted) {
 				jobMap.put(job.getName(), job);
+				// initialize the job data for this job
+				// since this is a long running job with segmented data for the backend to be stored,
+				// we have to make sure at the beginning that it's marked running, otherwise the frontend
+				// might display the wrong/old data 
+				connectionFacade.getMdekCallerCatalog().setURLInfo( connectionFacade.getCurrentPlugId(), getInitialJobInfo( new Date() ), MdekSecurityUtils.getCurrentUserUuid() );
 
 			} else {
 				log.debug("Could not start URL Validator Job.");
@@ -93,6 +102,16 @@ public class MdekJobHandler implements BeanFactoryAware {
 			log.debug("Error starting URL Validator Job.", ex);
 		}
 	}
+	
+	private IngridDocument getInitialJobInfo(Date startTime) {
+      IngridDocument jobInfo = new IngridDocument();
+        jobInfo.put(MdekKeys.URL_RESULT, new ArrayList<Map<String, Object>>());
+        jobInfo.put(MdekKeys.CAP_RESULT, new ArrayList<Map<String, Object>>());
+        jobInfo.put(MdekKeys.JOBINFO_START_TIME, MdekUtils.dateToTimestamp(startTime));
+        jobInfo.putBoolean( MdekKeys.JOBINFO_IS_UPDATE, false );
+        jobInfo.putBoolean( MdekKeys.JOBINFO_IS_FINISHED, false );
+        return jobInfo;
+    }
 
 	public JobInfoBean getJobInfo(JobType jobType) {
 		MdekJob job = getJob(jobType);

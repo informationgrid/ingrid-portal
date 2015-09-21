@@ -22,19 +22,24 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/dom-construct",
     "ingrid/message",
     "ingrid/utils/General"
-], function(declare, message, UtilGeneral) {
+], function(declare, domConstruct, message, UtilGeneral) {
     return declare(null, {
 
 
         compare: function(a, b) {
+            if (a === null || a === undefined) return -1;
+            if (b === null || b === undefined) return 1;
             a = a.replace("ö", "oe").replace("ä", "ae").replace("ü", "ue").replace("ß", "ss").replace("Ä", "Ae").replace("Ö", "Oe").replace("Ü", "Ue");
             b = b.replace("ö", "oe").replace("ä", "ae").replace("ü", "ue").replace("ß", "ss").replace("Ä", "Ae").replace("Ö", "Oe").replace("Ü", "Ue");
             return a == b ? 0 : (a < b ? -1 : 1);
         },
 
         compareIgnoreCase: function(a, b) {
+            if (a === null || a === undefined) return -1;
+            if (b === null || b === undefined) return 1;
             return this.compare(a.toLowerCase(), b.toLowerCase());
         },
 
@@ -100,6 +105,10 @@ define([
                 }
             }
             return connUrl;
-        }
+        },
+        
+        stripTags: function(str) { 
+            return domConstruct.create("div", { innerHTML: str }).textContent; 
+        } 
     })();
 });
