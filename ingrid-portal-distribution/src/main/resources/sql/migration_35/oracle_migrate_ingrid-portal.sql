@@ -69,10 +69,12 @@ ALTER TABLE FRAGMENT ADD CONSTRAINT FRAGMENT_STRING_ID_UNIQUE UNIQUE (FRAGMENT_S
 
 -- to avoid error: Einfügen von NULL in (."FRAGMENT_PREF_VALUE"."VALUE") nicht möglich
 UPDATE FRAGMENT_PREF_VALUE SET VALUE = '""' where VALUE=' ';
+UPDATE FRAGMENT_PREF_VALUE SET VALUE = '""' where VALUE IS NULL;
 
 -- to avoid wrong export of user preference: Null not exported leading to missing value of preference !
 -- (IndexOutOfBoundsException when importing)
 UPDATE PREFS_PROPERTY_VALUE SET PROPERTY_VALUE = '""' where PROPERTY_VALUE=' ';
+UPDATE PREFS_PROPERTY_VALUE SET PROPERTY_VALUE = '""' where PROPERTY_VALUE IS NULL;
 
 
 -- Already update InGrid Portal Database Version (though not finished yet)
