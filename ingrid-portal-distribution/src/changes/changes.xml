@@ -30,6 +30,9 @@
     <body>
 
         <release version="3.6.0.4" date="2015-09-30" description="Bugfix-Release 3.6.0.4">
+            <action type="update" dev="wemove" issue="REDMINE-169">
+                Portal: Added SSO functionality again (Shibboleth) after testing with GeoPortal.WSV.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-141">
                 IGE: Fixed using old library, which prevented URL-maintenance working correctly.
             </action>
