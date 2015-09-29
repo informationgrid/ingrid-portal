@@ -28,6 +28,13 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+
+        <release version="3.6.0.4" date="2015-09-30" description="Bugfix-Release 3.6.0.4">
+            <action type="fix" dev="wemove" issue="REDMINE-141">
+                IGE: Fixed using old library, which prevented URL-maintenance working correctly.
+            </action>
+        </release>
+
         <release version="3.6.0.3" date="2015-09-21" description="Bugfix-Release 3.6.0.3">
             <action type="fix" dev="wemove" issue="REDMINE-151">
                 Portal: Removed "show in map" functionality when clicking preview image in detail view of service with restricted access.
