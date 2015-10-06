@@ -29,7 +29,10 @@
     </properties>
     <body>
 
-        <release version="3.6.0.4" date="2015-09-30" description="Bugfix-Release 3.6.0.4">
+        <release version="3.6.0.4-SNAPSHOT" date="??" description="Bugfix-Release 3.6.0.4">
+            <action type="update" dev="wemove" issue="REDMINE-177">
+                Portal: MapClient POST Request now of type application/json to match changed BWaStr Locator Service (GeoPortal.WSV).
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-169">
                 Portal: Added SSO functionality again (Shibboleth) after testing with GeoPortal.WSV.
             </action>
