@@ -39,6 +39,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-141">
                 IGE: Fixed using old library, which prevented URL-maintenance working correctly.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-104">
+                Show new iPlug-SE (>=3.5.0) on admin page.
+            </action>
         </release>
 
         <release version="3.6.0.3" date="2015-09-21" description="Bugfix-Release 3.6.0.3">
