@@ -81,7 +81,7 @@
 <div id="identity" class="motiv_suche">
   <!-- LOGO -->
   <div id="logo">
-    <a href="/portal/default-page.psml"><img src="/decorations/layout/ingrid/images/logo.gif" width="168" height="60" alt="Logo InGrid-Portal" /></a>
+    <a href="/portal/default-page.psml"><img src="/decorations/layout/ingrid/images/ingrid_logo_icn.png" alt="Logo InGrid-Portal" /></a>
   </div>
 </div>
 

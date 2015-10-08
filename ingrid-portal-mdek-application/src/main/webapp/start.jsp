@@ -100,7 +100,7 @@
 		<div id="contentContainer" class="contentSection">
 			<div id="headerContainer">
                 <div id="logoContainer">
-                    <div id="logo"><img width="119" height="24" alt="InGrid-Portal" src="img/logo.gif"></div>
+                    <div id="logo"><img alt="InGrid-Portal" src="img/logo.png"></div>
                     <div id="title"><img width="158" height="24" alt="Metadatenerfassung" src="img/title_erfassung_<%=(String)session.getAttribute("currLang")%>.gif"></div>
                     <div id="languageBox" value="<%=(String)session.getAttribute("currLang")%>"></div>
                     <div id="headMenu">

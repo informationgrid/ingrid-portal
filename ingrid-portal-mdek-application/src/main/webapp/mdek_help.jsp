@@ -53,7 +53,7 @@ h2 {margin:0; padding:20px 0px 15px 0px; font:bold 12px/16px Verdana, Helvetica,
 
 <body style="margin:0; padding:0;width:100%; height:100%; overflow:auto;font:normal 11px/16px Verdana, Helvetica, Arial, sans-serif;">
 	<div class="head-menu">
-  	    <div id="logo" class="float-left"><img src="img/logo.gif" width="119" height="24" alt="InGrid-Portal" /></div>
+  	    <div id="logo" class="float-left"><img src="img/logo.png" alt="InGrid-Portal" /></div>
   		  <div id="title" class="float-left"><img src="img/title_erfassung_<%=currLang%>.gif" width="158" height="24" alt="Metadatenerfassung" /></div>
   	    <ul>
   	      <li><a href="mdek_help.jsp?lang='+userLocale+'&hkey=index"><fmt:message key='general.help.index' /></a></li>
