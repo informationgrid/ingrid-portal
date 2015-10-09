@@ -297,28 +297,35 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     }
 
     private void removeConnectedIPlug(String plugId) throws PortletException {
-    	Session s = HibernateUtil.currentSession();
-    	s.beginTransaction();
-    	try {
-	    	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
-	    	if (userDataList != null && userDataList.size() != 0) {
-	    		// TODO Delete all idc users in the catalog?
-	    		for(UserData userData : userDataList) {
-		    		s.delete(userData);
-		    		roleManager.removeRoleFromUser(userData.getPortalLogin(), "mdek");
-	    		}
-	        	s.getTransaction().commit();
-	    	}
+        Session s = HibernateUtil.currentSession();
+        s.beginTransaction();
+        try {
+            @SuppressWarnings("unchecked")
+            List<UserData> userDataList = (List<UserData>) s.createCriteria( UserData.class ).add( Restrictions.eq( "plugId", plugId ) ).list();
+            if (userDataList != null && userDataList.size() != 0) {
+                // TODO Delete all idc users in the catalog?
+                for (UserData userData : userDataList) {
+                    s.delete( userData );
+                    try {
+                        roleManager.removeRoleFromUser( userData.getPortalLogin(), "mdek" );
+                    } catch (SecurityException e) {
+                        // ignore if a user already has been deleted in the portal (REDMINE-144)
+                        if (e.getMessage().contains( "does not exist" )) {
+                            log.warn( "The role 'mdek' could not be removed. The user does not seem to exist anymore: " + userData.getPortalLogin() );
+                        } else {
+                            if (s.getTransaction() != null) {
+                                s.getTransaction().rollback();
+                            }
+                            throw new PortletException( e );
+                        }
+                    }
+                }
+                s.getTransaction().commit();
+            }
 
-    	} catch (SecurityException e) {
-    		if (s.getTransaction() != null) {
-    			s.getTransaction().rollback();
-    		}
-    		throw new PortletException(e);
-
-    	} finally {    		
-    		HibernateUtil.closeSession();
-    	}
+        } finally {
+            HibernateUtil.closeSession();
+        }
     }
 
     private static ACTION getAction(ActionRequest request) {
@@ -377,7 +384,8 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	s.beginTransaction();
 
     	for (String plugId : this.mdekClientCaller.getRegisteredIPlugs()) {
-        	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
+        	@SuppressWarnings("unchecked")
+            List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
         	if (userDataList != null && userDataList.size() != 0) {
         		HashMap<String, String> catalogData = new HashMap<String, String>();
         		UserData userData = userDataList.get(0);
@@ -482,7 +490,8 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
     	Session s = HibernateUtil.currentSession();
     	s.beginTransaction();
-    	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).add(Restrictions.eq("addressUuid", addressUuid)).list();
+    	@SuppressWarnings("unchecked")
+        List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).add(Restrictions.eq("addressUuid", addressUuid)).list();
 
     	s.getTransaction().commit();
     	HibernateUtil.closeSession();

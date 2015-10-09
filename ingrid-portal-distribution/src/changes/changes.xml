@@ -53,6 +53,12 @@
             <action type="fix" dev="wemove" issue="REDMINE-125">
                 IGE: Fixed error when user has no permission to create an address.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-159">
+                IGE: Extended search sometimes not shown.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-144">
+                Portal/IGE: Removing a catalog which contains an already deleted user lead to an error.
+            </action>
         </release>
         
         <release version="3.6.0.3" date="2015-09-21" description="Bugfix-Release 3.6.0.3">
