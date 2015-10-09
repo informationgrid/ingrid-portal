@@ -269,6 +269,7 @@
                 style.set( contentAreaNode, "display", "block" );
                 arrow.src = "img/ic_info_deflate.gif";
                 style.set( searchButtonContainer, "display", "none" );
+                contentPane.resize();
 
             } else {
                 style.set( contentAreaNode, "display", "none" );
@@ -382,8 +383,8 @@
                         </span>
                     </div>
 
-                    <div data-dojo-type="dojox/layout/ContentPane" id="extContentObj"
-                       style="margin-top:5px;" executeScripts="true" scriptHasHooks="true" loadingMessage="<fmt:message key="general.loading.data" /> 
+                    <div data-dojo-type="dojox/layout/ContentPane" id="extContentObj" doLayout="false"
+                       style="margin-top:5px;" executeScripts="true" scriptHasHooks="true" loadingMessage="<fmt:message key="general.loading.data" />"></div> 
 
                     <!-- OBJECT SEARCH RESULT LIST START -->
                     <div class="spacer"></div>
@@ -443,7 +444,7 @@
                         </span>
                     </div>
 
-                    <div data-dojo-type="dojox.layout.ContentPane" widgetId="extContentAdr" id="extContentAdr" style="margin-top: 5px;"
+                    <div data-dojo-type="dojox.layout.ContentPane" widgetId="extContentAdr" id="extContentAdr" style="margin-top: 5px;" doLayout="false"
                         executeScripts="true" scriptHasHooks="true" loadingMessage="<fmt:message key="general.loading.data" />"></div>
 
                     <!-- ADDRESS SEARCH RESULT LIST START -->
