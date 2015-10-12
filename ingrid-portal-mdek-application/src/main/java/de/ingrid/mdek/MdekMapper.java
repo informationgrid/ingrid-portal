@@ -1065,13 +1065,9 @@ public class MdekMapper implements DataMapperInterface {
         }
         if (null == obj.getAvailabilityDataFormatInspire()) {
             obj.setAvailabilityDataFormatInspire(sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_FORMAT_INSPIRE.getDbValue()));
-    }
-
-        String useConstr = obj.getAvailabilityUseConstraints();
-        if (useConstr == null)  {
-        	useConstr = sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_USE.getDbValue());
-            obj.setAvailabilityUseConstraints(useConstr);
         }
+
+
     }
 
     // ------------------------------- Helper Methods -----------------------------------
