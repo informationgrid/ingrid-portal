@@ -32,6 +32,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-56">
                 Portal: Remove JS detection with iFrames.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-182">
+                Portal: Fixed address search in thesaurus catalog.
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-14">
                 Portal: Replace "PortalU" with "InGrid-Portal".
             </action>

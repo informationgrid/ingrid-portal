@@ -104,7 +104,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
         // -----------------------------------------------------------
 
         // datasource
-        String selectedDS = request.getParameter(Settings.PARAM_DATASOURCE);
+        String selectedDS = (String) SearchState.getSearchStateObject(request, Settings.PARAM_DATASOURCE, SEARCH_STATE_TOPIC);
         if (selectedDS == null) {
         	selectedDS = Settings.PARAMV_DATASOURCE_ENVINFO;
         }
