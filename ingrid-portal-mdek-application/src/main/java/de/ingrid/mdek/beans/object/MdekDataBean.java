@@ -113,6 +113,7 @@ public class MdekDataBean {
 
 	// Availability
 	private List<String> availabilityAccessConstraints;
+	private List<String> availabilityUseAccessConstraints;
 	private String availabilityUseConstraints;
 	private String availabilityDataFormatInspire;
 	private List<DataFormatBean> availabilityDataFormatTable;
@@ -2016,5 +2017,15 @@ public class MdekDataBean {
 
     public void setRef3AtomDownload(Boolean ref3AtomDownload) {
         this.ref3AtomDownload = ref3AtomDownload;
+    }
+
+
+    public List<String> getAvailabilityUseAccessConstraints() {
+        return availabilityUseAccessConstraints;
+    }
+
+
+    public void setAvailabilityUseAccessConstraints(List<String> availabilityUseAccessConstraints) {
+        this.availabilityUseAccessConstraints = availabilityUseAccessConstraints;
     }
 }

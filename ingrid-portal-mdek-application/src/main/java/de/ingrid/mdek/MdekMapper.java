@@ -205,6 +205,7 @@ public class MdekMapper implements DataMapperInterface {
         // Availability
         // Inspire field
         mdekObj.setAvailabilityAccessConstraints(mapToAvailAccessConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.ACCESS_LIST)));
+        mdekObj.setAvailabilityUseAccessConstraints(mapToAvailUseAccessConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.USE_CONSTRAINTS)));
         mdekObj.setAvailabilityUseConstraints(mapToAvailUseConstraints((List<IngridDocument>) obj.get(MdekKeys.USE_LIST), isOpenData));
         
         mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
@@ -795,7 +796,8 @@ public class MdekMapper implements DataMapperInterface {
         // Availability
         if (data.getObjectClass() != null && data.getObjectClass() != 0) {
             udkObj.put(MdekKeys.ACCESS_LIST, mapFromAvailAccessConstraintsTable(data.getAvailabilityAccessConstraints()));
-            udkObj.put(MdekKeys.USE_LIST, mapFromAvailUseConstraints(data.getAvailabilityUseConstraints(), data.getOpenData()));
+            udkObj.put(MdekKeys.USE_CONSTRAINTS, mapFromAvailUseAccessConstraintsTable(data.getAvailabilityUseAccessConstraints()));
+            udkObj.put(MdekKeys.USE_LIST, mapFromAvailUseConstraints(data.getAvailabilityUseConstraints()));
             udkObj.put(MdekKeys.DATA_FORMATS, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
             udkObj.put(MdekKeys.MEDIUM_OPTIONS, mapFromAvailMediaOptionsTable(data.getAvailabilityMediaOptionsTable()));
             udkObj.put(MdekKeys.ORDERING_INSTRUCTIONS, data.getAvailabilityOrderInfo());
@@ -1346,6 +1348,24 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
+    private List<IngridDocument> mapFromAvailUseAccessConstraintsTable(List<String> acList) {
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        
+        if (acList != null) {
+            for (String ac : acList) {
+                KeyValuePair kvp = mapFromKeyValue(MdekKeys.USE_LICENSE_KEY, ac);
+                if (kvp.getValue() != null || kvp.getKey() != -1) {
+                    IngridDocument result = new IngridDocument();
+                    result.put(MdekKeys.USE_LICENSE_KEY, kvp.getKey());
+                    result.put(MdekKeys.USE_LICENSE_VALUE, kvp.getValue());
+                    resultList.add(result);
+                }
+            }           
+        }
+        
+        return resultList;
+    }
+    
     private List<IngridDocument> mapFromCategoriesOpenDataTable(List<String> acList) {
         List<IngridDocument> resultList = new ArrayList<IngridDocument>();
         
@@ -1364,24 +1384,15 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
-    /** Map single value to list ! UseConstraints was a table, now a text field, see INGRID32-45 */
-    private List<IngridDocument> mapFromAvailUseConstraints(String uc, boolean isOpenData) {
+    /** Map single value to list ! UseConstraints was a table, now a text field, see INGRID32-45, REDMINE-14,-717 */
+    private List<IngridDocument> mapFromAvailUseConstraints(String uc) {
         List<IngridDocument> resultList = new ArrayList<IngridDocument>();
-        if (uc != null) {
-            String key = MdekKeys.USE_TERMS_OF_USE_KEY;
-            // if open-data then lookup the key-value pair in a different syslist!  
-            if (isOpenData) {
-                key = USE_TERMS_OF_LICENCE_KEY;
-            }
-            KeyValuePair kvp = mapFromKeyValue(key, uc);
-            if (kvp.getValue() != null || kvp.getKey() != -1) {
-                IngridDocument result = new IngridDocument();
-                // always save under use-key which will be used in backend
-                result.put(MdekKeys.USE_TERMS_OF_USE_KEY, kvp.getKey());
-                result.put(MdekKeys.USE_TERMS_OF_USE_VALUE, kvp.getValue());
-                resultList.add(result);
-            }
-        }
+        
+        IngridDocument result = new IngridDocument();
+        // always save as free entry now since there's not syslist used anymore (REDMINE-14,-717)
+        result.put(MdekKeys.USE_TERMS_OF_USE_KEY, -1);
+        result.put(MdekKeys.USE_TERMS_OF_USE_VALUE, uc);
+        resultList.add(result);
 
         return resultList;
     }
@@ -1971,6 +1982,19 @@ public class MdekMapper implements DataMapperInterface {
             }
         }
 
+        return resultList;
+    }
+    
+    private List<String> mapToAvailUseAccessConstraintsTable(List<IngridDocument> docList) {
+        List<String> resultList = new ArrayList<String>();
+        
+        if (docList != null) {
+            for (IngridDocument doc : docList) {
+                KeyValuePair kvp = mapToKeyValuePair(doc, MdekKeys.USE_LICENSE_KEY, MdekKeys.USE_LICENSE_VALUE);
+                resultList.add(kvp.getValue());
+            }
+        }
+        
         return resultList;
     }
     

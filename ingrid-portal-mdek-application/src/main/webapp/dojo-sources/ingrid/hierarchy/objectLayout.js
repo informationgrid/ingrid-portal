@@ -1819,6 +1819,19 @@ define([
                 }];
                 layoutCreator.createDataGrid("availabilityAccessConstraints", null, availabilityAccessConstraintsStructure, null);
 
+                var availabilityUseAccessConstraintsStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '348px',
+                    type: gridEditors.ComboboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 6500,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6500)
+                }];
+                layoutCreator.createDataGrid("availabilityUseAccessConstraints", null, availabilityUseAccessConstraintsStructure, null);
+                
                 new SimpleTextarea({
                     "class": "textAreaFull",
                     rows: 5

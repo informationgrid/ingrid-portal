@@ -1968,16 +1968,24 @@
                                     </div>
 									</div>
                                 </span>
-                                <span id="uiElementN026" class="outer halfWidth">
+                                <span id="uiElementN027" class="outer halfWidth">
+                                    <div><span id="availabilityUseAccessConstraintsLabel" class="label">
+                                        <label for="availabilityUseAccessConstraints" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10027)">
+                                            <fmt:message key="ui.obj.availability.useAccessConstraints" />
+                                        </label>
+                                    </span>
+                                    <div class="input tableContainer">
+                                        <div id="availabilityUseAccessConstraints" autoHeight="4" interactive="true" class="hideTableHeader">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </span>
+                                <span id="uiElementN026" class="outer">
                                     <div>
                                     <span id="availabilityUseConstraintsLabel" class="label left">
                                         <label for="availabilityUseConstraints" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10026)">
                                             <fmt:message key="ui.obj.availability.useConstraints" />
                                         </label>
-                                    </span>
-                                    <span class="functionalLink">
-                                        <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
-                                        <a id="availabilityUseConstraintsLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('availabilityUseConstraints'), 'dialogs/mdek_use_constraints_dialog.jsp?c='+userLocale, 735, 300, true, {listId: '6020'});" title="<fmt:message key="dialog.popup.useConstraints.link" /> [Popup]"><fmt:message key="ui.obj.availability.useConstraints.link" /></a>
                                     </span>
                                     <span class="input clear"><input type="text" id="availabilityUseConstraints" name="availabilityUseConstraints" /></span>
                                     </div>
