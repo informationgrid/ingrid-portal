@@ -842,7 +842,7 @@ div.btn_gray_center { float:left; background-image: url("../images/button_gray.p
 
 .search_query_button { padding: 0px 0px 0px 595px; }
 .search_query_textarea { position: absolute;  margin: 1px 0 0; }
-div#logo img { height: 81px; width: 146px; background-color: #fff; padding: 0 40px 0 0; border-radius: 0 0 25px 0; }
+div#logo img {  background-color: #fff; padding: 14px 51px 14px 15px; border-radius: 0 0 25px 0; }
 p.chronicle_teaser_title { float: none; width: 100%; }
 
 

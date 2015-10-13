@@ -126,7 +126,7 @@ div.en_motiv_suche_detail { background-image:url(../images/en/en_01_motiv_blank.
 *********************************************************************/
 
 div#logo { float: left; }
-div#logo img { height: 81px; width: 146px; background-color: #fff; padding: 0 40px 0 0; border-radius: 0 0 25px 0; box-sizing: unset; }
+div#logo img {  background-color: #fff; padding: 14px 51px 14px 15px; border-radius: 0 0 25px 0; }
 
 /********************************************************************
   logged on styles 
