@@ -16,7 +16,7 @@ INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, he
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1530, 0, 10027, -1, 'de', 'Nutzungsbeschränkungen', 'Einschränkungen zum Schutz der Privatsphäre oder des geistigen Eigentums sowie andere besondere Einschränkungen oder Warnungen bezüglich der Nutzung der Ressource oder der Metadaten (ISO: useConstraints)', '');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
-(1531, 0, 10027, -1, 'en', 'Use Access Constraints', 'Constraints applied to assure the protection of privacy or intellectual property, and any special restrictions or limitations or warnings on using the resource or metadata (ISO: useConstraints)', '');
+(1531, 0, 10027, -1, 'en', 'Use Constraints', 'Constraints applied to assure the protection of privacy or intellectual property, and any special restrictions or limitations or warnings on using the resource or metadata (ISO: useConstraints)', '');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1410, 0, 6010, -1, 'de', 'Open Data', 'Diese Checkbox kennzeichnet dieses Objekt als "Open Data"-Objekt. Es sind dann zusätzlich folgende Angaben verpflichtend:<ul><li>In der (nur für Opendata) erscheinenden Tabelle "Kategorien" muß mindestens ein Wert eingetragen werden.</li><li>Unter Verweisen muß mindestens ein Verweis vom Typ "Datendownload" eingetragen werden.</li></ul>', '');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES

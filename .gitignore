@@ -18,3 +18,4 @@
 .project
 .settings/
 ingrid-portal-base/work_tomcat/
+/target
