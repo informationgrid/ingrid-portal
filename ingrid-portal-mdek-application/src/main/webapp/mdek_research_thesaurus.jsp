@@ -161,6 +161,7 @@ a.resultText.selected { color:#C21100; }
                 UtilList.addIcons(res.resultList);
 
                 UtilGrid.setTableData("searchThesaurusNavObjectsList", res.resultList);
+                UtilGrid.getTable("searchThesaurusNavObjectsList").reinitLastColumn(true);
             }
 
             function updateAddressResults(res) {
@@ -170,6 +171,7 @@ a.resultText.selected { color:#C21100; }
                 UtilList.addTableIndices(res.resultList);
 
                 UtilGrid.setTableData("searchThesaurusNavAddressesList", res.resultList);
+                UtilGrid.getTable("searchThesaurusNavAddressesList").reinitLastColumn(true);
             }
 
             function updateObjectNavigation(res) {
@@ -346,7 +348,7 @@ a.resultText.selected { color:#C21100; }
             </div>
         </div>
 
-            <div data-dojo-type="dijit/layout/ContentPane" region="center" class="innerPadding">
+        <div data-dojo-type="dijit/layout/ContentPane" region="center" class="innerPadding">
             <div id="researchThesaurusTabContainer" data-dojo-type="dijit/layout/TabContainer" class="tabContainerWithBorderTop" style="height: 100%; border: 0;" selectedChild="thesaurusTreeContainer">
               <!-- first tab, tree view -->
               <div class="grey" data-dojo-type="dijit/layout/ContentPane" id="thesaurusTreeContainer" title="<fmt:message key="dialog.research.thes.tree" />">
@@ -358,7 +360,7 @@ a.resultText.selected { color:#C21100; }
                   <span id="thesaurusResultContainer"></span>
                 </div>
             </div>
-            </div>
+        </div>
             
         <!-- LEFT HAND SIDE CONTENT END -->
         

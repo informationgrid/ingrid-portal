@@ -101,11 +101,11 @@ define([
                     if (helpEntry) {
                         deferred.resolve(helpEntry);
                     } else {
-                        deferred.errback();
+                        deferred.reject();
                     }
                 },
                 errorHandler: function(errMsg, err) {
-                    deferred.errback(new Error(errMsg));
+                    deferred.reject(new Error(errMsg));
                 }
             });
 
