@@ -1259,7 +1259,7 @@ define([
 
             // show info of long text which is necessary if no edit mode is available
             // if (query(".slick-cell.l2.r2")[1].scrollWidth > cellWidth)
-            if (this.getDataItem(cell.row) && thisCell.scrollWidth > this.columns[cell.cell].width) {
+            if (!doNotShowTooltips && this.getDataItem(cell.row) && thisCell.scrollWidth > this.columns[cell.cell].width) {
                 var self = this;
                 var cellContent = this.getDataItem(cell.row)[this.columns[cell.cell].field];
                 // in case the content is formatted we have to convert it
