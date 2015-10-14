@@ -35,29 +35,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0.LinkType;
 import de.ingrid.utils.udk.UtilsCountryCodelist;
-import de.ingrid.utils.xml.IDFNamespaceContext;
-import de.ingrid.utils.xml.XPathUtils;
 
 public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
 
 	@Override
 	public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
-		this.rootNode = node;
-		this.iPlugId = iPlugId;
-		this.request = request;
-		this.response = response;
-		this.uuid = this.request.getParameter("docuuid");
+        super.init( node, iPlugId, request, response, context );
+
 		this.templateName = "/WEB-INF/templates/detail/part/detail_part_preparer_address.vm";
-		this.namespaceUri = IDFNamespaceContext.NAMESPACE_URI_IDF;
 		this.localTagName = "idfResponsibleParty";
-		this.context = context;
-		this.messages = (IngridResourceBundle) context.get("MESSAGES");
-		this.sysCodeList = new IngridSysCodeList(request.getLocale());
 	}
 	
 	public String getAddressClassType() {

@@ -32,6 +32,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -43,9 +46,12 @@ import de.ingrid.utils.udk.TM_PeriodDurationToTimeAlle;
 import de.ingrid.utils.udk.TM_PeriodDurationToTimeInterval;
 import de.ingrid.utils.udk.UtilsDate;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
-import de.ingrid.utils.xml.XPathUtils;
+import de.ingrid.utils.xml.IDFNamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 
 public class DetailPartPreparer {
+
+    private final static Logger log = LoggerFactory.getLogger(DetailPartPreparer.class);
 
 	public NodeList				nodeList;
 	public IngridSysCodeList	sysCodeList;
@@ -60,9 +66,23 @@ public class DetailPartPreparer {
 	public String localTagName = "";
 	public String namespaceUri = "";
 	public Node rootNode = null;
-	
+
+    protected XPathUtils XPathUtils = null;
+
+	/** Default initialization ! May be overwritten in subclasses. */
 	public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
-		
+        this.rootNode = node;
+        this.iPlugId = iPlugId;
+        this.request = request;
+        this.response = response;
+        this.context = context;
+
+        this.namespaceUri = IDFNamespaceContext.NAMESPACE_URI_IDF;
+        this.messages = (IngridResourceBundle) context.get("MESSAGES");
+        this.sysCodeList = new IngridSysCodeList(request.getLocale());
+        this.uuid = this.request.getParameter("docuuid");
+
+        XPathUtils = new XPathUtils(new IDFNamespaceContext());
 	}
 
 	public String getValueFromXPath(String xpathExpression) {
@@ -140,7 +160,87 @@ public class DetailPartPreparer {
 		sortList(list);
 		return list;
 	}
-	
+
+    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType) {
+        return getSiblingsValuesFromXPath(xpathExpression, siblingType, false);
+    }
+    
+    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType, boolean includeSelection) {
+        return getSiblingsValuesFromXPath(xpathExpression, siblingType, includeSelection, null);
+    }
+    
+    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType, boolean includeSelection, String codeListId) {
+        return getSiblingsValuesFromXPath(xpathExpression, siblingType, includeSelection, codeListId, null);
+    }
+    
+    /** Get values of sibling(s) of node(s).<br>
+     * NOTICE: values starting with "{" and ending with "}" (JSON !) are not included
+     * @param xpathExpression get siblings of this node(s)
+     * @param siblingNodeName name of the sibling nodes to return values from, pass null if all siblings matter
+     * @param includeSelection include the value of the node of which the siblings are detected 
+     * @param codeListId pass code list if values have to be transformed, else pass null
+     * @param consideredValues values to skip
+     * @return list of values to render
+     */
+    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingNodeName, boolean includeSelection, String codeListId, ArrayList<String> consideredValues) {
+        ArrayList<String> list = new ArrayList<String>();
+        NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+        if(nodeList == null) {
+            return list;
+        }
+        ArrayList<Node> parentsParsed = new ArrayList<Node>();
+        for (int i=0; i<nodeList.getLength(); i++) {
+            Node selectedNode = nodeList.item(i);
+            Node parentNode = selectedNode.getParentNode();
+            if (parentNode != null && !parentsParsed.contains( parentNode )) {
+                parentsParsed.add( parentNode );
+                NodeList children = parentNode.getChildNodes();
+                for (int j=0; j<children.getLength(); j++) {
+                    Node child = children.item(j);
+
+                    // exclude starting node ?
+                    if (!includeSelection) {
+                        if (child.equals( selectedNode )) {
+                            continue;
+                        }
+                    }
+                    // exclude siblings not of given name
+                    if (siblingNodeName != null) {
+                        if (!child.getNodeName().equals( siblingNodeName )) {
+                            continue;
+                        }
+                    }
+                    String value = child.getTextContent().trim();
+                    if(value == null ||  value.length() == 0) {
+                        continue;
+                    }
+                    // exclude JSON values
+                    if (value.startsWith( "{" ) && value.endsWith( "}" )) {
+                        continue;                            
+                    }
+                    // exclude considered values
+                    if (consideredValues != null) {
+                        if (consideredValues.contains( value )) {
+                            continue;
+                        }
+                    }
+                    // transform with code list ?
+                    if(codeListId != null){
+                        String tmpValue = getValueFromCodeList(codeListId, value);
+                        if (tmpValue.length() > 0) {
+                            value = tmpValue;
+                        }
+                    }
+                    if (!list.contains( value )) {
+                        list.add(value);                        
+                    }
+                }
+            }
+        }
+        sortList(list);
+        return list;
+    }
+
 	public boolean nodeExist(String xpathExpression){
 		return XPathUtils.nodeExists(this.rootNode, xpathExpression);
 	}

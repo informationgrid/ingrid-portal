@@ -35,32 +35,21 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0.LinkType;
 import de.ingrid.utils.capabilities.CapabilitiesUtils;
 import de.ingrid.utils.capabilities.CapabilitiesUtils.ServiceType;
 import de.ingrid.utils.udk.UtilsCountryCodelist;
 import de.ingrid.utils.udk.UtilsDate;
-import de.ingrid.utils.xml.IDFNamespaceContext;
-import de.ingrid.utils.xml.XPathUtils;
 
 public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
 	@Override
 	public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
-		this.rootNode = node;
-		this.iPlugId = iPlugId;
-		this.request = request;
-		this.response = response;
-		this.uuid = this.request.getParameter("docuuid");
+	    super.init( node, iPlugId, request, response, context );
+
 		this.templateName = "/WEB-INF/templates/detail/part/detail_part_preparer_metadata.vm";
-		this.namespaceUri = IDFNamespaceContext.NAMESPACE_URI_IDF;
 		this.localTagName = "idfMdMetadata";
-		this.context = context;
-		this.messages = (IngridResourceBundle) context.get("MESSAGES");
-		this.sysCodeList = new IngridSysCodeList(request.getLocale());
 	}
 	
 	public String getUdkObjectClassType() {
@@ -111,7 +100,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 		String value = null;
 		String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title";
 		Node node = XPathUtils.getNode(this.rootNode, xpathExpression);
-        if(node.getTextContent().length() > 0){
+        if(node != null && node.getTextContent().length() > 0){
         	value = node.getTextContent();
         }
 		return value;
@@ -145,7 +134,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             xpathExpressionAbstract = "./gmd:abstract";
             abstractParentNode = node;
         }
-		value = XPathUtils.getString(abstractParentNode, xpathExpressionAbstract).trim();                    
+		value = XPathUtils.getString(abstractParentNode, xpathExpressionAbstract);
+		if (value != null) {
+		    value = value.trim();
+		}
 
 		return value;
 	}
