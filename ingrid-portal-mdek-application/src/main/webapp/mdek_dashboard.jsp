@@ -37,7 +37,7 @@
                     <div class="inputContainer">
                         <button data-dojo-type="dijit/form/Button" id="btnUpdateDashboard" title="<fmt:message key="ui.dashboard.update" />" onclick="pageDashboard.updateDashboard()"><fmt:message key="ui.dashboard.update" /></button>
                     </div>
-	               	<div class="infoboxWidth field">
+	               	<div class="infoboxWidth">
 	               		<div class="infobox">
 			                <table border="0">
 								<tr>

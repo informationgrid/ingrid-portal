@@ -180,7 +180,7 @@ div #toolbarPane .dijitToolbar .dijitButtonNode:hover { background-color: #ADD9F
 .claro .dijitTextBox .dijitInputField { padding-left:4px; padding-right:4px; }
 
 /* INFO */
-.infobox { background-color:#E6F0F5; border-bottom: 2px solid #156496; border-top: 2px solid #156496;  margin: 3px 0 11px 4px; padding: 0 16px 10px 6px; position: relative; width:700px; }
+.infobox { background-color:#E6F0F5; border-bottom: 2px solid #156496; border-top: 2px solid #156496;  padding: 0 16px 10px 6px; position: relative; width:700px; }
 .infoboxImage { width:16px; height:16px; padding-left: 16px; padding-top: 5px; }
 .infoboxWidth { width: 700px; padding-right: 16px; } 
 .contentBlockWhite div.listInfo { background: none repeat scroll 0 0 #ECECEC !important; clear: both; margin: 4px 0; padding-left: 15px; }
