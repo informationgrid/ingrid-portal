@@ -31,6 +31,7 @@ import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.query.ObjectSearchResultSimpleBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 
@@ -44,7 +45,7 @@ public interface ObjectService {
 	public void updateObjectTitle(String uuid, String newTitle);
 	public MdekDataBean assignObjectToQA(MdekDataBean data);
 	public MdekDataBean reassignObjectToAuthor(MdekDataBean data);
-	public ObjectSearchResultBean getWorkObjects(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
+	public ObjectSearchResultSimpleBean getWorkObjects(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
 	public ObjectSearchResultBean getQAObjects(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
 	public TreeNodeBean copyNode(String nodeUuid, String dstNodeUuid, Boolean includeChildren);
 	public void moveNode(String nodeUuid, String oldParentUuid, String newParentUuString, boolean forcePublicationCondition);

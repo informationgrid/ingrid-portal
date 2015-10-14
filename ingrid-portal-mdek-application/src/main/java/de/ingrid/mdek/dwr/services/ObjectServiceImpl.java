@@ -33,7 +33,9 @@ import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
+import de.ingrid.mdek.beans.object.MdekDataSimpleBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
+import de.ingrid.mdek.beans.query.ObjectSearchResultSimpleBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
@@ -331,16 +333,28 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 	}		
 	
-	public ObjectSearchResultBean getWorkObjects(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+	public ObjectSearchResultSimpleBean getWorkObjects(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
 		try {
 			ObjectSearchResultBean workObjects = objectRequestHandler.getWorkObjects(selectionType, orderBy, orderAsc, startHit, numHits);
 			Iterator<MdekDataBean> iterator = workObjects.getResultList().iterator();
+			ObjectSearchResultSimpleBean workObjectsSimple = new ObjectSearchResultSimpleBean();
+			workObjectsSimple.setTotalNumHits( workObjects.getTotalNumHits() );
+			workObjectsSimple.setNumHits( workObjects.getNumHits() );
 			while (iterator.hasNext()) {
                 MdekDataBean bean = iterator.next();
-                bean.setAssignerUser( null );
-                bean.setLastEditor( null );
+                MdekDataSimpleBean simpleBean = new MdekDataSimpleBean();
+                simpleBean.setUuid( bean.getUuid() );
+                simpleBean.setModificationTime( bean.getModificationTime() );
+                simpleBean.setNodeDocType( bean.getNodeDocType() );
+                simpleBean.setObjectClass( bean.getObjectClass() );
+                simpleBean.setRelationType( bean.getRelationType() );
+                simpleBean.setTitle( bean.getTitle() );
+                simpleBean.setWorkState( bean.getWorkState() );
+                simpleBean.setWritePermission( bean.getWritePermission() );
+                
+                workObjectsSimple.getResultList().add( simpleBean );
             }
-			return workObjects;
+			return workObjectsSimple;
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it

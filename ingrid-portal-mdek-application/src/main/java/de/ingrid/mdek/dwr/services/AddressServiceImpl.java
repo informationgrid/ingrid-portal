@@ -34,7 +34,9 @@ import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.address.MdekAddressSimpleBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
+import de.ingrid.mdek.beans.query.AddressSearchResultSimpleBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.handler.AddressRequestHandler;
@@ -330,16 +332,29 @@ public class AddressServiceImpl implements AddressService {
 		}		
 	}
 
-	public AddressSearchResultBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+	public AddressSearchResultSimpleBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
 		try {
 			AddressSearchResultBean workAddresses = addressRequestHandler.getWorkAddresses(selectionType, orderBy, orderAsc, startHit, numHits);
             Iterator<MdekAddressBean> iterator = workAddresses.getResultList().iterator();
+            AddressSearchResultSimpleBean workAddressesSimple = new AddressSearchResultSimpleBean();
+            workAddressesSimple.setTotalNumHits( workAddresses.getTotalNumHits() );
+            workAddressesSimple.setNumHits( workAddresses.getNumHits() );
             while (iterator.hasNext()) {
                 MdekAddressBean bean = iterator.next();
-                bean.setAssignerUser( null );
-                bean.setLastEditor( null );
+                MdekAddressSimpleBean simpleBean = new MdekAddressSimpleBean();
+                simpleBean.setUuid( bean.getUuid() );
+                simpleBean.setModificationTime( bean.getModificationTime() );
+                simpleBean.setNodeDocType( bean.getNodeDocType() );
+                simpleBean.setAddressClass( bean.getAddressClass() );
+                simpleBean.setGivenName( bean.getGivenName() );
+                simpleBean.setName( bean.getName() );
+                simpleBean.setOrganisation( bean.getOrganisation() );
+                simpleBean.setWorkState( bean.getWorkState() );
+                simpleBean.setWritePermission( bean.getWritePermission() );
+                
+                workAddressesSimple.getResultList().add( simpleBean );
             }
-            return workAddresses;
+            return workAddressesSimple;
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
