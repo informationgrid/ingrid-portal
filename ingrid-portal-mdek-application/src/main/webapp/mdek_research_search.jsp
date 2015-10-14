@@ -43,9 +43,10 @@
         "ingrid/utils/Store",
         "ingrid/utils/Address",
         "ingrid/layoutCreator",
-        "ingrid/utils/LoadingZone"
+        "ingrid/utils/LoadingZone",
+        "ingrid/grid/CustomGridFormatters"
     ], function(on, aspect, lang, dom, keys, registry, style, Deferred,
-                dialog, message, navigation, UtilList, UtilStore, UtilAddress, layoutCreator, LoadingZone) {
+                dialog, message, navigation, UtilList, UtilStore, UtilAddress, layoutCreator, LoadingZone, gridFormatters) {
         var resultsPerPage = 10;
         var objPageNav = new navigation.PageNavigation( {
             resultsPerPage: resultsPerPage,
@@ -114,9 +115,10 @@
 
         function createDomElements() {
             var objectSearchResultsStructure = [ {
-                field: 'icon',
+                field: 'nodeDocType',
                 name: '&nbsp;',
-                width: '23px'
+                width: '23px',
+                formatter:gridFormatters.renderIconClass
             }, {
                 field: 'linkLabel',
                 name: "<fmt:message key='dialog.research.name' />",
@@ -125,9 +127,10 @@
             layoutCreator.createDataGrid( "objectSearchResults", null, objectSearchResultsStructure, null );
 
             var addressSearchResultsStructure = [ {
-                field: 'icon',
+                field: 'nodeDocType',
                 name: '&nbsp;',
-                width: '23px'
+                width: '23px',
+                formatter:gridFormatters.renderIconClass
             }, {
                 field: 'linkLabel',
                 name: "<fmt:message key='dialog.research.name' />",

@@ -22,6 +22,7 @@
  */
 package de.ingrid.mdek.dwr.services;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -332,7 +333,14 @@ public class ObjectServiceImpl implements ObjectService {
 	
 	public ObjectSearchResultBean getWorkObjects(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
 		try {
-			return objectRequestHandler.getWorkObjects(selectionType, orderBy, orderAsc, startHit, numHits);
+			ObjectSearchResultBean workObjects = objectRequestHandler.getWorkObjects(selectionType, orderBy, orderAsc, startHit, numHits);
+			Iterator<MdekDataBean> iterator = workObjects.getResultList().iterator();
+			while (iterator.hasNext()) {
+                MdekDataBean bean = iterator.next();
+                bean.setAssignerUser( null );
+                bean.setLastEditor( null );
+            }
+			return workObjects;
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it

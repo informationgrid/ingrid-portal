@@ -23,11 +23,10 @@
 package de.ingrid.mdek.dwr.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
@@ -333,7 +332,14 @@ public class AddressServiceImpl implements AddressService {
 
 	public AddressSearchResultBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
 		try {
-			return addressRequestHandler.getWorkAddresses(selectionType, orderBy, orderAsc, startHit, numHits);
+			AddressSearchResultBean workAddresses = addressRequestHandler.getWorkAddresses(selectionType, orderBy, orderAsc, startHit, numHits);
+            Iterator<MdekAddressBean> iterator = workAddresses.getResultList().iterator();
+            while (iterator.hasNext()) {
+                MdekAddressBean bean = iterator.next();
+                bean.setAssignerUser( null );
+                bean.setLastEditor( null );
+            }
+            return workAddresses;
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
