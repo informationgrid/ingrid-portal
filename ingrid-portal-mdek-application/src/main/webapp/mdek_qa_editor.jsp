@@ -360,7 +360,7 @@ require([
         function getWorkObjects(type, sortBy, sortAsc, startHit, numHits) {
         	var def = new Deferred();
         
-        	ObjectService.getWorkObjects(type, sortBy, sortAsc, startHit, numHits, {
+        	ObjectService.getWorkObjectsQA(type, sortBy, sortAsc, startHit, numHits, {
         		callback: function(result) {
         			def.resolve(result);
         		},
@@ -382,7 +382,7 @@ require([
         function getWorkAddresses(type, sortBy, sortAsc, startHit, numHits) {
         	var def = new Deferred();
         
-        	AddressService.getWorkAddresses(type, sortBy, sortAsc, startHit, numHits, {
+        	AddressService.getWorkAddressesQA(type, sortBy, sortAsc, startHit, numHits, {
         		callback: function(result) {
         			def.resolve(result);
         		},

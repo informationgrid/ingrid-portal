@@ -366,6 +366,21 @@ public class ObjectServiceImpl implements ObjectService {
 			throw e;
 		}
 	}
+	
+	public ObjectSearchResultBean getWorkObjectsQA(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+        try {
+            return objectRequestHandler.getWorkObjects(selectionType, orderBy, orderAsc, startHit, numHits);
+
+        } catch (MdekException e) {
+            // Wrap the MdekException in a RuntimeException so dwr can convert it
+            log.debug("MdekException while fetching Work objects.", e);
+            throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+    
+        } catch (RuntimeException e) {
+            log.debug("Error while fetching Work objects", e);
+            throw e;
+        }
+    }
 
 	public ObjectSearchResultBean getQAObjects(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
 		try {

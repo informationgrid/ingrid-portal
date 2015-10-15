@@ -366,6 +366,21 @@ public class AddressServiceImpl implements AddressService {
 			throw e;
 		}
 	}
+	
+	public AddressSearchResultBean getWorkAddressesQA(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+	    try {
+	        return addressRequestHandler.getWorkAddresses(selectionType, orderBy, orderAsc, startHit, numHits);
+	        
+	    } catch (MdekException e) {
+	        // Wrap the MdekException in a RuntimeException so dwr can convert it
+	        log.debug("MdekException while fetching Work addresses.", e);
+	        throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+	        
+	    } catch (RuntimeException e) {
+	        log.debug("Error while fetching Work addresses", e);
+	        throw e;
+	    }
+	}
 
 	public AddressSearchResultBean getQAAddresses(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
 		try {
