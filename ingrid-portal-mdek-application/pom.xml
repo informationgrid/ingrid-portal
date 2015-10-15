@@ -223,7 +223,6 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-mdek-services</artifactId>
-            <version>3.6.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>ojdbc</groupId>
@@ -232,11 +231,12 @@
             </exclusions>
         </dependency>
         <!-- also included via transitive dependencies from ingrid-mdek-services, BUT KEEP HERE TO USE WHEN services sparated (see above) -->
+<!--
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-import-export</artifactId>
-            <version>3.6.0.3</version>
         </dependency>
+-->
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>

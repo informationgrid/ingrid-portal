@@ -153,7 +153,7 @@ public class Csw202ScriptImportDataMapperTest extends TestCase {
 			result.reset();
 			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/additional-information/access-constraint/restriction", "no conditions apply"));
 			result.reset();
-			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/additional-information/use-constraint/terms-of-use", "no conditions apply"));
+			assertEquals(true, xpathExists(result, "//igc/data-sources/data-source/data-source-instance/additional-information/use-limitation/terms-of-use", "no conditions apply"));
 		} catch (Exception e) {
 			fail("Error transforming: " + exampleXml);
 		}

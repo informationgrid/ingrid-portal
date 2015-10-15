@@ -34,7 +34,6 @@ import javax.portlet.RenderResponse;
 import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -184,58 +183,37 @@ public class DetailPartPreparer {
      */
     public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingNodeName, boolean includeSelection, String codeListId, ArrayList<String> consideredValues) {
         ArrayList<String> list = new ArrayList<String>();
-        NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
-        if(nodeList == null) {
+        
+        List<Node> siblingList = XPathUtils.getSiblingsFromXPath(rootNode, xpathExpression, siblingNodeName, includeSelection);
+        if(siblingList == null) {
             return list;
         }
-        ArrayList<Node> parentsParsed = new ArrayList<Node>();
-        for (int i=0; i<nodeList.getLength(); i++) {
-            Node selectedNode = nodeList.item(i);
-            Node parentNode = selectedNode.getParentNode();
-            if (parentNode != null && !parentsParsed.contains( parentNode )) {
-                parentsParsed.add( parentNode );
-                NodeList children = parentNode.getChildNodes();
-                for (int j=0; j<children.getLength(); j++) {
-                    Node child = children.item(j);
 
-                    // exclude starting node ?
-                    if (!includeSelection) {
-                        if (child.equals( selectedNode )) {
-                            continue;
-                        }
-                    }
-                    // exclude siblings not of given name
-                    if (siblingNodeName != null) {
-                        if (!child.getNodeName().equals( siblingNodeName )) {
-                            continue;
-                        }
-                    }
-                    String value = child.getTextContent().trim();
-                    if(value == null ||  value.length() == 0) {
-                        continue;
-                    }
-                    // exclude JSON values
-                    if (value.startsWith( "{" ) && value.endsWith( "}" )) {
-                        continue;                            
-                    }
-                    // exclude considered values
-                    if (consideredValues != null) {
-                        if (consideredValues.contains( value )) {
-                            continue;
-                        }
-                    }
-                    // transform with code list ?
-                    if(codeListId != null){
-                        String tmpValue = getValueFromCodeList(codeListId, value);
-                        if (tmpValue.length() > 0) {
-                            value = tmpValue;
-                        }
-                    }
-                    if (!list.contains( value )) {
-                        list.add(value);                        
-                    }
+        for (Node sibling : siblingList) {
+            String value = sibling.getTextContent().trim();
+            if(value == null ||  value.length() == 0) {
+                continue;
+            }
+            // exclude JSON values
+            if (value.startsWith( "{" ) && value.endsWith( "}" )) {
+                continue;                            
+            }
+            // exclude considered values
+            if (consideredValues != null) {
+                if (consideredValues.contains( value )) {
+                    continue;
                 }
             }
+            // transform with code list ?
+            if(codeListId != null){
+                String tmpValue = getValueFromCodeList(codeListId, value);
+                if (tmpValue.length() > 0) {
+                    value = tmpValue;
+                }
+            }
+            if (!list.contains( value )) {
+                list.add(value);                        
+            }            
         }
         sortList(list);
         return list;

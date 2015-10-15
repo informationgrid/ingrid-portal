@@ -38,6 +38,7 @@
  * @param target A org.w3c.dom.Document instance, that defines the output, based on the IGC import format template.
  * @param protocol A Protocol instance to add UI protocol messages.
  * @param log A Log instance
+ * @param XPathUtils Utils for XPath
  *
  *
  * Example to set debug message for protocol:
@@ -50,8 +51,8 @@ if (javaVersion.indexOf( "1.8" ) === 0) {
 }
 
 importPackage(Packages.de.ingrid.utils.udk);
-importPackage(Packages.de.ingrid.utils.xml);
 importPackage(Packages.org.w3c.dom);
+importClass(Packages.de.ingrid.utils.xml.XMLUtils);
 
 var DEBUG = 1;
 var INFO = 2;
@@ -598,7 +599,7 @@ var mappingDescription = {"mappings":[
         {
             "srcXpath":"//gmd:identificationInfo//gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString",
             "targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information",
-            "newNodeName":"use-constraint",
+            "newNodeName":"use-limitation",
             "subMappings":{
                 "mappings": [
                     {
@@ -607,18 +608,18 @@ var mappingDescription = {"mappings":[
                         "targetNode":"terms-of-use"
                     },
 	  				{
-			  			"srcXpath":".",
 			  			"targetNode":"terms-of-use",
 			  			"targetAttribute":"id",
-			  			"defaultValue":"-1",
-			  			"transform":{
-							"funct":transformToIgcDomainId,
-							"params":[6020, ""]
-						}
+				  		"defaultValue":"-1",
 			  		}
                 ]
             }
   		},
+        {   
+            "execute":{
+                "funct":mapUseConstraints
+            }
+        },
   		{
   			"srcXpath":"//gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine/gmd:MD_Medium",
   			"targetNode":"/igc/data-sources/data-source/data-source-instance/additional-information",
@@ -1501,6 +1502,47 @@ function mapMDIdentifier(source, target)  {
     }
 }
 
+function mapUseConstraints(source, target) {
+    var useConstraints = XPathUtils.getNodeList(source, "//gmd:identificationInfo//gmd:resourceConstraints/*/gmd:useConstraints/gmd:MD_RestrictionCode");
+    if (hasValue(useConstraints)) {
+        for (i=0; i<useConstraints.getLength(); i++ ) {
+            var isoValue = XPathUtils.getString(useConstraints.item(i), "./@codeListValue");
+            if (isoValue != "otherRestrictions") {
+                addUseConstraint(isoValue, target);
+            }
+        }
+    }
+
+    useConstraints = XPathUtils.getSiblingsFromXPath(source, "//gmd:identificationInfo//gmd:resourceConstraints/*/gmd:useConstraints", "gmd:otherConstraints", false);
+    
+    if (hasValue(useConstraints)) {
+        for (i=0; i<useConstraints.size(); i++ ) {
+            var useConstraint = XPathUtils.getString(useConstraints.get(i), "./gco:CharacterString");
+            addUseConstraint(useConstraint, target);
+        }
+    }
+}
+
+function addUseConstraint(useConstraint, target) {
+    if (hasValue(useConstraint)) {
+    	useConstraint = useConstraint.trim();
+
+    	// Do not add JSON
+        if (useConstraint.startsWith( "{" ) && useConstraint.endsWith( "}" )) {
+        	return;
+        }
+
+        log.debug("adding '" + "/igc/data-sources/data-source/data-source-instance/additional-information/use-constraint/license" + "' = '" + useConstraint + "' to target document.");
+        var node = XPathUtils.createElementFromXPathAsSibling(target, "/igc/data-sources/data-source/data-source-instance/additional-information/use-constraint");
+        node = XPathUtils.createElementFromXPath(node, "license");
+        XMLUtils.createOrReplaceTextNode(node, useConstraint);
+        var useConstraintId = transformToIgcDomainId(useConstraint, 524, "", "Could not map use-constraint, use as free entry: ");
+        if (hasValue(useConstraintId)) {
+            XMLUtils.createOrReplaceAttribute(node, "id", useConstraintId);                 
+        }
+    }
+}
+
 function mapAccessConstraints(source, target) {
     var accConstraints = XPathUtils.getNodeList(source, "//gmd:identificationInfo//gmd:resourceConstraints/*/gmd:accessConstraints/gmd:MD_RestrictionCode");
     if (hasValue(accConstraints)) {
@@ -1512,10 +1554,11 @@ function mapAccessConstraints(source, target) {
         }
     }
 
-    accConstraints = XPathUtils.getNodeList(source, "//gmd:identificationInfo//gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString");
+    accConstraints = XPathUtils.getSiblingsFromXPath(source, "//gmd:identificationInfo//gmd:resourceConstraints/*/gmd:accessConstraints", "gmd:otherConstraints", false);
+    
     if (hasValue(accConstraints)) {
-        for (i=0; i<accConstraints.getLength(); i++ ) {
-            var accConstraint = XPathUtils.getString(accConstraints.item(i), ".");
+        for (i=0; i<accConstraints.size(); i++ ) {
+            var accConstraint = XPathUtils.getString(accConstraints.get(i), "./gco:CharacterString");
             addAccessConstraint(accConstraint, target);
         }
     }
