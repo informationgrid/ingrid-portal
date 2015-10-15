@@ -225,8 +225,8 @@ p.load_icon_webmap{   background-color: transparent;
 }
 
 .olControlOverviewMapElement {
-  background-color: #d9e7f8 !important;
-  border: 1px solid #8db2e3;
+  background-color: #e5e5e5 !important;
+  border: 1px solid #d0d0d0;
   border-radius: 0 !important;
   -moz-border-radius: 0 !important;
   padding: 5px 21px 0 5px ;
@@ -298,8 +298,8 @@ p.load_icon_webmap{   background-color: transparent;
     right: 25px;
     padding:0 5px;
     height:16px;
-    background: none repeat scroll 0 0 #D9E7F8;
-    border: 1px solid #8DB2E3;
+    background: none repeat scroll 0 0 #e5e5e5;
+    border: 1px solid #d0d0d0;
     z-index: 1100;
 }
 
@@ -594,4 +594,25 @@ label.x-form-item-label {
 
 .dialogToolbarBottom {
 	background: #FFFFFF;
+}
+
+#bWaStrDialog, .bWaStrPanelResult {
+	font: 12px/100% tahoma,arial,verdana,sans-serif;
+}
+    
+#bWaStrDialog .x-fieldset, .bWaStrPanelResult .x-fieldset {
+	padding: 5px;
+}
+
+#bWaStrDialog .x-fieldset-header-text, .bWaStrPanelResult .x-fieldset-header-text {
+	color: #777777;
+    font: bold 11px tahoma,arial,helvetica,sans-serif;
+}
+#bWaStrDialog label, .bWaStrPanelResult label {
+	font-size: 11px;
+}
+
+#bWaStrDialog .bWaStrDialog_info {
+	color: red;
+    font-size: 9px;
 }
