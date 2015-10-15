@@ -679,7 +679,7 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { margin: 0 0 0 55px; background: url(../images/ingrid_logo_icn_footer.png) no-repeat; padding: 0 0 70px 115px; }
+div#footercontainer { margin: 0 0 0 55px; background: rgba(0, 0, 0, 0) url("../images/ingrid_logo_icn_footer.png") no-repeat scroll 0 10px / 30px auto; padding: 0 0 70px 60px; }
 #footercontent { font-size: 65%; line-height: 120%; color: #B0B2B4; padding-top: 10px; }
 
 div#footermarginalcontainer { width: 1240px; margin-top: 25px; margin-bottom: 0px; padding: 0; background: #FFFFFF; height: 10px; }
