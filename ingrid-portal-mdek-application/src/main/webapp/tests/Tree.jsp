@@ -33,6 +33,7 @@
                 "dojo/_base/array",
                 "dojo/store/Memory",
                 "dojo/store/Observable",
+                "dojo/data/ItemFileReadStore",
                 "dijit/Tree",
                 "dijit/tree/ObjectStoreModel",
                 "ingrid/tree/MetadataTree",
@@ -40,7 +41,7 @@
                 "ingrid/utils/Tree",
                 "dwr/interface/SecurityService",
                 "dojo/domReady!"
-            ], function(aspect, win, array, Memory, Observable, Tree, ObjectStoreModel, MetadataTree, ThesaurusTree, UtilTree) {
+            ], function(aspect, win, array, Memory, Observable, ItemFileReadStore, Tree, ObjectStoreModel, MetadataTree, ThesaurusTree, UtilTree) {
                 
                 var clickedTree = function(item, node, event) {
                     console.log("Clicked in tree, item:", item);
@@ -64,63 +65,145 @@
                 
                 treeUsers = new MetadataTree({ showRoot: false, treeType: "Users" }, "tree5");
                 usersStore = treeUsers.model.store;
+                
+                
+                var data = [ { id: 'world', name:'The earth', type:'planet', population: '6 billion'} ];
+                
+                for (var j=0; j<1000; j++) {
+                    data.push({ 
+                        id: 'j'+j, name:'group_' + j, parent: 'world'
+                    });
+                    for (var i=0; i<1; i++) {
+                        data.push({ 
+                            id: 'i'+i, name:'item_' + i, parent: 'j'+j
+                        });
+                    }
+                }
+                
+                //var queryHuge = {parent: object.id}
+                myStore = new Memory({
+                    data: data,
+                    getChildren: function(object){
+                        return this.query({parent: object.id});
+                    }
+                }); 
+                myStore = new Observable(myStore);
+                
+                
+                /* var data = { identifier: "id",
+                    items: [{ id: 'world', name:'The earth', type:'planet', population: '6 billion'}]
+                };
+                for (var j=0; j<10; j++) {
+                    data.items.push({ 
+                        id: 'j'+j, name:'group_' + j, parent: 'world'
+                    });
+                    for (var i=0; i<5000; i++) {
+                        data.items.push({ 
+                            id: 'i'+i, name:'item_' + i, parent: 'j'+j
+                        });
+                    }
+                }
+                
+                var myStore = new ItemFileReadStore({
+                    data: data
+                }); */
+                
+                
+                // Create the model
+                myModel = new ObjectStoreModel({
+                    store: myStore,
+                    query: {id: 'world'}
+                });
+                
+                // Create a huge Tree.
+                treeHuge = new Tree({
+                    model: myModel,
+                    autoExpand: false
+                });
+                treeHuge.placeAt("treeHuge");
+                treeHuge.startup();
             });
+            
+            function refresh(/*TreeNode*/node) {
+                node._expandDeferred = undefined;
+                node._loadDeferred = undefined;
+                
+                for(var id in treeHuge.model.childrenCache){
+                    delete treeHuge.model.childrenCache[id];
+                }
+                
+                var self = this;
+                
+                return node.setChildItems([])
+                .then(function() { return treeHuge.model.store.getChildren(node.item); })
+                .then(require('dojo/_base/lang').hitch(node, node.setChildItems));
+            }
             
         </script>
         
 	</head>
 	<body>
-	    <h1>Tree Tests</h1>
+        <div data-dojo-type="dijit/layout/ContentPane" style="height: 600px;">
+    	    <h1>Tree Tests</h1>
+    
+            <h1>ThesaurusTree</h1>
+            <div id="treeThes"></div>
+            
+            <h1>MetadataTree - Users</h1>
+            <div id="tree5"></div>
+            <button onclick="usersStore.add({id: 'new1', title:'new root user', parent: 'UsersRoot'});">
+                Add root node to user tree
+            </button>
+            <button onclick="usersStore.add({id: 'new2', title:'new sub-user', parent: 'TreeNode_167269'});">
+                Add sub user to tree
+            </button>
+            <button onclick="usersStore.remove('new1');">
+                Delete root user node
+            </button>
+    
+    
+            <h1>MetadataTree - Objects and Addresses</h1>
+            <div id="tree2"></div>
+            <button onclick="metaStore.add({id: 'new1', title:'neuer knoten', parent: 'ObjectsAndAddressesRoot'});">
+                Add root node to meta tree
+            </button>
+            <button onclick="metaStore.add({id: 'new2', title:'new Object', nodeAppType: 'O', parent: 'objectRoot'});">
+                Add node to objects - meta tree
+            </button>
+            <button onclick="metaStore.add({id: 'new3', title:'new Address', nodeAppType: 'A', parent: 'addressRoot'});">
+                Add node to addresses - meta tree
+            </button>
+    
+    
+            <h1>MetadataTree - Objects</h1>
+            <div id="tree3"></div>
+            <button onclick="objectsStore.add({id: 'new1', title:'neuer knoten', nodeAppType: 'O', parent: 'objectRoot'});">
+                Add root node to meta tree
+            </button>
+            <button onclick="objectsStore.add({id: 'new2', title:'new Object', nodeAppType: 'O', parent: '71FE85D0-67AA-485D-900D-924B10855B21'});">
+                Add node to "All Object classes" - meta tree
+            </button>
+            <button onclick="objectsStore.add({id: 'new3', title:'new Object', nodeAppType: 'O', parent: '8020DFE1-1208-487B-BA1A-F054AFCFF611'});">
+                Add node to object leaf - meta tree
+            </button>
+            <button onclick="treeObjects.filter.title = new RegExp('Copy.*'); treeObjects.refreshChildren(treeObjects.rootNode)">
+                Filter tree by title: "Copy.*"
+            </button>
+    
+            <h1>MetadataTree - Addresses</h1>
+            <div id="tree4"></div>
+            <button onclick="addressesStore.add({id: 'new1', title:'new Root', parent: 'AddressesRoot'});">
+                Add root node to meta tree
+            </button>
+            <button onclick="addressesStore.add({id: 'new2', title:'new Address', nodeAppType: 'A', parent: 'addressRoot'});">
+                Add node to addresses - meta tree
+            </button>
 
-        <h1>ThesaurusTree</h1>
-        <div id="treeThes"></div>
-        
-        <h1>MetadataTree - Users</h1>
-        <div id="tree5"></div>
-        <button onclick="usersStore.add({id: 'new1', title:'new root user', parent: 'UsersRoot'});">
-            Add root node to user tree
-        </button>
-        <button onclick="usersStore.add({id: 'new2', title:'new sub-user', parent: 'TreeNode_167269'});">
-            Add sub user to tree
-        </button>
-        <button onclick="usersStore.remove('new1');">
-            Delete root user node
-        </button>
-
-
-        <h1>MetadataTree - Objects and Addresses</h1>
-        <div id="tree2"></div>
-        <button onclick="metaStore.add({id: 'new1', title:'neuer knoten', parent: 'ObjectsAndAddressesRoot'});">
-            Add root node to meta tree
-        </button>
-        <button onclick="metaStore.add({id: 'new2', title:'new Object', nodeAppType: 'O', parent: 'objectRoot'});">
-            Add node to objects - meta tree
-        </button>
-        <button onclick="metaStore.add({id: 'new3', title:'new Address', nodeAppType: 'A', parent: 'addressRoot'});">
-            Add node to addresses - meta tree
-        </button>
-
-
-        <h1>MetadataTree - Objects</h1>
-        <div id="tree3"></div>
-        <button onclick="objectsStore.add({id: 'new1', title:'neuer knoten', nodeAppType: 'O', parent: 'objectRoot'});">
-            Add root node to meta tree
-        </button>
-        <button onclick="objectsStore.add({id: 'new2', title:'new Object', nodeAppType: 'O', parent: '71FE85D0-67AA-485D-900D-924B10855B21'});">
-            Add node to "All Object classes" - meta tree
-        </button>
-        <button onclick="objectsStore.add({id: 'new3', title:'new Object', nodeAppType: 'O', parent: '8020DFE1-1208-487B-BA1A-F054AFCFF611'});">
-            Add node to object leaf - meta tree
-        </button>
-
-        <h1>MetadataTree - Addresses</h1>
-        <div id="tree4"></div>
-        <button onclick="addressesStore.add({id: 'new1', title:'new Root', parent: 'AddressesRoot'});">
-            Add root node to meta tree
-        </button>
-        <button onclick="addressesStore.add({id: 'new2', title:'new Address', nodeAppType: 'A', parent: 'addressRoot'});">
-            Add node to addresses - meta tree
-        </button>
-
+            <h1>Huge Tree</h1>
+            <button onclick="myStore.getChildren = function(object) { return this.query({parent: object.id, name: new RegExp('group_10.*')}); }; refresh(treeHuge.rootNode);">
+                Filter tree
+            </button>
+            <div id="treeHuge"></div>
+          </div>
 	</body>
 </html>

@@ -121,7 +121,15 @@ define(["dojo/_base/declare",
             },
 
             renderIconClass: function(row, cell, value, columnDef, dataContext) {
-                return "<div class=\"TreeIcon TreeIcon" + value + "\"></div>";
+                return "<div class='TreeIcon TreeIcon" + value + "'></div>";
+            },
+            
+            renderFolderIcon: function(row, cell, value, columnDef, dataContext, gridContext) {
+                if (value == true) {
+                    return "<a href='#' onclick='require(\"dijit\/registry\").byId(\""+gridContext.id+"\").openNode(" + row + ")'><span class='dijitInline dijitTreeExpando dijitTreeExpandoClosed'></span></a>";
+                } else {
+                    return "";
+                }
             }
 
         })();

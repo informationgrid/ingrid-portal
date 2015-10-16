@@ -78,6 +78,7 @@
 
 <script type='text/javascript' src='../dwr/interface/SNSService.js'></script>
 <script type='text/javascript' src='../dwr/interface/TreeService.js'></script>
+<script type='text/javascript' src='../js/error_handler.js'></script>
 
 
 <script type="text/javascript">
@@ -148,6 +149,12 @@ require([
             registry.byId("stackContainer").selectChild(registry.byId("pageTreeTest"));
         }
     }));
+    menu.addChild(new MenuBarItem({
+        label: "TreeGrids",
+        onClick: function(){
+            registry.byId("stackContainer").selectChild(registry.byId("pageTreeGridTest"));
+        }
+    }));
 
     sc = new StackContainer({
         style: "width: 100%;",
@@ -186,11 +193,20 @@ require([
         scriptHasHooks: true,
         executeScripts: true
     });
+    
+    var treeGridTests = new ContentPaneX({
+        id: "pageTreeGridTest",
+        layoutAlign: "client",
+        href: "TreeGrid.jsp?c="+userLocale,
+        scriptHasHooks: true,
+        executeScripts: true
+    });
 
     sc.addChild(dialogTests);
     sc.addChild(tableTests);
     sc.addChild(additionalTests);
     sc.addChild(treeTests);
+    sc.addChild(treeGridTests);
     sc.startup();
 
     //main.startup();
