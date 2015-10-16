@@ -41,10 +41,11 @@
         "dijit/registry",
         "ingrid/layoutCreator",
         "ingrid/utils/Grid",
+        "ingrid/grid/CustomGridFormatters",
         "ingrid/utils/List",
         "ingrid/utils/Address",
         "ingrid/utils/PageNavigation"
-    ], function(aspect, lang, on, has, dom, style, string, registry, layoutCreator, UtilGrid, UtilList, UtilAddress, navigation) {
+    ], function(aspect, lang, on, has, dom, style, string, registry, layoutCreator, UtilGrid, GridFormatters, UtilList, UtilAddress, navigation) {
 
             var resultsPerPage = 20;
             var pageNav = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dom.byId("searchDatabaseResultsInfo"), pagingSpan:dom.byId("searchDatabaseResultsPaging") });
@@ -58,7 +59,7 @@
 
             function createDOMElements() {
                 var datbaseSearchResultsStructure = [
-                    {field: 'icon',name: '&nbsp;',width: '23px'},
+                    {field: 'nodeDocType',name: '&nbsp;',width: '32px', formatter: GridFormatters.renderIconClass},
                     {field: 'linkLabel',name: "<fmt:message key='dialog.research.db.name' />",width: '600px'}
                 ];
                 layoutCreator.createDataGrid("datbaseSearchResults", null, datbaseSearchResultsStructure, null);
@@ -108,7 +109,7 @@
             // Button onClick function
             // Reads the input field, resets the navigation and starts a new query
             function startNewSearch() {
-                currentQuery = lang.trim(registry.byId("databaseSearch").getValue());
+                currentQuery = lang.trim(registry.byId("databaseSearch").get('value'));
                 pageNav.reset();
                 startSearch();
             }

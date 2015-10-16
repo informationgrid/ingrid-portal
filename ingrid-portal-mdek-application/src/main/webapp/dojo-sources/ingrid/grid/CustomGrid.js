@@ -828,7 +828,7 @@ define([
              // a formatter can have influence on the cell itself, so we have to call it before we request invalidCells
              var content;
              if (d) {
-                 content = this.getFormatter(row, m)(row, i, d[m.field], m, d);
+                 content = this.getFormatter(row, m)(row, i, d[m.field], m, d, this);
              }
              
              // check for invalid cells
@@ -1259,7 +1259,7 @@ define([
 
             // show info of long text which is necessary if no edit mode is available
             // if (query(".slick-cell.l2.r2")[1].scrollWidth > cellWidth)
-            if (!doNotShowTooltips && this.getDataItem(cell.row) && thisCell.scrollWidth > this.columns[cell.cell].width) {
+            if (!win.global.doNotShowTooltips && this.getDataItem(cell.row) && thisCell.scrollWidth > this.columns[cell.cell].width) {
                 var self = this;
                 var cellContent = this.getDataItem(cell.row)[this.columns[cell.cell].field];
                 // in case the content is formatted we have to convert it

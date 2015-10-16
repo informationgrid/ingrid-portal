@@ -85,7 +85,7 @@ require([
             layoutCreator.createDataGrid("editorsOverviewTable", null, editorsOverviewTableStructure, null);
             
             var expObjTableStructure = [
-               {field: 'icon',name: '&nbsp;',width: '32px'},
+               {field: 'nodeDocType',name: '&nbsp;',width: '32px', formatter: GridFormatters.renderIconClass},
                {field: 'linkLabel',name: "<fmt:message key='dialog.qa.name' />",width: '700px'},
                {field: 'modUserTitle',name: "<fmt:message key='dialog.qa.modUser' />",width: '130px'},
                {field: 'expiryDate',name: "<fmt:message key='dialog.qa.expiredAt' />",width: 'auto', formatter: GridFormatters.DateCellFormatter}
@@ -93,7 +93,7 @@ require([
             layoutCreator.createDataGrid("expObjTable", null, expObjTableStructure, null);
             
             var expAdrTableStructure = [
-               {field: 'icon',name: '&nbsp;',width: '32px'},
+               {field: 'nodeDocType',name: '&nbsp;',width: '32px', formatter: GridFormatters.renderIconClass},
                {field: 'linkLabel',name: "<fmt:message key='dialog.qa.name' />",width: '700px'},
                {field: 'modUserTitle',name: "<fmt:message key='dialog.qa.modUser' />",width: '130px'},
                {field: 'expiryDate',name: "<fmt:message key='dialog.qa.expiredAt' />",width: 'auto', formatter: GridFormatters.DateCellFormatter}
@@ -101,7 +101,7 @@ require([
             layoutCreator.createDataGrid("expAdrTable", null, expAdrTableStructure, null);
             
             var modObjTableStructure = [
-               {field: 'icon',name: '&nbsp;',width: '32px'},
+               {field: 'nodeDocType',name: '&nbsp;',width: '32px', formatter: GridFormatters.renderIconClass},
                {field: 'linkLabel',name: "<fmt:message key='dialog.qa.name' />",width: '550px'/*, sortable: true, sortColField: "objectName"*/},
                {field: 'modUserTitle',name: "<fmt:message key='dialog.qa.modUser' />",width: '130px'/*, sortable: true*/},
                {field: 'expiryDate',name: "<fmt:message key='dialog.qa.expiredAt' />",width: 'auto', formatter: GridFormatters.DateCellFormatter/*, sortable: true*/}
@@ -109,7 +109,7 @@ require([
             layoutCreator.createDataGrid("modObjTable", null, modObjTableStructure, null);
             
             var modAdrTableStructure = [
-               {field: 'icon',name: '&nbsp;',width: '32px'},
+               {field: 'nodeDocType',name: '&nbsp;',width: '32px', formatter: GridFormatters.renderIconClass},
                {field: 'linkLabel',name: "<fmt:message key='dialog.qa.name' />",width: '550px'},
                {field: 'modUserTitle',name: "<fmt:message key='dialog.qa.modUser' />",width: '130px'},
                {field: 'expiryDate',name: "<fmt:message key='dialog.qa.expiredAt' />",width: 'auto', formatter: GridFormatters.DateCellFormatter}
@@ -117,7 +117,7 @@ require([
             layoutCreator.createDataGrid("modAdrTable", null, modAdrTableStructure, null);
             
             var qaObjTableStructure = [
-               {field: 'icon',name: '&nbsp;',width: '32px'},
+               {field: 'nodeDocType',name: '&nbsp;',width: '32px', formatter: GridFormatters.renderIconClass},
                {field: 'linkLabel',name: "<fmt:message key='dialog.qa.name' />",width: '340px'},
                {field: 'assignerUserTitle',name: "<fmt:message key='dialog.qa.assignedBy' />",width: '130px'},
                {field: 'state',name: "<fmt:message key='dialog.qa.state' />",width: '210px'},
@@ -127,7 +127,7 @@ require([
             layoutCreator.createDataGrid("qaObjTable", null, qaObjTableStructure, null);
             
             var qaAdrTableStructure = [
-               {field: 'icon',name: '&nbsp;',width: '32px'},
+               {field: 'nodeDocType',name: '&nbsp;',width: '32px', formatter: GridFormatters.renderIconClass},
                {field: 'linkLabel',name: "<fmt:message key='dialog.qa.name' />",width: '340px'},
                {field: 'assignerUserTitle',name: "<fmt:message key='dialog.qa.assignedBy' />",width: '130px'},
                {field: 'state',name: "<fmt:message key='dialog.qa.state' />",width: '210px'},
@@ -137,7 +137,7 @@ require([
             layoutCreator.createDataGrid("qaAdrTable", null, qaAdrTableStructure, null);
             
             var spatialObjTableStructure = [
-               {field: 'icon',name: '&nbsp;',width: '32px'},
+               {field: 'nodeDocType',name: '&nbsp;',width: '32px', formatter: GridFormatters.renderIconClass},
                {field: 'linkLabel',name: "<fmt:message key='dialog.qa.name' />",width: '550px'},
                {field: 'modUserTitle',name: "<fmt:message key='dialog.qa.modUser' />",width: '130px'},
                {field: 'expiryDate',name: "<fmt:message key='dialog.qa.expiredAt' />",width: 'auto', formatter: GridFormatters.DateCellFormatter}
