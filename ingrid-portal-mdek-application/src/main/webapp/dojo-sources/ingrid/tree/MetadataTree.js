@@ -156,20 +156,7 @@ define("ingrid/tree/MetadataTree", [
             return new CustomTreeNode(args);
         },
         
-//        removeChildren: function(childrenItems) {
-//            array.forEach(childrenItems, function(childItem) {
-//                // check if child also has children to delete/update
-//                if (childItem.children && childItem.children.length > 0)
-//                    this.removeChildren(childItem.children);
-//                this.model.store.deleteItem(childItem);
-//            }, this);
-//        },
-        
         refreshChildren: function(/*TreeNode*/node) {
-            //var path = node.getTreePath();
-            
-            //this.collapseAll();
-            
             // reinitialize for refresh
             node._expandDeferred = undefined;
             node._loadDeferred = undefined;
@@ -185,14 +172,6 @@ define("ingrid/tree/MetadataTree", [
             return node.setChildItems([])
             .then(function() { return self.model.store.getChildren(node.item); })
             .then(lang.hitch(node, node.setChildItems));
-            // .then(function() {
-            //     // if last loaded node does is not attached to the DOM anymore
-            //     if (self.lastLoadedNode && !self.lastLoadedNode.domNode) {
-            //         var updatedNode = UtilTree.getNodeById("dataTree", self.lastLoadedNode.item.id);
-            //         self._markLoadedNode(updatedNode);
-            //     }
-            // });
-            
         },
 
         _markLoadedNode: function(/*TreeNode*/node) {
@@ -208,7 +187,6 @@ define("ingrid/tree/MetadataTree", [
             this.copySubTree = copySubTree;
             if (this.nodesToCut) {
                 array.forEach(this.nodesToCut, function(node) {
-                    // registry.byId(node.id).set('class','');
                     domClass.remove(node.id, "nodeCut");
                 });
                 this.nodesToCut = null;
@@ -222,7 +200,6 @@ define("ingrid/tree/MetadataTree", [
             if (this.nodesToCut) {
                 array.forEach(this.nodesToCut, function(nodeItem) {
                     var node = UtilTree.getNodeById("dataTree", nodeItem.id);
-                    // registry.byId(node.id).set('class','');
                     domClass.remove(node.id, "nodeCut");
                 });
             }
@@ -230,7 +207,6 @@ define("ingrid/tree/MetadataTree", [
             this.nodesToCut = nodes;
             array.forEach(this.nodesToCut, function(nodeItem) {
                 var node = UtilTree.getNodeById("dataTree", nodeItem.id);
-                // dijit.byId(node.id).set('class','nodeCut');
                 domClass.add(node.id, "nodeCut");
             });
             this.nodesToCopy = null;
@@ -238,13 +214,7 @@ define("ingrid/tree/MetadataTree", [
         },
         
         doPaste: function() {
-            // cut only once!
-            //if (this.nodeToCut) {
-                // browser crashes here when tree is being refreshed
-                // but this here shouldn't be necessary since the node is removed
-                //dijit.byId(this.nodeToCut.id[0]).set('class',''); 
             this.nodesToCut = null;
-            //}
         },
         
         canPaste: function(node) {
@@ -287,10 +257,9 @@ define("ingrid/tree/MetadataTree", [
                                 }
                             }
                             // The target node is no root node. Compare the src and dst types:
-                            if (dstType >= 2 || (srcType === 0 && dstType === 1))
+                            if (dstType >= 2 || (srcType === 0 && dstType === 1)) {
                                 canBePasted = false;
-    //                        else
-    //                            return true;
+                            }
                             
                         }
                     } else {
