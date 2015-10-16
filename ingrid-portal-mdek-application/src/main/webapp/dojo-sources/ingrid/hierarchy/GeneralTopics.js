@@ -25,7 +25,9 @@ define([
         "dojo/topic",
         "dojo/string",
         "ingrid/dialog",
-        "ingrid/message"
+        "ingrid/message",
+        "dwr/interface/AddressService",
+        "dwr/interface/ObjectService"
     ], function(declare, topic, string, dialog, message) {
         return declare(null, {
 

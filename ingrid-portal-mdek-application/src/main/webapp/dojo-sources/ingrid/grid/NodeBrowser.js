@@ -5,9 +5,12 @@ define( [
     'ingrid/utils/Address',
     'dojo/_base/declare',
     'dojo/_base/lang',
+    "dojo/Deferred",
+    "dojo/topic",
     'dojo/on',
     'dijit/_Widget',
-    'dojo/dom-construct' ], function (CustomGrid, GridFormatters, DwrStore, UtilAddress, declare, lang, on, _Widget, construct) {
+    'dojo/dom-construct',
+    'ingrid/hierarchy/GeneralTopics'], function (CustomGrid, GridFormatters, DwrStore, UtilAddress, declare, lang, Deferred, topic, on, _Widget, construct) {
 
     var BreadCrumb = declare( "ingrid.BreadCrumb", _Widget, {
         /**
@@ -93,10 +96,18 @@ define( [
             width: 25,
             formatter: GridFormatters.renderIconClass
         }, {
+            id: 'colFolder',
             field: 'isFolder',
             name: '&nbsp',
             width: 28,
             formatter: GridFormatters.renderFolderIcon
+        }, {
+            id: 'colParent',
+            field: 'parentLink',
+            name: '&nbsp',
+            width: 28,
+            hidden: true
+            //formatter: GridFormatters.renderFolderIcon
         }, {
             field: 'title',
             name: 'Titel',
@@ -172,6 +183,8 @@ define( [
                 callback: function(res) { 
                     var data = self._prepareResult(res, self);
                     self.setData(data);
+                    self.hideColumn('colFolder');
+                    self.showColumn('colParent');
                 },
                 errorHandler: function(errMsg, err) {
                     displayErrorMessage(err);
@@ -181,9 +194,12 @@ define( [
 
         _prepareQuery: function(value) {
             var query = null;
+            
             if (this.type === "Objects") {
                 query = "FROM ObjectNode oNode JOIN oNode.t01ObjectWork obj WHERE obj.objName LIKE '%"+value+"%'";
             } else {
+                // TODO: exclude login user
+                // TODO: also search by organisation/institution
                 query = "FROM AddressNode aNode JOIN aNode.t02AddressWork addr WHERE " +
                 		"addr.firstname LIKE '%"+value+"%'" + 
                 		"OR addr.lastname LIKE '%"+value+"%'";
@@ -202,6 +218,12 @@ define( [
                     data[i].title = UtilAddress.createAddressTitle(data[i]);
                 }
             }
+            
+            // generate link to parent for tree view
+            for (var i=0; i<data.length; i++) {
+                data[i].parentLink = "<a href='#' onclick='require(\"dijit\/registry\").byId(\""+this.id+"\").jumpToNode(\"" + data[i].parentUuid + "\")'>parent</a>";
+            }
+            
             return data;
         },
         
@@ -214,6 +236,44 @@ define( [
             this.crumb.popToItem( pos );
         },
 
+        jumpToNode: function(uuid) {
+            var self = this;
+            var node = this.store._getRootNode();
+            node.id = uuid;
+            //this.crumb.push( {label: item.title, data: item} );
+            this.store.getChildren( node ).then( function (data) {
+                self.setData( data );
+            } );
+            this._getPathToNode(uuid).then(function(path) {
+                // set bread crumb
+                console.log(path);
+                var nodeAppType = self.type === 'Objects' ? 'O' : 'A';
+                var rootNode = self.store._getRootNode();
+                self.crumb.clear();
+                self.crumb.push({label: rootNode.title, data: rootNode});
+                for (var i=0; i<path.length; i++) {
+                    self.crumb.push({label: path[i], data: {id: path[i], nodeAppType: nodeAppType }});
+                }
+            });
+        },
+        
+        _getPathToNode: function(uuid) {
+            var getPathDef = new Deferred();
+            if (this.type == "Objects") {
+                topic.publish("/getObjectPathRequest", {
+                    id: uuid,
+                    resultHandler: getPathDef
+                });
+
+            } else {
+                topic.publish("/getAddressPathRequest", {
+                    id: uuid,
+                    resultHandler: getPathDef
+                });
+            }
+            return getPathDef;
+        },
+        
         openNode: function (row) {
             var self = this;
             var node = this.store._getRootNode();
