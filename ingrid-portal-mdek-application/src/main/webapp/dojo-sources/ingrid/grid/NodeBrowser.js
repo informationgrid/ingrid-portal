@@ -167,6 +167,8 @@ define( [
             this.crumb.clear();
             
             if (value === "") {
+                this.hideColumn('colParent');
+                this.showColumn('colFolder');
                 this.openNode();
                 return;
             }
@@ -182,9 +184,9 @@ define( [
                 //postHook: hideLoadingZone,
                 callback: function(res) { 
                     var data = self._prepareResult(res, self);
-                    self.setData(data);
                     self.hideColumn('colFolder');
                     self.showColumn('colParent');
+                    self.setData(data);
                 },
                 errorHandler: function(errMsg, err) {
                     displayErrorMessage(err);
