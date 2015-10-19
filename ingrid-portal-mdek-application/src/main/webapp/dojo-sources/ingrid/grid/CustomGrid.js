@@ -344,7 +344,14 @@ define([
                     }
                 });
                 var newWidth = this.viewportW - totalColWidth - scrollbarDimensions.width;
-                this.columns[lastColumn].width = newWidth;//  + this.cellWidthDiff;
+                // if last column is very small then shrink the second to last column a bit
+                var minWidth = this.columns[lastColumn].minWidth ? this.columns[lastColumn].minWidth : 23;
+                if (newWidth < minWidth) {
+                    this.columns[lastColumn].width = minWidth;
+                    this.columns[lastColumn-1].width = this.columns[lastColumn-1].width - minWidth;
+                } else {
+                    this.columns[lastColumn].width = newWidth;
+                }
                 totalColWidth += newWidth;
 
                 if (style.get(this.canvas, "width") != totalColWidth) {
@@ -398,6 +405,9 @@ define([
             var x = 0,
                 w, i;
             for (i = 0; i < this.columns.length; i++) {
+                if (this.columns[i].hidden) {
+                    continue;
+                }
                 w = this.columns[i].width;
 
                 rules.push("." + this.uid + " .l" + i + " { left: " + x + "px; }");
@@ -2141,13 +2151,15 @@ define([
             var h;
             for (var i = 0, headers = this.headers.children, ii = headers.length; i < ii; i++) {
                 if (this.columns[i].hidden) {
-                    style.set(headers[i], "width", "0px");
+                    //style.set(headers[i], "width", "0px");
+                    style.set(headers[i], "display", "none");
                     continue;
                 }
                 h = headers[i];
                 if (style.get(h, "width") !== this.columns[i].width - this.headerColumnWidthDiff) {
                     style.set(h, "width", this.columns[i].width - this.headerColumnWidthDiff + "px");
                 }
+                style.set(headers[i], "display", "block");
             }
         },
 
@@ -2157,9 +2169,9 @@ define([
             var x = 0,
                 w, rule;
             for (var i = 0; i < this.columns.length; i++) {
-                if (this.columns[i].hidden)
+                if (this.columns[i].hidden) {
                     w = 0;
-                else
+                } else
                     w = this.columns[i].width;
 
                 rule = this.findCssRule("." + this.uid + " .c" + i);
@@ -2186,7 +2198,9 @@ define([
                 rule = this.findCssRule("." + this.uid + " .r" + i);
                 rule.style.right = (rowWidth - x - this.cellWidthDiff - w) + "px";
 
-                x += this.columns[i].width;
+                if (!this.columns[i].hidden) {
+                    x += this.columns[i].width;
+                }
 
 
             }

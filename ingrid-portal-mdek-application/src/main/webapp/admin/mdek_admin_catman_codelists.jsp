@@ -88,7 +88,7 @@
                     {field: 'entryId',name: "<fmt:message key='dialog.admin.catalog.management.codelists.id' />",width: '32px'},
                     {field: 'deName',name: "<fmt:message key='dialog.admin.catalog.management.codelists.germanName' />",width: '300px', editable:true},
                     {field: 'enName',name: "<fmt:message key='dialog.admin.catalog.management.codelists.englishName' />",width: '300px', editable:true},
-                    {field: 'data',name: "<fmt:message key='dialog.admin.catalog.management.codelists.data' />",width: '300px', editable:true}
+                    {field: 'data',name: "<fmt:message key='dialog.admin.catalog.management.codelists.data' />",width: '300px', minWidth: 200, hidden:false, editable:true}
                 ];
                 layoutCreator.createDataGrid("codeListTable11", null, codeListTable11Structure, null);
                 
@@ -160,8 +160,9 @@
                         return UtilString.compareIgnoreCase(a[0], b[0]);
                     });
                     
-                    //selectWidget.dataProvider.setData(selectWidgetData);
                     UtilStore.updateWriteStore("selectionList", selectWidgetData, {identifier:'1', label:'0'});
+                    selectWidget.set("value", selectWidgetData[0]);
+                    
                 }, function(error){
                     displayErrorMessage(error);
                     console.debug("Error: " + error);
@@ -231,22 +232,6 @@
                 // gets registered properly
                 var mainStore = UtilGrid.getTableData("codeListTable12");//.store;
                 UtilGrid.setTableData("codeListTable11", mainStore);
-                
-                // Helper function that displays a simple dialog with 'text' as content. There are two buttons 'yes' and 'no'.
-                // If the user clicks yes, the invocation is triggered. Otherwise nothing happens.
-                /*var askUserAndInvokeOrCancel = function(text, invocation) {
-                    dialog.show("<fmt:message key='general.hint' />", text, dialog.INFO, [{
-                        caption: "<fmt:message key='general.no' />",
-                        action: function(){
-                            ;
-                        }
-                    }, {
-                        caption: "<fmt:message key='general.yes' />",
-                        action: function(){
-                            invocation.proceed();
-                        }
-                    }]);
-                }*/
             }
             
             
@@ -350,7 +335,7 @@
             // [ { entryId:entryId, deName:entryName, enName:entryName, isDefault:default }, {...} ]
             function updateCodelistTable(data){
                 //UtilList.addTableIndices(data);
-                var sysListId = parseInt(registry.byId("selectionList").getValue());
+                var sysListId = parseInt(registry.byId("selectionList").get("value"));
                 
                 if (array.some(CAN_SET_DEFAULT_LIST_IDS, function(listId){
                     return listId == sysListId;
@@ -381,23 +366,23 @@
             }
             
             function showDefaultRadioButtons(){
-                registry.byId("selectionListDefault").setValue(true);
+                registry.byId("selectionListDefault").set("value", true);
                 UtilUI.switchTableDisplay("codeListTable12", "codeListTable11", true);
             }
             
             function hideDefaultRadioButtons(){
-                registry.byId("selectionListDefault").setValue(false);
+                registry.byId("selectionListDefault").set("value", false);
                 UtilUI.switchTableDisplay("codeListTable12", "codeListTable11", false);
             }
             
             function enableDefaultCheckbox(){
                 dom.byId("codeListDefaultDisabledHint").style.visibility = "hidden";
-                registry.byId("selectionListDefault").setDisabled(false);
+                registry.byId("selectionListDefault").set("disabled", false);
             }
             
             function disableDefaultCheckbox(){
                 dom.byId("codeListDefaultDisabledHint").style.visibility = "visible";
-                registry.byId("selectionListDefault").setDisabled(true);
+                registry.byId("selectionListDefault").set("disabled", true);
             }
             
             // Get the modified data and send it to the server
@@ -414,7 +399,7 @@
             
             
             function saveChangesCodelist(){
-                var sysListId = registry.byId("selectionList").getValue();
+                var sysListId = registry.byId("selectionList").get("value");
                 
                 var isValid = validateCodelist(sysListId);
                 if (!isValid) {
@@ -539,17 +524,14 @@
                 dom.byId("codeListEditDisabledHint").style.visibility = "hidden";
             }
             
-            
-            
             // Functions for the second div. Adding free entries to a list / overwriting free entries with sysList entries
-            
             function initFreeEntrySelect(){
                 var selectWidget = registry.byId("freeEntrySelectionList");
                 
                 // Currently the form is restricted to the list with id 1350 - 'rechtliche Grundlagen'
                 // 6005 - Zusatzinfo -> Spezifikation der Konformität
-                // 6020 - Verfügbarkeit -> Nutzungsbedingungen
-                var listIds = [1350, 6005, 6020];
+                // 6020 - Verfügbarkeit -> Nutzungsbedingungen (has been removed at 3.6.1!)
+                var listIds = [1350, 6005];
                 var selectWidgetData = [];
                 for (var index = 0; index < listIds.length; ++index) {
                     var name = UtilCatalog.getNameForSysList(listIds[index]);
@@ -562,7 +544,7 @@
                 on(selectWidget, "Change", reloadFreeEntryCodelistsDef);
                 
                 // Initially set the select widget value to the first one in the list
-                selectWidget.setValue(listIds[0]);
+                selectWidget.set("value", listIds[0]);
             }
             
             function reloadFreeEntryCodelistsDef(listId){
@@ -597,8 +579,6 @@
             }
             
             function initFreeEntryTables(){
-                //registry.byId("freeEntryCodelistTable").removeContextMenu();
-                //registry.byId("freeEntryTable").removeContextMenu();
             }
             
             function updateFreeEntryCodelistTable(data){
@@ -659,8 +639,7 @@
                         
                         // Update the frontend after the list has been stored
                         var selectWidget = registry.byId("freeEntrySelectionList");
-                        //selectWidget.setValue(selectWidget.getValue());
-                        reloadFreeEntryCodelistsDef(selectWidget.getValue());
+                        reloadFreeEntryCodelistsDef(selectWidget.get("value"));
                     }, function(err){
                         if (err != "CANCEL") {
                             displayErrorMessage(err);
@@ -672,7 +651,6 @@
             
             function addAllFreeEntriesToSysList() {
                 var freeData = UtilGrid.getTableData("freeEntryTable");
-                //var sysListId = registry.byId("freeEntrySelectionList").getValue();
                 
                 if (freeData && freeData.length > 0) {
                 
@@ -711,8 +689,7 @@
                         
                         // Update the frontend after the list has been stored
                         var selectWidget = registry.byId("freeEntrySelectionList");
-                        //selectWidget.setValue(selectWidget.getValue());
-                        reloadFreeEntryCodelistsDef(selectWidget.getValue());
+                        reloadFreeEntryCodelistsDef(selectWidget.get("value"));
                     }, function(err){
                         if (err != "CANCEL") {
                             displayErrorMessage(err);
@@ -726,7 +703,7 @@
                 var addFreeEntryDef = new Deferred();
                 
                 var codelistData = UtilGrid.getTableData("freeEntryCodelistTable");
-                var sysListId = registry.byId("freeEntrySelectionList").getValue();
+                var sysListId = registry.byId("freeEntrySelectionList").get("value");
                 
                 console.debug("free entry: " + freeEntry);
                 
@@ -823,7 +800,7 @@
             
             
             function replaceFreeEntryWithSysListEntry(){
-                var sysListId = registry.byId("freeEntrySelectionList").getValue();
+                var sysListId = registry.byId("freeEntrySelectionList").get("value");
                 
                 var codelistEntry = UtilGrid.getSelectedData("freeEntryCodelistTable")[0];
                 var freeEntry = UtilGrid.getSelectedData("freeEntryTable")[0];
@@ -852,8 +829,7 @@
                         
                         // Update the frontend after the list has been stored
                         var selectWidget = registry.byId("freeEntrySelectionList");
-                        //selectWidget.setValue(selectWidget.getValue());
-                        reloadFreeEntryCodelistsDef(selectWidget.getValue());
+                        reloadFreeEntryCodelistsDef(selectWidget.get("value"));
                     }, function(err){
                         if (err != "CANCEL") {
                             displayErrorMessage(err);
@@ -873,7 +849,7 @@
             function saveChangesFreeEntryDef(){
                 var def = new Deferred();
                 
-                var sysListId = registry.byId("freeEntrySelectionList").getValue();
+                var sysListId = registry.byId("freeEntrySelectionList").get("value");
                 if (sysListId) {
                     var tableData = UtilGrid.getTableData("freeEntryCodelistTable");
                     
