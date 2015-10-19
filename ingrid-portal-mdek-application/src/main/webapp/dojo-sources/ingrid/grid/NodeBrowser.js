@@ -105,8 +105,8 @@ define( [
             id: 'colParent',
             field: 'parentLink',
             name: '&nbsp',
-            width: 28,
-            hidden: true
+            width: 28
+            //hidden: true
             //formatter: GridFormatters.renderFolderIcon
         }, {
             field: 'title',
@@ -161,6 +161,7 @@ define( [
 
             // create grid
             this.inherited( arguments );
+            this.hideColumn( 'colParent' );
         },
         
         onFilterData: function(value) {
@@ -223,7 +224,7 @@ define( [
             
             // generate link to parent for tree view
             for (var i=0; i<data.length; i++) {
-                data[i].parentLink = "<a href='#' onclick='require(\"dijit\/registry\").byId(\""+this.id+"\").jumpToNode(\"" + data[i].parentUuid + "\")'>parent</a>";
+                data[i].parentLink = "<a href='#' title='Zum übergeordneten Element' onclick='require(\"dijit\/registry\").byId(\""+this.id+"\").jumpToNode(\"" + data[i].parentUuid + "\")'>&lt;</a>";
             }
             
             return data;
@@ -232,16 +233,26 @@ define( [
         onCrumbClick: function (item, pos) {
             var self = this;
             console.log( 'Navigate crumb:', item );
-            this.store.getChildren( item ).then( function (data) {
-                self.setData( data );
-            } );
-            this.crumb.popToItem( pos );
+            // if we click on a filter in the crumb then reexecute filter
+            if (item.query) {
+                this.onFilterData( item.query );
+
+            } else {
+                this.store.getChildren( item ).then( function (data) {
+                    self.setData( data );
+                } );
+                this.crumb.popToItem( pos );
+            }
         },
 
         jumpToNode: function(uuid) {
             var self = this;
             var node = this.store._getRootNode();
-            node.id = uuid;
+            node.id = uuid === "null" ? node.id : uuid;
+            
+            this.hideColumn('colParent');
+            this.showColumn('colFolder');
+            
             //this.crumb.push( {label: item.title, data: item} );
             this.store.getChildren( node ).then( function (data) {
                 self.setData( data );
@@ -251,7 +262,7 @@ define( [
                 console.log(path);
                 var nodeAppType = self.type === 'Objects' ? 'O' : 'A';
                 var rootNode = self.store._getRootNode();
-                self.crumb.clear();
+                //self.crumb.clear();
                 self.crumb.push({label: rootNode.title, data: rootNode});
                 for (var i=0; i<path.length; i++) {
                     self.crumb.push({label: path[i], data: {id: path[i], nodeAppType: nodeAppType }});
@@ -261,17 +272,24 @@ define( [
         
         _getPathToNode: function(uuid) {
             var getPathDef = new Deferred();
-            if (this.type == "Objects") {
-                topic.publish("/getObjectPathRequest", {
-                    id: uuid,
-                    resultHandler: getPathDef
-                });
-
+            
+            if (uuid === 'null') {
+                getPathDef.resolve( [] );
+                
             } else {
-                topic.publish("/getAddressPathRequest", {
-                    id: uuid,
-                    resultHandler: getPathDef
-                });
+                
+                if (this.type == "Objects") {
+                    topic.publish("/getObjectPathRequest", {
+                        id: uuid,
+                        resultHandler: getPathDef
+                    });
+    
+                } else {
+                    topic.publish("/getAddressPathRequest", {
+                        id: uuid,
+                        resultHandler: getPathDef
+                    });
+                }
             }
             return getPathDef;
         },
