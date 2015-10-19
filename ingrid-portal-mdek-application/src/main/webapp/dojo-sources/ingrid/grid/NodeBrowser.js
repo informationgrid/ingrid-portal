@@ -1,6 +1,7 @@
 define( [
     'ingrid/grid/CustomGrid',
     'ingrid/grid/CustomGridFormatters',
+    "ingrid/utils/PageNavigation",
     'ingrid/tree/DwrStore',
     'ingrid/utils/Address',
     'dojo/_base/declare',
@@ -10,7 +11,7 @@ define( [
     'dojo/on',
     'dijit/_Widget',
     'dojo/dom-construct',
-    'ingrid/hierarchy/GeneralTopics'], function (CustomGrid, GridFormatters, DwrStore, UtilAddress, declare, lang, Deferred, topic, on, _Widget, construct) {
+    'ingrid/hierarchy/GeneralTopics'], function (CustomGrid, GridFormatters, navigation, DwrStore, UtilAddress, declare, lang, Deferred, topic, on, _Widget, construct) {
 
     var BreadCrumb = declare( "ingrid.BreadCrumb", _Widget, {
         /**
@@ -21,7 +22,7 @@ define( [
         path: [],
 
         navHandler: null,
-
+        
         postCreate: function () {
             construct.create( "div", {
                 'class': 'breadcrumb',
@@ -85,6 +86,10 @@ define( [
     return declare( "ingrid.NodeBrowser", CustomGrid, {
 
         type: 'Objects',
+        
+        pager: null,
+        
+        resultsPerPage: 10,
 
         crumb: null,
 
@@ -105,7 +110,7 @@ define( [
             id: 'colParent',
             field: 'parentLink',
             name: '&nbsp',
-            width: 28
+            width: 25
             //hidden: true
             //formatter: GridFormatters.renderFolderIcon
         }, {
@@ -145,8 +150,12 @@ define( [
             var filterContainer = construct.create( "div" );
             var crumbContainer = construct.create( "div" );
             var gridContainer = construct.create( "div" );
+            var pagingInfo = construct.create( "span" );
+            var pagingPager = construct.create( "span", { style: 'float: right' } );
             construct.place( filterContainer, this.domNode );
             construct.place( crumbContainer, this.domNode );
+            construct.place( pagingInfo, this.domNode );
+            construct.place( pagingPager, this.domNode );
             construct.place( gridContainer, this.domNode );
 
             // set the dom node to the grid container to be rendered inside the child
@@ -155,13 +164,26 @@ define( [
 
             this.filter = new Filter({onChange: lang.hitch( this, this.onFilterData )}, filterContainer);
             
+            this._initPager( this.resultsPerPage, pagingInfo, pagingPager );
+            
             // create bread crumb
             this.crumb = new BreadCrumb( {navHandler: lang.hitch( this, this.onCrumbClick )}, crumbContainer );
             this.openNode();
+            
 
             // create grid
             this.inherited( arguments );
             this.hideColumn( 'colParent' );
+        },
+        
+        _initPager: function(resultsPerPage, infoSpan, pagingSpan ) {
+            this.pager = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan: infoSpan, pagingSpan: pagingSpan });
+        },
+        
+        _updateData: function(data) {
+            this.setData( data );
+            this.pager.setTotalNumHits(data.length);
+            this.pager.updateDomNodes();
         },
         
         onFilterData: function(value) {
@@ -187,7 +209,7 @@ define( [
                     var data = self._prepareResult(res, self);
                     self.hideColumn('colFolder');
                     self.showColumn('colParent');
-                    self.setData(data);
+                    lang.hitch(self, lang.partial(self._updateData, data))();
                 },
                 errorHandler: function(errMsg, err) {
                     displayErrorMessage(err);
@@ -239,7 +261,7 @@ define( [
 
             } else {
                 this.store.getChildren( item ).then( function (data) {
-                    self.setData( data );
+                    lang.hitch(self, lang.partial(self._updateData, data))();
                 } );
                 this.crumb.popToItem( pos );
             }
@@ -255,7 +277,7 @@ define( [
             
             //this.crumb.push( {label: item.title, data: item} );
             this.store.getChildren( node ).then( function (data) {
-                self.setData( data );
+                lang.hitch(self, lang.partial(self._updateData, data))();
             } );
             this._getPathToNode(uuid).then(function(path) {
                 // set bread crumb
@@ -304,7 +326,7 @@ define( [
             }
             this.crumb.push( {label: item.title, data: item} );
             this.store.getChildren( node ).then( function (data) {
-                self.setData( data );
+                lang.hitch(self, lang.partial(self._updateData, data))();
             } );
         }
     } );
