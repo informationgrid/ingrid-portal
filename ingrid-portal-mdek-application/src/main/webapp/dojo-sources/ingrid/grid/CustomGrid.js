@@ -346,7 +346,7 @@ define([
                 var newWidth = this.viewportW - totalColWidth - scrollbarDimensions.width;
                 // if last column is very small then shrink the second to last column a bit
                 var minWidth = this.columns[lastColumn].minWidth ? this.columns[lastColumn].minWidth : 23;
-                if (newWidth < minWidth) {
+                if (lastColumn > 0 && newWidth < minWidth) {
                     this.columns[lastColumn].width = minWidth;
                     this.columns[lastColumn-1].width = this.columns[lastColumn-1].width - minWidth;
                 } else {
