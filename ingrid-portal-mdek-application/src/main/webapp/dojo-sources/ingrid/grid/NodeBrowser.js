@@ -6,12 +6,14 @@ define( [
     'ingrid/utils/Address',
     'dojo/_base/declare',
     'dojo/_base/lang',
+    'dojo/_base/array',
     "dojo/Deferred",
     "dojo/topic",
     'dojo/on',
+    'dojo/aspect',
     'dijit/_Widget',
     'dojo/dom-construct',
-    'ingrid/hierarchy/GeneralTopics'], function (CustomGrid, GridFormatters, navigation, DwrStore, UtilAddress, declare, lang, Deferred, topic, on, _Widget, construct) {
+    'ingrid/hierarchy/GeneralTopics'], function (CustomGrid, GridFormatters, navigation, DwrStore, UtilAddress, declare, lang, array, Deferred, topic, on, aspect, _Widget, construct) {
 
     var BreadCrumb = declare( "ingrid.BreadCrumb", _Widget, {
         /**
@@ -87,15 +89,22 @@ define( [
 
         type: 'Objects',
         
+        enablePaging: true,
+        
         pager: null,
         
         resultsPerPage: 10,
+        
+        childrenData: null,
+        
+        currentQuery: null,
 
         crumb: null,
 
         wrapperNode: null,
 
         columns: [ {
+            id: 'nodeDocType',
             field: 'nodeDocType',
             name: "&nbsp;",
             width: 25,
@@ -114,6 +123,7 @@ define( [
             //hidden: true
             //formatter: GridFormatters.renderFolderIcon
         }, {
+            id: 'title',
             field: 'title',
             name: 'Titel',
             width: 200
@@ -164,12 +174,13 @@ define( [
 
             this.filter = new Filter({onChange: lang.hitch( this, this.onFilterData )}, filterContainer);
             
-            this._initPager( this.resultsPerPage, pagingInfo, pagingPager );
+            if (this.enablePaging) {
+                this._initPager( this.resultsPerPage, pagingInfo, pagingPager );
+            }
             
             // create bread crumb
             this.crumb = new BreadCrumb( {navHandler: lang.hitch( this, this.onCrumbClick )}, crumbContainer );
             this.openNode();
-            
 
             // create grid
             this.inherited( arguments );
@@ -178,12 +189,32 @@ define( [
         
         _initPager: function(resultsPerPage, infoSpan, pagingSpan ) {
             this.pager = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan: infoSpan, pagingSpan: pagingSpan });
+            // if page in navigation clicked then update
+            aspect.after( this.pager, "onPageSelected", lang.hitch( this, this._doPaging ) );
+        },
+        
+        _doPaging: function() {
+            var startHit = this.pager.getStartHit();
+            
+            // if we browsed through the tree
+            if (this.childrenData) {
+                
+                this._updateData( this.childrenData.slice( startHit, startHit + this.resultsPerPage ) );
+            } else {
+                // if we searched by a query
+                this._doQuery(this.currentQuery, startHit);
+            }
         },
         
         _updateData: function(data) {
             this.setData( data );
-            this.pager.setTotalNumHits(data.length);
-            this.pager.updateDomNodes();
+            // clean up table from selection
+            this.setSelectedRows([]);
+            this.resetActiveCell();
+            // update pager
+            if (this.enablePaging) {
+                this.pager.updateDomNodes();
+            }
         },
         
         onFilterData: function(value) {
@@ -199,22 +230,37 @@ define( [
             this.crumb.push({label: 'Filter', data: {query: value}});
             
             var query = this._prepareQuery(value);
-            var startHit = 0;
-            var resultsPerPage = 50;
+            this.childrenData = null;
+            this.currentQuery = query;
+            this._doQuery(query, 0);
+        },
+        
+        _doQuery: function(query, startHit) {
             var self = this;
-            QueryService.queryHQL(query, startHit, resultsPerPage, {
+            QueryService.queryHQL(query, startHit, this.resultsPerPage, {
                 //preHook: showLoadingZone,
                 //postHook: hideLoadingZone,
-                callback: function(res) { 
+                callback: function(res) {
                     var data = self._prepareResult(res, self);
                     self.hideColumn('colFolder');
                     self.showColumn('colParent');
+                    if (self.enablePaging) {
+                        self.pager.setTotalNumHits(self._getTotalHitsFromResult(res));
+                    }
                     lang.hitch(self, lang.partial(self._updateData, data))();
                 },
                 errorHandler: function(errMsg, err) {
                     displayErrorMessage(err);
                 }
             });
+        },
+        
+        _getTotalHitsFromResult: function(res) {
+            if (this.type === "Objects") {
+                return res.objectSearchResult ? res.objectSearchResult.totalNumHits : 0;
+            } else {
+                return res.addressSearchResult ? res.addressSearchResult.totalNumHits : 0;
+            }
         },
 
         _prepareQuery: function(value) {
@@ -235,9 +281,9 @@ define( [
         _prepareResult: function(res, self) {
             var data = null;
             if (self.type === "Objects") {
-                data = res.objectSearchResult.resultList;
+                data = res.objectSearchResult ? res.objectSearchResult.resultList : [];
             } else {
-                data = res.addressSearchResult.resultList;
+                data = res.addressSearchResult ? res.addressSearchResult.resultList : [];
                 // prepare title for grid
                 for (var i=0; i<data.length; i++) {
                     data[i].title = UtilAddress.createAddressTitle(data[i]);
@@ -260,11 +306,18 @@ define( [
                 this.onFilterData( item.query );
 
             } else {
-                this.store.getChildren( item ).then( function (data) {
-                    lang.hitch(self, lang.partial(self._updateData, data))();
-                } );
+                var def = this._getChildren( item );
+                var child = this.crumb.path[pos+1];
                 this.crumb.popToItem( pos );
+                // mark item in grid where we came from
+                def.then(function() {
+                    var nodeToMark = array.filter(self.getData(), function(item) { return item.id === child.data.id; } );
+                    var row = array.indexOf(self.getData(), nodeToMark[0]);
+                    self.setSelectedRows([row]);
+                });
             }
+            
+            
         },
 
         jumpToNode: function(uuid) {
@@ -276,9 +329,7 @@ define( [
             this.showColumn('colFolder');
             
             //this.crumb.push( {label: item.title, data: item} );
-            this.store.getChildren( node ).then( function (data) {
-                lang.hitch(self, lang.partial(self._updateData, data))();
-            } );
+            this._getChildren( node );
             this._getPathToNode(uuid).then(function(path) {
                 // set bread crumb
                 console.log(path);
@@ -325,7 +376,17 @@ define( [
                 node.id = item.id;
             }
             this.crumb.push( {label: item.title, data: item} );
-            this.store.getChildren( node ).then( function (data) {
+            this._getChildren( node );
+        },
+        
+        _getChildren: function(node) {
+            var self = this;
+            return this.store.getChildren( node ).then( function (data) {
+                self.childrenData = data;
+                if (self.enablePaging) {
+                    self.pager.setTotalNumHits(data.length);
+                    data = data.slice(0, self.resultsPerPage);
+                }
                 lang.hitch(self, lang.partial(self._updateData, data))();
             } );
         }
