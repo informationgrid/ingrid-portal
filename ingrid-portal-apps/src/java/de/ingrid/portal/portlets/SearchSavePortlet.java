@@ -126,17 +126,19 @@ public class SearchSavePortlet extends GenericVelocityPortlet {
             Principal principal = request.getUserPrincipal();
             SavedSearchQueries searchSaveEntries = (SavedSearchQueries) IngridPersistencePrefs.getPref(principal
                     .getName(), IngridPersistencePrefs.SEARCH_SAVE_ENTRIES);
-            for (int i = 0; i < searchSaveEntries.size(); i++) {
-                String chk = request.getParameter("chk_" + i);
-                if (chk != null) {
-                    searchSaveEntries.remove(i);
+            if(searchSaveEntries != null){
+                for (int i = 0; i < searchSaveEntries.size(); i++) {
+                    String chk = request.getParameter("chk_" + i);
+                    if (chk != null) {
+                        searchSaveEntries.remove(i);
+                    }
                 }
-            }
-            IngridPersistencePrefs.setPref(principal.getName(), IngridPersistencePrefs.SEARCH_SAVE_ENTRIES,
-                    searchSaveEntries);
+                IngridPersistencePrefs.setPref(principal.getName(), IngridPersistencePrefs.SEARCH_SAVE_ENTRIES,
+                        searchSaveEntries);
 
-            f.init();
-            f.setError("", "searchSave.msg.entries.deleted");
+                f.init();
+                f.setError("", "searchSave.msg.entries.deleted");
+            }
         }
     }
 
