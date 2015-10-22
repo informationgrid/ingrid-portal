@@ -326,6 +326,9 @@ define([
             if (force || this.viewportW === 0) {
                 // update the viewport width which might have changed 
                 this.viewportW = parseFloat(style.get(this.domNode, "width"));
+                
+                // in case the grid is not yet visible, just return instead of modifying columns to a wrong width
+                if (this.viewportW === 0) return;
 
                 /*if (style.get(this.canvas, "width") > this.viewportW){
                     // make the width smaller first so that the scrollbar disappears

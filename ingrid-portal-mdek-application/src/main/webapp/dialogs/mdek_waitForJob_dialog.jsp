@@ -39,8 +39,6 @@ require(["dojo/on",
     var cancelJob;
 
     on(_container_, "Load", function() {
-        //dojo.require("dojo.lang.timing.Timer");
-        debugger;
         requestInProgress = false;
         cancelJob = false;
         canceled = false;

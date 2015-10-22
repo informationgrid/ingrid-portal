@@ -625,7 +625,10 @@ define([
                 tabRef1Process.addChild(tabRef1ProcessTab2);
                 tabRef1Process.startup();
 
-                tabRef1Process.watch("selectedChildWidget", lang.partial(UtilUI.toggleFunctionalLink, "ref1ProcessTab2"));
+                tabRef1Process.watch("selectedChildWidget", function(event, object, selectedTabWidget) {
+                    UtilUI.toggleFunctionalLink( "ref1ProcessTab2", event, object, selectedTabWidget );
+                    registry.byId("ref1ProcessLink").reinitLastColumn(true);
+                });
             },
 
             createRefClass1DQ: function() {
@@ -1371,7 +1374,10 @@ define([
                 ref6BaseDataTabContainer.addChild(ref6BaseDataTab2);
                 ref6BaseDataTabContainer.startup();
 
-                ref6BaseDataTabContainer.watch("selectedChildWidget", lang.partial(UtilUI.toggleFunctionalLink, "ref6MethodTab2"));
+                ref6BaseDataTabContainer.watch("selectedChildWidget", function(event, object, selectedTabWidget) {
+                    UtilUI.toggleFunctionalLink( "ref6MethodTab2", event, object, selectedTabWidget );
+                    registry.byId("ref6BaseDataLink").reinitLastColumn(true);
+                });
 
                 new SimpleTextarea({
                     "class": "textAreaFull",
