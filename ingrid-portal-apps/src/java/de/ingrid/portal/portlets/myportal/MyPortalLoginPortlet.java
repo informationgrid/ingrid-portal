@@ -73,6 +73,13 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 	private static final String VIEW_SHIB = "/WEB-INF/templates/myportal/myportal_shib.vm";
 
     /**
+     * The separator used to create a unique portlet name as
+     * {portletApplication}::{portlet}
+     * Taken from org.apache.jetspeed.components.portletregistry.PersistenceBrokerPortletRegistry
+     */
+    static public final String PORTLET_UNIQUE_NAME_SEPARATOR = "::";
+
+    /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
@@ -249,7 +256,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 
     private List<String> getInitialParameterFromOtherPortlet(String paramName) {
     	PortletRegistry registry = (PortletRegistry) getPortletContext().getAttribute(CommonPortletServices.CPS_REGISTRY_COMPONENT);
-    	InitParam initParam = registry.getPortletDefinitionByUniqueName("MyPortalCreateAccountPortlet").getInitParam(paramName);
+    	InitParam initParam = registry.getPortletDefinitionByUniqueName("ingrid-portal-apps" + PORTLET_UNIQUE_NAME_SEPARATOR + "MyPortalCreateAccountPortlet").getInitParam(paramName);
     	
     	return getInitParamAsList(initParam);
 	}
