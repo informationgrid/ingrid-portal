@@ -317,7 +317,6 @@
                     </li>
                 </ul>
             </div>
-            #if ($webmaster_email != "")
             <div class="right">
                 <ul>
                     <li>
@@ -326,7 +325,6 @@
                     </li>
                 </ul>
             </div>
-            #end
         </div>  
     </div>
 </div>

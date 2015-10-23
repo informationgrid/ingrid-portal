@@ -16,6 +16,18 @@
             <hidden>false</hidden>
         </page>
         <page>
+			<name>main-service.psml</name>
+			<hidden>false</hidden>
+		</page>
+		<page>
+			<name>main-measures.psml</name>
+			<hidden>false</hidden>
+		</page>
+		<page>
+			<name>main-features.psml</name>
+			<hidden>false</hidden>
+		</page>
+        <page>
             <name>main-chronicle.psml</name>
             <hidden>false</hidden>
         </page>
@@ -37,6 +49,18 @@
         </page>
         <page>
             <name>mdek/mdek_portal_admin.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-about-partner.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-about-data-source.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>service-contact-newsletter.psml</name>
             <hidden>false</hidden>
         </page>
         <page>
@@ -281,6 +305,10 @@
             <![CDATA[UPDATE folder_menu SET options='/search-catalog/search-catalog-hierarchy.psml' WHERE options='/search-catalog/search-catalog-thesaurus.psml';]]>
         </execute>
         -->
+        <!-- Enable webmaster-->		
+		<execute>
+            <![CDATA[UPDATE link SET IS_HIDDEN='0' WHERE PATH='/webmaster.link';]]>
+        </execute>
         <!-- Use _new templates for info portlet -->
        	<execute>
             <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/chronicle_info_new.vm' WHERE value='/WEB-INF/templates/chronicle_info.vm';]]>
