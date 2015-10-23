@@ -47,7 +47,5 @@ if(domain == "10.7.101.83"){
 <noscript><p><img src="//10.7.101.83/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
 
-<script> if (document.documentMode == 7) alert("$MESSAGES.getString('ingrid.page.compatibility')") </script>
-
 </body>
 </html>
