@@ -44,6 +44,18 @@
             <action type="update" dev="wemove" issue="REDMINE-109">
                 Portal: Updated to final Jetspeed 2.3.0 release.
             </action>
+            <action type="update" dev="wemove" issue="REDMINE-177">
+                Portal: MapClient POST Request now of type application/json to match changed BWaStr Locator Service (GeoPortal.WSV).
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-169">
+                Portal: Added SSO functionality again (Shibboleth) after testing with GeoPortal.WSV.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-141">
+                IGE: Fixed using old library, which prevented URL-maintenance working correctly.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-104">
+                Show new iPlug-SE (>=3.5.0) on admin page.
+            </action>
             <action type="add" dev="wemove" issue="REDMINE-23">
                 IGE: Show object/address ID in header.
             </action>
