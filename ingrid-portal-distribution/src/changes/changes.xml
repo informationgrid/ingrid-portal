@@ -65,6 +65,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-144">
                 Portal/IGE: Removing a catalog which contains an already deleted user lead to an error.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-192">
+                IGE: In a rare case the tables can become not editable anymore.
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-13">
                 Portal/IGE: Added table for useConstraints in IGE and adapt detail view in Portal to new IDF structure concerning constraints.
             </action>
