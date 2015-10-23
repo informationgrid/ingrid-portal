@@ -847,7 +847,7 @@ div.btn_gray_center { float:left; background-image: url("../images/button_gray.p
 
 .search_query_button { padding: 0px 0px 0px 595px; }
 .search_query_textarea { position: absolute;  margin: 1px 0 0; }
-div#logo img {  padding: 15px; width: 40px; height: 50px; box-sizing: unset; }
+div#logo img {  padding: 15px; width: 40px; height: 50px; box-sizing: content-box; }
 p.chronicle_teaser_title { float: none; width: 100%; }
 
 
