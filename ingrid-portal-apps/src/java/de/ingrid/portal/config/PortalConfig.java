@@ -26,6 +26,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.Iterator;
 
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -298,7 +299,13 @@ public class PortalConfig extends PropertiesConfiguration {
     private PortalConfig() throws Exception {
         super("ingrid-portal-apps.properties");
         //this.setReloadingStrategy(ReloadingStrategy)
-        URL url = this.getClass().getResource("/ingrid-portal-apps.override.properties");
+        URL urlProfile = this.getClass().getResource("/ingrid-portal-apps.profile.properties");
+        URL urlOverride = this.getClass().getResource("/ingrid-portal-apps.override.properties");
+        updateProperties(urlProfile);
+        updateProperties(urlOverride);
+    }
+    
+    private void updateProperties(URL url) throws ConfigurationException {
         if (url != null) {
             File f = new File(url.getPath());
             PropertiesConfiguration userConfig = new PropertiesConfiguration(f);
