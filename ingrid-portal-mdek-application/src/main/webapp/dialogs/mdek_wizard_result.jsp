@@ -480,14 +480,18 @@ require([
 
         // If selected, add description
         var desc = "";
-        if (applyAll || registry.byId( "assistantDescriptionCheckbox" ).checked) {
+        var aDescr = registry.byId( "assistantDescriptionCheckbox" ).checked;
+        var aHtmlContent = registry.byId( "assistantHtmlContentCheckbox" ).checked;
+        if (applyAll || aDescr) {
             desc += registry.byId( "assistantDescription" ).getValue();
             desc += "\n\n";
         }
-        if (applyAll || registry.byId( "assistantHtmlContentCheckbox" ).checked) {
+        if (applyAll || aHtmlContent) {
             desc += registry.byId( "assistantHtmlContent" ).getValue();
         }
-        registry.byId( "generalDesc" ).setValue( lang.trim( desc ) );
+        if (aDescr || aHtmlContent) {
+            registry.byId( "generalDesc" ).setValue( lang.trim( desc ) );
+        }
 
         // Title
         if (applyAll || registry.byId( "assistantHtmlTitleCheckbox" ).checked) {
@@ -509,7 +513,10 @@ require([
                 } );
             }
         } );
-        registry.byId( "availabilityAccessConstraints" ).setData( accessToAdd );
+        
+        if (accessToAdd.length > 0) {
+            registry.byId( "availabilityAccessConstraints" ).setData( accessToAdd );
+        }
 
         // Service Type
         if (applyAll || registry.byId( "assistantServiceTypeCheckbox" ).checked) {
@@ -642,7 +649,12 @@ require([
 
         // add Events (created, published, ...)
         var datesList = UtilGrid.getTableData( "assistantTimeEventsTable" );
-        UtilGrid.setTableData( "timeRefTable", datesList );
+        for ( var i in datesList) {
+            // If checkbox is selected
+            if (applyAll || datesList[i].selection == 1) {
+                UtilGrid.addTableDataRow( "timeRefTable", datesList[i] );
+            }
+        }
 
         // add Keywords
         var keywords = [];
@@ -672,7 +684,9 @@ require([
                 } );
             }
         } );
-        UtilStore.updateWriteStore( "ref1SpatialSystem", crsToAdd );
+        if (crsToAdd.length > 0) {
+            UtilStore.updateWriteStore( "ref1SpatialSystem", crsToAdd );
+        }
 
         // Conformities
         var conformitiesData = UtilGrid.getTableData( "assistantConformityTable" );
@@ -682,7 +696,9 @@ require([
                 conformitiesToAdd.push( conformity );
             }
         } );
-        UtilStore.updateWriteStore( "extraInfoConformityTable", conformitiesToAdd );
+        if (conformitiesToAdd.length > 0) {
+            UtilStore.updateWriteStore( "extraInfoConformityTable", conformitiesToAdd );
+        }
 
         // Addresses
         var defs = [];
@@ -756,7 +772,9 @@ require([
         // wait for all addresses being added and update address table then
         var defAddresses = new DeferredList( defs ).then( function() {
             console.debug( "update address table now!" );
-            UtilStore.updateWriteStore( "generalAddress", addressesToAdd );
+            if (addressesToAdd.length > 0) {
+                UtilStore.updateWriteStore( "generalAddress", addressesToAdd );
+            }
             // reload sub tree of newly created addresses
             // WARNING: this removes focus of selected node and new node cannot be clicked again!?
             // -> added parameter to prevent selection of node!
@@ -837,9 +855,11 @@ require([
 
         var allLinks = onlineResources.concat( resourceLocators.concat( urlData ) );
 
-        UtilList.addIcons( allLinks );
-        UtilList.addUrlLinkLabels( allLinks );
-        UtilStore.updateWriteStore( "linksTo", allLinks );
+        if (allLinks.length > 0) {
+            UtilList.addIcons( allLinks );
+            UtilList.addUrlLinkLabels( allLinks );
+            UtilStore.updateWriteStore( "linksTo", allLinks );
+        }
         
         // wait for adding keywords AND addresses to be finished
         defKeywords.then( function() {
@@ -879,10 +899,12 @@ require([
                 };
         
                 if ( createDatasetsDeferreds.length === 0 ) {
-                    console.log( "Adding all coupled resources as links: ", coupledResources );
-                    addCoupledResourcesInfo( coupledResources );
-                    UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
-                    setTimeout(igeEvents.refreshTabContainers, 500);
+                    if (coupledResources.length > 0) {
+                        console.log( "Adding all coupled resources as links: ", coupledResources );
+                        addCoupledResourcesInfo( coupledResources );
+                        UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
+                        setTimeout(igeEvents.refreshTabContainers, 500);
+                    }
                     
                 } else {
                     UtilUI.enterLoadingState();
