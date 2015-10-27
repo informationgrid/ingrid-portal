@@ -468,6 +468,8 @@ define({
 	"validation.begin":"von",
 	"validation.end":"bis",
     "validation.serviceUrl":"Der '${0}' sowie die '${1}' muss angegeben werden.",
+    "validation.isocategory.added":"Die abhängige ISO-Kategorie '${0}' wurde ebenfalls hinzugefügt.",
+    "validation.isocategory.delete.dependent":"Die Kategorie muss bestehen bleiben, solange das INSPIRE-Thema '${0}' verwendet wird.",
 	
 	"ui.entry.loadingMessage":"Die Anwendung wird geladen...",
 	"ui.entry.admin.title":"InGrid-Editor - Verwaltung und Management",

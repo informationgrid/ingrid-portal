@@ -469,6 +469,8 @@ define({
 	"validation.begin":"from",
 	"validation.end":"to",
 	"validation.serviceUrl":"The '${0}' and the '${1}' must be specified.",
+	"validation.isocategory.added":"The dependend ISO-category '${0}' was also added.",
+    "validation.isocategory.delete.dependent":"The category cannot be deleted, as long as the INSPIRE-topic '${0}' is used.",
 	
 	"ui.entry.loadingMessage":"The application is loading...",
 	"ui.entry.admin.title":"InGrid-Editor - Administration",

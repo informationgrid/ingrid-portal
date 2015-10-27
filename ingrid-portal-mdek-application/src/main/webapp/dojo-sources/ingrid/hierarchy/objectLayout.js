@@ -53,7 +53,9 @@ define([
     "ingrid/dialog",
     "ingrid/layoutCreator",
     "ingrid/hierarchy/rules",
+    "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/dirty",
+    "ingrid/hierarchy/behaviours",
     "ingrid/IgeEvents",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
@@ -62,9 +64,8 @@ define([
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
             UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus,
-            message, dialog, layoutCreator, rules, dirty, igeEvents, gridEditors, gridFormatters, validator) {
+            message, dialog, layoutCreator, rules, behaviours, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
 
-        //var objectLayout = 
         return declare(null, {
             objectTemplateCreated: false,
 
@@ -73,7 +74,7 @@ define([
             additionalFieldWidgets: [],
 
             create: function() {
-                // TODO: clean up and just return deferredCreation promise without the need
+                // clean up and just return deferredCreation promise without the need
                 // of objectTemplateCreated!
                 this.deferredCreation = new Deferred();
                 if (this.objectTemplateCreated) {
@@ -142,16 +143,9 @@ define([
                 defAddFields.then(this.applyDefaultConnections)
                 .then(setVisibilityOfFields);
 
-                // console.debug("visibility!");
-
                 // update view according to initial chosen class
                 console.debug("select class");
                 igeEvents.selectUDKClass();
-
-                // from rules_required.js
-                //console.debug("apply Rules");
-                // done within profile now!
-                //applyRules();
 
                 // add a '*' to all labels and display them if an element is required 
                 query(".outer label", "contentFrameBodyObject").forEach(function(item) {
@@ -2238,6 +2232,9 @@ define([
                 aspect.after(UtilGrid.getTable("ref5KeysLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 aspect.after(UtilGrid.getTable("ref5MethodLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 aspect.after(UtilGrid.getTable("ref6BaseDataLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
+                
+                // activate default behaviour
+                behaviour.inspireIsoConnection.run();
             }
         })();
 
