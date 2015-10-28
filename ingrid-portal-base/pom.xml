@@ -39,6 +39,8 @@
                 <exclude>WEB-INF/ui-pages/**</exclude>
                 <exclude>WEB-INF/min-ui-pages/**</exclude>
                 <exclude>WEB-INF/conf/jetspeed.properties</exclude>
+                <!-- Exclude jetspeed only logging configuration, we have our own log4j.xml including ingrid logging -->
+                <exclude>WEB-INF/classes/log4j.xml</exclude>
               </excludes>
             </overlay>
           </overlays>
@@ -165,6 +167,7 @@
         <directory>src/java</directory>
         <includes>
           <include>**/*.properties</include>
+          <include>**/*.xml</include>
         </includes>
       </resource>
     </resources>
