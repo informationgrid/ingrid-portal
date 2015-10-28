@@ -64,7 +64,8 @@ define(["dojo/_base/declare",
                 };
                 
                 // react when inspire topics has been added
-                aspect.after(UtilGrid.getTable("thesaurusInspire"), "onCellChange", function(result, args) {
+                var inspireGridChanges = function(result, args) {
+                    console.log("Inspire data behaviour");
                     var msg = args[0];
                     var objClass = registry.byId("objectClass").get("value");
                     // only react if class == 1
@@ -79,7 +80,10 @@ define(["dojo/_base/declare",
                             UtilUI.showToolTip( "thesaurusInspire", string.substitute(message.get("validation.isocategory.added"), [added]) );
                         }
                     }
-                });
+                };
+                
+                aspect.after(UtilGrid.getTable("thesaurusInspire"), "onCellChange", inspireGridChanges);
+                aspect.after(UtilGrid.getTable("thesaurusInspire"), "notifyChangedData", inspireGridChanges);
                 
                 // if a category is removed that belongs to a set INSPIRE topic, then we won't allow it
                 // -> instead we have to remove the topic first
