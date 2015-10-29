@@ -122,7 +122,7 @@ self.focus();
 <div id="identity" class="${langCode}motiv_suche_detail">
   <!-- LOGO -->
   <div id="logo">
-    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')"><img src="/decorations/layout/ingrid/images/RP_Wappen_4c.jpg" alt="Logo PortalU" />
+    <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img src="/decorations/layout/ingrid/images/RP_Wappen_4c.jpg" alt="Logo PortalU" />
     	<p><span>$MESSAGES.getString("ingrid.page.logo.header.title")</span></p>
     </a>
   </div>
