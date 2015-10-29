@@ -19,3 +19,4 @@
 .settings/
 ingrid-portal-base/work_tomcat/
 /target
+ingrid-portal-apps/src/java/ingrid-portal-apps.override.properties
