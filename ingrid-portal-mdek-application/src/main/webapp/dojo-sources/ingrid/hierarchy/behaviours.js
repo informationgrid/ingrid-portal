@@ -51,7 +51,7 @@ define(["dojo/_base/declare",
                     } else {
                         // check if entry already exists in table
                         var exists = dojo.some( UtilGrid.getTableData( "thesaurusTopics" ), function(row) {
-                            return row.title === mappedEntry;
+                            return row.title == mappedEntry; // String-Number comparison
                         } );
 
                         // add entry to table if it doesn't already exist
@@ -75,9 +75,11 @@ define(["dojo/_base/declare",
                             updateIsoCategories(msg.oldItem.title, true);
                         }
                         // add new dependent value
-                        var added = updateIsoCategories(msg.item.title, false);
-                        if (added) {
-                            UtilUI.showToolTip( "thesaurusInspire", string.substitute(message.get("validation.isocategory.added"), [added]) );
+                        if (msg.type !== "deleted") {
+                            var added = updateIsoCategories(msg.item.title, false);
+                            if (added) {
+                                UtilUI.showToolTip( "thesaurusInspire", string.substitute(message.get("validation.isocategory.added"), [added]) );
+                            }
                         }
                     }
                 };
@@ -87,8 +89,10 @@ define(["dojo/_base/declare",
                 
                 // if a category is removed that belongs to a set INSPIRE topic, then we won't allow it
                 // -> instead we have to remove the topic first
-                aspect.after(UtilGrid.getTable("thesaurusTopics"), "onDeleteItems", function(result, args) {
+                var isoCategoriesChanges = function(result, args) {
                     var msg = args[0];
+                    // if cell is changed, then we must not allow to remove the old item
+                    if (msg.oldItem) msg.items = [msg.oldItem];
                     var objClass = registry.byId("objectClass").get("value");
                     // only react if class == 1
                     if (objClass == "Class1") {
@@ -100,7 +104,11 @@ define(["dojo/_base/declare",
                                 var id = UtilSyslist.getSyslistEntryKey( 527, item.title );
                                 if (mappedId == id) { // Integer and String comparison!!!
                                     // re-insert removed category again
-                                    UtilGrid.addTableDataRow( "thesaurusTopics", { title: item.title } );
+                                    if (msg.oldItem) {
+                                        UtilGrid.updateTableDataRow( "thesaurusTopics", msg.row, msg.oldItem );
+                                    } else {
+                                        UtilGrid.addTableDataRow( "thesaurusTopics", { title: item.title } );
+                                    }
                                     
                                     // show tooltip for explanation
                                     var inspireName = UtilSyslist.getSyslistEntryName( 6100, topic.title );
@@ -110,7 +118,10 @@ define(["dojo/_base/declare",
                             });
                         });
                     }
-                });
+                };
+                
+                aspect.after(UtilGrid.getTable("thesaurusTopics"), "onCellChange", isoCategoriesChanges );
+                aspect.after(UtilGrid.getTable("thesaurusTopics"), "onDeleteItems", isoCategoriesChanges );
             }
         }
         
