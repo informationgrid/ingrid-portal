@@ -19,11 +19,6 @@
 #if(!$footerMenu.empty)
   #includeFooterNavigation($footerMenu)
 #end
-<br />
-    $MESSAGES.getString('ingrid.page.copyright')<br />
-
-    $MESSAGES.getString('ingrid.page.rights')<br /><br />
-  </div>
 </div>
 
 </div>

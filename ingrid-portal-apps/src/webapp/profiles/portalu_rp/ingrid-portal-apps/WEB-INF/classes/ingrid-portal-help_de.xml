@@ -159,8 +159,7 @@
         <section help-key="about-5">
             <header>Wie werde ich Informationsanbieter in PortalU?</header>
             <content>
-                <p>In PortalU können alle behördlichen Umweltinformationen aufgenommen werden. Zum Anbieterkreis 
-                   gehören:  
+                <p>In PortalU können alle behördlichen Umweltinformationen aufgenommen werden.  
                 </p>
                 <!-- 
                 <ul>
@@ -271,8 +270,10 @@
                         <a href="?hkey=search-save-1">Speicherung von Suchanfragen</a>
                     </li>
                 </ul>
+                <!-- 
                 <p>Einen kurzen Überblick über die Freitextsuche finden 
                    Sie <a href="/funktionen?action=doSearch/" target="_new">HIER</a>. </p>
+                 -->
             </content>
         </section>
     </chapter>
@@ -308,9 +309,11 @@
                     <li>
                         <a href="?hkey=ext-search-time-1">Zeit</a>
                     </li>
+                    <!-- 
                     <li>
                         <a href="?hkey=ext-search-area-1">Suchbereich</a>
                     </li>
+                     -->
                 </ul>
             </content>
         </section>
@@ -462,7 +465,7 @@
                 <content>
                     <p>Wenn Sie im Bereich der <b>Erweiterten räumlichen Suche</b> 
                        auf die Schaltfläche <b>Auf Karte festlegen</b> klicken, 
-                       wird Ihnen eine Rheinland-Pfalz in einem Kartenfenster 
+                       wird Ihnen eine Rheinland-Pfalz-Karte in einem Kartenfenster 
                        angezeigt. Die Schaltfläche <b>Gebiet auswählen</b> 
                        <img border="0" width="20" height="21" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"></img> ist hierbei bereits aktiviert. 
                        Sie wählen ein Gebiet aus, indem Sie mit gedrückter 
@@ -635,7 +638,8 @@
     <chapter>
         <header>Erweiterte Suche: Suchbereich</header>
         <section help-key="ext-search-area-1">
-            <header>Inhalte</header>
+            <!-- 
+        	<header>Inhalte</header>
             <content>
                 <p>An dieser Stelle können Sie festlegen, ob Sie alle
                     Umweltinformationen (auch Themen und Service)
@@ -643,6 +647,7 @@
                     nur in den Service-Seiten (Pressemitteilungen, Publikationen
                     und Veranstaltungen) suchen möchten.</p>
             </content>
+        	-->
         </section>
         <section help-key="ext-search-area-2">
             <header>Datenquellen</header>
@@ -741,7 +746,7 @@
                     Suchausdruck) oder nach Aktualität (die neusten Seiten
                     stehen vorne) sortiert anzeigen lassen.</p>
                 <p><b>Gruppierung</b> bedeutet, dass die
-                    Suchergebnisse nach Bund/Ländern, Informationsanbietern
+                    Suchergebnisse nach Informationsanbietern
                     oder Domänen zusammengefasst angezeigt werden.</p>
             </content>
         </section>
@@ -1230,6 +1235,7 @@
                     Umweltwirtschaft, Verkehr, Wasser </p>
             </content>
         </section>
+        <!-- 
         <section help-key="search-expert-11">
             <header>Suche nach speziellen Messwertseiten</header>
             <content>
@@ -1254,6 +1260,7 @@
                 <p> press, publication, event </p>
             </content>
         </section>
+         -->
         <section help-key="search-expert-13">
             <header>Suche nach einer speziellen Metadatenklasse</header>
             <content>
@@ -1482,10 +1489,10 @@
                    Ortsnamen einschränken. </p>
                 <p>Wenn Sie auf die Schaltfläche <b>Auf Karte festlegen</b> 
                    klicken, können Sie ein Suchrechteck auf einer 
-                   Rheinland-Pfalz aufziehen. Klicken Sie auf die Schaltfläche 
+                   Rheinland-Pfalz-Karte aufziehen. Klicken Sie auf die Schaltfläche 
                    <b>Auswahl anwenden</b>, um die räumliche Einschränkung für 
                    die Suchergebnisse zu übernehmen. 
-                   <a href="?hkey=ext-search-spatial-6">Mehr dazu</a></p>                               
+                   <!--  <a href="?hkey=ext-search-spatial-6">Mehr dazu</a></p> -->                      
                    
                 <p>Sie können Ihr Suchergebnis aber auch über Ortsnamen und 
                    anderen geographischen Bezeichnungen einschränken. Klicken Sie 
@@ -1538,18 +1545,20 @@
         <section help-key="search-catalog-1">
             <header>Umweltmetadaten</header>
             <content>
-                <p>Recherchieren Sie in den Umwelt- und Geodatenkatalogen von 
-                   Bund und Ländern. Die Kataloge sind hierarchisch aufgebaut 
-                   und können mit einem Klick auf das Ordnersymbol aufgeklappt 
+                <p>Recherchieren Sie im Umweltdatenkatalog von 
+                   Rheinland-Pfalz. Der Katalog ist hierarchisch aufgebaut 
+                   und kann mit einem Klick auf das Ordnersymbol aufgeklappt 
                    werden. Die Umweltinformationen werden in den Katalogen als 
                    <b>Objekte</b> bezeichnet. Als zusätzliche Information sind 
                    im Bereich <b>Adressen</b> die jeweiligen behördlichen 
                    Ansprechpartner aufgeführt. Durch einen Klick auf ein Objekt
                    oder eine Adresse werden detaillierte Informationen 
                    angezeigt. </p>
+                <!-- 
                 <p> Einen anschaulichen Überblick über Recherchemöglichkeiten 
                     in den Umweltdatenkatalogen finden Sie <a href="/funktionen?action=doCatalog" target="_new">HIER</a>.
                 </p>
+                 -->
             </content>
         </section>
         <section help-key="search-catalog-2">
@@ -1598,7 +1607,7 @@
                 <p>Tipp: Wenn Sie auf der PortalU-Startseite auf ein Umweltthema 
                    klicken (z.B. Wasser), wird Ihnen die entsprechende 
                    Ergebnisliste direkt angezeigt.</p>              
-
+				
                 <p> Einen anschaulichen Überblick über die Umweltthemen 
                     finden Sie <a href="/funktionen?action=doEnvironment" target="_new">HIER</a>. </p>
                   </content>
@@ -1663,8 +1672,10 @@
                    ein und klicken dann auf die Schaltfläche <b>Anzeigen</b>. 
                    Bei Bedarf können Sie zudem einen Zeitraum oder ein Datum 
                    eingeben, um die Suche weiter einzuschränken. </p>
+                <!-- 
                 <p>Einen anschaulichen Überblick der Recherchemöglichkeiten in
                    der Umweltchronik finden Sie <a href="/funktionen?action=doChronicle" target="_new">HIER</a>.</p>
+                 -->
             </content>
         </section>
     </chapter>

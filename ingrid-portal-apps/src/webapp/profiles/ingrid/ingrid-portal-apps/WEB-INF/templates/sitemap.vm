@@ -127,6 +127,7 @@
             </div>
 			#end
             <div class="clearer"></div>
+            #if($enableTopic || $enableMeasure || $enableService)
             <div class="left">
                 <ul>
                     #if($enableTopic)
@@ -152,8 +153,13 @@
                     #end
                 </ul>
             </div>
-			#if($enableMaps || $enableChronicle)
+            #end
+            #if($enableMaps || $enableChronicle)
+            	#if($enableTopic || $enableMeasure || $enableService)
             <div class="middle">
+            	#else
+            <div class="left">
+            	#end
                 <ul>
                     #if($enableMaps)
                     <li class="dottedTop">

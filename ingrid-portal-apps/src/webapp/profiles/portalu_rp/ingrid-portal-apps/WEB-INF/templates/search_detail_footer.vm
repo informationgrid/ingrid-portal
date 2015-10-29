@@ -24,9 +24,6 @@
   #includeFooterNavigation()
 #end
 <br /> 
-	$MESSAGES.getString('footer.copyright')<br />
-
-    <!-- <i>$MESSAGES.getString('footer.rights')</i><br /><br /> -->
   </div>
 </div>
 
