@@ -20,9 +20,7 @@
 <div id="footercontainer">
   <div id="footercontent">
     <!-- portlets go here -->
-#if($site && $site.getMenu("footer-menu") && !$site.getMenu("footer-menu").empty)
   #includeFooterNavigation()
-#end
 <br /> 
   </div>
 </div>
