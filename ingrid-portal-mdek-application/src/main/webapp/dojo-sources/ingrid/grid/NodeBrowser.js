@@ -159,8 +159,8 @@ define( [
             // create two children for bread crumb and grid
             var filterContainer = construct.create( "div" );
             var crumbContainer = construct.create( "div" );
-            var gridContainer = construct.create( "div" );
-            var pagingInfo = construct.create( "span" );
+            var gridContainer = construct.create( "div", { style: 'clear: both' } );
+            var pagingInfo = construct.create( "span", { style: 'float: left' } );
             var pagingPager = construct.create( "span", { style: 'float: right' } );
             construct.place( filterContainer, this.domNode );
             construct.place( crumbContainer, this.domNode );
@@ -273,7 +273,8 @@ define( [
                 // TODO: also search by organisation/institution
                 query = "FROM AddressNode aNode JOIN aNode.t02AddressWork addr WHERE " +
                 		"addr.firstname LIKE '%"+value+"%'" + 
-                		"OR addr.lastname LIKE '%"+value+"%'";
+                		"OR addr.lastname LIKE '%"+value+"%'" +
+                        "OR addr.institution LIKE '%"+value+"%'";
             }
             return query;
         },

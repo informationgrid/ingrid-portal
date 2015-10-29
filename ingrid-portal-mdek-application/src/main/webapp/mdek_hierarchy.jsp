@@ -38,10 +38,17 @@
         <script type="text/javascript" src="generated/dynamicJS.js?lang=<%=currLang%>&c=<%=java.lang.Math.random()%>"></script>
         <script type="text/javascript">
             var pageHierachy = _container_;
-            require(["dojo/Deferred", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/registry", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct", "dojo/dom-class",
-                    "ingrid/tree/MetadataTree", "ingrid/IgeToolbar", "ingrid/IgeActions", "ingrid/tree/HierarchyTreeActions", "dojo/ready"
+            require(["dojo/Deferred", "dijit/layout/BorderContainer", "dijit/layout/ContentPane",
+                     "dijit/layout/TabContainer", "dijit/registry", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct", "dojo/dom-class",
+                    "ingrid/tree/MetadataTree",
+                    "ingrid/grid/NodeBrowser",
+                    "ingrid/grid/NodeBrowserActions",
+                    "ingrid/IgeToolbar",
+                    "ingrid/IgeActions",
+                    "ingrid/tree/HierarchyTreeActions",
+                    "dojo/ready"
                 ],
-                function(Deferred, BorderContainer, ContentPane, registry, lang, dom, construct, domClass, MetadataTree, IgeToolbar, igeActions, TreeActions, ready) {
+                function(Deferred, BorderContainer, ContentPane, TabContainer, registry, lang, dom, construct, domClass, MetadataTree, NodeBrowser, NodeBrowserActions, IgeToolbar, igeActions, TreeActions, ready) {
 
                     pageHierachy.dataTreePromise = new Deferred();
 
@@ -118,10 +125,35 @@
                         // add toolbar to top-pane
                         IgeToolbar.createToolbar(topPane);
 
-                        // add tree to left-pane
+                        
+                        var tc = new TabContainer({
+                            style: "height: 100%; width: 100%;"
+                        }).placeAt(leftPane.domNode);
+                        
+                        var cp0 = new ContentPane({
+                            title: "Browser"
+                        });
+                        construct.create("div", {
+                            id: "browser",
+                            "class": "hideTableHeader"
+                        }, cp0.domNode);
+                        tc.addChild(cp0);
+                        
+                        var cp1 = new ContentPane({
+                            title: "Objekte"
+                        });
+                        // add tree to first tab pane
                         construct.create("div", {
                             id: "dataTree"
-                        }, leftPane.domNode);
+                        }, cp1.domNode);
+                        tc.addChild(cp1);
+
+                        var cp2 = new ContentPane({
+                            title: "Adressen"
+                        });
+                        tc.addChild(cp2);
+
+                        tc.startup();
 
                         ready(function() {
                             // hide error button on start
@@ -136,6 +168,13 @@
                             tree.onLoadDeferred.then(pageHierachy.dataTreePromise.resolve);
                             TreeActions.createTreeMenu();
                             igeActions.dataTree = tree;
+                            
+                            var nodeBrowser = new NodeBrowser({
+                                id : "browser",
+                                type: "Addresses",
+                                onClick: NodeBrowserActions.clickHandler
+                            }, "browser");
+                            
                             contentBorderContainer.startup();
                             registry.byId("contentContainer").resize();
                         });

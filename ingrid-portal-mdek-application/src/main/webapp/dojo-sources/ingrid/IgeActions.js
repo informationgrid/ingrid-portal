@@ -2891,38 +2891,39 @@ define([
                 //                if (registry.byId(oldUuid)) {
                 //                    node = registry.byId(oldUuid).item;
                 //                }
-                node = registry.byId("dataTree").selectedNode;
-                if (node) {
-                    nodeItem = node.item;
-                    nodeItem.nodeDocType = nodeData.nodeDocType;
-                    nodeItem.publicationCondition = nodeData.extraInfoPublishArea;
-                    //registry.byId("treeDocIcons").setnodeDocTypeClass(node);
-                    // this call updates the tree, so provide newest data in node before !
-                    //registry.byId("dataTree").model.store.setValue(node, "title", title);
-                    //query("#" + node.id + " .dijitTreeLabel")[0].innerHTML = title;
-                    nodeItem.title = title;
-                    nodeItem.objectClass = objClass;
-                    nodeItem.id = nodeData.uuid;
-                    // update permissions
-                    nodeItem.isPublished = nodeData.isPublished;
-                    nodeItem.workState = nodeData.workState;
-                    nodeItem.userWritePermission = nodeData.writePermission;
-                    nodeItem.userMovePermission = nodeData.movePermission;
-                    nodeItem.userWriteSinglePermission = nodeData.writeSinglePermission;
-                    nodeItem.userWriteTreePermission = nodeData.writeTreePermission;
-                    nodeItem.userWriteSubNodePermission = nodeData.writeSubNodePermission;
-                    nodeItem.userWriteSubTreePermission = nodeData.writeSubTreePermission;
-                    UtilTree.updateNode("dataTree", null, nodeItem);
-                } else {
-                    console.debug("Error in _updateTree: TreeNode widget not found. ID: " + nodeData.uuid);
-                }
+                // TODO: update source like the tree to show the loaded node correctly!?
+//                node = registry.byId("dataTree").selectedNode;
+//                if (node) {
+//                    nodeItem = node.item;
+//                    nodeItem.nodeDocType = nodeData.nodeDocType;
+//                    nodeItem.publicationCondition = nodeData.extraInfoPublishArea;
+//                    //registry.byId("treeDocIcons").setnodeDocTypeClass(node);
+//                    // this call updates the tree, so provide newest data in node before !
+//                    //registry.byId("dataTree").model.store.setValue(node, "title", title);
+//                    //query("#" + node.id + " .dijitTreeLabel")[0].innerHTML = title;
+//                    nodeItem.title = title;
+//                    nodeItem.objectClass = objClass;
+//                    nodeItem.id = nodeData.uuid;
+//                    // update permissions
+//                    nodeItem.isPublished = nodeData.isPublished;
+//                    nodeItem.workState = nodeData.workState;
+//                    nodeItem.userWritePermission = nodeData.writePermission;
+//                    nodeItem.userMovePermission = nodeData.movePermission;
+//                    nodeItem.userWriteSinglePermission = nodeData.writeSinglePermission;
+//                    nodeItem.userWriteTreePermission = nodeData.writeTreePermission;
+//                    nodeItem.userWriteSubNodePermission = nodeData.writeSubNodePermission;
+//                    nodeItem.userWriteSubTreePermission = nodeData.writeSubTreePermission;
+//                    UtilTree.updateNode("dataTree", null, nodeItem);
+//                } else {
+//                    console.debug("Error in _updateTree: TreeNode widget not found. ID: " + nodeData.uuid);
+//                }
             }
-            if ( /*doSelectNode && */ nodeItem) {
+            //if ( /*doSelectNode && */ nodeItem) {
                 topic.publish("/selectNode", {
                     id: "dataTree",
-                    node: nodeItem
+                    node: nodeData
                 });
-            }
+            //}
         },
 
         // Returns an array representing the UNFILTERED data of the table with name 'tableName'.

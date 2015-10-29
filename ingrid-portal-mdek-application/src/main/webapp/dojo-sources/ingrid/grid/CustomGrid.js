@@ -340,6 +340,7 @@ define([
                     lastColumn = this._getLastVisibleColumn();;
                 this.columns.forEach(function(c, i) {
                     if (!c.hidden) {
+                        if (c.width < 0) c.width = c.minWidth;
                         if (i < lastColumn) totalColWidth += c.width;                        
                     }
                 });
