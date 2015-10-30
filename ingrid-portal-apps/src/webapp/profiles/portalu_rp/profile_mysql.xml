@@ -20,10 +20,6 @@
 			<hidden>true</hidden>
 		</page>
 		<page>
-			<name>main-about-partner.psml</name>
-			<hidden>true</hidden>
-		</page>
-		<page>
 			<name>main-about-data-source.psml</name>
 			<hidden>true</hidden>
 		</page>

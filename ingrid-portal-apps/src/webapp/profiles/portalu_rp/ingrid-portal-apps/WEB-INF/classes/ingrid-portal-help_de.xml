@@ -1147,11 +1147,11 @@
                     <td>mspowerpoint </td>  
                     <td> Es wird nur nach MS PowerPoint - Dokumenten gesucht</td>
                     </tr>
-                </table>  
+                </table>
+                <br></br>  
             </content>
         </section>
         <section help-key="search-expert-9">
-        <br></br>
             <header>Suche nach speziellen Datentypen</header>
             <content>
                 <p>Der PortalU-Volltextindex gliedert sich in verschiedene
@@ -1492,7 +1492,8 @@
                    Rheinland-Pfalz-Karte aufziehen. Klicken Sie auf die Schaltfläche 
                    <b>Auswahl anwenden</b>, um die räumliche Einschränkung für 
                    die Suchergebnisse zu übernehmen. 
-                   <!--  <a href="?hkey=ext-search-spatial-6">Mehr dazu</a></p> -->                      
+                   <!--  <a href="?hkey=ext-search-spatial-6">Mehr dazu</a>--> 
+               </p>                      
                    
                 <p>Sie können Ihr Suchergebnis aber auch über Ortsnamen und 
                    anderen geographischen Bezeichnungen einschränken. Klicken Sie 
