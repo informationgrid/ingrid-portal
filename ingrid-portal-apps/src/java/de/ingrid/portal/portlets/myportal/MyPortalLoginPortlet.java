@@ -190,7 +190,8 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         	List<String> rulesValues = getInitialParameterFromOtherPortlet("rulesValues");
         	Map<String, String> rules = new HashMap<String, String>();
         	for (int ix = 0; ix < ((rulesNames.size() < rulesValues.size()) ? rulesNames.size() : rulesValues.size()); ix++) {
-                rules.put(rulesNames.get(ix), rulesValues.get(ix));
+                //rules.put(rulesNames.get(ix), rulesValues.get(ix));
+                rules.put(rulesValues.get(ix), rulesNames.get(ix));
             }
         	Map<String, String> userAttributes = getUserAttributes(request);
         	String username = (String)request.getAttribute(Settings.USER_AUTH_INFO);
