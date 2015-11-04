@@ -212,13 +212,36 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
             userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
             
             // add admin-portal role 
+            roles.add("user");
             if (isAdminPortalUser) {
-	            roles.add("user");
 	            roles.add(IngridRole.ROLE_ADMIN_PORTAL);
             }
         	
         	try {
-        		log.debug("registerUser username: " + username + ", roles: " + roles + ", groups: " + groups + ", userAttr: " + userAttributes + ", rules: " + rules);
+                if (log.isInfoEnabled()) {
+                    String myRoles = "";
+                    for (String myRole : roles) {
+                        myRoles += myRole + " / ";
+                    }
+                    String myGroups = "";
+                    for (String myGroup : groups) {
+                        myGroups += myGroup + " / ";
+                    }
+                    String myUserAttributes = "";
+                    for (String myKey : userAttributes.keySet()) {
+                        myUserAttributes += myKey + ":" + userAttributes.get( myKey ) + " / ";
+                    }
+                    String myRules = "";
+                    for (String myKey : rules.keySet()) {
+                        myRules += myKey + ":" + rules.get( myKey ) + " / ";
+                    }
+                    log.info("registerUser "
+                            + "\nusername: " + username 
+                            + "\nroles: " + myRoles
+                            + "\ngroups: " + myGroups
+                            + "\nuserAttr: " + myUserAttributes
+                            + "\nrules: " + myRules);
+                }
 				admin.registerUser(username, password, roles, groups, userAttributes, rules, null);
 				//UserManager userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
 				//userManager.setPasswordEnabled(username, false);
