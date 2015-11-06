@@ -171,7 +171,7 @@
                             
                             var nodeBrowser = new NodeBrowser({
                                 id : "browser",
-                                type: "Addresses",
+                                type: "Objects",
                                 onClick: NodeBrowserActions.clickHandler
                             }, "browser");
                             

@@ -178,7 +178,7 @@ define("ingrid/tree/MetadataTree", [
             var selectedNode = node ? node : this.selectedNode;
             // set de-/selection css classes
             if (this.lastLoadedNode && this.lastLoadedNode.domNode !== null) domClass.remove(this.lastLoadedNode.domNode, "TreeNodeSelect");
-            domClass.add(selectedNode.domNode, "TreeNodeSelect");
+            //TODO domClass.add(selectedNode.domNode, "TreeNodeSelect");
             this.lastLoadedNode = selectedNode;
         },
 

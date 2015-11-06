@@ -55,7 +55,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/_base/lang", "dojo/Defer
                     });
 
                     topic.publish("/loadRequest", {
-                        id: item.uuid,
+                        id: item.id ? item.id : item.uuid,
                         appType: item.nodeAppType,
                         node: item,
                         resultHandler: deferred

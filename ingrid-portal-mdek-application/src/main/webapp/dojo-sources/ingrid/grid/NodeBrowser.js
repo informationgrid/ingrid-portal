@@ -12,8 +12,9 @@ define( [
     'dojo/on',
     'dojo/aspect',
     'dijit/_Widget',
+    'dijit/registry',
     'dojo/dom-construct',
-    'ingrid/hierarchy/GeneralTopics'], function (CustomGrid, GridFormatters, navigation, DwrStore, UtilAddress, declare, lang, array, Deferred, topic, on, aspect, _Widget, construct) {
+    'ingrid/hierarchy/GeneralTopics'], function (CustomGrid, GridFormatters, navigation, DwrStore, UtilAddress, declare, lang, array, Deferred, topic, on, aspect, _Widget, registry, construct) {
 
     var BreadCrumb = declare( "ingrid.BreadCrumb", _Widget, {
         /**
@@ -75,9 +76,8 @@ define( [
         
         postCreate: function () {
             var self = this;
-            var input = construct.create( "input", {
-                'class': 'filter'
-            }, this.domNode );
+            var input = construct.toDom( "<div>Suche: <input class='filter'></div>" );
+            construct.place( input, this.domNode );
             
             on( input, 'keyup', function() {
                 self.onChange(input.value);
@@ -89,7 +89,7 @@ define( [
 
         type: 'Objects',
         
-        enablePaging: true,
+        enablePaging: false,
         
         pager: null,
         
@@ -157,12 +157,24 @@ define( [
 
         postCreate: function () {
             // create two children for bread crumb and grid
-            var filterContainer = construct.create( "div" );
+//            var template = 
+//                "<div class='filterContainer'></div>" +
+//                "<hr>" +
+//                "<div></div>" +
+//                "<span style='float: left;'></span><span style='float: right;'></span>" +
+//                "<div style='clear:both'></div>";
+//            
+//            var element = construct.toDom( template );
+//            construct.place( element, this.domNode );
+            
+            var filterContainer = construct.create( "div",  { 'class': 'filterContainer' } );
             var crumbContainer = construct.create( "div" );
+            var line = construct.create( "hr" );
             var gridContainer = construct.create( "div", { style: 'clear: both' } );
             var pagingInfo = construct.create( "span", { style: 'float: left' } );
             var pagingPager = construct.create( "span", { style: 'float: right' } );
             construct.place( filterContainer, this.domNode );
+            construct.place( line, this.domNode );
             construct.place( crumbContainer, this.domNode );
             construct.place( pagingInfo, this.domNode );
             construct.place( pagingPager, this.domNode );
@@ -185,6 +197,15 @@ define( [
             // create grid
             this.inherited( arguments );
             this.hideColumn( 'colParent' );
+            
+            // react on the resize event
+            var self = this;
+            on(registry.byId("treePane_splitter"), "mouseup", function() {
+                setTimeout( function() {
+                    console.log("resize");
+                    self.reinitLastColumn( true );
+                }, 10 );
+            });
         },
         
         _initPager: function(resultsPerPage, infoSpan, pagingSpan ) {
