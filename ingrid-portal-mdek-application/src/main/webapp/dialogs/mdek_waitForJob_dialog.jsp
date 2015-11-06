@@ -32,8 +32,9 @@
 var waitForJobDlg = null;
 
 require(["dojo/on",
+         "dojo/dom",
         "dijit/registry",
-        "dijit/ProgressBar"], function(on, registry, ProgressBar) {
+        "dijit/ProgressBar"], function(on, dom, registry, ProgressBar) {
     var canceled;
     var requestInProgress;
     var cancelJob;
