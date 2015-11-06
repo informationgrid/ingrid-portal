@@ -268,6 +268,7 @@
             <div class="inputContainer noSpaceBelow">
                 <!-- TABLE START -->
                 <div class="inputContainer noSpaceBelow">
+                    <span class="left"><fmt:message key="dialog.admin.catalog.management.searchTerms.info" /></span>
                     <span class="functionalLink" style="margin-top:0"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="pageSearchTerms.downloadAsCSV();" title="<fmt:message key="dialog.admin.catalog.management.searchTerms.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.searchTerms.saveAsCSV" /></a></span>
                     <div class="listInfo" style="clear:both;">
                         <span id="snsUpdateResultInfo" class="searchResultsInfo">&nbsp;</span>
