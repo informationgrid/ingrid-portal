@@ -62,6 +62,9 @@
             <action type="add" dev="wemove" issue="REDMINE-19">
                 IGE: When publishing, then jump to first invalid field on error.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-20">
+                IGE: Add option to sort hierarchy tree by class.
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-13">
                 IGE: Import CSW, separate namespace and resource identifier with "/" instead of "#".
             </action>
