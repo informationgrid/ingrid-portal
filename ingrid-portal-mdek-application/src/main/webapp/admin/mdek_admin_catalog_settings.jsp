@@ -90,30 +90,35 @@
             });
             
             function updateInputFields(catalogData) {
-                registry.byId("adminCatalogName").setValue(catalogData.catalogName);
-                registry.byId("adminCatalogNamespace").setValue(catalogData.catalogNamespace);
-                registry.byId("adminCatalogPartnerName").setValue(catalogData.partnerName);
-                registry.byId("adminCatalogProviderName").setValue(catalogData.providerName);
-                registry.byId("adminCatalogCountry").setValue(catalogData.countryCode);
-                registry.byId("adminCatalogLanguage").setValue(catalogData.languageCode);
-                registry.byId("adminCatalogSpatialRef").setValue(catalogData.location.name);
+                registry.byId("adminCatalogName").set("value", catalogData.catalogName);
+                registry.byId("adminCatalogNamespace").set("value", catalogData.catalogNamespace);
+                registry.byId("adminCatalogPartnerName").set("value", catalogData.partnerName);
+                registry.byId("adminCatalogProviderName").set("value", catalogData.providerName);
+                registry.byId("adminCatalogCountry").set("value", catalogData.countryCode);
+                registry.byId("adminCatalogLanguage").set("value", catalogData.languageCode);
+                registry.byId("adminCatalogSpatialRef").set("value", catalogData.location.name);
                 registry.byId("adminCatalogSpatialRef").location = catalogData.location;
-                registry.byId("adminCatalogAtomDownload").setValue(catalogData.atomUrl);
+                registry.byId("adminCatalogAtomDownload").set("value", catalogData.atomUrl);
                 if (catalogData.workflowControl == "Y") {
-                    registry.byId("adminCatalogWorkflowControl").setValue(true);
+                    registry.byId("adminCatalogWorkflowControl").set("value", true);
                 }
                 else {
-                    registry.byId("adminCatalogWorkflowControl").setValue(false);
+                    registry.byId("adminCatalogWorkflowControl").set("value", false);
                 }
                 if (catalogData.expiryDuration !== null && catalogData.expiryDuration > 0) {
-                    registry.byId("adminCatalogExpire").setValue(true);
+                    registry.byId("adminCatalogExpire").set("value", true);
                     registry.byId("adminCatalogExpiryDuration").set('disabled', false);
-                    registry.byId("adminCatalogExpiryDuration").setValue(catalogData.expiryDuration);
+                    registry.byId("adminCatalogExpiryDuration").set("value", catalogData.expiryDuration);
                 }
                 else {
-                    registry.byId("adminCatalogExpire").setValue(false);
-                    registry.byId("adminCatalogExpiryDuration").setValue("0");
+                    registry.byId("adminCatalogExpire").set("value", false);
+                    registry.byId("adminCatalogExpiryDuration").set("value", "0");
                     registry.byId("adminCatalogExpiryDuration").set('disabled', true);
+                }
+                if (catalogData.sortByClass === "Y") {
+                    registry.byId("adminCatalogSortByClass").set("value", true);
+                } else {
+                    registry.byId("adminCatalogSortByClass").set("value", false);
                 }
             }
             
@@ -135,18 +140,19 @@
             function saveCatalogData() {
                 var newCatalogData = {};
                 newCatalogData.uuid = pageCatSettings.currentCatalogData.uuid;
-                newCatalogData.catalogName = registry.byId("adminCatalogName").getValue();
-                newCatalogData.catalogNamespace = registry.byId("adminCatalogNamespace").getValue();
-                newCatalogData.partnerName = registry.byId("adminCatalogPartnerName").getValue();
-                newCatalogData.providerName = registry.byId("adminCatalogProviderName").getValue();
-                newCatalogData.countryCode = registry.byId("adminCatalogCountry").getValue();
-                newCatalogData.languageCode = registry.byId("adminCatalogLanguage").getValue();
+                newCatalogData.catalogName = registry.byId("adminCatalogName").get("value");
+                newCatalogData.catalogNamespace = registry.byId("adminCatalogNamespace").get("value");
+                newCatalogData.partnerName = registry.byId("adminCatalogPartnerName").get("value");
+                newCatalogData.providerName = registry.byId("adminCatalogProviderName").get("value");
+                newCatalogData.countryCode = registry.byId("adminCatalogCountry").get("value");
+                newCatalogData.languageCode = registry.byId("adminCatalogLanguage").get("value");
                 newCatalogData.location = registry.byId("adminCatalogSpatialRef").location;
-                newCatalogData.atomUrl = registry.byId("adminCatalogAtomDownload").getValue();
+                newCatalogData.atomUrl = registry.byId("adminCatalogAtomDownload").get("value");
                 // add a slash at the end
                 if (dojo.lastIndexOf(newCatalogData.atomUrl, "/") != newCatalogData.atomUrl.length-1) newCatalogData.atomUrl += "/";
-                newCatalogData.expiryDuration = (registry.byId("adminCatalogExpire").checked ? registry.byId("adminCatalogExpiryDuration").getValue() : "0");
+                newCatalogData.expiryDuration = (registry.byId("adminCatalogExpire").checked ? registry.byId("adminCatalogExpiryDuration").get("value") : "0");
                 newCatalogData.workflowControl = registry.byId("adminCatalogWorkflowControl").checked ? "Y" : "N";
+                newCatalogData.sortByClass = registry.byId("adminCatalogSortByClass").checked ? "Y" : "N";
                 console.debug("validating");
                 if (!isValidCatalog(newCatalogData)) {
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.catalog.requiredFieldsHint' />", dialog.WARNING);
@@ -187,7 +193,7 @@
                 def.then(function(result){
                     var spatialRefWidget = registry.byId("adminCatalogSpatialRef");
                     UtilList.addSNSLocationLabels([result]);
-                    spatialRefWidget.setValue(result.label);
+                    spatialRefWidget.set("value", result.label);
                     spatialRefWidget.location = result;
                 });
             }
@@ -325,8 +331,14 @@
                                 <input type="checkbox" id="adminCatalogExpire" data-dojo-type="dijit/form/CheckBox" />
                                 <label class="inActive">
                                     <fmt:message key="dialog.admin.catalog.expireAfter" />
-                                    <input id="adminCatalogExpiryDuration" style="width:33px !important;" min="1" max="2147483647" maxlength="10" data-dojo-type="dijit/form/NumberTextBox" />
+                                    <input id="adminCatalogExpiryDuration" style="width:33px !important; height: 16px;" min="1" max="2147483647" maxlength="10" data-dojo-type="dijit/form/NumberTextBox" />
                                     <fmt:message key="dialog.admin.catalog.days" />
+                                </label>
+                            </span>
+                            <span class="input">
+                                <input type="checkbox" id="adminCatalogSortByClass" data-dojo-type="dijit/form/CheckBox" />
+                                <label class="inActive">
+                                    <fmt:message key="dialog.admin.catalog.sortByClass" />
                                 </label>
                             </span>
                         </div>

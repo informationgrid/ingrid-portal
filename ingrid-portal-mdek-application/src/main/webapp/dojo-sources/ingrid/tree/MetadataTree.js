@@ -72,6 +72,8 @@ define("ingrid/tree/MetadataTree", [
 
         // register a function to decide which nodes not to make selectable
         excludeFunction: null,
+        
+        sortByClass: false,
 
         getPreIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
             var myClass = "TreePreIcon";
@@ -110,13 +112,32 @@ define("ingrid/tree/MetadataTree", [
         },
 
         postMixInProperties: function() {
+            var self = this;
             var memoryStore = new DwrStore ( {
                 data: [],
                 storeType: this.treeType,
                 getChildren: function(object){
                     // Add a getChildren() method to store for the data model where
                     // children objects point to their parent (aka relational model)
-                    return this.query({parent: object.id, nodeAppType: object.nodeAppType});
+                    var childrenDef = this.query({parent: object.id, nodeAppType: object.nodeAppType});
+                    // if sorted by class then do some post processingand 1st sort by class and 2nd by title
+                    if (self.sortByClass) {
+                        return childrenDef.then(function(children) {
+                            return children.sort(function(child1, child2) {
+                                if (child1.objectClass === null && child2.objectClass === null) return 0;
+                                if (child1.objectClass === null) return -1;
+                                if (child2.objectClass === null) return +1;
+                                var compareClass = child1.objectClass - child2.objectClass;
+                                if (compareClass === 0) {
+                                    return child1.title.localeCompare( child2.title);
+                                } else {
+                                    return compareClass;
+                                }
+                            } )
+                        });
+                    } else {
+                        return childrenDef;
+                    }
                 }
             } );
 

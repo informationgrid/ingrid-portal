@@ -39,9 +39,9 @@
         <script type="text/javascript">
             var pageHierachy = _container_;
             require(["dojo/Deferred", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/registry", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct", "dojo/dom-class",
-                    "ingrid/tree/MetadataTree", "ingrid/IgeToolbar", "ingrid/IgeActions", "ingrid/tree/HierarchyTreeActions", "dojo/ready"
+                    "ingrid/tree/MetadataTree", "ingrid/IgeToolbar", "ingrid/IgeActions", "ingrid/tree/HierarchyTreeActions", "ingrid/utils/Catalog", "dojo/ready"
                 ],
-                function(Deferred, BorderContainer, ContentPane, registry, lang, dom, construct, domClass, MetadataTree, IgeToolbar, igeActions, TreeActions, ready) {
+                function(Deferred, BorderContainer, ContentPane, registry, lang, dom, construct, domClass, MetadataTree, IgeToolbar, igeActions, TreeActions, UtilCatalog, ready) {
 
                     pageHierachy.dataTreePromise = new Deferred();
 
@@ -124,12 +124,9 @@
                         }, leftPane.domNode);
 
                         ready(function() {
-                            // hide error button on start
-                            // it must be visible during startup, otherwise the width will be null
-                            // setTimeout(function() { domClass.add(registry.byId("bShowNextError").domNode, "hide"); }, 1000);
-
                             var tree = new MetadataTree({
                                 showRoot: false,
+                                sortByClass: UtilCatalog.catalogData.sortByClass === "Y",
                                 onClick: TreeActions.clickHandler,
                                 onMouseDown: lang.partial(TreeActions.mouseDownHandler, TreeActions)
                             }, "dataTree");

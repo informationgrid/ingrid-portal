@@ -1525,6 +1525,9 @@
 				 nach wie vielen Tagen ein <i>Überarbeiten</i> der Metadaten-Objekte (Verfallsdatum) 
 				 gefordert wird (siehe auch 
 				 <a href="?hkey=quality-assurance-0">Konzept der Qualitätssicherung (Der Workflow)</a>).</p>
+                 <p>Die Sortierung der Objekte/Adressen im Hierarchiebaum in der Erfassung kann ebenfalls so angepasst werden, 
+                 dass anstelle des Titels, zuerst nach der Klasse sortiert wird. Dadurch werden die Objekte/Adressen derselben
+                 Klasse zusammenhängend dargestellt.</p>
 				 <p>Hinweis: Um ein Minimum an Aktualität eines Metadaten-Katalogs zu gewährleisten, wird 
 				 empfohlen, das <i>Überarbeiten</i> einzuschalten und einen Wiedervorlagezeitraum von 
 				 höchstens einem Jahr (365 Tage) anzugeben. </p>

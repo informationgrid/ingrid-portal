@@ -39,7 +39,6 @@ import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.SysList;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.job.MdekException;
-import de.ingrid.mdek.util.MdekCatalogUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.utils.ige.profile.ProfileMapper;
 import de.ingrid.utils.ige.profile.beans.ProfileBean;
@@ -105,7 +104,7 @@ public class CatalogServiceImpl implements CatalogService {
         storeSysGenericValues(genericValues);
 	}
 
-	public List<GenericValueBean> getSysGenericValues(String[] keyNames) {
+	public List<GenericValueBean> getSysGenericValues(String... keyNames) {
 	    return getSysGenericValues(keyNames, null);
 	}
 	
@@ -135,13 +134,25 @@ public class CatalogServiceImpl implements CatalogService {
 	}
 
 	public CatalogBean getCatalogData() {
-		return catalogRequestHandler.getCatalogData();	
+		CatalogBean catalogData = catalogRequestHandler.getCatalogData();
+		List<GenericValueBean> sysGenericValues = getSysGenericValues( "sortByClass" );
+		if (sysGenericValues.size() > 0) {
+		    catalogData.setSortByClass( sysGenericValues.get( 0 ).getValue() );
+		}
+		return catalogData;
 	}
 
 	public CatalogBean storeCatalogData(CatalogBean cat) {
 		try {
-			return catalogRequestHandler.storeCatalogData(cat);
-
+			CatalogBean storeCatalogData = catalogRequestHandler.storeCatalogData(cat);
+			
+			List<GenericValueBean> genericValues = new ArrayList<GenericValueBean>();
+	        GenericValueBean valueBean = new GenericValueBean("sortByClass", cat.getSortByClass());
+	        genericValues.add(valueBean);
+	        storeSysGenericValues(genericValues);
+			
+	        storeCatalogData.setSortByClass( cat.getSortByClass() );
+	        return storeCatalogData;
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.debug("MdekException while storing catalog data.", e);

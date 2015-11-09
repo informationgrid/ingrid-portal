@@ -1160,6 +1160,7 @@
 			<p> Under the submenu item <i>Catalogue Settings</i> the catalogue administrator can set the name of the catalogue, the partner (the Federation or a federal state) and of the provider as well as the state, the catalogue language and the spatial reference (<i>State, Location</i>).</p>
 			<p> <u>Note</u>: Even if it is not obligatory to fill in all fields, it is nevertheless highly recommended that all fields are filled in. </p>
 			<p> Further, the <i> Workflow Control</i> can be switched on and also set as to whether, and after how many days, a review of the metadata objects (Expiry Data) is required (see also Concept of Quality Assurance (the workflow)).</p>
+            <p>The sorting of objects/addresses in the hierarchy tree on the Aquisition page can also be modified. Instead of sorting by title, you can also sort by class, so that objects/addresses are presented together.</p>
 			<p> Note: In order to guarantee a minimum of actuality in a metadata catalogue, it is recommended that the <i>Expiry Function</i> is activated and a resubmission time period of at least one year (365 days) is given.</p>
 			<p> The settings have to be closed via the <i> Save</i> button and are then immediately activated.</p>
 			</content>
