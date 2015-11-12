@@ -78,7 +78,10 @@ define([
             entries.push(["ShowChanges", lang.hitch(MenuActions, MenuActions.handleShowChanges)]);
             entries.push(["Separator", null]);
             entries.push(["ShowComments", lang.hitch(MenuActions, MenuActions.handleShowComment)]);
-            //entries.push(["ShowNextError", MenuActions.handleShowComment]);
+            
+            entries.push(["Separator", null]);
+            entries.push(["Previous", MenuActions.gotoPrevious]);
+            entries.push(["Next", MenuActions.gotoNext]);
 
             var entriesRight = [
                 ["Help",
