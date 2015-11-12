@@ -31,8 +31,8 @@ define([
     "dijit/ToolbarSeparator",
     "dijit/form/Button",
     "ingrid/message",
-    "ingrid/utils/QA", "ingrid/utils/Security", "ingrid/utils/UI", "ingrid/MenuActions", "ingrid/IgeEvents", "ingrid/IgeActions", "ingrid/hierarchy/dirty"
-], function(declare, lang, array, aspect, topic, registry, Toolbar, ToolbarSeparator, Button, message, UtilQA, UtilSecurity, UtilUI, MenuActions, igeEvents, igeActions, dirty) {
+    "ingrid/utils/QA", "ingrid/utils/Security", "ingrid/utils/UI", "ingrid/MenuActions", "ingrid/IgeEvents", "ingrid/IgeActions", "ingrid/hierarchy/dirty", "ingrid/hierarchy/History"
+], function(declare, lang, array, aspect, topic, registry, Toolbar, ToolbarSeparator, Button, message, UtilQA, UtilSecurity, UtilUI, MenuActions, igeEvents, igeActions, dirty, History) {
     return declare(null, {
 
         buttons: {},
@@ -80,8 +80,8 @@ define([
             entries.push(["ShowComments", lang.hitch(MenuActions, MenuActions.handleShowComment)]);
             
             entries.push(["Separator", null]);
-            entries.push(["Previous", MenuActions.gotoPrevious]);
-            entries.push(["Next", MenuActions.gotoNext]);
+            entries.push(["Previous", lang.hitch(History, History.goBack)]);
+            entries.push(["Next", lang.hitch(History, History.goNext)]);
 
             var entriesRight = [
                 ["Help",
@@ -214,6 +214,13 @@ define([
                     self._handleSingleSelection(selectedNode);
                 } else {
                     self._handleMultiSelection();
+                }
+                
+                if (History.hasPrevious()) {
+                    self.buttons.Previous.set("disabled", false);
+                }
+                if (History.hasNext()) {
+                    self.buttons.Next.set("disabled", false);
                 }
             });
 
