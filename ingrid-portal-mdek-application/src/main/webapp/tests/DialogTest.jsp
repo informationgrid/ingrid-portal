@@ -27,9 +27,31 @@
 		<title>Tables Test</title>
 
         <script type="text/javascript">
-            require(["ingrid/dialog", "dojo/parser"], function(dialog, parser) {
+            require(["ingrid/dialog", "dojo/parser", "dojo/on", "dojo/_base/lang", "dijit/form/Button", "dijit/registry", "ingrid/hierarchy/History"], function(dialog, parser, on, lang, Button, registry, History) {
                 parser.parse();
+                var backBtn = registry.byId("btnBack");
+                var nextBtn = registry.byId("btnNext");
+                
+                on(backBtn, "click", lang.hitch(History, History.goBack));
+                on(nextBtn, "click", lang.hitch(History, History.goNext));
+                
+                History.addPreviousButton( backBtn );
+                History.addNextButton( nextBtn );
+                
+                History.stack = [
+                    { id: 1, type: "O", title: "Test 1" },
+                    { id: 2, type: "O", title: "Test 2" },
+                    { id: 3, type: "O", title: "Test 3" },
+                    { id: 4, type: "O", title: "Test 4" },
+                    { id: 5, type: "O", title: "Test 5" }
+               ];
+                
+                History._callerFunction = function(node) {
+                    console.log("At node:", node);
+                }
             });
+            
+            
         </script>
         
 	</head>
@@ -49,6 +71,11 @@
         <input type="button" onclick="require('ingrid/dialog').showPage('Thesaurus Dialog', '../dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {service: 'rdf', dstTable: 'thesaurusTerms', rootUrl: 'http://boden-params.herokuapp.com/bodenchemische-parameter-organisch.rdf'});" value="RDF Thesaurus Dialog - Hierarchy Leaf">
         <input type="button" onclick="require('ingrid/dialog').showPage('Thesaurus Dialog', '../dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {service: 'rdf', dstTable: 'thesaurusTerms', rootUrl: 'http://boden-exam.herokuapp.com/de/scheme.rdf'});" value="RDF Thesaurus Dialog - Hierarchy no root">
         <input type="button" onclick="require('ingrid/dialog').showPage('Thesaurus Dialog', '../dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {service: 'rdf', dstTable: 'thesaurusTerms', rootUrl: 'http://boden-exam.herokuapp.com/'});" value="RDF Thesaurus Dialog - Hierarchy (boden-exam)">
+        
+        <div>
+            <button id="btnBack" type="button" data-dojo-type="dijit/form/Button">Back</button>
+            <button id="btnNext" type="button" data-dojo-type="dijit/form/Button">Next</button>
+        </div>
 
         <div id="termContainer"></div>
 	</body>

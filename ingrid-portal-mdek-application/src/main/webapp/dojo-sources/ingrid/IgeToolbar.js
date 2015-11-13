@@ -26,14 +26,13 @@ define([
     "dojo/_base/array",
     "dojo/aspect",
     "dojo/topic",
-    "dojo/on",
     "dijit/registry",
     "dijit/Toolbar",
     "dijit/ToolbarSeparator",
     "dijit/form/Button",
     "ingrid/message",
     "ingrid/utils/QA", "ingrid/utils/Security", "ingrid/utils/UI", "ingrid/MenuActions", "ingrid/IgeEvents", "ingrid/IgeActions", "ingrid/hierarchy/dirty", "ingrid/hierarchy/History"
-], function(declare, lang, array, aspect, topic, on, registry, Toolbar, ToolbarSeparator, Button, message, UtilQA, UtilSecurity, UtilUI, MenuActions, igeEvents, igeActions, dirty, History) {
+], function(declare, lang, array, aspect, topic, registry, Toolbar, ToolbarSeparator, Button, message, UtilQA, UtilSecurity, UtilUI, MenuActions, igeEvents, igeActions, dirty, History) {
     return declare(null, {
 
         buttons: {},
@@ -240,44 +239,10 @@ define([
             }
             this.buttons.Help.set("disabled", false);
             
-            this._addHistoryPopup( self.buttons.Previous, false );
-            this._addHistoryPopup( self.buttons.Next, true );
+            History.addPreviousButton( self.buttons.Previous );
+            History.addNextButton( self.buttons.Next );
         },
         
-        _addHistoryPopup: function(button, forNextItems) {
-            var longPress = false;
-            
-            // prepare action for long press or normal click
-            aspect.before( button, "onClick", function(evt) {
-                if (longPress === null) {
-                    evt.ignore = true;
-                } else {
-                    longPress = false;
-                }
-            } );
-            // register a long press
-            var waitForLongPress = null;
-            on( button, "mousedown", function() {
-                if (this.disabled) return;
-                
-                // remove an already set timeout, otherwise multiple clicks could be interpreted as a long press
-                if (waitForLongPress) clearTimeout( waitForLongPress );
-                longPress = true;
-                
-                // wait a bit, to registrate if the user did a long press 
-                waitForLongPress = setTimeout(function() {
-                    if (longPress) {
-                        longPress = null;
-                        if (forNextItems) {
-                            History.showNextEntries(button);
-                        } else {
-                            History.showPreviousEntries(button);
-                        }
-                    }
-                }, 500);
-            } );
-        },
-
         _handleMultiSelection: function() {
             var enableList = [];
             var buttons = this.buttons;

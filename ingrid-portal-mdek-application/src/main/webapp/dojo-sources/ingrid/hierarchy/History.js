@@ -23,13 +23,14 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/aspect",
     "dojo/topic",
     "dojo/on",
     "dijit/Menu",
     "dijit/MenuItem",
     "dijit/popup",
     "ingrid/menu"
-], function(declare, lang, topic, on, Menu, MenuItem, popup, menu) {
+], function(declare, lang, aspect, topic, on, Menu, MenuItem, popup, menu) {
     return declare(null, {
         // the stack that holds our history of visited objects/addresses
         stack: [],
@@ -86,7 +87,7 @@ define([
             
             var node = this.stack[ this.pointer-1 ];
             this.ignoreNextPush = true;
-            menu.handleSelectNodeInTree(node.id, node.type);
+            this._callerFunction( node );
             if (this.pointer > 0) this.pointer--;
         },
         
@@ -99,7 +100,7 @@ define([
             
             var node = this.stack[ this.pointer+1 ];
             this.ignoreNextPush = true;
-            menu.handleSelectNodeInTree(node.id, node.type);
+            this._callerFunction( node );
             if (this.hasNext()) this.pointer++;
         },
         
@@ -111,12 +112,51 @@ define([
             return this.pointer > 0;
         },
         
-        showNextEntries: function(parent) {
-            this._showEntries(parent, true);
+        addPreviousButton: function(button) {
+            this._addHistoryPopup( button, false );
         },
         
-        showPreviousEntries: function(parent) {
-            this._showEntries(parent, false);
+        addNextButton: function(button) {
+            this._addHistoryPopup( button, true );
+        },
+        
+        _addHistoryPopup: function(button, forNextItems) {
+            var longPress = false;
+            var self = this; 
+            
+            // prepare action for long press or normal click
+            aspect.before( button, "onClick", function(evt) {
+                if (longPress === null) {
+                    evt.ignore = true;
+                } else {
+                    longPress = false;
+                }
+            } );
+            // register a long press
+            var waitForLongPress = null;
+            on( button, "mousedown", function() {
+                if (this.disabled) return;
+                
+                // remove an already set timeout, otherwise multiple clicks could be interpreted as a long press
+                if (waitForLongPress) clearTimeout( waitForLongPress );
+                longPress = true;
+                
+                // wait a bit, to registrate if the user did a long press 
+                waitForLongPress = setTimeout(function() {
+                    if (longPress) {
+                        longPress = null;
+                        if (forNextItems) {
+                            self._showEntries(button, true);
+                        } else {
+                            self._showEntries(button, false);
+                        }
+                    }
+                }, 500);
+            } );
+        },
+        
+        _callerFunction: function(item) {
+            menu.handleSelectNodeInTree(item.id, item.type);
         },
         
         _showEntries: function(parent, forNextEntries) {
@@ -130,7 +170,7 @@ define([
                     label: item.title,
                     item: item,
                     onClick: function() {
-                        menu.handleSelectNodeInTree(this.item.id, this.item.type);
+                        self._callerFunction( this.item );
                         self.pointer = self.stack.indexOf( this.item );
                     }
                 }));
