@@ -34,16 +34,20 @@ define([
         // the stack that holds our history of visited objects/addresses
         stack: [],
         
+        // maximum of nodes in stack
+        maxSize: 20,
+        
         // a pointer to show were we are in the history stack
         pointer: -1,
         
         // when loading a node by back-Button, we don't want to add it to the stack!
         ignoreNextPush: false,
         
+        // the popup showing the last/next nodes
+        popupMenu: null,
+        
         constructor: function() {
             topic.subscribe("/loadRequest", lang.hitch(this, this.pushToStack));
-            //topic.subscribe("/previousNode", this.goBack);
-            //topic.subscribe("/nextNode", this.goNext);
         },
         
         pushToStack: function(msg) {
@@ -51,6 +55,9 @@ define([
                 this.ignoreNextPush = false;
                 return;
             }
+            
+            // if the last node was loaded again -> ignore
+            if (this.stack.length !== 0 && msg.id === this.stack[this.stack.length-1].id) return;
             
             // remove everything after the pointer to discard nodes from history, when we came back
             this.stack.splice( this.pointer+1 );
@@ -61,16 +68,22 @@ define([
                 title: msg.node.title
             };
             this.stack.push( node );
-            this.pointer++;
-        },
-        
-        popFromStack: function() {
-            this.stack.pop();
+            
+            // if stack gets too big, then remove first item
+            if (this.stack.length > this.maxSize) {
+                this.stack.shift();
+            } else {
+                this.pointer++;
+            }
         },
         
         goBack: function(evt) {
             // in case of a long press this shall not be executed
             if (evt.ignore) return;
+            
+            // close the popup if it's still open
+            popup.close(this.popupMenu);
+            
             var node = this.stack[ this.pointer-1 ];
             this.ignoreNextPush = true;
             menu.handleSelectNodeInTree(node.id, node.type);
@@ -80,6 +93,10 @@ define([
         goNext: function(evt) {
             // in case of a long press this shall not be executed
             if (evt.ignore) return;
+            
+            // close the popup if it's still open
+            popup.close(this.popupMenu);
+            
             var node = this.stack[ this.pointer+1 ];
             this.ignoreNextPush = true;
             menu.handleSelectNodeInTree(node.id, node.type);
@@ -103,13 +120,13 @@ define([
         },
         
         _showEntries: function(parent, forNextEntries) {
-            var menuWidget = new Menu({});
+            this.popupMenu = new Menu({});
             var self = this;
             var start = forNextEntries ? (this.pointer+1) : 1;
             var end = forNextEntries ? (this.stack.length-1) : this.pointer;
             for (var i=start; i<=end; i++) {
                 var item = forNextEntries ? this.stack[ i ] : this.stack[ end-i ];
-                menuWidget.addChild(new MenuItem({
+                this.popupMenu.addChild(new MenuItem({
                     label: item.title,
                     item: item,
                     onClick: function() {
@@ -121,20 +138,22 @@ define([
             
             // when the parent looses focus we have to close the popup
             var parentBlur = on.once( parent, "blur", function() {
-                popup.close(menuWidget);
+                popup.close(self.popupMenu);
             } );
             
             popup.open({
-                popup: menuWidget,
+                popup: self.popupMenu,
                 parent: parent,
                 around: parent.domNode,
+                maxHeight: 200,
                 onExecute: function(){
                     self.ignoreNextPush = true;
                     parentBlur.remove();
-                    popup.close(menuWidget);
+                    popup.close(self.popupMenu);
                 },
                 onClose: function() {
-                    menuWidget.destroy()
+                    self.popupMenu.destroy();
+                    self.popupMenu = null;
                 }
             });
             
