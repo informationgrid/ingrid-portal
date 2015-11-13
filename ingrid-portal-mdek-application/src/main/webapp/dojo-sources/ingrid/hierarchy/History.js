@@ -24,8 +24,12 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/topic",
+    "dojo/on",
+    "dijit/Menu",
+    "dijit/MenuItem",
+    "dijit/popup",
     "ingrid/menu"
-], function(declare, lang, topic, menu) {
+], function(declare, lang, topic, on, Menu, MenuItem, popup, menu) {
     return declare(null, {
         // the stack that holds our history of visited objects/addresses
         stack: [],
@@ -64,14 +68,18 @@ define([
             this.stack.pop();
         },
         
-        goBack: function() {
+        goBack: function(evt) {
+            // in case of a long press this shall not be executed
+            if (evt.ignore) return;
             var node = this.stack[ this.pointer-1 ];
             this.ignoreNextPush = true;
             menu.handleSelectNodeInTree(node.id, node.type);
             if (this.pointer > 0) this.pointer--;
         },
         
-        goNext: function() {
+        goNext: function(evt) {
+            // in case of a long press this shall not be executed
+            if (evt.ignore) return;
             var node = this.stack[ this.pointer+1 ];
             this.ignoreNextPush = true;
             menu.handleSelectNodeInTree(node.id, node.type);
@@ -84,6 +92,52 @@ define([
         
         hasPrevious: function() {
             return this.pointer > 0;
+        },
+        
+        showNextEntries: function(parent) {
+            this._showEntries(parent, true);
+        },
+        
+        showPreviousEntries: function(parent) {
+            this._showEntries(parent, false);
+        },
+        
+        _showEntries: function(parent, forNextEntries) {
+            var menuWidget = new Menu({});
+            var self = this;
+            var start = forNextEntries ? (this.pointer+1) : 1;
+            var end = forNextEntries ? (this.stack.length-1) : this.pointer;
+            for (var i=start; i<=end; i++) {
+                var item = forNextEntries ? this.stack[ i ] : this.stack[ end-i ];
+                menuWidget.addChild(new MenuItem({
+                    label: item.title,
+                    item: item,
+                    onClick: function() {
+                        menu.handleSelectNodeInTree(this.item.id, this.item.type);
+                        self.pointer = self.stack.indexOf( this.item );
+                    }
+                }));
+            }
+            
+            // when the parent looses focus we have to close the popup
+            var parentBlur = on.once( parent, "blur", function() {
+                popup.close(menuWidget);
+            } );
+            
+            popup.open({
+                popup: menuWidget,
+                parent: parent,
+                around: parent.domNode,
+                onExecute: function(){
+                    self.ignoreNextPush = true;
+                    parentBlur.remove();
+                    popup.close(menuWidget);
+                },
+                onClose: function() {
+                    menuWidget.destroy()
+                }
+            });
+            
         }
         
     })();
