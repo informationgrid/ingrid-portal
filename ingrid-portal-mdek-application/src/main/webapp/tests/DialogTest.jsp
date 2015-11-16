@@ -27,7 +27,7 @@
 		<title>Tables Test</title>
 
         <script type="text/javascript">
-            require(["ingrid/dialog", "dojo/parser", "dojo/on", "dojo/_base/lang", "dijit/form/Button", "dijit/registry", "ingrid/hierarchy/History"], function(dialog, parser, on, lang, Button, registry, History) {
+            require(["ingrid/dialog", "dojo/parser", "dojo/on", "dojo/dom", "dojo/_base/lang", "dijit/form/Button", "dijit/registry", "ingrid/hierarchy/History"], function(dialog, parser, on, dom, lang, Button, registry, History) {
                 parser.parse();
                 var backBtn = registry.byId("btnBack");
                 var nextBtn = registry.byId("btnNext");
@@ -44,11 +44,25 @@
                     { id: 3, type: "O", title: "Test 3" },
                     { id: 4, type: "O", title: "Test 4" },
                     { id: 5, type: "O", title: "Test 5" }
-               ];
+                ];
+                History.pointer = 0;
+                
+                var printStack = function() {
+                    var result = "";
+                    debugger;
+                    for (var i=0; i<History.stack.length; i++) {
+                        if (History.pointer === i) result += "* ";
+                        result += History.stack[i].title + "<br>";
+                    }
+                    dom.byId('stack').innerHTML = result;
+                };
                 
                 History._callerFunction = function(node) {
                     console.log("At node:", node);
+                    printStack();
                 }
+                
+                printStack();
             });
             
             
@@ -72,9 +86,11 @@
         <input type="button" onclick="require('ingrid/dialog').showPage('Thesaurus Dialog', '../dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {service: 'rdf', dstTable: 'thesaurusTerms', rootUrl: 'http://boden-exam.herokuapp.com/de/scheme.rdf'});" value="RDF Thesaurus Dialog - Hierarchy no root">
         <input type="button" onclick="require('ingrid/dialog').showPage('Thesaurus Dialog', '../dialogs/mdek_thesaurus_dialog.jsp?c='+userLocale, 1010, 430, true, {service: 'rdf', dstTable: 'thesaurusTerms', rootUrl: 'http://boden-exam.herokuapp.com/'});" value="RDF Thesaurus Dialog - Hierarchy (boden-exam)">
         
+        <h1>History-Buttons</h1>
         <div>
             <button id="btnBack" type="button" data-dojo-type="dijit/form/Button">Back</button>
             <button id="btnNext" type="button" data-dojo-type="dijit/form/Button">Next</button>
+            <div id="stack"></div>
         </div>
 
         <div id="termContainer"></div>

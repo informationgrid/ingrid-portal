@@ -87,8 +87,8 @@ define([
             
             var node = this.stack[ this.pointer-1 ];
             this.ignoreNextPush = true;
-            this._callerFunction( node );
             if (this.pointer > 0) this.pointer--;
+            this._callerFunction( node );
         },
         
         goNext: function(evt) {
@@ -100,8 +100,8 @@ define([
             
             var node = this.stack[ this.pointer+1 ];
             this.ignoreNextPush = true;
-            this._callerFunction( node );
             if (this.hasNext()) this.pointer++;
+            this._callerFunction( node );
         },
         
         hasNext: function() {
@@ -170,8 +170,8 @@ define([
                     label: item.title,
                     item: item,
                     onClick: function() {
-                        self._callerFunction( this.item );
                         self.pointer = self.stack.indexOf( this.item );
+                        self._callerFunction( this.item );
                     }
                 }));
             }
