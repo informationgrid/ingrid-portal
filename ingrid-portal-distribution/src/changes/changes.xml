@@ -86,6 +86,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-193">
                 IGE: When updating with the GetCapabilities assistant, some data could get lost.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-209">
+                Portal: Fixed ability to modify the start page for each user.
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-13">
                 Portal/IGE: Added table for useConstraints in IGE and adapt detail view in Portal to new IDF structure concerning constraints.
             </action>

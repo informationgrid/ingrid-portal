@@ -60,11 +60,12 @@ public class MyPortalPersonalizeHomePortlet extends ConfigureHomepagePortlet {
         String titleKey = prefs.getValue("titleKey", "searchSettings.title.rankingAndGrouping");
         response.setTitle(messages.getString(titleKey));
 
-        if (pagePath == null) {
-            Principal principal = request.getUserPrincipal();
+        Principal principal = request.getUserPrincipal();
+        if ("admin".equals( principal.getName())) {
+            pagePath = Folder.ROLE_FOLDER + "user/default-page.psml";
+        } else {
             pagePath = Folder.USER_FOLDER + principal.getName() + "/default-page.psml";
         }
-
         super.doView(request, response);
     }
 
@@ -74,11 +75,12 @@ public class MyPortalPersonalizeHomePortlet extends ConfigureHomepagePortlet {
      */
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException,
             IOException {
-        if (pagePath == null) {
-            Principal principal = request.getUserPrincipal();
+        Principal principal = request.getUserPrincipal();
+        if ("admin".equals( principal.getName())) {
+            pagePath = Folder.ROLE_FOLDER + "user/default-page.psml";
+        } else {
             pagePath = Folder.USER_FOLDER + principal.getName() + "/default-page.psml";
         }
-        
         super.processAction(request, response);
     }
 }
