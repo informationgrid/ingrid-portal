@@ -502,6 +502,38 @@
         </portlet-preferences>
     </portlet>
 
+    <portlet id="EnvironmentTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/environment_teaser.vm</value>
+        </init-param>
+        <portlet-name>EnvironmentTeaser</portlet-name>
+        <display-name>Environment Teaser</display-name>
+        <description>This portlet displays the rubrics of the Environment catalogue page on the home page for quick search.</description>
+        <portlet-class>de.ingrid.portal.portlets.EnvironmentTeaserPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>teaser.environment.title</value>
+            </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>search-topics-1</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
     <portlet id="RssNewsTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -587,6 +619,147 @@
             <preference>
                 <name>cmsKey</name>
                 <value>ingrid.cms.default</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <portlet id="IngridInformPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>IngridInformPortlet</portlet-name>
+        <display-name>Generisches Informationsportlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>0</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/default_cms.vm</value>
+            </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>ingrid-inform-1</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>teaser.ingridInform.title</value>
+            </preference>
+            <preference>
+                <name>cmsKey</name>
+                <value>ingrid.teaser.inform</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <portlet id="IngridWelcomePortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>IngridWelcomePortlet</portlet-name>
+        <display-name>Generisches Willkommens-Portlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>3</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/default_cms.vm</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>ingrid.home.welcome.title</value>
+            </preference>
+            <preference>
+                <name>cmsKey</name>
+                <value>ingrid.home.welcome</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+
+    <portlet id="ServiceTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/service_teaser_new.vm</value>
+        </init-param>
+        <portlet-name>ServiceTeaser</portlet-name>
+        <display-name>Service Teaser</display-name>
+        <description>This portlet displays the rubrics of the Service page on the home page for quick search.</description>
+        <portlet-class>de.ingrid.portal.portlets.ServiceTeaserPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>teaser.service.title</value>
+            </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>search-service-1</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <portlet id="MeasuresTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/measures_teaser_new.vm</value>
+        </init-param>
+        <portlet-name>MeasuresTeaser</portlet-name>
+        <display-name>Measures Teaser</display-name>
+        <description>This portlet displays the rubrics of the Measures page on the home page for quick search.</description>
+        <portlet-class>de.ingrid.portal.portlets.MeasuresTeaserPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>2</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>teaser.measures.title</value>
+            </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>search-measure-1</value>
             </preference>
         </portlet-preferences>
     </portlet>
