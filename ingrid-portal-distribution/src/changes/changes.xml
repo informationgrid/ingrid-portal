@@ -95,6 +95,9 @@
             <action type="update" dev="wemove" issue="REDMINE-13">
                 Portal/IGE: Added table for useConstraints in IGE and adapt detail view in Portal to new IDF structure concerning constraints.
             </action>
+			<action type="fix" dev="wemove" issue="REDMINE-71">
+                Portal/MapClient: Update localisation messages for transparency.
+            </action>
         </release>
         
         <release version="3.6.0.3" date="2015-09-21" description="Bugfix-Release 3.6.0.3">
