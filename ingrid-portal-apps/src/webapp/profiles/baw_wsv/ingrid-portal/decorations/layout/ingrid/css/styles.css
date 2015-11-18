@@ -972,3 +972,5 @@ div.dialog_content input.btn { text-align: center; min-width: 120px; }
 .js-error { border: 1px solid #CECECE; text-align: center; padding: 5px; background-color: #f6f6f6; }
 .tundra .dijitBorderContainer { background-color: transparent !important; }
 .tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child { border: 0px solid #CCCCCC !important; }
+
+.search_hit_icon_partner { float:right; padding: 0 5px; }
