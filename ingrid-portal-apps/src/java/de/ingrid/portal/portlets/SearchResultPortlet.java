@@ -107,6 +107,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("MESSAGES", messages);
         context.put("Codelists", CodeListServiceFactory.instance());
         context.put("enableFacete", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false));
+        context.put("showHitPartnerLogo", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_PARTNER_LOGO, false));
         
         // add request language, used to localize the map client
         context.put("languageCode",request.getLocale().getLanguage());
