@@ -125,13 +125,13 @@ public class AdminUserPortlet extends ContentPortlet {
     private String emailTemplate;
 
     /** roles */
-    private List roles;
+    private List<String> roles;
 
     /** groups */
-    private List groups;
+    private List<String> groups;
 
     /** profile rules */
-    private Map rules;
+    private Map<String, String> rules;
 
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#refreshBrowserState(javax.portlet.PortletRequest)
@@ -194,9 +194,9 @@ public class AdminUserPortlet extends ContentPortlet {
         this.groups = getInitParameterList(config, IP_GROUPS);
 
         // rules (name,value pairs)
-        List names = getInitParameterList(config, IP_RULES_NAMES);
-        List values = getInitParameterList(config, IP_RULES_VALUES);
-        rules = new HashMap();
+        List<String> names = getInitParameterList(config, IP_RULES_NAMES);
+        List<String> values = getInitParameterList(config, IP_RULES_VALUES);
+        rules = new HashMap<String, String>();
         for (int ix = 0; ix < ((names.size() < values.size()) ? names.size() : values.size()); ix++) {
         // jetspeed 2.3 reads rule key/values vice versa than Jetspeed 2.1 !!!
         // see PortalAdministrationImpl.registerUser
@@ -549,7 +549,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 return;
             }
 
-            Map userAttributes = new HashMap();
+            Map<String, String> userAttributes = new HashMap<String, String>();
             // we'll assume that these map back to PLT.D values
             userAttributes.put("user.name.prefix", f.getInput(AdminUserForm.FIELD_SALUTATION));
             userAttributes.put("user.name.given", f.getInput(AdminUserForm.FIELD_FIRSTNAME));
@@ -573,12 +573,36 @@ public class AdminUserPortlet extends ContentPortlet {
                     Long.toString(System.currentTimeMillis())));
             userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
 
+            if (log.isInfoEnabled()) {
+                String myRoles = "";
+                for (String myRole : this.roles) {
+                    myRoles += myRole + " / ";
+                }
+                String myGroups = "";
+                for (String myGroup : this.groups) {
+                    myGroups += myGroup + " / ";
+                }
+                String myUserAttributes = "";
+                for (String myKey : userAttributes.keySet()) {
+                    myUserAttributes += myKey + ":" + userAttributes.get( myKey ) + " / ";
+                }
+                String myRules = "";
+                for (String myKey : rules.keySet()) {
+                    myRules += myKey + ":" + rules.get( myKey ) + " / ";
+                }
+                log.info("registerUser "
+                        + "\nusername: " + userName 
+                        + "\nroles: " + myRoles
+                        + "\ngroups: " + myGroups
+                        + "\nuserAttr: " + myUserAttributes
+                        + "\nrules: " + myRules);
+            }
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
 
             IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                     request.getLocale()), request.getLocale());
 
-            HashMap userInfo = new HashMap(userAttributes);
+            HashMap<String, String> userInfo = new HashMap<String, String>(userAttributes);
             // map coded stuff
             String salutationFull = messages.getString("account.edit.salutation.option", (String) userInfo
                     .get("user.name.prefix"));
@@ -1025,10 +1049,10 @@ public class AdminUserPortlet extends ContentPortlet {
     	return input == null ? "" : input;
     }
 
-    protected List getInitParameterList(PortletConfig config, String ipName) {
+    protected List<String> getInitParameterList(PortletConfig config, String ipName) {
         String temp = config.getInitParameter(ipName);
         if (temp == null)
-            return new ArrayList();
+            return new ArrayList<String>();
 
         String[] temps = temp.split("\\,");
         for (int ix = 0; ix < temps.length; ix++)

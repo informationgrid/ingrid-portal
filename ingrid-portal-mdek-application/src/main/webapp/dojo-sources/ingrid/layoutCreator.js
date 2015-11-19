@@ -90,22 +90,14 @@ define([
                     var struct = [];
                     var sortable = false;
                     array.forEach(structure, function(item) {
-                        var col = lang.clone(item); //{};
+                        var col = lang.clone(item);
                         col.editor = item.editor ? item.editor : self.mapGridCellType(item.type);
                         col.id = item.field;
-                        //col.name = item.name;
-                        //col.field = item.field;
-                        //col.formatter = item.formatter;
-                        //col.options = item.options;
-                        //col.values = item.values;
-                        //col.sortable = item.sortable; // needs more stuff to do (see example13!)
+
                         if (col.sortable === true)
                             sortable = true;
 
                         col.cannotTriggerInsert = col.unselectable = item.editable ? false : true;
-
-                        //if (item.listId)
-                        //    col.listId = item.listId;
 
                         if (item.width == "auto")
                             col.width = 100;
@@ -199,7 +191,6 @@ define([
                 // if a query is present then convert the string to an object
                 if (gridProperties.query && typeof(gridProperties.query) != "object") {
                     gridProperties.query = eval("(" + gridProperties.query + ")");
-                    //gridProperties.query = {relationType:'3520'};
                 }
 
                 // create object for emptyItem representation
@@ -249,7 +240,6 @@ define([
                     selectProperties.store = store;
                     selectProperties.searchAttr = storeProps.data.label;
                     selectProperties.required = selectProperties.required === "true" ? true : false;
-                    // selectProperties.intermediateChanges = true;
 
                     var mySelect;
                     if (node === null) {

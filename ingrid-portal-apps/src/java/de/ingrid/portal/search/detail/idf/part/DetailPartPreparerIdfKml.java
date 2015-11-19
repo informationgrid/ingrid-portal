@@ -33,27 +33,16 @@ import org.apache.velocity.context.Context;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
-import de.ingrid.utils.xml.IDFNamespaceContext;
-import de.ingrid.utils.xml.XPathUtils;
 
 public class DetailPartPreparerIdfKml extends DetailPartPreparer{
 
 	@Override
 	public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
-		this.rootNode = node;
-		this.iPlugId = iPlugId;
-		this.request = request;
-		this.response = response;
-		this.uuid = this.request.getParameter("docuuid");
+        super.init( node, iPlugId, request, response, context );
+
 		this.templateName = "/WEB-INF/templates/detail/part/detail_part_preparer_kml.vm";
-		this.namespaceUri = IDFNamespaceContext.NAMESPACE_URI_IDF;
 		this.localTagName = "kml";
-		this.context = context;
-		this.messages = (IngridResourceBundle) context.get("MESSAGES");
-		this.sysCodeList = new IngridSysCodeList(request.getLocale());
 	}
 	
 	public HashMap getKML(){

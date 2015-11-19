@@ -11,7 +11,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
-  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "PortalU")</title>
+  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "InGrid")</title>
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   
   <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
@@ -46,10 +46,7 @@
 
   </head>
   <body class="#PageBaseCSSClass()">
-    <noscript>
-	  <iframe src="/portal/detect-js.psml" style="display:none"></iframe>
-    </noscript>
-<!--  BEGIN: layout/html/portalu/decorator.vm -->
+<!--  BEGIN: layout/html/ingrid/decorator.vm -->
     <div class="#PageBaseCSSClass()">
 
 <!-- IDENTITY AREA -->
@@ -60,7 +57,7 @@
 <div id="popupheader" class="${langCode}motiv_hilfe">
 	<!-- LOGO -->
   <div id="logo">
-    <img src="#GetPageResource('images/logo.gif')" alt="Logo PortalU" />
+    <img src="#GetPageResource('images/logo.gif')" alt="Logo InGrid" />
   </div>
 </div>
 <div id="mainnav">
@@ -75,4 +72,4 @@
   
 ## $jetspeed.include($jetspeed.currentFragment)
 
-<!--  END: layout/html/portalu/decorator.vm -->
+<!--  END: layout/html/ingrid/decorator.vm -->

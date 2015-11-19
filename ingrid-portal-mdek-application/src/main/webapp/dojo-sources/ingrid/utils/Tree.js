@@ -215,7 +215,7 @@ define([
          * node is used.
          */
         refreshChildren: function(treeId, node) {
-            var tree = registry.byId("dataTree");
+            var tree = registry.byId(treeId);
             var selectedNode = node ? node : tree.selectedNode;
             tree.refreshChildren(selectedNode);
         }

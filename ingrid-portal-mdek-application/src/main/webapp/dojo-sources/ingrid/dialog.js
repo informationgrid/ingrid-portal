@@ -117,6 +117,7 @@ define([
             //        style(dlgId, "height", (windowHeight)+"px");
             //});
 
+            return dialogWnd;
         },
 
 
@@ -191,7 +192,7 @@ define([
                 if ((mouseY + height) > windowHeight)
                     style.set(dlg.domNode, "top", (windowHeight - height - 20) + "px");
             }, function() {
-                this.show(message.get('general.hint'), errorText, this.INFO);
+                self.show(message.get('general.hint'), errorText, this.INFO);
             });
         },
 

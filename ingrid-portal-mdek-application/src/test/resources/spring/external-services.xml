@@ -29,7 +29,8 @@
 
     <!-- PortalU -->
     <bean id="thesaurusService" class="de.ingrid.external.sns.SNSService" />
-    <bean id="gazetteerService" class="de.ingrid.external.sns.SNSService" />
+    <!-- <bean id="gazetteerService" class="de.ingrid.external.sns.SNSService" /> -->
+    <bean id="gazetteerService" class="de.ingrid.external.wfs.WFSService" />
     <bean id="fullClassifyService" class="de.ingrid.external.sns.SNSService" />
 
     <!-- GS Soil: activate these ones for GS Soil on GS Soil server (comment PortalU ones above) ! -->

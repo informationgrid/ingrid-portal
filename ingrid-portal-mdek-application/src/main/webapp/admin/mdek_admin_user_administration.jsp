@@ -360,7 +360,7 @@
             // 'Save user' button function
             function saveUser() {
                 var selectedUser = registry.byId("treeUser").selectedNode;
-                var login = registry.byId("userDataLogin").getValue();
+                var login = registry.byId("userDataLogin").get('value');
                 var oldUserLogin = selectedUser.item.portalLogin + "";
                 selectedUser.item.portalLogin = login;
 
@@ -593,7 +593,7 @@
                 updateInputElements(item);
 
                 // activate save button
-                registry.byId("btnSaveUser").setDisabled(false);
+                registry.byId("btnSaveUser").set('disabled', false);
             }
 
             // Updates the input elements with the data from 'treeNode'
@@ -631,8 +631,8 @@
                         setUserAddressDataFields(null);
                     }
 
-                    registry.byId("userDataLogin").setValue(treeNode.portalLogin);
-                    registry.byId("userDataRole").setValue(treeNode.roleName);
+                    registry.byId("userDataLogin").set('value', treeNode.portalLogin);
+                    registry.byId("userDataRole").set('value', treeNode.roleName);
                     console.debug("set to groupid: " + treeNode.groupId);
                     //registry.byId("userDataGroup").set("value",treeNode.groupId+"");
                     currentSelectedAddressId = treeNode.addressUuid;
@@ -675,18 +675,18 @@
 
             function setUserAddressDataFields(addressData) {
                 if (addressData) {
-                    registry.byId("userDataAddressSurname").setValue(addressData.name);
-                    registry.byId("userDataAddressForename").setValue(addressData.givenName);
+                    registry.byId("userDataAddressSurname").set('value', addressData.name);
+                    registry.byId("userDataAddressForename").set('value', addressData.givenName);
                     var commValue = UtilAddress.getAddressCommunicationValue(addressData, ["E-Mail", "e-mail"]);
-                    registry.byId("userDataAddressEmailUser").setValue(commValue);
+                    registry.byId("userDataAddressEmailUser").set('value', commValue);
                     commValue = UtilAddress.getAddressCommunicationValue(addressData, ["emailPointOfContact"]);
-                    registry.byId("userDataAddressEmailPointOfContact").setValue(commValue);
-                    registry.byId("userDataAddressInstitution").setValue(addressData.organisation);
-                    registry.byId("userDataAddressStreet").setValue(addressData.street);
-                    registry.byId("userDataAddressPostCode").setValue(addressData.postalCode);
-                    registry.byId("userDataAddressCity").setValue(addressData.city);
+                    registry.byId("userDataAddressEmailPointOfContact").set('value', commValue);
+                    registry.byId("userDataAddressInstitution").set('value', addressData.organisation);
+                    registry.byId("userDataAddressStreet").set('value', addressData.street);
+                    registry.byId("userDataAddressPostCode").set('value', addressData.postalCode);
+                    registry.byId("userDataAddressCity").set('value', addressData.city);
                     commValue = UtilAddress.getAddressCommunicationValue(addressData, ["Telefon", "telephone"]);
-                    registry.byId("userDataAddressPhone").setValue(commValue);
+                    registry.byId("userDataAddressPhone").set('value', commValue);
                 } else {
                     // reset fields
                     registry.byId("userDataAddressSurname").set("value", "");
@@ -719,32 +719,32 @@
 
             function getAddressDataFromFields() {
                 var addr = {};
-                addr.name = registry.byId("userDataAddressSurname").getValue();
-                addr.givenName = registry.byId("userDataAddressForename").getValue();
-                addr.organisation = registry.byId("userDataAddressInstitution").getValue();
-                addr.street = registry.byId("userDataAddressStreet").getValue();
-                addr.postalCode = registry.byId("userDataAddressPostCode").getValue();
-                addr.city = registry.byId("userDataAddressCity").getValue();
+                addr.name = registry.byId("userDataAddressSurname").get('value');
+                addr.givenName = registry.byId("userDataAddressForename").get('value');
+                addr.organisation = registry.byId("userDataAddressInstitution").get('value');
+                addr.street = registry.byId("userDataAddressStreet").get('value');
+                addr.postalCode = registry.byId("userDataAddressPostCode").get('value');
+                addr.city = registry.byId("userDataAddressCity").get('value');
 
                 var commList = [],
                     comm;
-                if (registry.byId("userDataAddressEmailUser").getValue()) {
+                if (registry.byId("userDataAddressEmailUser").get('value')) {
                     comm = {};
-                    comm.value = registry.byId("userDataAddressEmailUser").getValue();
+                    comm.value = registry.byId("userDataAddressEmailUser").get('value');
                     comm.medium = "E-Mail";
                     comm.description = null;
                     commList.push(comm);
                 }
-                if (registry.byId("userDataAddressEmailPointOfContact").getValue()) {
+                if (registry.byId("userDataAddressEmailPointOfContact").get('value')) {
                     comm = {};
-                    comm.value = registry.byId("userDataAddressEmailPointOfContact").getValue();
+                    comm.value = registry.byId("userDataAddressEmailPointOfContact").get('value');
                     comm.medium = "emailPointOfContact";
                     comm.description = null;
                     commList.push(comm);
                 }
-                if (registry.byId("userDataAddressPhone").getValue()) {
+                if (registry.byId("userDataAddressPhone").get('value')) {
                     comm = {};
-                    comm.value = registry.byId("userDataAddressPhone").getValue();
+                    comm.value = registry.byId("userDataAddressPhone").get('value');
                     comm.medium = "Telefon";
                     comm.description = null;
                     commList.push(comm);
@@ -773,7 +773,7 @@
 
                 deferred.then(function(portalUser) {
                     console.debug("user chosen: " + portalUser);
-                    registry.byId("userDataLogin").setValue(portalUser);
+                    registry.byId("userDataLogin").set('value', portalUser);
                 });
             }
 
@@ -1038,7 +1038,7 @@
                                         <span class="input">
                                             <input type="text" maxLength="255" id="userDataAddressEmailUser"
                                                 name="userDataAddressEmailUser"
-                                                regExp="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$"
+                                                pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$"
                                                 required="true" style="width: 100%;"
                                                 data-dojo-type="dijit/form/ValidationTextBox" />
                                         </span>
@@ -1087,7 +1087,7 @@
                                         <span class="input">
                                             <input type="text" maxLength="255" id="userDataAddressEmailPointOfContact"
                                                 name="userDataAddressEmailPointOfContact"
-                                                regExp="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$"
+                                                pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$"
                                                 style="width: 100%;" data-dojo-type="dijit/form/ValidationTextBox" />
                                         </span>
                                     </div>

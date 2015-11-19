@@ -25,6 +25,13 @@ package de.ingrid.mdek.beans;
 public class GenericValueBean {
 	private String key;
 	private String value;
+	
+	public GenericValueBean() {}
+	
+	public GenericValueBean(String key, String value) {
+	    this.key = key;
+	    this.value = value;
+	}
 
 	public String getKey() {
 		return key;

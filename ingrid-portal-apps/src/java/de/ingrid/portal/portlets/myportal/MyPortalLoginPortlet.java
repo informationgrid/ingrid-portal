@@ -20,9 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
  */
-/*
- * Copyright (c) 2006 wemove digital solutions. All rights reserved.
- */
 package de.ingrid.portal.portlets.myportal;
 
 import java.io.IOException;
@@ -76,16 +73,26 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 	private static final String VIEW_SHIB = "/WEB-INF/templates/myportal/myportal_shib.vm";
 
     /**
+     * The separator used to create a unique portlet name as
+     * {portletApplication}::{portlet}
+     * Taken from org.apache.jetspeed.components.portletregistry.PersistenceBrokerPortletRegistry
+     */
+    static public final String PORTLET_UNIQUE_NAME_SEPARATOR = "::";
+
+    /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
+        // check SSO Login, set in ShibbolethPortalFilter !
         //boolean isShibbolethAuth = "shibboleth".equals(request.getAuthType());
         boolean isLoggedInExternally = request.getAttribute(Settings.USER_AUTH_INFO) != null;
+        boolean isCreateAccount = Boolean.TRUE.equals( request.getAttribute("de.ingrid.user.auth.createAccount"));
         
         if (log.isDebugEnabled()) {
 	        log.debug("is logged in externally: " + isLoggedInExternally + " : " + request.getAttribute(Settings.USER_AUTH_INFO));
+            log.debug("is create account: " + isCreateAccount);
 	        log.debug("auth type is: " + request.getAuthType());
         }
 
@@ -95,7 +102,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         
         // when using shibboleth authentication just show a page to create a profile
         // for the new user
-        if (isLoggedInExternally) {
+        if (isLoggedInExternally && isCreateAccount) {
         	request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_SHIB);
         	super.doView(request, response);
         	return;
@@ -177,6 +184,10 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                     .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
                     + "/login/redirector"));
         } else if (cmd != null && cmd.equals("doCreateProfile") && isLoggedInExternally) {
+            if (log.isDebugEnabled()) {
+                log.debug("Is logged in externally and doCreateProfile !");
+            }
+
         	PortalAdministration admin = (PortalAdministration) getPortletContext()
                     .getAttribute(CommonPortletServices.CPS_PORTAL_ADMINISTRATION);
         	
@@ -186,26 +197,51 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         	List<String> rulesValues = getInitialParameterFromOtherPortlet("rulesValues");
         	Map<String, String> rules = new HashMap<String, String>();
         	for (int ix = 0; ix < ((rulesNames.size() < rulesValues.size()) ? rulesNames.size() : rulesValues.size()); ix++) {
-                rules.put(rulesNames.get(ix), rulesValues.get(ix));
+        	    // Jetspeed 2.3 vice versa !
+                //rules.put(rulesNames.get(ix), rulesValues.get(ix));
+                rules.put(rulesValues.get(ix), rulesNames.get(ix));
             }
         	Map<String, String> userAttributes = getUserAttributes(request);
         	String username = (String)request.getAttribute(Settings.USER_AUTH_INFO);
         	String password = RandomStringUtils.randomAlphanumeric(8);
         	Boolean isAdminPortalUser = (Boolean)request.getAttribute(Settings.USER_AUTH_INFO_IS_ADMIN);
-        	
+
         	// generate login id
             String confirmId = Utils.getMD5Hash(username.concat(password).concat(
                     Long.toString(System.currentTimeMillis())));
             userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
             
             // add admin-portal role 
+            roles.add("user");
             if (isAdminPortalUser) {
-	            roles.add("user");
 	            roles.add(IngridRole.ROLE_ADMIN_PORTAL);
             }
         	
         	try {
-        		log.debug("username: " + username + ", roles: " + roles + ", groups: " + groups + ", userAttr: " + userAttributes + ", rules: " + rules);
+                if (log.isInfoEnabled()) {
+                    String myRoles = "";
+                    for (String myRole : roles) {
+                        myRoles += myRole + " / ";
+                    }
+                    String myGroups = "";
+                    for (String myGroup : groups) {
+                        myGroups += myGroup + " / ";
+                    }
+                    String myUserAttributes = "";
+                    for (String myKey : userAttributes.keySet()) {
+                        myUserAttributes += myKey + ":" + userAttributes.get( myKey ) + " / ";
+                    }
+                    String myRules = "";
+                    for (String myKey : rules.keySet()) {
+                        myRules += myKey + ":" + rules.get( myKey ) + " / ";
+                    }
+                    log.info("registerUser "
+                            + "\nusername: " + username 
+                            + "\nroles: " + myRoles
+                            + "\ngroups: " + myGroups
+                            + "\nuserAttr: " + myUserAttributes
+                            + "\nrules: " + myRules);
+                }
 				admin.registerUser(username, password, roles, groups, userAttributes, rules, null);
 				//UserManager userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
 				//userManager.setPasswordEnabled(username, false);
@@ -252,7 +288,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 
     private List<String> getInitialParameterFromOtherPortlet(String paramName) {
     	PortletRegistry registry = (PortletRegistry) getPortletContext().getAttribute(CommonPortletServices.CPS_REGISTRY_COMPONENT);
-    	InitParam initParam = registry.getPortletDefinitionByUniqueName("MyPortalCreateAccountPortlet").getInitParam(paramName);
+    	InitParam initParam = registry.getPortletDefinitionByUniqueName("ingrid-portal-apps" + PORTLET_UNIQUE_NAME_SEPARATOR + "MyPortalCreateAccountPortlet").getInitParam(paramName);
     	
     	return getInitParamAsList(initParam);
 	}

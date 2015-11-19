@@ -25,7 +25,7 @@
 <!-- DOKUMENTATION
 
 Diese Datei dient zur Konfiguration der Facettierung. Hier können weitere Facetten definiert werden oder auch entfernt werden. 
-Standardmäßig sind hier die Facettierungseinstellungen von PortalU definiert.
+Standardmäßig sind hier die Facettierungseinstellungen von InGrid-Portal definiert.
 
 Für die Facette (<facet>) sind folgende Tags Pflicht:
 - <name>

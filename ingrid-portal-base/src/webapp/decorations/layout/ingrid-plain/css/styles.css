@@ -1,6 +1,6 @@
 /*
  * **************************************************-
- * Ingrid Portal Base
+ * Ingrid Portal Apps
  * ==================================================
  * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
  * ==================================================
@@ -44,6 +44,7 @@ span.smaller {font-size: 83%}
 ul { list-style-type:square; padding-left:0px; margin: 0 0 0 0; }
 p { margin-top:0; margin-bottom:1em; font-size:12px; }
 strong {font-weight:bold}
+.section textarea, .section select, input { border: 1px solid #999999 !important; }
 div.line { border: 0; height: 0px; margin:10px 0 0 0; padding:0; border-bottom: 1px dotted #B4B4B4; }
 div.line_form { border: 0; background-color: #CCCCCC; height: 1px; margin:10px 0 10px 0; padding:0}
 /* for CSS1 browsers */ 
@@ -619,7 +620,7 @@ div.formbody input.qry_chronic {width: 29em; height: 25px; font-size: 83%; line-
 
 /*** Formular Einfache Suche Start Seite ***/
 
-div.formbody input.qrystr {width: 45em; height: 25px; font-size: 83%; line-height: 25px; border: 1px solid #999999; }
+div.formbody input.qrystr {width: 43em; height: 25px; font-size: 83%; line-height: 25px; border: 1px solid #999999; }
 
 /*** Formular Erweiterte Suche ***/
 
@@ -810,9 +811,9 @@ div.btn_left { float:left; background-image: url(../images/button_left.png); hei
 div.btn_right { float:left; background-image: url(../images/button_right.png); height: 33px; width: 2px; }
 div.btn_center { float:left; background-image: url("../images/button.png"); background-position: right center; }
 
-.search_query_button { padding: 0px 0px 0px 625px; }
+.search_query_button { padding: 0px 0px 0px 595px; }
 .search_query_textarea { position: absolute;  margin: 1px 0 0; }
-div#logo img { height: 81px; width: 188px; }
+div#logo img { background-color: #fff; padding: 14px 51px 14px 15px; border-radius: 0 0 25px 0; box-sizing: unset; }
 
 
 

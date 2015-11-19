@@ -2,18 +2,18 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>3.6.0.3</version>
+    <version>3.6.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>3.6.0.3</version>
+  <version>3.6.1</version>
   <name>InGrid Portal</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git</connection>
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git</developerConnection>
-    <tag>ingrid-portal-project-3.6.0.2</tag>
+    <tag>HEAD</tag>
   </scm>
   <modules>
     <module>ingrid-portal-apps</module>
@@ -25,10 +25,7 @@
   </modules>
 
   <properties>
-    <org.apache.portals.jetspeed.version>2.3.0-SNAPSHOT</org.apache.portals.jetspeed.version>
-<!--
-    <org.apache.portals.jetspeed.version>2.2.2</org.apache.portals.jetspeed.version>
--->
+    <org.apache.portals.jetspeed.version>2.3.0</org.apache.portals.jetspeed.version>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -49,43 +46,35 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-<!-- Then import our ingrid dependency versions ! Only versions not defined yet will be used (former jetspeed import has higher priority) ! -->
       <dependency>
         <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-version-management-pom</artifactId>
-        <version>3.5.0</version>
-        <type>pom</type>
-        <scope>import</scope>
+        <artifactId>ingrid-utils</artifactId>
+        <version>3.6.1</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-iplug-dsc</artifactId>
-        <version>3.5.0</version>
+        <artifactId>ingrid-codelist-service</artifactId>
+        <version>3.6.1</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-iplug-sns</artifactId>
+        <artifactId>ingrid-portal-utils</artifactId>
         <version>3.5.0</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-mdek-api</artifactId>
-        <version>3.6.0.3</version>
+        <version>3.6.1</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-mdek-services</artifactId>
-        <version>3.6.0.3</version>
+        <version>3.6.1</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-import-export</artifactId>
-        <version>3.6.0.3</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.portals.jetspeed-2</groupId>
-        <artifactId>jetspeed-security</artifactId>
-        <version>2.3.0.BETA1</version>
+        <version>3.6.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -95,7 +84,7 @@
     <!-- Provided Dependencies (e.g. needed in portal-base and portal-apps) -->
     <dependency>
       <groupId>org.apache.portals</groupId>
-      <artifactId>portlet-api_2.0_spec</artifactId>
+      <artifactId>portlet-api_2.1.0_spec</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -165,16 +154,22 @@
       <name>Maven Repo InGrid</name>
       <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
+<!-- Remove Apache SNAPSHOT Repo ! Jetspeed 2.3.0 released ! -->
+<!--
 	<repository>
       <id>apache.snapshots</id>
       <url>https://repository.apache.org/content/repositories/snapshots</url>
     </repository>
+-->
   </repositories>
   <pluginRepositories>
+<!-- Remove Apache SNAPSHOT Repo ! Jetspeed 2.3.0 released ! -->
+<!--
     <pluginRepository>
       <id>apache.snapshots</id>
       <url>https://repository.apache.org/content/repositories/snapshots</url>
     </pluginRepository>
+-->
   </pluginRepositories>
 
   <profiles>

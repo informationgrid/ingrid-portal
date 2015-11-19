@@ -52,7 +52,9 @@ import de.ingrid.mdek.handler.ProtocolHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.xml.Versioning;
 import de.ingrid.mdek.xml.XMLKeys;
+import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xml.XMLUtils;
+import de.ingrid.utils.xpath.XPathUtils;
 
 public class ScriptImportDataMapper implements ImportDataMapper {
 	
@@ -243,6 +245,8 @@ public class ScriptImportDataMapper implements ImportDataMapper {
 	        for(String param : parameters.keySet())
 	        	engine.put(param, parameters.get(param));
 	        engine.put("log", log);
+	        engine.put("XPathUtils", new XPathUtils(new IDFNamespaceContext()));
+
 	
 			// execute the mapping
 	    	log.debug("Mapping with script: " + mapperScript);

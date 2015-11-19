@@ -409,7 +409,7 @@ define([
 
         setObjectUuid: function() {
             var fieldWidget = this._inputFieldWidget;
-            var fieldValue = fieldWidget.getValue();
+            var fieldValue = fieldWidget.get('value');
 
             // extract namespace from field content (Namespace#ID)
             var myNamespace = "";

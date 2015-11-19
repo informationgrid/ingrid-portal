@@ -280,10 +280,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
             // this event will also execute when object is loaded
             // here we have to make sure the categories table is shown/removed correctly
             on(registry.byId("isOpenData"), "Change", function(isChecked) {
-                // get link for use constraints which will be changed depending on the
-                // state of the open data checkbox
-                var link = dom.byId("availabilityUseConstraintsLink");
-                var onclickValue = link.attributes.onclick.value;
 
                 if (isChecked) {
 
@@ -292,9 +288,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
 
                     // make field mandatory
                     domClass.add("uiElement6020", "required");
-
-                    // change codelist for 'availabilityUseConstraints'
-                    link.attributes.onclick.value = onclickValue.replace(/(listId:).*'}/, "$1 '6500'}");
 
                     // add check for url reference of type download when publishing
                     // we check name and not id cause is combo box ! id not adapted yet if not saved !
@@ -309,9 +302,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                             notPublishableIDs.push( ["linksTo", message.get("validation.error.missing.download.link")] );
                     });
                 } else {
-                    // change codelist for 'availabilityUseConstraints'
-                    link.attributes.onclick.value = onclickValue.replace(/(listId:).*'}/, "$1 '6020'}");
-
                     // hide categories
                     domClass.add("uiElement6020", "hide");
 
@@ -504,6 +494,14 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 else if (type == 3) UtilUI.updateEntryToConformityTable(40, deleteEntry);
                 else if (type == 5) UtilUI.updateEntryToConformityTable(43, deleteEntry);
             };
+            
+            var updateSyslistServiceVersion = function(type) {
+                if (type == 1) registry.byId("ref3ServiceVersion").columns[0].listId = 5151;
+                else if (type == 2) registry.byId("ref3ServiceVersion").columns[0].listId = 5152;
+                else if (type == 3) registry.byId("ref3ServiceVersion").columns[0].listId = 5153;
+                else if (type == 4) registry.byId("ref3ServiceVersion").columns[0].listId = 5154;
+                else registry.byId("ref3ServiceVersion").columns[0].listId = null;
+            }
 
             // react when inspire topics has been added
             on(registry.byId("ref3ServiceType"), "Change", function(value) {
@@ -515,6 +513,8 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                     });
                     // add possibly new type
                     applySpecification(value, false);
+                    // change syslist of supported versions
+                    updateSyslistServiceVersion(value);
                 }
             });
 

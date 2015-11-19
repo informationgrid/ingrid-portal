@@ -71,72 +71,72 @@ define([
             require(["dojo/cookie"], function(cookie) {
                 UtilGeneral.initialJSessionId = cookie("JSESSIONID");
             });
-
-            var deferred2 = this.initCatalogData()
-                .then(this.fetchSysLists);
-
-            var deferred = this.initCurrentUser()
-                .then(this.initCurrentUserPermissions)
-                .then(this.initCurrentGroups);
-
-
-            // get guiIds that are going to be configured for visibility
-            //fetchGuiIdList();
-            this.initGeneralEventListener(); // for release activate!
-
+            
             var self = this;
-            // wait for page rendered before 
-            require(["dojo/domReady!"], function() {
-                // create the main layout with toolbar, splitter, tree, ...
-                self.createBaseLayout();
-
-                // create the containers where external pages shall be loaded into
-                self.createMenuPages();
-
-                // create the menu bar
-                deferred.then(function() {
+            var userDeferred = this.initCurrentUser()
+                .then(this.initCurrentUserPermissions)
+                .then(this.initCurrentGroups)
+                .then(function() {
+                
+                var deferred2 = self.initCatalogData()
+                    .then(self.fetchSysLists);
+    
+    
+    
+                // get guiIds that are going to be configured for visibility
+                //fetchGuiIdList();
+                self.initGeneralEventListener(); // for release activate!
+    
+                // wait for page rendered before 
+                require(["dojo/domReady!"], function() {
+                    // create the main layout with toolbar, splitter, tree, ...
+                    self.createBaseLayout();
+    
+                    // create the containers where external pages shall be loaded into
+                    self.createMenuPages();
+    
+                    // create the menu bar
                     igeMenuBar.create(registry.byId("menubarPane"));
-                })
-                    // .then(self.initPageHeader)
-                    .then(self.initSessionKeepalive)
+                    self.initSessionKeepalive();
+//                        .then(null, function(err) {
+//                            dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING, null, null, null, err.stack);
+//                        });
+    
+                    // select a page initially
+                    deferred2.then(function() {
+                        layoutCreator.createSelectBox("languageBox", null, {
+                            data: {
+                                identifier: 'id',
+                                label: 'label'
+                            }
+                        }, null, "js/data/languageCode.json");
+                        // the connect has to be called delayed, otherwise onChange will be 
+                        // triggered immediately and the page would be switching always
+                        // -> not when set initially?! (see declaration of selectbox!)
+                        setTimeout(function() {
+                            on(registry.byId("languageBox"), "Change", menuEventHandler.switchLanguage);
+                        }, 2000);
+                        registry.byId("stackContainer").selectChild(registry.byId("pageDashboard"), false);
+                        self.jumpToNodeOnInit();
+    
+                        // create an iframe which will be used for printing    
+                        DomConstruct.create("iframe", {
+                            id: 'printFrame',
+                            name: 'printFrame',
+                            style: {
+                                position: "absolute",
+                                left: "-1000px",
+                                height: "0",
+                                border: "0",
+                                zoom: "2"
+                            }
+                        }, wnd.body());
+                        setTimeout(self.initPrintFrame, 4000);
+                    })
                     .then(null, function(err) {
-                        dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING, null, null, null, err.stack);
+                        console.error(err);
+                        dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING, null, null, null, err ? err.stack : null);
                     });
-
-                // select a page initially
-                deferred2.then(function() {
-                    layoutCreator.createSelectBox("languageBox", null, {
-                        data: {
-                            identifier: 'id',
-                            label: 'label'
-                        }
-                    }, null, "js/data/languageCode.json");
-                    // the connect has to be called delayed, otherwise onChange will be 
-                    // triggered immediately and the page would be switching always
-                    // -> not when set initially?! (see declaration of selectbox!)
-                    setTimeout(function() {
-                        on(registry.byId("languageBox"), "Change", menuEventHandler.switchLanguage);
-                    }, 2000);
-                    registry.byId("stackContainer").selectChild(registry.byId("pageDashboard"), false);
-                    self.jumpToNodeOnInit();
-
-                    // create an iframe which will be used for printing    
-                    DomConstruct.create("iframe", {
-                        id: 'printFrame',
-                        name: 'printFrame',
-                        style: {
-                            position: "absolute",
-                            left: "-1000px",
-                            height: "0",
-                            border: "0",
-                            zoom: "2"
-                        }
-                    }, wnd.body());
-                    setTimeout(self.initPrintFrame, 4000);
-                })
-                .then(null, function(err) {
-                    console.error(err);
-                    dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING, null, null, null, err ? err.stack : null);
                 });
             });
         },
@@ -179,7 +179,7 @@ define([
                     def.resolve();
                 },
                 errorHandler: function(mes) {
-                    dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
+                    dialog.show(message.get("general.error"), message.get("init.error.userNotFound"), dialog.WARNING);
                     console.debug("Error: " + mes);
                     def.reject(mes);
                 }
@@ -607,7 +607,7 @@ define([
                 console.debug("LanguageShort is: " + languageCode);
 
                 var lstIds = [100, 101, 102, 502, 505, 510, 515, 518, 520, 523, 525, 526, 527, 528, 1100, 1230, 1320, 1350, 1370, 1400, 1410, 2000,
-                    3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5180, 5200, 5300, 6000, 6005, 6010, 6020, 6100, 6200, 6300,
+                    3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5151, 5152, 5153, 5154, 5180, 5200, 5300, 6000, 6005, 6010, 6020, 6100, 6200, 6300,
                     6400, 6500, 7109, 7112, 7113, 7114, 7115, 7120, 7125, 7126, 7127, 8000, 99999999
                 ];
 

@@ -20,9 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
  */
-/*
- * Copyright (c) 2006 wemove digital solutions. All rights reserved.
- */
 package de.ingrid.portal.search;
 
 import java.security.Principal;

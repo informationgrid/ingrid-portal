@@ -242,7 +242,7 @@
                         <value>disclaimer.title</value>
                     </preference>
                     <preference name="cmsKey">
-                        <value>portalu.disclaimer</value>
+                        <value>ingrid.disclaimer</value>
                     </preference>
                 </portlet>
             </portlets>

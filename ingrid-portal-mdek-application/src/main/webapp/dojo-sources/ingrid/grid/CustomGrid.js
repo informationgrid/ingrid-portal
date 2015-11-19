@@ -326,6 +326,9 @@ define([
             if (force || this.viewportW === 0) {
                 // update the viewport width which might have changed 
                 this.viewportW = parseFloat(style.get(this.domNode, "width"));
+                
+                // in case the grid is not yet visible, just return instead of modifying columns to a wrong width
+                if (this.viewportW === 0) return;
 
                 /*if (style.get(this.canvas, "width") > this.viewportW){
                     // make the width smaller first so that the scrollbar disappears
@@ -344,7 +347,14 @@ define([
                     }
                 });
                 var newWidth = this.viewportW - totalColWidth - scrollbarDimensions.width;
-                this.columns[lastColumn].width = newWidth;//  + this.cellWidthDiff;
+                // if last column is very small then shrink the second to last column a bit
+                var minWidth = this.columns[lastColumn].minWidth ? this.columns[lastColumn].minWidth : 23;
+                if (lastColumn > 0 && newWidth < minWidth) {
+                    this.columns[lastColumn].width = minWidth;
+                    this.columns[lastColumn-1].width = this.columns[lastColumn-1].width - minWidth;
+                } else {
+                    this.columns[lastColumn].width = newWidth;
+                }
                 totalColWidth += newWidth;
 
                 if (style.get(this.canvas, "width") != totalColWidth) {
@@ -398,6 +408,9 @@ define([
             var x = 0,
                 w, i;
             for (i = 0; i < this.columns.length; i++) {
+                if (this.columns[i].hidden) {
+                    continue;
+                }
                 w = this.columns[i].width;
 
                 rules.push("." + this.uid + " .l" + i + " { left: " + x + "px; }");
@@ -828,7 +841,7 @@ define([
              // a formatter can have influence on the cell itself, so we have to call it before we request invalidCells
              var content;
              if (d) {
-                 content = this.getFormatter(row, m)(row, i, d[m.field], m, d);
+                 content = this.getFormatter(row, m)(row, i, d[m.field], m, d, this);
              }
              
              // check for invalid cells
@@ -1259,7 +1272,7 @@ define([
 
             // show info of long text which is necessary if no edit mode is available
             // if (query(".slick-cell.l2.r2")[1].scrollWidth > cellWidth)
-            if (this.getDataItem(cell.row) && thisCell.scrollWidth > this.columns[cell.cell].width) {
+            if (!win.global.doNotShowTooltips && this.getDataItem(cell.row) && thisCell.scrollWidth > this.columns[cell.cell].width) {
                 var self = this;
                 var cellContent = this.getDataItem(cell.row)[this.columns[cell.cell].field];
                 // in case the content is formatted we have to convert it
@@ -2141,13 +2154,15 @@ define([
             var h;
             for (var i = 0, headers = this.headers.children, ii = headers.length; i < ii; i++) {
                 if (this.columns[i].hidden) {
-                    style.set(headers[i], "width", "0px");
+                    //style.set(headers[i], "width", "0px");
+                    style.set(headers[i], "display", "none");
                     continue;
                 }
                 h = headers[i];
                 if (style.get(h, "width") !== this.columns[i].width - this.headerColumnWidthDiff) {
                     style.set(h, "width", this.columns[i].width - this.headerColumnWidthDiff + "px");
                 }
+                style.set(headers[i], "display", "block");
             }
         },
 
@@ -2157,9 +2172,9 @@ define([
             var x = 0,
                 w, rule;
             for (var i = 0; i < this.columns.length; i++) {
-                if (this.columns[i].hidden)
+                if (this.columns[i].hidden) {
                     w = 0;
-                else
+                } else
                     w = this.columns[i].width;
 
                 rule = this.findCssRule("." + this.uid + " .c" + i);
@@ -2186,7 +2201,9 @@ define([
                 rule = this.findCssRule("." + this.uid + " .r" + i);
                 rule.style.right = (rowWidth - x - this.cellWidthDiff - w) + "px";
 
-                x += this.columns[i].width;
+                if (!this.columns[i].hidden) {
+                    x += this.columns[i].width;
+                }
 
 
             }

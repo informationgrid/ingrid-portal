@@ -53,6 +53,7 @@
     <property name="updateOracle320d" location="${installDir}/sql/update_3.2.0d_oracle.sql"/>
     <property name="updateOracle331" location="${installDir}/sql/update_3.3.1_oracle.sql"/>
     <property name="updateOracle341" location="${installDir}/sql/update_3.4.1_oracle.sql"/>
+    <property name="updateOracle361" location="${installDir}/sql/update_3.6.1_oracle.sql"/>
     
 
     <!-- oracle ige imports -->
@@ -64,6 +65,7 @@
     <property name="mdekDBOracle_331"      location="${installDir}/sql/mdek_3.3.1_oracle.sql"/>
     <property name="mdekDBOracle_332"      location="${installDir}/sql/mdek_3.3.2_oracle.sql"/>
     <property name="mdekDBOracle_340"      location="${installDir}/sql/mdek_3.4.0_oracle.sql"/>
+    <property name="mdekDBOracle_361"      location="${installDir}/sql/mdek_3.6.1_oracle.sql"/>
 
 
     <target name="CheckDbs" depends="checkPortalDbOracle, checkMdekDbOracle" if="useOracle">
@@ -194,6 +196,7 @@
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
+			<transaction src="${updateOracle361}"/>
         </sql>
     </target>
     
@@ -218,6 +221,7 @@
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
+			<transaction src="${updateOracle361}"/>
         </sql>
     </target>
     
@@ -241,6 +245,7 @@
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
+			<transaction src="${updateOracle361}"/>
         </sql>
     </target>
     
@@ -260,6 +265,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
+			<transaction src="${updateOracle361}"/>
         </sql>
     </target>
     
@@ -278,6 +284,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle341}"/>
+			<transaction src="${updateOracle361}"/>
         </sql>
     </target>
     
@@ -288,6 +295,24 @@
         </echo>
     </target>
     
+	<target name="PortalDbUpdateFrom350" if="useOracle">
+        <echo>Oracle-Portal Daten importieren (ab 3.5.0)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateOracle361}"/>
+        </sql>
+    </target>
+	
     <!-- =============================================
          = IGE MDEK DATABASE                         =
          ============================================= -->
@@ -316,6 +341,7 @@
             <transaction src="${mdekDBOracle_331}"/>
             <transaction src="${mdekDBOracle_332}"/>
             <transaction src="${mdekDBOracle_340}"/>
+            <transaction src="${mdekDBOracle_361}"/>
 
         </sql>
     </target>
@@ -342,6 +368,7 @@
             <transaction src="${mdekDBOracle_331}"/>
             <transaction src="${mdekDBOracle_332}"/>
             <transaction src="${mdekDBOracle_340}"/>
+            <transaction src="${mdekDBOracle_361}"/>
 
         </sql>
     </target>

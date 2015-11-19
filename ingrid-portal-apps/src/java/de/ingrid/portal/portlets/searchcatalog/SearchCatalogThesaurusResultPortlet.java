@@ -20,9 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
  */
-/*
- * Copyright (c) 2007 wemove digital solutions. All rights reserved.
- */
 package de.ingrid.portal.portlets.searchcatalog;
 
 import java.io.IOException;
@@ -107,7 +104,7 @@ public class SearchCatalogThesaurusResultPortlet extends GenericVelocityPortlet 
         // -----------------------------------------------------------
 
         // datasource
-        String selectedDS = request.getParameter(Settings.PARAM_DATASOURCE);
+        String selectedDS = (String) SearchState.getSearchStateObject(request, Settings.PARAM_DATASOURCE, SEARCH_STATE_TOPIC);
         if (selectedDS == null) {
         	selectedDS = Settings.PARAMV_DATASOURCE_ENVINFO;
         }

@@ -497,6 +497,10 @@ define([
                     preHook: UtilUI.enterLoadingState,
                     postHook: UtilUI.exitLoadingState,
                     callback: function(res) {
+                        if (res === null) {
+                            msg.resultHandler.reject(new Error("[USER_HAS_NO_PERMISSION_ON_ENTITY]"));
+                            return;
+                        }
                         res.addressClass = msg.addressClass;
                         if (res.addressClass === 0) {
                             res.nodeDocType = "Institution_B";
@@ -1550,6 +1554,7 @@ define([
 
             dom.byId("addressCreationTime").innerHTML = nodeData.creationTime;
             dom.byId("addressModificationTime").innerHTML = nodeData.modificationTime;
+            dom.byId("addressUuid").innerHTML = nodeData.uuid;
 
             if (nodeData.lastEditor !== null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
                 dom.byId("addressLastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
@@ -1679,6 +1684,7 @@ define([
             dom.byId("workState").innerHTML = (nodeData.isMarkedDeleted ? workStateStr + "<br>(" + message.get("general.state.markedDeleted") + ")" : workStateStr);
             dom.byId("creationTime").innerHTML = nodeData.creationTime;
             dom.byId("modificationTime").innerHTML = nodeData.modificationTime;
+            dom.byId("uuid").innerHTML = nodeData.uuid;
 
             if (nodeData.lastEditor !== null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
                 dom.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
@@ -1778,6 +1784,7 @@ define([
 
             // -- Availability --
             UtilStore.updateWriteStore("availabilityAccessConstraints", UtilList.listToTableData(nodeData.availabilityAccessConstraints));
+            UtilStore.updateWriteStore("availabilityUseAccessConstraints", UtilList.listToTableData(nodeData.availabilityUseAccessConstraints));
             registry.byId("availabilityUseConstraints").attr("value", nodeData.availabilityUseConstraints, true);
             registry.byId("availabilityOrderInfo").attr("value", nodeData.availabilityOrderInfo, true);
             UtilStore.updateWriteStore("availabilityDataFormat", nodeData.availabilityDataFormatTable);
@@ -2018,8 +2025,8 @@ define([
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, true);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
-            registry.byId("ref3ServiceType")._lastValueReported = nodeData.ref3ServiceType + "";
-            registry.byId("ref3ServiceType").set("value", nodeData.ref3ServiceType, false);
+            //registry.byId("ref3ServiceType")._lastValueReported = nodeData.ref3ServiceType + "";
+            registry.byId("ref3ServiceType").set("value", nodeData.ref3ServiceType, true);
             registry.byId("ref3IsAtomDownload").attr("value", nodeData.ref3AtomDownload, true);
             // manually call behavior to show atom checkk box or not
             // -> we've got the problem that another event wants to change metadata when service type has changed
@@ -2301,6 +2308,7 @@ define([
             // -- Availability --
             //  nodeData.availabilityUsageLimitationTable = this._getTableData("availabilityUsageLimitationTable");
             nodeData.availabilityAccessConstraints = UtilList.tableDataToList(this._getTableData("availabilityAccessConstraints"));
+            nodeData.availabilityUseAccessConstraints = UtilList.tableDataToList(this._getTableData("availabilityUseAccessConstraints"));
             nodeData.availabilityUseConstraints = registry.byId("availabilityUseConstraints").get("value");
 
             nodeData.availabilityOrderInfo = registry.byId("availabilityOrderInfo").get("value");

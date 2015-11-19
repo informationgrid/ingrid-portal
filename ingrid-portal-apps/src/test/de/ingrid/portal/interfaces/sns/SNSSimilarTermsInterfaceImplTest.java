@@ -20,9 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
  */
-/*
- * Copyright (c) 1997-2006 by wemove GmbH
- */
 package de.ingrid.portal.interfaces.sns;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;

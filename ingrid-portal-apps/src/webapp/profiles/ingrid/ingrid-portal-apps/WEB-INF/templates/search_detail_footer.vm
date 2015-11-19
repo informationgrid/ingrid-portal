@@ -1,0 +1,60 @@
+#* include service navigation component *#
+#macro (includeFooterNavigation)
+	<a href="$renderResponse.encodeURL('/portal/disclaimer.psml')" title="$MESSAGES.getString('footer.disclaimer.tooltip')">$MESSAGES.getString('footer.disclaimer')</a>
+	|
+	<a href="$renderResponse.encodeURL('/portal/privacy.psml')" title="$MESSAGES.getString('footer.privacy.policy.tooltip')">$MESSAGES.getString('footer.privacy.policy')</a>
+	|
+	<a href="mailto:info@informationgrid.eu" title="$MESSAGES.getString('footer.webmaster.tooltip')">$MESSAGES.getString('footer.webmaster')</a>
+	|
+	<a href="$renderResponse.encodeURL('/portal/service-contact-newsletter.psml')" title="$MESSAGES.getString('footer.newsletter.tooltip')">$MESSAGES.getString('footer.newsletter')</a>
+#end
+
+</div>
+<div class="clearer"></div>
+<div id="footermarginalcontainer">
+  <div id="footermarginal">
+    <!-- portlets go here -->
+  	<div id="footerSeparator"></div>
+  	&nbsp;
+  </div>
+</div>
+<div class="clearer"></div>
+
+<!-- footer block -->
+<div id="footercontainer">
+  <div id="footercontent">
+    <!-- portlets go here -->
+  #includeFooterNavigation()
+<br /> 
+	$MESSAGES.getString('footer.copyright')<br />
+
+    <i>$MESSAGES.getString('footer.rights')</i><br /><br />
+  </div>
+</div>
+
+</div>
+<!--  END: layout/html/ingrid/decorator.vm -->
+
+<!-- Piwik -->
+#if($piwik != "")
+	<script type="text/javascript">
+	var pkBaseURL = '${piwik}';
+	var host = location.host;
+	document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		try {
+			var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+			piwikTracker.trackPageView();
+			piwikTracker.enableLinkTracking();
+		} catch( err ) {
+		}
+	</script>
+	<noscript><p><img src="$piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+#end
+<!-- End Piwik Tag -->
+
+<script> if (document.documentMode == 7) alert("$MESSAGES.getString('footer.compatibility')") </script>
+
+</body>
+</html>

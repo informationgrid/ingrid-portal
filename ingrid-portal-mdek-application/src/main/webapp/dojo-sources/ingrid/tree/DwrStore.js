@@ -81,13 +81,14 @@ define([
                 }
 
             } else {
+                var self = this;
                 queryDef = this.getSubTree(query)
                     .then(function(children) {
                         array.forEach(children, function(child) {
                             child.parent = query.parent;
-                            // mem.data.push( child );//, options );                        
                         });
                         return children;
+                        //return self.queryEngine(query, options)(children);
                     }, displayErrorMessage);
             }
             return QueryResults(queryDef);

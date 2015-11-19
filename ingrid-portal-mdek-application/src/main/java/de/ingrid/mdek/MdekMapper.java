@@ -83,7 +83,7 @@ public class MdekMapper implements DataMapperInterface {
     public void init() throws Exception {
         // Fetch the sns resource bundle for location topic type mapping
         // this bundle is included in the external-service-sns lib!
-        snsResourceBundle = ResourceBundle.getBundle("sns");
+        snsResourceBundle = ResourceBundle.getBundle("mapping");
     }
 
 
@@ -205,6 +205,7 @@ public class MdekMapper implements DataMapperInterface {
         // Availability
         // Inspire field
         mdekObj.setAvailabilityAccessConstraints(mapToAvailAccessConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.ACCESS_LIST)));
+        mdekObj.setAvailabilityUseAccessConstraints(mapToAvailUseAccessConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.USE_CONSTRAINTS)));
         mdekObj.setAvailabilityUseConstraints(mapToAvailUseConstraints((List<IngridDocument>) obj.get(MdekKeys.USE_LIST), isOpenData));
         
         mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
@@ -325,7 +326,8 @@ public class MdekMapper implements DataMapperInterface {
             if (td3Map == null)
                 break;
 
-            mdekObj.setRef3ServiceType((Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY));
+            Integer serviceType = (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY);
+            mdekObj.setRef3ServiceType(serviceType);
             mdekObj.setRef3AtomDownload("Y".equals(td3Map.get(MdekKeys.HAS_ATOM_DOWNLOAD)) ? true : false);            
             mdekObj.setRef3CouplingType(td3Map.getString(MdekKeys.COUPLING_TYPE));
             mdekObj.setRef3ServiceTypeTable(mapToServiceTypeTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_TYPE2_LIST)));
@@ -333,7 +335,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef3SystemEnv((String) td3Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
             mdekObj.setRef3History((String) td3Map.get(MdekKeys.SYSTEM_HISTORY));
             mdekObj.setRef3BaseDataText((String) td3Map.get(MdekKeys.DATABASE_OF_SYSTEM));
-            mdekObj.setRef3ServiceVersion((List<String>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST));
+            mdekObj.setRef3ServiceVersion(mapToServiceVersionTable(serviceType, (List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_VERSION_LIST)));
             mdekObj.setRef3Explanation((String) td3Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
             mdekObj.setRef3Scale(mapToScaleTable((List<IngridDocument>) td3Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
             mdekObj.setRef3Operation(mapToOperationTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY)));
@@ -377,7 +379,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef6SystemEnv((String) td6Map.get(MdekKeys.SYSTEM_ENVIRONMENT));
             mdekObj.setRef6History((String) td6Map.get(MdekKeys.SYSTEM_HISTORY));
             mdekObj.setRef6BaseDataText((String) td6Map.get(MdekKeys.DATABASE_OF_SYSTEM));
-            mdekObj.setRef6ServiceVersion((List<String>) td6Map.get(MdekKeys.SERVICE_VERSION_LIST));
+            mdekObj.setRef6ServiceVersion(mapToServiceVersionTable(null, (List<IngridDocument>) td6Map.get(MdekKeys.SERVICE_VERSION_LIST)));
             mdekObj.setRef6Explanation((String) td6Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
             mdekObj.setRef6UrlList(mapToUrlList((List<IngridDocument>)td6Map.get(MdekKeys.URL_LIST)));
 
@@ -794,7 +796,8 @@ public class MdekMapper implements DataMapperInterface {
         // Availability
         if (data.getObjectClass() != null && data.getObjectClass() != 0) {
             udkObj.put(MdekKeys.ACCESS_LIST, mapFromAvailAccessConstraintsTable(data.getAvailabilityAccessConstraints()));
-            udkObj.put(MdekKeys.USE_LIST, mapFromAvailUseConstraints(data.getAvailabilityUseConstraints(), data.getOpenData()));
+            udkObj.put(MdekKeys.USE_CONSTRAINTS, mapFromAvailUseAccessConstraintsTable(data.getAvailabilityUseAccessConstraints()));
+            udkObj.put(MdekKeys.USE_LIST, mapFromAvailUseConstraints(data.getAvailabilityUseConstraints()));
             udkObj.put(MdekKeys.DATA_FORMATS, mapFromAvailDataFormatTable(data.getAvailabilityDataFormatTable()));
             udkObj.put(MdekKeys.MEDIUM_OPTIONS, mapFromAvailMediaOptionsTable(data.getAvailabilityMediaOptionsTable()));
             udkObj.put(MdekKeys.ORDERING_INSTRUCTIONS, data.getAvailabilityOrderInfo());
@@ -910,8 +913,9 @@ public class MdekMapper implements DataMapperInterface {
             udkObj.put(MdekKeys.TECHNICAL_DOMAIN_DOCUMENT, td2Map);
             break;
         case 3:
-            IngridDocument td3Map = new IngridDocument();           
-            td3Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef3ServiceType());
+            IngridDocument td3Map = new IngridDocument();    
+            Integer serviceType = data.getRef3ServiceType();
+            td3Map.put(MdekKeys.SERVICE_TYPE_KEY, serviceType);
             if (data.getRef3AtomDownload() != null) {
                 if (data.getRef3AtomDownload().booleanValue()) {
                     td3Map.put(MdekKeys.HAS_ATOM_DOWNLOAD, "Y");
@@ -929,7 +933,7 @@ public class MdekMapper implements DataMapperInterface {
             td3Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef3SystemEnv());
             td3Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef3History());
             td3Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef3BaseDataText());
-            td3Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef3ServiceVersion());
+            td3Map.put(MdekKeys.SERVICE_VERSION_LIST, mapFromServiceVersionTable(serviceType, data.getRef3ServiceVersion()));
             td3Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef3Explanation());
             td3Map.put(MdekKeys.PUBLICATION_SCALE_LIST, mapFromScaleTable(data.getRef3Scale()));
             td3Map.put(MdekKeys.SERVICE_OPERATION_LIST, mapFromOperationTable(data.getRef3Operation(), data.getRef3ServiceType()));
@@ -970,7 +974,7 @@ public class MdekMapper implements DataMapperInterface {
             td6Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef6SystemEnv());
             td6Map.put(MdekKeys.SYSTEM_HISTORY, data.getRef6History());
             td6Map.put(MdekKeys.DATABASE_OF_SYSTEM, data.getRef6BaseDataText());
-            td6Map.put(MdekKeys.SERVICE_VERSION_LIST, data.getRef6ServiceVersion());
+            td6Map.put(MdekKeys.SERVICE_VERSION_LIST, mapFromServiceVersionTable(null, data.getRef6ServiceVersion()));
             td6Map.put(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN, data.getRef6Explanation());
             td6Map.put(MdekKeys.URL_LIST, mapFromUrlListTable(data.getRef6UrlList()));
             udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td6Map);
@@ -1063,13 +1067,9 @@ public class MdekMapper implements DataMapperInterface {
         }
         if (null == obj.getAvailabilityDataFormatInspire()) {
             obj.setAvailabilityDataFormatInspire(sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_FORMAT_INSPIRE.getDbValue()));
-    }
-
-        String useConstr = obj.getAvailabilityUseConstraints();
-        if (useConstr == null)  {
-        	useConstr = sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_USE.getDbValue());
-            obj.setAvailabilityUseConstraints(useConstr);
         }
+
+
     }
 
     // ------------------------------- Helper Methods -----------------------------------
@@ -1348,6 +1348,24 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
+    private List<IngridDocument> mapFromAvailUseAccessConstraintsTable(List<String> acList) {
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        
+        if (acList != null) {
+            for (String ac : acList) {
+                KeyValuePair kvp = mapFromKeyValue(MdekKeys.USE_LICENSE_KEY, ac);
+                if (kvp.getValue() != null || kvp.getKey() != -1) {
+                    IngridDocument result = new IngridDocument();
+                    result.put(MdekKeys.USE_LICENSE_KEY, kvp.getKey());
+                    result.put(MdekKeys.USE_LICENSE_VALUE, kvp.getValue());
+                    resultList.add(result);
+                }
+            }           
+        }
+        
+        return resultList;
+    }
+    
     private List<IngridDocument> mapFromCategoriesOpenDataTable(List<String> acList) {
         List<IngridDocument> resultList = new ArrayList<IngridDocument>();
         
@@ -1366,24 +1384,15 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
-    /** Map single value to list ! UseConstraints was a table, now a text field, see INGRID32-45 */
-    private List<IngridDocument> mapFromAvailUseConstraints(String uc, boolean isOpenData) {
+    /** Map single value to list ! UseConstraints was a table, now a text field, see INGRID32-45, REDMINE-14,-717 */
+    private List<IngridDocument> mapFromAvailUseConstraints(String uc) {
         List<IngridDocument> resultList = new ArrayList<IngridDocument>();
-        if (uc != null) {
-            String key = MdekKeys.USE_TERMS_OF_USE_KEY;
-            // if open-data then lookup the key-value pair in a different syslist!  
-            if (isOpenData) {
-                key = USE_TERMS_OF_LICENCE_KEY;
-            }
-            KeyValuePair kvp = mapFromKeyValue(key, uc);
-            if (kvp.getValue() != null || kvp.getKey() != -1) {
-                IngridDocument result = new IngridDocument();
-                // always save under use-key which will be used in backend
-                result.put(MdekKeys.USE_TERMS_OF_USE_KEY, kvp.getKey());
-                result.put(MdekKeys.USE_TERMS_OF_USE_VALUE, kvp.getValue());
-                resultList.add(result);
-            }
-        }
+        
+        IngridDocument result = new IngridDocument();
+        // always save as free entry now since there's not syslist used anymore (REDMINE-14,-717)
+        result.put(MdekKeys.USE_TERMS_OF_USE_KEY, -1);
+        result.put(MdekKeys.USE_TERMS_OF_USE_VALUE, uc);
+        resultList.add(result);
 
         return resultList;
     }
@@ -1698,6 +1707,23 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
+    private Object mapFromServiceVersionTable(Integer serviceType, List<String> refList) {
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        if (refList == null)
+            return resultList;
+        
+        for (String ref : refList) {
+            KeyValuePair kvp = mapFromKeyValue(MdekKeys.SERVICE_VERSION_KEY + "." + serviceType, ref);
+            if (kvp.getValue() != null || kvp.getKey() != -1) {
+                IngridDocument result = new IngridDocument();
+                result.put(MdekKeys.SERVICE_VERSION_KEY, kvp.getKey());
+                result.put(MdekKeys.SERVICE_VERSION_VALUE, kvp.getValue());
+                resultList.add(result);
+            }
+        }
+        return resultList;
+    }
+    
     /****************************************************************************
      * Mapping from the IngridDocument Structure to the Mdek gui representation *
      ****************************************************************************/
@@ -1862,7 +1888,7 @@ public class MdekMapper implements DataMapperInterface {
         // The sns resource bundle is used to resolve the different types
         // If the type can not be resolved, null is returned
         try {
-            return snsResourceBundle.getString( "sns.topic.ref." + topicTypeId );
+            return snsResourceBundle.getString( "gazetteer.de." + topicTypeId );
             
         } catch (Exception e) {
             return null;
@@ -1956,6 +1982,19 @@ public class MdekMapper implements DataMapperInterface {
             }
         }
 
+        return resultList;
+    }
+    
+    private List<String> mapToAvailUseAccessConstraintsTable(List<IngridDocument> docList) {
+        List<String> resultList = new ArrayList<String>();
+        
+        if (docList != null) {
+            for (IngridDocument doc : docList) {
+                KeyValuePair kvp = mapToKeyValuePair(doc, MdekKeys.USE_LICENSE_KEY, MdekKeys.USE_LICENSE_VALUE);
+                resultList.add(kvp.getValue());
+            }
+        }
+        
         return resultList;
     }
     
@@ -2123,6 +2162,26 @@ public class MdekMapper implements DataMapperInterface {
         }
         for (IngridDocument serviceType : serviceTypeList) {
             resultList.add((Integer) serviceType.get(MdekKeys.SERVICE_TYPE2_KEY));
+        }
+        return resultList;
+    }
+    
+    private List<String> mapToServiceVersionTable(Integer serviceType, List<IngridDocument> serviceVersionList) {
+        List<String> resultList = new ArrayList<String>();
+        if (serviceVersionList == null) {
+            return resultList;
+        }
+        for (IngridDocument serviceVersion : serviceVersionList) {
+            
+            // name of version is free entry (key=-1) or syslist entry !
+            // first set direct value (free)
+            String val = (String) serviceVersion.get(MdekKeys.SERVICE_VERSION_VALUE);
+            // then overwrite with name from syslist if syslist entry
+            Integer versionKey = (Integer) serviceVersion.get(MdekKeys.SERVICE_VERSION_KEY);
+            if (versionKey != null && versionKey != -1) {
+                val = sysListMapper.getValue(MdekKeys.SERVICE_VERSION_KEY+"."+serviceType, (Integer) serviceVersion.get(MdekKeys.SERVICE_VERSION_KEY), false);
+            }
+            resultList.add(val);
         }
         return resultList;
     }

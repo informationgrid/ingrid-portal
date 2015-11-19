@@ -70,7 +70,6 @@ define({
     "page.breadcrumb.adminImport":"Import/Export -> Import",
     
 	"menu.general.help":"Hilfe",
-	"menu.general.disclaimer":"Impressum",
 	"menu.general.info":"Info",
 	"menu.general.closeApplication":"SCHLIESSEN",
 	"menu.main.hierarchyAcquisition":"Hierarchie & Erfassung",
@@ -469,6 +468,8 @@ define({
 	"validation.begin":"von",
 	"validation.end":"bis",
     "validation.serviceUrl":"Der '${0}' sowie die '${1}' muss angegeben werden.",
+    "validation.isocategory.added":"Die abhängige ISO-Kategorie '${0}' wurde ebenfalls hinzugefügt.",
+    "validation.isocategory.delete.dependent":"Die Kategorie muss bestehen bleiben, solange das INSPIRE-Thema '${0}' verwendet wird.",
 	
 	"ui.entry.loadingMessage":"Die Anwendung wird geladen...",
 	"ui.entry.admin.title":"InGrid-Editor - Verwaltung und Management",
@@ -947,10 +948,14 @@ define({
 	"ui.sysList.4430":"Adresse - Kommunikation - Art",
 	"ui.sysList.5000":"Gruppe",
     "ui.sysList.5100":"Objektklasse 3 - Art des Dienstes",
-    "ui.sysList.5105":"Objektklasse 3 - Name der Operation - CWS",
+    "ui.sysList.5105":"Objektklasse 3 - Name der Operation - CSW",
     "ui.sysList.5110":"Objektklasse 3 - Name der Operation - WMS",
     "ui.sysList.5120":"Objektklasse 3 - Name der Operation - WFS",
     "ui.sysList.5130":"Objektklasse 3 - Name der Operation - WCTS",
+    "ui.sysList.5151":"Objektklasse 3 - Version des Dienstes - CSW",
+    "ui.sysList.5152":"Objektklasse 3 - Version des Dienstes - WMS",
+    "ui.sysList.5153":"Objektklasse 3 - Version des Dienstes - WFS",
+    "ui.sysList.5154":"Objektklasse 3 - Version des Dienstes - WCTS",
     "ui.sysList.5180":"Objektklasse 3 - Operation - Unterstützte Platformen",
     "ui.sysList.5200":"Objektklasse 3 - Klassifikation des Dienstes",
     "ui.sysList.5300":"Objektklasse 6 - Art des Dienstes",
@@ -1036,6 +1041,8 @@ define({
     "validation.error.spatial.no.entry":"Es muss mindestens ein Raumbezug als Geothesaurus oder Freier eingetragen werden.",
     "validation.error.spatial.no.expired":"Der Raumbezug darf nicht abgelaufen sein.",
     "validation.error.missing.download.link":"Bei der Auswahl von 'Open Data' muss ein Verweis vom Typ 'Datendownload' angelegt werden.",
+    
+    "init.error.userNotFound":"Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",
     
     "hint.noCapabilityUrlFound":"Es konnte keine GetCapabilities-Url gefunden werden, um den Datensatz zu aktualisieren.",
     "hint.datasetUpdatedFromCapabilities":"Der Datensatz wurde erfolgreich aktualisiert.",

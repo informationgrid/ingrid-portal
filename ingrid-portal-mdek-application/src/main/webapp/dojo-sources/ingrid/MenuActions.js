@@ -102,7 +102,10 @@ define([
                         this._createNewAddress(0, selectedNode);
                     } else {
                         var selectClassDef = new Deferred();
+                        var dlg = null;
                         selectClassDef.then(function(addressClass) {
+                            // hide dialog to show error dialogs correctly
+                            dlg.destroyRecursive();
                             self._createNewAddress(addressClass, selectedNode);
                         });
 
@@ -111,7 +114,7 @@ define([
                             parentClass: selectedNode.item.objectClass,
                             resultHandler: selectClassDef
                         };
-                        dialog.showPage(message.get("dialog.createAddressTitle"), "dialogs/mdek_address_select_class_dialog.jsp?c=" + userLocale, 350, 160, false, params);
+                        dlg = dialog.showPage(message.get("dialog.createAddressTitle"), "dialogs/mdek_address_select_class_dialog.jsp?c=" + userLocale, 350, 160, false, params);
                     }
                 }
             }

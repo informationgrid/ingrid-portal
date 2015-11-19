@@ -52,6 +52,7 @@
     <property name="updateMySQL320d" location="${installDir}/sql/update_3.2.0d_mysql.sql"/>
     <property name="updateMySQL331" location="${installDir}/sql/update_3.3.1_mysql.sql"/>
     <property name="updateMySQL341" location="${installDir}/sql/update_3.4.1_mysql.sql"/>
+    <property name="updateMySQL361" location="${installDir}/sql/update_3.6.1_mysql.sql"/>
 
     <!-- mysql ige imports -->
     <property name="mdekDB"          location="${installDir}/sql/mdek_0_mysql.sql"/>
@@ -62,6 +63,7 @@
     <property name="mdekDB_331"      location="${installDir}/sql/mdek_3.3.1_mysql.sql"/>
     <property name="mdekDB_332"      location="${installDir}/sql/mdek_3.3.2_mysql.sql"/>
     <property name="mdekDB_340"      location="${installDir}/sql/mdek_3.4.0_mysql.sql"/>
+    <property name="mdekDB_361"      location="${installDir}/sql/mdek_3.6.1_mysql.sql"/>
 
 
     <target name="CheckDbs" depends="checkPortalDb, checkMdekDb" if="useMysql">
@@ -194,6 +196,7 @@
             <transaction src="${updateMySQL320d}"/>
             <transaction src="${updateMySQL331}"/>
             <transaction src="${updateMySQL341}"/>
+            <transaction src="${updateMySQL361}"/>
         </sql>
     </target>
     
@@ -218,6 +221,7 @@
             <transaction src="${updateMySQL320d}"/>
             <transaction src="${updateMySQL331}"/>
             <transaction src="${updateMySQL341}"/>
+            <transaction src="${updateMySQL361}"/>
         </sql>
     </target>
     
@@ -241,6 +245,7 @@
             <transaction src="${updateMySQL320d}"/>
             <transaction src="${updateMySQL331}"/>
             <transaction src="${updateMySQL341}"/>
+            <transaction src="${updateMySQL361}"/>
         </sql>
     </target>
     
@@ -260,6 +265,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL331}"/>
             <transaction src="${updateMySQL341}"/>
+            <transaction src="${updateMySQL361}"/>
         </sql>
     </target>
     
@@ -278,6 +284,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL341}"/>
+            <transaction src="${updateMySQL361}"/>
         </sql>
     </target>
     
@@ -288,6 +295,24 @@
         </echo>
     </target>
     
+	<target name="PortalDbUpdateFrom350" if="useMysql">
+        <echo>MySQL-Portal Daten importieren (ab 3.5.0)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateMySQL361}"/>
+        </sql>
+    </target>
+	
     <!-- =============================================
          = IGE MDEK DATABASE                         =
          ============================================= -->
@@ -341,6 +366,7 @@
             <transaction src="${mdekDB_331}"/>
             <transaction src="${mdekDB_332}"/>
             <transaction src="${mdekDB_340}"/>
+            <transaction src="${mdekDB_361}"/>
 
         </sql>
     </target>
@@ -368,6 +394,7 @@
             <transaction src="${mdekDB_331}"/>
             <transaction src="${mdekDB_332}"/>
             <transaction src="${mdekDB_340}"/>
+            <transaction src="${mdekDB_361}"/>
 
         </sql>
     </target>

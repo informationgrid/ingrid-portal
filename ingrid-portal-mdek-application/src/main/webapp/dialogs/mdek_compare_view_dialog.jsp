@@ -336,6 +336,9 @@ require([
             renderList(nodeDataOld.availabilityAccessConstraints, nodeDataNew.availabilityAccessConstraints, "<fmt:message key='ui.obj.availability.accessConstraints' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(6010, val);
             });
+            renderList(nodeDataOld.availabilityUseAccessConstraints, nodeDataNew.availabilityUseAccessConstraints, "<fmt:message key='ui.obj.availability.useAccessConstraints' />", null, function(val) {
+                return UtilSyslist.getSyslistEntryName(6500, val);
+            });
             renderTextWithTitle(nodeDataOld.availabilityUseConstraints, nodeDataNew.availabilityUseConstraints, "<fmt:message key='ui.obj.availability.useConstraints' />");
 
             // only show "availabilityDataFormatInspire" in class 1 ... by default a default value is mapped to 

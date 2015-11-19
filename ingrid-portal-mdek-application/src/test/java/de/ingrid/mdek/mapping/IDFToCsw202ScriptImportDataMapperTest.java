@@ -100,8 +100,10 @@ public class IDFToCsw202ScriptImportDataMapperTest extends TestCase {
 	public final void testConvertIDF() throws Exception {
 		// set variables that are needed for running correctly
 		initClassVariables(mapperScript, templateIGC);
-		
-		String exampleXml = "/de/ingrid/mdek/mapping/idf_1_0_0.xml";
+
+//        String filename = "idf_1_0_0.xml";
+		String filename = "idf_3_6_1.xml";
+        String exampleXml = "/de/ingrid/mdek/mapping/" + filename;
 		
 		InputStream data = null;
 		try {
@@ -118,7 +120,7 @@ public class IDFToCsw202ScriptImportDataMapperTest extends TestCase {
 
 		// System.out.println("start mapping: " + XMLUtils.toString(getDomFromSourceData(data)));
 		HashMapProtocolHandler protocolHandler = new HashMapProtocolHandler();
-		protocolHandler.setCurrentFilename("idf_1_0_0.xml");
+		protocolHandler.setCurrentFilename(filename);
 		InputStream result;
 		try {
 			result = mapper.convert(data, protocolHandler);

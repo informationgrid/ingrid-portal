@@ -1,25 +1,3 @@
-<!--
-  **************************************************-
-  Ingrid Portal MDEK Application
-  ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  -->
 <list>
   <de.ingrid.codelists.model.CodeList>
     <id>100</id>
@@ -2954,7 +2932,7 @@ Bei der Erzeuung der ISO-Metadaten aus den Katalogdaten wird, wenn vorhanden, im
   </de.ingrid.codelists.model.CodeList>
   <de.ingrid.codelists.model.CodeList>
     <id>5105</id>
-    <name>Objektklasse 3 - Name der Operation - CWS</name>
+    <name>Objektklasse 3 - Name der Operation - CSW</name>
     <defaultEntry></defaultEntry>
     <entries>
       <de.ingrid.codelists.model.CodeListEntry>
@@ -3345,6 +3323,140 @@ Bei der Erzeuung der ISO-Metadaten aus den Katalogdaten wird, wenn vorhanden, im
           <entry>
             <string>en</string>
             <string>GetResourceById</string>
+          </entry>
+        </localisations>
+      </de.ingrid.codelists.model.CodeListEntry>
+    </entries>
+    <lastModified>0</lastModified>
+  </de.ingrid.codelists.model.CodeList>
+  <de.ingrid.codelists.model.CodeList>
+    <id>5151</id>
+    <name>Objektklasse 3 - Version des Dienstes - CSW</name>
+    <defaultEntry></defaultEntry>
+    <entries>
+      <de.ingrid.codelists.model.CodeListEntry>
+        <id>1</id>
+        <localisations>
+          <entry>
+            <string>de</string>
+            <string>OGC:CSW 2.0.2</string>
+          </entry>
+          <entry>
+            <string>iso</string>
+            <string>OGC:CSW 2.0.2</string>
+          </entry>
+          <entry>
+            <string>en</string>
+            <string>OGC:CSW 2.0.2</string>
+          </entry>
+        </localisations>
+      </de.ingrid.codelists.model.CodeListEntry>
+    </entries>
+    <lastModified>0</lastModified>
+  </de.ingrid.codelists.model.CodeList>
+  <de.ingrid.codelists.model.CodeList>
+    <id>5152</id>
+    <name>Objektklasse 3 - Version des Dienstes - WMS</name>
+    <defaultEntry></defaultEntry>
+    <entries>
+      <de.ingrid.codelists.model.CodeListEntry>
+        <id>1</id>
+        <localisations>
+          <entry>
+            <string>de</string>
+            <string>OGC:WMS 1.1.1</string>
+          </entry>
+          <entry>
+            <string>iso</string>
+            <string>OGC:WMS 1.1.1</string>
+          </entry>
+          <entry>
+            <string>en</string>
+            <string>OGC:WMS 1.1.1</string>
+          </entry>
+        </localisations>
+      </de.ingrid.codelists.model.CodeListEntry>
+      <de.ingrid.codelists.model.CodeListEntry>
+        <id>2</id>
+        <localisations>
+          <entry>
+            <string>de</string>
+            <string>OGC:WMS 1.3.0</string>
+          </entry>
+          <entry>
+            <string>iso</string>
+            <string>OGC:WMS 1.3.0</string>
+          </entry>
+          <entry>
+            <string>en</string>
+            <string>OGC:WMS 1.3.0</string>
+          </entry>
+        </localisations>
+      </de.ingrid.codelists.model.CodeListEntry>
+    </entries>
+    <lastModified>0</lastModified>
+  </de.ingrid.codelists.model.CodeList>
+  <de.ingrid.codelists.model.CodeList>
+    <id>5153</id>
+    <name>Objektklasse 3 - Version des Dienstes - WFS</name>
+    <defaultEntry></defaultEntry>
+    <entries>
+      <de.ingrid.codelists.model.CodeListEntry>
+        <id>1</id>
+        <localisations>
+          <entry>
+            <string>de</string>
+            <string>OGC:WFS 1.1.0</string>
+          </entry>
+          <entry>
+            <string>iso</string>
+            <string>OGC:WFS 1.1.0</string>
+          </entry>
+          <entry>
+            <string>en</string>
+            <string>OGC:WFS 1.1.0</string>
+          </entry>
+        </localisations>
+      </de.ingrid.codelists.model.CodeListEntry>
+      <de.ingrid.codelists.model.CodeListEntry>
+        <id>2</id>
+        <localisations>
+          <entry>
+            <string>de</string>
+            <string>OGC:WFS 2.0</string>
+          </entry>
+          <entry>
+            <string>iso</string>
+            <string>OGC:WFS 2.0</string>
+          </entry>
+          <entry>
+            <string>en</string>
+            <string>OGC:WFS 2.0</string>
+          </entry>
+        </localisations>
+      </de.ingrid.codelists.model.CodeListEntry>
+    </entries>
+    <lastModified>0</lastModified>
+  </de.ingrid.codelists.model.CodeList>
+  <de.ingrid.codelists.model.CodeList>
+    <id>5154</id>
+    <name>Objektklasse 3 - Version des Dienstes - WCTS</name>
+    <defaultEntry></defaultEntry>
+    <entries>
+      <de.ingrid.codelists.model.CodeListEntry>
+        <id>1</id>
+        <localisations>
+          <entry>
+            <string>de</string>
+            <string>OGC:CTS 1.0</string>
+          </entry>
+          <entry>
+            <string>iso</string>
+            <string>OGC:CTS 1.0</string>
+          </entry>
+          <entry>
+            <string>en</string>
+            <string>OGC:CTS 1.0</string>
           </entry>
         </localisations>
       </de.ingrid.codelists.model.CodeListEntry>

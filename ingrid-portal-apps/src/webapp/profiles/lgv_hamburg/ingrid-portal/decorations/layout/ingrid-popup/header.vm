@@ -69,10 +69,7 @@ self.focus();
 
   </head>
   <body class="#PageBaseCSSClass()">
-    <noscript>
-	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
-    </noscript>
-<!--  BEGIN: layout/html/portalu/decorator.vm -->
+<!--  BEGIN: layout/html/ingrid/decorator.vm -->
     <div class="#PageBaseCSSClass()">
 
 <!-- IDENTITY AREA -->
@@ -90,7 +87,7 @@ self.focus();
 #end
   <!-- LOGO -->
   <div id="logo">
-    <img src="#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo PortalU" />
+    <img src="#GetPageResource('images/logo.gif')" width="168" height="60" alt="Logo InGrid" />
   </div>
 </div>
 
@@ -99,4 +96,4 @@ self.focus();
   
 ## $jetspeed.include($jetspeed.currentFragment)
 
-<!--  END: layout/html/portalu/decorator.vm -->
+<!--  END: layout/html/ingrid/decorator.vm -->

@@ -71,7 +71,7 @@ public class SNSServiceRDF implements ThesaurusService {
 		try {
 			termModels = rdfReader.fetchHierarchiesFromRoot(strippedUri);
 		} catch (DoesNotExistException e) {
-			return getHierarchyNextLevel(rootURI.substring(0, rootURI.length()-4), lang);
+			return getHierarchyNextLevel(strippedUri, lang);
 		}
         resultList = rdfMapper.mapHierarchyRootToTreeTerms(termModels);
 		

@@ -39,9 +39,9 @@
         <script type="text/javascript">
             var pageHierachy = _container_;
             require(["dojo/Deferred", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/registry", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct", "dojo/dom-class",
-                    "ingrid/tree/MetadataTree", "ingrid/IgeToolbar", "ingrid/IgeActions", "ingrid/tree/HierarchyTreeActions", "dojo/ready"
+                    "ingrid/tree/MetadataTree", "ingrid/IgeToolbar", "ingrid/IgeActions", "ingrid/tree/HierarchyTreeActions", "ingrid/utils/Catalog", "dojo/ready"
                 ],
-                function(Deferred, BorderContainer, ContentPane, registry, lang, dom, construct, domClass, MetadataTree, IgeToolbar, igeActions, TreeActions, ready) {
+                function(Deferred, BorderContainer, ContentPane, registry, lang, dom, construct, domClass, MetadataTree, IgeToolbar, igeActions, TreeActions, UtilCatalog, ready) {
 
                     pageHierachy.dataTreePromise = new Deferred();
 
@@ -124,12 +124,9 @@
                         }, leftPane.domNode);
 
                         ready(function() {
-                            // hide error button on start
-                            // it must be visible during startup, otherwise the width will be null
-                            // setTimeout(function() { domClass.add(registry.byId("bShowNextError").domNode, "hide"); }, 1000);
-
                             var tree = new MetadataTree({
                                 showRoot: false,
+                                sortByClass: UtilCatalog.catalogData.sortByClass === "Y",
                                 onClick: TreeActions.clickHandler,
                                 onMouseDown: lang.partial(TreeActions.mouseDownHandler, TreeActions)
                             }, "dataTree");
@@ -245,7 +242,8 @@
                                 <td class="note bgBlue" colspan="3">
                                     <strong><fmt:message key="ui.obj.header.creationTime" />:</strong><span id="creationTime">26.06.1998</span>
                                     | <strong><fmt:message key="ui.obj.header.modificationTime" />:</strong><span id="modificationTime">27.09.2000</span>
-                                    | <strong><fmt:message key="ui.obj.header.modUser" />:</strong><span id="lastEditor">---</span>
+                                    | <strong><fmt:message key="ui.obj.header.uuid" />:</strong><span id="uuid" class="oneClickMark">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</span>
+                                    <br><strong><fmt:message key="ui.obj.header.modUser" />:</strong><span id="lastEditor">---</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -1967,16 +1965,24 @@
                                     </div>
 									</div>
                                 </span>
-                                <span id="uiElementN026" class="outer halfWidth">
+                                <span id="uiElementN027" class="outer halfWidth">
+                                    <div><span id="availabilityUseAccessConstraintsLabel" class="label">
+                                        <label for="availabilityUseAccessConstraints" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10027)">
+                                            <fmt:message key="ui.obj.availability.useAccessConstraints" />
+                                        </label>
+                                    </span>
+                                    <div class="input tableContainer">
+                                        <div id="availabilityUseAccessConstraints" autoHeight="4" interactive="true" class="hideTableHeader">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </span>
+                                <span id="uiElementN026" class="outer">
                                     <div>
                                     <span id="availabilityUseConstraintsLabel" class="label left">
                                         <label for="availabilityUseConstraints" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10026)">
                                             <fmt:message key="ui.obj.availability.useConstraints" />
                                         </label>
-                                    </span>
-                                    <span class="functionalLink">
-                                        <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
-                                        <a id="availabilityUseConstraintsLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('availabilityUseConstraints'), 'dialogs/mdek_use_constraints_dialog.jsp?c='+userLocale, 735, 300, true, {listId: '6020'});" title="<fmt:message key="dialog.popup.useConstraints.link" /> [Popup]"><fmt:message key="ui.obj.availability.useConstraints.link" /></a>
                                     </span>
                                     <span class="input clear"><input type="text" id="availabilityUseConstraints" name="availabilityUseConstraints" /></span>
                                     </div>
@@ -2143,7 +2149,8 @@
                                 <td class="note bgBlue" colspan="3">
                                     <strong><fmt:message key="ui.adr.header.creationTime" />:</strong><span id="addressCreationTime">----------</span>
                                     | <strong><fmt:message key="ui.adr.header.modificationTime" />:</strong><span id="addressModificationTime">----------</span>
-                                    | <strong><fmt:message key="ui.adr.header.modUser" />:</strong><span id="addressLastEditor">---</span>
+                                    | <strong><fmt:message key="ui.adr.header.uuid" />:</strong><span id="addressUuid" class="oneClickMark">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</span>
+                                    <br><strong><fmt:message key="ui.adr.header.modUser" />:</strong><span id="addressLastEditor">---</span>
                                 </td>
                             </tr>
                         </tbody>

@@ -400,11 +400,16 @@
     				#renderTable($TOOL.getMediumOptions("./gmd:distributionInfo/gmd:MD_Distribution"))
         		## Bestellinformationen
     				#renderTextLabelLeft($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions"))
-        		## Zugangsbeschränkungen
+    				
+        		## Zugangsbeschränkungen (accessConstraints)
             		#set($consideredValues = ["otherRestrictions"])
-            		#renderTextList($MESSAGES.getString("object_access.restriction_value") $TOOL.mergeList($TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints", ".", "6010", $consideredValues), $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints", "./gmd:MD_RestrictionCode/@codeListValue", "6010", $consideredValues)))
-        		## Nutzungsbedingungen
-    				#renderTextList($MESSAGES.getString("object_access.terms_of_use") $TOOL.mergeList($TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation", "."), $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue", ".", "524")))
+            		#set($accessConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints")
+            		#renderTextList($MESSAGES.getString("object_access.restriction_value") $TOOL.mergeList($TOOL.getListOfValuesFromXPath($accessConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "6010", $consideredValues), $TOOL.getSiblingsValuesFromXPath($accessConstraintsXPath, "gmd:otherConstraints", false, "6010", $consideredValues)))
+        		## Nutzungsbeschr�nkungen (useConstraints)
+            		#set($useConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints")
+            		#renderTextList($MESSAGES.getString("object_access.license") $TOOL.mergeList($TOOL.getListOfValuesFromXPath($useConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "524", $consideredValues), $TOOL.getSiblingsValuesFromXPath($useConstraintsXPath, "gmd:otherConstraints")))
+        		## Nutzungsbedingungen (useLimitation)
+    				#renderTextList($MESSAGES.getString("object_access.terms_of_use") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation", "."))
         #closeDiv()
 	#end
 	## Zusätzliche Info

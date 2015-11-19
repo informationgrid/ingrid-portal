@@ -441,7 +441,7 @@
         <to>/umweltchronik</to>
     </outbound-rule>
     
-    <!-- Über PortalU  -->
+    <!-- Über InGrid-Portal  -->
     <rule>
         <from>/hintergrundinformationen</from>
         <to type="forward">/portal/main-about.psml</to>
@@ -471,7 +471,7 @@
         <to>/datenquellen</to>
     </outbound-rule>
     
-    <!-- Mein PortalU  -->
+    <!-- Mein Portal  -->
     <rule>
         <from>/personalisierungsoptionen</from>
         <to type="forward">/portal/service-myportal.psml</to>

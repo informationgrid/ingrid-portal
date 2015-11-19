@@ -92,7 +92,7 @@ public class SNSUpdateJobTest {
         IngridDocument t = new IngridDocument();
         t.put( MdekKeys.TERM_TYPE, SearchtermType.UMTHES.getDbValue() );
         t.put( MdekKeys.TERM_NAME, "Forschungspolitik old" );
-        t.put( MdekKeys.TERM_SNS_ID, "uba_thes_10065" );
+        t.put( MdekKeys.TERM_SNS_ID, "http://sns.uba.de/umthes/_00010065" );
         thesTerms.add( t );
         subDoc.put( MdekKeys.SUBJECT_TERMS, thesTerms);
         
@@ -140,9 +140,9 @@ public class SNSUpdateJobTest {
                 Object[] args = invocation.getArguments();
                 List old = (List) args[1];
                 List newTerms = (List) args[2];
-                assertThat( (String)((IngridDocument)old.get( 0 )).get( "term-sns-id" ), is( "uba_thes_10065" ));
+                assertThat( (String)((IngridDocument)old.get( 0 )).get( "term-sns-id" ), is( "http://sns.uba.de/umthes/_00010065" ));
                 assertThat( (String)((IngridDocument)old.get( 0 )).get( "term-name" ), is( "Forschungspolitik old" ));
-                assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-sns-id" ), is( "uba_thes_10065" ));
+                assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-sns-id" ), is( "http://sns.uba.de/umthes/_00010065" ));
                 assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-name" ), is( "Forschungspolitik" ));
                 
                 return null;
@@ -172,9 +172,9 @@ public class SNSUpdateJobTest {
         when(callerCatalog.getSearchTerms( "test-plug-id", new SearchtermType[] { SearchtermType.UMTHES, SearchtermType.GEMET }, "test-user-id" )).thenReturn( getTestSnsTerms()  );
         when(callerCatalog.getSearchTerms( "test-plug-id", new SearchtermType[] { SearchtermType.FREI },                         "test-user-id" )).thenReturn( getTestFreeTerms() );
         
-        SNSTopic expiredTopic = new SNSTopic(SNSTopic.Type.DESCRIPTOR, SNSTopic.Source.UMTHES, "uba_thes_10065", "Forschungspolitik", null, null);
+        SNSTopic expiredTopic = new SNSTopic(SNSTopic.Type.DESCRIPTOR, SNSTopic.Source.UMTHES, "http://sns.uba.de/umthes/_00010065", "Forschungspolitik", null, null);
         expiredTopic.setExpired( true );
-        when(serviceMock.getPSI( "uba_thes_10065", new Locale("de"))).thenReturn( expiredTopic  );
+        when(serviceMock.getPSI( "http://sns.uba.de/umthes/_00010065", new Locale("de"))).thenReturn( expiredTopic  );
         
      // CHECK RESULTS
         Mockito.doAnswer( new Answer() {

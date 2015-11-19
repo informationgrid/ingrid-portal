@@ -112,20 +112,21 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 
 div#identity { padding:0; margin:0; height: 97px; width:59.5em; background-color:#68A5D2; overflow:visible; }
 div.motiv_blank { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
-div.motiv_suche { background-image:url(../images/01_motiv_suche.gif); background-repeat:no-repeat; }
-div.motiv_karten { background-image:url(../images/01_motiv_karten.gif); background-repeat:no-repeat; }
-div.motiv_suche_detail { background-image:url(../images/01_motiv_suche_detail.png); background-repeat:no-repeat; }
+div.motiv_suche { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_karten { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
+div.motiv_suche_detail { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
 
 div.en_motiv_blank { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
-div.en_motiv_suche { background-image:url(../images/en/en_01_motiv_suche.gif); background-repeat:no-repeat; }
-div.en_motiv_karten { background-image:url(../images/en/en_01_motiv_karten.gif); background-repeat:no-repeat; }
-div.en_motiv_suche_detail { background-image:url(../images/en/01_motiv_suche_detail.png); background-repeat:no-repeat; }
+div.en_motiv_suche { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_karten { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
+div.en_motiv_suche_detail { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
 *********************************************************************/
 
 div#logo { float: left; }
+div#logo img { background-color: #fff; padding: 14px 51px 14px 15px; border-radius: 0 0 25px 0; box-sizing: unset; }
 
 /********************************************************************
   logged on styles 
@@ -475,7 +476,7 @@ div.formbody input.qry_chronic {width: 25em; font-size: 83%; line-height: 100%;}
 
 /*** Formular Einfache Suche Start Seite ***/
 
-div.formbody input.qrystr {width: 30em; font-size: 83%; line-height: 100%;}
+div.formbody input.qrystr {width: 43em; font-size: 83%; line-height: 100%;}
 
 /*** Formular Erweiterte Suche ***/
 
@@ -508,10 +509,10 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { margin: 0px 0 0px 55px; background: url(../images/logo_footer.gif) no-repeat; padding: 0 0 70px 115px; }
+div#footercontainer { margin: 0 0 0 55px; background: rgba(0, 0, 0, 0) url("../images/ingrid_logo_icn_footer.png") no-repeat scroll 0 10px / 30px auto; padding: 0 0 70px 60px; }
 #footercontent { font-size: 65%; line-height: 120%; color: #B0B2B4; padding-top: 10px; }
 
-div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF; height: 10px; }
+div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 0px; padding: 0; background: #FFFFFF; height: 10px; }
 div#footermarginal { background: #FFFFFF; width: 19em; padding-right: 14px; text-align:right; font-size: 65%; line-height: 100%; width:100%;}
 
 div#finalfootercontainer { float: left; width: 59.5em; }

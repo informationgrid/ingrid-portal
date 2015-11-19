@@ -1,0 +1,51 @@
+#* include service navigation component *#
+#macro (includeFooterNavigation)
+	<a href="$renderResponse.encodeURL('/portal/disclaimer.psml')" title="$MESSAGES.getString('footer.disclaimer.tooltip')">$MESSAGES.getString('footer.disclaimer')</a>
+	|
+	<a href="$renderResponse.encodeURL('/portal/privacy.psml')" title="$MESSAGES.getString('footer.privacy.policy.tooltip')">$MESSAGES.getString('footer.privacy.policy')</a>
+#end
+
+</div>
+<div class="clearer"></div>
+<div id="footermarginalcontainer">
+  <div id="footermarginal">
+    <!-- portlets go here -->
+  	<div id="footerSeparator"></div>
+  	&nbsp;
+  </div>
+</div>
+<div class="clearer"></div>
+
+<!-- footer block -->
+<div id="footercontainer">
+  <div id="footercontent">
+    <!-- portlets go here -->
+  #includeFooterNavigation()
+<br /> 
+  </div>
+</div>
+
+</div>
+<!--  END: layout/html/ingrid/decorator.vm -->
+
+<!-- Piwik -->
+#if($piwik != "")
+	<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="${piwik}";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="$piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+#end
+<!-- End Piwik Code -->
+<script> if (document.documentMode == 7) alert("$MESSAGES.getString('footer.compatibility')") </script>
+
+</body>
+</html>

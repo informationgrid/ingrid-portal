@@ -12,8 +12,8 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>About PortalU</title>
-  <!--<metadata name="title" xml:lang="de">&Uuml;ber PortalU</metadata>-->
+  <title>About InGrid-Portal</title>
+  <!--<metadata name="title" xml:lang="de">&Uuml;ber InGrid-Portal</metadata>-->
 
   <fragment id="main-about-data-source" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="main-about-data-source-1" type="portlet" name="ingrid-portal-apps::ShowDataSourcePortlet">

@@ -102,7 +102,6 @@ require(["dojo/dom",
             }
             
             if (!customParams.showExternalRef) {
-                debugger;
                 var tabCont = registry.byId("tabContainerLinkDlg");
                 tabCont.removeChild( tabCont.getChildren()[1] );
             }
@@ -174,7 +173,6 @@ require(["dojo/dom",
                 }
                 
             } else {
-                //debugger;
                 var currentLink = {
                     url: recordUrl.get("value"),
                     name: record.title,

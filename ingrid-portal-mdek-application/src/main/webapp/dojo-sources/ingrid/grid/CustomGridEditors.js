@@ -80,6 +80,8 @@ define([
             };
 
             this.isValueChanged = function() {
+                // in case the content was already destroyed (clicking on a 'x' of a dialog) we assume that the value should not be modified 
+                if (this.input.textbox === undefined) return false;
                 return (!(this.input.get("value") == "" && this.defaultValue === null)) && (this.input.get("value") != this.defaultValue);
             };
 

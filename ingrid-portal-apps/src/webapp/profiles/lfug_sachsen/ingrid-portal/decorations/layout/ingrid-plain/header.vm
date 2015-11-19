@@ -92,10 +92,7 @@ if (xmlhttp) {
 
   </head>
   <body class="#PageBaseCSSClass() claro">
-    <noscript>
-	  <iframe src="$jetspeed.getAbsoluteUrl('/detect-js.psml')" style="display:none"></iframe>
-    </noscript>
-<!--  BEGIN: layout/html/portalu/decorator.vm -->
+<!--  BEGIN: layout/html/ingrid/decorator.vm -->
     <div class="#PageBaseCSSClass()">
 
 <!-- Identity Area inkl. service menu -->
@@ -145,4 +142,4 @@ if (xmlhttp) {
   
 ## $jetspeed.include($jetspeed.currentFragment)
 
-<!--  END: layout/html/portalu/decorator.vm -->
+<!--  END: layout/html/ingrid/decorator.vm -->

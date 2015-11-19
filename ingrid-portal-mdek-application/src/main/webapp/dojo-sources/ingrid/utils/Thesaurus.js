@@ -98,7 +98,7 @@ define([
                     },
                     errorHandler: function(errMsg, err) {
                         console.debug("Error while calling findTopics: " + errMsg);
-                        def.errback(err);
+                        def.reject(err);
                     }
                 });
                 return def;
@@ -320,7 +320,7 @@ define([
                     },
                     errorHandler: function(errMsg, err) {
                         dojo.debug("Error while calling getTopicsForTopic: " + errMsg);
-                        def.errback(err);
+                        def.reject(err);
                     }
                 });
                 return def;

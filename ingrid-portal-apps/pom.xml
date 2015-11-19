@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>3.6.0.3</version>
+    <version>3.6.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -13,7 +13,7 @@
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-apps</connection>
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-apps</developerConnection>
-    <tag>ingrid-portal-project-3.6.0.2</tag>
+    <tag>HEAD</tag>
   </scm>
   <build>
     <finalName>ingrid-portal-apps</finalName>
@@ -144,7 +144,6 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>3.6.0</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -182,6 +181,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus-client</artifactId>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <groupId>net.sf.ehcache</groupId>
@@ -192,6 +192,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug</artifactId>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <groupId>jetty</groupId>
@@ -222,6 +223,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug-dsc</artifactId>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <groupId>de.ingrid</groupId>
@@ -283,6 +285,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug-sns</artifactId>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <groupId>de.ingrid</groupId>
@@ -301,10 +304,12 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-communication</artifactId>
+      <version>3.5.0</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-communication-authentication</artifactId>
+      <version>3.5.0</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
@@ -434,10 +439,12 @@
       <name>InGrid Repo Maven</name>
       <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
     </repository>
+<!--
     <repository>
       <id>maven.repo</id>
       <name>Maven Repo Default</name>
       <url>http://maven.jahia.org/maven2</url>
     </repository>
+-->
   </repositories>
 </project>

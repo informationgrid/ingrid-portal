@@ -40,6 +40,7 @@ public class CatalogBean {
 	private String atomUrl;
 	private String workflowControl;
 	private Integer expiryDuration;
+	private String sortByClass;
 	private Date dateOfCreation;
 	private Date dateOfLastModification;
 	private String modUuid;
@@ -162,5 +163,13 @@ public class CatalogBean {
 
     public void setAtomUrl(String atomUrl) {
         this.atomUrl = atomUrl;
+    }
+
+    public String getSortByClass() {
+        return sortByClass;
+    }
+
+    public void setSortByClass(String sortByClass) {
+        this.sortByClass = sortByClass;
     }
 }

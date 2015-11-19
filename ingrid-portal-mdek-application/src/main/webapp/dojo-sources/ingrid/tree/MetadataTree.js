@@ -72,6 +72,8 @@ define("ingrid/tree/MetadataTree", [
 
         // register a function to decide which nodes not to make selectable
         excludeFunction: null,
+        
+        sortByClass: false,
 
         getPreIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
             var myClass = "TreePreIcon";
@@ -110,13 +112,32 @@ define("ingrid/tree/MetadataTree", [
         },
 
         postMixInProperties: function() {
+            var self = this;
             var memoryStore = new DwrStore ( {
                 data: [],
                 storeType: this.treeType,
                 getChildren: function(object){
                     // Add a getChildren() method to store for the data model where
                     // children objects point to their parent (aka relational model)
-                    return this.query({parent: object.id, nodeAppType: object.nodeAppType});
+                    var childrenDef = this.query({parent: object.id, nodeAppType: object.nodeAppType});
+                    // if sorted by class then do some post processingand 1st sort by class and 2nd by title
+                    if (self.sortByClass) {
+                        return childrenDef.then(function(children) {
+                            return children.sort(function(child1, child2) {
+                                if (child1.objectClass === null && child2.objectClass === null) return 0;
+                                if (child1.objectClass === null) return -1;
+                                if (child2.objectClass === null) return +1;
+                                var compareClass = child1.objectClass - child2.objectClass;
+                                if (compareClass === 0) {
+                                    return child1.title.localeCompare( child2.title);
+                                } else {
+                                    return compareClass;
+                                }
+                            } )
+                        });
+                    } else {
+                        return childrenDef;
+                    }
                 }
             } );
 
@@ -156,20 +177,7 @@ define("ingrid/tree/MetadataTree", [
             return new CustomTreeNode(args);
         },
         
-//        removeChildren: function(childrenItems) {
-//            array.forEach(childrenItems, function(childItem) {
-//                // check if child also has children to delete/update
-//                if (childItem.children && childItem.children.length > 0)
-//                    this.removeChildren(childItem.children);
-//                this.model.store.deleteItem(childItem);
-//            }, this);
-//        },
-        
         refreshChildren: function(/*TreeNode*/node) {
-            //var path = node.getTreePath();
-            
-            //this.collapseAll();
-            
             // reinitialize for refresh
             node._expandDeferred = undefined;
             node._loadDeferred = undefined;
@@ -185,14 +193,6 @@ define("ingrid/tree/MetadataTree", [
             return node.setChildItems([])
             .then(function() { return self.model.store.getChildren(node.item); })
             .then(lang.hitch(node, node.setChildItems));
-            // .then(function() {
-            //     // if last loaded node does is not attached to the DOM anymore
-            //     if (self.lastLoadedNode && !self.lastLoadedNode.domNode) {
-            //         var updatedNode = UtilTree.getNodeById("dataTree", self.lastLoadedNode.item.id);
-            //         self._markLoadedNode(updatedNode);
-            //     }
-            // });
-            
         },
 
         _markLoadedNode: function(/*TreeNode*/node) {
@@ -208,7 +208,6 @@ define("ingrid/tree/MetadataTree", [
             this.copySubTree = copySubTree;
             if (this.nodesToCut) {
                 array.forEach(this.nodesToCut, function(node) {
-                    // registry.byId(node.id).set('class','');
                     domClass.remove(node.id, "nodeCut");
                 });
                 this.nodesToCut = null;
@@ -222,7 +221,6 @@ define("ingrid/tree/MetadataTree", [
             if (this.nodesToCut) {
                 array.forEach(this.nodesToCut, function(nodeItem) {
                     var node = UtilTree.getNodeById("dataTree", nodeItem.id);
-                    // registry.byId(node.id).set('class','');
                     domClass.remove(node.id, "nodeCut");
                 });
             }
@@ -230,7 +228,6 @@ define("ingrid/tree/MetadataTree", [
             this.nodesToCut = nodes;
             array.forEach(this.nodesToCut, function(nodeItem) {
                 var node = UtilTree.getNodeById("dataTree", nodeItem.id);
-                // dijit.byId(node.id).set('class','nodeCut');
                 domClass.add(node.id, "nodeCut");
             });
             this.nodesToCopy = null;
@@ -238,13 +235,7 @@ define("ingrid/tree/MetadataTree", [
         },
         
         doPaste: function() {
-            // cut only once!
-            //if (this.nodeToCut) {
-                // browser crashes here when tree is being refreshed
-                // but this here shouldn't be necessary since the node is removed
-                //dijit.byId(this.nodeToCut.id[0]).set('class',''); 
             this.nodesToCut = null;
-            //}
         },
         
         canPaste: function(node) {
@@ -287,10 +278,9 @@ define("ingrid/tree/MetadataTree", [
                                 }
                             }
                             // The target node is no root node. Compare the src and dst types:
-                            if (dstType >= 2 || (srcType === 0 && dstType === 1))
+                            if (dstType >= 2 || (srcType === 0 && dstType === 1)) {
                                 canBePasted = false;
-    //                        else
-    //                            return true;
+                            }
                             
                         }
                     } else {

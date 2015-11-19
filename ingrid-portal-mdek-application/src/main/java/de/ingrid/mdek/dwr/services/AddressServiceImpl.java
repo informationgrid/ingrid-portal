@@ -23,11 +23,10 @@
 package de.ingrid.mdek.dwr.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
@@ -35,7 +34,9 @@ import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.WorkState;
 import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
+import de.ingrid.mdek.beans.address.MdekAddressSimpleBean;
 import de.ingrid.mdek.beans.query.AddressSearchResultBean;
+import de.ingrid.mdek.beans.query.AddressSearchResultSimpleBean;
 import de.ingrid.mdek.beans.query.AddressStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
 import de.ingrid.mdek.handler.AddressRequestHandler;
@@ -139,10 +140,12 @@ public class AddressServiceImpl implements AddressService {
 			log.error("Error while getting address data.", e);
 		}
 
-		MdekAddressUtils.setInitialValues(data);
-
-		data.setNodeAppType(ADDRESS_APPTYPE);
-		data.setUuid("newNode");
+		if (data != null) {
+    		MdekAddressUtils.setInitialValues(data);
+    
+    		data.setNodeAppType(ADDRESS_APPTYPE);
+    		data.setUuid("newNode");
+		}
 		return data;
 	}
 
@@ -329,9 +332,29 @@ public class AddressServiceImpl implements AddressService {
 		}		
 	}
 
-	public AddressSearchResultBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+	public AddressSearchResultSimpleBean getWorkAddresses(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
 		try {
-			return addressRequestHandler.getWorkAddresses(selectionType, orderBy, orderAsc, startHit, numHits);
+			AddressSearchResultBean workAddresses = addressRequestHandler.getWorkAddresses(selectionType, orderBy, orderAsc, startHit, numHits);
+            Iterator<MdekAddressBean> iterator = workAddresses.getResultList().iterator();
+            AddressSearchResultSimpleBean workAddressesSimple = new AddressSearchResultSimpleBean();
+            workAddressesSimple.setTotalNumHits( workAddresses.getTotalNumHits() );
+            workAddressesSimple.setNumHits( workAddresses.getNumHits() );
+            while (iterator.hasNext()) {
+                MdekAddressBean bean = iterator.next();
+                MdekAddressSimpleBean simpleBean = new MdekAddressSimpleBean();
+                simpleBean.setUuid( bean.getUuid() );
+                simpleBean.setModificationTime( bean.getModificationTime() );
+                simpleBean.setNodeDocType( bean.getNodeDocType() );
+                simpleBean.setAddressClass( bean.getAddressClass() );
+                simpleBean.setGivenName( bean.getGivenName() );
+                simpleBean.setName( bean.getName() );
+                simpleBean.setOrganisation( bean.getOrganisation() );
+                simpleBean.setWorkState( bean.getWorkState() );
+                simpleBean.setWritePermission( bean.getWritePermission() );
+                
+                workAddressesSimple.getResultList().add( simpleBean );
+            }
+            return workAddressesSimple;
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
@@ -342,6 +365,21 @@ public class AddressServiceImpl implements AddressService {
 			log.debug("Error while fetching Work addresses", e);
 			throw e;
 		}
+	}
+	
+	public AddressSearchResultBean getWorkAddressesQA(IdcWorkEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {
+	    try {
+	        return addressRequestHandler.getWorkAddresses(selectionType, orderBy, orderAsc, startHit, numHits);
+	        
+	    } catch (MdekException e) {
+	        // Wrap the MdekException in a RuntimeException so dwr can convert it
+	        log.debug("MdekException while fetching Work addresses.", e);
+	        throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+	        
+	    } catch (RuntimeException e) {
+	        log.debug("Error while fetching Work addresses", e);
+	        throw e;
+	    }
 	}
 
 	public AddressSearchResultBean getQAAddresses(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits) {

@@ -5,7 +5,7 @@
      portlet-decorator="ingrid-teaser"
   />
   <title>Login</title>
-  <metadata name="title" xml:lang="de">Mein PortalU</metadata>
+  <metadata name="title" xml:lang="de">Mein Portal</metadata>
 
   <fragment id="myportal-personalize" type="layout" name="jetspeed-layouts::IngridTwoColumns">
     <fragment id="myportal-personalize-4" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeOverviewPortlet">

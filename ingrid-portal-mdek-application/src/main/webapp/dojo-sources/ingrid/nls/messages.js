@@ -71,7 +71,6 @@ define({
     "page.breadcrumb.adminImport":"Import/Export -> Import",
 	
 	"menu.general.help":"Help",
-	"menu.general.disclaimer":"Disclaimer",
 	"menu.general.info":"Info",
 	"menu.general.closeApplication":"CLOSE",
 	"menu.main.hierarchyAcquisition":"Hierarchy & Acquisition",
@@ -470,6 +469,8 @@ define({
 	"validation.begin":"from",
 	"validation.end":"to",
 	"validation.serviceUrl":"The '${0}' and the '${1}' must be specified.",
+	"validation.isocategory.added":"The dependend ISO-category '${0}' was also added.",
+    "validation.isocategory.delete.dependent":"The category cannot be deleted, as long as the INSPIRE-topic '${0}' is used.",
 	
 	"ui.entry.loadingMessage":"The application is loading...",
 	"ui.entry.admin.title":"InGrid-Editor - Administration",
@@ -1037,6 +1038,8 @@ define({
     "validation.error.spatial.no.entry":"At least one spatial reference must be entered as thesaurus or free entry.",
     "validation.error.spatial.no.expired":"A spatial reference must not be expired.",
     "validation.error.missing.download.link":"When 'Open Data' is selected then there must be a link of the type 'Download' created.",
+    
+    "init.error.userNotFound":"The user could not be found in the catalog. Please check the mdek-database and the used catalog.",
     
     "hint.noCapabilityUrlFound":"No GetCapabilities-Url could be found to update this dataset.",
     "hint.datasetUpdatedFromCapabilities":"The dataset has been successfully updated.",

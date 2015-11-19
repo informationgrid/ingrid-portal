@@ -3,7 +3,7 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>3.6.0.3</version>
+        <version>3.6.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.ingrid.portal</groupId>
@@ -13,7 +13,7 @@
     <scm>
         <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-mdek-application</connection>
         <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-mdek-application</developerConnection>
-      <tag>ingrid-portal-project-3.6.0.2</tag>
+      <tag>HEAD</tag>
   </scm>
     <build>
         <finalName>ingrid-portal-mdek-application</finalName>
@@ -173,17 +173,16 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-mdek-api</artifactId>
-            <version>3.6.0.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils-ige</artifactId>
+            <version>3.5.0</version>
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils</artifactId>
-            <version>3.6.0</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -195,10 +194,12 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-external-service-sns</artifactId>
+            <version>3.6.1</version>
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
 			<artifactId>ingrid-external-service-wfs</artifactId>
+            <version>3.6.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>de.ingrid</groupId>
@@ -221,7 +222,6 @@
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-mdek-services</artifactId>
-            <version>3.6.0.3</version>
             <exclusions>
                 <exclusion>
                     <groupId>ojdbc</groupId>
@@ -230,11 +230,12 @@
             </exclusions>
         </dependency>
         <!-- also included via transitive dependencies from ingrid-mdek-services, BUT KEEP HERE TO USE WHEN services sparated (see above) -->
+<!--
         <dependency>
             <groupId>de.ingrid.mdek</groupId>
             <artifactId>ingrid-import-export</artifactId>
-            <version>3.6.0.3</version>
         </dependency>
+-->
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
@@ -426,6 +427,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils-geo</artifactId>
+            <version>3.5.0</version>
         </dependency>
         <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
         <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>

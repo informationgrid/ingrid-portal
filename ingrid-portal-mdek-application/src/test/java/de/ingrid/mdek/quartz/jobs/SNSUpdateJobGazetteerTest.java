@@ -179,10 +179,10 @@ public class SNSUpdateJobGazetteerTest {
                 IngridDocument oldDoc = ((IngridDocument)old.get( 0 ));
                 IngridDocument newDoc = ((IngridDocument)newTerms.get( 0 ));
                 assertThat( oldDoc.getString( MdekKeys.LOCATION_SNS_ID ), is( "GEMEINDE0315401015" ));
-                assertThat( newDoc.getString( MdekKeys.LOCATION_SNS_ID), is( "GEMEINDE0315401015" ));
+                assertThat( newDoc.getString( MdekKeys.LOCATION_SNS_ID), is( "http://sns.uba.de/gazetteer/GEMEINDE0315401015" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_NAME), is( "Mariental" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_CODE), is( "03154015" ));
-                assertThat( newDoc.getString( MdekKeys.SNS_TOPIC_TYPE), is( "use6Type" ));
+                assertThat( newDoc.getString( MdekKeys.SNS_TOPIC_TYPE), is( "-location-admin-use6-" ));
                 
                 IngridDocument doc = new IngridDocument();
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );
@@ -580,10 +580,10 @@ public class SNSUpdateJobGazetteerTest {
                 IngridDocument oldDoc = ((IngridDocument)old.get( 0 ));
                 IngridDocument newDoc = ((IngridDocument)newTerms.get( 0 ));
                 assertThat( oldDoc.getString( MdekKeys.LOCATION_SNS_ID ), is( "GEMEINDE0315400015" ));
-                assertThat( newDoc.getString( MdekKeys.LOCATION_SNS_ID), is( "GEMEINDE0315401015" ));
+                assertThat( newDoc.getString( MdekKeys.LOCATION_SNS_ID), is( "http://sns.uba.de/gazetteer/GEMEINDE0315401015" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_NAME), is( "Mariental" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_CODE), is( "03154015" ));
-                assertThat( newDoc.getString( MdekKeys.SNS_TOPIC_TYPE), is( "use6Type" ));
+                assertThat( newDoc.getString( MdekKeys.SNS_TOPIC_TYPE), is( "-location-admin-use6-" ));
                 
                 IngridDocument doc = new IngridDocument();
                 doc.put( IJobRepository.JOB_INVOKE_SUCCESS, false );

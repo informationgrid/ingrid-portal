@@ -28,6 +28,81 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="3.6.1" date="2015-11-19" description="Release 3.6.1">
+            <action type="add" dev="wemove" issue="REDMINE-122">
+                Portal: Add profile Portalu RLP.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-191">
+                Portal: Fixed automatic creation of account when new user logs in via SSO (utilized in GeoPortal.WSV profile).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-56">
+                Portal: Remove JS detection with iFrames.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-182">
+                Portal: Fixed address search in thesaurus catalog.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-14">
+                Portal: Replace "PortalU" with "InGrid-Portal".
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-109">
+                Portal: Updated to final Jetspeed 2.3.0 release.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-177">
+                Portal: MapClient POST Request now of type application/json to match changed BWaStr Locator Service (GeoPortal.WSV).
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-169">
+                Portal: Added SSO functionality again (Shibboleth) after testing with GeoPortal.WSV.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-141">
+                IGE: Fixed using old library, which prevented URL-maintenance working correctly.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-104">
+                Show new iPlug-SE (>=3.5.0) on admin page.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-23">
+                IGE: Show object/address ID in header.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-19">
+                IGE: When publishing, then jump to first invalid field on error.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-20">
+                IGE: Add option to sort hierarchy tree by class.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-13">
+                IGE: Import CSW, separate namespace and resource identifier with "/" instead of "#".
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-47">
+                IGE: Service version now editied via comboboxes displaying GDI-DE like versions (new syslists).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-125">
+                IGE: Fixed error when user has no permission to create an address.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-159">
+                IGE: Extended search sometimes not shown.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-144">
+                Portal/IGE: Removing a catalog which contains an already deleted user lead to an error.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-192">
+                IGE: In a rare case the tables can become not editable anymore.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-193">
+                IGE: When updating with the GetCapabilities assistant, some data could get lost.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-120">
+                Portal: Fixed title of addresses in result list.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-209">
+                Portal: Fixed ability to modify the start page for each user.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-13">
+                Portal/IGE: Added table for useConstraints in IGE and adapt detail view in Portal to new IDF structure concerning constraints.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-71">
+                Portal/MapClient: Update localisation messages for transparency.
+            </action>
+        </release>
+        
         <release version="3.6.0.3" date="2015-09-21" description="Bugfix-Release 3.6.0.3">
             <action type="fix" dev="wemove" issue="REDMINE-151">
                 Portal: Removed "show in map" functionality when clicking preview image in detail view of service with restricted access.

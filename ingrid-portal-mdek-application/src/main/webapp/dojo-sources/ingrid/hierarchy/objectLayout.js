@@ -53,7 +53,9 @@ define([
     "ingrid/dialog",
     "ingrid/layoutCreator",
     "ingrid/hierarchy/rules",
+    "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/dirty",
+    "ingrid/hierarchy/behaviours",
     "ingrid/IgeEvents",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
@@ -62,9 +64,8 @@ define([
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
             UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus,
-            message, dialog, layoutCreator, rules, dirty, igeEvents, gridEditors, gridFormatters, validator) {
+            message, dialog, layoutCreator, rules, behaviours, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
 
-        //var objectLayout = 
         return declare(null, {
             objectTemplateCreated: false,
 
@@ -73,7 +74,7 @@ define([
             additionalFieldWidgets: [],
 
             create: function() {
-                // TODO: clean up and just return deferredCreation promise without the need
+                // clean up and just return deferredCreation promise without the need
                 // of objectTemplateCreated!
                 this.deferredCreation = new Deferred();
                 if (this.objectTemplateCreated) {
@@ -142,20 +143,18 @@ define([
                 defAddFields.then(this.applyDefaultConnections)
                 .then(setVisibilityOfFields);
 
-                // console.debug("visibility!");
-
                 // update view according to initial chosen class
                 console.debug("select class");
                 igeEvents.selectUDKClass();
 
-                // from rules_required.js
-                //console.debug("apply Rules");
-                // done within profile now!
-                //applyRules();
-
                 // add a '*' to all labels and display them if an element is required 
                 query(".outer label", "contentFrameBodyObject").forEach(function(item) {
                     item.innerHTML = lang.trim(item.innerHTML) + '<span class=\"requiredSign\">*</span>';
+                });
+                
+                // mark all the content of a special marked container 
+                query(".oneClickMark", "dataFormContainer").on("click", function() {
+                    UtilUI.selectTextInContainer( this );
                 });
 
                 console.debug("toggle");
@@ -620,7 +619,10 @@ define([
                 tabRef1Process.addChild(tabRef1ProcessTab2);
                 tabRef1Process.startup();
 
-                tabRef1Process.watch("selectedChildWidget", lang.partial(UtilUI.toggleFunctionalLink, "ref1ProcessTab2"));
+                tabRef1Process.watch("selectedChildWidget", function(event, object, selectedTabWidget) {
+                    UtilUI.toggleFunctionalLink( "ref1ProcessTab2", event, object, selectedTabWidget );
+                    registry.byId("ref1ProcessLink").reinitLastColumn(true);
+                });
             },
 
             createRefClass1DQ: function() {
@@ -1033,7 +1035,12 @@ define([
                     field: 'title',
                     name: 'title',
                     width: '348px',
-                    editable: true
+                    type: gridEditors.ComboboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 5152,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6400)
                 }];
                 layoutCreator.createDataGrid("ref3ServiceVersion", null, ref3ServiceVersionStructure, null);
 
@@ -1361,7 +1368,10 @@ define([
                 ref6BaseDataTabContainer.addChild(ref6BaseDataTab2);
                 ref6BaseDataTabContainer.startup();
 
-                ref6BaseDataTabContainer.watch("selectedChildWidget", lang.partial(UtilUI.toggleFunctionalLink, "ref6MethodTab2"));
+                ref6BaseDataTabContainer.watch("selectedChildWidget", function(event, object, selectedTabWidget) {
+                    UtilUI.toggleFunctionalLink( "ref6MethodTab2", event, object, selectedTabWidget );
+                    registry.byId("ref6BaseDataLink").reinitLastColumn(true);
+                });
 
                 new SimpleTextarea({
                     "class": "textAreaFull",
@@ -1809,6 +1819,19 @@ define([
                 }];
                 layoutCreator.createDataGrid("availabilityAccessConstraints", null, availabilityAccessConstraintsStructure, null);
 
+                var availabilityUseAccessConstraintsStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '348px',
+                    type: gridEditors.ComboboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 6500,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6500)
+                }];
+                layoutCreator.createDataGrid("availabilityUseAccessConstraints", null, availabilityUseAccessConstraintsStructure, null);
+                
                 new SimpleTextarea({
                     "class": "textAreaFull",
                     rows: 5
@@ -1915,7 +1938,7 @@ define([
                 // button._inputFieldWidget = registry.byId("thesaurusFreeTerms");
                 // button._termListWidget = "thesaurusTerms";
                 on(button, "Click", function() {
-                    var termList = UtilThesaurus.parseQueryTerm(freeTermsWidget.getValue());
+                    var termList = UtilThesaurus.parseQueryTerm(freeTermsWidget.get('value'));
                     var callerInfo = { id: this.id, _termListWidget: "thesaurusTerms" };
                     lang.hitch(igeEvents, igeEvents.addKeywords(termList, callerInfo));
                     freeTermsWidget.attr("value", "", true);
@@ -2067,7 +2090,7 @@ define([
                             return;
                         }
                         var coords = selectedData[0];
-                        var toSRS = this.srcSelect.getValue();
+                        var toSRS = this.srcSelect.get('value');
                         var realNumberFormat = {
                             format: ["#?.#?????????????????????", "#?????????????????????", "-#?.#?????????????????????", "-#?????????????????????", "#?,#?????????????????????", "-#?,#?????????????????????"]
                         };
@@ -2209,6 +2232,9 @@ define([
                 aspect.after(UtilGrid.getTable("ref5KeysLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 aspect.after(UtilGrid.getTable("ref5MethodLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 aspect.after(UtilGrid.getTable("ref6BaseDataLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
+                
+                // activate default behaviour
+                behaviour.inspireIsoConnection.run();
             }
         })();
 

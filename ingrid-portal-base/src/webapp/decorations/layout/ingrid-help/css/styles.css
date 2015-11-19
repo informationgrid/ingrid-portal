@@ -103,15 +103,16 @@ div#breadcrumb { padding-top:0.2em; padding-bottom:0.2em; margin-left:28px; back
 *********************************************************************/
 
 div#identity { padding:0; margin:0; height: 80px; width:59.5em; background-color:#68A5D2; overflow:visible; }
-div.motiv_hilfe { background-image:url(../images/01_motiv_hilfe.png); background-repeat:no-repeat; }
+div.motiv_hilfe { background-image:url(../images/01_motiv_blank.gif); background-repeat:no-repeat; }
 
-div.en_motiv_hilfe { background-image:url(../images/en/01_motiv_hilfe.png); background-repeat:no-repeat; }
+div.en_motiv_hilfe { background-image:url(../images/en/en_01_motiv_blank.gif); background-repeat:no-repeat; }
 
 /********************************************************************
   logo styles 
 *********************************************************************/
 
 div#logo { float: left; }
+div#logo img { background-color: #fff; padding: 14px 51px 14px 15px; border-radius: 0 0 25px 0; }
 
 /********************************************************************
   logged on styles 
@@ -462,7 +463,7 @@ div.formbody input.qry_chronic {width: 25em; font-size: 83%; line-height: 100%;}
 
 /*** Formular Einfache Suche Start Seite ***/
 
-div.formbody input.qrystr {width: 30em; font-size: 83%; line-height: 100%;}
+div.formbody input.qrystr {width: 43em; font-size: 83%; line-height: 100%;}
 
 /*** Formular Erweiterte Suche ***/
 
@@ -495,7 +496,7 @@ div.formbody .snslogo_margin {margin-top: 8px; }
   footer block styles  
 *********************************************************************/
 
-div#footercontainer { margin: 0px 0 0px 28px; background: url(../images/logo_footer.gif) no-repeat; padding: 0px 0px 30px 112px; }
+div#footercontainer { margin: 0px 0 0px 28px; background: url(../images/ingrid_logo_icn_footer.png) no-repeat; padding: 0px 0px 30px 112px; }
 #footercontent { font-size: 65%; line-height: 120% }
 
 div#footermarginalcontainer { width: 59.5em; margin-top: 25px; margin-bottom: 20px; padding: 0; background: #FFFFFF; height: 10px; }

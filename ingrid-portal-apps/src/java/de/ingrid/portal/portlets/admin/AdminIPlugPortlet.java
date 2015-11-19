@@ -20,9 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
  */
-/*
- * Copyright (c) 2006 wemove digital solutions. All rights reserved.
- */
 package de.ingrid.portal.portlets.admin;
 
 import java.io.IOException;
@@ -103,36 +100,19 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
         // get iplug-se iplugs
         context.put("SEIplugs", getSEIPlugs(plugs));
         
-        // get iplug-se indexer iplugs the user has permissions for
-        context.put("SEIndexIplugs", getSEIndexIPlugs(plugs));
-
         // check, get for ibus
         context.put("ibusURL", PortalConfig.getInstance().getString("ibus.admin.url", ""));
 
         super.doView(request, response);
     }
 
-    private ArrayList getSEIndexIPlugs(PlugDescription[] plugs) {
-        ArrayList result = new ArrayList();
-        for (int i = 0; i < plugs.length; i++) {
-            PlugDescription plug = plugs[i];
-            // only include activated index engine iplugs
-            if (plug.isActivate() && plug.getIPlugClass() != null &&
-            		(plug.getIPlugClass().equals("de.ingrid.iplug.se.IndexIPlug") || plug.getIPlugClass().equals("de.ingrid.admin.object.IndexSePlug"))) {
-                result.add(plug);
-            }
-        }
-        return result;
-    }
-
-    
     private ArrayList getSEIPlugs(PlugDescription[] plugs) {
         ArrayList result = new ArrayList();
         for (int i = 0; i < plugs.length; i++) {
             PlugDescription plug = plugs[i];
             // do not include search engine iplugs
             if (plug.isActivate() && plug.getIPlugClass() != null &&
-            		plug.getIPlugClass().equals("de.ingrid.iplug.se.NutchSearcher")) {
+            		plug.getIPlugClass().equals("de.ingrid.iplug.se.SEIPlug")) {
                 result.add(plug);
             }
         }

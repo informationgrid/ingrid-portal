@@ -20,9 +20,9 @@
   limitations under the Licence.
   **************************************************#
   -->
-<project name="PortalU Installation" basedir=".">
+<project name="InGrid Installation" basedir=".">
     <description>
-        PortalU Installation Script
+        InGrid Installation Script
     </description>
 
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
@@ -565,12 +565,22 @@
         <elseif>
             <equals arg1="${portal.version}" arg2=",3.5.0" />
             <then>
-                <echo>Ihre Datenbank ist aktuell!</echo>
+                <runtarget target="mysql.PortalDbUpdateFrom350"/>
+                <runtarget target="oracle.PortalDbUpdateFrom350"/>
+                <runtarget target="copyMigrationTools"/>
+            </then>
+        </elseif>
+		<elseif>
+            <!-- If database was setup with 3.5 dump then version is 3.5 without third 0 digit ! -->
+            <equals arg1="${portal.version}" arg2=",3.5" />
+            <then>
+                <runtarget target="mysql.PortalDbUpdateFrom350"/>
+                <runtarget target="oracle.PortalDbUpdateFrom350"/>
+                <runtarget target="copyMigrationTools"/>
             </then>
         </elseif>
         <elseif>
-            <!-- If database was setup with 3.5 dump then version is 3.5 without third 0 digit ! -->
-            <equals arg1="${portal.version}" arg2=",3.5" />
+            <equals arg1="${portal.version}" arg2=",3.6.1" />
             <then>
                 <echo>Ihre Datenbank ist aktuell!</echo>
             </then>

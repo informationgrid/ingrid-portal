@@ -68,7 +68,7 @@ require([
         pageLocations.startSNSLocationUpdateJob = function() {
         	var file = dwr.util.getValue("snsLocationUpdateFile");
         
-	CatalogManagementService.startSNSLocationUpdateJob(userLocale, {
+        CatalogManagementService.startSNSLocationUpdateJob(userLocale, {
         		preHook: showLoadingZone,
                 postHook: hideLoadingZone,        
         		callback: function() {
@@ -233,14 +233,12 @@ require([
 						</span>
 					</div>
 				</div>
-				<div class="spacer"></div>
 			</div> <!-- INFO END -->
-
-			<div class="spacer"></div>
 
 			<!-- LEFT HAND SIDE CONTENT START -->
 			<div class="inputContainer">
 				<div class="inputContainer">
+                    <span class="left"><fmt:message key="dialog.admin.catalog.management.locations.info" /></span>
 					<span class="functionalLink" style="margin-top:0;"><img src="img/ic_fl_save_csv.gif" width="11" height="15" alt="Popup" /><a href="javascript:void(0);" onclick="pageLocations.downloadAsCSV()" title="<fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" />"><fmt:message key="dialog.admin.catalog.management.locations.saveAsCSV" /></a></span>
 
 					<div class="listInfo">
