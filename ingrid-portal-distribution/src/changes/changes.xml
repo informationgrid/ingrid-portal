@@ -28,7 +28,7 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="3.6.1-SNAPSHOT" date="2015-??-??" description="Release 3.6.1">
+        <release version="3.6.1" date="2015-11-19" description="Release 3.6.1">
             <action type="add" dev="wemove" issue="REDMINE-122">
                 Portal: Add profile Portalu RLP.
             </action>
@@ -88,6 +88,9 @@
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-193">
                 IGE: When updating with the GetCapabilities assistant, some data could get lost.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-120">
+                Portal: Fixed title of addresses in result list.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-209">
                 Portal: Fixed ability to modify the start page for each user.
