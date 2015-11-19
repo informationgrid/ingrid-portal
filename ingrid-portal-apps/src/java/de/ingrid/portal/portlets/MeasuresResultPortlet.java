@@ -207,7 +207,8 @@ public class MeasuresResultPortlet extends AbstractVelocityMessagingPortlet {
         }
         context.put("rankedPageSelector", pageNavigation);
         context.put("rankedResultList", hits);
-
+        context.put("showHitPartnerLogo", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_PARTNER_LOGO, false));
+        
         super.doView(request, response);
     }
 
