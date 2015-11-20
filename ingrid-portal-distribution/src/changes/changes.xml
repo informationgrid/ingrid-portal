@@ -29,7 +29,7 @@
     </properties>
     <body>
         <release version="3.6.2-SNAPSHOT" date="2016-??-??" description="Release 3.6.2">
-            <action type="add" dev="wemove" issue="REDMINE-795">
+            <action type="add" dev="wemove" issue="REDMINE-21">
                 Portal: Add configurable partner logos to search result hits.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-214">
