@@ -28,6 +28,14 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="3.6.2-SNAPSHOT" date="2016-??-??" description="Release 3.6.2">
+            <action type="add" dev="wemove" issue="REDMINE-795">
+                Portal: Add configurable partner logos to search result hits.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-214">
+                MapClient: Fix loading deleted services from session.
+            </action>
+        </release>
         <release version="3.6.1" date="2015-11-19" description="Release 3.6.1">
             <action type="add" dev="wemove" issue="REDMINE-122">
                 Portal: Add profile Portalu RLP.
