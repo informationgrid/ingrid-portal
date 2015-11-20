@@ -254,6 +254,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_HIDDEN_DATATYPES = "portal.search.hidden.datatype";
     
+    public static final String PORTAL_SEARCH_HIT_PARTNER_LOGO = "portal.search.hit.partner.logo";
+    
     // Enable debug mode of webmap-client
     public static final String PORTAL_WEBMAPCLIENT_DEBUG = "portal.webmapclient.debug";
     
