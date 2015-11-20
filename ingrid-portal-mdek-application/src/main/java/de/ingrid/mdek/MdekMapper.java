@@ -1891,7 +1891,12 @@ public class MdekMapper implements DataMapperInterface {
             return snsResourceBundle.getString( "gazetteer.de." + topicTypeId );
             
         } catch (Exception e) {
-            return null;
+            // try translation from non-INNOQ gazetteer
+            try {
+                return ResourceBundle.getBundle("sns").getString( "sns.topic.ref." + topicTypeId );
+            } catch (Exception ex) {
+                return null;
+            }
         }
     }
 
