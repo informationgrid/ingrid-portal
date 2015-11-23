@@ -18,7 +18,7 @@
   #end
   #if($udkObjClass)
 	<meta name="igc-objektklasse" content="${udkObjClassName}" />
-	<meta name="igc-icon" content="http://10.7.101.83/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
+	<meta name="igc-icon" content="http://www.portalu.rlp.de/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
   #end
   <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
   <meta name="keywords" content="" />

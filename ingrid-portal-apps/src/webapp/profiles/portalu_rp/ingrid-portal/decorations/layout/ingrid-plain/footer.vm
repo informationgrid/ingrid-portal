@@ -3,12 +3,12 @@
 <!-- Piwik -->
 <script type="text/javascript">
 var domain = document.domain;
-if(domain == "10.7.101.83"){
+if(domain == "www.portalu.rlp.de"){
   var _paq = _paq || [];
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
   (function() {
-    var u="//10.7.101.83/piwik/";
+    var u="//www.portalu.rlp.de/piwik/";
     _paq.push(['setTrackerUrl', u+'piwik.php']);
     _paq.push(['setSiteId', 1]);
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
@@ -16,7 +16,7 @@ if(domain == "10.7.101.83"){
   })();
  }
 </script>
-<noscript><p><img src="//10.7.101.83/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+<noscript><p><img src="//www.portalu.rlp.de/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
 </body>
 </html>
