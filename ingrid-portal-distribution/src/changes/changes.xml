@@ -28,6 +28,12 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+    	<release version="3.6.1.1" date="2015-xx-xx" description="Release 3.6.1.1">
+            <action type="fix" dev="wemove" issue="REDMINE-221">
+                IGE: Use constraints set to "null" when left empty.
+            </action>
+        </release>
+
         <release version="3.6.1" date="2015-11-19" description="Release 3.6.1">
             <action type="add" dev="wemove" issue="REDMINE-122">
                 Portal: Add profile Portalu RLP.
