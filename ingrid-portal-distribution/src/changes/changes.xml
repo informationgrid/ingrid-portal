@@ -32,6 +32,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-221">
                 IGE: Use constraints set to "null" when left empty.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-224">
+                IGE: After canceling URL analysis, the process never stops.
+            </action>
         </release>
 
         <release version="3.6.1" date="2015-11-19" description="Release 3.6.1">
