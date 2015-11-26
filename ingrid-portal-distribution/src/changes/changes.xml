@@ -28,12 +28,15 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-    	<release version="3.6.1.1" date="2015-xx-xx" description="Release 3.6.1.1">
+    	<release version="3.6.1.1-SNAPSHOT" date="2015-xx-xx" description="Release 3.6.1.1">
             <action type="fix" dev="wemove" issue="REDMINE-221">
                 IGE: Use constraints set to "null" when left empty.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-224">
                 IGE: After canceling URL analysis, the process never stops.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-225">
+                IGE: Add new field "Nutzungsbeschränkungen" to "additional fields".
             </action>
         </release>
 
