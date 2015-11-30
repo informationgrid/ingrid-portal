@@ -38,6 +38,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-225">
                 IGE: Add new field "Nutzungsbeschränkungen" to "additional fields".
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-228">
+                IGE: Fixed creation of objects when hierarchy tree is sorted by class.
+            </action>
         </release>
 
         <release version="3.6.1" date="2015-11-19" description="Release 3.6.1">
