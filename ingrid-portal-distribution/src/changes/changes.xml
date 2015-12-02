@@ -109,6 +109,9 @@
 			<action type="fix" dev="wemove" issue="REDMINE-71">
                 Portal/MapClient: Update localisation messages for transparency.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-25">
+                IGE: Added paging for all tables on the dashboard.
+            </action>
         </release>
         
         <release version="3.6.0.3" date="2015-09-21" description="Bugfix-Release 3.6.0.3">
