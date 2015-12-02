@@ -41,6 +41,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-228">
                 IGE: Fixed creation of objects when hierarchy tree is sorted by class.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-230">
+                IGE: Closing of the operations dialog with opened select box lead to an error.
+            </action>
         </release>
 
         <release version="3.6.1" date="2015-11-19" description="Release 3.6.1">

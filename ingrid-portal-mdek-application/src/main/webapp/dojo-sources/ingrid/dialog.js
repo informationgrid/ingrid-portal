@@ -58,7 +58,11 @@ define([
             var dlgWidget = registry.byId(dlgId);
             //dlgWidget.hide();
             setTimeout(function() {
-                dlgWidget.destroyRecursive();
+                try {
+                    dlgWidget.destroyRecursive();
+                } catch(e) {
+                    console.warn("Exception during clean up of dialog.");
+                }
             }, 300);
         },
 
