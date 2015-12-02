@@ -45,6 +45,8 @@
 .tabIconShowChanges  {background-position: -324px;}
 .tabIconShowComments {background-position:    0px;}
 .tabIconHelp         {background-position: -270px;}
+.tabIconPrevious     {background-position: -648px;}
+.tabIconNext         {background-position: -666px;}
 
 /* disabled icons */
 .dijitDisabled .dijitIcon, .IconDisabled { opacity: 0.3; filter: alpha(opacity=30);}

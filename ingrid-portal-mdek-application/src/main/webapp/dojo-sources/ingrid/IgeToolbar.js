@@ -31,8 +31,8 @@ define([
     "dijit/ToolbarSeparator",
     "dijit/form/Button",
     "ingrid/message",
-    "ingrid/utils/QA", "ingrid/utils/Security", "ingrid/utils/UI", "ingrid/MenuActions", "ingrid/IgeEvents", "ingrid/IgeActions", "ingrid/hierarchy/dirty"
-], function(declare, lang, array, aspect, topic, registry, Toolbar, ToolbarSeparator, Button, message, UtilQA, UtilSecurity, UtilUI, MenuActions, igeEvents, igeActions, dirty) {
+    "ingrid/utils/QA", "ingrid/utils/Security", "ingrid/utils/UI", "ingrid/MenuActions", "ingrid/IgeEvents", "ingrid/IgeActions", "ingrid/hierarchy/dirty", "ingrid/hierarchy/History"
+], function(declare, lang, array, aspect, topic, registry, Toolbar, ToolbarSeparator, Button, message, UtilQA, UtilSecurity, UtilUI, MenuActions, igeEvents, igeActions, dirty, History) {
     return declare(null, {
 
         buttons: {},
@@ -78,7 +78,10 @@ define([
             entries.push(["ShowChanges", lang.hitch(MenuActions, MenuActions.handleShowChanges)]);
             entries.push(["Separator", null]);
             entries.push(["ShowComments", lang.hitch(MenuActions, MenuActions.handleShowComment)]);
-            //entries.push(["ShowNextError", MenuActions.handleShowComment]);
+            
+            entries.push(["Separator", null]);
+            entries.push(["Previous", lang.hitch(History, History.goBack)]);
+            entries.push(["Next", lang.hitch(History, History.goNext)]);
 
             var entriesRight = [
                 ["Help",
@@ -212,6 +215,13 @@ define([
                 } else {
                     self._handleMultiSelection();
                 }
+                
+                if (History.hasPrevious()) {
+                    self.buttons.Previous.set("disabled", false);
+                }
+                if (History.hasNext()) {
+                    self.buttons.Next.set("disabled", false);
+                }
             });
 
             // The undo button depends on the dirty flag
@@ -228,8 +238,11 @@ define([
                 this.buttons[i].set("disabled", true);
             }
             this.buttons.Help.set("disabled", false);
+            
+            History.addPreviousButton( self.buttons.Previous );
+            History.addNextButton( self.buttons.Next );
         },
-
+        
         _handleMultiSelection: function() {
             var enableList = [];
             var buttons = this.buttons;

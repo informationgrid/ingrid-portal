@@ -496,6 +496,8 @@ define({
 	"ui.toolbar.discardDeleteCaption":"Löschen Verwerfen",
 	"ui.toolbar.finalDeleteCaption":"Ausgewähltes Objekt/Teilbaum endgültig löschen",
     "ui.toolbar.showErrorCaption":"Zeige nächsten Fehler",
+    "ui.toolbar.PreviousCaption":"Klicken, um zum vorherigen Objekt/Adresse zu gehen. Gedrückt halten für Verlauf.",
+    "ui.toolbar.NextCaption":"Klicken, um zum nächsten Objekt/Adresse zu gehen. Gedrückt halten für Verlauf.",
 	"ui.pageNav.zeroHits":"keine Treffer",
 	"ui.pageNav.beginEndTotalHit":"${0}-${1} von ${2} Treffer",
 	"ui.pageNav.beginEndTotalHits":"${0}-${1} von ${2} Treffern",
