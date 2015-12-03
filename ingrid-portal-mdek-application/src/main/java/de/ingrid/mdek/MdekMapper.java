@@ -70,9 +70,6 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 public class MdekMapper implements DataMapperInterface {
 
     private final static Logger log = Logger.getLogger(MdekMapper.class);
-    // this constant is used to get the correct codelist for mapping "object use", which
-    // can be one of two different codelists, depending on open data checkbox state
-    private static final String USE_TERMS_OF_LICENCE_KEY = "use-terms-of-licence-key";
     
     @Autowired
     private SysListCache sysListMapper;
@@ -1833,6 +1830,7 @@ public class MdekMapper implements DataMapperInterface {
             additionalField.setListId(additionalFieldDoc.getString(MdekKeys.ADDITIONAL_FIELD_LIST_ITEM_ID));
             
             // if it's a table it must have rows
+            @SuppressWarnings("unchecked")
             List<List<IngridDocument>> tableRows = (List<List<IngridDocument>>)(List<?>) additionalFieldDoc.getArrayList(MdekKeys.ADDITIONAL_FIELD_ROWS);
             if (tableRows != null) {
                 List<List<AdditionalFieldBean>> tableData = new ArrayList<List<AdditionalFieldBean>>();
@@ -2022,13 +2020,10 @@ public class MdekMapper implements DataMapperInterface {
 
         if (docList != null) {
             String key = MdekKeys.USE_TERMS_OF_USE_KEY;
-            if (isOpenData) {
-                key = USE_TERMS_OF_LICENCE_KEY;
-            }
             result = "";
             for (IngridDocument doc : docList) {
                 KeyValuePair kvp = mapToKeyValuePair(doc, key, MdekKeys.USE_TERMS_OF_USE_VALUE);
-                result += kvp.getValue() + "\n";
+                if (kvp.getValue() != null) result += kvp.getValue() + "\n";
                 // use only FIRST element, ignore rest (will be deleted on save !). was a table, now a text field, see INGRID32-45
                 // -> NO! MERGE all elements into the new text area!
                 //break;
@@ -2250,6 +2245,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
 
+    @SuppressWarnings("unchecked")
     private List<OperationBean> mapToOperationTable(List<IngridDocument> opList, Integer serviceType) {
         List<OperationBean> resultList = new ArrayList<OperationBean>();
         if (opList == null)
@@ -2455,6 +2451,7 @@ public class MdekMapper implements DataMapperInterface {
     }   
 
 
+    @SuppressWarnings("rawtypes")
     private void cleanUpHashMap(IngridDocument doc) {
         if (doc == null)
             return;
@@ -2480,31 +2477,5 @@ public class MdekMapper implements DataMapperInterface {
             }
         }
     }
-/*
-    private static String convertLanguageIdentifierToCode(String identifier) {
-        if (identifier == null || identifier.length() == 0) {
-            return identifier;
-        } else if (identifier.equals(LANGUAGE_ID_GERMAN)) {
-            return LANGUAGE_CODE_GERMAN;
-        } else if (identifier.equals(LANGUAGE_ID_ENGLISH)) {
-            return LANGUAGE_CODE_ENGLISH;
-        } else {
-            log.debug("Could not convert language identifier '"+identifier+"' to code.");
-            return "";
-        }
-    }
 
-    private static String convertLanguageCodeToIdentifier(String code) {
-        if (code == null || code.length() == 0) {
-            return code;
-        } else if (code.equals(LANGUAGE_CODE_GERMAN)) {
-            return LANGUAGE_ID_GERMAN;
-        } else if (code.equals(LANGUAGE_CODE_ENGLISH)) {
-            return LANGUAGE_ID_ENGLISH;
-        } else {
-            log.debug("Could not convert language code '"+code+"' to identifier.");
-            return "";
-        }
-    }
-*/
 }

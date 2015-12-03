@@ -31,14 +31,41 @@
         <release version="3.6.2-SNAPSHOT" date="2016-??-??" description="Release 3.6.2">
             <action type="add" dev="wemove" issue="REDMINE-21">
                 Portal: Add configurable partner logos to search result hits.
-            </action>
-            <action type="fix" dev="wemove" issue="REDMINE-214">
-                MapClient: Fix loading deleted services from session.
-            </action>
+            <action>
             <action type="add" dev="wemove" issue="REDMINE-84">
                 IGE: Added information about additional ATOM service functionality.
             </action>
         </release>
+        
+        <release version="3.6.1.1" date="2015-12-03" description="Release 3.6.1.1">
+            <action type="fix" dev="wemove" issue="REDMINE-221">
+                IGE: Use constraints set to "null" when left empty.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-214">
+                MapClient: Fix loading deleted services from session.
+            <action type="fix" dev="wemove" issue="REDMINE-224">
+                IGE: After canceling URL analysis, the process never stops.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-225">
+                IGE: Add new field "Nutzungsbeschränkungen" to "additional fields".
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-228">
+                IGE: Fixed creation of objects when hierarchy tree is sorted by class.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-230">
+                IGE: Closing of the operations dialog with opened select box lead to an error.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-215">
+                IGE: Fixed right click behaviour in IE11.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-214">
+                WebMapClient: Fixed handling of a deleted active service.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-231">
+                WebMapClient: Updated lib for H2 database.
+            </action>
+        </release>
+
         <release version="3.6.1" date="2015-11-19" description="Release 3.6.1">
             <action type="add" dev="wemove" issue="REDMINE-122">
                 Portal: Add profile Portalu RLP.

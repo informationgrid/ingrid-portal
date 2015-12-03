@@ -899,6 +899,7 @@ define({
     "ui.N024.description":"Konformität",
     "ui.N025.description":"Zugangsbeschr&auml;nkungen",
     "ui.N026.description":"Nutzungsbedingungen",
+    "ui.N027.description":"Nutzungsbeschr&auml;nkungen",
 
 	"ui.4400.description":"Adresse und Aufgaben - Stra&szlig;e/Hausnummer",
 	"ui.4405.description":"Adresse und Aufgaben - Staat",

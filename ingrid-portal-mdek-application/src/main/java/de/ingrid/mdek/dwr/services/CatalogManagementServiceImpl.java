@@ -84,6 +84,14 @@ public class CatalogManagementServiceImpl {
 
 	public void stopUrlValidatorJob() {
 		mdekJobHandler.stopJob(JobType.URL_VALIDATOR);
+		
+        // also do not forget to tell the backend that job was canceled
+		IngridDocument jobInfo = new IngridDocument();
+		jobInfo.put(MdekKeys.URL_RESULT, new ArrayList<Map<String, Object>>());
+        jobInfo.put(MdekKeys.CAP_RESULT, new ArrayList<Map<String, Object>>());
+		jobInfo.putBoolean( MdekKeys.JOBINFO_IS_UPDATE, true);
+		jobInfo.putBoolean( MdekKeys.JOBINFO_IS_FINISHED, true);
+		connectionFacade.getMdekCallerCatalog().setURLInfo( connectionFacade.getCurrentPlugId(), jobInfo, MdekSecurityUtils.getCurrentUserUuid() );
 	}
 
 	public URLJobInfoBean getUrlValidatorJobInfo() {

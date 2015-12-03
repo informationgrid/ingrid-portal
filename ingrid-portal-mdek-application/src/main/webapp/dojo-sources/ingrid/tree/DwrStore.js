@@ -89,7 +89,25 @@ define([
                         });
                         return children;
                         //return self.queryEngine(query, options)(children);
-                    }, displayErrorMessage);
+                    }, displayErrorMessage)
+                    .then(function(children) {
+                        // if sorted by class then do some post processingand 1st sort by class and 2nd by title
+                        if (options.sortByClass) {
+                            return children.sort(function(child1, child2) {
+                                if (child1.objectClass === null && child2.objectClass === null) return 0;
+                                if (child1.objectClass === null) return -1;
+                                if (child2.objectClass === null) return +1;
+                                var compareClass = child1.objectClass - child2.objectClass;
+                                if (compareClass === 0) {
+                                    return child1.title.localeCompare( child2.title);
+                                } else {
+                                    return compareClass;
+                                }
+                            } );
+                        } else {
+                            return children;
+                        }
+                    });
             }
             return QueryResults(queryDef);
         },
