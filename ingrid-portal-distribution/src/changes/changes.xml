@@ -28,7 +28,7 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-    	<release version="3.6.1.1-SNAPSHOT" date="2015-xx-xx" description="Release 3.6.1.1">
+    	<release version="3.6.1.1-SNAPSHOT" date="2015-12-03" description="Release 3.6.1.1">
             <action type="fix" dev="wemove" issue="REDMINE-221">
                 IGE: Use constraints set to "null" when left empty.
             </action>
@@ -43,6 +43,15 @@
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-230">
                 IGE: Closing of the operations dialog with opened select box lead to an error.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-215">
+                IGE: Fixed right click behaviour in IE11.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-214">
+                WebMapClient: Fixed handling of a deleted active service.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-231">
+                WebMapClient: Updated lib for H2 database.
             </action>
         </release>
 
