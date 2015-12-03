@@ -147,5 +147,34 @@ define(["dojo/_base/declare",
             }
         }
         
+        /*
+         * ABORTED: The ATOM URL has to be maintained when automatically inserted into document. It's better to adapt the context help
+         * to let the user know that the URL is added to the IDF.
+        atomOperationConnection: {
+            title: "ATOM - Operations Connection",
+            description: "When a service is of type ATOM then the operation 'Get Download Service Metadata' is mandatory.",
+            issue: "https://dev.informationgrid.eu/redmine/issues/84",
+            run: function() {
+                var handler = null;
+                on(registry.byId("ref3IsAtomDownload"), "change", function(isChecked) {
+                    if (isChecked) {
+                        handler = topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                            console.log("atom check before publish");
+                            var data = UtilGrid.getTableData("ref3Operation");
+                            var hasOperationDownloadServiceMeta = data.some(function(item) { return item.name === "Get Download Service Metadata"; });
+                            if (!hasOperationDownloadServiceMeta) {
+                                notPublishableIDs.push( ["ref3Operation", message.get("validation.error.missing.operation.download")] );
+                            }
+                        });
+                    } else {
+                        if (handler) {
+                            handler.remove();
+                            handler = null;
+                        }
+                    }
+                });
+            }
+        }*/
+        
     } )();
 });

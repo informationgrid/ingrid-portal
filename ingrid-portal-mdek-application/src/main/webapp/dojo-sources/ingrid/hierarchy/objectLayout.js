@@ -53,7 +53,6 @@ define([
     "ingrid/dialog",
     "ingrid/layoutCreator",
     "ingrid/hierarchy/rules",
-    "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/dirty",
     "ingrid/hierarchy/behaviours",
     "ingrid/IgeEvents",
@@ -64,7 +63,7 @@ define([
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
             UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus,
-            message, dialog, layoutCreator, rules, behaviours, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
+            message, dialog, layoutCreator, rules, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
 
         return declare(null, {
             objectTemplateCreated: false,

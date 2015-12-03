@@ -35,6 +35,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-214">
                 MapClient: Fix loading deleted services from session.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-84">
+                IGE: Added information about additional ATOM service functionality.
+            </action>
         </release>
         <release version="3.6.1" date="2015-11-19" description="Release 3.6.1">
             <action type="add" dev="wemove" issue="REDMINE-122">
