@@ -8,7 +8,7 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>3.6.1</version>
+  <version>3.6.1.1</version>
   <name>InGrid Portal</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git</connection>
@@ -64,17 +64,17 @@
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-mdek-api</artifactId>
-        <version>3.6.1</version>
+        <version>3.6.1.1</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-mdek-services</artifactId>
-        <version>3.6.1</version>
+        <version>3.6.1.1</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-import-export</artifactId>
-        <version>3.6.1</version>
+        <version>3.6.1.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

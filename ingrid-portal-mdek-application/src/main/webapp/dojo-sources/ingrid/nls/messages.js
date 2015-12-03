@@ -898,6 +898,7 @@ define({
     "ui.N024.description":"Conformity",
     "ui.N025.description":"Access Constraints",
     "ui.N026.description":"Usage Limitations",
+    "ui.N027.description":"Usage Constraints",
 
     "ui.4400.description":"Address and Tasks - Street/Nr.",
     "ui.4405.description":"Address and Tasks - State",

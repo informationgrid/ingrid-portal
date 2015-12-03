@@ -82,10 +82,13 @@
             var caller = {};
 
             var customParams = null;
+            
+            var dialog = null;
 
             var global = this;
 
             on(_container_, "Load", function() {
+                dialog = this;
                 customParams = this.customParams;
 
                 // take over passed data
@@ -177,10 +180,9 @@
             function initOperationNameInput() {
                 var def = new Deferred();
                 var serviceTypeWidget = registry.byId("ref3ServiceType");
-                var serviceType = "" + serviceTypeWidget.getValue();
+                var serviceType = "" + serviceTypeWidget.get("value");
 
                 console.debug("serviceType = " + serviceType);
-
                 if (serviceType != "5" && serviceType != "6") {
                     registry.byId("operationsName").domNode.style.display = "none";
                     requiredElements.push(["operationsNameSelect", "operationsNameLabel"]);
@@ -196,7 +198,6 @@
                     });
                     _opNameIsTextInput = false;
                 } else {
-                    style.set("operationsNameSelect", "display", "none");
                     requiredElements.push(["operationsName", "operationsNameLabel"]);
                     _opNameIsTextInput = true;
                     def.resolve([]);
@@ -226,7 +227,7 @@
             function disableGUIOnWrongPermission() {
                 if (global.currentUdk.writePermission === false) {
                     disableInputElements();
-                    registry.byId("saveButton").setDisabled(true);
+                    registry.byId("saveButton").set("disabled", true);
                     //      registry.byId("cancelButton").disable();
                 } else {
                     enableInputElements();
@@ -239,7 +240,7 @@
                     if (widget instanceof CustomGrid)
                         UtilGrid.updateOption(item, 'editable', false);
                     else
-                        widget.setDisabled(true);
+                        widget.set("disabled", true);
                 });
             }
 
@@ -249,7 +250,7 @@
                     if (widget instanceof CustomGrid) {
                         UtilGrid.updateOption(item, 'editable', true);
                     } else {
-                        widget.setDisabled(false);
+                        widget.set("disabled", false);
                     }
                 });
             }
@@ -261,7 +262,7 @@
                 array.forEach(inputElements, function(item) {
                     var widget = registry.byId(item);
                     if (widget instanceof ValidationTextBox || widget instanceof ComboBox || widget instanceof SimpleTextarea) {
-                        widget.setValue("");
+                        widget.set("value", "");
                     } else if (widget instanceof CustomGrid) {
                         UtilGrid.setTableData(item, []);
                     }
@@ -270,21 +271,31 @@
 
             function displayOperation(op) {
                 if (_opNameIsTextInput)
-                    registry.byId("operationsName").setValue(op.name);
+                    registry.byId("operationsName").set("value", op.name);
                 else {
                     var selectWidget = registry.byId("operationsNameSelect");
                     selectWidget.set('value', UtilSyslist.getSyslistEntryKey(getSysListIdForServiceType(registry.byId("ref3ServiceType").get("value")), op.name));
                 }
 
-                registry.byId("operationsDescription").setValue(op.description);
+                registry.byId("operationsDescription").set("value", op.description);
                 UtilStore.updateWriteStore("operationsPlatform", op.platform);
-                registry.byId("operationsCall").setValue(op.methodCall);
+                registry.byId("operationsCall").set("value", op.methodCall);
                 UtilStore.updateWriteStore("operationsParameter", op.paramList);
                 UtilStore.updateWriteStore("operationsAddress", op.addressList);
                 UtilStore.updateWriteStore("operationsDependencies", op.dependencies);
             }
 
             function init() {
+                if (_opNameIsTextInput) {
+                    style.set("operationsNameSelect", "display", "none");
+                } else {
+                    // make sure select box drop down is closed when closing the dialog, otherwise
+                    // it cannot be destroyed correctly
+                    aspect.before(dialog, "hide", function() {
+                        registry.byId("operationsNameSelect").closeDropDown(true);
+                    });
+                }
+                
                 // adapt GUI and data dependent from passed data (create new op or edit op ?)
                 if (caller.selectedRow) {
                     // EDIT ROW !
@@ -292,14 +303,14 @@
                     // we clone row, so edit process does not affect original row (cancel may be clicked)
                     displayOperation(lang.clone(caller.selectedRow));
                     isNewOperation = false;
-                    registry.byId("saveButton").setLabel("<fmt:message key='dialog.links.apply' />");
+                    registry.byId("saveButton").set("label", "<fmt:message key='dialog.links.apply' />");
 
                 } else {
                     // NEW ROW !
 
                     resetInputElements();
                     isNewOperation = true;
-                    registry.byId("saveButton").setLabel("<fmt:message key='general.add' />");
+                    registry.byId("saveButton").set("label", "<fmt:message key='general.add' />");
                 }
 
                 // Init table validators
@@ -328,21 +339,21 @@
             function getOperation() {
                 var operation = {};
                 if (_opNameIsTextInput)
-                    operation.name = registry.byId("operationsName").getValue();
+                    operation.name = registry.byId("operationsName").get("value");
                 else {
                     var selectWidget = registry.byId("operationsNameSelect");
                     // NOTICE: getValue() delivers id and is null if nothing selected
-                    operation.nameId = selectWidget.getValue();
+                    operation.nameId = selectWidget.get("value");
                     if (operation.nameId) {
                         // and this one is the label displayed and is set as name in op.
                         // NOTICE: causes NPE if nothing selected !!!!!
                         operation.name = selectWidget.get("displayedValue");
                     }
                 }
-                operation.description = registry.byId("operationsDescription").getValue();
+                operation.description = registry.byId("operationsDescription").get("value");
                 operation.platform = UtilGrid.getTableData("operationsPlatform");
 
-                operation.methodCall = registry.byId("operationsCall").getValue();
+                operation.methodCall = registry.byId("operationsCall").get("value");
                 operation.paramList = UtilGrid.getTableData("operationsParameter");
 
                 operation.addressList = UtilGrid.getTableData("operationsAddress");
@@ -367,7 +378,7 @@
                         if (!widget.validateNonEmptyRows()) valid = false;
                         
                     } else {
-                        var val = widget.getValue();
+                        var val = widget.get("value");
                         if (!val || val === "") {
                             domClass.add(dom.byId(element[1]), "important");
                             valid = false;
@@ -411,7 +422,7 @@
             // Save/Add Button onClick function
             //
             function saveOperation() {
-    if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/Operations")) return;
+                if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/Operations")) return;
 
                 var operation = getOperation();
                 if (!isValidOperation(operation)) {
