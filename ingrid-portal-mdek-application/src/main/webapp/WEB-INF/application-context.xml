@@ -23,7 +23,6 @@
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
                 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
-    <context:component-scan base-package="de.ingrid" />
     
     <!-- Import hibernate bean definitions -->
 	<import resource="core-services.xml"/>
@@ -159,4 +158,8 @@
             </map>
         </property>
     </bean>
+    
+    <context:component-scan base-package="de.ingrid">
+        <context:exclude-filter type="regex" expression="de.ingrid.mdek.services.security.DefaultPermissionService*" />
+    </context:component-scan>
  </beans>

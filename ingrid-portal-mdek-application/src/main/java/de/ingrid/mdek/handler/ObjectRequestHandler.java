@@ -58,4 +58,5 @@ public interface ObjectRequestHandler {
 	public ObjectSearchResultBean getQAObjects(WorkState workState, IdcQAEntitiesSelectionType selectionType, IdcEntityOrderBy orderBy, boolean orderAsc, Integer startHit, Integer numHits);
 	public ObjectStatisticsResultBean getObjectStatistics(String objUuid);
 	public ThesaurusStatisticsResultBean getObjectThesaurusStatistics(String objUuid, boolean thesaurusTerms, int startHit, int numHits);
+	public String getIsoXml(String id);
 }

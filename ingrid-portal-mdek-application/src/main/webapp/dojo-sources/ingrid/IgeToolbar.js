@@ -82,6 +82,14 @@ define([
             entries.push(["Separator", null]);
             entries.push(["Previous", lang.hitch(History, History.goBack)]);
             entries.push(["Next", lang.hitch(History, History.goNext)]);
+            entries.push(["Separator", null]);
+            entries.push(["ISO", function() {
+                ObjectService.getIsoXml( currentUdk.uuid, {
+                    callback: function(res) {
+                        console.log("Result:", res);
+                    }
+                } );
+            }]);
 
             var entriesRight = [
                 ["Help",
@@ -317,7 +325,7 @@ define([
 
             } else {
                 // If a 'normal' node (obj/adr that is not root) [is] selected, always enable the following nodes
-                enableList = enableList.concat([buttons.PrintDoc, buttons.Copy, buttons.ShowComments, buttons.Expand]);
+                enableList = enableList.concat([buttons.PrintDoc, buttons.Copy, buttons.ShowComments, buttons.Expand, buttons.ISO]);
 
                 // Only show the compare view dialog if a published version exists. Otherwise there's nothing to compare to
                 if (isPublished == "true") {
