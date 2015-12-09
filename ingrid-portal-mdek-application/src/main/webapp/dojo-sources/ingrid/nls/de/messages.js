@@ -378,6 +378,8 @@ define({
 	"dialog.waitForJob.opName":"Laufende Operation:",
 	"dialog.waitForJob.objCount":"Bearbeitete Objekte:",
 	"dialog.waitForJob.numObjects":"Anzahl der Objekte:",
+	
+	"dialog.xml.title":"ISO-XML Ansicht",
 
     "operation.error.object.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind nicht ver&ouml;ffentlicht. Bitte ver&ouml;ffentlichen Sie zun&auml;chst diese Objekte !",
     "operation.error.address.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Adressen sind nicht ver&ouml;ffentlicht. Bitte ver&ouml;ffentlichen Sie zun&auml;chst diese Adressen !",
@@ -479,6 +481,7 @@ define({
 	"ui.toolbar.HelpCaption":"Hilfe",
 	"ui.toolbar.NewDocCaption":"Neu anlegen",
 	"ui.toolbar.PrintDocCaption":"Vorschau und Druckansicht",
+	"ui.toolbar.ISOCaption":"ISO-XML Anzeige",
 	"ui.toolbar.CutCaption":"Objekte/Adressen/Teilbaum ausschneiden",
 	"ui.toolbar.CopyCaption":"Objekte/Adressen kopieren",
 	"ui.toolbar.CopySubTreeCaption":"Teilb&auml;ume kopieren",

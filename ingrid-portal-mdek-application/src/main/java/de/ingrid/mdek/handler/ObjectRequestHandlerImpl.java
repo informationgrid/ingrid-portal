@@ -29,8 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.MdekError;
-import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekError.MdekErrorType;
+import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
 import de.ingrid.mdek.MdekUtils.IdcEntityVersion;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
@@ -42,9 +42,9 @@ import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
+import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.caller.IMdekClientCaller;
-import de.ingrid.mdek.caller.IMdekCaller.FetchQuantity;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekEmailUtils;
 import de.ingrid.mdek.util.MdekErrorUtils;
@@ -52,7 +52,6 @@ import de.ingrid.mdek.util.MdekObjectUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.dsc.Record;
 
 @Service("objectRequestHandler")
 public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
@@ -282,7 +281,6 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
     public String getIsoXml(String objUuid) {
         IngridDocument response = mdekCallerObject.getIsoXml( connectionFacade.getCurrentPlugId(), objUuid, MdekSecurityUtils.getCurrentUserUuid() );
         IngridDocument result = MdekUtils.getResultFromResponse(response);
-        Record record = (Record) result.get( "record" );
-        return record.get("data").toString();
+        return result.getString( "record" );
     }
 }

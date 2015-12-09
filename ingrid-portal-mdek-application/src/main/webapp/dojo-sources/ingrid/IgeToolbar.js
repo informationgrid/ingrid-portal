@@ -31,8 +31,16 @@ define([
     "dijit/ToolbarSeparator",
     "dijit/form/Button",
     "ingrid/message",
-    "ingrid/utils/QA", "ingrid/utils/Security", "ingrid/utils/UI", "ingrid/MenuActions", "ingrid/IgeEvents", "ingrid/IgeActions", "ingrid/hierarchy/dirty", "ingrid/hierarchy/History"
-], function(declare, lang, array, aspect, topic, registry, Toolbar, ToolbarSeparator, Button, message, UtilQA, UtilSecurity, UtilUI, MenuActions, igeEvents, igeActions, dirty, History) {
+    "ingrid/dialog",
+    "ingrid/utils/QA",
+    "ingrid/utils/Security", 
+    "ingrid/utils/UI", 
+    "ingrid/MenuActions",
+    "ingrid/IgeEvents",
+    "ingrid/IgeActions",
+    "ingrid/hierarchy/dirty",
+    "ingrid/hierarchy/History"
+], function(declare, lang, array, aspect, topic, registry, Toolbar, ToolbarSeparator, Button, message, dialog, UtilQA, UtilSecurity, UtilUI, MenuActions, igeEvents, igeActions, dirty, History) {
     return declare(null, {
 
         buttons: {},
@@ -48,6 +56,9 @@ define([
             var entries = [
                 ["NewDoc", lang.hitch(MenuActions, MenuActions.handleNewEntity)],
                 ["PrintDoc", lang.hitch(MenuActions, MenuActions.handlePreview)],
+                ["ISO", function() {
+                    dialog.showPage(message.get("dialog.xml.title"), 'dialogs/mdek_xml_dialog.jsp?c=' + userLocale, 800, 800, true, { uuid: currentUdk.uuid, type: currentUdk.nodeAppType } );
+                }],
                 ["Separator", null],
                 ["Cut", lang.hitch(MenuActions, MenuActions.handleCut)],
                 ["Copy", lang.hitch(MenuActions, MenuActions.handleCopyEntity)],
@@ -82,14 +93,6 @@ define([
             entries.push(["Separator", null]);
             entries.push(["Previous", lang.hitch(History, History.goBack)]);
             entries.push(["Next", lang.hitch(History, History.goNext)]);
-            entries.push(["Separator", null]);
-            entries.push(["ISO", function() {
-                ObjectService.getIsoXml( currentUdk.uuid, {
-                    callback: function(res) {
-                        console.log("Result:", res);
-                    }
-                } );
-            }]);
 
             var entriesRight = [
                 ["Help",

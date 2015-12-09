@@ -379,6 +379,8 @@ define({
 	"dialog.waitForJob.opName":"Current operation:",
 	"dialog.waitForJob.objCount":"Objects processed:",
 	"dialog.waitForJob.numObjects":"Total number of objects:",
+	
+	"dialog.xml.title":"ISO-XML View",
 
 	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
 	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",
@@ -480,6 +482,7 @@ define({
 	"ui.toolbar.HelpCaption":"Help",
 	"ui.toolbar.NewDocCaption":"Create new",
 	"ui.toolbar.PrintDocCaption":"Print preview",
+	"ui.toolbar.ISOCaption":"ISO-XML View",
 	"ui.toolbar.CutCaption":"Cut Objects/Addresses/Subtrees",
 	"ui.toolbar.CopyCaption":"Copy Objects/Addresses",
 	"ui.toolbar.CopySubTreeCaption":"Copy Subtrees",

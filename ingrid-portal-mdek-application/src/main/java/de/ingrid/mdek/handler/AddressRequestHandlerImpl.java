@@ -284,4 +284,12 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 		this.connectionFacade = connectionFacade;
 	}
 
+
+    @Override
+    public String getIsoXml(String addrUuid) {
+        IngridDocument response = mdekCallerAddress.getIsoXml( connectionFacade.getCurrentPlugId(), addrUuid, MdekSecurityUtils.getCurrentUserUuid() );
+        IngridDocument result = MdekUtils.getResultFromResponse(response);
+        return result.getString( "record" );
+    }
+
 }
