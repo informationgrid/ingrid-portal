@@ -1,4 +1,4 @@
-<!--
+<%--
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
@@ -19,8 +19,10 @@
   See the Licence for the specific language governing permissions and
   limitations under the Licence.
   **************************************************#
-  -->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+  --%>
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -33,39 +35,68 @@
 
     require(["dojo/on",
              "dojo/dom",
+             "dojo/Deferred",
+             "dojo/promise/all",
+             "dojo/_base/lang",
              "dojo/dom-style",
              "dojo/dom-attr",
              "dojox/highlight",
              "dojox/highlight/languages/xml",
-             "dojox/highlight/languages/html"], function(on, dom, style, domAttr, highlight, xml, html) {
+             "ingrid/message"], function(on, dom, Deferred, all, lang, style, domAttr, highlight, xml, message) {
         on(_container_, "Load", function() {
             var uuid = this.customParams.uuid;
             var type = this.customParams.type;
+            var def1 = new Deferred();
+            var def2 = new Deferred();
             
             if (type === "O") {
-                ObjectService.getIsoXml( uuid, {
+                ObjectService.getIsoXml( uuid, true, {
                     preHook: showLoadingZone,
                     postHook: hideLoadingZone,
-                    callback: handleResult
+                    callback: lang.partial(handleResult, 'xmlContainerPublished', def1)
+                } );
+                ObjectService.getIsoXml( uuid, false, {
+                    preHook: showLoadingZone,
+                    postHook: hideLoadingZone,
+                    callback: lang.partial(handleResult, 'xmlContainerWorking', def2)
                 } );
             } else if (type === "A") {
-                AddressService.getIsoXml( uuid, {
+                AddressService.getIsoXml( uuid, true, {
                     preHook: showLoadingZone,
                     postHook: hideLoadingZone,
-                    callback: handleResult
+                    callback: lang.partial(handleResult, 'xmlContainerPublished', def1)
+                } );
+                AddressService.getIsoXml( uuid, false, {
+                    preHook: showLoadingZone,
+                    postHook: hideLoadingZone,
+                    callback: lang.partial(handleResult, 'xmlContainerWorking', def2)
                 } );
             }
+            all([def1, def2]).then(function(results) {
+                // if a published version exists
+                if (results[0]) {
+                    var diff = WDiffString( results[0], results[1] );
+                    domAttr.set("xmlDiffContainer", {innerHTML: diff});
+                } else {
+                    domAttr.set("xmlDiffContainer", {innerHTML: message.get("dialog.xml.noPublishedVersion")});
+                }
+            });
             
         });
 
-        function handleResult(res) {
+        function handleResult(container, def, res) {
             if (res) {
                 var highlighted = hljs.highlight("xml", res);
                 // putting the highlighted code in a html element so you can see
-                domAttr.set('xmlContainer', {innerHTML: highlighted.value});
+                domAttr.set(container, {innerHTML: highlighted.value});
             } else {
-                domAttr.set('xmlContainer', {innerHTML: message.get("dialog.xml.")});
+                if (container === "xmlContainerPublished") {
+                    domAttr.set(container, {innerHTML: message.get("dialog.xml.noPublishedVersion")});
+                } else {
+                    domAttr.set(container, {innerHTML: message.get("dialog.xml.problem.generation")});
+                }
             }
+            def.resolve(res);
         }
         
         function showLoadingZone() {
@@ -81,10 +112,27 @@
 </head>
 
 <body>
-    <div id="xmlLoadingZone" style="display:none;">
+    <div id="xmlLoadingZone" style="float: right;">
         <img id="imageZone" src="img/ladekreis.gif" />
     </div>
-    <pre style="height: 700px; font-size: 12px; overflow: auto;">
-        <code id="xmlContainer" style="border: 0;"></code>
-    </pre>
+    <!-- MAIN TAB CONTAINER START -->
+    <div data-dojo-type="dijit/layout/TabContainer" selectedChild="xmlWorkingVersion" style="height:800px; width:100%;" >
+        <!-- TAB 1 START -->
+        <div id="xmlWorkingVersion" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.xml.version.working" />">
+            <pre style="font-size: 12px;"><code id="xmlContainerWorking" style="border: 0;"></code></pre>
+        </div>
+        <!-- TAB 2 START -->
+        <div id="xmlPublishedVersion" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.xml.version.published" />">
+            <pre style="font-size: 12px;"><code id="xmlContainerPublished" style="border: 0;"></code></pre>
+        </div>
+        <!-- TAB 3 START -->
+        <div id="xmlDiffVersion" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.xml.version.diff" />">
+            <pre style="font-size: 12px;"><code id="xmlDiffContainer" style="border: 0;"></code></pre>
+            <div id="diffContentLegend" class="inputContainer field grey">
+                <span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.insertedText" /><br/>
+                <span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.deletedText" /><br/>
+                <fmt:message key="dialog.compare.otherColor" /> - <fmt:message key="dialog.compare.movedText" /></div>
+            </div>
+        </div>
+    </div>
 </body>

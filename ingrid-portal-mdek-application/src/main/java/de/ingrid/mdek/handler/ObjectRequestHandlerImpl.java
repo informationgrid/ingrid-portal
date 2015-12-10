@@ -278,8 +278,9 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
     @Override
-    public String getIsoXml(String objUuid) {
-        IngridDocument response = mdekCallerObject.getIsoXml( connectionFacade.getCurrentPlugId(), objUuid, MdekSecurityUtils.getCurrentUserUuid() );
+    public String getIsoXml(String objUuid, boolean publishedVersion) {
+        IdcEntityVersion version = publishedVersion ? IdcEntityVersion.PUBLISHED_VERSION : IdcEntityVersion.WORKING_VERSION;
+        IngridDocument response = mdekCallerObject.getIsoXml( connectionFacade.getCurrentPlugId(), objUuid, version, MdekSecurityUtils.getCurrentUserUuid() );
         IngridDocument result = MdekUtils.getResultFromResponse(response);
         return result.getString( "record" );
     }

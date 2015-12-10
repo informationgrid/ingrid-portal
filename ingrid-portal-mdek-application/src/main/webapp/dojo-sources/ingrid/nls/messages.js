@@ -381,7 +381,9 @@ define({
 	"dialog.waitForJob.numObjects":"Total number of objects:",
 	
 	"dialog.xml.title":"ISO-XML View",
-
+	"dialog.xml.problem.generation":"The ISO-XML representation could not be created.",
+	"dialog.xml.noPublishedVersion":"There is no published version or an error occurred during the creation.",
+	
 	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
 	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",
 	"operation.error.targetIsSubnodeOfSourceError":"The target node of a move operation must not be a child of the source node.",

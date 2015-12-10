@@ -436,7 +436,7 @@ public class ObjectServiceImpl implements ObjectService {
 		this.objectRequestHandler = objectRequestHandler;
 	}
 	
-	public String getIsoXml(String id) {
-	    return objectRequestHandler.getIsoXml( id );
+	public String getIsoXml(String id, boolean publishedVersion) {
+	    return objectRequestHandler.getIsoXml( id, publishedVersion );
 	}
 }

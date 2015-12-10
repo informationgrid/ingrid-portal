@@ -380,6 +380,8 @@ define({
 	"dialog.waitForJob.numObjects":"Anzahl der Objekte:",
 	
 	"dialog.xml.title":"ISO-XML Ansicht",
+	"dialog.xml.problem.generation":"Die ISO-XML Abbildung konnte nicht erstellt werden.",
+	"dialog.xml.noPublishedVersion":"Es gibt keine veröffentlichte Version oder es trat ein Fehler bei der Erstellung auf.",
 
     "operation.error.object.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Objekte sind nicht ver&ouml;ffentlicht. Bitte ver&ouml;ffentlichen Sie zun&auml;chst diese Objekte !",
     "operation.error.address.parentNotPublishedError":"Ein oder mehrere &uuml;bergeordnete Adressen sind nicht ver&ouml;ffentlicht. Bitte ver&ouml;ffentlichen Sie zun&auml;chst diese Adressen !",
