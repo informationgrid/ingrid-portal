@@ -333,7 +333,15 @@ public class QueryResultPostProcessor {
             }
             // determine type of hit dependent from plug description !!!
             boolean isObject = true;
-            if (plugDescr != null) {
+            Object type = hit.getHit().get("es_type");
+            // the new elastic search type tells us if we have an address or object type
+            if (type != null) {
+                // if type is address then we expect no object, otherwise we always expect an object
+                if ( "address".equals( type )) {
+                    isObject = false;
+                }
+            // if we have an old iplug connected then we check the plug description's datatypes    
+            } else if (plugDescr != null) {
             	List<String> typesPlug = Arrays.asList(plugDescr.getDataTypes());
             	for (int i=0; i < Settings.QVALUES_DATATYPES_ADDRESS.length; i++) {
                 	if (typesPlug.contains(Settings.QVALUES_DATATYPES_ADDRESS[i])) {
