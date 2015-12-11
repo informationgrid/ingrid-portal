@@ -132,6 +132,8 @@
             <exclude>**/*.xsl</exclude>
             <exclude>**/*.apt</exclude>
             <exclude>**/main/resources/apache-tomcat/bin/*.sh</exclude>
+            <exclude>**/highlight.js</exclude>
+            <exclude>**/github.css</exclude>
           </excludes>
         </configuration>
       </plugin>

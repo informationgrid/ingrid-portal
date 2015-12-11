@@ -40,9 +40,7 @@
              "dojo/_base/lang",
              "dojo/dom-style",
              "dojo/dom-attr",
-             "dojox/highlight",
-             "dojox/highlight/languages/xml",
-             "ingrid/message"], function(on, dom, Deferred, all, lang, style, domAttr, highlight, xml, message) {
+             "ingrid/message"], function(on, dom, Deferred, all, lang, style, domAttr, message) {
         on(_container_, "Load", function() {
             var uuid = this.customParams.uuid;
             var type = this.customParams.type;
