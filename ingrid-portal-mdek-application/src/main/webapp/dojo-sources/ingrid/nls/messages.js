@@ -379,7 +379,11 @@ define({
 	"dialog.waitForJob.opName":"Current operation:",
 	"dialog.waitForJob.objCount":"Objects processed:",
 	"dialog.waitForJob.numObjects":"Total number of objects:",
-
+	
+	"dialog.xml.title":"ISO-XML View",
+	"dialog.xml.problem.generation":"The ISO-XML representation could not be created.",
+	"dialog.xml.noPublishedVersion":"There is no published version or an error occurred during the creation.",
+	
 	"operation.error.object.parentNotPublishedError":"You have to publish the parent objects before publishing the selected object!",
 	"operation.error.address.parentNotPublishedError":"You have to publish the parent addresses before publishing the selected addresses!",
 	"operation.error.targetIsSubnodeOfSourceError":"The target node of a move operation must not be a child of the source node.",
@@ -480,6 +484,7 @@ define({
 	"ui.toolbar.HelpCaption":"Help",
 	"ui.toolbar.NewDocCaption":"Create new",
 	"ui.toolbar.PrintDocCaption":"Print preview",
+	"ui.toolbar.ISOCaption":"ISO-XML View",
 	"ui.toolbar.CutCaption":"Cut Objects/Addresses/Subtrees",
 	"ui.toolbar.CopyCaption":"Copy Objects/Addresses",
 	"ui.toolbar.CopySubTreeCaption":"Copy Subtrees",

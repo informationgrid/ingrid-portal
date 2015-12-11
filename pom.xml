@@ -26,6 +26,7 @@
 
   <properties>
     <org.apache.portals.jetspeed.version>2.3.0</org.apache.portals.jetspeed.version>
+    <mdek.version>3.6.2-SNAPSHOT</mdek.version>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -64,17 +65,17 @@
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-mdek-api</artifactId>
-        <version>3.6.1.1</version>
+        <version>${mdek.version}</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-mdek-services</artifactId>
-        <version>3.6.1.1</version>
+        <version>${mdek.version}</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-import-export</artifactId>
-        <version>3.6.1.1</version>
+        <version>${mdek.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

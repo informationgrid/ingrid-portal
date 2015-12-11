@@ -439,4 +439,7 @@ public class AddressServiceImpl implements AddressService {
 		this.addressRequestHandler = addressRequestHandler;
 	}
 
+	public String getIsoXml(String id) {
+        return addressRequestHandler.getIsoXml( id );
+    }
 }
