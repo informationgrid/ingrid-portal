@@ -35,6 +35,9 @@
             <action type="add" dev="wemove" issue="REDMINE-84">
                 IGE: Added information about additional ATOM service functionality.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-88">
+                IGE: Show ISO Xml from document.
+            </action>
         </release>
         
         <release version="3.6.1.1" date="2015-12-03" description="Release 3.6.1.1">
