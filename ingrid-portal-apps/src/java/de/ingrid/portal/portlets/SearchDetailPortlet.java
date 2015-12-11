@@ -153,6 +153,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String docUuid = request.getParameter("docuuid");
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
+            boolean isAddress = "address".equals( request.getParameter("type") );
             IngridHit hit = null;
             PlugDescription plugDescription = null;
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
@@ -191,7 +192,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            	} else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
 	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT)){
-	                	qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                    // new iPlug IGE-DSC contains both: objects and addresses!
+	                    if (isAddress) {
+	                        qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score datatype:address";
+	                    } else {
+	                        qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                    }
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)){
 	                	qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else {
