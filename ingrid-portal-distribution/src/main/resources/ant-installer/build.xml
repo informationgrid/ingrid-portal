@@ -388,6 +388,7 @@
         <propertyfile file="${prop-ingrid-portal-apps}">
             <entry key="ibus.admin.url" value="http://${serverIp}/ibus-gui/" />
             <entry key="csw.interface.url" value="${cswUrl}" />
+            <entry key="email.smtp.server" value="${mdekMailSmtp}" />
         </propertyfile>
         
         <!-- Writing username and password into xml files -->

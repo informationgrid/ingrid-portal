@@ -38,6 +38,9 @@
             <action type="add" dev="wemove" issue="REDMINE-88">
                 IGE: Show ISO Xml from document.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-235">
+                Portal: Also write SMTP server into portal configuration.
+            </action>
         </release>
         
         <release version="3.6.1.1" date="2015-12-03" description="Release 3.6.1.1">
