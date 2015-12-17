@@ -117,7 +117,7 @@ public class CatalogServiceImpl implements CatalogService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching sysGenericKeys data.", e);
+			log.error("MdekException while fetching sysGenericKeys data.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -128,7 +128,7 @@ public class CatalogServiceImpl implements CatalogService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while storing sysGenericKeys data.", e);
+			log.error("MdekException while storing sysGenericKeys data.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -155,7 +155,7 @@ public class CatalogServiceImpl implements CatalogService {
 	        return storeCatalogData;
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while storing catalog data.", e);
+			log.error("MdekException while storing catalog data.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}

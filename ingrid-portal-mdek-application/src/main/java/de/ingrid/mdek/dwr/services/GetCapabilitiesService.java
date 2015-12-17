@@ -70,15 +70,15 @@ public class GetCapabilitiesService {
             return getCapabilitiesData( doc );
 
         } catch (MalformedURLException e) {
-            log.debug( "URL is malformed: " + urlStr, e );
+            log.error( "URL is malformed: " + urlStr, e );
             throw new RuntimeException( ERROR_GETCAP_INVALID_URL, e );
 
         } catch (IOException e) {
-            log.debug( "IO-Exception occured with url: " + urlStr, e );
+            log.error( "IO-Exception occured with url: " + urlStr, e );
             throw new RuntimeException( ERROR_GETCAP, e );
 
         } catch (Exception e) {
-            log.debug( "A general exception occured with url: " + urlStr, e );
+            log.error( "A general exception occured with url: " + urlStr, e );
             throw new RuntimeException( ERROR_GETCAP, e );
         }
     }
