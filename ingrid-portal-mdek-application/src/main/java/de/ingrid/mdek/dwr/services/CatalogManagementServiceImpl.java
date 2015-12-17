@@ -240,7 +240,7 @@ public class CatalogManagementServiceImpl {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while starting analysis job.", e);
+			log.error("MdekException while starting analysis job.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -285,7 +285,7 @@ public class CatalogManagementServiceImpl {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while replacing address.", e);
+			log.error("MdekException while replacing address.", e);
 			throw MdekErrorUtils.convertToRuntimeException(e);
 		}
 	}
@@ -296,7 +296,7 @@ public class CatalogManagementServiceImpl {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while starting 'rebuild sysList' job.", e);
+			log.error("MdekException while starting 'rebuild sysList' job.", e);
 			throw MdekErrorUtils.convertToRuntimeException(e);
 		}
 	}
@@ -307,7 +307,7 @@ public class CatalogManagementServiceImpl {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching 'rebuild sysList' job info.", e);
+			log.error("MdekException while fetching 'rebuild sysList' job info.", e);
 			throw MdekErrorUtils.convertToRuntimeException(e);
 		}
 	}

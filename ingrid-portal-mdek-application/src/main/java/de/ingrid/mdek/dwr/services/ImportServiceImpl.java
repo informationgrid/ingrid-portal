@@ -409,7 +409,7 @@ class ImportEntitiesThread extends Thread {
 		try {
 			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, protocol, publishImmediately, doSeparateImport, copyNodeIfPresent);
 		} catch(MdekException ex) {
-			log.debug("Exception while importing entities.", ex);
+			log.error("Exception while importing entities.", ex);
 			setException(ex);
 		}
 	}

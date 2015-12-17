@@ -61,7 +61,7 @@ public class ObjectServiceImpl implements ObjectService {
 			objectRequestHandler.canCopyObject(uuid);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while checking if node can be cut.", e);
+			log.error("MdekException while checking if node can be cut.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error checking if node can be copied.", e);
@@ -77,7 +77,7 @@ public class ObjectServiceImpl implements ObjectService {
             }
         } catch (MdekException e) {
             // Wrap the MdekException in a RuntimeException so dwr can convert it
-            log.debug("MdekException while checking if one of several nodes can be cut.", e);
+            log.error("MdekException while checking if one of several nodes can be cut.", e);
             throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
         } catch (Exception e) {
             log.error("Error checking if one of several nodes can be copied.", e);
@@ -93,7 +93,7 @@ public class ObjectServiceImpl implements ObjectService {
 			objectRequestHandler.canCutObject(uuid);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while checking if node can be cut.", e);
+			log.error("MdekException while checking if node can be cut.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error checking if node can be cut.", e);
@@ -113,11 +113,11 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while copying node.", e);
+			log.error("MdekException while copying node.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.debug("Error copying node.", e);
+			log.error("Error copying node.", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -156,11 +156,11 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("Error deleting object.", e);
+			log.error("Error deleting object.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.debug("Error deleting object.", e);
+			log.error("Error deleting object.", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -174,11 +174,11 @@ public class ObjectServiceImpl implements ObjectService {
 			}
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("Error deleting working Copy.", e);
+			log.error("Error deleting working Copy.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.debug("Error deleting working Copy.", e);
+			log.error("Error deleting working Copy.", e);
 			throw new RuntimeException(e);
 		}
 
@@ -193,7 +193,7 @@ public class ObjectServiceImpl implements ObjectService {
 		try {
 			data = objectRequestHandler.getObjectDetail(nodeUuid);
 		} catch (RuntimeException e) {
-			log.debug("Error while getting node data.", e);
+			log.error("Error while getting node data.", e);
 			throw e;
 		}
 
@@ -209,7 +209,7 @@ public class ObjectServiceImpl implements ObjectService {
 		try {
 			data = objectRequestHandler.getPublishedObjectDetail(nodeUuid);
 		} catch (RuntimeException e) {
-			log.debug("Error while getting published node data.", e);
+			log.error("Error while getting published node data.", e);
 			throw e;
 		}
 
@@ -232,11 +232,11 @@ public class ObjectServiceImpl implements ObjectService {
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while moving node.", e);
+			log.error("MdekException while moving node.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.debug("Error moving node.", e);
+			log.error("Error moving node.", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -256,11 +256,11 @@ public class ObjectServiceImpl implements ObjectService {
 			try { return objectRequestHandler.saveObject(data); }
 			catch (MdekException e) {
 				// Wrap the MdekException in a RuntimeException so dwr can convert it
-				log.debug("MdekException while saving node.", e);
+				log.error("MdekException while saving node.", e);
 				throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 			}
 			catch (RuntimeException e) {
-				log.debug("Error while saving node", e);
+				log.error("Error while saving node", e);
 				throw new RuntimeException(e);
 			}
 		} else {
@@ -269,11 +269,11 @@ public class ObjectServiceImpl implements ObjectService {
 			try { return objectRequestHandler.publishObject(data, forcePublicationCondition); }
 			catch (MdekException e) {
 				// Wrap the MdekException in a RuntimeException so dwr can convert it
-				log.debug("MdekException while publishing node.", e);
+				log.error("MdekException while publishing node.", e);
 				throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 			}
 			catch (RuntimeException e) {
-				log.debug("Error while publishing node", e);
+				log.error("Error while publishing node", e);
 				throw e;
 			}
 		}
@@ -298,7 +298,7 @@ public class ObjectServiceImpl implements ObjectService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while updating object title.", e);
+			log.error("MdekException while updating object title.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -309,11 +309,11 @@ public class ObjectServiceImpl implements ObjectService {
 		try { return objectRequestHandler.assignObjectToQA(data); }
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while assigning node to QA.", e);
+			log.error("MdekException while assigning node to QA.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (RuntimeException e) {
-			log.debug("Error while assigning node to QA", e);
+			log.error("Error while assigning node to QA", e);
 			throw e;
 		}
 	}		
@@ -324,11 +324,11 @@ public class ObjectServiceImpl implements ObjectService {
 		try { return objectRequestHandler.reassignObjectToAuthor(data); }
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while reassigning node to Author.", e);
+			log.error("MdekException while reassigning node to Author.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (RuntimeException e) {
-			log.debug("Error while reassigning node to Author", e);
+			log.error("Error while reassigning node to Author", e);
 			throw e;
 		}
 	}		
@@ -358,11 +358,11 @@ public class ObjectServiceImpl implements ObjectService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching Work objects.", e);
+			log.error("MdekException while fetching Work objects.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 	
 		} catch (RuntimeException e) {
-			log.debug("Error while fetching Work objects", e);
+			log.error("Error while fetching Work objects", e);
 			throw e;
 		}
 	}
@@ -373,11 +373,11 @@ public class ObjectServiceImpl implements ObjectService {
 
         } catch (MdekException e) {
             // Wrap the MdekException in a RuntimeException so dwr can convert it
-            log.debug("MdekException while fetching Work objects.", e);
+            log.error("MdekException while fetching Work objects.", e);
             throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
     
         } catch (RuntimeException e) {
-            log.debug("Error while fetching Work objects", e);
+            log.error("Error while fetching Work objects", e);
             throw e;
         }
     }
@@ -388,11 +388,11 @@ public class ObjectServiceImpl implements ObjectService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching QA objects.", e);
+			log.error("MdekException while fetching QA objects.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 
 		} catch (RuntimeException e) {
-			log.debug("Error while fetching QA objects", e);
+			log.error("Error while fetching QA objects", e);
 			throw e;
 		}
 	}
@@ -403,11 +403,11 @@ public class ObjectServiceImpl implements ObjectService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching objects for statistics.", e);
+			log.error("MdekException while fetching objects for statistics.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 
 		} catch (RuntimeException e) {
-			log.debug("Error while fetching objects for statistics", e);
+			log.error("Error while fetching objects for statistics", e);
 			throw e;
 		}		
 	}
@@ -418,11 +418,11 @@ public class ObjectServiceImpl implements ObjectService {
     
     	} catch (MdekException e) {
     		// Wrap the MdekException in a RuntimeException so dwr can convert it
-    		log.debug("MdekException while fetching objects for thesaurus statistics.", e);
+    		log.error("MdekException while fetching objects for thesaurus statistics.", e);
     		throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
     
     	} catch (RuntimeException e) {
-    		log.debug("Error while fetching objects for thesaurus statistics", e);
+    		log.error("Error while fetching objects for thesaurus statistics", e);
     		throw e;
     	}		
     }
