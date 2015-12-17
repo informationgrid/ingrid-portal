@@ -48,11 +48,6 @@ public class Config {
     @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog( Config.class );
 
-    public static final int DEFAULT_TIMEOUT = 10;
-
-    public static final int DEFAULT_MAXIMUM_SIZE = 3145728;
-
-    public static final int DEFAULT_THREAD_COUNT = 100;
 
     /**
      * COMMUNICATION - SETTINGS
@@ -69,7 +64,28 @@ public class Config {
     @PropertyValue("communication.server.port")
     @DefaultValue("")
     public String ibusPort;
+    
+    @PropertyValue("communication.server.timeout")
+    @DefaultValue("10")
+    public int ibusTimeout;
+    
+    @PropertyValue("communication.server.maxMsgSize")
+    @DefaultValue("3145728")
+    public int ibusMaxMsgSize;
+    
+    @PropertyValue("communication.server.threadCount")
+    @DefaultValue("100")
+    public int ibusThreadCount;
+    
+    @PropertyValue("communication.server.msgTimeout")
+    @DefaultValue("30")
+    private String ibusMsgTimeout;
 
+    @PropertyValue("communication.server.queueSize")
+    @DefaultValue("2000")
+    private String ibusQueueSize;
+    
+    
     /**
      * CODELIST - REPOSITORY
      */
@@ -94,7 +110,7 @@ public class Config {
     @PropertyValue("installation.standalone")
     @DefaultValue("false")
     public boolean noPortal;
-    
+
 
     public void initialize() throws IOException {
         System.setProperty( "spring.profiles.active", "http" );
@@ -125,15 +141,15 @@ public class Config {
             communication.addNode( "/communication/server", "socket", id );
             communication.addNode( "/communication/server", "messages", id );
             
-            communication.addAttribute( "/communication/server/messages", "maximumSize", "" + DEFAULT_MAXIMUM_SIZE, id );
-            communication.addAttribute( "/communication/server/messages", "threadCount", "" + DEFAULT_THREAD_COUNT, id );
+            communication.addAttribute( "/communication/server/messages", "maximumSize", "" + this.ibusMaxMsgSize, id );
+            communication.addAttribute( "/communication/server/messages", "threadCount", "" + this.ibusThreadCount, id );
 
             communication.addAttribute( "/communication/server/socket", "port", "" + ibusPort, id );
-            communication.addAttribute( "/communication/server/socket", "timeout", "" + DEFAULT_TIMEOUT, id );
+            communication.addAttribute( "/communication/server/socket", "timeout", "" + this.ibusTimeout, id );
 
             communication.addNode( "/communication", "messages", id );
-            communication.addAttribute( "/communication/messages", "handleTimeout", "30", id );
-            communication.addAttribute( "/communication/messages", "queueSize", "2000", id );
+            communication.addAttribute( "/communication/messages", "handleTimeout", this.ibusMsgTimeout, id );
+            communication.addAttribute( "/communication/messages", "queueSize", this.ibusQueueSize, id );
 
             communication.store( communicationFile );
 
