@@ -821,7 +821,7 @@ define([
                     if (res !== null) {
                         self._setData(res)
                             .then(function() {
-                                self.updateTreeAfterNewData(res, nodeData.uuid, msg.resultHandler);
+                                self.updateTreeAfterNewData(res, res.uuid, msg.resultHandler);
                             });
                     }
                     msg.resultHandler.resolve(res);
