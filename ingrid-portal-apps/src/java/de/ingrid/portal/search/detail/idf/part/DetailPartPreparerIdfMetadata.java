@@ -295,8 +295,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 		        	    // get link from operation (unique one)
 		        	    if (serviceType.trim().equals("view")) {
 		        	        String capabilityUrl = getCapabilityUrl();
-		        	        capabilityUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl, ServiceType.WMS );
-		        	        link.put("mapLink", capabilityUrl + "&ID=" + getLayerIdentifier(node));
+	                        if ( capabilityUrl != null ) {
+	                            capabilityUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl, ServiceType.WMS );
+	                            link.put("mapLink", capabilityUrl + "&ID=" + getLayerIdentifier(node));	                            
+	                        }
 		        	    }
 		        	    // do not show link relation for coupled resources (INGRID-2285)
 		        	    link.remove("attachedToField");
