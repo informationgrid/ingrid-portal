@@ -139,6 +139,12 @@
             </action>
         </release>
         
+        <release version="3.6.0.5" date="2015-12-22" description="Bugfix-Release 3.6.0.5">
+            <action type="fix" dev="wemove" issue="REDMINE-244">
+                Portal: Fix bug in detail view (NPE).
+            </action>
+        </release>
+        
         <release version="3.6.0.3" date="2015-09-21" description="Bugfix-Release 3.6.0.3">
             <action type="fix" dev="wemove" issue="REDMINE-151">
                 Portal: Removed "show in map" functionality when clicking preview image in detail view of service with restricted access.
