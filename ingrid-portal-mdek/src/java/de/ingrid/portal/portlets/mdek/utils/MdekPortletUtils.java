@@ -107,7 +107,11 @@ public class MdekPortletUtils {
     			conflicting = true;
         		log.error("Frontend version could be extracted from mdek-api (jar) BUT backend version was NOT delivered (\"old\" backend)! -> does not match !");
     		} else {
-    			if (!frontendVersion.equals(backendVersion)) {
+    		    // introduce new comparison mechanism !
+    		    // versions do not have to be equal, instead backend has to start with frontend version.
+    		    // So frontend 3.6.1 and backend 3.6.1.1 matches and portal does not have to be updated !
+    		    // This way we can change backend version, e.g. when profile is updated, which does not affect frontend !
+    			if (!backendVersion.startsWith(frontendVersion)) {
         			conflicting = true;
     			}
     		}
