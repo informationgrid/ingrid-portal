@@ -29,7 +29,10 @@ elif [ -f $CATALINA_HOME/bin/env.sh ]; then
   eval "`sh $CATALINA_HOME/bin/env.sh`"
 fi
 
+# NOTICE: Option -XX:MaxPermSize is deprecated in Java 8 !
+# We use this one if Java 7 is used. In Java 8 we do not need to manage PermSize and this option is ignored.
 export JAVA_OPTS="$INGRID_OPTS -XX:MaxPermSize=256m"
+
 # Better OS/400 detection: see Bugzilla 31132
 os400=false
 darwin=false
