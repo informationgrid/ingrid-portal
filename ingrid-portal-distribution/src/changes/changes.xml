@@ -38,6 +38,9 @@
             <action type="add" dev="wemove" issue="REDMINE-88">
                 IGE: Show ISO Xml from document.
             </action>
+            <action type="update" dev="wemove" issue="REDMINE-86">
+                Portal: Updated initial codelist (6005 conformity).
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-245">
                 Portal: Make comparison of IGE frontend with backend version (IGE iPlug) more tolerant, so older Portal can work with newer IGE iPlug, if possible.
             </action>
