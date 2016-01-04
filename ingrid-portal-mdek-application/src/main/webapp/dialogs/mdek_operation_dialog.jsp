@@ -311,6 +311,13 @@
                     resetInputElements();
                     isNewOperation = true;
                     registry.byId("saveButton").set("label", "<fmt:message key='general.add' />");
+                    
+                    // set Webservice as default entry for inspire dataset (REDMINE-87)
+                    if (registry.byId("isInspireRelevant").checked) {
+                        UtilGrid.addTableDataRow( "operationsPlatform", {
+                            title: "6" // WebServices
+                        } );
+                    }
                 }
 
                 // Init table validators
