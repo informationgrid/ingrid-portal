@@ -56,6 +56,9 @@
             <action type="add" dev="wemove" issue="REDMINE-87">
                 IGE: Use WebServices as default value for inspire dataset when adding a new operation.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-247">
+                IGE: Fixed session refresh functionality.
+            </action>
         </release>
         
         <release version="3.6.1.1" date="2015-12-03" description="Release 3.6.1.1">
