@@ -57,13 +57,13 @@
                     var autosaveEnabled = true;
                     var autosaveInterval = valueMap[UtilCatalog.AUTOSAVE_INTERVAL];
                     
-                    registry.byId("autosaveCheckbox").setValue(autosaveEnabled);
-                    registry.byId("autosaveInterval").setValue(autosaveInterval);
+                    registry.byId("autosaveCheckbox").set("value", autosaveEnabled);
+                    registry.byId("autosaveInterval").set("value", autosaveInterval);
                     
                 }
                 else {
-                    registry.byId("autosaveCheckbox").setValue(false);
-                    registry.byId("autosaveInterval").setValue(10);
+                    registry.byId("autosaveCheckbox").set("value", false);
+                    registry.byId("autosaveInterval").set("value", 10);
                 }
             }
             
@@ -72,13 +72,13 @@
                     var sessionRefreshEnabled = true;
                     var sessionRefreshInterval = valueMap[UtilCatalog.SESSION_REFRESH_INTERVAL];
                     
-                    registry.byId("sessionRefreshCheckbox").setValue(sessionRefreshEnabled);
-                    registry.byId("sessionRefreshInterval").setValue(sessionRefreshInterval);
+                    registry.byId("sessionRefreshCheckbox").set("value", sessionRefreshEnabled);
+                    registry.byId("sessionRefreshInterval").set("value", sessionRefreshInterval);
                     
                 }
                 else {
-                    registry.byId("sessionRefreshCheckbox").setValue(false);
-                    registry.byId("sessionRefreshInterval").setValue(10);
+                    registry.byId("sessionRefreshCheckbox").set("value", false);
+                    registry.byId("sessionRefreshInterval").set("value", 10);
                 }
             }
             
@@ -98,7 +98,7 @@
             
             pageGeneralSettings.addAutosaveValuesToMap = function(valueMap){
                 if (registry.byId("autosaveCheckbox").checked) {
-                    valueMap[UtilCatalog.AUTOSAVE_INTERVAL] = registry.byId("autosaveInterval").getValue();
+                    valueMap[UtilCatalog.AUTOSAVE_INTERVAL] = registry.byId("autosaveInterval").get("value");
                     
                 }
                 else {
@@ -108,7 +108,7 @@
             
             pageGeneralSettings.addSessionRefreshValuesToMap = function(valueMap){
                 if (registry.byId("sessionRefreshCheckbox").checked) {
-                    valueMap[UtilCatalog.SESSION_REFRESH_INTERVAL] = registry.byId("sessionRefreshInterval").getValue();
+                    valueMap[UtilCatalog.SESSION_REFRESH_INTERVAL] = registry.byId("sessionRefreshInterval").get("value");
                     
                 }
                 else {

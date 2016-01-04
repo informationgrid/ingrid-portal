@@ -104,8 +104,8 @@ public class CatalogServiceImpl implements CatalogService {
         storeSysGenericValues(genericValues);
 	}
 
-	public List<GenericValueBean> getSysGenericValues(String... keyNames) {
-	    return getSysGenericValues(keyNames, null);
+	public List<GenericValueBean> getSysGenericValues(List<String> keyNames) {
+	    return getSysGenericValues(keyNames.toArray(new String[0]), null);
 	}
 	
 	public List<GenericValueBean> getSysGenericValues(String[] keyNames, HttpServletRequest req) {
@@ -135,7 +135,7 @@ public class CatalogServiceImpl implements CatalogService {
 
 	public CatalogBean getCatalogData() {
 		CatalogBean catalogData = catalogRequestHandler.getCatalogData();
-		List<GenericValueBean> sysGenericValues = getSysGenericValues( "sortByClass" );
+		List<GenericValueBean> sysGenericValues = getSysGenericValues( new String[]{"sortByClass"}, null );
 		if (sysGenericValues.size() > 0) {
 		    catalogData.setSortByClass( sysGenericValues.get( 0 ).getValue() );
 		}
@@ -177,7 +177,7 @@ public class CatalogServiceImpl implements CatalogService {
         List<GenericValueBean> data;
         
         if (req == null)
-            data = getSysGenericValues(new String[]{"profileXML"});
+            data = getSysGenericValues(new String[]{"profileXML"}, null);
         else
             data = getSysGenericValues(new String[]{"profileXML"}, req);
         

@@ -35,6 +35,12 @@
             <action type="fix" dev="wemove" issue="REDMINE-236">
                 IGE: Fixed paging of object references in addresses.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-241">
+                MapClient: Fix change projection for WMS version 1.3.0.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-247">
+                IGE: Fixed session refresh functionality.
+            </action>
         </release>
         
         <release version="3.6.1.1" date="2015-12-03" description="Release 3.6.1.1">
