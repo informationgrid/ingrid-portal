@@ -49,6 +49,7 @@ define([
     "ingrid/utils/List",
     "ingrid/utils/Grid",
     "ingrid/utils/Thesaurus",
+    "ingrid/utils/Catalog",
     "ingrid/message",
     "ingrid/dialog",
     "ingrid/layoutCreator",
@@ -62,7 +63,7 @@ define([
 ], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, validate,
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
-            UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus,
+            UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog,
             message, dialog, layoutCreator, rules, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
 
         return declare(null, {
@@ -2233,7 +2234,11 @@ define([
                 aspect.after(UtilGrid.getTable("ref6BaseDataLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 
                 // activate default behaviour
-                behaviour.inspireIsoConnection.run();
+                UtilCatalog.getActiveBehavioursDef().then(function(data) {
+                    array.forEach(data, function(item) {
+                        behaviour[item].run();
+                    });
+                });
             }
         })();
 

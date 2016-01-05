@@ -168,6 +168,13 @@ define([
                     self.selectChild("generalSettings");
                 }
             }));
+            adminMenuCatalog.addChild(new MenuItem({
+                id: "menuPageBehaviourSettings",
+                label: message.get("menu.admin.main.catalog.behaviourSettings"),
+                onClick: function() {
+                    self.selectChild("behaviourSettings");
+                }
+            }));
 
             //---------------------------------------
             var adminMenuUserManagement = new Menu({});

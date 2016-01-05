@@ -337,6 +337,16 @@ define([
                     scriptHasHooks: true,
                     executeScripts: true
                 });
+                
+                var behaviourSettings = new XContentPane({
+                    id: "behaviourSettings",
+                    title: "behaviourSettings",
+                    layoutAlign: "client",
+                    style: "padding: 0px;",
+                    href: "admin/mdek_admin_catalog_behaviours.jsp?c=" + userLocale,
+                    scriptHasHooks: true,
+                    executeScripts: true
+                });
 
                 var groupManagement = new XContentPane({
                     id: "groupManagement",
@@ -500,6 +510,7 @@ define([
                 sc.addChild(catalogSettings);
                 //sc.addChild(fieldSettings);
                 sc.addChild(generalSettings);
+                sc.addChild(behaviourSettings);
                 sc.addChild(groupManagement);
                 sc.addChild(permissionOverview);
                 sc.addChild(adminImport);

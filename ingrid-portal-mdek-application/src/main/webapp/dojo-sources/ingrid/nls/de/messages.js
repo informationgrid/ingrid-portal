@@ -55,6 +55,7 @@ define({
     "page.breadcrumb.pageStatistics":"Statistik",
     "page.breadcrumb.catalogSettings":"Katalogverwaltung -> Katalogeinstellungen",
 	"page.breadcrumb.generalSettings":"Katalogverwaltung -> Allgemeine Einstellungen",
+	"page.breadcrumb.behaviourSettings":"Katalogverwaltung -> Verhalten",
     "page.breadcrumb.userManagement":"Nutzerverwaltung -> Nutzeradministration",
     "page.breadcrumb.groupManagement":"Nutzerverwaltung -> Gruppenadministration",
     "page.breadcrumb.permissionOverview":"Nutzerverwaltung -> Berechtigungs&uuml;bersicht",
@@ -85,6 +86,7 @@ define({
 	"menu.admin.main.catalog":"Katalogverwaltung",
 	"menu.admin.main.catalog.settings":"Katalogeinstellungen",
 	"menu.admin.main.catalog.generalSettings":"Allgemeine Einstellungen",
+	"menu.admin.main.catalog.behaviourSettings":"Verhalten",
 	"menu.admin.main.user":"Nutzerverwaltung",
 	"menu.admin.main.user.userAdmin":"Nutzeradministration",
 	"menu.admin.main.user.groupAdmin":"Gruppenadministration",
@@ -323,7 +325,7 @@ define({
 	"dialog.admin.users.deleteUser":"Benutzer l&ouml;schen",
 	"dialog.admin.users.importUser":"Portalbenutzer importieren",
 	"dialog.admin.users.deleteGroup":"Gruppe l&ouml;schen",
-
+	
 	"dialog.admin.userNotFoundError":"Der von Ihnen eingegebene Benutzername konnte nicht gefunden werden. Der Benutzer muss im Portal existieren und darf nicht bereits die Rolle 'mdek' besitzen!",
 	"dialog.admin.fieldSettingsUpdated":"Die Feldeinstellungen wurden erfolgreich gespeichert. Die &Auml;nderungen stehen Ihnen nach erneutem Laden der Erfassungsapplikation zur Verf&uuml;gung.",
 	"dialog.admin.generalSettingsUpdated":"Die allgemeinen Einstellungen wurden erfolgreich gespeichert. Die &Auml;nderungen stehen Ihnen nach erneutem Laden der Erfassungsapplikation / Administrationskomponente zur Verf&uuml;gung.",
