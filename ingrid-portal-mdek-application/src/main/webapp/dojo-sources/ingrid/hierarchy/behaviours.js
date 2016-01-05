@@ -145,6 +145,17 @@ define(["dojo/_base/declare",
                 aspect.after(UtilGrid.getTable("thesaurusTopics"), "onCellChange", isoCategoriesChanges );
                 aspect.after(UtilGrid.getTable("thesaurusTopics"), "onDeleteItems", isoCategoriesChanges );
             }
+        },
+        
+        coupledResourceDownloadDataCheck: {
+            title: "Coupled Resources - Check for download data",
+            description: "When an external coupled resource is being added then also check if the resource contains download data.",
+            issue: "https://dev.informationgrid.eu/redmine/issues/153",
+            run: function() {
+                topic.subscribe("/afterInitDialog/SelectObject", function(config) {
+                    config.ignoreDownloadData = false;
+                });
+            }
         }
         
         /*

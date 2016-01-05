@@ -58,6 +58,10 @@ require(["dojo/dom",
         
         // store the fetched record
         var record = currentUrl = null;
+        
+        var config = {
+            ignoreDownloadData: true
+        };
 
         on(_container_, "Load", function() {
             btnAnalyze = registry.byId("btn_analyze");
@@ -67,7 +71,7 @@ require(["dojo/dom",
             init();
 
             console.log("Publishing event: '/afterInitDialog/SelectObject'");
-            topic.publish("/afterInitDialog/SelectObject");
+            topic.publish("/afterInitDialog/SelectObject", config);
             
             registry.byId("tabContainerLinkDlg").watch("selectedChildWidget", function(name, oldVal, newVal) {
                 if (newVal.id === "tabRemote") {
@@ -212,9 +216,9 @@ require(["dojo/dom",
                     return;
                 }
                 if (!result.identifier) domClass.remove("errorNoId", "hide");
-                if (!result.hasDownloadData) domClass.remove("errorNoData", "hide");
+                if (!config.ignoreDownloadData && !result.hasDownloadData) domClass.remove("errorNoData", "hide");
                 
-                if (result.identifier && result.hasDownloadData) {
+                if (result.identifier && (config.ignoreDownloadData || result.hasDownloadData)) {
                     btnAssign.set("disabled", false);
                     
                     record = result;
