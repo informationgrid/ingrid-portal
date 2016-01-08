@@ -81,15 +81,17 @@
         		## Durch die Ressource abgedeckte Zeitspanne
         			#set($beginTime = $TOOL.convertDateString($TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition")))
         			#set($endTime = $TOOL.convertDateString($TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition")))
-        			#if($beginTime == $endTime)
-        				#renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime")
-        			#elseif($beginTime && !$endTime)
-        				#renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime")
-        			#elseif(!$beginTime && $endTime)
-        				#renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime")
-        			#elseif($beginTime != $endTime)
-        				#renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
-        			#end
+                    #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
+                        #if($beginTime == $endTime)
+                            #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime")
+                        #elseif($beginTime && !$endTime)
+                            #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime")
+                        #elseif(!$beginTime && $endTime)
+                            #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime")
+                        #elseif($beginTime != $endTime)
+                            #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+                        #end
+                    #end
         		## Status
     				#renderTextLabelLeft($MESSAGES.getString("t01_object.time_status") $TOOL.getValueFromXPath("./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue", "523"))
         		## Periodizität
