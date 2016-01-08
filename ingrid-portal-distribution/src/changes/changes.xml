@@ -47,6 +47,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-235">
                 Portal: Also write SMTP server into portal configuration.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-237">
+                Portal: Fix paging of search result list.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-236">
                 IGE: Fixed paging of object references in addresses.
             </action>
