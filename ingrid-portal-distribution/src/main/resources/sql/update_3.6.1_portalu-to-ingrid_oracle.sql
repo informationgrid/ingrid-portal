@@ -7,8 +7,8 @@ UPDATE ingrid_cms_item SET item_title = 'Über InGrid-Portal', item_value = '<p>
 UPDATE ingrid_cms_item SET item_title = 'About InGrid-Portal', item_value = '<p>Write a portrait of the InGrid-Portal. To maintain and display your portrait use the InGrid-Portal admininstration interface</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key = 'ingrid.about') AND item_lang = 'en';
 
 -- CMS update ingrid.teaser.inform
-UPDATE ingrid_cms_item SET item_title = '<span style= \'text-transform: none;\'>InGrid-Portal INFO</span>', item_value = '<p>Hier können Sie über die Administration des InGrid-Portals aktuelle Nachrichten pflegen und darstellen.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key = 'ingrid.teaser.inform') AND item_lang = 'de';
-UPDATE ingrid_cms_item SET item_title = '<span style=\'text-transform: none;\'>InGrid-Portal INFO</span>', item_value = '<p>Here you can maintain and display the latest news by using the InGrid-Portal administration interface.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key = 'ingrid.teaser.inform') AND item_lang = 'en';
+UPDATE ingrid_cms_item SET item_title = '<span style= ''text-transform: none;''>InGrid-Portal INFO</span>', item_value = '<p>Hier können Sie über die Administration des InGrid-Portals aktuelle Nachrichten pflegen und darstellen.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key = 'ingrid.teaser.inform') AND item_lang = 'de';
+UPDATE ingrid_cms_item SET item_title = '<span style=''text-transform: none;''>InGrid-Portal INFO</span>', item_value = '<p>Here you can maintain and display the latest news by using the InGrid-Portal administration interface.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key = 'ingrid.teaser.inform') AND item_lang = 'en';
 
 -- CMS update ingrid.privacy
 UPDATE ingrid_cms_item SET item_value = '<p>Verwenden Sie die Administration des InGrid-Portals um Ihr Datenschutz zu pflegen und im Portal darzustellen.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key = 'ingrid.privacy') AND item_lang = 'de';
