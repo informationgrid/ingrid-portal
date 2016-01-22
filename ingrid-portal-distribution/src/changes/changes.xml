@@ -53,9 +53,6 @@
             <action type="fix" dev="wemove" issue="REDMINE-249">
                 MapClient: Fix load saved maps with redlining.
             </action>
-            <action type="add" dev="wemove" issue="REDMINE-87">
-                IGE: Use WebServices as default value for inspire dataset when adding a new operation.
-            </action>
             <action type="fix" dev="wemove" issue="REDMINE-247">
                 IGE: Fixed session refresh functionality.
             </action>
