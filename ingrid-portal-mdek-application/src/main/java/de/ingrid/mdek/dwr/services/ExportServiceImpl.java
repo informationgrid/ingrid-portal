@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -51,7 +51,7 @@ public class ExportServiceImpl {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while starting export job.", e);
+			log.error("MdekException while starting export job.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -61,7 +61,7 @@ public class ExportServiceImpl {
 			catalogRequestHandler.exportObjectsWithCriteria(exportCriteria, includeWorkingCopies);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while starting export job.", e);
+			log.error("MdekException while starting export job.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -71,7 +71,7 @@ public class ExportServiceImpl {
 			catalogRequestHandler.exportAddressBranch(rootUuid, exportChildren, includeWorkingCopies);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while starting export job.", e);
+			log.error("MdekException while starting export job.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -81,7 +81,7 @@ public class ExportServiceImpl {
 			catalogRequestHandler.exportFreeAddresses(includeWorkingCopies);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while starting export job.", e);
+			log.error("MdekException while starting export job.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -91,7 +91,7 @@ public class ExportServiceImpl {
 			catalogRequestHandler.exportTopAddresses(exportChildren, includeWorkingCopies);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while starting export job.", e);
+			log.error("MdekException while starting export job.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}

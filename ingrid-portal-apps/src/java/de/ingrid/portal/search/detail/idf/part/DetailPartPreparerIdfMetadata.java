@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -287,8 +287,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 		        	    // get link from operation (unique one)
 		        	    if (serviceType.trim().equals("view")) {
 		        	        String capabilityUrl = getCapabilityUrl();
-		        	        capabilityUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl, ServiceType.WMS );
-		        	        link.put("mapLink", capabilityUrl + "&ID=" + getLayerIdentifier(node));
+	                        if ( capabilityUrl != null ) {
+	                            capabilityUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl, ServiceType.WMS );
+	                            link.put("mapLink", capabilityUrl + "&ID=" + getLayerIdentifier(node));	                            
+	                        }
 		        	    }
 		        	    // do not show link relation for coupled resources (INGRID-2285)
 		        	    link.remove("attachedToField");

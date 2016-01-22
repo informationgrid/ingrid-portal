@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -60,7 +60,7 @@ public class AddressServiceImpl implements AddressService {
 			addressRequestHandler.canCopyAddress(uuid);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while checking if address can be cut.", e);
+			log.error("MdekException while checking if address can be cut.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error checking if address can be copied.", e);
@@ -76,7 +76,7 @@ public class AddressServiceImpl implements AddressService {
             }
         } catch (MdekException e) {
             // Wrap the MdekException in a RuntimeException so dwr can convert it
-            log.debug("MdekException while checking if one of several address can be cut.", e);
+            log.error("MdekException while checking if one of several address can be cut.", e);
             throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
         } catch (Exception e) {
             log.error("Error checking if one of several address can be copied.", e);
@@ -91,7 +91,7 @@ public class AddressServiceImpl implements AddressService {
 			addressRequestHandler.canCutAddress(uuid);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while checking if address can be cut.", e);
+			log.error("MdekException while checking if address can be cut.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error checking if address can be cut.", e);
@@ -113,11 +113,11 @@ public class AddressServiceImpl implements AddressService {
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while copying address.", e);
+			log.error("MdekException while copying address.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.debug("Error copying address.", e);
+			log.error("Error copying address.", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -156,10 +156,10 @@ public class AddressServiceImpl implements AddressService {
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("Error deleting address.", e);
+			log.error("Error deleting address.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (RuntimeException e) {
-			log.debug("Error deleting address", e);
+			log.error("Error deleting address", e);
 			throw e;
 		}
 	}
@@ -173,11 +173,11 @@ public class AddressServiceImpl implements AddressService {
 			}
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("Error deleting address working Copy.", e);
+			log.error("Error deleting address working Copy.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.debug("Error deleting address working Copy.", e);
+			log.error("Error deleting address working Copy.", e);
 			throw new RuntimeException(e);
 		}
 		return null;
@@ -189,7 +189,7 @@ public class AddressServiceImpl implements AddressService {
 		try {
 			address = addressRequestHandler.getAddressDetail(nodeUuid);
 		} catch (RuntimeException e) {
-			log.debug("Error while getting address data.", e);
+			log.error("Error while getting address data.", e);
 			throw e;
 		}
 
@@ -219,7 +219,7 @@ public class AddressServiceImpl implements AddressService {
 		try {
 			address = addressRequestHandler.getPublishedAddressDetail(nodeUuid);
 		} catch (RuntimeException e) {
-			log.debug("Error while getting published address data.", e);
+			log.error("Error while getting published address data.", e);
 			throw e;
 		}
 
@@ -241,11 +241,11 @@ public class AddressServiceImpl implements AddressService {
 		}
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while moving address.", e);
+			log.error("MdekException while moving address.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (Exception e) {
-			log.debug("Error moving address.", e);
+			log.error("Error moving address.", e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -266,11 +266,11 @@ public class AddressServiceImpl implements AddressService {
 			try { return addressRequestHandler.saveAddress(data); }
 			catch (MdekException e) {
 				// Wrap the MdekException in a RuntimeException so dwr can convert it
-				log.debug("MdekException while saving address.", e);
+				log.error("MdekException while saving address.", e);
 				throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 			}
 			catch (RuntimeException e) {
-				log.debug("Error while saving node", e);
+				log.error("Error while saving node", e);
 				throw e;
 			}
 		} else {
@@ -279,11 +279,11 @@ public class AddressServiceImpl implements AddressService {
 			try { return addressRequestHandler.publishAddress(data, forcePublicationCondition); }
 			catch (MdekException e) {
 				// Wrap the MdekException in a RuntimeException so dwr can convert it
-				log.debug("MdekException while publishing address.", e);
+				log.error("MdekException while publishing address.", e);
 				throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 			}
 			catch (RuntimeException e) {
-				log.debug("Error while publishing address", e);
+				log.error("Error while publishing address", e);
 				throw e;
 			}
 		}
@@ -295,11 +295,11 @@ public class AddressServiceImpl implements AddressService {
 		try { return addressRequestHandler.assignAddressToQA(data); }
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while forwarding address to QA.", e);
+			log.error("MdekException while forwarding address to QA.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (RuntimeException e) {
-			log.debug("Error while forwarding address to QA", e);
+			log.error("Error while forwarding address to QA", e);
 			throw e;
 		}
 	}		
@@ -310,11 +310,11 @@ public class AddressServiceImpl implements AddressService {
 		try { return addressRequestHandler.reassignAddressToAuthor(data); }
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while forwarding address to Author.", e);
+			log.error("MdekException while forwarding address to Author.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (RuntimeException e) {
-			log.debug("Error while forwarding address to Author", e);
+			log.error("Error while forwarding address to Author", e);
 			throw e;
 		}
 	}		
@@ -323,11 +323,11 @@ public class AddressServiceImpl implements AddressService {
 		try { return addressRequestHandler.fetchAddressObjectReferences(addrUuid, startIndex, numRefs); }
 		catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching address AORs.", e);
+			log.error("MdekException while fetching address AORs.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 		catch (RuntimeException e) {
-			log.debug("Error while fetching address AORs.", e);
+			log.error("Error while fetching address AORs.", e);
 			throw e;
 		}		
 	}
@@ -358,11 +358,11 @@ public class AddressServiceImpl implements AddressService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching Work addresses.", e);
+			log.error("MdekException while fetching Work addresses.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 	
 		} catch (RuntimeException e) {
-			log.debug("Error while fetching Work addresses", e);
+			log.error("Error while fetching Work addresses", e);
 			throw e;
 		}
 	}
@@ -373,11 +373,11 @@ public class AddressServiceImpl implements AddressService {
 	        
 	    } catch (MdekException e) {
 	        // Wrap the MdekException in a RuntimeException so dwr can convert it
-	        log.debug("MdekException while fetching Work addresses.", e);
+	        log.error("MdekException while fetching Work addresses.", e);
 	        throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 	        
 	    } catch (RuntimeException e) {
-	        log.debug("Error while fetching Work addresses", e);
+	        log.error("Error while fetching Work addresses", e);
 	        throw e;
 	    }
 	}
@@ -388,11 +388,11 @@ public class AddressServiceImpl implements AddressService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching QA addresses.", e);
+			log.error("MdekException while fetching QA addresses.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 
 		} catch (RuntimeException e) {
-			log.debug("Error while fetching QA addresses", e);
+			log.error("Error while fetching QA addresses", e);
 			throw e;
 		}
 	}
@@ -403,11 +403,11 @@ public class AddressServiceImpl implements AddressService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching addresses statistics.", e);
+			log.error("MdekException while fetching addresses statistics.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 
 		} catch (RuntimeException e) {
-			log.debug("Error while fetching addresses statistics", e);
+			log.error("Error while fetching addresses statistics", e);
 			throw e;
 		}		
 	}
@@ -418,11 +418,11 @@ public class AddressServiceImpl implements AddressService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching addresses thesaurus statistics.", e);
+			log.error("MdekException while fetching addresses thesaurus statistics.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 
 		} catch (RuntimeException e) {
-			log.debug("Error while fetching addresses thesaurus statistics", e);
+			log.error("Error while fetching addresses thesaurus statistics", e);
 			throw e;
 		}
 	}

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -409,7 +409,7 @@ class ImportEntitiesThread extends Thread {
 		try {
 			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, protocol, publishImmediately, doSeparateImport, copyNodeIfPresent);
 		} catch(MdekException ex) {
-			log.debug("Exception while importing entities.", ex);
+			log.error("Exception while importing entities.", ex);
 			setException(ex);
 		}
 	}

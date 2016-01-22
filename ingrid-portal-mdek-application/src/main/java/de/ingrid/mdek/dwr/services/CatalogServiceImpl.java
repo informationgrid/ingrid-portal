@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -104,8 +104,8 @@ public class CatalogServiceImpl implements CatalogService {
         storeSysGenericValues(genericValues);
 	}
 
-	public List<GenericValueBean> getSysGenericValues(String... keyNames) {
-	    return getSysGenericValues(keyNames, null);
+	public List<GenericValueBean> getSysGenericValues(List<String> keyNames) {
+	    return getSysGenericValues(keyNames.toArray(new String[0]), null);
 	}
 	
 	public List<GenericValueBean> getSysGenericValues(String[] keyNames, HttpServletRequest req) {
@@ -117,7 +117,7 @@ public class CatalogServiceImpl implements CatalogService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while fetching sysGenericKeys data.", e);
+			log.error("MdekException while fetching sysGenericKeys data.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -128,14 +128,14 @@ public class CatalogServiceImpl implements CatalogService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while storing sysGenericKeys data.", e);
+			log.error("MdekException while storing sysGenericKeys data.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
 
 	public CatalogBean getCatalogData() {
 		CatalogBean catalogData = catalogRequestHandler.getCatalogData();
-		List<GenericValueBean> sysGenericValues = getSysGenericValues( "sortByClass" );
+		List<GenericValueBean> sysGenericValues = getSysGenericValues( new String[]{"sortByClass"}, null );
 		if (sysGenericValues.size() > 0) {
 		    catalogData.setSortByClass( sysGenericValues.get( 0 ).getValue() );
 		}
@@ -155,7 +155,7 @@ public class CatalogServiceImpl implements CatalogService {
 	        return storeCatalogData;
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while storing catalog data.", e);
+			log.error("MdekException while storing catalog data.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		}
 	}
@@ -177,7 +177,7 @@ public class CatalogServiceImpl implements CatalogService {
         List<GenericValueBean> data;
         
         if (req == null)
-            data = getSysGenericValues(new String[]{"profileXML"});
+            data = getSysGenericValues(new String[]{"profileXML"}, null);
         else
             data = getSysGenericValues(new String[]{"profileXML"}, req);
         

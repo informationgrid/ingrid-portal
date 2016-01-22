@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,6 +25,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/dom",
+    "dojo/_base/array",
     "dojo/aspect",
     "dijit/registry",
     "ingrid/utils/List",
@@ -32,7 +33,7 @@ define([
     "ingrid/utils/UI",
     "ingrid/utils/PageNavigation",
     "ingrid/message"
-], function(declare, lang, dom, aspect, registry, UtilList, UtilStore, UtilUI, navigation, message){
+], function(declare, lang, dom, array, aspect, registry, UtilList, UtilStore, UtilUI, navigation, message){
         return declare(null, {
         
             objectAddressRefPageNav: null,
@@ -89,7 +90,6 @@ define([
             initObjectAddressReferenceTable : function(linkList, numReferences) {
                 var tableLabel = dom.byId("associatedObjNameLabel");
                 var tableLink = dom.byId("associatedObjNameLink");
-                //var tableStore = registry.byId("associatedObjName").store;
 
                 // Add table specific data to the list
                 UtilList.addObjectLinkLabels(linkList);  
@@ -100,7 +100,7 @@ define([
 
                 } else {
                     this.objectAddressRefPageNav = new navigation.PageNavigation({ resultsPerPage: 20, infoSpan:dom.byId("associatedObjNameInfo"), pagingSpan:dom.byId("associatedObjNamePaging") });
-                    aspect.after(this.objectAddressRefPageNav, "onPageSelected", function() { this.navObjectAddressReferences(); });
+                    aspect.after(this.objectAddressRefPageNav, "onPageSelected", lang.hitch(this, this.navObjectAddressReferences));
                 }
 
                 this.objectAddressRefPageNav.setTotalNumHits(numReferences);
@@ -111,11 +111,12 @@ define([
             navObjectAddressReferences : function() {
                 var curPos = this.objectAddressRefPageNav.getStartHit();
                 var totalNumHits = this.objectAddressRefPageNav.totalNumHits;
+                var self = this;
 
                 // TODO Do we need to get the uuid from somewhere else?
                 AddressService.fetchAddressObjectReferences(currentUdk.uuid, curPos, 20, {
-                        preHook: UtilUI.enterLoadingState,
-                        postHook: UtilUI.exitLoadingState,
+                        //preHook: UtilUI.enterLoadingState,
+                        //postHook: UtilUI.exitLoadingState,
                         callback: function(adr){
                             var unpubLinkTable = adr.linksFromObjectTable;
                             var pubLinkTable = adr.linksFromPublishedObjectTable;
@@ -127,7 +128,7 @@ define([
                             UtilList.addIcons(linkTable);
 
                             UtilGrid.setTableData("associatedObjName", linkTable);
-                            this.objectAddressRefPageNav.updateDomNodes();
+                            self.objectAddressRefPageNav.updateDomNodes();
                         },
                         errorHandler:function(message) {
                             UtilUI.exitLoadingState();

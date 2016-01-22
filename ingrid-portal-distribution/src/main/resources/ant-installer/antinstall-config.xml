@@ -73,6 +73,7 @@
             name        ="menu"
             overflow    = "true"
             displayText ="Auswahl der Konfigurationen">
+        <comment displayText="" bold="true" explanatoryText="Wenn Oracle als Datenbanksystem verwendet wird, so muss unterschieden werden, ob die InGrid-Datenbanken schon vorhanden sind oder erst noch erzeugt werden müssen. Das Erzeugen der Datenbanken muss bei Oracle manuell erfolgen! Wählt man die Option 'ohne DBs' so wird der einzuspielende Dump im Installationsordner bereitgestellt. Nachdem die Datenbanken erstellt wurden, kann mit der anderen Oracle Option 'vorhandene DBs' fortgesetzt werden." />
         <target-select
             property     ="dbChoice"
             displayText  ="Datenbankkonfiguration"
@@ -81,7 +82,7 @@
             <option text ="Oracle (vorhandene DBs)" value="setOracleProperty"/>
             <option text ="Oracle (ohne DBs)" value="copyOracleDump"/>
         </target-select>
-        <comment displayText="" bold="true" explanatoryText="Wenn Oracle als Datenbanksystem verwendet wird, so muss unterschieden werden, ob die InGrid-Datenbanken schon vorhanden sind oder erst noch erzeugt werden müssen. Das Erzeugen der Datenbanken muss bei Oracle manuell erfolgen! Wählt man die Option 'ohne DBs' so wird der einzuspielende Dump im Installationsordner bereitgestellt. Nachdem die Datenbanken erstellt wurden, kann mit der anderen Oracle Option 'vorhandene DBs' fortgesetzt werden." />
+
         <checkbox
             property     ="configMdek"
             displayText  ="InGrid-Editor"
@@ -95,6 +96,7 @@
             name        ="menu"
             overflow    = "true"
             displayText ="Auswahl der Konfigurationen">
+        <comment displayText="" bold="true" explanatoryText="Wenn Oracle als Datenbanksystem verwendet wird, so muss unterschieden werden, ob die InGrid-Datenbanken schon vorhanden sind oder erst noch erzeugt werden müssen. Das Erzeugen der Datenbanken muss bei Oracle manuell erfolgen! Wählt man die Option 'ohne DBs' so wird der einzuspielende Dump im Installationsordner bereitgestellt. Nachdem die Datenbanken erstellt wurden, kann mit der anderen Oracle Option 'vorhandene DBs' fortgesetzt werden." />
         <target-select
             property     ="dbChoice"
             displayText  ="Datenbankkonfiguration"
@@ -103,7 +105,6 @@
             <option text ="Oracle (vorhandene DBs)" value="setOracleProperty"/>
             <option text ="Oracle (ohne DBs)" value="copyOracleDump"/>
         </target-select>
-        <comment displayText="" bold="true" explanatoryText="Wenn Oracle als Datenbanksystem verwendet wird, so muss unterschieden werden, ob die InGrid-Datenbanken schon vorhanden sind oder erst noch erzeugt werden müssen. Das Erzeugen der Datenbanken muss bei Oracle manuell erfolgen! Wählt man die Option 'ohne DBs' so wird der einzuspielende Dump im Installationsordner bereitgestellt. Nachdem die Datenbanken erstellt wurden, kann mit der anderen Oracle Option 'vorhandene DBs' fortgesetzt werden." />
     </page>
     
     <page
@@ -175,11 +176,10 @@
             type        ="input"
             name        ="oracleOptions"
             displayText ="Einstellungen für die Portal Oracle-Datenbank">
+        <comment displayText="" bold="true" explanatoryText="Stellen Sie sicher, dass die Datenbank und der Datenbankbenutzer existieren und die Rechte für den Benutzer korrekt gesetzt sind!"/>
         <text property="adminUser"  displayText="Oracle Benutzername:"      defaultValue="ingrid_portal"/>
         <text property="adminPassword"  displayText="Oracle Benutzer-Passwort:" defaultValue=""/>
         <text property="dbUrl"      displayText="Oracle Datenbank-URL:"     defaultValue="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
-
-        <comment displayText="" bold="true" explanatoryText="Stellen Sie sicher, dass die Datenbank und der Datenbankbenutzer existieren und die Rechte für den Benutzer korrekt gesetzt sind!"/>
     </page>
 
     <page
@@ -205,8 +205,8 @@
             name        ="igeOptions"
             displayText ="Erweiterte Einstellungen für den IGE">
             
-            <text property="igeAdminPassword" displayText="Passwort fuer Administrator:" defaultValue=""/>
             <comment displayText="" explanatoryText="Mit dem Login 'admin' und diesem Passwort, koennen Sie Benutzer fuer den IGE verwalten sowie Kataloge verbinden."/>
+            <text property="igeAdminPassword" displayText="Passwort fuer Administrator:" defaultValue=""/>
     </page>
     
     <page

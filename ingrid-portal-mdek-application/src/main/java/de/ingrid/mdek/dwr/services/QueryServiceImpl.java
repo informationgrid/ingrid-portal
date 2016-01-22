@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,8 +24,6 @@ package de.ingrid.mdek.dwr.services;
 
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import de.ingrid.mdek.beans.address.MdekAddressBean;
 import de.ingrid.mdek.beans.query.AddressExtSearchParamsBean;
@@ -52,7 +50,7 @@ public class QueryServiceImpl implements QueryService {
 			  return queryRequestHandler.queryAddressesThesaurusTerm(topicId, startHit, numHits);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for addresses.", e);
+			log.error("MdekException while searching for addresses.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error while searching for addresses.", e);
@@ -68,7 +66,7 @@ public class QueryServiceImpl implements QueryService {
 			  return queryRequestHandler.queryAddressesExtended(query, startHit, numHits);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while executing an extended search for addresses.", e);
+			log.error("MdekException while executing an extended search for addresses.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error while executing an extended search for addresses.", e);
@@ -83,7 +81,7 @@ public class QueryServiceImpl implements QueryService {
 			  return queryRequestHandler.queryObjectsExtended(query, startHit, numHits);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while executing an extended search for objects.", e);
+			log.error("MdekException while executing an extended search for objects.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error while executing an extended search for objects.", e);
@@ -98,7 +96,7 @@ public class QueryServiceImpl implements QueryService {
 			  return queryRequestHandler.queryAddressesFullText(searchTerm, startHit, numHits);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while executing a fulltext search for addresses.", e);
+			log.error("MdekException while executing a fulltext search for addresses.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error while executing a fulltext search for addresses.", e);
@@ -114,7 +112,7 @@ public class QueryServiceImpl implements QueryService {
 			  return queryRequestHandler.queryObjectsFullText(searchTerm, startHit, numHits);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while executing a fulltext search for objects.", e);
+			log.error("MdekException while executing a fulltext search for objects.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error while executing a fulltext search for objects.", e);
@@ -129,7 +127,7 @@ public class QueryServiceImpl implements QueryService {
 			  return queryRequestHandler.queryHQL(hqlQuery, startHit, numHits);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for objects.", e);
+			log.error("MdekException while searching for objects.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 //		} catch (Exception e) {
 //			log.error("Error while searching for objects.", e);
@@ -148,11 +146,11 @@ public class QueryServiceImpl implements QueryService {
 
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for objects.", e);
+			log.error("MdekException while searching for objects.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 
 		} catch (RuntimeException e) {
-			log.debug("Runtime Exception while loading csv values", e);
+			log.error("Runtime Exception while loading csv values", e);
 			throw new RuntimeException(e.getCause());
 		}
 	}
@@ -165,7 +163,7 @@ public class QueryServiceImpl implements QueryService {
 			  return queryRequestHandler.queryObjectsThesaurusTerm(topicId, startHit, numHits);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for objects.", e);
+			log.error("MdekException while searching for objects.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error while searching for objects.", e);
@@ -181,7 +179,7 @@ public class QueryServiceImpl implements QueryService {
 			  return queryRequestHandler.searchAddresses(adr, startHit, numHits);
 		} catch (MdekException e) {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
-			log.debug("MdekException while searching for addresses.", e);
+			log.error("MdekException while searching for addresses.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
 		} catch (Exception e) {
 			log.error("Error while searching for addresses.", e);

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -49,7 +49,7 @@ public interface CatalogService {
 	//public List<Map<String, String>> getSysGuis(String[] guiIds);
 	//public List<Map<String, String>> storeSysGuis(List<Map<String, String>> sysGuis, boolean refetchAfterStore);
 
-	public List<GenericValueBean> getSysGenericValues(String... keyNames);
+	public List<GenericValueBean> getSysGenericValues(List<String> keyNames);
 	public void storeSysGenericValues(List<GenericValueBean> genericValues);
 	
 	public CatalogBean getCatalogData();

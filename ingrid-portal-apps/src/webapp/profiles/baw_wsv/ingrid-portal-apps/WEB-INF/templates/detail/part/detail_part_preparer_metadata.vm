@@ -25,14 +25,16 @@
 	    	## Zeitliche Beschränkung
         		#set($beginTime = $TOOL.convertDateString($TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition")))
         		#set($endTime = $TOOL.convertDateString($TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition")))
-        		#if($beginTime == $endTime)
-        			#renderTextLabelLeft("Zeitliche Beschr&auml;nkung" "$MESSAGES.getString('search.detail.time.at'): $beginTime")
-        		#elseif($beginTime && !$endTime)
-        			#renderTextLabelLeft("Zeitliche Beschr&auml;nkung" "$MESSAGES.getString('search.detail.time.since'): $beginTime")
-        		#elseif(!$beginTime && $endTime)
-        			#renderTextLabelLeft("Zeitliche Beschr&auml;nkung" "$MESSAGES.getString('search.detail.time.to'): $endTime")
-        		#elseif($beginTime != $endTime)
-        			#renderTextLabelLeft("Zeitliche Beschr&auml;nkung" "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+        		#if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
+	        		#if($beginTime == $endTime)
+	        			#renderTextLabelLeft("Zeitliche Beschr&auml;nkung" "$MESSAGES.getString('search.detail.time.at'): $beginTime")
+	        		#elseif($beginTime && !$endTime)
+	        			#renderTextLabelLeft("Zeitliche Beschr&auml;nkung" "$MESSAGES.getString('search.detail.time.since'): $beginTime")
+	        		#elseif(!$beginTime && $endTime)
+	        			#renderTextLabelLeft("Zeitliche Beschr&auml;nkung" "$MESSAGES.getString('search.detail.time.to'): $endTime")
+	        		#elseif($beginTime != $endTime)
+	        			#renderTextLabelLeft("Zeitliche Beschr&auml;nkung" "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+					#end
 				#end
     		## Periodizität
     			#renderTextLabelLeft($MESSAGES.getString("t01_object.time_period") $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue", "518"))

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -70,15 +70,15 @@ public class GetCapabilitiesService {
             return getCapabilitiesData( doc );
 
         } catch (MalformedURLException e) {
-            log.debug( "URL is malformed: " + urlStr, e );
+            log.error( "URL is malformed: " + urlStr, e );
             throw new RuntimeException( ERROR_GETCAP_INVALID_URL, e );
 
         } catch (IOException e) {
-            log.debug( "IO-Exception occured with url: " + urlStr, e );
+            log.error( "IO-Exception occured with url: " + urlStr, e );
             throw new RuntimeException( ERROR_GETCAP, e );
 
         } catch (Exception e) {
-            log.debug( "A general exception occured with url: " + urlStr, e );
+            log.error( "A general exception occured with url: " + urlStr, e );
             throw new RuntimeException( ERROR_GETCAP, e );
         }
     }
