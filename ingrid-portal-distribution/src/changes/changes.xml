@@ -44,6 +44,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-241">
                 MapClient: Fix change projection for WMS version 1.3.0.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-243">
+                MapClient: Fixed spatial search on map.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-248">
                 MapClient: Fix yx axis order for WMS version 1.3.0 layer by loading from session.
             </action>
