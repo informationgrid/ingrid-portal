@@ -44,6 +44,12 @@
             <action type="update" dev="wemove" issue="REDMINE-245">
                 Portal: Make comparison of IGE frontend with backend version (IGE iPlug) more tolerant, so older Portal can work with newer IGE iPlug, if possible.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-87">
+                IGE: Use WebServices as default value for inspire dataset when adding a new operation.
+            </action>
+        </release>
+        
+        <release version="3.6.1.2" date="2016-01-22" description="Release 3.6.1.2">
             <action type="fix" dev="wemove" issue="REDMINE-235">
                 Portal: Also write SMTP server into portal configuration.
             </action>
@@ -56,17 +62,17 @@
             <action type="fix" dev="wemove" issue="REDMINE-236">
                 IGE: Fixed paging of object references in addresses.
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-241">
+            <action type="fix" dev="wemove" issue="REDMINE-241">
                 MapClient: Fix change projection for WMS version 1.3.0.
-			</action>
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-243">
+                MapClient: Fixed spatial search on map.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-248">
                 MapClient: Fix yx axis order for WMS version 1.3.0 layer by loading from session.
-			</action>
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-249">
                 MapClient: Fix load saved maps with redlining.
-			</action>
-            <action type="add" dev="wemove" issue="REDMINE-87">
-                IGE: Use WebServices as default value for inspire dataset when adding a new operation.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-247">
                 IGE: Fixed session refresh functionality.
