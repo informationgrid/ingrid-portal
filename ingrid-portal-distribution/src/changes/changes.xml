@@ -29,6 +29,9 @@
     </properties>
     <body>
         <release version="3.6.2-SNAPSHOT" date="2016-??-??" description="Release 3.6.2">
+            <action type="fix" dev="wemove" issue="REDMINE-258">
+                Portal: Fixed limitation of displayed cross references.
+            </action>
             <action type="add" dev="wemove" issue="REDMINE-21">
                 Portal: Add configurable partner logos to search result hits.
             </action>
