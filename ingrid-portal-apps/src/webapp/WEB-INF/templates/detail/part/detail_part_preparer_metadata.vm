@@ -28,10 +28,10 @@
     		#if($TOOL.aNodeOfListExist($xpathList))
     		#renderSectionTitle($MESSAGES.getString("references"))
     			#if($type == "3")
-    				## Darstellender Dienst
+    				## Dargestellte Daten 
     				#renderLinkList($MESSAGES.getString("coupled_data") $TOOL.getReference("./idf:crossReference", true) "false")
     			#else
-    				## Dargestellte Daten 
+    				## Darstellender Dienst
     				#renderLinkList($MESSAGES.getString("coupled_service") $TOOL.getReference("./idf:crossReference", true) "false")
     			#end
         		## Querverweise zu
@@ -405,7 +405,7 @@
             		#set($consideredValues = ["otherRestrictions"])
             		#set($accessConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints")
             		#renderTextList($MESSAGES.getString("object_access.restriction_value") $TOOL.mergeList($TOOL.getListOfValuesFromXPath($accessConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "6010", $consideredValues), $TOOL.getSiblingsValuesFromXPath($accessConstraintsXPath, "gmd:otherConstraints", false, "6010", $consideredValues)))
-        		## Nutzungsbeschränkungen (useConstraints)
+        		## Nutzungsbeschrï¿½nkungen (useConstraints)
             		#set($useConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints")
             		#renderTextList($MESSAGES.getString("object_access.license") $TOOL.mergeList($TOOL.getListOfValuesFromXPath($useConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "524", $consideredValues), $TOOL.getSiblingsValuesFromXPath($useConstraintsXPath, "gmd:otherConstraints")))
         		## Nutzungsbedingungen (useLimitation)

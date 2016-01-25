@@ -206,16 +206,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			for (int i=0; i<nodeList.getLength();i++){
 				
-				if (i >= limitReferences){
-					if (linkList.size() >= limitReferences){
-						HashMap<String, Object> link = new HashMap<String, Object>();
-			        	link.put("type", "html");
-			        	link.put("body", messages.getString("info_limit_references"));
-			        	linkList.add(link);
-					}
-					break;
+				if (linkList.size() >= limitReferences){
+					HashMap<String, Object> link = new HashMap<String, Object>();
+		        	link.put("type", "html");
+		        	link.put("body", messages.getString("info_limit_references"));
+		        	linkList.add(link);
+                    break;
 				}
-				
 				Node node = nodeList.item(i);
 				String uuid = "";
 				String title = "";
