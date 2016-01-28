@@ -338,6 +338,7 @@ define([
                     executeScripts: true
                 });
                 
+                /*
                 var behaviourSettings = new XContentPane({
                     id: "behaviourSettings",
                     title: "behaviourSettings",
@@ -347,6 +348,7 @@ define([
                     scriptHasHooks: true,
                     executeScripts: true
                 });
+                */
 
                 var groupManagement = new XContentPane({
                     id: "groupManagement",
@@ -510,7 +512,7 @@ define([
                 sc.addChild(catalogSettings);
                 //sc.addChild(fieldSettings);
                 sc.addChild(generalSettings);
-                sc.addChild(behaviourSettings);
+                //sc.addChild(behaviourSettings);
                 sc.addChild(groupManagement);
                 sc.addChild(permissionOverview);
                 sc.addChild(adminImport);

@@ -72,7 +72,7 @@
                     var check = dom.byId("behaviour_" + id);
                     check.checked = true;
                     domClass.add(check.parentNode.parentNode, "active");
-                })
+                });
             }
             
             function renderBehaviours() {
