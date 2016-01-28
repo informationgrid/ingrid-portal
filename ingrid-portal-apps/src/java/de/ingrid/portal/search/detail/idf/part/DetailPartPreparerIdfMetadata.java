@@ -1725,11 +1725,60 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 	
 	private String getCapabilityUrl() {
 	    String url = null;
-        //HashMap link = (HashMap) getConnectionPoints("./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint").get("link");
-        Node capNode = XPathUtils.getNode( this.rootNode, "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/gco:CharacterString[text() = 'GetCapabilities']/../../srv:connectPoint//gmd:URL");
-        if (capNode != null) {
-            url = capNode.getTextContent();
+	    String serviceType = null;
+        String xpathExpression = "";
+        
+        xpathExpression = "./gmd:identificationInfo/*/srv:serviceType";
+        if(XPathUtils.nodeExists(this.rootNode, xpathExpression)){
+            serviceType = XPathUtils.getString(this.rootNode, xpathExpression);
         }
+        if(serviceType != null){
+            if (serviceType.trim().equals("view")) {
+                Node capNode = XPathUtils.getNode( this.rootNode, "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/gco:CharacterString[text() = 'GetCapabilities']/../../srv:connectPoint//gmd:URL");
+                if (capNode != null) {
+                    if(capNode.getTextContent() != null){
+                        url = capNode.getTextContent().trim();
+                    }
+                }
+            }else{
+                // Check URL parameter 'service=wms' exist on connectPoint
+                String tmpUrl = null;
+                NodeList nodeList = XPathUtils.getNodeList( this.rootNode, "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/gco:CharacterString[text() = 'GetCapabilities']/../../srv:connectPoint//gmd:URL");
+                if(nodeList != null){
+                    for (int i = 0; i < nodeList.getLength(); i++) {
+                        Node node = nodeList.item( i );
+                        if(node.getTextContent() != null){
+                            if(node.getTextContent().toLowerCase().indexOf("service=wms") > -1){
+                                tmpUrl = node.getTextContent().trim();
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                if(tmpUrl == null){
+                    // Check URL parameter 'service=wms' exist on srv:SV_Parameter
+                    nodeList = XPathUtils.getNodeList(this.rootNode, "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/gco:CharacterString[text() = 'GetCapabilities']/../../srv:parameters/srv:SV_Parameter/srv:name/gco:aName");
+                    if(nodeList != null){
+                        for (int i = 0; i < nodeList.getLength(); i++) {
+                            Node node = nodeList.item( i );
+                            if(node.getTextContent().toLowerCase().indexOf("service=wms") > -1){
+                                Node capNode = XPathUtils.getNode(node, "../../../../srv:connectPoint//gmd:URL" );
+                                if(capNode.getTextContent() != null){
+                                    tmpUrl = capNode.getTextContent().trim();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if(tmpUrl != null){
+                    url = tmpUrl;
+                }
+            }
+        }
+        
         return url;
     }
 	
