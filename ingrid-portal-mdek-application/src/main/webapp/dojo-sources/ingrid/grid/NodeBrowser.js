@@ -76,8 +76,10 @@ define( [
         
         postCreate: function () {
             var self = this;
-            var input = construct.toDom( "<div>Suche: <input class='filter'></div>" );
-            construct.place( input, this.domNode );
+            var wrapper = construct.toDom( "<div>Suche: </div>" );
+            var input = construct.toDom( "<input class='filter'>" );
+            wrapper.appendChild( input );
+            construct.place( wrapper, this.domNode );
             
             on( input, 'keyup', function() {
                 self.onChange(input.value);
