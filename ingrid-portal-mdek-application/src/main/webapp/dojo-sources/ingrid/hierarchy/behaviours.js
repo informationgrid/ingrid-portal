@@ -46,8 +46,11 @@ define(["dojo/_base/declare",
         
         inspireIsoConnection: {
             title: "Inspire / ISO - Connection",
-            description: "According to the GDI_DE Conventions, an ISO categorie is added automatically to a corresponding INSPIRE-topic. " +
-            		"The category cannot be removed until the INSPIRE topic is present. If an INSPIRE topic is removed, then the ISO" +
+            description: "Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Thema hinzugefügt. " +
+            		"Diese Kategorie bleibt so lange bestehen, wie auch das INSPIRE-Thema vorhanden ist. Erst wenn das INSPIRE-Thema entfernt " +
+            		"wurde, kann auch die Kategorie entfernt werden."
+            description_en: "According to the GDI_DE Conventions, an ISO categorie is added automatically to a corresponding INSPIRE-topic. " +
+            		"The category cannot be removed until the INSPIRE topic is present. If an INSPIRE topic is removed, then the ISO " +
             		"category also will be removed.",
             run: function() {
                 
@@ -148,8 +151,10 @@ define(["dojo/_base/declare",
         },
         
         coupledResourceDownloadDataCheck: {
-            title: "Coupled Resources - Check for download data",
-            description: "When an external coupled resource is being added then also check if the resource contains download data.",
+            title: "Gekoppelte Daten - Überprüfung auf Download-Daten",
+            title_en: "Coupled Resources - Check for download data",
+            description: "Wenn eine externe gekoppelte Ressource hinzugefügt wird, dann überprüfe, dass diese Download-Daten enthält.",
+            description_en: "When an external coupled resource is being added then also check if the resource contains download data.",
             issue: "https://dev.informationgrid.eu/redmine/issues/153",
             run: function() {
                 topic.subscribe("/afterInitDialog/SelectObject", function(config) {
