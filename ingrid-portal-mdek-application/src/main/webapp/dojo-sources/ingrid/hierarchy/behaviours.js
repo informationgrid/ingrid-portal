@@ -48,7 +48,7 @@ define(["dojo/_base/declare",
             title: "Inspire / ISO - Connection",
             description: "Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Thema hinzugefügt. " +
             		"Diese Kategorie bleibt so lange bestehen, wie auch das INSPIRE-Thema vorhanden ist. Erst wenn das INSPIRE-Thema entfernt " +
-            		"wurde, kann auch die Kategorie entfernt werden."
+            		"wurde, kann auch die Kategorie entfernt werden.",
             description_en: "According to the GDI_DE Conventions, an ISO categorie is added automatically to a corresponding INSPIRE-topic. " +
             		"The category cannot be removed until the INSPIRE topic is present. If an INSPIRE topic is removed, then the ISO " +
             		"category also will be removed.",
