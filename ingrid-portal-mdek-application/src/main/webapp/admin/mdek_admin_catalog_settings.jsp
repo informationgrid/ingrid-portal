@@ -38,13 +38,18 @@
             "dijit/form/CheckBox",
             "dijit/form/NumberTextBox",
             "dojo/on",
+            "dojo/query",
+            "dojo/dom",
+            "dojo/dom-class",
+            "dojo/dom-construct",
             "ingrid/layoutCreator",
             "ingrid/dialog",
             "ingrid/init",
             "ingrid/utils/Syslist",
             "ingrid/utils/List",
-            "ingrid/utils/Catalog"
-        ], function(array, lang, Deferred, registry, Select, CheckBox, NumberTextBox, on, layoutCreator, dialog, init, UtilSyslist, UtilList, UtilCatalog) {
+            "ingrid/utils/Catalog",
+            "ingrid/hierarchy/behaviours"
+        ], function(array, lang, Deferred, registry, Select, CheckBox, NumberTextBox, on, query, dom, domClass, domConstruct, layoutCreator, dialog, init, UtilSyslist, UtilList, UtilCatalog, behaviour) {
             
             console.log("catalog settings");
         
@@ -55,6 +60,8 @@
             
             // Storage for the current catalog. We need to get the uuid from somewhere
             pageCatSettings.currentCatalogData = null;
+            
+            var def = UtilCatalog.getActiveBehavioursDef();
             
             on(_container_, "Load", function() {
                 try {
@@ -78,6 +85,15 @@
                         
                     var checkbox = registry.byId("adminCatalogExpire");
                     var inputField = registry.byId("adminCatalogExpiryDuration");
+                    
+                    renderBehaviours();
+                    def.then(function(data) {
+                        // set all checkboxes active that are activated
+                        array.forEach(data, function(id) {
+                            var check = registry.byId("behaviour_" + id);
+                            check.set( "checked", true );
+                        });
+                    });
                     
                     on(checkbox, "click", function(){ //!!!connectOnce
                         checkbox.checked ? inputField.set('disabled', false) : inputField.set('disabled', true);
@@ -153,11 +169,13 @@
                 newCatalogData.expiryDuration = (registry.byId("adminCatalogExpire").checked ? registry.byId("adminCatalogExpiryDuration").get("value") : "0");
                 newCatalogData.workflowControl = registry.byId("adminCatalogWorkflowControl").checked ? "Y" : "N";
                 newCatalogData.sortByClass = registry.byId("adminCatalogSortByClass").checked ? "Y" : "N";
+                
                 console.debug("validating");
                 if (!isValidCatalog(newCatalogData)) {
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.catalog.requiredFieldsHint' />", dialog.WARNING);
                     return;
                 }
+                
                 console.debug("storing");
                 CatalogService.storeCatalogData(newCatalogData, {
                     callback: function(res){
@@ -167,6 +185,7 @@
                         pageCatSettings.currentCatalogData = res;
                         // init.initPageHeader();
                         init.initCatalogData();
+                        saveBehaviours();
                         dialog.show("<fmt:message key='general.hint' />", "<fmt:message key='dialog.admin.catalog.saveSuccess' />", dialog.INFO);
                         
                     },
@@ -181,6 +200,24 @@
                         
                         console.error(errMsg);
                     }
+                });
+            }
+            
+            function saveBehaviours() {
+
+                var ids = query("#behaviourContent input:checked").map(function(item) {
+                    return item.id.substring(10);
+                });
+                
+                data = {};
+                data[UtilCatalog.ACTIVE_BEHAVIOURS] = ids.join(",");
+                // write the active IDs to the backend
+                UtilCatalog.storeGenericValuesDef(data).then(function() {
+                    //query("#behaviourContent .row").removeClass("active");
+                    //highlightActiveRows(ids);
+                }, function(error) {
+                    console.error(error);
+                    displayErrorMessage(error);
                 });
             }
             
@@ -211,6 +248,25 @@
                     })*/);
                 else
                     return false;
+            }
+            
+            function renderBehaviours() {
+                for(var behave in behaviour) {
+                    if (!behaviour[behave].title) continue;
+                    console.log(behaviour[behave].title);
+                    domConstruct.place( renderRow(behaviour[behave], behave), "behaviourContent" );
+                }
+            }
+            
+            function renderRow(data, id) {
+                var row = domConstruct.toDom("<span class='input'></span>");
+                var label = domConstruct.toDom("<label class='inActive' title='" + data.description + "'></label>");
+                var cb = new CheckBox({id: "behaviour_" + id});
+                label.appendChild(cb.domNode);
+                label.appendChild(domConstruct.toDom(data.title));
+                
+                row.appendChild(label);
+                return row;
             }
 
             /*
@@ -341,6 +397,7 @@
                                     <fmt:message key="dialog.admin.catalog.sortByClass" />
                                 </label>
                             </span>
+                            <div id="behaviourContent" class="clear"></div>
                         </div>
                         </div></span>
                         <div class="fill"></div>
