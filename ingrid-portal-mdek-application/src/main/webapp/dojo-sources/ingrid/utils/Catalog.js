@@ -176,7 +176,7 @@ define([
                 return activeBehaviours;
             });
             return def;
-        },
+        }
             
     })();
 });
