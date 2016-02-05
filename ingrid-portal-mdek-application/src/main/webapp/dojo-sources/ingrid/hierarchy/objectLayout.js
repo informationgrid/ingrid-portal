@@ -141,11 +141,8 @@ define([
                 // apply special validation for necessary components
                 console.debug("apply Validations");
                 defAddFields.then(this.applyDefaultConnections)
-                .then(setVisibilityOfFields);
-
-                // update view according to initial chosen class
-                console.debug("select class");
-                igeEvents.selectUDKClass();
+                .then(setVisibilityOfFields)
+                .then(igeEvents.selectUDKClass); // update view according to initial chosen class
 
                 // add a '*' to all labels and display them if an element is required 
                 query(".outer label", "contentFrameBodyObject").forEach(function(item) {
