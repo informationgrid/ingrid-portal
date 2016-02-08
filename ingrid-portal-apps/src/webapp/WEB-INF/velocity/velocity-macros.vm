@@ -408,3 +408,14 @@ $action.setParameter("id", "$rowId")
     #end
 </h1>
 #end
+
+#macro (renderPortletTitleTeaser $_title $_help)
+<h4>
+	$_title
+	#if($_help)
+		<div class="tooltip ob-circle js-popup" data-content="<p>$_help</p>">
+	        <svg class="tooltip__icon icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#question-mark"></use></svg>
+	    </div>
+    #end
+</h4>
+#end
