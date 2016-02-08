@@ -58,6 +58,7 @@ import de.ingrid.portal.om.IngridEnvTopic;
 import de.ingrid.portal.om.IngridFacet;
 import de.ingrid.portal.om.IngridPartner;
 import de.ingrid.portal.om.IngridProvider;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
@@ -234,7 +235,7 @@ public class UtilsFacete {
         sortingFacet(config);
 		context.put("facetConfig", config);
         context.put("facetKeys", keys);
-        
+        context.put("searchTerm", SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING));
         context.put("facetsQuery", getAttributeFromSession(request, "FACETS_QUERY"));
         context.put("searchQuery", getAttributeFromSession(request, "SEARCH_QUERY"));
         context.put("enableFacetSelection", isFacetSelection(request));
