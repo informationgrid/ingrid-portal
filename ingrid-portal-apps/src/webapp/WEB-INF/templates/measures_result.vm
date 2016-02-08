@@ -33,87 +33,90 @@
           </div>
 #end
 	
-	<div class="section ">    
-      <div class="resultset_nav float_left">
-#if($grouping)
-	#renderResultCounterCatalogueGrouping($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
-#else
-	#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
-#end	
-      </div>
-      <div class="resultset_nav">
-#if($grouping)
-	#renderRankedPageNavigationGrouping($rankedPageSelector)
-#else
-	#renderRankedPageNavigation($rankedPageSelector)
-#end
-      </div>
-      <br />
-#foreach($rs in $rankedResultList.getWrapperHits())
-
-	#if($grouping)
-      <div class="resultset_partner_group">
-		#set ($groupSubject = "")
-		#set ($groupSubjectKey = "")
-		#if($grouping == 'partner')
-			#set ($groupSubject = "$MESSAGES.getString('common.result.partner') '$rs.partner'")
-			#set ($groupSubjectKey = $rs.partnerKey)
-		#elseif($grouping == 'provider')
-			#set ($groupSubject = "$MESSAGES.getString('common.result.provider') '$rs.provider'")
-			#set ($groupSubjectKey = $rs.providerKey)
-		#end
-        <div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.group.header') $!{groupSubject}</span></div>
-      </div>
-	#else
-		#if($velocityCount > 1)
-			<div class="line"><hr /></div>
-		#elseif($providerOnly)
-		    #set ($filterProviders = "")
-		    #set ($firstFilterProvider = "1")
-		    #foreach($filterProvider in $resultsForProviderList)
-				#if($firstFilterProvider == '1')
-		    		#set ($firstFilterProvider = "0")
-					#set ($filterProviders = "'$filterProvider'")
-	    		#else
-					#set ($filterProviders = "$filterProviders, '$filterProvider'")
-		    	#end
-		    #end
+<section class="block block--padded block--light">
+	<div class="ob-box-wide ob-box-padded ob-box-center">
+		<article class="content ob-container">
+			#if($grouping)
+				#renderResultCounterCatalogueGrouping($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
+			#else
+				#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
+			#end	
+			      <div class="resultset_nav">
+			#if($grouping)
+				#renderRankedPageNavigationGrouping($rankedPageSelector)
+			#else
+				#renderRankedPageNavigation($rankedPageSelector)
+			#end
+			      </div>
+			      <br />
+			#foreach($rs in $rankedResultList.getWrapperHits())
 			
-			#set ($filterSubject = "$MESSAGES.getString('common.result.provider') $filterProviders")
-			<div class="resultset_partner_group">
-				<div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.filter.header') $filterSubject</span></div>
-			</div>
-		#end
-	#end
-	#renderHit($rs $grouping)
-    #foreach($sub_rs in $rs.get('subHits'))
-        <div class="line"><hr /></div>
-		#renderHit($sub_rs $grouping)
-    #end
-	#if($rs.get('moreHits') && $groupSubjectKey != "")
-      <div class="line"><hr /></div>
-      <div class="resultset_show_partner">
-    #set ($action = $renderResponse.createActionURL())
-    $action.setParameter('action', 'showAll')
-    $action.setParameter('grouping', $grouping)
-    $action.setParameter('subject', $groupSubjectKey)
-        <span class="result_title"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('common.result.group.showAll') $!{groupSubject}</a></span>
-      </div>
-      <br />
-	#end
-#end
-      <div class="resultset_nav float_left">
-#if($grouping)
-	#renderResultCounterCatalogueGrouping($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
-#else
-	#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
-#end	
-      </div>
-      <div class="resultset_nav">
-#if($grouping)
-	#renderRankedPageNavigationGrouping($rankedPageSelector)
-#else
-	#renderRankedPageNavigation($rankedPageSelector)
-#end
-      </div>
-    </div>
+				#if($grouping)
+			      <div class="resultset_partner_group">
+					#set ($groupSubject = "")
+					#set ($groupSubjectKey = "")
+					#if($grouping == 'partner')
+						#set ($groupSubject = "$MESSAGES.getString('common.result.partner') '$rs.partner'")
+						#set ($groupSubjectKey = $rs.partnerKey)
+					#elseif($grouping == 'provider')
+						#set ($groupSubject = "$MESSAGES.getString('common.result.provider') '$rs.provider'")
+						#set ($groupSubjectKey = $rs.providerKey)
+					#end
+			        <div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.group.header') $!{groupSubject}</span></div>
+			      </div>
+				#else
+					#if($velocityCount > 1)
+						<div class="line"><hr /></div>
+					#elseif($providerOnly)
+					    #set ($filterProviders = "")
+					    #set ($firstFilterProvider = "1")
+					    #foreach($filterProvider in $resultsForProviderList)
+							#if($firstFilterProvider == '1')
+					    		#set ($firstFilterProvider = "0")
+								#set ($filterProviders = "'$filterProvider'")
+				    		#else
+								#set ($filterProviders = "$filterProviders, '$filterProvider'")
+					    	#end
+					    #end
+						
+						#set ($filterSubject = "$MESSAGES.getString('common.result.provider') $filterProviders")
+						<div class="resultset_partner_group">
+							<div class="ico_down_black"><span class="title">$MESSAGES.getString('common.result.filter.header') $filterSubject</span></div>
+						</div>
+					#end
+				#end
+				#renderHit($rs $grouping)
+			    #foreach($sub_rs in $rs.get('subHits'))
+			        <div class="line"><hr /></div>
+					#renderHit($sub_rs $grouping)
+			    #end
+				#if($rs.get('moreHits') && $groupSubjectKey != "")
+			      <div class="line"><hr /></div>
+			      <div class="resultset_show_partner">
+			    #set ($action = $renderResponse.createActionURL())
+			    $action.setParameter('action', 'showAll')
+			    $action.setParameter('grouping', $grouping)
+			    $action.setParameter('subject', $groupSubjectKey)
+			        <span class="result_title"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('common.result.group.showAll') $!{groupSubject}</a></span>
+			      </div>
+			      <br />
+				#end
+			#end
+			      <div class="resultset_nav float_left">
+			#if($grouping)
+				#renderResultCounterCatalogueGrouping($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
+			#else
+				#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('measuresSearch.result.navigationTitle')")
+			#end	
+			      </div>
+			      <div class="resultset_nav">
+			#if($grouping)
+				#renderRankedPageNavigationGrouping($rankedPageSelector)
+			#else
+				#renderRankedPageNavigation($rankedPageSelector)
+			#end
+			      </div>
+		    </div>
+		</article>
+	</div>
+</section>

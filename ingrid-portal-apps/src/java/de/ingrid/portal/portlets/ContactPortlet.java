@@ -126,8 +126,6 @@ public class ContactPortlet extends GenericVelocityPortlet {
         	context.put("contactIntroPostEmail", localizedItem.getItemValue());
         }
         
-        // show newsletter option if configured that way
-        context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
 
         // ----------------------------------
         // check for passed RENDER PARAMETERS and react

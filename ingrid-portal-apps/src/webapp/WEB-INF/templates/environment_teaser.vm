@@ -1,13 +1,24 @@
-<div class="themen_image">
-	<img class="themen_image_style" src="/ingrid-portal-apps/images/topics/index_themen_${randomTopicImage}.png" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
+<section class="block">
+<div class="ob-box-wide ob-box-padded ob-box-center">
+<article class="content ob-container">
+<div class="media">
+                <div class="media__obj media__obj--left">
+                    <img class="themen_image_style" src="/ingrid-portal-apps/images/topics/index_themen_${randomTopicImage}.png" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
+                </div>
+                <div class="media__body">
+                <ul class="tag-group">
+                    #set ($numTopics = $topicList.size())
+					#foreach ($topic in $topicList)
+					#set ($action = $renderResponse.createActionURL())
+					$action.setParameter('action','doTeaser')
+					$action.setParameter('rubric',"$topic.FormValue")
+					    <li>
+					    	<a class="tag tag--big" href="$action">$topic.QueryValue</a>
+					    </li>
+					#end
+                    </ul>
+                </div>
+            </div>
+</article>
 </div>
-<ul class="catalog">
-#set ($numTopics = $topicList.size())
-#foreach ($topic in $topicList)
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric',"$topic.FormValue")
-    <li><a href="$action">$topic.QueryValue</a>#if($velocityCount != $numTopics)<span class="separator">&nbsp;</span>#end</li>
-#end
-</ul>
-<span class="clearer"></span>
+</section>

@@ -902,9 +902,6 @@ public class AdminUserPortlet extends ContentPortlet {
 
             context.put("actionForm", f);
 
-            // show newsletter option if configured that way
-            context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
-
             setDefaultViewPage(viewEdit);
             
             return true;
@@ -932,9 +929,6 @@ public class AdminUserPortlet extends ContentPortlet {
         }
 
         context.put("actionForm", f);
-
-        // show newsletter option if configured that way
-        context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
 
         setDefaultViewPage(viewNew);
         return true;

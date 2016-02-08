@@ -71,7 +71,6 @@ public class SearchNominatimPortlet extends GenericVelocityPortlet {
             String myView = prefs.getValue("infoTemplate", "/WEB-INF/templates/search_simple_info.vm");
             setDefaultViewPage(myView);
             response.setTitle(messages.getString("searchSimple.info.title"));
-            context.put("enableFeatureType", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_FEATURE_TYPE, false));
 
             super.doView(request, response);
             return;

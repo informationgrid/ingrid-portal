@@ -1,7 +1,12 @@
-<div class="formbody">
-  <h3>$MESSAGES.getString('admin.statistics.headline')</h3>
-  <p>
-	<a target="_new" href="$apacheStatisticsURL">$MESSAGES.getString('admin.statistics.apache')</a>
-  </p>
-</div>
-
+<section class="block">
+	<div class="ob-box-wide ob-box-padded ob-box-center">
+		<article class="content ob-container">
+			<div class="formbody">
+			  <h3>$MESSAGES.getString('admin.statistics.headline')</h3>
+			  <p>
+				<a target="_new" href="$apacheStatisticsURL">$MESSAGES.getString('admin.statistics.apache')</a>
+			  </p>
+			</div>
+		</article>
+	</div>
+</section>

@@ -1,48 +1,54 @@
-#set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
-    <div class="formbody formbody_border_style">
-
-    <div id="filterArea">
-    <div style="float:left">
-    <p style="float:left;margin-right:10px"><label for="filterCriteriaId">$MESSAGES.getString('account.view.id')</label><br/>
-    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" />
-    </p>
-    <p style="float:left;margin-right:10px"><label for="filterCriteriaFirstName">$MESSAGES.getString('account.view.first.name')</label><br/>
-    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" />
-    </p>
-    <p style="float:left;margin-right:10px"><label for="filterCriteriaLastName">$MESSAGES.getString('account.view.last.name')</label><br/>
-    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" />
-    </p>
-    <br style="clear:both" />
-    <p style="float:left;margin-right:10px"><label for="filterCriteriaEmail">$MESSAGES.getString('account.view.email')</label><br/>
-    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" />
-    </p>
-    <p style="float:left;margin-right:10px"><label for="filterCriteriaRole">$MESSAGES.getString('account.view.roles')</label><br/>
-    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" />
-    </p>
-    <br style="clear:both" />
-    <p>$MESSAGES.getString('component.forms.text.search.wildcard')</p>
-    </div>
-    <div style="float:right;margin-top:20px">
-    #renderInputButton("$MESSAGES.getString('component.forms.buttons.search')" "" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')")
-    </div>
-    <br style="clear:both" />
-    </div>
-    
-    #renderPaginationAndHint($browser "$MESSAGES.getString('account.view.tip')")
-
-    <br style="clear:both" />
-    <table class="border fullwidth">
-#set ($colNames = ["id", "firstName", "lastName", "email", "roles", "lastLogin"])
-#set ($colTitles = [$MESSAGES.getString('account.view.id'), $MESSAGES.getString('account.view.first.name'), $MESSAGES.getString('account.view.last.name'), $MESSAGES.getString('account.view.email'), $MESSAGES.getString('account.view.roles'), $MESSAGES.getString('account.view.last.login')])
-#renderDBBrowserHeader($colNames $colTitles)
-#foreach ($dbEntity in $dbEntities)
-    #set ($rowId = $dbEntity.id)
-    #set ($rowValues = [$UtilsString.cutString($dbEntity.firstName, 20, 20), $UtilsString.cutString($dbEntity.lastName, 20, 20), $UtilsString.cutString($dbEntity.email, 40, 40), $dbEntity.roles, $dbEntity.lastLogin])
-    #renderDBBrowserRowWithEditLink($rowId $rowValues)
-#end
-        </table>
-    </div>
-#set ($buttons = ["doDelete", "doRefresh", "doNew"])
-#renderDBBrowserFooterButtons($buttons)
-</form>
+<section class="block">
+	<div class="ob-box-wide ob-box-padded ob-box-center">
+		<article class="content ob-container">
+			#set ($action = $renderResponse.createActionURL())
+			<form action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
+			    <div class="formbody formbody_border_style">
+			
+			    <div id="filterArea">
+			    <div style="float:left">
+			    <p style="float:left;margin-right:10px"><label for="filterCriteriaId">$MESSAGES.getString('account.view.id')</label><br/>
+			    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" />
+			    </p>
+			    <p style="float:left;margin-right:10px"><label for="filterCriteriaFirstName">$MESSAGES.getString('account.view.first.name')</label><br/>
+			    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" />
+			    </p>
+			    <p style="float:left;margin-right:10px"><label for="filterCriteriaLastName">$MESSAGES.getString('account.view.last.name')</label><br/>
+			    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" />
+			    </p>
+			    <br style="clear:both" />
+			    <p style="float:left;margin-right:10px"><label for="filterCriteriaEmail">$MESSAGES.getString('account.view.email')</label><br/>
+			    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" />
+			    </p>
+			    <p style="float:left;margin-right:10px"><label for="filterCriteriaRole">$MESSAGES.getString('account.view.roles')</label><br/>
+			    <input class="inputstyletext" style="margin-bottom:0" type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" />
+			    </p>
+			    <br style="clear:both" />
+			    <p>$MESSAGES.getString('component.forms.text.search.wildcard')</p>
+			    </div>
+			    <div style="float:right;margin-top:20px">
+			    #renderInputButton("$MESSAGES.getString('component.forms.buttons.search')" "" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')")
+			    </div>
+			    <br style="clear:both" />
+			    </div>
+			    
+			    #renderPaginationAndHint($browser "$MESSAGES.getString('account.view.tip')")
+			
+			    <br style="clear:both" />
+			    <table class="border fullwidth">
+			#set ($colNames = ["id", "firstName", "lastName", "email", "roles", "lastLogin"])
+			#set ($colTitles = [$MESSAGES.getString('account.view.id'), $MESSAGES.getString('account.view.first.name'), $MESSAGES.getString('account.view.last.name'), $MESSAGES.getString('account.view.email'), $MESSAGES.getString('account.view.roles'), $MESSAGES.getString('account.view.last.login')])
+			#renderDBBrowserHeader($colNames $colTitles)
+			#foreach ($dbEntity in $dbEntities)
+			    #set ($rowId = $dbEntity.id)
+			    #set ($rowValues = [$UtilsString.cutString($dbEntity.firstName, 20, 20), $UtilsString.cutString($dbEntity.lastName, 20, 20), $UtilsString.cutString($dbEntity.email, 40, 40), $dbEntity.roles, $dbEntity.lastLogin])
+			    #renderDBBrowserRowWithEditLink($rowId $rowValues)
+			#end
+			        </table>
+			    </div>
+			#set ($buttons = ["doDelete", "doRefresh", "doNew"])
+			#renderDBBrowserFooterButtons($buttons)
+			</form>
+		</article>
+	</div>
+</section>

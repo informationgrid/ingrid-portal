@@ -110,8 +110,6 @@ public class CMSPortlet extends GenericVelocityPortlet {
                     }
                 	context.put("tool", new UtilsVelocity());
                 }
-            } else if (myKey.equals("ingrid.teaser.inform")) {
-                context.put("showNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER_CMS_INFO, false));
             }
         }
 

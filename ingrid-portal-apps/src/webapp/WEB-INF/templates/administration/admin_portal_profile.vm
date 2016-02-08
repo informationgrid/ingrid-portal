@@ -1,21 +1,26 @@
-#set ($action = $renderResponse.createActionURL())
-<div class="formbody">
-  <h3>$MESSAGES.getString('admin.portal.profile.headline')</h3>
-  <p>$MESSAGES.getString('admin.portal.profile.description')</p>
-  <div class="line_form"><hr /></div>
-#if($switchedToProfile)
-  <p class="portlet-msg-info">$MESSAGES.getString('admin.portal.profile.switched_to'): $switchedToProfile.</p>
-  <p class="portlet-msg-info">$MESSAGES.getString('admin.portal.profile.restart')</p>
-  <div class="line_form"><hr /></div>
-#else
-  $action.setParameter('action',"switchProfile")		
-#foreach($profile in $profiles)
-  $action.setParameter('profile', "$profile.id")
-  <p>
-	<a href="$action">$MESSAGES.getString("$profile.title_key")</a>
-  </p>
-#end		
-#end	
-
-</div>
-
+<section class="block">
+	<div class="ob-box-wide ob-box-padded ob-box-center">
+		<article class="content ob-container">
+			#set ($action = $renderResponse.createActionURL())
+			<div class="formbody">
+			  <h3>$MESSAGES.getString('admin.portal.profile.headline')</h3>
+			  <p>$MESSAGES.getString('admin.portal.profile.description')</p>
+			  <div class="line_form"><hr /></div>
+			#if($switchedToProfile)
+			  <p class="portlet-msg-info">$MESSAGES.getString('admin.portal.profile.switched_to'): $switchedToProfile.</p>
+			  <p class="portlet-msg-info">$MESSAGES.getString('admin.portal.profile.restart')</p>
+			  <div class="line_form"><hr /></div>
+			#else
+			  $action.setParameter('action',"switchProfile")		
+			#foreach($profile in $profiles)
+			  $action.setParameter('profile', "$profile.id")
+			  <p>
+				<a href="$action">$MESSAGES.getString("$profile.title_key")</a>
+			  </p>
+			#end		
+			#end	
+			
+			</div>
+		</article>
+	</div>
+</section>

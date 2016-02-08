@@ -72,8 +72,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
     private final static String TEMPLATE_SEARCH_SIMPLE = "/WEB-INF/templates/search_simple.vm";
 
-    private final static String TEMPLATE_SEARCH_EXTENDED = "/WEB-INF/templates/search_extended/search_ext.vm";
-
     // TITLE KEYS
 
     /**
@@ -186,9 +184,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // Search, just
         // the view template differs !
         setDefaultViewPage(TEMPLATE_SEARCH_SIMPLE);
-        if (titleKey.equals(TITLE_KEY_EXTENDED)) {
-            setDefaultViewPage(TEMPLATE_SEARCH_EXTENDED);
-        }
 
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
@@ -328,47 +323,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             context.put("enableSave", "true");
         }
 
-        // enable/disable providers drop down
-        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS)
-        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_ENVINFO)
-        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_ADDRESS)
-        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_LAW) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_LAW)
-        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_RESEARCH) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_RESEARCH)
-        		) {
-        	String partner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
-            List providers;
-            if (partner == null || partner.length() == 0) {
-                providers = UtilsDB.getProviders();
-            } else {
-                providers = UtilsDB.getProvidersFromPartnerKey(partner);
-            }
-            context.put("displayProviders", Boolean.TRUE);
-            context.put("providers", providers);
-            context.put("UtilsString", new UtilsString());
-            // get selected provider
-            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
-                    IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
-            String provider = request.getParameter(Settings.PARAM_PROVIDER);
-            if (provider != null) {
-                sessionPrefs.put(IngridSessionPreferences.RESTRICTING_PROVIDER, provider);
-            }
-            context.put("selectedProviderIdent", sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER));
-        }
-
-        context.put("enableDatasourceResearch", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_DATASOURCE_RESEARCH, Boolean.TRUE));
-        context.put("enableDatasourceAddresses", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_DATASOURCE_ADDRESSES, Boolean.TRUE));
-        context.put("enableDatasourceLaws", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_DATASOURCE_LAWS, Boolean.TRUE));
-        context.put("enableDatasourceCatalog", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_DATASOURCE_CATALOG, Boolean.FALSE));
-        context.put("enableSearchSeperator", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_SEARCH_SEPERATOR, Boolean.FALSE));
-        context.put("enableDatasourceSelection", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_SEARCH_SIMPLE_DATASOURCE_SELECTION, Boolean.TRUE));
-        context.put("enableOptionalLinks", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_SEARCH_SIMPLE_OPTIONAL_LINKS, Boolean.TRUE));
         context.put("enableFacets", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, Boolean.FALSE));
        

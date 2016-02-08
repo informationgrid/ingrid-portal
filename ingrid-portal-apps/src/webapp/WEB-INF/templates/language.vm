@@ -1,17 +1,45 @@
 #macro (getSelected $lang)
-    #if ($lang.equals($selectedLang)) selected="selected"#end
+    #if ($lang.equals($selectedLang)) is-active#end
+#end
+
+#macro (getSelectedIcon)
+    #if ($lang.equals($selectedLang)) <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tick"></use></svg>#end
+#end
+
+#macro (getSelectedValue)
+	#set($i = 0)
+    #set($index = 0)
+    #foreach($ls in $languagesShort)
+    	#if($ls.equals($selectedLang))
+    		#set($index=$i)
+    	#end
+    	#set($i=$i+1)	
+    #end
+    $ListTool.get($languagesNames, $index)
 #end
 
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
-    <select name="lang" onchange="this.form.submit();" class="language_switch_style">
-        #set($i=0)
-        #foreach($lang in $languagesShort)
-            <option value="$lang" #getSelected($lang)>$ListTool.get($languagesNames, $i)</option>
-            #set($i=$i+1)
-        #end
-    </select>
-    <noscript>
-        <input class="btn" type="submit" style="padding:0;vertical-align:top;margin-top:1px;font-size:80%; color: #000000; height: 20px;" value=">" />
-    </noscript>
-</form>
+<div class="header__widget mq-hide-l">
+    <a href="#" class="header__widget__toggle js-header-toggle">
+	    <span class="header__widget__text">#getSelectedValue()</span>
+        <svg class="header__widget__icon icon icon-xs"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-thick"></use></svg>
+    </a>
+	<div class="metamenu">
+    	<form action="$action" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
+	        #set($i=0)
+		    #foreach($lang in $languagesShort)
+		            <a type="submit" name="lang" value="$lang" class="metamenu__link link #getSelected($lang)" onclick="submitform($(this), '$lang')">#getSelectedIcon($lang)$ListTool.get($languagesNames, $i)</a>
+		        #set($i=$i+1)
+	        #end
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+function submitform(anchor, lang)
+	{
+		var form = anchor.closest('form');
+		form.append('<input type="hidden" name="lang" value="'+ lang + '"/>');
+		form.submit();
+	}
+</script>

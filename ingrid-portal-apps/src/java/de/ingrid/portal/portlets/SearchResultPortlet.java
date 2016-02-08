@@ -82,8 +82,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
     private static final String TEMPLATE_RESULT_JS_RANKED = "/WEB-INF/templates/search_result_js_ranked.vm";
 
-    private static final String TEMPLATE_RESULT_JS_UNRANKED = "/WEB-INF/templates/search_result_js_unranked.vm";
-
     private static final String TEMPLATE_RESULT_FILTERED_ONECOLUMN = "/WEB-INF/templates/search_result_iplug.vm";
     
     private HttpClient client;
@@ -273,11 +271,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             	}
             }
         }
-        // check whether right column is switched OFF and set according context flag
-        boolean rightColumnDisabled =
-        	!PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_RESULTS_UNRANKED, true);
-        context.put("RIGHT_COLUMN_DISABLED", rightColumnDisabled);
-
 
         String currentView = getDefaultViewPage();
 
@@ -292,10 +285,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         boolean renderResultColumnRanked = true;
         boolean renderResultColumnUnranked = true;
         reqParam = request.getParameter("js_ranked");
-        // finally disable query for right column if switched OFF !
-        if (rightColumnDisabled) {
-        	renderResultColumnUnranked = false;
-        }
 
         // create threaded query controller
         ThreadedQueryController controller = new ThreadedQueryController();
@@ -658,9 +647,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             if (reqParam.equals("true")) {
                 request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_RANKED);
                 renderResultColumnUnranked = false;
-            } else {
-                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_UNRANKED);
-                renderResultColumnRanked = false;
             }
             // check for js enabled iframe rendering
 

@@ -123,109 +123,114 @@
         </tr>
 	#end
 #end
-
-#set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
-	<input name="modelSize" type="hidden" value="#if ($model) $model.size() #end" />
-      <ul class="internlinklist" style="margin:0;">
-        $action.setParameter("doShowUpdates", "true")
-        <li><a style="font-weight:bold;" href="$action">$MESSAGES.getString('component.forms.text.upgrade')</a></li>
-      </ul>
-      <ul class="innermenu">
-        <li><a href="portal/administration/admin-component-monitor.psml#import">$MESSAGES.getString('component.forms.text.import.iplugs')</a></li>
-      </ul>
-      <br/>
-      <br/>
-	  
-#set ($buttons = ["doDelete", "doRefresh", "doNew"])
-
-<div class="formbody formbody_border_style">
-		<table class="border fullwidth">
-		#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status", "component.monitor.general.last.check", "component.monitor.general.last.errorfree.run", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
-		#set ($colTitles = [$MESSAGES.getString('component.forms.text.name'), $MESSAGES.getString('component.forms.text.type'), $MESSAGES.getString('component.forms.text.status'), $MESSAGES.getString('component.forms.text.last.check'), $MESSAGES.getString('component.forms.text.last.errorfree.run'), $MESSAGES.getString('component.forms.text.average.exec.time'), $MESSAGES.getString('component.forms.text.interval')]) ##, "aktiv"])
-   
-		#renderDBBrowserHeader($colNames $colTitles)
-    
-		#set ($action = $renderResponse.createActionURL())
-		#set ($count = 0)
-	
-		$action.setParameter('doEdit','Edit')
-        
-        ## running jobs
-        ## there can be only one job at a time be running, because of a StateJob-restriction
-        ## the title will only be rendered if there's any running job
-        $!filterMap.clear()
-        #fillTable($filterMap true true)
-
-		<tr><td colspan=2><h3>Aktive</h3></td></tr>
-		## aktive
-		## clear is important here otherwise the old value would be returned
-		## to the html output
-		$!filterMap.clear()
-		$!filterMap.put("component.monitor.general.active",0)
-		## other jobs (they don't have the "active"-key in the map
-		##$!filterMap.put("component.monitor.general.active",null)
-		#fillTable($filterMap true false)
-		
-		<tr><td>&nbsp;</td></tr>
-		<tr><td colspan=2><h3>Inaktive</h3></td></tr>
-		
-		## inaktive
-		## get the inverse results of the filtered jobs
-		#fillTable($filterMap false false)
-		</table>
-</div>
-		
-#renderDBBrowserFooterButtons($buttons)
-
-</form>
-<p/>
-#set ($action = $renderResponse.createActionURL())
-<a name="import"></a>
-<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
-	<input type="hidden" name="action" value="doImport">
-	<div class="formbody formbody_border_style">
-		<p>
-			$MESSAGES.getString('component.forms.text.import.description')
-#if($import_message)
-<br/><br/><span class="portlet-msg-error">$import_message</span><br/>
-#end
-		</p>
-        <p>
-            <input class="" id="activate" name="activate" value="1" type="checkbox">
-			<label class="" for="activate">$MESSAGES.getString('component.forms.text.import.activate.job')</label>
-        </p>
-		<p>
-            <input class="" id="overwrite" name="overwrite" value="1" type="checkbox">
-			<label class="" for="overwrite">$MESSAGES.getString('component.forms.text.import.overwrite.job')</label>
-        </p>
-		<p>
-            <label class="" for="std_email">$MESSAGES.getString('component.forms.text.import.standard.email')</label>
-            <input class="" id="std_email" name="std_email" value="" type="text">
-        </p>
-    	<p class="clearer" />
+<section class="block">
+	<div class="ob-box-wide ob-box-padded ob-box-center">
+		<article class="content ob-container">
+			#set ($action = $renderResponse.createActionURL())
+			<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
+				<input name="modelSize" type="hidden" value="#if ($model) $model.size() #end" />
+			      <ul class="internlinklist" style="margin:0;">
+			        $action.setParameter("doShowUpdates", "true")
+			        <li><a style="font-weight:bold;" href="$action">$MESSAGES.getString('component.forms.text.upgrade')</a></li>
+			      </ul>
+			      <ul class="innermenu">
+			        <li><a href="portal/administration/admin-component-monitor.psml#import">$MESSAGES.getString('component.forms.text.import.iplugs')</a></li>
+			      </ul>
+			      <br/>
+			      <br/>
+				  
+			#set ($buttons = ["doDelete", "doRefresh", "doNew"])
+			
+			<div class="formbody formbody_border_style">
+					<table class="border fullwidth">
+					#set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status", "component.monitor.general.last.check", "component.monitor.general.last.errorfree.run", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
+					#set ($colTitles = [$MESSAGES.getString('component.forms.text.name'), $MESSAGES.getString('component.forms.text.type'), $MESSAGES.getString('component.forms.text.status'), $MESSAGES.getString('component.forms.text.last.check'), $MESSAGES.getString('component.forms.text.last.errorfree.run'), $MESSAGES.getString('component.forms.text.average.exec.time'), $MESSAGES.getString('component.forms.text.interval')]) ##, "aktiv"])
+			   
+					#renderDBBrowserHeader($colNames $colTitles)
+			    
+					#set ($action = $renderResponse.createActionURL())
+					#set ($count = 0)
+				
+					$action.setParameter('doEdit','Edit')
+			        
+			        ## running jobs
+			        ## there can be only one job at a time be running, because of a StateJob-restriction
+			        ## the title will only be rendered if there's any running job
+			        $!filterMap.clear()
+			        #fillTable($filterMap true true)
+			
+					<tr><td colspan=2><h3>Aktive</h3></td></tr>
+					## aktive
+					## clear is important here otherwise the old value would be returned
+					## to the html output
+					$!filterMap.clear()
+					$!filterMap.put("component.monitor.general.active",0)
+					## other jobs (they don't have the "active"-key in the map
+					##$!filterMap.put("component.monitor.general.active",null)
+					#fillTable($filterMap true false)
+					
+					<tr><td>&nbsp;</td></tr>
+					<tr><td colspan=2><h3>Inaktive</h3></td></tr>
+					
+					## inaktive
+					## get the inverse results of the filtered jobs
+					#fillTable($filterMap false false)
+					</table>
+			</div>
+					
+			#renderDBBrowserFooterButtons($buttons)
+			
+			</form>
+			<p/>
+			#set ($action = $renderResponse.createActionURL())
+			<a name="import"></a>
+			<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
+				<input type="hidden" name="action" value="doImport">
+				<div class="formbody formbody_border_style">
+					<p>
+						$MESSAGES.getString('component.forms.text.import.description')
+			#if($import_message)
+			<br/><br/><span class="portlet-msg-error">$import_message</span><br/>
+			#end
+					</p>
+			        <p>
+			            <input class="" id="activate" name="activate" value="1" type="checkbox">
+						<label class="" for="activate">$MESSAGES.getString('component.forms.text.import.activate.job')</label>
+			        </p>
+					<p>
+			            <input class="" id="overwrite" name="overwrite" value="1" type="checkbox">
+						<label class="" for="overwrite">$MESSAGES.getString('component.forms.text.import.overwrite.job')</label>
+			        </p>
+					<p>
+			            <label class="" for="std_email">$MESSAGES.getString('component.forms.text.import.standard.email')</label>
+			            <input class="" id="std_email" name="std_email" value="" type="text">
+			        </p>
+			    	<p class="clearer" />
+				</div>
+			    <div class="formfooter formfooter_border_style" align="right">
+						#renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.import.jobs')" "" "doImport" "" "float_right")
+			            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.export.jobs')" "" "doExport" "" "float_left")
+			    </div>
+			</form>
+			
+			<script language="JavaScript" type="text/javascript">
+				function closeDialog() {
+					document.getElementById('exportDialog').style.display = "none";
+					document.getElementById('blocker').style.display = "none"; 
+				}
+			</script>
+			<noscript>
+				
+			</noscript>
+			
+			#if($exportLink)
+				## create div for download
+				<div id="blocker" style="background-color: gray; width: 100%; height: 100%; position: fixed; top: 0px; opacity: 0.3; left: 0px; z-index: 13;"></div>
+				<div id="exportDialog" style="position: fixed; top: 50%; padding: 20px; background-color: white; border: 2px solid black; display: block; z-index: 14; left: 332px;">
+			        <p>$MESSAGES.getString('component.forms.text.export.note') <a href="$exportLink">job_export.csv</a></p>
+					<input type="button" class="btn float_right" value="$MESSAGES.getString('component.forms.text.export.close')" onclick="javascript:closeDialog();">
+			    </div>
+			#end
+		</article>
 	</div>
-    <div class="formfooter formfooter_border_style" align="right">
-			#renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.import.jobs')" "" "doImport" "" "float_right")
-            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.export.jobs')" "" "doExport" "" "float_left")
-    </div>
-</form>
-
-<script language="JavaScript" type="text/javascript">
-	function closeDialog() {
-		document.getElementById('exportDialog').style.display = "none";
-		document.getElementById('blocker').style.display = "none"; 
-	}
-</script>
-<noscript>
-	
-</noscript>
-
-#if($exportLink)
-	## create div for download
-	<div id="blocker" style="background-color: gray; width: 100%; height: 100%; position: fixed; top: 0px; opacity: 0.3; left: 0px; z-index: 13;"></div>
-	<div id="exportDialog" style="position: fixed; top: 50%; padding: 20px; background-color: white; border: 2px solid black; display: block; z-index: 14; left: 332px;">
-        <p>$MESSAGES.getString('component.forms.text.export.note') <a href="$exportLink">job_export.csv</a></p>
-		<input type="button" class="btn float_right" value="$MESSAGES.getString('component.forms.text.export.close')" onclick="javascript:closeDialog();">
-    </div>
-#end
+</section>

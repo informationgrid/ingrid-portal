@@ -7,13 +7,15 @@
 
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter("doRemoveFilter", "true")
-  <div id="content_full">
-    <div class="resultset_partner_group">
-      <div>
-        <a class="resultset_partner_group_link" href="$action">
-			<img class="resultset_partner_group_delete_icon" title="$MESSAGES.getString('common.form.button.delete')" src="/ingrid-portal-apps/images/facete/facete_delete.png">
-		</a>
-		<span class="title">$MESSAGES.getString('common.result.filter.header')</span><span class="title_subject"> $filterSubject</span></div>
+<div class="box box--fill box--medium">
+    <div class="box__content ob-container">
+        <p><strong>$MESSAGES.getString('common.result.filter.header') "$filterSubject" werden angezeigt</strong></p>
+        <p>
+            <a class="link" href="$action">
+                <svg class="link__icon icon ob-flip-x"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#internal-link"></use></svg>
+                <strong>Alle Ergebnisse anzeigen</strong>
+            </a>
+        </p>
     </div>
-  </div>  
+</div>
 #end

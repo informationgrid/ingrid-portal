@@ -1,5 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
-
+<section class="block">
+	<div class="ob-box-wide ob-box-padded ob-box-center">
+		<article class="content ob-container ob-box-narrow ob-box-center">
 <form action="$action" method="post" id="frm_login">
 <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
 <input type="hidden" name="cmd" value="doLogin" />
@@ -40,3 +42,6 @@
 <p></p>
 <h2>$MESSAGES.getString('login.description.title')</h2>
 $MESSAGES.getString('login.description.content')
+		</article>
+	</div>
+</section>

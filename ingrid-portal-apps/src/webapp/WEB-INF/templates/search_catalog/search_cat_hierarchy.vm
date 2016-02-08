@@ -1,12 +1,7 @@
 #macro (renderNode $node)
 	#set ($action = $renderResponse.createActionURL())
 	$action.setParameter('nodeId',$node.id)
-	## highest nodes have level 1 ! (only root has level 0)
-	## NOTICE: NO FLOATS IN VELOCITY MATHs ! Use e.g. (3/2) instead ! :-(
-	#set ($leftMargin = ($node.level - 1) * 25)
-	#set ($iconLayerWidth = 35)
-	#set ($textLayerWidth = 825 - $leftMargin - $iconLayerWidth)
-	<p style="margin-left:${leftMargin}px; clear:left; overflow:hidden">	
+	<ul class="js-accordion-multi">
 	## UDK Object/Address render params
 	#set($nodeTitle = $MESSAGES.getString($node.getName()))
 	#if($tool.hasContent(${node.udk_class}))
@@ -30,55 +25,70 @@
 		#set($nodeUrl = '')
 	#end
 	## render +/- and icon
-	<span style="float:left; width:${iconLayerWidth}px">
 	#if($node.isOpen())
 		#set ($renderSubNodes = true)
-		## render "-" and icon WITH ACTION -> node can be closed
 		$action.setParameter('action','doCloseNode')
-		<a id="$action" href="$action" onclick="makeScrollTopLink('$action')"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
-		<a id="$action Icon" href="$action" onclick="makeScrollTopLink('$action')"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+			<li class="tree__item tree__toggle js-accordion-toggle is-active">
+				<svg class="tree__toggle__icon icon">
+					<use xlink:href="#plus">
+				</svg>
+				<svg class="tree__toggle__icon icon">
+					<use xlink:href="#minus">
+				</svg>
+				<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
+			</li>
+			<li class="tree__content js-accordion-content">
+				## render sub nodes
+				#if ($renderSubNodes)
+			    	#foreach($childNode in $node.getChildren())
+			    		#renderNode($childNode)
+			    	#end
+				#end
+			</li>
 	#else
 		#set ($renderSubNodes = false)
 		#if ($node.expandable)
     		## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
        		$action.setParameter('action','doOpenNode')
-       		<a id="$action" href="$action" onclick="makeScrollTopLink('$action')"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
-    		<a id="$action Icon" href="$action" onclick="makeScrollTopLink('$action')"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
+       		<a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
+				<li class="tree__item tree__toggle js-accordion-toggle">
+					<svg class="tree__toggle__icon icon">
+						<use xlink:href="#plus">
+					</svg>
+					<svg class="tree__toggle__icon icon">
+						<use xlink:href="#minus">
+					</svg>
+					## render node text
+					$nodeTitle
+				</li>
+			</a>
 		#else
-			## render " " and icon WITHOUT ACTION -> node can't be expanded
-			&nbsp;&nbsp;
-			<img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" />
+			#if($nodeUrl != '')
+			<li class="tree__item">
+		        <svg class="tree__icon icon" title="Informationssystem"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#molecule"></use></svg>
+		        <a href="$nodeUrl">$nodeTitle</a>
+		    </li>
+		    #end
 		#end
 	#end
-	</span>
-	## render node text
-	<span style="float:left; width:${textLayerWidth}px">
-	<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
-	</span>
-	</p>
-	## render sub nodes
-	#if ($renderSubNodes)
-    	#foreach($childNode in $node.getChildren())
-    		#renderNode($childNode)
-    	#end
-	#end
+	
+	</ul>
 #end
 
-<div class="section">
-	<div class="formbody formbody_border_style">
-#foreach($plugNode in $ps.plugsRoot.getChildren())
-	#renderNode($plugNode)
-#end
-	</div>
-#set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
-    	<div class="formfooter formfooter_border_style">
-    		<div class="float_right">
-    			#renderInputButton($MESSAGES.getString('searchCatHierarchy.submit.reload') "" "submitReload" $MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip'))
-    		</div>
-    	</div>
-	</form>
+#renderPortletTitle($MESSAGES.getString('searchCatHierarchy.portlet.title') $MESSAGES.getString('searchCatHierarchy.portlet.title'))
+
+<div class="tree bx-bot-l">
+	#foreach($plugNode in $ps.plugsRoot.getChildren())
+		#renderNode($plugNode)
+	#end
 </div>
+
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
+	<p>
+		<input type="submit" class="btn btn--secondary btn--medium" name="submitReload" value="$MESSAGES.getString('searchCatHierarchy.submit.reload')" title="$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')"/>
+	</p>
+</form>
 <script type="text/javascript">
 document.onreadystatechange = function () {
     if (document.readyState == "complete") {

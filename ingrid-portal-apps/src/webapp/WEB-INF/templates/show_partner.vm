@@ -1,12 +1,21 @@
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title') $MESSAGES.getString('javax.portlet.title'))
+
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
   <p>$MESSAGES.getString("showpartner.intro")</p>
-  <ul class="innermenu">
+  <ul class="link-list">
 #foreach( $key in $partners.keySet() ) 
 	#set($partnerHash = $partners.get($key))
 	#set($partner = $partnerHash.partner)
 	#if($partnerHash.providers)
 	#set ($link = $renderResponse.encodeURL("/portal/main-about-partner.psml#$partner.ident"))
-	<li><a href="$link">$partner.name</a></li>
+	<li>
+		<a href="$link">
+			<svg class="icon">
+				<use xlink:href="#external-link">
+			</svg>
+		$partner.name
+		</a>
+	</li>
 	#end
 #end
 	<br/>
@@ -17,12 +26,23 @@
 	#if($partnerHash.providers)
   <a name="$partner.ident"></a>
   <div class="line"><hr /></div>
-  <h3>$partner.name</h3>
-<ul>
+  <h4>$partner.name</h4>
+<ul class="link-list">
 		#set($providers = $partnerHash.providers)
 		#foreach($provider in $providers)
 			#if($provider.provider)
-			<li>#if($provider.provider.url && $provider.provider.url != "")<a href="$provider.provider.url" target="_new">$provider.provider.name</a>#else$provider.provider.name#end</li>
+				<li>
+				#if($provider.provider.url && $provider.provider.url != "")
+					<a href="$provider.provider.url" target="_new">
+						<svg class="icon">
+							<use xlink:href="#external-link">
+						</svg>
+					$provider.provider.name
+					</a>
+				#else
+					$provider.provider.name
+				#end
+				</li>
 			#end
 		#end
 </ul>

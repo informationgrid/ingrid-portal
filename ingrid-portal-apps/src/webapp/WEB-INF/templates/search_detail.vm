@@ -698,7 +698,6 @@
 #set($pageDescription = $pageDescription.replace('"',"'"))
 #set($pageDescription = $stringTool.cutString($pageDescription,300))
 #set($udkObjClassName = $Codelists.getCodeListValue('8000', $rec.get("t01_object.obj_class"), $languageCode))
-#parse('WEB-INF/templates/search_detail_header.vm')
 
 #set ($action = $renderResponse.createActionURL())
 <div id="content_full">
@@ -778,8 +777,3 @@
 	<br/>
 #end	
 </div>
-	
-## ***************************
-## include the footer here
-## ***************************
-#parse('WEB-INF/templates/search_detail_footer.vm')

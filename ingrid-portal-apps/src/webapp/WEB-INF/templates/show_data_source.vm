@@ -1,18 +1,20 @@
-<h3>$MESSAGES.getString("show.data.source.connected.databases"):</h3>
-<ul>
-#foreach($plug in $plugs)
-	#set($hideId = "false")
-	#foreach($hideIPlugId in $hideIPlugIdList)
-		#if($hideId != "true")
-			#if($plug.getPlugId() == $hideIPlugId)
-				#set($hideId = "true")
-			#else
-				#set($hideId  = "false")
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title') $MESSAGES.getString('javax.portlet.title'))
+
+<h4>$MESSAGES.getString("show.data.source.connected.databases"):</h4>
+	<ul class="list list--bullets">
+	#foreach($plug in $plugs)
+		#set($hideId = "false")
+		#foreach($hideIPlugId in $hideIPlugIdList)
+			#if($hideId != "true")
+				#if($plug.getPlugId() == $hideIPlugId)
+					#set($hideId = "true")
+				#else
+					#set($hideId  = "false")
+				#end
 			#end
 		#end
+		#if($hideId == "false")
+			<li>$plug.getDataSourceName()</li>
+		#end
 	#end
-	#if($hideId == "false")
-		<li>$plug.getDataSourceName()</li>
-	#end
-#end
-</ul>
+	</ul>

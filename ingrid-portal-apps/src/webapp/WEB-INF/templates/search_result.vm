@@ -1,63 +1,43 @@
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
-
+<section class="block">
+<div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
 #if($enableFacete)
-    <div dojoType="dijit.layout.ContentPane" id="search_facete" style="display:none">
-       	#parse ('/WEB-INF/templates/facete/facete.vm')
-    </div>
+    <aside class="sidebar js-accordion-multi">
+    	<div class="sidebar__content js-accordion-content is-hidden">
+    		<form class="sidebar__filter">
+    			#parse ('/WEB-INF/templates/facete/facete.vm')
+    		</form>
+    	</div>
+    </aside>
     
-    <div dojoType="dijit.layout.ContentPane" id="search_hits" class="nonjavascript">
-    <!-- RESULTS LEFT -->
-    #if ($RIGHT_COLUMN_DISABLED)
-      <div id="section">
-    #else
-      <div id="results_left">
-    #end
-    #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
-      </div>
-    </div>
+    <article class="content ob-container ob-box-narrow">
+    	#parse ('/WEB-INF/templates/include_search_result_ranked.vm')
+    </article>
 #else
 	<!-- RESULTS LEFT -->
-    #if ($RIGHT_COLUMN_DISABLED)
-      <div id="section">
-    #else
-      <div id="results_left">
-    #end
-    #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
-      </div>
+    <article class="content ob-container ob-box-narrow">
+    	#parse ('/WEB-INF/templates/include_search_result_ranked.vm')
+	</article>
 #end
-
-	<!-- RESULTS RIGHT -->
-    #if (!$RIGHT_COLUMN_DISABLED)
-      <div id="results_right">
-    #parse ('/WEB-INF/templates/include_search_result_unranked.vm')
-      </div>
+    #if($adminContent)
+	    <!--
+	    #if($rankedResultList.get("FACETS"))
+	        Facets:
+	        $rankedResultList.get("FACETS")
+	    #end
+	    
+		#if($facetsQuery)
+	   		Facets Query:
+	        #foreach($facete in $facetsQuery)
+	        	$facete
+	        #end
+	    #end
+	    
+		#if($searchQuery)
+	        Search Query:
+	    	$searchQuery
+	    #end
+	    -->
     #end
-    
-      <div class="clearer"></div>
-	  
-	  
-  #if($adminContent)
-	<!--
-    #if($rankedResultList.get("FACETS"))
-        Facets:
-        $rankedResultList.get("FACETS")
-    #end
-    
-	#if($facetsQuery)
-   		Facets Query:
-        #foreach($facete in $facetsQuery)
-        	$facete
-        #end
-    #end
-    
-	#if($searchQuery)
-        Search Query:
-    	$searchQuery
-    #end
-    -->
-  #end
-  
-     <script type="text/javascript">
-     	document.getElementById('search_facete').style.display = "block";
-    	document.getElementById('search_hits').setAttribute('class', "javascript");
-     </script>
+</div>
+</section>
