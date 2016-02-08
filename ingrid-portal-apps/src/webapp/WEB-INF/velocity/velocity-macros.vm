@@ -397,3 +397,14 @@ $action.setParameter("id", "$rowId")
 		<img class="themen_image_style" height="96" width="210" src="/ingrid-portal-apps/images/topics/index_themen_${index}.png" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
 	</div>
 #end
+
+#macro (renderPortletTitle $_title $_help)
+<h1>
+	$_title
+	#if($_help)
+		<div class="tooltip ob-circle js-popup" data-content="<p>$_help</p>">
+	        <svg class="tooltip__icon icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#question-mark"></use></svg>
+	    </div>
+    #end
+</h1>
+#end

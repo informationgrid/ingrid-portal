@@ -29,6 +29,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #macro (renderRankedResultCounterGrouping $pageSelector)
 $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.setMsgParam("$searchTerm")
 $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
 #end
 
@@ -83,30 +84,37 @@ $MESSAGES.getStringWithMsgParams('common.result.navigation.ranked')
 ## this navigation is used when "grouping by domain"
 ## -> renders pages just like with NO GROUPING and estimates starthits of oncoming pages
 #macro (renderRankedPageNavigationGroupingWithPages $pageSelector)
-#set ($action = $renderResponse.createActionURL())
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
-$MESSAGES.getStringWithMsgParams('common.result.navigation.ranked.grouped')
+<ul class="pagination__list tx-right mq-hide-m">
+	#set ($action = $renderResponse.createActionURL())
 	#if($pageSelector.selectorHasPreviousPage)
         #set ($pstart = $pageSelector.currentSelectorPage - 1)
     	$action.setParameter('currentSelectorPage', $pstart.toString())
+    	<li>
     		<a href="$action">&laquo;</a>
+    	</li>
     	$action.setParameter('currentSelectorPage', "1")
-    		| <a href="$action">1</a> ..
+    	<li>
+    		<a href="$action">1</a>
+    	</li>
 	#end
 	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+		<li>
     	#if($pageId == $pageSelector.currentSelectorPage)
-    		| $pageId
+    		<a class="pagination__number is-active" href="$action">$pageId</a>
     	#else
 			$action.setParameter('currentSelectorPage', $pageId.toString())
-    		| <a href="$action">$pageId</a>
+    		<a class="pagination__number" href="$action">$pageId</a>
     	#end
+    	</li>
 	#end
     #if($pageSelector.selectorHasNextPage)
+    	<li>
         #set ($pstart = $pageSelector.currentSelectorPage + 1)
     	$action.setParameter('currentSelectorPage', $pstart.toString())
-    		| <a href="$action">&raquo;</a>
+    		<a href="$action">&raquo;</a>
+    	</li>
     #end
+</ul>
 #end
 
 ## this navigation is used when grouping is active and is not "grouping by domain" (then see above) 
