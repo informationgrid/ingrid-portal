@@ -128,247 +128,12 @@
     
     <!-- Hauptsuche   -->
     <rule>
-        <from>/freitextsuche/rechtsvorschriften(.?)</from>
-        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=4</to>
-    </rule>
-    <rule>
-        <from>/freitextsuche/rechtsvorschriften(.*)</from>
-        <to type="forward">/portal/main-search.psml$1</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-search.psml?(.*ds=4.*)</from>
-        <to>/freitextsuche/rechtsvorschriften$1</to>
-    </outbound-rule>
-       
-    <rule>
-        <from>/freitextsuche/addressen(.?)</from>
-        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=2</to>
-    </rule>
-    <rule>
-        <from>/freitextsuche/addressen(.*)</from>
-        <to type="forward">/portal/main-search.psml$1</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-search.psml?(.*ds=2.*)</from>
-        <to>/freitextsuche/addressen$1</to>
-    </outbound-rule>
-    
-    <rule>
-        <from>/freitextsuche/umweltinformationen(.?)</from>
-        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=1</to>
-    </rule>
-    <rule>
-        <from>/freitextsuche/umweltinformationen(.*)</from>
-        <to type="forward">/portal/main-search.psml$1</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-search.psml?(.*ds=1.*)</from>
-        <to>/freitextsuche/umweltinformationen$1</to>
-    </outbound-rule>
-    
-    <rule>
-        <from>/freitextsuche/forschungsprojekte(.?)</from>
-        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=3</to>
-    </rule>
-    <rule>
-        <from>/freitextsuche/forschungsprojekte(.*)</from>
-        <to type="forward">/portal/main-search.psml$1</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-search.psml?(.*ds=3.*)</from>
-        <to>/freitextsuche/forschungsprojekte$1</to>
-    </outbound-rule>
-    
-    <rule>
-        <from>/freitextsuche/kataloge(.?)</from>
-        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=5</to>
-    </rule>
-    <rule>
-        <from>/freitextsuche/kataloge(.*)</from>
-        <to type="forward">/portal/main-search.psml$1</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-search.psml?(.*ds=5.*)</from>
-        <to>/freitextsuche/kataloge$1</to>
-    </outbound-rule>
-    
-    <rule>
         <from>/freitextsuche</from>
         <to type="forward">/portal/main-search.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-search.psml</from>
         <to>/freitextsuche</to>
-    </outbound-rule>
-    
-    <!-- Erweiterte Suche  -->
-    <!-- <rule>
-        <from>/detailsuche$</from>
-        <to type="forward">portal/search-extended/search-ext-env-topic-terms.psml</to>
-    </rule>-->
-    <rule>
-        <from>/detailsuche/umwelt</from>
-        <to type="forward">/portal/search-extended/search-ext-env-topic-terms.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-env-topic-terms.psml</from>
-        <to>/detailsuche/umwelt</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/recht</from>
-        <to type="forward">/portal/search-extended/search-ext-law-topic-terms.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-law-topic-terms.psml</from>
-        <to>/detailsuche/recht</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/forschung</from>
-        <to type="forward">/portal/search-extended/search-ext-res-topic-attributes.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-res-topic-attributes.psml</from>
-        <to>/detailsuche/forschung</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/thema-addressen</from>
-        <to type="forward">/portal/search-extended/search-ext-adr-topic-terms.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-adr-topic-terms.psml</from>
-        <to>/detailsuche/thema-addressen</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/raum-adressen</from>
-        <to type="forward">/portal/search-extended/search-ext-adr-place-reference.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-adr-place-reference.psml</from>
-        <to>/detailsuche/raum-adressen</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/partner-adressen</from>
-        <to type="forward">/portal/search-extended/search-ext-adr-area-partner.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-adr-area-partner.psml</from>
-        <to>/detailsuche/partner-adressen</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/modus-adressen</from>
-        <to type="forward">/portal/search-extended/search-ext-adr-topic-mode.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-adr-topic-mode.psml</from>
-        <to>/detailsuche/modus-adressen</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/begriff-forschung</from>
-        <to type="forward">/portal/search-extended/search-ext-res-topic-terms.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-res-topic-terms.psml</from>
-        <to>/detailsuche/begriff-forschung</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/fach-recht</from>
-        <to type="forward">/portal/search-extended/search-ext-law-topic-thesaurus.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-law-topic-thesaurus.psml</from>
-        <to>/detailsuche/fach-recht</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/partner-recht</from>
-        <to type="forward">/portal/search-extended/search-ext-law-area-partner.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-law-area-partner.psml</from>
-        <to>/detailsuche/partner-recht</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/fach-umwelt</from>
-        <to type="forward">/portal/search-extended/search-ext-env-topic-thesaurus.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-env-topic-thesaurus.psml</from>
-        <to>/detailsuche/fach-umwelt</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/raum-umwelt</from>
-        <to type="forward">/portal/search-extended/search-ext-env-place-geothesaurus.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-env-place-geothesaurus.psml</from>
-        <to>/detailsuche/raum-umwelt</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/raum-karte-umwelt</from>
-        <to type="forward">/portal/search-extended/search-ext-env-place-map.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-env-place-map.psml</from>
-        <to>/detailsuche/raum-karte-umwelt</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/zeit-umwelt</from>
-        <to type="forward">/portal/search-extended/search-ext-env-time-constraint.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-env-time-constraint.psml</from>
-        <to>/detailsuche/zeit-umwelt</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/suchinhalt-umwelt</from>
-        <to type="forward">/portal/search-extended/search-ext-env-area-contents.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-env-area-contents.psml</from>
-        <to>/detailsuche/suchinhalt-umwelt</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/datenquelle-umwelt</from>
-        <to type="forward">/portal/search-extended/search-ext-env-area-sources.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-env-area-sources.psml</from>
-        <to>/detailsuche/datenquelle-umwelt</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche/partner-umwelt</from>
-        <to type="forward">/portal/search-extended/search-ext-env-area-partner.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended/search-ext-env-area-partner.psml</from>
-        <to>/detailsuche/partner-umwelt</to>
-    </outbound-rule>
-    <rule>
-        <from>/detailsuche</from>
-        <to type="forward">/portal/search-extended</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended</from>
-        <to>/detailsuche</to>
-    </outbound-rule>
-    
-    <!-- Suchhistorie   -->
-    <rule>
-        <from>/suchhistorie</from>
-        <to type="forward">/portal/search-history.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-history.psml</from>
-        <to>/suchhistorie</to>
-    </outbound-rule>
-    
-    <!-- Einstellungen   -->
-    <rule>
-        <from>/darstellungsoptionen</from>
-        <to type="forward">/portal/search-settings.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-settings.psml</from>
-        <to>/darstellungsoptionen</to>
     </outbound-rule>
     
     <!--  Suche - Datenkataloge - Hierarchiebaum -->
@@ -379,26 +144,6 @@
     <outbound-rule>
         <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
         <to>/datenkataloge</to>
-    </outbound-rule>
-    
-    <!-- Suche - Datenkataloge -Thesaurus-Navigator  -->
-    <rule>
-        <from>/umweltthesaurus</from>
-        <to type="forward">/portal/search-catalog/search-catalog-thesaurus.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-catalog/search-catalog-thesaurus.psml</from>
-        <to>/umweltthesaurus</to>
-    </outbound-rule>
-    
-    <!--  Service  -->
-    <rule>
-        <from>/servicesuche</from>
-        <to type="forward">/portal/main-service.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-service.psml</from>
-        <to>/servicesuche</to>
     </outbound-rule>
     
     <!--  Messwerte  -->
@@ -521,16 +266,6 @@
         <to>/kontakt</to>
     </outbound-rule>
     
-    <!--  Newsletter  -->
-    <rule>
-        <from>/newsletter</from>
-        <to type="forward">/portal/service-contact-newsletter.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/service-contact-newsletter.psml</from>
-        <to>/newsletter</to>
-    </outbound-rule>
-    
     <!-- Impressum   -->
     <rule>
         <from>/impressum</from>
@@ -559,16 +294,6 @@
     <outbound-rule>
         <from>/portal/help.psml</from>
         <to>/hilfe</to>
-    </outbound-rule>
-    
-    <!-- Features -->
-    <rule>
-        <from>/funktionen</from>
-        <to type="forward">/portal/main-features.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-features.psml</from>
-        <to>/funktionen</to>
     </outbound-rule>
     
 </urlrewrite>
