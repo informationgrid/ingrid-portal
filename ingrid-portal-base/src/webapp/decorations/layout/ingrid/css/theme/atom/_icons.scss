@@ -1,0 +1,33 @@
+/*
+ *  Bits: Icons
+ *______________________*/
+
+
+
+
+.icon {
+    display: inline-block;
+    font-size: rem(16px);
+    height: 1em;
+    width: 1em;
+}
+
+.icon-xs{
+    font-size: rem(10px) !important;
+}
+
+.icon-s{
+    font-size: rem(14px) !important;
+}
+
+.icon-m{
+    font-size: rem(16px) !important;
+}
+
+.icon-l{
+    font-size: rem(20px) !important;
+}
+
+.icon-light{
+    fill: color(nobel) !important;
+}

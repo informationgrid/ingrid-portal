@@ -1,0 +1,101 @@
+/*
+ *  Utility: Query
+ *______________________*/
+
+
+
+
+.mq-hide-s {
+    @include media(
+    $query: '< 480',
+        $css: (
+        display: none
+        )
+        );
+}
+.mq-show-s {
+    @include media(
+    $query: '480 >',
+        $css: (
+        display: none
+        )
+        );
+}
+
+.mq-hide-m {
+    @include media(
+    $query: '< 640',
+        $css: (
+        display: none
+        )
+        );
+}
+.mq-show-m {
+    @include media(
+    $query: '640 >',
+        $css: (
+        display: none
+        )
+        );
+}
+
+.mq-hide-l {
+    @include media(
+    $query: '< 768',
+        $css: (
+        display: none
+        )
+        );
+}
+.mq-show-l {
+    @include media(
+    $query: '768 >',
+        $css: (
+        display: none
+        )
+        );
+}
+
+
+.mq-hide-xl {
+    @include media(
+    $query: '< 840',
+        $css: (
+        display: none
+        )
+        );
+}
+.mq-show-xl {
+    @include media(
+    $query: '840 >',
+        $css: (
+        display: none
+        )
+        );
+}
+
+.mq-hide-xxl {
+    @include media(
+    $query: '< 940',
+        $css: (
+        display: none
+        )
+        );
+}
+.mq-show-xxl {
+    @include media(
+    $query: '940 >',
+        $css: (
+        display: none
+        )
+        );
+}
+
+.mq-show-xb {
+    @include media(
+    $query: '1140 >',
+        $css: (
+        display: none
+        )
+        );
+}

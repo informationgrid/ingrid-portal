@@ -1,0 +1,32 @@
+/*
+ *  Bits: Images
+ *______________________*/
+
+
+
+
+.image {
+    float: left;
+}
+
+.image--narrow {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: rem(440px);
+}
+
+.image--inline {
+    @include media(
+    $query: '640 >',
+        $css: (
+        float: left,
+        margin: .3em 1em 0 0,
+        max-width: 50%,
+        padding-right: 1em
+        )
+        );
+}
+
+.image__caption {
+
+}

@@ -1,0 +1,83 @@
+/*
+ *  Utility: Objects
+ *______________________*/
+
+
+
+
+.ob-flex {
+    display: flex;
+}
+
+.ob-flt-r {
+    float: right;
+}
+
+.ob-box-right {
+    display: table;
+    margin: 0 0 0 auto;
+}
+
+.ob-box-narrow {
+    max-width: rem(780px);
+}
+
+.ob-box-wide {
+    max-width: rem($global-width-wide);
+}
+
+.ob-box-center {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.ob-circle {
+    border-radius: 50%;
+}
+
+.ob-clear {
+    &:after {
+        clear: both;
+        content: " ";
+        display: table;
+    }
+}
+
+.ob-container {
+    >:first-child {
+        margin-top: 0;
+    }
+
+    >:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.ob-box-padded {
+    padding-right: rem($global-gutter / 2);
+    padding-left: rem($global-gutter / 2);
+}
+
+.ob-box-padded-more{
+    padding: 0 rem($global-gutter / 4);
+
+    @include media(
+    $query: '1240 >',
+        $css: (
+        padding-right: rem($global-gutter * 1.5),
+        padding-left: rem($global-gutter * 1.5)
+        )
+        );
+}
+
+.ob-flip-x {
+    transform: scaleX(-1);
+}
+
+.ob-rel {
+    position: relative;
+}
+
+.ob-fade {
+    opacity: 0;
+}

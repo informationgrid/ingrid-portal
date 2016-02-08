@@ -1,0 +1,218 @@
+/*
+ *  Core: Functions
+ *________________________*/
+
+
+
+
+/*
+    get()
+    _____
+
+    Find and return the matching value
+    from the given map and key.
+
+    @param <map> Name of map
+    @param <string> Key
+
+    @return <string>
+
+*/
+@function get($map, $key){
+    @if not map-has-key($map, $key) {
+        @warn "Map does not contain key.";
+        @return null;
+    }
+    @else {
+        @return map-get($map, $key);
+    }
+}
+
+
+
+
+/*
+    breakpoint()
+    ____________
+
+    Find and return the matching
+    breakpoint definition.
+
+    @param <string> Breakpoint name
+
+    @return <string> Condition
+
+*/
+@function breakpoint($key){
+    @if not map-has-key($breakpoint, $key) {
+        @return $key;
+    }
+    @else {
+        @return get($breakpoint, $key);
+    }
+}
+
+
+
+
+/*
+    color()
+    _______
+
+    Find and return the matching color.
+    Returns red if not found.
+
+    @param <string> Color name
+
+    @return <string> Hex value
+
+*/
+@function color($key){
+    @if not map-has-key($color, $key) {
+        @warn "Color not found.";
+        @return red;
+    }
+    @else {
+        @return get($color, $key);
+    }
+}
+
+
+
+
+/*
+    rem()
+    _____
+
+    Converts a pixel value to a
+    rem value.
+
+    @param <string> Your value, in pixels
+    @param <string> The base font-size to use
+
+    @return <string>
+*/
+@function strip-unit($num) {
+    @return $num / ($num * 0 + 1);
+}
+
+@function convert-to-rem($value, $base-value: 16px)  {
+    $value: strip-unit($value) / strip-unit($base-value) * 1rem;
+
+    @if $value == 0rem {
+        @return 0;
+    }
+    @else {
+        @return $value;
+    }
+}
+
+@function rem($values, $base-value: 16px) {
+    $max: length($values);
+
+    @if $max == 1 { @return convert-to-rem(nth($values, 1), $base-value); }
+
+    $remValues: ();
+
+    @for $i from 1 through $max {
+        @if str-index(#{nth($values, $i)}, 'px') or unitless(nth($values, $i)) {
+            $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
+        }
+        @else {
+            $remValues: append($remValues, nth($values, $i));
+        }
+    }
+
+    @return $remValues;
+}
+
+
+
+
+/*
+    ease()
+    _____
+
+    @param <string> Name of easing function
+
+    @return easing function
+*/
+$ease: (
+in-quad:      cubic-bezier(0.550,  0.085, 0.680, 0.530),
+in-cubic:     cubic-bezier(0.550,  0.055, 0.675, 0.190),
+in-quart:     cubic-bezier(0.895,  0.030, 0.685, 0.220),
+in-quint:     cubic-bezier(0.755,  0.050, 0.855, 0.060),
+in-sine:      cubic-bezier(0.470,  0.000, 0.745, 0.715),
+in-expo:      cubic-bezier(0.950,  0.050, 0.795, 0.035),
+in-circ:      cubic-bezier(0.600,  0.040, 0.980, 0.335),
+in-back:      cubic-bezier(0.600, -0.280, 0.735, 0.045),
+out-quad:     cubic-bezier(0.250,  0.460, 0.450, 0.940),
+out-cubic:    cubic-bezier(0.215,  0.610, 0.355, 1.000),
+out-quart:    cubic-bezier(0.165,  0.840, 0.440, 1.000),
+out-quint:    cubic-bezier(0.230,  1.000, 0.320, 1.000),
+out-sine:     cubic-bezier(0.390,  0.575, 0.565, 1.000),
+out-expo:     cubic-bezier(0.190,  1.000, 0.220, 1.000),
+out-circ:     cubic-bezier(0.075,  0.820, 0.165, 1.000),
+out-back:     cubic-bezier(0.175,  0.885, 0.320, 1.275),
+in-out-quad:  cubic-bezier(0.455,  0.030, 0.515, 0.955),
+in-out-cubic: cubic-bezier(0.645,  0.045, 0.355, 1.000),
+in-out-quart: cubic-bezier(0.770,  0.000, 0.175, 1.000),
+in-out-quint: cubic-bezier(0.860,  0.000, 0.070, 1.000),
+in-out-sine:  cubic-bezier(0.445,  0.050, 0.550, 0.950),
+in-out-expo:  cubic-bezier(1.000,  0.000, 0.000, 1.000),
+in-out-circ:  cubic-bezier(0.785,  0.135, 0.150, 0.860),
+in-out-back:  cubic-bezier(0.680, -0.550, 0.265, 1.550)
+);
+
+@function ease($key) {
+    @if map-has-key($ease, $key) {
+        @return map-get($ease, $key);
+    }
+    @else {
+        @warn "Unkown '#{$key}' in $ease.";
+        @return null;
+    }
+}
+
+
+
+
+/*
+    round()
+    _____
+
+    @param <string> The value
+    @param <string> Number of places to round to
+    @param <string> The rounding mode e.g. round, ceil, floor...
+
+    @return Rounded number
+*/
+@function decimal-round($number, $digits: 0, $mode: round) {
+    $n: 1;
+    // $number must be a number
+    @if type-of($number) != number {
+        @warn '#{ $number } is not a number.';
+        @return $number;
+    }
+    // $digits must be a unitless number
+    @if type-of($digits) != number {
+        @warn '#{ $digits } is not a number.';
+        @return $number;
+    } @else if not unitless($digits) {
+        @warn '#{ $digits } has a unit.';
+        @return $number;
+    }
+    @for $i from 0 through $digits {
+        //$n: $n * 10;
+    }
+    @if $mode == round {
+        @return round($number * $n) / $n;
+    } @else if $mode == ceil {
+        @return ceil($number * $n) / $n;
+    } @else if $mode == floor {
+        @return floor($number * $n) / $n;
+    } @else {
+        @warn '#{ $mode } is undefined keyword.';
+        @return $number;
+    }
+}

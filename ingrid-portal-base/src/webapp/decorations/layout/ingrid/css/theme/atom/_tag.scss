@@ -1,0 +1,48 @@
+/*
+ *  Atom: Tag
+ *______________________*/
+
+
+
+
+.tag {
+    background: color(faded);
+}
+
+.tag--small {
+    padding: rem(6px 14px);
+}
+
+.tag--big {
+    font-weight: 700;
+    padding: rem(10px 24px);
+
+    @include media(
+    $query: '< 480',
+        $css: (
+        padding: rem(8px 12px)
+        )
+        );
+}
+
+.tag-group {
+    display: block;
+    overflow: hidden;
+
+    li {
+        display: inline-block;
+        float: left;
+        margin: rem(0 10px 10px 0);
+
+        @include media(
+        $query: '480 >',
+            $css: (
+            margin: rem(0 16px 16px 0)
+            )
+            );
+    }
+
+    a {
+        display: block;
+    }
+}

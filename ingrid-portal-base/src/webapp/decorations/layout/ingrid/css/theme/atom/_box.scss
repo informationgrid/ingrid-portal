@@ -1,0 +1,79 @@
+/*
+ *  Atoms: Box
+ *______________________*/
+
+
+
+
+.box {
+    background: color(white);
+    margin: rem(40px) 0;
+}
+
+.box--fill {
+    background: color(faded);
+}
+
+.box--small,
+.box--medium,
+.box--large {
+    .box__title {
+        padding: rem(10px 20px);
+    }
+
+    .box__content {
+        padding: rem(20px);
+    }
+}
+
+.box--medium,
+.box--large {
+    .box__title {
+        @include media(
+        $query: '480 >',
+            $css: (
+            padding: rem(15px 30px)
+            )
+            );
+    }
+
+    .box__content {
+        @include media(
+        $query: '480 >',
+            $css: (
+            padding: rem(30px)
+            )
+            );
+    }
+}
+
+.box--large {
+    .box__title {
+        @include media(
+        $query: '768 >',
+            $css: (
+            padding: rem(20px 40px)
+            )
+            );
+    }
+
+    .box__content {
+        @include media(
+        $query: '768 >',
+            $css: (
+            padding: rem(40px)
+            )
+            );
+    }
+}
+
+.box__title {
+    background: color(gainsboro);
+    border-bottom: 2px solid color(nobel);
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.box__content {
+}

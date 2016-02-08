@@ -1,0 +1,205 @@
+/*
+ *  Pieces/Layout: Sidebar
+ *______________________*/
+
+
+
+$sidebar-width: 250px;
+
+.sidebar,
+.sidebar + .content {
+    @include media(
+    $query: '768 >',
+        $css: (
+        display: inline-block,
+        margin-right: -4px,
+        padding: rem(60px) 0,
+        vertical-align: top
+        )
+        );
+}
+
+.sidebar {
+    margin-bottom: rem(40px);
+
+    @include media(
+    $query: '768 - 1140',
+        $css: (
+        left: $global-gutter / 2,
+        padding-top: rem(64px),
+        position: absolute,
+        top: 0
+        )
+        );
+
+    @include media(
+    $query: '768 >',
+        $css: (
+        box-shadow: inset -1px 0 0 color(gainsboro),
+        margin-bottom: 0,
+        width: rem($sidebar-width)
+        )
+        );
+
+    &.is-active {
+        + .content {
+            @include media(
+            $query: '768 - 1140',
+                $css: (
+                box-shadow: -1px 0 0 color(gainsboro),
+                padding-left: $global-gutter,
+                transform: translateX($sidebar-width),
+                width: calc(100% - #{$sidebar-width})
+            )
+            );
+        }
+    }
+}
+
+.sidebar + .content {
+    @include media(
+    $query: '768 - 1140',
+        $css: (
+        background: color(white),
+        position: relative,
+        padding-top: rem(64px),
+        //transition: #{padding-left .25s, transform .25s, width .25s},
+        transition: transform .25s,
+        z-index: 1
+        )
+        );
+
+    @include media(
+    $query: '1140 >',
+        $css: (
+        background: color(white),
+        box-shadow: -1px 0 0 color(gainsboro),
+        max-width: none,
+        padding-left: $global-gutter,
+        position: relative,
+        width: calc(100% - #{$sidebar-width}),
+    z-index: 1
+        )
+        );
+}
+
+.sidebar__title {
+    background: color(gainsboro);
+    color: color(black);
+    cursor: pointer;
+    font: 700 rem(18px) $font-brand;
+    margin: rem(20px 0 0);
+    padding: rem(10px 14px);
+
+    .no-touchevents &:hover,
+        &.is-active {
+        background: color(light-grey);
+    }
+
+    &.is-active {
+        .icon {
+            display: none;
+
+            + .icon {
+                display: block;
+            }
+        }
+    }
+
+    .icon {
+        fill: color(dim-grey);
+        float: right;
+        font-size: rem(20px);
+
+        + .icon {
+            display: none;
+        }
+    }
+}
+
+.sidebar__content {
+    background: #f8f8f8;
+    padding: rem(10px);
+
+    @include media(
+    $query: '768 >',
+        $css: (
+        background: transparent,
+        display: block !important,
+        margin-bottom: 0,
+        padding: 0 rem(10px) 0 0
+        )
+        );
+}
+
+.sidebar-toggle {
+    box-shadow: 0 0 0 1px color(gainsboro);
+    cursor: pointer;
+    font-size: rem(24px);
+    left: 0;
+    height: 1em;
+    position: absolute;
+    top: rem(20px);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    width: 1em;
+
+    &.is-active {
+        margin-left: -1px;
+        -ms-transform: rotate(270deg) translateY(-100%);
+        transform: rotate(270deg) translateY(-100%);
+    }
+
+    .icon {
+        display: block;
+        fill: color(dim-grey);
+        margin: .25em;
+        position: relative;
+        top: 1px;
+    }
+}
+
+.sidebar__widget {
+    @include media(
+    $query: '768 >',
+        $css: (
+        margin-right: rem(-10px)
+        )
+        );
+}
+
+.sidebar__widget__title {
+    border-bottom: 1px solid color(gainsboro);
+    color: color(black);
+    display: block;
+    font: 700 rem(18px) $font-brand;
+    padding: rem(12px) 1.2em rem(12px) 0;
+}
+
+.sidebar__widget__content {
+    margin-bottom: rem(30px);
+}
+
+.sidebar__widget__content--pushed {
+    @include media(
+    $query: '768 >',
+        $css: (
+        padding-right: rem(12px)
+        )
+        );
+}
+
+.sidebar__nav {
+    font-family: $font-brand;
+    font-size: rem(16px);
+    padding-left: rem(12px);
+
+    a {
+        display: block;
+        margin-top: .65em;
+    }
+
+    .is-active {
+        color: color(black);
+    }
+}
