@@ -1,0 +1,41 @@
+<section class="block block--padded">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+    	<article class="content ob-container">
+	    	$jetspeed.renderPortletWindow("SearchSimple", "ingrid-portal-apps::SearchSimple")
+	    </article>
+	    <article class="content ob-container">
+	    	$jetspeed.renderPortletWindow("RssNewsTeaser", "ingrid-portal-apps::RssNewsTeaser")
+	    </article>
+	</div>
+</section>
+
+<section class="block block--padded block--light">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+	</div>
+</section>
+
+<section class="block block--padded">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+    	<article class="content ob-container">
+	    	$jetspeed.renderPortletWindow("EnvironmentTeaser", "ingrid-portal-apps::EnvironmentTeaser")
+    	</article>
+	</div>
+</section>
+
+<section class="block block--padded">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+    	<article class="content ob-container">
+			<div class="grid grid--gutter grid--equal bx-top-l">
+			    <div class="column column--1-2-s column--1-3-l">
+			        $jetspeed.renderPortletWindow("ChronicleTeaser", "ingrid-portal-apps::ChronicleTeaser")
+			    </div>
+			    <div class="column column--1-2-s column--1-3-l">
+					$jetspeed.renderPortletWindow("MeasuresTeaser", "ingrid-portal-apps::MeasuresTeaser")
+			    </div>
+			    <div class="column column--1-2-s column--1-3-l">
+					$jetspeed.renderPortletWindow("WeatherTeaser", "ingrid-portal-apps::WeatherTeaser")
+			    </div>
+			</div>
+		</article>
+	</div>
+</section>
