@@ -1,5 +1,0 @@
-      <div class="portlet-section-body">
-        <p>$MESSAGES.getString('searchExtResTopicAttributes.info.content1')</p>
-        <p>$MESSAGES.getString('searchExtResTopicAttributes.info.content2')</p>
-        <p>$MESSAGES.getString('searchExtResTopicAttributes.info.content3')</p>
-      </div>

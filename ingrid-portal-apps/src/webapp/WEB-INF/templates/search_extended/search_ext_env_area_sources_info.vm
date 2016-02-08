@@ -1,9 +1,0 @@
-      <div class="portlet-section-body">
-          <p>$MESSAGES.getString('searchExtEnvAreaSources.info.content1')</p>
-            <ul>
-                <li><p>$MESSAGES.getString('searchExtEnvAreaSources.info.content2')</p></li>
-                <li><p>$MESSAGES.getString('searchExtEnvAreaSources.info.content3')</p></li>
-                <li><p>$MESSAGES.getString('searchExtEnvAreaSources.info.content4')</p></li>
-            </ul>
-          <p>$MESSAGES.getString('searchExtEnvAreaSources.info.content5')</p>
-      </div>
