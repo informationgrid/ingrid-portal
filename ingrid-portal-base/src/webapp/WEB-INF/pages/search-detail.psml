@@ -1,17 +1,13 @@
 <page>
   <defaults
      skin="orange"
-     layout-decorator="ingrid-clear"
-     portlet-decorator="clear"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
   />
   <title>Detail Information</title>
   <metadata name="title" xml:lang="de">Detailinformationen</metadata>
 
   <fragment id="search-detail" type="layout" name="jetspeed-layouts::IngridClearLayout">
-    <fragment id="search-detail-1" type="portlet" name="ingrid-portal-apps::SearchDetail">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
-    </fragment>
   </fragment>
 
   <security-constraints>

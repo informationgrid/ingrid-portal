@@ -7,21 +7,7 @@
   <title>Login</title>
   <metadata name="title" xml:lang="de">Mein Portal</metadata>
 
-  <fragment id="myportal-create-account" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="myportal-create-account-1" type="portlet" name="ingrid-portal-apps::MyPortalCreateAccountPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
-    </fragment>
-    <fragment id="myportal-create-account-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/myportal/login_teaser.vm</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>teaser.login.title</value>
-      </preference>
-    </fragment>
+  <fragment id="myportal-create-account" type="layout" name="jetspeed-layouts::IngridClearLayout">
   </fragment>
 
   <security-constraints>

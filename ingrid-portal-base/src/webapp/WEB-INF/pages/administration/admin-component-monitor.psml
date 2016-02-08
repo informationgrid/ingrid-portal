@@ -14,10 +14,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
   />
   <title>ingrid.page.admin.monitor</title>
 
-  <fragment id="admin-component-monitor" type="layout" name="jetspeed-layouts::IngridOneColumn">
-    <fragment id="admin-component-monitor-0" type="portlet" name="ingrid-portal-apps::AdminComponentMonitorPortlet">
-      <property layout="OneColumn" name="row" value="1"/>
-    </fragment>
+  <fragment id="admin-component-monitor" type="layout" name="jetspeed-layouts::IngridClearLayout">
   </fragment>
 
   <security-constraints>

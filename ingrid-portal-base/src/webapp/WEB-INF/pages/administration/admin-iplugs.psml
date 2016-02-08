@@ -6,10 +6,7 @@
   />
   <title>ingrid.page.admin.iplugs</title>
   
-  <fragment id="admin-iplugs" type="layout" name="jetspeed-layouts::IngridOneColumn">
-    <fragment id="admin-iplugs-0" type="portlet" name="ingrid-portal-apps::AdminIPlugPortlet">
-      <property layout="OneColumn" name="row" value="1"/>
-    </fragment>
+  <fragment id="admin-iplugs" type="layout" name="jetspeed-layouts::IngridClearLayout">
   </fragment>
 
   <security-constraints>

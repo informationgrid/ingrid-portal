@@ -18,40 +18,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
   <metadata name="meta_descr">ingrid.page.about.meta.description</metadata>
   <metadata name="meta_keywords">ingrid.page.about.meta.keywords</metadata>
 
-  <fragment id="main-about" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="main-about-1" type="portlet" name="ingrid-portal-apps::CMSPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/default_cms.vm</value>
-      </preference>
-      <preference name="cmsKey" readOnly="false">
-        <value>ingrid.about</value>
-      </preference>
-      <preference name="helpKey" readOnly="false">
-        <value>about-1</value>
-      </preference>
-    </fragment>
-    <fragment id="main-about-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/about_links.vm</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>about.links.title</value>
-      </preference>
-    </fragment>
-    <fragment id="main-about-3" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
-      <property layout="TwoColumns" name="row" value="1" />
-      <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/about_partner.vm</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>about.partner.title</value>
-      </preference>
-    </fragment>
+  <fragment id="main-about" type="layout" name="jetspeed-layouts::IngridClearLayout">
   </fragment>
 
   <security-constraints>

@@ -25,17 +25,7 @@ limitations under the License.
   <metadata name="meta_descr">ingrid.page.privacy.meta.description</metadata>
   <metadata name="meta_keywords">ingrid.page.privacy.meta.keywords</metadata>
 
-  <fragment id="privacy" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="privacy-1" type="portlet" name="ingrid-portal-apps::CMSPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/default_cms.vm</value>
-      </preference>
-      <preference name="cmsKey" readOnly="false">
-        <value>ingrid.privacy</value>
-      </preference>
-    </fragment>
+  <fragment id="privacy" type="layout" name="jetspeed-layouts::IngridClearLayout">
   </fragment>
 
   <security-constraints>

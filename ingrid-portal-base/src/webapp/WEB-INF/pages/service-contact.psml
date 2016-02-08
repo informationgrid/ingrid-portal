@@ -10,21 +10,7 @@
   <metadata name="meta_descr">ingrid.page.contact.meta.description</metadata>
   <metadata name="meta_keywords">ingrid.page.contact.meta.keywords</metadata>
 
-  <fragment id="service-contact" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="service-contact-1" type="portlet" name="ingrid-portal-apps::Contact">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
-    </fragment>
-    <fragment id="service-contact-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/newsletter_teaser.vm</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>teaser.newsletter.title</value>
-      </preference>
-    </fragment>
+  <fragment id="service-contact" type="layout" name="jetspeed-layouts::IngridClearLayout">
   </fragment>
 
   <security-constraints>

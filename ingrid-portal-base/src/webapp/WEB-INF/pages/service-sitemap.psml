@@ -10,7 +10,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
   <defaults
      skin="orange"
      layout-decorator="ingrid"
-     portlet-decorator="clear"
+     portlet-decorator="ingrid-teaser"
   />
   <title>ingrid.page.sitemap.tooltip</title>
   <short-title>ingrid.page.sitemap</short-title>
@@ -18,17 +18,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
   <metadata name="meta_descr">ingrid.page.sitemap.meta.description</metadata>
   <metadata name="meta_keywords">ingrid.page.sitemap.meta.keywords</metadata>
 
-  <fragment id="service-sitemap" type="layout" name="jetspeed-layouts::IngridTwoColumns">
-    <fragment id="service-sitemap-1" type="portlet" name="ingrid-portal-apps::InfoPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/sitemap.vm</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>sitemap.title</value>
-      </preference>
-    </fragment>
+  <fragment id="service-sitemap" type="layout" name="jetspeed-layouts::IngridClearLayout">
   </fragment>
 
   <security-constraints>
