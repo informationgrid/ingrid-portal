@@ -1,13 +1,20 @@
 ## ------------------------------
 ## search macros
 ## ------------------------------
-#macro (renderResultCounterCatalogue $pageSelector $catalogueName)
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
-$MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
-$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
-$MESSAGES.setMsgParam($catalogueName)
-$MESSAGES.getStringWithMsgParams('common.result.counter.catalog')
+#macro (renderResultCounterCatalogue $pageSelector $catalogueName $searchName)
+	#if($searchName)
+		$MESSAGES.resetMsgParams()
+		$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+		$MESSAGES.setMsgParam($searchName)
+		$MESSAGES.getStringWithMsgParams('common.result.counter.catalog.withsearchvalue')
+	#else
+		$MESSAGES.resetMsgParams()
+		$MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
+		$MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
+		$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+		$MESSAGES.setMsgParam($catalogueName)
+		$MESSAGES.getStringWithMsgParams('common.result.counter.catalog')
+	#end
 #end
 
 #macro (renderResultCounterCatalogueGrouping $pageSelector $catalogueName)
@@ -54,49 +61,77 @@ $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
 
 #macro (renderRankedPageNavigation $pageSelector)
 #set ($action = $renderResponse.createActionURL())
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
-$MESSAGES.setMsgParam("$pageSelector.numberOfPages")
-$MESSAGES.getStringWithMsgParams('common.result.navigation.ranked')
-	#if($pageSelector.selectorHasPreviousPage)
-        #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
-    	$action.setParameter('rstart', $pstart.toString())	
-    		<a href="$action">&laquo;</a>
-    	$action.setParameter('rstart', "0")	
-    		| <a href="$action">1</a> ..
-    #end
+<ul class="pagination__list tx-right mq-hide-m">
+    #set ($pstart = 0)
+	$action.setParameter('rstart', $pstart.toString())
+	<li>
+		<a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+			<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+		</a>
+	</li>
+    
+    #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+	<li>
+		<a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+			<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+		</a>
+	</li>
+
 	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+		<li>
     	#if($pageId == $pageSelector.currentSelectorPage)
-    		| $pageId
+    		<a class="pagination__number is-active" href="$action">$pageId</a>
     	#else
     		#set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
     		$action.setParameter('rstart', $pstart.toString())
-    		| <a href="$action">$pageId</a>
+    		<a class="pagination__number" href="$action">$pageId</a>
     	#end
+    	</li>
 	#end
-    #if($pageSelector.selectorHasNextPage)
-        #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
-    	$action.setParameter('rstart', $pstart.toString())
-    		| <a href="$action">&raquo;</a>
-    #end
+	
+    #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
+	$action.setParameter('rstart', $pstart.toString())
+	<li>
+		<a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+			<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+		</a>
+	</li>
+	
+    #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
+	$action.setParameter('rstart', $pstart.toString())
+	<li>
+		<a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+			<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+		</a>
+	</li>
+</ul>
 #end
 
 ## this navigation is used when "grouping by domain"
 ## -> renders pages just like with NO GROUPING and estimates starthits of oncoming pages
-#macro (renderRankedPageNavigationGroupingWithPages $pageSelector)
+#macro (renderRankedPageNavigationGroupingWithPages $pageSelector $isBottom)
+#if($isBottom)
+	<p class="mq-hide-l">#renderRankedResultCounter($pageSelector)</p>
+#end
 <ul class="pagination__list tx-right mq-hide-m">
 	#set ($action = $renderResponse.createActionURL())
-	#if($pageSelector.selectorHasPreviousPage)
-        #set ($pstart = $pageSelector.currentSelectorPage - 1)
-    	$action.setParameter('currentSelectorPage', $pstart.toString())
-    	<li>
-    		<a href="$action">&laquo;</a>
-    	</li>
-    	$action.setParameter('currentSelectorPage', "1")
-    	<li>
-    		<a href="$action">1</a>
-    	</li>
-	#end
+	#set ($pstart = 1)
+	$action.setParameter('currentSelectorPage', $pstart.toString())
+	<li>
+		<a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+			<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+		</a>
+	</li>
+    
+    #set ($pstart = $pageSelector.currentSelectorPage - 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+	<li>
+		<a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+			<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+		</a>
+	</li>
+	
 	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
 		<li>
     	#if($pageId == $pageSelector.currentSelectorPage)
@@ -107,13 +142,22 @@ $MESSAGES.getStringWithMsgParams('common.result.navigation.ranked')
     	#end
     	</li>
 	#end
-    #if($pageSelector.selectorHasNextPage)
-    	<li>
-        #set ($pstart = $pageSelector.currentSelectorPage + 1)
-    	$action.setParameter('currentSelectorPage', $pstart.toString())
-    		<a href="$action">&raquo;</a>
-    	</li>
-    #end
+    
+    #set ($pstart = $pageSelector.currentSelectorPage + 1)
+	$action.setParameter('currentSelectorPage', $pstart.toString())
+	<li>
+		<a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
+			<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+		</a>
+	</li>
+	
+    #set ($pstart = $pageSelector.lastSelectorPage)
+	$action.setParameter('currentSelectorPage', $pstart.toString())
+	<li>
+		<a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
+			<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+		</a>
+	</li>
 </ul>
 #end
 

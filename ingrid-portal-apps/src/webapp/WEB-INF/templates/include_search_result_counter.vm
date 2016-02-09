@@ -1,6 +1,2 @@
 ## RANKED (left column stuff)
-#if($grouping)
-	#renderRankedResultCounterGrouping($rankedPageSelector)
-#else
-	#renderRankedResultCounter($rankedPageSelector)
-#end
+#renderRankedResultCounterGrouping($rankedPageSelector)

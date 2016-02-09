@@ -7,37 +7,30 @@
 #end
 	
 ## set flag indicating how to render stuff (e.g. in includes)
-#set ($IS_RANKED = true)
+<div class="section">
+	<h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
+	#parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+	<br />
 
-	<div class="section">
-	  #parse ('/WEB-INF/templates/include_search_result_counter.vm')
-	  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
-      <br />
-
-#if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
-	#foreach($rs in $rankedResultList.getWrapperHits())
-        #if($grouping)
-			#parse ('/WEB-INF/templates/include_search_result_group_header.vm')
-        #end
-		#set ($topHit = true)
-		#renderHit($rs)
-        #if($rs.subhit)
-			#set ($rs = $rs.subhit)
-			#set ($topHit = false)
-			#set ($subHitLeftMargin = 40)
+	#if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
+		#foreach($rs in $rankedResultList.getWrapperHits())
+	        #if($grouping)
+				#parse ('/WEB-INF/templates/include_search_result_group_header.vm')
+	        #end
+			#set ($topHit = true)
 			#renderHit($rs)
+	        #if($rs.subhit)
+				#set ($rs = $rs.subhit)
+				#set ($topHit = false)
+				#set ($subHitLeftMargin = 40)
+				#renderHit($rs)
+			#end
+			#parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
 		#end
-		#parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
-	#end
-#elseif($rankedSearchFinished)
+	#elseif($rankedSearchFinished)
 		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
-#else
+	#else
 		<p><strong>$MESSAGES.getString('common.result.interrupted')</strong><br /><br /></p>
-#end
-        #parse ('/WEB-INF/templates/include_search_result_counter.vm')
-      <div class="resultset_nav">
-        &nbsp;
-      </div>
-	  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
-
-    </div>
+	#end
+  	#parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
+</div>

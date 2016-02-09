@@ -1,11 +1,11 @@
 ## Renders Single Hit
     ## different margins dependent from grouping
     #if($topHit)
-        <div class="search-result">
-        	<div>
+		<div class="search-result">
+			<div>
     #else
-        <div class="media ob-clear search-result" >
-        	<div class="search-result--nested">
+	    <div class="media ob-clear search-result" >
+	    	<div class="search-result--nested">
     #end
     
     ###if($showHitPartnerLogo)
