@@ -40,7 +40,6 @@ import org.w3c.dom.NodeList;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsString;
-import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0.LinkType;
 import de.ingrid.utils.udk.TM_PeriodDurationToTimeAlle;
 import de.ingrid.utils.udk.TM_PeriodDurationToTimeInterval;
 import de.ingrid.utils.udk.UtilsDate;
@@ -68,6 +67,22 @@ public class DetailPartPreparer {
 
     protected XPathUtils XPathUtils = null;
 
+    public enum LinkType {
+        EMAIL, WWW_URL
+    }
+    
+    public enum ReferenceType {
+        SUBORDINATE, SUPERIOR, CROSS, OBJECT
+    }
+    
+    public enum LabelType {
+        LEFT, ABOVE, DURING
+    }
+    
+    public enum TimeSpatialType {
+        TIME, SPATIAL
+    }
+    
 	/** Default initialization ! May be overwritten in subclasses. */
 	public void init(Node node, String iPlugId, RenderRequest request, RenderResponse response, Context context) {
         this.rootNode = node;

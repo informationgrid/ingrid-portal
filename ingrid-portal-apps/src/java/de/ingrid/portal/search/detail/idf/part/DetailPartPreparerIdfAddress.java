@@ -36,7 +36,6 @@ import org.w3c.dom.NodeList;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.UtilsVelocity;
-import de.ingrid.portal.search.detail.idf.DetailDataPreparerIdf1_0_0.LinkType;
 import de.ingrid.utils.udk.UtilsCountryCodelist;
 
 public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
