@@ -55,14 +55,6 @@ $contactIntroPostEmail
 				<input type="file" id="upload" name="upload"></input>
             </p>
 #end
-#if ($enableNewsletter)		
-		<p>
-			<label class="float_left col2left_incr">$MESSAGES.getString('contact.form.newsletter')</label>
-			<input type="checkbox" id="chk1" name="newsletter" value="1" #getChecked('newsletter' '1')/>&nbsp;
-			<label for="chk1">$MESSAGES.getString('contact.form.newsletter.label')</label>
-			<span class="clearer"></span>
-		</p>
-#end
 
 #if($enableCaptcha)
 		<p>

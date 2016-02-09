@@ -155,41 +155,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         }
 
-        // starthit UNRANKED
-
-        // NO GROUPING !!!
-        // Do we need to read unrankedStartHit, is passed from navi when not grouped but UNRANKED SEARCH IS ALWAYS GROUPED !!!
-        int unrankedStartHit = 0;
-        try {
-            reqParam = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
-            if (SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, reqParam)) {
-                unrankedStartHit = (new Integer(reqParam)).intValue();
-            }
-        } catch (Exception ex) {
-            if (log.isErrorEnabled()) {
-                log.error(
-                        "Problems parsing UNRANKED starthit from render request, set UNRANKED starthit to 0 ! reqParam="
-                                + reqParam, ex);
-            }
-        }
-
-        // GROUPING ONLY !!!
-        // UNRANKED SEARCH IS ALWAYS GROUPED !!!
-        // get the current page number, default to 1
-        int currentSelectorPageUnranked = 1;
-        try {
-            reqParam = request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED);
-            if (SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, reqParam)) {
-                currentSelectorPageUnranked = new Integer(reqParam).intValue();
-            }
-        } catch (Exception ex) {
-            if (log.isErrorEnabled()) {
-                log.error(
-                        "Problems parsing currentSelectorPageUnranked from render request, set currentSelectorPageUnranked to 1 ! reqParam="
-                                + reqParam, ex);
-            }
-        }
-
         // indicates whether we do a query or we read results from cache
         String queryType = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
         if (queryType == null) {
@@ -283,7 +248,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         
         // determine whether we have to render only one result column
         boolean renderResultColumnRanked = true;
-        boolean renderResultColumnUnranked = true;
         reqParam = request.getParameter("js_ranked");
 
         // create threaded query controller
@@ -300,7 +264,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         if (renderResultColumnRanked) {
         	if(reqParam == null){
 	            // check if query must be executed
-	            if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_UNRANKED_QUERY)) {
+	            if (queryType.equals(Settings.MSGV_NO_QUERY)) {
 	                rankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
 	                if (log.isDebugEnabled()) {
 	                    log.debug("Read RANKED hits from CACHE !!! rankedHits=" + rankedHits);
@@ -321,105 +285,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 	                }
 	            }
 	        }
-        }else{
-			if(queryType.equals(Settings.MSGV_UNRANKED_QUERY)){
-				if(ps.getAttribute("isPagingUnranked") != null && ps.getAttribute("isPagingUnranked").equals(currentSelectorPageUnranked + "")){
-    				ps.removeAttribute("isPagingUnranked");
-    				rankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
-	                if (log.isDebugEnabled()) {
-	                    log.debug("Read RANKED hits from CACHE !!! rankedHits=" + rankedHits);
-	                }
-                }else{
-                    String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
-                    if(queryString == null){
-                        rankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
-                    }
-                    
-                    if(rankedHits == null){
-                    	// process query, create QueryDescriptor
-    	                qd = QueryPreProcessor.createRankedQueryDescriptor(request);
-    	                if (qd != null) {
-    	                    controller.addQuery("ranked", qd);
-    	                    SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
-    	                }
-                    }
-                }
-			}
         }
-
-        // UNRANKED
-        IngridHitsWrapper unrankedHits = null;
-    	if (renderResultColumnUnranked) {
-    		if(reqParam != null && reqParam.equals("false") || !hasJavaScript){
-				if (!currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
-	                // check if query must be executed
-	                if (queryType.equals(Settings.MSGV_NO_QUERY) || queryType.equals(Settings.MSGV_RANKED_QUERY)) {
-	                    if(!currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)){
-	                    	unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request,
-	                                Settings.MSG_SEARCH_RESULT_UNRANKED);
-	                        if (log.isDebugEnabled()) {
-	                            log.debug("Read UNRANKED hits from CACHE !!!! unrankedHits=" + unrankedHits);
-	                        }
-	                    }else{
-	                        String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
-	                        if(queryString == null){
-	                            unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
-	                        }
-	                        
-	                        if(unrankedHits == null){
-    	                    	// process query, create QueryDescriptor
-    	                        qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
-    	                        if (qd != null) {
-    	                            controller.addQuery("unranked", qd);
-    	                            SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
-    	                        }
-	                        }
-	                    }
-	                }else {
-	                    String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
-                        if(queryString == null){
-                            unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
-                        }
-                        
-                        if(unrankedHits == null){
-    	                    // process query, create QueryDescriptor
-    	                    qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
-    	                    if (qd != null) {
-    	                        controller.addQuery("unranked", qd);
-    	                        SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
-    	                    }
-                        }
-	                }
-    			}
-    		}else{
-    			if(queryType.equals(Settings.MSGV_RANKED_QUERY)){
-    				if(ps.getAttribute("isPagingRanked") != null && ps.getAttribute("isPagingRanked").equals(currentSelectorPage + "")){
-        				ps.removeAttribute("isPagingRanked");
-        				unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request,
-                                Settings.MSG_SEARCH_RESULT_UNRANKED);
-                        if (log.isDebugEnabled()) {
-                            log.debug("Read UNRANKED hits from CACHE !!!! unrankedHits=" + unrankedHits);
-                        }
-                    }else{
-                        String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
-                        if(queryString == null){
-                            unrankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_UNRANKED);
-                        }
-                        
-                        if(unrankedHits == null){
-                        	// process query, create QueryDescriptor
-    	                    qd = QueryPreProcessor.createUnrankedQueryDescriptor(request);
-    	                    if (qd != null) {
-    	                        controller.addQuery("unranked", qd);
-    	                        SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
-    	                    }
-                        }
-                    }
-    			}
-            }
-        }
-
-        // get possible changes AFTER PREPROCESSING QUERY !!!
 
         // Grouping may have changed !
         String grouping = (String) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING);
@@ -525,37 +391,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 }
 
             }
-            // post process unranked hits if exists
-            if (results.containsKey("unranked")) {
-                unrankedHits = QueryResultPostProcessor.processUnrankedHits((IngridHitsWrapper) results.get("unranked"),
-                        selectedDS);
-                SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_UNRANKED, unrankedHits);
-                SearchState.adaptSearchState(request, Settings.MSG_SEARCH_FINISHED_UNRANKED, Settings.MSGV_TRUE);
-                // get the grouping starthits history from session
-                // create and initialize if not exists
-                try {
-                    @SuppressWarnings("unchecked")
-                    List<Object> groupedStartHits = 
-                    	(List<Object>) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED);
-                    if (groupedStartHits == null || unrankedHits == null) {
-                        groupedStartHits = new ArrayList<Object>();
-                        groupedStartHits.add(new Integer(0));
-                        SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED,
-                                groupedStartHits);
-                    } else {
-                        // set start hit for next page (grouping)
-                    	int nextStartHit = unrankedHits.getGoupedHitsLength();
-                        groupedStartHits.add(currentSelectorPageUnranked, new Integer(nextStartHit));
-                    }
-                } catch (Exception ex) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Problems processing grouping starthits UNRANKED", ex);
-                    }
-                    if (log.isInfoEnabled()) {
-                        log.info("Problems processing grouping starthits UNRANKED. switch to debug level to get the exception logged.");
-                    }
-                }
-            }
         }
 
         int totalNumberOfRankedHits = 0;
@@ -567,41 +402,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 Settings.SEARCH_RANKED_HITS_PER_PAGE, totalNumberOfRankedHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
-        int totalNumberOfUnrankedHits = 0;
-        if (unrankedHits != null) {
-            if (filter != null && filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-                totalNumberOfUnrankedHits = (int) unrankedHits.length();
-            } else {
-                totalNumberOfUnrankedHits = unrankedHits.getInVolvedPlugs();
-            }
-        }
-        // adapt settings of unranked page navigation
-        Map<String, Object> unrankedPageNavigation = UtilsSearch.getPageNavigation(unrankedStartHit,
-                Settings.SEARCH_UNRANKED_HITS_PER_PAGE, totalNumberOfUnrankedHits,
-                Settings.SEARCH_UNRANKED_NUM_PAGES_TO_SELECT);
-
         Object rankedSearchFinished = SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
-        Object unrankedSearchFinished = SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_UNRANKED);
-        /*
-         // DON'T SHOW separate Template when no results ! This one is never displayed when JS is active and search is performed
-         // initially (cause then always two columns are rendered (via iframes)). Only afterwards, e.g. when similar terms are
-         // clicked, this template is displayed, causing changes of result content (when similar terms are displayed).
-         // WE DON'T WANT TO CHANGE RESULTS CONTENT, WHEN SIMILAR TERMS ARE CKLICKED (DO we ???)
-         if (rankedSearchFinished != null && unrankedSearchFinished != null && numberOfRankedHits == 0
-         && numberOfUnrankedHits == 0 && (renderOneResultColumnUnranked && renderOneResultColumnRanked)
-         && filter.length() == 0) {
-         // query string will be displayed when no results !
-         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
-         context.put("queryString", queryString);
-
-         setDefaultViewPage(TEMPLATE_NO_RESULT);
-         super.doView(request, response);
-         return;
-         }
-         */
-        // ----------------------------------
-        // prepare view
-        // ----------------------------------
 
         // GROUPING
         // adapt page navigation for grouping in left column 
@@ -619,22 +420,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 }
             }
         }
-        // adapt page navigation for right column (always grouped)
-        if (renderResultColumnUnranked) {
-            unrankedPageNavigation.put(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, new Integer(
-                    currentSelectorPageUnranked));
-            // check if we have more results to come
-            if (unrankedHits != null) {
-                int groupedHitsLength = unrankedHits.getGoupedHitsLength();
-                if (groupedHitsLength > 0 && totalNumberOfUnrankedHits > 0) {
-                    if (totalNumberOfUnrankedHits <= groupedHitsLength) {
-                        unrankedPageNavigation.put("selectorHasNextPage", new Boolean(false));
-                    } else {
-                        unrankedPageNavigation.put("selectorHasNextPage", new Boolean(true));
-                    }
-                }
-            }
-        }
 
         boolean showAdminContent = false;
         if (request.getUserPrincipal() != null) {
@@ -646,7 +431,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             // check if we have to render only the ranked column
             if (reqParam.equals("true")) {
                 request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_RANKED);
-                renderResultColumnUnranked = false;
             }
             // check for js enabled iframe rendering
 
@@ -656,12 +440,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 context.put("IS_RANKED", new Boolean(false));
         	} else {
         		// grouping by domain
-                renderResultColumnUnranked = false;
                 context.put("IS_RANKED", new Boolean(true));
         	}
 
         } else if (currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
-            renderResultColumnUnranked = false;
             context.put("ds", request.getParameter("ds"));
             
             // check for js enabled iframe rendering
@@ -683,18 +465,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             context.put("rankedPageSelector", rankedPageNavigation);
             context.put("rankedResultList", rankedHits);
             context.put("rankedSearchFinished", rankedSearchFinished);
-            context.put("unrankedResultUrl", response.encodeURL(((RequestContext) request
-                    .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
-                    + "/portal/search-result-js.psml"
-                    + SearchState.getURLParamsMainSearch(request)
-                    + "&js_ranked=false"));
             super.doView(request, response);
             return;
         }
         
         context.put("adminContent", showAdminContent);
         context.put("rankedPageSelector", rankedPageNavigation);
-        context.put("unrankedPageSelector", unrankedPageNavigation);
         if(rankedHits != null){
         	if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
                 UtilsFacete.checkForExistingFacete((IngridHitsWrapper) rankedHits, request);
@@ -702,9 +478,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         	}
         }
         context.put("rankedResultList", rankedHits);
-        context.put("unrankedResultList", unrankedHits);
         context.put("rankedSearchFinished", rankedSearchFinished);
-        context.put("unrankedSearchFinished", unrankedSearchFinished);
         //context.put("providerMap", getProviderMap());
 
         super.doView(request, response);
@@ -735,11 +509,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
             SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, rankedStarthit);
         }
-        String unrankedStarthit = request.getParameter(Settings.PARAM_STARTHIT_UNRANKED);
-        if (unrankedStarthit != null) {
-            SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_UNRANKED_QUERY);
-            SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, unrankedStarthit);
-        }
 
         // GROUPING
         // currentSelectorPage is set, send according message (Search state)
@@ -748,14 +517,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
             SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, currentSelectorPage);
             ps.setAttribute("isPagingRanked", currentSelectorPage);
-        }
-        // currentSelectorPageUnranked is set, send according message (Search state)
-        String currentSelectorPageUnranked = request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED);
-        if (currentSelectorPageUnranked != null) {
-            SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_UNRANKED_QUERY);
-            SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED,
-                    currentSelectorPageUnranked);
-            ps.setAttribute("isPagingUnranked", currentSelectorPage);
         }
 
         // adapt filter params, set state only if we do have a subject
@@ -780,8 +541,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         	SearchState.adaptSearchState(request, Settings.PARAM_FILTER, "");
         	SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
         	SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, 0);
-    		SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, 1);
-    		SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, 0);
     		actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + ps.getAttribute("facetsURL"));
         }else{
         	if(!url.equals(ps.getAttribute("facetsURL"))){
@@ -791,8 +550,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, "");
                     SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
                     SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, 0);
-                    SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, 1);
-                    SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, 0);
         	    }
         	}
         	actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + url);

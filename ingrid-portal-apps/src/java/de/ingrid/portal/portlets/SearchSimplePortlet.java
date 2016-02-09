@@ -362,9 +362,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // Reset all Stuff which are remains of former state and shouldn't be
         // taken into account on any action in SimpleSearch form
         SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, null);
-        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, null);
         SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, null);
-        SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, null);
 
         SearchState.adaptSearchState(request, Settings.PARAM_FILTER, null);
         SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, null);        

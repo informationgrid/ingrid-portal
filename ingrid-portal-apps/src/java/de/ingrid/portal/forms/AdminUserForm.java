@@ -69,8 +69,6 @@ public class AdminUserForm extends ActionForm {
 
     public static final String FIELD_PROFESSION = "profession";
 
-    public static final String FIELD_SUBSCRIBE_NEWSLETTER = "subscribe_newsletter";
-
     public static final String FIELD_MODE = "mode";
 
     public static final String FIELD_TAB = "tab";
@@ -126,7 +124,6 @@ public class AdminUserForm extends ActionForm {
             setInput(FIELD_AGE, request.getParameter(FIELD_AGE));
             setInput(FIELD_INTEREST, request.getParameter(FIELD_INTEREST));
             setInput(FIELD_PROFESSION, request.getParameter(FIELD_PROFESSION));
-            setInput(FIELD_SUBSCRIBE_NEWSLETTER, request.getParameter(FIELD_SUBSCRIBE_NEWSLETTER));
             // if tab 2 was selected onle populate fields from tab2
         } else if (this.getInput(FIELD_TAB).equals("2")) {
             setInput(FIELD_CHK_ADMIN_PORTAL, request.getParameter(FIELD_CHK_ADMIN_PORTAL));

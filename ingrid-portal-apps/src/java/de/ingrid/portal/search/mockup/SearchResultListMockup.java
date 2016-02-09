@@ -92,50 +92,5 @@ public class SearchResultListMockup {
         srs.setNumberOfHits(3 * COUNT);
 
         return srs;
-
-    }
-
-    /**
-     * @return
-     */
-    public static SearchResultList getUnrankedSearchResultList() {
-
-        SearchResultList srs = new SearchResultList();
-
-        IngridDocument rsr = new IngridDocument();
-        rsr.put("title", "ULIDAT");
-        rsr.put("type", "WEBSITE");
-        rsr.put("abstract", "Umweltliteraturdatenbank");
-        rsr.put("provider", "Umweltbundesamt");
-        rsr
-                .put(
-                        "url",
-                        "http://doku.uba.de/cgi-bin/g2kadis?WEB=JA&ADISDB=AK&%24VTIV1=J&THEMA1=Blei+Tanne+Waldsterben+&TITEL=Blei+Tanne+Waldsterben+&THEMA2=Blei+Tanne+Waldsterben+&GEJAHR=&GEJAHV=&GEJAHB=&%24TMPLG=(DW0720*TH=TTDWDE,L=L020,Q=SWVF/DW0720*+o+THA710*TH=THESAW,L=L0710,Q=SWVF/THA710*+o+A0712*Q=BIBDE1*+o+CASNR*Q=CASNR1*+o+STOFFN*Q=STOFF1*+o+A0720P*Q=A0720P*+o+A0720*Q=A0720*)");
-        rsr.put("hits", "18211");
-        srs.add(rsr);
-
-        rsr = new IngridDocument();
-        rsr.put("title", "UFORDAT");
-        rsr.put("type", "WEBSITE");
-        rsr.put("abstract", "Umweltforschungsdatenbank");
-        rsr.put("provider", "Umweltbundesamt");
-        rsr
-                .put(
-                        "url",
-                        "http://doku.uba.de/cgi-bin/g2kadis?WEB=JA&ADISDB=VH&%24VTIV1=J&THEMA1=Blei+Tanne+Waldsterben+&TITEL=Blei+Tanne+Waldsterben+&THEMA2=Blei+Tanne+Waldsterben+&VHBEG=&VHBEGF=&STATUS=G,X&VERSTA=x,f&%24TMPLG=(DW0720*TH=TTDWDE,L=L0720,Q=SWVF/DW0720*+o+THKEY*TH=THESAW,L=L0710,Q=SWVF/THKEY*+o+AUTDD*Q=AUTDD1*+o+CASNR*Q=CASNR1*+o+STOFFN*Q=STOFF1*+o+A0720P*Q=A0720P*+o+A0720*Q=A0720*)+u+STATUS*Q=STATUS*+u+VERSTA*Q=VERSTA*");
-        rsr.put("hits", "2236");
-        srs.add(rsr);
-        srs.add(rsr);
-        srs.add(rsr);
-        srs.add(rsr);
-        srs.add(rsr);
-        srs.add(rsr);
-        srs.add(rsr);
-        srs.add(rsr);
-        srs.add(rsr);
-
-        srs.setNumberOfHits(200);
-
-        return srs;
     }
 }

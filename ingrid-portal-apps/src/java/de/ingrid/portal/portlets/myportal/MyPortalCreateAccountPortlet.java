@@ -62,7 +62,6 @@ import de.ingrid.portal.forms.CreateAccountForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.om.IngridNewsletterData;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -272,8 +271,6 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(CreateAccountForm.FIELD_ATTENTION));
             userAttributes.put("user.custom.ingrid.user.interest", f.getInput(CreateAccountForm.FIELD_INTEREST));
             userAttributes.put("user.custom.ingrid.user.profession", f.getInput(CreateAccountForm.FIELD_PROFESSION));
-            userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f
-                    .getInput(CreateAccountForm.FIELD_SUBSCRIBE_NEWSLETTER));
 
             // generate login id
             String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
@@ -345,28 +342,6 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             String to = (String) userInfo.get("user.business-info.online.email");
             String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
             if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
-                if (((String)userAttributes.get("user.custom.ingrid.user.subscribe.newsletter")).equals("1")) {
-                	Session session = HibernateUtil.currentSession();
-                    Transaction tx = null;
-                    tx = session.beginTransaction();
-                    List newsletterDataList = session.createCriteria(IngridNewsletterData.class)
-                    .add(Restrictions.eq("emailAddress", to))
-                    .list();
-                    tx.commit();
-                    
-                    if (newsletterDataList.isEmpty()) {
-                    
-                        IngridNewsletterData data = new IngridNewsletterData(); 
-                        data.setFirstName((String)userAttributes.get("user.name.given"));
-                        data.setLastName((String)userAttributes.get("user.name.family"));
-                        data.setEmailAddress(to);
-                        data.setDateCreated(new Date());
-                        
-                        tx = session.beginTransaction();
-                        session.save(data);
-                        tx.commit();
-                    }                       	
-                }
             	actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_CREATED);
             } else {
                 actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_PROBLEMS_EMAIL);

@@ -13,113 +13,29 @@
 						</svg>
                         $MESSAGES.getString("sitemap.area.main.search")</a>
                         <p>$MESSAGES.getString("sitemap.area.main.search.description")</p>
-                        #if($enableSearchSimpleOptionalLinks)
+                    </li>
+					#if ($enableSearchCatalog)
+                    <li>
+                        #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
+                        <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.tooltip")">
+	                    	<svg class="icon">
+								<use xlink:href="#internal-link">
+							</svg>
+                        	$MESSAGES.getString("sitemap.area.main.search.catalogs")
+                        </a>
+                        <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.description")</p>
                         <ul>
                             <li>
-                                #set ($link = $renderResponse.encodeURL("/portal/search-extended/search-ext-env-topic-terms.psml?ds=1"))
-                                <a href="$link" title="$MESSAGES.getString("sitemap.area.main.extsearch.tooltip")">
-                                                        <svg class="icon">
-							<use xlink:href="#internal-link">
-						</svg>
-                                
-                                $MESSAGES.getString("sitemap.area.main.extsearch")</a>
-                                <p>$MESSAGES.getString("sitemap.area.main.extsearch.description")</p>
+                                #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
+                                <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.tooltip")">
+                                	<svg class="icon">
+										<use xlink:href="#internal-link">
+									</svg>
+                                $MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy")
+                                </a>
+                                <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.description")</p>
                             </li>
-                            <li>
-                                #set ($link = $renderResponse.encodeURL("/portal/search-history.psml"))
-                                <a href="$link" title="$MESSAGES.getString("sitemap.area.main.history.tooltip")">
-                                                        <svg class="icon">
-							<use xlink:href="#internal-link">
-						</svg>
-                                
-                                $MESSAGES.getString("sitemap.area.main.history")</a>
-                                <p>$MESSAGES.getString("sitemap.area.main.history.description")</p>
-                            </li>
-                            <li>
-                                #set ($link = $renderResponse.encodeURL("/portal/search-settings.psml"))
-                                <a href="$link" title="$MESSAGES.getString("sitemap.area.main.settings.tooltip")">
-                                                        <svg class="icon">
-							<use xlink:href="#internal-link">
-						</svg>
-                                
-                                $MESSAGES.getString("sitemap.area.main.settings")</a>
-                                <p>$MESSAGES.getString("sitemap.area.main.settings.description")</p>
-                            </li>
-                            <li>
-                                #set ($link = $renderResponse.encodeURL("/portal/help.psml?hkey=search-tipps-1"))
-                                <a href="$link" target="_new" title="$MESSAGES.getString("sitemap.area.main.tips.tooltip")">
-                                                        <svg class="icon">
-							<use xlink:href="#internal-link">
-						</svg>
-                                
-                                $MESSAGES.getString("sitemap.area.main.tips")</a>
-                                <p>$MESSAGES.getString("sitemap.area.main.tips.description")</p>
-                            </li> 
                         </ul>
-                        #end
-                    </li>
-					#if ($enableSearchCatalog || $enableSearchCatalogThesaurus)
-                    <li>
-                        #if($enableSearchCatalog && !$enableSearchCatalogThesaurus)
-                            #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
-                            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.tooltip")">
-                                                    <svg class="icon">
-							<use xlink:href="#internal-link">
-						</svg>
-                            
-                            $MESSAGES.getString("sitemap.area.main.search.catalogs")</a>
-                            <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.description")</p>
-                            <ul>
-                                <li>
-                                    #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
-                                    <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.tooltip")">
-                                                            <svg class="icon">
-							<use xlink:href="#internal-link">
-						</svg>
-                                    
-                                    $MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy")</a>
-                                    <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.description")</p>
-                                </li>
-                            </ul>
-                        #elseif(!$enableSearchCatalog && $enableSearchCatalogThesaurus)
-                            #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-thesaurus.psml"))
-                            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.thesaurus.tooltip")">
-                                                    <svg class="icon">
-							<use xlink:href="#internal-link">
-						</svg>
-                            
-                            $MESSAGES.getString("sitemap.area.main.search.catalogs.thesaurus")</a>
-                            <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.thesaurus.description")</p>
-                        #else
-                            #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
-                            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.tooltip")">
-                                                    <svg class="icon">
-							<use xlink:href="#internal-link">
-						</svg>
-                            
-                            $MESSAGES.getString("sitemap.area.main.search.catalogs")</a>
-                            <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.description")</p>
-                            <ul>
-                                <li>
-                                    #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
-                                    <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.tooltip")">
-                                                            <svg class="icon">
-							<use xlink:href="#internal-link">
-						</svg>
-                                    $MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy")</a>
-                                    <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.description")</p>
-                                </li>
-                                <li>
-                                    #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-thesaurus.psml"))
-                                    <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.thesaurus.tooltip")">
-                                                            <svg class="icon">
-							<use xlink:href="#internal-link">
-						</svg>
-                                    $MESSAGES.getString("sitemap.area.main.search.catalogs.thesaurus")</a>
-                                    <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.thesaurus.description")</p>
-                                </li>
-                            </ul>
-                        #end
                     </li>
 					#end
 					#if ($enableApplication)
