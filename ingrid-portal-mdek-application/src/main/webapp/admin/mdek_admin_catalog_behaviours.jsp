@@ -76,7 +76,6 @@
             }
             
             function renderBehaviours() {
-                debugger;
                 for(var behave in behaviour) {
                     if (!behaviour[behave].title) continue;
                     console.log(behaviour[behave].title);
