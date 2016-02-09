@@ -198,24 +198,7 @@
                 <p><a class="btn btn--primary btn--small btn--block" href="$linkUrl">Gehe zu MeinPortal</a></p>
             </div>
         #else
-            <!-- State NOT logged in -->
-            <div class="metamenu__box ob-container">
-                <h5>Nutzerkonto</h5>
-            </div>
-            <form class="metamenu__box ob-container">
-                <label for="field-1">Nutzername</label>
-                <input type="text" value="" id="field-1" class="field bx-bot-s">
-                <label for="field-2">Passwort</label>
-                <input type="text" value="" id="field-2" class="field bx-bot-0">
-                <p><a href="k13_meinP_kennwort.php" class="link">Passwort vergessen?</a></p>
-                <p><a href="#" class="btn btn--primary btn--small btn--block">Jetzt anmelden</a></p>
-            </form>
-            <div class="metamenu__box ob-container">
-                <p>Sie haben noch kein Nutzerkonto bei InGrid Portal?</p>
-                <p>
-                    <a href="k8_meinP_registrierung.php" class="link"><strong>Jetzt registrieren</strong></a>
-                </p>
-            </div>
+            $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
         #end
         </div>
     </div>

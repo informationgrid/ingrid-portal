@@ -28,7 +28,7 @@
     	<form action="$action" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
 	        #set($i=0)
 		    #foreach($lang in $languagesShort)
-		            <a type="submit" name="lang" value="$lang" class="metamenu__link link #getSelected($lang)" onclick="submitform($(this), '$lang')">#getSelectedIcon($lang)$ListTool.get($languagesNames, $i)</a>
+		            <a class="metamenu__link link #getSelected($lang)" onclick="submitform($(this), '$lang')">#getSelectedIcon($lang)$ListTool.get($languagesNames, $i)</a>
 		        #set($i=$i+1)
 	        #end
         </form>

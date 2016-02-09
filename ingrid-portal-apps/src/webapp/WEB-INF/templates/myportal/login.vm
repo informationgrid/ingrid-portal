@@ -1,47 +1,20 @@
+<div class="metamenu__box ob-container">
+    <h5>Nutzerkonto</h5>
+</div>
 #set ($action = $renderResponse.createActionURL())
-<section class="block">
-	<div class="ob-box-wide ob-box-padded ob-box-center">
-		<article class="content ob-container ob-box-narrow ob-box-center">
-<form action="$action" method="post" id="frm_login">
-<input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
-<input type="hidden" name="cmd" value="doLogin" />
-<div class="formbody formbody_border_style">
-		<div class="optional-links">
-			&nbsp;<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-create-account.psml" title="$MESSAGES.getString('login.form.newUser.tooltip')">$MESSAGES.getString('login.form.newUser')</a>&nbsp;&nbsp;  
-			<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-password-forgotten.psml" title="$MESSAGES.getString('login.form.passwdForgotten.tooltip')">$MESSAGES.getString('login.form.passwdForgotten')</a>
-		</div>
-		<br />
-#displayFormErrors()
-		<p>
-			<label class="hide" for="login">$MESSAGES.getString('login.form.username'): </label><input class="inputstyletext inputtextfont" type="text" id="login" name="${loginConstants.USERNAME}" value="#getFieldValue($loginConstants.USERNAME)" onFocus="clearUser()" />
-		</p>
-	    <p>
-			<label class="hide" for="passwd">$MESSAGES.getString('login.form.passwd'): </label><input class="inputstyletext inputtextfont" type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.PASSWORD)"  onFocus="clearPasswd()" />
-	    </p>
-		<span class="clearer"></span>
-		<br />
-##		<table cellpadding="0" cellspacing="0" class="formtable">
-##		<tr>
-##			<td><input id="auto_login" name="xx" type="checkbox" /></td>
-##			<td><label for="auto_login"><strong>$MESSAGES.getString('login.form.autoLogin')</strong></label></td>
-##	    </tr>
-##	    <tr>
-##	      <td></td>
-##	      <td><span style="padding-left:4px; display:block;">$MESSAGES.getString('login.form.autoLogin.text')</span></td>
-##	    </tr>
-##		</table>
-##		<span class="clearer"></span>
-</div>
-<div class="formfooter formfooter_border_style">
-	<div align="right">
-		#renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "" "" "" "float_right")
-    </div>
-</div>
+<form class="metamenu__box ob-container" action="$action" method="post" id="frm_login">
+	<input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
+	<input type="hidden" name="cmd" value="doLogin" />
+	    <label for="field-1">$MESSAGES.getString('login.form.username')</label>
+	    <input type="text" id="login" name="${loginConstants.USERNAME}" value="#getFieldValue($loginConstants.USERNAME)" onFocus="clearUser()" class="field bx-bot-s">
+	    <label for="field-2">$MESSAGES.getString('login.form.passwd')</label>
+	    <input type="text" type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.PASSWORD)"  onFocus="clearPasswd()" class="field bx-bot-0">
+	    <p><a href="portal/myportal-password-forgotten.psml" class="link">$MESSAGES.getString('login.form.passwdForgotten')</a></p>
+	    <p><a onclick="$(this).closest('form').submit()" class="btn btn--primary btn--small btn--block">$MESSAGES.getString('login.form.button.subscribe')</a></p>
 </form>
-<!-- BESCHREIBUNG -->
-<p></p>
-<h2>$MESSAGES.getString('login.description.title')</h2>
-$MESSAGES.getString('login.description.content')
-		</article>
-	</div>
-</section>
+<div class="metamenu__box ob-container">
+    <p>Sie haben noch kein Nutzerkonto bei InGrid Portal?</p>
+    <p>
+        <a href="portal/myportal-create-account.psml" class="link"><strong>$MESSAGES.getString('login.form.newUser')</strong></a>
+    </p>
+</div>
