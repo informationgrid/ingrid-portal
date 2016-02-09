@@ -4,7 +4,8 @@
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>Detail Information</title>
+  <title>ingrid.page.search.detail.tooltip</title>
+  <short-title>ingrid.page.search.detail</short-title>
   <metadata name="title" xml:lang="de">Detailinformationen</metadata>
 
   <fragment id="search-detail" type="layout" name="jetspeed-layouts::IngridClearLayout">
