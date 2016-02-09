@@ -118,7 +118,7 @@ if (xmlhttp) {
 <section class="breadcrumb ob-box-padded-more mq-hide-l">
     <div class="breadcrumb__title mq-hide-xxl">Sie sind hier:</div>
     <nav class="breadcrumb__list">
-        <a href="$jetspeed.getAbsoluteUrl("$currentPage")">Startseite</a>
+        <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
     #if($currentPage)
 		#if($currentPage != "/default-page.psml")
 		<svg class="icon icon-xs"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
