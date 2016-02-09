@@ -3,9 +3,10 @@
 #set ($action = $renderResponse.createActionURL())
 <h4>#displayFieldLabel('event' "$MESSAGES.getString('chronicle.form.eventtype')")</h4>
 <form action="$action" method="post" enctype="" name="chronicle_search" id="chronicle_search">
+    #displayFormErrors()
     <div class="media__body">
 		<div class="field-toggle field-toggle--check bx-bot-xs">
-			<input id="chk_all" type="checkbox" value="all">
+			<input id="chk_all" name="event" type="checkbox" value="all" onclick="ingrid_checkAll(document.chronicle_search)" onkeypress="ingrid_checkAll(document.chronicle_search)" #getChecked('event' 'all')>
 			<label class="field-toggle__label field-toggle__label--boxed" for="chk_all">
 				<div class="field-toggle__icon field-toggle__icon-alt">
 					<svg class="icon">
@@ -18,7 +19,7 @@
 		#set ($numEvtypes = $evtypesList.size())
 		#foreach ($evtype in $evtypesList)
 		<div class="field-toggle field-toggle--check bx-bot-xs">
-			<input id="chk_$velocityCount" type="checkbox" value="$evtype.FormValue">
+			<input id="chk_$velocityCount" name="event" type="checkbox" value="$evtype.FormValue" onclick="ingrid_checkGroup(document.chronicle_search)" onkeypress="ingrid_checkGroup(document.chronicle_search)" #getChecked('event' "$evtype.FormValue")>
 			<label class="field-toggle__label field-toggle__label--boxed" for="chk_$velocityCount">
 				<div class="field-toggle__icon field-toggle__icon-alt">
 					<svg class="icon">
@@ -35,28 +36,30 @@
             	<strong class="tx-darkest">Auswahl</strong>
 				<select id="at_yy">
 					<option value="">von: ... bis: </option>
-					<option value="">vor: </option>
-					<option value="">seit: </option>
 					<option value="">am: </option>
 				</select>
             </div>
 			<div class="media__obj--left">
 				<strong class="tx-darkest"> von: </strong>
-				<input id="from_yy" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="text" name="time_from" value="#getFieldValue('time_from')"></input>
+				<input id="from_yy" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="date" name="time_from" value="#getFieldValue('time_from')"></input>
 			</div>
 			<div class="media__obj--left">
 				<strong class="tx-darkest"> bis: </strong>
-				<input id="till_yy" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="text" name="time_to" value="#getFieldValue('time_to')"></input>
+				<input id="till_yy" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="date" name="time_to" value="#getFieldValue('time_to')"></input>
 			</div>
         </div>
         <br>
         <h4>Suchbegriff</h4>
-    	<input class="field field--large" type="text" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"></input>
-    	<button class="btn btn--primary btn--medium btn--icon-transition">
-			<svg class="icon mq-show-m">
-				<use xlink:href="#magnifier" xmlns:xlink="http://www.w3.org/1999/xlink">
-			</svg>
-			<div class="mq-hide-m">Anzeigen</div>
-		</button>
+    	<div class="search-form ob-clear ob-container ob-flex">
+	        <input class="field field--large" type="text" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"></input>
+	    	<button class="btn btn--primary btn--medium btn--icon-transition">
+				<svg class="icon mq-show-m">
+					<use xlink:href="#magnifier" xmlns:xlink="http://www.w3.org/1999/xlink">
+				</svg>
+				<div class="mq-hide-m">$MESSAGES.getString('common.form.button.show')</div>
+			</input>
+		</div>
+		<input type="hidden" name="action" value="doSearch"/>
     </div>
 </form>
+<hr>

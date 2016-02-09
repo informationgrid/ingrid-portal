@@ -1,47 +1,59 @@
-	<div class="section ">    
-      <div class="resultset_nav float_left">
-#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('chronicle.result.navigationTitle')")
-      </div>
-      <div class="resultset_nav">
-#renderRankedPageNavigation($rankedPageSelector)
-      </div>
-      <br />
+<h3>#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('chronicle.result.navigationTitle')" )</h3>
+<div class="pagination bx-top-m mq-hide-l">
+	#renderRankedPageNavigation($rankedPageSelector)
+</div>
 #foreach($rs in $rankedResultList.hits)
 	#if($velocityCount > 1)
       <div class="line"><hr /></div>
 	#end
-		  <div class="resultset">
+		  <div class="search-result">
 		  #if ($rs.title)
-			<span class="result_title"><strong>#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end</strong></span><span class="inquiry"><img src="/ingrid-portal-apps/images/icn_magnifier.gif" alt="$MESSAGES.getString('chronicle.result.alt.icon.inquiry')" /> <a href="$!rs.searchURL">$MESSAGES.getString('chronicle.result.inquiry')</a></span>
-            <p class="result_metadata">
-              $MESSAGES.getString('chronicle.result.eventType') $!rs.type<br />
-			  $MESSAGES.getString('chronicle.result.eventDate') $!rs.date<br />
-            </p>
-			<p class="event_description">
-			$!rs.description
+			<h4 class="bx-bot-m bx-bot-xs">#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end</h4>
+			<p>
+				<a href="$!rs.searchURL">
+					<svg class="icon research__icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#magnifier"></use></svg> 
+					$MESSAGES.getString('chronicle.result.inquiry')
+				</a>
 			</p>
-			#if ($rs.definitions)
-       			<p class="result_metadata">
-					$MESSAGES.getString('chronicle.result.definitions')
-				#foreach($defURL in $rs.definitions)
+            <p class="bx-bot-0 bx-top-s">
+              <span class="tx-darkest"><strong>$MESSAGES.getString('chronicle.result.eventType')</strong></span>
+              <span class="tx-light">$!rs.type</span>
+            </p>
+            <p class="bx-top-0">
+                <span class="tx-darkest"><strong>$MESSAGES.getString('chronicle.result.eventDate')</strong></span>
+                <span class="tx-light">$!rs.date</span>
+            </p>
+			<p class="bx-top-xs">
+				$!rs.description
+			</p>
+			#if ($rs.definitions && $rs.definitions.size() > 0)
+       			<p class="bx-top-s bx-bot-s tx-darkest">
+					<strong>$MESSAGES.getString('chronicle.result.definitions')</strong>
+       			</p>
+       			<ul class="link-list">
+       			#foreach($defURL in $rs.definitions)
 					#set ($titleIndex = $velocityCount - 1)
 					#set ($defTitle = $rs.defTitles.get($titleIndex))
-        				<br /><a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#if ($defTitle)$defTitle#else$defURL#end</a>
+    				<li>
+    					<a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#if ($defTitle)$defTitle#else$defURL#end</a>
+    				</li>
 				#end
-       			</p>        
+				</ul>
 			#end
-			#if ($rs.samples)
-				#if ($rs.definitions)
-					<p class="result_metadata">&nbsp;</p>
-				#end
-       			<p class="result_metadata">
-					$MESSAGES.getString('chronicle.result.samples')
+			
+			#if ($rs.samples && $rs.samples.size() > 0)
+       			<p class="bx-top-s bx-bot-s tx-darkest">
+					<strong>$MESSAGES.getString('chronicle.result.samples')</strong>
+       			</p>
+       			<ul class="link-list">
 				#foreach($defURL in $rs.samples)
 					#set ($titleIndex = $velocityCount - 1)
 					#set ($defTitle = $rs.sampleTitles.get($titleIndex))
-        				<br /><a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#if ($defTitle)$defTitle#else$defURL#end</a>
+        			<li>
+        				<a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#if ($defTitle)$defTitle#else$defURL#end</a>
+        			</li>
 				#end
-       			</p>        
+       			</ul>
 			#end
 		  #else
 			<span class="result_title"><strong>$MESSAGES.getString('chronicle.result.emptyEvent')</strong></span>
@@ -49,10 +61,3 @@
 		  #end
           </div>
 #end
-      <div class="resultset_nav float_left">
-#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('chronicle.result.navigationTitle')")
-      </div>
-      <div class="resultset_nav">
-#renderRankedPageNavigation($rankedPageSelector)
-      </div>
-    </div>
