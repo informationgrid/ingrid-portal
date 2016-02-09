@@ -47,14 +47,14 @@
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
     </portlet>
 
-    <portlet id="SitemapPortlet">
+	<portlet id="SitemapPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
             <value>/WEB-INF/templates/sitemap.vm</value>
         </init-param>
         <portlet-name>SitemapPortlet</portlet-name>
-        <display-name>Generisches Informationsportlet</display-name>
+        <display-name>SitemapPortlet</display-name>
         <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
         <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
@@ -63,8 +63,18 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/sitemap.vm</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>myPortal.info.navigation.title</value>
+            </preference>
+        </portlet-preferences>
     </portlet>
-    
+
     <portlet id="DetectJavaScriptPortlet">
         <portlet-name>DetectJavaScriptPortlet</portlet-name>
         <display-name>javascript detection portlet</display-name>

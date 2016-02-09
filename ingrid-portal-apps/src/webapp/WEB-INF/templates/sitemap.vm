@@ -208,7 +208,6 @@
 	                        $MESSAGES.getString("sitemap.area.main.measures")</a>
 	                        <p>$MESSAGES.getString("sitemap.area.main.measures.description")</p>
 	                    </li>
-	                    #end
 		            #end
 		            #if($enableMaps || $enableChronicle)
 	                    #if($enableMaps)
@@ -279,7 +278,6 @@
 	                        $MESSAGES.getString("sitemap.area.main.provider")</a>
 	                        <p>$MESSAGES.getString("sitemap.area.main.provider.description")</p>
 	                    </li>
-	                    #end
                      #end
                 </ul>
 		        <h4>$MESSAGES.getString("sitemap.area.service")</h4>
