@@ -1,4 +1,4 @@
-#renderPortletTitleTeaser($MESSAGES.getString('teaser.environment.title') $MESSAGES.getString('teaser.environment.title'))
+#renderPortletTitle($MESSAGES.getString('teaser.environment.title') $MESSAGES.getString('teaser.environment.title'))
 <div class="media">
     <div class="media__obj media__obj--left">
         <img class="themen_image_style" src="/ingrid-portal-apps/images/topics/index_themen_${randomTopicImage}.png" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
@@ -7,11 +7,8 @@
     <ul class="tag-group">
         #set ($numTopics = $topicList.size())
 		#foreach ($topic in $topicList)
-		#set ($action = $renderResponse.createActionURL())
-		$action.setParameter('action','doTeaser')
-		$action.setParameter('rubric',"$topic.FormValue")
 		    <li>
-		    	<a class="tag tag--big" href="$action">$topic.QueryValue</a>
+		    	<a class="tag tag--big" href="$renderResponse.encodeURL("/portal/main-search.psml?action=doSearch&q=topic:${topic.QueryValue}&ds=1&grouping=domain")">$topic.QueryValue</a>
 		    </li>
 		#end
         </ul>
