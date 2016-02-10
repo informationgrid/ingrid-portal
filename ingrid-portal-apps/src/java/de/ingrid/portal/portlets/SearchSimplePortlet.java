@@ -23,7 +23,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -46,9 +45,7 @@ import de.ingrid.portal.forms.SearchSimpleForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsFacete;
-import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -86,12 +83,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
      */
     private final static String TITLE_KEY_RESULT = "searchSimple.title.result";
 
-    /**
-     * key of title for main exstended search pages, passed from page per
-     * Preferences
-     */
-    private final static String TITLE_KEY_EXTENDED = "searchSimple.title.extended";
-
     // ACTION VALUES
 
     /** value of action parameter if datasource was clicked */
@@ -109,41 +100,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
     /** value of action parameter if "save query" was clicked */
     private static final String PARAMV_ACTION_SAVE_QUERY = "doSaveQuery";
 
-    // PAGES
-
-    /** search-history page -> displays and handles search settings */
-    private final static String PAGE_SEARCH_HISTORY = "/portal/search-history.psml";
-
-    /** search-settings page -> displays and handles search settings */
-    private final static String PAGE_SEARCH_SETTINGS = "/portal/search-settings.psml";
-
-    /** save query page -> displays and handles save query functionality */
-    private final static String PAGE_SAVE_QUERY = "/portal/search-save.psml";
-
-    /**
-     * main extended search page for datasource "environmentinfos" -> envinfo:
-     * topic/terms
-     */
-    private final static String PAGE_SEARCH_EXT_ENV = "/portal/search-extended/search-ext-env-topic-terms.psml";
-
-    /**
-     * main extended search page for datasource "address" -> address:
-     * topic/terms
-     */
-    private final static String PAGE_SEARCH_EXT_ADR = "/portal/search-extended/search-ext-adr-topic-terms.psml";
-
-    /**
-     * main extended search page for datasource "research" -> research:
-     * topic/attributes
-     */
-    private final static String PAGE_SEARCH_EXT_RES = "/portal/search-extended/search-ext-res-topic-attributes.psml";
-
-    /**
-     * main extended search page for datasource "law" -> law:
-     * topic/attributes
-     */
-    private final static String PAGE_SEARCH_EXT_LAW = "/portal/search-extended/search-ext-law-topic-terms.psml";
-    
     /*
      * (non-Javadoc)
      * 
@@ -316,6 +272,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 titleKey = TITLE_KEY_SEARCH;
             }
         }
+        context.put("titleKey", titleKey);
         response.setTitle(messages.getString(titleKey));
 
         // enable the save button if the query was set AND a user is logged on
@@ -417,38 +374,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             if (getDefaultViewPage().equals(TEMPLATE_SEARCH_SIMPLE)) {
                 // we're in main search
                 actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));
-            } else {
-                // we're in extended search
-                if (newDatasource.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ENV));
-                } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ADR));
-                } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_RES));
-                } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_LAW)) {
-                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_LAW));
-                }
-            }
-
-        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_SETTINGS)) {
-            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_SETTINGS + SearchState.getURLParamsMainSearch(request)));
-
-        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_HISTORY)) {
-            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_HISTORY + SearchState.getURLParamsMainSearch(request)));
-
-        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SAVE_QUERY)) {
-            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SAVE_QUERY + SearchState.getURLParamsMainSearch(request)));
-
-        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_EXTENDED)) {
-            String currentDatasource = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
-            if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ENV));
-            } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ADR));
-            } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_RES));
-            } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_LAW)) {
-                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_LAW));
             }
         }
     }

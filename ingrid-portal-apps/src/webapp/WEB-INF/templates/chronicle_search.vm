@@ -57,7 +57,7 @@
 					<use xlink:href="#magnifier" xmlns:xlink="http://www.w3.org/1999/xlink">
 				</svg>
 				<div class="mq-hide-m">$MESSAGES.getString('common.form.button.show')</div>
-			</input>
+			</button>
 		</div>
 		<input type="hidden" name="action" value="doSearch"/>
     </div>

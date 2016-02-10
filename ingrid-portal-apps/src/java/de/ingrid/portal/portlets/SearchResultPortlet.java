@@ -78,10 +78,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
     //    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/search_no_result.vm";
 
-    private static final String TEMPLATE_RESULT_JS = "/WEB-INF/templates/search_result_js.vm";
-
-    private static final String TEMPLATE_RESULT_JS_RANKED = "/WEB-INF/templates/search_result_js_ranked.vm";
-
     private static final String TEMPLATE_RESULT_FILTERED_ONECOLUMN = "/WEB-INF/templates/search_result_iplug.vm";
     
     private HttpClient client;
@@ -427,14 +423,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         }
         
      // check for one column rendering
-        if (reqParam != null) {
-            // check if we have to render only the ranked column
-            if (reqParam.equals("true")) {
-                request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS_RANKED);
-            }
-            // check for js enabled iframe rendering
-
-        } else if (currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
+        if (currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
         	if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID) && rankedHits == null) {
                 renderResultColumnRanked = false;
                 context.put("IS_RANKED", new Boolean(false));
@@ -445,28 +434,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
         } else if (currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
             context.put("ds", request.getParameter("ds"));
-            
-            // check for js enabled iframe rendering
-        } else if (hasJavaScript && queryType.equals(Settings.MSGV_NEW_QUERY)) {
-            // if javascript and new query, set template to javascript enabled iframe template
-            // exit method!!
-            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_RESULT_JS);
-            
-            context.put("ds", request.getParameter("ds"));
-            
-            if(rankedHits != null){
-            	if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-            		UtilsFacete.checkForExistingFacete((IngridHitsWrapper) rankedHits, request);
-	                UtilsFacete.setParamsToContext(request, context, true);
-            	}
-            }
-            
-            context.put("adminContent", showAdminContent);
-            context.put("rankedPageSelector", rankedPageNavigation);
-            context.put("rankedResultList", rankedHits);
-            context.put("rankedSearchFinished", rankedSearchFinished);
-            super.doView(request, response);
-            return;
         }
         
         context.put("adminContent", showAdminContent);

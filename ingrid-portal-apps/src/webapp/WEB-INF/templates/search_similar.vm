@@ -1,65 +1,61 @@
-<div class="ob-box-wide ob-box-padded ob-box-center">
-	<article class="content ob-container">
-		<div class="box__content ob-container">
-			  <form action="$renderResponse.createActionURL()" method="get" name="frmSimilar" id="frmSimilar">
-			  <input type="hidden" name="action" value="doAddSimilar" />
-			  <div class="formbody">
-		#set ($action = $renderResponse.createActionURL())
-		#if(!$ps.isSimilarOpen)
-			$action.setParameter('action','doOpenSimilar')
-		        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>&nbsp;<a href="$action" title="$MESSAGES.getString('searchSimilar.headline.tooltip')">$MESSAGES.getString('searchSimilar.headline')</a></h3>
-		#else
-			$action.setParameter('action','doCloseSimilar')
-			#if($enableSnsLogo)
-			  <span class="float_right snslogo_margin"><a href="http://www.semantic-network.de" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><img src="/ingrid-portal-apps/images/sns_small.gif" width="30" height="23" alt="$MESSAGES.getString('common.alt.icon.sns')" title="$MESSAGES.getString('common.tooltip.link.extern.sns')" /></a></span>
-			#end
-		        <h3><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>&nbsp;<a href="$action" title="$MESSAGES.getString('searchSimilar.headline.tooltip')" >$MESSAGES.getString('searchSimilar.headline')</a></h3>
-		        <span class="clearer"></span>
-		        	  <div class="leftmargin">
-		          	  <table>
-		#foreach($similarNode in $ps.similarRoot.getChildren())
-			#set ($action = $renderResponse.createActionURL())
-			$action.setParameter('nodeId',$similarNode.id)
-			#if($similarNode.isOpen())
-				$action.setParameter('action','doCloseNode')
-					  <tr>
-						<td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a></td>
-		          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
-		          	  </tr>
-				#foreach($tokenNode in $similarNode.getChildren())
-		          	  <tr>
-		          	    <td></td>
-						#if($tokenNode.type == 4)
-							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$MESSAGES.getString('searchSimilar.terms.not.available')</td>
-						#else
-							<td>&nbsp;&nbsp;<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox" #if($tokenNode.isOpen()) checked="checked" #end/><label for="chk_$tokenNode.id">$tokenNode.name</label></td>
-						#end
-		          	  </tr>
-				#end
-			#else
-				$action.setParameter('action','doOpenNode')
-		          	  <tr>
-		          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a></td>
-		          	    <td><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;<strong>$similarNode.getName()</strong></td>
-		          	  </tr>
-			#end
-		#end			  
-		          	  </table>
-		
-		        	  </div>
-			
-			
-		#end	
-		      </div>
+<div class="js-accordion-multi">
+#set ($action = $renderResponse.createActionURL())
+	<form action="$action" method="get" name="frmSimilar" id="frmSimilar">
 		#if($ps.isSimilarOpen)
-			  <div class="formfooter formfooter_border_style">
-		        <div align="right" style="padding-top: 8px;">
-		          #renderInputButtonClass($MESSAGES.getString('searchSimilar.add.to.query') "" "" "" "float_right")
-		        </div>
-		      </div>
+			$action.setParameter('action','doCloseSimilar')
+			<div onclick="location.href='$action'" class="js-accordion-toggle filter__title">
+		        $MESSAGES.getString('searchSimilar.headline')
+		        <svg class="filter__title__icon icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-thick"></use></svg>
+		    </div>
+		#else
+			$action.setParameter('action','doOpenSimilar')
+			<div onclick="location.href='$action'" class="js-accordion-toggle filter__title is-active">
+		        $MESSAGES.getString('searchSimilar.headline')
+		        <svg class="filter__title__icon icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-thick"></use></svg>
+		    </div>
 		#end
-		      </form>
+	    <div class="bx-top-s js-accordion-content #if($ps.isSimilarOpen)#else is-hidden #end">
+			<div class="tree">
+				#foreach($similarNode in $ps.similarRoot.getChildren())
+					<ul class="js-accordion-multi">
+						#set ($action = $renderResponse.createActionURL())
+						#if($similarNode.isOpen())
+							$action.setParameter('action','doCloseNode')
+							<li class="tree__item tree__toggle js-accordion-toggle" is-active>
+						#else
+							$action.setParameter('action','doOpenNode')
+							<li class="tree__item tree__toggle js-accordion-toggle">
+						#end
+						    <svg class="tree__toggle__icon icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#plus"></use></svg>
+                            <svg class="tree__toggle__icon icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#minus"></use></svg>
+                            $similarNode.getName()
+                        </li>
+                        <li class="filter__checks js-accordion-content is-hidden">
+                            <div class="field">
+                            	#foreach($tokenNode in $similarNode.getChildren())
+                            		<div class="field-toggle field-toggle--check field-toggle--check-mobile">
+                                        #if($tokenNode.type == 4)
+                                        	$MESSAGES.getString('searchSimilar.terms.not.available')
+                                        #else
+                                        	<input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox">
+                                        	<label class="field-toggle__label field-toggle__label--boxed" for="chk_$tokenNode.id">
+                                            <div class="field-toggle__icon">
+                                                <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tick"></use></svg>
+                                            </div>
+                                            	$tokenNode.name
+                                        #end
+                                        </label>
+                                    </div>
+                            	#end
+                            </div>
+                        </li>
+					</ul>
+				#end	
+			</div>
+			<p class="bx-top-m bx-bot-0 tx-center">
+				<button class="btn btn--primary btn--small">$MESSAGES.getString('searchSimilar.add.to.query')</button>
+				<input type="hidden" name="action" value="doAddSimilar" />
+			</p>
 		</div>
-	</article>
+	</form>
 </div>
-<hr class="bx-top-0 bx-bot-0">
