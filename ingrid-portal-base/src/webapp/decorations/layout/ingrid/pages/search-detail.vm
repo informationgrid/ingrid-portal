@@ -1,7 +1,1 @@
-<section class="block block--padded">
-    <div class="ob-box-wide ob-box-padded ob-box-center">
-    	<article class="content ob-container">
-    		$jetspeed.renderPortletWindow("SearchDetail", "ingrid-portal-apps::SearchDetail")
-	    </article>
-	</div>
-</section>
+$jetspeed.renderPortletWindow("SearchDetail", "ingrid-portal-apps::SearchDetail")

@@ -115,18 +115,24 @@ if (xmlhttp) {
   #includeMainNavigation($mainMenu)
 #end
 </header>
+
 <section class="breadcrumb ob-box-padded-more mq-hide-l">
     <div class="breadcrumb__title mq-hide-xxl">Sie sind hier:</div>
     <nav class="breadcrumb__list">
         <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
     #if($currentPage)
+    	#if($currentPage == "/search-detail.psml")
+	    	<svg class="icon icon-xs"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+			<a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
+    	#end
 		#if($currentPage != "/default-page.psml")
-		<svg class="icon icon-xs"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
-		<span>$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</span>
+			<svg class="icon icon-xs"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+			<span>$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</span>
 		#end
 	#end
 	</nav>
 </section>
+
 #if($currentPage)
 	#if($currentPage == "/default-page.psml")
 		#parse ('/decorations/layout/ingrid/pages/default-page.vm')
