@@ -34,18 +34,22 @@
         <div class="media ob-clear">
             <div class="media__obj media__obj--left">
             	<strong class="tx-darkest">Auswahl</strong>
-				<select id="at_yy">
-					<option value="">von: ... bis: </option>
-					<option value="">am: </option>
+				<select class="js-selection" id="at_yy" name="time_select">
+					<option id="vonbis" value="period" class="selection-options is-active">von: ... bis: </option>
+					<option id="am" value="date" class="selection-options" >am: </option>
 				</select>
             </div>
-			<div class="media__obj--left">
-				<strong class="tx-darkest"> von: </strong>
-				<input id="from_yy" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="date" name="time_from" value="#getFieldValue('time_from')"></input>
+			<div for="vonbis" class="selection-content media__obj--left">
+				<strong class="tx-darkest">#displayFieldLabel('time_from' "$MESSAGES.getString('chronicle.form.time.from')")</strong>
+				<input id="from_yy" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="text" name="time_from" value="#getFieldValue('time_from')"></input>
 			</div>
-			<div class="media__obj--left">
-				<strong class="tx-darkest"> bis: </strong>
-				<input id="till_yy" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="date" name="time_to" value="#getFieldValue('time_to')"></input>
+			<div for="vonbis" class="selection-content media__obj--left">
+				<strong class="tx-darkest">#displayFieldLabel('time_to' "$MESSAGES.getString('chronicle.form.time.to')")</strong>
+				<input id="till_yy" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="text" name="time_to" value="#getFieldValue('time_to')"></input>
+			</div>
+			<div for="am" class="selection-content media__obj--left is-hidden">
+				<strong class="tx-darkest">#displayFieldLabel('time_at' "$MESSAGES.getString('chronicle.form.time.at')")</strong>
+				<input id="time_at" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="text" name="time_at" value="#getFieldValue('time_at')"></input>
 			</div>
         </div>
         <br>

@@ -2,7 +2,7 @@
 	<div class="ob-box-padded ob-box-center ob-clear">
 		<div class="footer__top">
 			<a href="#">
-				<img class="footer__logo" src="#GetPageResource('images/templates/footer-logo.svg')">
+				<img class="footer__logo" src="">
 			</a>
 			<p class="copyright">© Niedersächsisches Ministerium für Umwelt, Energie und Klimaschutz</p>
 		</div>
@@ -78,6 +78,12 @@
 <script src="#GetPageResource("scripts/tabs.js")"></script>
 <script>
   $('.js-tabs').tabs();
+</script>
+
+<!-- Selection -->
+<script src="#GetPageResource("scripts/selection.js")"></script>
+<script>
+  $('.js-selection').selection();
 </script>
 
 <!-- Table Sort -->
