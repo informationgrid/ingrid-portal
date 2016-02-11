@@ -458,17 +458,15 @@
 				#renderMultiLineAddresses("$TOOL.getValueFromXPath('./gmd:contact/*/gmd:role/gmd:CI_RoleCode/@codeListValue', '505') ($MESSAGES.getString('pointofcontact_metadata'))" $TOOL.getAddresses("./gmd:identificationInfo/*/gmd:pointOfContact", true))
 	 				</div>
 				</div>
-		## Additional Fields Example Harrison
-		#set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))
-		#openTabContentPane($tabtitle)
-		#renderNoScriptTitle($tabtitle)
-			<br>
-			#renderTextLabelLeft($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:data"))
-			#renderTextLabelLeft($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364739']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364739']/idf:data"))
-			#renderTextLabelLeft($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField27131904']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField27131904']/idf:data"))
-		#if($tool.hasContent($tabtitle))
-			#closeDiv()
-		#end
+		## Additional Fields Example
+				<div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-8">
+	                <div class="box__content ob-container">
+	            #renderSectionTitle($MESSAGES.getString("additional_information"))
+	            	#renderTextLabelLeft($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:data"))
+					#renderTextLabelLeft($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364739']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364739']/idf:data"))
+					#renderTextLabelLeft($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField27131904']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField27131904']/idf:data"))
+	 				</div>
+				</div>
 		</article>
     </div>
 </section>

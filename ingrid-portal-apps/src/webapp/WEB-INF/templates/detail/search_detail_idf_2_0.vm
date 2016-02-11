@@ -349,6 +349,12 @@
 		                        ## Zusätzliche Info
 		                        <div class="tab__toggle" data-tabid="tab-7"><a href="#">$MESSAGES.getString("additional_information_tab")</a></div>
 		                    #end
+		                    ## Zusatzfelder
+		                    #set($xpathList = ["./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"])
+		                    #set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))
+							#if($tabtitle)
+		                        <div class="tab__toggle" data-tabid="tab-8"><a href="#">$tabtitle</a></div>
+							#end
 	                    </nav>
 	                </div>
 	            </form>
