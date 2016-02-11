@@ -813,19 +813,6 @@
     #set($pageDescription = $stringTool.cutString($pageDescription,300))
 #end    
 #set ($action = $renderResponse.createActionURL())
-
-## render "zurueck" link if no IngridSession (entry via google)
-## Remove for new detail view
-#if($noIngridSession)
-    <div class="section-header">
-        <p class="iconLink">
-            <span class="icon"><img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
-            <a class="detail_link" href="$renderResponse.encodeURL('/portal/default-page.psml')">$MESSAGES.getString('search.detail.back')</a>
-            <span class="clearer"></span>
-        </p>
-    </div>
-#end
-##
 ## Remove comment for new detail view
 #if($renderElements)
     #renderElements($renderElements)

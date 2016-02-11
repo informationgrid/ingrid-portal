@@ -1,16 +1,1 @@
-<section class="block block--padded block--light">
-	<div class="ob-box-wide ob-box-padded ob-box-center">
-		<article class="content ob-container">
-			<div class="section">
-		        <div class="noresult">
-		            <p>$MESSAGES.getString('measuresSearch.result.noResult1')</p>
-		            <ul>
-		              <li>$MESSAGES.getString('measuresSearch.result.noResult2')</li>
-		              <li>$MESSAGES.getString('measuresSearch.result.noResult3')</li>
-		              <li>$MESSAGES.getString('measuresSearch.result.noResult4')</li>
-		            </ul>
-		        </div>
-			</div>
-		</article>
-	</div>
-</section>
+<p>$MESSAGES.getString('measuresSearch.result.noResult1')</p>

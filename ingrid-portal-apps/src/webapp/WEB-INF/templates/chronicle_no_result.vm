@@ -1,10 +1,2 @@
-      <div class="section">
-        <div class="noresult">
-            <p>$MESSAGES.getString('chronicle.result.noResult1')</p>
-            <ul>
-              <li>$MESSAGES.getString('chronicle.result.noResult2')</li>
-              <li>$MESSAGES.getString('chronicle.result.noResult3')</li>
-              <li>$MESSAGES.getString('chronicle.result.noResult4')</li>
-            </ul>
-        </div>
-      </div>
+<p>$MESSAGES.getString('chronicle.result.noResult1')</p>
+
