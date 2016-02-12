@@ -10,8 +10,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
-  <!-- <base href="#BaseHref()" /> -->
-  <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')">
+  #set($currentPage = $site.getPageOrTemplate().url)
+  #if($currentPage)
+	  #if($currentPage != "/help.psml")
+	  	<base href="#BaseHref()" />
+	  #end
+  #end
+  <link rel="prefetch" href="decorations/layout/ingrid/images/template/icons.svg">
   <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "InGrid-Portal")</title>
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   
@@ -21,16 +26,16 @@
   <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
   <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
   <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
-#set($currentPage = $site.getPageOrTemplate().url)
+
 #if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
   <meta name="robots" content="noindex,follow" />
 #else
   <meta name="robots" content="index,follow" />
 #end
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700'>
-  <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css?v=1')">
-  <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')">
-  <link rel="stylesheet" href="#GetPageResource('css/demo.css')">
+  <link rel="stylesheet" href="decorations/layout/ingrid/css/datepicker/classic.css">
+  <link rel="stylesheet" href="decorations/layout/ingrid/css/datepicker/classic.date.css">
+  <link rel="stylesheet" href="decorations/layout/ingrid/css/demo.css">
   <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
   #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
     <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
@@ -101,8 +106,8 @@ if (xmlhttp) {
 	</div>
 	<div class="header__widgets__section">
 		<a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-		<img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.svg')">
-		<img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/mobile-logo.svg')">
+		<img class="mq-hide-xxl desktop-logo" src="decorations/layout/ingrid/images/template/logo.svg">
+		<img class="mq-show-xxl mobile__logo" src="decorations/layout/ingrid/images/template/mobile-logo.svg">
 		</a>
 	</div>
 	#set($serviceMenu = $site.getMenu("service-menu"))

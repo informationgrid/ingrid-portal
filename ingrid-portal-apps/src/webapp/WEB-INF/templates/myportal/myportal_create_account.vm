@@ -5,6 +5,20 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="create_account" id="create_account">
 	<input type="hidden" name="cmd" value="form_sent" />
-#set ($formType = 'create')
-#parse ('/WEB-INF/templates/myportal/include_account_form.vm')
+	#set ($formType = 'create')
+	<section class="block block--padded">
+		<div class="ob-box-wide ob-box-center">
+			<article class="content ob-container ob-box-narrow">
+				#parse ('/WEB-INF/templates/myportal/include_account_form.vm')
+				<div class="media">
+			        <div class="media__obj media__obj--large media__obj--left">
+			        </div>
+			        <div class="media__body media__obj--right">
+			            <p><a class="btn btn--primary btn--medium" onclick="$(this).closest('form').submit()">$MESSAGES.getString('account.create.submit')</a></p>
+			        </div>
+			    </div>
+			    <p>&nbsp;</p>
+			</article>
+		</div>
+	</section>
 </form>
