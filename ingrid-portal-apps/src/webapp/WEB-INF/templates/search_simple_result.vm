@@ -1,0 +1,18 @@
+#renderPortletTitle($MESSAGES.getString($titleKey))
+
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doSearch')
+<form action="$action" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
+    <div class="box box--medium">
+            <div class="search-form ob-clear ob-flex">
+                <input class="field field--large" type="text" placeholder="Suchbegriff eingeben" id="qrystr" name="q" value="#getHTMLEscapedFieldValue('q')" 
+    onfocus='if (this.value == "$MESSAGES.getString('searchSimple.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('searchSimple.query.initial')"'>
+                <button class="btn btn--primary btn--medium btn--icon-transition">
+                	<svg class="icon mq-show-m"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#magnifier"></use></svg>
+                	<div class="mq-hide-m">InGrid-Suche</div>
+                </button>
+            </div>
+    </div>
+#displayFormErrors()
+</form>

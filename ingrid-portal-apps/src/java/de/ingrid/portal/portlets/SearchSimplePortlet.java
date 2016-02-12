@@ -65,10 +65,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
     private final static Logger log = LoggerFactory.getLogger(SearchSimplePortlet.class);
 
-    // VIEW TEMPLATES
-
-    private final static String TEMPLATE_SEARCH_SIMPLE = "/WEB-INF/templates/search_simple.vm";
-
     // TITLE KEYS
 
     /**
@@ -82,23 +78,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
      * page per Preferences
      */
     private final static String TITLE_KEY_RESULT = "searchSimple.title.result";
-
-    // ACTION VALUES
-
-    /** value of action parameter if datasource was clicked */
-    private final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
-
-    /** value of action parameter if "search settings" was clicked */
-    private final static String PARAMV_ACTION_SEARCH_SETTINGS = "doSearchSettings";
-
-    /** value of action parameter if "search history" was clicked */
-    private final static String PARAMV_ACTION_SEARCH_HISTORY = "doSearchHistory";
-
-    /** value of action parameter if "Extended Search" was clicked */
-    private final static String PARAMV_ACTION_SEARCH_EXTENDED = "doSearchExtended";
-
-    /** value of action parameter if "save query" was clicked */
-    private static final String PARAMV_ACTION_SAVE_QUERY = "doSaveQuery";
 
     /*
      * (non-Javadoc)
@@ -131,16 +110,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
         context.put("titleKey", titleKey);
+        String helpKey = prefs.getValue( "helpKey", "" );
+        context.put("helpKey", helpKey);
         
-        // set the help Tooltip which cannot be transported through the context when nested fragments are used in a psml-file
-        //prefs.setValue("helpToolTip", messages.getString("ingrid.page.help.link.title"));
-        //prefs.setValue("helpToolTip", "bla");
-
-        // set view template, we use the same portlet for Simple- and Extended
-        // Search, just
-        // the view template differs !
-        setDefaultViewPage(TEMPLATE_SEARCH_SIMPLE);
-
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
         // ADAPT OUR PERMANENT STATE (MESSAGES)
@@ -159,7 +131,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         if (action == null) {
             action = "";
         }
-        if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH) || action.equals(PARAMV_ACTION_NEW_DATASOURCE)) {
+        if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH)) {
             // reset relevant search stuff, we perform a new one !
             SearchState.resetSearchState(request);
             SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
@@ -246,9 +218,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // - we have no query parameter in our URL (e.g. we entered from other
         // page)
         // - the enterd query is empty or initial value
-        if (action.equals(PARAMV_ACTION_NEW_DATASOURCE) || action.equals(PARAMV_ACTION_SEARCH_SETTINGS)
-                || action.equals(PARAMV_ACTION_SEARCH_HISTORY) || action.equals(PARAMV_ACTION_SEARCH_EXTENDED)
-                || queryInRequest == null || !validInput) {
+        if (queryInRequest == null || !validInput) {
             setUpNewQuery = false;
         }
         if (setUpNewQuery) {
@@ -272,13 +242,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 titleKey = TITLE_KEY_SEARCH;
             }
         }
-        context.put("titleKey", titleKey);
         response.setTitle(messages.getString(titleKey));
-
-        // enable the save button if the query was set AND a user is logged on
-        if (validInput && Utils.getLoggedOn(request)) {
-            context.put("enableSave", "true");
-        }
 
         context.put("enableFacets", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, Boolean.FALSE));
@@ -352,29 +316,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));
             }
 
-        } else if (action.equalsIgnoreCase(PARAMV_ACTION_NEW_DATASOURCE)) {
-            String newDatasource = request.getParameter(Settings.PARAM_DATASOURCE);
-
-            // adapt SearchState (base for generating URL params for render
-            // request):
-            // - set datasource
-            SearchState.adaptSearchState(request, Settings.PARAM_DATASOURCE, newDatasource);
-
-            // don't populate action form, this is no submit, so no form
-            // parameters are in request !
-            // TODO use JavaScript to submit form on datasource change ! then
-            // populate ActionForm,
-            // in that way we don't loose query changes on data source change,
-            // when changes weren't submitted before
-
-            // redirect to MAIN page with parameters for bookmarking, ONLY IF
-            // WE'RE "ON MAIN PAGE"
-            // Otherwise go to startpage of extended search for selected
-            // datasource without support for bookmarking !
-            if (getDefaultViewPage().equals(TEMPLATE_SEARCH_SIMPLE)) {
-                // we're in main search
-                actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));
-            }
         }
     }
 
