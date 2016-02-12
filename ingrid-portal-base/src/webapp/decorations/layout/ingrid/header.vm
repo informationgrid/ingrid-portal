@@ -10,8 +10,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
   <head>
-  <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')">
   <!-- <base href="#BaseHref()" /> -->
+  <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')">
   <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "InGrid-Portal")</title>
   <meta http-equiv="Content-type" content="#ContentType()" />
   <meta http-equiv="Content-style-type" content="text/css" />   

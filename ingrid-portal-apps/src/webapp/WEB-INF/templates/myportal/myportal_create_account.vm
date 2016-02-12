@@ -1,11 +1,10 @@
+<div class="box__content ob-container">
+ #renderPortletTitle($MESSAGES.getString('javax.portlet.title') )
+</div>
+
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="create_account" id="create_account">
 	<input type="hidden" name="cmd" value="form_sent" />
 #set ($formType = 'create')
 #parse ('/WEB-INF/templates/myportal/include_account_form.vm')
-	<div class="formfooter formfooter_border_style">
-		<div align="right">
-			#renderInputButtonClass($MESSAGES.getString('account.create.submit') "" "" "" "float_right")
-		</div>
-	</div>
 </form>
