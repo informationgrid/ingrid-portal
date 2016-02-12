@@ -4,7 +4,7 @@
     </div>
     <div class="teaser__box">
         <div class="teaser__content ob-container">
-            #renderPortletTitleTeaser($MESSAGES.getString('chronicle.teaser.title') $MESSAGES.getString('chronicle.teaser.title'))
+            #renderPortletTitleTeaser($MESSAGES.getString('chronicle.teaser.title'))
         </div>
         <hr class="bx-top-0 bx-bot-0">
         <div class="teaser__content ob-container">

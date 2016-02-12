@@ -1,5 +1,5 @@
 #if($cmsItemTitle)
-	#renderPortletTitle($cmsItemTitle $cmsItemTitle)
+	#renderPortletTitle($cmsItemTitle)
 #end
 
 #if($cmsItemValue)

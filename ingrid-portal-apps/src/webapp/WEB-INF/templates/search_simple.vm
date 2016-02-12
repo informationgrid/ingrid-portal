@@ -1,4 +1,4 @@
-#renderPortletTitle($MESSAGES.getString($titleKey) $MESSAGES.getString($titleKey))
+#renderPortletTitle($MESSAGES.getString($titleKey))
 
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())

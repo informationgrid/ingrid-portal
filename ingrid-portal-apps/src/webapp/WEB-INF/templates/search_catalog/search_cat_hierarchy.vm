@@ -75,7 +75,7 @@
 	</ul>
 #end
 
-#renderPortletTitle($MESSAGES.getString('searchCatHierarchy.portlet.title') $MESSAGES.getString('searchCatHierarchy.portlet.title'))
+#renderPortletTitle($MESSAGES.getString('searchCatHierarchy.portlet.title'))
 
 <div class="tree bx-bot-l">
 	#foreach($plugNode in $ps.plugsRoot.getChildren())

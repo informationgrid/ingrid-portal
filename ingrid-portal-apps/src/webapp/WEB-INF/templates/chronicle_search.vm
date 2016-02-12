@@ -1,4 +1,4 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title') $MESSAGES.getString('javax.portlet.title'))
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
 
 #set ($action = $renderResponse.createActionURL())
 <h4>#displayFieldLabel('event' "$MESSAGES.getString('chronicle.form.eventtype')")</h4>
