@@ -403,7 +403,7 @@ $action.setParameter("id", "$rowId")
 	#set($_h ="h1")
 #end
 
-<$_h #if($_h_class)class="$_h_class" #end>
+<$_h #if($_h_class && $_h_class != "")class="$_h_class" #end>
 	$_title
 	#if($_help)
 		<div class="tooltip ob-circle js-popup" data-content="<p>$_help</p>">
