@@ -44,69 +44,65 @@
 	</table>     
 #end
 
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
+
 #set ($action = $renderResponse.createActionURL())
-<section class="block">
-	<div class="ob-box-wide ob-box-padded ob-box-center">
-		<article class="content ob-container">
-			<form action="$action" method="get" name="measures_search" id="measures_search">
-			   	<input type="hidden" name="action" value="doSearch"/>
-				<div class="formbody formbody_border_style formbody_padding">
-					<h2 class="nospace">$MESSAGES.getString('common.form.criteria')</h2>
-					#displayFormErrors()    
-					<div class="float_left">  
-						<h3>#displayFieldLabel('rubric' $MESSAGES.getString('measuresSearch.form.rubric'))</h3>
-						#if($enable_provider)
-							#renderServiceTableHorizontal($rubricList)
-						#else
-							#renderServiceTableVertical($rubricList)
-						#end
-					</div> 
+<form action="$action" method="get" name="measures_search" id="measures_search">
+   	<input type="hidden" name="action" value="doSearch"/>
+	<div class="formbody formbody_border_style formbody_padding">
+		<h2 class="nospace">$MESSAGES.getString('common.form.criteria')</h2>
+		#displayFormErrors()    
+		<div class="float_left">  
+			<h3>#displayFieldLabel('rubric' $MESSAGES.getString('measuresSearch.form.rubric'))</h3>
 			#if($enable_provider)
-					<span class="clearer"></span>
-					<br style="line-height:10px" />
-					<div class="float_left">
-						<h3>#displayFieldLabel('partner' $MESSAGES.getString('common.form.partner'))</h3>
-						<select class="spacial_relation inputstyle" name="partner" size="5" multiple="multiple">
-							#displayPartner()
-						</select>
-					</div>
+				#renderServiceTableHorizontal($rubricList)
+			#else
+				#renderServiceTableVertical($rubricList)
 			#end
-			#if($enable_grouping)
-					<div class="float_left marginleft">
-						<h3>#displayFieldLabel('grouping' $MESSAGES.getString('common.form.grouping'))</h3>
-						<input type="radio" class="radio_button" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
-						<label class="radiogroup" for="grouping_no">$MESSAGES.getString('common.form.grouping.no')</label>
-						<br />
-			#if(!$onePartnerOnly || $onePartnerOnly != "true")
-						<input type="radio" class="radio_button" id="grouping_partner" name="grouping" value="partner" #getChecked('grouping' 'partner')/>
-						<label class="radiogroup" for="grouping_partner">$MESSAGES.getString('common.form.grouping.partner')</label>
-						<br />
-			#end
-						<input type="radio" class="radio_button" id="grouping_info" name="grouping" value="provider" #getChecked('grouping' 'provider')/>
-						<label class="radiogroup" for="grouping_info">$MESSAGES.getString('common.form.grouping.provider')</label>
-						<br />
-					</div>
-			#end
-			#if($enable_searchterm)
-					<br style="line-height:10px" />
-					<span class="clearer"></span>
-					<div class="float_left">
-						<h3><label for="q">#displayFieldLabel('q' $MESSAGES.getString('common.form.querystring'))</label></h3>
-						<input class="qrystr inputstyletext" type="text" id="q" name="q" value="#getHTMLEscapedFieldValue('q')" />
-					</div>
-			#end
-					<span class="clearer"></span>
-					<br/>
-				</div>
-				<div class="formfooter formfooter_border_style formfooter_padding">
-					<div align="right">
-						#renderInputButtonSearchClass($MESSAGES.getString('common.form.button.show') "" "" $MESSAGES.getString('common.form.button.show.tooltip') "float_right")
-					</div>
-				</div>
-			</form>
-		</article>
+		</div> 
+#if($enable_provider)
+		<span class="clearer"></span>
+		<br style="line-height:10px" />
+		<div class="float_left">
+			<h3>#displayFieldLabel('partner' $MESSAGES.getString('common.form.partner'))</h3>
+			<select class="spacial_relation inputstyle" name="partner" size="5" multiple="multiple">
+				#displayPartner()
+			</select>
+		</div>
+#end
+#if($enable_grouping)
+		<div class="float_left marginleft">
+			<h3>#displayFieldLabel('grouping' $MESSAGES.getString('common.form.grouping'))</h3>
+			<input type="radio" class="radio_button" id="grouping_no" name="grouping" value="none" #getChecked('grouping' 'none')/>
+			<label class="radiogroup" for="grouping_no">$MESSAGES.getString('common.form.grouping.no')</label>
+			<br />
+#if(!$onePartnerOnly || $onePartnerOnly != "true")
+			<input type="radio" class="radio_button" id="grouping_partner" name="grouping" value="partner" #getChecked('grouping' 'partner')/>
+			<label class="radiogroup" for="grouping_partner">$MESSAGES.getString('common.form.grouping.partner')</label>
+			<br />
+#end
+			<input type="radio" class="radio_button" id="grouping_info" name="grouping" value="provider" #getChecked('grouping' 'provider')/>
+			<label class="radiogroup" for="grouping_info">$MESSAGES.getString('common.form.grouping.provider')</label>
+			<br />
+		</div>
+#end
+#if($enable_searchterm)
+		<br style="line-height:10px" />
+		<span class="clearer"></span>
+		<div class="float_left">
+			<h3><label for="q">#displayFieldLabel('q' $MESSAGES.getString('common.form.querystring'))</label></h3>
+			<input class="qrystr inputstyletext" type="text" id="q" name="q" value="#getHTMLEscapedFieldValue('q')" />
+		</div>
+#end
+		<span class="clearer"></span>
+		<br/>
 	</div>
-</section>
+	<div class="formfooter formfooter_border_style formfooter_padding">
+		<div align="right">
+			#renderInputButtonSearchClass($MESSAGES.getString('common.form.button.show') "" "" $MESSAGES.getString('common.form.button.show.tooltip') "float_right")
+		</div>
+	</div>
+</form>
 
 <script language="JavaScript" type="text/javascript">
 getAndSetMultiple(document.measures_search.partner);

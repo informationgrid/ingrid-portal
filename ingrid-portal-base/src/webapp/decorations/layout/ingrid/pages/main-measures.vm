@@ -5,10 +5,18 @@
 	    </article>
 	</div>
 </section>
-<section class="block block--padded">
+<section class="block block--padded block--light">
     <div class="ob-box-wide ob-box-padded ob-box-center">
     	<article class="content ob-container">
     		$jetspeed.renderPortletWindow("MeasuresResult", "ingrid-portal-apps::MeasuresResult")
 	    </article>
 	</div>
+</section>
+<section class="block">
+    <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
+        <article class="content ob-container ob-box-wide">
+        	<div class="tab__content box--medium bx-bot-xl" data-tabid="tab-1">
+            </div>
+        </article>
+    </div>
 </section>
