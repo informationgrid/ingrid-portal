@@ -1,14 +1,25 @@
 <div class="box__content ob-container">
-	#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
+	#renderPortletTitle($MESSAGES.getString('javax.portlet.title') "" ""  $MESSAGES.getString('chronicle.search.help'))
 </div>
 <section class="block block--padded">
 	<div class="ob-box-wide">
 		<article class="content ob-container">
 			#set ($action = $renderResponse.createActionURL())
-			<h4>#displayFieldLabel('event' "$MESSAGES.getString('chronicle.form.eventtype')")</h4>
+			<h4>$MESSAGES.getString('chronicle.form.term')</h4>
 			<form action="$action" method="post" enctype="" name="chronicle_search" id="chronicle_search">
 			    #displayFormErrors()
-			    <div class="media__body">
+			    	<div class="search-form ob-clear ob-container ob-flex">
+				        <input class="field field--large" type="text" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"></input>
+				    	<button class="btn btn--primary btn--medium btn--icon-transition">
+							<svg class="icon mq-show-m">
+								<use xlink:href="#magnifier" xmlns:xlink="http://www.w3.org/1999/xlink">
+							</svg>
+							<div class="mq-hide-m">$MESSAGES.getString('common.form.button.show')</div>
+						</button>
+					</div>
+					<input type="hidden" name="action" value="doSearch"/>
+			    <h4>#displayFieldLabel('event' "$MESSAGES.getString('chronicle.form.eventtype')")</h4>
+				<div class="media__body">
 					<div class="field-toggle field-toggle--check bx-bot-xs">
 						<input id="chk_all" name="event" type="checkbox" value="all" onclick="ingrid_checkAll(document.chronicle_search)" onkeypress="ingrid_checkAll(document.chronicle_search)" #getChecked('event' 'all')>
 						<label class="field-toggle__label field-toggle__label--boxed" for="chk_all">
@@ -56,18 +67,6 @@
 							<input id="time_at" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="text" name="time_at" value="#getFieldValue('time_at')"></input>
 						</div>
 			        </div>
-			        <br>
-			        <h4>Suchbegriff</h4>
-			    	<div class="search-form ob-clear ob-container ob-flex">
-				        <input class="field field--large" type="text" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"></input>
-				    	<button class="btn btn--primary btn--medium btn--icon-transition">
-							<svg class="icon mq-show-m">
-								<use xlink:href="#magnifier" xmlns:xlink="http://www.w3.org/1999/xlink">
-							</svg>
-							<div class="mq-hide-m">$MESSAGES.getString('common.form.button.show')</div>
-						</button>
-					</div>
-					<input type="hidden" name="action" value="doSearch"/>
 			    </div>
 			</form>
 			<hr>
