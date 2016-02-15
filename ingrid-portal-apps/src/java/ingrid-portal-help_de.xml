@@ -465,7 +465,7 @@
                        auf die Schaltfläche <b>Auf Karte festlegen</b> klicken, 
                        wird Ihnen eine Deutschlandkarte in einem Kartenfenster 
                        angezeigt. Die Schaltfläche <b>Gebiet auswählen</b> 
-                       <img border="0" width="20" height="21" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"></img> ist hierbei bereits aktiviert. 
+                       <img border="0" width="20" height="21" src="../decorations/layout/ingrid/images/help/image201.jpg" alt="*"></img> ist hierbei bereits aktiviert. 
                        Sie wählen ein Gebiet aus, indem Sie mit gedrückter 
                        linker Maustaste ein Rechteck auf der Deutschlandkarte 
                        aufziehen. Die Koordinaten des Rechtecks werden rechts 
@@ -481,7 +481,7 @@
                 <ul>
                     <li>Klicken Sie auf die Schaltfläche 
                         <b>ID einer administrativen Einheit auswählen</b> 
-                        <img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img>.  
+                        <img border="0" width="25" height="23" src="../decorations/layout/ingrid/images/help/image202.jpg" alt="*"></img>.  
                     </li>
                     <li>Klicken Sie dann auf einen Standort in der Karte.
                     </li>
@@ -514,27 +514,27 @@
                         <li>3.  Der Raumbezug der Suchergebnisse umschließt den 
                         Kartenausschnitt.</li>
                     </ul>
-                    <p> <img border="0" width="455" height="252" src="../decorations/layout/ingrid-help/images/image208.jpg" alt="*"></img></p>
+                    <p> <img border="0" width="455" height="252" src="../decorations/layout/ingrid/images/help/image208.jpg" alt="*"></img></p>
                 </content>
             </section>
             <section help-key="ext-search-spacial-10">
                 <header>Schaltflächen oberhalb des Kartenfensters</header>
                 <content>
-                   <p><img border="0" width="20" height="21" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"></img> 
+                   <p><img border="0" width="20" height="21" src="../decorations/layout/ingrid/images/help/image201.jpg" alt="*"></img> 
                       <b>Gebiet auswählen</b>: Suchrechteck (Bounding Box) 
                       kann mit der Maus auf der Karte aufgezogen werden.
                     </p>
-                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img> 
+                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid/images/help/image202.jpg" alt="*"></img> 
                       <b>ID einer administrativen Einheit auswählen</b>: 
                       Gebietsbezeichnung (Area-ID) kann mit der Maus auf der 
                       Karte bestimmt werden.
                     </p>
-                   <p><img border="0" width="21" height="20" src="../decorations/layout/ingrid-help/images/image203.jpg" alt="*"></img> 
+                   <p><img border="0" width="21" height="20" src="../decorations/layout/ingrid/images/help/image203.jpg" alt="*"></img> 
                       <b>Karte verschieben</b>: Zum Verschieben: Klicken Sie mit 
                       der linken Maustaste auf einen Punkt in der Karte, halten 
                       Sie die Taste und ziehen Sie die Maus über die Karte. 
                     </p>
-                    <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image204.jpg" alt="*"></img> 
+                    <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid/images/help/image204.jpg" alt="*"></img> 
                       <b>Drucken</b>: Erstellung einer pdf-Datei für einen 
                       Kartenausschnitt. 
                     </p>                  
@@ -625,9 +625,9 @@
                     <p>Es werden alle Ereignisse, die über die Suche in
                         der Chronik gefunden wurden, mit Titel und Datum
                         angezeigt. Durch einen Klick auf das Ereignis oder das
-                        davor stehende Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="*"></img> wird die Beschreibung des Ereignisses
+                        davor stehende Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg" alt="*"></img> wird die Beschreibung des Ereignisses
                         eingeblendet, durch einen Klick auf das Minuszeichen
-                            <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image019.jpg" alt="*"></img> wieder ausgeblendet.</p>
+                            <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image019.jpg" alt="*"></img> wieder ausgeblendet.</p>
                 </content>
             </section>
         </section>
@@ -680,7 +680,7 @@
                     Mehrfachauswahl ist dabei möglich.</p>
                 <p>Der Bund und auch die meisten Länder haben mehrere
                     Datenanbieter. Diese werden angezeigt, wenn Sie auf das
-                    Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="*"></img> klicken. Anstatt des Bundes oder eines Landes
+                    Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg" alt="*"></img> klicken. Anstatt des Bundes oder eines Landes
                     können auch einzelne Anbieter ausgewählt werden. Auch in
                     diesem Fall ist eine Mehrfachauswahl möglich.</p>
             </content>
@@ -1531,10 +1531,10 @@
                     eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
                     Verfügung gestellt.</p>
-                <p>Wenn Sie auf das Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> klicken,
+                <p>Wenn Sie auf das Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg"></img> klicken,
                     erhalten Sie zu jedem eingegebenen Suchbegriff die ähnlichen
                     Begriffe angeboten. Diese können Sie sich wiederum über das
-                        <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> Symbol
+                        <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg"></img> Symbol
                     anzeigen lassen. Durch das Ankreuzen der einzelnen Begriffe
                     und Klick auf den Button <b>Zur Suche
                     hinzufügen</b> werden die ähnlichen Begriffe jeweils
@@ -1687,9 +1687,9 @@
                    Kartenviewers können <b>Dienste</b> hinzugeladen und die 
                    <b>Legende</b> zu den aktivierten Kartenebenen eingesehen 
                    werden. Dieser Bereich lässt sich bei Bedarf durch die 
-                   Schaltfläche <b>zuklappen</b> <img border="0" width="15" height="16" src="../decorations/layout/ingrid-help/images/image205.jpg" alt="*"></img>    
+                   Schaltfläche <b>zuklappen</b> <img border="0" width="15" height="16" src="../decorations/layout/ingrid/images/help/image205.jpg" alt="*"></img>    
                    (oben rechts) schließen und durch die Schaltfläche 
-                   <b>aufklappen</b> <img border="0" width="20" height="20" src="../decorations/layout/ingrid-help/images/image206.jpg" alt="*"></img>  
+                   <b>aufklappen</b> <img border="0" width="20" height="20" src="../decorations/layout/ingrid/images/help/image206.jpg" alt="*"></img>  
                    wieder öffnen.
                 </p> 
                 
@@ -1748,7 +1748,7 @@
                     </li>
                     <li>
                         Klicken Sie zum Abschluss auf die Schaltfläche 
-                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>
+                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid/images/help/image207.jpg" alt="*"></img>
                     </li>
                 </ul>                                        
                 <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
@@ -1774,7 +1774,7 @@
                     </li>
                     <li>
                         Klicken Sie zum Abschluss auf die Schaltfläche 
-                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>
+                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid/images/help/image207.jpg" alt="*"></img>
                     </li>
                 </ul>                                        
                 <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
@@ -1803,7 +1803,7 @@
                         Klicken Sie nun auf eine Karte aus der Suchergebnisliste
                     </li>
                     <li>Bedienen Sie anschließend die Schaltfläche  
-                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>
+                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid/images/help/image207.jpg" alt="*"></img>
                     </li>
                 </ul>                                        
                 <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
@@ -1829,7 +1829,7 @@
                         (oberen links). 
                     </li>
                     <li>Bedienen Sie anschließend die Schaltfläche  
-                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img>
+                        <b>Dienst hinzufügen</b> <img border="0" width="21" height="23" src="../decorations/layout/ingrid/images/help/image207.jpg" alt="*"></img>
                     </li>
                     <li>Geben Sie nun die GetCapabilities-URL ein
                     </li>
@@ -1846,7 +1846,7 @@
           <header>Funktionen</header>
           <content>
                <p><b>Schaltflächen im Bereich Dienste</b></p>
-                   <p><img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img> <b>Dienst hinzufügen</b>: in 
+                   <p><img border="0" width="21" height="23" src="../decorations/layout/ingrid/images/help/image207.jpg" alt="*"></img> <b>Dienst hinzufügen</b>: in 
                       den Bereichen <b>Anbieter</b>, 
                       <b>Themen</b> und <b>Suchergebnisse</b> wird über die 
                       Schaltfläche ein markierter Kartendienst in den Bereich 
@@ -1854,33 +1854,33 @@
                       <b>Aktive Dienste</b> wird ein Dialogfeld geöffnet, 
                       damit ein externer Dienst hinzugeladen werden kann. 
                     </p>
-                   <p><img border="0" width="22" height="19" src="../decorations/layout/ingrid-help/images/image209.jpg" alt="*"></img> <b>Dienst entfernen</b>: 
+                   <p><img border="0" width="22" height="19" src="../decorations/layout/ingrid/images/help/image209.jpg" alt="*"></img> <b>Dienst entfernen</b>: 
                       Kartendienst wird aus dem Bereich <b>Aktive Dienste</b> 
                       gelöscht. Um einen Dienst zu löschen, muss dieser vorher 
                       durch einen Klick markiert werden. 
                     </p>
                     
-                   <p><img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img> <b>Layer-Transparenz</b>: 
+                   <p><img border="0" width="26" height="19" src="../decorations/layout/ingrid/images/help/image101.jpg" alt="*"></img> <b>Layer-Transparenz</b>: 
                       Anpassung der Transparenz einer im Kartenfenster 
                       dargestellten Kartenebene. Um die Transparenz einer 
                       Kartenebene zu ändern, muss die Kartenebene vorher durch 
                       einen Klick markiert werden. 
                     </p>                    
                     
-                   <p><img border="0" width="22" height="21" src="../decorations/layout/ingrid-help/images/image102.jpg" alt="*"></img> <b>Metadaten</b>: 
+                   <p><img border="0" width="22" height="21" src="../decorations/layout/ingrid/images/help/image102.jpg" alt="*"></img> <b>Metadaten</b>: 
                       Aufruf von Hintergrundinformationen zu einem Kartendienst 
                       oder einer Kartenebene. 
                     </p>                    
 
-                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image112.jpg" alt="*"></img> <b>Alle auf/zu klappen</b>: 
+                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid/images/help/image112.jpg" alt="*"></img> <b>Alle auf/zu klappen</b>: 
                       Alle Ebenen werden auf- bzw. zugeklappt. 
                     </p> 
-                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image113.jpg" alt="*"></img> <b>Zoome auf Service oder Layer</b>: 
+                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid/images/help/image113.jpg" alt="*"></img> <b>Zoome auf Service oder Layer</b>: 
                       Zoomt auf den sichtbaren Bereich eines Kartendienstes oder 
                       einer Ebene. 
                     </p>                                         
 
-                   <p><img border="0" width="26" height="23" src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"></img> <b>Suchergebnisse löschen</b>: 
+                   <p><img border="0" width="26" height="23" src="../decorations/layout/ingrid/images/help/image104.jpg" alt="*"></img> <b>Suchergebnisse löschen</b>: 
                       Alle Suchergebnisse werden aus der Ergebnisliste gelöscht. 
                     </p>
 
@@ -1908,7 +1908,7 @@
                 <p>Oberhalb des Kartenfensters stehen weitere Funktionen zur 
                    Verfügung, die im Folgenden von links nach rechts beschrieben 
                    werden:</p> 
-                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img> <b>Objektinformationen</b>: 
+                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid/images/help/image202.jpg" alt="*"></img> <b>Objektinformationen</b>: 
                       Abfrage von Sachdaten in der Karte. Über einen Klick in 
                       die Karte erhalten Sie standortspezifische Informationen 
                       der dargestellten Layer. Nicht alle Objektinformationen 
@@ -1916,21 +1916,21 @@
                       bereitgestellt. In diesem Fall bleibt das Ergebnisfenster 
                       leer.  
                     </p>
-                   <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image105.jpg" alt="*"></img> <b>Zurück</b>: 
+                   <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid/images/help/image105.jpg" alt="*"></img> <b>Zurück</b>: 
                       Der Kartenausschnitt, der vor der letzten Aktion angezeigt 
                       wurde, wird wieder hergestellt. 
                     </p>
-                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image106.jpg" alt="*"></img> <b>Vor</b>: 
+                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid/images/help/image106.jpg" alt="*"></img> <b>Vor</b>: 
                       Wurde über die Schaltfläche <b>Zurück</b> zu einem 
                       Kartenausschnitt zurück gesprungen, kann über die 
                       Schaltfläche <b>Vor</b> wieder zu den danach ausgeführten 
                       Aktionen vorgeblättert werden. 
                     </p>
-                   <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image107.jpg" alt="*"></img> 
+                   <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid/images/help/image107.jpg" alt="*"></img> 
                       <b>Auf initiale Kartenausdehnung zoomen</b>:
                       Zoombereich der Ausgangskarte wird wieder hergestellt. 
                     </p>
-                   <p><img border="0" width="35" height="21" src="../decorations/layout/ingrid-help/images/image108.jpg" alt="*"></img> <b>Messen</b>:
+                   <p><img border="0" width="35" height="21" src="../decorations/layout/ingrid/images/help/image108.jpg" alt="*"></img> <b>Messen</b>:
                       Ausmessen von Strecken oder Flächen in der Karte. Zum 
                       Messen aktivieren Sie die entsprechende Checkbox, klicken 
                       auf einen Punkt in der Karte und anschließend auf weitere 
@@ -1938,23 +1938,23 @@
                       definieren. Mit einem Doppelklick auf einen Punkt ist die 
                       Messung abgeschlossen. 
                     </p>
-                   <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image204.jpg" alt="*"></img> <b>Drucken</b>:
+                   <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid/images/help/image204.jpg" alt="*"></img> <b>Drucken</b>:
                       Erstellung einer pdf-Datei für einen Kartenausschnitt. 
                    </p>
-                   <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> <b>Laden</b>:
+                   <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid/images/help/image109.jpg" alt="*"></img> <b>Laden</b>:
                       Zuvor gespeicherte Karten werden geladen. Schaltfläche ist 
                       nur dann aktiv, wenn Sie als InGrid-Portal-Nutzer eingeloggt 
                       sind (<a href="/personalisierungsoptionen" target="_new">Personalisierungsoptionen</a>) und 
                       bereits eine Karte gespeichert haben. Näheres 
                       siehe unter <a href="?hkey=maps-7">Karte speichern</a>. 
                    </p>
-                   <p><img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> <b>Speichern</b>:
+                   <p><img border="0" width="24" height="24" src="../decorations/layout/ingrid/images/help/image110.jpg" alt="*"></img> <b>Speichern</b>:
                       Kartenausschnitt wird gespeichert. Schaltfläche ist nur 
                       dann aktiv, wenn Sie als InGrid-Portal-Nutzer eingeloggt sind 
                       (<a href="/personalisierungsoptionen" target="_new">Personalisierungsoptionen</a>). Näheres siehe 
                       unter <a href="?hkey=maps-7">Karte speichern</a>. 
                    </p>
-                   <p><img border="0" width="24" height="26" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> <b>Karte als WMC speichern</b>:
+                   <p><img border="0" width="24" height="26" src="../decorations/layout/ingrid/images/help/image111.jpg" alt="*"></img> <b>Karte als WMC speichern</b>:
                       Kartenausschnitt wird im WMC gespeichert. WMC steht für 
                       Web Map Context und ist ein standardisiertes auf XML 
                       basierendes Speicherformat für Kartenansichten. 
@@ -1993,15 +1993,15 @@
                     <li>Wechseln Sie dann wieder in den Bereich <b>Karten</b>.
                     </li>
                     <li>Klicken Sie nun auf die Schalfläche <b>Speichern</b>
-                        <img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> (oberhalb des Kartenfensters, rechts)
+                        <img border="0" width="24" height="24" src="../decorations/layout/ingrid/images/help/image110.jpg" alt="*"></img> (oberhalb des Kartenfensters, rechts)
                     </li>
                     <li>Über die Schaltfläche <b>Löschen</b>
-                        <img border="0" width="22" height="19" src="../decorations/layout/ingrid-help/images/image209.jpg" alt="*"></img> können gespeicherte Karten wieder gelöscht 
+                        <img border="0" width="22" height="19" src="../decorations/layout/ingrid/images/help/image209.jpg" alt="*"></img> können gespeicherte Karten wieder gelöscht 
                         werden.
                     </li>
                 </ul>                                        
                 <p>Wenn Sie nun auf die Schaltfläche <b>Laden</b>
-                   <img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> 
+                   <img border="0" width="23" height="23" src="../decorations/layout/ingrid/images/help/image109.jpg" alt="*"></img> 
                    klicken, werden Ihnen alle gespeicherten Karten angezeigt. 
                    Wählen Sie mit einem Klick eine Karte aus und klicken Sie 
                    dann auf die Schaltfläche <b>Laden</b>, um eine gespeicherte 
@@ -2049,7 +2049,7 @@
                   überdeckende Kartenebene transparent, um die verdeckten Ebenen 
                   sichtbar zu machen. Klicken Sie hierfür auf eine Layer und 
                   betätigen Sie anschließend die Schaltfläche 
-                  <b>Layer Transparenz</b> <img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img>.
+                  <b>Layer Transparenz</b> <img border="0" width="26" height="19" src="../decorations/layout/ingrid/images/help/image101.jpg" alt="*"></img>.
                   Auf der nun eingeblendeten Skala können Sie die Transparenz 
                   individuell einstellen.  
                </p>
