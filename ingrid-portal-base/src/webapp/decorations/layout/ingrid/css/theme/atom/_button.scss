@@ -110,19 +110,17 @@
     width: 100%;
 }
 
+.btn--tiny {
+    min-width: 0 !important;
+    padding: rem(5px 7px);
+}
 
 .btn--small {
     font-size: rem(18px);
-}
-
-.btn--medium {
-    font-size: rem(20px);
-}
-
-.btn--small {
     padding: rem(3px) 1em;
 }
 
 .btn--medium {
+    font-size: rem(20px);
     padding: rem(8px) 1em;
 }

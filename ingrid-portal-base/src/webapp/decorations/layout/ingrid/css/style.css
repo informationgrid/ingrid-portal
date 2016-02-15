@@ -455,6 +455,10 @@ label {
     margin-top: 0.625rem; }
   .field + small {
     margin: -1.25rem 0 1.875rem; }
+  .field + .picker {
+    margin-top: -1.25rem; }
+  .field + .media {
+    margin-top: -1.25rem; }
 
 .field--narrow {
   max-width: 13.75rem; }
@@ -481,7 +485,8 @@ label {
   display: inline-block;
   position: relative; }
   .field-toggle:not(:last-child) {
-    margin-right: 0.75rem; }
+    margin-right: 0.75rem;
+    margin-bottom: 0.75rem; }
   .field-toggle input {
     display: none; }
   .field-toggle .icon {
@@ -623,6 +628,10 @@ tbody {
   background: #F0F0F0; }
 .table--striped tbody {
   border-bottom: 1px solid #DDD; }
+
+.picker__weekday {
+  text-align: center;
+  background: white; }
 
 /*
  *  Bits: Button
@@ -2242,12 +2251,6 @@ tbody {
 @media screen and (min-width: 480px) and (max-width: 767px) {
   .header__logo {
     margin-left: 5rem; } }
-@media screen and (min-width: 640px) and (max-width: 839px) {
-  .block--padded {
-    padding: 3.75rem 0; }
-
-  .block--pad-top {
-    padding-top: 2.5rem; } }
 @media screen and (max-width: 639px) {
   .media__obj {
     margin-bottom: 2.5rem; }
@@ -2291,6 +2294,12 @@ tbody {
   .column--1-4-s {
     width: 25%; }
 
+  .column--5-12-s {
+    width: 41.66666%; }
+
+  .column--7-12-s {
+    width: 58.33334%; }
+
   .pagination .icon {
     font-size: 20px; }
 
@@ -2314,8 +2323,17 @@ tbody {
   .message__content {
     padding: 0.5rem 1rem; }
 
+  .tx-right-s {
+    text-align: right !important; }
+
   .mq-show-m {
     display: none; } }
+@media screen and (min-width: 640px) and (max-width: 839px) {
+  .block--padded {
+    padding: 3.75rem 0; }
+
+  .block--pad-top {
+    padding-top: 2.5rem; } }
 @media screen and (max-width: 767px) {
   .tab__toggles {
     margin: 0;
@@ -2346,6 +2364,9 @@ tbody {
 
   .column--1-3-m {
     width: 33.33334%; }
+
+  .column--2-3-m {
+    width: 66.66666%; }
 
   .column--1-4-m {
     width: 25%; }
@@ -2512,6 +2533,9 @@ tbody {
 
   .column--1-3-xl {
     width: 33.33334%; }
+
+  .column--2-3-xl {
+    width: 66.66666%; }
 
   .column--1-4-xl {
     width: 25%; }
