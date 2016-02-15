@@ -28,13 +28,15 @@
 	#if($node.isOpen())
 		#set ($renderSubNodes = true)
 		$action.setParameter('action','doCloseNode')
-			<li class="tree__item tree__toggle js-accordion-toggle is-active">
+			<li class="tree__item tree__toggle is-active">
+				<a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
 				<svg class="tree__toggle__icon icon">
 					<use xlink:href="#plus">
 				</svg>
 				<svg class="tree__toggle__icon icon">
 					<use xlink:href="#minus">
 				</svg>
+				</a>
 				<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
 			</li>
 			<li class="tree__content js-accordion-content">
@@ -50,23 +52,26 @@
 		#if ($node.expandable)
     		## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
        		$action.setParameter('action','doOpenNode')
-       		<a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
-				<li class="tree__item tree__toggle js-accordion-toggle">
+			<li class="tree__item tree__toggle ">
+				<a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
 					<svg class="tree__toggle__icon icon">
 						<use xlink:href="#plus">
 					</svg>
 					<svg class="tree__toggle__icon icon">
 						<use xlink:href="#minus">
 					</svg>
-					## render node text
-					$nodeTitle
-				</li>
-			</a>
+				</a>
+				## render node text
+				<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
+			</li>
 		#else
 			#if($nodeUrl != '')
 			<li class="tree__item">
-		        <svg class="tree__icon icon" title="Informationssystem"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#molecule"></use></svg>
-		        <a href="$nodeUrl">$nodeTitle</a>
+		        <svg class="tree__icon icon" title="Informationssystem">
+		        	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#molecule">
+		        	</use>
+		        </svg>
+		        <a href="$nodeUrl" target="_new">$nodeTitle</a>
 		    </li>
 		    #end
 		#end
