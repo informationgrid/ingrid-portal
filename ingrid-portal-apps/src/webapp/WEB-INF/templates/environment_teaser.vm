@@ -1,4 +1,4 @@
-#renderPortletTitle($MESSAGES.getString('teaser.environment.title'))
+#renderPortletTitle($MESSAGES.getString('teaser.environment.title') "h2" "bx-top-0 bx-bot-xl")
 <div class="media">
     <div class="media__obj media__obj--left">
         <img class="themen_image_style" src="/ingrid-portal-apps/images/topics/index_themen_${randomTopicImage}.png" alt="$MESSAGES.getString('teaser.environment.img.alt')" />

@@ -1,10 +1,10 @@
 <article class="teaser ob-container">
     <div class="teaser__box">
         <div class="teaser__content ob-container">
-            #renderPortletTitleTeaser($MESSAGES.getString('teaser.weather.title'))
+            #renderPortletTitle($MESSAGES.getString('teaser.weather.title') "h4")
         </div>
         #if($DWD_PATH != "" && $DWD_PATH.length() > 0)
-	        <object class="weatherObject" data="$DWD_PATH" type="application/x-shockwave-flash" width="226" height="240">
+	        <object class="weatherObject" data="$DWD_PATH" type="application/x-shockwave-flash" width="333" height="360">
 	    		#if($DWD_MOVIE != "" && $DWD_MOVIE.length() > 0)
 	            <param name="movie" value="$DWD_MOVIE"/>
 	    		#end
