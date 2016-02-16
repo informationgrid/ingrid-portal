@@ -112,7 +112,7 @@
             #end
             #if($geothesaurusTopicsBrowse || $geothesaurusTopics)
                 #renderCheckLink("#" $MESSAGES.getString('searchResult.facete.dialog.all.select') "faceteDialogSelectAll(document.geothesaurus_form)")
-	            #renderCheckLink("#" $MESSAGES.getString('searchResult.facete.dialog.all.delete') "faceteDialogDeselectAll(document.geothesaurus_form)")
+	            #renderCrossLink("#" $MESSAGES.getString('searchResult.facete.dialog.all.delete') "faceteDialogDeselectAll(document.geothesaurus_form)")
 	        #end
             #if($geothesaurusError)
                 <p>
@@ -129,7 +129,7 @@
         #end
         #if($geothesaurusSelectTopics && $geothesaurusSelectTopics.size() > 1)
             $action.setParameter("doRemoveGeothesaurus",  "all")
-            #renderCheckLink($action $MESSAGES.getString("searchResult.facete.area.name.delete"))
+            #renderCrossLink($action $MESSAGES.getString("searchResult.facete.area.name.delete"))
         #end
     </div>
 </div>

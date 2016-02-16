@@ -334,17 +334,15 @@
 #end
 
 #macro (renderFaceteSelectedAttributeHashMapNumber $doAction $title $numbers $key $isDelete)
-    <p class="bx-top-xs bx-bot-0 tx-right">
-        <small>
-            <a href="$doAction" class="link">
-                <svg class="icon link__icon icon-xs"><use xlink:href="#check"/></svg>
-                $title
-                #if($numbers && $key)
-                    #renderLinkEntryNumberInArrayHashMap($numbers $key)
-                #end
-            </a>
-        </small>
-    </p>
+	<p>
+		<a class="btn btn--secondary btn--small btn--block" href="$doAction">
+		<svg class="icon link__icon"><use xlink:href="#check"/></svg>
+        $title
+		#if($numbers && $key)
+            #renderLinkEntryNumberInArrayHashMap($numbers $key)
+        #end
+		</a>
+	</p>
 #end
 
 #macro(renderLinkEntryNumberInArrayHashMap $numbers $id)
@@ -407,6 +405,17 @@
         <small>
             <a href=#if($doAction)"$doAction" #else "#" #end class="link" #if($onclick)onclick="$onclick" #end>
                 <svg class="icon link__icon icon-xs"><use xlink:href="#check"/></svg>
+                $title
+            </a>
+        </small>
+    </p>
+#end
+
+#macro(renderCrossLink $doAction $title $onclick)
+    <p class="bx-top-xs bx-bot-0 tx-right">
+        <small>
+            <a href=#if($doAction)"$doAction" #else "#" #end class="link" #if($onclick)onclick="$onclick" #end>
+                <svg class="icon link__icon icon-xs"><use xlink:href="#cross"/></svg>
                 $title
             </a>
         </small>

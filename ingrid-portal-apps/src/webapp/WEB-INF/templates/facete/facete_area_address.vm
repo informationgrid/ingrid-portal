@@ -35,17 +35,17 @@
              ## Strasse
             #if($doAddAreaAddress.street)
                 $action.setParameter("doRemoveAreaAddress",  "street")
-                #renderCheckLink($action $doAddAreaAddress.street)
+                #renderFaceteSelectedAttributeHashMapNumber($action $doAddAreaAddress.street)
             #end
             ## PLZ
             #if($doAddAreaAddress.zip)
                 $action.setParameter("doRemoveAreaAddress",  "zip")
-                #renderCheckLink($action $doAddAreaAddress.zip)
+                #renderFaceteSelectedAttributeHashMapNumber($action $doAddAreaAddress.zip)
             #end
             ## Ort
             #if($doAddAreaAddress.city)
                 $action.setParameter("doRemoveAreaAddress",  "city")
-                #renderCheckLink($action $doAddAreaAddress.city)
+                #renderFaceteSelectedAttributeHashMapNumber($action $doAddAreaAddress.city)
             #end
             #if($doAddAreaAddress.size() > 1)
                $action.setParameter("doRemoveAreaAddress",  "all")
