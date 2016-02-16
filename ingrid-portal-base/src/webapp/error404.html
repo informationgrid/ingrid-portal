@@ -113,7 +113,7 @@
                                 </svg>
                             </a>
                             <div class="metamenu">
-                                <form action="http://localhost:8080/portal/_ns:Ykxhbmd1YWdlU3dpdGNo/default-page.psml" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
+                                <form action="/portal/_ns:Ykxhbmd1YWdlU3dpdGNo/default-page.psml" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
                                       <a class="metamenu__link link is-active" onclick="submitform($(this), 'de')">
                                         <svg class="icon">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tick"></use>
@@ -143,8 +143,8 @@
                                 <div class="metamenu__box ob-container">
                                     <h5>Nutzerkonto</h5>
                                 </div>
-                                <form class="metamenu__box ob-container" action="http://localhost:8080/portal/_ns:Yk15UG9ydGFsTG9naW5Qb3J0bGV0/default-page.psml" method="post" id="frm_login">
-                                    <input type="hidden" name="org.apache.jetspeed.login.destination" value="http://localhost:8080/portal/_ns:Yk15UG9ydGFsTG9naW5Qb3J0bGV0/default-page.psml"></input>
+                                <form class="metamenu__box ob-container" action="/portal/_ns:Yk15UG9ydGFsTG9naW5Qb3J0bGV0/default-page.psml" method="post" id="frm_login">
+                                    <input type="hidden" name="org.apache.jetspeed.login.destination" value="/portal/_ns:Yk15UG9ydGFsTG9naW5Qb3J0bGV0/default-page.psml"></input>
                                     <input type="hidden" name="cmd" value="doLogin"></input>
                                         <label for="field-1">Benutzername</label>
                                         <input type="text" id="login" name="org.apache.jetspeed.login.username" value="Benutzername" onfocus="clearUser()" class="field bx-bot-s"></input>
