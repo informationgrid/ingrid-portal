@@ -92,6 +92,12 @@
         </script>
     </head>
     <body>
+        #set($mainMenu = $site.getMenu("main-menu"))
+        #set($serviceMenu = $site.getMenu("service-menu"))
+        #set($footerMenu = $site.getMenu("footer-menu"))
+        #if(!$mainMenu.empty)
+            #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
+        #end
         <div class="page" >
             <header class="header">
                 <div class="ob-box-padded-more ob-box-center">
@@ -111,12 +117,10 @@
                         <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/mobile-logo.svg')">
                         </a>
                     </div>
-                    #set($serviceMenu = $site.getMenu("service-menu"))
-                    #if($serviceMenu && !$serviceMenu.empty)
+                     #if($serviceMenu && !$serviceMenu.empty)
                         #includeServiceNavigation($serviceMenu)
                     #end
                 </div>
-            #set($mainMenu = $site.getMenu("main-menu"))
             #if(!$mainMenu.empty)
               #includeMainNavigation($mainMenu)
             #end

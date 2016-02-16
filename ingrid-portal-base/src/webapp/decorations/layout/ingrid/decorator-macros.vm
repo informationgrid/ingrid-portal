@@ -48,45 +48,24 @@
         #end
         #set($tabUrl = $jetspeed.getAbsoluteUrl($element.url))
         ## flags indicating how to render menu item
-        #set($elemSelected = false)
-        #set($elemRender = true)
         ## different menu item name than title in psml !
         #if($element.url=="/main-search.psml")
             ##set($tabTitle = $MESSAGES.getString('ingrid.page.search'))
             #set($tabName = $MESSAGES.getString('ingrid.page.search'))
         #end
-        ## process and set flags accordingly
-        #if($element.isSelected($site))
-            #set($elemSelected = true)
-        #elseif($element.url=="/main-maps.psml")
-            ##<li><a href="$tabUrl" title="$MESSAGES.getString('ingrid.page.maps.link.title')" target="ingrid_wms">$tabName</a></li>
-            ###set($elemRender = false)
-        #elseif($element.url=="/main-search.psml")
-            #if($currentPage.startsWith('/search-ext'))
-                #set($elemSelected = true)
-            #end
-        #elseif($element.url.startsWith("/search-catalog"))
-            #if($currentPage.startsWith('/search-catalog'))
-                #set($elemSelected = true)
-            #end
-        #elseif($element.url=="/main-about.psml")
-            #if($currentPage.startsWith('/main-about'))
-                #set($elemSelected = true)
-            #end
+        #if ($element.url.startsWith('/main-about'))
+            #set($subMenu = $site.getMenu("sub-menu-about"))
+            <li class="nav-desktop__item dropmenu__box">
+                  <a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="$tabTitle">$tabName</a>
+                  #if($subMenu && !$subMenu.empty)
+                        #includeSubNavigation($subMenu true)
+                #end
+            </li>
+        #else
+            <li class="nav-desktop__item">
+              <a class="nav-desktop__title" href="$tabUrl" title="$tabTitle">$tabName</a>
+            </li>
         #end
-	    #if ($element.url.startsWith('/main-about'))
-	    	#set($subMenu = $site.getMenu("sub-menu-about"))
-	        <li class="nav-desktop__item dropmenu__box">
-	  			<a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="$tabTitle">$tabName</a>
-		  		#if($subMenu && !$subMenu.empty)
-		                #includeSubNavigation($subMenu true)
-		        #end
-	        </li>
-	    #else
-		    <li class="nav-desktop__item">
-			  <a class="nav-desktop__title" href="$tabUrl" title="$tabTitle">$tabName</a>
-			</li>
-	    #end
       #end
     #end
     </ul>
@@ -108,7 +87,6 @@
         #end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         ## flags indicating how to render menu item
-        #set($elemSelected = false)
         ## process and set flags accordingly
         #if ($element.url.startsWith('/main-about.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.portrait.tooltip'))
@@ -126,12 +104,9 @@
             #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
             #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
         #end
-        #if($element.isSelected($site))
-            #set($elemSelected = true)
-        #end
-		<li>
-			<a href="$linkUrl" title="$linkTitle">$linkName</a>
-		</li>
+        <li>
+            <a href="$linkUrl" title="$linkTitle">$linkName</a>
+        </li>
       #end
     #end
     </ul>
@@ -181,15 +156,15 @@
                 <h5>Nutzerkonto</h5>
              </div>
             #set($userAttributes = $jetspeed.getUserProperties())
-		    #set($userNameGiven = $userAttributes.get("user.name.given"))
-		    #set($userNameFamily = $userAttributes.get("user.name.family"))
-		    
-		    #if($userNameGiven)
-		    	#set ($salutation = " $userNameGiven")
-		    #end
-		    #if($userNameFamily)
-		    	#set ($salutation = "$!{salutation} $userNameFamily")
-		    #end        
+            #set($userNameGiven = $userAttributes.get("user.name.given"))
+            #set($userNameFamily = $userAttributes.get("user.name.family"))
+            
+            #if($userNameGiven)
+                #set ($salutation = " $userNameGiven")
+            #end
+            #if($userNameFamily)
+                #set ($salutation = "$!{salutation} $userNameFamily")
+            #end        
             <div class="metamenu__box ob-container">
                 <p>Sie sind eingeloggt als<br><strong>$salutation</strong></p>
                 <p><a class="btn btn--secondary btn--small btn--block" href="login/logout">Logout</a></p>
@@ -224,7 +199,6 @@
                 #end
                 #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
                 ## flags indicating how to render menu item
-                #set($elemSelected = false)
                 ## process and set flags accordingly
                 #if ($element.url.startsWith('/main-about.psml'))
                     #set($linkTitle = $MESSAGES.getString('ingrid.page.portrait.tooltip'))
@@ -241,9 +215,6 @@
                 #elseif($element.url.startsWith('/search-catalog/search-catalog-thesaurus.psml'))
                     #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
                     #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
-                #end
-                #if($element.isSelected($site))
-                    #set($elemSelected = true)
                 #end
                 <a class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
               #end
@@ -300,4 +271,133 @@
       #renderServiceLink($element.url $currentPage $linkUrl $linkTitle $linkName "")
     #end
 </div> 
+#end
+
+#macro (includeMobileNavigation $_mainmenu $_servicemenu $_footermenu)
+    <div class="nav-overlay is-fixed">
+        #if($_mainmenu)
+            #foreach($element in $_mainmenu.elements.iterator())
+                #if($element.elementType == "option")
+                    #set($tabTitle = $element.getTitle($preferedLocale))
+                    #set($tabName = $element.getShortTitle($preferedLocale))
+                    ## read localized title from resource with title from psml as key !
+                    #if($tabTitle.startsWith('ingrid'))
+                        #set($tabTitle = $MESSAGES.getString($tabTitle))
+                        #set($tabName = $MESSAGES.getString($tabName))
+                    #end
+                    #set($tabUrl = $jetspeed.getAbsoluteUrl($element.url))
+                    #if ($element.url.startsWith('/main-about'))
+                        #set($subMenu = $site.getMenu("sub-menu-about"))
+                        <div class="js-accordion-multi">
+                            <div class="nav-overlay__item nav-overlay__item--level1 js-accordion-toggle" title="$tabTitle">
+                                <svg class="nav-overlay__icon icon"><use xlink:href="#plus"/></svg>
+                                <svg class="nav-overlay__icon icon"><use xlink:href="#minus"/></svg>
+                                $tabName
+                            </div>
+                            #if($subMenu && !$subMenu.empty)
+                                #includeMobileSubNavigation($subMenu)
+                            #end
+                        </div>
+                    #else
+                        <a href="$tabUrl" class="nav-overlay__item nav-overlay__item--level1" title="$tabTitle">$tabName</a>
+                    #end
+                #end
+            #end
+        #end
+        #if($_servicemenu)
+            #includeMobileServiceNavigation ($_servicemenu)
+        #end
+        #if($_footermenu)
+            #includeMobileFooterNavigation ($_footermenu)
+        #end
+    </div>
+#end
+
+#macro (includeMobileSubNavigation $_menu)
+    #set($currentPage = $site.getPageOrTemplate().url)
+    <div class="nav-overlay__level2 js-accordion-content is-hidden">
+        <div class="nav-overlay__level2__content">
+        #foreach($element in $_menu.elements.iterator())
+            #if($element.elementType == "option")
+                #set($linkTitle = $element.getTitle($preferedLocale))
+                #set($linkName = $element.getShortTitle($preferedLocale))
+                ## read localized title from resource with title from psml as key !
+                #if($linkTitle.startsWith('ingrid'))
+                    #set($linkTitle = $MESSAGES.getString($linkTitle))
+                    #set($linkName = $MESSAGES.getString($linkName))            
+                #end
+                #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+                ## flags indicating how to render menu item
+                ## process and set flags accordingly
+                #if ($element.url.startsWith('/main-about.psml'))
+                    #set($linkTitle = $MESSAGES.getString('ingrid.page.portrait.tooltip'))
+                    #set($linkName = $MESSAGES.getString('ingrid.page.portrait')) 
+                #elseif($element.url.startsWith('/main-about-partner.psml'))
+                    #set($linkTitle = $MESSAGES.getString('ingrid.page.partner.tooltip'))
+                    #set($linkName = $MESSAGES.getString('ingrid.page.partner'))
+                #elseif($element.url.startsWith('/main-about-data-source.psml'))
+                    #set($linkTitle = $MESSAGES.getString('ingrid.page.data.source.tooltip'))
+                    #set($linkName = $MESSAGES.getString('ingrid.page.data.source'))
+                #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
+                    #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
+                    #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
+                #elseif($element.url.startsWith('/search-catalog/search-catalog-thesaurus.psml'))
+                    #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
+                    #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
+                #end
+                <a href="$linkUrl" class="nav-overlay__item nav-overlay__item--level2" title="$linkTitle">
+                    $linkName
+                </a>
+            #end
+        #end
+        </div>
+    </div>
+#end
+
+#macro (includeMobileFooterNavigation $_menu)
+<ul class="nav__mobile nav__foot">
+    #foreach($element in $_menu.elements.iterator())
+      #if($element.elementType == "option")
+        #set($linkTitle = $element.getTitle($preferedLocale))
+        #set($linkName = $element.getShortTitle($preferedLocale))
+        ## read localized title from resource with title from psml as key !
+        #if($linkTitle.startsWith('ingrid'))
+            #set($linkTitle = $MESSAGES.getString($linkTitle))
+            #set($linkName = $MESSAGES.getString($linkName))            
+        #end
+        #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+        ## obfuscate email addresse (webmaster)
+        #if($linkUrl && $linkUrl.contains("@"))
+            #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
+        #end
+        <li><a href="$linkUrl" title="$linkTitle">$linkName</a></li>
+      #end
+    #end
+</ul>
+#end
+
+#macro (includeMobileServiceNavigation $_menu)
+    #set($currentPage = $site.getPageOrTemplate().url)
+    #foreach($element in $_menu.elements.iterator())
+      #if($element.elementType == "option")
+        #set($lastType = $element.type)
+        #set($linkTitle = $element.getTitle($preferedLocale))
+        #set($linkName = $element.getShortTitle($preferedLocale))
+        ## read localized title from resource with title from psml as key !
+        #if($linkTitle.startsWith('ingrid'))
+            #set($linkTitle = $MESSAGES.getString($linkTitle))
+            #set($linkName = $MESSAGES.getString($linkName))            
+        #end
+        #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+        #set($linkPage = $element.url)
+        #set($isSelected = $element.isSelected($site))
+## handle language element
+## NOTICE: defaultTitle is from "psml" or "link" file !
+        #set($defaultTitle = $element.getTitle())
+        #if($defaultTitle == "ingrid.page.language")
+            #set($linkTitle = $defaultTitle)
+            $jetspeed.renderPortletWindow("LanguageSwitchMobile", "ingrid-portal-apps::LanguageSwitchMobile")
+        #end
+      #end
+    #end
 #end
