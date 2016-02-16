@@ -35,7 +35,7 @@
 			  #if($rs.udk_class)
 				#set($udkObjClassNameKey = "udk_adr_class_name_$rs.udk_class")
 				#set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
-				<h4 class="bx-top-l bx-bot-xs">#if(!$topHit)<div class="search-hr"></div>#end
+				<h4 class="#if(!$topHit)bx-top-l bx-bot-xs"><div class="search-hr"></div>#else bx-bot-0"> #end
 				#if($rs.docuuid)
 					<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&type=address&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($title) </a>
 				#else
@@ -43,7 +43,7 @@
 				#end
 				</h4>
 			  #else
-				<h4 class="bx-top-l bx-bot-xs">#if(!$topHit)<div class="search-hr"></div>#end
+				<h4 class="#if(!$topHit)bx-top-l bx-bot-xs"><div class="search-hr"></div>#else bx-bot-0"> #end
 				#if($rs.docuuid)
 					<a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&type=address&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#renderTitle($title)</a>
 				#else
@@ -52,7 +52,7 @@
 			    </h4>
 			  #end
 			#else
-			  <h4 class="bx-top-l bx-bot-xs">#if(!$topHit)<div class="search-hr"></div>#end<strong>#renderTitle($title) </strong></h4>
+			  <h4 class="#if(!$topHit)bx-top-l bx-bot-xs"><div class="search-hr"></div>#else bx-bot-0"> #end<strong>#renderTitle($title) </strong></h4>
 			#end		
             <p class="result_description">
             $!rs.abstract 
