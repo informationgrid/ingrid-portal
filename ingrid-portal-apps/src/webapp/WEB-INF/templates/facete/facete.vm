@@ -317,29 +317,6 @@
     <input type="submit" class="$buttonclass" value="$buttonvalue" name="$buttonname" title="$buttontitle" onclick="$buttononclick" />
 #end
 
-
-#macro (renderFaceteDeleteLinkLineDialog $label $doAction)
-    <p class="bx-top-xs bx-bot-0 tx-right">
-        <small>
-            <a href="$doAction" class="link">
-                <svg class="icon link__icon icon-xs"><use xlink:href="#check"/></svg>
-                $label
-            </a>
-        </small>
-    </p>
-#end
-
-#macro (renderFaceteSelectedAttribute $doAction $title)
-    <p class="bx-top-xs bx-bot-0 tx-right">
-        <small>
-            <a href="$doAction" class="link">
-                <svg class="icon link__icon icon-xs"><use xlink:href="#check"/></svg>
-                $title
-            </a>
-        </small>
-    </p>
-#end
-
 #macro (renderFaceteSelectedAttributeNumber $doAction $title $tooltip $number $isDelete)
     <div class="js-accordion">
             <div class="js-accordion-toggle sidebar-filter-subheader" onclick="location.href='$doAction'">
@@ -347,7 +324,7 @@
                     <use xlink:href="#select-arrow">
                 </svg>
                 $title
-                 #if($number)
+                #if($number)
                     <strong>($number)</strong>
                 #end
             </div>
@@ -414,20 +391,35 @@
     </a>
 #end
 
+#macro(renderResetLink $doAction $title)
+    <small class="tx-right">
+        <a class="link" href="$doAction">
+            <svg class="icon link__icon icon-s">
+                <use xlink:href="#reset">
+            </svg>
+        $title
+        </a>
+    </small>
+#end
+
+#macro(renderCheckLink $doAction $title $onclick)
+    <p class="bx-top-xs bx-bot-0 tx-right">
+        <small>
+            <a href=#if($doAction)"$doAction" #else "#" #end class="link" #if($onclick)onclick="$onclick" #end>
+                <svg class="icon link__icon icon-xs"><use xlink:href="#check"/></svg>
+                $title
+            </a>
+        </small>
+    </p>
+#end
+
 <div>
     #set ($rankedHitslenght = $rankedResultList.get("length").toString())
     #if($rankedHitslenght != "0")
         #if($enableFacetSelection > 0 || $isSelection)
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter("doRemoveAll", "true")
-            <small class="tx-right">
-                <a class="link" href="$action">
-                    <svg class="icon link__icon icon-s">
-                        <use xlink:href="#reset">
-                    </svg>
-                $MESSAGES.getString('searchResult.facet.delete.selection')
-                </a>
-            </small>
+            #renderResetLink($action $MESSAGES.getString('searchResult.facet.delete.selection'))
         #end
         #renderFacetCategory($facetConfig)
 
@@ -442,25 +434,10 @@
             #if($enableFacetSelection > 0 || $isSelection)
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("doRemoveLast", "true")
-                <small class="tx-right">
-                    <a class="link" href="$action">
-                        <svg class="icon link__icon icon-s">
-                            <use xlink:href="#reset">
-                        </svg>
-                    $MESSAGES.getString("searchResult.facete.category.delete.last")
-                    </a>
-                </small>
-                #renderFaceteDeleteLinkLineDialog( $action)
+                #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("doRemoveAll", "true")
-                <small class="tx-right">
-                    <a class="link" href="$action">
-                        <svg class="icon link__icon icon-s">
-                            <use xlink:href="#reset">
-                        </svg>
-                    $MESSAGES.getString("searchResult.facete.category.delete.all")
-                    </a>
-                </small>
+                #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
             #end
         <br>
     #end

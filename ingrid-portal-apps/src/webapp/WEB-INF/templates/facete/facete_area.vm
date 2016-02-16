@@ -64,14 +64,14 @@
                         #if($topic.topicNativeKey && $topic.topicNativeKey != "")
                             #set($topicId = $topic.topicNativeKey)
                         #end
-                        <input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+                        <input id="$topicId_$count" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
                         #foreach($selectTopic in $geothesaurusSelectTopics)
                             #if($selectTopic.topicId == $topicId)
                                 checked
                             #end
                         #end
                         >
-                        <label class="field-toggle__label field-toggle__label--highlight" for="$topicId">
+                        <label class="field-toggle__label field-toggle__label--highlight" for="$topicId_$count">
                             <div class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
                                     <use xlink:href="#tick">
@@ -92,14 +92,14 @@
                         #if($topic.topicNativeKey && $topic.topicNativeKey != "")
                             #set($topicId = $topic.topicNativeKey)
                         #end
-                        <input id="$topicId" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
+                        <input id="$topicId_$count" type=checkbox class="facete_input_chb_dialog" value="$topicId" name="chk$count"
                         #foreach($selectTopic in $geothesaurusSelectTopics)
                             #if($selectTopic.topicId == $topicId)
                                 checked
                             #end
                         #end
                         >
-                        <label class="field-toggle__label field-toggle__label--highlight" for="$topicId">
+                        <label class="field-toggle__label field-toggle__label--highlight" for="$topicId_$count">
                             <div class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
                                     <use xlink:href="#tick">
@@ -110,29 +110,15 @@
                     </div>
                 #end
             #end
+            #if($geothesaurusTopicsBrowse || $geothesaurusTopics)
+                #renderCheckLink("#" $MESSAGES.getString('searchResult.facete.dialog.all.select') "faceteDialogSelectAll(document.geothesaurus_form)")
+	            #renderCheckLink("#" $MESSAGES.getString('searchResult.facete.dialog.all.delete') "faceteDialogDeselectAll(document.geothesaurus_form)")
+	        #end
             #if($geothesaurusError)
-                <div class="dialog_error_message">
-                    <span>
-                        $MESSAGES.getString('searchResult.facete.area.name.search.error')
-                    </span>
-                </div>
+                <p>
+                    $MESSAGES.getString('searchResult.facete.area.name.search.error')
+                </p>
             #end
-            <p class="bx-top-xs bx-bot-0 tx-right">
-                <small>
-                    <a href="#" class="link" onclick="faceteDialogSelectAll(document.geothesaurus_form)">
-                        <svg class="icon link__icon icon-xs"><use xlink:href="#check"/></svg>
-                        $MESSAGES.getString('searchResult.facete.dialog.all.select')
-                    </a>
-                </small>
-            </p>
-            <p class="bx-top-xs bx-bot-0 tx-right">
-                <small>
-                    <a href="#" class="link" onclick="faceteDialogDeselectAll(document.geothesaurus_form)">
-                        <svg class="icon link__icon icon-xs"><use xlink:href="#check"/></svg>
-                        $MESSAGES.getString('searchResult.facete.dialog.all.delete')
-                    </a>
-                </small>
-            </p>
             <p><button type="submit" name="doAddGeothesaurus" class="btn btn--primary btn--small btn--block">$MESSAGES.getString('searchResult.facete.dialog.commit')</button></p>
         </form>
         
@@ -143,7 +129,7 @@
         #end
         #if($geothesaurusSelectTopics && $geothesaurusSelectTopics.size() > 1)
             $action.setParameter("doRemoveGeothesaurus",  "all")
-            #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.area.name.delete") $action)
+            #renderCheckLink($action $MESSAGES.getString("searchResult.facete.area.name.delete"))
         #end
     </div>
 </div>

@@ -76,40 +76,40 @@
             ##Projektname
             #if($doAddAttribute.db_title)
                 $action.setParameter("doRemoveAttribute",  "db_title")
-                #renderFaceteSelectedAttribute ($action  $doAddAttribute.db_title)
+                #renderCheckLink ($action  $doAddAttribute.db_title)
             #end
             ##Institution
             #if($doAddAttribute.db_institute)
                 $action.setParameter("doRemoveAttribute",  "db_institute")
-                #renderFaceteSelectedAttribute ($action  $doAddAttribute.db_institute)
+                #renderCheckLink ($action  $doAddAttribute.db_institute)
             #end
             ##Projektleiter
             #if($doAddAttribute.db_pm)
                 $action.setParameter("doRemoveAttribute",  "db_pm")
-                #renderFaceteSelectedAttribute ($action  $doAddAttribute.db_pm)
+                #renderCheckLink ($action  $doAddAttribute.db_pm)
             #end
             ##Beteiligte
             #if($doAddAttribute.db_staff)
                 $action.setParameter("doRemoveAttribute",  "db_staff")
-                #renderFaceteSelectedAttribute ($action  $doAddAttribute.db_staff)
+                #renderCheckLink ($action  $doAddAttribute.db_staff)
             #end
             ##Projektträger
             #if($doAddAttribute.db_org)
                 $action.setParameter("doRemoveAttribute",  "db_org")
-                #renderFaceteSelectedAttribute ($action  $doAddAttribute.db_org)
+                #renderCheckLink ($action  $doAddAttribute.db_org)
             #end
             ##Laufzeit
             #if($doAddAttribute.term_from)
                 $action.setParameter("doRemoveAttribute",  "term_from")
-                #renderFaceteSelectedAttribute ($action  $doAddAttribute.term_from)
+                #renderCheckLink ($action  $doAddAttribute.term_from)
             #end
             #if($doAddAttribute.term_to)
                 $action.setParameter("doRemoveAttribute",  "term_to")
-                #renderFaceteSelectedAttribute ($action  $doAddAttribute.term_to)
+                #renderCheckLink ($action  $doAddAttribute.term_to)
             #end
             #if($doAddAttribute.size() > 1)
                 $action.setParameter("doRemoveAttribute",  "all")
-                #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.attribute.delete") $action)
+                #renderCheckLink($action $MESSAGES.getString("searchResult.facete.attribute.delete"))
             #end
         #end
     </div>
