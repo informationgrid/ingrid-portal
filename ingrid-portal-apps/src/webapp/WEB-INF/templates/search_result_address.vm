@@ -5,7 +5,6 @@
         #parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
     #end
 #end
-#parse ('/WEB-INF/templates/include_search_result_filter.vm')
 #if($enableFacete)
     <aside class="sidebar js-accordion-multi">
            <div class="sidebar__title js-accordion-toggle mq-show-l">
@@ -22,6 +21,7 @@
 <article class="content ob-container ob-box-narrow">
     #parse ('/WEB-INF/templates/include_search_result_counter.vm')
     #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+    #parse ('/WEB-INF/templates/include_search_result_filter.vm')
     <br />
     #if($rankedResultList && "$rankedResultList.length()" != "0")
         #foreach($rs in $rankedResultList.getWrapperHits())
