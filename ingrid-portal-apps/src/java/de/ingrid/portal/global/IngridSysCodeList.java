@@ -92,7 +92,7 @@ public class IngridSysCodeList {
                 }
             }
         }else{
-        	log.error("Codelist does not exit for codeListId: " + codeListId);
+        	log.error("Codelist does not exist for codeListId: " + codeListId);
         }
     	return "";
     }
