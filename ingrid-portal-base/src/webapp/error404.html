@@ -28,6 +28,7 @@
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-style-type" content="text/css" />
         <meta http-equiv="content-language" content="de" />
+        <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
         <meta name="description" content="InGrid-Portal bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="wemove digital solutions" />
         <meta name="keywords" lang="de" content="InGrid-Portal, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
@@ -40,45 +41,6 @@
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
         <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/styles.css" />
         <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
-        <script language="JavaScript" type="text/javascript">
-            var xmlhttp = false;
-            /*@cc_on @*/
-            /*@if (@_jscript_version >= 5)
-             // JScript gives us Conditional compilation, we can cope with old IE versions.
-             // and security blocked creation of the objects.
-             try {
-             xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-             } catch (e) {
-             try {
-             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-             } catch (E) {
-             xmlhttp = false;
-             }
-             }
-             @end @*/
-            if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
-                try {
-                    xmlhttp = new XMLHttpRequest();
-                } 
-                catch (e) {
-                    xmlhttp = false;
-                }
-            }
-            if (!xmlhttp && window.createRequest) {
-                try {
-                    xmlhttp = window.createRequest();
-                } 
-                catch (e) {
-                    xmlhttp = false;
-                }
-            }
-            if (xmlhttp) {
-                xmlhttp.open('GET', '/portal/detect-js.psml?js=1', true);
-                xmlhttp.onreadystatechange = function(){
-                };
-                xmlhttp.send(null);
-            }
-        </script>
         <style>
             #horizontalMenu { margin:0; }
             #horizontalMenu li { float:left; margin-right: 15px; list-style: none; color: #176798;}

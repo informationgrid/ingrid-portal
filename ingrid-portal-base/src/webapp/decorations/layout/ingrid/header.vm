@@ -5,7 +5,7 @@
 #parse($layoutDecoration.getResource("decorator-macros.vm"))
 
 #* Add all template constants to the current context *#
-#defineNavigationConstants()
+##defineNavigationConstants()
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
@@ -23,6 +23,7 @@
         <meta http-equiv="Content-style-type" content="text/css" />   
         <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
         <meta name="description" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_descr"), "")" />
         <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
         <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
@@ -43,53 +44,13 @@
         #end
 
         #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
-        #includeHeaderResource()
+        ##includeHeaderResource()
         #* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
-        <style>
-            html, body { width: auto; height: auto; }
-        </style>
-        #includeJavaScriptForHead()
+        ##includeJavaScriptForHead()
         #IncludeStylesheets()
 
         #* our decorator macros, see ./decorator-macros.vm *#
         #decoratorIncludeJavaScriptForHead()
-  
-        <script language="JavaScript" type="text/javascript">
-        var xmlhttp=false;
-        /*@cc_on @*/
-        /*@if (@_jscript_version >= 5)
-        // JScript gives us Conditional compilation, we can cope with old IE versions.
-        // and security blocked creation of the objects.
-        try {
-            xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e) {
-            try {
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (E) {
-                xmlhttp = false;
-            }
-        }
-        @end @*/
-        if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
-            try {
-                xmlhttp = new XMLHttpRequest();
-            } catch (e) {
-                xmlhttp=false;
-            }
-        }
-        if (!xmlhttp && window.createRequest) {
-            try {
-                xmlhttp = window.createRequest();
-            } catch (e) {
-                xmlhttp=false;
-            }
-        }
-        if (xmlhttp) {
-            xmlhttp.open('GET', '$jetspeed.getAbsoluteUrl('/detect-js.psml?js=1')', true);
-            xmlhttp.onreadystatechange = function () {};
-            xmlhttp.send(null);
-        }   
-        </script>
     </head>
     <body>
         #set($mainMenu = $site.getMenu("main-menu"))
