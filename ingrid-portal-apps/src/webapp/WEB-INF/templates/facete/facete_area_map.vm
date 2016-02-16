@@ -1,0 +1,11 @@
+<div class="sidebar__widget js-accordion-multi">
+    <div class="sidebar__widget__title filter__title js-accordion-toggle">
+        $MESSAGES.getString("searchResult.facete.area.map.search")
+        <svg class="filter__title__icon icon">
+            <use xlink:href="#arrow-thick"/>
+        </svg>
+    </div>
+    <div class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content is-hidden">
+        #set ($action = $renderResponse.createActionURL())
+    </div>
+</div>

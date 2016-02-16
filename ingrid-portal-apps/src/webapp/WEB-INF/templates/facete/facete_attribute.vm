@@ -1,56 +1,116 @@
 #set ($action = $renderResponse.createActionURL())
-<div class="cat_label">
-	<img id="attribute_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_cat_open.png" onclick="openNode('attribute')">
-	<a onclick="openNode('attribute')" title="$MESSAGES.getString("searchResult.facete.title.attribute.tooltip")">$MESSAGES.getString("searchResult.facete.title.attribute")</a>
-	<br>
-</div>
-<div id="attribute" class="cat_content">
-	<div class="cat_entry_label">
-    	<a onclick="loadDialog(dijit.byId('dialog_attribute'))" class="facete_link_line" title="$MESSAGES.getString("searchResult.facete.attribute.tooltip")">
-			$MESSAGES.getString("searchResult.facete.attribute.add")
-		</a>
-        <img id="facete_img" class="facete_open" src="/ingrid-portal-apps/images/facete/facete_more.png" ></img>
+<div class="sidebar__widget js-accordion-multi">
+    <div class="sidebar__widget__title filter__title js-accordion-toggle">
+        $MESSAGES.getString("searchResult.facete.title.attribute")
+         <svg class="filter__title__icon icon">
+            <use xlink:href="#arrow-thick"/>
+        </svg>
     </div>
-	#parse ('/WEB-INF/templates/facete/facete_dialog_attribute.vm')
-	#if($doAddAttribute)
-		 ##Projektname
-		#if($doAddAttribute.db_title)
-			$action.setParameter("doRemoveAttribute",  "db_title")
-        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_title)
-		#end
-		##Institution
-		#if($doAddAttribute.db_institute)
-			$action.setParameter("doRemoveAttribute",  "db_institute")
-        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_institute)
-		#end
-		##Projektleiter
-		#if($doAddAttribute.db_pm)
-			$action.setParameter("doRemoveAttribute",  "db_pm")
-        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_pm)
-		#end
-		##Beteiligte
-		#if($doAddAttribute.db_staff)
-			$action.setParameter("doRemoveAttribute",  "db_staff")
-        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_staff)
-		#end
-		##Projektträger
-		#if($doAddAttribute.db_org)
-			$action.setParameter("doRemoveAttribute",  "db_org")
-        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.db_org)
-		#end
-		##Laufzeit
-		#if($doAddAttribute.term_from)
-			$action.setParameter("doRemoveAttribute",  "term_from")
-        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.term_from)
-		#end
-		#if($doAddAttribute.term_to)
-			$action.setParameter("doRemoveAttribute",  "term_to")
-        	#renderFaceteSelectedAttribute ($action  $doAddAttribute.term_to)
-		#end
-		#if($doAddAttribute.size() > 1)
-			$action.setParameter("doRemoveAttribute",  "all")
-        	#renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.attribute.delete") $action)
-		#end
-	#end
-	<br>
+    <div class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content is-hidden">
+        <form action="$action" method="post">
+            <div class="dialog_content" style="width:400px;">
+                <p>
+                    <label class="float_left col2left" for="db_title">$MESSAGES.getString("searchResult.facete.attribute.project")</label>
+                    <input type="text" name="db_title" id="db_title" size="35" class="float_left inputstyletext"
+                    #if($doAddAttributeInput.db_title)
+                        value="$doAddAttributeInput.db_title"
+                    #end
+                    >
+                </p>
+                <p>
+                    <label class="float_left col2left" for="db_institute">$MESSAGES.getString("searchResult.facete.attribute.institution")</label>
+                    <input type="text" name="db_institute" id="db_institute" size="35" class="float_left inputstyletext"
+                        #if($doAddAttributeInput.db_institute)
+                            value="$doAddAttributeInput.db_institute"
+                        #end
+                    >
+                </p>
+                <p>
+                    <label class="float_left col2left" for="db_pm">$MESSAGES.getString("searchResult.facete.attribute.leader")</label>
+                    <input type="text" name="db_pm" id="db_pm" size="35" class="float_left inputstyletext"
+                        #if($doAddAttributeInput.db_pm)
+                            value="$doAddAttributeInput.db_pm"
+                        #end
+                    >
+                </p>
+                <p>
+                    <label class="float_left col2left" for="db_staff">$MESSAGES.getString("searchResult.facete.attribute.involved")</label>
+                    <input type="text" name="db_staff" id="db_staff" size="35" class="float_left inputstyletext"
+                        #if($doAddAttributeInput.db_staff)
+                            value="$doAddAttributeInput.db_staff"
+                        #end
+                    >
+                </p>
+                <p>
+                    <label class="float_left col2left" for="db_org">$MESSAGES.getString("searchResult.facete.attribute.org")</label>
+                    <input type="text" name="db_org" id="db_org" size="35" class="float_left inputstyletext"
+                        #if($doAddAttributeInput.db_org)
+                            value="$doAddAttributeInput.db_org"
+                        #end
+                    >
+                </p>
+                <p>
+                    <label class="float_left col2left" for="db_org">$MESSAGES.getString("searchResult.facete.attribute.time")</label>
+                    <label for="term_from">$MESSAGES.getString("searchResult.facete.attribute.from")</label>
+                    <input type="text" name="term_from" maxlength="10" size="10" id="term_from" class="inputstyletext"
+                        #if($doAddAttributeInput.term_from)
+                            value="$doAddAttributeInput.term_from"
+                        #end
+                    >
+                    <br>
+                    <label class="float_left col2left" for="db_org">$MESSAGES.getString("searchResult.facete.attribute.timeformat")</label>
+                    <label for="term_to">$MESSAGES.getString("searchResult.facete.attribute.to")</label>
+                    <input type="text" name="term_to" maxlength="10" size="10" id="term_to" class="inputstyletext"
+                        #if($doAddAttributeInput.term_to)
+                            value="$doAddAttributeInput.term_to"
+                        #end
+                    >
+                    <br>
+                </p>
+            </div>
+            <div class="dialog_bottom">
+                #renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "" "doAddAttribute" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "float_right" "")
+            </div>
+        </form>
+        #if($doAddAttribute)
+            ##Projektname
+            #if($doAddAttribute.db_title)
+                $action.setParameter("doRemoveAttribute",  "db_title")
+                #renderFaceteSelectedAttribute ($action  $doAddAttribute.db_title)
+            #end
+            ##Institution
+            #if($doAddAttribute.db_institute)
+                $action.setParameter("doRemoveAttribute",  "db_institute")
+                #renderFaceteSelectedAttribute ($action  $doAddAttribute.db_institute)
+            #end
+            ##Projektleiter
+            #if($doAddAttribute.db_pm)
+                $action.setParameter("doRemoveAttribute",  "db_pm")
+                #renderFaceteSelectedAttribute ($action  $doAddAttribute.db_pm)
+            #end
+            ##Beteiligte
+            #if($doAddAttribute.db_staff)
+                $action.setParameter("doRemoveAttribute",  "db_staff")
+                #renderFaceteSelectedAttribute ($action  $doAddAttribute.db_staff)
+            #end
+            ##Projektträger
+            #if($doAddAttribute.db_org)
+                $action.setParameter("doRemoveAttribute",  "db_org")
+                #renderFaceteSelectedAttribute ($action  $doAddAttribute.db_org)
+            #end
+            ##Laufzeit
+            #if($doAddAttribute.term_from)
+                $action.setParameter("doRemoveAttribute",  "term_from")
+                #renderFaceteSelectedAttribute ($action  $doAddAttribute.term_from)
+            #end
+            #if($doAddAttribute.term_to)
+                $action.setParameter("doRemoveAttribute",  "term_to")
+                #renderFaceteSelectedAttribute ($action  $doAddAttribute.term_to)
+            #end
+            #if($doAddAttribute.size() > 1)
+                $action.setParameter("doRemoveAttribute",  "all")
+                #renderFaceteDeleteLinkLineDialog($MESSAGES.getString("searchResult.facete.attribute.delete") $action)
+            #end
+        #end
+    </div>
 </div>

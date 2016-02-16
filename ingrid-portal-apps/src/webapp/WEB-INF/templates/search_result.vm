@@ -1,48 +1,42 @@
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
-<section class="block">
-<div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
 #if($enableFacete)
     <aside class="sidebar js-accordion-multi">
-    	<div class="sidebar__title js-accordion-toggle mq-show-l">
+        <div class="sidebar__title js-accordion-toggle mq-show-l">
             Filter
             <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filter"></use></svg>
             <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cross"></use></svg>
         </div>
-    	<div class="sidebar__content js-accordion-content is-hidden">
-    		<form class="sidebar__filter">
-    			#parse ('/WEB-INF/templates/facete/facete.vm')
-    		</form>
-    	</div>
+        <div class="sidebar__content js-accordion-content is-hidden">
+            #parse ('/WEB-INF/templates/facete/facete.vm')
+        </div>
     </aside>
     
     <article class="content ob-container ob-box-narrow">
-    	#parse ('/WEB-INF/templates/include_search_result_ranked.vm')
+        #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
     </article>
 #else
-	<!-- RESULTS LEFT -->
+    <!-- RESULTS LEFT -->
     <article class="content ob-container ob-box-narrow">
-    	#parse ('/WEB-INF/templates/include_search_result_ranked.vm')
-	</article>
+        #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
+    </article>
 #end
-    #if($adminContent)
-	    <!--
-	    #if($rankedResultList.get("FACETS"))
-	        Facets:
-	        $rankedResultList.get("FACETS")
-	    #end
-	    
-		#if($facetsQuery)
-	   		Facets Query:
-	        #foreach($facete in $facetsQuery)
-	        	$facete
-	        #end
-	    #end
-	    
-		#if($searchQuery)
-	        Search Query:
-	    	$searchQuery
-	    #end
-	    -->
+#if($adminContent)
+    <!--
+    #if($rankedResultList.get("FACETS"))
+        Facets:
+        $rankedResultList.get("FACETS")
     #end
-</div>
-</section>
+    
+    #if($facetsQuery)
+           Facets Query:
+        #foreach($facete in $facetsQuery)
+            $facete
+        #end
+    #end
+    
+    #if($searchQuery)
+        Search Query:
+        $searchQuery
+    #end
+    -->
+#end

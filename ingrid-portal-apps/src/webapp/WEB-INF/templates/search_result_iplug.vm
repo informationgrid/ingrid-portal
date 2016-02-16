@@ -1,38 +1,29 @@
-<section class="block">
-	<div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
-	#if($enableFacete)
-	    <aside class="sidebar js-accordion-multi">
-	    	<div class="sidebar__title js-accordion-toggle mq-show-l">
-                Filter
-                <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filter"></use></svg>
-                <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cross"></use></svg>
-            </div>
-	    	<div class="sidebar__content js-accordion-content is-hidden">
-	    		<form class="sidebar__filter">
-	    			#parse ('/WEB-INF/templates/facete/facete.vm')
-	    		</form>
-	    	</div>
-	    </aside>
-	#end
-	    <article class="content ob-container ob-box-narrow">
-			#parse ('/WEB-INF/templates/include_search_result_counter.vm')
-			#parse ('/WEB-INF/templates/include_search_result_navigation.vm')
-			#parse ('/WEB-INF/templates/include_search_result_filter.vm')
-			<br />
-		#if ($IS_RANKED)
-			## RANKED -> CALLED FROM LEFT COLUMN (where grouped by domain)
-		    #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
-		    	#foreach($rs in $rankedResultList.getWrapperHits())
-		    		#set ($topHit = true)
-		    		#parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
-					#parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
-		    	#end
-		    #else
-		    		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
-		    #end
-		  #parse ('/WEB-INF/templates/include_search_result_counter.vm')
-		  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
-		#end
-		</article>
-	</div>
-</section>
+#if($enableFacete)
+    <aside class="sidebar js-accordion-multi">
+        <div class="sidebar__title js-accordion-toggle mq-show-l">
+            Filter
+            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filter"></use></svg>
+            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cross"></use></svg>
+        </div>
+        <div class="sidebar__content js-accordion-content is-hidden">
+            #parse ('/WEB-INF/templates/facete/facete.vm')
+        </div>
+    </aside>
+#end
+<article class="content ob-container ob-box-narrow">
+    #parse ('/WEB-INF/templates/include_search_result_counter.vm')
+    #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+    #parse ('/WEB-INF/templates/include_search_result_filter.vm')
+    <br />
+    #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
+        #foreach($rs in $rankedResultList.getWrapperHits())
+            #set ($topHit = true)
+            #parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
+            #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
+        #end
+    #else
+            <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
+    #end
+  #parse ('/WEB-INF/templates/include_search_result_counter.vm')
+  #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+</article>
