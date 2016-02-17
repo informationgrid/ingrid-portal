@@ -19,7 +19,7 @@
 #end
 <!-- RESULTS LEFT -->
 <article class="content ob-container ob-box-narrow">
-    #parse ('/WEB-INF/templates/include_search_result_counter.vm')
+    <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
     #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
     #parse ('/WEB-INF/templates/include_search_result_filter.vm')
     <br />
@@ -41,7 +41,6 @@
     #else
             <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
     #end
-    #parse ('/WEB-INF/templates/include_search_result_counter.vm')
     #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
 </article>
 #if($adminContent)

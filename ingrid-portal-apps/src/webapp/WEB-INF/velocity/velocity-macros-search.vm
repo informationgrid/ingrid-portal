@@ -41,6 +41,11 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
 #end
 
 #macro (renderRankedPageNavigation $pageSelector $isBottom)
+
+#if($isBottom)
+    <p class="mq-hide-l">#renderRankedResultCounter($pageSelector)</p>
+#end
+
 #set ($action = $renderResponse.createActionURL())
 <ul class="pagination__list tx-right mq-hide-m">
     #set ($pstart = 0)
@@ -186,6 +191,11 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
 ## this navigation is used when grouping is active and is not "grouping by domain" (then see above) 
 ## -> renders only current page with ">>" to next page
 #macro (renderRankedPageNavigationGrouping $pageSelector $isBottom)
+
+#if($isBottom)
+    <p class="mq-hide-l">#renderRankedResultCounter($pageSelector)</p>
+#end
+
 <ul class="pagination__list tx-right mq-hide-m">
     <li style="display:none">
         <a class="pagination__left">
