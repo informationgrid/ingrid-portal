@@ -42,25 +42,25 @@
             <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
     #end
     #parse ('/WEB-INF/templates/include_search_result_counter.vm')
-    #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+    #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
 </article>
-    #if($adminContent)
-        <!--
-        #if($rankedResultList.get("FACETS"))
-            Facets:
-            $rankedResultList.get("FACETS")
+#if($adminContent)
+    <!--
+    #if($rankedResultList.get("FACETS"))
+        Facets:
+        $rankedResultList.get("FACETS")
+    #end
+    
+    #if($facetsQuery)
+           Facets Query:
+        #foreach($facete in $facetsQuery)
+            $facete
         #end
-        
-        #if($facetsQuery)
-               Facets Query:
-            #foreach($facete in $facetsQuery)
-                $facete
-            #end
-        #end
-        
-        #if($searchQuery)
-            Search Query:
-            $searchQuery
-        #end
-        -->
-      #end
+    #end
+    
+    #if($searchQuery)
+        Search Query:
+        $searchQuery
+    #end
+    -->
+  #end

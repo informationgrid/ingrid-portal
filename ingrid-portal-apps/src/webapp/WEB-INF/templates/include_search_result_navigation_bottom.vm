@@ -1,12 +1,12 @@
-<div class="pagination bx-top-m mq-hide-l">
+<div class="pagination bx-top-xl bx-bot-xl">
 ## RANKED (left column stuff)
 #if($grouping)
-	#if($grouping == 'domain')
-		#renderRankedPageNavigationGroupingWithPages($rankedPageSelector true)
-	#else
-		#renderRankedPageNavigationGrouping($rankedPageSelector true)
-	#end
+    #if($grouping == 'domain')
+        #renderRankedPageNavigationGroupingWithPages($rankedPageSelector true)
+    #else
+        #renderRankedPageNavigationGrouping($rankedPageSelector true)
+    #end
 #else
-	#renderRankedPageNavigation($rankedPageSelector true)
+    #renderRankedPageNavigation($rankedPageSelector true)
 #end
 </div>
