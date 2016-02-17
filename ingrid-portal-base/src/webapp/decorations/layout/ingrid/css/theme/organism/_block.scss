@@ -13,36 +13,36 @@
     padding: rem(40px) 0;
 
     @include media(
-    $query: '640 - 840',
+        $query: '640 - 840',
         $css: (
-        padding: rem(60px) 0
+            padding: rem(60px) 0
         )
-        );
+    );
 
     @include media(
-    $query: '840 >',
+        $query: '840 >',
         $css: (
-        padding: rem(80px) 0
+            padding: rem(80px) 0
         )
-        );
+    );
 }
 
 .block--pad-top {    
     padding-top: rem(20px);
 
     @include media(
-    $query: '640 - 840',
+        $query: '640 - 840',
         $css: (
-        padding-top: rem(40px)
+            padding-top: rem(40px)
         )
-        );
+    );
 
     @include media(
-    $query: '840 >',
+        $query: '840 >',
         $css: (
-        padding-top: rem(60px)
+            padding-top: rem(60px)
         )
-        );
+    );
 }
 
 .block--blank {

@@ -9,48 +9,48 @@ $sidebar-width: 250px;
 .sidebar,
 .sidebar + .content {
     @include media(
-    $query: '768 >',
+        $query: '768 >',
         $css: (
-        display: inline-block,
-        margin-right: -4px,
-        padding: rem(60px) 0,
-        vertical-align: top
+            display: inline-block,
+            margin-right: -4px,
+            padding: rem(60px) 0,
+            vertical-align: top
         )
-        );
+    );
 }
 
 .sidebar {
     margin-bottom: rem(40px);
 
     @include media(
-    $query: '768 - 1140',
+        $query: '768 - 1140',
         $css: (
-        left: $global-gutter / 2,
-        padding-top: rem(64px),
-        position: absolute,
-        top: 0
+            left: $global-gutter / 2,
+            padding-top: rem(64px),
+            position: absolute,
+            top: 0
         )
-        );
+    );
 
     @include media(
-    $query: '768 >',
+        $query: '768 >',
         $css: (
-        box-shadow: inset -1px 0 0 color(gainsboro),
-        margin-bottom: 0,
-        width: rem($sidebar-width)
+            box-shadow: inset -1px 0 0 color(gainsboro),
+            margin-bottom: 0,
+            width: rem($sidebar-width)
         )
-        );
+    );
 
     &.is-active {
         + .content {
             @include media(
-            $query: '768 - 1140',
+                $query: '768 - 1140',
                 $css: (
-                box-shadow: -1px 0 0 color(gainsboro),
-                padding-left: $global-gutter,
-                transform: translateX($sidebar-width),
-                width: calc(100% - #{$sidebar-width})
-            )
+                    box-shadow: -1px 0 0 color(gainsboro),
+                    padding-left: $global-gutter,
+                    transform: translateX($sidebar-width),
+                    width: calc(100% - #{$sidebar-width})
+                )
             );
         }
     }
@@ -58,29 +58,29 @@ $sidebar-width: 250px;
 
 .sidebar + .content {
     @include media(
-    $query: '768 - 1140',
+        $query: '768 - 1140',
         $css: (
-        background: color(white),
-        position: relative,
-        padding-top: rem(64px),
-        //transition: #{padding-left .25s, transform .25s, width .25s},
-        transition: transform .25s,
-        z-index: 1
+            background: color(white),
+            position: relative,
+            padding-top: rem(64px),
+            //transition: #{padding-left .25s, transform .25s, width .25s},
+            transition: transform .25s,
+            z-index: 1
         )
-        );
+    );
 
     @include media(
-    $query: '1140 >',
+        $query: '1140 >',
         $css: (
-        background: color(white),
-        box-shadow: -1px 0 0 color(gainsboro),
-        max-width: none,
-        padding-left: $global-gutter,
-        position: relative,
-        width: calc(100% - #{$sidebar-width}),
-    z-index: 1
+            background: color(white),
+            box-shadow: -1px 0 0 color(gainsboro),
+            max-width: none,
+            padding-left: $global-gutter,
+            position: relative,
+            width: calc(100% - #{$sidebar-width}),
+            z-index: 1
         )
-        );
+    );
 }
 
 .sidebar__title {
@@ -92,7 +92,7 @@ $sidebar-width: 250px;
     padding: rem(10px 14px);
 
     .no-touchevents &:hover,
-        &.is-active {
+    &.is-active {
         background: color(light-grey);
     }
 
@@ -122,14 +122,14 @@ $sidebar-width: 250px;
     padding: rem(10px);
 
     @include media(
-    $query: '768 >',
+        $query: '768 >',
         $css: (
-        background: transparent,
-        display: block !important,
-        margin-bottom: 0,
-        padding: 0 rem(10px) 0 0
+            background: transparent,
+            display: block !important,
+            margin-bottom: 0,
+            padding: 0 rem(10px) 0 0
         )
-        );
+    );
 }
 
 .sidebar-toggle {
@@ -161,11 +161,11 @@ $sidebar-width: 250px;
 
 .sidebar__widget {
     @include media(
-    $query: '768 >',
+        $query: '768 >',
         $css: (
-        margin-right: rem(-10px)
+            margin-right: rem(-10px)
         )
-        );
+    );
 }
 
 .sidebar__widget__title {
@@ -182,23 +182,23 @@ $sidebar-width: 250px;
 
 .sidebar__widget__content--pushed {
     @include media(
-    $query: '768 >',
+        $query: '768 >',
         $css: (
-        padding-right: rem(12px)
+            padding-right: rem(12px)
         )
-        );
+    );
 }
 
 .sidebar__nav {
     font-family: $font-brand;
     font-size: rem(16px);
     padding-left: rem(12px);
-
+    
     a {
         display: block;
         margin-top: .65em;
     }
-
+    
     .is-active {
         color: color(black);
     }

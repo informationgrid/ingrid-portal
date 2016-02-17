@@ -19,15 +19,15 @@
     z-index: 5;
 
     @include media(
-    $query: '480 >',
+        $query: '480 >',
         $css: (
-        left: 50%,
-        margin-left: rem(-240px),
+            left: 50%,
+            margin-left: rem(-240px),
         )
-        );
+    );
 
     &.is-open {
-        -ms-transform: translateY(0);    
+    -ms-transform: translateY(0);    
         transform: translateY(0);
     }
 }
@@ -38,11 +38,11 @@
     padding: rem(10px 16px);
 
     @include media(
-    $query: '480 >',
+        $query: '480 >',
         $css: (
-        padding: rem(12px 18px)
+            padding: rem(12px 18px)
         )
-        );
+    );
 }
 
 .popup__title {
@@ -76,11 +76,11 @@
         top: 1px;
 
         @include media(
-        $query: '480 >',
+            $query: '480 >',
             $css: (
-            font-size: rem(12px)
+                font-size: rem(12px)
             )
-            );
+        );
     }
 }
 
@@ -89,9 +89,9 @@
     padding: rem(16px);
 
     @include media(
-    $query: '480 >',
+        $query: '480 >',
         $css: (
-        padding: rem(12px 18px 18px)
+            padding: rem(12px 18px 18px)
         )
-        );
+    );
 }

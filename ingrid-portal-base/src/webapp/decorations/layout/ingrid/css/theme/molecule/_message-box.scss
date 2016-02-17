@@ -73,11 +73,11 @@
     position: relative;
 
     @include media(
-    $query: '640 >',
+        $query: '640 >',
         $css: (
-        padding: rem(8px 16px)
+            padding: rem(8px 16px)
         )
-        );
+    );
 }
 
 .message__simple-content {

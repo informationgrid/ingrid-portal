@@ -14,21 +14,21 @@
 .tabs--wide {
     .tab__toggles {
         @include media(
-        $query: '768 >',
+            $query: '768 >',
             $css: (
-            display: table,
-            width: 100%
+                display: table,
+                width: 100%
             )
-            );
+        );
     }
 
     .tab__toggle {
         @include media(
-        $query: '768 >',
+            $query: '768 >',
             $css: (
-            display: table-cell
+                display: table-cell
             )
-            );
+        );
     }
 }
 
@@ -40,20 +40,20 @@
     box-shadow: 0px 1px 0px color(gainsboro);
 
     @include media(
-    $query: '< 768',
+        $query: '< 768',
         $css: (
-        margin: 0,
-        border: solid color(gainsboro),
-        border-width: 0 1px 1px
+            margin: 0,
+            border: solid color(gainsboro),
+            border-width: 0 1px 1px
         )
-        );
+    );
 
     @include media(
-    $query: '768 >',
+        $query: '768 >',
         $css: (
-        text-align: center
+            text-align: center
         )
-        );
+    );
 
     a {
         color: color(nobel);
@@ -61,35 +61,35 @@
         padding: rem(6px 18px);
 
         @include media(
-        $query: '640 >',
+            $query: '640 >',
             $css: (
-            border-width: 1px 1px 0,
-            padding: rem(10px 24px)
+                border-width: 1px 1px 0,
+                padding: rem(10px 24px)
             )
-            );
+        );
 
         &:hover,
-            &.is-active {
+        &.is-active {
             color: color(fruit-salad);
         }
 
         &:hover {
             @include media(
-            $query: '< 768',
+                $query: '< 768',
                 $css: (
-                background: color(white-smoke)
+                    background: color(white-smoke)
                 )
-                );
+            );
         }
     }
 
     a:hover,
-        .is-active a {
+    .is-active a {
         @include media(
-        $query: '768 >',
+            $query: '768 >',
             $css: (
-            box-shadow: #{inset 0 -2px 0 0 color(fruit-salad), 0 4px 0 0 color(fruit-salad)}
-        )
+                box-shadow: #{inset 0 -2px 0 0 color(fruit-salad), 0 4px 0 0 color(fruit-salad)}
+            )
         );
     }
 }
@@ -104,25 +104,25 @@
     position: relative;
 
     @include media(
-    $query: '640 >',
+        $query: '640 >',
         $css: (
-        padding: rem(10px 24px)
+            padding: rem(10px 24px)
         )
-        );
+    );
 
     &:hover,
-        &.is-active {
+    &.is-active {
         background: color(salem);
     }
 
     &.is-active {
         + .tab__toggles {
             @include media(
-            $query: '< 768',
+                $query: '< 768',
                 $css: (
-                display: block
+                    display: block
                 )
-                );
+            );
         }
     }
 }
@@ -152,20 +152,20 @@
     margin-right: -4px;
 
     @include media(
-    $query: '< 768',
+        $query: '< 768',
         $css: (
-        background: #f8f8f8,
-        width: 100%
+            background: #f8f8f8,
+            width: 100%
         )
-        );
+    );
 
     @include media(
-    $query: '768 >',
+        $query: '768 >',
         $css: (
-        text-align: center
+            text-align: center
         )
-        );
-
+    );
+    
     &.is-active a {
         color: color(fruit-salad);
     }

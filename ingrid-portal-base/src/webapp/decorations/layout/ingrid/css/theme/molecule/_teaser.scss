@@ -21,11 +21,11 @@
 
     &:not(:first-child) {
         @include media(
-        $query: '480 >',
+            $query: '480 >',
             $css: (
-            margin: 0 rem(12px)
+                margin: 0 rem(12px)
             )
-            );
+        );
     }
 
     .tooltip{
@@ -52,12 +52,12 @@
     background: color(faded);
 
     @include media(
-    $query: '480 >',
+        $query: '480 >',
         $css: (
-        margin-bottom: rem(-40px)
+            margin-bottom: rem(-40px)
         )
-        );
-
+    );
+    
     .icon{
         margin-top: rem(30px);
         font-size: rem(64px);

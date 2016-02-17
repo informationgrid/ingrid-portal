@@ -55,8 +55,8 @@
         &:nth-child(2) {
             margin-right: rem(18px);
 
-            @include media(
-            $query: '480 >',
+                @include media(
+                $query: '480 >',
                 $css: (
                 margin-right: rem(32px)
                 )
@@ -65,9 +65,9 @@
 
         &:nth-last-child(2) {
             margin-left: rem(18px);
-
+            
             @include media(
-            $query: '480 >',
+                $query: '480 >',
                 $css: (
                 margin-left: rem(32px)
                 )
@@ -116,9 +116,9 @@
     }
 
     @include media(
-    $query: '< 480',
+        $query: '< 480',
         $css: (
-        margin: 0,
+            margin: 0,
         )
-        );
+    );
 }

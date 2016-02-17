@@ -5,10 +5,10 @@
 
 .search__box-form{
     cursor: pointer;
-
+    
     .tree{
         white-space: normal;
-
+        
         &:not(:first-child){
             border-top:none;
         }

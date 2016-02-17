@@ -18,7 +18,7 @@
     display: flex;
     position: relative;
     width: 100%;
-
+    
     .ieold & {
     }
 
@@ -39,7 +39,7 @@
     }
 
     // .ieold & {
-    display: inline-block;
+        display: inline-block;
     // }
 }
 
@@ -51,7 +51,7 @@
     text-transform: uppercase;
 
     &:hover,
-        &.is-active {
+    &.is-active {
         color: color(white);
         background: color(salem);
     }
@@ -87,11 +87,11 @@
 
     a{
         &:hover, 
-            &:active{
+        &:active{
             color: color(fruit-salad) !important;  
         }
     }
-
+    
     .icon{
         fill: currentColor;   
         position: absolute;
@@ -102,7 +102,7 @@
 .nav__dropdown-item{
     font: 400 rem(14px) 'Arial';
     padding-left: rem(48px) !important;
-
+    
     a{
         &:hover{
             color: color(black) !important;  
@@ -112,7 +112,7 @@
             color: color(fruit-salad) !important;
         }
     }
-
+    
     .icon{
         left: rem(50px);
         -ms-transform: rotate(270deg);

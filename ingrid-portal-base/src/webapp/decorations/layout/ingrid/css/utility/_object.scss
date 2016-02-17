@@ -65,12 +65,12 @@
     padding: 0 rem($global-gutter / 4);
 
     @include media(
-    $query: '1240 >',
+        $query: '1240 >',
         $css: (
-        padding-right: rem($global-gutter * 1.5),
-        padding-left: rem($global-gutter * 1.5)
+            padding-right: rem($global-gutter * 1.5),
+            padding-left: rem($global-gutter * 1.5)
         )
-        );
+    );
 }
 
 .ob-flip-x {

@@ -17,14 +17,14 @@
 
 .image--inline {
     @include media(
-    $query: '640 >',
+        $query: '640 >',
         $css: (
-        float: left,
-        margin: .3em 1em 0 0,
-        max-width: 50%,
-        padding-right: 1em
+            float: left,
+            margin: .3em 1em 0 0,
+            max-width: 50%,
+            padding-right: 1em
         )
-        );
+    );
 }
 
 .image__caption {

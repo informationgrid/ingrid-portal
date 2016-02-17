@@ -30,40 +30,40 @@
 .box--large {
     .box__title {
         @include media(
-        $query: '480 >',
+            $query: '480 >',
             $css: (
-            padding: rem(15px 30px)
+                padding: rem(15px 30px)
             )
-            );
+        );
     }
 
     .box__content {
         @include media(
-        $query: '480 >',
+            $query: '480 >',
             $css: (
-            padding: rem(30px)
+                padding: rem(30px)
             )
-            );
+        );
     }
 }
 
 .box--large {
     .box__title {
         @include media(
-        $query: '768 >',
+            $query: '768 >',
             $css: (
-            padding: rem(20px 40px)
+                padding: rem(20px 40px)
             )
-            );
+        );
     }
 
     .box__content {
         @include media(
-        $query: '768 >',
+            $query: '768 >',
             $css: (
-            padding: rem(40px)
+                padding: rem(40px)
             )
-            );
+        );
     }
 }
 

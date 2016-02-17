@@ -47,9 +47,9 @@ $media-queries: ();
         // then add it to the query pool.
         $entry: (
             #{breakpoint($query)}: (
-            #{&}: $css
+                #{&}: $css
             )
-            );
+        );
 
         $media-queries: map-merge($media-queries, $entry) !global;
     }
@@ -58,7 +58,7 @@ $media-queries: ();
 @each $short, $long in $breakpoint {
     $entry: (
         #{$long}: ()
-        );
+    );
 
     $media-queries: map-merge($media-queries, $entry) !global;
 }

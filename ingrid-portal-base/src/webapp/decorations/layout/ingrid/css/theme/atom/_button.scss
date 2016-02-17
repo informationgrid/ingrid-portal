@@ -26,11 +26,11 @@
     vertical-align: top;
 
     @include media(
-    $query: '640 >',
+        $query: '640 >',
         $css: (
-        min-width: rem(160px),
+            min-width: rem(160px),
         )
-        );
+    );
 }
 
 .btn--primary {
@@ -54,7 +54,7 @@
     @extend %button--secondary;
 
     &:not([disabled]) {
-        &:hover,
+            &:hover,
             &:focus,
             &:active {
             background: color(fruit-salad);
@@ -73,18 +73,18 @@
     max-width: 50px;
 
     @include media(
-    $query: '< 480',
+        $query: '< 480',
         $css: (
-        padding: rem(4px 8px) 0
+            padding: rem(4px 8px) 0
         )
-        );
+    );
 
     @include media(
-    $query: '480 - 640',
+        $query: '480 - 640',
         $css: (
-        padding: rem(10px 14px 6px) 
+            padding: rem(10px 14px 6px) 
         )
-        );
+    );
 
     .icon{
         fill: color(white);

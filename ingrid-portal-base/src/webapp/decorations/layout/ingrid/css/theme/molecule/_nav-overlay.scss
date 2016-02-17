@@ -19,19 +19,19 @@
     z-index: 2;
 
     @include media(
-    $query: '768 >',
+        $query: '768 >',
         $css: (
-        margin-top: rem(76px),
-        min-height: calc(100% - 76px)
+            margin-top: rem(76px),
+            min-height: calc(100% - 76px)
         )
-        );
+    );
 
     @include media(
-    $query: '940 >',
+        $query: '940 >',
         $css: (
-        display: none
+            display: none
         )
-        );
+    );
 
     &.is-active {
         transform: translateX(0);
@@ -83,7 +83,7 @@
     text-transform: uppercase;
 
     .no-touchevents &:hover,
-        &.is-active {
+    &.is-active {
         background: color(salem);
         color: color(white);
     }
@@ -99,7 +99,7 @@
     padding: rem(15px 36px);
 
     .no-touchevents &:hover,
-        &.is-active {
+    &.is-active {
         color: color(fruit-salad);
     }
 

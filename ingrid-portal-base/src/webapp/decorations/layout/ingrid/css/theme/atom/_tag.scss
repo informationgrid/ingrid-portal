@@ -16,13 +16,13 @@
 .tag--big {
     font-weight: 700;
     padding: rem(10px 24px);
-
+    
     @include media(
-    $query: '< 480',
+        $query: '< 480',
         $css: (
-        padding: rem(8px 12px)
+            padding: rem(8px 12px)
         )
-        );
+    );
 }
 
 .tag-group {
@@ -33,15 +33,15 @@
         display: inline-block;
         float: left;
         margin: rem(0 10px 10px 0);
-
+        
         @include media(
-        $query: '480 >',
+            $query: '480 >',
             $css: (
-            margin: rem(0 16px 16px 0)
+                margin: rem(0 16px 16px 0)
             )
-            );
+        );
     }
-
+    
     a {
         display: block;
     }
