@@ -1,8 +1,0 @@
-      <div class="portlet-section-body">
-        <p>
-           $MESSAGES.getString('searchHistory.info.text1')
-        </p>
-        <p>
-           $MESSAGES.getString('searchHistory.info.text2')
-        </p>
-	  </div>

@@ -66,38 +66,6 @@
         <page>
             <name>main-about.psml</name>
             <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::CMSPortlet</name>
-                    <preference name="infoTemplate" readOnly="false">
-        				<value>/WEB-INF/templates/default_cms.vm</value>
-      				</preference>
-      				<preference name="cmsKey" readOnly="false">
-        				<value>ingrid.about</value>
-      				</preference>
-      				<preference name="helpKey" readOnly="false">
-        				<value>about-1</value>
-      				</preference>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::InfoPortlet</name>
-                    <preference name="infoTemplate" readOnly="false">
-        				<value>/WEB-INF/templates/about_links.vm</value>
-      				</preference>
-      				<preference name="titleKey" readOnly="false">
-        				<value>about.links.title</value>
-      				</preference>
-                </portlet>
-                <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::InfoPortlet</name>
-                    <preference name="infoTemplate" readOnly="false">
-        				<value>/WEB-INF/templates/about_partner.vm</value>
-      				</preference>
-      				<preference name="titleKey" readOnly="false">
-        				<value>about.partner.title</value>
-      				</preference>
-      	         </portlet>
-            </portlets>
         </page>
         <page>
             <name>main-features.psml</name>
@@ -126,83 +94,14 @@
         <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::SearchSimple</name>
-                </portlet>
-                <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
-                </portlet>
-                <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
-                <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ChronicleTeaser</name>
-                </portlet>
-                <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::WeatherTeaser</name>
-                </portlet>
-                <portlet col="1" row="3">
-                    <name>ingrid-portal-apps::MeasuresTeaser</name>
-                </portlet>
-            </portlets>
         </page>
         <page>
             <name>_role/user/default-page.psml</name>
             <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::SearchSimple</name>
-                </portlet>
-                <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
-                </portlet>
-                <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
-                <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ChronicleTeaser</name>
-                </portlet>
-                <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::WeatherTeaser</name>
-                </portlet>
-                <portlet col="1" row="3">
-                    <name>ingrid-portal-apps::MeasuresTeaser</name>
-                </portlet>
-            </portlets>
         </page>
         <page>
             <name>_user/template/default-page.psml</name>
             <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::SearchSimple</name>
-                </portlet>
-                <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
-                </portlet>
-                <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
-                <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ChronicleTeaser</name>
-                </portlet>
-                <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::WeatherTeaser</name>
-                </portlet>
-                <portlet col="1" row="3">
-                    <name>ingrid-portal-apps::MeasuresTeaser</name>
-                </portlet>
-            </portlets>
         </page>
         <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
@@ -215,65 +114,14 @@
         <page>
             <name>service-contact.psml</name>
             <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::Contact</name>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::InfoPortlet</name>
-                    <preference name="infoTemplate">
-                    	<value>/WEB-INF/templates/newsletter_teaser.vm</value>
-                    </preference>
-                    <preference name="titleKey">
-                    	<value>teaser.newsletter.title</value>
-                    </preference>
-                </portlet>
-            </portlets>
         </page>
         <page>
             <name>_role/user/myportal-edit-account.psml</name>
             <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::MyPortalEditAccountPortlet</name>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::MyPortalEditAboutInfoPortlet</name>
-                </portlet>
-                <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::MyPortalEditNewsletterInfoPortlet</name>
-                </portlet>
-                <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::MyPortalEditAdvancedInfoPortlet</name>
-                </portlet>
-            </portlets>
         </page>
         <page>
             <name>disclaimer.psml</name>
             <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::CMSPortlet</name>
-                    <preference name="infoTemplate" readOnly="false">
-                        <value>/WEB-INF/templates/default_cms.vm</value>
-                    </preference>
-                    <preference name="titleKey" readOnly="false">
-                        <value>disclaimer.title</value>
-                    </preference>
-                    <preference name="cmsKey" readOnly="false">
-                        <value>ingrid.disclaimer</value>
-                    </preference>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::InfoPortlet</name>
-                    <preference name="infoTemplate" readOnly="false">
-                        <value>/WEB-INF/templates/disclaimer_info.vm</value>
-                    </preference>
-                    <preference name="titleKey" readOnly="false">
-                        <value>disclaimer.info.title</value>
-                    </preference>
-                 </portlet>
-            </portlets>
         </page>
       </pages>
     <files>
