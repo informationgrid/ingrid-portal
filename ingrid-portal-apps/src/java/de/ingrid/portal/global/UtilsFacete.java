@@ -519,16 +519,9 @@ public class UtilsFacete {
 				coordOptions = new ArrayList<String>();
 				webmapclientCoords = new HashMap<String, String>();
 				
-	        	if(request.getParameter("chk_1") != null){
-	        		coordOptions.add(request.getParameter("chk_1"));
-	        	}
-	        	if(request.getParameter("chk_2") != null){
-	        		coordOptions.add(request.getParameter("chk_2"));
-	        	}
-	        	if(request.getParameter("chk_3") != null){
-	        		coordOptions.add(request.getParameter("chk_3"));
-	        	}
-	        	if(request.getParameter("x1") != null){
+        		coordOptions.add("inside");
+
+        		if(request.getParameter("x1") != null){
 	        		webmapclientCoords.put("x1", request.getParameter("x1"));
 	        	}
 	        	if(request.getParameter("x2") != null){

@@ -34,7 +34,7 @@
         #else
             <meta name="robots" content="index,follow" />
         #end
-        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' />
+        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' />
         <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css')" />
         <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')" />
         <link rel="stylesheet" href="#GetPageResource('css/demo.css')" />
@@ -51,8 +51,13 @@
 
         #* our decorator macros, see ./decorator-macros.vm *#
         #decoratorIncludeJavaScriptForHead()
+        #if($currentPage == "/main-search.psml")
+	        <link rel="stylesheet" href="#GetPageResource('scripts/leaflet/leaflet.css')" />
+	        <script src="#GetPageResource('scripts/leaflet/leaflet.js')"></script>
+	    #end
     </head>
     <body>
+    
         #set($mainMenu = $site.getMenu("main-menu"))
         #set($serviceMenu = $site.getMenu("service-menu"))
         #set($footerMenu = $site.getMenu("footer-menu"))
