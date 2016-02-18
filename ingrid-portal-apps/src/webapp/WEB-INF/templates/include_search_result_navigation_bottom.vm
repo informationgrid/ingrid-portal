@@ -10,3 +10,9 @@
     #renderRankedPageNavigation($rankedPageSelector true)
 #end
 </div>
+
+<div class="sidebar-toggle mq-hide-l mq-show-xb js-sidebar-toggle">
+    <svg class="icon">
+        <use xlink:href="#arrow-thick">
+     </svg>
+</div>
