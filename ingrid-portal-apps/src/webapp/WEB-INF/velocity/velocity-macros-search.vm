@@ -46,9 +46,10 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
     <p class="mq-hide-l">#renderRankedResultCounter($pageSelector)</p>
 #end
 
-#set ($action = $renderResponse.createActionURL())
+## Default
 <ul class="pagination__list tx-right mq-hide-m">
     #set ($pstart = 0)
+    #set ($action = $renderResponse.createActionURL())
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
@@ -67,7 +68,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
     #foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
         <li>
         #if($pageId == $pageSelector.currentSelectorPage)
-            <a class="pagination__number is-active" href="$action">$pageId</a>
+            <a class="pagination__number is-active">$pageId</a>
         #else
             #set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
             $action.setParameter('rstart', $pstart.toString())
@@ -75,6 +76,47 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
         #end
         </li>
     #end
+    
+    #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    
+    #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+</ul>
+
+## Mobile
+<ul class="pagination__list mq-show-m">
+    #set ($pstart = 0)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+    
+    #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    
+    <li><a class="pagination__number is-active" >$pageSelector.currentSelectorPage</a></li>
+    <li><a class="pagination__number" >/</a></li>
+    #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li><a class="pagination__number" href="$action">$pageSelector.numberOfPages</a></li>
     
     #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
     $action.setParameter('rstart', $pstart.toString())
@@ -101,6 +143,8 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
 #if($isBottom)
     <p class="mq-hide-l">#renderRankedResultCounter($pageSelector)</p>
 #end
+
+## Default
 <ul class="pagination__list tx-right mq-hide-m">
     #set ($action = $renderResponse.createActionURL())
     #set ($pstart = 1)
@@ -122,7 +166,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
     #foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
         <li>
         #if($pageId == $pageSelector.currentSelectorPage)
-            <a class="pagination__number is-active" href="$action">$pageId</a>
+            <a class="pagination__number is-active">$pageId</a>
         #else
             $action.setParameter('currentSelectorPage', $pageId.toString())
             <a class="pagination__number" href="$action">$pageId</a>
@@ -146,6 +190,8 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
         </a>
     </li>
 </ul>
+
+## Mobile
 <ul class="pagination__list mq-show-m">
     #set ($action = $renderResponse.createActionURL())
     #set ($pstart = 1)
@@ -164,8 +210,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
         </a>
     </li>
     
-    $action.setParameter('currentSelectorPage', $pageSelector.currentSelectorPage.toString())
-    <li><a class="pagination__number is-active" href="$action">$pageSelector.currentSelectorPage</a></li>
+    <li><a class="pagination__number is-active">$pageSelector.currentSelectorPage</a></li>
     <li><a class="pagination__number">/</a></li>
     $action.setParameter('currentSelectorPage', $pageSelector.lastSelectorPage.toString())
     <li><a class="pagination__number" href="$action">$pageSelector.lastSelectorPage</a></li>
@@ -196,6 +241,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
     <p class="mq-hide-l">#renderRankedResultCounter($pageSelector)</p>
 #end
 
+## Default
 <ul class="pagination__list tx-right mq-hide-m">
     <li style="display:none">
         <a class="pagination__left">
@@ -217,10 +263,8 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
        </li>
        <li>...</li>
     #end
-    #set ($pstart = $pageSelector.currentSelectorPage)
-    $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
-        <a class="pagination__number is-active" href="$action"> $pstart</a>
+        <a class="pagination__number is-active"> $pstart</a>
     </li>
     
     #if($pageSelector.selectorHasNextPage)
@@ -247,6 +291,8 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
         </a>
     </li>
 </ul>
+
+## Mobile
 <ul class="pagination__list mq-show-m">
     <li style="display:none">
         <a class="pagination__left">
@@ -262,10 +308,8 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
         </a>
     </li>
     
-    #set ($pstart = $pageSelector.currentSelectorPage)
-    $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
-        <a class="pagination__number is-active" href="$action"> $pageSelector.currentSelectorPage</a>
+        <a class="pagination__number is-active"> $pageSelector.currentSelectorPage</a>
     </li>
     
     #set ($pstart = $pageSelector.currentSelectorPage + 1)
