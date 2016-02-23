@@ -140,29 +140,31 @@ define([
 
                 // apply special validation for necessary components
                 console.debug("apply Validations");
+                var self = this;
                 defAddFields.then(this.applyDefaultConnections)
                 .then(setVisibilityOfFields)
-                .then(igeEvents.selectUDKClass); // update view according to initial chosen class
+                .then(igeEvents.selectUDKClass) // update view according to initial chosen class
+                .then(function() {
+                    // add a '*' to all labels and display them if an element is required 
+                    query(".outer label", "contentFrameBodyObject").forEach(function(item) {
+                        item.innerHTML = lang.trim(item.innerHTML) + '<span class=\"requiredSign\">*</span>';
+                    });
+                    
+                    // mark all the content of a special marked container 
+                    query(".oneClickMark", "dataFormContainer").on("click", function() {
+                        UtilUI.selectTextInContainer( this );
+                    });
 
-                // add a '*' to all labels and display them if an element is required 
-                query(".outer label", "contentFrameBodyObject").forEach(function(item) {
-                    item.innerHTML = lang.trim(item.innerHTML) + '<span class=\"requiredSign\">*</span>';
+                    console.debug("toggle");
+                    // show only required fields initially
+                    igeEvents.toggleFields(undefined, "showRequired");
+                    UtilUI.updateBlockerDivInfo("createObjects");
+
+                    // tell the calling function that we are finished and can proceed
+                    self.deferredCreation.resolve();
+
+                    domClass.remove("loadBlockDiv", "blockerFull");
                 });
-                
-                // mark all the content of a special marked container 
-                query(".oneClickMark", "dataFormContainer").on("click", function() {
-                    UtilUI.selectTextInContainer( this );
-                });
-
-                console.debug("toggle");
-                // show only required fields initially
-                igeEvents.toggleFields(undefined, "showRequired");
-                UtilUI.updateBlockerDivInfo("createObjects");
-
-                // tell the calling function that we are finished and can proceed
-                this.deferredCreation.resolve();
-
-                domClass.remove("loadBlockDiv", "blockerFull");
 
             },
 
