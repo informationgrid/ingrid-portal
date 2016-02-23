@@ -31,6 +31,7 @@ var pageImport = null;
 
 require([
     "dojo/_base/array",
+    "dojo/_base/lang",
     "dojo/on",
     "dojo/dom",
     "dojo/dom-class",
@@ -42,9 +43,10 @@ require([
     "ingrid/utils/String",
     "ingrid/dialog",
     "ingrid/tree/MetadataTree"
-], function(array, on, dom, domClass, style, string, registry, LoadingZone, UtilGeneral, UtilString, dialog, MetadataTree) {
+], function(array, lang, on, dom, domClass, style, string, registry, LoadingZone, UtilGeneral, UtilString, dialog, MetadataTree) {
             
         var isStartUp = true;
+        var currentFile = null;
         
         var importTreeSelectedParentDataset = null;
         var importTreeSelectedParentAddress = null;
@@ -73,25 +75,6 @@ require([
             }
         };
         
-        var importTransformationCallback = {
-            preHook: LoadingZone.show,
-            postHook: LoadingZone.hide,
-            callback: function(res){
-                checkImportTransformationStatus();
-            },
-            errorHandler: function(msg, err) {
-                console.debug("ERROR in importTransformationCallback");
-                //console.debugShallow(err);
-                LoadingZone.hide();
-                if (msg.indexOf("USER_HAS_RUNNING_JOBS") != -1) {
-                    dialog.show("<fmt:message key='general.error' />", "<fmt:message key='operation.error.userHasRunningJobs' />", dialog.WARNING);
-                } else {
-                    displayErrorMessage(err);
-                }
-            }
-        };
-        
-        
         on(_container_, "Load", function(){
             initTree();
             initCheckboxBehaviour();
@@ -99,23 +82,8 @@ require([
         });
         
         function initCheckboxBehaviour() {
-            console.debug("init checkboxes");
-            // Only one of the checkboxes is allowed to be active
-            // var pubImportCheckbox = registry.byId("publishImportedDatasetsCheckbox");
-            // var sepImportCheckbox = registry.byId("radioSeparateImport");
             var importFileType    = registry.byId("importFileType");
         
-            /*on(pubImportCheckbox, "click", function(){
-                if (sepImportCheckbox.checked) {
-                    sepImportCheckbox.setValue(false);
-                }
-            });
-            on(sepImportCheckbox, "click", function(){
-                if (pubImportCheckbox.checked) {
-                    pubImportCheckbox.setValue(false);
-                }
-            });*/
-            
             on(importFileType, "Change", function(value){
                 if (value == "igc") {
                     domClass.add("publishImportedDatasets", "hide");
@@ -129,11 +97,12 @@ require([
         }
         
         function resetImport() {
-            registry.byId("importTreeParentDataset").setValue("");
-            registry.byId("importTreeParentAddress").setValue("");
-            registry.byId("publishImportedDatasetsCheckbox").setValue(false);
-            registry.byId("radioSeparateImport").setValue(false);
-            registry.byId("importFileType").setValue("igc");
+            // FIXME: what is set here?
+            //registry.byId("importTreeParentDataset").set("value");
+            //registry.byId("importTreeParentAddress").set("value");
+            registry.byId("publishImportedDatasetsCheckbox").set("value", false);
+            registry.byId("radioSeparateImport").set("value", false);
+            registry.byId("importFileType").set("value", "igc");
             importTreeSelectedParentDataset = null;
             importTreeSelectedParentAddress = null;
         }
@@ -142,7 +111,7 @@ require([
             var selectedNode = registry.byId("treeImportTree").selectedNode;
         
             if (selectedNode && selectedNode.item.nodeAppType == "O" && selectedNode.item.id != "objectRoot") {
-                registry.byId("importTreeParentDataset").setValue(selectedNode.item.title);
+                registry.byId("importTreeParentDataset").set("value",selectedNode.item.title);
                 importTreeSelectedParentDataset = selectedNode.item;
         
             } else {
@@ -154,7 +123,7 @@ require([
             var selectedNode = registry.byId("treeImportTree").selectedNode;
         
             if (selectedNode && selectedNode.item.nodeAppType == "A" && selectedNode.item.objectClass === 0) {
-                registry.byId("importTreeParentAddress").setValue(selectedNode.item.title);
+                registry.byId("importTreeParentAddress").set("value",selectedNode.item.title);
                 importTreeSelectedParentAddress = selectedNode.item;
         
             } else {
@@ -188,21 +157,20 @@ require([
         }
         
         function startTreeImport(force) {
-            var file                    = dwr.util.getValue("importFile");
-            var fileType                = registry.byId("importFileType").getValue();
+            //var file                    = dwr.util.getValue("importFile");
+            var fileType                = registry.byId("importFileType").get("value");
             var parentObjectUuid        = (importTreeSelectedParentDataset !== null && importTreeSelectedParentDataset.id != "objectRoot") ? importTreeSelectedParentDataset.id : null;
             var parentAddressUuid       = (importTreeSelectedParentAddress !== null) ? importTreeSelectedParentAddress.id : null;
             var publishImportedDatasets = registry.byId("publishImportedDatasetsCheckbox").checked;
             var separateImport          = registry.byId("radioSeparateImport").checked;
             var copyNodeIfPresent       = force; // will be set to true if necessary and wished by the user
         
-            console.debug("file: "+file);
             console.debug("parent object uuid: "+parentObjectUuid);
             console.debug("parent address uuid: "+parentAddressUuid);
         
-            ImportService.startImportThread(file, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, copyNodeIfPresent, {
+            ImportService.startImportThread(this.currentFile, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, copyNodeIfPresent, {
                 callback: function(res){
-                    refreshImportProcessInfo();
+                    setTimeout(refreshUrlProcessInfo, 2000);
                 },
                 errorHandler: function(msg, err){
                     refreshImportProcessInfo();
@@ -214,33 +182,21 @@ require([
             });
         }
         
-        function startTreeImportProtocol() {
-            var file = dwr.util.getValue("importFile");
-            var fileType = registry.byId("importFileType").getValue();
-            var parentObjectUuid = (importTreeSelectedParentDataset !== null && importTreeSelectedParentDataset.id != "objectRoot") ? importTreeSelectedParentDataset.id : null;
-            var parentAddressUuid = (importTreeSelectedParentAddress !== null) ? importTreeSelectedParentAddress.id : null;
-            var publishImportedDatasets = registry.byId("publishImportedDatasetsCheckbox").checked;
-            var separateImport = registry.byId("radioSeparateImport").checked;
-        
-            console.debug("file: "+file);
-            console.debug("parent object uuid: "+parentObjectUuid);
-            console.debug("parent address uuid: "+parentAddressUuid);
-        
-            ImportService.importEntities(file, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, {
-                callback: function(res) {
-                    checkImportTransformationStatus();
-                },
-                errorHandler: function(msg, err){
-                    LoadingZone.hide();
-                    displayErrorMessage(err);
-                }
-            });
-            
-        }
-        
-        function startImport() {
+        function analyzeImport() {
             if (dom.byId("importFile").value && validImportNodesSelected()) {
-                startTreeImportProtocol();
+                this.currentFile = dwr.util.getValue("importFile");
+                var fileType = registry.byId("importFileType").get("value");
+            
+                ImportService.analyzeImportData(this.currentFile, fileType, null, null, false, false, false, {
+                    callback: function(res) {
+                        checkImportAnalyzeStatus();
+                    },
+                    errorHandler: function(msg, err){
+                        LoadingZone.hide();
+                        displayErrorMessage(err);
+                    }
+                });
+                
             } else {
                 dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.import.selectParentsError' />", dialog.WARNING);
             }
@@ -271,7 +227,6 @@ require([
         function refreshImportProcessInfo() {
             ImportService.getImportInfo({
                 callback: function(importInfo){
-                    console.debug("refreshImportProcessInfo callback");
                     updateImportInfo(importInfo);
                     if (!jobFinished(importInfo)) {
                         setTimeout(refreshImportProcessInfo, 2000);
@@ -309,15 +264,13 @@ require([
         }
         
         //Check for transformation status
-        function checkImportTransformationStatus() {
-            console.debug("check protocol now");
+        function checkImportAnalyzeStatus() {
             ImportService.getProtocolInfo({
                 callback: function(infoBean){
                     updateReadInputInfo(infoBean);
                     console.debug("Status: " + infoBean.finished);
                     if (infoBean.finished !== true) {
-                        console.debug("call again later");
-                        setTimeout(checkImportTransformationStatus, 2000);
+                        setTimeout(checkImportAnalyzeStatus, 2000);
                     } else {
                         showProtocol(infoBean);
                     }
@@ -327,15 +280,43 @@ require([
         
         function showProtocol(infoBean) {
             if(infoBean.inputType != "igc"){
-                var protocolMessageToHtml = returnToBr(infoBean.protocol);
-                if(protocolMessageToHtml !== null && protocolMessageToHtml.length > 0){
-                    dialog.show("<fmt:message key='protocol.title' />", protocolMessageToHtml, dialog.MESSAGE, [{caption:"<fmt:message key='protocol.import' />",action:function(){startTreeImport(false);}}, {caption:"<fmt:message key='protocol.cancel' />",action:dialog.CLOSE_ACTION}], 500, 500);
+                
+                var content = prepareProtocol(infoBean.protocol);
+                
+                if(content !== null && content.length > 0){
+                    dialog.show("<fmt:message key='protocol.title' />", content, dialog.MESSAGE, 
+                            [{caption:"<fmt:message key='protocol.import' />",
+                                action:lang.hitch(this, lang.partial(startTreeImport, false))}, {caption:"<fmt:message key='protocol.cancel' />", action:dialog.CLOSE_ACTION}], 
+                            500, 500);
                 }else{
-                    dialog.show("<fmt:message key='protocol.title' />", "<fmt:message key='protocol.empty' />", dialog.MESSAGE, [{caption:"<fmt:message key='protocol.import' />",action:function(){startTreeImport(false);}}, {caption:"<fmt:message key='protocol.cancel' />",action:dialog.CLOSE_ACTION}], 500, 500);
+                    dialog.show("<fmt:message key='protocol.title' />", "<fmt:message key='protocol.empty' />", dialog.MESSAGE, 
+                            [{caption:"<fmt:message key='protocol.import' />",action:lang.hitch(this, lang.partial(startTreeImport, false))}, {caption:"<fmt:message key='protocol.cancel' />", action:dialog.CLOSE_ACTION}],
+                            500, 500);
                 }
             } else {
                 startTreeImport(false);
             }
+        }
+        
+        function prepareProtocol(protocols) {
+            var result = "";
+            array.forEach(protocols, function(protocol) {
+                var protocolInfo = returnToBr(protocol.INFO);
+                var protocolWarn = returnToBr(protocol.WARN);
+                var protocolError = returnToBr(protocol.ERROR);
+                
+                if(protocolInfo !== null && protocolInfo.length > 0) {
+                    result += "<h3>Information</h3>" + protocolInfo;
+                }
+                if(protocolWarn !== null && protocolWarn.length > 0) {
+                    result += "<h3>Warnung</h3>" + protocolWarn;
+                }
+                if(protocolError !== null && protocolError.length > 0) {
+                    result += "<h3>Fehler</h3>" + protocolError;
+                }
+                result += "<br>";
+            });
+            return result;
         }
         
         function updateReadInputInfo(infoBean) {
@@ -513,10 +494,16 @@ require([
             
         }
         
-        function returnToBr(string) {
-            if(string !== null){
-                return string.replace(/[\r\n]/g, "<br />");
-            }else{
+        function returnToBr(list) {
+            var result = "<ul>";
+            if (list) {
+                if (list.length === 0) return null;
+                array.forEach(list, function(item) {
+                    result += "<li>" + item + "</li>"
+                });
+                result += "</ul>";
+                return result;
+            } else {
                 return null;
             }
         }
@@ -532,7 +519,7 @@ require([
             toggleMoreInfo: toggleMoreInfo,
             selectParentDatasetForTreeImport: selectParentDatasetForTreeImport,
             selectParentAddressForTreeImport: selectParentAddressForTreeImport,
-            startImport: startImport,
+            startImport: analyzeImport,
             resetImport: resetImport
         };
     });

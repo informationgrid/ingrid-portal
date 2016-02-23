@@ -263,6 +263,21 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
         return MdekCatalogUtils.extractExportJobInfoFromResponse(response);
     }
 
+    public IngridDocument analyzeImportData(UserData currentUser, byte[] importData, String targetObjectUuid, String targetAddressUuid,
+            String frontendMappingProtocol, boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent, boolean startNewAnalysis) {
+        IngridDocument response = mdekCallerCatalog.analyzeImportData(
+                currentUser.getPlugId(),
+                importData,
+                targetObjectUuid, targetAddressUuid,
+                publishImmediately, doSeparateImport,
+                copyNodeIfPresent,
+                frontendMappingProtocol,
+                startNewAnalysis,
+                currentUser.getAddressUuid());
+        IngridDocument result = MdekUtils.getResultFromResponse(response);
+        return result;
+    }
+
     public void importEntities(UserData currentUser, List<byte[]> importData, String targetObjectUuid, String targetAddressUuid,
             String frontendMappingProtocol, boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent) {
         IngridDocument response = mdekCallerCatalog.importEntities(

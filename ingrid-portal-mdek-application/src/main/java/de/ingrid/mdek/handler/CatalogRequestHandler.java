@@ -67,6 +67,7 @@ public interface CatalogRequestHandler {
 	public void exportObjectBranch(String rootUuid, boolean exportChildren, boolean includeWorkingCopies);
 	public void exportObjectsWithCriteria(String exportCriteria, boolean includeWorkingCopies);
 	public ExportJobInfoBean getExportInfo(boolean includeExportData);
+	public IngridDocument analyzeImportData(UserData currentUser, byte[] importData, String targetObjectUuid, String targetAddressUuid, String frontendProtocol, boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent, boolean startNewAnalysis);
 	public void importEntities(UserData currentUser, List<byte[]> importData, String targetObjectUuid, String targetAddressUuid, String frontendProtocol, boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent);
 	public JobInfoBean getImportInfo();
 	public void cancelRunningJob();
