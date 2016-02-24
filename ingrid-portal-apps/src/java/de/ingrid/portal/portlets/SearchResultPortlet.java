@@ -477,7 +477,12 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         String url = "";
         
         if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-            SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+            String queryType = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
+            if (queryType != null) {
+                if (queryType.equals(Settings.MSGV_NO_QUERY)) {
+                    SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
+                }
+            }
             url = UtilsFacete.setFaceteParamsToSessionByAction(request, actionResponse);
         }
         
