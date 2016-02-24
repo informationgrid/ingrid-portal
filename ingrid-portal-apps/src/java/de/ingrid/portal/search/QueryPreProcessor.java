@@ -70,13 +70,11 @@ public class QueryPreProcessor {
         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
         IngridQuery query = null;
         try {
-        	log.debug("The QueryString: " + queryString);
+            log.debug("The QueryString: " + queryString);
             query = QueryStringParser.parse(queryString);
             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-            	UtilsFacete.facetePrepareInGridQuery(request, query);
+                UtilsFacete.facetePrepareInGridQuery(request, query);
             }
-            
-            
         } catch (ParseException ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
@@ -109,42 +107,42 @@ public class QueryPreProcessor {
 
         // always request ALL DATA !!! all kind of hits can be rendered in one page when datatypes are entered in query !
         String[] requestedMetadata = new String[] {
-        		// udk object metadata
-        		Settings.HIT_KEY_UDK_CLASS,
-        		Settings.HIT_KEY_UDK_CLASS.toLowerCase(),
-        		Settings.HIT_KEY_OBJ_ID,
-        		Settings.HIT_KEY_ORG_OBJ_ID,
-        		Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT,
-        		Settings.HIT_KEY_OBJ_SERV_TYPE,        		
-        		Settings.HIT_KEY_OBJ_SERV_TYPE_KEY,        		
-        		// udk address metadata
-        		Settings.HIT_KEY_ADDRESS_CLASS,
-        		Settings.HIT_KEY_ADDRESS_CLASS2,
-        		Settings.HIT_KEY_ADDRESS_CLASS3,
-        		Settings.HIT_KEY_ADDRESS_FIRSTNAME,
-        		Settings.HIT_KEY_ADDRESS_LASTNAME,
-        		Settings.HIT_KEY_ADDRESS_TITLE,
-        		Settings.HIT_KEY_ADDRESS_ADDRESS,
-        		Settings.HIT_KEY_ADDRESS_ADDRID,
-        		Settings.HIT_KEY_ADDRESS_ADDRID2,
-        		Settings.HIT_KEY_ADDRESS_ADDRID3,
-        		Settings.HIT_KEY_ADDRESS_INSTITUTION2,
-        		Settings.HIT_KEY_ADDRESS_INSTITUTION3,
-        		Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID,
-        		Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID3,
-        		// both
-        		Settings.HIT_KEY_WMS_URL,
-        		Settings.HIT_KEY_WMS_URL.toLowerCase(),
-        		Settings.RESULT_KEY_PARTNER,
-        		Settings.RESULT_KEY_PROVIDER,
-        		"kml",
-        		Settings.RESULT_KEY_ADDITIONAL_HTML_1,
-        		Settings.RESULT_KEY_CAPABILITIES_URL,
-        		Settings.RESULT_KEY_SERVICE_UUID
-        		// other dsc scripted iPlugs might deliver a direct URL, so always request URL !
-        		// NO, older SE iPlugs have a bug: extracted SE url is set empty when URL is requested :(
-        		// so let's skip URL for now ... (26. Sep. 2011)
-//        		Settings.RESULT_KEY_URL
+            // udk object metadata
+            Settings.HIT_KEY_UDK_CLASS,
+            Settings.HIT_KEY_UDK_CLASS.toLowerCase(),
+            Settings.HIT_KEY_OBJ_ID,
+            Settings.HIT_KEY_ORG_OBJ_ID,
+            Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT,
+            Settings.HIT_KEY_OBJ_SERV_TYPE,
+            Settings.HIT_KEY_OBJ_SERV_TYPE_KEY,
+            // udk address metadata
+            Settings.HIT_KEY_ADDRESS_CLASS,
+            Settings.HIT_KEY_ADDRESS_CLASS2,
+            Settings.HIT_KEY_ADDRESS_CLASS3,
+            Settings.HIT_KEY_ADDRESS_FIRSTNAME,
+            Settings.HIT_KEY_ADDRESS_LASTNAME,
+            Settings.HIT_KEY_ADDRESS_TITLE,
+            Settings.HIT_KEY_ADDRESS_ADDRESS,
+            Settings.HIT_KEY_ADDRESS_ADDRID,
+            Settings.HIT_KEY_ADDRESS_ADDRID2,
+            Settings.HIT_KEY_ADDRESS_ADDRID3,
+            Settings.HIT_KEY_ADDRESS_INSTITUTION2,
+            Settings.HIT_KEY_ADDRESS_INSTITUTION3,
+            Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID,
+            Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID3,
+            // both
+            Settings.HIT_KEY_WMS_URL,
+            Settings.HIT_KEY_WMS_URL.toLowerCase(),
+            Settings.RESULT_KEY_PARTNER,
+            Settings.RESULT_KEY_PROVIDER,
+            "kml",
+            Settings.RESULT_KEY_ADDITIONAL_HTML_1,
+            Settings.RESULT_KEY_CAPABILITIES_URL,
+            Settings.RESULT_KEY_SERVICE_UUID
+            // other dsc scripted iPlugs might deliver a direct URL, so always request URL !
+            // NO, older SE iPlugs have a bug: extracted SE url is set empty when URL is requested :(
+            // so let's skip URL for now ... (26. Sep. 2011)
+            // Settings.RESULT_KEY_URL
         };
         
         // set properties according to the session preferences
@@ -187,14 +185,14 @@ public class QueryPreProcessor {
             // no grouping when filter is set.
             // set GROUPING ! ONLY IF NO GROUPING IN Query String Input !
             if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_GROUPED)) {
-            	
-            	// IF NO GROUPING IN Query String input then use request parameters !!!
-            	// bookmarking has higher prio than user preferences (see below) !
+                
+                // IF NO GROUPING IN Query String input then use request parameters !!!
+                // bookmarking has higher prio than user preferences (see below) !
                 String grouping = request.getParameter(Settings.PARAM_GROUPING);
 
                 // If no grouping yet, adapt grouping to USER preferences
                 if (grouping == null) {
-                    grouping = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING);                	
+                    grouping = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING);                    
                 }
 
                 // set grouping
@@ -221,7 +219,7 @@ public class QueryPreProcessor {
             int currentSelectorPage;
             try {
                 currentSelectorPage =
-                	(new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
+                    (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
             } catch (Exception ex) {
                 currentSelectorPage = 1;
             }
@@ -235,9 +233,9 @@ public class QueryPreProcessor {
                 SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
             }
             // ensure correct size of Array ! Notice: currentSelectorPage is 1 for first page !
-        	while (currentSelectorPage >= groupedStartHits.size()) {
-        		groupedStartHits.add(new Integer(0));
-        	}
+            while (currentSelectorPage >= groupedStartHits.size()) {
+                groupedStartHits.add(new Integer(0));
+            }
 
             currentPage = 0;
             startHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
@@ -245,7 +243,7 @@ public class QueryPreProcessor {
 
         // set language for query
         if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_LANG)) {
-            //            UtilsSearch.processLanguage(query, request.getLocale());
+            // UtilsSearch.processLanguage(query, request.getLocale());
         }
         
         // add partner to query if the portal is restricted to a certain partner
@@ -257,7 +255,7 @@ public class QueryPreProcessor {
         //      TODO If no query should be submitted, return null
         // now with PlugDescription for determining type of Hit (Address, Object)
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, startHit, PortalConfig
-        		.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, true, requestedMetadata);
+                .getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, true, requestedMetadata);
     }
 
     private static void processQuerySources(PortletRequest request, String ds, IngridQuery query) {
@@ -302,7 +300,6 @@ public class QueryPreProcessor {
                                 query.addClause(clauses[i]);
                             }
                         }
-
                     } catch (ParseException e) {
                         log.error("Error parsing sources query string.", e);
                     }
@@ -332,7 +329,6 @@ public class QueryPreProcessor {
                 } catch (ParseException e) {
                     log.error("Error parsing sources query string.", e);
                 }
-
             }
         }
     }
@@ -373,13 +369,13 @@ public class QueryPreProcessor {
      * @return the hash-code of the manipulated query
      */
     public static int getQueryCacheKey(IngridQuery query, String postfix) {
-    	IngridQueryTools queryTool = new IngridQueryTools();
-    	String cacheKey = "";
-    	
-    	String stringQuery = UtilsSearch.queryToString(query);
-    	cacheKey = queryTool.getComparableString(stringQuery,postfix);
-    	
-    	return cacheKey.hashCode();    	
+        IngridQueryTools queryTool = new IngridQueryTools();
+        String cacheKey = "";
+        
+        String stringQuery = UtilsSearch.queryToString(query);
+        cacheKey = queryTool.getComparableString(stringQuery,postfix);
+        
+        return cacheKey.hashCode();
     }
     
 }

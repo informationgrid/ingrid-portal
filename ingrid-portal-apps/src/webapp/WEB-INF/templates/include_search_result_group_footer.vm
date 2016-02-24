@@ -1,4 +1,4 @@
-#if($rs.get('moreHits') && $groupSubjectKey != "")
+#if($rs.get('moreHits') && $groupSubjectKey)
 	<p class="link">
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action', $detailAction)
