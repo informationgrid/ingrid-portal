@@ -140,13 +140,13 @@
                 #end
             #else
                 <div class="sidebar__widget js-accordion-multi">
-                    <div class="sidebar__widget__title filter__title js-accordion-toggle">
+                    <div class="sidebar__widget__title filter__title js-accordion-toggle #if($facet.isSelect())is-active#end">
                         $MESSAGES.getString("$facet.getName()")
                         <svg class="filter__title__icon icon">
                             <use xlink:href="#arrow-thick">
                         </svg>
                     </div>
-                    <div id="$facet.getId()" class="sidebar__widget__content js-accordion-content is-hidden">
+                    <div id="$facet.getId()" class="sidebar__widget__content js-accordion-content #if(!$facet.isSelect())is-hidden#end">
                         #set($isSelected = false)
                         #foreach($subFacet in $facet.getFacets())
                             #if($subFacet.isSelect())
@@ -218,7 +218,7 @@
         #if(!$treeFacet.isParentHidden())
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter("$treeParentId", "$treeFacet.getId()")
-            <div class="js-accordion-toggle sidebar-filter-subheader" onclick="location.href='$action'">
+            <div class="js-accordion-toggle sidebar-filter-subheader #if($treeFacet.isSelect())is-active#end" onclick="location.href='$action'">
                 <svg class="sidebar-subheader-icon icon">
                     <use xlink:href="#select-arrow">
                 </svg>
@@ -276,28 +276,16 @@
             <strong>($treeFacet.getFacetValue())</strong>
         </div>
     </div>
-    <div id="$treeFacet.getId()" class="cat_content_entry">
+    <div id="$treeFacet.getId()" class="sidebar-filter-content">
     #set($isSelectedTree = false)
     #foreach ($treeSubFacet in $treeFacet.getFacets())
         #if($treeSubFacet.isSelect())
             #set($isSelectedTree = true)
         #end
     #end
-    #if($isSelectedTree)
+    
         #foreach ($treeSubFacet in $treeFacet.getFacets())
-            #if($treeSubFacet.isSelect())
-                #set ($action = $renderResponse.createActionURL())
-                $action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
-                #if($treeSubFacet.getCodelistId())
-                   #set ($name = $Codelists.getCodeListValue($treeSubFacet.getCodelistId(), $treeSubFacet.getCodelistEntryId(), $languageCode))
-                #else
-                   #set ($name = $MESSAGES.getString("$treeSubFacet.getName()"))
-                #end
-                #renderFaceteSelectedAttributeNumber ($action $name $name $treeSubFacet.getFacetValue() $treeSubFacet.isSelect())
-            #end
-         #end
-    #else
-        #foreach ($treeSubFacet in $treeFacet.getFacets())
+            <ul>
             #if($treeSubFacet.getFacetValue())
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
@@ -306,10 +294,13 @@
                 #else
                    #set ($name = $MESSAGES.getString("$treeSubFacet.getName()"))
                 #end
-                #renderFaceteSelectedAttributeNumber ($action $name $name $treeSubFacet.getFacetValue() $treeSubFacet.isSelect())
+                <li>
+	                <svg class="icon sidebar-filter-content-icon"><use xlink:href="#select-arrow"/></svg>
+	                <a href="$action">$name <strong>($treeSubFacet.getFacetValue())</strong></a>
+	            </li>
             #end
+            </ul>
         #end
-     #end
     </div>
 #end
 
@@ -319,7 +310,7 @@
 
 #macro (renderFaceteSelectedAttributeNumber $doAction $title $tooltip $number $isDelete)
     <div class="js-accordion">
-            <div class="js-accordion-toggle sidebar-filter-subheader" onclick="location.href='$doAction'">
+            <div class="js-accordion-toggle sidebar-filter-subheader #if($isDelete)is-active#end" onclick="location.href='$doAction'">
                 <svg class="sidebar-subheader-icon icon">
                     <use xlink:href="#select-arrow">
                 </svg>
