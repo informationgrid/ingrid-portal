@@ -589,51 +589,7 @@ public class UtilsFacete {
             setAttributeToSession(request, SELECTED_MAP, selectedMap, true);
         }
         if(doRemoveMap != null){
-            if(doRemoveMap.equals("all")){
-                removeAttributeFromSession(request, SELECTED_MAP);
-            }else{
-                selectedMap = (HashMap<String, String>) getAttributeFromSession(request, SELECTED_MAP);
-                if(selectedMap != null){
-                    doMapCoords = (HashMap<String, String>) selectedMap.get("doMapCoords");
-                    doMapCoords.remove(doRemoveMap);
-                    webmapclientCoords = (HashMap<String, String>) selectedMap.get("webmapclientCoords");
-                    coordOptions = (ArrayList<String>) selectedMap.get("coordOptions");
-                    
-                    if(coordOptions != null){
-                        for(int i=0; i < coordOptions.size(); i++){
-                            if(coordOptions.get(i).equals(doRemoveMap)){
-                                coordOptions.remove(i);
-                            }
-                        }
-                    }else{
-                        coordOptions = new ArrayList<String>();
-                    }
-                }
-                
-                if(coordOptions != null && coordOptions.size() > 0){
-                    if(doMapCoords != null || webmapclientCoords != null){
-                        if(selectedMap == null){
-                            selectedMap = new HashMap();
-                        }
-                    }
-                    if(doMapCoords != null){
-                        selectedMap.put("doMapCoords", doMapCoords);
-                    }
-                    if(coordOptions != null){
-                        selectedMap.put("coordOptions", coordOptions);
-                    }
-                    if(webmapclientCoords != null){
-                        selectedMap.put("webmapclientCoords", webmapclientCoords);
-                    }
-                }
-                
-                if(selectedMap != null && coordOptions != null && coordOptions.size() > 0){
-                    setAttributeToSession(request, SELECTED_MAP, selectedMap, true);
-                }else{
-                    selectedMap.remove("webmapclientCoords");
-                    selectedMap.remove("areaid");
-                }
-            }
+            removeAttributeFromSession(request, SELECTED_MAP);
         }
     }
     
@@ -1433,7 +1389,7 @@ public class UtilsFacete {
                 if(facetSelectionState.get(key)){
                     i=i+1;
                     if(i>1){
-                        break;    
+                        break;
                     }
                 }
             }    

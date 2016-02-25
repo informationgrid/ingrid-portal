@@ -50,7 +50,7 @@
     map.whenReady(function () {
         window.setTimeout(function () {
             var identifier = "$selectedMap.doMapCoords";
-            if(identifier == "{}"){
+            if(identifier == "{}" || identifier.indexOf("selectedMap.doMapCoords") > -1){
                 $('#facet_map').addClass('is-hidden');
             }
         }.bind(this), 200);
