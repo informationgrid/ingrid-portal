@@ -227,7 +227,7 @@
             </div>
         #end
         <br/>
-        <div id="$treeFacet.getId()">
+        <div id="$treeFacet.getId()" class="sidebar-filter-content">
         #set($isSelect = false)
         #set($countFacetWithValue = 0)
         #foreach ($treeSubFacet in $treeFacet.getFacets())
@@ -258,7 +258,7 @@
                     </div>
                 #end
             #end
-               </div>
+           </div>
         </div>
     </div>
 #end
@@ -284,23 +284,29 @@
         #end
     #end
     
-        #foreach ($treeSubFacet in $treeFacet.getFacets())
-            <ul>
-            #if($treeSubFacet.getFacetValue())
-                #set ($action = $renderResponse.createActionURL())
-                $action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
-                #if($treeSubFacet.getCodelistId())
-                   #set ($name = $Codelists.getCodeListValue($treeSubFacet.getCodelistId(), $treeSubFacet.getCodelistEntryId(), $languageCode))
-                #else
-                   #set ($name = $MESSAGES.getString("$treeSubFacet.getName()"))
-                #end
-                <li>
-	                <svg class="icon sidebar-filter-content-icon"><use xlink:href="#select-arrow"/></svg>
-	                <a href="$action">$name <strong>($treeSubFacet.getFacetValue())</strong></a>
-	            </li>
+    #foreach ($treeSubFacet in $treeFacet.getFacets())
+        <ul>
+        #if($treeSubFacet.getFacetValue())
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
+            #if($treeSubFacet.getCodelistId())
+               #set ($name = $Codelists.getCodeListValue($treeSubFacet.getCodelistId(), $treeSubFacet.getCodelistEntryId(), $languageCode))
+            #else
+               #set ($name = $MESSAGES.getString("$treeSubFacet.getName()"))
             #end
-            </ul>
+            <li>
+                <svg class="icon sidebar-filter-content-icon">
+                #if($treeSubFacet.isSelect())
+                    <use xlink:href="#cross">
+                #else
+                    <use xlink:href="#select-arrow"/>
+                #end
+                </svg>
+                <a href="$action">$name <strong>($treeSubFacet.getFacetValue())</strong></a>
+            </li>
         #end
+        </ul>
+    #end
     </div>
 #end
 
