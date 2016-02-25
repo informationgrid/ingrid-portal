@@ -1,37 +1,32 @@
-<section class="block">
-	<div class="ob-box-wide ob-box-padded ob-box-center">
-		<article class="content ob-container">
-			#set ($action = $renderResponse.createActionURL())
-			<form action="$action" method="post" name="frmAdminUserMigration" id="frmAdminUserMigration">
-				<div class="formbody formbody_border_style">
-					<p>
-					<textarea rows="30" cols="125" id="xmlData" name="xmlData">$!xmlData</textarea>
-					</p>
-				</div>
-			<div class="formfooter formfooter_border_style" align="right">
-			   	#renderInputButtonClass("Export" "" "doExport" "" "float_right")
-			</div>
-			</form>
-			<form action="$action" method="post" name="frmAdminUserMigrationImport" id="frmAdminUserMigrationImport">
-				<div class="formbody formbody_border_style">
-					<p>
-					$MESSAGES.getString('account.view.path.file')<br/><br/>
-					<input type="text" id="path" name="path" size="100"></input>
-					</p>
-					#if($sqlStatements)
-			    		<p>$MESSAGES.getString('account.view.sql.tip')</p>
-			    		<p>
-						#foreach ($sql in $sqlStatements)
-			    			$!sql<br/>
-						#end
-						</p>
-					#end	
-						
-				</div>
-			<div class="formfooter formfooter_border_style" align="right">
-			   	#renderInputButtonClass("Import" "" "doImport" "" "float_right")
-			</div>
-			</form>
-		</article>
-	</div>
-</section>
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
+
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmAdminUserMigration" id="frmAdminUserMigration">
+    <div class="formbody formbody_border_style">
+        <p>
+        <textarea rows="30" cols="125" id="xmlData" name="xmlData">$!xmlData</textarea>
+        </p>
+    </div>
+<div class="media__obj media__obj--right">
+    #renderInputButtonClass("Export" "width:100%" "doExport" "" "btn btn--secondary btn--small")
+</div>
+</form>
+<form action="$action" method="post" name="frmAdminUserMigrationImport" id="frmAdminUserMigrationImport">
+    <div class="formbody formbody_border_style">
+        <p>
+        $MESSAGES.getString('account.view.path.file')<br/><br/>
+        <input type="text" id="path" name="path" size="100"></input>
+        </p>
+        #if($sqlStatements)
+            <p>$MESSAGES.getString('account.view.sql.tip')</p>
+            <p>
+            #foreach ($sql in $sqlStatements)
+                $!sql<br/>
+            #end
+            </p>
+        #end
+    </div>
+    <div class="media__obj media__obj--right">
+        #renderInputButtonClass("Import" "width:100%" "doImport" "" "btn btn--secondary btn--small")
+    </div>
+</form>
