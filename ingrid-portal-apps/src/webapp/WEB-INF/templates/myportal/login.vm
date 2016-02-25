@@ -5,12 +5,12 @@
 <form class="metamenu__box ob-container" action="$action" method="post" id="frm_login">
     <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
     <input type="hidden" name="cmd" value="doLogin" />
-        <label for="field-1">$MESSAGES.getString('login.form.username')</label>
-        <input type="text" id="login" name="${loginConstants.USERNAME}" value="#getFieldValue($loginConstants.USERNAME)" onFocus="clearUser()" class="field bx-bot-s">
-        <label for="field-2">$MESSAGES.getString('login.form.passwd')</label>
-        <input type="text" type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.PASSWORD)"  onFocus="clearPasswd()" class="field bx-bot-0">
-        <p><a href="$renderResponse.encodeURL('/portal/myportal-password-forgotten.psml')" class="link">$MESSAGES.getString('login.form.passwdForgotten')</a></p>
-        <p><a onclick="$(this).closest('form').submit()" class="btn btn--primary btn--small btn--block">$MESSAGES.getString('login.form.button.subscribe')</a></p>
+    <label for="login">$MESSAGES.getString('login.form.username')</label>
+    <input type="text" id="login" name="${loginConstants.USERNAME}" value="#getFieldValue($loginConstants.USERNAME)" onFocus="clearUser()" class="field bx-bot-s">
+    <label for="passwd">$MESSAGES.getString('login.form.passwd')</label>
+    <input type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.PASSWORD)" onFocus="clearPasswd()" class="field bx-bot-0">
+    <p><a href="$renderResponse.encodeURL('/portal/myportal-password-forgotten.psml')" class="link">$MESSAGES.getString('login.form.passwdForgotten')</a></p>
+    <p><a onclick="$(this).closest('form').submit()" class="btn btn--primary btn--small btn--block">$MESSAGES.getString('login.form.button.subscribe')</a></p>
 </form>
 <div class="metamenu__box ob-container">
     <p>Sie haben noch kein Nutzerkonto bei InGrid Portal?</p>
