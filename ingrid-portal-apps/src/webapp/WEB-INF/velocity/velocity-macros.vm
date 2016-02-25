@@ -209,19 +209,17 @@ $fieldLabel#end
     $action.setParameter('doEdit','Edit')
     $action.setParameter("id", "$rowId")
     <td>
-        <a href="$action">
-            <div class="field-toggle field-toggle--check">
-                <input id="chk_$velocityCount" type="checkbox" name="id" type="checkbox" value="$rowId">
-                <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
-                <div class="field-toggle__icon field-toggle__icon-alt">
-                    <svg class="icon">
-                        <use xlink:href="#tick">
-                    </svg>
-                </div>
-                $rowId
-                </label>
+        <div class="field-toggle field-toggle--check">
+            <input id="chk_$velocityCount" type="checkbox" name="id" type="checkbox" value="$rowId">
+            <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
+            <div class="field-toggle__icon field-toggle__icon-alt">
+                <svg class="icon">
+                    <use xlink:href="#tick">
+                </svg>
             </div>
-        </a>
+            $rowId
+            </label>
+        </div>
     </td>
     #foreach ($rowValue in $rowValues)
         <td><a href="$action">$rowValue</a></td>
