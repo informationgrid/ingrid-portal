@@ -2,38 +2,40 @@
 
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
-    <p>$MESSAGES.getString('component.forms.text.search.wildcard')</p>
-    <div id="filterArea" class="media ob-clear">
-        <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-            <input class="bx-bot-xs" type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" placeholder="$MESSAGES.getString('account.view.id')"/>
-        </div>
-        <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-            <input class="bx-bot-xs" type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" placeholder="$MESSAGES.getString('account.view.first.name')"/>
-        </div>
-        <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-            <input class="bx-bot-xs" type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" placeholder="$MESSAGES.getString('account.view.last.name')"/>
-        </div>
-        <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-            <input class="bx-bot-xs" type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" placeholder="$MESSAGES.getString('account.view.email')"/>
-        </div>
-        <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-            <input class="bx-bot-xs" type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" placeholder="$MESSAGES.getString('account.view.roles')"/>
-        </div>
-        <span style="clear:both" />
-        <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%" "doFilter" "" "btn btn--secondary btn--small")
+    <div class="box box--fill box--small">
+        <div class="box__content ob-container">
+            #renderMessageInfo($MESSAGES.getString('component.forms.text.search.wildcard'))
+            <hr>
+            <div id="filterArea" class="media ob-clear">
+                <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+                    <input class="bx-bot-xs" type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" placeholder="$MESSAGES.getString('account.view.id')"/>
+                </div>
+                <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+                    <input class="bx-bot-xs" type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" placeholder="$MESSAGES.getString('account.view.first.name')"/>
+                </div>
+                <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+                    <input class="bx-bot-xs" type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" placeholder="$MESSAGES.getString('account.view.last.name')"/>
+                </div>
+                <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+                    <input class="bx-bot-xs" type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" placeholder="$MESSAGES.getString('account.view.email')"/>
+                </div>
+                <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+                    <input class="bx-bot-xs" type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" placeholder="$MESSAGES.getString('account.view.roles')"/>
+                </div>
+                <span style="clear:both" />
+                <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+                    #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%" "doFilter" "" "btn btn--secondary btn--small")
+                </div>
+            </div>
         </div>
     </div>
-    <hr>
     #renderPaginationAndHint($browser "$MESSAGES.getString('account.view.tip')")
+    <hr>
     <div class="table table--striped table--sortable">
         <table class="js-table-sortable">
         #set ($colNames = ["id", "firstName", "lastName", "email", "roles", "lastLogin"])
         #set ($colTitles = [$MESSAGES.getString('account.view.id'), $MESSAGES.getString('account.view.first.name'), $MESSAGES.getString('account.view.last.name'), $MESSAGES.getString('account.view.email'), $MESSAGES.getString('account.view.roles'), $MESSAGES.getString('account.view.last.login')])
         #renderDBBrowserHeader($colNames $colTitles)
-        <tr>
-            <th class="table__subheading" colspan="6">Aktive</th>
-        </tr>
         #foreach ($dbEntity in $dbEntities)
             #set ($rowId = $dbEntity.id)
             #set ($rowValues = [$UtilsString.cutString($dbEntity.firstName, 20, 20), $UtilsString.cutString($dbEntity.lastName, 20, 20), $UtilsString.cutString($dbEntity.email, 40, 40), $dbEntity.roles, $dbEntity.lastLogin])
@@ -41,7 +43,6 @@
         #end
         </table>
     </div>
-    <br>
-#set ($buttons = ["doDelete", "doRefresh", "doNew"])
-#renderDBBrowserFooterButtons($buttons)
+    #set ($buttons = ["doDelete", "doRefresh", "doNew"])
+    #renderDBBrowserFooterButtons($buttons)
 </form>

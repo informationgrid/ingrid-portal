@@ -1,15 +1,15 @@
-<section class="block block--padded">
+<section class="block block--pad-top">
     <div class="ob-box-wide ob-box-padded ob-box-center">
-    	<article class="content ob-container">
-	    	$jetspeed.renderPortletWindow("AdminUserPortlet", "ingrid-portal-apps::AdminUserPortlet")
-	    </article>
-	</div>
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("AdminUserPortlet", "ingrid-portal-apps::AdminUserPortlet")
+        </article>
+    </div>
 </section>
 
 <section class="block block--padded">
     <div class="ob-box-wide ob-box-padded ob-box-center">
-    	<article class="content ob-container">
-	    	$jetspeed.renderPortletWindow("AdminUserMigrationPortlet", "ingrid-portal-apps::AdminUserMigrationPortlet")
-	    </article>
-	</div>
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("AdminUserMigrationPortlet", "ingrid-portal-apps::AdminUserMigrationPortlet")
+        </article>
+    </div>
 </section>

@@ -27,190 +27,196 @@
     </nav>
 </div>
 
-
 <form action="$action" method="post" name="frmEditUser" id="frmEditUser">
-    <input type="hidden" name="tab" value="$tab"/>
-    <input type="hidden" name="id" value="$actionForm.getInput('id')"/>
-    <input type="hidden" name="layoutPermission" value="$actionForm.getInput('layoutPermission')"/>
-    <div>
-        #displayFormErrors()
-        #displayFormMessages()
-        #if ($mode == 'edit')
-            <h2>$MESSAGES.getString('account.edit.update.user')</h2>
-        #elseif ($mode == 'new')
-            <h2>$MESSAGES.getString('account.edit.add.user')</h2>
-        #end
-        #if($tab=='1')
-            <h4>* Pflichtfelder</h4>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                    <label for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation'))</label>
-                </div>
-                <div class="media__body">
-                     <select name="salutation" id="salutation" size="1">
-                         <option value="0" #getSelectedFlag('salutation' '0')>---</option>
-                         <option value="1" #getSelectedFlag('salutation' '1')>$MESSAGES.getString('account.edit.salutation.option1')</option>
-                         <option value="2" #getSelectedFlag('salutation' '2')>$MESSAGES.getString('account.edit.salutation.option2')</option>
-                         <option value="3" #getSelectedFlag('salutation' '3')>$MESSAGES.getString('account.edit.salutation.option3')</option>
-                         <option value="4" #getSelectedFlag('salutation' '4')>$MESSAGES.getString('account.edit.salutation.option4')</option>
-                     </select>
-                 </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="firstname">#displayFieldLabel('firstname' $MESSAGES.getString('account.edit.label.firstname'))*</label>
-                </div>
-                <div class="media__body">
-                     <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" />
-                 </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="lastname">#displayFieldLabel('lastname' $MESSAGES.getString('account.edit.label.lastname'))*</label>
-                </div>
-                <div class="media__body">
-                     <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" />
-                 </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="email">#displayFieldLabel('email' $MESSAGES.getString('account.edit.label.email'))*</label>
-                </div>
-                <div class="media__body">
-                     <input type="text" id="email" name="email" value="#getFieldValue('email')" />
-                 </div>
-            </div>
-               <hr/>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="login">#displayFieldLabel('login' $MESSAGES.getString('account.create.label.username'))</label>
-                </div>
-                <div class="media__body">
-                     #getFieldValue('id')
-                 </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="login">#displayFieldLabel('password_old' $MESSAGES.getString('account.edit.label.password_old'))</label>
-                </div>
-                <div class="media__body">
-                     <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" />
-                 </div>
-            </div>
-            <hr/>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="password">#displayFieldLabel('password_new' $MESSAGES.getString('account.edit.label.password_new'))</label>
-                </div>
-                <div class="media__body">
-                     <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" />
-                 </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="password_confirm">#displayFieldLabel('password_new_confirm' $MESSAGES.getString('account.edit.label.password_new_confirm'))</label>
-                </div>
-                <div class="media__body">
-                     <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" />
-                 </div>
-            </div>
-            <hr />
-            <h3>$MESSAGES.getString('account.edit.address.information')</h3>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="street">#displayFieldLabel('street' $MESSAGES.getString('account.edit.label.street'))</label>
-                </div>
-                <div class="media__body">
-                     <input type="text" id="street" name="street" value="#getFieldValue('street')" />
-                 </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="postalcode">#displayFieldLabel('postalcode' $MESSAGES.getString('account.edit.label.postalcode'))</label>
-                </div>
-                <div class="media__body">
-                     <input type="text" id="postalcode" name="postalcode" value="#getFieldValue('postalcode')" />
-                 </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                      <label for="city">#displayFieldLabel('city' $MESSAGES.getString('account.edit.label.city'))</label>
-                </div>
-                <div class="media__body">
-                      <input type="text" id="city" name="city" value="#getFieldValue('city')" />
-                 </div>
-            </div>
-            <div class="line_form"><hr /></div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="attention">#displayFieldLabel('attention' $MESSAGES.getString('account.edit.label.attention'))</label>
-                </div>
-                <div class="media__body">
-                     <input type="text" id="attention" name="attention" value="#getFieldValue('attention')" />
-                 </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="age">#displayFieldLabel('age' $MESSAGES.getString('account.edit.label.age'))</label>
-                </div>
-                <div class="media__body">
-                     <select name="age" size="1" id="age">
-                         <option value="0" #getSelectedFlag('age' '0')>---</option>
-                         <option value="1" #getSelectedFlag('age' '1')>&lt; 20</option>
-                         <option value="2" #getSelectedFlag('age' '2')>20 - 30</option>
-                         <option value="3" #getSelectedFlag('age' '3')>30 - 40</option>
-                         <option value="4" #getSelectedFlag('age' '4')>40 - 50</option>
-                         <option value="5" #getSelectedFlag('age' '5')>60 - 70</option>
-                         <option value="6" #getSelectedFlag('age' '6')>&gt; 70</option>
-                     </select>
-                 </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                     <label for="interest">#displayFieldLabel('interest' $MESSAGES.getString('account.edit.label.interest'))</label>
-                </div>
-                <div class="media__body">
-                     <select name="interest" id="interest" size="1">
-                         <option value="0" #getSelectedFlag('interest' '0')>---</option>
-                         <option value="1" #getSelectedFlag('interest' '1')>$MESSAGES.getString('account.edit.interest.option1')</option>
-                         <option value="2" #getSelectedFlag('interest' '2')>$MESSAGES.getString('account.edit.interest.option2')</option>
-                     </select>
-                 </div>
-            </div>
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                      <label for="profession">#displayFieldLabel('profession' $MESSAGES.getString('account.edit.label.profession'))</label>
-                </div>
-                <div class="media__body">
-                      <select size="1" id="profession" name="profession">
-                         <option value="0" #getSelectedFlag('profession' '0')>---</option>
-                         <option value="1" #getSelectedFlag('profession' '1')>$MESSAGES.getString('account.edit.profession.option1')</option>
-                         <option value="2" #getSelectedFlag('profession' '2')>$MESSAGES.getString('account.edit.profession.option2')</option>
-                         <option value="3" #getSelectedFlag('profession' '3')>$MESSAGES.getString('account.edit.profession.option3')</option>
-                         <option value="4" #getSelectedFlag('profession' '4')>$MESSAGES.getString('account.edit.profession.option4')</option>
-                         <option value="5" #getSelectedFlag('profession' '5')>$MESSAGES.getString('account.edit.profession.option5')</option>
-                         <option value="6" #getSelectedFlag('profession' '6')>$MESSAGES.getString('account.edit.profession.option6')</option>
-                         <option value="7" #getSelectedFlag('profession' '7')>$MESSAGES.getString('account.edit.profession.option7')</option>
-                         <option value="8" #getSelectedFlag('profession' '8')>$MESSAGES.getString('account.edit.profession.option8')</option>
-                     </select>
-                 </div>
-            </div>
-        #elseif($tab=='2')
-            ## only show content of permission tab if we are "admin"
-            #if($actionForm.getInput('layoutPermission') == "admin")
-                <div class="field-toggle field-toggle--check bx-bot-xs">
-                    <input id="admin_portal" type="checkbox" name="admin_portal" value="1" #getChecked('admin_portal' '1') onchange="adapt()">
-                    <label class="field-toggle__label field-toggle__label--boxed" for="admin_portal">
-                        <div class="field-toggle__icon field-toggle__icon-alt">
-                            <svg class="icon">
-                                <use xlink:href="#tick">
-                            </svg>
-                        </div>
-                        $MESSAGES.getString('account.edit.admin.portal')
-                    </label>
-                </div>
+    <div class="box box--fill box--small">
+        <div class="box__title ob-container">
+            #if ($mode == 'edit')
+                <h4>$MESSAGES.getString('account.edit.update.user')</h4>
+            #elseif ($mode == 'new')
+                <h4>$MESSAGES.getString('account.edit.add.user')</h4>
             #end
-        #end
+        </div>
+        <div class="box__content ob-container">
+            <input type="hidden" name="tab" value="$tab"/>
+            <input type="hidden" name="id" value="$actionForm.getInput('id')"/>
+            <input type="hidden" name="layoutPermission" value="$actionForm.getInput('layoutPermission')"/>
+            #if($tab=='1')
+                #renderMessageInfo("* Pflichtfelder")
+                #displayFormErrors()
+                #displayFormMessages()
+                <hr>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                        <label for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation'))</label>
+                    </div>
+                    <div class="media__body">
+                         <select name="salutation" id="salutation" size="1">
+                             <option value="0" #getSelectedFlag('salutation' '0')>---</option>
+                             <option value="1" #getSelectedFlag('salutation' '1')>$MESSAGES.getString('account.edit.salutation.option1')</option>
+                             <option value="2" #getSelectedFlag('salutation' '2')>$MESSAGES.getString('account.edit.salutation.option2')</option>
+                             <option value="3" #getSelectedFlag('salutation' '3')>$MESSAGES.getString('account.edit.salutation.option3')</option>
+                             <option value="4" #getSelectedFlag('salutation' '4')>$MESSAGES.getString('account.edit.salutation.option4')</option>
+                         </select>
+                     </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="firstname">#displayFieldLabel('firstname' $MESSAGES.getString('account.edit.label.firstname'))*</label>
+                    </div>
+                    <div class="media__body">
+                         <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" />
+                     </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="lastname">#displayFieldLabel('lastname' $MESSAGES.getString('account.edit.label.lastname'))*</label>
+                    </div>
+                    <div class="media__body">
+                         <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" />
+                     </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="email">#displayFieldLabel('email' $MESSAGES.getString('account.edit.label.email'))*</label>
+                    </div>
+                    <div class="media__body">
+                         <input type="text" id="email" name="email" value="#getFieldValue('email')" />
+                     </div>
+                </div>
+                   <hr/>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="login">#displayFieldLabel('login' $MESSAGES.getString('account.create.label.username'))</label>
+                    </div>
+                    <div class="media__body">
+                         #getFieldValue('id')
+                     </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="login">#displayFieldLabel('password_old' $MESSAGES.getString('account.edit.label.password_old'))</label>
+                    </div>
+                    <div class="media__body">
+                         <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" />
+                     </div>
+                </div>
+                <hr/>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="password">#displayFieldLabel('password_new' $MESSAGES.getString('account.edit.label.password_new'))</label>
+                    </div>
+                    <div class="media__body">
+                         <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" />
+                     </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="password_confirm">#displayFieldLabel('password_new_confirm' $MESSAGES.getString('account.edit.label.password_new_confirm'))</label>
+                    </div>
+                    <div class="media__body">
+                         <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" />
+                     </div>
+                </div>
+                <hr />
+                <h3>$MESSAGES.getString('account.edit.address.information')</h3>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="street">#displayFieldLabel('street' $MESSAGES.getString('account.edit.label.street'))</label>
+                    </div>
+                    <div class="media__body">
+                         <input type="text" id="street" name="street" value="#getFieldValue('street')" />
+                     </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="postalcode">#displayFieldLabel('postalcode' $MESSAGES.getString('account.edit.label.postalcode'))</label>
+                    </div>
+                    <div class="media__body">
+                         <input type="text" id="postalcode" name="postalcode" value="#getFieldValue('postalcode')" />
+                     </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                          <label for="city">#displayFieldLabel('city' $MESSAGES.getString('account.edit.label.city'))</label>
+                    </div>
+                    <div class="media__body">
+                          <input type="text" id="city" name="city" value="#getFieldValue('city')" />
+                     </div>
+                </div>
+                <hr />
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="attention">#displayFieldLabel('attention' $MESSAGES.getString('account.edit.label.attention'))</label>
+                    </div>
+                    <div class="media__body">
+                         <input type="text" id="attention" name="attention" value="#getFieldValue('attention')" />
+                     </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="age">#displayFieldLabel('age' $MESSAGES.getString('account.edit.label.age'))</label>
+                    </div>
+                    <div class="media__body">
+                         <select name="age" size="1" id="age">
+                             <option value="0" #getSelectedFlag('age' '0')>---</option>
+                             <option value="1" #getSelectedFlag('age' '1')>&lt; 20</option>
+                             <option value="2" #getSelectedFlag('age' '2')>20 - 30</option>
+                             <option value="3" #getSelectedFlag('age' '3')>30 - 40</option>
+                             <option value="4" #getSelectedFlag('age' '4')>40 - 50</option>
+                             <option value="5" #getSelectedFlag('age' '5')>60 - 70</option>
+                             <option value="6" #getSelectedFlag('age' '6')>&gt; 70</option>
+                         </select>
+                     </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                         <label for="interest">#displayFieldLabel('interest' $MESSAGES.getString('account.edit.label.interest'))</label>
+                    </div>
+                    <div class="media__body">
+                         <select name="interest" id="interest" size="1">
+                             <option value="0" #getSelectedFlag('interest' '0')>---</option>
+                             <option value="1" #getSelectedFlag('interest' '1')>$MESSAGES.getString('account.edit.interest.option1')</option>
+                             <option value="2" #getSelectedFlag('interest' '2')>$MESSAGES.getString('account.edit.interest.option2')</option>
+                         </select>
+                     </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left">
+                          <label for="profession">#displayFieldLabel('profession' $MESSAGES.getString('account.edit.label.profession'))</label>
+                    </div>
+                    <div class="media__body">
+                          <select size="1" id="profession" name="profession">
+                             <option value="0" #getSelectedFlag('profession' '0')>---</option>
+                             <option value="1" #getSelectedFlag('profession' '1')>$MESSAGES.getString('account.edit.profession.option1')</option>
+                             <option value="2" #getSelectedFlag('profession' '2')>$MESSAGES.getString('account.edit.profession.option2')</option>
+                             <option value="3" #getSelectedFlag('profession' '3')>$MESSAGES.getString('account.edit.profession.option3')</option>
+                             <option value="4" #getSelectedFlag('profession' '4')>$MESSAGES.getString('account.edit.profession.option4')</option>
+                             <option value="5" #getSelectedFlag('profession' '5')>$MESSAGES.getString('account.edit.profession.option5')</option>
+                             <option value="6" #getSelectedFlag('profession' '6')>$MESSAGES.getString('account.edit.profession.option6')</option>
+                             <option value="7" #getSelectedFlag('profession' '7')>$MESSAGES.getString('account.edit.profession.option7')</option>
+                             <option value="8" #getSelectedFlag('profession' '8')>$MESSAGES.getString('account.edit.profession.option8')</option>
+                         </select>
+                     </div>
+                </div>
+            #elseif($tab=='2')
+                #displayFormErrors()
+                #displayFormMessages()
+                ## only show content of permission tab if we are "admin"
+                #if($actionForm.getInput('layoutPermission') == "admin")
+                    <div class="field-toggle field-toggle--check bx-bot-xs">
+                        <input id="admin_portal" type="checkbox" name="admin_portal" value="1" #getChecked('admin_portal' '1') onchange="adapt()">
+                        <label class="field-toggle__label field-toggle__label--boxed" for="admin_portal">
+                            <div class="field-toggle__icon field-toggle__icon-alt">
+                                <svg class="icon">
+                                    <use xlink:href="#tick">
+                                </svg>
+                            </div>
+                            $MESSAGES.getString('account.edit.admin.portal')
+                        </label>
+                    </div>
+                #end
+            #end
+        </div>
     </div>
     #renderDBEditFooter($mode)
 </form>
