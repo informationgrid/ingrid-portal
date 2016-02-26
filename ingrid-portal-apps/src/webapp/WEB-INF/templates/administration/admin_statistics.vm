@@ -1,12 +1,19 @@
-<section class="block">
-	<div class="ob-box-wide ob-box-padded ob-box-center">
-		<article class="content ob-container">
-			<div class="formbody">
-			  <h3>$MESSAGES.getString('admin.statistics.headline')</h3>
-			  <p>
-				<a target="_new" href="$apacheStatisticsURL">$MESSAGES.getString('admin.statistics.apache')</a>
-			  </p>
-			</div>
-		</article>
-	</div>
-</section>
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
+
+<div class="box box--fill box--small">
+    <div class="box__title ob-container">
+        <h4>$MESSAGES.getString('admin.statistics.headline')</h4>
+    </div>
+    <div class="box__content ob-container">
+        <ul class="link-list">
+            <li>
+                <a target="_new" href="$apacheStatisticsURL">
+                    <svg class="icon">
+                        <use xlink:href="#internal-link">
+                    </svg>
+                    $MESSAGES.getString('admin.statistics.apache')
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
