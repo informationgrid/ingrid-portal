@@ -217,7 +217,7 @@ $fieldLabel#end
                     <use xlink:href="#tick">
                 </svg>
             </div>
-            $rowId
+            <a href="$action">$rowId</a>
             </label>
         </div>
     </td>

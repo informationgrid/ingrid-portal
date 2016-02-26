@@ -1,30 +1,30 @@
 #renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
 
 #if($switchedToProfile)
-	#renderMessageSuccess("$MESSAGES.getString('admin.portal.profile.switched_to'): $switchedToProfile")
-	#renderMessageSuccess($MESSAGES.getString('admin.portal.profile.restart'))
+    #renderMessageSuccess("$MESSAGES.getString('admin.portal.profile.switched_to'): $switchedToProfile")
+    #renderMessageSuccess($MESSAGES.getString('admin.portal.profile.restart'))
 #else
-	#renderMessageInfo($MESSAGES.getString('admin.portal.profile.description'))
-	#set ($action = $renderResponse.createActionURL())
-	<div class="box box--fill box--small">
-	    <div class="box__title ob-container">
-	        <h4>$MESSAGES.getString('admin.portal.profile.headline')</h4>
-	    </div>
-	    <div class="box__content ob-container">
-	        <ul class="link-list">
-	            $action.setParameter('action',"switchProfile")
-	            #foreach($profile in $profiles)
-	                $action.setParameter('profile', "$profile.id")
-	                <li>
-	                    <a href="$action">
-	                        <svg class="icon">
-	                            <use xlink:href="#internal-link">
-	                        </svg>
-	                        $MESSAGES.getString("$profile.title_key")
-	                    </a>
-	                </li>
-	            #end
-	        </ul>
-	    </div>
-	</div>
+    #renderMessageInfo($MESSAGES.getString('admin.portal.profile.description'))
+    #set ($action = $renderResponse.createActionURL())
+    <div class="box box--fill box--small">
+        <div class="box__title ob-container">
+            <h4>$MESSAGES.getString('admin.portal.profile.headline')</h4>
+        </div>
+        <div class="box__content ob-container">
+            <ul class="link-list">
+                $action.setParameter('action',"switchProfile")
+                #foreach($profile in $profiles)
+                    $action.setParameter('profile', "$profile.id")
+                    <li>
+                        <a href="$action">
+                            <svg class="icon">
+                                <use xlink:href="#internal-link">
+                            </svg>
+                            $MESSAGES.getString("$profile.title_key")
+                        </a>
+                    </li>
+                #end
+            </ul>
+        </div>
+    </div>
 #end

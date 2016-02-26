@@ -2,8 +2,8 @@
 
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
+    #renderPaginationAndHint($browser "")
     <div class="table table--striped table--sortable">
-        #renderPaginationAndHint($browser "")
         <table class="js-table-sortable">
             #set ($colNames = ["id", "provider", "description", "language", "categories", "numLastCount", "lastUpdate", "error"])
             #set ($colTitles = [$MESSAGES.getString('component.forms.rss.text.id'), $MESSAGES.getString('component.forms.rss.text.provider'), $MESSAGES.getString('component.forms.rss.text.description'), $MESSAGES.getString('component.forms.rss.text.lang'), $MESSAGES.getString('component.forms.rss.text.category'), $MESSAGES.getString('component.forms.rss.text.new.messages'), $MESSAGES.getString('component.forms.rss.text.last.update'), $MESSAGES.getString('component.forms.rss.text.error')])
@@ -25,12 +25,12 @@
                         <div class="field-toggle field-toggle--check">
                             <input id="chk_$velocityCount" type="checkbox" name="id" type="checkbox" value="$rowId">
                             <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
-                            <div class="field-toggle__icon field-toggle__icon-alt">
-                                <svg class="icon">
-                                    <use xlink:href="#tick">
-                                </svg>
-                            </div>
-                            $rowId
+                                <div class="field-toggle__icon field-toggle__icon-alt">
+                                    <svg class="icon">
+                                        <use xlink:href="#tick">
+                                    </svg>
+                                </div>
+                                <a href="$action">$rowId</a>
                             </label>
                         </div>
                     </td>
@@ -44,7 +44,6 @@
                         #end
                     #end
                 </tr>
-                
             #end
         </table>
     </div>
