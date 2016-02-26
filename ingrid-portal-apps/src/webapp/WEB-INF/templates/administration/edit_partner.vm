@@ -1,44 +1,41 @@
-<section class="block">
-	<div class="ob-box-wide ob-box-padded ob-box-center">
-		<article class="content ob-container">
-			#set ($action = $renderResponse.createActionURL())
-			<form action="$action" method="post" name="frmEditPartner" id="frmEditPartner">
-				<div class="formbody formbody_border_style">
-				#if ($mode == 'edit')
-					<h2 class="nospace">$MESSAGES.getString('component.forms.partner.text.update.partner')</h2>
-				#elseif ($mode == 'new')
-					<h2 class="nospace">$MESSAGES.getString('component.forms.partner.text.new.partner')</h2>
-				#end
-				#displayFormErrors()
-			#set ($colNames = ["ident", "name", "sortkey"])
-			#set ($colLabels = ["$MESSAGES.getString('component.forms.partner.text.short')*", "$MESSAGES.getString('component.forms.partner.text.name')*", "$MESSAGES.getString('component.forms.partner.text.sort')"])
-			#foreach ($dbEntity in $dbEntities)
-				<div class="line"><hr /></div>
-			   	#set ($entityIndex = $velocityCount - 1)
-			   	#set ($colValues = ["$!{dbEntity.Ident}", "$!{dbEntity.Name}", "$!{dbEntity.Sortkey}"])
-			   	#renderDBEditId($mode $dbEntity.Id)
-			   	#foreach ($colName in $colNames)
-			       	#set ($colIndex = $velocityCount - 1)
-					#if($mode == 'new')
-						#renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
-					#else
-						#if($colName == 'ident')			
-							#if($disablePartnerProviderEdit == 'true')
-								#renderDBEditTextFieldDisable($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex) $disablePartnerProviderEdit)
-							#else
-								#renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
-							#end
-						#else
-							#renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
-						#end
-					#end
-				#end
-				<p class="clearer"></p>
-				</br>
-			#end
-				</div>
-			#renderDBEditFooter($mode)
-			</form>
-		</article>
-	</div>
-</section>
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
+
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" name="frmEditPartner" id="frmEditPartner">
+    <div class="box box--fill box--small">
+        <div class="box__title ob-container">
+            #if ($mode == 'edit')
+                <h4>$MESSAGES.getString('component.forms.partner.text.update.partner')</h4>
+            #elseif ($mode == 'new')
+                <h4>$MESSAGES.getString('component.forms.partner.text.new.partner')</h4>
+            #end
+        </div>
+        <div class="box__content ob-container">
+            #displayFormErrors()
+            #set ($colNames = ["ident", "name", "sortkey"])
+            #set ($colLabels = ["$MESSAGES.getString('component.forms.partner.text.short')*", "$MESSAGES.getString('component.forms.partner.text.name')*", "$MESSAGES.getString('component.forms.partner.text.sort')"])
+            #foreach ($dbEntity in $dbEntities)
+                   #set ($entityIndex = $velocityCount - 1)
+                   #set ($colValues = ["$!{dbEntity.Ident}", "$!{dbEntity.Name}", "$!{dbEntity.Sortkey}"])
+                   #renderDBEditId($mode $dbEntity.Id)
+                   #foreach ($colName in $colNames)
+                       #set ($colIndex = $velocityCount - 1)
+                    #if($mode == 'new')
+                        #renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+                    #else
+                        #if($colName == 'ident')            
+                            #if($disablePartnerProviderEdit == 'true')
+                                #renderDBEditTextFieldDisable($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex) $disablePartnerProviderEdit)
+                            #else
+                                #renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+                            #end
+                        #else
+                            #renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+                        #end
+                    #end
+                #end
+            #end
+        </div>
+    </div>
+    #renderDBEditFooter($mode)
+</form>
