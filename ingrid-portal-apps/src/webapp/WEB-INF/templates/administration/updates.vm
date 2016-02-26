@@ -1,32 +1,14 @@
-<style type="text/css">
-    td { vertical-align: middle; }
-</style>
-
-#macro (getSpecialRowStyle $count $component)
-    #if ($component.connected == "component.update.component.not.available")
-        #getRowStyle($count 1)    
-    #elseif ($component.emails.size() == 0)
-        #if ($count % 2 == 0)
-            #set ($rowstyle = "contentRowEvenYellow")
-        #else
-            #set ($rowstyle = "contentRowOddYellow")
-        #end
-    #else
-        #getRowStyle($count 0)
-    #end
-#end
-
 #macro (writeTypeHeader $newType $previousType $currentVersion)
     #if ($newType != $previousType)
-        <tr class="contentRowTitle">
-            <td colspan="3">$newType</td>
-            <td colspan="2" style="text-align: right; ">
-        #if ($currentVersion)
+        <tr>
+            <th class="table__subheading" colspan="2">$newType</th>
+            <th class="table__subheading" colspan="2" style="text-align: right; ">
+            #if ($currentVersion)
                 <a style="color:lightSteelBlue;font-size:10px;" href="$!component.downloadLink" title="#printVersion($component)">$MESSAGES.getString('component.forms.update.component.download.version') $currentVersion</a>
-        #else
+            #else
                 <span style="color:lightSlateGray;font-size:10px;">$MESSAGES.getString('component.forms.update.component.download.version.not.available')</span>
-        #end
-            </td>
+            #end
+            </th>
         </tr>
     #end
 #end
@@ -68,79 +50,97 @@
     Download: $component.versionAvailable $!build    
 #end
 
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
 
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter("doRestartUpgradeJob", "true")
 <form action="$action" method="post" name="frmUpdate" id="frmUpdate">
-<div class="formbody formbody_border_style">
-    <p class="float_right"><a href="$action" title="$MESSAGES.getString('component.forms.update.component.tooltip.start.job')">$MESSAGES.getString('component.forms.update.component.trigger.job')</a></p>
+    <a href="$action" title="$MESSAGES.getString('component.forms.update.component.tooltip.start.job')">$MESSAGES.getString('component.forms.update.component.trigger.job')</a>
     <!--<h3>$MESSAGES.getString('Updates')</h3>-->
-    <table class="border" style="width:100%;">
-        <tr style="border-bottom:1px solid #F4F4F4; font-weight:bold;">
-            <td class="contentColumnHead" style="text-decoration:none;"></td>
-            <td class="contentColumnHead" style="text-decoration:none; width:40%;">$MESSAGES.getString('component.forms.update.component.name')</td>
-            <td class="contentColumnHead" style="text-decoration:none;">$MESSAGES.getString('component.forms.update.component.installed.version')</td>
-            <!--<td class="contentColumnHead" style="text-decoration:none;">verfügbare Version</td>-->
-            <td class="contentColumnHead" style="text-decoration:none">$MESSAGES.getString('component.forms.update.component.email.sent')</td>
-            <td class="contentColumnHead" style="text-decoration:none;width: 49px;">&nbsp;</td>
-        </tr>
-#set ($count = 0)
-$action.setParameter("doUpdateEdit", "updateEdit")
-## first sort by name
-#set($sortedComponents = $sorter.sort($components,"name"))
-## and then sort by type
-#set($sortedComponents = $sorter.sort($sortedComponents,"type"))
-#set ($previousType = "")
-#foreach($component in $sortedComponents)
-    #writeTypeHeader($component.type $previousType $!component.versionAvailable)
-    #set ($previousType = $component.type)
-    #set ($count = $count + 1)
-    ##getSpecialRowStyle($count $component)
-    #getRowStyle($count 0)
-    $action.setParameter("id", "$component.id")
-        <tr class="$rowstyle">
-            <td><input type="checkbox" id="component_$count" name="id" value="$component.id"></td>
-            <td><a href="$action" title="">$!component.name</a></td>
-            <td>$!component.version</td>
-            <!--<td>$!component.versionAvailable</td>-->
-            #set ($sentDate = "$!date.format('yyyy-MM-dd H:mm:ss', $component.getEmailSentDate())")
-            <td>
-            #if ($component.errorStatus && $component.errorStatus == "component.monitor.update.error.sending.email")
-                $MESSAGES.getString('component.monitor.update.error.sending.email')
-            #else
-                $!sentDate</td>
-            #end
-            <td style="text-align:right;">
-    #if ($component.status == "component.update.new.version")
-                <a class="tooltip" href="$!component.downloadLink">
-                    <img src='/ingrid-portal-apps/images/icn_download.gif' alt="Update" />
-                    <span>$MESSAGES.getString('component.forms.update.component.tooltip.download')<br />#printVersion($component)</span>
-                </a>
-    #end
-    
-    #if ($!component.changelogLink)
-                <a class="tooltip" href="$!component.changelogLink">
-    #else
-                <a class="tooltip">
-    #end
-                    #if ($component.connected == "component.update.component.not.available")
-                        <img src='/ingrid-portal-apps/images/icn_info_error.gif' alt="info" />
-                    #elseif ($component.emails.size() == 0)
-                        <img src='/ingrid-portal-apps/images/icn_info_warn.gif' alt="info" />
+    <div class="table table--striped table--sortable">
+        <table class="js-table-sortable">
+            <thead>
+                <tr style="border-bottom:1px solid #F4F4F4; font-weight:bold;">
+                    <th class="table__sort-toggle js-column-sortable">$MESSAGES.getString('component.forms.update.component.name')</th>
+                    <th class="table__sort-toggle js-column-sortable">$MESSAGES.getString('component.forms.update.component.installed.version')</th>
+                    <!--<th class="table__sort-toggle js-column-sortable">verfügbare Version</th>-->
+                    <th class="table__sort-toggle js-column-sortable">$MESSAGES.getString('component.forms.update.component.email.sent')</th>
+                    <th class="table__sort-toggle js-column-sortable">&nbsp;</th>
+                </tr>
+            </thead>
+            #set ($count = 0)
+            $action.setParameter("doUpdateEdit", "updateEdit")
+            ## first sort by name
+            #set($sortedComponents = $sorter.sort($components,"name"))
+            ## and then sort by type
+            #set($sortedComponents = $sorter.sort($sortedComponents,"type"))
+            #set ($previousType = "")
+            #foreach($component in $sortedComponents)
+                #writeTypeHeader($component.type $previousType $!component.versionAvailable)
+                #set ($previousType = $component.type)
+                #set ($count = $count + 1)
+                $action.setParameter("id", "$component.id")
+                <tr class="js-row-sortable">
+                    <td>
+                        <div class="field-toggle field-toggle--check">
+                            <input type="checkbox" id="component_$count" name="id" value="$component.id">
+                            <label class="field-toggle__label field-toggle__label--highlight" for="component_$count">
+                                <div class="field-toggle__icon field-toggle__icon-alt">
+                                    <svg class="icon">
+                                        <use xlink:href="#tick">
+                                    </svg>
+                                </div>
+                                <a href="$action" title="">$!component.name</a>
+                            </label>
+                        </div>
+                    </td>
+                    <td>$!component.version</td>
+                    <!--<td>$!component.versionAvailable</td>-->
+                    #set ($sentDate = "$!date.format('yyyy-MM-dd H:mm:ss', $component.getEmailSentDate())")
+                    <td>
+                    #if ($component.errorStatus && $component.errorStatus == "component.monitor.update.error.sending.email")
+                        $MESSAGES.getString('component.monitor.update.error.sending.email')
                     #else
-                        <img src='/ingrid-portal-apps/images/icn_info.gif' alt="info" />                        
+                        $!sentDate
                     #end
-                    <span>#setInfoText($component)</span>
-                </a>
-            </td>
-        </tr>
-#end
-    </table>
-</div>
-<div class="formfooter formfooter_border_style" align="right">
-	#renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.delete')" "" "doUpdateRemove" "" "float_left")
-	<span class="float_left">&nbsp;</span>
-	#renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.add')" "" "doUpdateAdd" "" "float_left")
-	#renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.import')" "" "doUpdateImport" "" "float_right")
-</div>
+                    </td>
+                    <td style="text-align:right;">
+                    #if ($component.status == "component.update.new.version")
+                        <a href="$!component.downloadLink">
+                            <img src='/ingrid-portal-apps/images/icn_download.gif' alt="Update" />
+                            <span>$MESSAGES.getString('component.forms.update.component.tooltip.download')<br />#printVersion($component)</span>
+                        </a>
+                    #end
+                        
+                    #if ($!component.changelogLink)
+                        <a class="link tx-upper tx-brand" href="$!component.changelogLink">
+                    #else
+                        <a class="link tx-upper tx-brand">
+                    #end
+                        #if ($component.connected == "component.update.component.not.available")
+                            <svg class="icon link__icon"><use xlink:href="#cross" /></svg>
+                        #elseif ($component.emails.size() == 0)
+                            <svg class="icon link__icon"><use xlink:href="#minus" /></svg>
+                        #else
+                            <svg class="icon link__icon"><use xlink:href="#attention" /></svg>
+                        #end
+                        </a>
+                    </td>
+                </tr>
+            #end
+        </table>
+    </div>
+    <div>
+        <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.delete')" "width:100%;" "doUpdateRemove" "" "btn btn--secondary btn--small")
+        </div>
+        <span>&nbsp;</span>
+        <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.add')" "width:100%;" "doUpdateAdd" "" "btn btn--secondary btn--small")
+        </div>
+        <span>&nbsp;</span>
+        <div class="media__obj media__obj--right" style="margin-bottom: 0;">
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.import')" "width:100%;" "doUpdateImport" "" "btn btn--secondary btn--small")
+        </div>
+    </div>
 </form>

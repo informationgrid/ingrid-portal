@@ -1,163 +1,217 @@
 #macro (getInputStyleText $fieldName)#if ($actionForm.hasErrorInField($fieldName)) inputstyleerror#else inputstyletext#end#end
 
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
+
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmUpdate" id="frmUpdate">
-<div class="formbody formbody_border_style">
-    <h3>$MESSAGES.getString('component.forms.update.component.edit.title')</h3>
-    <p>
-<!--
-COMPONENT_ID
--->
-        <label class="float_left col2left_incr" for="componentId">#displayFieldLabel('componentId' $MESSAGES.getString('component.forms.update.component.id'))</label>
-        <input type="hidden" name="oldComponentId" value="#getFieldValue('componentId')"/>
-##if ($component.isIPlug())
-    <span>#getFieldValue('componentId')</span>
-    <input type="hidden" name="componentId" value="#getFieldValue('componentId')"/>
-##else
-##   <input class="inputstyletext contentInput" type="text" id="componentId" name="componentId" value="#getFieldValue('componentId')">
-##end
-    </p>
-    <p class="clearer" />
-    <p>
-<!--
-COMPONENT_TITLE
--->
-        <label class="float_left col2left_incr" for="componentTitle">#displayFieldLabel('componentTitle' $MESSAGES.getString('component.forms.update.component.title'))</label>
-        <!--
-        <label class="float_left inputstyletext contentInput" id="componentTitle" name="componentTitle">#getFieldValue('componentTitle')</label>
-        <input type="hidden" name="componentTitle" value="#getFieldValue('componentTitle')"/>
-        -->
-        <input class="inputstyletext contentInput" type="text" id="componentTitle" name="componentTitle" value="#getFieldValue('componentTitle')">
-        <div class="comment">$MESSAGES.getString('component.forms.update.component.help.title')</div>
-    </p>
-    <p class="clearer" />
-    
-#if ($component.isIPlug())
-<!--
-PARTNER
--->
-    <p>
-        <div class="float_left" style="font-size:75%;"><label class="float_left col2left_incr" for="componentPartner">#displayFieldLabel('componentPartner' $MESSAGES.getString('component.forms.update.component.partner'))</label></div>
-        <div class="float_left" style="font-size:75%;">
-        #foreach($partner in $component.getExtraInfo("PARTNER_INFO"))
-            $partner<br />
-        #end
+    <div class="box box--fill box--small">
+        <div class="box__title ob-container">
+            <h4>$MESSAGES.getString('component.forms.update.component.edit.title')</h4>
         </div>
-    </p>
-    <p class="clearer" />
-    <p>
-<!--
-PROVIDER
--->
-    <div class="float_left" style="font-size:75%;"><label class="float_left col2left_incr" for="componentProvider">#displayFieldLabel('componentProvider' $MESSAGES.getString('component.forms.update.component.provider'))</label></div>
-        <div class="float_left" style="font-size:75%;">
-        #foreach($provider in $component.getExtraInfo("PROVIDER_INFO"))
-            $provider<br />
-        #end
+        <div class="box__content ob-container">
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                <!--
+                COMPONENT_ID
+                -->
+                    <label for="componentId">#displayFieldLabel('componentId' $MESSAGES.getString('component.forms.update.component.id'))</label>
+                </div>
+                <div class="media__body">
+                    <input type="hidden" name="oldComponentId" value="#getFieldValue('componentId')"/>
+                    ##if ($component.isIPlug())
+                        <span>#getFieldValue('componentId')</span>
+                        <input type="hidden" name="componentId" value="#getFieldValue('componentId')"/>
+                    ##else
+                    ##   <input class="inputstyletext contentInput" type="text" id="componentId" name="componentId" value="#getFieldValue('componentId')">
+                    ##end
+                </div>
+            </div>
+            <!--
+            COMPONENT_TITLE
+            -->
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                    <label for="componentTitle">#displayFieldLabel('componentTitle' $MESSAGES.getString('component.forms.update.component.title'))</label>
+                </div>
+                <div class="media__body">
+                    <input class="inputstyletext contentInput" type="text" id="componentTitle" name="componentTitle" value="#getFieldValue('componentTitle')">
+                    <p>$MESSAGES.getString('component.forms.update.component.help.title')</p>
+                </div>
+            </div>
+            #if ($component.isIPlug())
+            <!--
+            PARTNER
+            -->
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                    <label for="componentPartner">#displayFieldLabel('componentPartner' $MESSAGES.getString('component.forms.update.component.partner'))</label>
+                </div>
+                <div class="media__body">
+                    #foreach($partner in $component.getExtraInfo("PARTNER_INFO"))
+                        $partner&nbsp;
+                    #end
+                </div>
+            </div>
+            <!--
+            PROVIDER
+            -->
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                    <label for="componentProvider">#displayFieldLabel('componentProvider' $MESSAGES.getString('component.forms.update.component.provider'))</label>
+                </div>
+                <div class="media__body">
+                    #foreach($provider in $component.getExtraInfo("PROVIDER_INFO"))
+                        $provider&nbsp;
+                    #end
+                </div>
+            </div>
+            #end
+            <!--
+            COMPONENT_TYPE
+            -->
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                    <label for="componentType">#displayFieldLabel('componentType' $MESSAGES.getString('component.forms.update.component.type'))</label>
+                </div>
+                <div class="media__body">
+                    #if ($component.wasUnknown() || !$component.isIPlug())
+                        <select class="float_left #getInputStyleText('componentType')" name="componentType">
+                            <option value="OTHER">&nbsp;</option>
+                        #foreach($type in $componentTypes)
+                            <option value="$type" #getSelectedFlag("componentType" $type)>$MESSAGES.getString($type)</option>
+                        #end
+                        </select>
+                        #if ($componentTypes.size() == 0)
+                            <span style="color:red;">$MESSAGES.getString('component.forms.update.component.error.no.distributions')</span>
+                            <input type="hidden" name="anyDistributions" value="false"/>
+                        #end
+                        <p style="clear:both"><div class="comment">$MESSAGES.getString('component.forms.update.component.help.type')</div></p>
+                    #else
+                        <span>#getFieldValue('componentType')</span>
+                        <input type="hidden" name="componentType" value="#getFieldValue('componentType')"/>
+                    #end
+                </div>
+            </div>
+            <!--
+            COMPONENT_VERSION
+            -->
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                    <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.version')</label>
+                </div>
+                <div class="media__body">
+                    #if ($component.isIPlug() && !$component.wasUnknown()) ##$component.version.toLowerCase() != "unknown")    
+                        <span>#getFieldValue('componentVersion')</span>
+                        <input type="hidden" name="componentVersion" value="#getFieldValue('componentVersion')"/>
+                    #else
+                        <input class="inputstyletext contentInput" type="text" id="componentVersion" name="componentVersion" value="#getFieldValue('componentVersion')">
+                        <div class="comment">$MESSAGES.getString('component.forms.update.component.help.version')</div>
+                    #end
+                </div>
+            </div>
+            <!--
+            COMPONENT_AVAILABLE
+            -->
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                    <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.availability')</label>
+                </div>
+                <div class="media__body">
+                    $MESSAGES.getString($component.connected)
+                </div>
+            </div>
+            <!--
+            COMPONENT_INFO
+            -->
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                    <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.info')</label>
+                </div>
+                <div class="media__body">
+                    <textarea cols="119" rows="3" id="componentInfo" name="componentInfo">#getFieldValue('componentInfo')</textarea>
+                    <div class="comment">$MESSAGES.getString('component.forms.update.component.help.info')</div>
+                </div>
+            </div>
+            <!--
+            COMPONENT_EMAILS
+            -->
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                    <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.emails')</label>
+                </div>
+                <div class="media__body">
+                    #set ($emails = $actionForm.getInputAsArray('contact_email'))
+                    #if ($component.emails.size() > 0)    
+                        <table class="js-table-sortable">
+                            <thead>
+                                <tr>
+                                    <th class="contentColumnHead" >Email</th>
+                                </tr>
+                            </thead>
+                        #set ($count = 0)
+                        #foreach($email in $emails)
+                            #set ($count = $count + 1)
+                            ##set($cnt = $velocityCount - 1)
+                            ##set($threshold = $list.get($thresholds, $cnt))
+                            <tr>
+                                <td>
+                                    <div class="field-toggle field-toggle--check">
+                                        <input type="checkbox" id="component_$count" name="contact_email_marked" value="$email">
+                                        <label class="field-toggle__label field-toggle__label--highlight" for="component_$count">
+                                            <div class="field-toggle__icon field-toggle__icon-alt">
+                                                <svg class="icon">
+                                                    <use xlink:href="#tick">
+                                                </svg>
+                                            </div>
+                                            $email<input type="hidden" name="contact_email" value="$email"/>
+                                        </label>
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                        #end
+                            <tr>
+                                <td></td>
+                                <td>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="media__obj media__obj--right" style="margin-bottom: 0;">
+                            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.remove.email')" "width:100%;" "doUpdateAddEmail" "" "btn btn--secondary btn--small")
+                        </div>
+                    #end
+                </div>
+            </div>
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                    &nbsp;
+                </div>
+                <div class="media__body">
+                    <table class="js-table-sortable">
+                        <tr>
+                            <!--
+                            COMPONENT_EMAIL_NEW
+                            -->
+                            <td><input class="#getInputStyleText('contact_email_new')" id="newEmail" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text"></td>
+                            <td>
+                                #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.add.new.email')" "width:100%;" "doUpdateAddEmail" "" "btn btn--primary btn--small")
+                            </td>
+                        </tr>
+                    </table>
+                    <p>$MESSAGES.getString('component.forms.update.component.help.add.new.email')</p>
+                </div>
+            </div>
         </div>
-    </p>
-    <p class="clearer" />
-#end
-    <p>
-<!--
-COMPONENT_TYPE
--->
-        <label class="float_left col2left_incr" for="componentType">#displayFieldLabel('componentType' $MESSAGES.getString('component.forms.update.component.type'))</label>
-#if ($component.wasUnknown() || !$component.isIPlug())
-        <select class="float_left #getInputStyleText('componentType')" name="componentType">
-            <option value="OTHER">&nbsp;</option>
-        #foreach($type in $componentTypes)
-            <option value="$type" #getSelectedFlag("componentType" $type)>$MESSAGES.getString($type)</option>
-        #end
-        </select>
-        #if ($componentTypes.size() == 0)
-            <span style="color:red;">$MESSAGES.getString('component.forms.update.component.error.no.distributions')</span>
-            <input type="hidden" name="anyDistributions" value="false"/>
-        #end
-        <p style="clear:both"><div class="comment">$MESSAGES.getString('component.forms.update.component.help.type')</div></p>
-#else
-        <span>#getFieldValue('componentType')</span>
-        <input type="hidden" name="componentType" value="#getFieldValue('componentType')"/>
-#end
-    </p>
-    <p class="clearer" />
-    <p>
-<!--
-COMPONENT_VERSION
--->
-    <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.version')</label>
-#if ($component.isIPlug() && !$component.wasUnknown()) ##$component.version.toLowerCase() != "unknown")    
-    <span>#getFieldValue('componentVersion')</span>
-    <input type="hidden" name="componentVersion" value="#getFieldValue('componentVersion')"/>
-#else    
-    <input class="inputstyletext contentInput" type="text" id="componentVersion" name="componentVersion" value="#getFieldValue('componentVersion')">
-    <div class="comment">$MESSAGES.getString('component.forms.update.component.help.version')</div>
-#end
-    <p class="clearer" />
-    <p>
-<!--
-COMPONENT_AVAILABLE
--->
-    <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.availability')</label>
-    <span>$MESSAGES.getString($component.connected)</span>
-    <p class="clearer" />
-    <p>
-<!--
-COMPONENT_INFO
--->
-    <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.info')</label>
-    <textarea cols="119" rows="3" id="componentInfo" name="componentInfo">#getFieldValue('componentInfo')</textarea>
-    <div class="comment">$MESSAGES.getString('component.forms.update.component.help.info')</div>
-    <p class="clearer" />
-    <p>
-<!--
-COMPONENT_EMAILS
--->
-    <label class="float_left col2left_incr">$MESSAGES.getString('component.forms.update.component.emails')</label>
-#set ($emails = $actionForm.getInputAsArray('contact_email'))
-#if ($component.emails.size() > 0)    
-    <table class="border" style="width:640px;">
-        <tr>
-            <td class="contentColumnHead" style="text-decoration:none; width: 10px;"></td>
-            <td class="contentColumnHead" style="text-decoration:none">Email</td>
-        </tr>
-    #set ($count = 0)
-    #foreach($email in $emails)
-        #set ($count = $count + 1)
-    ##set($cnt = $velocityCount - 1)
-    ##set($threshold = $list.get($thresholds, $cnt))
-        #getRowStyle($count 0)##$component.isIplug)
-        <tr class="$rowstyle">
-            <td><input type="checkbox" id="component_$count" name="contact_email_marked" value="$email"></td>
-            <td>$email<input type="hidden" name="contact_email" value="$email"/></td>
-        </tr>
-    #end
-        <tr>
-            <td></td>
-            <td>
-                #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.remove.email')" "font-size:100%;" "doUpdateAddEmail" "" "float_right")
-            </td>
-        </tr>
-    </table>
-    <p>
-    <label class="float_left col2left_incr">&nbsp;</label>
-#end
-    <table class="border" style="width:640px;">
-    <tr>
-<!--
-COMPONENT_EMAIL_NEW
--->
-    <td><input class="#getInputStyleText('contact_email_new')" id="newEmail" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text" style="width:425px;"></td>
-    <td>
-        #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.add.new.email')" "font-size:100%;" "doUpdateAddEmail" "" "float_right")
-    </td>
-    </tr>
-    </table>
-    <p><div class="comment">$MESSAGES.getString('component.forms.update.component.help.add.new.email')</div></p>
+    </div>
     
-</div>
-<div class="formfooter formfooter_border_style" align="right">
-    #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.edit.back')" "" "doShowUpdates" "" "float_right")
-    #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.edit.save')" "" "doSaveUpdates" "" "float_right")
-</div>
+    <div>
+        <div class="media__obj media__obj--right" style="margin-bottom: 0;">
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.edit.back')" "width:100%;" "doShowUpdates" "" "btn btn--secondary btn--small")
+        </div>
+        <span>&nbsp;</span>
+        <div class="media__obj media__obj--right" style="margin-bottom: 0;">
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.edit.save')" "width:100%;" "doSaveUpdates" "" "btn btn--primary btn--small")
+        </div>
+    </div>
 </form>
