@@ -12,15 +12,15 @@
         <div class="box__content ob-container">
             <div class="media">
                 <div class="media__obj media__obj--large media__obj--left">
-                    <label for="id">#displayFieldLabel('id' $MESSAGES.getString('component.forms.text.component.id'))*</label>
+                    <label for="id">$MESSAGES.getString('component.forms.text.component.id')*</label>
                 </div>
                 <div class="media__body">
-                       <input id="id" name="id" value="#getFieldValue('id')" type="text">
+                       <input id="id" name="id" value="#getFieldValue('id')" type="text" #addErrorFormClass('id')>
                 </div>
             </div>
             <div class="media">
                 <div class="media__obj media__obj--large media__obj--left">
-                    <label for="type">#displayFieldLabel('type' $MESSAGES.getString('component.forms.text.component.type'))*</label>
+                    <label for="type">$MESSAGES.getString('component.forms.text.component.type')*</label>
                 </div>
                 <div class="media__body">
                     <select name="type">

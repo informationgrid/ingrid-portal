@@ -64,7 +64,7 @@
                          <label for="firstname">$MESSAGES.getString('account.edit.label.firstname')*</label>
                     </div>
                     <div class="media__body">
-                         #getFieldValueByFormRequired('text' 'firstname')
+                         <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname')/>
                      </div>
                 </div>
                 <div class="media">
@@ -72,7 +72,7 @@
                          <label for="lastname">$MESSAGES.getString('account.edit.label.lastname')*</label>
                     </div>
                     <div class="media__body">
-                         #getFieldValueByFormRequired('text' 'lastname')
+                         <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
                      </div>
                 </div>
                 <div class="media">
@@ -80,7 +80,7 @@
                          <label for="email">$MESSAGES.getString('account.edit.label.email')*</label>
                     </div>
                     <div class="media__body">
-                         #getFieldValueByFormRequired('text' 'email')
+                         <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
                      </div>
                 </div>
                    <hr/>
@@ -97,7 +97,7 @@
                          <label for="password_old">$MESSAGES.getString('account.edit.label.password_old')</label>
                     </div>
                     <div class="media__body">
-                         #getFieldValueByFormRequired('password' 'password_old')
+                         <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" #addErrorFormClass('password_old')/>
                      </div>
                 </div>
                 <hr/>
@@ -106,7 +106,7 @@
                          <label for="password_new">$MESSAGES.getString('account.edit.label.password_new')</label>
                     </div>
                     <div class="media__body">
-                         #getFieldValueByFormRequired('password' 'password_new')
+                         <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new')/>
                      </div>
                 </div>
                 <div class="media">
@@ -114,7 +114,7 @@
                          <label for="password_new_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')</label>
                     </div>
                     <div class="media__body">
-                         #getFieldValueByFormRequired('password' 'password_new_confirm')
+                         <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
                      </div>
                 </div>
                 <hr />

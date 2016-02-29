@@ -14,26 +14,26 @@
                 #displayFormErrors()
                     <div class="media">
                         <div class="media__obj media__obj--large media__obj--left">
-                            <label for="bemerkungen">#displayFieldLabel('message' "$MESSAGES.getString('contact.form.message')")</label>
+                            <label for="bemerkungen">$MESSAGES.getString('contact.form.message')</label>
                         </div>
                         <div class="media__body">
-                            <textarea name="message" id="bemerkungen">#getFieldValue('message')</textarea>
+                            <textarea name="message" id="bemerkungen" #addErrorFormClass('message')>#getFieldValue('message')</textarea>
                         </div>
                     <h4>$MESSAGES.getString('contact.form.required')</h4>
                     <div class="media">
                         <div class="media__obj media__obj--large media__obj--left">
-                            <label for="xx2">#displayFieldLabel('firstname' "$MESSAGES.getString('contact.form.firstname')")</label>
+                            <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
                         </div>
                         <div class="media__body">
-                            <input type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')"/>
+                            <input type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname') />
                         </div>
                     </div>
                     <div class="media">
                         <div class="media__obj media__obj--large media__obj--left">
-                            <label for="xx3">#displayFieldLabel('lastname' "$MESSAGES.getString('contact.form.lastname')")</label>
+                            <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
                         </div>
                         <div class="media__body">
-                            <input type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')"/>
+                            <input type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
                         </div>
                     </div>
                     <div class="media">
@@ -54,10 +54,10 @@
                     </div>
                     <div class="media">
                         <div class="media__obj media__obj--large media__obj--left">
-                            <label for="xx6">#displayFieldLabel('email' "$MESSAGES.getString('contact.form.email')")</label>
+                            <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
                         </div>
                         <div class="media__body">
-                            <input type="text" id="xx6" name="email" value="#getFieldValue('email')"/>
+                            <input type="text" id="xx6" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
                         </div>
                     </div>
                     <div class="media">
@@ -122,10 +122,10 @@
                         $action.setParameter("doRefresh",  "Refresh")
                         <div class="media">
                             <div class="media__obj media__obj--large media__obj--left">
-                                <label for="xx7">#displayFieldLabel('jcaptcha' "$MESSAGES.getString('contact.jcaptcha.title')")</label>
+                                <label for="xx7">$MESSAGES.getString('contact.jcaptcha.title')</label>
                             </div>
                             <div class="media__body">
-                                <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')"/>
+                                <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')" #addErrorFormClass('jcaptcha')/>
                             </div>
                         </div>
                     #end

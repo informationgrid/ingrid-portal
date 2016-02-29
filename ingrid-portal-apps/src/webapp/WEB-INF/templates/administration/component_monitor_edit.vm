@@ -45,10 +45,10 @@
                 </div>
                 <div class="media">
                     <div class="media__obj media__obj--large media__obj--left">
-                        <label for="title">#displayFieldLabel('title' $MESSAGES.getString('component.forms.text.component.name'))*</label>
+                        <label for="title">$MESSAGES.getString('component.forms.text.component.name')*</label>
                     </div>
                     <div class="media__body">
-                        <input id="title" name="title" value="#getFieldValue('title')" type="text">
+                        <input id="title" name="title" value="#getFieldValue('title')" type="text" #addErrorFormClass('title')>
                     </div>
                 </div>
                 
@@ -73,18 +73,18 @@
                 
                 <div class="media">
                     <div class="media__obj media__obj--large media__obj--left">
-                          <label for="interval">#displayFieldLabel('interval' $MESSAGES.getString('component.forms.text.interval'))*</label>
+                          <label for="interval">$MESSAGES.getString('component.forms.text.interval')*</label>
                     </div>
                     <div class="media__body">
-                          <input id="interval" name="interval" value="#getFieldValue('interval')" type="text">
+                          <input id="interval" name="interval" value="#getFieldValue('interval')" type="text" #addErrorFormClass('interval')>
                     </div>
                 </div>
                 <div class="media">
                     <div class="media__obj media__obj--large media__obj--left">
-                          <label for="timeout">#displayFieldLabel('timeout' $MESSAGES.getString('component.forms.text.timeout'))*</label>
+                          <label for="timeout">$MESSAGES.getString('component.forms.text.timeout')*</label>
                     </div>
                     <div class="media__body">
-                          <input id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text">
+                          <input id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text" #addErrorFormClass('timeout')>
                     </div>
                 </div>
                 <div class="media">

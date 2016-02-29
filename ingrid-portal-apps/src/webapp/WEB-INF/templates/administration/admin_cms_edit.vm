@@ -16,10 +16,10 @@
         <hr />
         <div class="media">
             <div class="media__obj media__obj--large media__obj--left">
-                <label for="item_key">#displayFieldLabel("item_key" "$MESSAGES.getString('admin.cms.item.key')")*</label>
+                <label for="item_key">$MESSAGES.getString('admin.cms.item.key')*</label>
             </div>
             <div class="media__body">
-                <input type="text" id="item_key" name="item_key" value="$!dbEntity.itemKey"/>
+                <input type="text" id="item_key" name="item_key" value="$!dbEntity.itemKey" #addErrorFormClass('item_key')/>
             </div>
         </div>
         <div class="media">
@@ -49,10 +49,10 @@
             </div>
             <div class="media">
                 <div class="media__obj media__obj--large media__obj--left">
-                    <label for="value_$lang">#displayFieldLabel("value_$lang" "$MESSAGES.getString('admin.cms.item.content') ($ListTool.get($languagesNames, $i))")*</label>
+                    <label for="value_$lang">$MESSAGES.getString('admin.cms.item.content') ($ListTool.get($languagesNames, $i))*</label>
                 </div>
                 <div class="media__body">
-                    <textarea cols="125" rows="10" name="value_$lang" id="value_$lang">$!item.itemValue</textarea>
+                    <textarea cols="125" rows="10" name="value_$lang" id="value_$lang" #addErrorFormClass("value_$lang")>$!item.itemValue</textarea>
                 </div>
             </div>
             #if ($mode == 'edit')

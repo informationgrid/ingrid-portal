@@ -10,8 +10,11 @@ $form.getInput($field)#end
 #macro (getHTMLEscapedFieldValue $field)
 $actionForm.getInputHTMLEscaped($field)#end
 
-#macro (getFieldValueByFormRequired $type $field)
-<input type="$type" id="$field" name="$field" value="$actionForm.getInput($field)" #if ($actionForm.hasErrorInField($field))class="field--error"#end/>
+#macro (addErrorFormClass $field)
+#if ($actionForm.hasErrorInField($field))class="field--error"#end
+#end
+#macro (addErrorFormClassText $field)
+#if ($actionForm.hasErrorInField($field))field--error#end
 #end
 
 #macro (getChecked $field $value)

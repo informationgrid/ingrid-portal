@@ -29,52 +29,52 @@
             </div>
             <div class="media">
                 <div class="media__obj media__obj--large media__obj--left">
-                    <label for="firstname">#displayFieldLabel('firstname' $MESSAGES.getString('account.edit.label.firstname'))*</label>
+                    <label for="firstname">$MESSAGES.getString('account.edit.label.firstname')*</label>
                 </div>
                 <div class="media__body">
-                    <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" />
+                    <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname')/>
                 </div>
             </div>
             <div class="media">
                 <div class="media__obj media__obj--large media__obj--left">
-                    <label for="lastname">#displayFieldLabel('lastname' $MESSAGES.getString('account.edit.label.lastname'))*</label>
+                    <label for="lastname">$MESSAGES.getString('account.edit.label.lastname')*</label>
                 </div>
                 <div class="media__body">
-                    <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" />
+                    <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
                 </div>
             </div>
             <div class="media">
                 <div class="media__obj media__obj--large media__obj--left">
-                    <label for="email">#displayFieldLabel('email' $MESSAGES.getString('account.edit.label.email'))*</label>
+                    <label for="email">$MESSAGES.getString('account.edit.label.email')*</label>
                 </div>
                 <div class="media__body">
-                    <input type="text" id="email" name="email" value="#getFieldValue('email')" />
-                </div>
-            </div>
-            <hr />
-            <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                    <label for="login">#displayFieldLabel('id' $MESSAGES.getString('account.create.label.username'))*</label>
-                </div>
-                <div class="media__body">
-                    <input type="text" id="id" name="id" value="#getFieldValue('id')" />
+                    <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
                 </div>
             </div>
             <hr />
             <div class="media">
                 <div class="media__obj media__obj--large media__obj--left">
-                    <label for="password_new">#displayFieldLabel('password_new' $MESSAGES.getString('account.create.label.password'))*</label>
+                    <label for="login">$MESSAGES.getString('account.create.label.username')*</label>
                 </div>
                 <div class="media__body">
-                    <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" />
+                    <input type="text" id="id" name="id" value="#getFieldValue('id')" #addErrorFormClass('id')/>
+                </div>
+            </div>
+            <hr />
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left">
+                    <label for="password_new">$MESSAGES.getString('account.create.label.password')*</label>
+                </div>
+                <div class="media__body">
+                    <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new')/>
                 </div>
             </div>
             <div class="media">
                 <div class="media__obj media__obj--large media__obj--left">
-                    <label for="password_new_confirm">#displayFieldLabel('password_new_confirm' $MESSAGES.getString('account.create.label.password_confirm'))*</label>
+                    <label for="password_new_confirm">$MESSAGES.getString('account.create.label.password_confirm')*</label>
                 </div>
                 <div class="media__body">
-                    <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" />
+                    <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
                 </div>
             </div>
             <hr />
