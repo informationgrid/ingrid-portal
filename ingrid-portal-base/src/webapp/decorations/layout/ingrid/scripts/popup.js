@@ -8,13 +8,13 @@ var popup = (function () {
     var title = $('.popup__title');
     var content = $('.popup__content');
 
-    function open(message) {
+    function open(messageTitle, message) {
 
         if (message === "" || message === undefined) {
             return;
         }
 
-        update(message);
+        update(messageTitle, message);
 
         box.addClass('is-open');
 
@@ -28,7 +28,8 @@ var popup = (function () {
 
     }
 
-    function update(message) {
+    function update(messageTitle, message) {
+        title.html(messageTitle);
         content.html(message);
     }
 
@@ -42,7 +43,7 @@ var popup = (function () {
 
 $('.js-popup').on('click', function (event) {
     event.preventDefault();
-    popup.open($(this).data('content'));
+    popup.open($(this).data('title'), $(this).data('content'));
 });
 
 $('.js-popup-close').on('click', function (event) {
