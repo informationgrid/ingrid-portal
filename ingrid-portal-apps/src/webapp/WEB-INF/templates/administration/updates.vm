@@ -66,7 +66,7 @@ $action.setParameter("doRestartUpgradeJob", "true")
     <div class="table table--striped table--sortable">
         <table class="js-table-sortable">
             <thead>
-                <tr style="border-bottom:1px solid #F4F4F4; font-weight:bold;">
+                <tr>
                     <th class="table__sort-toggle js-column-sortable">$MESSAGES.getString('component.forms.update.component.name')</th>
                     <th class="table__sort-toggle js-column-sortable">$MESSAGES.getString('component.forms.update.component.installed.version')</th>
                     <!--<th class="table__sort-toggle js-column-sortable">verfügbare Version</th>-->
