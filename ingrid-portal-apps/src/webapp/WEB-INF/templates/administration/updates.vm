@@ -13,34 +13,40 @@
     #end
 #end
 
-#macro (setInfoText $component)
-    <h1>Informationen</h1>
+#macro (setInfoText $component $icon)
+    <div class="tooltip ob-circle js-popup" data-title="Information" data-content='
     #if ($component.connected && $component.connected == "component.update.component.not.available")
-        <p style="color:red;">$MESSAGES.getString('component.forms.update.component.not.connected')</p>
+        #renderMessageError($MESSAGES.getString('component.forms.update.component.not.connected'))
     #else
         ## if it's a manual component say that here and if it's an iPlug say this also
         ## so show at least some information here if there are no errors
         #if ($component.connected == "component.update.component.is.available")
-            $MESSAGES.getString('component.forms.update.component.is.connected')
+            #renderMessageInfo($MESSAGES.getString('component.forms.update.component.is.connected'))
         #else
-            $MESSAGES.getString('component.forms.update.component.is.manual')
+            #renderMessageInfo($MESSAGES.getString('component.forms.update.component.is.manual'))
         #end
     #end
     #if ($component.emails.size() == 0)
-        <p style="color:red;">$MESSAGES.getString('component.forms.update.component.no.email')</p>
+        #renderMessageError($MESSAGES.getString('component.forms.update.component.no.email'))
     #end
     #if ($component.getExtraInfo("PARTNER_INFO"))
-        <h1>$MESSAGES.getString('component.forms.update.component.partner')</h1>
+        <p><strong>$MESSAGES.getString('component.forms.update.component.partner')</strong></p>
         #foreach($partner in $component.getExtraInfo("PARTNER_INFO"))
             $partner<br />
         #end
     #end
     #if ($component.getExtraInfo("PROVIDER_INFO"))
-        <h1>$MESSAGES.getString('component.forms.update.component.provider')</h1>
+        <p><strong>$MESSAGES.getString('component.forms.update.component.provider')</strong></p>
         #foreach($provider in $component.getExtraInfo("PROVIDER_INFO"))
             $provider<br />
         #end
     #end
+    '>
+        <svg class="tooltip__icon icon">
+            <use xlink:href="$icon"></use>
+        </svg>
+    </div>
+    
 #end
 
 #macro (printVersion $component)
@@ -118,11 +124,11 @@ $action.setParameter("doRestartUpgradeJob", "true")
                         <a class="link tx-upper tx-brand">
                     #end
                         #if ($component.connected == "component.update.component.not.available")
-                            <svg class="icon link__icon"><use xlink:href="#cross" /></svg>
+                            <span>#setInfoText($component "#cross")</span>
                         #elseif ($component.emails.size() == 0)
-                            <svg class="icon link__icon"><use xlink:href="#minus" /></svg>
+                            <span>#setInfoText($component "#minus")</span>
                         #else
-                            <svg class="icon link__icon"><use xlink:href="#attention" /></svg>
+                            <span>#setInfoText($component "#attention")</span>
                         #end
                         </a>
                     </td>
