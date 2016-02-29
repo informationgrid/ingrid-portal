@@ -1,7 +1,9 @@
-<section class="block  block--pad-top">
+<section class="block  block--padded">
     <div class="ob-box-wide ob-box-padded ob-box-center">
-    	<article class="content ob-container ob-box-narrow">
-    		$jetspeed.renderPortletWindow("MyPortalCreateAccountPortlet", "ingrid-portal-apps::MyPortalCreateAccountPortlet")
-	    </article>
-	</div>
+        <article class="content ob-container ob-box-narrow">
+            <article class="content ob-container ob-box-narrow">
+                $jetspeed.renderPortletWindow("MyPortalCreateAccountPortlet", "ingrid-portal-apps::MyPortalCreateAccountPortlet")
+            </article>
+        </article>
+    </div>
 </section>

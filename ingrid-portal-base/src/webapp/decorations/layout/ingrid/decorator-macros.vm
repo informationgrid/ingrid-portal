@@ -167,7 +167,7 @@
             #end        
             <div class="metamenu__box ob-container">
                 <p>Sie sind eingeloggt als<br><strong>$salutation</strong></p>
-                <p><a class="btn btn--secondary btn--small btn--block" href="login/logout">Logout</a></p>
+                <p><a class="btn btn--secondary btn--small btn--block" href="/login/logout">Logout</a></p>
             </div>
             <div class="metamenu__box ob-container">
                 <p><a class="btn btn--primary btn--small btn--block" href="$linkUrl">Gehe zu MeinPortal</a></p>
@@ -237,12 +237,12 @@
     #set($userNameFamily = $userAttributes.get("user.name.family"))
     
     #if($userNameGiven)
-    #set ($salutation = " $userNameGiven")
+        #set ($salutation = " $userNameGiven")
     #end
     #if($userNameFamily)
-    #set ($salutation = "$!{salutation} $userNameFamily")
+        #set ($salutation = "$!{salutation} $userNameFamily")
     #end        
-<a href="portal/myportal-edit-account.psml"><span class="header__widget tx-light mq-hide-xxl">$salutation</span></a>
+    <a href="/portal/myportal-edit-account.psml"><span class="header__widget tx-light mq-hide-xxl">$salutation</span></a>
 #end
     #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())

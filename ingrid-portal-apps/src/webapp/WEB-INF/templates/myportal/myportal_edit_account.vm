@@ -1,24 +1,15 @@
-<div class="box__content ob-container">
- #renderPortletTitle($MESSAGES.getString('javax.portlet.title') )
-</div>
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title') )
 
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="edit_account" id="edit_account">
-	<input type="hidden" name="cmd" value="form_sent" />
-	#set ($formType = 'edit')
-	<section class="block block--padded">
-		<div class="ob-box-wide ob-box-center">
-			<article class="content ob-container ob-box-narrow">
-				#parse ('/WEB-INF/templates/myportal/include_account_form.vm')
-				<div class="media">
-			        <div class="media__obj media__obj--large media__obj--left">
-			        </div>
-			        <div class="media__body media__obj--right">
-			            <p><a class="btn btn--primary btn--medium" onclick="$(this).closest('form').submit()">$MESSAGES.getString('account.edit.submit')</a></p>
-			        </div>
-			    </div>
-			    <p>&nbsp;</p>
-			</article>
-		</div>
-	</section>
+    <input type="hidden" name="cmd" value="form_sent" />
+    #set ($formType = 'edit')
+    #parse ('/WEB-INF/templates/myportal/include_account_form.vm')
+    <div class="media">
+        <div class="media__obj media__obj--large media__obj--left">
+        </div>
+        <div class="media__body media__obj--right">
+            #renderInputButtonClass("$MESSAGES.getString('account.edit.submit')" "width:100%" "" "" "btn btn--primary btn--medium")
+        </div>
+    </div>
 </form>

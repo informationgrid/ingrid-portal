@@ -1,1 +1,3 @@
-<p>$MESSAGES.getString('account.edited.content')</p>
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title') )
+
+#renderMessageSuccess($MESSAGES.getString('account.edited.content'))

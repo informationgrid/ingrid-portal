@@ -10,6 +10,10 @@ $form.getInput($field)#end
 #macro (getHTMLEscapedFieldValue $field)
 $actionForm.getInputHTMLEscaped($field)#end
 
+#macro (getFieldValueByFormRequired $type $field)
+$actionForm.hasErrorInField($field)
+<input type="$type" id="$field" name="$field" value="$actionForm.getInput($field)" #if ($actionForm.hasErrorInField($field))class="field--error"#end/>
+#end
 
 #macro (getChecked $field $value)
 #if ($actionForm.isCurrentInput($field, $value)) checked="checked"#end
@@ -34,28 +38,28 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (displayFormMessagesByForm $form)
-#if ($form.hasMessages())
-<div>
-#foreach ($msg in $form.getAllMessages())
-<h3>$MESSAGES.getString($msg)</h3>
-#end
-</div>
-#end
+    #if ($form.hasMessages())
+        #foreach ($msg in $form.getAllMessages())
+            #renderMessageSuccess($MESSAGES.getString($msg))
+        #end
+    #end
 #end
 
 #macro (displayFormMessages)
-#displayFormMessagesByForm($actionForm) 
+    #displayFormMessagesByForm($actionForm) 
 #end
 
 
 #macro (displayFieldLabelByForm $form $fieldName $fieldLabel)
-#if ($form.hasErrorInField($fieldName))
-<span class="portlet-msg-error">$fieldLabel</span>#else
-$fieldLabel#end
+    #if ($form.hasErrorInField($fieldName))
+        #renderMessageError($fieldLabel)
+    #else
+        $fieldLabel
+    #end
 #end
 
 #macro (displayFieldLabel $fieldName $fieldLabel)
-#displayFieldLabelByForm($actionForm $fieldName $fieldLabel)
+    #displayFieldLabelByForm($actionForm $fieldName $fieldLabel)
 #end
 
 

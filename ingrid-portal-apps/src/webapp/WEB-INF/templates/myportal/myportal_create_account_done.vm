@@ -1,5 +1,7 @@
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title') )
+
 #if ($success == 'true')
-<p>$MESSAGES.getString('account.created.content')</p>
+    #renderMessageSuccess($MESSAGES.getString('account.created.content'))
 #else
-<p>$!{MESSAGES.getString($problemText)}</p>
+    #renderMessageError($!{MESSAGES.getString($problemText)})
 #end

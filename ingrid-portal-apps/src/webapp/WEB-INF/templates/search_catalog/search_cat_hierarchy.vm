@@ -89,7 +89,7 @@
 
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
-    <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+    <div class="media__obj media__obj--left">
         #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--medium")
     </div>
 </form>
