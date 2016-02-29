@@ -11,7 +11,6 @@ $form.getInput($field)#end
 $actionForm.getInputHTMLEscaped($field)#end
 
 #macro (getFieldValueByFormRequired $type $field)
-$actionForm.hasErrorInField($field)
 <input type="$type" id="$field" name="$field" value="$actionForm.getInput($field)" #if ($actionForm.hasErrorInField($field))class="field--error"#end/>
 #end
 
