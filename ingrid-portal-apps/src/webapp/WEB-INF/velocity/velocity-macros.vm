@@ -486,3 +486,45 @@ $actionForm.getInputHTMLEscaped($field)#end
         </div>
     </div>
 #end
+
+#macro(renderUDKIcon $class $title)
+    <svg class="icon globe__icon" title="$title">
+        #if($class == "0")
+            ## Fachaufgabe
+            <use xlink:href="#folder">
+        #elseif($class == "1")
+            ## Geodatensatz
+            <use xlink:href="#globe">
+        #elseif($class == "2")
+            ## Literatur
+            <use xlink:href="#book">
+        #elseif($class == "3")
+            ## Geodatendienst
+            <use xlink:href="#gears">
+        #elseif($class == "4")
+            ## Projekt
+            <use xlink:href="#board">
+        #elseif($class == "5")
+            ## Datensammlung
+            <use xlink:href="#database">
+        #end
+    </svg>
+#end
+
+#macro(renderUDKAddressIcon $class $title)
+    <svg class="icon globe__icon" title="$title">
+        #if($class == "0")
+            ## Institution
+            <use xlink:href="#building">
+        #elseif($class == "1")
+            ## Einheit
+            <use xlink:href="#group">
+        #elseif($class == "2")
+            ## Person
+            <use xlink:href="#users">
+        #elseif($class == "3")
+            ## Freie Adresse
+            <use xlink:href="#envelope">
+        #end
+    </svg>
+#end

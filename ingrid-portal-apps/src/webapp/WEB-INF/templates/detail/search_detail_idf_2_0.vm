@@ -4,93 +4,89 @@
     #end
 #end
 
-#macro (renderSpace)
-	<div style="clear:both; padding:5px;"></div>
-#end
-
 #macro (renderLinkLine $entry)
-	#if($entry.type == "html")
-		$entry.body
-	#else
-		#if($entry.hasLinkIcon)
-	        #if($entry.iconImage)
-	            ##<span class="icon_udk">
-	            ##    <img src="/ingrid-portal-apps/images/$entry.iconImage" alt="$entry.iconImageAltText" />
-	            ##</span>
-	        #elseif($entry.objectClass)
-	            ##<span class="icon_udk">
-	            ##    <img src="/ingrid-portal-apps/images/icn_udk_obj_${entry.get("objectClass")}.gif" alt="Class${entry.get("objectClass")}" />
-	            ##</span>
-	        #else
-	            ##<span class="icon">
-	            #if($entry.isExtern)
-	            ##    <img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
-	            #else
-	            ##    <img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
-	            #end
-	            ##</span>
-	        #end
-	    #end
-	    #if(!$entry.hasLinkIcon)
+    #if($entry.type == "html")
+        $entry.body
+    #else
+        #if($entry.hasLinkIcon)
+            #if($entry.iconImage)
+                ##<span class="icon_udk">
+                ##    <img src="/ingrid-portal-apps/images/$entry.iconImage" alt="$entry.iconImageAltText" />
+                ##</span>
+            #elseif($entry.objectClass)
+                ##<span class="icon_udk">
+                ##    <img src="/ingrid-portal-apps/images/icn_udk_obj_${entry.get("objectClass")}.gif" alt="Class${entry.get("objectClass")}" />
+                ##</span>
+            #else
+                ##<span class="icon">
+                #if($entry.isExtern)
+                ##    <img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
+                #else
+                ##    <img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+                #end
+                ##</span>
+            #end
+        #end
+        #if(!$entry.hasLinkIcon)
             #if($entry.isExtern)
                 <img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
             #elseif($entry.isMapLink)
-            	#if(!$entry.get("href"))
-            		<figure>
+                #if(!$entry.get("href"))
+                    <figure>
                         <img class="ob-box-left" src="$entry.src" alt="">
                         <figcaption class="caption"><p>$entry.title</p></figcaption>
                     </figure>
-				#elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
-					<figure>
+                #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
+                    <figure>
                         <img class="ob-box-left" src="$entry.src" alt="">
                         <figcaption class="caption"><p><a class="btn btn--primary btn--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=${entry.get("href")}">$entry.title</a></p></figcaption>
                     </figure>
-				#else
-					<figure>
+                #else
+                    <figure>
                         <img class="ob-box-left" src="$entry.src" alt="">
                         <figcaption class="caption"><p><a class="btn btn--primary btn--small" href="${entry.get("href")}">$entry.title</a></p></figcaption>
                     </figure>
-				#end
+                #end
             #else
                 <img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
             #end
-	    #end
-	    #if($entry.isExtern)
-	        <p>
-		        <a class="icon-link link" href="$entry.href">
-		            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#globe"></use></svg>
-		            $entry.title
-		        </a>
-		    </p>
-	    #elseif(!$entry.isMapLink)
-	        <p>
-		        <a class="icon-link link" href="$entry.href">
-		            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#globe"></use></svg>
-		            $entry.title
-		        </a>
-		    </p>
-	    #end
-	    #if($tool.hasContent($entry.linkInfo) || $tool.hasContent($entry.attachedToField) || $tool.hasContent($entry.description))
-	        #if($tool.hasContent($entry.linkInfo))
-	            <span class="linkinfo">$entry.linkInfo</span>
-	        #end
-	        #if($tool.hasContent($entry.attachedToField))
-	            <span class="linkinfo">(${entry.get("attachedToField")})</span>
-	        #end
-	        #if($tool.hasContent($entry.description))
-	            #set($myIndent = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-	            #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>${myIndent}"))
-	            <span class="linkinfo"><br/>${myIndent}${myDescription}</span>
-			#end
-		#else
-			<span class="linkinfo">&nbsp;</span>
-	    #end
-	    #if($tool.hasContent($entry.mapLink))
-		    <p>
-		       <a class="btn btn--primary btn--small" target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
-		    </p>
-	    #end
-	#end
+        #end
+        #if($entry.isExtern)
+            <p>
+                <a class="icon-link link" href="$entry.href">
+                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#globe"></use></svg>
+                    $entry.title
+                </a>
+            </p>
+        #elseif(!$entry.isMapLink)
+            <p>
+                <a class="icon-link link" href="$entry.href">
+                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#globe"></use></svg>
+                    $entry.title
+                </a>
+            </p>
+        #end
+        #if($tool.hasContent($entry.linkInfo) || $tool.hasContent($entry.attachedToField) || $tool.hasContent($entry.description))
+            #if($tool.hasContent($entry.linkInfo))
+                <span class="linkinfo">$entry.linkInfo</span>
+            #end
+            #if($tool.hasContent($entry.attachedToField))
+                <span class="linkinfo">(${entry.get("attachedToField")})</span>
+            #end
+            #if($tool.hasContent($entry.description))
+                #set($myIndent = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+                #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>${myIndent}"))
+                <span class="linkinfo"><br/>${myIndent}${myDescription}</span>
+            #end
+        #else
+            <span class="linkinfo">&nbsp;</span>
+        #end
+        #if($tool.hasContent($entry.mapLink))
+            <p>
+               <a class="btn btn--primary btn--small" target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
+            </p>
+        #end
+    #end
 #end
 
 #macro (renderLinkLineAddress $entry)
@@ -267,100 +263,99 @@
 
 ##Render header 
 #macro (renderDetailHeader $title $type $modTime $isMetadata)
-	<section class="block block--light block--pad-top">
-	    <div class="ob-box-wide ob-box-padded ob-box-center">
-	    	<article class="content ob-container">
-		    	<form class="box box--medium">
-	                <div class="box__content ob-container">
-	                    <h6 class="tx-light tx-upper tx-brand bx-bot-0">10.09.2015</h6>
-	                    <h1 class="bx-top-0 bx-bot-s">$title</h1>
-	                    <h3 class="bx-top-0">
-	                    	<svg class="icon">
-	                    		<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#globe"></use>
-	                    	</svg>
-	                    	#if($isMetadata == true)
-								#renderUdkClass($type)
-							#else
-								#renderAddressType($type)
-							#end
-	                    </h3>
-	                </div>
-	                <hr class="hr-thick bx-top-0 bx-bot-0">
-	                <div class="tabs tabs--wide js-tabs bx-top-0 bx-bot-0">
-	                    <nav class="tab__toggles ob-clear mq-hide-l">
-	                        ## Allgemeines
-	                        <div class="tab__toggle is-active" data-tabid="tab-1"><a href="#">$MESSAGES.getString("general_tab")</a></div>
-	                        ## Verweise
-	                        #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
-							#if($TOOL.aNodeOfListExist($xpathList))
-	                        <div class="tab__toggle" data-tabid="tab-2"><a href="#">$MESSAGES.getString("references_tab")</a></div>
-	                        #end
-	                        ## Raum/Zeit
-	                        #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
-							#if($TOOL.aNodeOfListExist($xpathList))
-	                        <div class="tab__toggle" data-tabid="tab-3"><a href="#">$MESSAGES.getString("spacial_reference_tab")</a></div>
-	                        #end
-	                        ## Fachbezug
-	                        #if($type == "1")
-								#set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
-								#if($TOOL.aNodeOfListExist($xpathList))
-								<div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
-		                        #end
-	                        #elseif($type == "2")
-								#set($xpathList = ["./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/organisationName","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:editionDate","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:issueIdentification","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:page","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:ISBN","./gmd:identificationInfo/*/gmd:resourceFormat/gmd:MD_Format/gmd:name","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:otherCitationDetails","./gmd:identificationInfo/*/gmd:supplementalInformation"])
-								#if($TOOL.aNodeOfListExist($xpathList))
-								<div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
-		                        #end
-	                        #elseif($type == "3")
-								#set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
-								#set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:identificationInfo/*/srv:serviceType","./gmd:identificationInfo/*/srv:serviceTypeVersion","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:identificationInfo/*/gmd:environmentDescription","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation","./gmd:identificationInfo/*/gmd:supplementalInformation/gmd:abstract","./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata","./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint"])
-								#if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
-								<div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
-		                        #end
-	                        #elseif($type == "4")
-								#set($xpathList = ["./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty","./gmd:individualName","./gmd:identificationInfo/*/gmd:supplementalInformation"])
-								#if($TOOL.aNodeOfListExist($xpathList))
-								<div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
-		                        #end
-	                        #elseif($type == "5")
-								#set($xpathList = ["./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation"])
-								#if($TOOL.aNodeOfListExist($xpathList))
-								<div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
-		                        #end
-	                        #elseif($type == "6")
-		                        #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
-								#set($xpathList = ["./gmd:identificationInfo/*/srv:serviceType","./gmd:identificationInfo/*/srv:serviceTypeVersion","./gmd:identificationInfo/*/gmd:environmentDescription","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation","./gmd:identificationInfo/*/srv:containsOperations"])
-								#if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
-		                        <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
-		                        #end
-		                    #end
-	                        ## Datenqualität
-	                        #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"])
-							#if($TOOL.aNodeOfListExist($xpathList))
-	                        <div class="tab__toggle" data-tabid="tab-5"><a href="#">$MESSAGES.getString("data_quality")</a></div>
-	                        #end
-	                        ## Verfügbarkeit
-	                        #set($xpathList = ["./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:version/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:fileDecompressionTechnique/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:specification/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue","./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue"])
-							#if($TOOL.aNodeOfListExist($xpathList))
-	                        <div class="tab__toggle" data-tabid="tab-6"><a href="#">$MESSAGES.getString("availability_tab")</a></div>
-	                        #end
-	                        #set($xpathList = ["./gmd:identificationInfo//gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:language/gmd:LanguageCode/@codeListValue"])
-							#if($TOOL.aNodeOfListExist($xpathList))
-		                        ## Zusätzliche Info
-		                        <div class="tab__toggle" data-tabid="tab-7"><a href="#">$MESSAGES.getString("additional_information_tab")</a></div>
-		                    #end
-		                    ## Zusatzfelder
-		                    #set($xpathList = ["./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"])
-		                    #set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))
-							#if($tabtitle)
-		                        <div class="tab__toggle" data-tabid="tab-8"><a href="#">$tabtitle</a></div>
-							#end
-	                    </nav>
-	                </div>
-	            </form>
-        	</article>
-	    </div>
-	</section>
+    <section class="block block--light block--pad-top">
+        <div class="ob-box-wide ob-box-padded ob-box-center">
+            <article class="content ob-container">
+                <form class="box box--medium">
+                    <div class="box__content ob-container">
+                        <h6 class="tx-light tx-upper tx-brand bx-bot-0">10.09.2015</h6>
+                        <h1 class="bx-top-0 bx-bot-s">$title</h1>
+                        <h3 class="bx-top-0">
+                            #if($isMetadata == true)
+                                #renderUDKIcon($type)
+                                #renderUdkClass($type)
+                            #else
+                                #renderUDKAddressIcon($type)
+                                #renderAddressType($type)
+                            #end
+                        </h3>
+                    </div>
+                    <hr class="hr-thick bx-top-0 bx-bot-0">
+                    <div class="tabs tabs--wide js-tabs bx-top-0 bx-bot-0">
+                        <nav class="tab__toggles ob-clear mq-hide-l">
+                            ## Allgemeines
+                            <div class="tab__toggle is-active" data-tabid="tab-1"><a href="#">$MESSAGES.getString("general_tab")</a></div>
+                            ## Verweise
+                            #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                            <div class="tab__toggle" data-tabid="tab-2"><a href="#">$MESSAGES.getString("references_tab")</a></div>
+                            #end
+                            ## Raum/Zeit
+                            #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                            <div class="tab__toggle" data-tabid="tab-3"><a href="#">$MESSAGES.getString("spacial_reference_tab")</a></div>
+                            #end
+                            ## Fachbezug
+                            #if($type == "1")
+                                #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
+                                #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #elseif($type == "2")
+                                #set($xpathList = ["./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/organisationName","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:editionDate","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:issueIdentification","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:page","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:ISBN","./gmd:identificationInfo/*/gmd:resourceFormat/gmd:MD_Format/gmd:name","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:otherCitationDetails","./gmd:identificationInfo/*/gmd:supplementalInformation"])
+                                #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #elseif($type == "3")
+                                #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
+                                #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:identificationInfo/*/srv:serviceType","./gmd:identificationInfo/*/srv:serviceTypeVersion","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:identificationInfo/*/gmd:environmentDescription","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation","./gmd:identificationInfo/*/gmd:supplementalInformation/gmd:abstract","./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata","./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint"])
+                                #if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
+                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #elseif($type == "4")
+                                #set($xpathList = ["./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty","./gmd:individualName","./gmd:identificationInfo/*/gmd:supplementalInformation"])
+                                #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #elseif($type == "5")
+                                #set($xpathList = ["./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation"])
+                                #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #elseif($type == "6")
+                                #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
+                                #set($xpathList = ["./gmd:identificationInfo/*/srv:serviceType","./gmd:identificationInfo/*/srv:serviceTypeVersion","./gmd:identificationInfo/*/gmd:environmentDescription","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation","./gmd:identificationInfo/*/srv:containsOperations"])
+                                #if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
+                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #end
+                            ## Datenqualität
+                            #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                            <div class="tab__toggle" data-tabid="tab-5"><a href="#">$MESSAGES.getString("data_quality")</a></div>
+                            #end
+                            ## Verfügbarkeit
+                            #set($xpathList = ["./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:version/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:fileDecompressionTechnique/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:specification/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue","./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                            <div class="tab__toggle" data-tabid="tab-6"><a href="#">$MESSAGES.getString("availability_tab")</a></div>
+                            #end
+                            #set($xpathList = ["./gmd:identificationInfo//gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:language/gmd:LanguageCode/@codeListValue"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                                ## Zusätzliche Info
+                                <div class="tab__toggle" data-tabid="tab-7"><a href="#">$MESSAGES.getString("additional_information_tab")</a></div>
+                            #end
+                            ## Zusatzfelder
+                            #set($xpathList = ["./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"])
+                            #set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))
+                            #if($tabtitle)
+                                <div class="tab__toggle" data-tabid="tab-8"><a href="#">$tabtitle</a></div>
+                            #end
+                        </nav>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </section>
 #end
 
 #macro (renderImageLine $entry)
@@ -407,7 +402,7 @@
     <h1 class="print_title"> 
         $entry
     </h1>
-	#end
+    #end
 #end
 
 
@@ -457,18 +452,18 @@
 
 ## Render Table
 #macro (renderTable $entry)
-	#renderTableTitle("" $entry "")
+    #renderTableTitle("" $entry "")
 #end
 
 #macro (renderTableTitle $title $entry $space)
-	#if($tool.hasContent($entry.get("body")))
-		#if($title == "")
+    #if($tool.hasContent($entry.get("body")))
+        #if($title == "")
             #if($tool.hasContent($entry.title))
                 #renderGroupTitle($entry.title)
-			#end
-		#else
-			#renderGroupTitle($title)
-		#end
+            #end
+        #else
+            #renderGroupTitle($title)
+        #end
         <div class="table table--striped">
         <table class="border detail_table" border="0">
         #if($tool.hasContent($entry.get("head")))
@@ -514,10 +509,10 @@
         </tbody>
         </table>
         </div>
-	#else
-		#if($space != "")
-			#renderTextLabelLeft($title $space)
-		#end
+    #else
+        #if($space != "")
+            #renderTextLabelLeft($title $space)
+        #end
     #end
 #end
 
@@ -525,7 +520,7 @@
 #macro (renderTextLine $entry)
     #if($tool.hasContent($entry.body))
         #if($tool.hasContent($entry.title))
-        	<div class="table--lined">
+            <div class="table--lined">
                 <table>
                     <tbody>
                         <tr>
@@ -550,10 +545,10 @@
                     <tr>
                         <th>$entry.title</th>
                         <td>
-							<a href="$entry.href" alt="$entry.altText">
-				                $entry.body
-				            </a>
-						</td>
+                            <a href="$entry.href" alt="$entry.altText">
+                                $entry.body
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -595,40 +590,40 @@
 
 ## Render link in list
 #macro (renderLinkList $title $linkList $titleAsSection)
-	#renderLinkListSpace ($title $linkList $titleAsSection "")
+    #renderLinkListSpace ($title $linkList $titleAsSection "")
 #end
 #macro (renderLinkListSpace $title $linkList $titleAsSection $space)
     #if($tool.hasContent($linkList))
-		#if($titleAsSection == "true")
-			#if($tool.hasContent($title))
-					#renderSectionTitle($title)
-			#end
-		#end
+        #if($titleAsSection == "true")
+            #if($tool.hasContent($title))
+                    #renderSectionTitle($title)
+            #end
+        #end
         <div class="width_two_thirds">
-			#if($titleAsSection == "false")
-				#if($tool.hasContent($title))
-					#renderLine()
-					<h4>$title</h4>
-				#end
-			#end
+            #if($titleAsSection == "false")
+                #if($tool.hasContent($title))
+                    #renderLine()
+                    <h4>$title</h4>
+                #end
+            #end
             #foreach($link in $sorter.sort($linkList,"title"))
                 #renderLinkLine($link)
             #end
         </div>
-	#else
-		#if($space != "")
-			#renderTextLabelLeft($title $space)
-		#end
+    #else
+        #if($space != "")
+            #renderTextLabelLeft($title $space)
+        #end
     #end
 #end
 
 ## Render list
 #macro (renderTextList $title $textList)
-	#renderTextListSpace ($title $textList "")
+    #renderTextListSpace ($title $textList "")
 #end
 
 #macro (renderTextListSpace $title $textList $space)
-	#if($tool.hasContent($textList))
+    #if($tool.hasContent($textList))
         #if($tool.hasContent($title))
             <h4>$title</h4>
             ##renderGroupTitle($entry.title)
@@ -638,10 +633,10 @@
              <li class="detail_li"><p class="detail_li">$text</li>
         #end
         </ul>
-	#else
-		#if($space != "")
-			#renderTextLabelLeft($title $space)
-		#end
+    #else
+        #if($space != "")
+            #renderTextLabelLeft($title $space)
+        #end
     #end
 #end
 
@@ -655,7 +650,7 @@
             </h4>
         #end
         <p class="text_label_above_body">$body</p>
-	#end
+    #end
 #end
 
 ## Render label above text
@@ -677,12 +672,12 @@
 
 ## Render label left from text
 #macro (renderTextLabelLeft $title $body)
-	#renderTextLabelLeftSpace($title $body "")
+    #renderTextLabelLeftSpace($title $body "")
 #end
 
 #macro (renderTextLabelLeftSpace $title $body $space)
-	#if($tool.hasContent($body))
-		<div class="table--lined">
+    #if($tool.hasContent($body))
+        <div class="table--lined">
             <table>
                 <tbody>
                     <tr>
@@ -692,11 +687,11 @@
                 </tbody>
             </table>
         </div>  
-	#else 
-		#if($space != "")
-			#renderTextLabelLeft($title $space)
-		#end
-	#end
+    #else 
+        #if($space != "")
+            #renderTextLabelLeft($title $space)
+        #end
+    #end
 #end
 
 #macro (renderTextLabelLeftLink $entry)
@@ -766,20 +761,6 @@
     #end
 #end
 
-#macro (openLayoutTabContainer)
-	<div dojoType="dijit.layout.TabContainer" doLayout="false" style="width: 100%; min-height: 100px;">
-#end
-
-#macro (openTabContentPane $title)
-	#if($tool.hasContent($title))
-    	<div dojoType="dijit.layout.ContentPane" title="$title" class="contentTab">
-    		#renderClearer()
-	#end
-#end
-
-#macro (closeDiv)
-	</div>
-#end
 
 
 ## Render elements
@@ -788,18 +769,12 @@
             #if($e.type)
                 #if($e.type=="render")
                     #set ($TOOL = $e.preparer)
-					#parse ($TOOL.templateName)
+                    #parse ($TOOL.templateName)
                 #elseif($e.type=="html")
                     $e.body
                 #end
             #end
         #end
-#end
-
-#macro (renderClearer)
-    <script type="text/javascript">
-        document.write("<span class=\"clearer\"><\/span>");
-    </script>
 #end
 
 ## ***************************

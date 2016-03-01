@@ -61,16 +61,22 @@
                         <use xlink:href="#minus">
                     </svg>
                 </a>
+                #if ($node.plugType == 'dsc_ecs')
+                    #renderUDKIcon(${node.udk_class} $nodeAlt)
+                #else
+                    #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
+                #end
                 ## render node text
                 <strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
             </li>
         #else
             #if($nodeUrl != '')
             <li class="tree__item">
-                <svg class="tree__icon icon" title="Informationssystem">
-                    <use xlink:href="#molecule">
-                    </use>
-                </svg>
+                #if ($node.plugType == 'dsc_ecs')
+                    #renderUDKIcon(${node.udk_class} $nodeAlt)
+                #else
+                    #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
+                #end
                 <a href="$nodeUrl" target="_new">$nodeTitle</a>
             </li>
             #end
