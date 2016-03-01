@@ -1472,7 +1472,6 @@ public class UtilsSearch {
         List wmsServices = null;
 
         WMSInterface service = WMSInterfaceImpl.getInstance();
-        boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
         PortletSession session = request.getPortletSession();
 
         // check for personalizes wms services
@@ -1495,12 +1494,12 @@ public class UtilsSearch {
 
         // create the wms url
         if (wmsServices.size() > 0) {
-            return service.getWMSAddedServiceURL(wmsServices, session.getId(), hasJavaScript, request.getLocale(),
+            return service.getWMSAddedServiceURL(wmsServices, session.getId(), request.getLocale(),
                     isViewer);
         } else if (isViewer) {
-            return service.getWMSViewerURL(session.getId(), hasJavaScript, request.getLocale());
+            return service.getWMSViewerURL(session.getId(), request.getLocale());
         } else {
-            return service.getWMSSearchURL(session.getId(), hasJavaScript, request.getLocale());
+            return service.getWMSSearchURL(session.getId(), request.getLocale());
         }
     }
 

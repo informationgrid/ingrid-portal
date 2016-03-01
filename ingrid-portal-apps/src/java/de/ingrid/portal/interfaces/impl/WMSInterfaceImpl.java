@@ -265,9 +265,9 @@ public class WMSInterfaceImpl implements WMSInterface {
     /**
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSURL(java.lang.String)
      */
-    public String getWMSViewerURL(String sessionId, boolean jsEnabled, Locale language) {
+    public String getWMSViewerURL(String sessionId, Locale language) {
         String viewerURL = "";
-        if (jsEnabled || !mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
+        if (!mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
             viewerURL = config.getString("display_viewer_url", "http://localhost/mapbender/frames/WMS_Viewer.php");
         } else {
             // this URL only exists for MapBender 2.1 based Map Viewer
@@ -290,9 +290,9 @@ public class WMSInterfaceImpl implements WMSInterface {
     /**
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSSearchURL(java.lang.String)
      */
-    public String getWMSSearchURL(String sessionId, boolean jsEnabled, Locale language) {
+    public String getWMSSearchURL(String sessionId, Locale language) {
         String searchURL = "";
-        if (jsEnabled || !mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
+        if (!mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
             searchURL = config.getString("display_search_url", "http://localhost/mapbender/frames/WMS_Search.php");
         } else {
             // this URL only exists for MapBender 2.1 based Map Viewer
@@ -319,7 +319,7 @@ public class WMSInterfaceImpl implements WMSInterface {
             Locale language, boolean isViewer) {
         ArrayList l = new ArrayList();
         l.add(service);
-        return getWMSAddedServiceURL(l, sessionId, jsEnabled, language, isViewer);
+        return getWMSAddedServiceURL(l, sessionId, language, isViewer);
     }
 
     /**
@@ -327,15 +327,15 @@ public class WMSInterfaceImpl implements WMSInterface {
      * @see de.ingrid.portal.interfaces.WMSInterface#getWMSAddedServiceURL(java.util.ArrayList,
      *      java.lang.String)
      */
-    public String getWMSAddedServiceURL(List services, String sessionId, boolean jsEnabled, Locale language, boolean isViewer) {
+    public String getWMSAddedServiceURL(List services, String sessionId, Locale language, boolean isViewer) {
         WMSServiceDescriptor service;
         String serviceURL;
         String serviceName;
         StringBuffer resultB;
         if (isViewer) {
-            resultB = new StringBuffer(getWMSViewerURL(sessionId, jsEnabled, language));
+            resultB = new StringBuffer(getWMSViewerURL(sessionId, language));
         } else {
-            resultB = new StringBuffer(this.getWMSSearchURL(sessionId, jsEnabled, language));
+            resultB = new StringBuffer(this.getWMSSearchURL(sessionId, language));
         }
         boolean prequestAdded = false;
 

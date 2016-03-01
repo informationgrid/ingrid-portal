@@ -160,7 +160,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         }
         SearchState.adaptSearchState(request, Settings.PARAM_FILTER, filter);
         String filterSubject = request.getParameter(Settings.PARAM_SUBJECT);
-        SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, filterSubject);        
+        SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, filterSubject);
 
         // set filter params into context for filter display
         if (filter != null) {
@@ -227,8 +227,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                  }
             }
         }
-
-        String currentView = getDefaultViewPage();
 
         // ----------------------------------
         // business logic
@@ -298,7 +296,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 
                 String url = PortalConfig.getInstance().getString(PortalConfig.PORTAL_LOGGER_RESOURCE);
                 if (url != null) {
-                    String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);                
+                    String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
                     HttpMethod method = null;
                      try{
                          url = url.concat("?code=NO_RESULTS_FOR_QUERY&q=").concat(URLEncoder.encode(queryString, "UTF-8")).concat("&qtypes=").concat(URLEncoder.encode(queryTypes, "UTF-8"));
@@ -316,7 +314,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                              } catch (Throwable t) {
                                  if (log.isErrorEnabled()) {
                                      log.error("Cannot close connection to logger resource: ".concat(url), t);
-                           }
+                                 }
                              }
                          }
                      }
@@ -404,19 +402,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
              showAdminContent = request.getUserPrincipal().getName().equals("admin");
         }
         
-     // check for one column rendering
-        if (currentView.equals(TEMPLATE_RESULT_FILTERED_ONECOLUMN)) {
-             if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID) && rankedHits == null) {
-                context.put("IS_RANKED", new Boolean(false));
-             } else {
-                  // grouping by domain
-                context.put("IS_RANKED", new Boolean(true));
-             }
-
-        } else if (currentView.equals(TEMPLATE_RESULT_ADDRESS)) {
-            context.put("ds", request.getParameter("ds"));
-        }
-        
+        context.put("ds", request.getParameter("ds"));        
         context.put("adminContent", showAdminContent);
         context.put("rankedPageSelector", rankedPageNavigation);
         if(rankedHits != null){
