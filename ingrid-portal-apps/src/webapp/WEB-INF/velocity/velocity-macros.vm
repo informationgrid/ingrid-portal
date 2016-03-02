@@ -444,18 +444,23 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (renderPortletTitle $_title $_h $_h_class $_help)
-#if(!$_h || $_h == "")
-    #set($_h ="h1")
+    #if(!$_h || $_h == "")
+        #set($_h ="h1")
+    #end
+    <$_h #if($_h_class && $_h_class != "")class="$_h_class" #end>
+        $_title
+        #if($_help)
+            <div class="tooltip ob-circle js-popup" data-content="<p>$_help</p>">
+                <svg class="tooltip__icon icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#question-mark"></use></svg>
+            </div>
+        #end
+    </$_h>
 #end
 
-<$_h #if($_h_class && $_h_class != "")class="$_h_class" #end>
-    $_title
-    #if($_help)
-        <div class="tooltip ob-circle js-popup" data-content="<p>$_help</p>">
-            <svg class="tooltip__icon icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#question-mark"></use></svg>
-        </div>
-    #end
-</$_h>
+#macro (renderPopUpIcon $_message $_class $_style $_title )
+    <div class="tooltip ob-circle js-popup #if($_class)$_class#end" #if($_title)data-title="$_title"#end data-content="$_message" #if($_style)style="$_style"#end>
+        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
+    </div>
 #end
 
 #macro (renderMessageInfo $_message)
