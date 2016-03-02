@@ -1,67 +1,82 @@
 #renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
 
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
-    <div class="box box--fill box--small">
-        <div class="box__content ob-container">
-            #renderMessageInfo($MESSAGES.getString('component.forms.text.search.wildcard'))
-            <div id="filterArea" class="media ob-clear">
-                <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-                    <input class="bx-bot-xs" style="margin-bottom:0" type="text" name="filterCriteriaProviderIdent" id="filterCriteriaProviderIdent" value="$!browser.filterCriteria.filterCriteriaProviderIdent" placeholder="$MESSAGES.getString('component.forms.provider.text.short')"/>
-                </div>
-                <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-                    <input class="bx-bot-xs" style="margin-bottom:0" type="text" name="filterCriteriaProviderName" id="filterCriteriaProviderName" value="$!browser.filterCriteria.filterCriteriaProviderName" placeholder="$MESSAGES.getString('component.forms.provider.text.name')"/>
-                </div>
-                <span style="clear:both" />
-                <div class="media__obj media__obj--right" style="margin-bottom: 0;">
-                    #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%;" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')" "btn btn--secondary btn--small")
+<div class="block">
+    <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
+        <aside class="sidebar js-accordion-multi" style="padding:3.75rem 0 0; left:0;">
+            <div class="sidebar__title js-accordion-toggle mq-show-l">
+                Filter
+                <svg class="icon"><use xlink:href="#filter"></use></svg>
+                <svg class="icon"><use xlink:href="#cross"></use></svg>
+            </div>
+            <div class="sidebar__content js-accordion-content is-hidden">
+                <div class="sidebar__widget js-accordion-multi">
+                    <div class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content">
+                        <div id="filterArea" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content">
+                            <h4>
+                                <span class="mq-hide-l">Filter</span>
+                                <span>&nbsp;</span>
+                                #renderPopUpIcon("<p>$MESSAGES.getString('component.forms.text.search.wildcard')</p>" "" "float:right")
+                            </h4>
+                            <input class="bx-bot-xs" style="margin-bottom:0" type="text" name="filterCriteriaProviderIdent" id="filterCriteriaProviderIdent" value="$!browser.filterCriteria.filterCriteriaProviderIdent" placeholder="$MESSAGES.getString('component.forms.provider.text.short')"/>
+                            <input class="bx-bot-xs" style="margin-bottom:0" type="text" name="filterCriteriaProviderName" id="filterCriteriaProviderName" value="$!browser.filterCriteria.filterCriteriaProviderName" placeholder="$MESSAGES.getString('component.forms.provider.text.name')"/>
+                            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%;" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')" "btn btn--secondary btn--small")
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    #renderPaginationAndHint($browser "")
-    <div class="table table--striped table--sortable">
-        <table class="js-table-sortable">
-            #set ($colNames = ["id", "ident", "name", "url", "sortkey", "sortkeyPartner"])
-            #set ($colTitles = [$MESSAGES.getString('component.forms.provider.text.id'), $MESSAGES.getString('component.forms.provider.text.short'), $MESSAGES.getString('component.forms.provider.text.name'), $MESSAGES.getString('component.forms.provider.text.link'), $MESSAGES.getString('component.forms.provider.text.sort'), $MESSAGES.getString('component.forms.provider.text.partner')])
-            #renderDBBrowserHeader($colNames $colTitles)
-            #foreach ($dbEntity in $dbEntities)
-                #set ($rowId = $dbEntity.Id)
-                #set ($rowValues = [$dbEntity.Ident, $dbEntity.Name, $UtilsString.cutString($dbEntity.Url, 20, 20), $dbEntity.Sortkey, $dbEntity.SortkeyPartner])
-                <tr>
-                    #set ($action = $renderResponse.createActionURL())
-                    $action.setParameter('doEdit','Edit')
-                    $action.setParameter("id", "$rowId")
-                    <td>
-                        <div class="field-toggle field-toggle--check">
-                            <input id="chk_$velocityCount" type="checkbox" name="id" type="checkbox" value="$rowId">
-                            <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
-                            <div class="field-toggle__icon field-toggle__icon-alt">
-                                <svg class="icon">
-                                    <use xlink:href="#tick">
-                                </svg>
-                            </div>
-                            <a href="$action">$rowId</a>
-                            </label>
-                        </div>
-                    </td>
-                    <td><a href="$action">$dbEntity.Ident</a></td>
-                    <td><a href="$action">$dbEntity.Name</a></td>
-                    <td><a href="$action">$UtilsString.cutString($dbEntity.Url, 20, 20)</a></td>
-                    <td><a href="$action">$dbEntity.Sortkey</a></td>
-                    <td><a href="$action">
-                    #foreach ($partner in $partners)
-                        #if($partner.sortkey == $dbEntity.SortkeyPartner)
-                            $partner.name
-                        #end
-                    #end</a></td>
-                </tr>
-            #end
-        </table>
-    </div>
-    #set ($buttons = ["doDelete", "doRefresh", "doNew"])
-    #renderDBBrowserFooterButtonsDisable($buttons $disablePartnerProviderEdit)
-</form>
+        </aside>
+        <article class="content ob-container ob-box-narrow">
+            #renderPaginationAndHint($browser "")
+            <div class="table table--striped table--sortable">
+                <table class="js-table-sortable">
+                    #set ($colNames = ["id", "ident", "name", "url", "sortkey", "sortkeyPartner"])
+                    #set ($colTitles = [$MESSAGES.getString('component.forms.provider.text.id'), $MESSAGES.getString('component.forms.provider.text.short'), $MESSAGES.getString('component.forms.provider.text.name'), $MESSAGES.getString('component.forms.provider.text.link'), $MESSAGES.getString('component.forms.provider.text.sort'), $MESSAGES.getString('component.forms.provider.text.partner')])
+                    #renderDBBrowserHeader($colNames $colTitles)
+                    #foreach ($dbEntity in $dbEntities)
+                        #set ($rowId = $dbEntity.Id)
+                        #set ($rowValues = [$dbEntity.Ident, $dbEntity.Name, $UtilsString.cutString($dbEntity.Url, 20, 20), $dbEntity.Sortkey, $dbEntity.SortkeyPartner])
+                        <tr>
+                            #set ($action = $renderResponse.createActionURL())
+                            $action.setParameter('doEdit','Edit')
+                            $action.setParameter("id", "$rowId")
+                            <td>
+                                <div class="field-toggle field-toggle--check">
+                                    <input id="chk_$velocityCount" type="checkbox" name="id" type="checkbox" value="$rowId">
+                                    <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
+                                    <div class="field-toggle__icon field-toggle__icon-alt">
+                                        <svg class="icon">
+                                            <use xlink:href="#tick">
+                                        </svg>
+                                    </div>
+                                    <a href="$action">$rowId</a>
+                                    </label>
+                                </div>
+                            </td>
+                            <td><a href="$action">$dbEntity.Ident</a></td>
+                            <td><a href="$action">$dbEntity.Name</a></td>
+                            <td><a href="$action">$UtilsString.cutString($dbEntity.Url, 20, 20)</a></td>
+                            <td><a href="$action">$dbEntity.Sortkey</a></td>
+                            <td><a href="$action">
+                            #foreach ($partner in $partners)
+                                #if($partner.sortkey == $dbEntity.SortkeyPartner)
+                                    $partner.name
+                                #end
+                            #end</a></td>
+                        </tr>
+                    #end
+                </table>
+            </div>
+            #set ($buttons = ["doDelete", "doRefresh", "doNew"])
+            #renderDBBrowserFooterButtonsDisable($buttons $disablePartnerProviderEdit)
+            <div class="sidebar-toggle mq-hide-l mq-show-xb js-sidebar-toggle">
+                <svg class="icon">
+                    <use xlink:href="#arrow-thick">
+                </svg>
+            </div>
+        </article>
+    </form>
+</div>
 <br/>
 <hr/>
 #set ($action = $renderResponse.createActionURL())
@@ -79,6 +94,6 @@
         </div>
     </div>
     <div class="media__obj media__obj--right" style="margin-bottom: 0;">
-        #renderInputButtonClass("$MESSAGES.getString('component.forms.provider.button.import')" "width:100%;" "doImport" "" "btn btn--secondary btn--small")
+        #renderInputButtonClass("$MESSAGES.getString('component.forms.provider.button.import')" "width:100%;" "doImport" "" "btn btn--primary btn--small")
     </div>
 </form>

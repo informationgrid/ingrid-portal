@@ -46,7 +46,6 @@
             </div>
             #set ($buttons = ["doDelete", "doRefresh", "doNew"])
             #renderDBBrowserFooterButtons($buttons)
-            <br>
             <div class="sidebar-toggle mq-hide-l mq-show-xb js-sidebar-toggle">
                 <svg class="icon">
                     <use xlink:href="#arrow-thick">

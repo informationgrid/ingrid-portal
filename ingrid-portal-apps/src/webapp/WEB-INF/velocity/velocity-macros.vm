@@ -103,12 +103,14 @@ $actionForm.getInputHTMLEscaped($field)#end
     <div id="paginationAndHint" class="pagination">
         <ul class="pagination__list tx-right mq-hide-m">
             <li>
+                #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doFirst', 'first')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
                     <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
                 </a>
             </li>
             <li>
+                #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doPrev', 'prev')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
                     <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
@@ -118,6 +120,7 @@ $actionForm.getInputHTMLEscaped($field)#end
             <li>$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</li>
             
             <li>
+                #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doNext', 'next')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
                     <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
@@ -125,6 +128,7 @@ $actionForm.getInputHTMLEscaped($field)#end
             </li>
             
             <li>
+                #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doLast', 'last')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
                     <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
@@ -133,12 +137,14 @@ $actionForm.getInputHTMLEscaped($field)#end
         </ul>
         <ul class="pagination__list mq-show-m">
             <li>
+                #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doFirst', 'first')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
                     <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
                 </a>
             </li>
             <li>
+                #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doPrev', 'prev')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
                     <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
@@ -148,6 +154,7 @@ $actionForm.getInputHTMLEscaped($field)#end
             <li>$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() / $browser.getTotalNumRows()</li>
             
             <li>
+                #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doNext', 'next')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
                     <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
@@ -155,6 +162,7 @@ $actionForm.getInputHTMLEscaped($field)#end
             </li>
             
             <li>
+                #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doLast', 'last')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
                     <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
