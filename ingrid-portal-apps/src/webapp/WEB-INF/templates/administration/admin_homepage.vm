@@ -17,7 +17,7 @@
                 #set($fragment = "")
             #end
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label for="c1r$velocityCount">$MESSAGES.getString('admin.homepage.line') $velocityCount</label>
                 </div>
                 <div class="media__body">

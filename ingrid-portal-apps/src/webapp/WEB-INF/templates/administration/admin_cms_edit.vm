@@ -15,7 +15,7 @@
         #renderDBEditId($mode $dbEntity.id)
         <hr />
         <div class="media">
-            <div class="media__obj media__obj--large media__obj--left">
+            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                 <label for="item_key">$MESSAGES.getString('admin.cms.item.key')*</label>
             </div>
             <div class="media__body">
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="media">
-            <div class="media__obj media__obj--large media__obj--left">
+            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                 <label for="item_description">#displayFieldLabel("item_description" "$MESSAGES.getString('admin.cms.item.description')")</label>
             </div>
             <div class="media__body">
@@ -40,7 +40,7 @@
                 #set($item = $dbEntity.getLocalizedEntry($lang))
             #end
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label for="title_$lang">#displayFieldLabel("title_$lang" "$MESSAGES.getString('admin.cms.item.title') ($ListTool.get($languagesNames, $i))")</label>
                 </div>
                 <div class="media__body">
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label for="value_$lang">$MESSAGES.getString('admin.cms.item.content') ($ListTool.get($languagesNames, $i))*</label>
                 </div>
                 <div class="media__body">
@@ -57,7 +57,7 @@
             </div>
             #if ($mode == 'edit')
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label>$MESSAGES.getString('admin.cms.changed.on')</label>
                     </div>
                     <div class="media__body">
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label>$MESSAGES.getString('admin.cms.changed.by')</label>
                     </div>
                     <div class="media__body">

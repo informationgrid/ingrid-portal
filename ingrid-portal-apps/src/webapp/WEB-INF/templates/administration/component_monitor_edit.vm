@@ -21,9 +21,8 @@
             #end
             #displayFormErrors()
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label>$MESSAGES.getString('component.forms.text.component.id')</label>
-                    
                 </div>
                 <div class="media__body">
                     #getFieldValue('id')&nbsp;
@@ -35,7 +34,7 @@
                 ## nothing
             #else
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label for="type">#displayFieldLabel('type' $MESSAGES.getString('component.forms.text.component.type'))</label>
                     </div>
                     <div class="media__body">
@@ -44,7 +43,7 @@
                     </div>
                 </div>
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label for="title">$MESSAGES.getString('component.forms.text.component.name')*</label>
                     </div>
                     <div class="media__body">
@@ -72,7 +71,7 @@
                 ########################################################################
                 
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                           <label for="interval">$MESSAGES.getString('component.forms.text.interval')*</label>
                     </div>
                     <div class="media__body">
@@ -80,7 +79,7 @@
                     </div>
                 </div>
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                           <label for="timeout">$MESSAGES.getString('component.forms.text.timeout')*</label>
                     </div>
                     <div class="media__body">
@@ -88,8 +87,8 @@
                     </div>
                 </div>
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
-                        <label for="active">&nbsp;</label>
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label class="mq-hide-l" for="active">&nbsp;</label>
                     </div>
                     <div class="media__body">
                         <div class="field-toggle field-toggle--check">
@@ -105,7 +104,7 @@
                     </div>
                 </div>
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label>$MESSAGES.getString('component.forms.text.email.addresses')</label>
                     </div>
                     <div class="media__body">
@@ -152,7 +151,7 @@
             #end
             #if ($actionForm.getInput('last_execution') != "")
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label for="">#displayFieldLabel('lastExecution' $MESSAGES.getString('component.forms.text.last.check'))</label>
                     </div>
                     <div class="media__body">
@@ -160,7 +159,7 @@
                     </div>
                 </div>
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label for="">#displayFieldLabel('lastOkExecution' $MESSAGES.getString('component.forms.text.last.errorfree.run'))</label>
                     </div>
                     <div class="media__body">
@@ -168,7 +167,7 @@
                     </div>
                 </div>
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label for="">#displayFieldLabel('nextExecution' $MESSAGES.getString('component.forms.text.next.check'))</label>
                     </div>
                     <div class="media__body">
@@ -176,7 +175,7 @@
                     </div>
                 </div>
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label for="">#displayFieldLabel('numExecutions' $MESSAGES.getString('component.forms.text.num.executions'))</label>
                     </div>
                     <div class="media__body">
@@ -184,7 +183,7 @@
                     </div>
                 </div>
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label for="">#displayFieldLabel('averageExecution' $MESSAGES.getString('component.forms.text.average.exec.time'))</label>
                     </div>
                     <div class="media__body">
@@ -203,6 +202,7 @@
         <div class="media__obj media__obj--left" style="margin-bottom: 0;">
             #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset.time')" "width:100%;" "doResetTime" "" "btn btn--secondary btn--small")
         </div>
+        <span>&nbsp;</span>
     #end
     #renderDBEditFooter("edit")
 </form>

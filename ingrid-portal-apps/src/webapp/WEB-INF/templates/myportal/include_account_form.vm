@@ -4,7 +4,7 @@
 #renderMessageInfo("* $MESSAGES.getString('account.edit.required.fields')")
 #displayFormErrors()
 <div class="media">
-    <div class="media__obj media__obj--large media__obj--left">
+    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation')):</label>
     </div>
     <div class="media__body">
@@ -18,7 +18,7 @@
     </div>
 </div>  
 <div class="media">
-    <div class="media__obj media__obj--large media__obj--left">
+    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="firstname">$MESSAGES.getString('account.edit.label.firstname')*:</label>
     </div>
     <div class="media__body">
@@ -26,7 +26,7 @@
     </div>
 </div>  
 <div class="media">
-    <div class="media__obj media__obj--large media__obj--left">
+    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="lastname">$MESSAGES.getString('account.edit.label.lastname')*:</label>
     </div>
     <div class="media__body">
@@ -34,7 +34,7 @@
     </div>
 </div>  
 <div class="media">
-    <div class="media__obj media__obj--large media__obj--left">
+    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="email">$MESSAGES.getString('account.edit.label.email')*:</label>
     </div>
     <div class="media__body">
@@ -43,7 +43,7 @@
 </div>  
 #if ($formType == 'edit')
 	<div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="login">$MESSAGES.getString('account.edit.label.password_old')*:</label>
         </div>
         <div class="media__body">
@@ -52,7 +52,7 @@
     </div>  
     <hr />
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="password">$MESSAGES.getString('account.edit.label.password_new')*:</label>
         </div>
         <div class="media__body">
@@ -60,7 +60,7 @@
         </div>
     </div>  
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="password_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')*:</label>
         </div>
         <div class="media__body">
@@ -69,7 +69,7 @@
     </div>
 #elseif($formType == 'create')
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="login">$MESSAGES.getString('account.create.label.username')*:</label>
         </div>
         <div class="media__body">
@@ -78,7 +78,7 @@
     </div>
     <hr />
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="password">$MESSAGES.getString('account.create.label.password')*:</label>
         </div>
         <div class="media__body">
@@ -86,7 +86,7 @@
         </div>
     </div>
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="password_confirm">$MESSAGES.getString('account.create.label.password_confirm')*:</label>
         </div>
         <div class="media__body">
@@ -97,7 +97,7 @@
 <hr />
 <h4>$MESSAGES.getString('account.edit.address.information')</h4>
 <div class="media">
-    <div class="media__obj media__obj--large media__obj--left">
+    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="street">#displayFieldLabel('street' $MESSAGES.getString('account.edit.label.street')):</label>
     </div>
     <div class="media__body">
@@ -105,7 +105,7 @@
     </div>
 </div>
 <div class="media">
-    <div class="media__obj media__obj--large media__obj--left">
+    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="postalcode">#displayFieldLabel('postalcode' $MESSAGES.getString('account.edit.label.postalcode')):</label>
     </div>
     <div class="media__body">
@@ -113,7 +113,7 @@
     </div>
 </div>
 <div class="media">
-    <div class="media__obj media__obj--large media__obj--left">
+    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="city">#displayFieldLabel('city' $MESSAGES.getString('account.edit.label.city')):</label>
     </div>
     <div class="media__body">
@@ -123,7 +123,7 @@
 #if($enableAccountQuestion)
     <hr />
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="attention">#displayFieldLabel('attention' $MESSAGES.getString('account.edit.label.attention')):</label>
         </div>
         <div class="media__body">
@@ -131,7 +131,7 @@
         </div>
     </div>
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="age">#displayFieldLabel('age' $MESSAGES.getString('account.edit.label.age')):</label>
         </div>
         <div class="media__body">
@@ -148,7 +148,7 @@
         </div>
     </div>
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="interest">#displayFieldLabel('interest' $MESSAGES.getString('account.edit.label.interest')):</label>
         </div>
         <div class="media__body">
@@ -160,7 +160,7 @@
         </div>
     </div>
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="profession">#displayFieldLabel('profession' $MESSAGES.getString('account.edit.label.profession'))</label>
         </div>
         <div class="media__body">

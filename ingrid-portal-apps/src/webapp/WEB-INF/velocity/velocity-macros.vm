@@ -304,7 +304,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 #macro (renderDBEditId $mode $id)
     #if ($mode == 'edit')
         <div class="media">
-            <div class="media__obj media__obj--large media__obj--left">
+            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                 <input type="hidden" name="id" value="$!{id}"/>
                 <label>Id</label>
             </div>
@@ -335,7 +335,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 
 #macro (renderDBEditTextFieldDisable $index $colName $colLabel $colValue $disable)
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
         </div>
         <div class="media__body">
@@ -369,7 +369,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 
 #macro (renderTextField $label $id)
     <div class="media">
-        <div class="media__obj media__obj--large media__obj--left">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="query">#displayFieldLabel($id $label)</label>
         </div>
         <div class="media__body">

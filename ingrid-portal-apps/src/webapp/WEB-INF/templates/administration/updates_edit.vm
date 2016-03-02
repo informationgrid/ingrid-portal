@@ -10,7 +10,7 @@
         </div>
         <div class="box__content ob-container">
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                 <!--
                 COMPONENT_ID
                 -->
@@ -30,7 +30,7 @@
             COMPONENT_TITLE
             -->
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label for="componentTitle">#displayFieldLabel('componentTitle' $MESSAGES.getString('component.forms.update.component.title'))</label>
                 </div>
                 <div class="media__body">
@@ -43,7 +43,7 @@
             PARTNER
             -->
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label for="componentPartner">#displayFieldLabel('componentPartner' $MESSAGES.getString('component.forms.update.component.partner'))</label>
                 </div>
                 <div class="media__body">
@@ -56,7 +56,7 @@
             PROVIDER
             -->
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label for="componentProvider">#displayFieldLabel('componentProvider' $MESSAGES.getString('component.forms.update.component.provider'))</label>
                 </div>
                 <div class="media__body">
@@ -70,7 +70,7 @@
             COMPONENT_TYPE
             -->
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label for="componentType">#displayFieldLabel('componentType' $MESSAGES.getString('component.forms.update.component.type'))</label>
                 </div>
                 <div class="media__body">
@@ -96,7 +96,7 @@
             COMPONENT_VERSION
             -->
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label>$MESSAGES.getString('component.forms.update.component.version')</label>
                 </div>
                 <div class="media__body">
@@ -113,7 +113,7 @@
             COMPONENT_AVAILABLE
             -->
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label>$MESSAGES.getString('component.forms.update.component.availability')</label>
                 </div>
                 <div class="media__body">
@@ -124,7 +124,7 @@
             COMPONENT_INFO
             -->
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label>$MESSAGES.getString('component.forms.update.component.info')</label>
                 </div>
                 <div class="media__body">
@@ -136,7 +136,7 @@
             COMPONENT_EMAILS
             -->
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label>$MESSAGES.getString('component.forms.update.component.emails')</label>
                 </div>
                 <div class="media__body">
@@ -184,8 +184,8 @@
                 </div>
             </div>
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                    &nbsp;
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                    <label class="mq-hide-l">&nbsp;</label>
                 </div>
                 <div class="media__body">
                     <table class="js-table-sortable">

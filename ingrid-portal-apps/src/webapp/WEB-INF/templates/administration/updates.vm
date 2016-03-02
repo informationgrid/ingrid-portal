@@ -61,7 +61,12 @@
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter("doRestartUpgradeJob", "true")
 <form action="$action" method="post" name="frmUpdate" id="frmUpdate">
-    <a href="$action" title="$MESSAGES.getString('component.forms.update.component.tooltip.start.job')">$MESSAGES.getString('component.forms.update.component.trigger.job')</a>
+    <small class="tx-right">
+        <a class="link" href="$action" title="$MESSAGES.getString('component.forms.update.component.tooltip.start.job')">
+            <svg class="icon link__icon icon-s"><use xlink:href="#reset"></svg>
+            $MESSAGES.getString('component.forms.update.component.trigger.job')
+        </a>
+    </small>
     <!--<h3>$MESSAGES.getString('Updates')</h3>-->
     <div class="table table--striped table--sortable">
         <table class="js-table-sortable">
@@ -142,11 +147,11 @@ $action.setParameter("doRestartUpgradeJob", "true")
         </div>
         <span>&nbsp;</span>
         <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.add')" "width:100%;" "doUpdateAdd" "" "btn btn--secondary btn--small")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.import')" "width:100%;" "doUpdateImport" "" "btn btn--secondary btn--small")
         </div>
         <span>&nbsp;</span>
         <div class="media__obj media__obj--right" style="margin-bottom: 0;">
-            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.import')" "width:100%;" "doUpdateImport" "" "btn btn--secondary btn--small")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.add')" "width:100%;" "doUpdateAdd" "" "btn btn--primary btn--small")
         </div>
     </div>
 </form>

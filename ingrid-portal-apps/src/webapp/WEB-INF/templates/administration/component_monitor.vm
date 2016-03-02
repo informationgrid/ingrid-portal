@@ -185,8 +185,8 @@
                 #end
             </p>
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                    <label class="" for="activate">&nbsp;</label>
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                    <label class="mq-hide-l" for="activate">&nbsp;</label>
                 </div>
                 <div class="media__body">
                     <div class="field-toggle field-toggle--check">
@@ -201,8 +201,8 @@
                 </div>
             </div>
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
-                    <label class="" for="overwrite">&nbsp;</label>
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                    <label class="mq-hide-l" for="overwrite">&nbsp;</label>
                 </div>
                 <div class="media__body">
                     <div class="field-toggle field-toggle--check">
@@ -217,7 +217,7 @@
                 </div>
             </div>
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label class="" for="std_email">$MESSAGES.getString('component.forms.text.import.standard.email')</label>
                 </div>
                 <div class="media__body">

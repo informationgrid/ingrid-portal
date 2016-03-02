@@ -15,7 +15,6 @@
             #set ($colNames = ["ident", "name", "url", "sortkey", "sortkey_partner"])
             #set ($colLabels = ["$MESSAGES.getString('component.forms.provider.text.short')*", "$MESSAGES.getString('component.forms.provider.text.name')*", "$MESSAGES.getString('component.forms.provider.text.link')", "$MESSAGES.getString('component.forms.provider.text.sort')", "$MESSAGES.getString('component.forms.provider.text.partner')"])
             #foreach ($dbEntity in $dbEntities)
-                <hr />
                 #set ($entityIndex = $velocityCount - 1)
                 #set ($colValues = ["$!{dbEntity.Ident}", "$!{dbEntity.Name}", "$!{dbEntity.Url}", "$!{dbEntity.Sortkey}", "$!{dbEntity.SortkeyPartner}"])
                 #renderDBEditId($mode $dbEntity.Id)
@@ -37,7 +36,7 @@
                 #renderDBEditTextField($entityIndex "sortkey" $colLabels.get($colIndex) $colValues.get($colIndex))
                 #set ($colIndex = 4)
                 <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label for="sortkey_partner$!{entityIndex}">#displayFieldLabel("sortkey_partner$!{entityIndex}" $colLabels.get($colIndex))</label>
                     </div>
                     <div class="media__body">

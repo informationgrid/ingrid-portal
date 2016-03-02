@@ -11,7 +11,7 @@
         #displayFormErrors()
         <div class="box__content ob-container">
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label for="id">$MESSAGES.getString('component.forms.text.component.id')*</label>
                 </div>
                 <div class="media__body">
@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="media">
-                <div class="media__obj media__obj--large media__obj--left">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label for="type">$MESSAGES.getString('component.forms.text.component.type')*</label>
                 </div>
                 <div class="media__body">
