@@ -10,7 +10,7 @@
     <label for="passwd">$MESSAGES.getString('login.form.passwd')</label>
     <input type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.PASSWORD)" onFocus="clearPasswd()" class="field bx-bot-0">
     <p><a href="$renderResponse.encodeURL('/portal/myportal-password-forgotten.psml')" class="link">$MESSAGES.getString('login.form.passwdForgotten')</a></p>
-    <p><a onclick="$(this).closest('form').submit()" class="btn btn--primary btn--small btn--block">$MESSAGES.getString('login.form.button.subscribe')</a></p>
+    #renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "" "doLogin" "" "btn btn--primary btn--small btn--block")
 </form>
 <div class="metamenu__box ob-container">
     <p>Sie haben noch kein Nutzerkonto bei InGrid Portal?</p>
