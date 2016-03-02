@@ -50,11 +50,9 @@
 
 <div class="box box--fill box--small">
     <div class="box__title ob-container">
-        <h4>$MESSAGES.getString('admin.iplug.headline.iplug')</h4>
+        <h4>$MESSAGES.getString('admin.iplug.headline.iplug') #renderPopUpIcon("$MESSAGES.getString('admin.iplug.description')" "" "float:right;")</h4>
     </div>
     <div class="box__content ob-container">
-        #renderMessageInfo($MESSAGES.getString('admin.iplug.description'))
-        <hr>
         #foreach($partnerNode in $tree.getChildren())
             $action.setParameter('id',"$partnerNode.id")
             <ul class="js-accordion-multi">
