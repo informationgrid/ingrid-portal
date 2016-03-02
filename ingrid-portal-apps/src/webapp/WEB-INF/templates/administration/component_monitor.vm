@@ -170,7 +170,7 @@
     </div>
     #renderDBBrowserFooterButtons($buttons)
 </form>
-<br/>
+<span class="mq-hide-l">&nbsp;</span>
 <hr/>
 #set ($action = $renderResponse.createActionURL())
 <a name="import"></a>
@@ -229,7 +229,7 @@
     <div class="media__obj media__obj--left" style="margin-bottom: 0;">
         #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.export.jobs')" "width:100%;" "doExport" "" "btn btn--secondary btn--small")
     </div>
-    <span style="float:right">&nbsp;</span>
+    <span>&nbsp;</span>
     <div class="media__obj media__obj--right" style="margin-bottom: 0;">
         #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.import.jobs')" "width:100%;" "doImport" "" "btn btn--secondary btn--small")
     </div>

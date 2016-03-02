@@ -77,20 +77,19 @@
         </article>
     </form>
 </div>
-<br/>
+<span class="mq-hide-l">&nbsp;</span>
 <hr/>
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
     <input type="hidden" name="action" value="doImport">
     <div class="box box--fill box--small">
         <div class="box__content ob-container">
-            <p>
-                <label for="csvData">$MESSAGES.getString('component.forms.provider.text.tip')</label><br/>
-                #if($import_message)
-                    <br/><span class="portlet-msg-error">$import_message</span><br/>
-                #end
-                <textarea rows="30" cols="125" id="csvData" name="csvData"></textarea>
-            </p>
+            <label for="csvData">$MESSAGES.getString('component.forms.provider.text.tip')</label>
+            <span>&nbsp;</span>
+            #if($import_message)
+                #renderMessageError($import_message)
+            #end
+            <textarea rows="30" cols="125" id="csvData" name="csvData"></textarea>
         </div>
     </div>
     <div class="media__obj media__obj--right" style="margin-bottom: 0;">

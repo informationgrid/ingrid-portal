@@ -206,7 +206,7 @@
     #end
     #renderDBEditFooter("edit")
 </form>
-<br/>
+<span class="mq-hide-l">&nbsp;</span>
 <hr/>
 <div class="box box--fill box--small">
     <a name="help"></a>
