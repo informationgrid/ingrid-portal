@@ -419,32 +419,30 @@
     </p>
 #end
 
-<div>
-    #set ($rankedHitslenght = $rankedResultList.get("length").toString())
-    #if($rankedHitslenght != "0")
+#set ($rankedHitslenght = $rankedResultList.get("length").toString())
+#if($rankedHitslenght != "0")
+    #if($enableFacetSelection > 0 || $isSelection)
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter("doRemoveAll", "true")
+        #renderResetLink($action $MESSAGES.getString('searchResult.facet.delete.selection'))
+    #end
+    #renderFacetCategory($facetConfig)
+
+#else
+    <p>
+        #if($isSelection)
+            $MESSAGES.getString("searchResult.facete.category.error")
+        #else
+            $MESSAGES.getString("searchResult.facete.category.no.hits") 
+        #end
+    </p>
         #if($enableFacetSelection > 0 || $isSelection)
             #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("doRemoveLast", "true")
+            #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
+            #set ($action = $renderResponse.createActionURL())
             $action.setParameter("doRemoveAll", "true")
-            #renderResetLink($action $MESSAGES.getString('searchResult.facet.delete.selection'))
+            #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
         #end
-        #renderFacetCategory($facetConfig)
-
-    #else
-        <p>
-            #if($isSelection)
-                $MESSAGES.getString("searchResult.facete.category.error")
-            #else
-                $MESSAGES.getString("searchResult.facete.category.no.hits") 
-            #end
-        </p>
-            #if($enableFacetSelection > 0 || $isSelection)
-                #set ($action = $renderResponse.createActionURL())
-                $action.setParameter("doRemoveLast", "true")
-                #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
-                #set ($action = $renderResponse.createActionURL())
-                $action.setParameter("doRemoveAll", "true")
-                #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
-            #end
-        <br>
-    #end
-</div>
+    <br>
+#end
