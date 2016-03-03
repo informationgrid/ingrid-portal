@@ -10,6 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         #set($currentPage = $site.getPageOrTemplate().url)
+        $currentPage
         <!--
         #if($currentPage)
             #if($currentPage != "/help.psml")
@@ -52,126 +53,128 @@
         #* our decorator macros, see ./decorator-macros.vm *#
         #decoratorIncludeJavaScriptForHead()
         #if($currentPage == "/main-search.psml")
-	        <link rel="stylesheet" href="#GetPageResource('scripts/leaflet/leaflet.css')" />
-	        <script src="#GetPageResource('scripts/leaflet/leaflet.js')"></script>
-	    #end
+            <link rel="stylesheet" href="#GetPageResource('scripts/leaflet/leaflet.css')" />
+            <script src="#GetPageResource('scripts/leaflet/leaflet.js')"></script>
+        #end
     </head>
     <body>
     
-        #set($mainMenu = $site.getMenu("main-menu"))
-        #set($serviceMenu = $site.getMenu("service-menu"))
-        #set($footerMenu = $site.getMenu("footer-menu"))
-        #if(!$mainMenu.empty)
-            #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
-        #end
-        <div class="page" >
-            <header class="header">
-                <div class="ob-box-padded-more ob-box-center">
-                    <div class="header__widgets__section">
-                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
-                            <svg class="icon">
-                            <use xlink:href="#burger">
-                            </svg>
-                            <svg class="icon ob-fade">
-                            <use xlink:href="#cross">
-                            </svg>
-                        </div>
+    #set($mainMenu = $site.getMenu("main-menu"))
+    #set($serviceMenu = $site.getMenu("service-menu"))
+    #set($footerMenu = $site.getMenu("footer-menu"))
+    #if(!$mainMenu.empty)
+        #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
+    #end
+    <div class="page" >
+        <header class="header">
+            <div class="ob-box-padded-more ob-box-center">
+                <div class="header__widgets__section">
+                    <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                        <svg class="icon">
+                        <use xlink:href="#burger">
+                        </svg>
+                        <svg class="icon ob-fade">
+                        <use xlink:href="#cross">
+                        </svg>
                     </div>
-                    <div class="header__widgets__section">
-                        <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                        <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.svg')">
-                        <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/mobile-logo.svg')">
-                        </a>
-                    </div>
-                     #if($serviceMenu && !$serviceMenu.empty)
-                        #includeServiceNavigation($serviceMenu)
-                    #end
                 </div>
-            #if(!$mainMenu.empty)
-              #includeMainNavigation($mainMenu)
-            #end
-            </header>
-            
-            <section class="breadcrumb ob-box-padded-more mq-hide-l">
-                <div class="breadcrumb__title mq-hide-xxl">Sie sind hier:</div>
-                <nav class="breadcrumb__list">
-                    <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
-                #if($currentPage)
-                    #if($currentPage == "/search-detail.psml")
-                        <svg class="icon icon-xs"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
-                        <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
-                    #end
-                    #if($currentPage != "/default-page.psml")
-                        <svg class="icon icon-xs"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
-                        <span>$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</span>
-                    #end
+                <div class="header__widgets__section">
+                    <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                    <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.svg')">
+                    <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/mobile-logo.svg')">
+                    </a>
+                </div>
+                 #if($serviceMenu && !$serviceMenu.empty)
+                    #includeServiceNavigation($serviceMenu)
                 #end
-                </nav>
-            </section>
-
+            </div>
+        #if(!$mainMenu.empty)
+          #includeMainNavigation($mainMenu)
+        #end
+        </header>
+        
+        <section class="breadcrumb ob-box-padded-more mq-hide-l">
+            <div class="breadcrumb__title mq-hide-xxl">Sie sind hier:</div>
+            <nav class="breadcrumb__list">
+                <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
             #if($currentPage)
-                #if($currentPage == "/default-page.psml")
-                    #parse ('/decorations/layout/ingrid/pages/default-page.vm')
-                #elseif($currentPage == "/main-about.psml")
-                    #parse ('/decorations/layout/ingrid/pages/main-about.vm')
-                #elseif($currentPage == "/search-catalog/search-catalog-hierarchy.psml")
-                    #parse ('/decorations/layout/ingrid/pages/search-catalog-hierarchy.vm')
-                #elseif($currentPage == "/main-about-partner.psml")
-                    #parse ('/decorations/layout/ingrid/pages/main-about-partner.vm')
-                #elseif($currentPage == "/main-about-data-source.psml")
-                    #parse ('/decorations/layout/ingrid/pages/main-about-data-source.vm')
-                #elseif($currentPage == "/main-search.psml")
-                    #parse ('/decorations/layout/ingrid/pages/main-search.vm')
-                #elseif($currentPage == "/main-measures.psml")
-                    #parse ('/decorations/layout/ingrid/pages/main-measures.vm')
-                #elseif($currentPage == "/main-chronicle.psml")
-                    #parse ('/decorations/layout/ingrid/pages/main-chronicle.vm')
-                #elseif($currentPage == "/service-contact.psml")
-                    #parse ('/decorations/layout/ingrid/pages/service-contact.vm')
-                #elseif($currentPage == "/privacy.psml")
-                    #parse ('/decorations/layout/ingrid/pages/privacy.vm')
-                #elseif($currentPage == "/service-sitemap.psml")
-                    #parse ('/decorations/layout/ingrid/pages/service-sitemap.vm')
-                #elseif($currentPage == "/disclaimer.psml")
-                    #parse ('/decorations/layout/ingrid/pages/disclaimer.vm')
-                #elseif($currentPage == "/service-myportal.psml")
-                    #parse ('/decorations/layout/ingrid/pages/service-myportal.vm')
-                #elseif($currentPage == "/myportal-create-account.psml")
-                    #parse ('/decorations/layout/ingrid/pages/myportal-create-account.vm')
-                #elseif($currentPage == "/myportal-password-forgotten.psml")
-                    #parse ('/decorations/layout/ingrid/pages/myportal-password-forgotten.vm')
-                #elseif($currentPage == "/service-myportal.psml /myportal-create-account.psml /myportal-password-forgotten.psml")
-                #elseif($currentPage == "/myportal-edit-account.psml")
-                    #parse ('/decorations/layout/ingrid/pages/myportal-edit-account.vm')
-                #elseif($currentPage == "/administration/admin-usermanagement.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-usermanagement.vm')
-                #elseif($currentPage == "/administration/admin-homepage.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-homepage.vm')
-                #elseif($currentPage == "/administration/admin-content-rss.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-content-rss.vm')
-                #elseif($currentPage == "/administration/admin-content-partner.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-content-partner.vm')
-                #elseif($currentPage == "/administration/admin-content-provider.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-content-provider.vm')
-                #elseif($currentPage == "/administration/admin-iplugs.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-iplugs.vm')
-                #elseif($currentPage == "/administration/admin-cms.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-cms.vm')
-                #elseif($currentPage == "/administration/admin-wms.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-wms.vm')
-                #elseif($currentPage == "/administration/admin-statistics.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-statistics.vm')
-                #elseif($currentPage == "/administration/admin-portal-profile.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-portal-profile.vm')
-                #elseif($currentPage == "/administration/admin-component-monitor.psml")
-                    #parse ('/decorations/layout/ingrid/pages/admin-component-monitor.vm')
-                #elseif($currentPage == "/rss-news.psml")
-                    #parse ('/decorations/layout/ingrid/pages/rss-news.vm')
-                #elseif($currentPage == "/search-detail.psml")
-                    #parse ('/decorations/layout/ingrid/pages/search-detail.vm')
-                #elseif($currentPage == "/myportal-personalize.psml")
-                    #parse ('/decorations/layout/ingrid/pages/myportal-personalize.vm')
-                #elseif($currentPage == "/help.psml")
-                    #parse ('/decorations/layout/ingrid/pages/help.vm')
+                #if($currentPage == "/search-detail.psml")
+                    <svg class="icon icon-xs"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+                    <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
+                #end
+                #if($currentPage != "/default-page.psml")
+                    <svg class="icon icon-xs"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+                    <span>$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</span>
                 #end
             #end
+            </nav>
+        </section>
+
+        #if($currentPage)
+            #if($currentPage == "/default-page.psml")
+                #parse ('/decorations/layout/ingrid/pages/default-page.vm')
+            #elseif($currentPage == "/main-about.psml")
+                #parse ('/decorations/layout/ingrid/pages/main-about.vm')
+            #elseif($currentPage == "/search-catalog/search-catalog-hierarchy.psml")
+                #parse ('/decorations/layout/ingrid/pages/search-catalog-hierarchy.vm')
+            #elseif($currentPage == "/main-about-partner.psml")
+                #parse ('/decorations/layout/ingrid/pages/main-about-partner.vm')
+            #elseif($currentPage == "/main-about-data-source.psml")
+                #parse ('/decorations/layout/ingrid/pages/main-about-data-source.vm')
+            #elseif($currentPage == "/main-search.psml")
+                #parse ('/decorations/layout/ingrid/pages/main-search.vm')
+            #elseif($currentPage == "/main-measures.psml")
+                #parse ('/decorations/layout/ingrid/pages/main-measures.vm')
+            #elseif($currentPage == "/main-chronicle.psml")
+                #parse ('/decorations/layout/ingrid/pages/main-chronicle.vm')
+            #elseif($currentPage == "/service-contact.psml")
+                #parse ('/decorations/layout/ingrid/pages/service-contact.vm')
+            #elseif($currentPage == "/privacy.psml")
+                #parse ('/decorations/layout/ingrid/pages/privacy.vm')
+            #elseif($currentPage == "/service-sitemap.psml")
+                #parse ('/decorations/layout/ingrid/pages/service-sitemap.vm')
+            #elseif($currentPage == "/disclaimer.psml")
+                #parse ('/decorations/layout/ingrid/pages/disclaimer.vm')
+            #elseif($currentPage == "/service-myportal.psml")
+                #parse ('/decorations/layout/ingrid/pages/service-myportal.vm')
+            #elseif($currentPage == "/myportal-create-account.psml")
+                #parse ('/decorations/layout/ingrid/pages/myportal-create-account.vm')
+            #elseif($currentPage == "/myportal-password-forgotten.psml")
+                #parse ('/decorations/layout/ingrid/pages/myportal-password-forgotten.vm')
+            #elseif($currentPage == "/service-myportal.psml /myportal-create-account.psml /myportal-password-forgotten.psml")
+            #elseif($currentPage == "/myportal-edit-account.psml")
+                #parse ('/decorations/layout/ingrid/pages/myportal-edit-account.vm')
+            #elseif($currentPage == "/administration/admin-usermanagement.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-usermanagement.vm')
+            #elseif($currentPage == "/administration/admin-homepage.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-homepage.vm')
+            #elseif($currentPage == "/administration/admin-content-rss.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-content-rss.vm')
+            #elseif($currentPage == "/administration/admin-content-partner.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-content-partner.vm')
+            #elseif($currentPage == "/administration/admin-content-provider.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-content-provider.vm')
+            #elseif($currentPage == "/administration/admin-iplugs.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-iplugs.vm')
+            #elseif($currentPage == "/administration/admin-cms.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-cms.vm')
+            #elseif($currentPage == "/administration/admin-wms.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-wms.vm')
+            #elseif($currentPage == "/administration/admin-statistics.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-statistics.vm')
+            #elseif($currentPage == "/administration/admin-portal-profile.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-portal-profile.vm')
+            #elseif($currentPage == "/administration/admin-component-monitor.psml")
+                #parse ('/decorations/layout/ingrid/pages/admin-component-monitor.vm')
+            #elseif($currentPage == "/rss-news.psml")
+                #parse ('/decorations/layout/ingrid/pages/rss-news.vm')
+            #elseif($currentPage == "/search-detail.psml")
+                #parse ('/decorations/layout/ingrid/pages/search-detail.vm')
+            #elseif($currentPage == "/myportal-personalize.psml")
+                #parse ('/decorations/layout/ingrid/pages/myportal-personalize.vm')
+            #elseif($currentPage == "/help.psml")
+                #parse ('/decorations/layout/ingrid/pages/help.vm')
+            #elseif($currentPage == "/mdek/mdek_portal_admin.psml")
+                #parse ('/decorations/layout/ingrid/pages/mdek_portal_admin.vm')
+            #end
+        #end

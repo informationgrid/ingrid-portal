@@ -1,0 +1,23 @@
+<section class="block block--padded">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("MdekPortalAdminPortlet", "ingrid-portal-mdek::MdekPortalAdminPortlet")
+        </article>
+    </div>
+</section>
+    
+<section class="block block--padded">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("MdekAdminLoginPortlet", "ingrid-portal-mdek::MdekAdminLoginPortlet")
+        </article>
+    </div>
+</section>
+    
+<section class="block block--padded">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("MdekEntryPortlet", "ingrid-portal-mdek::MdekEntryPortlet")
+        </article>
+    </div>
+</section>
