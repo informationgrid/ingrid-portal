@@ -360,7 +360,7 @@ GIS-Koordinierung für den Geschäftsbereich des Ministerium für Umwelt, Gesund
         <gmd:resourceConstraints>
           <gmd:MD_LegalConstraints>
             <gmd:useLimitation>
-              <gco:CharacterString>Nutzungsbedingungem</gco:CharacterString>
+              <gco:CharacterString>Anwendungseinschränkungen</gco:CharacterString>
             </gmd:useLimitation>
             <gmd:accessConstraints>
               <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>

@@ -29,12 +29,6 @@
     </properties>
     <body>
         <release version="3.6.2-SNAPSHOT" date="2016-??-??" description="Release 3.6.2">
-            <action type="fix" dev="wemove" issue="REDMINE-261">
-                Portal: Fixed of displayed "Show Maps" link on portal detail view.
-            </action>
-            <action type="fix" dev="wemove" issue="REDMINE-258">
-                Portal: Fixed limitation of displayed cross references.
-            </action>
             <action type="add" dev="wemove" issue="REDMINE-21">
                 Portal: Add configurable partner logos to search result hits.
             </action>
@@ -44,14 +38,23 @@
             <action type="add" dev="wemove" issue="REDMINE-88">
                 IGE: Show ISO Xml from document.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-87">
+                IGE: Use WebServices as default value for inspire dataset when adding a new operation.
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-86">
                 Portal: Updated initial codelist (6005 conformity).
             </action>
             <action type="update" dev="wemove" issue="REDMINE-245">
                 Portal: Make comparison of IGE frontend with backend version (IGE iPlug) more tolerant, so older Portal can work with newer IGE iPlug, if possible.
             </action>
-            <action type="add" dev="wemove" issue="REDMINE-87">
-                IGE: Use WebServices as default value for inspire dataset when adding a new operation.
+            <action type="update" dev="wemove" issue="REDMINE-197">
+                IGE: Rename german field labels of accessConstraints, useConstraints and useLimitation.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-261">
+                Portal: Fixed of displayed "Show Maps" link on portal detail view.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-258">
+                Portal: Fixed limitation of displayed cross references.
             </action>
         </release>
         

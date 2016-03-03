@@ -121,7 +121,7 @@ require(["dojo/_base/array",
                             var data = [{title: UtilSyslist.getSyslistEntryName(6010, 1) }];
                             UtilGrid.setTableData('availabilityAccessConstraints', data);
                             
-                            // set Nutzungsbedingungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
+                            // set Anwendungseinschränkungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
                             var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
                             registry.byId("availabilityUseConstraints").attr("value", entryNameLicense, true);
                             
@@ -184,7 +184,7 @@ require(["dojo/_base/array",
                     // set publication condition to Internet
                     registry.byId("extraInfoPublishArea").attr("value", 1, true);
 
-                    // set Nutzungsbedingungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
+                    // set Anwendungseinschränkungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
                     var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
                     registry.byId("availabilityUseConstraints").attr("value", entryNameLicense, true);
                 } else {
