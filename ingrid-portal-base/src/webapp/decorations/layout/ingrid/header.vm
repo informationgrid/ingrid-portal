@@ -10,7 +10,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         #set($currentPage = $site.getPageOrTemplate().url)
-        $currentPage
         <!--
         #if($currentPage)
             #if($currentPage != "/help.psml")
