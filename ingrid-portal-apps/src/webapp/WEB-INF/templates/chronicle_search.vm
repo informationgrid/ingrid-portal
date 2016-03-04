@@ -6,9 +6,7 @@
     <div class="search-form ob-clear ob-container ob-flex">
         <input class="field field--large" type="text" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"></input>
         <button class="btn btn--primary btn--medium btn--icon-transition">
-            <svg class="icon mq-show-m">
-                <use xlink:href="#magnifier" xmlns:xlink="http://www.w3.org/1999/xlink">
-            </svg>
+            <svg class="icon mq-show-m"><use xlink:href="#magnifier"></svg>
             <div class="mq-hide-m">$MESSAGES.getString('common.form.button.show')</div>
         </button>
     </div>

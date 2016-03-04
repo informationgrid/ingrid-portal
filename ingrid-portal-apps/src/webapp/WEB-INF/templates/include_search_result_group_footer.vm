@@ -1,13 +1,13 @@
 #if($rs.get('moreHits') && $groupSubjectKey)
-	<p class="link">
+    <p class="link">
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action', $detailAction)
 $action.setParameter('grouping', $grouping)
 $action.setParameter('subject', $groupSubjectKey)
-		<a href="$action">
-	        <strong>$MESSAGES.getString('common.result.group.showAll') $!{groupSubject}</strong>
-	        <svg class="icon link__icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#internal-link"></use></svg>
-	    </a>
-	</p>
+        <a href="$action">
+            <strong>$MESSAGES.getString('common.result.group.showAll') $!{groupSubject}</strong>
+            <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
+        </a>
+    </p>
 #end
 <hr>

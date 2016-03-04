@@ -54,14 +54,14 @@
         #if($entry.isExtern)
             <p>
                 <a class="icon-link link" href="$entry.href">
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#globe"></use></svg>
+                    <svg class="icon"><use xlink:href="#globe"></use></svg>
                     $entry.title
                 </a>
             </p>
         #elseif(!$entry.isMapLink)
             <p>
                 <a class="icon-link link" href="$entry.href">
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#globe"></use></svg>
+                    <svg class="icon"><use xlink:href="#globe"></use></svg>
                     $entry.title
                 </a>
             </p>

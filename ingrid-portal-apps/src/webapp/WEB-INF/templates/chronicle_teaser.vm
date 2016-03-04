@@ -1,6 +1,6 @@
 <article class="teaser ob-container">
     <div class="teaser__graphic">
-        <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#calendar-color"></use></svg>
+        <svg class="icon"><use xlink:href="#calendar-color"></use></svg>
     </div>
     <div class="teaser__box">
         <div class="teaser__content ob-container">
@@ -8,7 +8,7 @@
         </div>
         <hr class="bx-top-0 bx-bot-0">
         <div class="teaser__content ob-container">
-    	#if($snsAnniversary.years && $snsAnniversary.title)
+        #if($snsAnniversary.years && $snsAnniversary.title)
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter('action','doTeaser')
             $action.setParameter('topId',"$!snsAnniversary.topicId")
@@ -17,18 +17,18 @@
             ##$action.setParameter('topTo',"$!snsAnniversary.to")
             $action.setParameter('topTerm',"$!snsAnniversary.term")
             <p class="tx-darkest">
-            	<strong>
-            		<i>$MESSAGES.getString('chronicle.teaser.event.prae') $snsAnniversary.years
-	            	#if($snsAnniversary.years > 1)
-	            		$MESSAGES.getString('chronicle.teaser.event.years')
-	            	#else 
-	            		$MESSAGES.getString('chronicle.teaser.event.year')
-	            	#end
-	            	: 
-            		</i>
-            	</strong>
-            	<br/>
-            	<a href="$action" title="$MESSAGES.getString('chronicle.teaser.event.tooltip')">$snsAnniversary.title</a>
+                <strong>
+                    <i>$MESSAGES.getString('chronicle.teaser.event.prae') $snsAnniversary.years
+                    #if($snsAnniversary.years > 1)
+                        $MESSAGES.getString('chronicle.teaser.event.years')
+                    #else 
+                        $MESSAGES.getString('chronicle.teaser.event.year')
+                    #end
+                    : 
+                    </i>
+                </strong>
+                <br/>
+                <a href="$action" title="$MESSAGES.getString('chronicle.teaser.event.tooltip')">$snsAnniversary.title</a>
             </p>
         #end
         </div>
@@ -37,10 +37,10 @@
             <p>$MESSAGES.getString('chronicle.teaser.new.body')</p>
             <p>
                 #set ($action = $renderResponse.createActionURL())
-				$action.setParameter('action','doTeaser')
+                $action.setParameter('action','doTeaser')
                 <a class="link link--big" href="$action">
                     <strong>$MESSAGES.getString('chronicle.teaser.new.link')</strong>
-                    <svg class="icon link__icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#internal-link"></use></svg>
+                    <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
                 </a>
             </p>
         </div>

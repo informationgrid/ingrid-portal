@@ -1,8 +1,8 @@
 #if($filteredBy)
     #if($filteredBy == 'partner')
-    	#set ($filterSubject = "$MESSAGES.getString('common.result.partner') '$filterSubject'")
+        #set ($filterSubject = "$MESSAGES.getString('common.result.partner') '$filterSubject'")
     #elseif($filteredBy == 'provider')
-    	#set ($filterSubject = "$MESSAGES.getString('common.result.provider') '$filterSubject'")
+        #set ($filterSubject = "$MESSAGES.getString('common.result.provider') '$filterSubject'")
     #end
 
 #set ($action = $renderResponse.createActionURL())
@@ -12,7 +12,7 @@ $action.setParameter("doRemoveFilter", "true")
         <p><strong>$MESSAGES.getString('common.result.filter.header') "$filterSubject" werden angezeigt</strong></p>
         <p>
             <a class="link" href="$action">
-                <svg class="link__icon icon ob-flip-x"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#internal-link"></use></svg>
+                <svg class="link__icon icon ob-flip-x"><use xlink:href="#internal-link"></use></svg>
                 <strong>Alle Ergebnisse anzeigen</strong>
             </a>
         </p>

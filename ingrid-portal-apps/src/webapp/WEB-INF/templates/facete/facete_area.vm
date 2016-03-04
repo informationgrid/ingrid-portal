@@ -30,9 +30,7 @@
                     <input class="field field--large" type="text" name="search_term" id="search_term"/>
                 #end
                 <button type="submit" name="doSearchGeothesaurus" value="$MESSAGES.getString("searchResult.facete.area.name.search.button")" class="btn btn--primary btn--icon-transition" style="min-width:0;">
-                    <svg class="icon mq-show">
-                        <use xlink:href="#magnifier" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    </svg>
+                    <svg class="icon"><use xlink:href="#magnifier"></use></svg>
                 </button>
             </div>
             

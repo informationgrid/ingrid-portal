@@ -1,6 +1,6 @@
 <article class="teaser ob-container">
     <div class="teaser__graphic">
-        <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#dashboard"></use></svg>
+        <svg class="icon"><use xlink:href="#dashboard"></use></svg>
     </div>
     <div class="teaser__box">
         <div class="teaser__content ob-container">
@@ -14,10 +14,10 @@
             </p>
             <p>
                 #set ($action = $renderResponse.createActionURL())
-				$action.setParameter('action','doTeaser')
+                $action.setParameter('action','doTeaser')
                 <a class="link link--big" href="$action">
                     <strong>$MESSAGES.getString('measures.teaser.new.link')</strong>
-                    <svg class="icon link__icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#internal-link"></use></svg>
+                    <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
                 </a>
             </p>
         </div>

@@ -251,7 +251,7 @@
                         >
                         <label class="field-toggle__label field-toggle__label--highlight" for="$treeSubFacet.getId()">
                             <div class="field-toggle__icon field-toggle__icon-alt">
-                                <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tick"></use></svg>
+                                <svg class="icon"><use xlink:href="#tick"></use></svg>
                             </div>
                             $MESSAGES.getString("$treeSubFacet.getName()") <strong>($treeSubFacet.getFacetValue())</strong>
                         </label>

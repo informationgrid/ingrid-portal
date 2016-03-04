@@ -3,38 +3,36 @@
 <div class="grid grid--gutter grid--equal">
 #foreach($rssEntry in $rssEntries)
   <div class="column column--1-2-m">
-	  <article class="teaser news-teaser ob-container">
-	  	<small class="bx-bot-0">
+      <article class="teaser news-teaser ob-container">
+          <small class="bx-bot-0">
             <span class="tx-darker"><strong>$date.format('d.M.yyyy',$rssEntry.publishedDate)</strong></span>
             <span class="tx-light">$date.format('H:mm',$rssEntry.publishedDate)</span>
         </small>
-	  	<h4 class="bx-top-0">
-			<a href="$!rssEntry.link" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rssEntry.title</a>
-		</h4>
-		<p> 
-	      #if ($rssEntry && $rssEntry.description)
-	        $strutils.cutString($rssEntry.description, 350)
-	      #end  
-	    </p>
-	    #if($rssEntry.author && $rssEntry.author != "")
-		<p class="bx-bot-0">
-	        <small>
-	            <span class="tx-darkest"><strong>$MESSAGES.getString('news.author'):</strong></span>
-	            <span class="tx-light">
-	                $rssEntry.author
-	            </span>
-	        </small>
-	    </p>
-	    #end
-	  </article>
+          <h4 class="bx-top-0">
+            <a href="$!rssEntry.link" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rssEntry.title</a>
+        </h4>
+        <p> 
+          #if ($rssEntry && $rssEntry.description)
+            $strutils.cutString($rssEntry.description, 350)
+          #end  
+        </p>
+        #if($rssEntry.author && $rssEntry.author != "")
+        <p class="bx-bot-0">
+            <small>
+                <span class="tx-darkest"><strong>$MESSAGES.getString('news.author'):</strong></span>
+                <span class="tx-light">
+                    $rssEntry.author
+                </span>
+            </small>
+        </p>
+        #end
+      </article>
   </div>
 #end
 </div>
 <p>
-	<a class="link tx-upper tx-brand" href="$renderResponse.encodeURL('/portal/rss-news.psml')" title="$MESSAGES.getString('news.teaser.more.tooltip')">
-		<svg class="icon link__icon">
-			<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#refresh"></use>
-		</svg>
-		<strong>$MESSAGES.getString('news.teaser.more')</strong>
-	</a>
+    <a class="link tx-upper tx-brand" href="$renderResponse.encodeURL('/portal/rss-news.psml')" title="$MESSAGES.getString('news.teaser.more.tooltip')">
+        <svg class="icon link__icon"><use xlink:href="#refresh"></use></svg>
+        <strong>$MESSAGES.getString('news.teaser.more')</strong>
+    </a>
 </p>
