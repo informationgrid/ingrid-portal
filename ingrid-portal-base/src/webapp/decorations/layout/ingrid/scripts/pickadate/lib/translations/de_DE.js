@@ -10,7 +10,7 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
     close: 'Schließen',
     firstDay: 1,
     format: 'dddd, dd. mmmm yyyy',
-    formatSubmit: 'yyyy/mm/dd'
+    formatSubmit: 'dd.mm.yyyy'
 });
 
 jQuery.extend( jQuery.fn.pickatime.defaults, {

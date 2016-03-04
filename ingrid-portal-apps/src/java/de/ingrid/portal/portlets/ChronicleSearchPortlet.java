@@ -234,9 +234,9 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             String dateSelect = af.getInput(ChronicleSearchForm.FIELD_TIME_SELECT);
             boolean dateSet = false;
             if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD)) {
-                Date fromDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_FROM));
+                Date fromDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_FROM_SUBMIT));
                 if (fromDate != null) {
-                    Date toDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_TO));
+                    Date toDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_TO_SUBMIT));
                     if (toDate != null) {
                         String dateStr = df.format(fromDate);
                         query.put(Settings.QFIELD_DATE_FROM, dateStr);
@@ -246,7 +246,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                     }
                 }
             } else if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_DATE)) {
-                Date atDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_AT));
+                Date atDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_AT_SUBMIT));
                 if (atDate != null) {
                     String dateStr = df.format(atDate);
                     query.put(Settings.QFIELD_DATE_AT, dateStr);

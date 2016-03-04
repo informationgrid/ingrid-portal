@@ -55,12 +55,15 @@ public class ChronicleSearchForm extends ActionForm {
 
     /** field name of "time from" text field in form */
     public static final String FIELD_TIME_FROM = "time_from";
+    public static final String FIELD_TIME_FROM_SUBMIT = "time_from_submit";
 
     /** field name of "time to" text field in form */
     public static final String FIELD_TIME_TO = "time_to";
+    public static final String FIELD_TIME_TO_SUBMIT = "time_to_submit";
 
     /** field name of "time at" text field in form */
     public static final String FIELD_TIME_AT = "time_at";
+    public static final String FIELD_TIME_AT_SUBMIT = "time_at_submit";
 
     /** field name of "search term" text field in form */
     public static final String FIELD_SEARCH = "search";
@@ -105,11 +108,20 @@ public class ChronicleSearchForm extends ActionForm {
         if (request.getParameterValues(FIELD_TIME_FROM) != null) {
             setInput(FIELD_TIME_FROM, request.getParameter(FIELD_TIME_FROM));
         }
+        if (request.getParameterValues(FIELD_TIME_FROM_SUBMIT) != null) {
+            setInput(FIELD_TIME_FROM_SUBMIT, request.getParameter(FIELD_TIME_FROM_SUBMIT));
+        }
         if (request.getParameterValues(FIELD_TIME_TO) != null) {
             setInput(FIELD_TIME_TO, request.getParameter(FIELD_TIME_TO));
         }
+        if (request.getParameterValues(FIELD_TIME_TO_SUBMIT) != null) {
+            setInput(FIELD_TIME_TO_SUBMIT, request.getParameter(FIELD_TIME_TO_SUBMIT));
+        }
         if (request.getParameterValues(FIELD_TIME_AT) != null) {
             setInput(FIELD_TIME_AT, request.getParameter(FIELD_TIME_AT));
+        }
+        if (request.getParameterValues(FIELD_TIME_AT_SUBMIT) != null) {
+            setInput(FIELD_TIME_AT_SUBMIT, request.getParameter(FIELD_TIME_AT_SUBMIT));
         }
         if (request.getParameterValues(FIELD_SEARCH) != null) {
             setInput(FIELD_SEARCH, request.getParameter(FIELD_SEARCH));
@@ -131,9 +143,9 @@ public class ChronicleSearchForm extends ActionForm {
 
         // check time
         String inputTimeSelect = getInput(FIELD_TIME_SELECT);
-        String inputTimeFrom = getInput(FIELD_TIME_FROM);
-        String inputTimeTo = getInput(FIELD_TIME_TO);
-        String inputTimeAt = getInput(FIELD_TIME_AT);
+        String inputTimeFrom = getInput(FIELD_TIME_FROM_SUBMIT);
+        String inputTimeTo = getInput(FIELD_TIME_TO_SUBMIT);
+        String inputTimeAt = getInput(FIELD_TIME_AT_SUBMIT);
         if (inputTimeSelect.equals(FIELDV_TIME_SELECT_PERIOD)) {
             // first remove "other input" of radio button group
             setInput(FIELD_TIME_AT, "");

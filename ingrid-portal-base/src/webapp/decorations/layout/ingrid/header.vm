@@ -55,6 +55,26 @@
             <link rel="stylesheet" href="#GetPageResource('scripts/leaflet/leaflet.css')" />
             <script src="#GetPageResource('scripts/leaflet/leaflet.js')"></script>
         #end
+        <!-- Global scripts -->
+        <script src="#GetPageResource("scripts/modernizr.custom.min.js")"></script>
+        <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
+        <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
+        <script src="#GetPageResource("scripts/all.js")"></script>
+        
+        <!-- Popup -->
+        <script src="#GetPageResource("scripts/popup.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.date.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/legacy.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/translations/de_DE.js")"></script>
+        <!-- Accordion -->
+        <script src="#GetPageResource("scripts/accordion.js")"></script>
+        <!-- Tabs -->
+        <script src="#GetPageResource("scripts/tabs.js")"></script>
+        <!-- Selection -->
+        <script src="#GetPageResource("scripts/selection.js")"></script>
+        <!-- Table Sort -->
+        <script src="#GetPageResource("scripts/table.sortable.js")"></script>
     </head>
     <body>
     

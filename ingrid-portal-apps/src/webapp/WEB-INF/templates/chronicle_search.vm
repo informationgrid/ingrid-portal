@@ -39,25 +39,39 @@
         </div>
         #end
         <h4>#displayFieldLabel('time_select' "$MESSAGES.getString('chronicle.form.time')")</h4>
-        <div class="media ob-clear">
-            <div class="media__obj media__obj--left">
-                <strong class="tx-darkest">Auswahl</strong>
+        <div class="media">
+            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                <label for="at_yy">Auswahl</label>
+            </div>
+            <div class="media__body">
                 <select class="js-selection" id="at_yy" name="time_select">
                     <option id="vonbis" value="period" class="selection-options #if($actionForm.isCurrentInput('time_select', 'period')) is-active" selected #else " #end >von: ... bis: </option>
                     <option id="am" value="date" class="selection-options #if($actionForm.isCurrentInput('time_select', 'date')) is-active" selected #else " #end >am: </option>
                 </select>
             </div>
-            <div for="vonbis" class="selection-content media__obj--left #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
-                <strong class="tx-darkest">#displayFieldLabel('time_from' "$MESSAGES.getString('chronicle.form.time.from')")</strong>
-                <input id="from_yy" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="text" name="time_from" value="#getFieldValue('time_from')"></input>
+        </div>
+        <div for="vonbis" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                <label for="from_yy">$MESSAGES.getString('chronicle.form.time.from')</label>
             </div>
-            <div for="vonbis" class="selection-content media__obj--left #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
-                <strong class="tx-darkest">#displayFieldLabel('time_to' "$MESSAGES.getString('chronicle.form.time.to')")</strong>
-                <input id="till_yy" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="text" name="time_to" value="#getFieldValue('time_to')"></input>
+            <div class="media__body">
+                <input id="from_yy" class="field--narrow datepicker picker__input #addErrorFormClassText('time_from')" type="date" name="time_from" value="#getFieldValue('time_from')"></input>
             </div>
-            <div for="am" class="selection-content media__obj--left #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
-                <strong class="tx-darkest">#displayFieldLabel('time_at' "$MESSAGES.getString('chronicle.form.time.at')")</strong>
-                <input id="time_at" class="field--narrow bx-bot-xs" size="10" maxlength="10" type="text" name="time_at" value="#getFieldValue('time_at')"></input>
+        </div>
+        <div for="vonbis" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                <label for="till_yy" >$MESSAGES.getString('chronicle.form.time.to')</label>
+            </div>
+            <div class="media__body">
+                <input id="till_yy" class="field--narrow datepicker picker__input #addErrorFormClassText('time_to')" type="date" name="time_to" value="#getFieldValue('time_to')"></input>
+            </div>
+        </div>
+        <div for="am" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
+            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                <label for="time_at" >$MESSAGES.getString('chronicle.form.time.at')</label>
+            </div>
+            <div class="media__body">
+                <input id="time_at" class="field--narrow datepicker picker__input #addErrorFormClassText('time_at')" type="date" name="time_at" value="#getFieldValue('time_at')"></input>
             </div>
         </div>
     </div>
