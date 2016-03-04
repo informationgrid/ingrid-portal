@@ -13,5 +13,5 @@ $action.setParameter('action','doSearch')
             </button>
         </div>
     </div>
-    #displayFormErrors()
+    #addErrorFormMessageBox('q')
 </form>

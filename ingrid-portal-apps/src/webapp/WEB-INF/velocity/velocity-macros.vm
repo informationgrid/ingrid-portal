@@ -38,9 +38,7 @@ $actionForm.getInputHTMLEscaped($field)#end
     #if ($form.hasErrors())
         <div>
             #foreach ($errorMsg in $form.getAllErrors())
-                #if($errorMsg.indexOf('error.queryFormat') > -1)
-                    #renderMessageError($MESSAGES.getString($errorMsg))
-                #end
+                #renderMessageError($MESSAGES.getString($errorMsg))
             #end
         </div>
     #end
@@ -48,6 +46,18 @@ $actionForm.getInputHTMLEscaped($field)#end
 
 #macro (displayFormErrors)
     #displayFormErrorsByForm($actionForm)
+#end
+
+#macro (displayFormErrorQuery)
+    #if ($actionForm.hasErrors())
+        <div>
+            #foreach ($errorMsg in $actionForm.getAllErrors())
+                #if($errorMsg.indexOf('error.queryFormat') > -1)
+                    #renderMessageError($MESSAGES.getString($errorMsg))
+                #end
+            #end
+        </div>
+    #end
 #end
 
 #macro (displayFormError)
