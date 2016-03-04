@@ -156,28 +156,28 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (renderDBBrowserHeader $colNames $colTitles)
-<thead>
-    <tr>
-        #foreach ($colTitle in $colTitles)
-            #set ($colLink = $renderResponse.createActionURL())
-            #set ($colIndex = $velocityCount - 1)
-            $colLink.setParameter("sortColumn", $colNames.get($colIndex))
-            <th class="table__sort-toggle js-column-sortable"><a href="$colLink" class="contentColumnHead">$colTitle</a></th>
-        #end
-    </tr>
-</thead>
+    <thead>
+        <tr>
+            #foreach ($colTitle in $colTitles)
+                #set ($colLink = $renderResponse.createActionURL())
+                #set ($colIndex = $velocityCount - 1)
+                $colLink.setParameter("sortColumn", $colNames.get($colIndex))
+                <th class="table__sort-toggle js-column-sortable"><a href="$colLink" class="contentColumnHead">$colTitle</a></th>
+            #end
+        </tr>
+    </thead>
 #end
 
 #macro (renderDBBrowserRow $rowId $rowValues)
-<tr>
-    <td class="$rowstyle">
-        <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
-    </td>
-    <td class="$rowstyle">$rowId</td>
-#foreach ($rowValue in $rowValues)
-    <td class="$rowstyle">$rowValue</td>
-#end
-</tr>
+    <tr>
+        <td>
+            <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+        </td>
+        <td>$rowId</td>
+		#foreach ($rowValue in $rowValues)
+			<td>$rowValue</td>
+		#end
+    </tr>
 #end
 
 #macro (renderDBBrowserRowWithEditLink $rowId $rowValues)

@@ -6,44 +6,45 @@
 
 #macro (renderFooter)
 <div class="formfooter" align="right">
-	#renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.back')" "" "doCancel" "" "float_right")
-	#renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.create')" "" "doCreateCatalog" "" "float_right")
+    <div class="media__obj media__obj--right">
+        #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.back')" "width:100%" "doCancel" "" "btn btn--secondary btn--medium")
+    </div>
+    <div class="media__obj media__obj--right">       
+        #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.create')" "width:100%" "doCreateCatalog" "" "btn btn--primary btn--medium")
+    </div>
 </div>
 #end
 
+<h1>$MESSAGES.getString('mdek.title.portaladmin')</h1>
+
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="GET" name="mdek_portal_admin" id="mdek_portal_admin">
-	<div class="formbody formbody_border_style" style="overflow: auto;">
-		<h2 class="nospace">$MESSAGES.getString('mdek.portaladmin.catalog.new')</h2>
-		<br />
-
-		<div class="float_left">
-			<h3>$MESSAGES.getString('mdek.portaladmin.catalog.exist')</h3>
-			<select class="inputstyle" style="width:15em;" name="plugId" size="5">
-#displayListItems($plugIdList)
-			</select>
-		</div>
-		<div class="float_left marginleft">
-			<h3>$MESSAGES.getString('mdek.portaladmin.administrator')</h3>
-			<select class="inputstyle" style="width:15em;" name="userName" size="5">
-#displayListItems($userNameList)
-			</select>
-		</div>
-		<div class="clearer"></div>
-		<br />
-<!--
-		<label for="catalogName">Katalogname: </label><input type="text" id="catalogName" name="catalogName" />
-		<div class="clearer"></div>
-		<br />
--->
-	</div>
-
-#renderFooter()
-<!--
-	<div class="formfooter formfooter_border_style">
-		<div align="right">
-			<input class="btn" type="submit" value="Speichern" />
-		</div>
-	</div>
-	-->
+    <div class="box box--fill box--small">
+        <div class="box__title ob-container">
+            <h4>$MESSAGES.getString('mdek.portaladmin.catalog.new')</h4>
+        </div>
+        <div class="box__content ob-container">
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                    <label for="plugId">$MESSAGES.getString('mdek.portaladmin.catalog.exist')</label>
+                </div>
+                <div class="media__body">
+                    <select name="plugId">
+                        #displayListItems($plugIdList)
+                    </select>
+                </div>
+            </div>
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                    <label for="userName">$MESSAGES.getString('mdek.portaladmin.administrator')</label>
+                </div>
+                <div class="media__body">
+                    <select name="userName">
+                        #displayListItems($userNameList)
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    #renderFooter()
 </form>

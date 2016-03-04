@@ -1,81 +1,75 @@
-#macro (renderDBBrowserNavigation)
-<div class="contentNavigation">
-   	<div class="contentNavigationLeft">
-	</div>
-   	<div class="contentNavigationMiddle">$MESSAGES.getString('mdek.portaladmin.catalog.exist')</div>
-   	<div class="contentNavigationRight">
-		&nbsp;
-	</div>
-	<p class="clearer"></p>
-</div>
-#end
-
 #macro (renderDBBrowserHeader $colNames $colTitles)
-<tr>
-	<td class="contentColumnHead"></td>
-	#foreach ($colTitle in $colTitles)
-   		<td class="contentColumnHead">$colTitle</td>
-	#end
-</tr>
+    <thead>
+        <tr>
+            #foreach ($colTitle in $colTitles)
+                <th class="">$colTitle</th>
+            #end
+        </tr>
+    </thead>
 #end
 
 #macro (renderDBBrowserRow $rowId $rowValues)
-<tr>
-#if ($velocityCount % 2 == 0)
-	#set ($rowstyle = "contentRowEven")
-#else
-	#set ($rowstyle = "contentRowOdd")
-#end   
-	<td class="$rowstyle">
-		<input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
-    </td>
-	<td class="$rowstyle">$rowId</td>
-#foreach ($rowValue in $rowValues)
-	<td class="$rowstyle">$rowValue</td>
+    <tr>
+        <td>
+            <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+        </td>
+        <td>$rowId</td>
+        #foreach ($rowValue in $rowValues)
+            <td>$rowValue</td>
+        #end
+    </tr>
 #end
-</tr>
-#end
+
 #macro (renderDBBrowserFooterButtons $buttons)
-<div class="formfooter formfooter_border_style">
-#foreach ($button in $buttons)
-	#if($button == "doEdit")
-    	#renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.edit')" "" "doEdit" "" "float_left")
-		<span class="float_left">&nbsp;</span>
-	#end
-	#if($button == "doDelete")
-		#renderInputButtonOnClick("$MESSAGES.getString('mdek.portal.admin.delete')" "" "doDelete" "" "float_left" "return confirm('$MESSAGES.getString('mdek.portal.admin.delete.message')')")
-	#end
-	#if($button == "doRefresh")
-    	#renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.reload')" "" "doRefresh" "" "float_right")
-		<span class="float_right">&nbsp;</span>
-	#end
-	#if($button == "doNew")
-		#renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.add')" "" "doNew" "" "float_right")
-	#end
+    #foreach ($button in $buttons)
+        #if($button == "doEdit")
+            <div class="media__obj media__obj--left">
+                #renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.edit')" "width:100%" "doEdit" "" "btn btn--secondary btn--medium")
+            </div>
+            <span>&nbsp;</span>
+        #end
+        #if($button == "doDelete")
+            <div class="media__obj media__obj--left">
+                #renderInputButtonOnClick("$MESSAGES.getString('mdek.portal.admin.delete')" "width:100%" "doDelete" "" "btn btn--secondary btn--medium" "return confirm('$MESSAGES.getString('mdek.portal.admin.delete.message')')")
+            </div>
+        #end
+        #if($button == "doRefresh")
+            <div class="media__obj media__obj--left">
+                #renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.reload')" "width:100%" "doRefresh" "" "btn btn--secondary btn--medium")
+            </div>
+            <span>&nbsp;</span>
+        #end
+        #if($button == "doNew")
+            <div class="media__obj media__obj--right">
+                #renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.add')" "width:100%" "doNew" "" "btn btn--primary btn--medium")
+            </div>
+        #end
+    #end
 #end
-	<p class="clearer"></p>
-</div>
-#end
+
+<h1>$MESSAGES.getString('mdek.title.portaladmin')</h1>
 
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="mdek_portal_admin" id="mdek_portal_admin">
-	<div class="formbody formbody_border_style">
-#renderDBBrowserNavigation()
-		<p>
-		<table class="border fullwidth">
-#set ($colNames = ["plugId", "catName", "partner", "provider", "catAdmin", "portalLogin"])
-#set ($colTitles = [$MESSAGES.getString('mdek.portal.admin.id'), $MESSAGES.getString('mdek.portal.admin.catalogname'), $MESSAGES.getString('mdek.portal.admin.partner'), $MESSAGES.getString('mdek.portal.admin.provider'), $MESSAGES.getString('mdek.portal.admin.administrator'), $MESSAGES.getString('mdek.portal.admin.login')])
-#renderDBBrowserHeader($colNames $colTitles)
-
-#foreach ($entry in $catalogList)
-	#set ($rowId = $entry.plugId)
-	#set ($rowValues = ["$!entry.catName", "$!entry.partner", "$!entry.provider", "$!entry.catAdmin", "$!entry.portalLogin"])
-	#renderDBBrowserRow($rowId $rowValues)
-#end
-
-		</table>
-		</p>
-	</div>
-#set ($buttons = ["doDelete", "doRefresh", "doNew"])
-#renderDBBrowserFooterButtons($buttons)
+    <div class="box box--fill box--small">
+        <div class="box__title ob-container">
+            <h4>$MESSAGES.getString('mdek.portaladmin.catalog.exist')</h4>
+        </div>
+        <div class="box__content ob-container">
+            <div class="table table--striped">
+                <table class="">
+                    #set ($colNames = ["plugId", "catName", "partner", "provider", "catAdmin", "portalLogin"])
+                    #set ($colTitles = [$MESSAGES.getString('mdek.portal.admin.id'), $MESSAGES.getString('mdek.portal.admin.catalogname'), $MESSAGES.getString('mdek.portal.admin.partner'), $MESSAGES.getString('mdek.portal.admin.provider'), $MESSAGES.getString('mdek.portal.admin.administrator'), $MESSAGES.getString('mdek.portal.admin.login')])
+                    #renderDBBrowserHeader($colNames $colTitles)
+                    #foreach ($entry in $catalogList)
+                        #set ($rowId = $entry.plugId)
+                        #set ($rowValues = ["$!entry.catName", "$!entry.partner", "$!entry.provider", "$!entry.catAdmin", "$!entry.portalLogin"])
+                        #renderDBBrowserRow($rowId $rowValues)
+                    #end
+                </table>
+            </div>
+        </div>
+    </div>
+    #set ($buttons = ["doDelete", "doRefresh", "doNew"])
+    #renderDBBrowserFooterButtons($buttons)
 </form>
