@@ -1,13 +1,13 @@
 <hr>
 <h3>#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('chronicle.result.navigationTitle')" )</h3>
-<div class="pagination bx-top-m">
+<div id="chronicleResult" class="pagination bx-top-m">
     #renderRankedPageNavigation($rankedPageSelector)
 </div>
 #foreach($rs in $rankedResultList.hits)
     #if($velocityCount > 1)
         <hr>
     #end
-    <div class="search-result">
+    <div>
     #if ($rs.title)
         <h4 class="bx-bot-m bx-bot-xs">#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end</h4>
         <a href="$!rs.searchURL">
@@ -69,3 +69,6 @@
 <div class="pagination bx-top-m">
     #renderRankedPageNavigation($rankedPageSelector)
 </div>
+<script >
+    goToByScroll('chronicleResult');
+</script>

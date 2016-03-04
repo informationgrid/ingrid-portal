@@ -19,7 +19,7 @@
 #end
 <!-- RESULTS LEFT -->
 <article class="content ob-container ob-box-narrow">
-    <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
+    <h3 id="searchResult">#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
     #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
     #parse ('/WEB-INF/templates/include_search_result_filter.vm')
     <br />
@@ -62,4 +62,7 @@
         $searchQuery
     #end
     -->
-  #end
+#end
+<script >
+    goToByScroll('searchResult');
+</script>

@@ -283,5 +283,5 @@ function goToByScroll(id){
     id = id.replace("link", "");
     $('html,body').animate({
         scrollTop: $("#"+id).offset().top},
-    'slow');
+    1200);
 }
