@@ -12,20 +12,19 @@
     </div>
     <input type="hidden" name="action" value="doSearch"/>
     <h4>$MESSAGES.getString('chronicle.form.eventtype')</h4>
-    <div class="media__body">
-        <div class="field-toggle field-toggle--check bx-bot-xs" >
-            <input id="chk_all" name="event" type="checkbox" value="all" onclick="ingrid_checkAll(document.chronicle_search.event)" onkeypress="ingrid_checkAll(document.chronicle_search.event)" #getChecked('event' 'all')>
-            <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('event')" for="chk_all">
-                <div class="field-toggle__icon field-toggle__icon-alt">
-                    <svg class="icon">
-                        <use xlink:href="#tick">
-                    </svg>
-                </div>
-                $MESSAGES.getString('chronicle.form.allEventtypes')
-            </label>
-        </div>
-        #set ($numEvtypes = $evtypesList.size())
-        #foreach ($evtype in $evtypesList)
+    <div class="field-toggle field-toggle--check bx-bot-xs" >
+        <input id="chk_all" name="event" type="checkbox" value="all" onclick="ingrid_checkAll(document.chronicle_search.event)" onkeypress="ingrid_checkAll(document.chronicle_search.event)" #getChecked('event' 'all')>
+        <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('event')" for="chk_all">
+            <div class="field-toggle__icon field-toggle__icon-alt">
+                <svg class="icon">
+                    <use xlink:href="#tick">
+                </svg>
+            </div>
+            $MESSAGES.getString('chronicle.form.allEventtypes')
+        </label>
+    </div>
+    #set ($numEvtypes = $evtypesList.size())
+    #foreach ($evtype in $evtypesList)
         <div class="field-toggle field-toggle--check bx-bot-xs">
             <input id="chk_$velocityCount" name="event" type="checkbox" value="$evtype.FormValue" onclick="ingrid_checkGroup(document.chronicle_search)" onkeypress="ingrid_checkGroup(document.chronicle_search)" #getChecked('event' "$evtype.FormValue")>
             <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('event')" for="chk_$velocityCount">
@@ -37,42 +36,47 @@
                 $MESSAGES.getString("$evtype.QueryValue")
             </label>
         </div>
-        #end
-        <h4>#displayFieldLabel('time_select' "$MESSAGES.getString('chronicle.form.time')")</h4>
-        <div class="media">
-            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                <label for="at_yy">Auswahl</label>
-            </div>
-            <div class="media__body">
-                <select class="js-selection" id="at_yy" name="time_select">
-                    <option id="vonbis" value="period" class="selection-options #if($actionForm.isCurrentInput('time_select', 'period')) is-active" selected #else " #end >von: ... bis: </option>
-                    <option id="am" value="date" class="selection-options #if($actionForm.isCurrentInput('time_select', 'date')) is-active" selected #else " #end >am: </option>
-                </select>
-            </div>
+    #end
+    <h4>#displayFieldLabel('time_select' "$MESSAGES.getString('chronicle.form.time')")</h4>
+    <section class="block">
+        <div class="ob-box-wide ob-box-center">
+            <article class="content ob-container ob-box-narrow">
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="at_yy">Auswahl</label>
+                    </div>
+                    <div class="media__body">
+                        <select class="js-selection" id="at_yy" name="time_select">
+                            <option id="vonbis" value="period" class="selection-options #if($actionForm.isCurrentInput('time_select', 'period')) is-active" selected #else " #end >von: ... bis: </option>
+                            <option id="am" value="date" class="selection-options #if($actionForm.isCurrentInput('time_select', 'date')) is-active" selected #else " #end >am: </option>
+                        </select>
+                    </div>
+                </div>
+                <div for="vonbis" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="from_yy">$MESSAGES.getString('chronicle.form.time.from')</label>
+                    </div>
+                    <div class="media__body">
+                        <input id="from_yy" class="field--narrow datepicker picker__input #addErrorFormClassText('time_from')" type="date" name="time_from" value="#getFieldValue('time_from')"></input>
+                    </div>
+                </div>
+                <div for="vonbis" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="till_yy" >$MESSAGES.getString('chronicle.form.time.to')</label>
+                    </div>
+                    <div class="media__body">
+                        <input id="till_yy" class="field--narrow datepicker picker__input #addErrorFormClassText('time_to')" type="date" name="time_to" value="#getFieldValue('time_to')"></input>
+                    </div>
+                </div>
+                <div for="am" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="time_at" >$MESSAGES.getString('chronicle.form.time.at')</label>
+                    </div>
+                    <div class="media__body">
+                        <input id="time_at" class="field--narrow datepicker picker__input #addErrorFormClassText('time_at')" type="date" name="time_at" value="#getFieldValue('time_at')"></input>
+                    </div>
+                </div>
+            </article>
         </div>
-        <div for="vonbis" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
-            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                <label for="from_yy">$MESSAGES.getString('chronicle.form.time.from')</label>
-            </div>
-            <div class="media__body">
-                <input id="from_yy" class="field--narrow datepicker picker__input #addErrorFormClassText('time_from')" type="date" name="time_from" value="#getFieldValue('time_from')"></input>
-            </div>
-        </div>
-        <div for="vonbis" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
-            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                <label for="till_yy" >$MESSAGES.getString('chronicle.form.time.to')</label>
-            </div>
-            <div class="media__body">
-                <input id="till_yy" class="field--narrow datepicker picker__input #addErrorFormClassText('time_to')" type="date" name="time_to" value="#getFieldValue('time_to')"></input>
-            </div>
-        </div>
-        <div for="am" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
-            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                <label for="time_at" >$MESSAGES.getString('chronicle.form.time.at')</label>
-            </div>
-            <div class="media__body">
-                <input id="time_at" class="field--narrow datepicker picker__input #addErrorFormClassText('time_at')" type="date" name="time_at" value="#getFieldValue('time_at')"></input>
-            </div>
-        </div>
-    </div>
+    </section>
 </form>
