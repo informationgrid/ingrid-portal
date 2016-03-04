@@ -2,7 +2,7 @@
 #set ($action = $renderResponse.createActionURL())
 <h4>$MESSAGES.getString('chronicle.form.term')</h4>
 <form action="$action" method="post" enctype="" name="chronicle_search" id="chronicle_search">
-    #displayFormErrors()
+    #displayFormError()
     <div class="search-form ob-clear ob-container ob-flex">
         <input class="field field--large" type="text" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"></input>
         <button class="btn btn--primary btn--medium btn--icon-transition">

@@ -2,7 +2,7 @@
     <h2>$MESSAGES.getString('account.edit.profile.edit.from') #getFieldValue('firstname') #getFieldValue('lastname')</h2>
 #end
 #renderMessageInfo("* $MESSAGES.getString('account.edit.required.fields')")
-#displayFormErrors()
+#displayFormError()
 <div class="media">
     <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation')):</label>
@@ -23,6 +23,7 @@
     </div>
     <div class="media__body">
         <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname')/>
+        #addErrorFormMessage('firstname')
     </div>
 </div>  
 <div class="media">
@@ -31,6 +32,7 @@
     </div>
     <div class="media__body">
         <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
+        #addErrorFormMessage('lastname')
     </div>
 </div>  
 <div class="media">
@@ -39,6 +41,7 @@
     </div>
     <div class="media__body">
         <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
+        #addErrorFormMessage('email')
     </div>
 </div>  
 #if ($formType == 'edit')
@@ -48,6 +51,7 @@
         </div>
         <div class="media__body">
             <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" #addErrorFormClass('password_old')/>
+            #addErrorFormMessage('password_old')
         </div>
     </div>  
     <hr />
@@ -57,6 +61,7 @@
         </div>
         <div class="media__body">
             <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new')/>
+            #addErrorFormMessage('password_new')
         </div>
     </div>  
     <div class="media">
@@ -65,6 +70,7 @@
         </div>
         <div class="media__body">
             <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
+            #addErrorFormMessage('password_new_confirm')
         </div>
     </div>
 #elseif($formType == 'create')
@@ -74,6 +80,7 @@
         </div>
         <div class="media__body">
             <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login')/>
+            #addErrorFormMessage('login')
         </div>
     </div>
     <hr />
@@ -83,6 +90,7 @@
         </div>
         <div class="media__body">
             <input type="password" id="password" name="password" value="#getFieldValue('password')" #addErrorFormClass('password')/>
+            #addErrorFormMessage('password')
         </div>
     </div>
     <div class="media">
@@ -91,6 +99,7 @@
         </div>
         <div class="media__body">
             <input type="password" id="password_confirm" name="password_confirm" value="#getFieldValue('password_confirm')" #addErrorFormClass('password_confirm')/>
+            #addErrorFormMessage('password_confirm')
         </div>
     </div>
 #end

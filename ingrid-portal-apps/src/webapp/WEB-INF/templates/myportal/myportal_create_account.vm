@@ -9,3 +9,9 @@
         #renderInputButtonClass("$MESSAGES.getString('account.create.submit')" "width:100%" "" "" "btn btn--primary btn--medium")
     </div>
 </form>
+<script >
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('create_account');
+    }
+</script>

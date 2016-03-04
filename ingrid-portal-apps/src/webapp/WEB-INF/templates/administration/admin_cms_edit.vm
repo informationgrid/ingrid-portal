@@ -9,7 +9,7 @@
     #elseif ($mode == 'new')
         <h2>$MESSAGES.getString('admin.cms.entry.new')</h2>
     #end
-    #displayFormErrors()
+    #displayFormError()
     #displayFormMessages()
     #foreach ($dbEntity in $dbEntities)
         #renderDBEditId($mode $dbEntity.id)
@@ -20,6 +20,7 @@
             </div>
             <div class="media__body">
                 <input type="text" id="item_key" name="item_key" value="$!dbEntity.itemKey" #addErrorFormClass('item_key')/>
+                #addErrorFormMessage('item_key')
             </div>
         </div>
         <div class="media">
@@ -53,6 +54,7 @@
                 </div>
                 <div class="media__body">
                     <textarea cols="125" rows="10" name="value_$lang" id="value_$lang" #addErrorFormClass("value_$lang")>$!item.itemValue</textarea>
+                    #addErrorFormMessage("value_$lang")
                 </div>
             </div>
             #if ($mode == 'edit')
@@ -78,3 +80,9 @@
     #end
     #renderDBEditFooter($mode)
 </form>
+<script >
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('frmEditCMS');
+    }
+</script>

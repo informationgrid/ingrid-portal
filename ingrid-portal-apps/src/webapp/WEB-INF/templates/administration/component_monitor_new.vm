@@ -8,14 +8,15 @@
         <div class="box__title ob-container">
             <h4>$MESSAGES.getString('component.forms.text.new.job')</h4>
         </div>
-        #displayFormErrors()
+        #displayFormError()
         <div class="box__content ob-container">
             <div class="media">
                 <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                     <label for="id">$MESSAGES.getString('component.forms.text.component.id')*</label>
                 </div>
                 <div class="media__body">
-                       <input id="id" name="id" value="#getFieldValue('id')" type="text" #addErrorFormClass('id')>
+                   <input id="id" name="id" value="#getFieldValue('id')" type="text" #addErrorFormClass('id')>
+                    #addErrorFormMessage('id')
                 </div>
             </div>
             <div class="media">

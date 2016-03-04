@@ -209,7 +209,7 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             f.setError(EditAccountForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
             return;
         } catch (SecurityException e) {
-            f.setError("", "account.edit.error.wrong.password");
+            f.setError(EditAccountForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
             return;
         }
 

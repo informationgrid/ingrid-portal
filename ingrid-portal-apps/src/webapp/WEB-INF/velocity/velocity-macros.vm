@@ -13,8 +13,17 @@ $actionForm.getInputHTMLEscaped($field)#end
 #macro (addErrorFormClass $field)
 #if ($actionForm.hasErrorInField($field))class="field--error"#end
 #end
+
 #macro (addErrorFormClassText $field)
 #if ($actionForm.hasErrorInField($field))field--error#end
+#end
+
+#macro (addErrorFormMessage $field)
+#if ($actionForm.hasErrorInField($field))<small class="bx-top-xs">$MESSAGES.getString($actionForm.getErrorInField($field))</small>#end
+#end
+
+#macro (addErrorFormMessageBox $field)
+#if ($actionForm.hasErrorInField($field))#renderMessageError($MESSAGES.getString($actionForm.getErrorInField($field)))</small>#end
 #end
 
 #macro (getChecked $field $value)
@@ -29,14 +38,22 @@ $actionForm.getInputHTMLEscaped($field)#end
     #if ($form.hasErrors())
         <div>
             #foreach ($errorMsg in $form.getAllErrors())
-                #renderMessageError($MESSAGES.getString($errorMsg))
+                #if($errorMsg.indexOf('error.queryFormat') > -1)
+                    #renderMessageError($MESSAGES.getString($errorMsg))
+                #end
             #end
         </div>
     #end
 #end
 
 #macro (displayFormErrors)
-    #displayFormErrorsByForm($actionForm)   
+    #displayFormErrorsByForm($actionForm)
+#end
+
+#macro (displayFormError)
+    #if ($actionForm.hasErrors())
+        #renderMessageError("Fehler im Formular.")
+    #end
 #end
 
 #macro (displayFormMessagesByForm $form)
@@ -174,9 +191,9 @@ $actionForm.getInputHTMLEscaped($field)#end
             <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
         </td>
         <td>$rowId</td>
-		#foreach ($rowValue in $rowValues)
-			<td>$rowValue</td>
-		#end
+        #foreach ($rowValue in $rowValues)
+            <td>$rowValue</td>
+        #end
     </tr>
 #end
 
@@ -341,10 +358,11 @@ $actionForm.getInputHTMLEscaped($field)#end
 #macro (renderTextField $label $id)
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-            <label for="query">#displayFieldLabel($id $label)</label>
+            <label for="query">$label</label>
         </div>
         <div class="media__body">
-            <input id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" type="text">
+            <input id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" #addErrorFormClass($id) type="text">
+            #addErrorFormMessage($id)
         </div>
     </div>
 #end

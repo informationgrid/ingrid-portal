@@ -718,7 +718,7 @@ public class AdminUserPortlet extends ContentPortlet {
                     f.setError(AdminUserForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
                     return;
                 } catch (SecurityException e) {
-                    f.setError("", "account.edit.error.wrong.password");
+                    f.setError(AdminUserForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
                     return;
                 }
             // also check for superadmin to be sure !

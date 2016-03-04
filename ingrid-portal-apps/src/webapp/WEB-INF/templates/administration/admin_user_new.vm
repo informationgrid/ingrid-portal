@@ -10,7 +10,7 @@
         </div>
         <div class="box__content ob-container">
             #renderMessageInfo("* Pflichtfelder")
-            #displayFormErrors()
+            #displayFormError()
             #displayFormMessages()
             <hr>
             <div class="media">
@@ -33,6 +33,7 @@
                 </div>
                 <div class="media__body">
                     <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname')/>
+                    #addErrorFormMessage('firstname')
                 </div>
             </div>
             <div class="media">
@@ -41,6 +42,7 @@
                 </div>
                 <div class="media__body">
                     <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
+                    #addErrorFormMessage('lastname')
                 </div>
             </div>
             <div class="media">
@@ -49,6 +51,7 @@
                 </div>
                 <div class="media__body">
                     <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
+                    #addErrorFormMessage('email')
                 </div>
             </div>
             <hr />
@@ -58,6 +61,7 @@
                 </div>
                 <div class="media__body">
                     <input type="text" id="id" name="id" value="#getFieldValue('id')" #addErrorFormClass('id')/>
+                    #addErrorFormMessage('id')
                 </div>
             </div>
             <hr />
@@ -67,6 +71,7 @@
                 </div>
                 <div class="media__body">
                     <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new')/>
+                    #addErrorFormMessage('password_new')
                 </div>
             </div>
             <div class="media">
@@ -75,6 +80,7 @@
                 </div>
                 <div class="media__body">
                     <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
+                    #addErrorFormMessage('password_new_confirm')
                 </div>
             </div>
             <hr />
@@ -164,3 +170,10 @@
     </div>
     #renderDBEditFooter($mode)
 </form>
+	frmCreateUser
+<script >
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('frmCreateUser');
+    }
+</script>
