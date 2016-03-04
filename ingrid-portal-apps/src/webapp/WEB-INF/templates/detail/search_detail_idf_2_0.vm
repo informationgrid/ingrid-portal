@@ -268,7 +268,7 @@
             <article class="content ob-container">
                 <form class="box box--medium">
                     <div class="box__content ob-container">
-                        <h6 class="tx-light tx-upper tx-brand bx-bot-0">10.09.2015</h6>
+                        <h6 class="tx-light tx-upper tx-brand bx-bot-0">$modTime</h6>
                         <h1 class="bx-top-0 bx-bot-s">$title</h1>
                         <h3 class="bx-top-0">
                             #if($isMetadata == true)
@@ -282,6 +282,11 @@
                     </div>
                     <hr class="hr-thick bx-top-0 bx-bot-0">
                     <div class="tabs tabs--wide js-tabs bx-top-0 bx-bot-0">
+                        <div class="tab__select mq-show-l">
+                            <span class="tab__select__text">$MESSAGES.getString("general_tab")</span>
+                            <svg class="tab__select__icon icon"><use xlink:href="#burger"></svg>
+                            <svg class="tab__select__icon icon"><use xlink:href="#cross"></svg>
+                        </div>
                         <nav class="tab__toggles ob-clear mq-hide-l">
                             ## Allgemeines
                             <div class="tab__toggle is-active" data-tabid="tab-1"><a href="#">$MESSAGES.getString("general_tab")</a></div>
