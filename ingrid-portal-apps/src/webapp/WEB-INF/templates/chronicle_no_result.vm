@@ -1,2 +1,3 @@
-<p>$MESSAGES.getString('chronicle.result.noResult1')</p>
+<hr>
+#renderMessageInfo($MESSAGES.getString('chronicle.result.noResult1'))
 

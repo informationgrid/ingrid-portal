@@ -1,63 +1,68 @@
+<hr>
 <h3>#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('chronicle.result.navigationTitle')" )</h3>
 <div class="pagination bx-top-m mq-hide-l">
-	#renderRankedPageNavigation($rankedPageSelector)
+    #renderRankedPageNavigation($rankedPageSelector)
 </div>
 #foreach($rs in $rankedResultList.hits)
-	#if($velocityCount > 1)
-      <div class="line"><hr /></div>
-	#end
-		  <div class="search-result">
-		  #if ($rs.title)
-			<h4 class="bx-bot-m bx-bot-xs">#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end</h4>
-			<p>
-				<a href="$!rs.searchURL">
-					<svg class="icon research__icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#magnifier"></use></svg> 
-					$MESSAGES.getString('chronicle.result.inquiry')
-				</a>
-			</p>
-            <p class="bx-bot-0 bx-top-s">
-              <span class="tx-darkest"><strong>$MESSAGES.getString('chronicle.result.eventType')</strong></span>
-              <span class="tx-light">$!rs.type</span>
+    #if($velocityCount > 1)
+        <hr>
+    #end
+    <div class="search-result">
+    #if ($rs.title)
+        <h4 class="bx-bot-m bx-bot-xs">#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end</h4>
+        <a href="$!rs.searchURL">
+            <svg class="icon research__icon"><use xlink:href="#magnifier"></use></svg> 
+            $MESSAGES.getString('chronicle.result.inquiry')
+        </a>
+        <p class="bx-bot-0 bx-top-s">
+            <span class="tx-darkest"><strong>$MESSAGES.getString('chronicle.result.eventType')</strong></span>
+            <span class="tx-light">$!rs.type</span>
+        </p>
+        <p class="bx-top-0">
+            <span class="tx-darkest"><strong>$MESSAGES.getString('chronicle.result.eventDate')</strong></span>
+            <span class="tx-light">$!rs.date</span>
+        </p>
+        <p class="bx-top-xs">
+            $!rs.description
+        </p>
+        #if ($rs.definitions && $rs.definitions.size() > 0)
+            <p class="bx-top-s bx-bot-s tx-darkest">
+                <strong>$MESSAGES.getString('chronicle.result.definitions')</strong>
             </p>
-            <p class="bx-top-0">
-                <span class="tx-darkest"><strong>$MESSAGES.getString('chronicle.result.eventDate')</strong></span>
-                <span class="tx-light">$!rs.date</span>
+            <ul class="link-list">
+            #foreach($defURL in $rs.definitions)
+                #set ($titleIndex = $velocityCount - 1)
+                #set ($defTitle = $rs.defTitles.get($titleIndex))
+                <li>
+                    <a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">
+                        <svg class="icon"><use xlink:href="#external-link"></use></svg> 
+                        #if ($defTitle)$defTitle#else$defURL#end
+                    </a>
+                </li>
+            #end
+        </ul>
+        #end
+
+        #if ($rs.samples && $rs.samples.size() > 0)
+            <p class="bx-top-s bx-bot-s tx-darkest">
+                <strong>$MESSAGES.getString('chronicle.result.samples')</strong>
             </p>
-			<p class="bx-top-xs">
-				$!rs.description
-			</p>
-			#if ($rs.definitions && $rs.definitions.size() > 0)
-       			<p class="bx-top-s bx-bot-s tx-darkest">
-					<strong>$MESSAGES.getString('chronicle.result.definitions')</strong>
-       			</p>
-       			<ul class="link-list">
-       			#foreach($defURL in $rs.definitions)
-					#set ($titleIndex = $velocityCount - 1)
-					#set ($defTitle = $rs.defTitles.get($titleIndex))
-    				<li>
-    					<a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#if ($defTitle)$defTitle#else$defURL#end</a>
-    				</li>
-				#end
-				</ul>
-			#end
-			
-			#if ($rs.samples && $rs.samples.size() > 0)
-       			<p class="bx-top-s bx-bot-s tx-darkest">
-					<strong>$MESSAGES.getString('chronicle.result.samples')</strong>
-       			</p>
-       			<ul class="link-list">
-				#foreach($defURL in $rs.samples)
-					#set ($titleIndex = $velocityCount - 1)
-					#set ($defTitle = $rs.sampleTitles.get($titleIndex))
-        			<li>
-        				<a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">#if ($defTitle)$defTitle#else$defURL#end</a>
-        			</li>
-				#end
-       			</ul>
-			#end
-		  #else
-			<span class="result_title"><strong>$MESSAGES.getString('chronicle.result.emptyEvent')</strong></span>
-			<p class="result_link"></p>
-		  #end
-          </div>
+            <ul class="link-list">
+            #foreach($defURL in $rs.samples)
+                #set ($titleIndex = $velocityCount - 1)
+                #set ($defTitle = $rs.sampleTitles.get($titleIndex))
+                <li>
+                    <a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">
+                        <svg class="icon"><use xlink:href="#external-link"></use></svg> 
+                        #if ($defTitle)$defTitle#else$defURL#end
+                    </a>
+                </li>
+            #end
+            </ul>
+        #end
+    #else
+        <span class="result_title"><strong>$MESSAGES.getString('chronicle.result.emptyEvent')</strong></span>
+        <p class="result_link"></p>
+    #end
+    </div>
 #end
