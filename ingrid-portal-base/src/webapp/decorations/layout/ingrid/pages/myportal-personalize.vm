@@ -1,31 +1,31 @@
 <section class="block block--padded">
     <div class="ob-box-wide ob-box-padded ob-box-center">
-    	<article class="content ob-container">
-	    	$jetspeed.renderPortletWindow("MyPortalPersonalizeHomePortlet", "ingrid-portal-apps::MyPortalPersonalizeHomePortlet")
-	    </article>
-	</div>
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("MyPortalPersonalizeHomePortlet", "ingrid-portal-apps::MyPortalPersonalizeHomePortlet")
+        </article>
+    </div>
 </section>
 
 <section class="block block--padded block--light">
     <div class="ob-box-wide ob-box-padded ob-box-center">
-    	<article class="content ob-container">
-	    	$jetspeed.renderPortletWindow("MyPortalPersonalizePartnerPortlet", "ingrid-portal-apps::MyPortalPersonalizePartnerPortlet")
-    	</article>
-	</div>
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("MyPortalPersonalizePartnerPortlet", "ingrid-portal-apps::MyPortalPersonalizePartnerPortlet")
+        </article>
+    </div>
 </section>
 
 <section class="block block--padded">
     <div class="ob-box-wide ob-box-padded ob-box-center">
-    	<article class="content ob-container">
-	    	$jetspeed.renderPortletWindow("MyPortalPersonalizeSourcesPortlet", "ingrid-portal-apps::MyPortalPersonalizeSourcesPortlet")
-    	</article>
-	</div>
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("MyPortalPersonalizeSourcesPortlet", "ingrid-portal-apps::MyPortalPersonalizeSourcesPortlet")
+        </article>
+    </div>
 </section>
 
 <section class="block block--padded block--light">
     <div class="ob-box-wide ob-box-padded ob-box-center">
-    	<article class="content ob-container">
-	    	$jetspeed.renderPortletWindow("MyPortalPersonalizeSearchSettingsPortlet", "ingrid-portal-apps::MyPortalPersonalizeSearchSettingsPortlet")
-    	</article>
-	</div>
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("MyPortalPersonalizeSearchSettingsPortlet", "ingrid-portal-apps::MyPortalPersonalizeSearchSettingsPortlet")
+        </article>
+    </div>
 </section>

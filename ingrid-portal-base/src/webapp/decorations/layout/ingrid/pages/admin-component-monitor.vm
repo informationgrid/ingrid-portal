@@ -1,7 +1,7 @@
 <section class="block block--padded">
     <div class="ob-box-wide ob-box-padded ob-box-center">
-    	<article class="content ob-container">
-    		$jetspeed.renderPortletWindow("AdminComponentMonitorPortlet", "ingrid-portal-apps::AdminComponentMonitorPortlet")
-	    </article>
-	</div>
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("AdminComponentMonitorPortlet", "ingrid-portal-apps::AdminComponentMonitorPortlet")
+        </article>
+    </div>
 </section>
