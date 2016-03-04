@@ -36,7 +36,7 @@
                     </td>
                     #foreach ($rowValue in $rowValues)
                         #if ($velocityCount == 2)
-                            <td><a href="$action">$rowValue</a> (<a target="_blank" href="$dbEntity.Url">link</a>)</td>
+                            <td><a href="$action">$rowValue</a> (<a href="$dbEntity.Url">link</a>)</td>
                         ##elseif ($velocityCount == 7)
                         ##  <td><a href="$action">$MESSAGES.getString($rowValue)</a></td>
                         #else

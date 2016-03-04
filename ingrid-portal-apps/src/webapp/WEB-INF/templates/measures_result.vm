@@ -7,7 +7,7 @@
 			    	<span class="search_hit_icon_partner"><span class="search_hit_icon_partner_${rs.partnerKey}"><img src="/ingrid-portal-apps/images/partner/${rs.partnerKey}.png" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/></span></span></span>
 			    #end
 			#end
-			<span class="result_title"><strong><a href="$!rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end </a></strong></span>
+			<span class="result_title"><strong><a href="$!rs.url"><span class="icon"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')"/></span>#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end </a></strong></span>
             <p class="result_description">
 ##            $!rs.abstract 
             </p>
@@ -23,7 +23,7 @@
             </p>
 			#if($rs.url)
 			<p class="result_link">
-              <a href="$rs.url" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rs.url_str</a>
+              <a href="$rs.url">$!rs.url_str</a>
             </p>
 			#end
 		  #else

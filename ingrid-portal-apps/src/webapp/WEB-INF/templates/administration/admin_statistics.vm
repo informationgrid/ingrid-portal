@@ -7,7 +7,7 @@
     <div class="box__content ob-container">
         <ul class="link-list">
             <li>
-                <a target="_new" href="$apacheStatisticsURL">
+                <a href="$apacheStatisticsURL">
                     <svg class="icon">
                         <use xlink:href="#internal-link">
                     </svg>

@@ -10,7 +10,7 @@
         <div class="box__content ob-container">
             <ul class="link-list">
                 <li>
-                    <a target="_new" href="$ibusURL">
+                    <a href="$ibusURL">
                         <svg class="icon">
                             <use xlink:href="#internal-link">
                         </svg>
@@ -32,7 +32,7 @@
                 #foreach($plug in $SEIplugs)
                 <li>
                     #if($plug.getIplugAdminGuiUrl())
-                    <a target="_new" href="$plug.getIplugAdminGuiUrl()">
+                    <a href="$plug.getIplugAdminGuiUrl()">
                         <svg class="icon">
                             <use xlink:href="#internal-link">
                         </svg>
@@ -96,7 +96,7 @@
                                                 <use xlink:href="#external-link">
                                                 </use>
                                             </svg>
-                                            <a href="$plug.getIplugAdminGuiUrl()" target="_new">$plugNode.name</a>
+                                            <a href="$plug.getIplugAdminGuiUrl()">$plugNode.name</a>
                                         </li>
                                     #else
                                       $plugNode.name (kein Administrationsinterface angegeben!)

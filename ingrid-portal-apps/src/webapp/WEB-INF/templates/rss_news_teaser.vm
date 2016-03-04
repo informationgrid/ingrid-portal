@@ -9,7 +9,7 @@
             <span class="tx-light">$date.format('H:mm',$rssEntry.publishedDate)</span>
         </small>
           <h4 class="bx-top-0">
-            <a href="$!rssEntry.link" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rssEntry.title</a>
+            <a href="$!rssEntry.link">$!rssEntry.title</a>
         </h4>
         <p> 
           #if ($rssEntry && $rssEntry.description)

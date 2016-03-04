@@ -37,7 +37,7 @@
                         <use xlink:href="#minus">
                     </svg>
                 </a>
-                <strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
+                <strong>#if($nodeUrl != '')<a href="$nodeUrl">$nodeTitle</a>#else$nodeTitle#end</strong>
             </li>
             <li class="tree__content js-accordion-content">
                 ## render sub nodes
@@ -69,7 +69,7 @@
                     #end
                 #end
                 ## render node text
-                <strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
+                <strong>#if($nodeUrl != '')<a href="$nodeUrl">$nodeTitle</a>#else$nodeTitle#end</strong>
             </li>
         #else
             #if($nodeUrl != '')
@@ -79,7 +79,7 @@
                 #else
                     #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
                 #end
-                <a href="$nodeUrl" target="_new">$nodeTitle</a>
+                <a href="$nodeUrl">$nodeTitle</a>
             </li>
             #end
         #end

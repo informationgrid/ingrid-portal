@@ -7,7 +7,7 @@
     <div class="box__content ob-container">
         <ul class="link-list">
             <li>
-                <a target="_new" href="$wmsMapbenderInterface">
+                <a href="$wmsMapbenderInterface">
                     <svg class="icon">
                         <use xlink:href="#internal-link">
                     </svg>
@@ -15,7 +15,7 @@
                 </a>
             </li>
             <li>
-                <a target="_new" href="$wmsMaplabInterface">
+                <a href="$wmsMaplabInterface">
                     <svg class="icon">
                         <use xlink:href="#internal-link">
                     </svg>

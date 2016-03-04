@@ -83,7 +83,7 @@
         #end
         #if($tool.hasContent($entry.mapLink))
             <p>
-               <a class="btn btn--primary btn--small" target="_new" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
+               <a class="btn btn--primary btn--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
             </p>
         #end
     #end
@@ -759,7 +759,7 @@
                 <div>
                     <img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
                     </span>
-                    <a target="_new" class="detail_link" href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
+                    <a class="detail_link" href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
                 </div>  
            #end
         </div>

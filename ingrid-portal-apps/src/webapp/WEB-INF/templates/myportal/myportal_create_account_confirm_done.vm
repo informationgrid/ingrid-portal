@@ -6,10 +6,8 @@
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-myportal.psml"))
 <ul class="link-list">
     <li>
-        <a target="_new" href="$link">
-            <svg class="icon">
-                <use xlink:href="#internal-link">
-            </svg>
+        <a href="$link">
+            <svg class="icon"><use xlink:href="#internal-link"></svg>
             $MESSAGES.getString('account.confirmed.link')
         </a>
     </li>

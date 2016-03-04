@@ -34,7 +34,7 @@
                 #set ($titleIndex = $velocityCount - 1)
                 #set ($defTitle = $rs.defTitles.get($titleIndex))
                 <li>
-                    <a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">
+                    <a href="$defURL">
                         <svg class="icon"><use xlink:href="#external-link"></use></svg> 
                         #if ($defTitle)$defTitle#else$defURL#end
                     </a>
@@ -52,7 +52,7 @@
                 #set ($titleIndex = $velocityCount - 1)
                 #set ($defTitle = $rs.sampleTitles.get($titleIndex))
                 <li>
-                    <a href="$defURL" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">
+                    <a href="$defURL">
                         <svg class="icon"><use xlink:href="#external-link"></use></svg> 
                         #if ($defTitle)$defTitle#else$defURL#end
                     </a>

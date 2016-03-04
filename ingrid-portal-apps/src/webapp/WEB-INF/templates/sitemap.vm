@@ -81,7 +81,7 @@
             </li>
             <li>
                 #set ($link = "http://geoviewer.ilmenau.baw.de/mapclient/initParams.do")
-                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern1.tooltip")">
+                <a href="$link" title="$MESSAGES.getString("sitemap.application.extern1.tooltip")">
                     <svg class="icon">
                         <use xlink:href="#internal-link">
                     </svg>
@@ -91,7 +91,7 @@
             </li>
             <li>
                 #set ($link = "http://geokat.wsv.bvbs.bund.de/terraCatalog/Start.do")
-                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern2.tooltip")">
+                <a href="$link" title="$MESSAGES.getString("sitemap.application.extern2.tooltip")">
                     <svg class="icon">
                         <use xlink:href="#internal-link">
                     </svg>
@@ -101,7 +101,7 @@
             </li>
             <li>
                 #set ($link = "http://geoportal.wsv.bvbs.bund.de/geoportal/cms/Content/Anwendungen/ArcGIS.html")
-                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern3.tooltip")">
+                <a href="$link" title="$MESSAGES.getString("sitemap.application.extern3.tooltip")">
                     <svg class="icon">
                         <use xlink:href="#internal-link">
                     </svg>
@@ -111,7 +111,7 @@
             </li>
             <li>
                 #set ($link = "http://geoportal.wsv.bvbs.bund.de/geoportal/cms/Content/Anwendungen/Tools.html")
-                <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern4.tooltip")">
+                <a href="$link" title="$MESSAGES.getString("sitemap.application.extern4.tooltip")">
                     <svg class="icon">
                         <use xlink:href="#internal-link">
                     </svg>
@@ -138,10 +138,8 @@
         #if($enableMaps)
         <li>
         #set ($link = $renderResponse.encodeURL("/portal/main-maps.psml"))
-            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.maps.tooltip")" target="_new">
-                <svg class="icon">
-                    <use xlink:href="#internal-link">
-                </svg>
+            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.maps.tooltip")">
+                <svg class="icon"><use xlink:href="#internal-link"></svg>
                 $MESSAGES.getString("sitemap.area.main.maps")
             </a>
             <p>$MESSAGES.getString("sitemap.area.main.maps.description")</p>
@@ -230,10 +228,8 @@
 <ul class="link-list">
     <li>
         #set ($link = $renderResponse.encodeURL("/portal/help.psml"))
-        <a href="$link" title="$MESSAGES.getString("sitemap.area.service.help.tooltip")" target="_new">
-              <svg class="icon">
-                <use xlink:href="#internal-link">
-            </svg>
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.service.help.tooltip")">
+            <svg class="icon"><use xlink:href="#internal-link"></svg>
             $MESSAGES.getString("sitemap.area.service.help")
         </a>
         <p>$MESSAGES.getString("sitemap.area.service.help.description")</p>

@@ -33,11 +33,9 @@
                     #if($provider.provider)
                         <li>
                         #if($provider.provider.url && $provider.provider.url != "")
-                            <a href="$provider.provider.url" target="_new">
-                                <svg class="icon">
-                                    <use xlink:href="#external-link">
-                                </svg>
-                            $provider.provider.name
+                            <a href="$provider.provider.url">
+                                <svg class="icon"><use xlink:href="#external-link"></svg>
+                                $provider.provider.name
                             </a>
                         #else
                             $provider.provider.name

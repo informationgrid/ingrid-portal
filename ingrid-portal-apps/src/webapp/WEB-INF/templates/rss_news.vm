@@ -1,7 +1,7 @@
 <p>$MESSAGES.getString('news.archive.header')</p>
 #foreach($rssEntry in $rssEntries)
   <div class="resultset">
-    <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span><span class="intendResult"><a href="$!rssEntry.link" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rssEntry.title</a></span><em class="date"> <nobr>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</nobr></em></span>
+    <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span><span class="intendResult"><a href="$!rssEntry.link">$!rssEntry.title</a></span><em class="date"> <nobr>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</nobr></em></span>
     <p class="result_description">
       #if ($rssEntry && $rssEntry.description)
         $strutils.cutString($rssEntry.description, 350)
