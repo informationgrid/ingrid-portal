@@ -79,26 +79,6 @@ $actionForm.getInputHTMLEscaped($field)#end
 ## ------------------------------
 ## Administration macros
 ## ------------------------------
-#macro (renderDBBrowserNavigation $browser)
-<div class="contentNavigation">
-    <div class="contentNavigationLeft">
-    #if ($browser.hasPreviousPage())
-        #renderInputButtonClass("<<" "" "doFirst" "" "btn_admin")
-        #renderInputButtonClass("<" "" "doPrev" "" "btn_admin")
-    #end
-        &nbsp;
-    </div>
-    <div class="contentNavigationMiddle">$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</div>
-    <div class="contentNavigationRight">
-    #if ($browser.hasNextPage())
-        #renderInputButtonClass(">" "" "doNext" "" "btn_admin")
-        #renderInputButtonClass(">>" "" "doLast" "" "btn_admin")
-    #end
-    </div>
-    <p class="clearer"></p>
-</div>
-#end
-
 #macro (renderPaginationAndHint $browser $hint)
     <div id="paginationAndHint" class="pagination">
         <ul class="pagination__list tx-right mq-hide-m">
@@ -188,25 +168,8 @@ $actionForm.getInputHTMLEscaped($field)#end
 </thead>
 #end
 
-#macro (renderDBHeader $colNames $colTitles)
-<tr height=30>
-    <td class="contentColumnHeadLight" style="font-weight:bold; vertical-align:middle;"></td>
-    #foreach ($colTitle in $colTitles)
-        #set ($colLink = $renderResponse.createActionURL())
-        #set ($colIndex = $velocityCount - 1)
-        $colLink.setParameter("sortColumn", $colNames.get($colIndex))
-        <td class="contentColumnHeadLight" style="font-weight:bold; vertical-align:middle;"><a href="$colLink" class="contentColumnHeadLight">$colTitle</a></td>
-    #end
-</tr>
-#end
-
 #macro (renderDBBrowserRow $rowId $rowValues)
 <tr>
-#if ($velocityCount % 2 == 0)
-    #set ($rowstyle = "contentRowEven")
-#else
-    #set ($rowstyle = "contentRowOdd")
-#end   
     <td class="$rowstyle">
         <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
     </td>
@@ -246,10 +209,10 @@ $actionForm.getInputHTMLEscaped($field)#end
     #set ($action = $renderResponse.createActionURL())
     $action.setParameter('doEdit','Edit')
     $action.setParameter("id", "$rowId")
-        <td>
-            <input id="chk_$velocityCount" name="id" type="hidden" value="$rowId" />
-            <a href="$action">$rowId</a>
-        </td>
+    <td>
+        <input id="chk_$velocityCount" name="id" type="hidden" value="$rowId" />
+        <a href="$action">$rowId</a>
+    </td>
     #foreach ($rowValue in $rowValues)
         <td><a href="$action">$rowValue</a></td>
     #end
@@ -386,22 +349,6 @@ $actionForm.getInputHTMLEscaped($field)#end
     </div>
 #end
 
-#macro (getRowStyle $count $state)
-    #if ($count % 2 == 0)
-        #if ($state == 0)
-            #set ($rowstyle = "contentRowEven")
-        #else
-            #set ($rowstyle = "contentRowEvenError")
-        #end
-    #else
-        #if ($state == 0)
-            #set ($rowstyle = "contentRowOdd")
-        #else
-            #set ($rowstyle = "contentRowOddError")
-        #end
-    #end
-#end
-
 #macro (renderInputButton $buttonvalue $buttonstyle $buttonname $buttontitle)
     #renderInputButtonClass ($buttonvalue $buttonstyle $buttonname $buttontitle "")
 #end
@@ -415,7 +362,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
-    <input type="submit" class="$buttonclass" style="$buttonstyle" value="$buttonvalue" name="$buttonname" title="$buttontitle" onclick="$buttononclick" #if($buttondisable == "true")class="btn_disable" disabled#end />
+    <input type="submit" class="$buttonclass" style="$buttonstyle" value="$buttonvalue" name="$buttonname" title="$buttontitle" onclick="$buttononclick" #if($buttondisable == "true")disabled#end />
 #end
 
 #macro (renderInputButtonSearch $buttonvalue $buttonstyle $buttonname $buttontitle)
@@ -442,12 +389,6 @@ $actionForm.getInputHTMLEscaped($field)#end
             
         </div>
         <div class="btn_search_right" id="$buttonname right"></div>
-    </div>
-#end
-
-#macro(renderTopicImageRandom $index)
-    <div class="themen_image">
-        <img class="themen_image_style" height="96" width="210" src="/ingrid-portal-apps/images/topics/index_themen_${index}.png" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
     </div>
 #end
 
