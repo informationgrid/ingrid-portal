@@ -122,8 +122,6 @@
     <div class="box box--fill box--small">
         <div class="box__content ob-container">
             <ul class="link-list">
-                $action.setParameter("doShowUpdates", "true")
-                <li><a style="font-weight:bold;" href="$action"><svg class="icon"><use xlink:href="#internal-link"/></svg>$MESSAGES.getString('component.forms.text.upgrade')</a></li>
                 <li><a href="#import"><svg class="icon"><use xlink:href="#internal-link"/></svg>$MESSAGES.getString('component.forms.text.import.iplugs')</a></li>
             </ul>
         </div>
