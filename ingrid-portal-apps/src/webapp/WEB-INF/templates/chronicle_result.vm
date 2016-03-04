@@ -1,6 +1,6 @@
 <hr>
 <h3>#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('chronicle.result.navigationTitle')" )</h3>
-<div class="pagination bx-top-m mq-hide-l">
+<div class="pagination bx-top-m">
     #renderRankedPageNavigation($rankedPageSelector)
 </div>
 #foreach($rs in $rankedResultList.hits)
@@ -66,3 +66,6 @@
     #end
     </div>
 #end
+<div class="pagination bx-top-m">
+    #renderRankedPageNavigation($rankedPageSelector)
+</div>

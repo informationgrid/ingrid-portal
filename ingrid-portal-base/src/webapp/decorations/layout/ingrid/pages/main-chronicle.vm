@@ -8,7 +8,7 @@
 
 <section class="block block--padded">
     <div class="ob-box-wide ob-box-padded ob-box-center">
-        <article class="content ob-container ob-box-narrow">
+        <article class="content ob-container">
             $jetspeed.renderPortletWindow("MeasuresResult", "ingrid-portal-apps::ChronicleResult")
         </article>
     </div>

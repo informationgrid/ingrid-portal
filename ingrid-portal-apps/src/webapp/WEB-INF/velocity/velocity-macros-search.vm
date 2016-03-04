@@ -141,7 +141,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
 #macro (renderRankedPageNavigationGroupingWithPages $pageSelector $isBottom)
 
 #if($isBottom)
-    <p class="mq-hide-l">#renderRankedResultCounter($pageSelector)</p>
+    <p class="mq-hide-l">#renderRankedResultCounterGrouping($pageSelector)</p>
 #end
 
 ## Default
