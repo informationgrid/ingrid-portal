@@ -383,62 +383,6 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
     </portlet>
-
-	<portlet id="MyPortalEditAboutInfoPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/about_partner.vm</value>
-        </init-param>
-        <portlet-name>MyPortalEditAboutInfoPortlet</portlet-name>
-        <display-name>MyPortalEditAboutInfoPortlet</display-name>
-        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
-        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
-        <portlet-preferences>
-            <preference>
-                <name>infoTemplate</name>
-                <value>/WEB-INF/templates/myportal/myportal_navigation.vm</value>
-            </preference>
-            <preference>
-                <name>titleKey</name>
-                <value>myPortal.info.navigation.title</value>
-            </preference>
-        </portlet-preferences>
-    </portlet>
-    
-    <portlet id="MyPortalEditAdvancedInfoPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/myportal/login_teaser.vm</value>
-        </init-param>
-        <portlet-name>MyPortalEditAdvancedInfoPortlet</portlet-name>
-        <display-name>MyPortalEditAdvancedInfoPortlet</display-name>
-        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
-        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
-        <portlet-preferences>
-            <preference>
-                <name>infoTemplate</name>
-                <value>/WEB-INF/templates/myportal/login_teaser.vm</value>
-            </preference>
-            <preference>
-                <name>titleKey</name>
-                <value>teaser.login.title</value>
-            </preference>
-        </portlet-preferences>
-    </portlet>
     
     <portlet id="AdminUserMigrationPortlet">
         <init-param>
