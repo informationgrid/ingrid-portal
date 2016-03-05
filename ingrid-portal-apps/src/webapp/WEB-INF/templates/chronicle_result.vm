@@ -8,7 +8,6 @@
         #if($velocityCount > 1)
             <hr>
         #end
-        <div>
         #if ($rs.title)
             <h4 class="bx-bot-m bx-bot-xs">#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end</h4>
             <a href="$!rs.searchURL">
@@ -65,7 +64,6 @@
             <span class="result_title"><strong>$MESSAGES.getString('chronicle.result.emptyEvent')</strong></span>
             <p class="result_link"></p>
         #end
-        </div>
     #end
     <div class="pagination bx-top-m">
         #renderRankedPageNavigation($rankedPageSelector)

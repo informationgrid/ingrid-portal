@@ -7,29 +7,27 @@
 #end
     
 ## set flag indicating how to render stuff (e.g. in includes)
-<div>
-    <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
-    #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
-    <br />
-    #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
-        #foreach($rs in $rankedResultList.getWrapperHits())
-            #if($grouping)
-                #parse ('/WEB-INF/templates/include_search_result_group_header.vm')
-            #end
-            #set ($topHit = true)
-            #renderHit($rs)
-            #if($rs.subhit)
-                #set ($rs = $rs.subhit)
-                #set ($topHit = false)
-                #set ($subHitLeftMargin = 40)
-                #renderHit($rs)
-            #end
-            #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
+<h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
+#parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+<br />
+#if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
+    #foreach($rs in $rankedResultList.getWrapperHits())
+        #if($grouping)
+            #parse ('/WEB-INF/templates/include_search_result_group_header.vm')
         #end
-    #elseif($rankedSearchFinished)
-        <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
-    #else
-        <p><strong>$MESSAGES.getString('common.result.interrupted')</strong><br /><br /></p>
+        #set ($topHit = true)
+        #renderHit($rs)
+        #if($rs.subhit)
+            #set ($rs = $rs.subhit)
+            #set ($topHit = false)
+            #set ($subHitLeftMargin = 40)
+            #renderHit($rs)
+        #end
+        #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
     #end
-    #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
-</div>
+#elseif($rankedSearchFinished)
+    <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
+#else
+    <p><strong>$MESSAGES.getString('common.result.interrupted')</strong><br /><br /></p>
+#end
+#parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')

@@ -1,7 +1,7 @@
-#parse ('/WEB-INF/templates/include_search_result_filter.vm')
-#if($enableFacete)
-    <aside class="sidebar js-accordion-multi">
-        <div id="searchResult">
+<div id="searchResult">
+    #parse ('/WEB-INF/templates/include_search_result_filter.vm')
+    #if($enableFacete)
+        <aside class="sidebar js-accordion-multi">
             <div class="sidebar__title js-accordion-toggle mq-show-l">
                 Filter
                 <svg class="icon"><use xlink:href="#filter"></use></svg>
@@ -10,15 +10,12 @@
             <div class="sidebar__content js-accordion-content is-hidden">
                 #parse ('/WEB-INF/templates/facete/facete.vm')
             </div>
-        </div>
-    </aside>
-#end
-<article class="content ob-container ob-box-narrow">
-    <div #if(!$enableFacete)id="searchResult"#end>
+        </aside>
+    #end
+    <article class="content ob-container ob-box-narrow">
         #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
-    </div>
-</article>
-
+    </article>
+</div>
 #if($adminContent)
     <!--
     #if($rankedResultList.get("FACETS"))

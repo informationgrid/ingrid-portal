@@ -1,6 +1,6 @@
-#if($enableFacete)
-    <aside class="sidebar js-accordion-multi">
-        <div id="searchResult">
+<div id="searchResult">
+    #if($enableFacete)
+        <aside class="sidebar js-accordion-multi">
             <div class="sidebar__title js-accordion-toggle mq-show-l">
                 Filter
                 <svg class="icon"><use xlink:href="#filter"></use></svg>
@@ -9,11 +9,9 @@
             <div class="sidebar__content js-accordion-content is-hidden">
                 #parse ('/WEB-INF/templates/facete/facete.vm')
             </div>
-        </div>
-    </aside>
-#end
-<article class="content ob-container ob-box-narrow">
-    <div #if(!$enableFacete)id="searchResult"#end>
+        </aside>
+    #end
+    <article class="content ob-container ob-box-narrow">
         <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
         #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
         #parse ('/WEB-INF/templates/include_search_result_filter.vm')
@@ -28,8 +26,8 @@
                 <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
         #end
         #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
-    </div>
-</article>
+    </article>
+</div>
 <script >
     goToByScroll('searchResult');
 </script>
