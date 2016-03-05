@@ -1,25 +1,24 @@
 #parse ('/WEB-INF/templates/include_search_result_filter.vm')
 #if($enableFacete)
     <aside class="sidebar js-accordion-multi">
-        <div class="sidebar__title js-accordion-toggle mq-show-l">
-            Filter
-            <svg class="icon"><use xlink:href="#filter"></use></svg>
-            <svg class="icon"><use xlink:href="#cross"></use></svg>
-        </div>
-        <div class="sidebar__content js-accordion-content is-hidden">
-            #parse ('/WEB-INF/templates/facete/facete.vm')
+        <div id="searchResult">
+            <div class="sidebar__title js-accordion-toggle mq-show-l">
+                Filter
+                <svg class="icon"><use xlink:href="#filter"></use></svg>
+                <svg class="icon"><use xlink:href="#cross"></use></svg>
+            </div>
+            <div class="sidebar__content js-accordion-content is-hidden">
+                #parse ('/WEB-INF/templates/facete/facete.vm')
+            </div>
         </div>
     </aside>
-    
-    <article class="content ob-container ob-box-narrow">
-        #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
-    </article>
-#else
-    <!-- RESULTS LEFT -->
-    <article class="content ob-container ob-box-narrow">
-        #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
-    </article>
 #end
+<article class="content ob-container ob-box-narrow">
+    <div #if(!$enableFacete)id="searchResult"#end>
+        #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
+    </div>
+</article>
+
 #if($adminContent)
     <!--
     #if($rankedResultList.get("FACETS"))
@@ -40,3 +39,6 @@
     #end
     -->
 #end
+<script >
+    goToByScroll('searchResult');
+</script>

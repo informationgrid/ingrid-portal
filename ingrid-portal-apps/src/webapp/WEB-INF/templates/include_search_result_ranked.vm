@@ -8,7 +8,7 @@
     
 ## set flag indicating how to render stuff (e.g. in includes)
 <div>
-    <h3 id="searchResult">#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
+    <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
     #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
     <br />
     #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
@@ -33,6 +33,3 @@
     #end
     #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
 </div>
-<script >
-    goToByScroll('searchResult');
-</script>

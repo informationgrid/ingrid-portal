@@ -7,6 +7,7 @@
 #end
 #if($enableFacete)
     <aside class="sidebar js-accordion-multi">
+        <div id="searchResult">
            <div class="sidebar__title js-accordion-toggle mq-show-l">
                 Filter
                 <svg class="icon"><use xlink:href="#filter"></use></svg>
@@ -15,33 +16,36 @@
             <div class="sidebar__content js-accordion-content is-hidden">
                 #parse ('/WEB-INF/templates/facete/facete.vm')
             </div>
+        </div>
     </aside>
 #end
 <!-- RESULTS LEFT -->
 <article class="content ob-container ob-box-narrow">
-    <h3 id="searchResult">#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
-    #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
-    #parse ('/WEB-INF/templates/include_search_result_filter.vm')
-    <br />
-    #if($rankedResultList && "$rankedResultList.length()" != "0")
-        #foreach($rs in $rankedResultList.getWrapperHits())
-            #if($grouping)
-                #parse ('/WEB-INF/templates/include_search_result_group_header.vm')
-            #end
-            #set ($topHit = true)
-            #renderHit($rs)
-            #if($rs.subhit)
-                #set ($rs = $rs.subhit)
-                #set ($topHit = false)
-                #set ($subHitLeftMargin = 40)
+    <div #if(!$enableFacete)id="searchResult"#end>
+        <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
+        #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+        #parse ('/WEB-INF/templates/include_search_result_filter.vm')
+        <br />
+        #if($rankedResultList && "$rankedResultList.length()" != "0")
+            #foreach($rs in $rankedResultList.getWrapperHits())
+                #if($grouping)
+                    #parse ('/WEB-INF/templates/include_search_result_group_header.vm')
+                #end
+                #set ($topHit = true)
                 #renderHit($rs)
-            #end
-            #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
-          #end
-    #else
-            <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
-    #end
-    #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
+                #if($rs.subhit)
+                    #set ($rs = $rs.subhit)
+                    #set ($topHit = false)
+                    #set ($subHitLeftMargin = 40)
+                    #renderHit($rs)
+                #end
+                #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
+              #end
+        #else
+                <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
+        #end
+        #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
+    </div>
 </article>
 #if($adminContent)
     <!--

@@ -1,30 +1,34 @@
 #if($enableFacete)
     <aside class="sidebar js-accordion-multi">
-        <div class="sidebar__title js-accordion-toggle mq-show-l">
-            Filter
-            <svg class="icon"><use xlink:href="#filter"></use></svg>
-            <svg class="icon"><use xlink:href="#cross"></use></svg>
-        </div>
-        <div class="sidebar__content js-accordion-content is-hidden">
-            #parse ('/WEB-INF/templates/facete/facete.vm')
+        <div id="searchResult">
+            <div class="sidebar__title js-accordion-toggle mq-show-l">
+                Filter
+                <svg class="icon"><use xlink:href="#filter"></use></svg>
+                <svg class="icon"><use xlink:href="#cross"></use></svg>
+            </div>
+            <div class="sidebar__content js-accordion-content is-hidden">
+                #parse ('/WEB-INF/templates/facete/facete.vm')
+            </div>
         </div>
     </aside>
 #end
 <article class="content ob-container ob-box-narrow">
-    <h3 id="searchResult">#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
-    #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
-    #parse ('/WEB-INF/templates/include_search_result_filter.vm')
-    <br />
-    #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
-        #foreach($rs in $rankedResultList.getWrapperHits())
-            #set ($topHit = true)
-            #parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
-            #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
+    <div #if(!$enableFacete)id="searchResult"#end>
+        <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
+        #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+        #parse ('/WEB-INF/templates/include_search_result_filter.vm')
+        <br />
+        #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
+            #foreach($rs in $rankedResultList.getWrapperHits())
+                #set ($topHit = true)
+                #parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
+                #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
+            #end
+        #else
+                <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
         #end
-    #else
-            <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
-    #end
-  #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
+        #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
+    </div>
 </article>
 <script >
     goToByScroll('searchResult');
