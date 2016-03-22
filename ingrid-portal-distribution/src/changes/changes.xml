@@ -47,6 +47,9 @@
             <action type="update" dev="wemove" issue="REDMINE-245">
                 Portal: Make comparison of IGE frontend with backend version (IGE iPlug) more tolerant, so older Portal can work with newer IGE iPlug, if possible.
             </action>
+            <action type="update" dev="wemove" issue="REDMINE-223">
+                IGE: Make "Anwendungseinschränkungen" (useLimitation) always optional and "Nutzungsbedingungen" (useConstraints + useLimitation) mandatory if INSPIRE or Open Data is checked.
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-197">
                 IGE: Rename german field labels of accessConstraints, useConstraints and useLimitation.
             </action>
