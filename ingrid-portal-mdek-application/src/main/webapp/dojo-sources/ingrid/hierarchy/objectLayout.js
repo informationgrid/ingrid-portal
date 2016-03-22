@@ -2233,10 +2233,22 @@ define([
                 aspect.after(UtilGrid.getTable("ref6BaseDataLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 
                 // activate default behaviour
-                UtilCatalog.getActiveBehavioursDef().then(function(data) {
+                UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                    // mark behaviours with override values
                     array.forEach(data, function(item) {
-                        behaviour[item].run();
+                        behaviour[item.id].override = item.active;
                     });
+                    for (var behave in behaviour) {
+                        if (!behaviour[behave].title) continue;
+                        // run behaviour if 
+                        // 1) activated by default and not overriden
+                        // 2) activate if explicitly overriden
+                        if ((behaviour[behave].defaultActive && behaviour[behave].override === undefined)
+                                || (behaviour[behave].override === true)) {
+                            console.debug("execute behaviour: " + behave);
+                            behaviour[behave].run();
+                        }
+                    }
                 });
             }
         })();

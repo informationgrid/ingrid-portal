@@ -61,7 +61,7 @@
             // Storage for the current catalog. We need to get the uuid from somewhere
             pageCatSettings.currentCatalogData = null;
             
-            var def = UtilCatalog.getActiveBehavioursDef();
+            var def = UtilCatalog.getOverrideBehavioursDef();
             
             on(_container_, "Load", function() {
                 try {
@@ -89,9 +89,13 @@
                     renderBehaviours();
                     def.then(function(data) {
                         // set all checkboxes active that are activated
-                        array.forEach(data, function(id) {
-                            var check = registry.byId("behaviour_" + id);
-                            check.set( "checked", true );
+                        array.forEach(data, function(item) {
+                            var check = registry.byId("behaviour_" + item.id);
+                            check.set( "checked", item.active );
+                            // add a marker for display difference to default state
+                            var tag = domConstruct.toDom("<span title='<fmt:message key='dialog.admin.catalog.general.modifiedBehaviour' />'> (Info)</span>");
+                            check.domNode.parentNode.appendChild(tag);
+                            domClass.add(check.domNode.parentNode, "modified");
                         });
                     });
                     
@@ -209,8 +213,23 @@
                     return item.id.substring(10);
                 });
                 
+                // get all behaviours that differ from default behaviour
+                var modifiedBehaviours = [];
+                for (var behave in behaviour) {
+                    var box = registry.byId("behaviour_" + behave);
+                    if (box) {
+                        var currentState = box.checked;
+                        if (behaviour[behave].defaultActive !== currentState) {
+                            modifiedBehaviours.push({
+                                id: behave,
+                                active: currentState
+                            })
+                        }
+                    }
+                }
+                
                 data = {};
-                data[UtilCatalog.ACTIVE_BEHAVIOURS] = ids.join(",");
+                data[UtilCatalog.BEHAVIOURS] = JSON.stringify(modifiedBehaviours);
                 // write the active IDs to the backend
                 UtilCatalog.storeGenericValuesDef(data).then(function() {
                     //query("#behaviourContent .row").removeClass("active");
@@ -251,7 +270,7 @@
             }
             
             function renderBehaviours() {
-                for(var behave in behaviour) {
+                for (var behave in behaviour) {
                     if (!behaviour[behave].title) continue;
                     console.log(behaviour[behave].title);
                     domConstruct.place( renderRow(behaviour[behave], behave), "behaviourContent" );
@@ -261,7 +280,7 @@
             function renderRow(data, id) {
                 var row = domConstruct.toDom("<span class='input'></span>");
                 var label = domConstruct.toDom("<label class='inActive' title='" + data.description + "'></label>");
-                var cb = new CheckBox({id: "behaviour_" + id});
+                var cb = new CheckBox({id: "behaviour_" + id, checked: data.defaultActive});
                 label.appendChild(cb.domNode);
                 label.appendChild(domConstruct.toDom(data.title));
                 

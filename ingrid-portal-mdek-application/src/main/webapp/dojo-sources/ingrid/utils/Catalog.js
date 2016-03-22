@@ -29,7 +29,7 @@ define([
         // Constants that should be used by getGenericValuesDef and setGenericValuesDef
         AUTOSAVE_INTERVAL : "AUTOSAVE_INTERVAL",
         SESSION_REFRESH_INTERVAL : "SESSION_REFRESH_INTERVAL",
-        ACTIVE_BEHAVIOURS : "ACTIVE_BEHAVIOURS",
+        BEHAVIOURS : "BEHAVIOURS",
 
         // This object holds general information about the catalog (see CatalogBean for content).
         catalogData: {},
@@ -165,15 +165,14 @@ define([
             return def;
         },
         
-        getActiveBehavioursDef : function() {
+        getOverrideBehavioursDef : function() {
             var self = this;
-            var def = this.getGenericValuesDef([this.ACTIVE_BEHAVIOURS])
+            var def = this.getGenericValuesDef([this.BEHAVIOURS])
             .then(function(data) {
-                var activeBehaviours = [];
-                if (data[self.ACTIVE_BEHAVIOURS] !== "") {
-                    activeBehaviours = data[self.ACTIVE_BEHAVIOURS].split(",");
+                if (data[self.BEHAVIOURS] && data[self.BEHAVIOURS] !== "") {
+                    return JSON.parse(data[self.BEHAVIOURS]);
                 }
-                return activeBehaviours;
+                return [];
             });
             return def;
         }

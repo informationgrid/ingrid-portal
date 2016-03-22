@@ -52,6 +52,7 @@ define(["dojo/_base/declare",
             description_en: "According to the GDI_DE Conventions, an ISO categorie is added automatically to a corresponding INSPIRE-topic. " +
             		"The category cannot be removed until the INSPIRE topic is present. If an INSPIRE topic is removed, then the ISO " +
             		"category also will be removed.",
+            defaultActive: true,
             run: function() {
                 
                 // mapped INSPIRE-topic IDs to ISO-category IDs
@@ -156,6 +157,7 @@ define(["dojo/_base/declare",
             description: "Wenn eine externe gekoppelte Ressource hinzugefügt wird, dann überprüfe, dass diese Download-Daten enthält.",
             description_en: "When an external coupled resource is being added then also check if the resource contains download data.",
             issue: "https://dev.informationgrid.eu/redmine/issues/153",
+            defaultActive: false,
             run: function() {
                 topic.subscribe("/afterInitDialog/SelectObject", function(config) {
                     config.ignoreDownloadData = false;

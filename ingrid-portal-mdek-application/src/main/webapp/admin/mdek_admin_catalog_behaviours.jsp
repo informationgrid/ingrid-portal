@@ -57,7 +57,7 @@
             "ingrid/utils/Catalog"
         ], function(array, lang, on, query, dom, domClass, domConstruct, Deferred, registry, behaviour, message, UtilCatalog) {
             
-            var def = UtilCatalog.getActiveBehavioursDef();
+            var def = UtilCatalog.getOverrideBehavioursDef();
             
             on(_container_, "Load", function() {
                 renderBehaviours();
@@ -101,7 +101,7 @@
                 });
                 
                 var data = {};
-                data[UtilCatalog.ACTIVE_BEHAVIOURS] = ids.join(",");
+                data[UtilCatalog.BEHAVIOURS] = ids.join(",");
                 
                 // write the active IDs to the backend
                 UtilCatalog.storeGenericValuesDef(data).then(function() {
