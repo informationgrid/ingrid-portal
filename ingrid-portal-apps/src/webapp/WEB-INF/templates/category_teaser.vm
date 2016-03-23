@@ -1,0 +1,267 @@
+#renderPortletTitle($MESSAGES.getString('search.teaser.portlet.title'))
+#set ($action = $renderResponse.createActionURL())
+<div class="tabs js-tabs">
+    <div class="tab__select mq-show-l">
+        <span class="tab__select__text">$MESSAGES.getString('searchResult.facete.title.types')</span>
+        <svg class="tab__select__icon icon"><use xlink:href="#burger"></svg>
+        <svg class="tab__select__icon icon"><use xlink:href="#cross"></svg>
+    </div>
+    <nav class="tab__toggles ob-clear mq-hide-l">
+        #foreach ($cf in $config)
+            #set($facetParent = $cf.getId())
+            #set($facetParentName = $cf.getName())
+            #if($facetParent == "type")
+                #if($cf.getFacets())
+                    #getTabs($cf.getFacets() $facetParent)
+                #end
+            #end
+        #end
+    </nav>
+    <div class="tab__content" data-tabid="type">
+        <section class="block block--pad-top">
+            <div class="ob-box-wide ob-box-padded ob-box-center">
+                <article class="content ob-container">
+                    <div class="tag-group">
+                    #foreach ($cf in $config)
+                        #set($facetParent = $cf.getId())
+                        #set($facetParentName = $cf.getName())
+                        #if($facetParent == "type")
+                            #if($cf.getFacets())
+                                #getContent($cf.getFacets() $facetParent)
+                            #end
+                        #end
+                    #end
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+    <div class="tab__content is-hidden" data-tabid="type_metadata">
+        <section class="block block--pad-top">
+            <div class="ob-box-wide ob-box-padded ob-box-center">
+                <article class="content ob-container">
+                    <div class="tag-group">
+                    #foreach ($cf in $config)
+                        #set($facetParent = $cf.getId())
+                        #set($facetParentName = $cf.getName())
+                        #if($facetParent == "type")
+                            #if($cf.getFacets())
+                                #foreach ($cff in $cf.getFacets())
+                                    #set($facetChild = $cff.getId())
+                                    #set($facetChildName = $cff.getName())
+                                    #if($facetChild == "metadata")
+                                        #if($cff.getFacets())
+                                            #getContent($cff.getFacets() $facetChild)
+                                        #end
+                                    #end
+                                #end
+                            #end
+                        #end
+                    #end
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+    <div class="tab__content is-hidden" data-tabid="type_topic">
+        <section class="block block--pad-top">
+            <div class="ob-box-wide ob-box-padded ob-box-center">
+                <article class="content ob-container">
+                    <div class="tag-group">
+                    #foreach ($cf in $config)
+                        #set($facetParent = $cf.getId())
+                        #set($facetParentName = $cf.getName())
+                        #if($facetParent == "type")
+                            #if($cf.getFacets())
+                                #foreach ($cff in $cf.getFacets())
+                                    #set($facetChild = $cff.getId())
+                                    #set($facetChildName = $cff.getName())
+                                    #if($facetChild == "topic")
+                                        #if($cff.getFacets())
+                                            #getContent($cff.getFacets() $facetChild)
+                                        #end
+                                    #end
+                                #end
+                            #end
+                        #end
+                    #end
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+    <div class="tab__content is-hidden" data-tabid="type_measure">
+        <section class="block block--pad-top">
+            <div class="ob-box-wide ob-box-padded ob-box-center">
+                <article class="content ob-container">
+                    <div class="tag-group">
+                    #foreach ($cf in $config)
+                        #set($facetParent = $cf.getId())
+                        #set($facetParentName = $cf.getName())
+                        #if($facetParent == "type")
+                            #if($cf.getFacets())
+                                #foreach ($cff in $cf.getFacets())
+                                    #set($facetChild = $cff.getId())
+                                    #set($facetChildName = $cff.getName())
+                                    #if($facetChild == "measure")
+                                        #if($cff.getFacets())
+                                            #getContent($cff.getFacets() $facetChild)
+                                        #end
+                                    #end
+                                #end
+                            #end
+                        #end
+                    #end
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+    <div class="tab__content is-hidden" data-tabid="type_service">
+        <section class="block block--pad-top">
+            <div class="ob-box-wide ob-box-padded ob-box-center">
+                <article class="content ob-container">
+                    <div class="tag-group">
+                    #foreach ($cf in $config)
+                        #set($facetParent = $cf.getId())
+                        #set($facetParentName = $cf.getName())
+                        #if($facetParent == "type")
+                            #if($cf.getFacets())
+                                #foreach ($cff in $cf.getFacets())
+                                    #set($facetChild = $cff.getId())
+                                    #set($facetChildName = $cff.getName())
+                                    #if($facetChild == "service")
+                                        #if($cff.getFacets())
+                                            #getContent($cff.getFacets() $facetChild)
+                                        #end
+                                    #end
+                                #end
+                            #end
+                        #end
+                    #end
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+    <div class="tab__content is-hidden" data-tabid="type_provider">
+        <section class="block block--pad-top">
+            <div class="ob-box-wide ob-box-padded ob-box-center">
+                <article class="content ob-container">
+                    <div class="tag-group">
+                    #foreach ($cf in $config)
+                        #set($facetParent = $cf.getId())
+                        #set($facetParentName = $cf.getName())
+                        #if($facetParent == "provider")
+                            #if($cf.getFacets())
+                                #getContent($cf.getFacets() "partner")
+                            #end
+                        #end
+                    #end
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+</div>
+
+#macro (getTabs $facetList $parentFacet)
+    <div class="tab__toggle is-active" data-tabid="type">
+        <a href="#">$MESSAGES.getString('searchResult.facete.title.types')</a>
+    </div>
+    #foreach ($facet in $facetList)
+        #if($hits.get("FACETS").get("$parentFacet:$facet.getId()") && $hits.get("FACETS").get("$parentFacet:$facet.getId()") != "0")
+            #if($facet.getFacets())
+            <div class="tab__toggle" data-tabid="${parentFacet}_$facet.getId()">
+                <a href="#">$MESSAGES.getString($facet.getName())</a>
+            </div>
+            #end
+        #end
+    #end
+    <div class="tab__toggle" data-tabid="type_provider">
+        <a href="#">$MESSAGES.getString('searchResult.facete.title.provider')</a>
+    </div>
+#end
+
+#macro (getContent $facetList $parentFacet)
+    #set ($count = 0)
+    #foreach ($facet in $facetList)
+        #if($hits.get("FACETS").get("$parentFacet:$facet.getId()") && $hits.get("FACETS").get("$parentFacet:$facet.getId()") != "0")
+            #if($count % 5 == 0)
+                <div class="grid grid--gutter">
+            #end
+            #set ($count = $count + 1)
+            <div class="column column--1-5-m">
+                #set($facetParam = "$parentFacet:$facet.getId();")
+                #if($parentFacet != "type" && $parentFacet != "partner")
+                    #set($facetParam = "type:$parentFacet;$parentFacet:$facet.getId();")
+                #end
+                <div style="padding: 0 0 40px 0;">
+                    <a class="tag" href="/freitextsuche?q=datatype%3Ametadata+OR+datatype%3Awww&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
+                        #getIcon("$parentFacet:$facet.getId()")
+                        <div class="tx-center">
+                            #if($facet.getCodelistId())
+                                $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
+                            #else
+                                $MESSAGES.getString($facet.getName())
+                            #end
+                        </div>
+                        <div class="tx-center">($hits.get("FACETS").get("$parentFacet:$facet.getId()"))</div>
+                    </a>
+                </div>
+            </div>
+            #if($count % 5 == 0)
+                </div>
+            #end
+        #end
+    #end
+#end
+#macro (getIcon $facetId)
+<svg class="icon bx-top-s" style="display: block;font-size: 60px;margin: auto;">
+    <!-- type -->
+    #if($facetId == "type:www")
+        <use xlink:href="#external-link" />
+    #elseif($facetId == "type:metadata")
+        <use xlink:href="#internal-link" />
+    #elseif($facetId == "type:map")
+        <use xlink:href="#globe" />
+    #elseif($facetId == "type:topic")
+        <use xlink:href="#globe" />
+    #elseif($facetId == "type:measure")
+        <use xlink:href="#globe" />
+    #elseif($facetId == "type:service")
+        <use xlink:href="#globe" />
+    #elseif($facetId == "type:metadata")
+        <use xlink:href="#globe" />
+    #elseif($facetId == "type:other")
+        <use xlink:href="#globe" />
+    #elseif($facetId == "type:research")
+        <use xlink:href="#globe" />
+    #elseif($facetId == "type:law")
+        <use xlink:href="#globe" />
+    #elseif($facetId == "type:address")
+        <use xlink:href="#globe" />
+    #elseif($facetId == "type:fis")
+        <use xlink:href="#globe" />
+	<!-- metadata -->
+    #elseif($facetId == "metadata:service")
+        <use xlink:href="#molecule" />
+    #elseif($facetId == "metadata:map")
+        <use xlink:href="#globe" />
+    #elseif($facetId == "metadata:geoservice")
+        <use xlink:href="#gears" />
+    #elseif($facetId == "metadata:database")
+        <use xlink:href="#database" />
+    #elseif($facetId == "metadata:job")
+        <use xlink:href="#checklist" />
+    #elseif($facetId == "metadata:document")
+        <use xlink:href="#book" />
+    #elseif($facetId == "metadata:project")
+        <use xlink:href="#folder" />
+    #elseif($facetId == "metadata:inspire")
+        <use xlink:href="#attention" />
+    #else
+        <use xlink:href="#external-link" />
+    #end
+</svg>
+#end

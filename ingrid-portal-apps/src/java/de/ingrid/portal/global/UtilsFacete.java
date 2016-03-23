@@ -1902,7 +1902,7 @@ public class UtilsFacete {
         }
     }
     
-    private static void addDefaultIngridFacets(PortletRequest request, ArrayList<IngridFacet> config) {
+    public static void addDefaultIngridFacets(PortletRequest request, ArrayList<IngridFacet> config) {
         if(config != null){
             for(IngridFacet facet : config){
                 if(facet.getId().equals("topic")){
@@ -2010,7 +2010,11 @@ public class UtilsFacete {
         }
     }
 
-    private static void getConfigFacetQuery(ArrayList<IngridFacet> configNode, ArrayList<IngridDocument> facetQueries, boolean isDefault, String mainFacetId){
+    public static void getConfigFacetQuery(ArrayList<IngridFacet> configNode, ArrayList<IngridDocument> facetQueries, boolean isDefault, String mainFacetId){
+        getConfigFacetQuery( configNode, facetQueries, isDefault, mainFacetId, false);
+    }
+    
+    public static void getConfigFacetQuery(ArrayList<IngridFacet> configNode, ArrayList<IngridDocument> facetQueries, boolean isDefault, String mainFacetId, boolean isAll){
         IngridDocument facet = null;
         if(configNode != null){
             ArrayList<HashMap<String, String>> facetList = new ArrayList<HashMap<String, String>> ();
@@ -2018,7 +2022,7 @@ public class UtilsFacete {
                 String facetId = ingridFacet.getId();
                 String facetQuery = ingridFacet.getQuery();
                 if(ingridFacet.getParent() != null){
-                    if(!ingridFacet.getParent().getId().equals("topic") && !ingridFacet.getParent().getId().equals("partner") && !ingridFacet.getParent().getId().equals("provider")){
+                    if((!ingridFacet.getParent().getId().equals("topic") || isAll) && !ingridFacet.getParent().getId().equals("partner") && !ingridFacet.getParent().getId().equals("provider")){
                         if(facetId != null){
                             if(ingridFacet.getParent() != null){
                                 if(ingridFacet.getParent().getDependency() == null){
@@ -2038,9 +2042,9 @@ public class UtilsFacete {
                                 }
                             }
                             // Set sub facets only by selected
-                            if(ingridFacet.isSelect()){
+                            if(ingridFacet.isSelect() || isAll){
                                 if(ingridFacet.getFacets() != null){
-                                    getConfigFacetQuery(ingridFacet.getFacets(), facetQueries, false, facetId);
+                                    getConfigFacetQuery(ingridFacet.getFacets(), facetQueries, false, facetId, isAll);
                                 }
                             }
                         }
@@ -2054,7 +2058,7 @@ public class UtilsFacete {
                             facetList.add(facetEntry);
                         }
                         if(ingridFacet.getFacets() != null){
-                              getConfigFacetQuery(ingridFacet.getFacets(), facetQueries, false, facetId);
+                              getConfigFacetQuery(ingridFacet.getFacets(), facetQueries, false, facetId, isAll);
                         }
                     }
                 }
@@ -2121,7 +2125,7 @@ public class UtilsFacete {
         }
     }
     
-    private static void setFacetQuery(String term, ArrayList<IngridFacet> configNode, PortletRequest request, IngridQuery query) throws ParseException{
+    public static void setFacetQuery(String term, ArrayList<IngridFacet> configNode, PortletRequest request, IngridQuery query) throws ParseException{
         if(term != null){
             for (IngridFacet ingridFacet : configNode){
                 if(ingridFacet.getFacets() != null){

@@ -3,6 +3,19 @@
         <article class="content ob-container">
             $jetspeed.renderPortletWindow("SearchSimple", "ingrid-portal-apps::SearchSimple")
         </article>
+    </div>
+</section>
+
+<section class="block block--pad-top">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("CategoryTeaser", "ingrid-portal-apps::CategoryTeaser")
+        </article>
+    </div>
+</section>
+
+<section class="block block--pad-top">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
         <article class="content ob-container">
             $jetspeed.renderPortletWindow("RssNewsTeaser", "ingrid-portal-apps::RssNewsTeaser")
         </article>

@@ -473,7 +473,7 @@ $actionForm.getInputHTMLEscaped($field)#end
     <svg class="icon globe__icon" title="$title">
         #if($class == "0")
             ## Fachaufgabe
-            <use xlink:href="#folder">
+            <use xlink:href="#checklist">
         #elseif($class == "1")
             ## Geodatensatz
             <use xlink:href="#globe">
@@ -485,10 +485,13 @@ $actionForm.getInputHTMLEscaped($field)#end
             <use xlink:href="#gears">
         #elseif($class == "4")
             ## Projekt
-            <use xlink:href="#board">
+            <use xlink:href="#folder">
         #elseif($class == "5")
             ## Datensammlung
             <use xlink:href="#database">
+        #elseif($class == "6")
+            ## Informationssystem
+            <use xlink:href="#molecule">
         #end
     </svg>
 #end
