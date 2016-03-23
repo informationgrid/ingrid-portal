@@ -97,7 +97,7 @@
         </header>
         
         <section class="breadcrumb ob-box-padded-more mq-hide-l">
-            <div class="breadcrumb__title mq-hide-xxl">Sie sind hier:</div>
+            <div class="breadcrumb__title mq-hide-xxl">$MESSAGES.getString('ingrid.page.navigation.title'):</div>
             <nav class="breadcrumb__list">
                 <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
             #if($currentPage)

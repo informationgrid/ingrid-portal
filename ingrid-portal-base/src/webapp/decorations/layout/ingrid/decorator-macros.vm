@@ -155,9 +155,6 @@
         <div class="metamenu metamenu--wide">
         #if($jetspeed.getLoggedOn())
             <!-- State logged in -->
-            <div class="metamenu__box ob-container">
-                <h5>Nutzerkonto</h5>
-             </div>
             #set($userAttributes = $jetspeed.getUserProperties())
             #set($userNameGiven = $userAttributes.get("user.name.given"))
             #set($userNameFamily = $userAttributes.get("user.name.family"))
@@ -169,11 +166,11 @@
                 #set ($salutation = "$!{salutation} $userNameFamily")
             #end        
             <div class="metamenu__box ob-container">
-                <p>Sie sind eingeloggt als<br><strong>$salutation</strong></p>
-                <p><a class="btn btn--secondary btn--small btn--block" href="/login/logout">Logout</a></p>
+                <p>$MESSAGES.getString('ingrid.page.login.as'):<br><strong>$salutation</strong></p>
+                <p><a class="btn btn--secondary btn--small btn--block" href="/login/logout">$MESSAGES.getString('ingrid.page.login.logout')</a></p>
             </div>
             <div class="metamenu__box ob-container">
-                <p><a class="btn btn--primary btn--small btn--block" href="$linkUrl">Gehe zu MeinPortal</a></p>
+                <p><a class="btn btn--primary btn--small btn--block" href="$linkUrl">$MESSAGES.getString('ingrid.page.login.to.myportal')</a></p>
             </div>
         #else
             $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
@@ -198,7 +195,7 @@
                 ## read localized title from resource with title from psml as key !
                 #if($linkTitle.startsWith('ingrid'))
                     #set($linkTitle = $MESSAGES.getString($linkTitle))
-                    #set($linkName = $MESSAGES.getString($linkName))            
+                    #set($linkName = $MESSAGES.getString($linkName))
                 #end
                 #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
                 ## flags indicating how to render menu item
