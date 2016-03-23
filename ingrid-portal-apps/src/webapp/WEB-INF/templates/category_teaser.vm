@@ -154,7 +154,7 @@
                         #set($facetParentName = $cf.getName())
                         #if($facetParent == "provider")
                             #if($cf.getFacets())
-                                #getContent($cf.getFacets() "partner")
+                                #getContent($cf.getFacets() "partner" "provider")
                             #end
                         #end
                     #end
@@ -183,7 +183,7 @@
     </div>
 #end
 
-#macro (getContent $facetList $parentFacet)
+#macro (getContent $facetList $parentFacet $parentFacetParam)
     #set ($count = 0)
     #foreach ($facet in $facetList)
         #if($hits.get("FACETS").get("$parentFacet:$facet.getId()") && $hits.get("FACETS").get("$parentFacet:$facet.getId()") != "0")
@@ -193,6 +193,9 @@
             #set ($count = $count + 1)
             <div class="column column--1-5-m">
                 #set($facetParam = "$parentFacet:$facet.getId();")
+                #if($parentFacetParam)
+                    #set($facetParam = "$parentFacetParam:$facet.getId();")
+                #end
                 #if($parentFacet != "type" && $parentFacet != "partner")
                     #set($facetParam = "type:$parentFacet;$parentFacet:$facet.getId();")
                 #end
