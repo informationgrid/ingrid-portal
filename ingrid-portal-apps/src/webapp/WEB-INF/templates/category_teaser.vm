@@ -196,7 +196,7 @@
                 #if($parentFacet != "type" && $parentFacet != "partner")
                     #set($facetParam = "type:$parentFacet;$parentFacet:$facet.getId();")
                 #end
-                <div style="padding: 0 0 40px 0;">
+                <div class="mq-hide-l" style="padding: 0 0 20px 0;">
                     <a class="tag" href="/freitextsuche?q=datatype%3Ametadata+OR+datatype%3Awww&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
                         #getIcon("$parentFacet:$facet.getId()")
                         <div class="tx-center">
@@ -209,6 +209,19 @@
                         <div class="tx-center">($hits.get("FACETS").get("$parentFacet:$facet.getId()"))</div>
                     </a>
                 </div>
+                <div class="mq-show-l">
+                    <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="/freitextsuche?q=datatype%3Ametadata+OR+datatype%3Awww&rstart=0&currentSelectorPage=1&f=$facetParam">
+                        #getIcon("$parentFacet:$facet.getId()")
+                        <strong>
+                            #if($facet.getCodelistId())
+                                $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
+                            #else
+                                $MESSAGES.getString($facet.getName())
+                            #end
+                        </strong>
+                        ($hits.get("FACETS").get("$parentFacet:$facet.getId()"))
+                    </a>
+                </div>
             </div>
             #if($count % 5 == 0)
                 </div>
@@ -216,9 +229,22 @@
         #end
     #end
 #end
+
 #macro (getIcon $facetId)
-<svg class="icon bx-top-s" style="display: block;font-size: 60px;margin: auto;">
-    <!-- type -->
+<span class="mq-hide-l">
+    <svg class="icon bx-top-s" style="display: block;font-size: 60px;margin: auto;">
+        #getIconImage($facetId)
+    </svg>
+</span>
+<span class="mq-show-l">
+    <svg class="icon bx-top-s" style="">
+        #getIconImage($facetId)
+    </svg>
+</span>
+#end
+
+#macro (getIconImage $facetId)
+<!-- type -->
     #if($facetId == "type:www")
         <use xlink:href="#external-link" />
     #elseif($facetId == "type:metadata")
@@ -243,7 +269,7 @@
         <use xlink:href="#globe" />
     #elseif($facetId == "type:fis")
         <use xlink:href="#globe" />
-	<!-- metadata -->
+<!-- metadata -->
     #elseif($facetId == "metadata:service")
         <use xlink:href="#molecule" />
     #elseif($facetId == "metadata:map")
@@ -263,5 +289,4 @@
     #else
         <use xlink:href="#external-link" />
     #end
-</svg>
 #end
