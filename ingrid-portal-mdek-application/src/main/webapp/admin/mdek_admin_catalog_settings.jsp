@@ -61,8 +61,6 @@
             // Storage for the current catalog. We need to get the uuid from somewhere
             pageCatSettings.currentCatalogData = null;
             
-            var def = UtilCatalog.getOverrideBehavioursDef();
-            
             on(_container_, "Load", function() {
                 try {
                     // create select boxes for syslists
@@ -86,19 +84,6 @@
                     var checkbox = registry.byId("adminCatalogExpire");
                     var inputField = registry.byId("adminCatalogExpiryDuration");
                     
-                    renderBehaviours();
-                    def.then(function(data) {
-                        // set all checkboxes active that are activated
-                        array.forEach(data, function(item) {
-                            var check = registry.byId("behaviour_" + item.id);
-                            check.set( "checked", item.active );
-                            // add a marker for display difference to default state
-                            var tag = domConstruct.toDom("<span title='<fmt:message key='dialog.admin.catalog.general.modifiedBehaviour' />'> (Info)</span>");
-                            check.domNode.parentNode.appendChild(tag);
-                            domClass.add(check.domNode.parentNode, "modified");
-                        });
-                    });
-                    
                     on(checkbox, "click", function(){ //!!!connectOnce
                         checkbox.checked ? inputField.set('disabled', false) : inputField.set('disabled', true);
                     });
@@ -108,6 +93,31 @@
                 }
                 
             });
+            
+            function renderBehaviours() {
+                removeBehaviours();
+                renderSystemBehaviours();
+                UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                    // set all checkboxes active that are activated
+                    array.forEach(data, function(item) {
+                        var check = registry.byId("behaviour_" + item.id);
+                        check.set( "checked", item.active );
+                        // add a marker for display difference to default state
+                        var tag = domConstruct.toDom("<span title='<fmt:message key='dialog.admin.catalog.general.modifiedBehaviour' />'> (Info)</span>");
+                        check.domNode.parentNode.appendChild(tag);
+                        domClass.add(check.domNode.parentNode, "modified");
+                    });
+                });
+            }
+            
+            function removeBehaviours() {
+                for (var behave in behaviour) {
+                    if (!behaviour[behave].title) continue;
+                    var check = registry.byId("behaviour_" + behave);
+                    if (check) check.destroy();
+                }
+                domConstruct.empty("behaviourContent");
+            }
             
             function updateInputFields(catalogData) {
                 registry.byId("adminCatalogName").set("value", catalogData.catalogName);
@@ -140,6 +150,8 @@
                 } else {
                     registry.byId("adminCatalogSortByClass").set("value", false);
                 }
+                
+                renderBehaviours();
             }
             
             function reloadCatalogData() {
@@ -183,13 +195,16 @@
                 console.debug("storing");
                 CatalogService.storeCatalogData(newCatalogData, {
                     callback: function(res){
-                        // Update catalog Data
-                        updateInputFields(res);
                         UtilCatalog.catalogData = res;
                         pageCatSettings.currentCatalogData = res;
                         // init.initPageHeader();
                         init.initCatalogData();
-                        saveBehaviours();
+                        
+                        // after behaviours were saved we can update the input fields
+                        saveBehaviours().then(function() {
+                            // Update catalog Data
+                            updateInputFields(res);
+                        });
                         dialog.show("<fmt:message key='general.hint' />", "<fmt:message key='dialog.admin.catalog.saveSuccess' />", dialog.INFO);
                         
                     },
@@ -231,7 +246,7 @@
                 data = {};
                 data[UtilCatalog.BEHAVIOURS] = JSON.stringify(modifiedBehaviours);
                 // write the active IDs to the backend
-                UtilCatalog.storeGenericValuesDef(data).then(function() {
+                return UtilCatalog.storeGenericValuesDef(data).then(function() {
                     //query("#behaviourContent .row").removeClass("active");
                     //highlightActiveRows(ids);
                 }, function(error) {
@@ -269,7 +284,7 @@
                     return false;
             }
             
-            function renderBehaviours() {
+            function renderSystemBehaviours() {
                 for (var behave in behaviour) {
                     if (!behaviour[behave].title) continue;
                     console.log(behaviour[behave].title);
