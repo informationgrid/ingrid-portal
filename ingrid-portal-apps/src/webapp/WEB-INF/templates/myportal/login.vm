@@ -1,6 +1,3 @@
-<div class="metamenu__box ob-container">
-    <h5>Nutzerkonto</h5>
-</div>
 #set ($action = $renderResponse.createActionURL())
 <form class="metamenu__box ob-container" action="$action" method="post" id="frm_login">
     <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
@@ -13,8 +10,5 @@
     #renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "" "doLogin" "" "btn btn--primary btn--small btn--block")
 </form>
 <div class="metamenu__box ob-container">
-    <p>Sie haben noch kein Nutzerkonto bei InGrid Portal?</p>
-    <p>
-        <a href="$renderResponse.encodeURL('/portal/myportal-create-account.psml')" class="link"><strong>$MESSAGES.getString('login.form.newUser')</strong></a>
-    </p>
+    #renderInputButtonOnClick($MESSAGES.getString('login.form.newUser') "" "" "" "btn btn--secondary btn--small btn--block" "location.href='$renderResponse.encodeURL('/portal/myportal-create-account.psml')'")
 </div>
