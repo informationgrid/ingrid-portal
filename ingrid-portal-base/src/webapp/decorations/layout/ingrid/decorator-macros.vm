@@ -56,14 +56,17 @@
         #if ($element.url.startsWith('/main-about'))
             #set($subMenu = $site.getMenu("sub-menu-about"))
             <li class="nav-desktop__item dropmenu__box">
-                  <a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="$tabTitle">$tabName</a>
-                  #if($subMenu && !$subMenu.empty)
-                        #includeSubNavigation($subMenu true)
+                <a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="$tabTitle">
+                    $tabName
+                    <svg class="icon"><use xlink:href="#arrow-thick"/></svg>
+                </a>
+                #if($subMenu && !$subMenu.empty)
+                    #includeSubNavigation($subMenu true)
                 #end
             </li>
         #else
             <li class="nav-desktop__item">
-              <a class="nav-desktop__title" href="$tabUrl" title="$tabTitle">$tabName</a>
+                <a class="nav-desktop__title" href="$tabUrl" title="$tabTitle">$tabName</a>
             </li>
         #end
       #end
