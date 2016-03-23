@@ -132,8 +132,6 @@
                 #parse ('/decorations/layout/ingrid/pages/main-chronicle.vm')
             #elseif($currentPage == "/service-contact.psml")
                 #parse ('/decorations/layout/ingrid/pages/service-contact.vm')
-            #elseif($currentPage == "/privacy.psml")
-                #parse ('/decorations/layout/ingrid/pages/privacy.vm')
             #elseif($currentPage == "/service-sitemap.psml")
                 #parse ('/decorations/layout/ingrid/pages/service-sitemap.vm')
             #elseif($currentPage == "/disclaimer.psml")

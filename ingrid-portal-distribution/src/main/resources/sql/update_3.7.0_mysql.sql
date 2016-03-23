@@ -77,6 +77,7 @@ DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/se
 DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/search-extended/search-ext-law-area-partner.psml');
 DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-features.psml');
 DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-environment.psml');
+DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/privacy.psml');
 
 -- update pages
 UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator = 'ingrid-teaser' WHERE path = '/help.psml'; 
@@ -111,6 +112,7 @@ DELETE FROM page WHERE path = '/search-extended/search-ext-law-topic-thesaurus.p
 DELETE FROM page WHERE path = '/search-extended/search-ext-law-area-partner.psml';
 DELETE FROM page WHERE path = '/main-features.psml';
 DELETE FROM page WHERE path = '/main-environment.psml';
+DELETE FROM page WHERE path = '/privacy.psml';
 
 -- menu clean
 -- DELETE FROM folder_menu WHERE class_name = 'org.apache.jetspeed.om.folder.impl.FolderMenuSeparatorDefinitionImpl';
@@ -138,12 +140,12 @@ UPDATE folder_menu SET element_order = '2', parent_id = (SELECT temp_value FROM 
 -- footer-menu
 DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer-menu') AND options = '/service-contact-newsletter.psml';
 DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer-menu') AND options = '/webmaster.link';
+DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer-menu') AND options = '/privacy.psml';
 
 UPDATE folder_menu SET element_order = '0', parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer-menu') WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-menu') AND options = '/help.psml';
 UPDATE folder_menu SET element_order = '1', parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer-menu') WHERE options = '/service-contact.psml';
-UPDATE folder_menu SET element_order = '2' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer-menu') AND options = '/privacy.psml';
-UPDATE folder_menu SET element_order = '3', parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer-menu') WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-menu') AND options = '/service-sitemap.psml';
-UPDATE folder_menu SET element_order = '4' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer-menu') AND options = '/disclaimer.psml';
+UPDATE folder_menu SET element_order = '2', parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer-menu') WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-menu') AND options = '/service-sitemap.psml';
+UPDATE folder_menu SET element_order = '3' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer-menu') AND options = '/disclaimer.psml';
 
 -- sub-menu-about
 DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-about') AND options = '/main-features.psml';
