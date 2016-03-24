@@ -24,11 +24,7 @@
         #set ($action = $renderResponse.createActionURL())
         <form action="$action" method="post" name="geothesaurus_form">
             <div class="search-form ob-clear ob-flex">
-                #if($geothesaurusTerm)
-                    <input class="field field--large" type="text" name="search_term" id="search_term" value="$geothesaurusTerm" />
-                #else
-                    <input class="field field--large" type="text" name="search_term" id="search_term"/>
-                #end
+                <input class="field" type="text" name="search_term" id="search_term" #if($geothesaurusTerm)value="$geothesaurusTerm"#end />
                 <button type="submit" name="doSearchGeothesaurus" value="$MESSAGES.getString("searchResult.facete.area.name.search.button")" class="btn btn--primary btn--icon-transition" style="min-width:0;">
                     <svg class="icon"><use xlink:href="#magnifier"></use></svg>
                 </button>
