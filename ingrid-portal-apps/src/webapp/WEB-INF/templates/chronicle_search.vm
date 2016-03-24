@@ -38,45 +38,31 @@
         </div>
     #end
     <h4>#displayFieldLabel('time_select' "$MESSAGES.getString('chronicle.form.time')")</h4>
-    <section class="block">
-        <div class="ob-box-wide ob-box-center">
-            <article class="content ob-container ob-box-narrow">
-                <div class="media">
-                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="at_yy">Auswahl</label>
-                    </div>
-                    <div class="media__body">
-                        <select class="js-selection" id="at_yy" name="time_select">
-                            <option id="vonbis" value="period" class="selection-options #if($actionForm.isCurrentInput('time_select', 'period')) is-active" selected #else " #end >von: ... bis: </option>
-                            <option id="am" value="date" class="selection-options #if($actionForm.isCurrentInput('time_select', 'date')) is-active" selected #else " #end >am: </option>
-                        </select>
-                    </div>
-                </div>
-                <div for="vonbis" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
-                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="from_yy">$MESSAGES.getString('chronicle.form.time.from')</label>
-                    </div>
-                    <div class="media__body">
-                        <input id="from_yy" class="field--narrow datepicker picker__input #addErrorFormClassText('time_from')" type="date" name="time_from" value="#getFieldValue('time_from')"></input>
-                    </div>
-                </div>
-                <div for="vonbis" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
-                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="till_yy" >$MESSAGES.getString('chronicle.form.time.to')</label>
-                    </div>
-                    <div class="media__body">
-                        <input id="till_yy" class="field--narrow datepicker picker__input #addErrorFormClassText('time_to')" type="date" name="time_to" value="#getFieldValue('time_to')"></input>
-                    </div>
-                </div>
-                <div for="am" class="selection-content media #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
-                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="time_at" >$MESSAGES.getString('chronicle.form.time.at')</label>
-                    </div>
-                    <div class="media__body">
-                        <input id="time_at" class="field--narrow datepicker picker__input #addErrorFormClassText('time_at')" type="date" name="time_at" value="#getFieldValue('time_at')"></input>
-                    </div>
-                </div>
-            </article>
+    <div class="media ob-clear">
+        <div class="media__obj--left">
+            <label for="at_yy">Auswahl</label>
+            <select class="field js-selection" id="at_yy" name="time_select">
+                <option id="vonbis" value="period" class="selection-options #if($actionForm.isCurrentInput('time_select', 'period')) is-active" selected #else " #end >von: ... bis: </option>
+                <option id="am" value="date" class="selection-options #if($actionForm.isCurrentInput('time_select', 'date')) is-active" selected #else " #end >am: </option>
+            </select>
         </div>
-    </section>
+        <div class="media__obj--left">
+            <div for="vonbis" class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+                <label for="from_yy">$MESSAGES.getString('chronicle.form.time.from')</label>
+                <input id="from_yy" class="field datepicker picker__input #addErrorFormClassText('time_from')" type="date" name="time_from" value="#getFieldValue('time_from')"></input>
+            </div>
+        </div>
+        <div class="media__obj--left">
+            <div for="vonbis" class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+                <label for="till_yy" >$MESSAGES.getString('chronicle.form.time.to')</label>
+                <input id="till_yy" class="field datepicker picker__input #addErrorFormClassText('time_to')" type="date" name="time_to" value="#getFieldValue('time_to')"></input>
+            </div>
+        </div>
+        <div class="media__obj--left">
+            <div for="am" class="selection-content  #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
+                <label for="time_at" >$MESSAGES.getString('chronicle.form.time.at')</label>
+                <input id="time_at" class="field datepicker picker__input #addErrorFormClassText('time_at')" type="date" name="time_at" value="#getFieldValue('time_at')"></input>
+            </div>
+        </div>
+    </div>
 </form>

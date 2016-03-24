@@ -5,9 +5,6 @@
         #renderRankedPageNavigation($rankedPageSelector)
     </div>
     #foreach($rs in $rankedResultList.hits)
-        #if($velocityCount > 1)
-            <hr>
-        #end
         #if ($rs.title)
             <h4 class="bx-bot-m bx-bot-xs">#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end</h4>
             <a href="$!rs.searchURL">
@@ -42,7 +39,7 @@
                 #end
             </ul>
             #end
-    
+
             #if ($rs.samples && $rs.samples.size() > 0)
                 <p class="bx-top-s bx-bot-s tx-darkest">
                     <strong>$MESSAGES.getString('chronicle.result.samples')</strong>
@@ -59,6 +56,8 @@
                     </li>
                 #end
                 </ul>
+            #else
+                <hr />
             #end
         #else
             <span class="result_title"><strong>$MESSAGES.getString('chronicle.result.emptyEvent')</strong></span>
