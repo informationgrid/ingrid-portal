@@ -8,12 +8,6 @@
             <div class="search-result--nested">
     #end
     
-    ###if($showHitPartnerLogo)
-    ##    #if($rs.partnerKey != "all")
-    ##        #set($partnerTitleKey = "common.result.partner.${rs.partnerKey}")
-    ##        <span class="search_hit_icon_partner"><span class="search_hit_icon_partner_${rs.partnerKey}"><img src="/ingrid-portal-apps/images/partner/${rs.partnerKey}.png" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/></span></span></span>
-    ##    #end
-    ###end
     #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
     #if ($rs.title)
         #if($rs.url)
@@ -102,10 +96,10 @@
                     <span class="tx-light">$!rs.provider</span>
                 </small>
             #end
-                <small>
-                    <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.source'):</strong></span>
-                    <span class="tx-light">$!rs.source</span>
-                </small>
+            <small>
+                <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.source'):</strong></span>
+                <span class="tx-light">$!rs.source</span>
+            </small>
             #if($adminContent)
                 <small>
                     <span class="tx-darkest"><strong>Score:</strong></span>
@@ -131,6 +125,14 @@
             <p class="result_link">
               <a href="$rs.url">$!rs.url_str</a>
             </p>
+        #end
+        #if($showHitPartnerLogo)
+            <div class="media__obj media__obj--right">
+                #if($rs.partnerKey != "all")
+                    #set($partnerTitleKey = "common.result.partner.${rs.partnerKey}")
+                    <span class="search_hit_icon_partner"><span class="search_hit_icon_partner_${rs.partnerKey}"><img src="/ingrid-portal-apps/images/partner/${rs.partnerKey}.png" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/></span></span>
+                #end
+            </div>
         #end
     #else
         <span class="result_title"><strong>$MESSAGES.getString('common.result.empty')</strong></span>
