@@ -88,7 +88,7 @@
         <div class="media__obj media__obj--right">
             $!rs.additional_html_1
         </div>
-        <p class="bx-bot-xs bx-top-0">
+        <p #if(!$rs.additional_html_1)class="bx-bot-xs bx-top-0"#end>
             $!rs.abstract 
         </p>
         <p>
@@ -115,22 +115,16 @@
          </p>
         ## do not show wms urls when they already have been displayed (above)
         #if($rs.wms_url)
-            <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')">
-                $MESSAGES.getString('common.result.showMap')
-            </a>
+            <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
         #end
         
         ## render "Get XML"-link displayed next to the title
         #if ($rs.csw_link)
-            <a class="tag tag--small" href='$rs.csw_link' title='$MESSAGES.getString('common.result.show.xml')'>
-                XML
-            </a>
+            <a class="tag tag--small" href='$rs.csw_link' title='$MESSAGES.getString('common.result.show.xml')'>XML</a>
         #end
         
         #if($rs.wms_coord)
-            <p class="result_link">
-                <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
-            </p>
+            <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
         #end
             
         #if($rs.url)
