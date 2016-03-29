@@ -62,6 +62,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-275">
                 Portal: Fixed detail view when displaying literature metadata.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-278">
+                MapClient: Fixed measure tool dialog.
+            </action>
         </release>
         
         <release version="3.6.1.2" date="2016-01-22" description="Release 3.6.1.2">
