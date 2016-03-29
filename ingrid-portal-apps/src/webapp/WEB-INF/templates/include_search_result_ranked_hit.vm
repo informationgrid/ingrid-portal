@@ -82,7 +82,7 @@
         <div class="media__obj media__obj--right">
             $!rs.additional_html_1
         </div>
-        <p #if(!$rs.additional_html_1)class="bx-bot-xs bx-top-0"#end>
+        <p>
             $!rs.abstract 
         </p>
         <p>
