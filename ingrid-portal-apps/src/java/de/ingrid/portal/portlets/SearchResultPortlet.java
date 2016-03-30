@@ -251,7 +251,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             }
         } else {
             String queryString = request.getParameter(Settings.PARAM_QUERY_STRING);
-            if(queryString == null){
+            if(queryString == null && SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING).length() > 0){
                 rankedHits = (IngridHitsWrapper) SearchState.getSearchStateObject(request, Settings.MSG_SEARCH_RESULT_RANKED);
             }
 

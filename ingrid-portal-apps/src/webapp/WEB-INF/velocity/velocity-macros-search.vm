@@ -2,10 +2,16 @@
 ## search macros
 ## ------------------------------
 #macro (renderResultCounterCatalogue $pageSelector $catalogueName $searchName)
+    #set($term = "")
     #if($searchName)
+        #if($searchName.length() > 0)
+            #set($term = $searchName)
+        #end
+    #end
+    #if($term.lenght() > 0)
         $MESSAGES.resetMsgParams()
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
-        $MESSAGES.setMsgParam($searchName)
+        $MESSAGES.setMsgParam($term)
         $MESSAGES.getStringWithMsgParams('common.result.counter.catalog.withsearchvalue')
     #else
         $MESSAGES.resetMsgParams()
@@ -34,10 +40,22 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro (renderRankedResultCounterGrouping $pageSelector)
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
-$MESSAGES.setMsgParam("$searchTerm")
-$MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
+    #set($term = "")
+    #if($searchTerm)
+        #if($searchTerm.length() > 0)
+            #set($term = $searchTerm)
+        #end
+    #end
+    #if($term.length() > 0)
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.setMsgParam("$term")
+        $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.withsearchvalue')
+    #else
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
+    #end
 #end
 
 #macro (renderRankedPageNavigation $pageSelector $isBottom)

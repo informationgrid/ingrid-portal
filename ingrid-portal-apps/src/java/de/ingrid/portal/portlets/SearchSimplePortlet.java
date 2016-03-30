@@ -121,6 +121,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             }
         }
         if (action == null) {
+            action = request.getParameter( Settings.PARAM_ACTION );
+        }
+        if (action == null) {
             action = "";
         }
         if (action.equals( Settings.PARAMV_ACTION_NEW_SEARCH )) {
@@ -186,9 +189,6 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // that one for convenience
         // (although this state is not bookmarkable !)
         String queryString = SearchState.getSearchStateObjectAsString( request, Settings.PARAM_QUERY_STRING );
-        if (queryString.length() == 0 && af != null) {
-            queryString = af.getInput( "q" );
-        }
         af.setInput( SearchSimpleForm.FIELD_QUERY, queryString );
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
@@ -211,7 +211,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         }
         if (setUpNewQuery) {
             // set up Ingrid Query -> triggers search in result portlet
-            String errCode = setUpQuery( request, af.getInput( SearchSimpleForm.FIELD_QUERY ) );
+            String errCode = setUpQuery( request, af.getInput( SearchSimpleForm.FIELD_QUERY ), false);
             if (errCode != null) {
                 af.setError( SearchSimpleForm.FIELD_QUERY, messages.getString( errCode ) );
             }
@@ -236,6 +236,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
 
         // Set up query
         ContentPage page = (ContentPage) request.getAttribute( "org.apache.jetspeed.Page" );
+        boolean setQuery = false;
         Map<String, String[]> params = request.getParameterMap();
         if (page != null && (params != null && params.size() == 0)) {
             if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > 0 && queryString != null && queryString.length() > 0) {
@@ -243,10 +244,19 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                     if (!queryString.equals( af.getINITIAL_QUERY() )) {
                         response.setTitle( messages.getString( TITLE_KEY_RESULT ) );
                         UtilsFacete.setAttributeToSession( request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true );
-                        setUpQuery( request, queryString );
+                        setUpQuery( request, queryString, false );
+                        setQuery = true;
                     }
                 }
             }
+        }
+        if(setQuery == false){
+            if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && request.getParameter("q") == null){
+                String initalQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_SEARCH_EMPTY_QUERY, "" ).trim();
+                if(initalQuery.length() > 0){
+                    setUpQuery(request, initalQuery, true);
+                }
+            }  
         }
         super.doView( request, response );
     }
@@ -311,7 +321,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
      * @param queryString
      * @return null if OK, otherwise "Error Code" (for resourceBundle)
      */
-    private String setUpQuery(PortletRequest request, String queryString) {
+    private String setUpQuery(PortletRequest request, String queryString, boolean isInitial) {
         // Create IngridQuery
         IngridQuery query = null;
         try {
@@ -335,8 +345,10 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // simpleTermsPortlet and also in resultPortlet to determine whether
         // query should be executed !
         SearchState.adaptSearchState( request, Settings.MSG_QUERY, query );
-        SearchState.adaptSearchState( request, Settings.PARAM_QUERY_STRING, queryString );
-
+        if(!isInitial){
+            SearchState.adaptSearchState( request, Settings.PARAM_QUERY_STRING, queryString );
+        }
+        
         return null;
     }
 }
