@@ -206,6 +206,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_DETAIL_VIEW_LIMIT_REFERENCES = "portal.detail.view.limit.references";
     
+    public static final String CATEGORY_TEASER_SEARCH_QUERY = "category.teaser.search.query";
+    
     // private stuff
     private static PortalConfig instance = null;
 

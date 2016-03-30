@@ -71,7 +71,8 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
         IngridQuery query;
         IngridHits hits = null;
         try {
-            query = QueryStringParser.parse("datatype:www OR datatype:metadata");
+            String categoryQuery = PortalConfig.getInstance().getString( PortalConfig.CATEGORY_TEASER_SEARCH_QUERY, "datatype:www OR datatype:metadata" ).trim();
+            query = QueryStringParser.parse(categoryQuery);
             UtilsFacete.addDefaultIngridFacets(request, config);
             if(query.get("FACETS") == null){
                 ArrayList<IngridDocument> facetQueries = new ArrayList<IngridDocument>();
