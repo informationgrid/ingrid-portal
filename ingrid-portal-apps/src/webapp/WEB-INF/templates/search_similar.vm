@@ -3,13 +3,13 @@
     <form action="$action" method="get" name="frmSimilar" id="frmSimilar">
         #if($ps.isSimilarOpen)
             $action.setParameter('action','doCloseSimilar')
-            <div onclick="location.href='$action'" class="js-accordion-toggle filter__title">
+            <div onclick="location.href='$action'" class="js-accordion-toggle filter__title is-active">
                 $MESSAGES.getString('searchSimilar.headline')
                 <svg class="filter__title__icon icon"><use xlink:href="#arrow-thick"></use></svg>
             </div>
         #else
             $action.setParameter('action','doOpenSimilar')
-            <div onclick="location.href='$action'" class="js-accordion-toggle filter__title is-active">
+            <div onclick="location.href='$action'" class="js-accordion-toggle filter__title">
                 $MESSAGES.getString('searchSimilar.headline')
                 <svg class="filter__title__icon icon"><use xlink:href="#arrow-thick"></use></svg>
             </div>
