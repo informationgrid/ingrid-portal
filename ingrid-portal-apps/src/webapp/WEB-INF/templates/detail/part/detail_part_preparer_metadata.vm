@@ -22,7 +22,7 @@
                     ## Übergeordnetet Objekte
                     #renderLinkList($MESSAGES.getString("superior_references") $TOOL.getReference("./idf:superiorReference") "false")
                     ## Addressen
-                    #renderMultiLineAddresses($MESSAGES.getString("addresses") $TOOL.getAddresses("./gmd:identificationInfo/*/gmd:pointOfContact", false))
+                    #renderMultiLineAddresses($MESSAGES.getString("addresses") $TOOL.getNodeListFromXPath("./gmd:identificationInfo/*/gmd:pointOfContact"))
                 </div>
             </div>
         ## Verweis
@@ -457,7 +457,7 @@
                 ## XML Darstellung 
                 #renderTextLabelLeft($MESSAGES.getString("xml_link_label") $TOOL.addLinkToGetXML())
                 ## Ansprechpartner (Metadatum)
-                #renderMultiLineAddresses("$TOOL.getValueFromXPath('./gmd:contact/*/gmd:role/gmd:CI_RoleCode/@codeListValue', '505') ($MESSAGES.getString('pointofcontact_metadata'))" $TOOL.getAddresses("./gmd:identificationInfo/*/gmd:pointOfContact", true))
+                #renderMultiLineAddresses("$TOOL.getValueFromXPath('./gmd:contact/*/gmd:role/gmd:CI_RoleCode/@codeListValue', '505') ($MESSAGES.getString('pointofcontact_metadata'))" $TOOL.getNodeListFromXPath("./gmd:contact"), true)
              </div>
         </div>
         ## Additional Fields Example

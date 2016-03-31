@@ -402,7 +402,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
              showAdminContent = request.getUserPrincipal().getName().equals("admin");
         }
         
-        context.put("ds", request.getParameter("ds"));        
+        context.put("ds", request.getParameter("ds"));
         context.put("adminContent", showAdminContent);
         context.put("rankedPageSelector", rankedPageNavigation);
         if(rankedHits != null){

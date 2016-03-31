@@ -29,7 +29,7 @@
         #end
         #if(!$entry.hasLinkIcon)
             #if($entry.isExtern)
-                <img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
+                <svg class="icon"><use xlink:href="#external-link"></use></svg>
             #elseif($entry.isMapLink)
                 #if(!$entry.get("href"))
                     <figure>
@@ -48,43 +48,37 @@
                     </figure>
                 #end
             #else
-                <img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+                <svg class="icon"><use xlink:href="#internal-link"></use></svg>
             #end
         #end
         #if($entry.isExtern)
-            <p>
-                <a class="icon-link link" href="$entry.href">
-                    <svg class="icon"><use xlink:href="#globe"></use></svg>
-                    $entry.title
-                </a>
-            </p>
+            <a class="icon-link link" href="$entry.href">
+                <svg class="icon"><use xlink:href="#external-link"></use></svg>
+                $entry.title
+            </a>
         #elseif(!$entry.isMapLink)
-            <p>
-                <a class="icon-link link" href="$entry.href">
-                    <svg class="icon"><use xlink:href="#globe"></use></svg>
-                    $entry.title
-                </a>
-            </p>
+            <a class="icon-link link" href="$entry.href">
+                <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                $entry.title
+            </a>
         #end
         #if($tool.hasContent($entry.linkInfo) || $tool.hasContent($entry.attachedToField) || $tool.hasContent($entry.description))
             #if($tool.hasContent($entry.linkInfo))
-                <span class="linkinfo">$entry.linkInfo</span>
+                <span class="tx-light">$entry.linkInfo</span>
             #end
             #if($tool.hasContent($entry.attachedToField))
-                <span class="linkinfo">(${entry.get("attachedToField")})</span>
+                <span class="tx-light">(${entry.get("attachedToField")})</span>
             #end
             #if($tool.hasContent($entry.description))
                 #set($myIndent = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
                 #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>${myIndent}"))
-                <span class="linkinfo"><br/>${myIndent}${myDescription}</span>
+                <span class="tx-light"><br/>${myIndent}${myDescription}</span>
             #end
         #else
-            <span class="linkinfo">&nbsp;</span>
+            <span class="tx-light">&nbsp;</span>
         #end
         #if($tool.hasContent($entry.mapLink))
-            <p>
-               <a class="btn btn--primary btn--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')"><img class="map" src="/ingrid-portal-apps/images/world-map.png" alt="$MESSAGES.getString('common.result.showMap')" /></a>
-            </p>
+           <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
         #end
     #end
 #end
@@ -92,9 +86,9 @@
 #macro (renderLinkLineAddress $entry)
     <div>
     #if($entry.isExtern)
-        <a class="detail_link" href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a>
+        <a href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a>
     #else
-        <a class="detail_link" href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a>
+        <a href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a>
     #end
     </div>  
 #end
@@ -105,18 +99,6 @@
 
 #macro (renderAddressType $type)
     $MESSAGES.getString("udk_adr_class_name_$type")
-#end
-
-
-#macro (renderLine $entry)
-    #if($tool.hasContent($entry.udkClass))
-        <p class="float_left"><span class="icon_udk_detail"><img src="/ingrid-portal-apps/images/icn_udk_obj_${entry.get("udkClass")}.gif" alt="${entry.get("udkClassName")}" /></span>&nbsp;<strong>${entry.get("udkClassName")}</strong>&nbsp;<span class="smaller">$MESSAGES.getString('search.detail.object.class')</span></p>
-        <span class="clearer"></span>
-    #end
-#end
-
-#macro (renderLine)
-    <div class="line"><hr/></div>
 #end
 
 #macro (renderMultiLine $entry)
@@ -163,9 +145,7 @@
                 #elseif($e.type=="textLabelLeft")
                     #renderTextLabelLeft($e)
                 #elseif($e.type=="line")
-                    <div class="line"><hr /></div><br/>
-                #elseif($e.type=="space")
-                    <div style="clear:both; padding:5px;"></div>
+                    <hr />
                 #end
             #end
         #end
@@ -200,38 +180,232 @@
 ## New Detail macros
 ## *************************
 
-#macro (renderMultiLineAddresses $title $entry)
-    #if($tool.hasContent($entry.elementsAddress))
+#macro (renderMultiLineAddresses $title $entry $isMeta)
+    #if($isMeta == true)
         <hr>
         #if($tool.hasContent($title))
             #renderSectionTitle($title)
         #end
-        #set($elementsAddress = $entry.elementsAddress)
+        
         #set($count = 0)
-        #if($elementsAddress.size() % 2 == 0)
-            #set($rows = $elementsAddress.size()/2)
-        #else
-            #set($rows = $elementsAddress.size()/2+1)
-        #end
-        #if ($elementsAddress.size() > 0)
-                <div class="grid grid--gutter">
-        #end
-        #foreach($e in $sorter.sort($elementsAddress,"title"))
-            #set($count = $count + 1)
-            #if($tool.hasContent($e.elements))
-                #set($nextEntryEmpty = false)
-                #if($count != $elementsAddress.size())
-                    #if(!$tool.hasContent($elementsAddress.get($count).elements))
-                        #set($nextEntryEmpty = true)
-                    #end
-                #end
-                <div class="column column--1-2-m ob-container">
-                #renderTypeHalf($e)
-                </div>
+        #set($entryLength = $entry.getLength() - 1)
+        #foreach($number in [0..$entryLength])
+            #set($node = $entry.item($number))
+            #set($xPath = "./idf:idfResponsibleParty")
+            #if($TOOL.nodeExist($xPath, $node))
+                #set($xParentPath = "./idf:idfResponsibleParty")
+            #else
+                #set($xParentPath = "./gmd:CI_ResponsibleParty")
             #end
+            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
+            <div class="table--lined">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>$TOOL.getNameFromCodeList("4430", "3")</th>
+                            <td><a href="mailto:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
         #end
-        #if ($elementsAddress.size() > 0)
+    #else
+        #if($entry)
+            <hr>
+            #if($tool.hasContent($title))
+                #renderSectionTitle($title)
+            #end
+            
+            #set($count = 0)
+            #set($entryLength = $entry.getLength() - 1)
+            #foreach($number in [0..$entryLength])
+                #if ($count % 2 == 0)
+                    <div class="grid grid--gutter">
+                #end
+                #set($node = $entry.item($number))
+                #set($xPath = "")
+                #if($TOOL.nodeExist("./idf:idfResponsibleParty", $node))
+                    #set($xParentPath = "./idf:idfResponsibleParty")
+                #elseif($TOOL.nodeExist("./gmd:CI_ResponsibleParty", $node))
+                    #set($xParentPath = "./gmd:CI_ResponsibleParty")
+                #else
+                    #set($xParentPath = ".")
+                #end
+                
+                #set($uuid = "")
+                
+                #set($count = $count + 1)
+                <div class="column column--1-2-m ob-container media">
+                    #set($xPath = "$xParentPath/gmd:role/gmd:CI_RoleCode/@codeListValue")
+                    #if($TOOL.nodeExist($xPath, $node))
+                        <h4>$TOOL.getValueFromXPath($xPath, "505", $node)</h4>
+                    #end
+                    <p>
+                    #if($xParentPath == "./idf:idfResponsibleParty" || $xParentPath == ".")
+                        #set($xPath = "$xParentPath/idf:hierarchyParty")
+                        #if($TOOL.nodeExist($xPath, $node))
+                            #set($hierarchyParty = $TOOL.getNodeListFromXPath($xPath, $node))
+                            #set($hierarchyPartyLength = $hierarchyParty.getLength() - 1)
+                            #foreach($hierarchy in [$hierarchyPartyLength..0])
+                                #set($hierarchyPartyNode = $hierarchyParty.item($hierarchy))
+                                
+                                #set($xPath = "./@uuid")
+                                #set($uuid = $TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))
+
+                                #set($xPath = "./idf:addressType")
+                                #set($type = $TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))
+                               
+                                #if($type == "2")
+                                    #set($xPath = "./idf:addressIndividualName")
+                                    ## Person -> Name
+                                    #if($TOOL.nodeExist($xPath, $hierarchyPartyNode))
+                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</a>
+                                    #end
+                                #elseif($type == "3")
+                                    ## Free Address -> Name or Organisation
+                                    #if($TOOL.nodeExist("./idf:addressType", $hierarchyPartyNode))
+                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressType", null, $hierarchyPartyNode))</a>
+                                    #elseif($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
+                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode)</a>
+                                    #end
+                                #else
+                                    ## Organisation
+                                    #set($xPath = "./idf:addressOrganisationName")
+                                    <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)</a>
+                                    
+                                #end
+                                <br>
+                            #end
+                        #else
+                            ## Organistation
+                            #set($xPath = "$xParentPath/gmd:organisationName")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                #set($organisation = $TOOL.stringTokenizer($TOOL.getValueFromXPath($xPath, null, $node)))
+                                #set($organisationLength = $organisation.countTokens() - 1)
+                                #foreach($org in [0..$organisationLength])
+                                    $organisation.nextToken()
+                                    <br>
+                                #end
+                            #end
+                            ## Name
+                            #set($xPath = "$xParentPath/gmd:individualName")
+                            #if($TOOL.nodeExist($xPath, $node))
+                               $TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))
+                            #end
+                        #end
+                    #else
+                        ## Organistation
+                        #set($xPath = "$xParentPath/gmd:organisationName")
+                        #if($TOOL.nodeExist($xPath, $node))
+                            #set($organisation = $TOOL.stringTokenizer($TOOL.getValueFromXPath($xPath, null, $node)))
+                            #set($organisationLength = $organisation.countTokens() - 1)
+                            #foreach($org in [0..$organisationLength])
+                                $organisation.nextToken()
+                                <br>
+                            #end
+                        #end
+                        ## Name
+                        #set($xPath = "$xParentPath/gmd:individualName")
+                        #if($TOOL.nodeExist($xPath, $node))
+                            <a class="link" href="#">$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))</a>
+                        #end
+                    #end
+                    </p>
+                    <p>
+                        ## "Street"
+                        #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint")
+                        #if($TOOL.nodeExist($xPath, $node))
+                            #set($deliveryPoint = $TOOL.getNodeListFromXPath($xPath, $node))
+                            #set($deliveryPointLength = $deliveryPoint.getLength() - 1)
+                            #foreach($deliveryPointNumber in [0..$deliveryPointLength])
+                                #set($delivery = $TOOL.getValueFromXPath(".", null, $deliveryPoint.item($deliveryPointNumber)))
+                                #if($delivery.startsWith("Postbox"))
+                                    #set($deliverySplit = $delivery.split(","))
+                                    #foreach($d in $deliverySplit)
+                                        #if($d.startsWith("Postbox"))
+                                            $MESSAGES.getString("postbox_label") $d.replace("Postbox ", "")
+                                        #else
+                                            $d
+                                        #end
+                                        <br>
+                                    #end
+                                #elseif($delivery.matches("\\d*"))
+                                    $MESSAGES.getString("postbox_label") $delivery
+                                    <br>
+                                #else
+                                    #if($deliveryPointLength > 1)
+                                        <br>
+                                    #end
+                                    $delivery
+                                #end
+                            #end
+                            <br>
+                        #end
+                        ## "Postcode"
+                        #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:postalCode")
+                        #if($TOOL.nodeExist($xPath, $node))
+                            $TOOL.getValueFromXPath($xPath, null, $node)
+                        #end
+                        ## "City"
+                        #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city")
+                        #if($TOOL.nodeExist($xPath, $node))
+                            $TOOL.getValueFromXPath($xPath, null, $node)
+                            <br>
+                        #end
+                        ## "Country"
+                        #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:country")
+                        #if($TOOL.nodeExist($xPath, $node))
+                            $TOOL.getCountryValue($TOOL.getValueFromXPath($xPath, null, $node))
+                        #end
+                    </p>
+                    <div class="table table--lined2">
+                        <table>
+                            ## E-Mail
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                <tr>
+                                    <th>$TOOL.getNameFromCodeList("4430", "3")</th>
+                                    <td><a href="mailto:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a></td>
+                                </tr>
+                            #end
+                            ## Telefon
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                <tr>
+                                    <th>$TOOL.getNameFromCodeList("4430", "1")</th>
+                                    <td>$TOOL.getValueFromXPath($xPath, null, $node)</td>
+                                </tr>
+                            #end
+                            ## Fax
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                <tr>
+                                    <th>$TOOL.getNameFromCodeList("4430", "2")</th>
+                                    <td>$TOOL.getValueFromXPath($xPath, null, $node)</td>
+                                </tr>
+                            #end
+                            ## URL
+                            #set($xPath = "$xParentPath//gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                <tr>
+                                    <th>$TOOL.getNameFromCodeList("4430", "4")</th>
+                                    #set($url = $TOOL.getValueFromXPath($xPath, null, $node))
+                                    #if($url.startsWith("http"))
+                                        #set($url = $url)
+                                    #else 
+                                        #set($url = "http://$url")
+                                    #end
+                                    <td><a href="$url">$url</a></td>
+                                </tr>
+                            #end
+                        </table>
+                    </div>
                 </div>
+                #if ($count % 2 == 0 || $entryLength == $number)
+                     </div>
+                #end
+            #end
         #end
     #end
 #end
@@ -255,9 +429,7 @@
         #elseif($e.type=="textLabelLeft")
             #renderTextLabelLeft($e)
         #elseif($e.type=="line")
-            <div class="line"><hr /></div><br/>
-        #elseif($e.type=="space")
-            <div style="clear:both; padding:5px;"></div>
+            <hr />
         #end
     #end
 #end
@@ -292,62 +464,66 @@
                             ## Allgemeines
                             <div class="tab__toggle is-active" data-tabid="tab-1"><a href="#">$MESSAGES.getString("general_tab")</a></div>
                             ## Verweise
-                            #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
+                            #if($isMetadata == true)
+                                #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
+                            #else
+                                #set($xpathList = ["./idf:objectReference"])
+                            #end
                             #if($TOOL.aNodeOfListExist($xpathList))
-                            <div class="tab__toggle" data-tabid="tab-2"><a href="#">$MESSAGES.getString("references_tab")</a></div>
+                                <div class="tab__toggle" data-tabid="tab-2"><a href="#">$MESSAGES.getString("references_tab")</a></div>
                             #end
                             ## Raum/Zeit
                             #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
                             #if($TOOL.aNodeOfListExist($xpathList))
-                            <div class="tab__toggle" data-tabid="tab-3"><a href="#">$MESSAGES.getString("spacial_reference_tab")</a></div>
+                                <div class="tab__toggle" data-tabid="tab-3"><a href="#">$MESSAGES.getString("spacial_reference_tab")</a></div>
                             #end
                             ## Fachbezug
                             #if($type == "1")
                                 #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
                                 #if($TOOL.aNodeOfListExist($xpathList))
-                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
                                 #end
                             #elseif($type == "2")
                                 #set($xpathList = ["./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/organisationName","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:editionDate","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:issueIdentification","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:page","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:ISBN","./gmd:identificationInfo/*/gmd:resourceFormat/gmd:MD_Format/gmd:name","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:otherCitationDetails","./gmd:identificationInfo/*/gmd:supplementalInformation"])
                                 #if($TOOL.aNodeOfListExist($xpathList))
-                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
                                 #end
                             #elseif($type == "3")
                                 #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
                                 #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:identificationInfo/*/srv:serviceType","./gmd:identificationInfo/*/srv:serviceTypeVersion","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:identificationInfo/*/gmd:environmentDescription","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation","./gmd:identificationInfo/*/gmd:supplementalInformation/gmd:abstract","./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata","./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint"])
                                 #if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
-                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
                                 #end
                             #elseif($type == "4")
                                 #set($xpathList = ["./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty","./gmd:individualName","./gmd:identificationInfo/*/gmd:supplementalInformation"])
                                 #if($TOOL.aNodeOfListExist($xpathList))
-                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
                                 #end
                             #elseif($type == "5")
                                 #set($xpathList = ["./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation"])
                                 #if($TOOL.aNodeOfListExist($xpathList))
-                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
                                 #end
                             #elseif($type == "6")
                                 #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
                                 #set($xpathList = ["./gmd:identificationInfo/*/srv:serviceType","./gmd:identificationInfo/*/srv:serviceTypeVersion","./gmd:identificationInfo/*/gmd:environmentDescription","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation","./gmd:identificationInfo/*/srv:containsOperations"])
                                 #if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
-                                <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
                                 #end
                             #end
                             ## Datenqualität
                             #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"])
                             #if($TOOL.aNodeOfListExist($xpathList))
-                            <div class="tab__toggle" data-tabid="tab-5"><a href="#">$MESSAGES.getString("data_quality")</a></div>
+                                <div class="tab__toggle" data-tabid="tab-5"><a href="#">$MESSAGES.getString("data_quality")</a></div>
                             #end
                             ## Verfügbarkeit
                             #set($xpathList = ["./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:version/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:fileDecompressionTechnique/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:specification/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue","./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue"])
                             #if($TOOL.aNodeOfListExist($xpathList))
-                            <div class="tab__toggle" data-tabid="tab-6"><a href="#">$MESSAGES.getString("availability_tab")</a></div>
+                                <div class="tab__toggle" data-tabid="tab-6"><a href="#">$MESSAGES.getString("availability_tab")</a></div>
                             #end
+                            ## Zusätzliche Info
                             #set($xpathList = ["./gmd:identificationInfo//gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:language/gmd:LanguageCode/@codeListValue"])
                             #if($TOOL.aNodeOfListExist($xpathList))
-                                ## Zusätzliche Info
                                 <div class="tab__toggle" data-tabid="tab-7"><a href="#">$MESSAGES.getString("additional_information_tab")</a></div>
                             #end
                             ## Zusatzfelder
@@ -369,7 +545,7 @@
         #set($elements = $entry.elements)
         #foreach($e in $elements)
             <div class="detail_group_line">
-                <div class="float_left detail_group">
+                <div class="detail_group">
                     #renderImageTable($e "" "")
                 </div>
             </div>
@@ -379,7 +555,7 @@
 ## Render section title
 #macro (renderSectionTitle $title)
     #if($tool.hasContent($title))
-        <h3 class="float_left section_title" >
+        <h3 class="section_title" >
             $title
         </h3>
     #end
@@ -394,47 +570,11 @@
     #end
 #end
 
-## Render title for non script
-#macro (renderNoScriptTitle $entry)
-    #if($tool.hasContent($entry))
-    <noscript>
-    &nbsp;
-        <h1 class="no_script_title print_view_hidden"> 
-            $entry
-        </h1>
-        <span class="clearer print_view_hidden"></span>
-    </noscript>
-    <br class="print" /> 
-    <h1 class="print_title"> 
-        $entry
-    </h1>
-    #end
-#end
-
-
-## Render gray line(s) for section title
-#macro (renderGrayLine $count)
-    #if($count == "1")
-        <span class="clearer_gray_small"></span>
-    #elseif($count == "2")
-        <span class="clearer_dark_gray"></span>
-        <span class="clearer_gray"></span>
-    #else
-        
-    #end
-    
-#end
-
 ## Render title
 ##macro (renderTitle $entry)
 ##  <h1>$entry</h1>
 ##  <span class="clearer"></span>
 ##end
-
-## Render title
-#macro (renderTitleHeader $entry)
-    <h1 class="detail_title_header">$entry</h1>
-#end
 
 ## Render image with description and title
 #macro (renderImageTable $image $data_info $descr)
@@ -471,49 +611,24 @@
             #renderGroupTitle($title)
         #end
         <div class="table table--striped">
-        <table class="border detail_table" border="0">
-        #if($tool.hasContent($entry.get("head")))
-            <thead><tr>
-            #foreach($th in $entry.head)
-                <th class="detail_table_header">$th</th>
-            #end
-            </tr></thead>
-        #end
-        <tbody>
-        #set ($rowCount = 0)
-        #foreach($tr in $entry.body)
-            #set ($rowCount = $rowCount + 1)
-            #set ($cellCount = 0)
-            #if ($rowCount % 2 == 0)
-                    <tr class="detail_table_row_1">
-                    #foreach($td in $tr)
-                        #set ($cellCount = $cellCount + 1)
-                        #if($cellCount == $tr.size())
-                            <td class="detail_table_cell_font">$td</td>
-                        #else
-                            <td class="detail_table_cell detail_table_cell_font">$td</td>
-                        #end
+            <table>
+            #if($tool.hasContent($entry.get("head")))
+                <thead>
+                    <tr>
+                    #foreach($th in $entry.head)
+                        <th>$th</th>
                     #end
-                    #set ($cellCount = 0)
                     </tr>
-            
-            #else
-                    <tr class="detail_table_row_2">
-                    #foreach($td in $tr)
-                        #set ($cellCount = $cellCount + 1)
-                        #if($cellCount == $tr.size())
-                            <td class="detail_table_cell_font">$td</td>
-                        #else
-                            <td class="detail_table_cell detail_table_cell_font">$td</td>
-                        #end
-                    #end
-                    #set ($cellCount = 0)
-                    </tr>
+                </thead>
             #end
-        #end
-        #set ($rowCount = 0)
-        </tbody>
-        </table>
+            #foreach($tr in $entry.body)
+                <tr>
+                #foreach($td in $tr)
+                    <td>$td</td>
+                #end
+                </tr>
+            #end
+            </table>
         </div>
     #else
         #if($space != "")
@@ -565,12 +680,12 @@
 ## Render entry in line
 #macro (renderEntryInLine $entry)
     #if($tool.hasContent($entry.title))
-        <table class="detail_table_text">
+        <table>
             <tr>
-                <td class="detail_table_label">
+                <td>
                     $entry.title
                 </td>
-                <td class="detail_table_body">
+                <td>
                     $entry.body
                 </td>
             </tr>
@@ -584,12 +699,12 @@
         #if($tool.hasContent($entry.header))
             #renderSectionTitle($entry.header)
         #end
-        <div class="width_two_thirds">
+        <div>
         #if($tool.hasContent($entry.title))
-            <p class="detail_entry_title">$entry.title</p>
+            <p>$entry.title</p>
             &nbsp;
         #end
-        <p class="detail_entry_body">$entry.body</p>
+        <p>$entry.body</p>
         </div>
      #end
 #end
@@ -602,13 +717,12 @@
     #if($tool.hasContent($linkList))
         #if($titleAsSection == "true")
             #if($tool.hasContent($title))
-                    #renderSectionTitle($title)
+                #renderSectionTitle($title)
             #end
         #end
-        <div class="width_two_thirds">
+        <div>
             #if($titleAsSection == "false")
                 #if($tool.hasContent($title))
-                    #renderLine()
                     <h4>$title</h4>
                 #end
             #end
@@ -629,19 +743,27 @@
 #end
 
 #macro (renderTextListSpace $title $textList $space)
-    #if($tool.hasContent($textList))
-        #if($tool.hasContent($title))
-            <h4>$title</h4>
-            ##renderGroupTitle($entry.title)
+    #if($textList.size() > 1)
+        #if($tool.hasContent($textList))
+            #if($tool.hasContent($title))
+                <h4>$title</h4>
+                ##renderGroupTitle($entry.title)
+            #end
+            <ul class="list list--bullets bx-top-s">
+            #foreach($text in $sorter.sort($textList,"body"))
+                 <li><p>$text</li>
+            #end
+            </ul>
+        #else
+            #if($space != "")
+                #renderTextLabelLeft($title $space)
+            #end
         #end
-        <ul class="list list--bullets bx-top-s">
-        #foreach($text in $sorter.sort($textList,"body"))
-             <li class="detail_li"><p class="detail_li">$text</li>
-        #end
-        </ul>
     #else
-        #if($space != "")
-            #renderTextLabelLeft($title $space)
+        #if($tool.hasContent($textList))
+            #foreach($text in $textList)
+                #renderTextLabelLeft($title $text)
+            #end
         #end
     #end
 #end
@@ -655,22 +777,21 @@
                 $title
             </h4>
         #end
-        <p class="text_label_above_body">$body</p>
+        <p>$body</p>
     #end
 #end
 
 ## Render label above text
 #macro (renderTextLabelDuring $entry)
-    <div class="width_two_thirds">
-        #renderLine()
-        <div class="text_label_during">
+    <div>
+        <div>
         #if($tool.hasContent($entry.body))
             #if($tool.hasContent($entry.title))
-                <div class="text_label_during_title">
+                <div>
                     $entry.title
                 </div>
             #end
-            <p class="text_label_during_body">$entry.body</p>
+            <p>$entry.body</p>
         #end
        </div>
     </div>
@@ -692,7 +813,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>  
+        </div>
     #else 
         #if($space != "")
             #renderTextLabelLeft($title $space)
@@ -701,49 +822,34 @@
 #end
 
 #macro (renderTextLabelLeftLink $entry)
-    <div class="width_two_thirds">
-        #renderLine()
-        <table class="text_label_left">
-            <tr>
-            #if($tool.hasContent($entry.body))  
-                #if($tool.hasContent($entry.title))
-                <td class="text_label_left_title">
-                    $entry.title
-                </td>
-                #end
-                <td class="text_label_left_body">
-                    #if($entry.body)
-                        #if($entry.body.type)
-                            #if($entry.body.type == "linkLine")
-                                #renderLinkLine($entry.body)
+    <div class="table--lined">
+        <table>
+            <tbody>
+                <tr>
+                    <th>#if($tool.hasContent($entry.title))$entry.title#end</th>
+                    <td>
+                        #if($entry.body)
+                            #if($entry.body.type)
+                                #if($entry.body.type == "linkLine")
+                                    #renderLinkLine($entry.body)
+                                #else
+                                    $entry.body
+                                #end
                             #else
                                 $entry.body
                             #end
-                        #else
-                            $entry.body
                         #end
-                    #end
-                </td>
-            #end
-            </tr>
-            #if($tool.hasContent($entry.link))
-                #if($entry.linkLeft == true)
+                        #if($tool.hasContent($entry.link))
+                            <p>
+                                <a class="tag tag--small" href="$entry.link.href">$MESSAGES.getString('common.result.showMap')</a>
+                            </p>
+                        #end
+                    </td>
+                </tr>
+            </tbody>
         </table>
-                    #renderLinkLine($entry.link)
-                #else
-            <tr>
-                <td class="text_label_left_title">
-                </td>
-                <td class="text_label_left_body">
-                    #renderLinkLine($entry.link)
-                </td>
-            </tr>
-        </table>
-                #end
-            #else
-        </table>
-            #end
     </div>
+    
 #end
 
 ## New function for KML
@@ -757,9 +863,9 @@
            #end
            #if($tool.hasContent($entry.title) && $tool.hasContent($entry.plugId) && $tool.hasContent($entry.docId))
                 <div>
-                    <img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
+                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
                     </span>
-                    <a class="detail_link" href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
+                    <a href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
                 </div>  
            #end
         </div>
