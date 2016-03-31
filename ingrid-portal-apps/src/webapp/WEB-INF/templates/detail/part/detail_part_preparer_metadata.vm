@@ -79,7 +79,7 @@
                         ## Höhe
                         #renderTable($TOOL.getAreaHeight("./gmd:identificationInfo/*/*/gmd:EX_Extent"))
                         ## Erläuterung zum Raumbezug
-                        #renderTextLabelLeft($MESSAGES.getString("t01_object.loc_descr") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description"))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.loc_descr") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description"))
                         ## Raumbezugssystem
                         #renderTextList($MESSAGES.getString("t011_obj_geo.referencesystem_id") $TOOL.getNodeListValueReferenceSystem("./gmd:referenceSystemInfo"))
                     #end
@@ -93,45 +93,45 @@
                         #set($endTime = $TOOL.convertDateString($TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition")))
                         #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
                             #if($beginTime == $endTime)
-                                #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime")
+                                #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime")
                             #elseif($beginTime && !$endTime)
-                                #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime")
+                                #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime")
                             #elseif(!$beginTime && $endTime)
-                                #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime")
+                                #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime")
                             #elseif($beginTime != $endTime)
-                                #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+                                #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
                             #end
                         #end
                         ## Status
-                        #renderTextLabelLeft($MESSAGES.getString("t01_object.time_status") $TOOL.getValueFromXPath("./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue", "523"))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.time_status") $TOOL.getValueFromXPath("./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue", "523"))
                         ## Periodizität
-                        #renderTextLabelLeft($MESSAGES.getString("t01_object.time_period") $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue", "518"))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.time_period") $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue", "518"))
                         ## Intervall der Erhebung
                         #set($value = $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency"))
                         #set($content = $TOOL.timePeriodDurationToTimeAlle($value))
                         #set($unit = $TOOL.timePeriodDurationToTimeInterval($value))
                         #if($value)
-                            #renderTextLabelLeft($MESSAGES.getString("t01_object.time_interval") "$content $unit")
+                            #renderTextLabelAbove($MESSAGES.getString("t01_object.time_interval") "$content $unit")
                         #end
                         ## Zeitbezug der Ressource
                         #set($nodelist = $TOOL.getNodeListFromXPath("./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date"))
                         ## Erstellung 
                         #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
                         #if($title.length() > 0)
-                            #renderTextLabelLeft($title $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
+                            #renderTextLabelAbove($title $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
                         #end
                         ## Publikation
                         #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
                         #if($title.length() > 0)
-                            #renderTextLabelLeft($title $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
+                            #renderTextLabelAbove($title $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
                         #end
                         ## letzte Änderung 
                         #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
                         #if($title.length() > 0)
-                            #renderTextLabelLeft($title $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
+                            #renderTextLabelAbove($title $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
                         #end
                         ## Erläuterung zum Zeitbezug
-                        #renderTextLabelLeft($MESSAGES.getString("t01_object.time_descr") $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote"))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.time_descr") $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote"))
                     #end
                 </div>
             </div>
@@ -145,13 +145,13 @@
                         ## Fachbezug
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         ## Fachliche Grundlage
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"))
                         ## Datensatz/Datenserie
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.hierarchy_level") $TOOL.getValueFromXPath("./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue", "525"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.hierarchy_level") $TOOL.getValueFromXPath("./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue", "525"))
                         ## Digitale Repräsentation
                         #renderTextList($MESSAGES.getString("t011_obj_geo_spatial_rep.type") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue", "526"))
                         ## Topologieinformation
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.vector_topology_level") $TOOL.getValueFromXPath("./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue", "528"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.vector_topology_level") $TOOL.getValueFromXPath("./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue", "528"))
                         ## Vektorformat
                         #set($headTitles = [$MESSAGES.getString("t011_obj_geo_vector.geometric_object_type"),$MESSAGES.getString("t011_obj_geo_vector.geometric_object_count")])
                         #set($headXpathExpressions = ["./gmd:MD_GeometricObjects/gmd:geometricObjectType/gmd:MD_GeometricObjectTypeCode/@codeListValue","./gmd:MD_GeometricObjects/gmd:geometricObjectCount"])
@@ -164,21 +164,21 @@
                         #set($headXpathExpressions = ["./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:title","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:edition"])
                         #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_symc"), "./gmd:portrayalCatalogueInfo", $headTitles, $headXpathExpressions))
                         ## Schlüsselkatalog: im Datensatz vorhanden
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.keyc_incl_w_dataset") $TOOL.getValueFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.keyc_incl_w_dataset") $TOOL.getValueFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset"))
                         ## Schlüsselkatalog
                         #set($headTitles = [$MESSAGES.getString("t011_obj_geo_keyc.subject_cat"),$MESSAGES.getString("t011_obj_geo_keyc.key_date"),$MESSAGES.getString("t011_obj_geo_keyc.edition")])
                         #set($headXpathExpressions = ["./gmd:title","./gmd:date/gmd:CI_Date/gmd:date","./gmd:edition"])
                         #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_keyc"), "./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation", $headTitles, $headXpathExpressions))
                         ## Datengrundlage
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.data_base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.data_base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
                         ## Sachdaten/Attributinformation
                         #renderTextList($MESSAGES.getString("t011_obj_geo_supplinfo.feature_type") $TOOL.getListOfValuesFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes", "."))
                         ## Herstellungsprozess
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.method") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.method") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description"))
                         ## Identifikator der Datenquelle
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.datasource_uuid") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.datasource_uuid") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code"))
                         ## Identifikator der Datenquelle (older iplug)
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.datasource_uuid") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.datasource_uuid") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"))
                     </div>
                 </div>
             #end
@@ -191,33 +191,33 @@
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         #set($nodelist = $TOOL.getNodeListFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty"))
                         ## Autor
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.autor") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:individualName", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "originator"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.autor") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:individualName", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "originator"))
                         ## Standort
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.loc") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "resourceProvider"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.loc") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "resourceProvider"))
                         ## Herausgeber
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.publisher") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:individualName", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "publisher"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.publisher") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:individualName", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "publisher"))
                         ## Erscheinungsort
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.publish_loc") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "publisher"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.publish_loc") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "publisher"))
                         ## Verlag
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.publishing") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/organisationName", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "distribute"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.publishing") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/organisationName", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "distribute"))
                         ## Erschienen in
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.publish_in") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.publish_in") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name"))
                         ## Erscheinungsjahr
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.publish_year") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:editionDate"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.publish_year") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:editionDate"))
                         ## Band, Heft
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.volume") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:issueIdentification"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.volume") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:issueIdentification"))
                         ## Seiten
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.sides") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:page"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.sides") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:page"))
                         ## ISBN-Nummer des Dokumentes
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.isbn") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:ISBN"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.isbn") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:ISBN"))
                         ## Dokumententyp
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.typ") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceFormat/gmd:MD_Format/gmd:name"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.typ") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceFormat/gmd:MD_Format/gmd:name"))
                         ## Basisdaten
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
                         ## Weitere bibliographische Angaben
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.doc_info") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:otherCitationDetails"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.doc_info") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:otherCitationDetails"))
                         ## Erläuterung zum Fachbezug
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation"))
                     </div>
                 </div>
             #end
@@ -230,25 +230,25 @@
                         ## Fachbezug
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         ## Fachliche Grundlage
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"))
                         ## Klassifikation des Dienstes
                         #renderTextList($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
                         ## Typ des Dienstes
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_serv.type") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/srv:serviceType", "5100"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_serv.type") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/srv:serviceType", "5100"))
                         ## Version des Services
                         #renderTextList($MESSAGES.getString("t011_obj_serv_version.version") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/srv:serviceTypeVersion", "."))
                         ## Erstellungsmaßstab
                         #renderTable($TOOL.getReferenceObject("./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution"))
                         ## Systemumgebung
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_serv.environment") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:environmentDescription"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_serv.environment") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:environmentDescription"))
                         ## Historie
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_serv.history") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_serv.history") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description"))
                         ## Basisdaten
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_serv.base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_serv.base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
                         ## Erläuterung zum Fachbezug
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_serv.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_serv.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation"))
                         ## Erläuterung zum Fachbezug (*)
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_serv.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation/gmd:abstract"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_serv.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation/gmd:abstract"))
                         ## Operationen
                         #set($headTitles = [$MESSAGES.getString("t011_obj_serv_operation.name"),$MESSAGES.getString("t011_obj_serv_operation.descr"),$MESSAGES.getString("t011_obj_serv_operation.invocation_name")])
                         #set($headXpathExpressions = ["./srv:operationName","./srv:operationDescription","./srv:invocationName"])
@@ -281,11 +281,11 @@
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         #set($nodelist = $TOOL.getNodeListFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty"))
                         ## Projektleiter
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_project.leader") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:individualName", "./gmd:role/gmd:CI_RoleCode/@codeListValue", "projectManager"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_project.leader") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:individualName", "./gmd:role/gmd:CI_RoleCode/@codeListValue", "projectManager"))
                         ## Beteiligte
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_project.member") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:individualName", "./gmd:role/gmd:CI_RoleCode/@codeListValue", "projectParticipant"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_project.member") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:individualName", "./gmd:role/gmd:CI_RoleCode/@codeListValue", "projectParticipant"))
                         ##Erläuterung des Fachbezug
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_project.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_project.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation"))
                     </div>
                 </div>
             #end
@@ -297,7 +297,7 @@
                         ## Fachbezug
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         ## Schlüsselkatalog: im Datensatz vorhanden
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.keyc_incl_w_dataset") $TOOL.getValueFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.keyc_incl_w_dataset") $TOOL.getValueFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset"))
                         ## Schlüsselkatalog
                         #set($headTitles = [$MESSAGES.getString("t011_obj_geo_keyc.subject_cat"),$MESSAGES.getString("t011_obj_geo_keyc.key_date"),$MESSAGES.getString("t011_obj_geo_keyc.edition")])
                         #set($headXpathExpressions = ["./gmd:title","./gmd:date/gmd:CI_Date/gmd:date","./gmd:edition"])
@@ -305,12 +305,12 @@
                         ## Inhalte der Datensammlung/Datenbank
                         #set($nodelist = $TOOL.getNodeListFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes"))
                         #foreach($number in [0..$nodelist.getLength()])
-                            #renderTextLabelLeft("$MESSAGES.getString('t011_obj_data_para.parameter') ($MESSAGES.getString('t011_obj_data_para.unit'))" $TOOL.getValueFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes[$number]"))
+                            #renderTextLabelAbove("$MESSAGES.getString('t011_obj_data_para.parameter') ($MESSAGES.getString('t011_obj_data_para.unit'))" $TOOL.getValueFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes[$number]"))
                         #end
                         ## Methode/Datengrundlage
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_data.base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_data.base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
                         ## Erläuterungen zum Fachbezug
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_data.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_data.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation"))
                     </div>
                 </div>
             #end
@@ -325,17 +325,17 @@
                         ## Klassifikation des Dienstes
                         #renderTextList($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
                         ## Art des Dienstes
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_serv.type") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/srv:serviceType", "5300"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_serv.type") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/srv:serviceType", "5300"))
                         ## Version
                         #renderTextList($MESSAGES.getString("t011_obj_serv_version.version") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/srv:serviceTypeVersion", "."))
                         ## Systemumgebung
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_serv.environment") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:environmentDescription"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_serv.environment") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:environmentDescription"))
                         ## Historie
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_serv.history") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_serv.history") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description"))
                         ## Basisdaten
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_serv.base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_serv.base") $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
                         ## Erläuterung zum Fachbezug
-                        #renderTextLabelLeft($MESSAGES.getString("t011_obj_data.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_data.description") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:supplementalInformation"))
                         ## Service-URL
                         #set($headTitles = [$MESSAGES.getString("t011_obj_serv_url.name"),$MESSAGES.getString("t011_obj_serv_url.url"),$MESSAGES.getString("t011_obj_serv_url.description")])
                         #set($headXpathExpressions = ["./srv:SV_OperationMetadata/srv:operationName","./srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL","./srv:SV_OperationMetadata/srv:operationDescription"])
@@ -352,11 +352,11 @@
                     ## Raumbezugssystem
                     #renderSectionTitle($MESSAGES.getString("data_quality"))
                     ## Datendefizit
-                    #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.coverage") $TOOL.getGeoReport("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission", "completeness omission (rec_grade)", "Rate of missing items"))
+                    #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.coverage") $TOOL.getGeoReport("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission", "completeness omission (rec_grade)", "Rate of missing items"))
                     ## Höhengenauigkeit (m)
-                    #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.pos_accuracy_vertical") $TOOL.getGeoReport("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy", "vertical", "Mean value of positional uncertainties (1D)"))
+                    #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.pos_accuracy_vertical") $TOOL.getGeoReport("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy", "vertical", "Mean value of positional uncertainties (1D)"))
                     ## Lagegenauigkeit (m)
-                    #renderTextLabelLeft($MESSAGES.getString("t011_obj_geo.rec_exact") $TOOL.getGeoReport("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy", "geographic", "Mean value of positional uncertainties (2D)"))
+                    #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.rec_exact") $TOOL.getGeoReport("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy", "geographic", "Mean value of positional uncertainties (2D)"))
                     ## Datenüberschuss
                     #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
                     #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
@@ -417,7 +417,7 @@
                     ## Medien
                     #renderTable($TOOL.getMediumOptions("./gmd:distributionInfo/gmd:MD_Distribution"))
                     ## Bestellinformationen
-                    #renderTextLabelLeft($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions"))
+                    #renderTextLabelAbove($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions"))
                     
                     ## Zugangsbeschränkungen (accessConstraints)
                     #set($consideredValues = ["otherRestrictions"])
@@ -437,15 +437,15 @@
                 ## Verfügbarkeit
                 #renderSectionTitle($MESSAGES.getString("additional_information"))
                 ## Sprache des Metadatensatzes
-                #renderTextLabelLeft($MESSAGES.getString("t01_object.metadata_language") $TOOL.getLanguageValue($TOOL.getValueFromXPath("./gmd:language/gmd:LanguageCode/@codeListValue")))
+                #renderTextLabelAbove($MESSAGES.getString("t01_object.metadata_language") $TOOL.getLanguageValue($TOOL.getValueFromXPath("./gmd:language/gmd:LanguageCode/@codeListValue")))
                 ## Sprache des Datensatzes
-                #renderTextLabelLeft($MESSAGES.getString("t01_object.data_language") $TOOL.getLanguageValue($TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue")))
+                #renderTextLabelAbove($MESSAGES.getString("t01_object.data_language") $TOOL.getLanguageValue($TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue")))
                 ## Veröffentlichung
-                #renderTextLabelLeft($MESSAGES.getString("t01_object.publish_id") $TOOL.getPublishId($TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_SecurityConstraints/gmd:classification/gmd:MD_ClassificationCode/@codeListValue")))
+                #renderTextLabelAbove($MESSAGES.getString("t01_object.publish_id") $TOOL.getPublishId($TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_SecurityConstraints/gmd:classification/gmd:MD_ClassificationCode/@codeListValue")))
                 ## Eignung/Nutzung
-                #renderTextLabelLeft($MESSAGES.getString("t01_object.dataset_usage") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage"))
+                #renderTextLabelAbove($MESSAGES.getString("t01_object.dataset_usage") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage"))
                 ## Herstellungszweck
-                #renderTextLabelLeft($MESSAGES.getString("t01_object.info_note") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:purpose"))
+                #renderTextLabelAbove($MESSAGES.getString("t01_object.info_note") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:purpose"))
                 ## Rechtliche Grundlagen
                 #renderTextList($MESSAGES.getString("t015_legist.name") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/idf:idfLegalBasisConstraints/gmd:otherConstraints/gco:CharacterString", "."))
                 ## XML-Export-Kriterium
@@ -453,9 +453,9 @@
                 ## Konformität
                 #renderTable($TOOL.getConformityData("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report"))
                 ## Objekt-ID 
-                #renderTextLabelLeft($MESSAGES.getString("t01_object.obj_id") $TOOL.getValueFromXPath("./gmd:fileIdentifier"))
+                #renderTextLabelAbove($MESSAGES.getString("t01_object.obj_id") $TOOL.getValueFromXPath("./gmd:fileIdentifier"))
                 ## XML Darstellung 
-                #renderTextLabelLeft($MESSAGES.getString("xml_link_label") $TOOL.addLinkToGetXML())
+                #renderTextLabelAbove($MESSAGES.getString("xml_link_label") $TOOL.addLinkToGetXML())
                 ## Ansprechpartner (Metadatum)
                 #renderMultiLineAddresses("$TOOL.getValueFromXPath('./gmd:contact/*/gmd:role/gmd:CI_RoleCode/@codeListValue', '505') ($MESSAGES.getString('pointofcontact_metadata'))" $TOOL.getNodeListFromXPath("./gmd:contact"), true)
              </div>
@@ -464,9 +464,9 @@
             <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-8">
                 <div class="box__content ob-container">
                     #renderSectionTitle($MESSAGES.getString("additional_information"))
-                    #renderTextLabelLeft($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:data"))
-                    #renderTextLabelLeft($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364739']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364739']/idf:data"))
-                    #renderTextLabelLeft($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField27131904']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField27131904']/idf:data"))
+                    #renderTextLabelAbove($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:data"))
+                    #renderTextLabelAbove($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364739']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364739']/idf:data"))
+                    #renderTextLabelAbove($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField27131904']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField27131904']/idf:data"))
                  </div>
             </div>
         </article>
