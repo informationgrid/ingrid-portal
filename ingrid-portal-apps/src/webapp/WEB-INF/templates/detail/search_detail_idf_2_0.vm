@@ -8,25 +8,6 @@
     #if($entry.type == "html")
         $entry.body
     #else
-        #if($entry.hasLinkIcon)
-            #if($entry.iconImage)
-                ##<span class="icon_udk">
-                ##    <img src="/ingrid-portal-apps/images/$entry.iconImage" alt="$entry.iconImageAltText" />
-                ##</span>
-            #elseif($entry.objectClass)
-                ##<span class="icon_udk">
-                ##    <img src="/ingrid-portal-apps/images/icn_udk_obj_${entry.get("objectClass")}.gif" alt="Class${entry.get("objectClass")}" />
-                ##</span>
-            #else
-                ##<span class="icon">
-                #if($entry.isExtern)
-                ##    <img src="/decorations/layout/ingrid-popup/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" />
-                #else
-                ##    <img src="/decorations/layout/ingrid-popup/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" />
-                #end
-                ##</span>
-            #end
-        #end
         #if(!$entry.hasLinkIcon)
             #if($entry.isExtern)
                 <svg class="icon"><use xlink:href="#external-link"></use></svg>
@@ -56,6 +37,11 @@
                 <svg class="icon"><use xlink:href="#external-link"></use></svg>
                 $entry.title
             </a>
+        #elseif($entry.objectClass)
+            <a class="icon-link link" href="$entry.href">
+                #renderUDKIcon($entry.objectClass)
+                $entry.title
+            </a>
         #elseif(!$entry.isMapLink)
             <a class="icon-link link" href="$entry.href">
                 <svg class="icon"><use xlink:href="#internal-link"></use></svg>
@@ -74,8 +60,6 @@
                 #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>${myIndent}"))
                 <span class="tx-light"><br/>${myIndent}${myDescription}</span>
             #end
-        #else
-            <span class="tx-light">&nbsp;</span>
         #end
         #if($tool.hasContent($entry.mapLink))
            <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
@@ -247,15 +231,15 @@
                                 #set($uuid = $TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))
 
                                 #set($xPath = "./idf:addressType")
-                                #set($type = $TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))
+                                #set($t = $TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))
                                
-                                #if($type == "2")
+                                #if($t == "2")
                                     #set($xPath = "./idf:addressIndividualName")
                                     ## Person -> Name
                                     #if($TOOL.nodeExist($xPath, $hierarchyPartyNode))
                                         <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</a>
                                     #end
-                                #elseif($type == "3")
+                                #elseif($t == "3")
                                     ## Free Address -> Name or Organisation
                                     #if($TOOL.nodeExist("./idf:addressType", $hierarchyPartyNode))
                                         <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressType", null, $hierarchyPartyNode))</a>
@@ -720,7 +704,9 @@
                 #end
             #end
             #foreach($link in $sorter.sort($linkList,"title"))
-                #renderLinkLine($link)
+                <p>
+                    #renderLinkLine($link)
+                </p>
             #end
         </div>
     #else

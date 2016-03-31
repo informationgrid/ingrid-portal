@@ -199,7 +199,7 @@
                         ## Erscheinungsort
                         #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.publish_loc") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "publisher"))
                         ## Verlag
-                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.publishing") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/organisationName", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "distribute"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.publishing") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:organisationName", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "distribute"))
                         ## Erschienen in
                         #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.publish_in") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name"))
                         ## Erscheinungsjahr
