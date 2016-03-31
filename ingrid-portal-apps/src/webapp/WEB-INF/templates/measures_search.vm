@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+  <title>Messwerteclient</title>
+  <meta charset="utf-8">
+  <base href="/">
+  <style>
+    html, body {height: 100%; margin:0;}
+    app { height: 100%; width: 100%; position: absolute;}
+    #map { height: 100%; width: 100%; }
+  </style>
+<link href="ingrid-portal-apps/measures/styles.css" rel="stylesheet"></head>
+<body>
+  <!-- this will be our entry component for the application -->
+  <app></app>
+
+<script src="ingrid-portal-apps/measures/polyfills.bundle.js"></script><script src="ingrid-portal-apps/measures/main.bundle.js"></script></body>
+</html>
