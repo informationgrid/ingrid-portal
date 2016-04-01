@@ -879,21 +879,11 @@
 #if($renderElements)
     #renderElements($renderElements)
 #else
-    <p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+    <section class="block block--padded">
+        <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
+            <article class="content ob-container ob-box-wide">
+                #renderMessageError($MESSAGES.getString("error_no_details_available"))
+            </article>
+        </div>
+    </section>
 #end
