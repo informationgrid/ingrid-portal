@@ -1,4 +1,4 @@
-##renderPortletTitle($MESSAGES.getString('news.teaser.title') "h2" "bx-top-xl bx-bot-s")
+#renderPortletTitle($MESSAGES.getString('news.teaser.title') "h2" "bx-top-xl bx-bot-s")
 
 <div class="grid grid--gutter grid--equal">
 #foreach($rssEntry in $rssEntries)
