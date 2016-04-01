@@ -2126,6 +2126,9 @@ public class UtilsFacete {
     }
     
     public static void setFacetQuery(String term, ArrayList<IngridFacet> configNode, PortletRequest request, IngridQuery query) throws ParseException{
+        if(term == null){
+            term = "";
+        }
         if(term != null){
             for (IngridFacet ingridFacet : configNode){
                 if(ingridFacet.getFacets() != null){
