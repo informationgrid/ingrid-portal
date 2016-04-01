@@ -7,32 +7,33 @@
             #renderPortletTitle($MESSAGES.getString('chronicle.teaser.title') "h4")
         </div>
         <hr class="bx-top-0 bx-bot-0">
-        <div class="teaser__content ob-container">
         #if($snsAnniversary.years && $snsAnniversary.title)
-            #set ($action = $renderResponse.createActionURL())
-            $action.setParameter('action','doTeaser')
-            $action.setParameter('topId',"$!snsAnniversary.topicId")
-            $action.setParameter('topType',"$!snsAnniversary.type")
-            ##$action.setParameter('topFrom',"$!snsAnniversary.from")
-            ##$action.setParameter('topTo',"$!snsAnniversary.to")
-            $action.setParameter('topTerm',"$!snsAnniversary.term")
-            <p class="tx-darkest">
-                <strong>
-                    <i>$MESSAGES.getString('chronicle.teaser.event.prae') $snsAnniversary.years
-                    #if($snsAnniversary.years > 1)
-                        $MESSAGES.getString('chronicle.teaser.event.years')
-                    #else 
-                        $MESSAGES.getString('chronicle.teaser.event.year')
-                    #end
-                    : 
-                    </i>
-                </strong>
-                <br/>
-                <a href="$action" title="$MESSAGES.getString('chronicle.teaser.event.tooltip')">$snsAnniversary.title</a>
-            </p>
+            <div class="teaser__content ob-container">
+                $snsAnniversary.years $snsAnniversary.title
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('action','doTeaser')
+                $action.setParameter('topId',"$!snsAnniversary.topicId")
+                $action.setParameter('topType',"$!snsAnniversary.type")
+                ##$action.setParameter('topFrom',"$!snsAnniversary.from")
+                ##$action.setParameter('topTo',"$!snsAnniversary.to")
+                $action.setParameter('topTerm',"$!snsAnniversary.term")
+                <p class="tx-darkest">
+                    <strong>
+                        <i>$MESSAGES.getString('chronicle.teaser.event.prae') $snsAnniversary.years
+                        #if($snsAnniversary.years > 1)
+                            $MESSAGES.getString('chronicle.teaser.event.years')
+                        #else 
+                            $MESSAGES.getString('chronicle.teaser.event.year')
+                        #end
+                        : 
+                        </i>
+                    </strong>
+                    <br/>
+                    <a href="$action" title="$MESSAGES.getString('chronicle.teaser.event.tooltip')">$snsAnniversary.title</a>
+                </p>
+            </div>
+            <hr class="bx-top-0 bx-bot-0">
         #end
-        </div>
-        <hr class="bx-top-0 bx-bot-0">
         <div class="teaser__content ob-container">
             <p>$MESSAGES.getString('chronicle.teaser.new.body')</p>
             <p>
