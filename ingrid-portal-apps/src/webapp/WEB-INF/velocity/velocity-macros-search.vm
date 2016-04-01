@@ -348,3 +348,16 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #macro (renderTitle $title)
 #if ($title && $title != "")$title#else $MESSAGES.getString('common.result.noTitle')#end
 #end
+
+#macro(renderSearchResultFacetFilter)
+    <aside class="sidebar js-accordion-multi">
+        <div class="sidebar__title js-accordion-toggle mq-show-l" onclick="onClickFilterEvent()">
+            Filter
+            <svg class="icon"><use xlink:href="#filter"></use></svg>
+            <svg class="icon"><use xlink:href="#cross"></use></svg>
+        </div>
+        <div class="sidebar__content js-accordion-content is-hidden">
+            #parse ('/WEB-INF/templates/facete/facete.vm')
+        </div>
+    </aside>
+#end

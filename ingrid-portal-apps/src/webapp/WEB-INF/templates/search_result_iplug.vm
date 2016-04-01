@@ -1,15 +1,6 @@
 <div id="searchResult">
     #if($enableFacete)
-        <aside class="sidebar js-accordion-multi">
-            <div class="sidebar__title js-accordion-toggle mq-show-l">
-                Filter
-                <svg class="icon"><use xlink:href="#filter"></use></svg>
-                <svg class="icon"><use xlink:href="#cross"></use></svg>
-            </div>
-            <div class="sidebar__content js-accordion-content is-hidden">
-                #parse ('/WEB-INF/templates/facete/facete.vm')
-            </div>
-        </aside>
+        #renderSearchResultFacetFilter()
     #end
     <article class="content ob-container ob-box-narrow">
         <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
@@ -30,4 +21,10 @@
 </div>
 <script >
     goToByScroll('searchResult');
+    
+    function onClickFilterEvent(){
+        if(resizeMap){
+            resizeMap();
+        }
+    }
 </script>
