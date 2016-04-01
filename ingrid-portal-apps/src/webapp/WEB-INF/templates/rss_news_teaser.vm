@@ -1,33 +1,32 @@
-#renderPortletTitle($MESSAGES.getString('news.teaser.title') "h2" "bx-top-xl bx-bot-s")
-
+#renderPortletTitle($MESSAGES.getString('news.teaser.title') "h2" "bx-top-0")
 <div class="grid grid--gutter grid--equal">
 #foreach($rssEntry in $rssEntries)
-  <div class="column column--1-2-m">
-      <article class="teaser news-teaser ob-container">
-          <small class="bx-bot-0">
-            <span class="tx-darker"><strong>$date.format('d.M.yyyy',$rssEntry.publishedDate)</strong></span>
-            <span class="tx-light">$date.format('H:mm',$rssEntry.publishedDate)</span>
-        </small>
-          <h4 class="bx-top-0">
-            <a href="$!rssEntry.link">$!rssEntry.title</a>
-        </h4>
-        <p> 
-          #if ($rssEntry && $rssEntry.description)
-            $strutils.cutString($rssEntry.description, 350)
-          #end  
-        </p>
-        #if($rssEntry.author && $rssEntry.author != "")
-        <p class="bx-bot-0">
-            <small>
-                <span class="tx-darkest"><strong>$MESSAGES.getString('news.author'):</strong></span>
-                <span class="tx-light">
-                    $rssEntry.author
-                </span>
+    <div class="column column--1-2-m">
+        <article class="teaser news-teaser ob-container">
+            <small class="bx-bot-0">
+                <span class="tx-darker"><strong>$date.format('d.M.yyyy',$rssEntry.publishedDate)</strong></span>
+                <span class="tx-light">$date.format('H:mm',$rssEntry.publishedDate)</span>
             </small>
-        </p>
-        #end
-      </article>
-  </div>
+            <h4 class="bx-top-0">
+                <a href="$!rssEntry.link">$!rssEntry.title</a>
+            </h4>
+            <p> 
+                #if ($rssEntry && $rssEntry.description)
+                    $strutils.cutString($rssEntry.description, 350)
+                #end  
+            </p>
+            #if($rssEntry.author && $rssEntry.author != "")
+                <p class="bx-bot-0">
+                    <small>
+                        <span class="tx-darkest"><strong>$MESSAGES.getString('news.author'):</strong></span>
+                        <span class="tx-light">
+                            $rssEntry.author
+                        </span>
+                    </small>
+                </p>
+            #end
+        </article>
+    </div>
 #end
 </div>
 <p>
@@ -36,3 +35,4 @@
         <strong>$MESSAGES.getString('news.teaser.more')</strong>
     </a>
 </p>
+<br>

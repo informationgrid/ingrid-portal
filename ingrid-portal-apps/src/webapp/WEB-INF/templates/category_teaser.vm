@@ -1,4 +1,4 @@
-#renderPortletTitle($MESSAGES.getString('search.teaser.portlet.title'))
+#renderPortletTitle($MESSAGES.getString('search.teaser.portlet.title') "h2" "bx-top-0")
 #set ($action = $renderResponse.createActionURL())
 <div class="tabs js-tabs">
     <div class="tab__select mq-show-l">
@@ -17,8 +17,8 @@
             #end
         #end
     </nav>
-    <div class="tab__content" data-tabid="type">
-        <section class="block block--pad-top">
+    <div class="tab__content box" data-tabid="type">
+        <section class="block">
             <div class="ob-box-wide ob-box-padded ob-box-center">
                 <article class="content ob-container">
                     <div class="tag-group">
