@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
 
 import org.apache.velocity.context.Context;
@@ -57,13 +58,16 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
     private final static String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm";
     //scroll top value
     private String scrollTop = "0";
-    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
-            throws PortletException, IOException {
-        
-    	IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+    
+    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException {
+        Context context = getContext(request);
+
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
-       
-    	Context context = getContext(request);
+
+        PortletPreferences prefs = request.getPreferences();
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
 
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
@@ -227,5 +231,4 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                 }
             }
     }
-    
 }

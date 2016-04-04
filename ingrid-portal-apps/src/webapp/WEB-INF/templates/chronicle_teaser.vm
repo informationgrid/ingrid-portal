@@ -4,7 +4,7 @@
     </div>
     <div class="teaser__box">
         <div class="teaser__content ob-container">
-            #renderPortletTitle($MESSAGES.getString('chronicle.teaser.title') "h4")
+            #renderPortletTitle($MESSAGES.getString('chronicle.teaser.title') "h4" "" "" "" $helpKey)
         </div>
         <hr class="bx-top-0 bx-bot-0">
         #if($snsAnniversary.years && $snsAnniversary.title)

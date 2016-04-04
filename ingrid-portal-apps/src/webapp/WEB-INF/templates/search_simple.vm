@@ -1,4 +1,9 @@
 ##renderPortletTitle($MESSAGES.getString($titleKey) "h2" "bx-top-0")
+#if($helpKey && $helpKey != "")
+    <div class="box__content ob-container" style="padding-top: 1.25rem; padding-bottom: 0;">
+        #renderHelpIcon("" "float:right" $helpKey)
+    </div>
+#end
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doSearch')
@@ -13,6 +18,7 @@ $action.setParameter('action','doSearch')
                 </button>
             </div>
         </div>
+       
     </div>
     #addErrorFormMessageBox('q')
 </form>

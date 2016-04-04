@@ -108,7 +108,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue( "titleKey", TITLE_KEY_SEARCH );
         context.put( "titleKey", titleKey );
-
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
+        
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
         // ADAPT OUR PERMANENT STATE (MESSAGES)

@@ -63,6 +63,8 @@ public class ChronicleTeaserPortlet extends GenericVelocityPortlet {
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", "chronicle.teaser.title");
         response.setTitle(messages.getString(titleKey));
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
 
         // NOTICE: WE FETCH FROM DATABASE AND DON'T HAVE ALL DETAILS !!!
         String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());

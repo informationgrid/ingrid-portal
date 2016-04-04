@@ -60,6 +60,8 @@ public class MeasuresTeaserPortlet extends GenericVelocityPortlet {
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", "teaser.measures.title");
         response.setTitle(messages.getString(titleKey));
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
 
         super.doView(request, response);
     }

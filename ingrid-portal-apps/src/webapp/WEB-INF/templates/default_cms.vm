@@ -1,38 +1,38 @@
 #if($cmsItemTitle)
-	#renderPortletTitle($cmsItemTitle)
+    #renderPortletTitle($cmsItemTitle "" "" "" "" $helpKey)
 #end
 
 #if($cmsItemValue)
-	$cmsItemValue
+    $cmsItemValue
 #end
 
 #if($version)
 <section class="block block--padded">
-	<div class="ob-box-wide ob-box-padded ob-box-center">
-		<article class="content ob-container ob-box-narrow ob-box-center">
-		    #foreach($v in $version)
-		        #if($tool.hasContent($v))
-		            <p>
-		                #if($tool.hasContent($v.title))
-		                    <b>$v.title</b>
-		                    <br/>
-		                #end    
-		                #if($tool.hasContent($v.svn_version))
-		                    Revision: $v.svn_version
-		                    <br/>
-		                #end
-		                #if($tool.hasContent($v.build_time))
-		                    Build-Time: $v.build_time
-		                    <br/>
-		                #end
-		                #if($tool.hasContent($v.project_version))
-		                    Project-Version: $v.project_version
-		                    <br/>
-		                #end
-		            </p>
-		        #end
-		    #end
-		</article>
-	</div>
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+        <article class="content ob-container ob-box-narrow ob-box-center">
+            #foreach($v in $version)
+                #if($tool.hasContent($v))
+                    <p>
+                        #if($tool.hasContent($v.title))
+                            <b>$v.title</b>
+                            <br/>
+                        #end    
+                        #if($tool.hasContent($v.svn_version))
+                            Revision: $v.svn_version
+                            <br/>
+                        #end
+                        #if($tool.hasContent($v.build_time))
+                            Build-Time: $v.build_time
+                            <br/>
+                        #end
+                        #if($tool.hasContent($v.project_version))
+                            Project-Version: $v.project_version
+                            <br/>
+                        #end
+                    </p>
+                #end
+            #end
+        </article>
+    </div>
 </section>
 #end

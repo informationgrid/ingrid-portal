@@ -420,20 +420,28 @@ $actionForm.getInputHTMLEscaped($field)#end
     </div>
 #end
 
-#macro (renderPortletTitle $_title $_h $_h_class $_help $line)
+#macro (renderPortletTitle $_title $_h $_h_class $_help $_helpStyle $_helpKey $line)
     #if($line)<div class="teaser__box">#end
-        #if(!$_h || $_h == "")
-            #set($_h ="h1")
-        #end
-        <$_h #if($_h_class && $_h_class != "")class="$_h_class" #end>
-            $_title
-            #if($_help &&$_help != "")
-                <div class="tooltip ob-circle js-popup" data-content="<p>$_help</p>">
-                    <svg class="tooltip__icon icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#question-mark"></use></svg>
-                </div>
-            #end
-        </$_h>
-	#if($line)</div>#end
+    #if(!$_h || $_h == "")
+        #set($_h = "h1")
+    #end
+    <$_h #if($_h_class && $_h_class != "")class="$_h_class" #end>
+        $_title
+        #renderHelpIcon ($_help $_helpStyle $_helpKey)
+    </$_h>
+    #if($line)</div>#end
+#end
+
+#macro(renderHelpIcon $_helpText $_helpStyle $_helpKey )
+    #if($_helpKey && $_helpKey != "")
+        <a class="tooltip ob-circle" style="$_helpStyle" href="/portal/help.psml?hkey=$_helpKey">
+            <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
+        </a>
+    #elseif($_helpText && $_helpText != "")
+        <div class="tooltip ob-circle js-popup" style="$_helpStyle" data-content="<p>$_helpText</p>">
+            <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
+        </div>
+    #end
 #end
 
 #macro (renderPopUpIcon $_message $_class $_style $_title )

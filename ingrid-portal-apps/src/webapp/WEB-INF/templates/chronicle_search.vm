@@ -1,4 +1,5 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title') "" ""  $MESSAGES.getString('chronicle.search.help'))
+#renderPortletTitle($MESSAGES.getString('javax.portlet.title') "" "" "" "" $helpKey)
+
 #set ($action = $renderResponse.createActionURL())
 <h4>$MESSAGES.getString('chronicle.form.term')</h4>
 <form action="$action" method="post" enctype="" name="chronicle_search" id="chronicle_search">

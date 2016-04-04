@@ -65,6 +65,8 @@ public class RssNewsPortlet extends GenericVelocityPortlet
 
         // read preferences
         PortletPreferences prefs = request.getPreferences();
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
 
         int noOfEntriesDisplayed = Integer.parseInt(prefs.getValue("startWithEntry", "3"));
         

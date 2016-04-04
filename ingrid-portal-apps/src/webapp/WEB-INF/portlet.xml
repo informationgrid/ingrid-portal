@@ -638,6 +638,10 @@
                 <name>cmsKey</name>
                 <value>ingrid.about</value>
             </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>about-1</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -1238,6 +1242,12 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
+        <portlet-preferences>
+            <preference>
+                <name>helpKey</name>
+                <value>search-chronicle-1</value>
+            </preference>
+        </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>            
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>

@@ -1,20 +1,22 @@
 <p>$MESSAGES.getString('news.archive.header')</p>
 #foreach($rssEntry in $rssEntries)
-  <div class="resultset">
-    <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span><span class="intendResult"><a href="$!rssEntry.link">$!rssEntry.title</a></span><em class="date"> <nobr>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</nobr></em></span>
-    <p class="result_description">
-      #if ($rssEntry && $rssEntry.description)
-        $strutils.cutString($rssEntry.description, 350)
-      #end  
-    </p>
-    <p class="result_metadata">
-      <br />
-#if($rssEntry.author && $rssEntry.author != "")
-      $MESSAGES.getString('news.author'): $rssEntry.author
-#end      
-    </p>
-  </div>
-  <div class="line"><hr /></div>
-#end    
+    <div class="resultset">
+        <span class="result_title"><span class="icon_udk"><img src="/ingrid-portal-apps/images/icn_linkextern.gif" alt="$MESSAGES.getString('common.alt.icon.extern')" /></span><span class="intendResult"><a href="$!rssEntry.link">$!rssEntry.title</a></span><em class="date"> <nobr>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</nobr></em></span>
+        <p class="result_description">
+          #if ($rssEntry && $rssEntry.description)
+            $strutils.cutString($rssEntry.description, 350)
+          #end  
+        </p>
+        <p class="result_metadata">
+            <br />
+            #if($rssEntry.author && $rssEntry.author != "")
+                  $MESSAGES.getString('news.author'): $rssEntry.author
+            #end
+        </p>
+    </div>
+    <hr />
+#end
 <br />
-<div class="ico_linkintern float_right"><p><a href="$renderResponse.encodeURL('/portal/default-page.psml')">$MESSAGES.getString('news.archive.back')</a></p></div>
+<div class="media__obj media__obj--left">
+    <a style="width:100%" class="btn btn--secondary btn--medium" href="$renderResponse.encodeURL('/portal/default-page.psml')">$MESSAGES.getString('news.archive.back')</a>
+</div>
