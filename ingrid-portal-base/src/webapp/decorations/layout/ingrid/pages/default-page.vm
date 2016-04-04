@@ -6,6 +6,14 @@
     </div>
 </section>
 
+<section class="block block--pad-top block--light">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+        <article class="content ob-container">
+            $jetspeed.renderPortletWindow("IngridInformPortlet", "ingrid-portal-apps::IngridInformPortlet")
+        </article>
+    </div>
+</section>
+
 <section class="block block--pad-top">
     <div class="ob-box-wide ob-box-padded ob-box-center">
         <article class="content ob-container">
