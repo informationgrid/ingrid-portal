@@ -1,5 +1,5 @@
 #if($cmsItemTitle)
-    #renderPortletTitle($cmsItemTitle "" "" "" "" $helpKey)
+    #renderPortletTitle($cmsItemTitle "h2" "" "" "" $helpKey)
 #end
 
 #if($cmsItemValue)
