@@ -477,12 +477,17 @@
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" />
     </target>
     
-    <target name="copyMigrationTools">
+    <target name="copyMigrationTools35ManualMigration">
         <echo>=========================================================
             Die Portal-Datenbank muss manuell zu 3.5 migriert werden!
             Siehe im Installationsverzeichnis unter "migration_35"
             =========================================================
         </echo>
+        <runtarget target="copyMigrationTools35"/>
+        <property name="migrateManual" value="true" />
+    </target>
+
+    <target name="copyMigrationTools35">
         <copy toDir="${installDir}">
             <fileset dir="${basedir}/distribution/sql">
                 <include name="ingrid_portal_35_oracle_10_2.dmp"/>
@@ -493,7 +498,6 @@
         <copy file="${basedir}/distribution/sql/_README.txt" todir="${installDir}"/>
         <copy file="${installDir}/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"  todir="${installDir}/migration_35"/>
         <copy file="${installDir}/${tomcat-artifact}/shared/lib/ojdbc14.jar" todir="${installDir}/migration_35"/>
-        <property name="migrateManual" value="true" />
     </target>
 
     <target name="updatePortalDb" if="portal.installed">
@@ -504,7 +508,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFromInitial"/> 
                 <runtarget target="oracle.UpdateDbManually"/>
-                <runtarget target="copyMigrationTools"/>
+                <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
         <elseif>
             <equals arg1="${portal.version}" arg2=",1" />
@@ -512,7 +516,7 @@
                 <!-- import was executed but no patches installed yet -->
                 <runtarget target="mysql.PortalDbUpdateFromInitial"/>
                 <runtarget target="oracle.PortalDbUpdateFromInitial"/>
-                <runtarget target="copyMigrationTools"/>
+                <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
         </elseif>
         <elseif>
@@ -520,7 +524,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom300"/>
                 <runtarget target="oracle.PortalDbUpdateFrom300"/>
-                <runtarget target="copyMigrationTools"/>
+                <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
         </elseif>
         <elseif>
@@ -528,7 +532,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom301"/>
                 <runtarget target="oracle.PortalDbUpdateFrom301"/>
-                <runtarget target="copyMigrationTools"/>
+                <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
         </elseif>
         <elseif>
@@ -536,7 +540,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom310"/>
                 <runtarget target="oracle.PortalDbUpdateFrom310"/>
-                <runtarget target="copyMigrationTools"/>
+                <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
         </elseif>
         <elseif>
@@ -544,7 +548,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom320d"/>
                 <runtarget target="oracle.PortalDbUpdateFrom320d"/>
-                <runtarget target="copyMigrationTools"/>
+                <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
         </elseif>
         <elseif>
@@ -552,7 +556,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom331"/>
                 <runtarget target="oracle.PortalDbUpdateFrom331"/>
-                <runtarget target="copyMigrationTools"/>
+                <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
         </elseif>
         <elseif>
@@ -560,7 +564,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom341"/>
                 <runtarget target="oracle.PortalDbUpdateFrom341"/>
-                <runtarget target="copyMigrationTools"/>
+                <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
         </elseif>
         <elseif>
@@ -568,7 +572,8 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom350"/>
                 <runtarget target="oracle.PortalDbUpdateFrom350"/>
-                <runtarget target="copyMigrationTools"/>
+            	<!-- also copy migration tools, not needed but may be helpfull -->
+                <runtarget target="copyMigrationTools35"/>
             </then>
         </elseif>
 		<elseif>
@@ -577,7 +582,8 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom350"/>
                 <runtarget target="oracle.PortalDbUpdateFrom350"/>
-                <runtarget target="copyMigrationTools"/>
+            	<!-- also copy migration tools, not needed but may be helpfull -->
+                <runtarget target="copyMigrationTools35"/>
             </then>
         </elseif>
         <elseif>
