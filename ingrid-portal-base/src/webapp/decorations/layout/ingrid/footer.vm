@@ -1,3 +1,4 @@
+#if($currentPage != "/main-maps.psml")
         <footer class="footer">
             <div class="ob-box-padded ob-box-center ob-clear">
                 <div class="footer__top">
@@ -29,7 +30,7 @@
             </div>
             <div class="footer__top-link mq-show-l js-top">nach oben</div>
         </footer>
-        
+#end
         <!-- Popup -->
         <div class="popup">
             <header class="popup__header">
