@@ -62,6 +62,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
+        context.put("lang", request.getLocale().getLanguage());
 
         // read preferences
         PortletPreferences prefs = request.getPreferences();

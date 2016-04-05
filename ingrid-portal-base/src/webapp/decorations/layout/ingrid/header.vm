@@ -112,10 +112,11 @@
             #end
             </nav>
         </section>
-
         #if($currentPage)
             #if($currentPage == "/default-page.psml")
                 #parse ('/decorations/layout/ingrid/pages/default-page.vm')
+            #elseif($currentPage == "/main-maps.psml")
+                #parse ('/decorations/layout/ingrid/pages/main-maps.vm')
             #elseif($currentPage == "/main-about.psml")
                 #parse ('/decorations/layout/ingrid/pages/main-about.vm')
             #elseif($currentPage == "/search-catalog/search-catalog-hierarchy.psml")
