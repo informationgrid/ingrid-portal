@@ -279,9 +279,12 @@ function setMultiple(ob, arraySelect){
     }
 }
 
-function goToByScroll(id){
+function goToByScroll(id, time){
+    if(time == undefined){
+        time = 1200;
+    }
     id = id.replace("link", "");
     $('html,body').animate({
-        scrollTop: $("#"+id).offset().top},
-    1200);
+        scrollTop: $("#"+id).offset().top
+    }, time);
 }
