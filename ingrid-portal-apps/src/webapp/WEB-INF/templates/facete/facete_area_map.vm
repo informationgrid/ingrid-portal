@@ -6,7 +6,7 @@
             <use xlink:href="#arrow-thick"/>
         </svg>
     </div>
-    <div id="facet_map" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content" >
+    <div id="facet_map" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content #if(!$selectedMap.doMapCoords || $selectedMap.doMapCoords.size() == 0)is-hidden#end" >
         <div id="map" style="height:320px;"></div>
         <form action="$action" method="post" name="facete_map_form">
             <input id="x1" name="x1" type="hidden" />
@@ -47,17 +47,8 @@
     }
     map.addLayer(osm);
     
-    map.whenReady(function () {
-        window.setTimeout(function () {
-            var identifier = "$selectedMap.doMapCoords";
-            if(identifier == "{}" || identifier.indexOf("selectedMap.doMapCoords") > -1){
-                $('#facet_map').addClass('is-hidden');
-            }
-        }.bind(this), 200);
-    }, this);
-    
     window.onresize = function(event) {
-        resizeMap()
+        resizeMap();
     };
 
     function getMapBounds(){
