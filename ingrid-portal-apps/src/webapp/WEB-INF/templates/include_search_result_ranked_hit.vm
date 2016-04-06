@@ -122,9 +122,7 @@
         #end
             
         #if($rs.url)
-            <p class="result_link">
-              <a href="$rs.url">$!rs.url_str</a>
-            </p>
+            <a href="$rs.url">$!rs.url_str</a>
         #end
         #if($showHitPartnerLogo)
             <div class="media__obj media__obj--right">
@@ -135,8 +133,7 @@
             </div>
         #end
     #else
-        <span class="result_title"><strong>$MESSAGES.getString('common.result.empty')</strong></span>
-        <p class="result_link"></p>
+        <span><strong>$MESSAGES.getString('common.result.empty')</strong></span>
     #end
     </div>
 </div>

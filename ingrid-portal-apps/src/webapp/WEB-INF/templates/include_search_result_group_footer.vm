@@ -1,13 +1,20 @@
 #if($rs.get('moreHits') && $groupSubjectKey)
-    <p class="link">
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action', $detailAction)
-$action.setParameter('grouping', $grouping)
-$action.setParameter('subject', $groupSubjectKey)
-        <a href="$action">
-            <strong>$MESSAGES.getString('common.result.group.showAll') $!{groupSubject}</strong>
-            <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
-        </a>
-    </p>
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('action', $detailAction)
+    $action.setParameter('grouping', $grouping)
+    $action.setParameter('subject', $groupSubjectKey)
+#if($topHit)
+    <div class="search-result">
+        <div>
+#else
+    <div class="media ob-clear search-result" >
+        <div class="search-result--nested">
+#end
+            <a href="$action">
+                <strong>$MESSAGES.getString('common.result.group.showAll') $!{groupSubject}</strong>
+                <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
+            </a>
+        </div>
+    </div>
 #end
 <hr>
