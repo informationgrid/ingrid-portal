@@ -170,7 +170,6 @@
     </div>
     #renderDBEditFooter($mode)
 </form>
-	frmCreateUser
 <script >
     var error = $actionForm.hasErrors();
     if(error){
