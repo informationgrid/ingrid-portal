@@ -37,7 +37,6 @@
         <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' />
         <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css')" />
         <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')" />
-        <link rel="stylesheet" href="#GetPageResource('css/demo.css')" />
         <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
         #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
@@ -47,8 +46,8 @@
         ##includeHeaderResource()
         #* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
         ##includeJavaScriptForHead()
-        #IncludeStylesheets()
-
+        ##IncludeStylesheets()
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/style.css">
         #* our decorator macros, see ./decorator-macros.vm *#
         #decoratorIncludeJavaScriptForHead()
         #if($currentPage == "/main-search.psml")
