@@ -84,6 +84,7 @@ UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator =
 UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator = 'ingrid-teaser' WHERE path = '/main-maps.psml'; 
 UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator = 'ingrid-teaser' WHERE path = '/service-sitemap.psml'; 
 UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator = 'ingrid-teaser', title = 'ingrid.page.search.detail.tooltip', short_title = 'ingrid.page.search.detail' WHERE path = '/search-detail.psml'; 
+UPDATE page SET title = 'ingrid.page.partner.tooltip', short_title = 'ingrid.page.partner' WHERE path = '/main-about-partner.psml'; 
 
 -- delete unused pages
 DELETE FROM page WHERE path = '/main-service.psml';
