@@ -6,7 +6,7 @@ $action.setParameter('action','doSearch')
     <div class="box box--fill box--large">
         <div class="box__content ob-container">
             <div class="search-form ob-clear ob-flex">
-                <input class="field field--large" type="text" placeholder="Suchbegriff eingeben" id="qrystr" name="q" value="#getHTMLEscapedFieldValue('q')" onfocus='if (this.value == "$MESSAGES.getString('searchSimple.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('searchSimple.query.initial')"'>
+                <input class="field field--large" type="text" placeholder="$MESSAGES.getString('searchSimple.query.initial')" id="qrystr" name="q" value="$queryString">
                 <button class="btn btn--primary btn--medium btn--icon-transition">
                     <svg class="icon mq-show-m"><use xlink:href="#magnifier"></use></svg>
                     <div class="mq-hide-m">$MESSAGES.getString('searchSimple.query.submit')</div>
