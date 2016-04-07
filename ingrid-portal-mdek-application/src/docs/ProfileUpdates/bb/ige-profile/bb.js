@@ -173,6 +173,7 @@ if (objClass.equals("3")) {
 		var refUuid = operatesOn.getElement().getAttribute( "uuidref" );
 		// get email contact from referenced dataset which is needed to modify metadata identifier
 		var responsibleObj = SQL.first("SELECT responsible_uuid FROM t01_object WHERE obj_uuid=? AND work_state='V'", [refUuid]);
+		if (!responsibleObj) break;
 		var emailObj = SQL.first("SELECT comm_value FROM  t02_address adr, t021_communication comm WHERE  adr.adr_uuid=? AND adr.id=comm.adr_id AND commtype_key=3", [responsibleObj.get("responsible_uuid")]);
 		var subDomain = extractSubDomain( emailObj.get("comm_value") );
 		if ( subDomain ) {
