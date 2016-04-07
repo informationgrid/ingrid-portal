@@ -155,11 +155,23 @@
 #macro (renderServiceLink $el $currentPage $linkUrl $linkTitle $linkName $postfix)
   #if($el == "/service-myportal.psml")
     <div class="header__widget">
+        #if($jetspeed.getLoggedOn())
+            #set($userAttributes = $jetspeed.getUserProperties())
+            #set($userNameGiven = $userAttributes.get("user.name.given"))
+            #set($userNameFamily = $userAttributes.get("user.name.family"))
+            
+            #if($userNameGiven)
+                #set ($salutation = " $userNameGiven")
+            #end
+            #if($userNameFamily)
+                #set ($salutation = "$!{salutation} $userNameFamily")
+            #end
+        #end
         <a class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
             <svg class="header__widget__icon icon is-active">
                 <use xlink:href="#user">
             </svg>
-            <span class="header__widget__text mq-hide-l">${linkName}</span>
+            <span class="header__widget__text mq-hide-l">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
         </a>
         <div class="metamenu metamenu--wide">
         #if($jetspeed.getLoggedOn())
@@ -239,20 +251,6 @@
 ## include service navigation component
 #macro (includeServiceNavigation $_menu)
 <div class="header__widgets__section sub-header">
-<!-- logged on message -->
-#if($jetspeed.getLoggedOn())
-    #set($userAttributes = $jetspeed.getUserProperties())
-    #set($userNameGiven = $userAttributes.get("user.name.given"))
-    #set($userNameFamily = $userAttributes.get("user.name.family"))
-    
-    #if($userNameGiven)
-        #set ($salutation = " $userNameGiven")
-    #end
-    #if($userNameFamily)
-        #set ($salutation = "$!{salutation} $userNameFamily")
-    #end        
-    <a href="/portal/myportal-edit-account.psml"><span class="header__widget tx-light mq-hide-xxl">$salutation</span></a>
-#end
     #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
