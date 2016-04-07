@@ -427,21 +427,8 @@ $actionForm.getInputHTMLEscaped($field)#end
     #end
     <$_h #if($_h_class && $_h_class != "")class="$_h_class" #end>
         $_title
-        #renderHelpIcon ($_help $_helpStyle $_helpKey)
     </$_h>
     #if($line)</div>#end
-#end
-
-#macro(renderHelpIcon $_helpText $_helpStyle $_helpKey )
-    #if($_helpKey && $_helpKey != "")
-        <a class="tooltip ob-circle" style="$_helpStyle" href="/portal/help.psml?hkey=$_helpKey">
-            <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
-        </a>
-    #elseif($_helpText && $_helpText != "")
-        <div class="tooltip ob-circle js-popup" style="$_helpStyle" data-content="<p>$_helpText</p>">
-            <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
-        </div>
-    #end
 #end
 
 #macro (renderPopUpIcon $_message $_class $_style $_title )

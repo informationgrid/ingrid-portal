@@ -4,7 +4,7 @@
     </div>
     <div class="teaser__box">
         <div class="teaser__content ob-container">
-            #renderPortletTitle($MESSAGES.getString('teaser.measures.title') "h4" "" "" "" $helpKey)
+            #renderPortletTitle($MESSAGES.getString('teaser.measures.title') "h4")
         </div>
         <hr class="bx-top-0 bx-bot-0">
         <div class="teaser__content ob-container">
