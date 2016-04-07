@@ -38,13 +38,14 @@
   <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
     #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())
+      #set($elemSelected = false)
       #if($element.elementType == "option")
         #set($tabTitle = $element.getTitle($preferedLocale))
         #set($tabName = $element.getShortTitle($preferedLocale))
         ## read localized title from resource with title from psml as key !
         #if($tabTitle.startsWith('ingrid'))
             #set($tabTitle = $MESSAGES.getString($tabTitle))
-            #set($tabName = $MESSAGES.getString($tabName))          
+            #set($tabName = $MESSAGES.getString($tabName))
         #end
         #set($tabUrl = $jetspeed.getAbsoluteUrl($element.url))
         ## flags indicating how to render menu item
@@ -53,10 +54,18 @@
             ##set($tabTitle = $MESSAGES.getString('ingrid.page.search'))
             #set($tabName = $MESSAGES.getString('ingrid.page.search'))
         #end
+        ## process and set flags accordingly
+        #if($element.isSelected($site))
+            #set($elemSelected = true)
+        #elseif($element.url=="/main-about.psml" || $element.url=="/main-features.psml")
+            #if($currentPage.startsWith('/main-about') || $currentPage.startsWith('/main-feature') )
+                #set($elemSelected = true)
+            #end
+        #end
         #if ($element.url.startsWith('/main-about'))
             #set($subMenu = $site.getMenu("sub-menu-about"))
             <li class="nav-desktop__item dropmenu__box">
-                <a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="$tabTitle">
+                <a class="nav-desktop__title js-nav-desktop-toggle #if($elemSelected)is-selected#end" href="#" title="$tabTitle">
                     $tabName
                     <svg class="icon"><use xlink:href="#arrow-thick"/></svg>
                 </a>
@@ -66,7 +75,7 @@
             </li>
         #else
             <li class="nav-desktop__item">
-                <a class="nav-desktop__title" href="$tabUrl" title="$tabTitle">$tabName</a>
+                <a class="nav-desktop__title #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">$tabName</a>
             </li>
         #end
       #end
@@ -86,7 +95,7 @@
         ## read localized title from resource with title from psml as key !
         #if($linkTitle.startsWith('ingrid'))
             #set($linkTitle = $MESSAGES.getString($linkTitle))
-            #set($linkName = $MESSAGES.getString($linkName))            
+            #set($linkName = $MESSAGES.getString($linkName))
         #end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         ## flags indicating how to render menu item
@@ -125,7 +134,7 @@
         ## read localized title from resource with title from psml as key !
         #if($linkTitle.startsWith('ingrid'))
             #set($linkTitle = $MESSAGES.getString($linkTitle))
-            #set($linkName = $MESSAGES.getString($linkName))            
+            #set($linkName = $MESSAGES.getString($linkName))
         #end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         ## obfuscate email addresse (webmaster)
@@ -253,7 +262,7 @@
         ## read localized title from resource with title from psml as key !
         #if($linkTitle.startsWith('ingrid'))
             #set($linkTitle = $MESSAGES.getString($linkTitle))
-            #set($linkName = $MESSAGES.getString($linkName))            
+            #set($linkName = $MESSAGES.getString($linkName))
         #end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         #set($linkPage = $element.url)
@@ -324,7 +333,7 @@
                 ## read localized title from resource with title from psml as key !
                 #if($linkTitle.startsWith('ingrid'))
                     #set($linkTitle = $MESSAGES.getString($linkTitle))
-                    #set($linkName = $MESSAGES.getString($linkName))            
+                    #set($linkName = $MESSAGES.getString($linkName))
                 #end
                 #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
                 ## flags indicating how to render menu item
@@ -363,7 +372,7 @@
         ## read localized title from resource with title from psml as key !
         #if($linkTitle.startsWith('ingrid'))
             #set($linkTitle = $MESSAGES.getString($linkTitle))
-            #set($linkName = $MESSAGES.getString($linkName))            
+            #set($linkName = $MESSAGES.getString($linkName))
         #end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         ## obfuscate email addresse (webmaster)
@@ -386,7 +395,7 @@
         ## read localized title from resource with title from psml as key !
         #if($linkTitle.startsWith('ingrid'))
             #set($linkTitle = $MESSAGES.getString($linkTitle))
-            #set($linkName = $MESSAGES.getString($linkName))            
+            #set($linkName = $MESSAGES.getString($linkName))
         #end
         #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
         #set($linkPage = $element.url)

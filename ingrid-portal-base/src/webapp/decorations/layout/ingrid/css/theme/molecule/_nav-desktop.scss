@@ -51,6 +51,7 @@
     text-transform: uppercase;
 
     &:hover,
+    &.is-selected,
     &.is-active {
         color: color(white);
         background: color(salem);
