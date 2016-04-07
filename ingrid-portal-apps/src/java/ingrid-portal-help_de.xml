@@ -2109,13 +2109,13 @@
         <section help-key="myingrid-2">
             <header>Anmeldung</header>
             <content>
-                <p>Haben Sie bereits einen Benutzernamen und ein Kennwort, so
+                <p>Haben Sie bereits einen Benutzernamen und ein Passwort, so
                     geben Sie beides hier ein und klicken auf <b>Anmelden</b>.</p>
             </content>
             <section help-key="myingrid-3">
                 <header>Neuer Benutzer</header>
                 <content>
-                    <p>Haben Sie noch keinen Benutzernamen und Kennwort, so
+                    <p>Haben Sie noch keinen Benutzernamen und Passwort, so
                         klicken Sie auf den Link <b>Neuer
                         Benutzer</b>. Damit werden Sie zu dem Formular
                         <b>Anmeldung</b> durchgeschaltet.</p>
@@ -2127,14 +2127,14 @@
                 </content>
             </section>
             <section help-key="myingrid-4">
-                <header>Kennwort vergessen?</header>
+                <header>Passwort vergessen?</header>
                 <content>
-                    <p>Wenn Sie Ihr Kennwort vergessen haben, klicken Sie auf
-                        den Link <b>Kennwort vergessen</b>. Sie
+                    <p>Wenn Sie Ihr Passwort vergessen haben, klicken Sie auf
+                        den Link <b>Passwort vergessen</b>. Sie
                         werden dann zu dem entsprechenden Formular geführt, in
                         dem Sie Ihre E-Mail-Adresse eingeben können. Nach dem
                         Absenden bekommen Sie umgehend Ihren Benutzernamen und
-                        Ihr Kennwort zugesandt.</p>
+                        Ihr Passwort zugesandt.</p>
                 </content>
             </section>
             <section help-key="myingrid-5">
@@ -2143,7 +2143,7 @@
                     <p>Wenn Sie Ihre persönlichen Einstellungen immer nutzen
                         möchten, können Sie die Option <b>Automatisches
                         Login</b> wählen. Sie müssen in diesem Fall sich
-                        nicht jedes Mal über Benutzernamen und Kennwort
+                        nicht jedes Mal über Benutzernamen und Passwort
                         aufschalten. (Hinweis: Diese Funktion funktioniert nur,
                         wenn Sie Ihrem Internet-Browser die Erlaubnis zur
                         Nutzung von Cookies gegeben haben.)</p>
