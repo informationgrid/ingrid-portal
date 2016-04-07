@@ -87,19 +87,17 @@
     </ul>
 #end
 
-#renderPortletTitle($MESSAGES.getString('searchCatHierarchy.portlet.title'))
-
+##renderPortletTitle($MESSAGES.getString('searchCatHierarchy.portlet.title'))
 <div class="tree bx-bot-l">
     #foreach($plugNode in $ps.plugsRoot.getChildren())
         #renderNode($plugNode)
     #end
 </div>
-
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
-    <div class="media__obj media__obj--left">
-        #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--medium")
-    </div>
+    <p class="media__obj">
+        #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
+    </p>
 </form>
 <script type="text/javascript">
     document.onreadystatechange = function () {
