@@ -20,9 +20,6 @@
     </article>
 </div>
 <script >
-    // Scroll to result
-    // goToByScroll('searchResult');
-    
     // Resize facet map on filter click
     function onClickFilterEvent(){
         if(resizeMap){

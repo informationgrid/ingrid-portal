@@ -68,6 +68,3 @@
         #renderRankedPageNavigation($rankedPageSelector)
     </div>
 </div>
-<script >
-    goToByScroll('chronicleResult');
-</script>
