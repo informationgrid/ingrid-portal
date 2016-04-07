@@ -11,6 +11,9 @@
        <div class="portlet-section-body portlet_info">
             <h1>$MESSAGES.getString('javax.portlet.title')</h1>
             $MESSAGES.getString('chronicle.search.help')
+            <p>
+                <a href="$renderResponse.encodeURL('/portal/help.psml')?hkey=$helpKey">$MESSAGES.getString('chronicle.teaser.new.more')</a>
+            </p>
         </div>
     </div>
 </aside>
