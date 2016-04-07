@@ -1,4 +1,4 @@
-#if($currentPage != "/main-maps.psml")
+#if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
         <footer class="footer">
             <div class="ob-box-padded ob-box-center ob-clear">
                 <div class="footer__top">

@@ -6,8 +6,17 @@
   <base href="/">
   <style>
     html, body {height: 100%; margin:0;}
-    app { height: 100%; width: 100%; position: absolute;}
+    app { height: inherit; width: 100%; position: absolute; bottom: 0; top: 99px;}
+    @media screen and (max-width: 939px) {
+      app { top: 57px; }
+    }
+    @media screen and (max-width: 767px) {
+      app { top: 30px; }
+    }
     #map { height: 100%; width: 100%; }
+    table {
+      width: inherit;
+    }
   </style>
 <link href="ingrid-portal-apps/measures/styles.css" rel="stylesheet"></head>
 <body>
