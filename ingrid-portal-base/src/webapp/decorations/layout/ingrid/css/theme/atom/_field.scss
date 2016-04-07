@@ -14,9 +14,10 @@ textarea,
     color: color(black);
     font-size: rem(14px);
     padding: rem(8px);
-    @include placeholder {
-        color: color(dim-grey);
-    }
+    &::-webkit-input-placeholder {color:#333;}
+    &:-moz-placeholder           {color:#333;}
+    &::-moz-placeholder          {color:#333;}
+    &:-ms-input-placeholder      {color:#333;}
 }
 
 input[type="text"],
