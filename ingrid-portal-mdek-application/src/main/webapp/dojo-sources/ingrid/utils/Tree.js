@@ -81,6 +81,9 @@ define([
 
             // get the node from the tree internal map
             var node = this.getNodeById(treeId, nodeId);
+            
+            // in case node was deleted just return
+            if (!node) return;
 
             // set the selected node
             // do not call setSelected only on the node, since it will not be registered
