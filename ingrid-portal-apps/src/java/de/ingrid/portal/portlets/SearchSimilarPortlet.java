@@ -90,7 +90,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
 
         // if no query display "nothing"
         IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
-        if (query == null) {
+        if (query == null || query.getTerms().length == 0) {
             setDefaultViewPage(TEMPLATE_NO_QUERY);
             super.doView(request, response);
             return;

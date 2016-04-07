@@ -5,10 +5,7 @@
                 <div class="box__content ob-container">
                     $jetspeed.renderPortletWindow("SearchSimpleResult", "ingrid-portal-apps::SearchSimpleResult")
                 </div>
-                <hr class="hr-thick bx-top-0 bx-bot-0">
-                <div class="box__content ob-container">
-                    $jetspeed.renderPortletWindow("SearchSimilar", "ingrid-portal-apps::SearchSimilar")
-                </div>
+                $jetspeed.renderPortletWindow("SearchSimilar", "ingrid-portal-apps::SearchSimilar")
             </div>
          </article>
     </div>
