@@ -38,7 +38,7 @@
                                 $provider.provider.name
                             </a>
                         #else
-                            $provider.provider.name
+                            <a>$provider.provider.name</a>
                         #end
                         </li>
                     #end
