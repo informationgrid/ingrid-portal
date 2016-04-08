@@ -140,14 +140,14 @@ $sidebar-width: 250px;
     height: 1em;
     position: absolute;
     top: rem(20px);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+    -ms-transform: rotate(90deg) scale(-1);
+    transform: rotate(90deg) scale(-1);
     width: 1em;
 
     &.is-active {
         margin-left: -1px;
-        -ms-transform: rotate(270deg) translateY(-100%);
-        transform: rotate(270deg) translateY(-100%);
+        -ms-transform: rotate(270deg) translateY(-100%) scale(-1);
+        transform: rotate(270deg) translateY(-100%) scale(-1);
     }
 
     .icon {
