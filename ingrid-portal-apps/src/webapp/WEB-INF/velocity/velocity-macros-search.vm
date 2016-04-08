@@ -455,9 +455,10 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
             #end
         #else
             #if($entry.isSelect())
-            #set ($action = $renderResponse.createActionURL())
-            $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
-            #renderSearchResultFacetSelectionItem($entry $action "$cat:$resourceMsgs.getString($entry.getName())")
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
+                #renderSearchResultFacetSelectionItem($entry $action "$cat:$resourceMsgs.getString($entry.getName())")
+            #end
             #if($entry.getFacets())
                 #set($catNameSub = $resourceMsgs.getString($entry.getName()))
                 #renderSearchResultFacetSelection ($entry.getFacets() $resourceMsgs $catNameSub)
