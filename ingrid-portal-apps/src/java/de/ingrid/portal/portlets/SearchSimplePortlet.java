@@ -195,7 +195,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
         context.put( "actionForm", af );
-        context.put( "queryString", queryString );
+
         // ----------------------------------
         // prepare Search, Search will be performed in SearchResult portlet
         // ----------------------------------
