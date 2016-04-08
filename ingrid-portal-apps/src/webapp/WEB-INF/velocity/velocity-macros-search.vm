@@ -353,6 +353,9 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     <aside class="sidebar js-accordion-multi">
         <div class="sidebar__title js-accordion-toggle mq-show-l" onclick="onClickFilterEvent()">
             Filter
+            #if($enableFacetSelection > 0 || $isSelection)
+                <svg class="icon-active"><use xlink:href="#check"></use></svg>
+            #end
             <svg class="icon"><use xlink:href="#filter"></use></svg>
             <svg class="icon"><use xlink:href="#cross"></use></svg>
         </div>
@@ -360,4 +363,37 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
             #parse ('/WEB-INF/templates/facete/facete.vm')
         </div>
     </aside>
+#end
+
+#macro(renderSearchResultFacetSelection $entries $resourceMsgs $cat)
+    #foreach($entry in $entries)
+        #if(!$entry.getQuery())
+            #if($entry.isSelect())
+                #if($entry.getFacets())
+                    #set($catName = $resourceMsgs.getString($entry.getName()))
+                    #renderSearchResultFacetSelection ($entry.getFacets() $resourceMsgs $catName)
+                #end
+            #end
+        #else
+            #if($entry.isSelect())
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
+            <div class="field-toggle field-toggle--check" style="margin-bottom: 0;">
+                <input id="chk_fs_$entry.getId()" name="event" type="checkbox" value="$evtype.FormValue" onclick="location.href='$action'" checked>
+                <label class="field-toggle__label field-toggle__label--boxed" for="chk_fs_$entry.getId()">
+                    <div class="field-toggle__icon field-toggle__icon-alt">
+                        <svg class="icon">
+                            <use xlink:href="#tick">
+                        </svg>
+                    </div>
+                    $cat:$resourceMsgs.getString($entry.getName())
+                </label>
+            </div>
+            #end
+            #if($entry.getFacets())
+                #set($catNameSub = $resourceMsgs.getString($entry.getName()))
+                #renderSearchResultFacetSelection ($entry.getFacets() $resourceMsgs $catNameSub)
+            #end
+        #end
+    #end
 #end
