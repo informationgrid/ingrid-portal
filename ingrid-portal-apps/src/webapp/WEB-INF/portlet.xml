@@ -1186,26 +1186,7 @@
         <supported-locale>en</supported-locale>
     </portlet>
 
-    <portlet id="MeasuresResult">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/empty.vm</value>
-        </init-param>
-        <portlet-name>MeasuresResult</portlet-name>
-        <display-name>Messwerte Suchergebnis</display-name>
-        <description>This portlet displays the search results of the measures search (measures catalogue).</description>
-        <portlet-class>de.ingrid.portal.portlets.MeasuresResultPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle> 
-    </portlet>
-    
-
-	<portlet id="ShowMapsPortlet">
+    <portlet id="ShowMapsPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
