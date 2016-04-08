@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.commons.configuration.Configuration;
+import org.hibernate.cfg.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.hibernate.cfg.Environment;
 
 import de.ingrid.ibus.client.BusClient;
 import de.ingrid.ibus.client.BusClientFactory;
@@ -137,12 +137,13 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         injectCache(query);
         
         try {
+            long start = 0;
             if (log.isDebugEnabled()) {
                 log.debug("iBus.search: IngridQuery = " + UtilsSearch.queryToString(query)
                 		+ " / timeout=" + timeout + ", hitsPerPage=" + hitsPerPage 
                 		+ ", currentPage=" + currentPage + ", startHit=" + startHit);
+                start = System.currentTimeMillis();
             }
-            long start = System.currentTimeMillis();
             
             hits = bus.search(query, hitsPerPage, currentPage, startHit, timeout);
             
@@ -186,12 +187,13 @@ public class IBUSInterfaceImpl implements IBUSInterface {
     throws Exception {
     	IngridHits hits = null;
     	try {
+    	    long start = 0;
             if (log.isDebugEnabled()) {
                 log.debug("iBus.search: IngridQuery = " + UtilsSearch.queryToString(query)
                 		+ " / timeout=" + timeout + ", hitsPerPage=" + hitsPerPage 
                 		+ ", currentPage=" + currentPage + ", startHit=" + startHit);
+                start = System.currentTimeMillis();
             }
-            long start = System.currentTimeMillis();
             
             hits = bus.searchAndDetail(query, hitsPerPage, currentPage, startHit, timeout, reqParameter);
             
@@ -238,11 +240,13 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         String s = DeepUtil.deepString(query, 1);
         
         try {
+            long start = 0;
             if (log.isDebugEnabled()) {
                 log.debug("iBus.getDetail: hit = " + result + ", requestedFields = " 
                 		+ requestedFields);
+                start = System.currentTimeMillis();
             }
-            long start = System.currentTimeMillis();
+
             detail = bus.getDetail(result, query, requestedFields);
             
             if (log.isDebugEnabled()) {
@@ -277,11 +281,12 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         String s = DeepUtil.deepString(query, 1);
         
         try {
+            long start = 0;
             if (log.isDebugEnabled()) {
                 log.debug("iBus.getDetails: IngridQuery = '" + UtilsSearch.queryToString(query)
                 		+ "', hits = " + results + ", requestedFields = " + requestedFields);
+                start = System.currentTimeMillis();
             }
-            long start = System.currentTimeMillis();
             details = bus.getDetails(results, query, requestedFields);
             
             if (log.isDebugEnabled()) {
@@ -314,7 +319,15 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         injectCache(result);
         
         try {
+            long start = 0;
+            if (log.isDebugEnabled()) {
+                start = System.currentTimeMillis();
+            }
             rec = bus.getRecord(result);
+            if (log.isDebugEnabled()) {
+                long duration = System.currentTimeMillis() - start;
+                log.debug("Got record from iplug '" + result.getPlugId() + "' within " + duration + "ms.");
+            }
         } catch (Throwable t) {
             if (log.isDebugEnabled()) {
                 log.debug("Problems fetching Record of result: " + result
@@ -393,7 +406,15 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         PlugDescription[] plugs = new PlugDescription[0];
         
         try {
+            long start          = 0;
+            if (log.isDebugEnabled()) {
+                start = System.currentTimeMillis();
+            }
             plugs = bus.getAllIPlugs();
+            if (log.isDebugEnabled()) {
+                long duration = System.currentTimeMillis() - start;
+                log.debug("Got all iplug descriptions within " + duration + "ms.");
+            }
         } catch (Throwable t) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems fetching iPlugs from iBus !", t);
@@ -422,7 +443,15 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         PlugDescription[] plugs = new PlugDescription[0];
         
         try {
+            long start          = 0;
+            if (log.isDebugEnabled()) {
+                start = System.currentTimeMillis();
+            }
             plugs = bus.getAllIPlugsWithoutTimeLimitation();
+            if (log.isDebugEnabled()) {
+                long duration = System.currentTimeMillis() - start;
+                log.debug("Got all iplug descriptions without time limitation within " + duration + "ms.");
+            }
         } catch (Throwable t) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems fetching iPlugs from iBus !", t);
