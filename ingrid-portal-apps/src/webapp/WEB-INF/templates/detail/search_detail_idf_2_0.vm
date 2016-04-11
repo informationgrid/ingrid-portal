@@ -182,7 +182,7 @@
                     #set($xParentPath = "./gmd:CI_ResponsibleParty")
                 #end
                 #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
-                <h4>
+                <h4 class="title-font">
                     $TOOL.getNameFromCodeList("4430", "3")
                 </h4>
                 <p><a href="mailto:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a></p>
@@ -193,7 +193,7 @@
             <hr>
             #if($tool.hasContent($title))
                 #if($tool.hasContent($title))
-                    <h2 style="margin-bottom:0;">$title</h2>
+                    <h2 class="bx-bot-0 title-font">$title</h2>
                 #end
             #end
             
@@ -219,7 +219,7 @@
                 <div class="column column--1-2-m ob-container media">
                     #set($xPath = "$xParentPath/gmd:role/gmd:CI_RoleCode/@codeListValue")
                     #if($TOOL.nodeExist($xPath, $node))
-                        <h4>$TOOL.getValueFromXPath($xPath, "505", $node)</h4>
+                        <h4 class="title-font">$TOOL.getValueFromXPath($xPath, "505", $node)</h4>
                     #end
                     <p>
                     #if($xParentPath == "./idf:idfResponsibleParty" || $xParentPath == ".")
@@ -535,14 +535,14 @@
 ## Render section title
 #macro (renderSectionTitle $title)
     #if($tool.hasContent($title))
-        <h2>$title</h2>
+        <h2 class="title-font">$title</h2>
     #end
 #end
 
 ## Render group title
 #macro (renderGroupTitle $entry)
     #if($tool.hasContent($entry))
-        <h4>$entry</h4>
+        <h4 class="title-font">$entry</h4>
     #end
 #end
 
@@ -693,7 +693,7 @@
         <div>
             #if($titleAsSection == "false")
                 #if($tool.hasContent($title))
-                    <h4>$title</h4>
+                    <h4 class="title-font">$title</h4>
                 #end
             #end
             #foreach($link in $sorter.sort($linkList,"title"))
@@ -717,7 +717,7 @@
 #macro (renderTextListSpace $title $textList $space)
     #if($tool.hasContent($textList))
         #if($tool.hasContent($title))
-            <h4>$title</h4>
+            <h4 class="title-font">$title</h4>
             ##renderGroupTitle($entry.title)
         #end
         <ul class="list list--bullets bx-top-s">
@@ -737,7 +737,7 @@
 #macro (renderTextLabelAbove $title $body)
      #if($tool.hasContent($body))
         #if($tool.hasContent($title))
-            <h4>$title</h4>
+            <h4 class="title-font">$title</h4>
         #end
         <p>$body</p>
     #end
