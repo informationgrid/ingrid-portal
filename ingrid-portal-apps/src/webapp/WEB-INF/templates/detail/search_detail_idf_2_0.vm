@@ -170,28 +170,31 @@
         #if($tool.hasContent($title))
             #renderSectionTitle($title)
         #end
-        
-        #set($count = 0)
-        #set($entryLength = $entry.getLength() - 1)
-        #foreach($number in [0..$entryLength])
-            #set($node = $entry.item($number))
-            #set($xPath = "./idf:idfResponsibleParty")
-            #if($TOOL.nodeExist($xPath, $node))
-                #set($xParentPath = "./idf:idfResponsibleParty")
-            #else
-                #set($xParentPath = "./gmd:CI_ResponsibleParty")
+        <div class="search-result--nested">
+            #set($count = 0)
+            #set($entryLength = $entry.getLength() - 1)
+            #foreach($number in [0..$entryLength])
+                #set($node = $entry.item($number))
+                #set($xPath = "./idf:idfResponsibleParty")
+                #if($TOOL.nodeExist($xPath, $node))
+                    #set($xParentPath = "./idf:idfResponsibleParty")
+                #else
+                    #set($xParentPath = "./gmd:CI_ResponsibleParty")
+                #end
+                #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
+                <h4>
+                    $TOOL.getNameFromCodeList("4430", "3")
+                </h4>
+                <p><a href="mailto:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a></p>
             #end
-            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
-            <h4>
-                $TOOL.getNameFromCodeList("4430", "3")
-            </h4>
-            <p><a href="mailto:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a></p>
-        #end
+        </div>
     #else
         #if($entry)
             <hr>
             #if($tool.hasContent($title))
-                #renderSectionTitle($title)
+                #if($tool.hasContent($title))
+                    <h2 style="margin-bottom:0;">$title</h2>
+                #end
             #end
             
             #set($count = 0)
@@ -532,18 +535,14 @@
 ## Render section title
 #macro (renderSectionTitle $title)
     #if($tool.hasContent($title))
-        <h3 class="section_title" >
-            $title
-        </h3>
+        <h2>$title</h2>
     #end
 #end
 
 ## Render group title
 #macro (renderGroupTitle $entry)
     #if($tool.hasContent($entry))
-        <h4>
-            $entry
-        </h4>
+        <h4>$entry</h4>
     #end
 #end
 
@@ -643,9 +642,7 @@
                     <tr>
                         <th>$entry.title</th>
                         <td>
-                            <a href="$entry.href" alt="$entry.altText">
-                                $entry.body
-                            </a>
+                            <a href="$entry.href" alt="$entry.altText">$entry.body</a>
                         </td>
                     </tr>
                 </tbody>
@@ -659,12 +656,8 @@
     #if($tool.hasContent($entry.title))
         <table>
             <tr>
-                <td>
-                    $entry.title
-                </td>
-                <td>
-                    $entry.body
-                </td>
+                <td>$entry.title</td>
+                <td>$entry.body</td>
             </tr>
         </table>
     #end
@@ -744,9 +737,7 @@
 #macro (renderTextLabelAbove $title $body)
      #if($tool.hasContent($body))
         #if($tool.hasContent($title))
-            <h4>
-                $title
-            </h4>
+            <h4>$title</h4>
         #end
         <p>$body</p>
     #end
@@ -758,9 +749,7 @@
         <div>
         #if($tool.hasContent($entry.body))
             #if($tool.hasContent($entry.title))
-                <div>
-                    $entry.title
-                </div>
+                <div>$entry.title</div>
             #end
             <p>$entry.body</p>
         #end
@@ -835,7 +824,6 @@
            #if($tool.hasContent($entry.title) && $tool.hasContent($entry.plugId) && $tool.hasContent($entry.docId))
                 <div>
                     <svg class="icon"><use xlink:href="#internal-link"></use></svg>
-                    </span>
                     <a href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
                 </div>  
            #end
