@@ -11,7 +11,7 @@
 <hr class="hr-small-full">
 #if($enableFacetSelection > 0 || $isSelection)
     #renderSearchResultFacetSelection($facetConfig $MESSAGES)
-<hr class="hr-small-full">
+<hr class="hr-small-full" style="margin-top:0.175rem;">
 #end
 ##parse ('/WEB-INF/templates/include_search_result_navigation.vm')
 #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
