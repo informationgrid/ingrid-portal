@@ -288,3 +288,7 @@ function goToByScroll(id, time){
         scrollTop: $("#"+id).offset().top
     }, time);
 }
+
+function openURL(url){
+    window.location = url;
+}
