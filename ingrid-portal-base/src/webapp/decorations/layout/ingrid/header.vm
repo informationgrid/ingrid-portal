@@ -106,7 +106,7 @@
                     #end
                     #if($currentPage != "/default-page.psml")
                         <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
-                        <a href="#">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
+                        <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
                     #end
                 #end
                 </nav>
