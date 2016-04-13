@@ -129,8 +129,8 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             plugs = IPlugHelper.sortPlugs(plugs, new IPlugHelperDscEcs.PlugComparatorECS());
 
             DisplayTreeNode plugsRoot = DisplayTreeFactory.getTreeFromECSIPlugs(plugs);
-            String restrictPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
-            if (restrictPartner != null && restrictPartner.length() > 0) {
+            int openNodesInitial = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL, 3);
+            if (openNodesInitial > 0) {
                 openNodesUntilHierarchyLevel(plugsRoot, plugsRoot);
             }
             ps.put("plugsRoot", plugsRoot);
