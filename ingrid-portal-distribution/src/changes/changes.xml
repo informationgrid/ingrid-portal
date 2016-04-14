@@ -71,6 +71,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-282">
                 MapClient: Fixed display of service legend (Firefox).
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-291">
+                IGE: Missing dialog when remove coupled service.
+            </action>
         </release>
         
         <release version="3.6.1.2" date="2016-01-22" description="Release 3.6.1.2">
