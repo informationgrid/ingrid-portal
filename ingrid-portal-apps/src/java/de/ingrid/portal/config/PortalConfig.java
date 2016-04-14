@@ -210,6 +210,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String CATEGORY_TEASER_SEARCH_QUERY = "category.teaser.search.query";
     
+    public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
+    
     // private stuff
     private static PortalConfig instance = null;
 
