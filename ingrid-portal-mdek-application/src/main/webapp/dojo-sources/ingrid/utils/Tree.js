@@ -145,6 +145,12 @@ define([
             
             // delete all children first
             if (node) {
+                // check if node was intended to be cutted
+                tree.nodesToCut = array.forEach(tree.nodesToCut, function(n) {
+                    return n.id !== node.item.id;
+                });
+                if (tree.nodesToCut === undefined) tree.nodesToCut = null;
+                
                 this._recursiveDelete(tree.model, node.getChildren());
 
                 // finally delete the node itself
