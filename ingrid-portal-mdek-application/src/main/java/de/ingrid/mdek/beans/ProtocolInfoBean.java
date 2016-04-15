@@ -23,14 +23,16 @@
 package de.ingrid.mdek.beans;
 
 import java.util.List;
+import java.util.Map;
 
-import de.ingrid.mdek.handler.ProtocolHandler;
+import de.ingrid.mdek.job.protocol.ProtocolHandler;
+import de.ingrid.mdek.job.protocol.ProtocolHandler.Type;
 
 public class ProtocolInfoBean {
 
 	private String             inputType;
 	private boolean            finished;
-	//private String             protocol;
+	private List<Map<Type, List<String>>> protocol;
 	private List<byte[]>       importData;
 	private ProtocolHandler    protocolHandler;
 	private int                dataProcessed;
@@ -58,14 +60,6 @@ public class ProtocolInfoBean {
 	public void setFinished(boolean status) {
 		this.finished = status;
 	}
-	public String getProtocol() {
-	    if (protocolHandler != null)
-	        return protocolHandler.getProtocol();
-	    return null;
-	}
-	/*public void setProtocol(String protocol) {
-		this.protocol = protocol;
-	}*/
 	
 	public List<byte[]> getImportData() {
 		return importData;
@@ -82,6 +76,14 @@ public class ProtocolInfoBean {
 	public void setProtocolHandler(ProtocolHandler protocolHandler) {
 		this.protocolHandler = protocolHandler;
 	}
+
+    public List<Map<Type, List<String>>> getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(List<Map<Type, List<String>>> allProtocols) {
+        this.protocol = allProtocols;
+    }
 	
 	
 }
