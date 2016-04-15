@@ -311,20 +311,6 @@ define([
                 dialog.show(message.get("general.hint"), message.get("tree.selectNodePasteHint"), dialog.WARNING);
             } else {
                 var tree = registry.byId("dataTree");
-                
-                var updateTreeNodes = function() {
-                    // Copy was successful. Update the tree manually.
-                    tree.model.store.getChildren(targetNode.item).then(function(updatedChildren) {
-                        try {
-                            array.forEach(updatedChildren, function(copiedNode) {
-                                tree.model.store.put(copiedNode);
-                            });
-                        } catch(ex) {
-                            console.error( "Error during updating tree nodes", ex);
-                            displayErrorMessage(ex);
-                        }
-                    });
-                }
 
                 if (tree.nodesToCut !== null) {
                     var invalidPaste = array.some(tree.nodesToCut, function(nodeItem) {
@@ -358,7 +344,7 @@ define([
                                 UtilTree.deleteNode("dataTree", nodeItem);
                             });
 
-                            updateTreeNodes();
+                            tree.refreshChildren(targetNode);
                             
                             if (appType == "A") {
                                 array.forEach(tree.nodesToCut, function(nodeToCut) {
@@ -442,7 +428,7 @@ define([
                     deferred = new Deferred();
                     deferred.then(function() {
                         // Copy was successful. Update the tree manually.
-                        updateTreeNodes();
+                        tree.refreshChildren(targetNode);
                         
                         tree.doPaste();
                         // If copy was unsuccessful notify user and do nothing.
