@@ -40,3 +40,7 @@ footer .grid .footer__top-link {
 .mobile__logo {
   display:none;
 }
+
+.mq-show-l {
+  display:none;
+}
