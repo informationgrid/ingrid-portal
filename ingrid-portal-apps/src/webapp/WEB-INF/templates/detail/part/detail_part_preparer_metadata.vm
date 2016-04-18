@@ -7,6 +7,7 @@
             ## Allgemeines
             <div class="tab__content box--medium bx-bot-xl" data-tabid="tab-1">
                 <div class="box__content ob-container">
+                    <h2 class="print-title is-hidden">$MESSAGES.getString("general_tab")<h2>
                     ## Beschreibung
                     #renderSectionTitle($MESSAGES.getString("detail_description"))
                     <div class="media ob-clear">
@@ -30,6 +31,7 @@
         #if($TOOL.aNodeOfListExist($xpathList))
             <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-2">
                 <div class="box__content ob-container">
+                    <h2 class="print-title is-hidden">$MESSAGES.getString("references_tab")<h2>
                     ## Verweise
                     #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"])
                     #if($TOOL.aNodeOfListExist($xpathList))
@@ -49,11 +51,14 @@
                             ## Verweise im WWW
                             #renderLinkList($MESSAGES.getString("www_references") $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions") "false")
                         </div>
+                        #set($xpathList = ["./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
+                        #if($TOOL.aNodeOfListExist($xpathList))
+                            <hr>
+                        #end
                     #end
                     ## Verschlagwortung
                     #set($xpathList = ["./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
                     #if($TOOL.aNodeOfListExist($xpathList))
-                        <hr>
                         #renderSectionTitle($MESSAGES.getString("thesaurus"))
                         <div class="search-result--nested">
                             ## Verschlagwortung
@@ -72,6 +77,7 @@
         #if($TOOL.aNodeOfListExist($xpathList))
             <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-3">
                 <div class="box__content ob-container">
+                    <h2 class="print-title is-hidden">$MESSAGES.getString("spacial_reference_tab")<h2>
                     ## Raumbezugssystem
                     #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo"])
                     #if($TOOL.aNodeOfListExist($xpathList))
@@ -150,6 +156,7 @@
             #if($TOOL.aNodeOfListExist($xpathList))
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-4">
                     <div class="box__content ob-container">
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("subject_reference_tab")<h2>
                         ## Fachbezug
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         <div class="search-result--nested">
@@ -197,6 +204,7 @@
             #if($TOOL.aNodeOfListExist($xpathList))
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-4">
                     <div class="box__content ob-container">
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("subject_reference_tab")<h2>
                         ## Fachbezug
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         <div class="search-result--nested">
@@ -239,6 +247,7 @@
             #if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-4">
                     <div class="box__content ob-container">
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("subject_reference_tab")<h2>
                         ## Fachbezug
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         <div class="search-result--nested">
@@ -291,6 +300,7 @@
             #if($TOOL.aNodeOfListExist($xpathList))
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-4">
                     <div class="box__content ob-container">
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("subject_reference_tab")<h2>
                         ## Fachbezug
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         <div class="search-result--nested">
@@ -310,6 +320,7 @@
             #if($TOOL.aNodeOfListExist($xpathList))
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-4">
                     <div class="box__content ob-container">
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("subject_reference_tab")<h2>
                         ## Fachbezug
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         <div class="search-result--nested">
@@ -338,6 +349,7 @@
             #if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-4">
                     <div class="box__content ob-container">
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("subject_reference_tab")<h2>
                         ## Fachbezug
                         #renderSectionTitle($MESSAGES.getString("subject_reference"))
                         <div class="search-result--nested">
@@ -369,7 +381,7 @@
         #if($TOOL.aNodeOfListExist($xpathList))
             <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-5">
                 <div class="box__content ob-container">
-                    ## Raumbezugssystem
+                    <h2 class="print-title is-hidden">$MESSAGES.getString("data_quality")<h2>
                     #renderSectionTitle($MESSAGES.getString("data_quality"))
                     <div class="search-result--nested">
                         ## Datendefizit
@@ -432,6 +444,7 @@
         #if($TOOL.aNodeOfListExist($xpathList))
             <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-6">
                 <div class="box__content ob-container">
+                    <h2 class="print-title is-hidden">$MESSAGES.getString("availability_tab")<h2>
                     ## Verfügbarkeit
                     #renderSectionTitle($MESSAGES.getString("availability"))
                     <div class="search-result--nested">
@@ -458,7 +471,7 @@
         ## Zusätzliche Info
         <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-7">
             <div class="box__content ob-container">
-                ## Verfügbarkeit
+                <h2 class="print-title is-hidden">$MESSAGES.getString("additional_information_tab")<h2>
                 #renderSectionTitle($MESSAGES.getString("additional_information"))
                 <div class="search-result--nested">
                     ## Sprache des Metadatensatzes
@@ -487,8 +500,12 @@
              </div>
         </div>
         ## Additional Fields Example
+        #set($xpathList = ["./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"])
+        #set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))
+        #if($tabtitle)
             <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-8">
                 <div class="box__content ob-container">
+                    <h2 class="print-title is-hidden">$MESSAGES.getString("$tabtitle")<h2>
                     #renderSectionTitle($MESSAGES.getString("additional_information"))
                     <div class="search-result--nested">
                         #renderTextLabelAbove($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:data"))
@@ -497,6 +514,7 @@
                     </div>
                  </div>
             </div>
+        #end
         </article>
     </div>
 </section>
