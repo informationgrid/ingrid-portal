@@ -418,7 +418,7 @@
 #macro (renderDetailHeader $title $type $modTime $isMetadata)
     <section class="block block--light block--pad-top">
         <div class="ob-box-wide ob-box-padded ob-box-center">
-            <article class="content ob-container">
+            <article id="detail_meta_header" class="content ob-container">
                 <form class="box box--medium">
                     <div class="box__content ob-container">
                         <h6 class="tx-light tx-upper tx-brand bx-bot-0">$modTime</h6>

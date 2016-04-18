@@ -2,15 +2,16 @@
 .nav-toggle {
   display:none;
 }
-.tab__select, .tab__toggles {
+#detail_meta_header .tab__select, #detail_meta_header .tab__toggles {
   display:none;
 }
 footer .grid .footer__top-link {
   display:none;
 }
 
-.tab__content {
+#detail_meta .tab__content {
   display:block;
+  margin-bottom: 0px !important;
 }
 
 .print-title {

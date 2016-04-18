@@ -1,12 +1,13 @@
 #set ($type = $TOOL.getAddressClassType())
 
 #renderDetailHeader ($TOOL.getAddressClassTitle($type) $type $TOOL.convertDateString($TOOL.getValueFromXPath("./idf:last-modified")) false )
-<section class="block">
+<section id="detail_meta" class="block">
     <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
         <article class="content ob-container ob-box-wide">
             ## Allgemeines
             <div class="tab__content box--medium bx-bot-xl" data-tabid="tab-1">
                 <div class="box__content ob-container">
+                    <h2 class="print-title is-hidden">$MESSAGES.getString("general_tab")<h2>
                     #set($xpathList = ["./gmd:positionName"])
                     #if($TOOL.aNodeOfListExist($xpathList))
                         ## Beschreibung
@@ -27,8 +28,9 @@
                 ## Verweis
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-2">
                     <div class="box__content ob-container">
-                    ## Datenbezüge
-                    #renderLinkList($MESSAGES.getString("search.detail.dataRelations") $TOOL.getReference("./idf:objectReference", true) "true")
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("references_tab")<h2>
+                        ## Datenbezüge
+                        #renderLinkList($MESSAGES.getString("search.detail.dataRelations") $TOOL.getReference("./idf:objectReference", true) "true")
                     </div>
                 </div>
             #end

@@ -1,7 +1,7 @@
 #set ($type = $TOOL.getUdkObjectClassType())
 #set ($lang = $TOOL.getLanguage())
 #renderDetailHeader ($TOOL.getTitle() $type $TOOL.getTimeStamp("./gmd:dateStamp") true)
-<section class="block">
+<section id="detail_meta" class="block">
     <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
         <article class="content ob-container ob-box-wide">
             ## Allgemeines
