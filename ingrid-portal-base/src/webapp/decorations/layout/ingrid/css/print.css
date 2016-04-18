@@ -1,4 +1,3 @@
-
 /* PRINT */
 .nav-toggle {
   display:none;
@@ -25,5 +24,18 @@ footer .grid .footer__top-link {
 }
 
 .mq-hide-m {
+  display:none;
+}
+
+.header__logo {
+  margin-left: 0;
+}
+
+.desktop-logo {
+  width:100%;
+  height:100%;
+}
+
+.mobile__logo {
   display:none;
 }
