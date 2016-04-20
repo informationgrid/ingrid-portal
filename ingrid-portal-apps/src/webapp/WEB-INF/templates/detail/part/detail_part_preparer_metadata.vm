@@ -29,10 +29,10 @@
     		#renderSectionTitle($MESSAGES.getString("references"))
     			#if($type == "3")
     				## Dargestellte Daten 
-    				#renderLinkList($MESSAGES.getString("coupled_data") $TOOL.getReference("./idf:crossReference", true) "false")
+    				#renderLinkList($MESSAGES.getString("coupled_data") $TOOL.getReference("./idf:crossReference[idf:attachedToField[@entry-id='3600']]", true) "false")
     			#else
     				## Darstellender Dienst
-    				#renderLinkList($MESSAGES.getString("coupled_service") $TOOL.getReference("./idf:crossReference", true) "false")
+    				#renderLinkList($MESSAGES.getString("coupled_service") $TOOL.getReference("./idf:crossReference[idf:attachedToField[@entry-id='3600']]", true) "false")
     			#end
         		## Querverweise zu
     				#renderLinkList($MESSAGES.getString("cross_references_out") $TOOL.getReference("./idf:crossReference[@direction='OUT']") "false")
