@@ -60,9 +60,18 @@ $actionForm.getInputHTMLEscaped($field)#end
     #end
 #end
 
-#macro (displayFormError)
+#macro (displayFormError $field)
+    #if($field)
+        #set($tmpField = $field)
+    #else
+        #set($tmpField = "")
+    #end
     #if ($actionForm.hasErrors())
-        #renderMessageError("Fehler im Formular.")
+        #if($actionForm.hasErrorInField($tmpField))
+            #renderMessageError($MESSAGES.getString($actionForm.getErrorInField($tmpField)))
+        #else
+            #renderMessageError($MESSAGES.getString('common.form.error'))
+        #end
     #end
 #end
 
