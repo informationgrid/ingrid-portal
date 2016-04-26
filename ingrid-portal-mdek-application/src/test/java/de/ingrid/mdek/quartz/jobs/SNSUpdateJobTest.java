@@ -176,9 +176,9 @@ public class SNSUpdateJobTest {
         when(callerCatalog.getSearchTerms( "test-plug-id", new SearchtermType[] { SearchtermType.UMTHES, SearchtermType.GEMET }, "test-user-id" )).thenReturn( getTestSnsTerms()  );
         when(callerCatalog.getSearchTerms( "test-plug-id", new SearchtermType[] { SearchtermType.FREI },                         "test-user-id" )).thenReturn( getTestFreeTerms() );
         
-        SNSTopic expiredTopic = new SNSTopic(SNSTopic.Type.DESCRIPTOR, SNSTopic.Source.UMTHES, "http://sns.uba.de/umthes/_00010065", "Forschungspolitik", null, null);
+        SNSTopic expiredTopic = new SNSTopic(SNSTopic.Type.DESCRIPTOR, SNSTopic.Source.UMTHES, "https://sns.uba.de/umthes/_00010065", "Forschungspolitik", null, null);
         expiredTopic.setExpired( true );
-        when(serviceMock.getPSI( "http://sns.uba.de/umthes/_00010065", new Locale("de"))).thenReturn( expiredTopic  );
+        when(serviceMock.getPSI( "https://sns.uba.de/umthes/_00010065", new Locale("de"))).thenReturn( expiredTopic  );
         
      // CHECK RESULTS
         Mockito.doAnswer( new Answer() {
