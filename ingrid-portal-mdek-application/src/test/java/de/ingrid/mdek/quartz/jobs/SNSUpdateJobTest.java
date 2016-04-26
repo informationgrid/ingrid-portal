@@ -22,14 +22,15 @@
  */
 package de.ingrid.mdek.quartz.jobs;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,6 +55,7 @@ import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.job.repository.Pair;
 import de.ingrid.utils.IngridDocument;
 
+@SuppressWarnings("rawtypes")
 public class SNSUpdateJobTest {
     
     @InjectMocks SNSService service;
@@ -92,7 +94,7 @@ public class SNSUpdateJobTest {
         IngridDocument t = new IngridDocument();
         t.put( MdekKeys.TERM_TYPE, SearchtermType.UMTHES.getDbValue() );
         t.put( MdekKeys.TERM_NAME, "Forschungspolitik old" );
-        t.put( MdekKeys.TERM_SNS_ID, "http://sns.uba.de/umthes/_00010065" );
+        t.put( MdekKeys.TERM_SNS_ID, "https://sns.uba.de/umthes/_00010065" );
         thesTerms.add( t );
         subDoc.put( MdekKeys.SUBJECT_TERMS, thesTerms);
         
@@ -119,6 +121,7 @@ public class SNSUpdateJobTest {
         return doc;
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testExecuteInternalJobExecutionContext() throws JobExecutionException {
 //        String[] changedTopics = new String[1];
@@ -140,9 +143,9 @@ public class SNSUpdateJobTest {
                 Object[] args = invocation.getArguments();
                 List old = (List) args[1];
                 List newTerms = (List) args[2];
-                assertThat( (String)((IngridDocument)old.get( 0 )).get( "term-sns-id" ), is( "http://sns.uba.de/umthes/_00010065" ));
+                assertThat( (String)((IngridDocument)old.get( 0 )).get( "term-sns-id" ), is( "https://sns.uba.de/umthes/_00010065" ));
                 assertThat( (String)((IngridDocument)old.get( 0 )).get( "term-name" ), is( "Forschungspolitik old" ));
-                assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-sns-id" ), is( "http://sns.uba.de/umthes/_00010065" ));
+                assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-sns-id" ), is( "https://sns.uba.de/umthes/_00010065" ));
                 assertThat( (String)((IngridDocument)newTerms.get( 0 )).get( "term-name" ), is( "Forschungspolitik" ));
                 
                 return null;
@@ -157,6 +160,7 @@ public class SNSUpdateJobTest {
         
     }
     
+    @SuppressWarnings("unchecked")
     @Test
     public void testExpiredTerms() throws Exception {
         SNSUpdateJob snsUpdateJob = new SNSUpdateJob();

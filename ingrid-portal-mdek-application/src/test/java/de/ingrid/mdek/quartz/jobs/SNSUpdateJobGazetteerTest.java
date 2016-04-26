@@ -23,6 +23,7 @@
 package de.ingrid.mdek.quartz.jobs;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
@@ -54,6 +55,7 @@ import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.job.repository.Pair;
 import de.ingrid.utils.IngridDocument;
 
+@SuppressWarnings("rawtypes")
 public class SNSUpdateJobGazetteerTest {
     
     @InjectMocks SNSService service;
@@ -159,6 +161,7 @@ public class SNSUpdateJobGazetteerTest {
     }
 
     @Test
+    @SuppressWarnings({ "unchecked" })
     public void testNormalTerm() throws JobExecutionException {
         SNSLocationUpdateJob snsUpdateJob = new SNSLocationUpdateJob();
         JobDataMap jdm = new JobDataMap();
@@ -174,12 +177,13 @@ public class SNSUpdateJobGazetteerTest {
         Mockito.doAnswer( new Answer() {
             public Object answer(InvocationOnMock invocation) {
                 Object[] args = invocation.getArguments();
-                List old = (List) args[1];
-                List newTerms = (List) args[2];
-                IngridDocument oldDoc = ((IngridDocument)old.get( 0 ));
-                IngridDocument newDoc = ((IngridDocument)newTerms.get( 0 ));
+                List<IngridDocument> old = (List) args[1];
+                List<IngridDocument> newTerms = (List) args[2];
+                IngridDocument oldDoc = (old.get( 0 ));
+                IngridDocument newDoc = (newTerms.get( 0 ));
                 assertThat( oldDoc.getString( MdekKeys.LOCATION_SNS_ID ), is( "GEMEINDE0315401015" ));
-                assertThat( newDoc.getString( MdekKeys.LOCATION_SNS_ID), is( "http://sns.uba.de/gazetteer/GEMEINDE0315401015" ));
+                assertThat( "There should be a corresponding term for the old one.", newDoc, is( not ( nullValue() )));
+                assertThat( newDoc.getString( MdekKeys.LOCATION_SNS_ID), is( "https://sns.uba.de/gazetteer/GEMEINDE0315401015" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_NAME), is( "Mariental" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_CODE), is( "03154015" ));
                 assertThat( newDoc.getString( MdekKeys.SNS_TOPIC_TYPE), is( "-location-admin-use6-" ));
@@ -198,6 +202,7 @@ public class SNSUpdateJobGazetteerTest {
     }
     
     //@Test
+    @SuppressWarnings("unchecked")
     public void testExpiredTermsWithSuccessor() throws Exception {
         SNSLocationUpdateJob snsUpdateJob = new SNSLocationUpdateJob();
         JobDataMap jdm = new JobDataMap();
@@ -248,6 +253,7 @@ public class SNSUpdateJobGazetteerTest {
 
     
     //@Test
+    @SuppressWarnings("unchecked")
     public void testExpiredTermsWithExpiredSuccessor() throws Exception {
         SNSLocationUpdateJob snsUpdateJob = new SNSLocationUpdateJob();
         JobDataMap jdm = new JobDataMap();
@@ -300,6 +306,7 @@ public class SNSUpdateJobGazetteerTest {
     }
     
     //@Test
+    @SuppressWarnings("unchecked")
     public void testExpiredTermsWithExpiredSuccessorAndValidSuccessor() throws Exception {
         SNSLocationUpdateJob snsUpdateJob = new SNSLocationUpdateJob();
         JobDataMap jdm = new JobDataMap();
@@ -362,6 +369,7 @@ public class SNSUpdateJobGazetteerTest {
     }
     
     //@Test
+    @SuppressWarnings("unchecked")
     public void testExpiredTermsWithExpiredSuccessorAndSeveralValidSuccessors() throws Exception {
         SNSLocationUpdateJob snsUpdateJob = new SNSLocationUpdateJob();
         JobDataMap jdm = new JobDataMap();
@@ -432,6 +440,7 @@ public class SNSUpdateJobGazetteerTest {
 
     
     //@Test
+    @SuppressWarnings("unchecked")
     public void testValidTermsWithSuccessor() throws Exception {
         SNSLocationUpdateJob snsUpdateJob = new SNSLocationUpdateJob();
         JobDataMap jdm = new JobDataMap();
@@ -490,6 +499,7 @@ public class SNSUpdateJobGazetteerTest {
     }
     
     //@Test
+    @SuppressWarnings("unchecked")
     public void testValidTermsWithSuccessorReferencingItself() throws Exception {
         SNSLocationUpdateJob snsUpdateJob = new SNSLocationUpdateJob();
         JobDataMap jdm = new JobDataMap();
@@ -544,6 +554,7 @@ public class SNSUpdateJobGazetteerTest {
         snsUpdateJob.executeInternal( context );
     }
     
+    @SuppressWarnings("unchecked")
     @Test
     public void testTermIdNotFoundInsteadBySearchingName() throws Exception {
         SNSLocationUpdateJob snsUpdateJob = new SNSLocationUpdateJob();
@@ -580,7 +591,7 @@ public class SNSUpdateJobGazetteerTest {
                 IngridDocument oldDoc = ((IngridDocument)old.get( 0 ));
                 IngridDocument newDoc = ((IngridDocument)newTerms.get( 0 ));
                 assertThat( oldDoc.getString( MdekKeys.LOCATION_SNS_ID ), is( "GEMEINDE0315400015" ));
-                assertThat( newDoc.getString( MdekKeys.LOCATION_SNS_ID), is( "http://sns.uba.de/gazetteer/GEMEINDE0315401015" ));
+                assertThat( newDoc.getString( MdekKeys.LOCATION_SNS_ID), is( "https://sns.uba.de/gazetteer/GEMEINDE0315401015" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_NAME), is( "Mariental" ));
                 assertThat( newDoc.getString( MdekKeys.LOCATION_CODE), is( "03154015" ));
                 assertThat( newDoc.getString( MdekKeys.SNS_TOPIC_TYPE), is( "-location-admin-use6-" ));
