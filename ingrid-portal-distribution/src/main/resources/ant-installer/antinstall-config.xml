@@ -150,6 +150,17 @@
         <text property="mdekUser"         displayText="Mdek User:"          defaultValue="mdek"/>
         <text property="mdekPassword"     displayText="Mdek Passwort:"      defaultValue=""/>
     </page>
+    
+    <page
+            ifTarget    ="InstallPortal"
+            ifProperty  ="(${configMdek}==false)"
+            overflow    = "true"
+            type        ="input"
+            name        ="portalSmtpOption"
+            displayText ="Einstellungen für den SMTP-Server">
+            
+        <text property="mdekMailSmtp"   displayText="SMTP-Server:"          defaultValue="localhost"/>
+    </page>
 
     <page
             ifTarget    ="setMySqlProperty"
