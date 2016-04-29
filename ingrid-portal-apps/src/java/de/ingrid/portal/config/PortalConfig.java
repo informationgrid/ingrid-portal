@@ -124,45 +124,45 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_PARTNER = "portal.enable.partner";
     
-	public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
+public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
 
-	public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
+public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
 
-	public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
-	
-	public static final String PORTAL_ENABLE_ACCOUNT_QUESTION = "enable.account.registration.question";
-	
-	public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
+public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
 
-	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
+public static final String PORTAL_ENABLE_ACCOUNT_QUESTION = "enable.account.registration.question";
+
+public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
+
+public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
     
-	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SENDER = "component.monitor.alert.email.sender";
+public static final String COMPONENT_MONITOR_ALERT_EMAIL_SENDER = "component.monitor.alert.email.sender";
 
-	public static final String COMPONENT_MONITOR_DEFAULT_EMAIL = "component.monitor.default.email";
+public static final String COMPONENT_MONITOR_DEFAULT_EMAIL = "component.monitor.default.email";
 
-	public static final String COMPONENT_MONITOR_SNS_LOGIN = "component.monitor.sns.login";
+public static final String COMPONENT_MONITOR_SNS_LOGIN = "component.monitor.sns.login";
 
-	public static final String COMPONENT_MONITOR_SNS_PASSWORD = "component.monitor.sns.password";
-	
-	public static final String COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT = "component.monitor.update.alert.email.subject";
-	
-	public static final String TEASER_WEATHER_DWD_PATH = "teaser.weather.dwd.path";
-	
-	public static final String TEASER_WEATHER_DWD_MOVIE = "teaser.weather.dwd.movie";
-	
-	// contains the short version of all supported languages
-	public static final String LANGUAGES_SHORT = "languages.short";
-	
-	// the specific language is added after this variable (e.g. languages.names.de) 
-	public static final String LANGUAGES_NAMES = "languages.names.";
-	
-	// the url to the upgrade server
+public static final String COMPONENT_MONITOR_SNS_PASSWORD = "component.monitor.sns.password";
+
+public static final String COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT = "component.monitor.update.alert.email.subject";
+
+public static final String TEASER_WEATHER_DWD_PATH = "teaser.weather.dwd.path";
+
+public static final String TEASER_WEATHER_DWD_MOVIE = "teaser.weather.dwd.movie";
+
+// contains the short version of all supported languages
+public static final String LANGUAGES_SHORT = "languages.short";
+
+// the specific language is added after this variable (e.g. languages.names.de) 
+public static final String LANGUAGES_NAMES = "languages.names.";
+
+// the url to the upgrade server
     public static final String UPGRADE_SERVER_URL = "upgrade.server.url";
     
     public static final String UPGRADE_SERVER_USERNAME = "upgrade.server.username";
     
     public static final String UPGRADE_SERVER_PASSWORD = "upgrade.server.password";
-	
+
     // disable button and textfield for edit partner/provider 
     public static final String DISABLE_PARTNER_PROVIDER_EDIT = "portal.disable.partner.provider.edit";
     
@@ -174,9 +174,9 @@ public class PortalConfig extends PropertiesConfiguration {
     
     // User admin: show max row of users in a table
     public static final String USER_ADMIN_MAX_ROW = "admin.user.max.row";
-	
+
     public static final String PORTAL_SEARCH_LANGUAGE_INDEPENDENT = "portal.search.language.independent";
-	
+
     public static final String PORTAL_ENABLE_APPLICATION= "portal.enable.application";
     
     // Hide CMS items for changing on admin page
@@ -209,6 +209,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_SEARCH_EMPTY_QUERY = "portal.search.empty.query";
 
     public static final String CATEGORY_TEASER_SEARCH_QUERY = "category.teaser.search.query";
+   
+    public static final String CATEGORY_TEASER_SEARCH_FACETS_TYP = "category.teaser.search.facets.typ";
     
     public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
     
@@ -219,7 +221,6 @@ public class PortalConfig extends PropertiesConfiguration {
 
     private final static Logger log = LoggerFactory.getLogger(PortalConfig.class);
 
-	
     public static synchronized PortalConfig getInstance() {
         if (instance == null) {
             try {

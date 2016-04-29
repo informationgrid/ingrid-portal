@@ -42,6 +42,7 @@ import de.ingrid.portal.global.CodeListServiceFactory;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UtilsFacete;
+import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridFacet;
@@ -53,56 +54,56 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class CategoryTeaserPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(CategoryTeaserPortlet.class);
-    
+    private final static Logger log = LoggerFactory.getLogger( CategoryTeaserPortlet.class );
+
     public void init(PortletConfig config) throws PortletException {
-        super.init(config);
+        super.init( config );
     }
 
-    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
-            throws PortletException, IOException {
-        Context context = getContext(request);
+    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException {
+        Context context = getContext( request );
 
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()), request.getLocale());
-        context.put("MESSAGES", messages);
-        
+        IngridResourceBundle messages = new IngridResourceBundle( getPortletConfig().getResourceBundle( request.getLocale() ), request.getLocale() );
+        context.put( "MESSAGES", messages );
+
         ArrayList<IngridFacet> config = FacetsConfig.getFacets();
         IngridQuery query;
         IngridHits hits = null;
+        String categoryQuery = null;
         try {
-            String categoryQuery = PortalConfig.getInstance().getString( PortalConfig.CATEGORY_TEASER_SEARCH_QUERY, "datatype:www OR datatype:metadata" ).trim();
-            query = QueryStringParser.parse(categoryQuery);
-            UtilsFacete.addDefaultIngridFacets(request, config);
-            if(query.get("FACETS") == null){
+            categoryQuery = PortalConfig.getInstance().getString( PortalConfig.CATEGORY_TEASER_SEARCH_QUERY, "datatype:www OR datatype:metadata" ).trim();
+            query = QueryStringParser.parse( categoryQuery );
+            UtilsFacete.addDefaultIngridFacets( request, config );
+            if (query.get( "FACETS" ) == null) {
                 ArrayList<IngridDocument> facetQueries = new ArrayList<IngridDocument>();
-                UtilsFacete.getConfigFacetQuery(config, facetQueries, true, null, true);
-                if(facetQueries != null){
-                    query.put("FACETS", facetQueries);
+                UtilsFacete.getConfigFacetQuery( config, facetQueries, true, null, true );
+                if (facetQueries != null) {
+                    query.put( "FACETS", facetQueries );
                 }
             }
-            UtilsFacete.setFacetQuery("", config, request, query);
-            
-            query.put(IngridQuery.RANKED, "score");
-            hits = doSearch(query, 0, 0, Settings.SEARCH_RANKED_HITS_PER_PAGE, messages, request.getLocale());
+            UtilsFacete.setFacetQuery( "", config, request, query );
+
+            query.put( IngridQuery.RANKED, "score" );
+            hits = doSearch( query, 0, 0, Settings.SEARCH_RANKED_HITS_PER_PAGE, messages, request.getLocale() );
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        context.put( "facetsTyp", PortalConfig.getInstance().getList( PortalConfig.CATEGORY_TEASER_SEARCH_FACETS_TYP ) );
+        if(categoryQuery != null){
+            context.put( "categoryQuery", UtilsVelocity.urlencode(categoryQuery) );
+        }
         context.put( "hits", hits );
         context.put( "config", config );
-        context.put("Codelists", CodeListServiceFactory.instance());
-        context.put("enableFacete", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false));
-        context.put("languageCode",request.getLocale().getLanguage());
-        super.doView(request, response);
+        context.put( "Codelists", CodeListServiceFactory.instance() );
+        context.put( "enableFacete", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false ) );
+        context.put( "languageCode", request.getLocale().getLanguage() );
+        super.doView( request, response );
     }
 
-    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
-            IOException {
-    }
+    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {}
 
-    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage,
-            IngridResourceBundle resources, Locale locale) {
+    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage, IngridResourceBundle resources, Locale locale) {
 
         int currentPage = (int) (startHit / hitsPerPage) + 1;
 
@@ -113,17 +114,16 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
         IngridHits hits = null;
         try {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
-            hits = ibus.search(query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt(
-                    PortalConfig.QUERY_TIMEOUT_RANKED, 5000));
-            
+            hits = ibus.search( query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt( PortalConfig.QUERY_TIMEOUT_RANKED, 5000 ) );
+
             if (hits == null) {
                 if (log.isErrorEnabled()) {
-                    log.error("Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
                 }
             }
         } catch (Throwable t) {
             if (log.isErrorEnabled()) {
-                log.error("Problems performing Search !", t);
+                log.error( "Problems performing Search !", t );
             }
         }
 
