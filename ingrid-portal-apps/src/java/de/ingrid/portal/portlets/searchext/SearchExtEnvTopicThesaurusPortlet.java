@@ -417,7 +417,7 @@ public class SearchExtEnvTopicThesaurusPortlet extends SearchExtEnvTopic {
         if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0
                 && !node.isLoading()) {
             node.setLoading(true);
-            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getTopicsFromText(node.getName(), "/thesa", language);
+            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms( node.getName(), language);
             if (hits != null && hits.length > 0) {
                 for (int i=0; i<hits.length; i++) {
                     Topic hit = (Topic) hits[i];

@@ -28,11 +28,9 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
-import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.search.UtilsSearch;
 
 /**
