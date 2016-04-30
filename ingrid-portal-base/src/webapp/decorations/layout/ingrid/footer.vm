@@ -17,14 +17,15 @@
                         #if(!$footerMenu.empty)
                           #includeFooterNavigation($footerMenu)
                         #end
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="column column--1-4-xl">
-                <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0">
-                <div class="ob-box-padded ob-box-center ob-clear">
-                    <div class="footer__section">
-                        <div class="footer__bottom"></div>
+                <div class="column column--1-4-xl">
+                    <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0">
+                    <div class="ob-box-padded ob-box-center ob-clear">
+                        <div class="footer__section">
+                            <div class="footer__bottom"></div>
+                        </div>
                     </div>
                 </div>
             </div>
