@@ -253,7 +253,12 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             }
         }
         if(setQuery == false){
-            if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && request.getParameter("q") == null){
+            if(Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && request.getParameter("ct") != null){
+                String initalQuery = PortalConfig.getInstance().getString( PortalConfig.CATEGORY_TEASER_SEARCH_QUERY, "" ).trim();
+                if(initalQuery.length() > 0){
+                    setUpQuery(request, initalQuery, true);
+                }
+            } else if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && request.getParameter("q") == null){
                 String initalQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_SEARCH_EMPTY_QUERY, "" ).trim();
                 if(initalQuery.length() > 0){
                     setUpQuery(request, initalQuery, true);

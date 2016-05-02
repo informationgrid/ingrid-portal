@@ -81,7 +81,7 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
                     query.put( "FACETS", facetQueries );
                 }
             }
-            UtilsFacete.setFacetQuery( "", config, request, query );
+            UtilsFacete.setFacetQuery( null, config, request, query );
 
             query.put( IngridQuery.RANKED, "score" );
             hits = doSearch( query, 0, 0, Settings.SEARCH_RANKED_HITS_PER_PAGE, messages, request.getLocale() );
