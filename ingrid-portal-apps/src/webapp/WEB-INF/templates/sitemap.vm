@@ -245,16 +245,6 @@
         <p>$MESSAGES.getString("sitemap.area.service.contact.description")</p>
     </li>
     <li>
-        #set ($link = $renderResponse.encodeURL("/portal/privacy.psml"))
-        <a href="$link" title="$MESSAGES.getString("sitemap.area.footer.privacy.tooltip")">
-            <svg class="icon">
-                <use xlink:href="#internal-link">
-            </svg>
-            $MESSAGES.getString("sitemap.area.footer.privacy")
-        </a>
-        <p>$MESSAGES.getString("sitemap.area.footer.privacy.description")</p>
-    </li>
-    <li>
         #set ($link = $renderResponse.encodeURL("/portal/service-sitemap.psml"))
         <a href="$link" title="$MESSAGES.getString("sitemap.area.service.sitemap.tooltip")">
             <svg class="icon">
