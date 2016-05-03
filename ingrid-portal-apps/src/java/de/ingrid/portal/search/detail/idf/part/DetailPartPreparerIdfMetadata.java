@@ -859,7 +859,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 elementMapLink.put("hasLinkIcon", new Boolean(true));
                                 elementMapLink.put("isExtern", new Boolean(false));
                                 elementMapLink.put("title", messages.getString("common.result.showMap"));
-                                elementMapLink.put("href", "portal/main-maps.psml?wms_url=" + UtilsVelocity.urlencode(urlValue));
+                                elementMapLink.put("href", "portal/main-maps.psml?layers=WMS||" + UtilsVelocity.urlencode(urlValue) + "||");
                                   element.put("link", elementMapLink);
                                 element.put("linkLeft", true);
                             }
