@@ -207,9 +207,9 @@ public class QueryResultPostProcessor {
                 
                 if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                     for (String url : tmpArray) {
-                        url = addCapabilitiesInformation(url);
+                        url = addCapabilitiesInformation(url) + "||";
                         // add layer information to link
-                        if (firstResourceId != null) url += "&ID=" + URLEncoder.encode(firstResourceId, "UTF-8");
+                        if (firstResourceId != null) url += "" + URLEncoder.encode(firstResourceId, "UTF-8");
                         // only take the first map url, which should be the only one! 
                         hit.put(Settings.RESULT_KEY_WMS_URL, url);
                         break;

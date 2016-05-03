@@ -155,10 +155,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 // since this link will be going to the webmap-client, the service must be WMS!
                 getCapUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( getCapUrl, ServiceType.WMS );
                 
-                url = UtilsVelocity.urlencode( getCapUrl );
+                url = UtilsVelocity.urlencode( getCapUrl ) + "||";
                 
                 if(!getLayerIdentifier(null).equals("NOT_FOUND")) {
-                    url = url + "&ID=" + UtilsVelocity.urlencode(getLayerIdentifier(null));
+                    url = url + "" + UtilsVelocity.urlencode(getLayerIdentifier(null));
                 }
                 
                 if(getCapUrl.length() > 0) {
@@ -280,21 +280,21 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if (entryId.equals("3600") && getUdkObjectClassType().equals("3")) {
                         // get link from operation (unique one)
                         if (serviceType.trim().equals("view")) {
-                            String capabilityUrl = getCapabilityUrl();
+                            String capabilityUrl = getCapabilityUrl() + "||";
                             if ( capabilityUrl != null ) {
                                 capabilityUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl, ServiceType.WMS );
-                                link.put("mapLink", capabilityUrl + "&ID=" + getLayerIdentifier(node));
+                                link.put("mapLink", capabilityUrl + "" + getLayerIdentifier(node));
                             }
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
                         linkList.add(link);
                     } else if (entryId.equals("3600") && getUdkObjectClassType().equals("1")) {
-                        String capUrl = getCapabilityUrlFromCrossReference( uuid );
+                        String capUrl = getCapabilityUrlFromCrossReference( uuid ) + "||";
                         if ( capUrl != null ) {
                             // add possible missing parameters
                             capUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capUrl );
-                            link.put("mapLink",  capUrl + "&ID=" + getLayerIdentifier(node));
+                            link.put("mapLink",  capUrl + "" + getLayerIdentifier(node));
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
@@ -1192,14 +1192,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             for (int i=0; i<nodeList.getLength();i++){
                 if(XPathUtils.nodeExists(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL")){
                     Node node = XPathUtils.getNode(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL");
-                    String urlValue = XPathUtils.getString(node, ".").trim();
+                    String urlValue = XPathUtils.getString(node, ".").trim() + "||";
                     // do not display empty URLs
                     if (urlValue == null || urlValue.length() == 0) {
                         continue;
                     }
                     if (urlValue.toLowerCase().indexOf("request=getcapabilities") != -1) {
                         // also add an identifier to select the correct layer in the map client 
-                        map = addBigMapLink(urlValue + "&ID=" + getLayerIdentifier(null), true);
+                        map = addBigMapLink(urlValue + "" + getLayerIdentifier(null), true);
                         // ADD FIRST ONE FOUND !!!
                         mapLinkAdded = true;
                         break;

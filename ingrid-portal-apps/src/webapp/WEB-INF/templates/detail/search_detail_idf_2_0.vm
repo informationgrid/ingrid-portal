@@ -20,7 +20,7 @@
                 #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                     <figure>
                         <img class="ob-box-left" height=130 width=155 src="$entry.src" alt="">
-                        <figcaption class="caption"><p><a class="btn btn--primary btn--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=${entry.get("href")}">$entry.title</a></p></figcaption>
+                        <figcaption class="caption"><p><a class="btn btn--primary btn--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||${entry.get("href")}">$entry.title</a></p></figcaption>
                     </figure>
                 #else
                     <figure>
@@ -62,7 +62,7 @@
             #end
         #end
         #if($tool.hasContent($entry.mapLink))
-           <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?wms_url=$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
+           <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
         #end
     #end
 #end
