@@ -1,14 +1,29 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())
+#if($kmlUrl)
+    #set($hasKML = true)
+#else
+    #set($hasKML = false)
+#end
+
 <iframe id="iframe_map" allowfullscreen></iframe>
 
 <script>
 var buffer = 0; //scroll bar buffer
 var iframe = document.getElementById('iframe_map');
 var urlParams = location.search;
+var url = '$mapUrl' + urlParams;
 
+if($hasKML){
+    var kml = '$kmlUrl';
+	if(!kml.startsWith("http")){
+	    kml = location.origin + "/" + kml;
+	}
+	
+    url = url + "&layers=KML||" + kml;
+}
 // Add iFrame 'src'
-iframe.src = '$mapUrl' + urlParams;
+iframe.src = url;
 
 // .onload doesn't work with IE8 and older.
 if (iframe.attachEvent) {
