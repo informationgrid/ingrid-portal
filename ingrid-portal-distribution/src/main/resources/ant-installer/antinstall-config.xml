@@ -153,7 +153,7 @@
     
     <page
             ifTarget    ="InstallPortal"
-            ifProperty  ="(${configMdek}==false)"
+            ifProperty  ="(${dbChoice}!=copyOracleDump) AND (${configMdek}==false)"
             overflow    = "true"
             type        ="input"
             name        ="portalSmtpOption"

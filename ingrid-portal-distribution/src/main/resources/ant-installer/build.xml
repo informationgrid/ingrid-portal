@@ -50,7 +50,7 @@
     
     <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties"/>
 
-    <!-- THIS PORPERTIES ARE NECESSARY FOR UPDATES -->
+    <!-- THESE PROPERTIES ARE NECESSARY FOR UPDATES -->
     <property name="libraryDir"         value="${tomcat-artifact}/webapps/ROOT/META-INF,apache-tomcat-6.0.35/webapps/ROOT/META-INF" />
     <property name="libraryIdent"       value="MANIFEST.MF" />
     <property name="versionsWithConfigurations"  value="" />
@@ -502,15 +502,20 @@
 
     <target name="updatePortalDb" if="portal.installed">
         <echo>Konfiguration des Portals
-        </echo> 
+        </echo>
+    	
+    	<!-- First create database if needed ! NOTICE: Only on MySQL ! Oracle has to be created manually. -->
+    	<!-- MySQL/Oracle targets set ${portal.version} correctly so database update below works. -->
         <if>
             <equals arg1="${portal.db.not.exists}" arg2="true" />
             <then>
                 <runtarget target="mysql.PortalDbUpdateFromInitial"/> 
                 <runtarget target="oracle.UpdateDbManually"/>
-                <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
-        <elseif>
+        </if>
+
+    	<!-- Then update database ! ${portal.version} read from existing database or set when database was created ! -->
+        <if>
             <equals arg1="${portal.version}" arg2=",1" />
             <then>
                 <!-- import was executed but no patches installed yet -->
@@ -518,7 +523,6 @@
                 <runtarget target="oracle.PortalDbUpdateFromInitial"/>
                 <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
-        </elseif>
         <elseif>
             <equals arg1="${portal.version}" arg2=",3.0.0" />
             <then>
@@ -600,8 +604,6 @@
             </echo>
         </else>
         </if>
-        
-        <!--<runtarget target="oracle.UpdateDbManually"/>-->
     </target>
 
     <target name="updateIgeDb" if="ige.installed">

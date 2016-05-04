@@ -37,6 +37,8 @@
     
     <!-- mysql portal imports -->
     <property name="importMySQL"     location="${installDir}/sql/ingrid_portal_35_mysql_558.sql"/>
+    <property name="importMySQLPortalVersion" value=",3.5"/>
+
     <property name="updateMySQL114"  location="${installDir}/sql/update_1.1.4_mysql.sql"/>
     <property name="updateMySQL116"  location="${installDir}/sql/update_1.1.6_mysql.sql"/>
     <property name="updateMySQL117"  location="${installDir}/sql/update_1.1.7_mysql.sql"/>
@@ -174,6 +176,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${importMySQL}"/>
         </sql>
+        <property name="portal.version" value="${importMySQLPortalVersion}"/>
     </target>
     
     <target name="PortalDbUpdateFrom300" if="useMysql">

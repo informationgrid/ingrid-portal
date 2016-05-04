@@ -53,6 +53,9 @@
             <action type="update" dev="wemove" issue="REDMINE-197">
                 IGE: Rename german field labels of accessConstraints, useConstraints and useLimitation.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-300">
+                Portal: When installing new portal database also check and update database version (MySQL).
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-137">
                 Portal: Remove deprecated tables from portal database.
             </action>

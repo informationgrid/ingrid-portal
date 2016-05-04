@@ -137,7 +137,7 @@
     
     
     <target name="UpdateDbManually" if="useOracle">
-        <echo>Bitte aktualisieren Sie die Oracle-Datenbank manuell!
+        <echo>Bitte erzeugen Sie die Oracle-Datenbank manuell!
         </echo>
     </target>
 
