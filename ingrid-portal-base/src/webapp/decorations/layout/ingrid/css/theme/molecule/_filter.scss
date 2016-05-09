@@ -22,7 +22,7 @@
 .filter__title__icon {
     fill: color(dim-grey);
     font-size: rem(12px);
-    transform: scaleY(-1);
+    transform: scaleY(1);
     
     .sidebar & {
         position: absolute;
@@ -31,7 +31,7 @@
     }
 
     .is-active > & {
-        transform: scaleY(1);
+        transform: scaleY(-1);
     }
 }
 
