@@ -47,7 +47,7 @@ function resizeIframe() {
 }
 
 // Change params
-function onParamChange(params, p){
+function onParamChange(params){
     var newParams = '?';
     var key = [];
     for (var i in params) {
