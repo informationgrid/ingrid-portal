@@ -14,13 +14,13 @@
 #end
 
 <div class="sidebar__widget js-accordion-multi">
-    <div class="sidebar__widget__title filter__title js-accordion-toggle #if($geothesaurusTopics || $geothesaurusSelectTopics)is-active#end">
+    <div id="facet_area_header" class="sidebar__widget__title filter__title js-accordion-toggle #if($geothesaurusTopics || $geothesaurusSelectTopics)is-active#end">
         $MESSAGES.getString("searchResult.facete.area.name.search")
          <svg class="filter__title__icon icon">
             <use xlink:href="#arrow-thick" >
         </svg>
     </div>
-    <div class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content #if(!$geothesaurusTopics && !$geothesaurusSelectTopics)is-hidden#end">
+    <div id="facet_area_content" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content #if(!$geothesaurusTopics && !$geothesaurusSelectTopics)is-hidden#end">
         #set ($action = $renderResponse.createActionURL())
         <form action="$action" method="post" name="geothesaurus_form">
             <div class="search-form ob-clear ob-flex">

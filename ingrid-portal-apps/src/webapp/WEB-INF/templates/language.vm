@@ -1,9 +1,9 @@
 #macro (getSelected $lang)
-    #if ($lang.equals($selectedLang)) is-active#end
+#if ($lang.equals($selectedLang))is-active#end
 #end
 
 #macro (getSelectedIcon)
-    #if ($lang.equals($selectedLang)) <svg class="icon"><use xlink:href="#tick"></use></svg>#end
+#if ($lang.equals($selectedLang)) <svg class="icon"><use xlink:href="#tick"></use></svg>#end
 #end
 
 #macro (getSelectedValue)
@@ -20,7 +20,7 @@
 
 #set ($action = $renderResponse.createActionURL())
 <div class="header__widget mq-hide-l">
-    <a href="#" class="header__widget__toggle js-header-toggle">
+    <a href="#" class="header__widget__toggle js-header-toggle language">
         <span class="header__widget__text">#getSelectedValue()</span>
         <svg class="header__widget__icon icon icon-xs"><use xlink:href="#arrow-thick"></use></svg>
     </a>
@@ -28,7 +28,7 @@
         <form action="$action" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
             #set($i=0)
             #foreach($lang in $languagesShort)
-                    <a class="metamenu__link link #getSelected($lang)" onclick="submitform($(this), '$lang')">#getSelectedIcon($lang)$ListTool.get($languagesNames, $i)</a>
+                    <a class="metamenu__link link #getSelected($lang) language_$lang" onclick="submitform($(this), '$lang')">#getSelectedIcon($lang)$ListTool.get($languagesNames, $i)</a>
                 #set($i=$i+1)
             #end
         </form>

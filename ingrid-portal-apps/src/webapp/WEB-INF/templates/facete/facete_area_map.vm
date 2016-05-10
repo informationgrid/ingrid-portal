@@ -1,12 +1,12 @@
 #set ($action = $renderResponse.createActionURL())
 <div class="sidebar__widget js-accordion-multi">
-    <div class="sidebar__widget__title filter__title js-accordion-toggle #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 1)is-active#end" onclick="resizeMap()">
+    <div id="facet_area_map_header" class="sidebar__widget__title filter__title js-accordion-toggle #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 1)is-active#end" onclick="resizeMap()">
         $MESSAGES.getString("searchResult.facete.area.map.search")
         <svg class="filter__title__icon icon">
             <use xlink:href="#arrow-thick"/>
         </svg>
     </div>
-    <div id="facet_map" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content #if(!$selectedMap.doMapCoords || $selectedMap.doMapCoords.size() == 0)is-hidden#end" >
+    <div id="facet_area_map_content" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content #if(!$selectedMap.doMapCoords || $selectedMap.doMapCoords.size() == 0)is-hidden#end" >
         <div id="map" style="height:320px;"></div>
         <form action="$action" method="post" name="facete_map_form">
             <input id="x1" name="x1" type="hidden" />

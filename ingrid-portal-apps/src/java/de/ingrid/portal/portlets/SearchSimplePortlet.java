@@ -265,6 +265,9 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 }
             }  
         }
+        if(page != null){
+            context.put( "page", page.getPath());
+        }
         super.doView( request, response );
     }
 

@@ -446,34 +446,6 @@
         </portlet-preferences>
     </portlet>
 
-    <portlet id="SearchSimpleResult">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_simple_result.vm</value>
-        </init-param>
-        <portlet-name>SearchSimpleResult</portlet-name>
-        <display-name>Einfache Suche Ergebnisliste</display-name>
-        <description>This portlet displayes a search box for the home AND main search page.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchSimplePortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle>
-        <portlet-preferences>
-            <preference>
-                <name>titleKey</name>
-                <value>searchSimple.title.result</value>
-            </preference>
-            <preference>
-                <name>helpKey</name>
-                <value>search-1</value>
-            </preference>
-        </portlet-preferences>
-    </portlet>
-    
     <portlet id="CategoryTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
