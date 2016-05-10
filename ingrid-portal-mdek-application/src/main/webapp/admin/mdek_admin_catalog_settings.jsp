@@ -48,7 +48,7 @@
             "ingrid/utils/Syslist",
             "ingrid/utils/List",
             "ingrid/utils/Catalog",
-            "ingrid/hierarchy/behaviours"
+            "ingrid/hierarchy/behaviours.user"
         ], function(array, lang, Deferred, registry, Select, CheckBox, NumberTextBox, on, query, dom, domClass, domConstruct, layoutCreator, dialog, init, UtilSyslist, UtilList, UtilCatalog, behaviour) {
             
             console.log("catalog settings");

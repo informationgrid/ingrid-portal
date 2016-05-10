@@ -22,7 +22,22 @@
   -->
 <project name="Ingrid-Portal Patches">
 
-    <target name="patchFiles" depends="StartInstallation">
+    <target name="patchFromVersion3.6.1.2">
+        <compareVersion value1="${oldVersion}" value2="3.6.1.2" prop="compResult"/>
+        <if>
+            <not>
+                <equals arg1="${compResult}" arg2="1" />
+            </not>
+            <then>
+                <echo>Copying behaviour.user.js</echo>
+                <copy file="patches/3.6.2/behaviours.user.js" todir="${installDir}/apache-tomcat/webapps/ingrid-portal-mdek-application/dojo-sources/release/lib/ingrid/hierarchy"/>
+                <copy file="patches/3.6.2/behaviours.user.js.map" todir="${installDir}/apache-tomcat/webapps/ingrid-portal-mdek-application/dojo-sources/release/lib/ingrid/hierarchy"/>
+                <copy file="patches/3.6.2/behaviours.user.js.uncompressed.js" todir="${installDir}/apache-tomcat/webapps/ingrid-portal-mdek-application/dojo-sources/release/lib/ingrid/hierarchy"/>
+            </then>
+        </if>
+    </target>
+
+    <target name="patchFiles" depends="StartInstallation, patchFromVersion3.6.1.2">
         <!-- patch order determined through depends-order -->
     </target>
 </project>

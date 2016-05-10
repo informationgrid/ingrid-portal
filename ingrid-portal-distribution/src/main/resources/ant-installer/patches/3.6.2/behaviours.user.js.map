@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"behaviours.user.js",
+"lineCount":2,
+"mappings":"A;AAsBAA,MAAA,sFAEG,QAAA,CAASC,CAAT,CAAeC,CAAf,QAEQD,EAAAE,MAAA,CAAWD,CAAX,IAFR,CAFH;",
+"sources":["behaviours.user.js.uncompressed.js"],
+"names":["define","lang","behaviours","mixin"]
+}

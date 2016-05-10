@@ -20,10 +20,23 @@
  * limitations under the Licence.
  * **************************************************#
  */
-define(["dojo/_base/declare", "dojo/_base/array", "dojo/_base/lang", "dojo/Deferred", "dojo/topic", "dojo/on", "dojo/aspect", "dojo/dom-class",
-        "dijit/registry", "dijit/Menu", "dijit/MenuItem", "dijit/MenuSeparator",
-        "ingrid/MenuActions", "ingrid/IgeActions",
-        "ingrid/utils/QA", "ingrid/utils/Security", "ingrid/utils/Tree",
+define(["dojo/_base/declare",
+        "dojo/_base/array",
+        "dojo/_base/lang", 
+        "dojo/Deferred", 
+        "dojo/topic", 
+        "dojo/on", 
+        "dojo/aspect", 
+        "dojo/dom-class",
+        "dijit/registry", 
+        "dijit/Menu", 
+        "dijit/MenuItem", 
+        "dijit/MenuSeparator",
+        "ingrid/MenuActions", 
+        "ingrid/IgeActions",
+        "ingrid/utils/QA", 
+        "ingrid/utils/Security", 
+        "ingrid/utils/Tree",
         "ingrid/message"
     ],
     function(declare, array, lang, Deferred, topic, on, aspect, domClass, registry, Menu, MenuItem, MenuSeparator,

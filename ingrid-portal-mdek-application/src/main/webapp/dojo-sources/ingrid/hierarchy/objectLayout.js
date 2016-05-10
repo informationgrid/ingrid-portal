@@ -55,7 +55,7 @@ define([
     "ingrid/layoutCreator",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/dirty",
-    "ingrid/hierarchy/behaviours",
+    "ingrid/hierarchy/behaviours.user",
     "ingrid/IgeEvents",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
@@ -2249,6 +2249,8 @@ define([
                             behaviour[behave].run();
                         }
                     }
+                }, function(error) {
+                    console.error("Error executing behvaiour:", error);
                 });
             }
         })();
