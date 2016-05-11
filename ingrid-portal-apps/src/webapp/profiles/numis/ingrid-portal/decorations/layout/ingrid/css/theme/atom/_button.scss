@@ -42,11 +42,25 @@
             &:active {
             background: color(numis-gray);
             border-color: color(numis-gray);
+            color: color(numis-blue) !important;
         }
     }
 
     &[disabled] {
         opacity: .4;
+    }
+}
+
+#btn_search {
+    background: color(numis-red);
+    border-color: color(numis-red);
+    
+    &:not([disabled]) {
+        &:hover,
+            &:focus,
+            &:active {
+            color: color(white) !important;
+        }
     }
 }
 

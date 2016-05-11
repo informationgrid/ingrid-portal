@@ -55,6 +55,10 @@
     &.is-active {
         color: color(numis-blue);
         background: color(numis-gray);
+        
+        .icon{
+            fill: color(numis-blue); 
+        }
     }
 
     &.is-active + .nav-desktop__dropdown {
@@ -67,7 +71,7 @@
         position: absolute;
         left: 50%;
         margin-left: -.5em;
-        fill: color(numis-blue); 
+        fill: color(white); 
     }
 }
 
