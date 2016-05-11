@@ -22,7 +22,7 @@
   -->
 <project name="Ingrid-Portal Patches">
 
-    <target name="patchFromVersion3.6.1.2">
+    <target name="patchFromVersion3.6.1.2" if="ige.installed">
         <compareVersion value1="${oldVersion}" value2="3.6.1.2" prop="compResult"/>
         <if>
             <not>
