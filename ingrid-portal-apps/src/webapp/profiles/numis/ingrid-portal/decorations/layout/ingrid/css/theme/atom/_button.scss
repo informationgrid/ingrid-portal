@@ -1,0 +1,126 @@
+/*
+ *  Bits: Button
+ *______________________*/
+
+
+
+
+%button--primary {
+    background: color(numis-blue);
+    color: color(white) !important;
+    font-weight: 700;
+}
+
+%button--secondary {
+    background: transparent;
+    color: color(numis-blue) !important;
+}
+
+.btn {
+    border: 1px solid color(numis-blue);
+    display: inline-table;
+    font-family: $font-brand;
+    max-width: 100%;
+    text-align: center;
+    transition: background .1s, color .1s;
+    vertical-align: top;
+
+    @include media(
+        $query: '640 >',
+        $css: (
+            min-width: rem(160px),
+        )
+    );
+}
+
+.btn--primary {
+    @extend %button--primary;
+
+    &:not([disabled]) {
+        &:hover,
+            &:focus,
+            &:active {
+            background: color(numis-gray);
+            border-color: color(numis-gray);
+        }
+    }
+
+    &[disabled] {
+        opacity: .4;
+    }
+}
+
+.btn--secondary {
+    @extend %button--secondary;
+
+    &:not([disabled]) {
+            &:hover,
+            &:focus,
+            &:active {
+            background: color(numis-blue);
+            color: color(white) !important;
+        }
+    }
+
+    &[disabled] {
+        color: color(gainsboro);
+        border: 1px solid color(gainsboro);
+        opacity: .9;
+    }
+}
+
+.btn--icon-transition {
+    max-width: 50px;
+
+    @include media(
+        $query: '< 480',
+        $css: (
+            padding: rem(4px 8px) 0
+        )
+    );
+
+    @include media(
+        $query: '480 - 640',
+        $css: (
+            padding: rem(10px 14px 6px) 
+        )
+    );
+
+    .icon{
+        fill: color(white);
+        font-size: rem(20px);
+        line-height: 1;
+        vertical-align: text-top;
+    }
+}
+
+.btn--icon {
+    padding: rem(12px 9px 14px);
+    min-width: 50px;
+
+    .icon{
+        fill: color(white);
+        font-size: rem(20px);
+        line-height: 1;
+        vertical-align: text-top;
+    }
+}
+
+.btn--block {
+    width: 100%;
+}
+
+.btn--tiny {
+    min-width: 0 !important;
+    padding: rem(5px 7px);
+}
+
+.btn--small {
+    font-size: rem(18px);
+    padding: rem(3px) 1em;
+}
+
+.btn--medium {
+    font-size: rem(20px);
+    padding: rem(8px) 1em;
+}

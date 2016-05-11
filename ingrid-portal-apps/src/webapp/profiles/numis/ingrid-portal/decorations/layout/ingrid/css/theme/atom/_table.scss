@@ -1,0 +1,153 @@
+/*
+ *  Atom: Table
+ *______________________*/
+
+
+
+
+table {
+    label {
+        color: inherit;
+    }
+}
+
+thead {
+    color: color(black);
+    background: color(white-smoke);
+    border-bottom: 2px solid color(numis-blue);
+    font-size: rem(14px);
+}
+
+tbody {
+    font-size: rem(14px);
+
+    tr {
+        border-bottom: none;
+    }
+}
+
+.table {
+    margin: rem(40px) 0;
+    overflow: auto;
+}
+
+.table__subheading {
+    border-bottom: 1px solid color(gainsboro);
+}
+
+.table__sort-toggle {
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover,
+    &.is-active {
+        background: color(gainsboro);
+    }
+
+    &.is-active {
+        .icon {
+            opacity: 1;
+        }
+    }
+
+    &.is-asc {
+        .icon {
+            transform: scaleY(-1);
+        }
+    }
+
+    &.is-desc {
+
+    }
+
+    .icon {
+        fill: color(numis-blue);
+        font-size: rem(12px);
+        opacity: 0;
+        vertical-align: middle;
+    }
+}
+
+.table--lined {
+    th{
+        &:first-child {
+            width: rem(320px);
+            font-weight:bold;
+            color: color(black);
+            border-right: none;
+        }
+    }
+
+    tr {
+        border-bottom: 1px solid color(gainsboro);
+    }
+}
+
+.table--lined2 {
+    border-top: 1px solid color(gainsboro);
+
+    th{
+        &:first-child {
+            width: rem(90px);
+            font-weight:bold;
+            color: color(black);
+            border-right: none;
+        }
+    }
+
+    tr {
+        border-bottom: 1px solid color(gainsboro);
+    }
+}
+
+.table--boxed,
+.table--striped {
+    th,
+    td{
+        padding-left: rem(12px);
+    }    
+}
+
+.table--boxed {
+    th,
+    td{
+        background: color(white-smoke);
+    }
+
+    th {
+        color: color(black);
+        width: rem(320px);
+    }
+
+    td {
+        border-left: 2px solid color(white);
+    }
+
+    tr {
+        border-bottom: 2px solid color(white);
+    }
+}
+
+.table--striped {
+    th,
+    td {
+        &:not(:first-child) {
+            border-left: 1px solid color(gainsboro);
+        }
+    }
+
+    tr {
+        &:nth-child(even) {
+            background: color(white-smoke);
+        }
+    }
+
+    tbody {
+        border-bottom: 1px solid color(gainsboro);
+    }
+}
+
+.picker__weekday{
+    text-align: center;
+    background: white;
+}

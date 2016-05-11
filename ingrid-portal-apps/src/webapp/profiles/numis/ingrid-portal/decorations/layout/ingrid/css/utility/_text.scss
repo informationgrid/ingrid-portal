@@ -1,0 +1,51 @@
+/*
+ *  Utility: Text
+ *______________________*/
+
+
+
+
+.tx-brand {
+    font-family: $font-brand;
+}
+
+.tx-center {
+    text-align: center !important;
+}
+
+.tx-right {
+    text-align: right !important;
+}
+.tx-right-s {
+    @include media(
+        $query: '640 >',
+        $css: (
+            text-align: right !important
+        )
+    );
+}
+
+.tx-upper {
+    text-transform: uppercase !important;
+}
+
+.tx-highlight {
+    color: color(numis-blue) !important;
+}
+
+.tx-light {
+    color: color(nobel) !important;
+}
+
+.tx-dark {
+    color: color(dim-grey) !important;
+}
+
+.tx-darker{
+    color: color(paris-m) !important;
+}
+
+.tx-darkest{
+    color: color(black) !important;
+}
+

@@ -1,0 +1,58 @@
+/*
+ *  Utility: Box Model
+ *______________________*/
+
+
+
+
+.bx-top-0 {
+    margin-top: 0 !important;
+}
+.bx-bot-0 {
+    margin-bottom: 0 !important;
+}
+
+.bx-top-xs {
+    margin-top: rem(10px) !important;
+}
+.bx-bot-xs {
+    margin-bottom: rem(10px) !important;
+}
+
+.bx-top-s {
+    margin-top: rem(20px) !important;
+}
+.bx-top-s-n {
+    margin-top: rem(-20px) !important;
+}
+.bx-bot-s {
+    margin-bottom: rem(20px) !important;
+}
+
+.bx-top-m {
+    margin-top: rem(30px) !important;
+}
+.bx-bot-m {
+    margin-bottom: rem(30px) !important;
+}
+
+.bx-top-l {
+    margin-top: rem(40px) !important;
+}
+.bx-bot-l {
+    margin-bottom: rem(40px) !important;
+}
+
+.bx-top-xl {
+    margin-top: rem(50px) !important;
+}
+.bx-bot-xl {
+    margin-bottom: rem(50px) !important;
+}
+
+.bx-padl-0 {
+    padding-left: 0 !important;
+}
+.bx-padr-0 {
+    padding-right: 0 !important;
+}

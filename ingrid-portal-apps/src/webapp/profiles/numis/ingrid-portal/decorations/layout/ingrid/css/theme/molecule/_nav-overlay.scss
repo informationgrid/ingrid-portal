@@ -1,0 +1,150 @@
+/*
+ *  Pieces/UI: Nav-Overlay
+ *______________________*/
+
+
+
+
+.nav-overlay {
+    background: color(numis-blue);
+    color: color(white);
+    font-family: $font-brand;
+    margin-top: rem(60px);
+    min-height: calc(100% - 60px);
+    padding-bottom: rem(60px);
+    position: absolute;
+    transform: translateX(-100%);
+    transition: transform .25s;
+    width: 100%;
+    z-index: 2;
+
+    @include media(
+        $query: '768 >',
+        $css: (
+            margin-top: rem(76px),
+            min-height: calc(100% - 76px)
+        )
+    );
+
+    @include media(
+        $query: '940 >',
+        $css: (
+            display: none
+        )
+    );
+
+    &.is-active {
+        transform: translateX(0);
+        transition: transform .5s;
+    }
+
+    a {
+        display: block;
+    }
+}
+
+.nav-overlay__icon {
+    left: rem(10px);
+    position: absolute;
+}
+
+.nav-overlay__item {
+    cursor: pointer;
+    font-weight: 700;
+    position: relative;
+
+    &.is-active {
+        .nav-overlay__icon {
+            display: none;
+
+            + .nav-overlay__icon {
+                display: block;
+            }
+        }
+    }
+
+    .nav-overlay__icon {
+        + .nav__overlay__icon {
+            display: none;
+        }
+    }
+
+    .icon {
+        color: inherit;
+        fill: currentColor;
+    }
+}
+
+.nav-overlay__item--level1 {
+    border-bottom: 1px solid color(numis-gray);
+    color: color(white);
+    font-size: rem(18px);
+    padding: rem(20px 36px);
+    text-transform: uppercase;
+
+    .no-touchevents &:hover,
+    &.is-active {
+        background: color(numis-gray);
+        color: color(white);
+    }
+
+    .icon {
+        top: rem(24px);
+    }
+}
+
+.nav-overlay__item--level2,
+.nav-overlay__item--level3 {
+    color: color(dim-grey);
+    padding: rem(15px 36px);
+
+    .no-touchevents &:hover,
+    &.is-active {
+        color: color(numis-blue);
+    }
+
+    .icon {
+        left: rem(14px);
+        top: rem(20px);
+    }
+}
+.nav-overlay__item--level2 {
+    border-bottom: 1px solid color(gainsboro);
+}
+
+.nav-overlay__item--level3 {
+    padding: rem(8px 16px);
+    position: relative;
+
+    & + & {
+        border-top: 1px solid color(gainsboro);
+    }
+
+    .icon {
+        fill: currentColor;
+        font-size: rem(12px);
+        left: 0;
+        top: rem(13px);
+        -ms-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+    }
+}
+
+.nav-overlay__level2 {
+    background: color(white-smoke);
+    font-size: 1rem;
+    padding: rem(10px);
+}
+
+.nav-overlay__level2__content {
+    background: color(white);
+    box-shadow: 0 0 5px 0 color(gainsboro);
+}
+
+.nav-overlay__level3 {
+    background: #f8f8f8;
+    font-family: $font-sans;
+    font-size: rem(14px);
+    padding-left: rem(36px);
+    border-bottom: 1px solid color(gainsboro);
+}

@@ -1,53 +1,87 @@
-</div>
-<div class="clearer"></div>
-</div>
-
-<div id="footermarginalcontainer">
-  <div id="footermarginal">
-    <!-- portlets go here -->
-#defineUrlParams()
-##    <img src="#GetPageResource('images/arrow_up.gif')" alt="Pfeil nach oben" />&nbsp;<a href="${jetspeed.getAbsoluteUrl(${site.getPageOrTemplate().url})}${urlParams}">nach oben</a>
-  </div>
-</div>
-<div class="clearer"></div>
-
-<!-- footer block -->
-<div id="footercontainer">
-  <div id="footercontent">
-    <!-- portlets go here -->
-#set($footerMenu = $site.getMenu("footer-menu"))
-#if(!$footerMenu.empty)
-  #includeFooterNavigation($footerMenu)
+#if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
+        <footer class="footer">
+            <div class="ob-box-padded ob-box-center ob-clear">
+                <div class="footer__top">
+                    <a href="#">
+                        <img class="footer__logo" src="#GetPageResource("images/logo.gif")"></img>
+                    </a>
+                    <p class="copyright">© Niedersächsisches Ministerium für Umwelt, Energie und Klimaschutz</p>
+                </div>
+            </div>
+            <hr class="bx-top-0 bx-bot-0">
+            <div class="grid">
+                <div class="column column--3-4-xl">
+                    <div class="ob-box-padded ob-box-center ob-clear">
+                        <div class="footer__section">
+                        #set($footerMenu = $site.getMenu("footer-menu"))
+                        #if(!$footerMenu.empty)
+                          #includeFooterNavigation($footerMenu)
+                        #end
+                        </div>
+                    </div>
+                </div>
+                <div class="column column--1-4-xl">
+                    <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0">
+                    <div class="ob-box-padded ob-box-center ob-clear">
+                        <div class="footer__section">
+                            <div class="footer__bottom"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__top-link mq-show-l js-top">nach oben</div>
+        </footer>
 #end
-<img align="right" src="#GetPageResource('images/logo-niedersachsen.png')" alt="Niedersachsen" />
-<br>
-    $MESSAGES.getString('ingrid.page.copyright')<br />
-
-    $MESSAGES.getString('ingrid.page.rights')<br /><br />
-<br />
-<br />
-</div>
-</div>
-
-<!-- Piwik -->
-<script type="text/javascript">
-var domain = document.domain;
-if(domain == "numis.niedersachsen.de"){
-	var pkBaseURL = (("https:" == document.location.protocol) ? "https://numis.niedersachsen.de/piwik/" : "http://numis.niedersachsen.de/piwik/");
-	document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-}
-</script>
-<script type="text/javascript">
-	try {
-		var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
-		piwikTracker.trackPageView();
-		piwikTracker.enableLinkTracking();
-	} catch( err ) {
-	}
-</script><noscript><p><img src="http:/numis.niedersachsen.de/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
-<!-- End Piwik Tag -->
-
-<script> if (document.documentMode == 7) alert("$MESSAGES.getString('ingrid.page.compatibility')") </script>
-
-</body>
+        <!-- Popup -->
+        <div class="popup">
+            <header class="popup__header">
+                <div class="popup__close link--alt ob-flt-r js-popup-close">
+                    <svg class="icon"><use xlink:href="#cross" /></svg>
+                    <span class="mq-hide-m"></span>
+                </div>
+                <h4 class="popup__title bx-top-0 bx-bot-0">$MESSAGES.getString("ingrid.page.help")</h4>
+            </header>
+            <section class="popup__content ob-container">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p><a href="#">Read more</a></p>
+            </section>
+        </div>
+        
+        <!-- Global scripts -->
+        <script src="#GetPageResource("scripts/all.js")"></script>
+        
+        <!-- Popup -->
+        <script src="#GetPageResource("scripts/popup.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.date.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/legacy.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/translations/de_DE.js")"></script>
+        <script>
+            $('.datepicker').pickadate()
+        </script>
+        <!-- Accordion -->
+        <script src="#GetPageResource("scripts/accordion.js")"></script>
+        <script>
+        $('.js-accordion').accordion();
+        $('.js-accordion-multi').accordion({
+            multi: true
+        });
+        </script>
+        <!-- Tabs -->
+        <script src="#GetPageResource("scripts/tabs.js")"></script>
+        <script>
+            $('.js-tabs').tabs();
+        </script>
+        <!-- Selection -->
+        <script src="#GetPageResource("scripts/selection.js")"></script>
+        <script>
+            $('.js-selection').selection();
+        </script>
+        <!-- Table Sort -->
+        <script src="#GetPageResource("scripts/table.sortable.js")"></script>
+        <script>
+            $('.js-table-sortable').sortable();
+        </script>
+    </body>
 </html>

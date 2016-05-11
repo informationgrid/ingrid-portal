@@ -1,0 +1,225 @@
+/*
+ *  Atoms: Fields
+ *______________________*/
+
+
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+select,
+textarea,
+.field-toggle__label--boxed {
+    border: 1px solid color(paris-m);
+    color: color(black);
+    font-size: rem(14px);
+    padding: rem(8px);
+    &::-webkit-input-placeholder {color:#333;}
+    &:-moz-placeholder           {color:#333;}
+    &::-moz-placeholder          {color:#333;}
+    &:-ms-input-placeholder      {color:#333;}
+}
+
+input[type="text"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+
+    &:focus {
+        outline: 2px solid color(numis-blue);
+    }
+
+    &:disabled {
+        background: color(faded);
+    }
+}
+
+input[type="date"] {
+    height: rem(36px);
+}
+
+label {
+    color: color(black);
+    font-size: inherit;
+
+    .media__obj & {
+        @include media(
+        $query: '640 >',
+            $css: (
+            text-align: right
+            )
+            );
+    }
+}
+
+.field {
+    margin-bottom: rem(30px);
+
+    label + & {
+        margin-top: rem(10px);
+    }
+
+    + small {
+        margin: rem(-20px 0 30px);
+    }
+
+    + .picker{
+        margin-top: rem(-20px);
+    }
+
+    + .media{
+        margin-top: rem(-20px);
+    }
+}
+
+.field--large {
+    @include media(
+    $query: '480 >',
+        $css: (
+        font-size: rem(16px) !important,
+        padding: rem(15px) !important
+        )
+        );
+}
+
+.field--narrow {
+    max-width: rem(220px);
+}
+
+.field--inline {
+    display: inline-block;
+}
+
+.field--error {
+    border: 2px solid color(red) !important;
+}
+
+.field--success {
+    border: 2px solid color(numis-blue) !important;
+}
+
+.field__icon {
+    font-size: rem(20px);
+    margin: rem(11px);
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    + input {
+        padding-right: rem(40px);
+    }
+}
+
+.field-toggle {
+    display: inline-block;
+    position: relative;
+
+    &:not(:last-child) {
+        margin-right: rem(12px);
+        margin-bottom: rem(12px);
+    }
+
+    input {
+        display: none;
+    }
+
+    .icon {
+        fill: color(dim-grey);
+    }
+}
+
+.field-toggle--check {
+    .icon {
+        font-size: rem(12px);
+        margin: 1px;
+    }
+}
+
+.field-toggle--check-mobile{
+    @include media(
+    $query: '< 480',
+        $css: (
+        width: 100% 
+        )
+        );
+}
+
+.field-toggle--radio {
+    .icon {
+        font-size: rem(8px);
+        margin: 3px;
+    }
+}
+
+.field-toggle__icon {
+    background: color(white);
+    border: 1px solid color(nobel);
+    height: rem(16px);
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: rem(16px);
+}
+
+.field-toggle__label {
+    font-weight: 400;
+    position: relative;
+
+    .icon {
+        opacity: 0;
+    }
+}
+
+.field-toggle__label--boxed {
+    background: color(faded);
+    min-width: rem(150px);
+    padding: rem(9px 9px 9px 32px);
+
+    .field-toggle__icon {
+        left: rem(9px);
+        top: rem(9px);
+    }
+}
+
+.field-toggle__label--highlight {
+    margin-left: 2px;
+    padding-left: rem(24px);
+
+    .icon {
+        fill: color(numis-blue);
+    }
+}
+
+input:checked {
+    + .field-toggle__label--boxed,
+    + .field-toggle__label--highlight {
+        color: color(black);
+
+        .icon {
+            opacity: 1;
+        }
+    }
+
+    + .field-toggle__label--boxed {
+        background: color(light-grey);
+        border-color: color(paris-m);
+
+        .field-toggle__icon {
+            border-color: color(dim-grey);
+        }
+    }
+
+    + .field-toggle__label--highlight{     
+        .field-toggle__icon {
+            border-color: color(numis-blue);
+            border-radius: 2px;
+            box-shadow: 0 0 0 1px color(numis-blue);
+        }
+
+        .icon {
+            opacity: 1;
+        }
+    }
+}
+

@@ -1,0 +1,97 @@
+/*
+ *  Pieces/UI: Popup
+ *______________________*/
+
+
+
+
+.popup {
+    box-shadow: 0 5px 45px rgba(color(black), .5);
+    left: 0;
+    max-height: 100%;
+    max-width: 100%;
+    position: fixed;
+    top: 0;
+    -ms-transform: translateY(-150%);    
+    transform: translateY(-150%);
+    transition: transform .2s;
+    width: rem(480px);
+    z-index: 5;
+
+    @include media(
+        $query: '480 >',
+        $css: (
+            left: 50%,
+            margin-left: rem(-240px),
+        )
+    );
+
+    &.is-open {
+    -ms-transform: translateY(0);    
+        transform: translateY(0);
+    }
+}
+
+.popup__header {
+    background: color(white-smoke);
+    border-bottom: 2px solid color(numis-blue);
+    padding: rem(10px 16px);
+
+    @include media(
+        $query: '480 >',
+        $css: (
+            padding: rem(12px 18px)
+        )
+    );
+}
+
+.popup__title {
+    overflow: hidden;
+}
+
+.popup__close {
+    cursor: pointer;
+    font-size: rem(14px);
+    font-weight: 700;
+    margin: rem(2px 0 0 20px);
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        height: 150%;
+        left: -25%;
+        top: -25%;
+        width: 150%;
+    }
+
+    &:hover {
+        color: color(black);
+    }
+
+    .icon {
+        fill: currentColor;
+        font-size: rem(18px);
+        position: relative;
+        top: 1px;
+
+        @include media(
+            $query: '480 >',
+            $css: (
+                font-size: rem(12px)
+            )
+        );
+    }
+}
+
+.popup__content {
+    background: color(white);
+    padding: rem(16px);
+
+    @include media(
+        $query: '480 >',
+        $css: (
+            padding: rem(12px 18px 18px)
+        )
+    );
+}
