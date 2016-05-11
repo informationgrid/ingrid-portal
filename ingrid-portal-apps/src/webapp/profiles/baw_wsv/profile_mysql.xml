@@ -80,7 +80,7 @@
                     	<value>/ingrid-portal-apps/cms/html/tools-uebersicht.html</value>
                     </preference>
                     <preference name="HEIGHT">
-                    	<value>650</value>
+                    	<value>890</value>
                     </preference>
                     <preference name="WIDTH">
                     	<value>883</value>
@@ -104,7 +104,7 @@
                     	<value>https://atlas.wsv.bvbs.bund.de/visualist/</value>
                     </preference>
                     <preference name="HEIGHT">
-                    	<value>900</value>
+                    	<value>1024</value>
                     </preference>
                     <preference name="WIDTH">
                     	<value>883</value>
