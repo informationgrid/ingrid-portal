@@ -597,7 +597,6 @@
         <elseif>
             <equals arg1="${portal.version}" arg2=",3.7.0" />
             <then>
-            <then>
                 <echo>Ihre Datenbank ist aktuell!</echo>
             </then>
         </elseif>
