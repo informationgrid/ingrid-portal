@@ -49,12 +49,13 @@ define([
     "ingrid/utils/List",
     "ingrid/utils/Grid",
     "ingrid/utils/Thesaurus",
+    "ingrid/utils/Catalog",
     "ingrid/message",
     "ingrid/dialog",
     "ingrid/layoutCreator",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/dirty",
-    "ingrid/hierarchy/behaviours",
+    "ingrid/hierarchy/behaviours.user",
     "ingrid/IgeEvents",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
@@ -62,7 +63,7 @@ define([
 ], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, validate,
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
-            UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus,
+            UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog,
             message, dialog, layoutCreator, rules, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
 
         return declare(null, {
@@ -139,32 +140,31 @@ define([
 
                 // apply special validation for necessary components
                 console.debug("apply Validations");
+                var self = this;
                 defAddFields.then(this.applyDefaultConnections)
-                .then(setVisibilityOfFields);
+                .then(setVisibilityOfFields)
+                .then(igeEvents.selectUDKClass) // update view according to initial chosen class
+                .then(function() {
+                    // add a '*' to all labels and display them if an element is required 
+                    query(".outer label", "contentFrameBodyObject").forEach(function(item) {
+                        item.innerHTML = lang.trim(item.innerHTML) + '<span class=\"requiredSign\">*</span>';
+                    });
+                    
+                    // mark all the content of a special marked container 
+                    query(".oneClickMark", "dataFormContainer").on("click", function() {
+                        UtilUI.selectTextInContainer( this );
+                    });
 
-                // update view according to initial chosen class
-                console.debug("select class");
-                igeEvents.selectUDKClass();
+                    console.debug("toggle");
+                    // show only required fields initially
+                    igeEvents.toggleFields(undefined, "showRequired");
+                    UtilUI.updateBlockerDivInfo("createObjects");
 
-                // add a '*' to all labels and display them if an element is required 
-                query(".outer label", "contentFrameBodyObject").forEach(function(item) {
-                    item.innerHTML = lang.trim(item.innerHTML) + '<span class=\"requiredSign\">*</span>';
+                    // tell the calling function that we are finished and can proceed
+                    self.deferredCreation.resolve();
+
+                    domClass.remove("loadBlockDiv", "blockerFull");
                 });
-                
-                // mark all the content of a special marked container 
-                query(".oneClickMark", "dataFormContainer").on("click", function() {
-                    UtilUI.selectTextInContainer( this );
-                });
-
-                console.debug("toggle");
-                // show only required fields initially
-                igeEvents.toggleFields(undefined, "showRequired");
-                UtilUI.updateBlockerDivInfo("createObjects");
-
-                // tell the calling function that we are finished and can proceed
-                this.deferredCreation.resolve();
-
-                domClass.remove("loadBlockDiv", "blockerFull");
 
             },
 
@@ -2233,7 +2233,25 @@ define([
                 aspect.after(UtilGrid.getTable("ref6BaseDataLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 
                 // activate default behaviour
-                behaviour.inspireIsoConnection.run();
+                UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                    // mark behaviours with override values
+                    array.forEach(data, function(item) {
+                        behaviour[item.id].override = item.active;
+                    });
+                    for (var behave in behaviour) {
+                        if (!behaviour[behave].title) continue;
+                        // run behaviour if 
+                        // 1) activated by default and not overriden
+                        // 2) activate if explicitly overriden
+                        if ((behaviour[behave].defaultActive && behaviour[behave].override === undefined)
+                                || (behaviour[behave].override === true)) {
+                            console.debug("execute behaviour: " + behave);
+                            behaviour[behave].run();
+                        }
+                    }
+                }, function(error) {
+                    console.error("Error executing behvaiour:", error);
+                });
             }
         })();
 

@@ -24,9 +24,8 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/aspect",
-    "ingrid/dialog",
     "ingrid/message"
-], function(declare, array, aspect, dialog, message) {
+], function(declare, array, aspect, message) {
 
     // make var global for backward compatibility
     UtilGrid = declare(null, {
@@ -205,7 +204,8 @@ define([
 
             // we do not allow to delete from this table, because links only go: service -> data
             if (grid == "ref1ServiceLink") {
-                dialog.show( message.get( "dialog.general.info" ), message.get( "dialog.cannot.modify.table" ), dialog.INFO );
+                var dlg = require("ingrid/dialog");
+                dlg.show( message.get( "dialog.general.info" ), message.get( "dialog.cannot.modify.table" ), dlg.INFO );
                 return;
             }
 

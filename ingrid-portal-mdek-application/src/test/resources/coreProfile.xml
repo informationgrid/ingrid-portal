@@ -621,13 +621,13 @@
         <id>availability</id>
         <controls>
             <legacyControl>
-                <id>uiElementN025</id><!-- Zugangsbeschränkungen* -->
+                <id>uiElementN025</id><!-- Zugriffsbeschränkungen* -->
                 <isMandatory>true</isMandatory>
                 <isVisible>optional</isVisible>
                 <scriptedProperties><![CDATA[]]></scriptedProperties>
             </legacyControl>
             <legacyControl>
-                <id>uiElementN026</id><!-- Nutzungsbedingungen* -->
+                <id>uiElementN026</id><!-- Anwendungseinschränkungen* -->
                 <isMandatory>true</isMandatory>
                 <isVisible>optional</isVisible>
                 <scriptedProperties><![CDATA[]]></scriptedProperties>

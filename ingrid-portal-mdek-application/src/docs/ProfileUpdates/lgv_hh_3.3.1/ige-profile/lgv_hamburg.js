@@ -283,7 +283,7 @@ dojo.connect(dijit.byId("isOpenData"), "onClick", function() {
         // set publication condition to Internet
         dijit.byId("extraInfoPublishArea").attr("value", 1, true);
 
-        // set Nutzungsbedingungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
+        // set Anwendungseinschränkungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
         var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
         dijit.byId("availabilityUseConstraints").attr("value", entryNameLicense, true);
 

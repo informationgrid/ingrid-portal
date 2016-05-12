@@ -38,8 +38,9 @@
             "ingrid/utils/PageNavigation",
             "ingrid/utils/List",
             "ingrid/utils/UI",
+            "ingrid/utils/String",
             "ingrid/dialog"
-        ], function(on, aspect, dom, layoutCreator, LoadingZone, UtilStore, navigation, UtilList, UtilUI, dialog) {
+        ], function(on, aspect, dom, layoutCreator, LoadingZone, UtilStore, navigation, UtilList, UtilUI, UtilString, dialog) {
 
             var resultsPerPage = 20;
             var pageNav = new navigation.PageNavigation({
@@ -139,8 +140,8 @@
                         
                     }
                     else {
-                        dom.byId("snsUpdateProcessStart").innerHTML = jobInfo.startTime;
-                        dom.byId("snsUpdateProcessEnd").innerHTML = jobInfo.endTime;
+                        dom.byId("snsUpdateProcessStart").innerHTML = UtilString.getDateString(jobInfo.startTime, "EEEE, dd. MMMM yyyy HH:mm:ss");
+                        dom.byId("snsUpdateProcessEnd").innerHTML = UtilString.getDateString(jobInfo.endTime, "EEEE, dd. MMMM yyyy HH:mm:ss");
                         dom.byId("snsUpdateProcessNumEntities").innerHTML = jobInfo.numEntities;
                     }
                     
@@ -171,7 +172,7 @@
                         dom.byId("snsUpdateProcessStatus").innerHTML = jobInfo.description;
                     }
                     
-                    dom.byId("snsUpdateProcessStart").innerHTML = jobInfo.startTime;
+                    dom.byId("snsUpdateProcessStart").innerHTML = UtilString.getDateString(jobInfo.startTime, "EEEE, dd. MMMM yyyy HH:mm:ss");
                     dom.byId("snsUpdateProcessEnd").innerHTML = "";
                     dom.byId("snsUpdateProcessNumEntities").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
                 }

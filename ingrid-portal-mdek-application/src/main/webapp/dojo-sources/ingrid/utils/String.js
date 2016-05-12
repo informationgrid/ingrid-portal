@@ -23,9 +23,10 @@
 define([
     "dojo/_base/declare",
     "dojo/dom-construct",
+    "dojo/date/locale",
     "ingrid/message",
     "ingrid/utils/General"
-], function(declare, domConstruct, message, UtilGeneral) {
+], function(declare, domConstruct, locale, message, UtilGeneral) {
     return declare(null, {
 
 
@@ -58,7 +59,7 @@ define([
 
         getDateString: function(dateLong, pattern) {
             if (dateLong === undefined) dateLong = new Date();
-            return dojo.date.locale.format(dateLong, {
+            return locale.format(dateLong, {
                 selector: "date",
                 datePattern: pattern
             });

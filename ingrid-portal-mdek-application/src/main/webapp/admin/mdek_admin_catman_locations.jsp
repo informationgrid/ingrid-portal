@@ -38,8 +38,9 @@ require([
     "ingrid/utils/PageNavigation",
     "ingrid/utils/List",
     "ingrid/utils/UI",
+    "ingrid/utils/String",
     "ingrid/dialog"
-], function(on, aspect, dom, layoutCreator, LoadingZone, UtilStore, navigation, UtilList, UtilUI, dialog) {
+], function(on, aspect, dom, layoutCreator, LoadingZone, UtilStore, navigation, UtilList, UtilUI, UtilString, dialog) {
     
         var resultsPerPage = 20;
         var pageNav = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dom.byId("snsLocationUpdateResultInfo"), pagingSpan:dom.byId("snsLocationUpdateResultPaging") });
@@ -131,8 +132,8 @@ require([
         			dom.byId("snsLocationUpdateProcessNumEntities").innerHTML = "";
         
         		} else {
-        			dom.byId("snsLocationUpdateProcessStart").innerHTML = jobInfo.startTime;
-        			dom.byId("snsLocationUpdateProcessEnd").innerHTML = jobInfo.endTime;
+        			dom.byId("snsLocationUpdateProcessStart").innerHTML = UtilString.getDateString(jobInfo.startTime, "EEEE, dd. MMMM yyyy HH:mm:ss");
+        			dom.byId("snsLocationUpdateProcessEnd").innerHTML = UtilString.getDateString(jobInfo.endTime, "EEEE, dd. MMMM yyyy HH:mm:ss");
         			dom.byId("snsLocationUpdateProcessNumEntities").innerHTML = jobInfo.numEntities;
         		}
         
@@ -149,7 +150,7 @@ require([
         		//dojo.html.setVisibility("cancelSNSLocationUpdateProcessButton", true);
                 dom.byId("cancelSNSLocationUpdateProcessButton").style.visibility = "visible";
         		dom.byId("snsLocationUpdateProcessInfo").innerHTML = "<fmt:message key='dialog.admin.catalog.management.locations.updateCurrentProcessInfo' />";
-        		dom.byId("snsLocationUpdateProcessStart").innerHTML = jobInfo.startTime;
+        		dom.byId("snsLocationUpdateProcessStart").innerHTML = UtilString.getDateString(jobInfo.startTime, "EEEE, dd. MMMM yyyy HH:mm:ss");
         		dom.byId("snsLocationUpdateProcessEnd").innerHTML = "";
         		dom.byId("snsLocationUpdateProcessNumEntities").innerHTML = jobInfo.numProcessedEntities + " / " + jobInfo.numEntities;
         	}

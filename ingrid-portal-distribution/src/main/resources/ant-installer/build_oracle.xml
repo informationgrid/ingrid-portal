@@ -54,6 +54,7 @@
     <property name="updateOracle331" location="${installDir}/sql/update_3.3.1_oracle.sql"/>
     <property name="updateOracle341" location="${installDir}/sql/update_3.4.1_oracle.sql"/>
     <property name="updateOracle361" location="${installDir}/sql/update_3.6.1_oracle.sql"/>
+    <property name="updateOracle362" location="${installDir}/sql/update_3.6.2_oracle.sql"/>
     <property name="updateOracle370" location="${installDir}/sql/update_3.7.0_oracle.sql"/>
     
 
@@ -137,7 +138,7 @@
     
     
     <target name="UpdateDbManually" if="useOracle">
-        <echo>Bitte aktualisieren Sie die Oracle-Datenbank manuell!
+        <echo>Bitte erzeugen Sie die Oracle-Datenbank manuell!
         </echo>
     </target>
 
@@ -199,6 +200,7 @@
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
             <transaction src="${updateOracle361}"/>
+            <transaction src="${updateOracle362}"/>
             <transaction src="${updateOracle370}"/>
         </sql>
     </target>
@@ -225,6 +227,7 @@
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
             <transaction src="${updateOracle361}"/>
+            <transaction src="${updateOracle362}"/>
             <transaction src="${updateOracle370}"/>
         </sql>
     </target>
@@ -250,6 +253,7 @@
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
             <transaction src="${updateOracle361}"/>
+            <transaction src="${updateOracle362}"/>
             <transaction src="${updateOracle370}"/>
         </sql>
     </target>
@@ -271,6 +275,7 @@
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
             <transaction src="${updateOracle361}"/>
+            <transaction src="${updateOracle362}"/>
             <transaction src="${updateOracle370}"/>
         </sql>
     </target>
@@ -291,6 +296,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle341}"/>
             <transaction src="${updateOracle361}"/>
+            <transaction src="${updateOracle362}"/>
             <transaction src="${updateOracle370}"/>
         </sql>
     </target>
@@ -317,13 +323,31 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle361}"/>
+            <transaction src="${updateOracle362}"/>
             <transaction src="${updateOracle370}"/>
         </sql>
     </target>
-    
-
-    <target name="PortalDbUpdateFrom361" if="useOracle">
+	
+	<target name="PortalDbUpdateFrom361" if="useOracle">
         <echo>Oracle-Portal Daten importieren (ab 3.6.1)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateOracle362}"/>
+        </sql>
+    </target>
+
+    <target name="PortalDbUpdateFrom362" if="useOracle">
+        <echo>Oracle-Portal Daten importieren (ab 3.6.2)
         </echo>
 
         <!-- Import data to database -->

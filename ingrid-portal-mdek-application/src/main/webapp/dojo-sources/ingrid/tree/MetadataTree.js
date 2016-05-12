@@ -160,21 +160,17 @@ define("ingrid/tree/MetadataTree", [
         },
         
         refreshChildren: function(/*TreeNode*/node) {
-            // reinitialize for refresh
-            node._expandDeferred = undefined;
-            node._loadDeferred = undefined;
-            
-            // remove node from cache so that it is requested from the server again
-            for(var id in this.model.childrenCache){
-                delete this.model.childrenCache[id];
-            }
-            
-            // expand node and fetch children
             var self = this;
-            
-            return node.setChildItems([])
-            .then(function() { return self.model.store.getChildren(node.item); })
-            .then(lang.hitch(node, node.setChildItems));
+            return this.model.store.getChildren(node.item).then(function(updatedChildren) {
+                try {
+                    array.forEach(updatedChildren, function(copiedNode) {
+                        self.model.store.put(copiedNode);
+                    });
+                } catch(ex) {
+                    console.error( "Error during updating tree nodes", ex);
+                    displayErrorMessage(ex);
+                }
+            });
         },
 
         _markLoadedNode: function(/*TreeNode*/node) {

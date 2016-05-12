@@ -328,7 +328,7 @@ define([
                             return;
                         }
                     }
-
+                    
                     if (invalidPaste) {
                         // If an invalid target is selected (same node or child of node to cut)
                         dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
@@ -343,8 +343,9 @@ define([
                             array.forEach(tree.nodesToCut, function(nodeItem) {
                                 UtilTree.deleteNode("dataTree", nodeItem);
                             });
-                            //tree.model.store.save();
+
                             tree.refreshChildren(targetNode);
+                            
                             if (appType == "A") {
                                 array.forEach(tree.nodesToCut, function(nodeToCut) {
                                     // If we moved an address from/to the freeAddress part of the tree, the icon has to be updated
@@ -426,8 +427,9 @@ define([
                     // A node can be inserted everywhere. Start the paste request.
                     deferred = new Deferred();
                     deferred.then(function() {
-                        // Copy was successful. Update the tree.
+                        // Copy was successful. Update the tree manually.
                         tree.refreshChildren(targetNode);
+                        
                         tree.doPaste();
                         // If copy was unsuccessful notify user and do nothing.
                     }, displayErrorMessage);

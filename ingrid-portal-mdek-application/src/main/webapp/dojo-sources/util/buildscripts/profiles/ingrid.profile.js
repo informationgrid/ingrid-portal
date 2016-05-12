@@ -74,7 +74,7 @@ var profile = (function(){
         layers: {
             "ingrid/ingrid": {
                 include: ["dojo/dojo", "dijit/layout/TabContainer", "ingrid/grid/CustomGrid", "ingrid/init"],
-                //exclude: [ "ingrid/IgeActions", "ingrid/IgeEvents", "ingrid/hierarchy/rules", "ingrid/hierarchy/validation", "ingrid/hierarchy/requiredChecks" ],
+                exclude: [ "ingrid/hierarchy/behaviours.user" ],
                 customBase: true,
                 boot: true
             }/*,
