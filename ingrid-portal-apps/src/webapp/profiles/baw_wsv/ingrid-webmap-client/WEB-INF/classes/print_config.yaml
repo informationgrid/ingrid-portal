@@ -50,34 +50,83 @@ layouts:
     mainPage:
       pageSize: A4
       rotation: true
+      marginLeft: 70
+      marginRight: 70
       header:
-        height: 50
+        height: 30
         items:
-          - !text
-            font: Helvetica
-            fontEncoding: Cp1252
-            fontSize: 30
-            align: center
-            text: '${mapTitle}'
+            - !columns
+              config:
+                 borderWidthBottom: 2
+                 borderColorBottom: black
+                 cells:
+                   - paddingTop: 5
+                   - paddingBottom: 5
+              items:
+                 - !text
+                   font: Helvetica
+                   fontEncoding: Cp1252
+                   fontSize: 12
+                   align: left
+                   text: '${mapTitle}'
+                 - !image
+                   maxWidth: 70
+                   maxHeight: 25
+                   align: right
+                   url: http://localhost:8080/ingrid-webmap-client/frontend/images/geoviewer.png
       items:
-        - !image
-          spacingAfter: 15
-          rotation: '${rotation}'
-          maxWidth: 50
-          maxHeight: 50
-          align: left
-          url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
-        - !map
-          spacingAfter: 15
-          width: 440
-          height: 483
-        - !scalebar
-          type: bar
-          units: m
-          maxSize: 100
-          barBgColor: white
-          fontSize: 8
-          align: right
+        - !columns
+          spacingAfter: 10
+          config:
+             cells:
+               - paddingTop: 10
+          items:
+             - !map
+               width: 440
+               height: 483
+        - !columns
+          spacingAfter: 30
+          items:
+            - !scalebar
+              type: bar
+              units: m
+              maxSize: 100
+              barBgColor: white
+              fontSize: 8
+              align: left
+            - !image
+              rotation: '${rotation}'
+              maxWidth: 30
+              maxHeight: 30
+              align: right
+              url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
+        - !columns
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - row: 0
+                backgroundColor: #E7EFF7
+          items:
+            - !text
+              font: Helvetica
+              fontEncoding: Cp1252
+              fontSize: 10
+              text: 'Kommentar:'
+        - !columns
+          spacingAfter: 30
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+          items:
+            - !text
+              font: Helvetica
+              fontEncoding: Cp1252
+              fontSize: 8
+              text: '${comment}'
         - !legends
           maxHeight: 0
           maxWidth: 0
@@ -92,25 +141,30 @@ layouts:
           classFont: Helvetica
           classFontSize: 8
           fontEncoding: Cp1252
-        - !text
-          font: Helvetica
-          fontEncoding: Cp1252
-          text: '${comment}'
       footer:
         height: 30
         items:
           - !columns
+            config:
+              borderWidthTop: 1
+              borderColorTop: black
+              cells:
+                - paddingTop: 5
             items:
               - !text
                 font: Helvetica
                 fontSize: 9
                 align: left
-                text: '${now MM.dd.yyyy}'
+                text: '${now dd.MM.yyyy}'
               - !text
                 font: Helvetica
                 fontSize: 9
-                align: right
-                text: 'Seite ${pageNum} von ${pageTot}'
+                align: center
+                text: '${mapTitle} - ${pageNum} -'
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: center
   A4 (quer):
     metaData:
       author: 'InGrid Map Client'
@@ -119,34 +173,89 @@ layouts:
       pageSize: A4
       rotation: true
       landscape: true
+      marginLeft: 70
+      marginRight: 70
       header:
-        height: 50
+        height: 30
         items:
-          - !text
-            font: Helvetica
-            fontEncoding: Cp1252
-            fontSize: 30
-            align: center
-            text: '${mapTitle}'
+            - !columns
+              config:
+                 borderWidthBottom: 2
+                 borderColorBottom: black
+                 cells:
+                   - paddingTop: 5
+                   - paddingBottom: 5
+              items:
+                 - !text
+                   font: Helvetica
+                   fontEncoding: Cp1252
+                   fontSize: 12
+                   align: left
+                   text: '${mapTitle}'
+                 - !image
+                   maxWidth: 70
+                   maxHeight: 25
+                   align: right
+                   url: http://localhost:8080/ingrid-webmap-client/frontend/images/geoviewer.png
       items:
-        - !image
-          spacingAfter: 5
-          rotation: '${rotation}'
-          maxWidth: 50
-          maxHeight: 50
-          align: left
-          url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
-        - !map
-          spacingAfter: 5
-          width: 483
-          height: 400
-        - !scalebar
-          type: bar
-          units: m
-          maxSize: 100
-          barBgColor: white
-          fontSize: 8
-          align: right
+        - !columns
+          spacingAfter: 10
+          config:
+             cells:
+               - paddingTop: 10
+          items:
+             - !map
+               width: 483
+               height: 400
+               align: left
+        - !columns
+          spacingAfter: 30
+          items:
+            - !scalebar
+              type: bar
+              units: m
+              maxSize: 100
+              barBgColor: white
+              fontSize: 8
+              align: left
+            - !image
+              rotation: '${rotation}'
+              maxWidth: 35
+              maxHeight: 35
+              align: right
+              url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
+        - !columns
+          absoluteX: 570
+          absoluteY: 530
+          width: 200
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - row: 0
+                backgroundColor: #E7EFF7
+          items:
+            - !text
+              font: Helvetica
+              fontEncoding: Cp1252
+              fontSize: 12
+              text: 'Kommentar:'
+        - !columns
+          absoluteX: 570
+          absoluteY: 510
+          width: 200
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+          items:
+            - !text
+              font: Helvetica
+              fontEncoding: Cp1252
+              fontSize: 10
+              text: '${comment}'
         - !legends
           maxHeight: 0
           maxWidth: 0
@@ -161,60 +270,113 @@ layouts:
           classFont: Helvetica
           classFontSize: 8
           fontEncoding: Cp1252
-        - !text
-          font: Helvetica
-          fontEncoding: Cp1252
-          text: '${comment}'
       footer:
         height: 30
         items:
           - !columns
+            config:
+              borderWidthTop: 1
+              borderColorTop: black
+              cells:
+                - paddingTop: 5
             items:
               - !text
                 font: Helvetica
                 fontSize: 9
                 align: left
-                text: '${now MM.dd.yyyy}'
+                text: '${now dd.MM.yyyy}'
               - !text
                 font: Helvetica
                 fontSize: 9
-                align: right
-                text: 'Seite ${pageNum} von ${pageTot}'
+                align: center
+                text: '${mapTitle} - ${pageNum} -'
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: center
   A3 (hoch):
     metaData:
       author: 'InGrid Map Client'
       creator: 'MapFish'
     mainPage:
       pageSize: A3
-      rotation: true
+      marginLeft: 70
+      marginRight: 70
       header:
-        height: 50
+        height: 30
         items:
-          - !text
-            font: Helvetica
-            fontEncoding: Cp1252
-            fontSize: 30
-            align: center
-            text: '${mapTitle}'
+            - !columns
+              config:
+                 borderWidthBottom: 2
+                 borderColorBottom: black
+                 cells:
+                   - paddingTop: 5
+                   - paddingBottom: 5
+              items:
+                 - !text
+                   font: Helvetica
+                   fontEncoding: Cp1252
+                   fontSize: 12
+                   align: left
+                   text: '${mapTitle}'
+                 - !image
+                   maxWidth: 70
+                   maxHeight: 25
+                   align: right
+                   url: http://localhost:8080/ingrid-webmap-client/frontend/images/geoviewer.png
       items:
-        - !image
-          spacingAfter: 15
-          rotation: '${rotation}'
-          maxWidth: 50
-          maxHeight: 50
-          align: left
-          url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
-        - !map
-          spacingAfter: 15
-          width: 650
-          height: 750
-        - !scalebar
-          type: bar
-          units: m
-          maxSize: 100
-          barBgColor: white
-          fontSize: 8
-          align: right
+        - !columns
+          spacingAfter: 10
+          config:
+             cells:
+               - paddingTop: 10
+          items:
+             - !map
+               width: 650
+               height: 750
+        - !columns
+          spacingAfter: 30
+          items:
+            - !scalebar
+              type: bar
+              units: m
+              maxSize: 100
+              barBgColor: white
+              fontSize: 8
+              align: left
+            - !image
+              rotation: '${rotation}'
+              maxWidth: 35
+              maxHeight: 35
+              align: right
+              url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
+        - !columns
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - row: 0
+                backgroundColor: #E7EFF7
+          items:
+            - !text
+              font: Helvetica
+              fontEncoding: Cp1252
+              fontSize: 12
+              text: 'Kommentar:'
+        - !columns
+          spacingAfter: 30
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+          items:
+            - !text
+              font: Helvetica
+              fontEncoding: Cp1252
+              fontSize: 10
+              text: '${comment}'
         - !legends
           maxHeight: 0
           maxWidth: 0
@@ -229,25 +391,30 @@ layouts:
           classFont: Helvetica
           classFontSize: 8
           fontEncoding: Cp1252
-        - !text
-          font: Helvetica
-          fontEncoding: Cp1252
-          text: '${comment}'
       footer:
         height: 30
         items:
           - !columns
+            config:
+              borderWidthTop: 1
+              borderColorTop: black
+              cells:
+                - paddingTop: 5
             items:
               - !text
                 font: Helvetica
                 fontSize: 9
                 align: left
-                text: '${now MM.dd.yyyy}'
+                text: '${now dd.MM.yyyy}'
               - !text
                 font: Helvetica
                 fontSize: 9
-                align: right
-                text: 'Seite ${pageNum} von ${pageTot}'
+                align: center
+                text: '${mapTitle} - ${pageNum} -'
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: center
   A3 (quer):
     metaData:
       author: 'InGrid Map Client'
@@ -256,64 +423,131 @@ layouts:
       pageSize: A3
       rotation: true
       landscape: true
+      marginLeft: 70
+      marginRight: 70
       header:
-        height: 50
+        height: 30
         items:
-          - !text
-            font: Helvetica
-            fontEncoding: Cp1252
-            fontSize: 30
-            align: center
-            text: '${mapTitle}'
+            - !columns
+              config:
+                 borderWidthBottom: 2
+                 borderColorBottom: black
+                 cells:
+                   - paddingTop: 5
+                   - paddingBottom: 5
+              items:
+                 - !text
+                   font: Helvetica
+                   fontEncoding: Cp1252
+                   fontSize: 12
+                   align: left
+                   text: '${mapTitle}'
+                 - !image
+                   maxWidth: 70
+                   maxHeight: 25
+                   align: right
+                   url: http://localhost:8080/ingrid-webmap-client/frontend/images/geoviewer.png
       items:
-        - !image
-          spacingAfter: 5
-          rotation: '${rotation}'
-          maxWidth: 50
-          maxHeight: 50
-          align: left
-          url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
-        - !map
-          spacingAfter: 5
-          width: 750
-          height: 650
-        - !scalebar
-          type: bar
-          units: m
-          maxSize: 100
-          barBgColor: white
-          fontSize: 8
-          align: right
-        - !legends
-          maxHeight: 0
-          maxWidth: 0
-          maxIconWidth: 300
-          maxIconHeight: 250
-          defaultScale: 0
-          classIndentation: 0
-          layerSpace: 5
-          classSpace: 2
-          layerFont: Helvetica
-          layerFontSize: 8
-          classFont: Helvetica
-          classFontSize: 8
-          fontEncoding: Cp1252
-        - !text
-          font: Helvetica
-          fontEncoding: Cp1252
-          text: '${comment}'
+        - !columns
+          spacingAfter: 10
+          config:
+             cells:
+               - paddingTop: 10
+          items:
+             - !columns
+               items:
+                 - !map
+                   width: 750
+                   height: 650
+                   align: left
+        - !columns
+          spacingAfter: 30
+          items:
+            - !scalebar
+              type: bar
+              units: m
+              maxSize: 100
+              barBgColor: white
+              fontSize: 8
+              align: left
+            - !image
+              rotation: '${rotation}'
+              maxWidth: 35
+              maxHeight: 35
+              align: right
+              url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
+        - !columns
+          absoluteX: 850
+          absoluteY: 780
+          width: 250
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - row: 0
+                backgroundColor: #E7EFF7
+          items:
+            - !text
+              font: Helvetica
+              fontEncoding: Cp1252
+              fontSize: 12
+              text: 'Kommentar:'
+        - !columns
+          absoluteX: 850
+          absoluteY: 760
+          width: 250
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+          items:
+            - !text
+              font: Helvetica
+              fontEncoding: Cp1252
+              fontSize: 10
+              text: '${comment}'
+        - !columns
+          config:
+            cells:
+              - padding: 10
+          items:
+            - !legends
+              maxHeight: 0
+              maxWidth: 0
+              maxIconWidth: 300
+              maxIconHeight: 250
+              defaultScale: 0
+              classIndentation: 0
+              layerSpace: 5
+              classSpace: 2
+              layerFont: Helvetica
+              layerFontSize: 8
+              classFont: Helvetica
+              classFontSize: 8
+              fontEncoding: Cp1252
       footer:
         height: 30
         items:
           - !columns
+            config:
+              borderWidthTop: 1
+              borderColorTop: black
+              cells:
+                - paddingTop: 5
             items:
               - !text
                 font: Helvetica
                 fontSize: 9
                 align: left
-                text: '${now MM.dd.yyyy}'
+                text: '${now dd.MM.yyyy}'
               - !text
                 font: Helvetica
                 fontSize: 9
-                align: right
-                text: 'Seite ${pageNum} von ${pageTot}'
+                align: center
+                text: '${mapTitle} - ${pageNum} -'
+              - !text
+                font: Helvetica
+                fontSize: 9
+                align: center
