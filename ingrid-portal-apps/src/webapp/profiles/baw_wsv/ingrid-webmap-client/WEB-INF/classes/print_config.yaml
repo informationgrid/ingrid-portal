@@ -113,6 +113,7 @@ layouts:
               font: Helvetica
               fontEncoding: Cp1252
               fontSize: 10
+              condition: comment
               text: 'Kommentar:'
         - !columns
           spacingAfter: 30
@@ -126,6 +127,7 @@ layouts:
               font: Helvetica
               fontEncoding: Cp1252
               fontSize: 8
+              condition: comment
               text: '${comment}'
         - !columns
           config:
@@ -245,6 +247,7 @@ layouts:
               font: Helvetica
               fontEncoding: Cp1252
               fontSize: 12
+              condition: comment
               text: 'Kommentar:'
         - !columns
           absoluteX: 570
@@ -259,7 +262,8 @@ layouts:
             - !text
               font: Helvetica
               fontEncoding: Cp1252
-              fontSize: 10
+              fontSize: 8
+              condition: comment
               text: '${comment}'
         - !columns
           config:
@@ -373,6 +377,7 @@ layouts:
               font: Helvetica
               fontEncoding: Cp1252
               fontSize: 12
+              condition: comment
               text: 'Kommentar:'
         - !columns
           spacingAfter: 30
@@ -385,7 +390,8 @@ layouts:
             - !text
               font: Helvetica
               fontEncoding: Cp1252
-              fontSize: 10
+              fontSize: 8
+              condition: comment
               text: '${comment}'
         - !columns
           config:
@@ -507,6 +513,7 @@ layouts:
               font: Helvetica
               fontEncoding: Cp1252
               fontSize: 12
+              condition: comment
               text: 'Kommentar:'
         - !columns
           absoluteX: 850
@@ -521,7 +528,8 @@ layouts:
             - !text
               font: Helvetica
               fontEncoding: Cp1252
-              fontSize: 10
+              fontSize: 8
+              condition: comment
               text: '${comment}'
         - !columns
           config:
