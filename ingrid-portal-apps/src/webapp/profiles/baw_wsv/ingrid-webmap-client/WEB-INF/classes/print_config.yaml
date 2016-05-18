@@ -73,7 +73,7 @@ layouts:
                    maxWidth: 70
                    maxHeight: 25
                    align: right
-                   url: http://localhost:8080/ingrid-webmap-client/frontend/images/geoviewer.png
+                   url: https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/frontend/images/geoviewer.png
       items:
         - !columns
           spacingAfter: 10
@@ -127,20 +127,25 @@ layouts:
               fontEncoding: Cp1252
               fontSize: 8
               text: '${comment}'
-        - !legends
-          maxHeight: 0
-          maxWidth: 0
-          maxIconWidth: 250 
-          maxIconHeight: 300
-          defaultScale: 0
-          classIndentation: 0
-          layerSpace: 5
-          classSpace: 2
-          layerFont: Helvetica
-          layerFontSize: 8
-          classFont: Helvetica
-          classFontSize: 8
-          fontEncoding: Cp1252
+        - !columns
+          config:
+            cells:
+              - padding: 10
+          items:
+            - !legends
+              maxHeight: 0
+              maxWidth: 0
+              maxIconWidth: 300
+              maxIconHeight: 250
+              defaultScale: 0
+              classIndentation: 0
+              layerSpace: 5
+              classSpace: 2
+              layerFont: Helvetica
+              layerFontSize: 8
+              classFont: Helvetica
+              classFontSize: 8
+              fontEncoding: Cp1252
       footer:
         height: 30
         items:
@@ -196,7 +201,7 @@ layouts:
                    maxWidth: 70
                    maxHeight: 25
                    align: right
-                   url: http://localhost:8080/ingrid-webmap-client/frontend/images/geoviewer.png
+                   url: https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/frontend/images/geoviewer.png
       items:
         - !columns
           spacingAfter: 10
@@ -226,7 +231,7 @@ layouts:
               url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
         - !columns
           absoluteX: 570
-          absoluteY: 530
+          absoluteY: 536
           width: 200
           config:
             borderWidth: 0.5
@@ -243,7 +248,7 @@ layouts:
               text: 'Kommentar:'
         - !columns
           absoluteX: 570
-          absoluteY: 510
+          absoluteY: 514
           width: 200
           config:
             borderWidth: 0.5
@@ -256,20 +261,25 @@ layouts:
               fontEncoding: Cp1252
               fontSize: 10
               text: '${comment}'
-        - !legends
-          maxHeight: 0
-          maxWidth: 0
-          maxIconWidth: 200
-          maxIconHeight: 150
-          defaultScale: 0
-          classIndentation: 0
-          layerSpace: 5
-          classSpace: 2
-          layerFont: Helvetica
-          layerFontSize: 8
-          classFont: Helvetica
-          classFontSize: 8
-          fontEncoding: Cp1252
+        - !columns
+          config:
+            cells:
+              - padding: 10
+          items:
+            - !legends
+              maxHeight: 0
+              maxWidth: 0
+              maxIconWidth: 300
+              maxIconHeight: 250
+              defaultScale: 0
+              classIndentation: 0
+              layerSpace: 5
+              classSpace: 2
+              layerFont: Helvetica
+              layerFontSize: 8
+              classFont: Helvetica
+              classFontSize: 8
+              fontEncoding: Cp1252
       footer:
         height: 30
         items:
@@ -323,7 +333,7 @@ layouts:
                    maxWidth: 70
                    maxHeight: 25
                    align: right
-                   url: http://localhost:8080/ingrid-webmap-client/frontend/images/geoviewer.png
+                   url: https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/frontend/images/geoviewer.png
       items:
         - !columns
           spacingAfter: 10
@@ -377,20 +387,25 @@ layouts:
               fontEncoding: Cp1252
               fontSize: 10
               text: '${comment}'
-        - !legends
-          maxHeight: 0
-          maxWidth: 0
-          maxIconWidth: 250
-          maxIconHeight: 300
-          defaultScale: 0
-          classIndentation: 0
-          layerSpace: 5
-          classSpace: 2
-          layerFont: Helvetica
-          layerFontSize: 8
-          classFont: Helvetica
-          classFontSize: 8
-          fontEncoding: Cp1252
+        - !columns
+          config:
+            cells:
+              - padding: 10
+          items:
+            - !legends
+              maxHeight: 0
+              maxWidth: 0
+              maxIconWidth: 300
+              maxIconHeight: 250
+              defaultScale: 0
+              classIndentation: 0
+              layerSpace: 5
+              classSpace: 2
+              layerFont: Helvetica
+              layerFontSize: 8
+              classFont: Helvetica
+              classFontSize: 8
+              fontEncoding: Cp1252
       footer:
         height: 30
         items:
@@ -446,7 +461,7 @@ layouts:
                    maxWidth: 70
                    maxHeight: 25
                    align: right
-                   url: http://localhost:8080/ingrid-webmap-client/frontend/images/geoviewer.png
+                   url: https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/frontend/images/geoviewer.png
       items:
         - !columns
           spacingAfter: 10
@@ -478,7 +493,7 @@ layouts:
               url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
         - !columns
           absoluteX: 850
-          absoluteY: 780
+          absoluteY: 783
           width: 250
           config:
             borderWidth: 0.5
@@ -495,7 +510,7 @@ layouts:
               text: 'Kommentar:'
         - !columns
           absoluteX: 850
-          absoluteY: 760
+          absoluteY: 761
           width: 250
           config:
             borderWidth: 0.5
