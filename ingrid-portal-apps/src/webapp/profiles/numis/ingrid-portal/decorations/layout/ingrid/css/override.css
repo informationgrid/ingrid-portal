@@ -219,11 +219,19 @@ thead {
   border-color: transparent transparent #2C5C91 transparent;
 }
 
+.nav-toggle .icon {
+  fill: #000;
+}
+
 .ob-border-brand {
   border: 1px solid #2C5C91 !important;
 }
 .tx-highlight {
   color: #2C5C91 !important;
+}
+
+.header__widget__icon.is-active {
+  fill: #FFFFFF;
 }
 
 @media screen and (min-width: 640px) {
@@ -251,6 +259,6 @@ thead {
   }
 
   .header__widget__icon.is-active {
-    fill: #2C5C91;
+    fill: #28225B;
   }
 }
