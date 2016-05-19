@@ -46,24 +46,44 @@
           <version>2.17</version>
           <executions>
               <execution>
+                  <id>numis</id>
                   <phase>prepare-package</phase>
                   <goals>
                       <goal>update-stylesheets</goal>
                   </goals>
+                  <configuration>
+                      <resources>
+                          <resource>
+                              <!-- Set source and destination dirs -->
+                              <source>
+                                  <directory>${project.basedir}/src/webapp/profiles/numis/ingrid-portal/decorations/layout/ingrid/css</directory>
+                              </source>
+                              <destination>${project.build.directory}/${project.build.finalName}/profiles/numis/ingrid-portal/decorations/layout/ingrid/css</destination>
+                          </resource>
+                      </resources>
+                      <outputName>styles.css</outputName>
+                   </configuration>
+              </execution>
+              <execution>
+                  <id>ingrid</id>
+                  <phase>prepare-package</phase>
+                  <goals>
+                      <goal>update-stylesheets</goal>
+                  </goals>
+                  <configuration>
+                      <resources>
+                          <resource>
+                              <!-- Set source and destination dirs -->
+                              <source>
+                                  <directory>${project.basedir}/src/webapp/profiles/ingrid/ingrid-portal/decorations/layout/ingrid/css</directory>
+                              </source>
+                              <destination>${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/decorations/layout/ingrid/css</destination>
+                          </resource>
+                      </resources>
+                      <outputName>styles.css</outputName>
+                   </configuration>
               </execution>
           </executions>
-          <configuration>
-              <resources>
-                  <resource>
-                      <!-- Set source and destination dirs -->
-                      <source>
-                          <directory>${project.basedir}/src/webapp/profiles/numis/ingrid-portal/decorations/layout/ingrid/css</directory>
-                      </source>
-                      <destination>${project.build.directory}/${project.build.finalName}/profiles/numis/ingrid-portal/decorations/layout/ingrid/css</destination>
-                  </resource>
-              </resources>
-              <outputName>styles.css</outputName>
-          </configuration>
       </plugin>
     </plugins>
     <resources>
@@ -82,9 +102,9 @@
   </build>
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
   <!-- <dependencyManagement>
-	<dependencies>
+    <dependencies>
 
-	</dependencies>
+    </dependencies>
   </dependencyManagement> -->
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
@@ -352,12 +372,12 @@
     </dependency>
 
 <!-- Diverses -->
-	<!-- Version 1.4.4 causes error with Java 1.8: xstream.toXML see REDMINE-702 -->
-	<dependency>
-	  <groupId>com.thoughtworks.xstream</groupId>
-	  <artifactId>xstream</artifactId>
-	  <version>1.4.7</version>
-	</dependency>
+    <!-- Version 1.4.4 causes error with Java 1.8: xstream.toXML see REDMINE-702 -->
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.7</version>
+    </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
