@@ -1,41 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  **************************************************-
-  Ingrid Portal Apps
-  ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  -->
-
 <profile>
     <name>numis</name>
     <description>Portal-Profile für NUMIS</description>
     <pages>
         <page>
             <name>main-measures.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
-            <name>main-service.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
-            <name>main-environment.psml</name>
             <hidden>false</hidden>
         </page>
         <page>
@@ -63,112 +32,20 @@
             <hidden>false</hidden>
         </page>
         <page>
-            <name>main-features.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::SearchSimple</name>
-                </portlet>
-                <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::IngridWelcomePortlet</name>
-                </portlet>
-                <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
-                <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ChronicleTeaser</name>
-                </portlet>
-                <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::WeatherTeaser</name>
-                </portlet>
-            </portlets>
-        </page>
-        <page>
-            <name>_role/user/default-page.psml</name>
-            <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::SearchSimple</name>
-                </portlet>
-                <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::IngridWelcomePortlet</name>
-                </portlet>
-                <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
-                <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ChronicleTeaser</name>
-                </portlet>
-                <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::WeatherTeaser</name>
-                </portlet>
-            </portlets>
-        </page>
-        <page>
-            <name>_user/template/default-page.psml</name>
-            <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::SearchSimple</name>
-                </portlet>
-                <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::IngridWelcomePortlet</name>
-                </portlet>
-                <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
-                <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::ChronicleTeaser</name>
-                </portlet>
-                <portlet col="1" row="2">
-                    <name>ingrid-portal-apps::WeatherTeaser</name>
-                </portlet>
-            </portlets>
         </page>
         <page>
             <name>_role/user/myportal-edit-account.psml</name>
             <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::MyPortalEditAccountPortlet</name>
-                </portlet>
-                <portlet col="1" row="0">
-                    <name>ingrid-portal-apps::MyPortalEditAboutInfoPortlet</name>
-                </portlet>
-                <portlet col="1" row="1">
-                    <name>ingrid-portal-apps::MyPortalEditAdvancedInfoPortlet</name>
-                </portlet>
-            </portlets>
         </page>
         <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
             <hidden>false</hidden>
         </page>
         <page>
-            <name>service-contact-newsletter.psml</name>
-            <hidden>true</hidden>
-        </page>
-        <page>
             <name>service-contact.psml</name>
             <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::Contact</name>
-                </portlet>
-            </portlets>
         </page>
       </pages>
     <files>
@@ -190,15 +67,15 @@
         </file>
     </files>
     <sql>
-		<!-- MainMenu position-->		
-		<execute>
+        <!-- MainMenu position-->        
+        <execute>
             <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='3' WHERE OPTIONS='/main-service.psml';]]>
         </execute>
-		<execute>
+        <execute>
             <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='1' WHERE OPTIONS='/main-environment.psml';]]>
         </execute>
-		<!-- Use old templates for info portlet -->
-       	<execute>
+        <!-- Use old templates for info portlet -->
+           <execute>
             <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/chronicle_info_new.vm' WHERE value='/WEB-INF/templates/chronicle_info.vm';]]>
         </execute>
         <execute>
