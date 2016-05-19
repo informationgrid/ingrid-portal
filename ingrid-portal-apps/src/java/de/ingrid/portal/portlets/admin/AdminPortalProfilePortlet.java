@@ -157,6 +157,7 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                     pageManager.updatePage(p);
 
                     // set page layout configuration
+                    /* TODO: Disable update pages (instead of use override pages vm) 
                     List portletNames = profile.getList("pages.page(" + i + ").portlets.portlet.name");
                     if (portletNames != null && portletNames.size() > 0) {
                         // defragmentation
@@ -198,6 +199,7 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                         }
                         pageManager.updatePage(p);
                     }
+                    */
                 }
 
                 // process files copy actions
