@@ -1,0 +1,31 @@
+/*
+ *  Molecule/UI: Search Box Form
+ *______________________*/
+
+
+.search__box-form{
+    cursor: pointer;
+    
+    .tree{
+        white-space: normal;
+        
+        &:not(:first-child){
+            border-top:none;
+        }
+    }
+}
+
+.search__box-header{
+    font-weight: 700;
+    font-size: 18px;
+    color: color(dim-grey);
+    padding: 36px 0 16px;
+    margin: 0;
+
+    .icon{
+        fill: color(dim-grey);
+        position: relative;
+        top: rem(3px);
+        left: rem(6px);
+    }
+}

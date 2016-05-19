@@ -1,0 +1,65 @@
+/*
+ *  Pieces/UI: Teaser
+ *______________________*/
+
+
+
+
+.teaser {
+    padding-bottom: rem(30px);
+    padding-top: rem(30px);
+}
+
+.news-teaser{
+    border-bottom: 1px solid color(gainsboro);
+}
+
+.teaser__box{
+    background: color(white);
+    border-top: 4px solid color(fruit-salad);
+    position: relative;
+
+    &:not(:first-child) {
+        @include media(
+            $query: '480 >',
+            $css: (
+                margin: 0 rem(12px)
+            )
+        );
+    }
+
+    .tooltip{
+        float: right;
+        vertical-align: middle;
+    }
+}
+
+.teaser__content {
+    padding: rem(16px);
+
+    &:last-child {
+        padding-bottom: 0;
+    }
+}
+
+.teaser__overlay {
+    padding: rem(0 12px);
+}
+
+.teaser__graphic{
+    text-align: center;
+    min-height: 160px;
+    background: color(faded);
+
+    @include media(
+        $query: '480 >',
+        $css: (
+            margin-bottom: rem(-40px)
+        )
+    );
+    
+    .icon{
+        margin-top: rem(30px);
+        font-size: rem(64px);
+    }
+}

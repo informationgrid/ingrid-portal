@@ -1,0 +1,158 @@
+/*
+ *  Pieces/UI: List
+ *______________________*/
+
+
+
+
+.list {
+    color: color(dim-grey);
+    margin: rem(40px 0);
+    list-style: none;
+
+    li {
+        margin: 20px 0;
+        padding-left: rem(22px);
+        position: relative;
+    }
+
+    .list {
+        margin: rem(10px 0 0);
+    }
+}
+
+.list--ordered {
+    counter-reset: item;
+
+    li {
+        counter-increment: item;
+
+        &:before {
+            font-weight: 700;
+            top: 0;
+        }
+
+        li {
+            padding-left: rem(40px);
+        }
+    }
+}
+
+.list--bullets {
+    li {
+        &:before {
+            background: color(black);
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            top: .6em;
+            height: rem(6px);
+            width: rem(6px);
+        }
+
+        li {
+            &:before {
+                background: color(nobel);
+            }
+        }
+    }
+}
+
+
+.list--numbered {
+    counter-reset: item;
+
+    li {
+        counter-increment: item;
+
+        &:before {
+            content: counters(item, ".") ".";
+            color: color(black);
+            font-weight: 700;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        li {
+            padding-left: rem(40px);
+
+            &:before {
+                color: color(nobel);
+            }
+        }
+    }
+}
+
+.link-list {    
+    li {
+        border-bottom: 1px solid color(gainsboro);
+    }
+
+    a {
+        display: block;
+        padding: rem(9px 9px 9px 24px);
+        position: relative;
+
+        &:hover {
+            background: color(white-smoke);
+        }
+    }
+
+    .icon{
+        fill: currentColor;
+        left: 1px;
+        position: absolute;
+        top: .75em;
+    }
+}
+
+.download-list {
+    border-top: 1px solid color(gainsboro); 
+}
+
+.category-list {
+    li {
+        display: inline-block;
+
+        &:not(:first-child):not(:last-child) {
+            &:after {
+                content: ',';
+            }
+        }
+    }
+
+    a {
+        border-bottom: 1px dotted currentColor;
+        color: color(dim-grey);
+
+        &:hover {
+            color: color(fruit-salad);
+        }
+    }
+}
+
+.list--checked {
+    font-weight: bold;
+
+    .icon {
+        position: absolute;
+        top:rem(3px);
+        left:0;
+        fill: color(fruit-salad);        
+    }
+}
+
+.footnote {
+    color: color(nobel);
+    margin: rem(30px) 0;
+
+    li {
+        &:before {
+            color: color(nobel);
+            font-size: rem(13px);
+            top: .15em;
+        }  
+    }
+}

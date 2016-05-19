@@ -8,25 +8,9 @@
             <hidden>false</hidden>
         </page>
         <page>
-            <name>main-service.psml</name>
+            <name>main-measures.psml</name>
             <hidden>false</hidden>
         </page>
-        <page>
-            <name>main-environment.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
-			<name>main-service.psml</name>
-			<hidden>false</hidden>
-		</page>
-		<page>
-			<name>main-measures.psml</name>
-			<hidden>false</hidden>
-		</page>
-		<page>
-			<name>main-features.psml</name>
-			<hidden>false</hidden>
-		</page>
         <page>
             <name>main-chronicle.psml</name>
             <hidden>false</hidden>
@@ -60,19 +44,11 @@
             <hidden>false</hidden>
         </page>
         <page>
-            <name>service-contact-newsletter.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>main-about.psml</name>
             <hidden>false</hidden>
         </page>
         <page>
-            <name>main-features.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
-        	<name>cms/cms-0.psml</name>
+            <name>cms/cms-0.psml</name>
             <hidden>true</hidden>
         </page>
         <page>
@@ -96,27 +72,11 @@
             <hidden>false</hidden>
         </page>
         <page>
-            <name>_role/user/default-page.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
-            <name>_user/template/default-page.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
             <hidden>false</hidden>
         </page>
         <page>
-            <name>service-contact-newsletter.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>service-contact.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
-            <name>_role/user/myportal-edit-account.psml</name>
             <hidden>false</hidden>
         </page>
         <page>
@@ -131,7 +91,7 @@
         </file>
         <file>
             <action>copy-dir</action>
-			<src>ingrid-portal-apps/</src>
+            <src>ingrid-portal-apps/</src>
         </file>
         <file>
             <action>copy-dir</action>
@@ -147,18 +107,18 @@
         </file>
     </files>
     <sql>
-		<!-- Thesaurus Browser als Untermenü  -->
+        <!-- Thesaurus Browser als Untermenü  -->
         <!--
         <execute>
             <![CDATA[UPDATE folder_menu SET options='/search-catalog/search-catalog-hierarchy.psml' WHERE options='/search-catalog/search-catalog-thesaurus.psml';]]>
         </execute>
         -->
-        <!-- Enable webmaster-->		
-		<execute>
+        <!-- Enable webmaster-->        
+        <execute>
             <![CDATA[UPDATE link SET IS_HIDDEN='0' WHERE PATH='/webmaster.link';]]>
         </execute>
         <!-- Use _new templates for info portlet -->
-       	<execute>
+           <execute>
             <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/chronicle_info_new.vm' WHERE value='/WEB-INF/templates/chronicle_info.vm';]]>
         </execute>
         <execute>
@@ -233,7 +193,7 @@
         </execute>
         <!-- Set feature page as default for about page -->
         <execute>
-        	<![CDATA[INSERT INTO tmp_table (item_key\, item_value) values ('main-menu_id'\,  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')); ]]>
+            <![CDATA[INSERT INTO tmp_table (item_key\, item_value) values ('main-menu_id'\,  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')); ]]>
         </execute>
         <execute>
             <![CDATA[UPDATE folder_menu SET OPTIONS = '/main-features.psml' WHERE OPTIONS = '/main-about.psml' AND parent_id  = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id') ;]]>
@@ -243,18 +203,18 @@
         </execute>
         <!-- Revert of replacing main-menu option "main-search" with "default-page" (BAW)-->
         <execute>
-        	<![CDATA[UPDATE folder_menu SET options = '/main-search.psml' WHERE options = '/default-page.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id');]]>
+            <![CDATA[UPDATE folder_menu SET options = '/main-search.psml' WHERE options = '/default-page.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id');]]>
         </execute>
         <!-- Set folder "/cms" from display to hidden (only use on profile baw_wsv) -->
         <execute>
-        	<![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/cms';]]>
+            <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/cms';]]>
         </execute>
         <execute>
-        	<![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/application';]]>
+            <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/application';]]>
         </execute>
         <!-- DONE with tmp_table -->
         <execute>
             <![CDATA[DROP TABLE tmp_table;]]>
         </execute>
-	</sql>
+    </sql>
 </profile>

@@ -1,0 +1,20 @@
+/*
+ *  Atom: Quote
+ *______________________*/
+
+
+
+
+.quote {
+	text-align: center;
+}
+
+.quote__content {
+	color: color(black);
+  	font-family: $font-brand;
+  	font-size: rem(20px);
+}
+
+.quote__author {
+    color: color(dim-grey);
+}
