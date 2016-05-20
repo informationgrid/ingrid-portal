@@ -130,8 +130,6 @@ INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('sub-menu', (SELECT menu_
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('sub-menu-catalog', (SELECT menu_id FROM folder_menu WHERE name = 'sub-menu-catalog'));
 
 -- service-menu
-DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-menu') AND options = '/default-page.psml';
-
 UPDATE folder_menu SET element_order = '0' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-menu') AND options = '/language.link';
 UPDATE folder_menu SET element_order = '1' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-menu') AND options = '/service-myportal.psml';
 UPDATE folder_menu SET element_order = '2', parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-menu') WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-menu') AND options = '/administration';
