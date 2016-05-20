@@ -1,0 +1,13 @@
+#renderPortletTitle($MESSAGES.getString('teaser.environment.title') "h2" "bx-top-0")
+<div class="media">
+    <div class="media__body">
+        <ul class="tag-group">
+            #set ($numTopics = $topicList.size())
+            #foreach ($topic in $topicList)
+                <li>
+                    <a class="tag tag--big" href="$renderResponse.encodeURL("/portal/main-search.psml?action=doSearch&q=topic:${topic.QueryValue}&ds=1&grouping=domain")">$topic.QueryValue</a>
+                </li>
+            #end
+        </ul>
+    </div>
+</div>
