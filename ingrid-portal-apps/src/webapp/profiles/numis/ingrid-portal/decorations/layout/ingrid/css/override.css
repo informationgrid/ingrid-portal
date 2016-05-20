@@ -231,7 +231,7 @@ thead {
 }
 
 .header__widget__icon.is-active {
-  fill: #FFFFFF;
+  fill: #E0003C;
 }
 
 @media screen and (min-width: 640px) {
@@ -259,6 +259,6 @@ thead {
   }
 
   .header__widget__icon.is-active {
-    fill: #28225B;
+    fill: #E0003C;
   }
 }

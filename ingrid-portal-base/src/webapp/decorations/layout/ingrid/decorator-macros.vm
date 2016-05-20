@@ -168,7 +168,7 @@
             #end
         #end
         <a class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
-            <svg class="header__widget__icon icon is-active">
+            <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
                 <use xlink:href="#user">
             </svg>
             <span class="header__widget__text mq-hide-l">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
