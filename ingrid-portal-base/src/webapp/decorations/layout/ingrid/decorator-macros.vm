@@ -246,12 +246,14 @@
   #elseif($linkTitle == "ingrid.page.language")
     $jetspeed.renderPortletWindow("LanguageSwitch", "ingrid-portal-apps::LanguageSwitch")
   #elseif($el == "/default-page.psml")
+    <div class="header__widget">
         <a href="$linkUrl" title="$!linkTitle">
-            <svg class="header__widget__icon icon is-active">
+            <svg class="header__widget__icon icon">
                 <use xlink:href="#overview">
             </svg>
             <span class="header__widget__text mq-hide-l">${linkName}</span>
         </a>
+    </div>
   #end
 #end
 
