@@ -99,7 +99,7 @@ layouts:
               maxWidth: 30
               maxHeight: 30
               align: right
-              url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
+              url: https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/frontend/images/Arrow_North_CFCF.svg
         - !columns
           config:
             borderWidth: 0.5
@@ -230,7 +230,7 @@ layouts:
               maxWidth: 35
               maxHeight: 35
               align: right
-              url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
+              url: https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/frontend/images/Arrow_North_CFCF.svg
         - !columns
           absoluteX: 570
           absoluteY: 536
@@ -363,7 +363,7 @@ layouts:
               maxWidth: 35
               maxHeight: 35
               align: right
-              url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
+              url: https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/frontend/images/Arrow_North_CFCF.svg
         - !columns
           config:
             borderWidth: 0.5
@@ -496,7 +496,7 @@ layouts:
               maxWidth: 35
               maxHeight: 35
               align: right
-              url: http://trac.mapfish.org/trac/mapfish/export/2892/print/trunk/print-standalone/samples/Arrow_North_CFCF.svg
+              url: https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/frontend/images/Arrow_North_CFCF.svg
         - !columns
           absoluteX: 850
           absoluteY: 783
