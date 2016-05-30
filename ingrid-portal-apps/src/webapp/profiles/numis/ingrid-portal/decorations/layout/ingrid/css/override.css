@@ -262,3 +262,7 @@ thead {
     fill: #E0003C;
   }
 }
+
+.desktop-logo {
+    max-width: 140%;
+}
