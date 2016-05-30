@@ -35,7 +35,8 @@
         <dependency>
           <groupId>de.ingrid</groupId>
           <artifactId>ingrid-webmap-client</artifactId>
-          <version>${project.version}</version>
+          <!-- Version has to be fix, no variable with SNAPSHOT, to avoid error in release process -->
+          <version>3.6.2</version>
           <type>war</type>
         </dependency>
     </dependencies>
