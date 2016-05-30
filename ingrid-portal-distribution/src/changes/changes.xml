@@ -28,7 +28,7 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="3.6.2-SNAPSHOT" date="2016-??-??" description="Release 3.6.2">
+        <release version="3.6.2" date="2016-05-30" description="Release 3.6.2">
             <action type="add" dev="wemove" issue="REDMINE-302">
                 Portal: Contact form now pre-populated with name and email of logged in user.
             </action>
@@ -44,6 +44,9 @@
             <action type="add" dev="wemove" issue="REDMINE-87">
                 IGE: Use WebServices as default value for inspire dataset when adding a new operation.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-153">
+                IGE: Add configurable Download Data Check to catalog setting.
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-86">
                 Portal: Updated initial codelist (6005 conformity).
             </action>
@@ -55,6 +58,21 @@
             </action>
             <action type="update" dev="wemove" issue="REDMINE-197">
                 IGE: Rename german field labels of accessConstraints, useConstraints and useLimitation.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-311">
+                MapClient (baw_wsv profile): Update print layout.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-210">
+                IGE (lgv_hh profile): Adaptation concerning OpenData and HmbTG.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-312">
+                Portal Installer: Add an installer page to configure SMTP-server when portal installed without IGE. 
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-303">
+                IGE: Adapted sns service changes to https.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-113">
+                IGE: Move import to backend to be handled by CSW-T.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-300">
                 Portal: When installing new portal database also check and update database version (MySQL).
@@ -82,6 +100,16 @@
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-291">
                 IGE: Missing dialog when remove coupled service.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-313">
+                IGE: Fixed refreshChildren function when reloading the tree.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-314">
+                IGE: Fixed insertion of nodes into tree, which could become inconsistent.
+                Fixed error on a deleted node which was marked to be cut before.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-315">
+                IGE: Fix initialization of input GUI with data when loading new object.
             </action>
         </release>
         
