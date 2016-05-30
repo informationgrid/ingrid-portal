@@ -351,7 +351,7 @@ define([
                         node: msg.node
                     });
                     self.global.currentUdk = {};
-                    msg.resultHandler.resolve();
+                    if (msg.resultHandler) msg.resultHandler.resolve();
                 } else {
                     deferred2.resolve();
                 }

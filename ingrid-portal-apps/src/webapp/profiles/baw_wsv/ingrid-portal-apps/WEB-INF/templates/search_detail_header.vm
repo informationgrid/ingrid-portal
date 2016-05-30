@@ -128,7 +128,7 @@ self.focus();
 ###end
   <!-- LOGO -->
   <div id="logo">
-    <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo Geoportal.WSV" /></a>
+    <a href="$renderResponse.encodeURL('/portal/default-page.psml')"><img class="image_alt" src="/decorations/layout/ingrid/images/logo_alt.gif" alt="Logo GeoPortal.WSV" /></a>
   </div>
 </div>
 <div id="mainnav">

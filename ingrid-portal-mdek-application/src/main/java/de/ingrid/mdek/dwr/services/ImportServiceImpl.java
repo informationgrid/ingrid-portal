@@ -47,13 +47,14 @@ import org.springframework.stereotype.Service;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.ProtocolInfoBean;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
-import de.ingrid.mdek.handler.ProtocolHandler;
 import de.ingrid.mdek.job.MdekException;
-import de.ingrid.mdek.mapping.DataMapperFactory;
-import de.ingrid.mdek.mapping.ProtocolFactory;
+import de.ingrid.mdek.job.protocol.ProtocolFactory;
+import de.ingrid.mdek.job.protocol.ProtocolHandler;
+import de.ingrid.mdek.job.protocol.ProtocolHandler.Type;
 import de.ingrid.mdek.persistence.db.model.UserData;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekSecurityUtils;
+import de.ingrid.utils.IngridDocument;
 
 @Service
 public class ImportServiceImpl {
@@ -67,17 +68,18 @@ public class ImportServiceImpl {
 	// Injected by Spring
     @Autowired
 	private CatalogRequestHandler catalogRequestHandler;
-    @Autowired
-	private DataMapperFactory dataMapperFactory;
+    
     @Autowired
 	private ProtocolFactory protocolFactory;
 	
 	private static Map<String,ProtocolInfoBean> controlMap = new ConcurrentHashMap<String, ProtocolInfoBean>();
 	
-	public void importEntities(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
-			boolean publishImmediately, boolean doSeparateImport) {
+	public void analyzeImportData(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
+            boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent) {
 
 	    String userId = getCurrentUserId();
+	    boolean startNewAnalysis = true;
+	    List<Map<Type, List<String>>> allProtocols = new ArrayList<Map<Type,List<String>>>();
 	    
 		// Define bean for protocol
 		ProtocolInfoBean protocolBean = new ProtocolInfoBean(protocolFactory.getProtocolHandler());
@@ -101,7 +103,6 @@ public class ImportServiceImpl {
                 importDataStream = fileTransfer.getInputStream();
 
                 // Extract GZIP file
-                //FileInputStream inXML = new FileInputStream(fileGZIP);
                 GZIPInputStream gzipInXML = new GZIPInputStream(importDataStream);//inXML);
                 
                 File outXML = createFilebyInputStream(gzipInXML, rootDirGZIP + "/" + fileTransfer.getFilename()+".xml");
@@ -109,7 +110,8 @@ public class ImportServiceImpl {
                 
                 // Import file data
                 try {
-                    addImportData(importData, new FileInputStream(outXML), outXML.getName(), fileType, protocolBean.getProtocolHandler());
+                    IngridDocument result = analyzeXMLData( new FileInputStream(outXML), outXML.getName(), targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
+                    allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
                 } catch (Exception ex) {
                 	throw ex;
                 } finally {
@@ -137,9 +139,13 @@ public class ImportServiceImpl {
                     zipIn.closeEntry();
                     
                     try {
-                       	addImportData(importData, new FileInputStream(file), file.getName(), fileType, protocolBean.getProtocolHandler());                    	
+                       	//addImportData(importData, new FileInputStream(file), file.getName(), fileType, protocolBean.getProtocolHandler());
+                       	IngridDocument result = analyzeXMLData( new FileInputStream(file), file.getName(), targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
+                       	// since we analyse more than one file we have to set the flag to false, to remember all converted files in the backend (stored in job store)
+                       	startNewAnalysis = false;
+                       	
+                       	allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
                     } catch (Exception ex) {
-                    	protocolBean.getProtocolHandler().addMessage("\n\n");
                     	// DO NOTHING -> CONTINUE with next file, errors already logged in protocol
                     }
                 	
@@ -154,8 +160,8 @@ public class ImportServiceImpl {
                 // Fall through
             case XML:
                 
-            	addImportData(importData, fileTransfer.getInputStream(), fileTransfer.getFilename(), fileType, protocolBean.getProtocolHandler());
-            	
+            	IngridDocument result = analyzeXMLData( fileTransfer.getInputStream(), fileTransfer.getFilename(), targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
+            	allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
                 break;
 
             default:
@@ -171,6 +177,7 @@ public class ImportServiceImpl {
         } catch (Exception ex) {
             log.error("Error creating input data.", ex);
         } finally {
+            protocolBean.setProtocol( allProtocols );
             protocolBean.setImportData(importData);
             protocolBean.setFinished(true);
         }
@@ -187,7 +194,7 @@ public class ImportServiceImpl {
         
         ImportEntitiesThread importThread;
         ProtocolInfoBean infoBean = controlMap.get(getCurrentUserId());
-        importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, infoBean.getImportData(), fileType, targetObjectUuid, targetAddressUuid, infoBean.getProtocol(), publishImmediately, doSeparateImport, copyNodeIfPresent);
+        importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, infoBean.getImportData(), fileType, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent);
         importThread.start();
         try {
             importThread.join(3000);
@@ -223,10 +230,6 @@ public class ImportServiceImpl {
 		catalogRequestHandler.cancelRunningJob();
 	}
 	
-	public void setDataMapperFactory(DataMapperFactory mapperFactory) {
-		this.dataMapperFactory = mapperFactory;
-	}
-
 	public ProtocolInfoBean getProtocolInfo() {
 		return controlMap.get(getCurrentUserId());
 	}
@@ -255,40 +258,17 @@ public class ImportServiceImpl {
         }
     }
 
-    /**
-     * Add a import file as compressed IGC import format to the importdata 
-     * list. Transforms the file if necessary. If an error occurs during the 
-     * transformation process, the file will not be added to the list. The error 
-     * messages are still available through the protocolHandler.
-     * 
-     * 
-     * @param importData The import data list. Contains compressed imput data byte[].
-     * @param input The input stream.
-     * @param fileName The file name of the source data.
-     * @param fileType The file type of the source data.
-     * @param protocolHandler The protocol handler.
-     */
-    private void addImportData(List <byte[]> importData, InputStream input, String fileName, String fileType, ProtocolHandler protocolHandler)
-    throws IOException, MdekException {
+    private IngridDocument analyzeXMLData(InputStream inputFileStream, String inputFileName, String targetObjectUuid, String targetAddressUuid, Boolean publishImmediately, Boolean doSeparateImport, Boolean copyNodeIfPresent, String frontendProtocol, boolean startNewAnalysis) throws MdekException {
+        IngridDocument result = null;
         try {
-			importData.add(compress(importXMLData(input, fileName, fileType, protocolHandler)).toByteArray());
-		} catch (IOException e) {
-			log.error("Error adding import data from file: " + fileName, e);
-			throw e;
-		} catch (MdekException e) {
-			throw e;
-		}
-    }
-    
-    
-    private InputStream importXMLData (InputStream inputFileStream, String inputFileName, String inputFileType, ProtocolHandler protocolHandler)
-    throws MdekException {
-        if(inputFileType.equals("igc")){
-            return inputFileStream;
-        }else{
-            protocolHandler.setCurrentFilename(inputFileName);
-            return dataMapperFactory.getMapper(inputFileType).convert(inputFileStream, protocolHandler);
+            result = catalogRequestHandler.analyzeImportData( MdekSecurityUtils.getCurrentPortalUserData(), compress( inputFileStream ).toByteArray(), targetObjectUuid, targetAddressUuid, frontendProtocol, publishImmediately, doSeparateImport, copyNodeIfPresent, startNewAnalysis );
+            
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+        
+        return result;
     }
     
     private File createFileDirectory(String dirname){
@@ -326,30 +306,7 @@ public class ImportServiceImpl {
         
         return file;
     }
-
-    /*
-    private File createTemporaryFile(InputStream inputStream, File dir, String prefix) throws IOException{
-        File tmpFile = File.createTempFile(prefix, ".txt", dir);
-        OutputStream src = new FileOutputStream(tmpFile);
-        src.write(createByteArrayFromInputStream(inputStream));
-        src.close();
-        
-        return tmpFile;
-    }*/
     
-    private byte[] createByteArrayFromInputStream(InputStream in) throws IOException {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-        final int BUFFER = 2048;
-        int count;
-        byte data[] = new byte[BUFFER];
-        while((count = in.read(data, 0, BUFFER)) != -1) {
-               out.write(data, 0, count);
-        }
-
-        return out.toByteArray();
-    }
-
     // Compress (zip) any data on InputStream and write it to a ByteArrayOutputStream
     private static ByteArrayOutputStream compress(InputStream is) throws IOException {
         BufferedInputStream bin = new BufferedInputStream(is);
@@ -380,8 +337,7 @@ class ImportEntitiesThread extends Thread {
 	private final String targetAddressUuid;
 	private final boolean publishImmediately;
 	private final boolean doSeparateImport;
-	//private final String fileDataType;
-	private final String protocol;
+	private final String fileDataType;
 
 	private volatile MdekException exception;
 
@@ -389,7 +345,7 @@ class ImportEntitiesThread extends Thread {
 	
 	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, 
 	        UserData currentUser, List<byte[]> importData, String fileDataType, 
-	        String targetObjectUuid, String targetAddressUuid, String protocol, 
+	        String targetObjectUuid, String targetAddressUuid, 
 	        boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent) {
 		super();
 		this.catalogRequestHandler = catalogRequestHandler;
@@ -399,15 +355,14 @@ class ImportEntitiesThread extends Thread {
 		this.targetAddressUuid = targetAddressUuid;
 		this.publishImmediately = publishImmediately;
 		this.doSeparateImport = doSeparateImport;
-		//this.fileDataType = fileDataType;
-		this.protocol = protocol;
+		this.fileDataType = fileDataType;
 		this.copyNodeIfPresent = copyNodeIfPresent;
 	}
 
 	@Override
 	public void run() {
 		try {
-			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, protocol, publishImmediately, doSeparateImport, copyNodeIfPresent);
+			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, fileDataType, publishImmediately, doSeparateImport, copyNodeIfPresent);
 		} catch(MdekException ex) {
 			log.error("Exception while importing entities.", ex);
 			setException(ex);

@@ -394,7 +394,7 @@ div.resultset_nav { text-align:right; background-color:#F4F4F4; padding:0px 4px 
 div.resultset_nav a { text-decoration:underline; font-weight: bold;}
 
 div.resultset { padding:4px 10px 4px 0px; font-size:100%; margin: 5px 0px 5px 0px; }
-div.resultset a { text-decoration:none; font-size:10px; color: #666666; line-height:120%; padding: 0 10px 0 0; }
+div.resultset a { text-decoration:none; /*font-size:10px;*/ color: #666666; line-height:120%; padding: 0 10px 0 0; }
 div.resultset a:hover { text-decoration:underline;color: #111111;}
 div.resultset p.result_title { font-size:10px; margin: 10px 0px 10px 0px; }
 div.resultset p.result_description { font-size:11px; margin: 10px 0px 0px 0px; line-height:120%; color:#646464; }
@@ -1004,6 +1004,8 @@ div.dialog_content input.btn { text-align: center; min-width: 120px; }
 .js-error { border: 1px solid #b4b4b4; text-align: center; padding: 5px; background-image: url('../images/bg_search.png') }
 .tundra .dijitBorderContainer { background-color: transparent !important; }
 .tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child { border: 0px solid #CCCCCC !important; }
+
+.search_hit_icon_partner { float:right; padding: 0 5px 5px 5px; }
 
 /* InGrid Map Client*/
 

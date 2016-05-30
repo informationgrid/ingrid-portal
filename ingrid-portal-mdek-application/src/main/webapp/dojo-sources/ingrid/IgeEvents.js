@@ -213,13 +213,7 @@ define([
             });
         },
 
-        toggleFields: function(section, /* optional */ mode, /* optional flag */ refreshContainers) {
-            //  dojo.debug("toggleFields("+section+", "+mode+")");
-
-            if (typeof(refreshContainers) == "undefined") {
-                refreshContainers = true;
-            }
-
+        toggleFields: function(section, /* optional */ mode) {
             var sectionElement;
 
             if (typeof(section) != "undefined" && section != "Object" && section != "Address") {

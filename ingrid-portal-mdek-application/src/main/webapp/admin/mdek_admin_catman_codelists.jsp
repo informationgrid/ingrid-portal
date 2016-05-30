@@ -530,7 +530,7 @@
                 
                 // Currently the form is restricted to the list with id 1350 - 'rechtliche Grundlagen'
                 // 6005 - Zusatzinfo -> Spezifikation der Konformität
-                // 6020 - Verfügbarkeit -> Nutzungsbedingungen (has been removed at 3.6.1!)
+                // 6020 - Verfügbarkeit -> Anwendungseinschränkungen (has been removed at 3.6.1!)
                 var listIds = [1350, 6005];
                 var selectWidgetData = [];
                 for (var index = 0; index < listIds.length; ++index) {

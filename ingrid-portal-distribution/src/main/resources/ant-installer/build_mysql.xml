@@ -37,6 +37,8 @@
     
     <!-- mysql portal imports -->
     <property name="importMySQL"     location="${installDir}/sql/ingrid_portal_35_mysql_558.sql"/>
+    <property name="importMySQLPortalVersion" value=",3.5"/>
+
     <property name="updateMySQL114"  location="${installDir}/sql/update_1.1.4_mysql.sql"/>
     <property name="updateMySQL116"  location="${installDir}/sql/update_1.1.6_mysql.sql"/>
     <property name="updateMySQL117"  location="${installDir}/sql/update_1.1.7_mysql.sql"/>
@@ -53,6 +55,7 @@
     <property name="updateMySQL331" location="${installDir}/sql/update_3.3.1_mysql.sql"/>
     <property name="updateMySQL341" location="${installDir}/sql/update_3.4.1_mysql.sql"/>
     <property name="updateMySQL361" location="${installDir}/sql/update_3.6.1_mysql.sql"/>
+    <property name="updateMySQL362" location="${installDir}/sql/update_3.6.2_mysql.sql"/>
 
     <!-- mysql ige imports -->
     <property name="mdekDB"          location="${installDir}/sql/mdek_0_mysql.sql"/>
@@ -64,6 +67,7 @@
     <property name="mdekDB_332"      location="${installDir}/sql/mdek_3.3.2_mysql.sql"/>
     <property name="mdekDB_340"      location="${installDir}/sql/mdek_3.4.0_mysql.sql"/>
     <property name="mdekDB_361"      location="${installDir}/sql/mdek_3.6.1_mysql.sql"/>
+    <property name="mdekDB_362"      location="${installDir}/sql/mdek_3.6.2_mysql.sql"/>
 
 
     <target name="CheckDbs" depends="checkPortalDb, checkMdekDb" if="useMysql">
@@ -172,6 +176,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${importMySQL}"/>
         </sql>
+        <property name="portal.version" value="${importMySQLPortalVersion}"/>
     </target>
     
     <target name="PortalDbUpdateFrom300" if="useMysql">
@@ -197,6 +202,7 @@
             <transaction src="${updateMySQL331}"/>
             <transaction src="${updateMySQL341}"/>
             <transaction src="${updateMySQL361}"/>
+            <transaction src="${updateMySQL362}"/>
         </sql>
     </target>
     
@@ -222,6 +228,7 @@
             <transaction src="${updateMySQL331}"/>
             <transaction src="${updateMySQL341}"/>
             <transaction src="${updateMySQL361}"/>
+            <transaction src="${updateMySQL362}"/>
         </sql>
     </target>
     
@@ -246,6 +253,7 @@
             <transaction src="${updateMySQL331}"/>
             <transaction src="${updateMySQL341}"/>
             <transaction src="${updateMySQL361}"/>
+            <transaction src="${updateMySQL362}"/>
         </sql>
     </target>
     
@@ -266,6 +274,7 @@
             <transaction src="${updateMySQL331}"/>
             <transaction src="${updateMySQL341}"/>
             <transaction src="${updateMySQL361}"/>
+            <transaction src="${updateMySQL362}"/>
         </sql>
     </target>
     
@@ -285,6 +294,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL341}"/>
             <transaction src="${updateMySQL361}"/>
+            <transaction src="${updateMySQL362}"/>
         </sql>
     </target>
     
@@ -310,6 +320,25 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL361}"/>
+            <transaction src="${updateMySQL362}"/>
+        </sql>
+    </target>
+	
+	<target name="PortalDbUpdateFrom361" if="useMysql">
+        <echo>MySQL-Portal Daten importieren (ab 3.6.1)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateMySQL362}"/>
         </sql>
     </target>
 	
@@ -367,6 +396,7 @@
             <transaction src="${mdekDB_332}"/>
             <transaction src="${mdekDB_340}"/>
             <transaction src="${mdekDB_361}"/>
+            <transaction src="${mdekDB_362}"/>
 
         </sql>
     </target>
@@ -395,6 +425,7 @@
             <transaction src="${mdekDB_332}"/>
             <transaction src="${mdekDB_340}"/>
             <transaction src="${mdekDB_361}"/>
+            <transaction src="${mdekDB_362}"/>
 
         </sql>
     </target>

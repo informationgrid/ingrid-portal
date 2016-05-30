@@ -2427,7 +2427,7 @@ public class UtilsFacete {
 									IngridFacet facetParent = getFacetById(config, "type");
 									if(facetParent != null){
 										if(facetParent.getFacets() != null){
-											if(datatype.equals("www") || datatype.equals("metadata") || datatype.equals("address")){
+											if(datatype.equals("www")){
 												IngridFacet facet = getFacetById(facetParent.getFacets(), datatype);
 												if(facet != null){
 													if(facet.getFacetValue() == null){

@@ -55,6 +55,7 @@
         <script type="text/javascript" src="js/config.js"></script>
         <script type="text/javascript" src="dojo-sources/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/error_handler.js"></script>
+        <script type="text/javascript" src="js/highlight.js"></script>
         
         <!-- DWR Services -->
         <script type='text/javascript' src='dwr/interface/UtilityService.js'></script>

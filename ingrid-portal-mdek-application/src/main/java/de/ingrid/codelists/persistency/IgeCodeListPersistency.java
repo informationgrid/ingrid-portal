@@ -84,7 +84,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 put(5130,"Objektklasse 3 - Name der Operation - WCTS");    put(5180,"Objektklasse 3 - Operation - Unterstützte Platformen");
                 put(5200,"Objektklasse 3 - Klassifikation des Dienstes");    put(5300,"Objektklasse 6 - Art des Dienstes");
                 put(6000,"Konformität - Grad der Konformität"); put(6005,"Konformität - Spezifikation der Konformität");
-                put(6010,"Verfügbarkeit - Zugangsbeschränkungen");  put(6020,"Verfügbarkeit - Nutzungsbedingungen");
+                put(6010,"Verfügbarkeit - Zugriffsbeschränkungen");  put(6020,"Verfügbarkeit - Anwendungseinschränkungen");
                 put(6100,"INSPIRE-Themen"); put(6200,"ISO Liste der Länder");    put(6300,"INSPIRE-Datenformat");
                 put(7109,"Datenqualität - Datenüberschuss - Art der Messung");
                 put(7112,"Datenqualität - Konzeptionelle Konsistenz - Art der Messung");

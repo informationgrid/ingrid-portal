@@ -996,6 +996,8 @@ div.dialog_content input.btn { text-align: center; min-width: 120px; }
 .tundra .dijitBorderContainer { background-color: transparent !important; }
 .tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child { border: 0px solid #CCCCCC !important; }
 
+.search_hit_icon_partner { float:right; padding: 0 5px 5px 5px; }
+
 /* InGrid Map Client*/
 
 p,label.search-ext-env{padding:2px;}

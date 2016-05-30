@@ -38,12 +38,12 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
@@ -122,6 +122,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
 	public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
+	    long startTimer = 0;
+	    if (log.isDebugEnabled()) {
+	        log.debug("Start building detail view.");
+	        startTimer = System.currentTimeMillis();
+	    }
+	    
         Context context = getContext(request);
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
@@ -153,6 +159,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String docUuid = request.getParameter("docuuid");
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
+            boolean isAddress = "address".equals( request.getParameter("type") );
             IngridHit hit = null;
             PlugDescription plugDescription = null;
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
@@ -191,7 +198,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            	} else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
 	            		qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT)){
-	                	qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                    // new iPlug IGE-DSC contains both: objects and addresses!
+	                    if (isAddress) {
+	                        qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score datatype:address";
+	                    } else {
+	                        qStr = Settings.HIT_KEY_OBJ_ID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
+	                    }
 	                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)){
 	                	qStr = Settings.HIT_KEY_ADDRESS_ADDRID + ":\"" + docUuid.trim() + "\" iplugs:\"" + iplugId.trim() + "\" ranking:score";
 	                } else {
@@ -401,8 +413,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT);
                 	detailPreparer.prepare(record);
                 } else {
+                    long startTimer2 = 0;
+                    if (log.isDebugEnabled()) {
+                        startTimer2 = System.currentTimeMillis();
+                    }
 	                DetailDataPreparer detailPreparer = ddpf.getDetailDataPreparer(iPlugVersion);
 	                detailPreparer.prepare(record);
+	                if (log.isDebugEnabled()) {
+	                    log.debug("Executed detail preparer '" + detailPreparer.getClass().getName() + "' within " + (System.currentTimeMillis() - startTimer2) + "ms.");
+	                }
                 }
             }
         } catch (NumberFormatException e) {
@@ -415,7 +434,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             log.error("Error getting result record.", t);
         }
 
+        if (log.isDebugEnabled()) {
+            log.debug("Finished preparing detail data for view within " + (System.currentTimeMillis() - startTimer) + "ms.");
+            startTimer = System.currentTimeMillis();
+        }
         super.doView(request, response);
+        if (log.isDebugEnabled()) {
+            log.debug("Finished rendering detail data view within " + (System.currentTimeMillis() - startTimer) + "ms.");
+        }
     }
 
 

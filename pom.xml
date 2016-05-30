@@ -2,13 +2,13 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>3.6.1</version>
+    <version>3.6.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>3.6.1.2</version>
+  <version>3.6.2</version>
   <name>InGrid Portal</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git</connection>
@@ -26,6 +26,7 @@
 
   <properties>
     <org.apache.portals.jetspeed.version>2.3.0</org.apache.portals.jetspeed.version>
+    <mdek.version>3.6.2</mdek.version>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -54,7 +55,7 @@
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-codelist-service</artifactId>
-        <version>3.6.1</version>
+        <version>3.6.2</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>
@@ -64,17 +65,17 @@
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-mdek-api</artifactId>
-        <version>3.6.1.2</version>
+        <version>${mdek.version}</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-mdek-services</artifactId>
-        <version>3.6.1.2</version>
+        <version>${mdek.version}</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid.mdek</groupId>
         <artifactId>ingrid-import-export</artifactId>
-        <version>3.6.1.2</version>
+        <version>${mdek.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -131,6 +132,8 @@
             <exclude>**/*.xsl</exclude>
             <exclude>**/*.apt</exclude>
             <exclude>**/main/resources/apache-tomcat/bin/*.sh</exclude>
+            <exclude>**/highlight.js</exclude>
+            <exclude>**/github.css</exclude>
           </excludes>
         </configuration>
       </plugin>

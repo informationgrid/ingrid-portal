@@ -58,9 +58,6 @@
         <property name="catalogRequestHandler">
             <ref bean="catalogRequestHandler" />
         </property>
-        <property name="dataMapperFactory">
-            <ref bean="dataMapperFactory" />
-        </property>
         <property name="protocolFactory">
             <ref bean="protocolFactory" />
         </property>

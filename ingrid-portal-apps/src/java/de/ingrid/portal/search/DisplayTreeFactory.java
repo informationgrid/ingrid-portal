@@ -282,24 +282,36 @@ public class DisplayTreeFactory {
             // iPlug Node
             String name = "searchCatHierarchy.tree.unknown";
             String type = null;
-            if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+            if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS) && IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+                name = "searchCatHierarchy.tree.objects";
+                type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
+                addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
+                name = "searchCatHierarchy.tree.addresses";
+                type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
+                addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
+            } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
             	name = "searchCatHierarchy.tree.objects";
             	type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
+            	addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
             } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
             	name = "searchCatHierarchy.tree.addresses";
             	type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
+            	addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
             }
-            DisplayTreeNode node = new DisplayTreeNode("" + root.getNextId(), name, false);
-            node.setType(DisplayTreeNode.GENERIC);
-            node.put(NODE_LEVEL, new Integer(3));
-        	// only "plugid", no "docid" !
-            node.put(NODE_PLUG_TYPE, type);
-            node.put(NODE_PLUG_ID, plug.getPlugId());
-            node.put(NODE_EXPANDABLE, new Boolean(true));
-            node.setParent(catalogNode);
-            catalogNode.addChild(node);
         }
         return root;
+    }
+    
+    private static void addTreeNode(DisplayTreeNode root, String name, Object type, String plugId, DisplayTreeNode catalogNode) {
+        DisplayTreeNode node = new DisplayTreeNode("" + root.getNextId(), name, false);
+        node.setType(DisplayTreeNode.GENERIC);
+        node.put(NODE_LEVEL, new Integer(3));
+        // only "plugid", no "docid" !
+        node.put(NODE_PLUG_TYPE, type);
+        node.put(NODE_PLUG_ID, plugId);
+        node.put(NODE_EXPANDABLE, new Boolean(true));
+        node.setParent(catalogNode);
+        catalogNode.addChild(node);
     }
 
     public static void openECSNode(DisplayTreeNode rootNode, DisplayTreeNode nodeToOpen) {

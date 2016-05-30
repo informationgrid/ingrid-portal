@@ -206,16 +206,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 			NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
 			for (int i=0; i<nodeList.getLength();i++){
 				
-				if (i >= limitReferences){
-					if (linkList.size() >= limitReferences){
-						HashMap<String, Object> link = new HashMap<String, Object>();
-			        	link.put("type", "html");
-			        	link.put("body", messages.getString("info_limit_references"));
-			        	linkList.add(link);
-					}
-					break;
+				if (linkList.size() >= limitReferences){
+					HashMap<String, Object> link = new HashMap<String, Object>();
+		        	link.put("type", "html");
+		        	link.put("body", messages.getString("info_limit_references"));
+		        	linkList.add(link);
+                    break;
 				}
-				
 				Node node = nodeList.item(i);
 				String uuid = "";
 				String title = "";
@@ -1728,11 +1725,24 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 	
 	private String getCapabilityUrl() {
 	    String url = null;
-        //HashMap link = (HashMap) getConnectionPoints("./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint").get("link");
-        Node capNode = XPathUtils.getNode( this.rootNode, "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/gco:CharacterString[text() = 'GetCapabilities']/../../srv:connectPoint//gmd:URL");
-        if (capNode != null) {
-            url = capNode.getTextContent();
+	    String serviceType = null;
+        String xpathExpression = "";
+        
+        xpathExpression = "./gmd:identificationInfo/*/srv:serviceType";
+        if(XPathUtils.nodeExists(this.rootNode, xpathExpression)){
+            serviceType = XPathUtils.getString(this.rootNode, xpathExpression);
         }
+        if(serviceType != null){
+            if (serviceType.trim().equals("view")) {
+                Node capNode = XPathUtils.getNode( this.rootNode, "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/gco:CharacterString[text() = 'GetCapabilities']/../../srv:connectPoint//gmd:URL");
+                if (capNode != null) {
+                    if(capNode.getTextContent() != null){
+                        url = capNode.getTextContent().trim();
+                    }
+                }
+            }
+        }
+        
         return url;
     }
 	

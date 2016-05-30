@@ -38,13 +38,18 @@
             "dijit/form/CheckBox",
             "dijit/form/NumberTextBox",
             "dojo/on",
+            "dojo/query",
+            "dojo/dom",
+            "dojo/dom-class",
+            "dojo/dom-construct",
             "ingrid/layoutCreator",
             "ingrid/dialog",
             "ingrid/init",
             "ingrid/utils/Syslist",
             "ingrid/utils/List",
-            "ingrid/utils/Catalog"
-        ], function(array, lang, Deferred, registry, Select, CheckBox, NumberTextBox, on, layoutCreator, dialog, init, UtilSyslist, UtilList, UtilCatalog) {
+            "ingrid/utils/Catalog",
+            "ingrid/hierarchy/behaviours.user"
+        ], function(array, lang, Deferred, registry, Select, CheckBox, NumberTextBox, on, query, dom, domClass, domConstruct, layoutCreator, dialog, init, UtilSyslist, UtilList, UtilCatalog, behaviour) {
             
             console.log("catalog settings");
         
@@ -89,6 +94,31 @@
                 
             });
             
+            function renderBehaviours() {
+                removeBehaviours();
+                renderSystemBehaviours();
+                UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                    // set all checkboxes active that are activated
+                    array.forEach(data, function(item) {
+                        var check = registry.byId("behaviour_" + item.id);
+                        check.set( "checked", item.active );
+                        // add a marker for display difference to default state
+                        var tag = domConstruct.toDom("<span title='<fmt:message key='dialog.admin.catalog.general.modifiedBehaviour' />'> (Info)</span>");
+                        check.domNode.parentNode.appendChild(tag);
+                        domClass.add(check.domNode.parentNode, "modified");
+                    });
+                });
+            }
+            
+            function removeBehaviours() {
+                for (var behave in behaviour) {
+                    if (!behaviour[behave].title) continue;
+                    var check = registry.byId("behaviour_" + behave);
+                    if (check) check.destroy();
+                }
+                domConstruct.empty("behaviourContent");
+            }
+            
             function updateInputFields(catalogData) {
                 registry.byId("adminCatalogName").set("value", catalogData.catalogName);
                 registry.byId("adminCatalogNamespace").set("value", catalogData.catalogNamespace);
@@ -120,6 +150,8 @@
                 } else {
                     registry.byId("adminCatalogSortByClass").set("value", false);
                 }
+                
+                renderBehaviours();
             }
             
             function reloadCatalogData() {
@@ -153,20 +185,26 @@
                 newCatalogData.expiryDuration = (registry.byId("adminCatalogExpire").checked ? registry.byId("adminCatalogExpiryDuration").get("value") : "0");
                 newCatalogData.workflowControl = registry.byId("adminCatalogWorkflowControl").checked ? "Y" : "N";
                 newCatalogData.sortByClass = registry.byId("adminCatalogSortByClass").checked ? "Y" : "N";
+                
                 console.debug("validating");
                 if (!isValidCatalog(newCatalogData)) {
                     dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.catalog.requiredFieldsHint' />", dialog.WARNING);
                     return;
                 }
+                
                 console.debug("storing");
                 CatalogService.storeCatalogData(newCatalogData, {
                     callback: function(res){
-                        // Update catalog Data
-                        updateInputFields(res);
                         UtilCatalog.catalogData = res;
                         pageCatSettings.currentCatalogData = res;
                         // init.initPageHeader();
                         init.initCatalogData();
+                        
+                        // after behaviours were saved we can update the input fields
+                        saveBehaviours().then(function() {
+                            // Update catalog Data
+                            updateInputFields(res);
+                        });
                         dialog.show("<fmt:message key='general.hint' />", "<fmt:message key='dialog.admin.catalog.saveSuccess' />", dialog.INFO);
                         
                     },
@@ -181,6 +219,39 @@
                         
                         console.error(errMsg);
                     }
+                });
+            }
+            
+            function saveBehaviours() {
+
+                var ids = query("#behaviourContent input:checked").map(function(item) {
+                    return item.id.substring(10);
+                });
+                
+                // get all behaviours that differ from default behaviour
+                var modifiedBehaviours = [];
+                for (var behave in behaviour) {
+                    var box = registry.byId("behaviour_" + behave);
+                    if (box) {
+                        var currentState = box.checked;
+                        if (behaviour[behave].defaultActive !== currentState) {
+                            modifiedBehaviours.push({
+                                id: behave,
+                                active: currentState
+                            })
+                        }
+                    }
+                }
+                
+                data = {};
+                data[UtilCatalog.BEHAVIOURS] = JSON.stringify(modifiedBehaviours);
+                // write the active IDs to the backend
+                return UtilCatalog.storeGenericValuesDef(data).then(function() {
+                    //query("#behaviourContent .row").removeClass("active");
+                    //highlightActiveRows(ids);
+                }, function(error) {
+                    console.error(error);
+                    displayErrorMessage(error);
                 });
             }
             
@@ -211,6 +282,25 @@
                     })*/);
                 else
                     return false;
+            }
+            
+            function renderSystemBehaviours() {
+                for (var behave in behaviour) {
+                    if (!behaviour[behave].title) continue;
+                    console.log(behaviour[behave].title);
+                    domConstruct.place( renderRow(behaviour[behave], behave), "behaviourContent" );
+                }
+            }
+            
+            function renderRow(data, id) {
+                var row = domConstruct.toDom("<span class='input'></span>");
+                var label = domConstruct.toDom("<label class='inActive' title='" + data.description + "'></label>");
+                var cb = new CheckBox({id: "behaviour_" + id, checked: data.defaultActive});
+                label.appendChild(cb.domNode);
+                label.appendChild(domConstruct.toDom(data.title));
+                
+                row.appendChild(label);
+                return row;
             }
 
             /*
@@ -341,6 +431,7 @@
                                     <fmt:message key="dialog.admin.catalog.sortByClass" />
                                 </label>
                             </span>
+                            <div id="behaviourContent" class="clear"></div>
                         </div>
                         </div></span>
                         <div class="fill"></div>

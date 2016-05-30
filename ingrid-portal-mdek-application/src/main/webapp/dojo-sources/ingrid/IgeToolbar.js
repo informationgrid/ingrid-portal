@@ -31,8 +31,16 @@ define([
     "dijit/ToolbarSeparator",
     "dijit/form/Button",
     "ingrid/message",
-    "ingrid/utils/QA", "ingrid/utils/Security", "ingrid/utils/UI", "ingrid/MenuActions", "ingrid/IgeEvents", "ingrid/IgeActions", "ingrid/hierarchy/dirty"
-], function(declare, lang, array, aspect, topic, registry, Toolbar, ToolbarSeparator, Button, message, UtilQA, UtilSecurity, UtilUI, MenuActions, igeEvents, igeActions, dirty) {
+    "ingrid/dialog",
+    "ingrid/utils/QA",
+    "ingrid/utils/Security", 
+    "ingrid/utils/UI", 
+    "ingrid/MenuActions",
+    "ingrid/IgeEvents",
+    "ingrid/IgeActions",
+    "ingrid/hierarchy/dirty",
+    "ingrid/hierarchy/History"
+], function(declare, lang, array, aspect, topic, registry, Toolbar, ToolbarSeparator, Button, message, dialog, UtilQA, UtilSecurity, UtilUI, MenuActions, igeEvents, igeActions, dirty, History) {
     return declare(null, {
 
         buttons: {},
@@ -48,6 +56,9 @@ define([
             var entries = [
                 ["NewDoc", lang.hitch(MenuActions, MenuActions.handleNewEntity)],
                 ["PrintDoc", lang.hitch(MenuActions, MenuActions.handlePreview)],
+                ["ISO", function() {
+                    dialog.showPage(message.get("dialog.xml.title"), 'dialogs/mdek_xml_dialog.jsp?c=' + userLocale, 800, 800, true, { uuid: currentUdk.uuid, type: currentUdk.nodeAppType } );
+                }],
                 ["Separator", null],
                 ["Cut", lang.hitch(MenuActions, MenuActions.handleCut)],
                 ["Copy", lang.hitch(MenuActions, MenuActions.handleCopyEntity)],
@@ -78,7 +89,10 @@ define([
             entries.push(["ShowChanges", lang.hitch(MenuActions, MenuActions.handleShowChanges)]);
             entries.push(["Separator", null]);
             entries.push(["ShowComments", lang.hitch(MenuActions, MenuActions.handleShowComment)]);
-            //entries.push(["ShowNextError", MenuActions.handleShowComment]);
+            
+            entries.push(["Separator", null]);
+            entries.push(["Previous", lang.hitch(History, History.goBack)]);
+            entries.push(["Next", lang.hitch(History, History.goNext)]);
 
             var entriesRight = [
                 ["Help",
@@ -212,6 +226,13 @@ define([
                 } else {
                     self._handleMultiSelection();
                 }
+                
+                if (History.hasPrevious()) {
+                    self.buttons.Previous.set("disabled", false);
+                }
+                if (History.hasNext()) {
+                    self.buttons.Next.set("disabled", false);
+                }
             });
 
             // The undo button depends on the dirty flag
@@ -228,8 +249,11 @@ define([
                 this.buttons[i].set("disabled", true);
             }
             this.buttons.Help.set("disabled", false);
+            
+            History.addPreviousButton( self.buttons.Previous );
+            History.addNextButton( self.buttons.Next );
         },
-
+        
         _handleMultiSelection: function() {
             var enableList = [];
             var buttons = this.buttons;
@@ -304,7 +328,7 @@ define([
 
             } else {
                 // If a 'normal' node (obj/adr that is not root) [is] selected, always enable the following nodes
-                enableList = enableList.concat([buttons.PrintDoc, buttons.Copy, buttons.ShowComments, buttons.Expand]);
+                enableList = enableList.concat([buttons.PrintDoc, buttons.Copy, buttons.ShowComments, buttons.Expand, buttons.ISO]);
 
                 // Only show the compare view dialog if a published version exists. Otherwise there's nothing to compare to
                 if (isPublished == "true") {

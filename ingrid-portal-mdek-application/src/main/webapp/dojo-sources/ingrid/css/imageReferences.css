@@ -34,10 +34,10 @@
 .tabIconCopy         {background-position:  -18px;}
 .tabIconCopySubTree  {background-position:  -90px;}
 .tabIconPaste        {background-position: -450px;}
-.tabIconSave         {background-position: -360px;}
+.tabIconSave         {background-position: -359px;}
 .tabIconUndo         {background-position: -468px;}
-.tabIconDiscard      {background-position: -180px;}
-.tabIconFinalSave    {background-position: -378px;}
+.tabIconDiscard      {background-position: -179px;}
+.tabIconFinalSave    {background-position: -377px;}
 .tabIconreassign     {background-position: -396px;}
 .tabIconassignToQa   {background-position: -432px;}
 .tabIconmarkDeleted  {background-position: -144px;}
@@ -45,6 +45,9 @@
 .tabIconShowChanges  {background-position: -324px;}
 .tabIconShowComments {background-position:    0px;}
 .tabIconHelp         {background-position: -270px;}
+.tabIconPrevious     {background-position: -647px;}
+.tabIconNext         {background-position: -665px;}
+.tabIconISO          {background-position: -683px;}
 
 /* disabled icons */
 .dijitDisabled .dijitIcon, .IconDisabled { opacity: 0.3; filter: alpha(opacity=30);}

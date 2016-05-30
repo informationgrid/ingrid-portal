@@ -81,6 +81,9 @@ define([
 
             // get the node from the tree internal map
             var node = this.getNodeById(treeId, nodeId);
+            
+            // in case node was deleted just return
+            if (!node) return;
 
             // set the selected node
             // do not call setSelected only on the node, since it will not be registered
@@ -142,6 +145,12 @@ define([
             
             // delete all children first
             if (node) {
+                // check if node was intended to be cutted
+                tree.nodesToCut = array.forEach(tree.nodesToCut, function(n) {
+                    return n.id !== node.item.id;
+                });
+                if (tree.nodesToCut === undefined) tree.nodesToCut = null;
+                
                 this._recursiveDelete(tree.model, node.getChildren());
 
                 // finally delete the node itself

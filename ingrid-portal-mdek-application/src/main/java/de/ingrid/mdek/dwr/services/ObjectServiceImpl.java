@@ -413,19 +413,19 @@ public class ObjectServiceImpl implements ObjectService {
 	}
 
 	public ThesaurusStatisticsResultBean getObjectThesaurusStatistics(String objUuid, boolean thesaurusTerms, int startHit, int numHits) {
-	try {
-		return objectRequestHandler.getObjectThesaurusStatistics(objUuid, thesaurusTerms, startHit, numHits);
-
-	} catch (MdekException e) {
-		// Wrap the MdekException in a RuntimeException so dwr can convert it
+    	try {
+    		return objectRequestHandler.getObjectThesaurusStatistics(objUuid, thesaurusTerms, startHit, numHits);
+    
+    	} catch (MdekException e) {
+    		// Wrap the MdekException in a RuntimeException so dwr can convert it
     		log.error("MdekException while fetching objects for thesaurus statistics.", e);
-		throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-
-	} catch (RuntimeException e) {
+    		throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+    
+    	} catch (RuntimeException e) {
     		log.error("Error while fetching objects for thesaurus statistics", e);
-		throw e;
-	}		
-}
+    		throw e;
+    	}		
+    }
 
 	public ObjectRequestHandler getObjectRequestHandler() {
 		return objectRequestHandler;
@@ -434,5 +434,9 @@ public class ObjectServiceImpl implements ObjectService {
 
 	public void setObjectRequestHandler(ObjectRequestHandler objectRequestHandler) {
 		this.objectRequestHandler = objectRequestHandler;
+	}
+	
+	public String getIsoXml(String id, boolean publishedVersion) {
+	    return objectRequestHandler.getIsoXml( id, publishedVersion );
 	}
 }

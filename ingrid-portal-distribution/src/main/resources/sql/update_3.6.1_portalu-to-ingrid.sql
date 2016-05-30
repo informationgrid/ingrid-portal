@@ -3,7 +3,7 @@ UPDATE ingrid_cms SET item_description = 'InGrid-Portal informiert Text' WHERE i
 UPDATE ingrid_cms SET item_description = 'Über InGrid-Portal' WHERE item_key = 'ingrid.about';
 
 -- CMS update ingrid.about
-UPDATE ingrid_cms_item SET item_title = 'Über InGrid-Portal', item_value = '<p>Schreiben Sie ein Portät zu Ihrem InGrid-Portal. Verwenden Sie hierbei die Administration des InGrid-Portals um die Daten zu pflegen und darzustellen.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key = 'ingrid.about') AND item_lang = 'de';
+UPDATE ingrid_cms_item SET item_title = 'Über InGrid-Portal', item_value = '<p>Schreiben Sie ein Porträt zu Ihrem InGrid-Portal. Verwenden Sie hierbei die Administration des InGrid-Portals um die Daten zu pflegen und darzustellen.</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key = 'ingrid.about') AND item_lang = 'de';
 UPDATE ingrid_cms_item SET item_title = 'About InGrid-Portal', item_value = '<p>Write a portrait of the InGrid-Portal. To maintain and display your portrait use the InGrid-Portal admininstration interface</p>' WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key = 'ingrid.about') AND item_lang = 'en';
 
 -- CMS update ingrid.teaser.inform

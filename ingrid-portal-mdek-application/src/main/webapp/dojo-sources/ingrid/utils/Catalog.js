@@ -29,6 +29,7 @@ define([
         // Constants that should be used by getGenericValuesDef and setGenericValuesDef
         AUTOSAVE_INTERVAL : "AUTOSAVE_INTERVAL",
         SESSION_REFRESH_INTERVAL : "SESSION_REFRESH_INTERVAL",
+        BEHAVIOURS : "BEHAVIOURS",
 
         // This object holds general information about the catalog (see CatalogBean for content).
         catalogData: {},
@@ -160,6 +161,18 @@ define([
                 } else {
                     return 0;
                 }
+            });
+            return def;
+        },
+        
+        getOverrideBehavioursDef : function() {
+            var self = this;
+            var def = this.getGenericValuesDef([this.BEHAVIOURS])
+            .then(function(data) {
+                if (data[self.BEHAVIOURS] && data[self.BEHAVIOURS] !== "") {
+                    return JSON.parse(data[self.BEHAVIOURS]);
+                }
+                return [];
             });
             return def;
         }

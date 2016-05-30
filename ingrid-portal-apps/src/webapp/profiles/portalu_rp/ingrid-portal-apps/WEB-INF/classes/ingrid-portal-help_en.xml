@@ -36,6 +36,7 @@
                     <li>
                         <a href="?hkey=search-1">Search</a>
                     </li>
+                    <!-- 
                     <li>
                         <a href="?hkey=search-topics-1">Topics</a>
                     </li>
@@ -45,6 +46,7 @@
                     <li>
                         <a href="?hkey=search-measure-1">Data</a>
                     </li>
+                    -->
                     <li>
                         <a href="?hkey=search-chronicle-1">Almanac</a>
                     </li>
@@ -54,15 +56,19 @@
                     <li>
                         <a href="?hkey=rss-news-1">News</a>
                     </li>
+                    <!-- 
                     <li>
                         <a href="?hkey=ingrid-inform-1">PortalU informs</a>
                     </li>
+                    -->
                     <li>
                         <a href="?hkey=myingrid-1">My PortalU</a>
                     </li>
+                    <!-- 
                     <li>
                         <a href="?hkey=ingrid-newsletter-1">Newsletter</a>
                     </li>
+                    -->
                 </ul>
             </content>
         </section>
@@ -83,9 +89,10 @@
 				The information provided is being continually added to with the aim of 
 				capturing all official providers of environment information over the long term.</p>
                 <p>The EU environment guideline of 2003 and the planned INSPIRE guideline played an important role in the conception of PortalU. These guidelines lay down new standards for the public dissemination of official environment information respectively the construction of the information technology infrastructures necessary for this. In future, signficantly more authorities and organisations than heretofore will be obliged to provide data relevant to the environment in a clear understandable and easily accessible form</p>
-                <p> PortalU and the software especially developed for the construction of the portal â€?InGrid<sup>Â®</sup>â€? were especially conceived as tools to support the authorities in implementing the guidelines. </p>
+                <p> PortalU and the software especially developed for the construction of the portal ?InGrid<sup>Â®</sup>? were especially conceived as tools to support the authorities in implementing the guidelines. </p>
             </content>
         </section>
+       <!--
         <section help-key="about-2">
             <header>The PortalU operators</header>
             <content>
@@ -97,6 +104,7 @@
 					in the Lower Saxony Ministry for Environment, Energy and Climate Protection in Hanover.</p>
             </content>
         </section>
+        -->
         <section help-key="about-3">
             <header>Function overview</header>
             <content>
@@ -105,14 +113,16 @@
                     with the help of which web pages and data base entries can be searched via a customary full text 
 					search (<a href="?hkey=search-1">Simple Search</a>), but can also be searched using a differentiated specialist 
 					vocabulary  (<a href="?hkey=ext-search-1">Advanced Search</a>). </p>
-                <p>
+                <!-- 
+               <p>
                     <b>Topics:</b> The PortalU topic pages provide a topic-based access to selected, particularly interesting information and 
 					data (topic pages).</p>
                 <p>
                     <b>Data</b>: PortalU keeps you informed around the clock about the current state of your environment (environmental monitoring data).</p>
 				<p>
 				    <b>Service:</b> Here you can find news and information about events and current publications in the environment field.</p>
-                <p>
+               -->  
+               <p>
                     <b>Catalogues</b>: Here you can investigate in the environmental and geo data catalogues (e.g. Umweltdatenkataloge) from 
 					Federation and Federal States.</p>
 				<p>
@@ -121,25 +131,30 @@
                     <b>Almanac</b>: When did the Kyoto protocol come into effect? You can find an answer to this and many other questions on historical environment events in the environment chronicle (environment almanac)..</p>
             </content>
         </section>
+        <!-- 
         <section help-key="about-4">
             <header>Information sources in PortalU</header>
             <content>
                 <p>PortalU is a convenient and user-friendly portal to environment information in the internet. In contrast to most portals and search engines, PortalU gathers not only web pages, text documents and other internet formats but can also access databases and specialist information systems, even when these are not online. </p>
             </content>
         </section>
+         -->
         <section help-key="about-5">
             <header>How to become information provider in PortalU</header>
             <content>
                 <p>In PortalU all German public environmental information refering to the EU environment guideline of 2003 and all 
 				   environmental catalogue entries refering to INSPIRE are welcome to be integrated. The following German information 
 				   providers are welcome:
+                <!-- 
                 <ul>
                     <li>Public environmental departements from Federation and Federal States</li>
 					<li>Other departments from Federation and Federal States</li>
                     <li>Information binding companies refereing to the EU environment guideline of 2003</li>
                     <li>Municipalities</li>
 					<li>Public research institutions</li>
-                </ul></p>
+                </ul>
+                 -->
+                </p>
 				<p>If your organisation would likewise like to make environmentally relevant information available, please contact 
 				   <a href="mailto:kst@portalu.de/">the Coordination Center PortalU</a>.</p>
             </content>
@@ -166,6 +181,7 @@
                 </ul>
             </content>
         </section>
+        <!-- 
         <section help-key="search-2">
             <header>Further search topics</header>
             <content>
@@ -205,6 +221,7 @@
                 </ul>
             </content>
         </section>
+		 -->
     </chapter>
     <chapter>
         <header>Advanced Search for Environmental Information</header>
@@ -231,9 +248,11 @@
                     <li>
                         <a href="?hkey=ext-search-time-1">Time</a>
                     </li>
+                    <!-- 
                     <li>
                         <a href="?hkey=ext-search-area-1">Search-Area</a>
                     </li>
+                     -->
                 </ul>
             </content>
         </section>
@@ -445,10 +464,12 @@
     <chapter>
         <header>Advanced Search: Search-Area</header>
         <section help-key="ext-search-area-1">
+         <!-- 
             <header>Content</header>
             <content>
                 <p>Here you can ascertain whether you want to search through all environment information (also environmental topics and service) or whether you would only like to search in the environmental topics or only in the press pages (press releases, publications and events).</p>
             </content>
+         -->
         </section>
         <section help-key="ext-search-area-2">
             <header>Data Sources</header>
@@ -549,11 +570,13 @@
             </content>
         </section>
         <section help-key="search-tipps-3">
+            <!-- 
             <header>You are only interested in information about your Federal State?</header>
             <content>
                 <p>You can select your Federal State via the  <i><a href="?hkey=ext-search-area-1">Search-Area</a></i> of the search. Be aware that information at national level could also be of interest to you. You can set national information in the search area as well as a Federal State. </p>
                 <p>You can also have these settings on a lasting basis (see  <a href="?hkey=myingrid-1">myPortalU</a>).</p>
             </content>
+             -->
         </section>
         <section help-key="search-tipps-4">
             <header>You have a particular search query that you canâ€™t formulate via the advanced search?</header>
@@ -865,6 +888,7 @@
 					Umweltwirtschaft, Verkehr, Wasser </p>
 			</content>
         </section>
+        <!-- 
         <section help-key="search-expert-11">
             <header>Search for particular measurement pages (data)</header>
             <content>
@@ -883,6 +907,7 @@
 				<p> press, publication, event </p>
 			</content>
         </section>
+         -->
         <section help-key="search-expert-13">
             <header>Search for a particular metadata class (data)</header>
             <content>
@@ -1022,10 +1047,11 @@
                 <p>Map: metadata from the class geoinformation/map from all connected environmental data catalogues and map services which are provided within the <a href="?hkey=maps-1">PortalU-map viewer</a>.</p>
                 <p>Law: web pages refering to environmental law</p>                   
                 <p>Research Projects: information refering to environmental research projects </p> 
+                <!-- 
                 <p>Topics: web pages from the PortalU rubric <a href="?hkey=search-topics-1">topics</a>.</p>                  
                 <p>Measure: web pages from the PortalU rubric <a href="?hkey=search-measure-1">data</a></p>             
                 <p>Service: web pages from the PortalU rubric <a href="?hkey=search-service-1">service</a></p>
-                   
+                -->   
 				<p><b>Timeliness</b> </p>
                 
                 <p>When you chose the dataype <b>metadata</b>, you can see the timeliness (e.g. older than 5 years or last month). The timeliness referes to the latest date of changes within the current data set. </p>
@@ -1102,10 +1128,11 @@
         <section help-key="search-catalog-2">
             <header>Thesaurus-Navigator</header>
             <content>
-                <p>The representation of the body of words in the Thesaurus takes place in a tree structure, starting with the top terms in SNS. When a Thesaurus term (descriptor) is selected (clicked), the metadata sets of the catalogues (object- and/or address-iPlugs) available are represented, which have been given keywords with the descriptor selected ,in a â€Ÿresult listâ€? located next to the hierarchy tree. The listing of the metadatasets is grouped according to the catalogues in this list. The detailed representation of a metadataset only takes place after a query, i.e. by clicking on its title, just as in the list of the search results in the free search. Switching between â€œenvironment informationâ€? (<i>Objects</i>) and <i>Addresses </i>takes place in the area of the result list.</p>
+                <p>The representation of the body of words in the Thesaurus takes place in a tree structure, starting with the top terms in SNS. When a Thesaurus term (descriptor) is selected (clicked), the metadata sets of the catalogues (object- and/or address-iPlugs) available are represented, which have been given keywords with the descriptor selected ,in a ?result list? located next to the hierarchy tree. The listing of the metadatasets is grouped according to the catalogues in this list. The detailed representation of a metadataset only takes place after a query, i.e. by clicking on its title, just as in the list of the search results in the free search. Switching between â€œenvironment information? (<i>Objects</i>) and <i>Addresses </i>takes place in the area of the result list.</p>
             </content>
         </section>
     </chapter>
+    <!-- 
     <chapter>
         <header>Environmental Topics</header>
         <section help-key="search-topics-1">
@@ -1202,6 +1229,7 @@
                   </content>
         </section>
     </chapter>
+     -->
     <chapter>
         <header>Almanac</header>
         <section help-key="search-chronicle-1">
@@ -1451,6 +1479,7 @@
             </content>
         </section>
     </chapter>
+    <!-- 
     <chapter>
         <header>PortalU informs</header>
         <section help-key="ingrid-inform-1">
@@ -1460,6 +1489,7 @@
             </content>
         </section>
     </chapter>
+   	 -->
     <chapter>
         <header>My PortalU</header>
         <section help-key="myingrid-1">
@@ -1484,7 +1514,9 @@
                     <p>If you do not yet have a user name and password then click on the <i>New User</i> link. This will take you to the <i>Login </i>form. </p>
                     <p>Please fill out the form. The detail fields with a star* are mandatory and must be filled in. All other details are voluntary.</p>
                     <p>All details are handled in strict confidence and are only used for anonymised statistical evaluation.</p>
+                    <!-- 
                     <p>If you would always like to receive the latest news from the PortalU arena then order the <a href="?hkey=ingrid-newsletter-1">PortalU Newsletter</a>, by putting a cross against <i>I want to subscribe to the newsletter</i> at the end of the contact form (Note: you can unsubscribe at any time).</p>
+                     -->
                 </content>
             </section>
             <section help-key="myingrid-4">
@@ -1512,7 +1544,9 @@
                 <p>This link takes you to the form with your details thus far. If your details have changed, this is where you can update with these changes.</p>
                 <p>The data fields with a star * are mandatory and have to be filled in. All other details are voluntary.</p>
                 <p>All details are handled in strict confidence and are only used for anonymised statistical evaluation.</p>
+                <!-- 
                 <p>If you would always like to receive the latest news from the PortalU arena then order the <a href="?hkey=ingrid-newsletter-1">PortalU Newsletter</a>, by putting a cross against <i>I would like to subscribe to the newsletter</i> at the end of the form (Note: you can unsubscribe at any time).</p>
+                 -->
             </content>
         </section>
         <section help-key="myingrid-8">
@@ -1578,6 +1612,7 @@
             </content>
         </section>
     </chapter>
+    <!-- 
     <chapter>
         <header>Newsletter</header>
         <section help-key="ingrid-newsletter-1">
@@ -1600,4 +1635,5 @@
             </content>
         </section>
     </chapter>
+     -->
 </help>

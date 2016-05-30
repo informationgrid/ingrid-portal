@@ -32,6 +32,7 @@ import de.ingrid.mdek.MdekError;
 import de.ingrid.mdek.MdekError.MdekErrorType;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
+import de.ingrid.mdek.MdekUtils.IdcEntityVersion;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcStatisticsSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
@@ -283,5 +284,14 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	public void setConnectionFacade(ConnectionFacade connectionFacade) {
 		this.connectionFacade = connectionFacade;
 	}
+
+
+    @Override
+    public String getIsoXml(String addrUuid, boolean publishedVersion) {
+        IdcEntityVersion version = publishedVersion ? IdcEntityVersion.PUBLISHED_VERSION : IdcEntityVersion.WORKING_VERSION;
+        IngridDocument response = mdekCallerAddress.getIsoXml( connectionFacade.getCurrentPlugId(), addrUuid, version, MdekSecurityUtils.getCurrentUserUuid() );
+        IngridDocument result = MdekUtils.getResultFromResponse(response);
+        return result.getString( "record" );
+    }
 
 }

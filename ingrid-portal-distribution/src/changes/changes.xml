@@ -28,6 +28,91 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="3.6.2" date="2016-05-30" description="Release 3.6.2">
+            <action type="add" dev="wemove" issue="REDMINE-302">
+                Portal: Contact form now pre-populated with name and email of logged in user.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-21">
+                Portal: Add configurable partner logos to search result hits.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-84">
+                IGE: Added information about additional ATOM service functionality.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-88">
+                IGE: Show ISO Xml from document.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-87">
+                IGE: Use WebServices as default value for inspire dataset when adding a new operation.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-153">
+                IGE: Add configurable Download Data Check to catalog setting.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-86">
+                Portal: Updated initial codelist (6005 conformity).
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-245">
+                Portal: Make comparison of IGE frontend with backend version (IGE iPlug) more tolerant, so older Portal can work with newer IGE iPlug, if possible.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-223">
+                IGE: Make "Anwendungseinschränkungen" (useLimitation) always optional and "Nutzungsbedingungen" (useConstraints + useLimitation) mandatory if INSPIRE or Open Data is checked.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-197">
+                IGE: Rename german field labels of accessConstraints, useConstraints and useLimitation.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-311">
+                MapClient (baw_wsv profile): Update print layout.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-210">
+                IGE (lgv_hh profile): Adaptation concerning OpenData and HmbTG.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-312">
+                Portal Installer: Add an installer page to configure SMTP-server when portal installed without IGE. 
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-303">
+                IGE: Adapted sns service changes to https.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-113">
+                IGE: Move import to backend to be handled by CSW-T.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-300">
+                Portal: When installing new portal database also check and update database version (MySQL).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-137">
+                Portal: Remove deprecated tables from portal database.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-280">
+                Portal: Fixed output of installer when new portal with existing portal database is installed.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-261">
+                Portal: Fixed of displayed "Show Maps" link on portal detail view.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-258">
+                Portal: Fixed limitation of displayed cross references.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-275">
+                Portal: Fixed detail view when displaying literature metadata.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-278">
+                MapClient: Fixed measure tool dialog.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-282">
+                MapClient: Fixed display of service legend (Firefox).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-291">
+                IGE: Missing dialog when remove coupled service.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-313">
+                IGE: Fixed refreshChildren function when reloading the tree.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-314">
+                IGE: Fixed insertion of nodes into tree, which could become inconsistent.
+                Fixed error on a deleted node which was marked to be cut before.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-315">
+                IGE: Fix initialization of input GUI with data when loading new object.
+            </action>
+        </release>
+        
         <release version="3.6.1.2" date="2016-01-22" description="Release 3.6.1.2">
             <action type="fix" dev="wemove" issue="REDMINE-235">
                 Portal: Also write SMTP server into portal configuration.
@@ -62,6 +147,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-221">
                 IGE: Use constraints set to "null" when left empty.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-214">
+                MapClient: Fix loading deleted services from session.
+			</action>
             <action type="fix" dev="wemove" issue="REDMINE-224">
                 IGE: After canceling URL analysis, the process never stops.
             </action>
@@ -157,6 +245,9 @@
             </action>
 			<action type="fix" dev="wemove" issue="REDMINE-71">
                 Portal/MapClient: Update localisation messages for transparency.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-25">
+                IGE: Added paging for all tables on the dashboard.
             </action>
         </release>
         

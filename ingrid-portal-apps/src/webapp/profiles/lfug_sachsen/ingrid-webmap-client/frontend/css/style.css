@@ -451,7 +451,7 @@ ul .x-tree-node-ct li .x-tree-node {
 	text-decoration: none;
 }
 
-.x-grid-row-selected .x-grid-td {
+.x-tree-view .x-grid-row-selected .x-grid-td {
 	background: #ffffff;
 } 
 

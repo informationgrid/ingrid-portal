@@ -46,9 +46,13 @@ define(["dojo/_base/declare",
         
         inspireIsoConnection: {
             title: "Inspire / ISO - Connection",
-            description: "According to the GDI_DE Conventions, an ISO categorie is added automatically to a corresponding INSPIRE-topic. " +
-            		"The category cannot be removed until the INSPIRE topic is present. If an INSPIRE topic is removed, then the ISO" +
+            description: "Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Thema hinzugefügt. " +
+            		"Diese Kategorie bleibt so lange bestehen, wie auch das INSPIRE-Thema vorhanden ist. Erst wenn das INSPIRE-Thema entfernt " +
+            		"wurde, kann auch die Kategorie entfernt werden.",
+            description_en: "According to the GDI_DE Conventions, an ISO categorie is added automatically to a corresponding INSPIRE-topic. " +
+            		"The category cannot be removed until the INSPIRE topic is present. If an INSPIRE topic is removed, then the ISO " +
             		"category also will be removed.",
+            defaultActive: true,
             run: function() {
                 
                 // mapped INSPIRE-topic IDs to ISO-category IDs
@@ -145,7 +149,77 @@ define(["dojo/_base/declare",
                 aspect.after(UtilGrid.getTable("thesaurusTopics"), "onCellChange", isoCategoriesChanges );
                 aspect.after(UtilGrid.getTable("thesaurusTopics"), "onDeleteItems", isoCategoriesChanges );
             }
+        },
+        
+        coupledResourceDownloadDataCheck: {
+            title: "Gekoppelte Daten - Überprüfung auf Download-Daten",
+            title_en: "Coupled Resources - Check for download data",
+            description: "Wenn eine externe gekoppelte Ressource hinzugefügt wird, dann überprüfe, dass diese Download-Daten enthält.",
+            description_en: "When an external coupled resource is being added then also check if the resource contains download data.",
+            issue: "https://dev.informationgrid.eu/redmine/issues/153",
+            defaultActive: false,
+            run: function() {
+                topic.subscribe("/afterInitDialog/SelectObject", function(config) {
+                    config.ignoreDownloadData = false;
+                });
+            }
+        },
+        
+        requireUseConstraints: {
+            title: "Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
+            title_en: "Use Constraints - Required on INSPIRE / Open Data",
+            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die Checkbox \"INSPIRE-relevanter Datensatz\" oder \"Open Data\" angeklickt wird.",
+            description_en: "Input of field \"Use Constraints\" (ISO: useConstraints + useLimitation) is required if checkbox \"INSPIRE-relevant dataset\" or \"Open data\" is set.",
+            issue: "https://dev.informationgrid.eu/redmine/issues/223",
+            defaultActive: true,
+        	run: function() {
+        		// define our useConstraints handler
+                var updateUseConstraintsBehaviour = function(isChecked) {
+		            if (isChecked) {
+		                domClass.add("uiElementN027", "required");
+		                
+		            } else {
+		                // remove required field if INSPIRE and open data checkbox not selected
+		                if (!registry.byId("isInspireRelevant").checked &&
+		                	!registry.byId("isOpenData").checked) {
+		                    domClass.remove("uiElementN027", "required");
+		                }
+		            }
+		        };
+
+		        on(registry.byId("isInspireRelevant"), "Change", updateUseConstraintsBehaviour);
+		        on(registry.byId("isOpenData"), "Change", updateUseConstraintsBehaviour);
+            }
         }
+        
+        /*
+         * ABORTED: The ATOM URL has to be maintained when automatically inserted into document. It's better to adapt the context help
+         * to let the user know that the URL is added to the IDF.
+        atomOperationConnection: {
+            title: "ATOM - Operations Connection",
+            description: "When a service is of type ATOM then the operation 'Get Download Service Metadata' is mandatory.",
+            issue: "https://dev.informationgrid.eu/redmine/issues/84",
+            run: function() {
+                var handler = null;
+                on(registry.byId("ref3IsAtomDownload"), "change", function(isChecked) {
+                    if (isChecked) {
+                        handler = topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                            console.log("atom check before publish");
+                            var data = UtilGrid.getTableData("ref3Operation");
+                            var hasOperationDownloadServiceMeta = data.some(function(item) { return item.name === "Get Download Service Metadata"; });
+                            if (!hasOperationDownloadServiceMeta) {
+                                notPublishableIDs.push( ["ref3Operation", message.get("validation.error.missing.operation.download")] );
+                            }
+                        });
+                    } else {
+                        if (handler) {
+                            handler.remove();
+                            handler = null;
+                        }
+                    }
+                });
+            }
+        }*/
         
     } )();
 });

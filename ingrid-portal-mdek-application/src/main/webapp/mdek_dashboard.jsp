@@ -72,6 +72,11 @@
                         <div id="userSpace" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="ui.dashboard.myObjAdr" />" class="tab" style="overflow:hidden;">
         	                <div class="inputContainer field">
         	                    <h2><fmt:message key="ui.dashboard.title.objectsDraft" /></h2>
+                                <div class="listInfo">
+                                    <span id="workObjSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
+                                    <span id="workObjSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
+                                    <div class="fill"></div>
+                                </div>
         	                    <div class="tableContainer">
         							<div id="objectInfo" autoHeight="6" contextMenu="none"></div>
         	                    </div>
@@ -89,6 +94,11 @@
                             </div>
         					<div class="inputContainer field">
         	                    <h2><fmt:message key="ui.dashboard.title.addressesDraft" /></h2>
+                                <div class="listInfo">
+                                    <span id="workAddrSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
+                                    <span id="workAddrSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
+                                    <div class="fill"></div>
+                                </div>
         	                    <div class="tableContainer">
         							<div id="addressInfo" autoHeight="4" contextMenu="none"></div>
         	                    </div>
@@ -97,12 +107,22 @@
                         <div id="globalSpace" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="ui.dashboard.allObjAdr" />" class="tab" style="overflow:hidden;">
                             <div class="inputContainer field">
                                 <h2><fmt:message key="ui.dashboard.title.objectsDraft" /></h2>
+                                <div class="listInfo">
+                                    <span id="globalWorkObjSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
+                                    <span id="globalWorkObjSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
+                                    <div class="fill"></div>
+                                </div>
                                 <div class="tableContainer">
                                     <div id="globalObjectInfo" autoHeight="10" contextMenu="none"></div>
                                 </div>
                             </div>
                             <div class="inputContainer field">
                                 <h2><fmt:message key="ui.dashboard.title.addressesDraft" /></h2>
+                                <div class="listInfo">
+                                    <span id="globalWorkAddrSearchResultsInfo" class="searchResultsInfo">&nbsp;</span>
+                                    <span id="globalWorkAddrSearchResultsPaging" class="searchResultsPaging">&nbsp;</span>
+                                    <div class="fill"></div>
+                                </div>
                                 <div class="tableContainer">
                                     <div id="globalAddressInfo" autoHeight="10" contextMenu="none"></div>
                                 </div>
@@ -138,6 +158,10 @@
                 var infoData = {};
                 var resultsPerPage = 10;
                 var pubObjPageNav = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dom.byId("pubObjSearchResultsInfo"), pagingSpan:dom.byId("pubObjSearchResultsPaging") });
+                var workObjPageNav = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dom.byId("workObjSearchResultsInfo"), pagingSpan:dom.byId("workObjSearchResultsPaging") });
+                var workAddrPageNav = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dom.byId("workAddrSearchResultsInfo"), pagingSpan:dom.byId("workAddrSearchResultsPaging") });
+                var globalWorkObjPageNav = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dom.byId("globalWorkObjSearchResultsInfo"), pagingSpan:dom.byId("globalWorkObjSearchResultsPaging") });
+                var globalWorkAddrPageNav = new navigation.PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dom.byId("globalWorkAddrSearchResultsInfo"), pagingSpan:dom.byId("globalWorkAddrSearchResultsPaging") });
                 
                 parser.parse();
                 
@@ -147,7 +171,8 @@
                         LoadingZone.show();
                         var def1 = getCatalogInfo();
                         
-                        pubObjPageNav.reset();
+                        pubObjPageNav.reset();workObjPageNav.reset();workAddrPageNav.reset();
+                        globalWorkObjPageNav.reset();globalWorkAddrPageNav.reset();
                         var def2 = createGrids();
                         
                         all([def1, def2]).then(updateInfo)
@@ -170,6 +195,10 @@
 
                         // if page in navigation clicked then update
                         aspect.after( pubObjPageNav, "onPageSelected", navigatePublishedObjects );
+                        aspect.after( workObjPageNav, "onPageSelected", navigateWorkingObjects );
+                        aspect.after( workAddrPageNav, "onPageSelected", navigateWorkingAddresses );
+                        aspect.after( globalWorkObjPageNav, "onPageSelected", navigateGlobalWorkingObjects );
+                        aspect.after( globalWorkAddrPageNav, "onPageSelected", navigateGlobalWorkingAddresses );
                     } catch(error) {
                         console.error("Error:", error);
                     }
@@ -209,7 +238,7 @@
                         { field: 'workState', name: "<fmt:message key='ui.dashboard.status' />", width: '105px' },
                         { field: 'modificationTime', name: "<fmt:message key='ui.dashboard.changed' />", width: 'auto' }
                     ];
-                    var def1 = layoutCreator.createDataGrid("objectInfo", null, structure, lang.partial(receiveWorkObjects, "PORTAL_QUICKLIST"));
+                    var def1 = layoutCreator.createDataGrid("objectInfo", null, structure, lang.partial(receiveWorkObjects, "PORTAL_QUICKLIST", 0, resultsPerPage));
                     
                     var def5 = layoutCreator.createDataGrid("publishedObjectInfo", null, structure, lang.partial(receivePublishedObjectsResultList, "PORTAL_QUICKLIST_PUBLISHED", 0, resultsPerPage));
     
@@ -219,27 +248,31 @@
                         { field: 'workState', name: "<fmt:message key='ui.dashboard.status' />", width: '105px' },
                         { field: 'modificationTime', name: "<fmt:message key='ui.dashboard.changed' />", width: 'auto' }
                     ];
-                    var def2 = layoutCreator.createDataGrid("addressInfo", null, addrStructure, lang.partial(receiveWorkAddresses, "PORTAL_QUICKLIST"));
+                    var def2 = layoutCreator.createDataGrid("addressInfo", null, addrStructure, lang.partial(receiveWorkAddresses, "PORTAL_QUICKLIST", 0, resultsPerPage));
                     
-                    var def3 = layoutCreator.createDataGrid("globalObjectInfo", null, structure, lang.partial(receiveWorkObjects, "PORTAL_QUICKLIST_ALL_USERS"));
-                    var def4 = layoutCreator.createDataGrid("globalAddressInfo", null, addrStructure, lang.partial(receiveWorkAddresses, "PORTAL_QUICKLIST_ALL_USERS"));
+                    var def3 = layoutCreator.createDataGrid("globalObjectInfo", null, structure, lang.partial(receiveWorkObjects, "PORTAL_QUICKLIST_ALL_USERS", 0, resultsPerPage));
+                    var def4 = layoutCreator.createDataGrid("globalAddressInfo", null, addrStructure, lang.partial(receiveWorkAddresses, "PORTAL_QUICKLIST_ALL_USERS", 0, resultsPerPage));
 
                     return all([def1, def2, def3, def4, def5]);
                 }
                 
                 
-                function receiveWorkObjects(selection) {
+                function receiveWorkObjects(selection, startHit, numHits) {
                     var def = new Deferred();
-                    ObjectService.getWorkObjects(selection, "DATE", true, 0, 20, {
+                    ObjectService.getWorkObjects(selection, "DATE", true, startHit, numHits, {
                         callback: function(res){
                             if (selection == "PORTAL_QUICKLIST") {
                                 infoData.numObjects = res.totalNumHits;
                                 UtilList.addObjectLinkLabels(res.resultList);
+                                workObjPageNav.setTotalNumHits(res.totalNumHits);
+                                workObjPageNav.updateDomNodes();
                             } else {
                                 infoData.numObjectsAll = res.totalNumHits;
                                 UtilList.addObjectLinkLabels(res.resultList, null, true);
+                                globalWorkObjPageNav.setTotalNumHits(res.totalNumHits);
+                                globalWorkObjPageNav.updateDomNodes();
                             }
-                                
+                            
                             def.resolve(res.resultList);
                         },
                         errorHandler: function(mes) {
@@ -257,13 +290,13 @@
                             if (selection == "PORTAL_QUICKLIST_PUBLISHED") {
                                 infoData.numObjectsPublished = res.totalNumHits;
                                 UtilList.addObjectLinkLabels(res.resultList);
+                                pubObjPageNav.setTotalNumHits(res.totalNumHits);
+                                pubObjPageNav.updateDomNodes();
                             } else {
     //                            infoData.numObjectsPublishedAll = res.totalNumHits;
                                 UtilList.addObjectLinkLabels(res.resultList, null, true);
                             }
                                 
-                            pubObjPageNav.setTotalNumHits(res.totalNumHits);
-                            pubObjPageNav.updateDomNodes();
                             def.resolve(res);
                         },
                         errorHandler: function(mes) {
@@ -283,9 +316,9 @@
                     return def;
                 }
     
-                function receiveWorkAddresses(selection) {
+                function receiveWorkAddresses(selection, startHit, numHits) {
                     var def = new Deferred();
-                    AddressService.getWorkAddresses(selection, "DATE", true, 0, 20, {
+                    AddressService.getWorkAddresses(selection, "DATE", true, startHit, numHits, {
                         callback: function(res){
                             array.forEach(res.resultList, function(adr) {
                                 adr.title = UtilAddress.createAddressTitle(adr);
@@ -294,11 +327,14 @@
                             if (selection == "PORTAL_QUICKLIST") {
                                 infoData.numAddresses = res.totalNumHits;
                                 UtilList.addAddressLinkLabels(res.resultList);
+                                workAddrPageNav.setTotalNumHits(res.totalNumHits);
+                                workAddrPageNav.updateDomNodes();
                             } else {
                                 infoData.numAddressesAll = res.totalNumHits;
                                 UtilList.addAddressLinkLabels(res.resultList, true);
+                                globalWorkAddrPageNav.setTotalNumHits(res.totalNumHits);
+                                globalWorkAddrPageNav.updateDomNodes();
                             }
-                            
                             def.resolve(res.resultList);
                         },
                         errorHandler: function(mes) {
@@ -316,31 +352,64 @@
                         UtilGrid.setTableData("publishedObjectInfo", data);
                     });
                 }
+                function navigateWorkingObjects() {
+                    var startHit = workObjPageNav.getStartHit();
+    
+                    receiveWorkObjects("PORTAL_QUICKLIST", startHit, resultsPerPage)
+                    .then(function(data){
+                        UtilGrid.setTableData("objectInfo", data);
+                    });
+                }
+                function navigateWorkingAddresses() {
+                    var startHit = workAddrPageNav.getStartHit();
+    
+                    receiveWorkAddresses("PORTAL_QUICKLIST", startHit, resultsPerPage)
+                    .then(function(data){
+                        UtilGrid.setTableData("addressInfo", data);
+                    });
+                }
+                function navigateGlobalWorkingObjects() {
+                    var startHit = globalWorkObjPageNav.getStartHit();
+    
+                    receiveWorkObjects("PORTAL_QUICKLIST_ALL_USERS", startHit, resultsPerPage)
+                    .then(function(data){
+                        UtilGrid.setTableData("globalObjectInfo", data);
+                    });
+                }
+                function navigateGlobalWorkingAddresses() {
+                    var startHit = globalWorkAddrPageNav.getStartHit();
+    
+                    receiveWorkAddresses("PORTAL_QUICKLIST_ALL_USERS", startHit, resultsPerPage)
+                    .then(function(data){
+                        UtilGrid.setTableData("globalAddressInfo", data);
+                    });
+                }
     
                 // this function has to be available as an onclick-handler
                 function updateDashboard() {
                     LoadingZone.show();
 
-                    receiveWorkObjects("PORTAL_QUICKLIST")
+                    receiveWorkObjects("PORTAL_QUICKLIST", 0, resultsPerPage)
                     .then(function(data){
                         UtilGrid.setTableData("objectInfo", data);
                     });
     
-                    pubObjPageNav.reset();
+                    pubObjPageNav.reset();workObjPageNav.reset();workAddrPageNav.reset();
+                    globalWorkObjPageNav.reset();globalWorkAddrPageNav.reset();
                     receivePublishedObjectsResultList("PORTAL_QUICKLIST_PUBLISHED", 0, resultsPerPage)
                     .then(function(data){
                         UtilGrid.setTableData("publishedObjectInfo", data);
                     });
     
-                    receiveWorkAddresses("PORTAL_QUICKLIST")
+                    receiveWorkAddresses("PORTAL_QUICKLIST", 0, resultsPerPage)
                     .then(function(data){
                         UtilGrid.setTableData("addressInfo", data);
                     });
-                    receiveWorkObjects("PORTAL_QUICKLIST_ALL_USERS")
+                    receiveWorkObjects("PORTAL_QUICKLIST_ALL_USERS", 0, resultsPerPage)
                     .then(function(data){
                         UtilGrid.setTableData("globalObjectInfo", data);
                     });
-                    receiveWorkAddresses("PORTAL_QUICKLIST_ALL_USERS")
+                    receiveWorkAddresses("PORTAL_QUICKLIST_ALL_USERS", 0, resultsPerPage)
                     .then(function(data){
                         UtilGrid.setTableData("globalAddressInfo", data);
                     });

@@ -58,4 +58,5 @@ public interface AddressRequestHandler {
 	public AddressStatisticsResultBean getAddressStatistics(String uuid, boolean freeAddressesOnly);
 	public ThesaurusStatisticsResultBean getAddressThesaurusStatistics(String adrUuid, boolean freeAddressesOnly, boolean thesaurusTerms, int startHit, int numHits);
 	public String mergeAddressToSubAddresses(String adrUuid);
+    public String getIsoXml(String id, boolean publishedVersion);
 }
