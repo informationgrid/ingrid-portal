@@ -56,6 +56,7 @@
     <property name="updateMySQL341" location="${installDir}/sql/update_3.4.1_mysql.sql"/>
     <property name="updateMySQL361" location="${installDir}/sql/update_3.6.1_mysql.sql"/>
     <property name="updateMySQL362" location="${installDir}/sql/update_3.6.2_mysql.sql"/>
+    <property name="updateMySQL370" location="${installDir}/sql/update_3.7.0_mysql.sql"/>
 
     <!-- mysql ige imports -->
     <property name="mdekDB"          location="${installDir}/sql/mdek_0_mysql.sql"/>
