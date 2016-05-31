@@ -24,14 +24,14 @@
 <!-- Decorator  ingrid  ${decoTop} - ${decoBottom}-->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
-        <title>NUMIS - Das nieders&auml;chsische Umweltportal</title>
+        <title>UVP - Umweltverträglichkeitsprüfung</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-style-type" content="text/css" />
         <meta http-equiv="content-language" content="de" />
         <!--<meta name="description" content="" />-->
-        <meta name="description" content="NUMIS, das nieders&auml;chsische Umweltportal, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
+        <meta name="description" content="UVP, das nieders&auml;chsische Umweltportal, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="wemove digital solutions" />
-        <meta name="keywords" lang="de" content="NUMIS, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
+        <meta name="keywords" lang="de" content="UVP, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <meta name="robots" content="index,follow" />
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700'></link>
@@ -49,48 +49,20 @@
                     <div class="header__widgets__section">
                         <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
                             <svg class="icon">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#burger"></use>
+                                <use xlink:href="#burger"></use>
                             </svg>
                             <svg class="icon ob-fade">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cross"></use>
+                                <use xlink:href="#cross"></use>
                             </svg>
                         </div>
                     </div>
                     <div class="header__widgets__section">
                         <a class="header__widget header__logo" href="/startseite" title="Startseite von InGrid-Portal">
-                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
-                        <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg"></img>
+                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.jpg"></img>
+                        <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/logo.jpg"></img>
                         </a>
                     </div>
-                    <div class="header__widgets__section sub-header">
-                        <div class="header__widget mq-hide-l">
-                            <a href="#" class="header__widget__toggle js-header-toggle">
-                                <span class="header__widget__text">Deutsch</span>
-                                <svg class="header__widget__icon icon icon-xs">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-thick"></use>
-                                </svg>
-                            </a>
-                            <div class="metamenu">
-                                <form action="/portal/_ns:Ykxhbmd1YWdlU3dpdGNo/default-page.psml" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
-                                      <a class="metamenu__link link is-active" onclick="submitform($(this), 'de')">
-                                        <svg class="icon">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tick"></use>
-                                        </svg>
-                                        Deutsch
-                                    </a>
-                                       <a class="metamenu__link link" onclick="submitform($(this), 'en')">Englisch</a>
-                                </form>
-                            </div>
-                        </div>
-                        <script type="text/javascript">
-                        function submitform(anchor, lang)
-                            {
-                                var form = anchor.closest('form');
-                                form.append('<input type="hidden" name="lang" value="'+ lang + '"/>');
-                                form.submit();
-                            }
-                        </script>
-                    </div>
+
                 </div> 
                 <nav class="nav-desktop mq-hide-xxl">
                     <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
@@ -110,19 +82,16 @@
                           <a class="nav-desktop__title" href="/umweltchronik" title="Suche nach Ereignissen ">Chronik</a>
                         </li>
                         <li class="nav-desktop__item dropmenu__box">
-                            <a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="Hintergrundinformationen zu NUMIS">
-                                Über NUMIS
+                            <a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="Hintergrundinformationen zu UVP">
+                                Über Uns
                                 <svg class="icon"><use xlink:href="#arrow-thick"/></svg>
                             </a>
                             <ul class="nav-desktop__dropdown nav-desktop__dropdown-left dropmenu">
                                 <li>
-                                    <a href="/hintergrundinformationen" title="Kurzbeschreibung und Hintergrund">Porträt</a>
+                                    <a href="/hintergrundinformationen" title="Kurzbeschreibung und Hintergrund">Allgemeine Informationen</a>
                                 </li>
                                 <li>
-                                    <a href="/informationsanbieter" title="Kooperationspartner und Informationsanbieter">Informationsanbieter</a>
-                                </li>
-                                <li>
-                                    <a href="/datenquellen" title="Angeschlossene Datenbanken">Datenquellen</a>
+                                    <a href="/informationsanbieter" title="Kooperationspartner und Informationsanbieter">Verfahrenführende Behörden</a>
                                 </li>
                           </ul>
                         </li>
@@ -150,7 +119,7 @@
                                 die gew&uuml;nschte Seite zu finden
                             </li>
                             <li>
-                                St&ouml;bern Sie in den verschiedenen Such-Kategories von NUMIS:
+                                St&ouml;bern Sie in den verschiedenen Such-Kategorien von UVP:
                             </li>
                         </ul>
                         <ul class="link-list">
@@ -196,9 +165,9 @@
                 <div class="ob-box-padded ob-box-center ob-clear">
                     <div class="footer__top">
                         <a href="/startseite">
-                            <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg "></img>
+                            <img class="footer__logo" src="/decorations/layout/ingrid/images/template/logo.jpg"></img>
                         </a>
-                        <p class="copyright">© Niedersächsisches Ministerium für Umwelt, Energie und Klimaschutz</p>
+                        <p class="copyright">© UVP-Gesellschaft (Gesellschaft für die Prüfung der Umweltverträglichkeit) e.V.</p>
                     </div>
                 </div>
                 <hr class="bx-top-0 bx-bot-0"></hr>

@@ -1,0 +1,18 @@
+<section class="block block--light block--pad-top">
+    <div class="ob-box-wide ob-box-padded ob-box-center">
+        <article class="content ob-container">
+            <div class="box box--medium">
+                <div class="box__content ob-container">
+                    $jetspeed.renderPortletWindow("SearchSimple", "ingrid-portal-apps::SearchSimple")
+                </div>
+                $jetspeed.renderPortletWindow("SearchSimilar", "ingrid-portal-apps::SearchSimilar")
+            </div>
+         </article>
+    </div>
+</section>
+
+<section class="block">
+    <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
+        $jetspeed.renderPortletWindow("SearchResult", "ingrid-portal-apps::SearchResult")
+    </div>
+</section>

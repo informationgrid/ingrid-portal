@@ -96,10 +96,12 @@
                     <span class="tx-light">$!rs.provider</span>
                 </small>
             #end
+            <!--
             <small>
                 <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.source'):</strong></span>
                 <span class="tx-light">$!rs.source</span>
             </small>
+            -->
             #if($adminContent)
                 <small>
                     <span class="tx-darkest"><strong>Score:</strong></span>
