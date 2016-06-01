@@ -5,11 +5,11 @@
     <pages>
         <page>
             <name>main-measures.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>main-chronicle.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>main-maps.psml</name>
