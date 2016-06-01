@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  **************************************************-
-  Ingrid Portal Apps
-  ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  -->
-
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
 
@@ -1176,6 +1153,28 @@
         <portlet-info>
             <title>Karten</title>
             <short-title>ShowMapsPortlet</short-title>
+        </portlet-info>
+        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
+    </portlet>
+
+    <portlet id="ShowMapsPortletTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/show_maps_teaser.vm</value>
+        </init-param>
+        <portlet-name>ShowMapsPortletTeaser</portlet-name>
+        <display-name>Karten Teaser</display-name>
+        <description>This portlet displays the search results.</description>
+        <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Karten</title>
+            <short-title>ShowMapsPortletTeaser</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
