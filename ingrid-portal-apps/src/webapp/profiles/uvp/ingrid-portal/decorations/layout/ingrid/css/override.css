@@ -230,6 +230,10 @@ thead {
   color: #2C5C91 !important;
 }
 
+.header__logo {
+  width: auto;
+}
+
 .header__widget__icon.is-active {
   fill: #2C5C91;
 }
@@ -265,4 +269,23 @@ thead {
 
 .desktop-logo {
     max-width: 140%;
+}
+
+.desktop__title p {
+    padding: 0 1rem;
+    margin: 0;
+}
+
+.desktop__title p.main__title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.desktop__title p.sub__title {
+    font-size: 16px;
+}
+
+.mobile__title {
+    padding: 0 5px;
+    color: #FFFFFF;
 }

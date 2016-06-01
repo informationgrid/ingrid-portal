@@ -85,9 +85,16 @@
                 </div>
                 <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                    <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.jpg')">
-                    <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/logo.jpg')">
+                        <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.jpg')">
+                        <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/logo.jpg')">
                     </a>
+                </div>
+                <div class="header__widgets__section">
+                    <a class="mq-hide-xxl desktop__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                        <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
+                        <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
+                    </a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">UVP</a>
                 </div>
                  #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)
