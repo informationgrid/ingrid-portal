@@ -50,7 +50,9 @@
                 ## render sub nodes
                 #if ($renderSubNodes)
                     #foreach($childNode in $node.getChildren())
-                        #renderNode($childNode)
+                        #if($childNode.getChildren().size() > 0 || $childNode.docId)
+                            #renderNode($childNode)
+                        #end
                     #end
                 #end
             </li>
