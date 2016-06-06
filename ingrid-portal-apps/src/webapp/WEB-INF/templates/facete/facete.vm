@@ -2,57 +2,59 @@
 
 #macro(renderFacetCategory $nodes)
     #foreach($node in $nodes)
-        #if(!$node.getQuery())
-            #if($node.getDependency())
-                #if($node.isDependencySelect())
-                    #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
-                        #renderFacetContent($node)
-                    #else
-                        #if($node.getFacets())
-                            #set($nodeHasValueDependency = false)
-                            #foreach($facet in $node.getFacets())
-                                #if($facet.getFacetValue() || $facet.isOldIPlug())
-                                    #set($nodeHasValueDependency = true)
-                                #end
-                            #end
-                            #if($nodeHasValueDependency)
-                                #renderFacetContent($node)
-                            #end
-                        #end
-                    #end
-                #end
-            #else
-                #if($node.getHidden())
-                    #if($node.isHiddenSelect() == false)
+        #if(!$node.isCategoryOnly())
+            #if(!$node.getQuery())
+                #if($node.getDependency())
+                    #if($node.isDependencySelect())
                         #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
                             #renderFacetContent($node)
                         #else
                             #if($node.getFacets())
-                                #set($nodeHasValueHidden = false)
+                                #set($nodeHasValueDependency = false)
                                 #foreach($facet in $node.getFacets())
                                     #if($facet.getFacetValue() || $facet.isOldIPlug())
-                                        #set($nodeHasValueHidden = true)
+                                        #set($nodeHasValueDependency = true)
                                     #end
                                 #end
-                                #if($nodeHasValueHidden)
+                                #if($nodeHasValueDependency)
                                     #renderFacetContent($node)
                                 #end
                             #end
                         #end
                     #end
                 #else
-                    #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
-                        #renderFacetContent($node)
-                    #else
-                        #if($node.getFacets())
-                            #set($nodeHasValue = false)
-                            #foreach($facet in $node.getFacets())
-                                #if($facet.getFacetValue() || $facet.isOldIPlug() || $facet.isDisplay())
-                                    #set($nodeHasValue = true)
+                    #if($node.getHidden())
+                        #if($node.isHiddenSelect() == false)
+                            #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                                #renderFacetContent($node)
+                            #else
+                                #if($node.getFacets())
+                                    #set($nodeHasValueHidden = false)
+                                    #foreach($facet in $node.getFacets())
+                                        #if($facet.getFacetValue() || $facet.isOldIPlug())
+                                            #set($nodeHasValueHidden = true)
+                                        #end
+                                    #end
+                                    #if($nodeHasValueHidden)
+                                        #renderFacetContent($node)
+                                    #end
                                 #end
                             #end
-                            #if($nodeHasValue)
-                                #renderFacetContent($node)
+                        #end
+                    #else
+                        #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                            #renderFacetContent($node)
+                        #else
+                            #if($node.getFacets())
+                                #set($nodeHasValue = false)
+                                #foreach($facet in $node.getFacets())
+                                    #if($facet.getFacetValue() || $facet.isOldIPlug() || $facet.isDisplay())
+                                        #set($nodeHasValue = true)
+                                    #end
+                                #end
+                                #if($nodeHasValue)
+                                    #renderFacetContent($node)
+                                #end
                             #end
                         #end
                     #end
@@ -63,7 +65,7 @@
 #end
 
 #macro(renderFacetCategoryEntry $facet $parentId)
-    #if($facet.getFacetValue() || $facet.isOldIPlug() || $facet.isDisplay())
+    #if(($facet.getFacetValue() || $facet.isOldIPlug() || $facet.isDisplay()) && !$facet.isCategoryOnly())
         #if($facet.getFacets())
             ## Check for sub facets
             #if($facet.isSelect())
@@ -114,7 +116,7 @@
 
 
 #macro(renderFacetContent $facet)
-    #if($facet)
+    #if($facet && !$facet.isCategoryOnly())
         #if($facet.getQueryType())
             #if($facet.getQueryType() == "OR")
                 #renderCheckboxTree ($facet "")
@@ -289,7 +291,7 @@
     
     #foreach ($treeSubFacet in $treeFacet.getFacets())
         <ul>
-        #if($treeSubFacet.getFacetValue())
+        #if($treeSubFacet.getFacetValue() && !$treeSubFacet.isCategoryOnly())
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
             #if($treeSubFacet.getCodelistId())
