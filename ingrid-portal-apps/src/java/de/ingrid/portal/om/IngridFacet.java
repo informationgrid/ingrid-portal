@@ -36,6 +36,7 @@ public class IngridFacet {
     private String hidden;
     private String facetValue;
     private String sort;
+    private String icon;
     private boolean isDependencySelect = false;
     private boolean isHiddenSelect = false;
     private boolean isSelect = false;
@@ -173,5 +174,11 @@ public class IngridFacet {
     }
     public void setCategoryOnly(boolean categoryOnly) {
         this.categoryOnly = categoryOnly;
+    }
+    public String getIcon() {
+        return icon;
+    }
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

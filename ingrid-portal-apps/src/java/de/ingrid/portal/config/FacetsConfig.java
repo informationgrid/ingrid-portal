@@ -219,7 +219,13 @@ public class FacetsConfig {
                         ingridFacet.setCategoryOnly( Boolean.parseBoolean(node.getValue().toString()) );
                     }
                 }
-
+                
+                if (facetNode.getChildren( "icon" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "icon" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setIcon( node.getValue().toString() );
+                    }
+                }
                 if (facetNode.getChildren( "facets" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {

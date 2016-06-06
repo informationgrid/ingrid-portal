@@ -114,7 +114,7 @@
                 #end
                 <div class="mq-hide-l" style="padding: 0 0 20px 0;">
                     <a class="tag" href="/freitextsuche?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
-                        #getIcon("$pf:$facet.getId()")
+                        #getIcon($facet)
                         <div class="tx-center">
                             #if($facet.getCodelistId())
                                 $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
@@ -129,7 +129,7 @@
                 </div>
                 <div class="mq-show-l">
                     <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="/freitextsuche?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
-                        #getIcon("$pf:$facet.getId()")
+                        #getIcon($facet)
                         <strong>
                             #if($facet.getCodelistId())
                                 $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
@@ -148,116 +148,26 @@
     #end
 #end
 
-#macro (getIcon $facetId)
+#macro (getIcon $facet)
 <span class="mq-hide-l">
-    #getIconImage($facetId "display: block;font-size: 60px;margin: auto;")
+    #getIconImage($facet "display: block;font-size: 60px;margin: auto;")
 </span>
 <span class="mq-show-l">
-    #getIconImage($facetId)
+    #getIconImage($facet)
 </span>
 #end
 
-#macro (getIconImage $facetId $facetStyle)
-<!-- type -->
-    #if($facetId == "type:www")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#external-link" /></svg>
-    #elseif($facetId == "type:metadata")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#internal-link" /></svg>
-    #elseif($facetId == "type:map")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-    #elseif($facetId == "type:topic")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-    #elseif($facetId == "type:measure")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-    #elseif($facetId == "type:service")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-    #elseif($facetId == "type:metadata")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-    #elseif($facetId == "type:other")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-    #elseif($facetId == "type:research")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-    #elseif($facetId == "type:law")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-    #elseif($facetId == "type:address")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-    #elseif($facetId == "type:fis")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-<!-- metadata -->
-    #elseif($facetId == "metadata:service")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#molecule" /></svg>
-    #elseif($facetId == "metadata:map")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#globe" /></svg>
-    #elseif($facetId == "metadata:geoservice")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#gears" /></svg>
-    #elseif($facetId == "metadata:database")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#database" /></svg>
-    #elseif($facetId == "metadata:job")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#checklist" /></svg>
-    #elseif($facetId == "metadata:document")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#book" /></svg>
-    #elseif($facetId == "metadata:project")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#folder" /></svg>
-    #elseif($facetId == "metadata:inspire")
-        <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="#attention" /></svg>
-<!-- Kategorien -->
-    #elseif($facetId == "kategorien:bahnverkehr")
-        <i class="icon bx-top-s icon-train" style="$facetStyle"></i>
-    #elseif($facetId.indexOf("kategorien:stra") > -1)
-        <i class="icon bx-top-s icon-road" style="$facetStyle"></i>
-    #elseif($facetId == "kategorien:umwelt")
-        <i class="icon bx-top-s icon-tree" style="$facetStyle"></i>
-    #elseif($facetId == "kategorien:wetter")
-        <i class="icon bx-top-s icon-sun-cloud" style="$facetStyle"></i>
-    #elseif($facetId.indexOf("kategorien:wasserstra") > -1)
-        <i class="icon bx-top-s icon-ship" style="$facetStyle"></i>
-    #elseif($facetId == "kategorien:klima")
-        <i class="icon bx-top-s icon-sun" style="$facetStyle"></i>
-    #elseif($facetId == "kategorien:infrastruktur")
-        <i class="icon bx-top-s icon-network-2-1" style="$facetStyle"></i>
-    #elseif($facetId == "kategorien:grenze")
-        <i class="icon bx-top-s icon-anchor-point-1" style="$facetStyle"></i>
-    #elseif($facetId == "kategorien:nordostseekanal")
-        <i class="icon bx-top-s icon-transfer-6" style="$facetStyle"></i>
-    #elseif($facetId == "kategorien:tideelbe")
-        <i class="icon bx-top-s icon-record-2" style="$facetStyle"></i>
-    #elseif($facetId.indexOf("kategorien:gew") > -1)
-        <i class="icon bx-top-s icon-boat" style="$facetStyle"></i>
-<!-- Datentypen -->
-    #elseif($facetId == "datentypen:wms")
-       <i class="icon bx-top-s icon-layers-1" style="$facetStyle"></i>
-    #elseif($facetId == "datentypen:dateidownload")
-       <i class="icon bx-top-s icon-download-12" style="$facetStyle"></i>
-    #elseif($facetId == "datentypen:ftp")
-       <i class="icon bx-top-s icon-file-transfer" style="$facetStyle"></i>
-    #elseif($facetId == "datentypen:atomfeed")
-       <i class="icon bx-top-s icon-rss-1" style="$facetStyle"></i>
-    #elseif($facetId == "datentypen:sos")
-       <i class="icon bx-top-s icon-file-attention" style="$facetStyle"></i>
-    #elseif($facetId == "datentypen:wfs")
-       <i class="icon bx-top-s icon-firewire-2" style="$facetStyle"></i>
-    #elseif($facetId == "datentypen:portal")
-       <i class="icon bx-top-s icon-screen-2" style="$facetStyle"></i>
-    #elseif($facetId == "datentypen:wmts")
-       <i class="icon bx-top-s icon-thumbnails-2" style="$facetStyle"></i>
-    #elseif($facetId == "datentypen:json")
-       <i class="icon bx-top-s icon-file-1" style="$facetStyle"></i>
-<!-- Behörden -->
-    #elseif($facetId == "behoerde:bast")
-       <i class="tx-center" style="$facetStyle" >BAST</i>
-    #elseif($facetId == "behoerde:baw")
-       <i class="tx-center" style="$facetStyle" >BAW</i>
-    #elseif($facetId == "behoerde:bfg")
-        <i class="tx-center" style="$facetStyle" >BFG</i>
-    #elseif($facetId == "behoerde:bsh")
-       <i class="tx-center" style="$facetStyle" >BSH</i>
-    #elseif($facetId == "behoerde:dwd")
-       <i class="tx-center" style="$facetStyle" >DWD</i>
-    #elseif($facetId == "behoerde:wsv")
-       <i class="tx-center" style="$facetStyle" >WSV</i>
-    #elseif($facetId == "behoerde:eba")
-        <i class="tx-center" style="$facetStyle" >EBA</i>
-   #else
-        <i class="icon bx-top-s icon-question-mark" style="$facetStyle"></i>
+#macro (getIconImage $facet $facetStyle)
+    #if($facet.getIcon())
+        #set($icon = $facet.getIcon())
+        #if($icon.startsWith("#"))
+            <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="$icon" /></svg>
+        #elseif($icon.startsWith("/"))
+            <img style="margin: auto;" class="bx-top-s" src="$icon"></img>
+        #else
+            <i class="icon bx-top-s $icon" style="$facetStyle"></i>
+        #end
+    #else
+       <i class="icon bx-top-s icon-question-mark" style="$facetStyle"></i>
     #end
 #end

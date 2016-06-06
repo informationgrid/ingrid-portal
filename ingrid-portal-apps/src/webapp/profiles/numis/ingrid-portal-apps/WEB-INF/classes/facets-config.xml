@@ -413,36 +413,35 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.datatype.www</name>
                 <query>datatype:www</query>
                 <id>category_www</id>
+                <icon>icon-log-out-1</icon>
             </facet>
             <!-- Metadaten -->
             <facet>
                 <name>searchResult.facete.title.metaclass</name>
                 <query>datatype:metadata</query>
                 <id>category_metadata</id>
+                <icon>icon-folder-search</icon>
             </facet>
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
                 <query>inspireidentifiziert</query>
                 <id>category_inspire</id>
+                <icon>icon-globe-2</icon>
             </facet>
         <!-- Opendata -->
            <facet>
                 <name>Opendata</name>
                 <query>(opendata OR opendataident) datatype:metadata</query>
                 <id>category_opendata</id>
+                <icon>icon-hotspot-2</icon>
             </facet>
         <!-- Karten -->
             <facet>
                 <name>searchResult.facete.datatype.map</name>
                 <query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
                 <id>category_map</id>
-            </facet>
-        <!-- Adressen -->
-            <facet>
-                <name>searchResult.facete.datatype.address</name>
-                <query>datatype:address</query>
-                <id>category_address</id>
+                <icon>icon-globe-1</icon>
             </facet>
         </facets>
     </facet>
