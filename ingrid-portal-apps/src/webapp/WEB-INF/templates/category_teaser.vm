@@ -1,6 +1,7 @@
 #renderPortletTitle($MESSAGES.getString('search.teaser.portlet.title') "h2" "bx-top-0")
 #set ($action = $renderResponse.createActionURL())
 <div class="tabs js-tabs">
+    #if($facetsTyp.size() > 1)
     <div class="tab__select mq-show-l">
         <span class="tab__select__text">$MESSAGES.getString('searchResult.facete.title.types')</span>
         <svg class="tab__select__icon icon"><use xlink:href="#burger"></svg>
@@ -25,6 +26,7 @@
             #end
         #end
     </nav>
+    #end
     #set($isActive = "")
     #foreach ($cf in $config)
         #set($facetParent = $cf.getId())
@@ -100,7 +102,7 @@
     #set ($count = 0)
     #set ($pf = $parentFacet)
     #foreach ($facet in $facetList)
-        #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
+        #if($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != "0" || $facet.isDisplay()))
             #if($count % 5 == 0)
                 <div class="grid grid--gutter">
             #end
@@ -120,7 +122,9 @@
                                 $MESSAGES.getString($facet.getName())
                             #end
                         </div>
-                        <div class="tx-center">($hits.get("FACETS").get("$facetId:$facet.getId()"))</div>
+                        #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
+                            <div class="tx-center">($hits.get("FACETS").get("$facetId:$facet.getId()"))</div>
+                        #end
                     </a>
                 </div>
                 <div class="mq-show-l">

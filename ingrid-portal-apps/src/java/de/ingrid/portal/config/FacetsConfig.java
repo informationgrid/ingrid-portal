@@ -206,6 +206,20 @@ public class FacetsConfig {
                     }
                 }
 
+                if (facetNode.getChildren( "display" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "display" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setDisplay( Boolean.parseBoolean(node.getValue().toString()) );
+                    }
+                }
+
+                if (facetNode.getChildren( "categoryOnly" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "categoryOnly" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setCategoryOnly( Boolean.parseBoolean(node.getValue().toString()) );
+                    }
+                }
+
                 if (facetNode.getChildren( "facets" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {

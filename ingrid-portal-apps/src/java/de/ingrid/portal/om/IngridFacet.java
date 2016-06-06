@@ -40,6 +40,9 @@ public class IngridFacet {
     private boolean isHiddenSelect = false;
     private boolean isSelect = false;
     private boolean isOpen = false;
+    private boolean isDisplay = false;
+    private boolean categoryOnly = false;
+    
     /* Only for partner restriction */
     private boolean isParentHidden = false;
     private boolean isOldIPlug = false;
@@ -158,5 +161,17 @@ public class IngridFacet {
     }
     public void setOpen(boolean isOpen) {
         this.isOpen = isOpen;
+    }
+    public boolean isDisplay() {
+        return isDisplay;
+    }
+    public void setDisplay(boolean isDisplay) {
+        this.isDisplay = isDisplay;
+    }
+    public boolean isCategoryOnly() {
+        return categoryOnly;
+    }
+    public void setCategoryOnly(boolean categoryOnly) {
+        this.categoryOnly = categoryOnly;
     }
 }

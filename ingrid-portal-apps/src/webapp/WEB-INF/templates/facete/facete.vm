@@ -47,7 +47,7 @@
                         #if($node.getFacets())
                             #set($nodeHasValue = false)
                             #foreach($facet in $node.getFacets())
-                                #if($facet.getFacetValue() || $facet.isOldIPlug())
+                                #if($facet.getFacetValue() || $facet.isOldIPlug() || $facet.isDisplay())
                                     #set($nodeHasValue = true)
                                 #end
                             #end
@@ -63,7 +63,7 @@
 #end
 
 #macro(renderFacetCategoryEntry $facet $parentId)
-    #if($facet.getFacetValue() || $facet.isOldIPlug())
+    #if($facet.getFacetValue() || $facet.isOldIPlug() || $facet.isDisplay())
         #if($facet.getFacets())
             ## Check for sub facets
             #if($facet.isSelect())
