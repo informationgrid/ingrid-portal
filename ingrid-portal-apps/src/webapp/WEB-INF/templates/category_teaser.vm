@@ -102,7 +102,7 @@
     #set ($count = 0)
     #set ($pf = $parentFacet)
     #foreach ($facet in $facetList)
-        #if($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != "0" || $facet.isDisplay()))
+        #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != "0") || $facet.isDisplay()))
             #if($count % 5 == 0)
                 <div class="grid grid--gutter">
             #end
