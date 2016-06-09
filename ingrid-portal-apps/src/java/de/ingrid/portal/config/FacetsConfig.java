@@ -180,8 +180,12 @@ public class FacetsConfig {
                             to = df.format( cal.getTime() );
                         }
                     }
-                    if (from != null && to != null) {
-                        ingridFacet.setQuery( "t01_object.mod_time:[" + from + "0* TO " + to + "9*]" );
+                    node = (Node) facetNode.getChildren( "query" ).get( 0 );
+                    if (node != null) {
+                        String value = node.getValue().toString();
+                        if (from != null && to != null) {
+                            ingridFacet.setQuery( value.replace( "{FROM}", from ).replace( "{TO}", to ) );
+                        }
                     }
                 }
 
