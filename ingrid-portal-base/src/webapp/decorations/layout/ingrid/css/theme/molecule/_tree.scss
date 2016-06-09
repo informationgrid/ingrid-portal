@@ -31,6 +31,14 @@
     padding: rem(10px 16px 10px 32px);
     position: relative;
     white-space: nowrap;
+    
+    a {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        display: inline-block;
+        max-width: 95%;
+    }
 }
 
 .tree__item--large {
