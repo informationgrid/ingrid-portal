@@ -777,7 +777,12 @@ public class UtilsSearch {
         // !!! NOTICE: see http://jira.media-style.com/browse/INGRID-1076
 
     	String basicDatatypeForQuery = null;
-    	
+    	String defaultDS = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_DEFAULT_DATASOURCE, null);
+    	boolean hasDefaultDS = false;
+    	if(request.getParameter(Settings.PARAM_DATASOURCE) == null && defaultDS != null && defaultDS.length() > 0){
+    	    selectedDS = defaultDS;
+    	    hasDefaultDS = true;
+    	}
     	// DO NOT ALWAYS ADD BASIC DATA TYPE !!! datatypes are connected with OR !!!
     	// see http://jira.media-style.com/browse/INGRID-1076
         if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_DATATYPE)) {
@@ -799,7 +804,7 @@ public class UtilsSearch {
         }
 
         if (basicDatatypeForQuery != null) {
-        	if(request.getParameter(Settings.PARAM_DATASOURCE) != null){
+        	if(request.getParameter(Settings.PARAM_DATASOURCE) != null || hasDefaultDS){
 	            query.addField(new FieldQuery(true, false,
 	            		Settings.QFIELD_DATATYPE, basicDatatypeForQuery));
         	}

@@ -114,6 +114,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER = "portal.search.restrict.partner";
     
+    public static final String PORTAL_SEARCH_DEFAULT_DATASOURCE = "portal.search.default.datasource";
+    
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL = "portal.search.restrict.partner.level";
     
     public static final String PORTAL_HIERARCHY_CATALOGNAME_HIDDEN = "portal.hierarchy.catalogname.hidden";
