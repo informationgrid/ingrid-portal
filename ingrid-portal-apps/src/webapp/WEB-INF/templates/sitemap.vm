@@ -194,6 +194,16 @@
                     <p>$MESSAGES.getString("sitemap.area.main.provider.description")</p>
                 </li>
                  #end
+                <li>
+                    #set ($link = $renderResponse.encodeURL("/portal/main-about-data-source.psml"))
+                    <a href="$link" title="$MESSAGES.getString("sitemap.area.main.datasource.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.area.main.datasource")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.area.main.datasource.description")</p>
+                </li>
             </ul>
             </div>
         </li>
