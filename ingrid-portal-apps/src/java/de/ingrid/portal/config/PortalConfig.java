@@ -188,7 +188,9 @@ public static final String LANGUAGES_NAMES = "languages.names.";
     
     // Enable facete on search hits
     public static final String PORTAL_ENABLE_SEARCH_FACETE = "portal.search.facete.enable";
-
+    
+    public static final String PORTAL_SEARCH_FACETE_SUB_COUNT = "portal.search.facete.sub.count";
+    
     public static final String PORTAL_SEARCH_HIDDEN_DATATYPES = "portal.search.hidden.datatype";
     
     public static final String PORTAL_SEARCH_HIT_PARTNER_LOGO = "portal.search.hit.partner.logo";

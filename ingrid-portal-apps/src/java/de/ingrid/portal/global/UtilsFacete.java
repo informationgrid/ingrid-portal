@@ -246,6 +246,7 @@ public class UtilsFacete {
         }else{
             context.put("isSelection", isAnyFacetConfigSelect(config, (Boolean) getAttributeFromSession(request, "isSelection")));
         }
+        context.put( "subFacetsCount", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_FACETE_SUB_COUNT, 5));
         // Remove flag
         removeAttributeFromSession(request, "isSelection");
     }
@@ -663,6 +664,7 @@ public class UtilsFacete {
         String doBrowseGeothesaurus = request.getParameter("doBrowseGeothesaurus");
         String doBrowseSimilarGeothesaurus = request.getParameter("doBrowseSimilarGeothesaurus");
         String doRemoveGeothesaurus = request.getParameter("doRemoveGeothesaurus");
+        String doClearSearchGeothesaurus = request.getParameter("doClearSearchGeothesaurus");
 
         if(doCancelGeothesaurus != null){
             setAttributeToSession(request, GEOTHESAURUS_DO, false);
@@ -843,6 +845,13 @@ public class UtilsFacete {
                         setAttributeToSession(request, SELECTED_GEOTHESAURUS, selectedGeothesaurus, false);
                     }
                 }
+            }
+            
+            if(doClearSearchGeothesaurus != null){
+                removeAttributeFromSession(request, GEOTHESAURUS_TERM);
+                removeAttributeFromSession(request, GEOTHESAURUS_TOPICS);
+                removeAttributeFromSession(request, GEOTHESAURUS_SIMILAR_TOPICS);
+                removeAttributeFromSession(request, GEOTHESAURUS_CURRENT_TOPIC);
             }
         }
     }

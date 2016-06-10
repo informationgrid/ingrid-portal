@@ -29,7 +29,11 @@
                     <svg class="icon"><use xlink:href="#magnifier"></use></svg>
                 </button>
             </div>
-            
+            #if($geothesaurusTerm)
+                $action.setParameter("doClearSearchGeothesaurus", "")
+                #renderCrossLink($action $MESSAGES.getString("searchResult.facete.area.name.delete"))
+            #end
+             
             #if($geothesaurusCurrentTopic)
             <div class="facete_dialog_sns_content">
                 <p class="dialog_sub_title">$MESSAGES.getString("searchResult.facete.area.name.keyword")</p>
@@ -79,6 +83,17 @@
                 <h6>$MESSAGES.getString("searchResult.facete.area.name.keyword")</h6>
                 #set($count = 0)
                 #foreach($topic in $geothesaurusTopics)
+                    #if($count == $subFacetsCount)
+                    <div>
+                        <a href="#" class="js-expander link tx-upper tx-brand" id="facete_area_more">
+                            <svg class="icon link__icon">
+                                <use xlink:href="#plus"></use>
+                            </svg>
+                            <strong>$MESSAGES.getString("searchResult.facete.category.plus")</strong>
+                        </a>
+                    </div>
+                    <div class="js-expander-content facete_area_more is-hidden ">
+                    #end
                     #set($count = $count + 1)
                     #setMsgTopicType($topic.topic_ref)
                     <div class="field-toggle field-toggle--check">
@@ -103,17 +118,30 @@
                         </label>
                     </div>
                 #end
+                #if($count > $subFacetsCount)
+                        <div>
+                            <a href="#" class="js-expander-close facete_area_more is-hidden link tx-upper tx-brand">
+                                <svg class="icon link__icon">
+                                    <use xlink:href="#minus"></use>
+                                </svg>
+                                <strong>$MESSAGES.getString("searchResult.facete.category.minus")</strong>
+                            </a>
+                        </div>
+                    </div>
+                #end
             #end
             #if($geothesaurusTopicsBrowse || $geothesaurusTopics)
                 #renderCheckLink("#" $MESSAGES.getString('searchResult.facete.dialog.all.select') "faceteDialogSelectAll(document.geothesaurus_form)")
-	            #renderCrossLink("#" $MESSAGES.getString('searchResult.facete.dialog.all.delete') "faceteDialogDeselectAll(document.geothesaurus_form)")
-	        #end
+                #renderCrossLink("#" $MESSAGES.getString('searchResult.facete.dialog.all.delete') "faceteDialogDeselectAll(document.geothesaurus_form)")
+            #end
             #if($geothesaurusError)
                 <p>
                     $MESSAGES.getString('searchResult.facete.area.name.search.error')
                 </p>
             #end
-            <p><button type="submit" name="doAddGeothesaurus" class="btn btn--primary btn--small btn--block">$MESSAGES.getString('searchResult.facete.dialog.commit')</button></p>
+            #if($geothesaurusTopics)
+                <p><button type="submit" name="doAddGeothesaurus" class="btn btn--primary btn--small btn--block">$MESSAGES.getString('searchResult.facete.dialog.commit')</button></p>
+            #end
         </form>
         
         #foreach ($geothesaurus in $geothesaurusSelectTopics)

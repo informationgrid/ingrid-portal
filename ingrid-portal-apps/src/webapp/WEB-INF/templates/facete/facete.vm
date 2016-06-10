@@ -241,8 +241,22 @@
             #end
             <div class="field bx-bot-0">
                 <ul>
+                #set($count = 0)
                 #foreach ($treeSubFacet in $treeFacet.getFacets())
                     #if($treeSubFacet.getFacetValue() || $treeSubFacet.isOldIPlug())
+                        #if($count == $subFacetsCount)
+                            </ul>
+                            <div>
+                                <a href="#" class="js-expander link tx-upper tx-brand" id="facete_provider_more">
+                                    <svg class="icon link__icon">
+                                        <use xlink:href="#plus"></use>
+                                    </svg>
+                                    <strong>$MESSAGES.getString("searchResult.facete.category.plus")</strong>
+                                </a>
+                            </div>
+                            <ul class="js-expander-content facete_provider_more is-hidden">
+                        #end
+                        #set($count = $count + 1)
                         <li>
                             <div class="field-toggle field-toggle--check">
                                 #set ($action = $renderResponse.createActionURL())
@@ -263,6 +277,16 @@
                     #end
                 #end
                 </ul>
+                #if($count > $subFacetsCount)
+                    <div>
+                        <a href="#" class="js-expander-close facete_provider_more is-hidden link tx-upper tx-brand">
+                            <svg class="icon link__icon">
+                                <use xlink:href="#minus"></use>
+                            </svg>
+                            <strong>$MESSAGES.getString("searchResult.facete.category.minus")</strong>
+                        </a>
+                    </div>
+                #end
             </div>
         </div>
     </div>
