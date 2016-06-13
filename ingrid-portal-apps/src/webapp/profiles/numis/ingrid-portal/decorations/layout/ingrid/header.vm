@@ -18,7 +18,7 @@
         #end
         -->
         <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')" />
-        <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "NUMIS")</title>
+        <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "NUMIS - Das nieders&auml;chsische Umweltportal")</title>
         <meta http-equiv="Content-type" content="#ContentType()" />
         <meta http-equiv="Content-style-type" content="text/css" />   
         <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
@@ -86,8 +86,15 @@
                 <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
                     <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.svg')"></img>
-                    <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/mobile-logo.svg')"></img>
+                    <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/footer-logo.svg')"></img>
                     </a>
+                </div>
+                <div class="header__widgets__section">
+                    <a class="mq-hide-xxl desktop__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                        <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
+                        <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
+                    </a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">NUMIS</a>
                 </div>
                  #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)

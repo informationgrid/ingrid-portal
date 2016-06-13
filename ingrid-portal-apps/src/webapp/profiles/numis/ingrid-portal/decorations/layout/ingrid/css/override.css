@@ -264,5 +264,27 @@ thead {
 }
 
 .desktop-logo {
-    max-width: 140%;
+    max-width: 85%;
+}
+
+.header__logo {
+    width: auto;
+    height: unset;
+}
+
+.desktop__title p.main__title {
+    font-size: 27px;
+}
+
+.mobile__title {
+    padding: 0 5px;
+    color: #FFFFFF;
+}
+
+.mobile__title:hover {
+    color: #FFFFFF;
+}
+
+.footer__logo {
+    width: 3.125rem;
 }

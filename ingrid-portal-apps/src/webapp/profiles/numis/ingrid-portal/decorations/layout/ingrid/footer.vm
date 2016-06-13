@@ -53,6 +53,7 @@
         
         <!-- Popup -->
         <script src="#GetPageResource("scripts/popup.js")"></script>
+        <script src="#GetPageResource("scripts/expander.js")"></script>
         <script src="#GetPageResource("scripts/pickadate/lib/picker.js")"></script>
         <script src="#GetPageResource("scripts/pickadate/lib/picker.date.js")"></script>
         <script src="#GetPageResource("scripts/pickadate/lib/legacy.js")"></script>

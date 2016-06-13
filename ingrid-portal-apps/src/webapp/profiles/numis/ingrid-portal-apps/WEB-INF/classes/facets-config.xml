@@ -241,75 +241,11 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
                 <id>map</id>
             </facet>
-        <!-- Messwerte -->
-            <facet sort="SORT_BY_VALUE_DESC">
-                <name>searchResult.facete.datatype.measure</name>
-                <query>datatype:measure</query>
-                <id>measure</id>
-                <facets queryType="OR">
-                    <facet>
-                        <name>searchResult.facete.measures.radiation</name>
-                        <query>topic:radiation</query>
-                        <id>radiation</id>
-                    </facet>
-                    <facet>
-                        <name>searchResult.facete.measures.air</name>
-                        <query>topic:air</query>
-                        <id>air</id>
-                    </facet>
-                    <facet>
-                        <name>searchResult.facete.measures.water</name>
-                        <query>topic:water</query>
-                        <id>water</id>
-                    </facet>
-                    <facet>
-                        <name>searchResult.facete.measures.misc</name>
-                        <query>topic:misc</query>
-                        <id>misc</id>
-                    </facet>
-                </facets>
-            </facet>
-        <!-- Themen -->
-        <!-- Kann nicht erweitert werden -->
-            <facet sort="SORT_BY_VALUE_DESC">
-                <name>searchResult.facete.title.topic</name>
-                <query>datatype:topics</query>
-                <id>topic</id>
-            </facet>
         <!-- Rechtsvorschriften -->
             <facet>
                 <name>searchResult.facete.datatype.law</name>
                 <query>datatype:law</query>
                 <id>law</id>
-            </facet>
-        <!-- Forschungsprojekte -->
-            <facet>
-                <name>searchResult.facete.datatype.research</name>
-                <query>datatype:research</query>
-                <id>research</id>
-            </facet>
-        <!-- Service -->
-            <facet sort="SORT_BY_VALUE_DESC">
-                <name>searchResult.facete.title.service</name>
-                <query>datatype:service</query>
-                <id>service</id>
-                <facets queryType="OR">
-                    <facet>
-                        <name>searchResult.facete.service.press</name>
-                        <query>topic:press</query>
-                        <id>press</id>
-                    </facet>
-                    <facet>
-                        <name>searchResult.facete.service.publication</name>
-                        <query>topic:publication</query>
-                        <id>publication</id>
-                    </facet>
-                    <facet>
-                        <name>searchResult.facete.service.event</name>
-                        <query>topic:event</query>
-                        <id>event</id>
-                    </facet>
-                </facets>
             </facet>
         <!-- Adressen -->
             <facet>
@@ -344,6 +280,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime1</id>
                 <from>P1MT</from>
                 <to>PT</to>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
             </facet>
             <!-- letzte 3 Monate -->
             <facet>
@@ -351,6 +288,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime2</id>
                 <from>P3MT</from>
                 <to>P1M1DT</to>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
             </facet>
             <!-- letztes Jahr -->
             <facet>
@@ -358,6 +296,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime3</id>
                 <from>P1YT</from>
                 <to>P3M1DT</to>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
             </facet>
             <!-- letzte 5 Jahre -->
             <facet>
@@ -365,6 +304,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime4</id>
                 <from>P5YT</from>
                 <to>P1Y1DT</to>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
             </facet>
             <!-- Älter als 5 Jahre -->
             <facet>
@@ -372,6 +312,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime5</id>
                 <from></from>
                 <to>P5Y1DT</to>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
             </facet>
         </facets>
     </facet>
