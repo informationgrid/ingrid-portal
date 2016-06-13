@@ -25,7 +25,7 @@
                 $MESSAGES.setMsgParam('DOC')
                 #set($urlTitle = $MESSAGES.getStringWithMsgParams('common.tooltip.link.extern.document'))
             #end
-            <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0"> #end
+            <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end
                 <svg class="icon globe__icon" ><use xlink:href="#external-link"></svg>
                 <a href="$!rs.url" title="$urlTitle">#renderTitle($rs.title)</a>
             </h4>
@@ -47,7 +47,7 @@
                     #else
                         #set($title = "$rs.title")
                     #end
-                    <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0"> #end
+                    <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end
                     #renderUDKAddressIcon($rs.udk_class $udkObjClassName)
                     #if($rs.docuuid && $rs.docuuid.length() > 0)
                         <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end">#renderTitle($title.trim())</a>
@@ -57,7 +57,7 @@
                     </h4>
                 #else
                     #set($udkObjClassName = $Codelists.getCodeListValue('8000', $rs.udk_class, $languageCode))
-                    <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0"> #end
+                    <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end
                     #renderUDKIcon($rs.udk_class $udkObjClassName)
                     #if($rs.docuuid && $rs.docuuid.length() > 0)
                         <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end">#renderTitle($rs.title.trim())</a>
@@ -67,7 +67,7 @@
                     </h4>
                 #end
             #else
-                <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0"> #end
+                <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end
                 #if($rs.docuuid && $rs.docuuid.length() > 0)
                     <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid">#renderTitle($rs.title.trim())</a>
                 #else   
@@ -76,7 +76,7 @@
                 </h4>
             #end
         #else
-            <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0"> #end<strong>renderTitle($rs.title)<strong></h4>
+            <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end<strong>renderTitle($rs.title)<strong></h4>
         #end
             
         <div class="media__obj media__obj--right">
