@@ -421,7 +421,7 @@
             <article id="detail_meta_header" class="content ob-container">
                 <form class="box box--medium">
                     <div class="box__content ob-container">
-                        <h6 class="tx-light tx-upper tx-brand bx-bot-0">$modTime</h6>
+                        <h6 class="tx-light tx-upper tx-brand bx-bot-0">$MESSAGES.getString("t02_address.mod_time"): $modTime</h6>
                         <h1 class="bx-top-0 bx-bot-s">$title</h1>
                         <h3 class="bx-top-0">
                             #if($isMetadata == true)
