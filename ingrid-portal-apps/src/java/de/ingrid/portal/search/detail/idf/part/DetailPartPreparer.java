@@ -482,6 +482,9 @@ public class DetailPartPreparer {
             if(value.indexOf("T") > -1){
                 String[] split = value.split("T");
                 String content = UtilsDate.convertDateString(split[0], "yyyy-MM-dd", "dd.MM.yyyy");
+                if(split[1].equals("00:00:00")){
+                    return content;
+                }
                 return content + " " + split[1];
             }else{
                 String content = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");;
