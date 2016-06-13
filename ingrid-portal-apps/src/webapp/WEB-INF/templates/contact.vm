@@ -1,7 +1,5 @@
 #renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
 <article class="content ob-container ob-box-narrow ob-box-center">
-    $MESSAGES.getString('contact.intro.praeEmail')
-    <a href="mailto:$portalEmail" title="$MESSAGES.getString('contact.intro.praeEmail.tooltip')">$portalEmail</a>
     $contactIntroPostEmail
 </article>
 <section class="block block--padded">
