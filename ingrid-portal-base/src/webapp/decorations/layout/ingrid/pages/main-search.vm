@@ -4,8 +4,8 @@
             <div class="box box--medium">
                 <div class="box__content ob-container">
                     $jetspeed.renderPortletWindow("SearchSimple", "ingrid-portal-apps::SearchSimple")
+                    $jetspeed.renderPortletWindow("SearchSimilar", "ingrid-portal-apps::SearchSimilar")
                 </div>
-                $jetspeed.renderPortletWindow("SearchSimilar", "ingrid-portal-apps::SearchSimilar")
             </div>
          </article>
     </div>
