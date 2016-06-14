@@ -12,7 +12,7 @@
 
     li {
         margin: 20px 0;
-        padding-left: rem(22px);
+        /* padding-left: rem(22px); */
         position: relative;
     }
 
@@ -39,8 +39,12 @@
 }
 
 .list--bullets {
+    padding-left: rem(32px);
+    list-style: outside none disc;
+    
     li {
         &:before {
+            /*
             background: color(black);
             content: '';
             display: block;
@@ -49,6 +53,7 @@
             top: .6em;
             height: rem(6px);
             width: rem(6px);
+            */
         }
 
         li {
