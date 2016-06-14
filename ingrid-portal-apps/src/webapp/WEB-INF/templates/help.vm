@@ -1,11 +1,12 @@
 #set ($action = $renderResponse.createActionURL())
 <p>
-    #if($helpKey)
+    #if($helpKey && $helpKey != "index")
         <a class="link link--big" href="$renderResponse.encodeURL('/portal/help.psml?hkey=index')">
             <strong>$MESSAGES.getString('help.startpage')</strong>
             <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
-         </a>
+        </a>
+        <hr>
     #end
-    <hr>
+    
 </p>
 $help_content
