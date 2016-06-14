@@ -12,8 +12,10 @@
     <tr>
         <td>
             <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+			<label for="chk_$velocityCount" class="field-toggle__label field-toggle__label--highlight">
+			$rowId
+			</label>
         </td>
-        <td>$rowId</td>
         #foreach ($rowValue in $rowValues)
             <td>$rowValue</td>
         #end
