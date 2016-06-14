@@ -27,10 +27,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,7 +46,11 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.request.RequestContext;
+import org.apache.jetspeed.security.SecurityException;
+import org.apache.jetspeed.security.User;
+import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;
@@ -81,9 +87,15 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
     private final static String PARAMV_ACTION_DB_DO_REFRESH = "doRefresh";
 
-    
+    private UserManager userManager;
+
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
+
+        userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
+        if (null == userManager) {
+            throw new PortletException("Failed to find the User Manager on portlet initialization");
+        }
     }
 
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
@@ -134,12 +146,35 @@ public class ContactPortlet extends GenericVelocityPortlet {
         String action = request.getParameter(Settings.PARAM_ACTION);
         if (action == null) {
             cf.clear();
+            // but add user data from logged in user, see REDMINE-302
+            populateWithLoggedInUser(cf, request.getUserPrincipal());
         } else if (action.equals(PARAMV_ACTION_SUCCESS)) {
             response.setTitle(messages.getString("contact.success.title"));
             setDefaultViewPage(TEMPLATE_SUCCESS);
         }
 
         super.doView(request, response);
+    }
+    
+    /** Populate contact form with data from principal if principal not null */
+    private void populateWithLoggedInUser(ContactForm cf, Principal userPrincipal) {
+        User user = null;
+        if (userPrincipal != null) {
+            try {
+                user = userManager.getUser(userPrincipal.getName());
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }            
+        }
+        if (user != null) {
+            Map<String, String> userInfo = user.getInfoMap();
+            if (!cf.hasInput( cf.FIELD_FIRSTNAME ))
+                cf.setInput( cf.FIELD_FIRSTNAME, userInfo.get( "user.name.given" ));
+            if (!cf.hasInput( cf.FIELD_LASTNAME ))
+                cf.setInput( cf.FIELD_LASTNAME, userInfo.get( "user.name.family" ));
+            if (!cf.hasInput( cf.FIELD_EMAIL ))
+                cf.setInput( cf.FIELD_EMAIL, userInfo.get( "user.business-info.online.email" ));
+        }        
     }
 
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,

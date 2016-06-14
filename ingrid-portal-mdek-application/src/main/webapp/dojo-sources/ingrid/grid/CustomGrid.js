@@ -1343,6 +1343,9 @@ define([
                                 self.eventWndClick.remove();
                                 self.eventWndClick = null;
                                 self.lastActiveEditorRow = self.activeRow;
+                                
+                                // check if last row was empty and can be removed again
+                                self.handleEmptyRow();
                             }
                         }
                         if (self.activeCellNode) {
@@ -1354,16 +1357,23 @@ define([
                 }
             });
         },
-
-        clickWithinDomNode: function(evt, node) {
-            var target = evt.target;
-            while (target !== null) {
-                if (target == node)
-                    return true;
-                else
-                    target = target.parentNode;
+        
+        handleEmptyRow: function(row) {
+            var currentRow = row !== undefined ? row : this.activeRow;
+            var lastRowData = this.data[currentRow];
+            if (lastRowData) {
+                var hasContent = array.some(this.getColumns(), function(col) {
+                    return lastRowData[col.field] && lastRowData[col.field] !== "";
+                });
+                if (!hasContent) {
+                    this.data.splice(currentRow, 1);
+                    
+                    // close current editor if it was in the next row
+                    if (this.getEditorLock().isActive() && this.activeRow >= this.data.length) {
+                        this.getEditorLock().cancelCurrentEdit();
+                    }
+                }
             }
-            return false;
         },
 
         handleHeaderClick: function(/*e*/) {
@@ -2420,14 +2430,20 @@ define([
 
         navigateDown: function() {
             this.navigate("down");
+            this.handleEmptyRow(this.activeRow-1);
         },
 
         navigateUp: function() {
             this.navigate("up");
+            this.handleEmptyRow(this.activeRow-1);
         },
 
         navigateNext: function() {
+            var prevRow = this.activeRow;
             this.navigate("next");
+            if (prevRow !== this.activeRow) {
+                this.handleEmptyRow(prevRow);
+            }
         },
 
         navigatePrev: function() {
