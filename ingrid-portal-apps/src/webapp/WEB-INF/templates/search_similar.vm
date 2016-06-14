@@ -18,7 +18,7 @@
         <div class="bx-top-s js-accordion-content #if($ps.isSimilarOpen)#else is-hidden #end">
             <div class="tree">
                 #foreach($similarNode in $ps.similarRoot.getChildren())
-                    <ul class="js-accordion-multi">
+                <ul class="js-accordion-multi">
                         #set ($action = $renderResponse.createActionURL())
                         #if($similarNode.isOpen())
                             $action.setParameter('action','doCloseNode')
@@ -51,6 +51,7 @@
                             </div>
                         </li>
                     </ul>
+                    <img style="float:right; padding: 5px 0 0" src="/ingrid-portal-apps/images/sns_big.gif"/>
                 #end    
             </div>
             <p class="bx-top-m bx-bot-0 tx-center">
