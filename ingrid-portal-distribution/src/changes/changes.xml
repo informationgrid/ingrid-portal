@@ -28,6 +28,12 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="3.6.2.1-SNAPSHOT" date="2016-xx-xx" description="Release 3.6.2.1">
+            <action type="fix" dev="wemove" issue="REDMINE-323">
+                IGE: Fixed installer for update which overrode property file.
+            </action>
+        </release>
+        
         <release version="3.6.2" date="2016-05-30" description="Release 3.6.2">
             <action type="add" dev="wemove" issue="REDMINE-302">
                 Portal: Contact form now pre-populated with name and email of logged in user.

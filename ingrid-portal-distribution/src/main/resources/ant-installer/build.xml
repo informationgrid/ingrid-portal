@@ -333,9 +333,8 @@
             <patternset>
                 <exclude name="WEB-INF/classes/communication.xml" />
                 <exclude name="WEB-INF/classes/default-datasource.properties" />
-                <exclude name="WEB-INF/classes/mdek.properties" />
+                <exclude name="WEB-INF/classes/mdek.override.properties" />
                 <exclude name="WEB-INF/classes/igeAdminUser.properties" />
-                <exclude name="WEB-INF/configurations.xml" />
                 <exclude name="dojo-sources/release/lib/ingrid/hierarchy/behaviours.user.j*" />
             </patternset>
         </unwar>
