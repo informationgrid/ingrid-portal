@@ -24,12 +24,20 @@
                     #set ($colIndex = $velocityCount - 1)
                     #if ($colName == 'description')
                         #renderDBEditTextArea($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+                    #elseif($colName == 'language')
+                        #renderDBEditSelectField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex) $languages)
+                    #elseif($colName == 'categories')
+                        #set($value = $colValues.get($colIndex))
+                        #if($value == "")
+                            #set($value = "all")
+                        #end
+                        #renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $value $MESSAGES.getString('component.forms.rss.categories.info'))
                     #else
                         #renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
-                    #end   
+                    #end
                 #end
                 #if ($dbEntity.Error && $dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none" )
-                    <p  style="color:#ff0000;">
+                    <p style="color:#ff0000;">
                         <label>$MESSAGES.getString('component.forms.text.error.messages')</label><span>$!{id}</span>
                         <span>$MESSAGES.getString($dbEntity.Error)</span>
                     </p>

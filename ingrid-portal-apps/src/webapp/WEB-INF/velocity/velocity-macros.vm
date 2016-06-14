@@ -336,11 +336,11 @@ $actionForm.getInputHTMLEscaped($field)#end
 </div>
 #end
 
-#macro (renderDBEditTextField $index $colName $colLabel $colValue)
-    #renderDBEditTextFieldDisable ($index $colName $colLabel $colValue "false")
+#macro (renderDBEditTextField $index $colName $colLabel $colValue $info)
+    #renderDBEditTextFieldDisable ($index $colName $colLabel $colValue "false" $info)
 #end
 
-#macro (renderDBEditTextFieldDisable $index $colName $colLabel $colValue $disable)
+#macro (renderDBEditTextFieldDisable $index $colName $colLabel $colValue $disable $info)
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
@@ -351,6 +351,29 @@ $actionForm.getInputHTMLEscaped($field)#end
         #else
             <input type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
         #end
+        #if($info)
+            <div class="message--info" style="margin: 0.5rem 0;">
+                <div class="message__simple-content message-fill--info" style="">
+                    <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
+                    $info
+                </div>
+            </div>
+        #end
+        </div>
+    </div>
+#end
+
+#macro (renderDBEditSelectField $index $colName $colLabel $colValue $selectValues)
+    <div class="media">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+            <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
+        </div>
+        <div class="media__body">
+            <select class="js-selection" id="${colName}$!{index}" name="${colName}$!{index}">
+                #foreach ($selectValue in $selectValues)
+                <option id="$selectValue" value="$selectValue" class="selection-options #if($colValue == $selectValue) is-active" selected #else " #end >$selectValue</option>
+                #end
+            </select>
         </div>
     </div>
 #end
