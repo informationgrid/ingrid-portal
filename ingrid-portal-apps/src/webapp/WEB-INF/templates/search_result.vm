@@ -3,7 +3,7 @@
     #if($enableFacete)
         #renderSearchResultFacetFilter()
     #end
-    <article class="content ob-container ob-box-narrow">
+    <article class="content ob-container">
         #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
     </article>
 </div>

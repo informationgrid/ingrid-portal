@@ -2,7 +2,7 @@
     #if($enableFacete)
         #renderSearchResultFacetFilter()
     #end
-    <article class="content ob-container ob-box-narrow">
+    <article class="content ob-container">
         <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
         #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
         #parse ('/WEB-INF/templates/include_search_result_filter.vm')
