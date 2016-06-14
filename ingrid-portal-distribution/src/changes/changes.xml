@@ -32,6 +32,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-323">
                 IGE: Fixed installer for update which overrode property file.
             </action>
+            <action type="update" dev="wemove" issue="REDMINE-324">
+                IGE: Improved behaviour of grid to avoid creation of empty rows.
+            </action>
         </release>
         
         <release version="3.6.2" date="2016-05-30" description="Release 3.6.2">
