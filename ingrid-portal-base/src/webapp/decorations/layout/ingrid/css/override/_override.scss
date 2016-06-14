@@ -1,5 +1,5 @@
 /*
- *  Base: Datepicker
+ *  Base: Override
  *________________________*/
 
 
@@ -7,4 +7,8 @@
 
 .picker__select--month, .picker__select--year {
     height: 2.25em;
+}
+
+.leaflet-left, .leaflet-right {
+    z-index: 0 !important;
 }
