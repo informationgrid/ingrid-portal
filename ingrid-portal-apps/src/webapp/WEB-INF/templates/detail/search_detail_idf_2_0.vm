@@ -56,9 +56,8 @@
                 <span class="tx-light">(${entry.get("attachedToField")})</span>
             #end
             #if($tool.hasContent($entry.description))
-                #set($myIndent = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-                #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>${myIndent}"))
-                <span class="tx-light"><br/>${myIndent}${myDescription}</span>
+                #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
+                <span class="tx-light"><br/>${myDescription}</span>
             #end
         #end
         #if($tool.hasContent($entry.mapLink))
