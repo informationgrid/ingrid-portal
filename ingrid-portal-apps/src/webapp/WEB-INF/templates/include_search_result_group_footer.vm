@@ -12,6 +12,7 @@
 #end
             <a href="$action">
                 <strong>$MESSAGES.getString('common.result.group.showAll') $!{groupSubject}</strong>
+                <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
             </a>
         </div>
     </div>

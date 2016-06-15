@@ -42,7 +42,7 @@
                                 $provider.provider.name
                             </a>
                         #else
-                            <a>$provider.provider.name</a>
+                            <span style="display: block; padding: 0.5625rem 0.5625rem 0.5625rem 1.5rem; position: relative;">$provider.provider.name</span>
                         #end
                         </li>
                     #end
