@@ -1,11 +1,23 @@
 #renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
 
+#set($isFiltering = false)
+#if(($!browser.filterCriteria.filterCriteriaId &&  $!browser.filterCriteria.filterCriteriaId.length() > 0) 
+    || ($!browser.filterCriteria.filterCriteriaFirstName && $!browser.filterCriteria.filterCriteriaFirstName.length() > 0)
+    || ($!browser.filterCriteria.filterCriteriaLastName && $!browser.filterCriteria.filterCriteriaLastName.length() > 0)
+    || ($!browser.filterCriteria.filterCriteriaEmail && $!browser.filterCriteria.filterCriteriaEmail.length() > 0)
+    || ($!browser.filterCriteria.filterCriteriaRole && $!browser.filterCriteria.filterCriteriaRole.length() > 0))
+    #set($isFiltering = true)
+#end
+
 #set ($action = $renderResponse.createActionURL())
 <div class="block">
     <form action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
         <aside class="sidebar js-accordion-multi" style="padding:3.75rem 0 0; left:0;">
             <div class="sidebar__title js-accordion-toggle mq-show-l">
                 Filter
+                #if($isFiltering)
+                    <svg class="icon-active"><use xlink:href="#check"></use></svg>
+                #end
                 <svg class="icon"><use xlink:href="#filter"></use></svg>
                 <svg class="icon"><use xlink:href="#cross"></use></svg>
             </div>
@@ -18,12 +30,24 @@
                                 <span>&nbsp;</span>
                                 #renderPopUpIcon("<p>$MESSAGES.getString('component.forms.text.search.wildcard')</p>" "" "float:right")
                             </h4>
-                            <p><input class="bx-bot-xs" type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" placeholder="$MESSAGES.getString('account.view.id')"/></p>
-                            <p><input class="bx-bot-xs" type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" placeholder="$MESSAGES.getString('account.view.first.name')"/></p>
-                            <p><input class="bx-bot-xs" type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" placeholder="$MESSAGES.getString('account.view.last.name')"/></p>
-                            <p><input class="bx-bot-xs" type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" placeholder="$MESSAGES.getString('account.view.email')"/></p>
-                            <p><input class="bx-bot-xs" type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" placeholder="$MESSAGES.getString('account.view.roles')"/></p>
-                            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%" "doFilter" "" "btn btn--secondary btn--small")
+                            <input class="bx-bot-xs" type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" placeholder="$MESSAGES.getString('account.view.id')"/>
+                            <input class="bx-bot-xs" type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" placeholder="$MESSAGES.getString('account.view.first.name')"/>
+                            <input class="bx-bot-xs" type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" placeholder="$MESSAGES.getString('account.view.last.name')"/>
+                            <input class="bx-bot-xs" type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" placeholder="$MESSAGES.getString('account.view.email')"/>
+                            <input class="bx-bot-xs" type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" placeholder="$MESSAGES.getString('account.view.roles')"/>
+                            #if($isFiltering)
+                                #set ($action = $renderResponse.createActionURL())
+                                $action.setParameter("doFilter", "")
+                                $action.setParameter("filterCriteriaId", "")
+                                $action.setParameter("filterCriteriaFirstName", "")
+                                $action.setParameter("filterCriteriaLastName", "")
+                                $action.setParameter("filterCriteriaEmail", "")
+                                $action.setParameter("filterCriteriaRole", "")
+                                #renderHrefAction($action $MESSAGES.getString("component.forms.text.filter.clear") "btn btn--secondary btn--small" "width:100%")
+                            #end
+                            <p>
+                                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%" "doFilter" "" "btn btn--primary btn--small")
+                            </p>
                         </div>
                     </div>
                 </div>

@@ -1,11 +1,20 @@
 #renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
 
+#set($isFiltering = false)
+#if(($!browser.filterCriteria.filterCriteriaProviderIdent &&  $!browser.filterCriteria.filterCriteriaProviderIdent.length() > 0) 
+    || ($!browser.filterCriteria.filterCriteriaProviderName && $!browser.filterCriteria.filterCriteriaProviderName.length() > 0))
+    #set($isFiltering = true)
+#end
+
 #set ($action = $renderResponse.createActionURL())
 <div class="block">
     <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
         <aside class="sidebar js-accordion-multi" style="padding:3.75rem 0 0; left:0;">
             <div class="sidebar__title js-accordion-toggle mq-show-l">
                 Filter
+                #if($isFiltering)
+                    <svg class="icon-active"><use xlink:href="#check"></use></svg>
+                #end
                 <svg class="icon"><use xlink:href="#filter"></use></svg>
                 <svg class="icon"><use xlink:href="#cross"></use></svg>
             </div>
@@ -20,7 +29,16 @@
                             </h4>
                             <input class="bx-bot-xs" style="margin-bottom:0" type="text" name="filterCriteriaProviderIdent" id="filterCriteriaProviderIdent" value="$!browser.filterCriteria.filterCriteriaProviderIdent" placeholder="$MESSAGES.getString('component.forms.provider.text.short')"/>
                             <input class="bx-bot-xs" style="margin-bottom:0" type="text" name="filterCriteriaProviderName" id="filterCriteriaProviderName" value="$!browser.filterCriteria.filterCriteriaProviderName" placeholder="$MESSAGES.getString('component.forms.provider.text.name')"/>
-                            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%;" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')" "btn btn--secondary btn--small")
+                            #if($isFiltering)
+                                #set ($action = $renderResponse.createActionURL())
+                                $action.setParameter("doFilter", "")
+                                $action.setParameter("filterCriteriaProviderIdent", "")
+                                $action.setParameter("filterCriteriaProviderIdent", "")
+                                #renderHrefAction($action $MESSAGES.getString("component.forms.text.filter.clear") "btn btn--secondary btn--small" "width:100%")
+                            #end
+                            <p>
+                                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%;" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')" "btn btn--primary btn--small")
+                            </p>
                         </div>
                     </div>
                 </div>

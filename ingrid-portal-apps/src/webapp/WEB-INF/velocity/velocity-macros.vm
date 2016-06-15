@@ -326,6 +326,12 @@ $actionForm.getInputHTMLEscaped($field)#end
     #end
 #end
 
+#macro (renderHrefAction $buttonAction $buttontitle  $buttonclass $buttonstyle)
+    <a style="$buttonstyle" class="$buttonclass" href="$buttonAction">
+    $buttontitle
+    </a>
+#end
+
 #macro (renderDBBrowserFooter)
     #set ($buttons = ["doEdit", "doDelete", "doRefresh", "doNew"])
     #renderDBBrowserFooterButtons($buttons)
