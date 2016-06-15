@@ -89,25 +89,32 @@ public class ContentProviderPortlet extends ContentPortlet {
         Long[] ids = convertIds(getIds(request));
         // set up entity
         if (ids != null) {
-            dbEntities = (IngridProvider[]) Array.newInstance(IngridProvider.class, ids.length);
+            int nullCount = 0;
             for (int i = 0; i < ids.length; i++) {
-                dbEntities[i] = new IngridProvider();
-                dbEntities[i].setId(ids[i]);
-                try {
-                    dbEntities[i].setIdent(request.getParameter("ident" + i).toLowerCase());
-                } catch (Exception ex) {
-                }
-                dbEntities[i].setName(request.getParameter("name" + i));
-                dbEntities[i].setUrl(request.getParameter("url" + i));
-                try {
-                    int sortKey = new Integer(request.getParameter("sortkey" + i)).intValue();
-                    dbEntities[i].setSortkey(sortKey);
-                } catch (Exception ex) {
-                }
-                try {
-                    int sortKeyPartner = new Integer(request.getParameter("sortkey_partner" + i)).intValue();
-                    dbEntities[i].setSortkeyPartner(sortKeyPartner);
-                } catch (Exception ex) {
+                if(ids[i] != null){
+                    if(dbEntities == null){
+                        dbEntities = (IngridProvider[]) Array.newInstance(IngridProvider.class, ids.length - nullCount);
+                    }
+                    dbEntities[i - nullCount] = new IngridProvider();
+                    dbEntities[i - nullCount].setId(ids[i]);
+                    try {
+                        dbEntities[i - nullCount].setIdent(request.getParameter("ident" + i).toLowerCase());
+                    } catch (Exception ex) {
+                    }
+                    dbEntities[i - nullCount].setName(request.getParameter("name" + i));
+                    dbEntities[i - nullCount].setUrl(request.getParameter("url" + i));
+                    try {
+                        int sortKey = new Integer(request.getParameter("sortkey" + i)).intValue();
+                        dbEntities[i - nullCount].setSortkey(sortKey);
+                    } catch (Exception ex) {
+                    }
+                    try {
+                        int sortKeyPartner = new Integer(request.getParameter("sortkey_partner" + i)).intValue();
+                        dbEntities[i - nullCount].setSortkeyPartner(sortKeyPartner);
+                    } catch (Exception ex) {
+                    }
+                }else{
+                    nullCount = nullCount + 1;
                 }
             }
         }

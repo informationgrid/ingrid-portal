@@ -69,17 +69,24 @@ public class ContentRSSPortlet extends ContentPortlet {
         Long[] ids = convertIds(getIds(request));
         // set up entity
         if (ids != null) {
-            dbEntities = (IngridRSSSource[]) Array.newInstance(IngridRSSSource.class, ids.length);
+            int nullCount = 0;
             for (int i = 0; i < ids.length; i++) {
-                dbEntities[i] = new IngridRSSSource();
-                dbEntities[i].setId(ids[i]);
-                dbEntities[i].setProvider(request.getParameter("provider" + i));
-                dbEntities[i].setDescription(request.getParameter("description" + i));
-                dbEntities[i].setUrl(request.getParameter("url" + i));
-                dbEntities[i].setLanguage(request.getParameter("language" + i));
-                dbEntities[i].setCategories(request.getParameter("categories" + i));
-                if (dbEntities[i].getCategories() == null || dbEntities[i].getCategories().length() == 0) {
-                    dbEntities[i].setCategories("all");
+                if(ids[i] != null){
+                    if(dbEntities == null){
+                        dbEntities = (IngridRSSSource[]) Array.newInstance(IngridRSSSource.class, ids.length - nullCount);
+                    }
+                    dbEntities[i - nullCount] = new IngridRSSSource();
+                    dbEntities[i - nullCount].setId(ids[i]);
+                    dbEntities[i - nullCount].setProvider(request.getParameter("provider" + i));
+                    dbEntities[i - nullCount].setDescription(request.getParameter("description" + i));
+                    dbEntities[i - nullCount].setUrl(request.getParameter("url" + i));
+                    dbEntities[i - nullCount].setLanguage(request.getParameter("language" + i));
+                    dbEntities[i - nullCount].setCategories(request.getParameter("categories" + i));
+                    if (dbEntities[i - nullCount].getCategories() == null || dbEntities[i - nullCount].getCategories().length() == 0) {
+                        dbEntities[i - nullCount].setCategories("all");
+                    }
+                }else{
+                    nullCount = nullCount + 1;
                 }
             }
         }

@@ -32,7 +32,8 @@
                 <table class="js-table-sortable">
                     #set ($colNames = ["id", "ident", "name", "url", "sortkey", "sortkeyPartner"])
                     #set ($colTitles = [$MESSAGES.getString('component.forms.provider.text.id'), $MESSAGES.getString('component.forms.provider.text.short'), $MESSAGES.getString('component.forms.provider.text.name'), $MESSAGES.getString('component.forms.provider.text.link'), $MESSAGES.getString('component.forms.provider.text.sort'), $MESSAGES.getString('component.forms.provider.text.partner')])
-                    #renderDBBrowserHeader($colNames $colTitles)
+                    #set ($colCheckboxes = ["id"])
+                    #renderDBBrowserHeader($colNames $colTitles $colCheckboxes)
                     #foreach ($dbEntity in $dbEntities)
                         #set ($rowId = $dbEntity.Id)
                         #set ($rowValues = [$dbEntity.Ident, $dbEntity.Name, $UtilsString.cutString($dbEntity.Url, 20, 20), $dbEntity.Sortkey, $dbEntity.SortkeyPartner])

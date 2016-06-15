@@ -80,19 +80,26 @@ public class ContentPartnerPortlet extends ContentPortlet {
         Long[] ids = convertIds(getIds(request));
         // set up entity
         if (ids != null) {
-            dbEntities = (IngridPartner[]) Array.newInstance(IngridPartner.class, ids.length);
+            int nullCount = 0;
             for (int i = 0; i < ids.length; i++) {
-                dbEntities[i] = new IngridPartner();
-                dbEntities[i].setId(ids[i]);
-                try {
-                    dbEntities[i].setIdent(request.getParameter("ident" + i).toLowerCase());
-                } catch (Exception ex) {
-                }
-                dbEntities[i].setName(request.getParameter("name" + i));
-                try {
-                    int sortKey = new Integer(request.getParameter("sortkey" + i)).intValue();
-                    dbEntities[i].setSortkey(sortKey);
-                } catch (Exception ex) {
+                if(ids[i] != null){
+                    if(dbEntities == null){
+                        dbEntities = (IngridPartner[]) Array.newInstance(IngridPartner.class, ids.length - nullCount);
+                    }
+                    dbEntities[i - nullCount] = new IngridPartner();
+                    dbEntities[i - nullCount].setId(ids[i]);
+                    try {
+                        dbEntities[i - nullCount].setIdent(request.getParameter("ident" + i).toLowerCase());
+                    } catch (Exception ex) {
+                    }
+                    dbEntities[i - nullCount].setName(request.getParameter("name" + i));
+                    try {
+                        int sortKey = new Integer(request.getParameter("sortkey" + i)).intValue();
+                        dbEntities[i - nullCount].setSortkey(sortKey);
+                    } catch (Exception ex) {
+                    }
+                }else{
+                    nullCount = nullCount + 1;
                 }
             }
         }

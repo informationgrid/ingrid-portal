@@ -191,14 +191,37 @@ $actionForm.getInputHTMLEscaped($field)#end
     #end
 #end
 
-#macro (renderDBBrowserHeader $colNames $colTitles)
+#macro (renderDBBrowserHeader $colNames $colTitles $colCheckboxes)
     <thead>
         <tr>
             #foreach ($colTitle in $colTitles)
                 #set ($colLink = $renderResponse.createActionURL())
                 #set ($colIndex = $velocityCount - 1)
                 $colLink.setParameter("sortColumn", $colNames.get($colIndex))
-                <th class="table__sort-toggle js-column-sortable"><a href="$colLink" class="contentColumnHead">$colTitle</a></th>
+                <th class="table__sort-toggle js-column-sortable toggle-ignore">
+                #set ($addCheckbox = false)
+                
+                    #if($colCheckboxes)
+                        #foreach ($colCheckbox in $colCheckboxes)
+                            #if($colNames.get($colIndex) == $colCheckbox)
+                                #set ($addCheckbox = true)
+                                <div class="field-toggle field-toggle--check">
+                                <input id="chk_all" name="$colCheckbox" type="checkbox" onclick="ingrid_checkAll(document.getElementsByName('$colCheckbox'));">
+                                <label class="field-toggle__label field-toggle__label--highlight" for="chk_all">
+                                    <div class="field-toggle__icon field-toggle__icon-alt">
+                                        <svg class="icon">
+                                            <use xlink:href="#tick">
+                                        </use></svg>
+                                    </div>
+                                    <a href="$colLink" class="contentColumnHead"><strong>$colTitle</strong></a>
+                                </label>
+                            #end
+                        #end
+                    #end
+                    #if(!$addCheckbox)
+                        <a href="$colLink" class="contentColumnHead">$colTitle</a>
+                    #end
+                </th>
             #end
         </tr>
     </thead>
@@ -223,7 +246,7 @@ $actionForm.getInputHTMLEscaped($field)#end
     $action.setParameter("id", "$rowId")
     <td>
         <div class="field-toggle field-toggle--check">
-            <input id="chk_$velocityCount" type="checkbox" name="id" type="checkbox" value="$rowId">
+            <input id="chk_$velocityCount" type="checkbox" name="id" value="$rowId">
             <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
             <div class="field-toggle__icon field-toggle__icon-alt">
                 <svg class="icon">
@@ -261,7 +284,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 
 #macro (renderDBBrowserFooterButtonDisable $button)
     #if($button == "doDelete")
-        #renderInputButtonDisable("$MESSAGES.getString('component.forms.buttons.delete')" "" "doDelete" "" "float_left" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" "true")
+        #renderInputButtonDisable("$MESSAGES.getString('component.forms.buttons.delete')" "width:100%" "doDelete" "" "btn btn--secondary btn--small" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" "true")
     #end
 #end
 
