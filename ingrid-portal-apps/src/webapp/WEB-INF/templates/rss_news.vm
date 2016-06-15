@@ -3,7 +3,7 @@
 <hr>
 <div class="resultset">
     <h4 class="bx-bot-0">
-        <svg class="icon globe__icon"><use xlink:href="#external-link"></svg>
+        <i class="icon bx-top-s icon-rss-2"></i>
         <a href="$!rssEntry.link">$!rssEntry.title</a>
         <small><span class="tx-darker"><strong>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</strong></span></small>
     </h4>
