@@ -269,7 +269,6 @@ thead {
 
 .header__logo {
     width: auto;
-    height: unset;
 }
 
 .desktop__title p.main__title {
@@ -279,6 +278,24 @@ thead {
 .mobile__title {
     padding: 0 5px;
     color: #FFFFFF;
+}
+
+.desktop-logo {
+    max-width: 60%;
+    padding:5px 0 0 0;
+}
+
+.desktop__title p {
+    margin: 0 0 10px -25px;
+}
+
+.desktop__title p.main__title {
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.desktop__title p.sub__title {
+    font-size: 16px;
 }
 
 .mobile__title:hover {
