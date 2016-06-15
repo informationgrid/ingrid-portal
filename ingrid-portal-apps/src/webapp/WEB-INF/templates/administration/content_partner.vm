@@ -16,5 +16,8 @@
         </table>
     </div>
     #set ($buttons = ["doDelete", "doRefresh", "doNew"])
-    #renderDBBrowserFooterButtonsDisable($buttons $disablePartnerProviderEdit)
+    #renderDBBrowserFooterButtonsDisable($buttons true)
 </form>
+<script>
+ingrid_enableButtonByCheckbox('id', 'doDelete');
+</script>

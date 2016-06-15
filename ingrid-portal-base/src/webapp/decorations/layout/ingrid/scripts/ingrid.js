@@ -41,6 +41,22 @@ function ingrid_checkAll(group) {
   }
 }
 
+function ingrid_enableButtonByCheckbox(id, buttonName){
+    var checkboxes = document.getElementsByName(id);
+    for(var index in checkboxes){
+        //bind event to each checkbox
+        checkboxes[index].onchange = function() {
+            var isCheckboxSelect = false;
+            for(var i in checkboxes){
+                if(checkboxes[i].checked){
+                    isCheckboxSelect = true;
+                }
+            }
+            document.getElementsByName(buttonName)[0].disabled = !isCheckboxSelect;
+        };
+    }
+}
+
 // Select all or nothing in group1 and force group2 to same selection state.
 function ingrid_checkAll2Groups(group1, group2) {
     group2[0].checked = group1[0].checked;

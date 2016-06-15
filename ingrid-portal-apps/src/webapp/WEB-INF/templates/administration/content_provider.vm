@@ -68,7 +68,7 @@
                 </table>
             </div>
             #set ($buttons = ["doDelete", "doRefresh", "doNew"])
-            #renderDBBrowserFooterButtonsDisable($buttons $disablePartnerProviderEdit)
+            #renderDBBrowserFooterButtonsDisable($buttons true)
             <div class="sidebar-toggle mq-hide-l mq-show-xb js-sidebar-toggle">
                 <svg class="icon">
                     <use xlink:href="#arrow-thick">
@@ -96,3 +96,7 @@
         #renderInputButtonClass("$MESSAGES.getString('component.forms.provider.button.import')" "width:100%;" "doImport" "" "btn btn--primary btn--small")
     </div>
 </form>
+
+<script>
+ingrid_enableButtonByCheckbox('id', 'doDelete');
+</script>
