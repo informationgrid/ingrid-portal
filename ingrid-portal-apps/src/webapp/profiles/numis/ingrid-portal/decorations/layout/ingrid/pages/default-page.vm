@@ -29,7 +29,7 @@
         </article>
     </div>
 </section>
-<section class="block block--padded">
+<section class="block">
     <div class="ob-box-wide ob-box-padded ob-box-center">
         <article class="content ob-container">
             <!-- $jetspeed.renderPortletWindow("EnvironmentTeaser", "ingrid-portal-apps::EnvironmentTeaser") -->
