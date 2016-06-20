@@ -12,6 +12,7 @@
                 $snsAnniversary.years $snsAnniversary.title
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('action','doTeaser')
+                $action.setParameter('isChronicle', 'true')
                 $action.setParameter('topId',"$!snsAnniversary.topicId")
                 $action.setParameter('topType',"$!snsAnniversary.type")
                 ##$action.setParameter('topFrom',"$!snsAnniversary.from")
@@ -39,6 +40,7 @@
             <p>
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('action','doTeaser')
+                $action.setParameter('isChronicle', 'true')
                 <a class="link link--big" href="$action">
                     <strong>$MESSAGES.getString('chronicle.teaser.new.link')</strong>
                     <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>

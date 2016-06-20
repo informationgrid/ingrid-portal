@@ -1,5 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #if($switchedToProfile)
     #renderMessageSuccess("$MESSAGES.getString('admin.portal.profile.switched_to'): $switchedToProfile")
     #renderMessageSuccess($MESSAGES.getString('admin.portal.profile.restart'))

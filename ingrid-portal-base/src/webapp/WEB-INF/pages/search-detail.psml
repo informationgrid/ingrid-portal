@@ -9,6 +9,8 @@
   <metadata name="title" xml:lang="de">Detailinformationen</metadata>
 
   <fragment id="search-detail" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="search-detail-1" type="portlet" decorator="ingrid-clear" name="ingrid-portal-apps::SearchDetail">
+    </fragment>
   </fragment>
 
   <security-constraints>

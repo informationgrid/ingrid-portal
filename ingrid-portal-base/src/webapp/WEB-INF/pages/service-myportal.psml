@@ -11,6 +11,11 @@
   <metadata name="meta_keywords">ingrid.page.myportal.meta.keywords</metadata>
 
   <fragment id="service-myportal" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="service-myportal-1" type="portlet" name="ingrid-portal-apps::MyPortalLoginPortlet">
+      <preference name="sectionStyle" readOnly="false">
+        <value>block--padded</value>
+      </preference>
+    </fragment>
   </fragment>
 
   <security-constraints>

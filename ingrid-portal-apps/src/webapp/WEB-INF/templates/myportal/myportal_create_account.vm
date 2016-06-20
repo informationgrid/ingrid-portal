@@ -1,5 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title') )
-
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="create_account" id="create_account">
     <input type="hidden" name="cmd" value="form_sent" />

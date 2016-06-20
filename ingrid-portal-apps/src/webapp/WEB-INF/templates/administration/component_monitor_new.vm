@@ -1,5 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #macro (getInputStyleText $fieldName)#if ($actionForm.hasErrorInField($fieldName)) inputstyleerror#else inputstyletext#end#end
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">

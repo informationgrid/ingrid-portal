@@ -7,6 +7,14 @@
   <title>ingrid.page.myportal</title>
 
   <fragment id="service-myportal" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="myportal-overview" type="portlet" name="ingrid-portal-apps::MyPortalOverviewPortlet">
+      <preference name="titleTag" readOnly="false">
+        <value>h1</value>
+      </preference>
+      <preference name="sectionStyle" readOnly="false">
+        <value>block--padded</value>
+      </preference>
+    </fragment>
   </fragment>
 
   <security-constraints>

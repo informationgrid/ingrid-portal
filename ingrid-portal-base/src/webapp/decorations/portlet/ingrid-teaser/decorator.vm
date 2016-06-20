@@ -1,43 +1,62 @@
-#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+#set($disableTitle = $jetspeed.getPreferenceFirstValue($f, "disableTitle"))
 
-#set($decoration = $f.decoration)
-#set($actions = $decoration.actions)
-#set($_actions = $layoutDecoration.actions)
+##Default style values
+#set($titleTag = "h2")
+#set($titleStyle = "bx-top-0")
+#set($sectionStyle = "")
+#set($divStyle = "ob-box-wide ob-box-padded ob-box-center")
+#set($articleStyle = "content ob-container")
 
-## Begin: Fragment: ${f.id} Decoration: ${decoratorId}
-	<section class="breadcrumb ob-box-padded-more mq-hide-l">
-		<div class="breadcrumb__title mq-hide-xxl">Sie sind hier:</div>
-		<nav class="breadcrumb__list">
-			<a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">$MESSAGES.getString("ingrid.page.home")</a>
-			#if($site.getPageOrTemplate().url != "/default-page.psml")
-				<svg class="icon icon-xs">
-					<use xlink:href="#arrow">
-				</svg>
-				#set($title = $jetspeed.getTitle($f))
-				<span>$jetspeed.getTitle($f)</span>
-			#end
-		</nav>
-	</section>
+## Jetspeed style values
+#set($titleTagJetspeed = $jetspeed.getPreferenceFirstValue($f, 'titleTag'))
+#if($titleTagJetspeed && $titleTagJetspeed.length() > 0)
+    #set($titleTag = $titleTagJetspeed)
+#end
 
-<section id="${f.id}" class="block block--padded">
-    <div class="ob-box-wide ob-box-padded ob-box-center">
-    	<article class="content ob-container">
-	        #set($akey = $jetspeed.getPreferenceFirstValue($f, "titleKey")) 
-	        #if($akey && $akey.length() > 0)
-	            <a name="$akey"></a>
-	        #end
-	        <h1>
-	        	$!jetspeed.getTitle($f)
-	        	<div class="tooltip ob-circle js-popup" data-content="<p>Lorem ipsum dolor sit amet, consectetur adipsiicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><p><a href=&quot;#&quot;>Read more</a></p>">
-                    <svg class="tooltip__icon icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#question-mark"></use></svg>
-                </div>
-	        </h1>
-			#if (!$jetspeed.isHidden($f) || $jetspeed.WindowState != "minimized")
-			    $f.renderedContent
-		    #end
-		</article>
+#set($titleStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'titleStyle'))
+#if($titleStyleJetspeed && $titleStyleJetspeed.length() > 0)
+    #set($titleStyle = $titleStyleJetspeed)
+#end
+
+#set($sectionStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'sectionStyle'))
+#if($sectionStyleJetspeed && $sectionStyleJetspeed.length() > 0)
+    #set($sectionStyle = $sectionStyleJetspeed)
+#end
+
+#set($divStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'divStyle'))
+#if($divStyleJetspeed && $divStyleJetspeed.length() > 0)
+    #set($divStyle = $divStyleJetspeed)
+#end
+
+#set($articleStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'articleStyle'))
+#if($articleStyleJetspeed && $articleStyleJetspeed.length() > 0)
+    #set($articleStyle = $articleStyleJetspeed)
+#end
+
+<section id="${f.id}" class="block $sectionStyle">
+    <div class="$divStyle">
+        <article class="$articleStyle">
+            #set($akey = $jetspeed.getPreferenceFirstValue($f, "titleKey")) 
+            #if($akey && $akey.length() > 0)
+                <a name="$akey"></a>
+            #end
+            #if($disableTitle != true)
+            <$titleTag class="$titleStyle">
+                $!jetspeed.getTitle($f) $disableTitle
+                <!--
+                #set($helpkey = $jetspeed.getPreferenceFirstValue($f, "helpKey"))
+                #if($helpkey)
+                    <div class="tooltip ob-circle js-popup" data-content="<p>Lorem ipsum dolor sit amet, consectetur adipsiicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><p><a href=&quot;#&quot;>Read more</a></p>">
+                        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
+                    </div>
+                #end
+                -->
+            </$titleTag>
+            #end
+            #if (!$jetspeed.isHidden($f) || $jetspeed.WindowState != "minimized")
+                $f.renderedContent
+            #end
+        </article>
     </div>
 </section>
 ## END: Fragment: ${f.id} Decoration: ${decoratorId}
-
-

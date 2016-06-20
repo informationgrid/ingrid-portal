@@ -1,5 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set($isFiltering = false)
 #if(($!browser.filterCriteria.filterCriteriaProviderIdent &&  $!browser.filterCriteria.filterCriteriaProviderIdent.length() > 0) 
     || ($!browser.filterCriteria.filterCriteriaProviderName && $!browser.filterCriteria.filterCriteriaProviderName.length() > 0))
@@ -119,3 +117,4 @@
 <script>
 ingrid_enableButtonByCheckbox('id', 'doDelete');
 </script>
+<br/>

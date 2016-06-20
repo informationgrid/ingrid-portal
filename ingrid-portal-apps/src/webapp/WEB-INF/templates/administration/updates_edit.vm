@@ -1,7 +1,5 @@
 #macro (getInputStyleText $fieldName)#if ($actionForm.hasErrorInField($fieldName)) inputstyleerror#else inputstyletext#end#end
 
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmUpdate" id="frmUpdate">
     <div class="box box--fill box--small">

@@ -1,5 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set($isFiltering = false)
 #if(($!browser.filterCriteria.filterCriteriaId &&  $!browser.filterCriteria.filterCriteriaId.length() > 0) 
     || ($!browser.filterCriteria.filterCriteriaFirstName && $!browser.filterCriteria.filterCriteriaFirstName.length() > 0)

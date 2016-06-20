@@ -1,7 +1,3 @@
-#if($cmsItemTitle)
-    #renderPortletTitle($cmsItemTitle)
-#end
-
 #if($cmsItemValue)
     $cmsItemValue
 #end

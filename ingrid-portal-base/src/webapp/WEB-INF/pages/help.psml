@@ -11,6 +11,14 @@
   <metadata name="meta_keywords">ingrid.page.help.meta.keywords</metadata>
 
   <fragment id="help" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="help-1" type="portlet" name="ingrid-portal-apps::HelpPortlet">
+      <preference name="sectionStyle" readOnly="false">
+        <value>block--padded</value>
+      </preference>
+      <preference name="articleStyle" readOnly="false">
+        <value>content ob-container ob-box-narrow ob-box-center</value>
+      </preference>
+    </fragment>
   </fragment>
 
   <security-constraints>

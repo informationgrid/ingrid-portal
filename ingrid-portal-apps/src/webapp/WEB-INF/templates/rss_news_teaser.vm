@@ -1,4 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('news.teaser.title') "h2" "bx-top-0")
 <div class="grid grid--gutter grid--equal">
 #foreach($rssEntry in $rssEntries)
     <div class="column column--1-2-m">

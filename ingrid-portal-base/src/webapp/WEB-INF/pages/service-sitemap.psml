@@ -19,6 +19,17 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
   <metadata name="meta_keywords">ingrid.page.sitemap.meta.keywords</metadata>
 
   <fragment id="service-sitemap" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="service-sitemap-1" type="portlet" name="ingrid-portal-apps::InfoPortlet">
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/sitemap.vm</value>
+      </preference>
+      <preference name="titleKey" readOnly="false">
+        <value>sitemap.title</value>
+      </preference>
+      <preference name="sectionStyle" readOnly="false">
+        <value>block--padded</value>
+      </preference>
+    </fragment>
   </fragment>
 
   <security-constraints>

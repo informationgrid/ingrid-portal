@@ -2,7 +2,7 @@
   <defaults
      skin="orange"
      layout-decorator="ingrid"
-     portlet-decorator="ingrid-teaser"
+     portlet-decorator="ingrid-clear"
   />
   <title>ingrid.page.measures.tooltip</title>
   <short-title>ingrid.page.measures</short-title>
@@ -11,6 +11,8 @@
   <metadata name="meta_keywords">ingrid.page.measures.meta.keywords</metadata>
 
   <fragment id="main-measures" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="main-measures-input" type="portlet" name="ingrid-portal-apps::MeasuresSearch">
+    </fragment>
   </fragment>
 
   <security-constraints>

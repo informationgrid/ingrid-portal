@@ -1,5 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmCreateUser" id="frmCreateUser">
     <input type="hidden" name="layoutPermission" value="$actionForm.getInput('layoutPermission')"/>

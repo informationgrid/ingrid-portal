@@ -1,5 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="personalize_home" id="personalize_home">
     <p>$MESSAGES.getString('admin.homepage.explanation')</p>
@@ -40,3 +38,5 @@
     </div>
     #parse ('/WEB-INF/templates/administration/include_form_footer_save.vm')
 </form>
+<br/>
+<br/>

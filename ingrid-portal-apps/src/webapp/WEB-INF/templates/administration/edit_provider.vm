@@ -1,5 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
     <div class="box box--fill box--small">

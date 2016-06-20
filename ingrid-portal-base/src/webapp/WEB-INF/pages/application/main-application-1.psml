@@ -11,7 +11,7 @@
   <metadata name="meta_keywords">ingrid.page.application.1.meta.keywords</metadata>
 
   <fragment id="main-application-1-page" type="layout" name="jetspeed-layouts::IngridOneColumn">
-    <fragment id="main-application-1" type="portlet" decorator="ingrid-teaser" name="ingrid-portal-apps::IFramePortalPortlet">
+    <fragment id="main-application-1" type="portlet" name="ingrid-portal-apps::IFramePortalPortlet">
       <property layout="OneColumn" name="row" value="0" />
 	  <preference name="WIDTH">
         <value>883</value>

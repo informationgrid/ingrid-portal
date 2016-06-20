@@ -114,8 +114,6 @@
     #end
 #end
 
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentProvider" id="frmContentProvider">
     <input name="modelSize" type="hidden" value="#if ($model) $model.size() #end" />

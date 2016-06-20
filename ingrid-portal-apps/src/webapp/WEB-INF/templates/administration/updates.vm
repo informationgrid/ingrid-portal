@@ -56,8 +56,6 @@
     Download: $component.versionAvailable $!build    
 #end
 
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter("doRestartUpgradeJob", "true")
 <form action="$action" method="post" name="frmUpdate" id="frmUpdate">

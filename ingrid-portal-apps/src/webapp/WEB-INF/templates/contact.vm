@@ -1,4 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
 <article class="content ob-container ob-box-narrow ob-box-center">
     $contactIntroPostEmail
 </article>

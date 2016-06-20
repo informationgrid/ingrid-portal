@@ -10,8 +10,26 @@
   <metadata name="meta_descr">ingrid.page.search.meta.description</metadata>
   <metadata name="meta_keywords">ingrid.page.search.meta.keywords</metadata>
 
-    <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridClearLayout">
+  <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="search-simple-portlet" type="portlet"  decorator="ingrid-clear" name="ingrid-portal-apps::SearchSimpleResult">
+      <preference name="disableTitle" readOnly="false">
+        <value>true</value>
+      </preference>
+      <preference name="titleKey" readOnly="false">
+        <value>searchSimple.title.result</value>
+      </preference>
     </fragment>
+    <fragment id="main-search-similar" type="portlet" decorator="ingrid-clear" name="ingrid-portal-apps::SearchSimilar">
+    </fragment>
+    <fragment id="main-search-results" type="portlet" name="ingrid-portal-apps::SearchResult">
+      <preference name="disableTitle" readOnly="false">
+        <value>true</value>
+      </preference>
+      <preference name="divStyle" readOnly="false">
+        <value>ob-box-wide ob-box-padded ob-box-center ob-rel</value>
+      </preference>
+    </fragment>
+  </fragment>
 
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>

@@ -15,6 +15,7 @@
             <p>
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('action','doTeaser')
+                $action.setParameter('isMeasure', 'true')
                 <a class="link link--big" href="$action">
                     <strong>$MESSAGES.getString('measures.teaser.new.link')</strong>
                     <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>

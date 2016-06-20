@@ -71,7 +71,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
     
@@ -79,7 +79,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
 
@@ -99,7 +99,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     
@@ -107,7 +107,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
 </ul>
@@ -118,7 +118,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
     
@@ -126,7 +126,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     
@@ -140,7 +140,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     
@@ -148,7 +148,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
 </ul>
@@ -169,7 +169,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
     
@@ -177,7 +177,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     
@@ -196,7 +196,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     
@@ -204,7 +204,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
 </ul>
@@ -216,7 +216,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
     
@@ -224,7 +224,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     
@@ -237,7 +237,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     
@@ -245,7 +245,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
 </ul>
@@ -263,7 +263,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 <ul class="pagination__list tx-right mq-hide-m">
     <li style="display:none">
         <a class="pagination__left">
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
     #set ($action = $renderResponse.createActionURL())
@@ -271,7 +271,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     #if($pageSelector.currentSelectorPage > 1)
@@ -300,12 +300,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.selectorHasNextPage)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     <li style="display:none">
         <a class="pagination__right is-hidden">
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
 </ul>
@@ -314,7 +314,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 <ul class="pagination__list mq-show-m">
     <li style="display:none">
         <a class="pagination__left">
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
     #set ($action = $renderResponse.createActionURL())
@@ -322,7 +322,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     
@@ -334,12 +334,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.selectorHasNextPage)href="$action"#end>
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
         </a>
     </li>
     <li style="display:none">
         <a class="pagination__right">
-            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
         </a>
     </li>
 </ul>

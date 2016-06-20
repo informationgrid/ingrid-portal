@@ -1,5 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmEditCMS" id="frmEditCMS">
     <input type="hidden" name="mode" value="$mode"/>

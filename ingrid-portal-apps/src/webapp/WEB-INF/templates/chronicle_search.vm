@@ -1,5 +1,3 @@
-##renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set ($action = $renderResponse.createActionURL())
 <aside class="sidebar js-accordion-multi">
     <div class="sidebar__title js-accordion-toggle mq-show-l" onclick="onClickFilterEvent()">

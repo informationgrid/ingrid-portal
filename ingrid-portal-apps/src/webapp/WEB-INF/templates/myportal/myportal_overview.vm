@@ -9,7 +9,6 @@
     #set($salutation = "$!{salutation} $userNameFamily")
 #end
 
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title') )
 <p>
     $MESSAGES.resetMsgParams()
     $MESSAGES.setMsgParam("$!{salutation}")
@@ -18,22 +17,27 @@
     $MESSAGES.getString('overview.content.description')
 </p>
 <ul class="link-list">
+
 #if($externalLogin)
     <li>
         <a href="/portal/main-maps.psml"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry0')</a>
     </li>
 #end
+<!--
     <li>
         <a href="/portal/default-page.psml"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry1')</a>
     </li>
+-->
 #if(!$externalLogin)
     <li>
         <a href="/portal/myportal-edit-account.psml"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry2')</a>
     </li>
 #end
+<!--
     <li>
         <a href="/portal/myportal-personalize.psml"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry3')</a>
     </li>
+-->
 #if(!$externalLogin)
     <li>
         <a href="/login/logout"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry4')</a>

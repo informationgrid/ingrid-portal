@@ -122,14 +122,14 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doFirst', 'first')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
                 </a>
             </li>
             <li>
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doPrev', 'prev')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
                 </a>
             </li>
             
@@ -139,7 +139,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doNext', 'next')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
                 </a>
             </li>
             
@@ -147,7 +147,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doLast', 'last')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
                 </a>
             </li>
         </ul>
@@ -156,14 +156,14 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doFirst', 'first')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
                 </a>
             </li>
             <li>
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doPrev', 'prev')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
                 </a>
             </li>
             
@@ -173,7 +173,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doNext', 'next')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
                 </a>
             </li>
             
@@ -181,7 +181,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doLast', 'last')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#double-arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
                 </a>
             </li>
         </ul>

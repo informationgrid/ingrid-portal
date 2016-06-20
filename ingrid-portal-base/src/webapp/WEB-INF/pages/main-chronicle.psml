@@ -12,6 +12,19 @@
   <metadata name="meta_keywords">ingrid.page.chronicle.meta.keywords</metadata>
 
   <fragment id="main-chronicle" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="main-chronicle-input" type="portlet" name="ingrid-portal-apps::ChronicleSearch">
+      <preference name="disableTitle" readOnly="false">
+        <value>true</value>
+      </preference>
+    </fragment>
+    <fragment id="main-chronicle-results" type="portlet" name="ingrid-portal-apps::ChronicleResult">
+      <preference name="sectionStyle" readOnly="false">
+        <value>block--padded</value>
+      </preference>
+      <preference name="disableTitle" readOnly="false">
+        <value>true</value>
+      </preference>
+    </fragment>
   </fragment>
 
   <security-constraints>

@@ -61,3 +61,9 @@
         </div>
     </form>
 </div>
+## Close HTML tags (see "search_simple_result.vm") 
+                </div>
+            </div>
+         </article>
+    </div>
+</section>

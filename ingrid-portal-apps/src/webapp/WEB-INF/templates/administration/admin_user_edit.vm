@@ -1,5 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('javax.portlet.title'))
-
 #set ($action = $renderResponse.createActionURL())
 #set($tab = $actionForm.getInput('tab'))
 #if(!$tab || $tab == "")#set($tab = "1")#end

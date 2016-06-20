@@ -7,8 +7,19 @@
   <title>ingrid.page.search.catalog.tooltip</title>
   <short-title>ingrid.page.search.catalog</short-title>
 
-    <fragment id="search-catalog-hierarchy-page" type="layout" name="jetspeed-layouts::IngridClearLayout">
+  <fragment id="search-catalog-hierarchy-page" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="search-catalog-hierarchy" type="portlet" name="ingrid-portal-apps::SearchCatalogHierarchy">
+      <preference name="sectionStyle" readOnly="false">
+        <value>block--padded</value>
+      </preference>
+      <preference name="disableTitle" readOnly="false">
+        <value>true</value>
+      </preference>
+      <preference name="articleStyle" readOnly="false">
+        <value>content ob-container ob-box-narrow ob-box-center</value>
+      </preference>
     </fragment>
+  </fragment>
 
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>

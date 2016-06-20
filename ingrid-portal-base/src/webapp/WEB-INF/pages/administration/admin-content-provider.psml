@@ -7,6 +7,14 @@
   <title>ingrid.page.admin.provider</title>
   
   <fragment id="admin-content-provider" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="admin-content-provider-0" type="portlet" name="ingrid-portal-apps::ContentProviderPortlet">
+      <preference name="titleTag" readOnly="false">
+        <value>h1</value>
+      </preference>
+      <preference name="sectionStyle" readOnly="false">
+        <value>block--padded</value>
+      </preference>
+    </fragment>
   </fragment>
 
   <security-constraints>

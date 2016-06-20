@@ -1,4 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('teaser.environment.title') "h2" "bx-top-0")
 <div class="media">
     <div class="media__body">
         <ul class="tag-group">

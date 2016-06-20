@@ -1,4 +1,3 @@
-#renderPortletTitle($MESSAGES.getString('search.teaser.portlet.title') "h2" "bx-top-0")
 #set ($action = $renderResponse.createActionURL())
 <div class="tabs js-tabs">
     #if($facetsTyp.size() > 1)
