@@ -174,6 +174,9 @@ define(["dojo/_base/declare",
                 // don't do anything if already selected node is clicked again
                 //if (this.selectedNode.id == node.id)
                 //    return;
+                
+                // ignore click if a node is already loading
+                if (IgeActions.isLoading) return;
 
                 var doLoad = function() {
                     var deferred = new Deferred();

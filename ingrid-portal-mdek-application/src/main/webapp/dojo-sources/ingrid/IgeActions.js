@@ -165,6 +165,8 @@ define([
         previousClass: null,
 
         global: this,
+        
+        isLoading: false,
 
         dataTree: registry.byId("dataTree"),
 
@@ -333,6 +335,7 @@ define([
             var resultHandler = msg.resultHandler;
             // var deferred = this.checkForUnsavedChanges();
             var deferred2 = new Deferred();
+            this.isLoading = true;
 
             // TODO Check if we are in a state where it's safe to load data.
             //      If we are, load the data. If not delay the call and bounce back the message (e.g. query user).
@@ -379,7 +382,10 @@ define([
                                         // since onChange events are fired asynchronously 
                                         // we have to wait a bit to reset the dirty flag 
                                         //setTimeout(dirty.resetDirtyFlag, 100);
-                                        setTimeout(lang.hitch(dirty, dirty.resetDirtyFlag), 100);
+                                        setTimeout(function() {
+                                            lang.hitch(dirty, dirty.resetDirtyFlag)();
+                                            self.isLoading = false;
+                                        }, 100);
 
                                         console.debug("on after load");
                                         self.onAfterLoad();
@@ -391,11 +397,13 @@ define([
                                 if (typeof(resultHandler) != "undefined") {
                                     resultHandler.reject("Error loading object. The object with the specified id doesn't exist!");
                                 }
+                                self.isLoading = false;
                             }
                             return res;
                         },
                         errorHandler: function(message, err) {
                             UtilUI.exitLoadingState();
+                            self.isLoading = false;
                             console.error("Error in js/js: Error while waiting for nodeData: " + message);
                             console.debug(err);
                             resultHandler.reject(new Error(message));
@@ -414,7 +422,10 @@ define([
                                             resultHandler.resolve();
                                         // since onChange events are fired asynchronously 
                                         // we have to wait a bit to reset the dirty flag 
-                                        setTimeout(lang.hitch(dirty, dirty.resetDirtyFlag), 100);
+                                        setTimeout(function() {
+                                            lang.hitch(dirty, dirty.resetDirtyFlag)();
+                                            self.isLoading = false;
+                                        }, 100);
                                         //lang.hitch(dirty, dirty.resetDirtyFlag);
                                         self.onAfterLoad();
                                         UtilUI.exitLoadingState();
@@ -423,11 +434,13 @@ define([
                                 if (typeof(resultHandler) != "undefined") {
                                     resultHandler.reject("Error loading Address. The Address with the specified id doesn't exist!");
                                 }
+                                self.isLoading = false;
                             }
                             return res;
                         },
                         errorHandler: function(message) {
                             UtilUI.exitLoadingState();
+                            self.isLoading = false;
                             console.error("Error in js/js: Error while waiting for addressData: " + message);
                             resultHandler.reject(new Error(message));
                         }
