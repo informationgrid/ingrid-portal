@@ -346,19 +346,18 @@ define([
             // };
 
             var self = this;
-            // deferred.then(function() {
-                // Don't process newNode and objectRoot load requests.
-                if (msg.id == "newNode" || msg.id == "objectRoot" || msg.id == "addressRoot" || msg.id == "addressFreeRoot") {
-                    topic.publish("/selectNode", {
-                        id: "dataTree",
-                        node: msg.node
-                    });
-                    self.global.currentUdk = {};
-                    if (msg.resultHandler) msg.resultHandler.resolve();
-                } else {
-                    deferred2.resolve();
-                }
-            // }, loadErrback);
+            // Don't process newNode and objectRoot load requests.
+            if (msg.id == "newNode" || msg.id == "objectRoot" || msg.id == "addressRoot" || msg.id == "addressFreeRoot") {
+                topic.publish("/selectNode", {
+                    id: "dataTree",
+                    node: msg.node
+                });
+                self.global.currentUdk = {};
+                self.isLoading = false;
+                if (msg.resultHandler) msg.resultHandler.resolve();
+            } else {
+                deferred2.resolve();
+            }
 
             var loadCallback = function() {
                 console.debug("udkDataProxy calling ObjectService.getNodeData(" + nodeId + ", " + nodeAppType + ")");
