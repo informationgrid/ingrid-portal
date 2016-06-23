@@ -8,27 +8,18 @@
 
   <fragment id="mdek-portal" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="mdek-portal-0" type="portlet" name="ingrid-portal-mdek::MdekPortalAdminPortlet">
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
       <security-constraints>
         <security-constraints-ref>admin-portal</security-constraints-ref>
       </security-constraints>
     </fragment>
     
     <fragment id="mdek-portal-1" type="portlet" name="ingrid-portal-mdek::MdekAdminLoginPortlet">
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
       <security-constraints>
         <security-constraints-ref>admin</security-constraints-ref>
       </security-constraints>
     </fragment>
     
     <fragment id="mdek-entry-0" type="portlet" name="ingrid-portal-mdek::MdekEntryPortlet">
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
       <!-- Only mdek users are allowed to view this page -->
       <security-constraints>
         <security-constraint>

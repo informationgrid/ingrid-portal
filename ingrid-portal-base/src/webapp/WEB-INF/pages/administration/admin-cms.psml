@@ -8,12 +8,6 @@
   
   <fragment id="admin-cms" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="admin-cms-0" type="portlet" name="ingrid-portal-apps::AdminCMSPortlet">
-      <preference name="titleTag" readOnly="false">
-        <value>h1</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
     </fragment>
   </fragment>
 

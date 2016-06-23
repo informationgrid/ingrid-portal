@@ -20,9 +20,6 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
 
   <fragment id="main-about" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="main-about-1" type="portlet" name="ingrid-portal-apps::CMSPortlet">
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/default_cms.vm</value>
-      </preference>
       <preference name="cmsKey" readOnly="false">
         <value>ingrid.about</value>
       </preference>

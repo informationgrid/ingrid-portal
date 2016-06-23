@@ -8,15 +8,6 @@
   
   <fragment id="admin-portal-profile" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="admin-portal-profile-0" type="portlet" name="ingrid-portal-apps::AdminPortalProfilePortlet">
-      <preference name="titleTag" readOnly="false">
-        <value>h1</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
-      <preference name="articleStyle" readOnly="false">
-        <value>content ob-container ob-box-narrow ob-box-center</value>
-      </preference>
     </fragment>
   </fragment>
 

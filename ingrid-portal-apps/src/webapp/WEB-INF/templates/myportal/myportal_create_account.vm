@@ -7,6 +7,8 @@
         #renderInputButtonClass("$MESSAGES.getString('account.create.submit')" "width:100%" "" "" "btn btn--primary btn--medium")
     </div>
 </form>
+<br/>
+<br/>
 <script >
     var error = $actionForm.hasErrors();
     if(error){

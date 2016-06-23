@@ -9,15 +9,6 @@
 
   <fragment id="myportal-personalize" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="myportal-personalize-7" type="portlet" name="ingrid-portal-apps::MyPortalPersonalizeHomePortlet">
-      <preference name="titleTag" readOnly="false">
-        <value>h1</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>personalize.home.title</value>
-      </preference>
     </fragment>
   </fragment>
 

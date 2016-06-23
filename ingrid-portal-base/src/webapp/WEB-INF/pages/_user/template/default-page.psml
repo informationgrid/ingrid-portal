@@ -13,50 +13,14 @@
   
   <fragment id="home" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
-      <preference name="titleKey" readOnly="false">
-        <value>searchSimple.title.search</value>
-      </preference>
-      <preference name="disableTitle" readOnly="false">
-        <value>true</value>
-      </preference>
     </fragment>
     <fragment id="home-1" type="portlet" name="ingrid-portal-apps::IngridInformPortlet">
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/default_cms.vm</value>
-      </preference>
-      <preference name="cmsKey" readOnly="false">
-        <value>ingrid.teaser.inform</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--pad-top block--light</value>
-      </preference>
     </fragment>
     <fragment id="home-2" type="portlet" name="ingrid-portal-apps::CategoryTeaser">
-      <preference name="titleKey" readOnly="false">
-        <value>search.teaser.portlet.title</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--pad-top</value>
-      </preference>
     </fragment>
     <fragment id="home-3" type="portlet" name="ingrid-portal-apps::RssNewsTeaser">
-      <preference name="noOfEntriesDisplayed" readOnly="false">
-        <value>4</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>news.teaser.title</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--pad-top block--light</value>
-      </preference>
     </fragment>
     <fragment id="home-4" type="portlet" name="ingrid-portal-apps::EnvironmentTeaser">
-      <preference name="titleKey" readOnly="false">
-        <value>teaser.environment.title</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--pad-top</value>
-      </preference>
     </fragment>
     <fragment id="home-5" type="portlet" name="ingrid-portal-apps::InfoPortlet">
       <preference name="disableTitle" readOnly="false">

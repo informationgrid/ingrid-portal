@@ -8,12 +8,6 @@
   
   <fragment id="admin-content-rss" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="admin-content-rss-0" type="portlet" name="ingrid-portal-apps::ContentRSSPortlet">
-      <preference name="titleTag" readOnly="false">
-        <value>h1</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
     </fragment>
   </fragment>
 

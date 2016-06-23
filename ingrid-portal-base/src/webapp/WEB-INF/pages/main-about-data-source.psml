@@ -21,15 +21,6 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
 
   <fragment id="main-about-data-source" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="main-about-data-source-1" type="portlet" name="ingrid-portal-apps::ShowDataSourcePortlet">
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
-      <preference name="titleTag" readOnly="false">
-        <value>h1</value>
-      </preference>
-      <preference name="articleStyle" readOnly="false">
-        <value>content ob-container ob-box-narrow ob-box-center</value>
-      </preference>
     </fragment>
   </fragment>
 

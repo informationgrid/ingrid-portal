@@ -16,12 +16,6 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
 
   <fragment id="admin-component-monitor" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="admin-component-monitor-0" type="portlet" name="ingrid-portal-apps::AdminComponentMonitorPortlet">
-      <preference name="titleTag" readOnly="false">
-        <value>h1</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
     </fragment>
   </fragment>
 

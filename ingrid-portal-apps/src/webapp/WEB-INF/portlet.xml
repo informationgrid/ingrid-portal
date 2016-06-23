@@ -24,34 +24,6 @@
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
     </portlet>
 
-	<portlet id="SitemapPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/sitemap.vm</value>
-        </init-param>
-        <portlet-name>SitemapPortlet</portlet-name>
-        <display-name>SitemapPortlet</display-name>
-        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
-        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
-        <portlet-preferences>
-            <preference>
-                <name>infoTemplate</name>
-                <value>/WEB-INF/templates/sitemap.vm</value>
-            </preference>
-            <preference>
-                <name>titleKey</name>
-                <value>myPortal.info.navigation.title</value>
-            </preference>
-        </portlet-preferences>
-    </portlet>
-
     <portlet id="DetectJavaScriptPortlet">
         <portlet-name>DetectJavaScriptPortlet</portlet-name>
         <display-name>javascript detection portlet</display-name>
@@ -83,6 +55,20 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
+        <portlet-preferences>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.HelpPortletResources</resource-bundle>
     </portlet>
 
@@ -109,7 +95,17 @@
             <title>Jobübersicht</title>
             <short-title>Jobübersicht</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="ContentRSSPortlet">
@@ -131,7 +127,17 @@
             <title>RSS Feeds administrieren</title>
             <short-title>RSS Feeds administrieren</short-title>
         </portlet-info>      
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>  
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="ContentPartnerPortlet">
@@ -153,7 +159,17 @@
             <title>Partner administrieren</title>
             <short-title>Partner administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="ContentProviderPortlet">
@@ -175,7 +191,17 @@
             <title>Anbieter administrieren</title>
             <short-title>Anbieter administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminUserPortlet">
@@ -197,7 +223,17 @@
             <title>Benutzer administrieren</title>
             <short-title>Benutzer administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
         <init-param>
             <description>This is the template in which you setup an email to be sent after user exists</description>
             <name>emailTemplate</name>
@@ -247,7 +283,21 @@
             <title>iPlugs/iBus administrieren</title>
             <short-title>iPlugs/iBus administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminCMSPortlet">
@@ -269,7 +319,17 @@
             <title>Inhalte administrieren</title>
             <short-title>Inhalte administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminWMSPortlet">
@@ -291,7 +351,21 @@
             <title>WMS Administration</title>
             <short-title>WMS Administration</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminStatisticsPortlet">
@@ -313,7 +387,21 @@
             <title>Statistiken</title>
             <short-title>Statistiken</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminHomepagePortlet">
@@ -336,7 +424,21 @@
             <title>Startseite administrieren</title>
             <short-title>Startseite administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminPortalProfilePortlet">
@@ -358,7 +460,21 @@
             <title>Portal Profile</title>
             <short-title>Portal Profile</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
     
     <portlet id="AdminUserMigrationPortlet">
@@ -380,7 +496,7 @@
             <title>Portal User Migration</title>
             <short-title>Portal User Migration</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
         
     <!-- *********************** -->
@@ -402,7 +518,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>portlet-type</name>
@@ -420,6 +536,11 @@
                 <name>helpKey</name>
                 <value>search-1</value>
             </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+            
         </portlet-preferences>
     </portlet>
 
@@ -471,8 +592,8 @@
                 <value>search.teaser.portlet.title</value>
             </preference>
             <preference>
-                <name>helpKey</name>
-                <value>search-1</value>
+                <name>sectionStyle</name>
+                <value>block--pad-top</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -492,7 +613,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>portlet-type</name>
@@ -509,6 +630,10 @@
             <preference>
                 <name>helpKey</name>
                 <value>search-topics-1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--pad-top</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -532,7 +657,7 @@
             <title>Aktuelles</title>
             <short-title>RssNewsTeaser</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>portlet-type</name>
@@ -554,6 +679,10 @@
                 <name>noOfEntriesDisplayed</name>
                 <value>4</value>
             </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--pad-top block--light</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -572,10 +701,17 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        
     </portlet>
 
     <portlet id="CMSPortlet">
@@ -593,7 +729,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>cmsKey</name>
@@ -617,7 +753,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>cmsKey</name>
@@ -675,6 +811,14 @@
                 <name>cmsKey</name>
                 <value>ingrid.privacy</value>
             </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
         </portlet-preferences>
     </portlet>
     
@@ -719,7 +863,55 @@
                 <name>default-vertical-position</name>
                 <value>1</value>
             </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--pad-top block--light</value>
+            </preference>
         </portlet-preferences>
+    </portlet>
+    
+    <portlet id="InfoDefaultPageTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_info.vm</value>
+        </init-param>
+        <portlet-name>InfoDefaultPageTeaser</portlet-name>
+        <display-name>Generisches Informationsportlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>5</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/info_teaser.vm</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>Info Portlet</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--pad-bottom</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
     </portlet>
 
     <portlet id="IngridWelcomePortlet">
@@ -783,7 +975,22 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+
+        <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -804,10 +1011,17 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        
     </portlet>
 
     <portlet id="MyPortalOverviewPortlet">
@@ -825,7 +1039,17 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -880,7 +1104,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -902,7 +1140,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -919,7 +1171,6 @@
             <name>emailTemplate</name>
             <value>/WEB-INF/templates/myportal/forgottenPasswdEmail.vm</value>
         </init-param> 
-        
         <portlet-name>MyPortalPasswordForgottenPortlet</portlet-name>
         <display-name>MyPortalPasswordForgottenPortlet</display-name>
         <description>This portlet displays the myportal password forgotten dialog.</description>
@@ -929,7 +1180,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -951,7 +1216,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -973,7 +1238,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -995,7 +1274,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -1020,7 +1299,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ShowPartnerPortletResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.ShowPartnerPortletResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -1041,7 +1334,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ShowDataSourcePortletResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.ShowDataSourcePortletResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -1110,8 +1417,12 @@
                 <name>helpKey</name>
                 <value>search-chronicle-1</value>
             </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
         </portlet-preferences>
-        <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -1131,6 +1442,16 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+        </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle> 
     </portlet>
 
@@ -1178,6 +1499,16 @@
             <title>Suchergebnis</title>
             <short-title>SearchResult</short-title>
         </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>divStyle</name>
+                <value>ob-box-wide ob-box-padded ob-box-center ob-rel</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+        </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
     </portlet>
     
@@ -1231,6 +1562,18 @@
             <preference>
                 <name>helpKey</name>
                 <value>search-catalog-1</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
             </preference>
         </portlet-preferences>
     </portlet>

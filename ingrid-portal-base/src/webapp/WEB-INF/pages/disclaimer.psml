@@ -12,9 +12,6 @@
 
   <fragment id="disclaimer" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="disclaimer-1" type="portlet" name="ingrid-portal-apps::CMSPortlet">
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/default_cms.vm</value>
-      </preference>
       <preference name="titleKey" readOnly="false">
         <value>disclaimer.title</value>
       </preference>
@@ -29,18 +26,6 @@
       </preference>
     </fragment>
     <fragment id="privacy-1" type="portlet" name="ingrid-portal-apps::PrivacyPortlet">
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/default_cms.vm</value>
-      </preference>
-      <preference name="cmsKey" readOnly="false">
-        <value>ingrid.privacy</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
-      <preference name="articleStyle" readOnly="false">
-        <value>content ob-container ob-box-narrow ob-box-center</value>
-      </preference>
     </fragment>
   </fragment>
 

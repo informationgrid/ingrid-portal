@@ -9,12 +9,6 @@
 
   <fragment id="rss-news" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="rss-news-1" type="portlet" name="ingrid-portal-apps::RssNews">
-      <preference name="startWithEntry" readOnly="false">
-        <value>4</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--padded</value>
-      </preference>
     </fragment>
   </fragment>
   

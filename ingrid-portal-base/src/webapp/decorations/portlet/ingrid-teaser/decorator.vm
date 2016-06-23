@@ -40,9 +40,9 @@
             #if($akey && $akey.length() > 0)
                 <a name="$akey"></a>
             #end
-            #if($disableTitle != true)
+            #if($disableTitle != 1)
             <$titleTag class="$titleStyle">
-                $!jetspeed.getTitle($f) $disableTitle
+                $!jetspeed.getTitle($f)
                 <!--
                 #set($helpkey = $jetspeed.getPreferenceFirstValue($f, "helpKey"))
                 #if($helpkey)
