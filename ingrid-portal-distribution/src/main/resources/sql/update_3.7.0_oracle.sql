@@ -92,7 +92,7 @@ DELETE FROM fragment WHERE name = 'ingrid-portal-apps::ChronicleTeaser';
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::WeatherTeaser';
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::MeasuresTeaser';
 
--- default-page
+-- default-page.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('default-page', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/default-page.psml')));
 
 UPDATE fragment SET layout_row = 1, layout_column = 0 WHERE name = 'ingrid-portal-apps::IngridInformPortlet'; 
@@ -106,33 +106,61 @@ UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::Environme
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key   FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'default-page'), 'ingrid-portal-apps::CategoryTeaser', 'portlet', 2, 0, -1, -1, -1, -1, -1);
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+1   FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'default-page'), 'ingrid-portal-apps::InfoDefaultPageTeaser', 'portlet', 5, 0, -1, -1, -1, -1, -1);
 
--- main-measures
+-- /_role/user/default-page.psml
+INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('/_role/user/default-page', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/_role/user/default-page.psml')));
+
+UPDATE fragment SET layout_row = 1, layout_column = 0 WHERE name = 'ingrid-portal-apps::IngridInformPortlet'; 
+UPDATE fragment SET layout_row = 3 WHERE name = 'ingrid-portal-apps::RssNewsTeaser' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/default-page');  
+UPDATE fragment SET layout_row = 4 WHERE name = 'ingrid-portal-apps::EnvironmentTeaser' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/default-page'); 
+UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::SearchSimple' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/default-page');
+UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::IngridInformPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/default-page'); 
+UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::RssNewsTeaser' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/default-page');
+UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::EnvironmentTeaser' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/default-page');
+
+INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+3  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/default-page'), 'ingrid-portal-apps::CategoryTeaser', 'portlet', 2, 0, -1, -1, -1, -1, -1);
+INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+4   FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/default-page'), 'ingrid-portal-apps::InfoDefaultPageTeaser', 'portlet', 5, 0, -1, -1, -1, -1, -1);
+
+-- /_user/template/default-page.psml
+INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('/_user/template/default-page', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/_user/template/default-page.psml')));
+
+UPDATE fragment SET layout_row = 1, layout_column = 0 WHERE name = 'ingrid-portal-apps::IngridInformPortlet'; 
+UPDATE fragment SET layout_row = 3 WHERE name = 'ingrid-portal-apps::RssNewsTeaser' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_user/template/default-page');  
+UPDATE fragment SET layout_row = 4 WHERE name = 'ingrid-portal-apps::EnvironmentTeaser' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_user/template/default-page'); 
+UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::SearchSimple' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_user/template/default-page');
+UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::IngridInformPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_user/template/default-page'); 
+UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::RssNewsTeaser' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_user/template/default-page');
+UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::EnvironmentTeaser' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_user/template/default-page');
+
+INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+5  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_user/template/default-page'), 'ingrid-portal-apps::CategoryTeaser', 'portlet', 2, 0, -1, -1, -1, -1, -1);
+INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+6   FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_user/template/default-page'), 'ingrid-portal-apps::InfoDefaultPageTeaser', 'portlet', 5, 0, -1, -1, -1, -1, -1);
+
+-- main-measures.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main-measures', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-measures.psml')));
 
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-measures') AND name = 'ingrid-portal-apps::MeasuresResult';
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-measures') AND name = 'ingrid-portal-apps::InfoPortlet';
 
--- search-catalog-hierarchy
+-- search-catalog-hierarchy.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('search-catalog-hierarchy', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/search-catalog/search-catalog-hierarchy.psml')));
 
--- main-chronicle
+-- main-chronicle.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main-chronicle', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-chronicle.psml')));
 
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-chronicle') AND name = 'ingrid-portal-apps::InfoPortlet';
 UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::ChronicleResult' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-chronicle');
 
--- main-about
+-- main-about.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main-about', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-about.psml')));
 
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-about') AND name = 'ingrid-portal-apps::InfoPortlet';
 
--- main-about-partner
+-- main-about-partner.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main-about-partner', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-about-partner.psml')));
 
--- main-about-data-source
+-- main-about-data-source.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main-about-data-source', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-about-data-source.psml')));
 
--- main-search
+-- main-search.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main-search', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-search.psml')));
 
 INSERT INTO ingrid_temp2 (temp_key, temp_value) VALUES ('main-search-two', (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-search') AND name = 'jetspeed-layouts::IngridTwoColumns'));
@@ -149,36 +177,35 @@ UPDATE fragment SET decorator = NULL, parent_id = (SELECT temp_value FROM ingrid
 DELETE FROM fragment WHERE fragment_id = (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'main-search-two');
 DELETE FROM fragment WHERE fragment_id = (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'main-search-one');
 
--- myportal-create-account
+-- myportal-create-account.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('myportal-create-account', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/myportal-create-account.psml')));
 
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'myportal-create-account') AND name = 'ingrid-portal-apps::InfoPortlet';
 
--- myportal-password-forgotten
+-- myportal-password-forgotten.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('myportal-password-forgotten', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/myportal-password-forgotten.psml')));
 
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'myportal-password-forgotten') AND name = 'ingrid-portal-apps::InfoPortlet';
 
--- service-contact
+-- service-contact.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('service-contact', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/service-contact.psml')));
 
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-contact') AND name = 'ingrid-portal-apps::InfoPortlet';
 UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::Contact' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-contact'); 
 
--- disclaimer
+-- disclaimer.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('disclaimer', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/disclaimer.psml')));
 
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'disclaimer') AND name = 'ingrid-portal-apps::InfoPortlet';
 UPDATE fragment SET decorator = NULL WHERE name = 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'disclaimer'); 
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+2   FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'disclaimer'), 'ingrid-portal-apps::PrivacyPortlet', 'portlet', 1, 0, -1, -1, -1, -1, -1);
 
--- service-myportal
+-- service-myportal.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('service-myportal', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/service-myportal.psml')));
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-myportal') AND name = 'ingrid-portal-apps::InfoPortlet';
 
--- service-sitemap
+-- service-sitemap.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('service-sitemap', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/service-sitemap.psml')));
-
 
 -- /_role/user/service-myportal.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('/_role/user/service-myportal', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/_role/user/service-myportal.psml')));
@@ -198,11 +225,11 @@ DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/myportal-edit-account') AND name = 'ingrid-portal-apps::MyPortalEditAboutInfoPortlet';
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/myportal-edit-account') AND name = 'ingrid-portal-apps::MyPortalEditNewsletterInfoPortlet';
 
--- /administration/admin-usermanagement
+-- /administration/admin-usermanagement.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('/administration/admin-usermanagement', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/administration/admin-usermanagement.psml')));
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/administration/admin-usermanagement') AND name = 'ingrid-portal-apps::AdminUserMigrationPortlet';
 
--- /administration/admin-content-provider
+-- /administration/admin-content-provider.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('/administration/admin-content-provider', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/administration/admin-content-provider.psml')));
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/administration/admin-content-provider') AND name = 'ingrid-portal-apps::AdminUserMigrationPortlet';
 
@@ -243,6 +270,9 @@ DELETE FROM page WHERE path = '/main-features.psml';
 DELETE FROM page WHERE path = '/main-environment.psml';
 DELETE FROM page WHERE path = '/privacy.psml';
 DELETE FROM page WHERE path = '/administration/admin-wms.psml';
+
+-- delete user default pages
+-- DELETE FROM page WHERE name = "default-page.psml" AND path like "/_user/%/default-page.psml" AND path NOT LIKE "%/template/%";
 
 -- menu clean
 -- DELETE FROM folder_menu WHERE class_name = 'org.apache.jetspeed.om.folder.impl.FolderMenuSeparatorDefinitionImpl';
