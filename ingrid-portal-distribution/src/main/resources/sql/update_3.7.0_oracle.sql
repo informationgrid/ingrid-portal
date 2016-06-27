@@ -176,6 +176,10 @@ INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('service-myportal', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/service-myportal.psml')));
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-myportal') AND name = 'ingrid-portal-apps::InfoPortlet';
 
+-- service-sitemap
+INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('service-sitemap', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/service-sitemap.psml')));
+
+
 -- /_role/user/service-myportal.psml
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('/_role/user/service-myportal', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/_role/user/service-myportal.psml')));
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = '/_role/user/service-myportal') AND name = 'ingrid-portal-apps::InfoPortlet';
@@ -238,6 +242,7 @@ DELETE FROM page WHERE path = '/search-extended/search-ext-law-area-partner.psml
 DELETE FROM page WHERE path = '/main-features.psml';
 DELETE FROM page WHERE path = '/main-environment.psml';
 DELETE FROM page WHERE path = '/privacy.psml';
+DELETE FROM page WHERE path = '/administration/admin-wms.psml';
 
 -- menu clean
 -- DELETE FROM folder_menu WHERE class_name = 'org.apache.jetspeed.om.folder.impl.FolderMenuSeparatorDefinitionImpl';
@@ -294,10 +299,10 @@ UPDATE folder_menu SET element_order = '3' WHERE parent_id = (SELECT temp_value 
 UPDATE folder_menu SET element_order = '4' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-content-provider.psml';
 UPDATE folder_menu SET element_order = '5' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-iplugs.psml';
 UPDATE folder_menu SET element_order = '6' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-cms.psml';
-UPDATE folder_menu SET element_order = '7' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-wms.psml';
-UPDATE folder_menu SET element_order = '8' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-statistics.psml';
-UPDATE folder_menu SET element_order = '9' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-portal-profile.psml';
-UPDATE folder_menu SET element_order = '10' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-component-monitor.psml';
+UPDATE folder_menu SET element_order = '7' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-statistics.psml';
+UPDATE folder_menu SET element_order = '8' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-portal-profile.psml';
+UPDATE folder_menu SET element_order = '9' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-component-monitor.psml';
+DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-wms.psml';
 
 -- sub-menu-catalog
 DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-catalog') AND options = '/search-catalog/search-catalog-thesaurus.psml';
@@ -315,7 +320,7 @@ VALUES
 (SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-about')),
 'sectionStyle', 0),
 ((SELECT max_key+4 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-(SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-sitemap')),
+(SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::InfoPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-sitemap')),
 'sectionStyle', 0)
 ;
 

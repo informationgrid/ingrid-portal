@@ -242,6 +242,7 @@ DELETE FROM page WHERE path = '/search-extended/search-ext-law-area-partner.psml
 DELETE FROM page WHERE path = '/main-features.psml';
 DELETE FROM page WHERE path = '/main-environment.psml';
 DELETE FROM page WHERE path = '/privacy.psml';
+DELETE FROM page WHERE path = '/administration/admin-wms.psml';
 
 -- menu clean
 -- DELETE FROM folder_menu WHERE class_name = 'org.apache.jetspeed.om.folder.impl.FolderMenuSeparatorDefinitionImpl';
@@ -298,10 +299,10 @@ UPDATE folder_menu SET element_order = '3' WHERE parent_id = (SELECT temp_value 
 UPDATE folder_menu SET element_order = '4' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-content-provider.psml';
 UPDATE folder_menu SET element_order = '5' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-iplugs.psml';
 UPDATE folder_menu SET element_order = '6' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-cms.psml';
-UPDATE folder_menu SET element_order = '7' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-wms.psml';
-UPDATE folder_menu SET element_order = '8' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-statistics.psml';
-UPDATE folder_menu SET element_order = '9' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-portal-profile.psml';
-UPDATE folder_menu SET element_order = '10' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-component-monitor.psml';
+UPDATE folder_menu SET element_order = '7' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-statistics.psml';
+UPDATE folder_menu SET element_order = '8' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-portal-profile.psml';
+UPDATE folder_menu SET element_order = '9' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-component-monitor.psml';
+DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu') AND options = '/administration/admin-wms.psml';
 
 -- sub-menu-catalog
 DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-catalog') AND options = '/search-catalog/search-catalog-thesaurus.psml';

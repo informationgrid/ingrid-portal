@@ -131,6 +131,7 @@
 </div>
 #if($enableAccountQuestion)
     <hr />
+    <!--
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="attention">#displayFieldLabel('attention' $MESSAGES.getString('account.edit.label.attention')):</label>
@@ -139,6 +140,7 @@
             <input type="text" id="attention" name="attention" value="#getFieldValue('attention')" />
         </div>
     </div>
+    -->
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="age">#displayFieldLabel('age' $MESSAGES.getString('account.edit.label.age')):</label>

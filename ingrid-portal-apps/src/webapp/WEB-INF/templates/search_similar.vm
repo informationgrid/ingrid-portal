@@ -51,8 +51,7 @@
                             </div>
                         </li>
                     </ul>
-                    <img style="float:right; padding: 5px 0 0" src="/ingrid-portal-apps/images/sns_big.gif"/>
-                #end    
+                #end
             </div>
             <p class="bx-top-m bx-bot-0 tx-center">
                 <button class="btn btn--primary btn--small">$MESSAGES.getString('searchSimilar.add.to.query')</button>
