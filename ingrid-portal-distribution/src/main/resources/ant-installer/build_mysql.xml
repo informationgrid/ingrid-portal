@@ -346,6 +346,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL362}"/>
+			<transaction src="${updateMySQL370}"/>
         </sql>
     </target>
 

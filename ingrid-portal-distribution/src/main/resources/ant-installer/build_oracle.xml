@@ -343,6 +343,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle362}"/>
+			<transaction src="${updateOracle370}"/>
         </sql>
     </target>
 
