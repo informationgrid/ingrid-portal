@@ -111,8 +111,8 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         LoginForm frm = (LoginForm) Utils.getActionForm(request, LoginForm.SESSION_KEY, LoginForm.class);
 
         String errorCode = request.getParameter("errorCode");
+        frm.clearErrors();
         if (errorCode != null) {
-            frm.clearErrors();
             if (errorCode.equals(LoginConstants.ERROR_UNKNOWN_USER.toString())) {
                 frm.setError(LoginForm.FIELD_USERNAME, "login.error.unknownUser");
             } else if (errorCode.equals(LoginConstants.ERROR_INVALID_PASSWORD.toString())) {
