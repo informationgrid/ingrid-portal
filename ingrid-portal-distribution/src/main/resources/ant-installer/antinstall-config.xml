@@ -245,16 +245,10 @@
 
         <comment displayText="" explanatoryText="Geben Sie die Url der Opensearchschnittstelle an. Es reicht die Basis-Url wie im default angegeben, der Rest der Anfrage wird dynamisch hinzugefügt."/>
         <text property="openSearchUrl" displayText="Opensearch Url:" defaultValue="https://dev.informationgrid.eu/opensearch/query"/>
-        <comment displayText="" explanatoryText="Geben Sie die Basis-Url für das Laden von gespeicherten Karten an."/>
-        <text property="loadMapUrl" displayText="Karten-Url:" defaultValue="https://dev.informationgrid.eu/kartendienste"/>
-        <comment displayText="" explanatoryText="Geben Sie ein Verzeichnis zum Speichern der Map Client Daten an."/>
-        <directory
-                property        ="WebmapDataDir"
-                defaultValue    ="/opt/ingrid"
-                defaultValueWin ="${env.ProgramFiles}"
-                displayText     ="Webmapdatenverzeichnis"
-                create          ="true"/>    
-
+        <comment displayText="" explanatoryText="Geben Sie folgende Eigenschaften für den SMTP-Server an."/>
+        <text property="feedbackHost" displayText="SMTP-Server (Host):" defaultValue="localhost"/>
+        <text property="feedbackEmail" displayText="Sender E-Mail-Adresse:" defaultValue="info@informationgrid.eu"/>
+        
     </page>
     
     <page
