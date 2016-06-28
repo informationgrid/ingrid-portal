@@ -30,6 +30,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
@@ -66,6 +67,10 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle( getPortletConfig().getResourceBundle( request.getLocale() ), request.getLocale() );
         context.put( "MESSAGES", messages );
 
+        PortletPreferences prefs = request.getPreferences();
+        String titleKey = prefs.getValue( "titleKey", "" );
+        response.setTitle(messages.getString(titleKey));
+        
         ArrayList<IngridFacet> config = FacetsConfig.getFacets();
         IngridQuery query;
         IngridHits hits = null;

@@ -22,16 +22,7 @@
     </fragment>
     <fragment id="home-4" type="portlet" name="ingrid-portal-apps::EnvironmentTeaser">
     </fragment>
-    <fragment id="home-5" type="portlet" name="ingrid-portal-apps::InfoPortlet">
-      <preference name="disableTitle" readOnly="false">
-        <value>true</value>
-      </preference>
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/info_teaser.vm</value>
-      </preference>
-      <preference name="sectionStyle" readOnly="false">
-        <value>block--pad-bottom</value>
-      </preference>
+    <fragment id="home-5" type="portlet" name="ingrid-portal-apps::InfoDefaultPageTeaser">
     </fragment>
   </fragment>
   <security-constraints>
