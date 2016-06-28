@@ -1,4 +1,21 @@
-
+#macro (includeMobileNavigation)
+    <div class="nav-overlay is-fixed">
+        <ul class="nav__mobile nav__foot">
+            <li>
+                <a href="$renderResponse.encodeURL('/portal/help.psml')" title="$MESSAGES.getString('footer.help.tooltip')">$MESSAGES.getString('footer.help')</a>
+            </li>
+            <li>
+                <a href="$renderResponse.encodeURL('/portal/service-contact.psml')" title="$MESSAGES.getString('footer.contact.tooltip')">$MESSAGES.getString('footer.contact')</a>
+            </li>
+            <li>
+                <a href="$renderResponse.encodeURL('/portal/service-sitemap.psml')" title="$MESSAGES.getString('footer.sitemap.tooltip')">$MESSAGES.getString('footer.sitemap')</a>
+            </li>
+            <li>
+                <a href="$renderResponse.encodeURL('/portal/disclaimer.psml')" title="$MESSAGES.getString('footer.disclaimer.tooltip')">$MESSAGES.getString('footer.disclaimer')</a>
+            </li>
+        </ul>
+    </div>
+#end
 #* Add the current layouts configuration values to the context *#
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
@@ -44,9 +61,20 @@
   <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
   </head>
 
+    #includeMobileNavigation()
     <div class="page" >
         <header class="header">
             <div class="ob-box-padded-more ob-box-center">
+                <div class="header__widgets__section">
+                    <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                        <svg class="icon">
+                        <use xlink:href="#burger">
+                        </svg>
+                        <svg class="icon ob-fade">
+                        <use xlink:href="#cross">
+                        </svg>
+                    </div>
+                </div>
                 <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$renderResponse.encodeURL('/portal/default-page.psml')">
                     <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>

@@ -88,6 +88,7 @@ DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/ma
 DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-environment.psml');
 DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/privacy.psml');
 
+DELETE FROM fragment WHERE name = 'ingrid-portal-apps::IngridWelcomePortlet';
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::ServiceTeaser';
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::ChronicleTeaser';
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::WeatherTeaser';
