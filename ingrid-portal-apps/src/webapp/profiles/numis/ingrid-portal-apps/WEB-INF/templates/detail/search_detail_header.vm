@@ -5,7 +5,7 @@
   <head>
   <link rel="prefetch" href="/decorations/layout/ingrid/images/template/icons.svg" />
   #if(!$pageTitle || $pageTitle == "")
-    <title>InGrid-Portal</title>
+    <title>NUMIS</title>
   #else
     $MESSAGES.resetMsgParams()
     $MESSAGES.setMsgParam($pageTitle)
@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css" />
 
   <link rel="stylesheet" href="/decorations/layout/ingrid/css/style.css">
+  <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css">
   <link rel="stylesheet" href="/decorations/layout/ingrid/css/streamline-24px/styles.css">
   <link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print"/>
   <!-- Global scripts -->
@@ -48,9 +49,16 @@
             <div class="ob-box-padded-more ob-box-center">
                 <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$renderResponse.encodeURL('/portal/default-page.psml')">
-                    <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg">
-                    <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg">
+                    <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
+                    <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>
                     </a>
+                </div>
+                <div class="header__widgets__section">
+                    <a class="mq-hide-xxl desktop__title" href="$renderResponse.encodeURL('/portal/default-page.psml')">
+                        <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
+                        <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
+                    </a>
+                    <a class="mq-show-xxl mobile__title" href="$renderResponse.encodeURL('/portal/default-page.psml')">NUMIS</a>
                 </div>
             </div>
         </header>
