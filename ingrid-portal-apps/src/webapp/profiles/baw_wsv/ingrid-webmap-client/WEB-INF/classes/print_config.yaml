@@ -314,6 +314,7 @@ layouts:
       creator: 'MapFish'
     mainPage:
       pageSize: A3
+      rotation: true
       marginLeft: 70
       marginRight: 70
       header:
