@@ -88,6 +88,7 @@ DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/ma
 DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-environment.psml');
 DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/privacy.psml');
 
+DELETE FROM fragment WHERE name = 'ingrid-portal-apps::ServiceTeaser';
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::ChronicleTeaser';
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::WeatherTeaser';
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::MeasuresTeaser';
@@ -238,7 +239,7 @@ UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator =
 UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator = 'ingrid-clear' WHERE path = '/main-maps.psml'; 
 UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator = 'ingrid-clear' WHERE path = '/main-measures.psml'; 
 UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator = 'ingrid-teaser' WHERE path = '/service-sitemap.psml'; 
-UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator = 'clear', title = 'ingrid.page.search.detail.tooltip', short_title = 'ingrid.page.search.detail' WHERE path = '/search-detail.psml'; 
+UPDATE page SET default_layout_decorator = 'ingrid-clear', default_portlet_decorator = 'clear', title = 'ingrid.page.search.detail.tooltip', short_title = 'ingrid.page.search.detail' WHERE path = '/search-detail.psml'; 
 UPDATE page SET title = 'ingrid.page.partner.tooltip', short_title = 'ingrid.page.partner' WHERE path = '/main-about-partner.psml'; 
 
 -- delete unused pages

@@ -860,7 +860,9 @@
 #if($pageDescription)
     #set($pageDescription = $pageDescription.replace('"',"'"))
     #set($pageDescription = $stringTool.cutString($pageDescription,300))
-#end    
+#end
+#parse('WEB-INF/templates/detail/search_detail_header.vm')
+
 #set ($action = $renderResponse.createActionURL())
 ## Remove comment for new detail view
 #if($renderElements)
@@ -874,3 +876,8 @@
         </div>
     </section>
 #end
+
+## ***************************
+## include the footer here
+## ***************************
+#parse('WEB-INF/templates/detail/search_detail_footer.vm')
