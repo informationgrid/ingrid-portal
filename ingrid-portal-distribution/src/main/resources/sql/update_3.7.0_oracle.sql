@@ -272,6 +272,7 @@ DELETE FROM page WHERE path = '/main-features.psml';
 DELETE FROM page WHERE path = '/main-environment.psml';
 DELETE FROM page WHERE path = '/privacy.psml';
 DELETE FROM page WHERE path = '/administration/admin-wms.psml';
+DELETE FROM page WHERE path = '/_role/user/myportal-personalize.psml';
 
 -- delete user default pages
 DELETE FROM page WHERE name = "default-page.psml" AND path LIKE "/_user/%/default-page.psml" AND path NOT LIKE "%/template/%";
