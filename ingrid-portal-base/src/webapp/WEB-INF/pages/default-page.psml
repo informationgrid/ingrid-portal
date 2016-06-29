@@ -13,14 +13,44 @@
   
   <fragment id="home" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
+      <preference name="titleKey" readOnly="false">
+        <value>searchSimple.title.search</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>search-1</value>
+      </preference>
     </fragment>
     <fragment id="home-1" type="portlet" name="ingrid-portal-apps::IngridInformPortlet">
+      <preference name="infoTemplate" readOnly="false">
+        <value>/WEB-INF/templates/ingrid_inform_teaser.vm</value>
+      </preference>
+      <preference name="cmsKey" readOnly="false">
+        <value>portalu.teaser.inform</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>ingrid-inform-1</value>
+      </preference>
     </fragment>
     <fragment id="home-2" type="portlet" name="ingrid-portal-apps::CategoryTeaser">
     </fragment>
     <fragment id="home-3" type="portlet" name="ingrid-portal-apps::RssNewsTeaser">
+      <preference name="noOfEntriesDisplayed" readOnly="false">
+        <value>4</value>
+      </preference>
+      <preference name="titleKey" readOnly="false">
+        <value>news.teaser.title</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>rss-news-1</value>
+      </preference>
     </fragment>
     <fragment id="home-4" type="portlet" name="ingrid-portal-apps::EnvironmentTeaser">
+      <preference name="titleKey" readOnly="false">
+        <value>teaser.environment.title</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>search-topics-1</value>
+      </preference>
     </fragment>
     <fragment id="home-5" type="portlet" name="ingrid-portal-apps::InfoDefaultPageTeaser">
     </fragment>

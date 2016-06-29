@@ -12,6 +12,12 @@
 
   <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="search-simple-portlet" type="portlet" decorator="ingrid-clear" name="ingrid-portal-apps::SearchSimpleResult">
+      <preference name="titleKey" readOnly="false">
+        <value>searchSimple.title.result</value>
+      </preference>
+      <preference name="helpKey" readOnly="false">
+        <value>search-results-1</value>
+      </preference>
     </fragment>
     <fragment id="main-search-similar" type="portlet" decorator="ingrid-clear" name="ingrid-portal-apps::SearchSimilar">
     </fragment>
