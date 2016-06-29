@@ -29,14 +29,17 @@
     </properties>
     <body>
         <release version="3.6.2.1-SNAPSHOT" date="2016-xx-xx" description="Release 3.6.2.1">
+            <action type="update" dev="wemove" issue="REDMINE-324">
+                IGE: Improved behaviour of grid to avoid creation of empty rows.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-323">
-                IGE: Fixed installer for update which overrode property file.
+                IGE: Fixed installer for update which overwrote property file.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-332">
                 IGE: Prevent loading of objects/addresses if one is already being loaded.
             </action>
-            <action type="update" dev="wemove" issue="REDMINE-324">
-                IGE: Improved behaviour of grid to avoid creation of empty rows.
+            <action type="fix" dev="wemove" issue="REDMINE-346">
+                PORTAL: Fixed field names of constraints in detail view, now similar to IGE.
             </action>
         </release>
         
