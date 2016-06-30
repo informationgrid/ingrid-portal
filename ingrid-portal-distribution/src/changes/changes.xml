@@ -41,6 +41,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-346">
                 PORTAL: Fixed field names of constraints in detail view, now similar to IGE.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-189">
+                PORTAL: Fixed rendering of constraints in detail view in profiles.
+            </action>
         </release>
         
         <release version="3.6.2" date="2016-05-30" description="Release 3.6.2">

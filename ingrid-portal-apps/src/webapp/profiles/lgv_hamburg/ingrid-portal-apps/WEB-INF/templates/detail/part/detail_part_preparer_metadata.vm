@@ -28,11 +28,11 @@
     		#if($TOOL.aNodeOfListExist($xpathList))
     		#renderSectionTitle($MESSAGES.getString("references"))
     			#if($type == "3")
-    				## Darstellender Dienst
-    				#renderLinkList($MESSAGES.getString("coupled_data") $TOOL.getReference("./idf:crossReference", true) "false")
-    			#else
     				## Dargestellte Daten 
-    				#renderLinkList($MESSAGES.getString("coupled_service") $TOOL.getReference("./idf:crossReference", true) "false")
+    				#renderLinkList($MESSAGES.getString("coupled_data") $TOOL.getReference("./idf:crossReference[idf:attachedToField[@entry-id='3600']]", true) "false")
+    			#else
+    				## Darstellender Dienst
+    				#renderLinkList($MESSAGES.getString("coupled_service") $TOOL.getReference("./idf:crossReference[idf:attachedToField[@entry-id='3600']]", true) "false")
     			#end
         		## Querverweise zu
     				#renderLinkList($MESSAGES.getString("cross_references_out") $TOOL.getReference("./idf:crossReference[@direction='OUT']") "false")
@@ -187,7 +187,7 @@
             	## Erscheinungsort
             		#renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.publish_loc") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "publisher"))
             	## Verlag
-            		#renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.publishing") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/organisationName", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "distribute"))
+            		#renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.publishing") $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:CI_ResponsibleParty/gmd:organisationName", "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "distribute"))
             	## Erschienen in
             		#renderTextLabelLeft($MESSAGES.getString("t011_obj_literatur.publish_in") $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name"))
             	## Erscheinungsjahr
@@ -400,11 +400,16 @@
     				#renderTable($TOOL.getMediumOptions("./gmd:distributionInfo/gmd:MD_Distribution"))
         		## Bestellinformationen
     				#renderTextLabelLeft($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions"))
-        		## Zugangsbeschränkungen
+    				
+        		## Zugriffsbeschränkungen (accessConstraints)
             		#set($consideredValues = ["otherRestrictions"])
-            		#renderTextList($MESSAGES.getString("object_access.restriction_value") $TOOL.mergeList($TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints", ".", "6010", $consideredValues), $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints", "./gmd:MD_RestrictionCode/@codeListValue", "6010", $consideredValues)))
-        		## Nutzungsbedingungen
-    				#renderTextList($MESSAGES.getString("object_access.terms_of_use") $TOOL.mergeList($TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation", "."), $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue", ".", "524")))
+            		#set($accessConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints")
+            		#renderTextList($MESSAGES.getString("object_access.restriction_value") $TOOL.mergeList($TOOL.getListOfValuesFromXPath($accessConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "6010", $consideredValues), $TOOL.getSiblingsValuesFromXPath($accessConstraintsXPath, "gmd:otherConstraints", false, "6010", $consideredValues)))
+        		## Nutzungsbedingungen (useConstraints)
+            		#set($useConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints")
+            		#renderTextList($MESSAGES.getString("object_access.license") $TOOL.mergeList($TOOL.getListOfValuesFromXPath($useConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "524", $consideredValues), $TOOL.getSiblingsValuesFromXPath($useConstraintsXPath, "gmd:otherConstraints")))
+        		## Anwendungseinschränkungen (useLimitation)
+    				#renderTextList($MESSAGES.getString("object_access.terms_of_use") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation", "."))
         #closeDiv()
 	#end
 	## Zusätzliche Info
