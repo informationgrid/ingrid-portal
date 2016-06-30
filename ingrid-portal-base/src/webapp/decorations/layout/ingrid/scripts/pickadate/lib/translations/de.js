@@ -9,7 +9,7 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
     clear: 'Löschen',
     close: 'Schließen',
     firstDay: 1,
-    format: 'dddd, dd. mmmm yyyy',
+    format: 'ddd, dd. mmm yyyy',
     formatSubmit: 'dd.mm.yyyy',
     selectMonths: true,
     selectYears: true
