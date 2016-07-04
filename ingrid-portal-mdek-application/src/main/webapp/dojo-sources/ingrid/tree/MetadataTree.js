@@ -166,6 +166,7 @@ define("ingrid/tree/MetadataTree", [
                     array.forEach(updatedChildren, function(copiedNode) {
                         self.model.store.put(copiedNode);
                     });
+                    node.setChildItems(updatedChildren);
                 } catch(ex) {
                     console.error( "Error during updating tree nodes", ex);
                     displayErrorMessage(ex);
