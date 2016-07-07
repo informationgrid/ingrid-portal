@@ -346,10 +346,10 @@ require([
 
                 // Prepare bb for display in the table
                 if (locationTopicList[i].boundingBox) {
-                    locationTopicList[i].longitude1 = locationTopicList[i].boundingBox[0];
-                    locationTopicList[i].latitude1 = locationTopicList[i].boundingBox[1];
-                    locationTopicList[i].longitude2 = locationTopicList[i].boundingBox[2];
-                    locationTopicList[i].latitude2 = locationTopicList[i].boundingBox[3];
+                    locationTopicList[i].longitude1 = locationTopicList[i].boundingBox[1];
+                    locationTopicList[i].latitude1 = locationTopicList[i].boundingBox[0];
+                    locationTopicList[i].longitude2 = locationTopicList[i].boundingBox[3];
+                    locationTopicList[i].latitude2 = locationTopicList[i].boundingBox[2];
                 }
             }
             UtilStore.updateWriteStore( "assistantSpatialRefTable", locationTopicList );
@@ -578,13 +578,13 @@ require([
                             topic.type ? topic.name + ", " + topic.type : topic.name );
                     if (topic.boundingBox) {
                         UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "longitude1",
-                                topic.boundingBox[0] );
-                        UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "latitude1",
                                 topic.boundingBox[1] );
+                        UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "latitude1",
+                                topic.boundingBox[0] );
                         UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "longitude2",
-                                topic.boundingBox[2] );
-                        UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "latitude2",
                                 topic.boundingBox[3] );
+                        UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "latitude2",
+                                topic.boundingBox[2] );
                     }
                     // Update elements that aren't displayed in the table
                     storedTopic.nativeKey = topic.nativeKey;
@@ -600,10 +600,10 @@ require([
                             topicId: topic.topicId,
                             label: topic.type ? topic.name + ", " + topic.type : topic.name,
                             name: topic.name,
-                            longitude1: topic.boundingBox[0],
-                            latitude1: topic.boundingBox[1],
-                            longitude2: topic.boundingBox[2],
-                            latitude2: topic.boundingBox[3],
+                            longitude1: topic.boundingBox[1],
+                            latitude1: topic.boundingBox[0],
+                            longitude2: topic.boundingBox[3],
+                            latitude2: topic.boundingBox[2],
                             nativeKey: topic.nativeKey,
                             topicType: topic.type,
                             topicTypeId: topic.typeId

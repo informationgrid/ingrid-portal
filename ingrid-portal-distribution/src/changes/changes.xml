@@ -38,6 +38,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-332">
                 IGE: Prevent loading of objects/addresses if one is already being loaded.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-343">
+                IGE: Fixed spatial reference of imported getCapabilities document.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-346">
                 PORTAL: Fixed field names of constraints in detail view, now similar to IGE.
             </action>
