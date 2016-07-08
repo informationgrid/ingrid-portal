@@ -28,7 +28,7 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="3.6.2.1-SNAPSHOT" date="2016-xx-xx" description="Release 3.6.2.1">
+        <release version="3.6.2.1" date="2016-07-08" description="Release 3.6.2.1">
             <action type="update" dev="wemove" issue="REDMINE-324">
                 IGE: Improved behaviour of grid to avoid creation of empty rows.
             </action>
