@@ -142,13 +142,13 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 			xpathExpression = "./gmd:distributionInfo/gmd:MD_Distribution";
 			getAvailability(elementsAvailability, xpathExpression);
 			
-			// "Zugangsbeschränkungen"
+			// "Zugriffsbeschränkungen"
 			ArrayList elementsAccessConstraints = new ArrayList();
 			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints";
 			subXPathExpression = ".";
 			getNodeListValueList(elementsAccessConstraints, xpathExpression, subXPathExpression, "6010", "textList");
 			
-			// "Zugangsbeschränkungen" (Freie Einträge)
+			// "Zugriffsbeschränkungen"(Freie Einträge)
 			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints";
 			subXPathExpression = "./gmd:MD_RestrictionCode/@codeListValue";
 			getNodeListValueList(elementsAccessConstraints, xpathExpression, subXPathExpression, "otherRestrictions", "6010", "textList");
@@ -161,7 +161,7 @@ public class DetailDataPreparerIdf1_0_0_Md_Metadata extends DetailDataPreparerId
 	        	elementsAvailability.add(element);
 			}
 			
-			// "Nutzungsbedingungen"
+			// "Anwendungseinschränkungen"
 			ArrayList elementsUseConstraints = new ArrayList();
 			xpathExpression = "./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation";
 			subXPathExpression = ".";

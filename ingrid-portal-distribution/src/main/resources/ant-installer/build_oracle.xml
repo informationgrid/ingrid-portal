@@ -68,6 +68,7 @@
     <property name="mdekDBOracle_340"      location="${installDir}/sql/mdek_3.4.0_oracle.sql"/>
     <property name="mdekDBOracle_361"      location="${installDir}/sql/mdek_3.6.1_oracle.sql"/>
     <property name="mdekDBOracle_362"      location="${installDir}/sql/mdek_3.6.2_oracle.sql"/>
+    <property name="mdekDBOracle_3621"      location="${installDir}/sql/mdek_3.6.2.1_oracle.sql"/>
 
 
     <target name="CheckDbs" depends="checkPortalDbOracle, checkMdekDbOracle" if="useOracle">
@@ -369,6 +370,7 @@
             <transaction src="${mdekDBOracle_340}"/>
             <transaction src="${mdekDBOracle_361}"/>
             <transaction src="${mdekDBOracle_362}"/>
+            <transaction src="${mdekDBOracle_3621}"/>
 
         </sql>
     </target>
@@ -397,6 +399,7 @@
             <transaction src="${mdekDBOracle_340}"/>
             <transaction src="${mdekDBOracle_361}"/>
             <transaction src="${mdekDBOracle_362}"/>
+            <transaction src="${mdekDBOracle_3621}"/>
 
         </sql>
     </target>
