@@ -55,7 +55,7 @@
     <property name="updateOracle341" location="${installDir}/sql/update_3.4.1_oracle.sql"/>
     <property name="updateOracle361" location="${installDir}/sql/update_3.6.1_oracle.sql"/>
     <property name="updateOracle362" location="${installDir}/sql/update_3.6.2_oracle.sql"/>
-    <property name="updateOracle370" location="${installDir}/sql/update_3.7.0_oracle.sql"/>
+    <property name="updateOracle400" location="${installDir}/sql/update_4.0.0_oracle.sql"/>
     
 
     <!-- oracle ige imports -->
@@ -201,7 +201,7 @@
             <transaction src="${updateOracle341}"/>
             <transaction src="${updateOracle361}"/>
             <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle370}"/>
+            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
     
@@ -228,7 +228,7 @@
             <transaction src="${updateOracle341}"/>
             <transaction src="${updateOracle361}"/>
             <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle370}"/>
+            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
     
@@ -254,7 +254,7 @@
             <transaction src="${updateOracle341}"/>
             <transaction src="${updateOracle361}"/>
             <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle370}"/>
+            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
     
@@ -276,7 +276,7 @@
             <transaction src="${updateOracle341}"/>
             <transaction src="${updateOracle361}"/>
             <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle370}"/>
+            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
     
@@ -297,7 +297,7 @@
             <transaction src="${updateOracle341}"/>
             <transaction src="${updateOracle361}"/>
             <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle370}"/>
+            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
     
@@ -324,7 +324,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle361}"/>
             <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle370}"/>
+            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
 	
@@ -343,7 +343,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle362}"/>
-			<transaction src="${updateOracle370}"/>
+			<transaction src="${updateOracle400}"/>
         </sql>
     </target>
 
@@ -361,7 +361,7 @@
                 >
 
             <!-- use default-character-set=utf8 -->
-            <transaction src="${updateOracle370}"/>
+            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
 
