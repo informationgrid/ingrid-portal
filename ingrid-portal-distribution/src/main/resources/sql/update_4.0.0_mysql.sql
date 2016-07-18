@@ -275,7 +275,7 @@ DELETE FROM page WHERE path = '/administration/admin-wms.psml';
 DELETE FROM page WHERE path = '/_role/user/myportal-personalize.psml';
 
 -- delete user default pages
-DELETE FROM page WHERE name = "default-page.psml" AND path LIKE "/_user/%/default-page.psml" AND path NOT LIKE "%/template/%";
+DELETE FROM page WHERE name = 'default-page.psml' AND path LIKE '/_user/%/default-page.psml' AND path NOT LIKE '%/template/%';
 
 -- menu clean
 -- DELETE FROM folder_menu WHERE class_name = 'org.apache.jetspeed.om.folder.impl.FolderMenuSeparatorDefinitionImpl';

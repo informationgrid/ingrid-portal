@@ -1,17 +1,52 @@
 -- DB Version
-UPDATE ingrid_lookup SET item_value = '4.0.0', item_date = NOW() WHERE ingrid_lookup.item_key ='ingrid_db_version';
+UPDATE ingrid_lookup SET item_value = '4.0.0', item_date = SYSDATE WHERE ingrid_lookup.item_key ='ingrid_db_version';
 
 -- Temp Table um values aus folder_menu zwischen zu speichern (subselect in insert auf gleiche Tabelle nicht moeglich, s.u.)
-DROP TABLE IF EXISTS ingrid_temp;
-CREATE TABLE ingrid_temp (
-  temp_key varchar(255) NOT NULL,
-  temp_value mediumint
+-- oracle way of: DROP TABLE IF EXISTS
+
+-- !!!!!!!! -------------------------------------------------
+-- !!! DIFFERENT SYNTAX FOR JDBC <-> Scripting !  Choose your syntax, default is JDBC version
+
+-- !!! JDBC VERSION (installer):
+-- !!! All in one line and DOUBLE SEMICOLON at end !!! Or causes problems when executing via JDBC in installer (ORA-06550) !
+
+BEGIN execute immediate 'DROP TABLE ingrid_temp'; exception when others then null; END;;
+
+-- !!! SCRIPT VERSION (SQL Developer, SQL Plus):
+-- !!! SINGLE SEMICOLON AND "/" in separate line !
+
+-- BEGIN execute immediate 'DROP TABLE ingrid_temp'; exception when others then null; END;
+-- /
+
+-- !!!!!!!! -------------------------------------------------
+
+CREATE TABLE  ingrid_temp (
+	temp_key VARCHAR2(255),
+	temp_value NUMBER(10,0)
 );
 
-DROP TABLE IF EXISTS ingrid_temp2;
-CREATE TABLE ingrid_temp2 (
-  temp_key varchar(255) NOT NULL,
-  temp_value mediumint
+-- Temp Table um values aus folder_menu zwischen zu speichern (subselect in insert auf gleiche Tabelle nicht moeglich, s.u.)
+-- oracle way of: DROP TABLE IF EXISTS
+
+-- !!!!!!!! -------------------------------------------------
+-- !!! DIFFERENT SYNTAX FOR JDBC <-> Scripting !  Choose your syntax, default is JDBC version
+
+-- !!! JDBC VERSION (installer):
+-- !!! All in one line and DOUBLE SEMICOLON at end !!! Or causes problems when executing via JDBC in installer (ORA-06550) !
+
+BEGIN execute immediate 'DROP TABLE ingrid_temp2'; exception when others then null; END;;
+
+-- !!! SCRIPT VERSION (SQL Developer, SQL Plus):
+-- !!! SINGLE SEMICOLON AND "/" in separate line !
+
+-- BEGIN execute immediate 'DROP TABLE ingrid_temp2'; exception when others then null; END;
+-- /
+
+-- !!!!!!!! -------------------------------------------------
+
+CREATE TABLE  ingrid_temp2 (
+	temp_key VARCHAR2(255),
+	temp_value NUMBER(10,0)
 );
 
 -- clean fragments
@@ -275,7 +310,7 @@ DELETE FROM page WHERE path = '/administration/admin-wms.psml';
 DELETE FROM page WHERE path = '/_role/user/myportal-personalize.psml';
 
 -- delete user default pages
-DELETE FROM page WHERE name = "default-page.psml" AND path LIKE "/_user/%/default-page.psml" AND path NOT LIKE "%/template/%";
+DELETE FROM page WHERE name = 'default-page.psml' AND path LIKE '/_user/%/default-page.psml' AND path NOT LIKE '%/template/%';
 
 -- menu clean
 -- DELETE FROM folder_menu WHERE class_name = 'org.apache.jetspeed.om.folder.impl.FolderMenuSeparatorDefinitionImpl';
@@ -341,41 +376,43 @@ DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WH
 DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-catalog') AND options = '/search-catalog/search-catalog-thesaurus.psml';
 
 -- fragments preferences
-INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY)
-VALUES
+INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 ((SELECT max_key+1 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
 (SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'disclaimer')),
-'sectionStyle', 0),
+'sectionStyle', 0);
+INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 ((SELECT max_key+2 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
 (SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'disclaimer')),
-'articleStyle', 0),
+'articleStyle', 0);
+INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 ((SELECT max_key+3 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
 (SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-about')),
-'sectionStyle', 0),
+'sectionStyle', 0);
+INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 ((SELECT max_key+4 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
 (SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::InfoPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-sitemap')),
-'sectionStyle', 0)
-;
+'sectionStyle', 0);
 
-INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE)
-VALUES
+INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+1 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+1 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-0, 'block--pad-top'),
+0, 'block--pad-top');
+INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+2 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+2 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-0, 'content ob-container ob-box-narrow ob-box-center'),
+0, 'content ob-container ob-box-narrow ob-box-center');
+INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+3 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+3 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-0, 'block--padded'),
+0, 'block--padded');
+INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+4 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+4 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-0, 'block--padded')
-;
+0, 'block--padded');
 
 -- delete temporary table
-DROP TABLE IF EXISTS ingrid_temp;
-DROP TABLE IF EXISTS ingrid_temp2;
+DROP TABLE ingrid_temp;
+DROP TABLE ingrid_temp2;
 
 -- update max keys
 UPDATE ojb_hl_seq SET max_key=max_key+grab_size, version=version+1 WHERE tablename='SEQ_FRAGMENT';
