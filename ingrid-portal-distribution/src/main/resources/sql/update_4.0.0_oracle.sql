@@ -396,7 +396,7 @@ INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+1 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+1 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-0, 'block--pad-top');
+0, 'block'||chr(45)||'-pad-top');
 INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+2 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+2 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
@@ -404,11 +404,11 @@ INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VAL
 INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+3 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+3 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-0, 'block--padded');
+0, 'block'||chr(45)||'-padded');
 INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+4 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+4 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-0, 'block--padded');
+0, 'block'||chr(45)||'-padded');
 
 -- delete temporary table
 DROP TABLE ingrid_temp;
