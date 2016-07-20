@@ -19,8 +19,6 @@
     }
 </script>
 
-<h1>$MESSAGES.getString('mdek.title.adminlogin')</h1>
-
 #set ($action = $renderResponse.createActionURL())
 #if ($igeError)
     $igeError
@@ -56,3 +54,5 @@
         #renderInputButtonClass("$MESSAGES.getString('entry.button.ige')" "width:100%" "doLoginIGE" "" "btn btn--primary btn--medium")
     </div>
 </form>
+<br />
+<br />

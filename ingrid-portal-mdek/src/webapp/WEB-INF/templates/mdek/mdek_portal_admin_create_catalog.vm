@@ -15,8 +15,6 @@
 </div>
 #end
 
-<h1>$MESSAGES.getString('mdek.title.portaladmin')</h1>
-
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="GET" name="mdek_portal_admin" id="mdek_portal_admin">
     <div class="box box--fill box--small">
