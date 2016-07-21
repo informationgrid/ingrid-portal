@@ -31,160 +31,54 @@
             <content>
                 <ul>
                     <li>
-                        <a href="?hkey=about-1">Über InGrid-Portal</a>
-                    </li>
-                    <li>
                         <a href="?hkey=search-1">Suche</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-topics-1">Themen</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-service-1">Service</a>
                     </li>
                     <li>
                         <a href="?hkey=search-measure-1">Messwerte</a>
                     </li>
                     <li>
+                        <a href="?hkey=search-catalog-1">Kataloge</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=maps-1">Karte</a>
+                    </li>
+                    <li>
                         <a href="?hkey=search-chronicle-1">Chronik</a>
                     </li>
                     <li>
-                        <a href="?hkey=maps-1">Karten</a>
+                        <a href="?hkey=about-1">Über InGrid</a>
                     </li>
                     <li>
                         <a href="?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
-                        <a href="?hkey=ingrid-inform-1">InGrid-Portal Info</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=myingrid-1">Mein Portal</a>
+                        <a href="?hkey=myingrid-1">Anmeldung</a>
                     </li>
                 </ul>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>Über InGrid-Portal</header>
+        <header>Über InGrid</header>
         <section help-key="about-1">
-            <header>Konzept und Aufgabe von InGrid-Portal</header>
+            <header>Porträt</header>
             <content>
-                <p>InGrid-Portal bietet einen zentralen
-                    Zugriff auf mehrere Millionen Webseiten sowie über  
-                    eine halbe Millionen 
-                    Katalog- und Datenbankeinträge von Partnern und Informationsanbietern. Mit einem Mix aus
-                    aktuellen Nachrichten, Messwerten, Hintergrundinformationen,
-                    und historischen Ereignissen richtet sich InGrid-Portal
-                    sowohl an interessierte Laien als auch an ein versiertes 
-                    Fachpublikum. Das Informationsangebot wird kontinuierlich ausgebaut 
-                    mit dem Ziel, langfristig die Informationen möglichst aller
-                    Informationsanbieter unter einem Dach recherchierbar zu machen.</p>
-                <p>Als rechtliche Grundlage spielt die europäische 
-                    Umweltinformationsrichtlinie (2003/4/EG) und die europäische
-                    INSPIRE-Richtlinie (2007/2/EG) für PortalU eine zentrale Rolle. 
-                    Diese Richtlinien
-                    setzen neue Maßstäbe für die öffentliche Verbreitung
-                    behördlicher Umweltinformationen bzw. den Aufbau der dafür
-                    notwendigen informationstechnischen Infrastrukturen.
-                    Hiernach sind wesentlich mehr Behörden und Organisationen
-                    als zuvor dazu verpflichtet, umweltrelevante Daten und
-                    Informationen in einer klar verständlichen und einfach
-                    zugänglichen Form bereitzustellen.</p>
-                  <p>Die eigens
-                    zum Aufbau des Portals entwickelte Software
-                    InGrid-Portal wurden speziell als
-                    Werkzeuge zur Unterstützung bei der Umsetzung
-                    der Richtlinien konzipiert. </p>
+                <p>Dieser Bereich dient der Darstellung des Portals oder des Portal-Betreibers.</p>
+                <p>Die Inhalte können als Administrator dynamisch im Portal gepflegt werden (<b>Inhalt > ingrid.about</b>).</p>
             </content>
         </section>
         <section help-key="about-2">
-            <header>Die Betreiber von InGrid-Portal</header>
+            <header>Informationsanbieter</header>
             <content>
-                <p> Als Nachfolgeprojekt des Umweltdatenkatalogs (UDK) und des German 
-                    Environmental Information Network (gein) wurde PortalU  
-                    im Rahmen der Bund-Länder Verwaltungsvereinbarung UDK/GEIN
-                    entwickelt. An dieser Verwaltungsvereinbarung sind
-                    unter anderem das Umweltbundesministerium und die
-                    Umweltministerien aller 16 Länder beteiligt. PortalU wird
-                    technisch und inhaltlich von der Koordinierungsstelle
-                    PortalU im Niedersächsischen Ministerium für Umwelt, Energie und 
-                    Klimaschutz in Hannover betreut.</p>
+                <p>Hier werden alle im System eingepflegten Partner und die Ihnen zugeordneten Informationsanbieter angezeigt.</p>
+                <p>Als Administrator können diese im Bereich <b>Partner</b> und <b>Anbieter</b> gepflegt werden.</p>
             </content>
         </section>
         <section help-key="about-3">
-            <header>Funktionsüberblick</header>
+            <header>Datenquellen</header>
             <content>
-                <p>
-                    <b>Suche:</b> Zentrale Funktion des Portals mit 
-                    (<a href="?hkey=search-1">einfachen</a>) und 
-                    (<a href="?hkey=ext-search-1">erweiterten</a>) Suchfunktionen.
-                </p>
-                <p>
-                    <b>Themen:</b> Schneller Einstieg in einzelne Themen von
-                    A bis Z.</p>  
-                <p>
-                    <b>Messwerte</b>: InGrid-Portal informiert Sie rund um die Uhr
-                    über den aktuellen Zustand</p>
-                <p>
-                    <b>Service</b>: Nachrichten und Informationen über 
-                    Veranstaltungen und aktuelle Publikationen.</p>
-                <p>                   
-                    <b>Kataloge</b>: Recherchieren Sie in den Daten- und 
-                    Geodatenkatalogen von Partnern und Informationsanbietern.</p>                    
-                <p>
-                    <b>Karten:</b> Aufruf von digitalen Karten und 
-                    Angabe und Raumbezüge bei der Suche.</p>
-                <p>
-                    <b>Chronik</b>: Historische Umweltereignissen finden Sie in der Chronik.</p>
-            </content>
-        </section>
-        <section help-key="about-4">
-            <header>Informationsquellen in InGrid-Portal</header>
-            <content>
-                <p>InGrid-Portal ist ein komfortables und benutzerfreundliches Tor zu
-                    Informationen im Internet. Im Gegensatz zu den meisten
-                    Portalen und Suchmaschinen erfasst InGrid-Portal nicht nur
-                    Webseiten, Textdokumente und andere Internetformate, sondern
-                    kann auch auf Datenbanken und Fachinformationssysteme
-                    zugreifen, selbst wenn diese nicht online sind. 
-                </p>
-            </content>
-        </section>
-        <section help-key="about-5">
-            <header>Wie werde ich Informationsanbieter in InGrid-Portal?</header>
-            <content>
-                <p>In PortalU können alle behördlichen Umweltinformationen im Sinne des
-                   Umweltinformationsgesetzes und alle umweltrelevanten Webkataloge im  
-                   Sinne von INSPIRE aufgenommen werden. Zum Anbieterkreis gehören: 
-                </p>
-                <ul>
-                    <li>Umweltressorts von Bund und Ländern</li>
-                    <li>andere Ressorts von Bund und Ländern</li>
-                    <li>auskunftspflichtige Unternehmen im Sinne des   
-                        Umweltinformationsgesetzes</li>
-                    <li>kommunale Umweltinformationen</li>
-                    <li>Forschungseinrichtungen</li>
-                </ul>
-                <p>Bietet ihre Behörde oder Institution umweltrelevante behördliche 
-                   Informationen im Internet an, die noch nicht in PortalU zu finden 
-                   sind? Dann sprechen Sie uns an: <a href="mailto:kst@portalu.de" title="Schreiben Sie uns - Email Programm startet automatisch">Koordinierungsstelle PortalU</a>
-                </p>
-            </content>
-        </section>
-        <section help-key="about-6">
-            <header>InGrid – Die Software hinter dem InGrid-Portal</header>
-            <content>
-                <p>Zur Umsetzung von InGrid-Portal wurde das Softwarepaket InGrid
-                    entwickelt. InGrid setzt auf eine modulare und flexible
-                    Systemarchitektur auf der Basis lizenzfreier OpenSource
-                    Produkte. Dadurch wird es möglich, die technische Struktur
-                    des Informationsnetzes an sich wandelnde
-                    organisatorische Vorgaben anzupassen. So können mit InGrid-Portal
-                    bei Bedarf regionale Portale, z.B. für einzelne
-                    Partner oder Informationsanbieter, mit geringem technischem Aufwand
-                    erstellt werden. Dank OpenSource ist die Nachnutzung der
-                    Software für die Partner der VwV UDK/GEIN lizenzfrei und 
-                    kostenlos.</p>
+                <p>Hier werden alle angeschlossenen iPlugs angezeigt.</p>
+                <p>Der angezeigte Name wird im iPlug gepflegt und sollte Rückschlüsse auf Art und Inhalt der Daten geben.</p>
             </content>
         </section>
     </chapter>
@@ -638,7 +532,7 @@
             <header>Inhalte</header>
             <content>
                 <p>An dieser Stelle können Sie festlegen, ob Sie alle
-                    Informationen (auch Themen und Service)
+                    Informationen
                     durchsuchen wollen oder ob Sie nur in den Themen oder
                     nur in den Service-Seiten (Pressemitteilungen, Publikationen
                     und Veranstaltungen) suchen möchten.</p>
@@ -695,7 +589,7 @@
                     dieser Historie, die automatisch für eine Sitzung 
                     vorübergehend gespeichert
                     wird, können Sie als eingeloggter Nutzer 
-                    (siehe <a href="?hkey=myingrid-1">Mein Portal</a>) auch
+                    (siehe <a href="?hkey=myingrid-1">Anmeldung</a>) auch
                     Suchanfragen permanent speichern 
                     (<a href="?hkey=search-save-1">Suche Speichern</a>).</p>
                 <p>Sowohl die vorübergehenden als auch die permanent gespeicherten Suchanfragen können über den Reiter 
@@ -771,7 +665,7 @@
                         <b>Einstellungen für die Suche</b> (<a href="?hkey=search-settings-1">Suche/Einstellungen</a>)
                         die Option <b>Ähnliche Begriffe in die Suche
                         einbeziehen</b> an. Sie können diese
-                        Einstellungen auch dauerhaft vornehmen (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>).</li>
+                        Einstellungen auch dauerhaft vornehmen (siehe <a href="?hkey=myingrid-1">AnmeldungU</a>).</li>
                     <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
                         ähnliche Begriffe, indem Sie die Funktionalität
                         <a href="?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>
@@ -804,7 +698,7 @@
                     könnten. Sie können im Suchbereich neben einem Land auch die
                     Bundesinformationen einstellen.</p>
                 <p>Sie können diese Einstellungen auch dauerhaft vornehmen
-                    (siehe <a href="?hkey=myingrid-1">Mein Portal</a>).</p>
+                    (siehe <a href="?hkey=myingrid-1">Anmeldung</a>).</p>
             </content>
         </section>
         <section help-key="search-tipps-4">
@@ -1461,12 +1355,8 @@
                    rechtsrelevanten Themen</p>                   
                 <p>Forschungsprojekte: Suchergebnis aus Informationsangeboten zu 
                    Projekten in der Forschung</p> 
-                <p>Themen: Suchergebnis der PortalU-Rubrik 
-                   <a href="?hkey=search-topics-1">Themen</a> </p>                  
                 <p>Messwerte: Suchergebnis der InGrid-Portal-Rubrik 
                    <a href="?hkey=search-measure-1">Messwerte</a></p>             
-                <p>Service: Suchergebnis der InGrid-Portal-Rubrik 
-                   <a href="?hkey=search-service-1">Service</a></p>
                    
                 <p><b>Aktualität</b> </p>
                 
@@ -1547,92 +1437,17 @@
     <chapter>
         <header>Kataloge</header>
         <section help-key="search-catalog-1">
-            <header>Metadaten</header>
+            <header>Kataloge</header>
             <content>
                 <p>Recherchieren Sie in den Daten- und Geodatenkatalogen von 
                    Partnern und Informationsanbietern. Die Kataloge sind hierarchisch aufgebaut 
-                   und können mit einem Klick auf das Ordnersymbol aufgeklappt 
+                   und können mit einem Klick auf "+"/"-" auf-/zugeklappt 
                    werden. Die Informationen werden in den Katalogen als 
                    <b>Objekte</b> bezeichnet. Als zusätzliche Information sind 
                    im Bereich <b>Adressen</b> die jeweiligen 
                    Ansprechpartner aufgeführt. Durch einen Klick auf ein Objekt
                    oder eine Adresse werden detaillierte Informationen 
                    angezeigt. </p>
-                <p> Einen anschaulichen Überblick über Recherchemöglichkeiten 
-                    in den Datenkatalogen finden Sie <a href="/funktionen?action=doCatalog" target="_new">HIER</a>.
-                </p>
-            </content>
-        </section>
-        <section help-key="search-catalog-2">
-            <header>Schlagwortverzeichnis</header>
-            <content>
-                <p>Der Umweltthesaurus UMTHES ist eine Komponenten des 
-                   <a href="http://www.semantic-network.de/" target="_new">
-                   Semantic Network Service</a> des Umweltbundesamtes. SNS 
-                   stellt eine gemeinsame Terminologie für den Bereich Umwelt 
-                   auf deutsch und englisch zur Verfügung. Der UMTHES ist ein
-                   etabliertes Schlagwortverzeichnis für umweltrelevante 
-                   Themenfelder, das seit vielen Jahren vom Umweltbundesamt
-                   bereitgestellt und laufend aktualisiert wird.
-                </p>
-                <p>Sie können das Wortgut des Thesaurus nutzen, um sich für ihre
-                 Fragestellung passende Schlagworte herauszusuchen. Die 
-                 Darstellung des Wortgutes erfolgt in einer Baumstruktur. Wenn 
-                 Sie auf ein Schlagwort klicken, werden in der rechten Spalte 
-                 alle Metadatensätze der zur Verfügung stehenden Kataloge 
-                 angezeigt, die mit dem ausgewählten Begriff verschlagwortet 
-                 sind. Die Metadatensätze sind hierbei nach Katalogen gruppiert.
-                 Durch einen Klick auf einen Metadatensatz erhalten Sie
-                 Detailinformationen. 
-                </p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Themen</header>
-        <section help-key="search-topics-1">
-            <header>Themen</header>
-            <content>
-                <p>Wenn Sie einen schnellen Überblick über ein Thema 
-                   gewinnen möchten, recherchieren Sie am besten im Bereich 
-                   <b>Themen</b>. Hier finden Sie ausgewählte 
-                   Informationen, die Ihnen einen schnellen Einstieg in 
-                   21 Themen bieten. Zudem können Sie Ihre Suche auf 
-                   einzelnen Partnern beschränken. </p>
-                <p>Wenn Sie mehrere Themen oder Partnern gleichzeitig 
-                   auswählen möchten, halten Sie die Strg- bzw. Ctrl-Taste 
-                   gedrückt und klicken nacheinander auf die gewünschten Themen 
-                   oder Partnern. Die Suchergebnisse können gruppiert 
-                   anzeigen: entweder nach einzelnen Partnern oder 
-                   nach den einzelnen Informationsanbietern.</p>
-                <p>Tipp: Wenn Sie auf der InGrid-Portal-Startseite auf ein Thema 
-                   klicken (z.B. Wasser), wird Ihnen die entsprechende 
-                   Ergebnisliste direkt angezeigt.</p>              
-
-                <p> Einen anschaulichen Überblick über die Themen 
-                    finden Sie <a href="/funktionen?action=doEnvironment" target="_new">HIER</a>. </p>
-                  </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Service</header>
-        <section help-key="search-service-1">
-            <header>Pressemitteilungen, Publikationen und Veranstaltungen</header>
-            <content>
-                <p>Im Bereich <b>Service</b> können Sie nach Pressemitteilungen,
-                  Publikationen und Veranstaltungen der Partner 
-                  recherchieren. Die einzelnen Rubriken können 
-                  hierbei gemeinsam oder einzelnen durchsucht werden. Zudem 
-                  können Sie Ihre Suche auf ein einzelnen 
-                  Partner beschränken. Wenn Sie mehrere Partnern 
-                  gleichzeitig auswählen möchten, halten Sie die Strg- bzw. 
-                  Ctrl-Taste gedrückt und klicken Sie dann nacheinander die 
-                  gewünschten Partnern an. Die Suchergebnisse können 
-                  gruppiert anzeigen: entweder nach Partner
-                  oder nach den einzelnen Informationsanbietern.
-                </p>
-                <p> Einen anschaulichen Überblick über die in InGrid-Portal 
-                    recherchierbaren Serviceangebote finden Sie <a href="/funktionen?action=doService" target="_new">HIER</a>. </p>
             </content>
         </section>
     </chapter>
@@ -1985,9 +1800,9 @@
                   wie folgt vor:</p>
                 <ul>
                     <li>Melden Sie mit Ihrer Benutzerkennung unter 
-                        <b>Mein Portal</b> (oben rechts in der Kopfleiste). 
+                        <b>Anmeldung</b> (oben rechts in der Kopfleiste). 
                         Wenn Sie noch keinen Zugang haben, klicken Sie unter 
-                        <b>Mein Portal</b> auf <b>Neuer Benutzer</b> und legen 
+                        <b>Anmeldung</b> auf <b>Neuer Benutzer</b> und legen 
                         Sie ein neues Profil an.  
                     </li>
                     <li>Wechseln Sie dann wieder in den Bereich <b>Karten</b>.
@@ -2063,7 +1878,7 @@
             <header>Aktuelles</header>
             <content>
                 <p>Unter <b>Aktuelles</b> werden aktuelle
-                    Meldungen von Informationsanbieter gelistet. Die aktuellste Meldung steht
+                    Meldungen von Informationsanbietern auf der Startseite gelistet. Die aktuellste Meldung steht
                     dabei immer oben. Es wird jeweils nur der Titel und eine
                     Kurzbeschreibung der Meldung angezeigt. Durch einen Klick
                     auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
@@ -2071,28 +1886,13 @@
                     werden, werden in dem Meldungsarchiv abgelegt. Sie können
                     diese Meldungen einsehen, indem Sie auf den Link
                     <b>Weitere Meldungen</b> klicken.</p>
-                <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
-                    sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
-                    auf den Original-Servern der jeweiligen Informationsanbieter
-                    finden. Klicken Sie hierzu auf <a href="?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
-            </content>
-        </section>
-    </chapter>
-	<chapter>
-        <header>InGrid-Portal Info</header>
-        <section help-key="ingrid-inform-1">
-            <header>InGrid-Portal Info</header>
-            <content>
-                <p>In diesem Bereich finden Sie Meldungen, die durch den
-                    Betreiber von PortalU, die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle PortalU</a>,
-                    bereitgestellt werden.</p>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>Mein Portal</header>
+        <header>Anmeldung</header>
         <section help-key="myingrid-1">
-            <header>Mein Portal</header>
+            <header>Anmeldung</header>
             <content>
                 <p>InGrid-Portal bietet Ihnen die Möglichkeit, eigene Einstellungen
                     dauerhaft vorzunehmen. Sie können darüber:</p>
