@@ -622,9 +622,13 @@
                    rechtsrelevanten Themen</p>                   
                 <p>Forschungsprojekte: Suchergebnisse aus Informationsangeboten zu 
                    Projekten in der Forschung</p> 
-                <p>Messwerte: Suchergebnisse der InGrid-Portal-Rubrik 
-                   <a href="?hkey=search-measure-1">Messwerte</a></p>             
-                   
+                <p>Themen: Suchergebnisse aus dem Bereich  
+                   <a href="?hkey=search-topics-1">Themen</a> </p>                  
+                <p>Messwerte: Suchergebnisse aus dem Bereich 
+                   <a href="?hkey=search-measure-2">Messwerte</a></p>             
+                <p>Service: Suchergebnisse aus dem Bereich 
+                   <a href="?hkey=search-service-1">Service</a></p>
+
                 <p><b>Aktualität</b> </p>
                 
                 <p>Wenn Sie den Ergebnistyp <b>Metadaten</b> aufgewählt haben, 
@@ -704,9 +708,9 @@
     <chapter>
         <header>Messwerte</header>
         <section help-key="search-measure-1">
-            <header>Messwerte</header>
+            <header>Messwerte Kartenviewer</header>
             <content>
-                <p>Im Bereich <b>Messwerte</b> werden Ihnen aktuelle Messwerte direkt
+                <p>Im Bereich <b>Messwerte</b> aus dem Hauptmenü werden Ihnen aktuelle Messwerte direkt
                    innerhalb eines Kartenviewers zur Verfügung gestellt. Der Themenschwerpunkt liegt 
                    hierbei auf den Bereichen Strahlung, Luft und Wasser.
                    Die Messstationen werden direkt auf der Karte visualisiert und können per Klick
@@ -715,7 +719,14 @@
                 <p>Eine ausführliche Hilfe findet sich innerhalb der Anwendung unter dem Info Button.</p>
             </content>
         </section>
-        
+        <section help-key="search-measure-2">
+            <header>Messwerte Kategorisierung</header>
+            <content>
+                <p>Zusätzlich zur Darstellung im Messwerte Kartenviewer können auch Daten diesem Bereich zugeordnet werden.
+                   In den Suchkategorien finden sich die Unterkategorien Strahlung, Luft und Klima oder Wasser zur Recherche.</p>
+                <p>Verschiedene Web-Seiten können beim Indexieren diesen Kategorien zugeordnet werden.</p>
+            </content>
+        </section>        
     </chapter>
     <chapter>
         <header>Chronik</header>
@@ -785,6 +796,34 @@
                     werden, werden in dem Meldungsarchiv abgelegt. Sie können
                     diese Meldungen einsehen, indem Sie auf den Link
                     <b>Weitere Meldungen</b> klicken.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Themen</header>
+        <section help-key="search-topics-1">
+            <header>Themen</header>
+            <content>
+                <p>Wenn Sie einen schnellen Überblick über ein Thema 
+                   gewinnen möchten, recherchieren Sie am besten im Bereich 
+                   <b>Themen</b>. Hier finden Sie ausgewählte 
+                   Informationen, die Ihnen einen schnellen Einstieg in 
+                   21 Themen bieten.</p>
+                <p>Verschiedene Web-Seiten können beim Indexieren den einzelnen Themen zugewiesen werden.</p>
+                <p>Tipp: Wenn Sie auf der InGrid-Portal-Startseite auf ein Thema 
+                   klicken (z.B. Wasser), wird Ihnen die entsprechende 
+                   Ergebnisliste direkt angezeigt.</p>              
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Service</header>
+        <section help-key="search-service-1">
+            <header>Pressemitteilungen, Publikationen und Veranstaltungen</header>
+            <content>
+                <p>Im Bereich <b>Service</b> können Sie nach Pressemitteilungen,
+                  Publikationen und Veranstaltungen recherchieren.</p>
+                <p>Verschiedene Web-Seiten können beim Indexieren diesem Bereich zugeordnet werden.</p>
             </content>
         </section>
     </chapter>
