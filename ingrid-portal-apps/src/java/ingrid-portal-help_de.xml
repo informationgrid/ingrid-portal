@@ -85,61 +85,58 @@
     <chapter>
         <header>Suche</header>
         <section help-key="search-1">
-            <header>Einfache Suche</header>
+            <header>Sucheingabe</header>
             <content>
                 <p>Suchen ist ganz einfach. Geben Sie in das Suchfeld einen oder 
                    mehrere Begriffe ein und klicken Sie anschließend auf die 
-                   Schaltfläche <b>Suche</b>. InGrid-Portal durchsucht alle
+                   Schaltfläche <b>Suche</b>.</p>
+                <p>InGrid-Portal durchsucht alle
                    eingebundenen Informationen: Webseiten, Kataloge und
                    Datenbanken, die für Ihre Suche von Interesse sind. Die 
                    Ergebnisse Ihrer Suchanfrage werden in einer 
                    <a href="?hkey=search-results-1">Suchergebnisseite</a> 
-                   wiedergegeben. </p>
+                   wiedergegeben.</p>
             </content>
         </section>
         <section help-key="search-2">
-            <header>Suchräume</header>
+            <header>Suche via Kategorien</header>
             <content>
-                <p>Oberhalb des Suchfeldes können Sie über entsprechende 
-                   Schalflächen zwischen folgenden Suchräumen wählen. </p>
-                <ul>
-                    <li><b>Informationen</b>: Informationen 
-                        von Anbietern</li>
-                    <li><b>Rechtsvorschriften</b>: Informationen zu 
-                        rechtsrelevanten Themen</li>
-                    <li><b>Forschungsprojekte</b>: Projekte zur Forschung</li>
-                    <li><b>Adressen</b>: Zuständigkeiten</li>
-                </ul>
-                <p>In der Grundeinstellung erfolgt die Suche im Suchraum 
-                   <b>Informationen</b>.</p>
+                <p>Alternativ können Sie mit den Kategorien auf der linken Seite suchen.
+                   Beim Betreten der <b>Suche</b> werden schon automatisch alle Ergebnisse kategorisiert.
+                   Diese können Sie dann per Klick auf die Kategorien sich anzeigen lassen und weiter verfeinern.</p>
             </content>
         </section>
-
         <section help-key="search-3">
+            <header>Nach Ort suchen</header>
+            <content>
+                <p>Sie können Ihre Suchanfrage ortsbezogen über die Eingabe eines geografischen Namens ausführen.
+                   Dabei werden Ihnen passende Einträge aus dem Geo-Thesaurus-Umwelt angeboten.
+                   Nach Auswahl eines Raumbezugs wird die Suche mit der eindeutigen Kennung dieses Raumbezuges ausgeführt (z.B. administrative Einheit).</p>
+                <p>Anders als bei vielen anderen Suchmaschinen, erfolgt die räumliche
+                   Einschränkung also nicht über eine einfache Volltextsuche, sondern
+                   über die gezielte Suche nach Raumbezügen, die den Suchergebnissen zugeordnet wurden.</p>
+            </content>
+        </section>
+        <section help-key="search-4">
+            <header>Auf Karte festlegen</header>
+            <content>
+                <p>Die räumliche Einschränkung der InGrid-Portal-Suche ist auch über die Auswahl eines Kartenausschnitts 
+                   möglich.</p>
+                <p>Wählen Sie ein Gebiet aus, indem Sie mit Shift + gedrückter 
+                   linker Maustaste ein Rechteck auf der Karte aufziehen.
+                   Mit Klick auf die Schaltfläche <b>Auswahl anwenden</b>
+                   werden die Koordinaten der Suche hinzugefügt.</p>
+            </content>
+        </section>                
+        <section help-key="search-5">
             <header>Suche verfeinern</header>
             <content>
                 <p>Neben der einfachen Suche können Sie Ihre Suche weiter
                     verfeinern. Lesen Sie hierzu folgende Themen:</p>
                 <ul>
                     <li>
-                        <a href="?hkey=search-results-1">Ähnliche Begriffe zur 
+                        <a href="?hkey=search-results-3">Ähnliche Begriffe zur 
                         Suche hinzufügen</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-1">Erweiterte Suche
-                            nach Informationen</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-law-1">Erweiterte
-                            Suche nach Rechtsvorschriften</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-research-1">Erweiterte
-                            Suche nach Forschungsprojekten</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-address-1">Erweiterte
-                            Suche nach Adressen</a>
                     </li>
                     <li>
                         <a href="?hkey=search-expert-1">Experteneingabe</a>
@@ -147,743 +144,13 @@
                     </ul>
             </content>
         </section>                    
-        <section help-key="search-4">
-            <header>Weitere Themen</header>
-            <content>                    
-                <p>Weitere Themen, die für die Suche von Bedeutung sind:</p>
-                  <ul>
-                    <li>
-                        <a href="?hkey=search-history-1">Suchhistorie</a>
-                    </li>
-                    <li>
-                        individuelle Anpassung der Suchergebnisseite unter 
-                        <a href="?hkey=search-settings-1">Einstellungen</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-tipps-1">Tipps zur Suche</a> 
-                    </li>
-                    <li>
-                        <a href="?hkey=search-save-1">Speicherung von Suchanfragen</a>
-                    </li>
-                </ul>
-                <p>Einen kurzen Überblick über die Freitextsuche finden 
-                   Sie <a href="/funktionen?action=doSearch/" target="_new">HIER</a>. </p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche nach Informationen</header>
-        <section help-key="ext-search-1">
-            <header>Erweiterte Suche nach Informationen</header>
-            <content>
-                <p>Sie können Ihre Suche nach Informationen über die
-                    <b>Erweiterte Suche</b> verfeinern.</p>
-                <p>Prinzipiell setzt sich ein Suchausdruck aus einzelnen
-                    Suchbegriffen zusammen, die  mit Operatoren (UND, ODER,
-                    NICHT) verbunden werden. Wie Sie diese Operatoren von Hand
-                    eingeben können, lesen Sie in dem Kapitel <a href="?hkey=search-expert-1">Experteneingabe</a>.</p>
-                <p>Die <b>Erweiterte Suche</b> bietet Ihnen die
-                    Möglichkeit, Ihren Suchausdruck per Assistenten aufzubauen.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-2">
-            <header>Bereiche zur Spezifizierung der Suche</header>
-            <content>
-                <p>Der Suchraum umfasst alle
-                    Webseiten, Dokumente etc., die von einer Suchanfrage erfasst
-                    werden. Folgende Bereiche zur Erweiterung oder Einschränkung
-                    des Suchraumes stehen Ihnen zur Verfügung:</p>
-                <ul>
-                    <li>
-                        <a href="?hkey=ext-search-subject-1">Thema</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-spacial-1">Raum</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-time-1">Zeit</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-area-1">Suchbereich</a>
-                    </li>
-                </ul>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche: Thema</header>
-        <section help-key="ext-search-subject-1">
-            <header>Suchbegriffe</header>
-            <content>
-                <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                    Suchbegriffe zu Ihrem Suchausdruck hinzufügen, indem Sie sie
-                    mit einer der folgenden Optionen verknüpfen:</p>
-                <p>
-                    <b>all diese Begriffe (UND):</b> eine Information wird
-                    gefunden, wenn sie <b>alle</b> eingegebenen Begriffe enthält (Standard).</p>
-                <p>
-                    <b>einen dieser Begriffe (ODER):</b> eine Information wird
-                    gefunden, wenn sie <b>mindestens einen</b> der eingegebenen
-                    Begriffe enthält.</p>
-                <p>
-                    <b>genau diese Wortgruppe:</b> eine Information wird
-                    gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
-                    enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
-                <p>
-                    <b>keinen dieser Begriffe:</b> eine Information wird nur
-                    dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                    Begriffe enthält.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-subject-2">
-            <header>Fachwörterbuch</header>
-            <content>
-                <p>Wenn Sie bei Ihrer Suchanfrage Fachbegriffe verwenden 
-                   möchten, können Sie den Umweltthesaurus UMTHES zur Hilfe 
-                   nehmen. Sie geben hierfür einen Begriff ein und klicken auf 
-                   die Schaltfläche <b>In Thesaurus suchen</b>. Sie erhalten 
-                   dann eine Reihe von <b>ähnlichen Begriffen</b> angezeigt. 
-                   Diese Schlagworte können Sie zu Ihrer Suchanfrage hinzufügen. 
-                   Wählen Sie 
-                   hierfür ein Schlagwort aus und klicken sie dann auf die 
-                   Schaltfläche <b>Zur Suchanfrage hinzufügen</b>. </p>
-                <p>Wenn die aufgelisteten Schlagworte nicht richtig passen, 
-                   können Sie im UMTHES nach weiteren Schlagworten suchen, die 
-                   mit einem der gelisteten Schlagworte in Beziehung stehen. 
-                   Klicken Sie hierfür auf ein Schlagwort. Angezeigt werden 
-                   alle Ober- und Unterbegriffen, verwandte Begriffe und 
-                   Synonyme, die im UMTHES verzeichnet sind. Über die 
-                   Schaltfläche <b>Zur Suchanfrage hinzufügen</b> können Sie 
-                   passende Schlagworte in Ihre Suche mit einbeziehen.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-subject-3">
-            <header>Der UMTHES</header>
-                <content>
-                    <p>In InGrid-Portal kommt der Umweltthesaurus UMTHES des 
-                       Umweltbundesamtes zum Einsatz. Ein Thesaurus ist eine 
-                       Sammlung von Schlagworten, die miteinander in Beziehung 
-                       gesetzt werden. Zu jedem Schlagwort werden somit 
-                       Informationen vorgehalten, ob und wie es sich 
-                       verallgemeinern, spezialisieren oder anders ausdrücken 
-                       lässt. Hierbei wird zwischen Oberbegriffen, 
-                       Unterbegriffen, verwandten Begriffen und Synonymen 
-                       unterschieden. Das kontrollierte Thesaurusvokabular 
-                       kann zur Verschlagwortung von Dokumenten genutzt, damit 
-                       diese besser auffindbar sind. </p>
-                    <p>Im UMTHES werden über 30.000 umweltrelevante Schlagworte 
-                       vorgehalten. Einem Schlagwort können hierbei mehrere 
-                       Oberbegriffe, Unterbegriffe, verwandte Begriffe und 
-                       Synonyme zugeordnet sein. Ein verwandter Begriff  ist ein 
-                       Thesaurus-Begriff, der in einer Beziehung zu einem 
-                       anderen Thesaurus-Schlagwort steht, aber weder ein Ober- 
-                       noch ein Unterbegriff ist. Ein Synonym ist ein 
-                       alternativer, sinngleicher Ausdruck für ein Schlagwort. 
-                       Wenn sich ein Synonym aus zwei oder mehreren 
-                       Thesaurus-Begriffen zusammensetzt, ist dieses nicht als 
-                       alternativer Ausdruck für einen einzelnen 
-                       Thesaurus-Begriff zu verstehen, sondern als Synonym für 
-                       einen zusammengesetzten Begriff.</p>
-                    <p>Der UMTHES ist eine Komponente des <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des                
-                       Umweltbundesamtes.</p>
-                 </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche: Raum</header>
-        <section help-key="ext-search-spacial-1">
-            <header>Raum</header>
-            <content>
-                <p>Sie können Ihre Suchanfrage über einen geografischen Namen 
-                   oder individuell in einer Karte räumlich einschränken. Anders 
-                   als bei vielen anderen Suchmaschinen, erfolgt die räumliche 
-                   Einschränkung nicht über eine einfache Volltextsuche, sondern
-                   innovativ über die Berücksichtigung der entsprechenden 
-                   Koordinaten. </p>
-            </content>
-        </section>
-        <section help-key="ext-search-spacial-2">
-            <header>Nach Ort suchen</header>
-            <content>
-                <p>Um Ihre Suchanfrage über einen Ortsnamen oder eine andere
-                   geografischen Bezeichnung 
-                   einzuschränken, geben Sie einen geografischen Namen (z.B. 
-                   Hannover) in das Suchfeld ein, klicken Sie auf die 
-                   Schaltfläche <b>Geografische Namen suchen</b>. Dadurch wird 
-                   eine Suchanfrage an den <a href="#ext-search-spacial-3">
-                   Geo-Thesaurus-Umwelt</a> gestartet. Machen Sie ein Häkchen 
-                   vor dem passenden Geografischen Namen in der Auswahlliste und
-                   klicken Sie auf die Schaltfläche <b>Zur Suchanfrage 
-                   hinzufügen</b>.</p>                
-                <p>Tipp: Zu den geografischen Namen in der Auswahlliste lassen 
-                   sich weitere Namen aufrufen, die zu den Namen eine 
-                   Lagebeziehung aufweisen. Klicken Sie hierfür auf den 
-                   jeweiligen geografischen Namen (z.B. Region Hannover).</p>
-            </content>
-        </section>
-        <section help-key="ext-search-spacial-3">
-                <header>Der Geo-Thesaurus-Umwelt</header>
-                <content>
-                    <p>Der Geo-Thesaurus-Umwelt ist eine Komponenten des 
-                       <a href="http://www.semantic-network.de/" target="_new">
-                       Semantic Network Service</a> (SNS) des
-                        Umweltbundesamtes. SNS stellt eine gemeinsame 
-                        Terminologie für den Bereich Umwelt auf deutsch und 
-                        englisch zur Verfügung. Der Geo-Thesaurus-Umwelt umfasst
-                        rund 50.000 geografische Namen und beschränkt sich aus 
-                        praktischen Gründen auf Orte, die üblicherweise auf 
-                        Karten ab dem Maßstab 1:250.000 verzeichnet sind.</p> 
-                    <p>Ähnlich wie das Ortsverzeichnis eines Atlanten beschreibt
-                        der Geo-Thesaurus die Namen von Gemeinden,
-                        Flüssen, Bergen, Landschaften und anderen geografischen
-                        Objekten in Deutschland. Dabei gibt der Thesaurus neben
-                        der genauen Schreibweise auch die Koordinaten eines Orts
-                        und dessen Lagebeziehung zu anderen Orten an.</p>
-                 </content>
-            </section>
-        <section help-key="ext-search-spacial-6">
-            <header>Auf Karte festlegen</header>
-            <content>
-                <p>Die räumliche Einschränkung der InGrid-Portal-Suche ist sowohl über 
-                   Ortsnamen als auch die Auswahl eines Kartenausschnitts 
-                   möglich. Wenn Sie über ein Suchrechteck einen entsprechenden 
-                   Kartenausschnitt definiert haben, wird in dem über PortalU 
-                   verfügbaren Informationsangebot gezielt nach räumlichen 
-                   Begriffen (wie z.B. Städten oder Gebirgen) gesucht. </p>
-                </content>
-            </section>                
-            <section help-key="ext-search-spacial-7">
-                <header>Festlegung eines Suchrechtecks</header>
-                <content>
-                    <p>Wenn Sie im Bereich der <b>Erweiterten räumlichen Suche</b> 
-                       auf die Schaltfläche <b>Auf Karte festlegen</b> klicken, 
-                       wird Ihnen eine Deutschlandkarte in einem Kartenfenster 
-                       angezeigt. Die Schaltfläche <b>Gebiet auswählen</b> 
-                       <img border="0" width="20" height="21" src="../decorations/layout/ingrid/images/help/image201.jpg" alt="*"></img> ist hierbei bereits aktiviert. 
-                       Sie wählen ein Gebiet aus, indem Sie mit gedrückter 
-                       linker Maustaste ein Rechteck auf der Deutschlandkarte 
-                       aufziehen. Die Koordinaten des Rechtecks werden rechts 
-                       unterhalb des Kartenfensters angezeigt und können durch 
-                       einen Klick auf die Schaltfläche <b>Zur Suchanfrage 
-                       hinzufügen</b> für die Suche genutzt werden.</p>
-                 </content>
-            </section>
-            <section help-key="ext-search-spacial-8">
-                <header>Administrative Einheit auswählen</header>
-                <content>                   
-                    <p>
-                <ul>
-                    <li>Klicken Sie auf die Schaltfläche 
-                        <b>ID einer administrativen Einheit auswählen</b> 
-                        <img border="0" width="25" height="23" src="../decorations/layout/ingrid/images/help/image202.jpg" alt="*"></img>.  
-                    </li>
-                    <li>Klicken Sie dann auf einen Standort in der Karte.
-                    </li>
-                    <li>Aktiveren Sie nun im Dialogfeld <b>Administrative Auswahl</b> 
-                        die administrative Einheit und klicken Sie anschließend 
-                        auf <b>Hinzufügen</b>. 
-                    </li>
-                    <li>Die ausgewählte Raumbezugs-ID wird rechts unterhalb des 
-                        Kartenfensters angezeigt und kann durch einen Klick auf 
-                        die Schaltfläche <b>Zur Suchanfrage hinzufügen</b> für 
-                        die Suche genutzt werden.
-                    </li>
-                </ul></p>
-                </content>
-            </section>
-
-            <section help-key="ext-search-spacial-9">
-                <header>Art der Einschränkung</header>
-                <content>
-                    <p>Wenn Sie einen Kartenausschnitt gewählt haben, können Sie 
-                       wählen, in welcher Form die räumliche Einschränkung für 
-                       die InGrid-Portal-Suche verwendet werden soll. Folgende 
-                       Optionen stehen rechts unterhalb des Kartenfensters zur
-                       Verfügung:</p>
-                    <ul>
-                        <li>1.  Der Raumbezug der Suchergebnisse liegt innerhalb des 
-                        Kartenausschnittes.</li>
-                        <li>2.  Der Raumbezug der Suchergebnisse schneidet den 
-                        Kartenausschnitt.</li>
-                        <li>3.  Der Raumbezug der Suchergebnisse umschließt den 
-                        Kartenausschnitt.</li>
-                    </ul>
-                    <p> <img border="0" width="455" height="252" src="../decorations/layout/ingrid/images/help/image208.jpg" alt="*"></img></p>
-                </content>
-            </section>
-            <section help-key="ext-search-spacial-10">
-                <header>Schaltflächen oberhalb des Kartenfensters</header>
-                <content>
-                   <p><img border="0" width="20" height="21" src="../decorations/layout/ingrid/images/help/image201.jpg" alt="*"></img> 
-                      <b>Gebiet auswählen</b>: Suchrechteck (Bounding Box) 
-                      kann mit der Maus auf der Karte aufgezogen werden.
-                    </p>
-                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid/images/help/image202.jpg" alt="*"></img> 
-                      <b>ID einer administrativen Einheit auswählen</b>: 
-                      Gebietsbezeichnung (Area-ID) kann mit der Maus auf der 
-                      Karte bestimmt werden.
-                    </p>
-                   <p><img border="0" width="21" height="20" src="../decorations/layout/ingrid/images/help/image203.jpg" alt="*"></img> 
-                      <b>Karte verschieben</b>: Zum Verschieben: Klicken Sie mit 
-                      der linken Maustaste auf einen Punkt in der Karte, halten 
-                      Sie die Taste und ziehen Sie die Maus über die Karte. 
-                    </p>
-                    <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid/images/help/image204.jpg" alt="*"></img> 
-                      <b>Drucken</b>: Erstellung einer pdf-Datei für einen 
-                      Kartenausschnitt. 
-                    </p>                  
-                </content>
-            </section>
-            <section help-key="ext-search-spacial-11">
-                <header>Funktionen innerhalb des Kartenfensters</header>
-                <content>                   
-                    <p>
-                <ul>
-                    <li>In der linken oberen Ecke: Leiste zur <b>Navigation</b> 
-                        im Kartenausschnitt (reinzoomen, rauszoomen, 
-                        verschieben).  
-                    </li>
-                    <li>In der linken unteren Ecke: <b>Maßstabsleiste</b> und 
-                        <b>Koordinaten</b>. Die Koordinaten beziehen sich auf 
-                        die aktuelle Position der Maus auf dem Kartenausschnitt.
-                    </li>
-                    <li>In der rechten unteren Ecke: Wenn Sie den Pfeil 
-                        anklicken, wird eine Übersichtskarte eingeblendet. 
-                    </li>
-                </ul></p>
-                </content>
-            </section>
-
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche: Zeit</header>
-        <section help-key="ext-search-time-1">
-            <header>Zeit</header>
-            <content>
-                <p>InGrid-Portal ist in der Lage, nach den Zeitbezügen der
-                    angeschlossenen Systeme zu suchen. Hierzu werden einerseits
-                    die Daten genutzt, die der <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
-                    Umweltbundesamtes aus den Webseiten als Zeitbezüge
-                    analysiert hat. Andererseits wird auf die Zeitbezüge in den
-                    Datenbanken zugegriffen.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-time-2">
-            <header>Zeitbezug</header>
-            <content>
-                <p>Sie können als Zeitbezug entweder einen Zeitraum (von/bis)
-                    oder einen Zeitpunkt (am) angeben. In beiden Fällen ist das
-                    Format für die Datumsangabe TT.MM.JJJJ, also zwei Ziffern
-                    für den <b>T</b>ag, zwei für den <b>M</b>onat und vier für
-                    das <b>J</b>ahr.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-time-3">
-            <header>Erweiterung des Zeitbezuges</header>
-            <content>
-                <p>Grundsätzlich werden immer alle Informationen gefunden, deren
-                    Zeitbezug innerhalb des von Ihnen eingegebenen
-                    Suchintervalls liegt. Durch Ankreuzen können Sie zusätzlich
-                    auch Informationen finden, für die folgendes gilt:</p>
-                <ul>
-                    <li>Der Zeitbezug der Ergebnisse schneidet das eingegebene Suchintervall.</li>
-                    <li>Der Zeitbezug der Ergebnisse umschließt das eingegebene Suchintervall.</li>
-                </ul>
-            </content>
-        </section>
-        <section help-key="ext-search-time-4">
-            <header>Suche nach Zeitbezügen</header>
-            <content>
-                <p>Wenn Sie nach einem Datum suchen, das mit einem
-                    Ereignis verbunden ist, können Sie über die Angabe
-                    eines Suchbegriffes nach dem Ereignis in der Chronik
-                    suchen. Sie bekommen alle Ereignisse angezeigt, die über die
-                    Suche gefunden wurden. Über die Kopier- und Einfüge-Funktion
-                    des Browsers können Sie die angegebenen Daten direkt in das
-                    von Ihnen gewünschte Feld des Zeitbezugs einfügen.</p>
-            </content>
-            <section help-key="ext-search-time-5">
-                <header>Die Chronik</header>
-                <content>
-                    <p>Die Chronik ist eine Komponenten des <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
-                        Umweltbundesamtes.SNS stellt eine gemeinsame 
-                        Terminologie für den Bereich Umwelt auf deutsch und 
-                        englisch zur Verfügung. Die Chronik umfasst über 
-                        2.000 aktuelle und historische Ereignisse, die uns 
-                        wesentlich beeinflusst haben. </p>
-                </content>
-            </section>
-            <section help-key="ext-search-time-6">
-                <header>Ereignisse</header>
-                <content>
-                    <p>Es werden alle Ereignisse, die über die Suche in
-                        der Chronik gefunden wurden, mit Titel und Datum
-                        angezeigt. Durch einen Klick auf das Ereignis oder das
-                        davor stehende Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg" alt="*"></img> wird die Beschreibung des Ereignisses
-                        eingeblendet, durch einen Klick auf das Minuszeichen
-                            <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image019.jpg" alt="*"></img> wieder ausgeblendet.</p>
-                </content>
-            </section>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche: Suchbereich</header>
-        <section help-key="ext-search-area-1">
-            <header>Inhalte</header>
-            <content>
-                <p>An dieser Stelle können Sie festlegen, ob Sie alle
-                    Informationen
-                    durchsuchen wollen oder ob Sie nur in den Themen oder
-                    nur in den Service-Seiten (Pressemitteilungen, Publikationen
-                    und Veranstaltungen) suchen möchten.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-area-2">
-            <header>Datenquellen</header>
-            <content>
-                <p>An InGrid-Portal sind neben Web-Servern auch Metadaten- und
-                    Fachdatensysteme angeschlossen. Sie können wählen, ob Sie in
-                    all diesen Systemen suchen wollen (Standard) oder ob Sie
-                    ihre Suche gezielt auf eine oder mehrere Arten von
-                    Datenquellen einschränken möchten.</p>
-                <p>Wenn Sie die Suche auf Metadaten beschränken, haben Sie
-                    zusätzlich die Möglichkeit,  die Klassen der Metadaten
-                    auszuwählen, die Sie durchsuchen möchten. Es stehen Ihnen
-                    folgende Klassen zur Verfügung:</p>
-                <ul>
-                        
-                        <li>Organisationseinheit / Fachaufgabe</li>
-                        <li>Geo-Information / Karte</li>
-                        <li>Dokument / Bericht / Literatur</li>
-                        <li>Geodatendienst</li>
-                        <li>Vorhaben / Projekt / Programm</li>
-                        <li>Datensammlung / Datenbank</li>
-                        <li>Dienst / Anwendung / Informationssystem</li>
-                                                     
-
-                </ul>
-            </content>
-        </section>
-        <section help-key="ext-search-area-3">
-            <header>Bund/Länder</header>
-            <content>
-                <p>Die Datenangebote in PortalU stammen von Behörden und
-                    behördennahen Organisationen aus Bund und Ländern der
-                    Bundesrepublik Deutschland. Sie können für Ihre Suche das
-                    Angebot auf den Bund oder einzelne Länder einschränken. Eine
-                    Mehrfachauswahl ist dabei möglich.</p>
-                <p>Der Bund und auch die meisten Länder haben mehrere
-                    Datenanbieter. Diese werden angezeigt, wenn Sie auf das
-                    Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg" alt="*"></img> klicken. Anstatt des Bundes oder eines Landes
-                    können auch einzelne Anbieter ausgewählt werden. Auch in
-                    diesem Fall ist eine Mehrfachauswahl möglich.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Suchhistorie</header>
-        <section help-key="search-history-1">
-            <header>Suchhistorie</header>
-            <content>
-                <p>InGrid-Portal speichert eine Historie Ihrer Suchanfragen. Neben
-                    dieser Historie, die automatisch für eine Sitzung 
-                    vorübergehend gespeichert
-                    wird, können Sie als eingeloggter Nutzer 
-                    (siehe <a href="?hkey=myingrid-1">Anmeldung</a>) auch
-                    Suchanfragen permanent speichern 
-                    (<a href="?hkey=search-save-1">Suche Speichern</a>).</p>
-                <p>Sowohl die vorübergehenden als auch die permanent gespeicherten Suchanfragen können über den Reiter 
-                   <b>Suchhistorie</b> aufgerufen werden.</p>
-            </content>
-        </section>
-        <section help-key="search-history-2">
-            <header>Ihre zuletzt abgesendeten Suchanfragen</header>
-            <content>
-                <p>In diesem Bereich werden ihre zuletzt abgesendeten
-                    Suchanfragen aufgelistet. Durch das Anklicken einer
-                    Suchanfrage wird diese in das Suchfenster geladen und die
-                    Suche ausgeführt.</p>
-            </content>
-        </section>
-        <section help-key="search-history-3">
-            <header>Ihre gespeicherten Suchanfragen</header>
-            <content>
-                <p>In diesem Bereich werden Ihre dauerhaft gespeicherten
-                    Suchanfragen aufgelistet. Durch das Anklicken einer
-                    Suchanfrage wird diese in das Suchfenster geladen und die
-                    Suche ausgeführt. Gespeicherte Suchanfragen können durch
-                    Ankreuzen und den <b>Löschen</b>-Button
-                    entfernt werden.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Einstellungen</header>
-        <section help-key="search-settings-1">
-            <header>Einstellungen</header>
-            <content>
-                <p>Unter der Rubrik <b>Einstellungen</b> können
-                    Sie die Darstellung der Suchergebnisse steuern.</p>
-            </content>
-        </section>
-        <section help-key="search-settings-2">
-            <header>Sortierung und Gruppierung der Suchergebnisse</header>
-            <content>
-                <p>Sie können sich Ihre Suchergebnisse entweder nach Ranking
-                    (Relevanz der gefundenen Seite in Bezug auf Ihren
-                    Suchausdruck) oder nach Aktualität (die neusten Seiten
-                    stehen vorne) sortiert anzeigen lassen.</p>
-                <p><b>Gruppierung</b> bedeutet, dass die
-                    Suchergebnisse nach Partnern, Informationsanbietern
-                    oder Domänen zusammengefasst angezeigt werden.</p>
-            </content>
-        </section>
-        <section help-key="search-settings-3">
-            <header>Ähnliche Begriffe in die Suche einbeziehen</header>
-            <content>
-                <p>PortalU führt nicht nur die bei Suchmaschinen übliche
-                    Indexierung der Seiten durch, sondern lässt den Seiteninhalt
-                    auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
-                    Umweltbundesamtes analysieren. Als Ergebnis dieser Analyse
-                    werden den Webseiten Fachbegriffe aus dem  <a href="?hkey=ext-search-subject-3">Umweltthesaurus UMTHES</a> zugeordnet.</p>
-                <p>Wenn Sie durch Ankreuzen die Einstellung <b>Ähnliche
-                    Begriffe in die Suche einbeziehen</b> wählen werden
-                    die zugeordneten ähnlichen Begriffe in der Suche
-                    mitberücksichtigt. (Hinweis: In den meisten Fällen wird
-                    durch die Wahl dieser Einstellung die Treffermenge erhöht.)</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Tipps zur Suche</header>
-        <section help-key="search-tipps-1">
-            <header>Ähnliche Begriffe in die Suche einbeziehen</header>
-            <content>
-                <p>Sie haben drei Möglichkeiten, ähnliche Begriffe in die Suche einzubeziehen:</p>
-                <ul>
-                    <li>Automatisiert: Kreuzen Sie hierzu im Formular
-                        <b>Einstellungen für die Suche</b> (<a href="?hkey=search-settings-1">Suche/Einstellungen</a>)
-                        die Option <b>Ähnliche Begriffe in die Suche
-                        einbeziehen</b> an. Sie können diese
-                        Einstellungen auch dauerhaft vornehmen (siehe <a href="?hkey=myingrid-1">AnmeldungU</a>).</li>
-                    <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
-                        ähnliche Begriffe, indem Sie die Funktionalität
-                        <a href="?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>
-                        der <a href="?hkey=ext-search-1">Erweiterten
-                        Suche</a> nutzen.</li>
-                    <li>Nach einer Suchanfrage wird über der Suchergebnisliste 
-                        der Link <b>Ähnliche Begriffe: Suchen Sie nach...</b>
-                        eingeblendet. Wenn Sie auf diese Schaltfläche klicken 
-                        oder das Pluszeichen betätigen, werden Ihnen ähnliche 
-                        Begriffe vorgeschlagen, die für Ihre Suchanfrage ggf. 
-                        interessant sein könnten.</li>
-                </ul>
-            </content>
-        </section>
-        <section help-key="search-tipps-2">
-            <header>Suche auf Informationen zum Wohnort begrenzen</header>
-            <content>
-                <p>Nutzen Sie hierzu die <a href="?hkey=ext-search-spacial-1">Räumliche
-                    Suche</a>. Sie können entweder ein Suchrechteck über dem
-                    gewünschten Suchbereich aufziehen (<a href="?hkey=ext-search-spacial-6">Raumeinschränkung Karte</a>)
-                    oder Ihre Stadt oder Ihren Kreis als Begriff eingeben (<a href="?hkey=ext-search-spacial-2">Raumeinschränkung begrifflich</a>).</p>
-            </content>
-        </section>
-        <section help-key="search-tipps-3">
-            <header>Suche auf ein Bundesland begrenzen</header>
-            <content>
-                <p>Über den <a href="?hkey=ext-search-area-1">Suchbereich</a> der
-                    Suche können Sie ihr Land auswählen. Bedenken Sie, dass auch
-                    Informationen auf Bundesebene für Sie interessant sein
-                    könnten. Sie können im Suchbereich neben einem Land auch die
-                    Bundesinformationen einstellen.</p>
-                <p>Sie können diese Einstellungen auch dauerhaft vornehmen
-                    (siehe <a href="?hkey=myingrid-1">Anmeldung</a>).</p>
-            </content>
-        </section>
-        <section help-key="search-tipps-4">
-            <header>Spezielle Suchanfrage, die man nicht über die
-                erweiterte Suche formulieren kann</header>
-            <content>
-                <p>InGrid-Portal erlaubt komplexe Suchanfragen  durchzuführen, die
-                    über die Möglichkeiten der erweiterten Suche hinausgehen
-                    (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
-                    usw.). Lesen Sie hierzu in der Hilfe zu PortalU den
-                    Abschnitt <a href="?hkey=search-expert-1">Expertensuche</a>
-                    und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche nach Adressen</header>
-        <section help-key="ext-search-address-1">
-            <header>Thema</header>
-            <section help-key="ext-search-address-2">
-                <header>Suchbegriffe</header>
-                <content>
-                    <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                        Suchbegriffe zu Ihrem Suchausdruck hinzufügen, indem
-                        Sie sie mit einer der folgenden Optionen verknüpfen:</p>
-                    <p>
-                        <b>all diese Begriffe (UND):</b> eine Information wird
-                        gefunden, wenn sie <b>alle</b> eingegebenen Begriffe
-                        enthält (Standard).</p>
-                    <p>
-                        <b>einen dieser Begriffe (ODER):</b> eine Information
-                        wird gefunden, wenn sie <b>mindestens einen</b> der
-                        eingegebenen Begriffe enthält.</p>
-                    <p>
-                        <b>genau diese Wortgruppe:</b> eine Information wird
-                        gefunden, wenn sie <b>genau</b> die eingegebene
-                        Wortgruppe enthält (in der gleichen Reihenfolge, mit
-                        Leerzeichen etc.).</p>
-                    <p>
-                        <b>keinen dieser Begriffe:</b> eine Information wird nur
-                        dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                        Begriffe enthält.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-address-3">
-                <header>Suchmodus</header>
-                <content>
-                    <p>In diesem Bereich können Sie bestimmen, ob Ihre
-                        Suchbegriffe nur dann gefunden werden, wenn Sie mit
-                        einem ganzen Wort in der durchsuchten Adresse
-                        übereinstimmen oder ob es reicht, wenn nur ein Teil
-                        eines ganzen Wortes (Teilzeichenkette) in der Adresse
-                        mit dem jeweiligen Suchbegriff übereinstimmt.</p>
-                    <p>Weiterhin können Sie bestimmen, ob die Suche in allen
-                        Feldern der Adresse durchgeführt werden soll (z.B. also
-                        auch in dem Feld <b>Strasse</b>) oder
-                        aber nur in den vorgegebenen Feldern
-                        <b>Institution</b>,
-                        <b>Person</b>,
-                        <b>Beschreibung</b> und <b>Schlagworte</b>.</p>
-                </content>
-            </section>
-        </section>
-        <section help-key="ext-search-address-4">
-            <header>Raum</header>
-            <content>
-                <p>In diesem Bereich können Sie die Suche nach einer Adresse auf
-                    eine Strasse, eine Postleitzahl oder einen Ort einschränken.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche nach Forschungsprojekten</header>
-        <section help-key="ext-search-research-1">
-            <header>Suchbegriffe</header>
-            <content>
-                <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                    Suchbegriffe zu Ihrem Suchausdruck hinzufügen, indem Sie
-                    sie mit einer der folgenden Optionen verknüpfen:</p>
-                <p>
-                    <b>all diese Begriffe (UND):</b> eine Information wird
-                    gefunden, wenn sie <b>alle</b> eingegebenen Begriffe enthält (Standard).</p>
-                <p>
-                    <b>einen dieser Begriffe (ODER):</b> eine Information wird
-                    gefunden, wenn sie <b>mindestens einen</b> der eingegebenen
-                    Begriffe enthält.</p>
-                <p>
-                    <b>genau diese Wortgruppe:</b> eine Information wird
-                    gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
-                    enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
-                <p>
-                    <b>keinen dieser Begriffe:</b> eine Information wird nur
-                    dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                    Begriffe enthält.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-research-2">
-            <header>Attribute</header>
-            <content>
-                <p>In diesem Bereich können Sie die Suche nach
-                    Forschungsprojekten auf den Projektnamen, die beteiligten
-                    Institutionen, den Projektleiter, weitere Beteiligte, den
-                    Projektträger und die Laufzeit einschränken.</p>
-                <p>Bitte beachten Sie, dass sich die Suche bei der Nutzung
-                    dieser Filtermöglichkeiten ausschließlich auf Datenbanken
-                    beschränkt, die eine Suche in dem jeweiligen Attribut
-                    unterstützen. Sie schränken den Suchraum dadurch ggf.
-                    erheblich ein.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche nach Rechtsvorschriften</header>
-        <section help-key="ext-search-law-1">
-            <header>Suchbegriffe</header>
-            <content>
-                <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                    Suchbegriffe zu Ihrem Suchausdruck hinzufügen, indem Sie
-                    sie mit einer der folgenden Optionen verknüpfen:</p>
-                <p>
-                    <b>all diese Begriffe (UND):</b> eine Information wird
-                    gefunden, wenn sie <b>alle</b> eingegebenen Begriffe enthält (Standard).</p>
-                <p>
-                    <b>einen dieser Begriffe (ODER):</b> eine Information wird
-                    gefunden, wenn sie <b>mindestens einen</b> der eingegebenen
-                    Begriffe enthält.</p>
-                <p>
-                    <b>genau diese Wortgruppe:</b> eine Information wird
-                    gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
-                    enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
-                <p>
-                    <b>keinen dieser Begriffe:</b> eine Information wird nur
-                    dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                    Begriffe enthält.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-law-2">
-            <header>Fachwörterbuch</header>
-            <content>
-                  <p>Über das Fachwörterbuch können Sie Ihrem Suchausdruck
-                    Fachbegriffe hinzufügen. Dazu geben Sie einen beliebigen
-                    Begriff in das Eingabefeld ein und senden eine Anfrage an
-                    den <a href="#ext-search-subject-3">Umweltthesaurus UMTHES</a> ab.</p>
-                <p>Sie erhalten dann eine Reihe ähnlicher Begriffe, die
-                    Sie dem Suchausdruck hinzufügen können oder über deren
-                    Verlinkungen Sie ihren Suchbegriff weiter spezifizieren können.</p>
-            </content>
-        </section>
-      <section help-key="ext-search-law-3">
-            <header>Sucbbereich  - Bund /Länder</header>
-            <content>
-                  <p>Die Datenangebote in PortalU stammen von Behörden und behördennahen Organisationen 
-                     aus Bund und Ländern der Bundesrepublik Deutschland. Sie können für Ihre Suche das 
-                     Angebot auf den Bund oder einzelne Länder einschränken. Eine Mehrfachauswahl ist dabei möglich.</p>
-                <p>Der Bund und auch die meisten Länder haben mehrere Datenanbieter. Diese werden angezeigt,
-                    wenn Sie auf das Pluszeichen klicken. Anstatt des Bundes oder eines Landes können auch 
-                    einzelne Anbieter ausgewählt werden. Auch in diesem Fall ist eine Mehrfachauswahl möglich</p>
-            </content>
-        </section>
-        
-    
-    </chapter>
-    <chapter>
-    
-    
-        <header>Suche Speichern</header>
-        <section help-key="search-save-1">
-            <header>Suche Speichern</header>
-            <content>
-                <p>Nach dem Ausführen einer Suchanfrage haben die eingeloggten
-                    Nutzer (siehe <a href="?hkey=myingrid-1">Mein
-                    InGrid-Portal</a>) die Möglichkeit, den verwendeten Suchausdruck
-                    dauerhaft zu speichern. Dies geschieht über die Funktion
-                    <b>Suche speichern</b>.</p>
-                <p>Hinweis: Die zuletzt verwendeten Suchanfragen sind auch ohne
-                    Speicherung für die laufende Sitzung über die <a href="?hkey=search-history-1">Suchhistorie</a> zugänglich.</p>
-            </content>
-        </section>
     </chapter>
     <chapter>
         <header>Experteneingabe</header>
         <section help-key="search-expert-1">
             <header>Experteneingabe</header>
             <content>
-                <p>Alle Einstellungen der Erweiterten Suche und noch einige
+                <p>Alle Einstellungen der Such-Oberfläche und  
                     spezielle Einstellungen darüber hinaus lassen sich auch
                     direkt über den Suchausdruck in die Suche eingeben. Da die
                     Syntax durch die große Anzahl der Suchmethoden recht
@@ -948,6 +215,7 @@
                     werden dann alle Begriffe gefunden, die mit dem Rest des
                     Suchbegriffs übereinstimmen, wobei für den Platzhalter ein
                     bzw. mehrere Zeichen auftreten können.</p>
+                <p><b>ACHTUNG</b>: Platzhalter dürfen NICHT am Anfang des Suchwortes stehen.</p>
                 <p>Beispiel: ‚Te?t’ (Es werden sowohl
                     Dokumente mit dem Begriff ‚Text’ als
                     auch Dokumente mit dem Begriff  ‚Test’ gefunden)</p>
@@ -995,7 +263,7 @@
         <section help-key="search-expert-8">
             <header>Sonderzeichen</header>
             <content>
-                <p>Die folgenden Zeichen haben im Suchausdruck von PortalU eine
+                <p>Die folgenden Zeichen haben im Suchausdruck eine
                     spezielle Bedeutung (z.B. in Form von Operatoren):</p>
                 <p>+ - &amp;&amp; || ! ( ) { } [ ] ^ &quot; ~ * ? : \</p>
                 <p>Sollen sie dennoch als einfache Zeichen innerhalb eines
@@ -1012,7 +280,7 @@
                     Dazu wird die Syntax ‚fileformat:Wert’ verwandt.</p>
                 <p>Beispiel: ‚fileformat:pdf’ (Es wird nur nach
                     PDF-Dokumenten gesucht.)</p>
-                <p>Folgende Werte stehen für das Feld 'fileformat' in PortalU zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'fileformat' zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1053,10 +321,12 @@
                     Felder. Alle in InGrid-Portal verwendeten Felder lassen sich
                     gezielt einzeln durchsuchen. Dazu wird die Syntax
                     ‚Feldname:Wert’ verwandt.</p>
-                <p>Bei der Suche nach einem Datentyp ist der Feldname 'Datatype'.</p>
-                <p>Beispiel: ‚datatype:law’ (Es wird nach
-                    Dokumenten gesucht, die unter Rechtsvorschriften eingeordnet sind.)</p>
-                <p>Folgende Werte stehen für das Feld 'datatype' in PortalU zur Verfügung:</p>
+                <p>Die Feldnamen beziehen sich direkt auf die im Suchindex abgelegten Felder und sind somit
+                	abhängig von der Indexierung einzelner Datenquellen (iPlugs).
+                	Allen iPlugs ist die Angabe eines Datentyps eigen, der die Art der Inhalte beschreibt und im Feld 'Datatype' abgelegt ist.</p>
+                <p>Beispiel: ‚datatype:www’ (Es wird nach
+                    Webseiten gesucht, die aus dem Internet dem Suchindex hinzugefügt wurden.)</p>
+                <p>Folgende Werte stehen für das Feld 'datatype' zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1068,41 +338,41 @@
                     </tr>
                     <tr>
                     <td>www</td>  
-                    <td> Es wird nur nach Webseiten gesucht</td>
+                    <td> Es wird nur nach Webseiten gesucht.</td>
                     </tr>
                     
                     <tr>
                     <td>default</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Umweltinformationen' gesucht</td>
+                    <td> Es wird nach Dokumenten gesucht, die keinem speziellen Bereich zugeordnet sind.</td>
                     </tr>
                     
                     <tr>
                     <td>law</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Rechtsvorschriften' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Rechtsvorschriften' gesucht, z.B. können Webseiten diesem Bereich zugeordnet werden.</td>
                     </tr>
                                                                     
                     
                      <tr>
                     <td>research</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Forschungsprojekte' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Forschungsprojekte' gesucht, z.B. können Webseiten diesem Bereich zugeordnet werden.</td>
                     </tr>
          
                     <tr>
                     <td>address</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Adressen' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Adressen' gesucht, z.B. können Metadaten separate Adressen beinhalten (InGrid Katalog).</td>
                     </tr>
                    
                     <tr>
                     <td>topics</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Themen' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Themen' gesucht, z.B. können Webseiten diesem Bereich zugeordnet werden.</td>
                     </tr>
                      <tr>
                     <td>service</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Service' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Service' gesucht, z.B. können Webseiten diesem Bereich zugeordnet werden.</td>
                     </tr>
                     <tr>
                     <td>measure</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Messwerte' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Messwerte' gesucht, z.B. können Webseiten diesem Bereich zugeordnet werden.</td>
                     </tr>
                     <tr>
                     <td>metadata</td>  
@@ -1110,7 +380,7 @@
                     </tr>
                     <tr>
                     <td>fis</td>  
-                    <td> Es wird nach Informationen aus Fachdatenbanken gesucht</td>
+                    <td> Es wird nach Informationen aus Fachdatenbanken gesucht, z.B. können Webseiten diesem Bereich zugeordnet werden.</td>
                     </tr>
                 </table>
                 <br></br>
@@ -1161,7 +431,7 @@
                 Syntax ‚topic:Wert’ verwandt.</p>
                 <p>Beispiel: ‚datatype:metadata metaclass:map’ (Es wird nach
                     Metadaten der Klasse Geo-Information/Karte gesucht.)</p>
-                <p>Folgende Werte stehen für das Feld 'metaclass' in PortalU zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'metaclass' in zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -1289,8 +559,6 @@
                eingegeben werden. </p>
             </content>
         </section>
-<!--                    
--->
     </chapter>
     <chapter>
         <header>Suchergebnisseite</header>
@@ -1298,26 +566,25 @@
             <header>Ergebnisseite</header>
             <content>
                 <p>Nach dem Absenden einer Suchanfrage werden die Suchergebnisse
-                   angezeigt. Die Suchergebnisseite ist in drei Bereiche 
-                   gegliedert. In der Mitte finden Sie die Hauptergebnisliste, 
-                   in der linken Spalte nach 
-                   <a href="?hkey=search-results-2">Kategorien</a> sortierte 
-                   Ergebnisse und in der rechten Spalte Ergebnisse aus 
-                   <a href="?hkey=search-results-3">weiteren Datenquellen</a>. 
+                   angezeigt. Die Suchergebnisseite ist in zwei Bereiche 
+                   gegliedert. Rechts finden Sie die Hauptergebnisliste, links  
+                   davon die nach  
+                   <a href="?hkey=search-results-2">Kategorien</a> sortierten 
+                   Ergebnisse. 
                    In der Hauptergebnisliste und in den Kategorien sind 
                    Webseiten, Metadaten und/oder Fachinformationen enthalten, 
                    die nach Relevanz gewichtet und sortiert sind. Der oberste 
                    Eintrag weist hierbei die höchste Relevanz für die 
-                   Suchanfrage auf. Bei den weiteren Datenquellen findet eine 
-                   solche Vorsortierung hingegen nicht statt. </p>
+                   Suchanfrage auf.</p>
                 <p>Ein Suchergebnis besteht aus einem Titel, der auf die 
                    Webseite bzw. den Katalog- oder Datenbankeintrag verlinkt, 
                    eine Kurzbeschreibung, Angaben zum Anbieter und der 
                    Datenquelle sowie bei Webseiten die entsprechende URL. Wenn 
                    bei einigem Katalogeintrag eine digitale Karte hinterlegt 
-                   ist, können Sie sich über den Link <b>Zeige Karte</b> die 
+                   ist, können Sie sich über die Schaltfläche <b>Karte</b> die 
                    Karte direkt im <a href="?hkey=maps-1">InGrid-Portal-Kartenviewer
-                   </a> ansehen.
+                   </a> ansehen. Die Schaltfläche <b>XML</b> liefert die ISO
+                   Darstellung des Treffers, soweit dieser CSW konform abgegeben werden kann.
                 </p>
             </content>
         </section>
@@ -1338,24 +605,24 @@
                 <p>Wenn Sie Ihre Suchanfrage präzisieren möchten, können Sie 
                    auch mehrere Kategorien auswählen.</p>
                 <p>Um die vorgenommenen Einschränkung wieder aufzugeben, 
-                   klicken Sie auf die Schaltfläche <b>löschen</b> bzw. auf die 
-                   Schalfläche <b>x</b>. </p>
+                   klicken Sie nochmals auf die gewählte Kategorie bzw. auf die 
+                   grauen Schalfläche(n), die oben in der Ergebnisliste die aktuellen Einschränkungen anzeigen.</p>
                    
-                <p><b>Ergebnistypen</b> </p>
+                <p><b>Ergebnistypen (Auszug)</b> </p>
                 
-                <p>Webseiten: Suchergebnis aus umweltrelevanten Webauftritten</p>
-                <p>Metadaten: Suchergebnis in den angeschlossenen 
+                <p>Webseiten: Suchergebnisse aus Webauftritten</p>
+                <p>Metadaten: Suchergebnisse aus den angeschlossenen
                    Datenkatalogen </p>
-                <p>Karten: Suchergebnis aus der Klasse 
+                <p>Karten: Suchergebnisse aus der Klasse 
                    <b>Geoinformation/Karte</b> der angeschlossenen 
                    Datenkataloge und den im InGrid-Portal-Kartenviewer 
                    verzeichneten Karten. Alle Karten können Sie sich im 
                    <a href="?hkey=maps-1">InGrid-Portal-Kartenviewer</a> ansehen.</p>
-                <p>Rechtsvorschriften: Suchergebnis aus Informationsangeboten zu 
+                <p>Rechtsvorschriften: Suchergebnisse aus Informationsangeboten zu 
                    rechtsrelevanten Themen</p>                   
-                <p>Forschungsprojekte: Suchergebnis aus Informationsangeboten zu 
+                <p>Forschungsprojekte: Suchergebnisse aus Informationsangeboten zu 
                    Projekten in der Forschung</p> 
-                <p>Messwerte: Suchergebnis der InGrid-Portal-Rubrik 
+                <p>Messwerte: Suchergebnisse der InGrid-Portal-Rubrik 
                    <a href="?hkey=search-measure-1">Messwerte</a></p>             
                    
                 <p><b>Aktualität</b> </p>
@@ -1375,9 +642,9 @@
                    Anbieter sind hierbei nach Partnern sortiert, so 
                    dass eine Abgrenzung möglich ist. </p>
                 
-                <p><b>Raumbezug</b> </p>
+                <p><b>Nach Ort suchen / Auf Karte festlegen</b> </p>
                 
-                <p>In der Kategorie <b>Raumbezug</b> können Sie Ihr Suchergebnis 
+                <p>Sie können Ihr Suchergebnis 
                    räumlich einschränken, indem Sie entweder den Raum durch ein 
                    Suchrechteck in einer Karte oder durch die Angabe eines 
                    Ortsnamen einschränken. </p>
@@ -1386,47 +653,30 @@
                    Karte aufziehen. Klicken Sie auf die Schaltfläche 
                    <b>Auswahl anwenden</b>, um die räumliche Einschränkung für 
                    die Suchergebnisse zu übernehmen. 
-                   <a href="?hkey=ext-search-spatial-6">Mehr dazu</a></p>                               <p>Sie können Ihr Suchergebnis aber auch über Ortsnamen und 
+                   <a href="?hkey=search-4">Mehr dazu</a></p>
+                 <p>Sie können Ihr Suchergebnis aber auch über Ortsnamen und 
                    anderen geographischen Bezeichnungen einschränken. Klicken Sie 
                    hierfür auf die Schaltfläche <b>Nach Ort suchen</b>, geben 
                    Sie eine geographische Bezeichnung ein und klicken Sie 
                    anschließend auf <b>suchen</b>. Aktivieren Sie nun die 
                    passende Checkbox und klicken Sie auf <b>Auswahl anwenden</b> 
                    um die räumliche Einschränkung für die Suchergebnisse zu übernehmen. 
-                   <a href="?hkey=ext-search-spatial-2">Mehr dazu</a></p>    
+                   <a href="?hkey=search-3">Mehr dazu</a></p>    
                     
             </content>
         </section>
         <section help-key="search-results-3">
-            <header>Weitere Datenquellen</header>
-            <content>
-                <p>Auf der Ergebnisseite werden in der rechten Spalte weitere 
-                   <b>Datenquellen</b> angezeigt. Hier werden Suchergebnisse 
-                   gelistet, die aus Informationsquellen stammen, die in 
-                   InGrid-Portal nicht nach Relevanz gewichtet und sortiert werden 
-                   können. Die Suchergebnisse dieser Datenquellen werden daher 
-                   in einer getrennten Liste nach Datenquellen geordnet 
-                   angezeigt. Die Datenquellen werden dabei in der Reihenfolge 
-                   der erfolgten Rückmeldungen aufgeführt.</p>
-                <p>Über die angebotenen Links werden Sie je nach Datenquelle
-                    entweder direkt zu den einzelnen Suchergebnissen oder zu
-                    einer Suchergebnisliste im Quellsystem weitergeleitet.</p>
-            </content>
-        </section>
-        <section help-key="search-results-4">
             <header>Ähnliche Begriffe</header>
             <content>
                 <p>InGrid-Portal bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
-                    eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
-                    Umweltbundesamtes in Dessau analysiert und ihnen zur
+                    eingegebene Suchausdruck analysiert und in Form von Alternativ-Begriffen zur
                     Verfügung gestellt.</p>
-                <p>Wenn Sie auf das Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg"></img> klicken,
+                <p>Bei Klick auf <b>Ähnliche Begriffe</b> bekommen Sie die Begriffe
+                	Ihrer Suchanfrage dargestellt. Wenn Sie auf das Pluszeichen klicken,
                     erhalten Sie zu jedem eingegebenen Suchbegriff die ähnlichen
-                    Begriffe angeboten. Diese können Sie sich wiederum über das
-                        <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg"></img> Symbol
-                    anzeigen lassen. Durch das Ankreuzen der einzelnen Begriffe
-                    und Klick auf den Button <b>Zur Suche
+                    Begriffe angeboten. Durch das Ankreuzen der einzelnen Begriffe
+                    und Klick auf den Button <b>Zur Suchanfrage
                     hinzufügen</b> werden die ähnlichen Begriffe jeweils
                     dem zugeordneten Suchbegriff hinzugefügt und zwar so, dass
                     ein Dokument gefunden wird, wenn entweder der Suchbegriff
