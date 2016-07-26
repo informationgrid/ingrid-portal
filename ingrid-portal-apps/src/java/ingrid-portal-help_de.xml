@@ -750,7 +750,7 @@
     <chapter>
         <header>Karte</header>
         <section help-key="maps-1">
-            <header>Karte</header>
+            <header>Übersicht</header>
              <content>
                 <p>Mit dem InGrid-Portal-Kartenviewer können Sie sich eine Vielzahl 
                    Karten ansehen und auf diesen operieren.</p>
@@ -778,8 +778,150 @@
                         umfassende Druck Funktionalität 
                     </li>
                 </ul>                                       
-                <p>Eine ausführliche Hilfe findet sich im Kartenviewer unter <b>Hilfe</b>.</p>
             </content>
+        </section>
+        <section help-key="maps-2">
+            <header>Koordinatenanzeige</header>
+            <content>
+                <p>Die Koordinaten des Cursors im Standardkoordinatensystem werden direkt unter der Hauptkarte angezeigt.</p>
+				<p>Mittels rechtem Mausklick auf einen Punkt in der Karte werden weitere Information in einem Zusatzfenster angezeigt.</p>
+            </content>
+        </section>
+        <section help-key="maps-3">
+            <header>Navigation und Orientierung</header>
+            <content>
+            </content>
+            <section help-key="maps-3-1">
+                <header>Ändern des Kartenmassstabs</header>
+                <content>
+                    <p>Mit jedem Klick auf das "+" oder "-" wird der angezeigte Massstab vergrössert oder verkleinert.</p>
+                </content>
+            </section>
+            <section help-key="maps-3-2">
+                <header>Zoom auf Ausschnitt</header>
+                <content>
+                    <p>Zoom auf Rechteck / Ausschnitt wird über SHIFT Taste und gleichzeitiges Aufziehen eines Rechteckes mit gedrückter linker Maustaste aktiviert.</p>
+                </content>
+            </section>
+            <section help-key="maps-3-3">
+                <header>Verschiebewerkzeug (Panning)</header>
+                <content>
+                    <p>Das Verschiebewerkzeug (Panning) kann wie folgt benutzt werden: klicken und gedrückt halten, um die Karte zu verschieben.</p>
+                </content>
+            </section>
+            <section help-key="maps-3-4">
+                <header>Zentrieren auf Koordinaten</header>
+                <content>
+                    <p>Um die Karte auf einen Punkt zu zentrieren, müssen lediglich die Koordinaten des Punktes in das Suchfeld im oberen Teil der Karte eingegeben und Return gedrückt werden.</p>
+					<p>Im Defaultkoordinatensystem z.B. ""6468101.33 963106.56"</p>
+                </content>
+            </section>
+            <section help-key="maps-3-5">
+                <header>Suchen eines Orts, PLZ oder Gewässers</header>
+                <content>
+                    <p>Das Suchfeld im oberen Teil der Karte ermöglicht den sofortigen Zugriff auf Städte- und Ortsnamen, Postleitzahlen, 
+                       Geographische Bezeichnungen oder Gewässer oder Straßen.</p>
+					<p>Einfach den Namen eingeben und aus der Auswahlliste auswählen, um die Karte entsprechend zu zentrieren.</p>
+                </content>
+            </section>
+            <section help-key="maps-3-6">
+                <header>Zurück in die Startansicht</header>
+                <content>
+                    <p>Um wieder die initiale Kartenansicht herzustellen klicken Sie bitte auf die Schaltfläche mit dem Pfeilkreuz rechts oben in der Karte.
+                       Die Ansicht wechselt zu ganz Deutschland.</p>
+                </content>
+            </section>
+            <section help-key="maps-3-7">
+                <header>Geolokalisierung</header>
+                <content>
+                	<p>Die Schaltfläche mit dem Punkt rechts oben in der Karte erlaubt es, Ihre Position mittels GPS zu bestimmen.
+                    	Mit einem ersten Klick, wird diese rot angezeigt und Ihre Position erscheint als roter Punkt auf der Karte.</p>
+					<p>Der Pfeil oberhalb des roten Punktes zeigt die Richtung an, in welche Sie schauen.
+						Wenn Sie Ihr Gerät bewegen, dreht sich der Pfeil.</p>
+					<p>Klicken Sie erneut auf die Schaltfläche "Geolokalisierung" wird die Karte entsprechend der Richtung des Gerätes orientiert.
+						Nordrichtung wird durch das Symbol in der oberen rechten Bildschirmecke angezeigt.
+						Um den "Geolokalisierung" Modus zu verlassen klicken Sie erneut auf die Schaltfläche.</p>
+                </content>
+            </section>
+        </section>
+        <section help-key="maps-4">
+            <header>Auswahl und Anzeigen von Karten</header>
+            <content>
+            </content>
+            <section help-key="maps-4-1">
+                <header>Suche nach Karten (Volltextsuche)</header>
+                <content>
+                    <p>Mit der "Suche" im oberen Teil der Karte können Sie Suchbegriffe eingeben (z.B. "Moor", "Strasse", "Erdbeben" usw.) und nach Beschreibungen aller eingebundenen elektronischen Geodaten suchen.
+                    	Wenn Sie ein Resultat auswählen, wird es direkt im Kartenviewer dargestellt.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-2">
+                <header>Suche nach Karten (Verzeichnisstruktur)</header>
+                <content>
+                    <p>Unter "Rubrik wechseln" können Sie zwischen Gliederung nach "Themen" oder "Anbietern" der eingebundenen Geodaten wählen.
+                    	Wenn Sie Karten auswählen, werden sie im Kartenviewer angezeigt und wandern in die Sektion "Dargestellte Karten".
+                    	Im Auswahlbereich ("Themen" oder "Anbieter") wird die ausgewählte Karte dann rot hervorgehoben, um zu zeigen, dass die Karte bereits dargestellt wird.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-3">
+                <header>Ändern des Kartenhintergrundes</header>
+                <content>
+                    <p>Mit Klick auf "Hintergrund" rechts unten in der Karte können Sie zwischen verschiedenen Optionen wählen, z.B. gibt es die Hintergrundkarte in Farbe, Grau, OSM oder ganz ohne Hintergrund.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-4">
+                <header>Ändern der Transparenz einer Karte</header>
+                <content>
+                    <p>Klicken Sie auf das Zahnrad Symbol der Karte im Bereich "Dargestellte Karten".
+                    	Die Transparenz der ausgewählten Karte kann durch das verschieben des horizontalen Reglers individuell angepasst werden.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-5">
+                <header>Ändern der Reihenfolge der Karten</header>
+                <content>
+                    <p>Klicken Sie auf das Zahnrad Symbol der Karte im Bereich "Dargestellte Karten".
+                    	Die Position der ausgewählten Karte kann durch Klicken auf die Pfeile verändert werden.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-6">
+                <header>Entfernen einer Karte</header>
+                <content>
+                    <p>Eine Karte im Bereich "Dargestellte Karten" kann durck Klick auf die "Schließen" Schaltfläche ganz links aus der Liste und Kartenansicht entfernt werden.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-7">
+                <header>Anzeigen von Legende und Zusatzinformationen</header>
+                <content>
+                    <p>Klicken Sie auf das Informations-Symbol der Karte im Bereich "Dargestellte Karten".
+                    	Es wird die Legende und weitere Informationen zur Karte in einem eigenen Fenster angezeigt.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-8">
+                <header>Detailinformationen von Kartenelement</header>
+                <content>
+                    <p>Sofern vorhanden, können bei Vektordatensätze (Punkt, Linien, Polygon) die Attribute der einzelnen Kartenelemente durch einen einfachen Mausklick abgerufen werden.
+                    	Die Informationen werden in  einem eigenen Fenster "Objekt-Information" angezeigt.
+                    	Bei mehreren übereinanderligenden Karten werden alle unter der Maus liegenden Kartenelemente im Fenster angezeigt.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-9">
+                <header>Datenbezug</header>
+                <content>
+                    <p>Die Detailinformationen zu Karten können direkt beim Anbieter bezogen werden, vorausgesetzt der Anbieter sieht dies vor.</p>
+                    <p>Klicken Sie auf das Informations-Symbol der Karte im Bereich "Dargestellte Karten". Der Link Quelle führt zur jeweiligen Bezugsstelle.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-10">
+                <header>Drucken</header>
+                <content>
+                    <p>Die Kartenansicht und die für deren Verständnis nötigen Elemente (Massstab etc.) kann als pdf-Datei ausgegeben werden.
+                    	Diese Datei kann dann gespeichert oder ausgedruckt werden.</p>
+                    <p>Die Funktion "Drucken" lässt ein Dialogfenster erscheinen, wo die Parameter für die Erzeugung der pdf-Datei gewählt werden können.
+                    	Diese Parameter sind der Kartenmasstab und A4/A3 Orientierung.
+                    	Der Druckbereich der Karte wird hervorgehoben und kann mit der Maus verschoben werden.
+                    	Die Legende kann über Aktivierung der Checkbox mit ausgegeben werden.</p>
+                </content>
+            </section>
         </section>
     </chapter>
 	<chapter>
