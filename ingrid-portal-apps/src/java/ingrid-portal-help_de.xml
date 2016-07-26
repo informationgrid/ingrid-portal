@@ -1009,6 +1009,40 @@
                 </content>
             </section>
         </section>
+        <section help-key="maps-7">
+            <header>Erweiterte Werkzeuge</header>
+            <content>
+            </content>
+            <section help-key="maps-7-1">
+                <header>WMS Import</header>
+                <content>
+                    <p>Es können nur WMS Dienste dargestellt werden, die das Projektionsystem unterstützen und dem WMS OGC Standard entsprechen.</p>
+                    <p>Die WMS Datensätze sind meistens erst ab einem bestimmtem Massstab sichtbar, deswegen muss in den entsprechenden Kartenausschnitt zentriert und ein entsprechender Massstab ausgewählt werden.</p>
+                    <p>Die Geschwindigkeit der Darstellung des WMS Datensatzes, ebenso wie dessen Verfügbarkeit ist von der Infrastruktur des zuständigen Betreibers abhängig.
+                    	Bitte beachten sie auch Datennutzungsbedingungen der einzelnen WMS Anbieter.</p>
+                    <p>Die WMS Datensätze können über die Druckfunktionen als PDF gespeichert werden.</p>
+                    <p>Aktivierung des Dialogs duch Klick auf "WMS Import".</p>
+                </content>
+            </section>
+            <section help-key="maps-7-2">
+                <header>KML Import</header>
+                <content>
+                    <p>Es können online oder lokal (Ausnahme: bei der Nutzung von InternetExplorer) gespeicherte KML files dargestellt werden.
+                    	Es können nur KML Dateien fehlerfrei dargestellt werden, die dem KML OGC Standard entsprechen.</p>
+                    <p>Die geladene KML Datei wird unter "Dargestellte Karten" angezeigt und kann dort normal bearbeitet werden.</p>
+                    <p>Aktivierung des Dialogs duch Klick auf "KML Import".</p>
+                </content>
+            </section>
+            <section help-key="maps-7-3">
+                <header>Vergleichen</header>
+                <content>
+                    <p>Es ist möglich eine Karte dynamisch ein-/auszublenden und so mit den restlichen Karten zu verglichen.
+                    	Wählt man unter Werkzeuge „Vergleichen“ dann erscheint eine rote Linie mit einem Cursor in der Mitte der Karte, der beliebig verschoben werden kann.</p>
+                    <p>Die erste selektierte Karte (von oben) kann nun mit Hilfe der roten Linie ein-/ausgeblendet werden.
+                    	Mit Festhalten der linken Maustaste kann die rote Linie beliebig nach rechts oder links verschoben werden und die Karte "weggewischt" werden.</p>
+                </content>
+            </section>
+        </section>
     </chapter>
 	<chapter>
         <header>Aktuelles</header>
