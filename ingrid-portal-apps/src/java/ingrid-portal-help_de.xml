@@ -757,25 +757,25 @@
                 <p>Seine Funktionalität umfasst u.a.:</p>
                 <ul>
                     <li>
-                        layerzentrierte Darstellung von Karten mit direkter Vorschau
+                        - layerzentrierte Darstellung von Karten mit direkter Vorschau
                     </li>
                     <li>
-                        strukturiertes Angebot an Karten + Hinzufügen externer Karten 
+                        - strukturiertes Angebot an Karten + Hinzufügen externer Karten 
                     </li>
                     <li>
-                        Suche nach Karten direkt auf eingebundenen Karten oder im Suchraum von InGrid (Kataloge)
+                        - Suche nach Karten direkt auf eingebundenen Karten oder im Suchraum von InGrid (Kataloge)
                     </li>
                     <li>
-                        Zeichnen und Messen auf der Karte
+                        - Zeichnen und Messen auf der Karte
                     </li>                    
                     <li>
-                        Vergleichsfunktionalität zwischen Layern (Slider blendet ein/aus)
+                        - Vergleichsfunktionalität zwischen Layern (Slider blendet ein/aus)
                     </li>                    
                     <li>
-                        Abspeichern und Teilen von Karten u.a. via QR Code 
+                        - Abspeichern und Teilen von Karten u.a. via QR Code 
                     </li>
                     <li>
-                        umfassende Druck Funktionalität 
+                        - umfassende Druck Funktionalität 
                     </li>
                 </ul>                                       
             </content>
@@ -920,6 +920,92 @@
                     	Diese Parameter sind der Kartenmasstab und A4/A3 Orientierung.
                     	Der Druckbereich der Karte wird hervorgehoben und kann mit der Maus verschoben werden.
                     	Die Legende kann über Aktivierung der Checkbox mit ausgegeben werden.</p>
+                </content>
+            </section>
+        </section>
+        <section help-key="maps-5">
+            <header>Verlinkung und Einbinden</header>
+            <content>
+            </content>
+            <section help-key="maps-5-1">
+                <header>Kartendarstellung abspeichern/versenden/iFrame</header>
+                <content>
+                    <p>Über die Funktion "Link teilen" im Bereich "Teilen" kann die aktuelle Darstellung (Karten, Ort, Zoomstufe) als Link (URL) kopiert, abgespeichert und als e-mail oder andere Soziale Medien weiterversendet werden.</p>
+                    <p>Unter "Einbetten" wird der HTML code für die Integration in ihre Website als iFrame automatisch generiert.
+                    	Die "Vorschau" zeigt Ihnen die Darstellung, hier kann auch die Grösse des Kartenfensters angepasst werden.
+                    	Es genügt, den generierten Code in den Source Code ihrer Website zu kopieren.</p>
+                </content>
+            </section>
+        </section>
+        <section help-key="maps-6">
+            <header>Zeichnen und Messen</header>
+            <content>
+            </content>
+            <section help-key="maps-6-1">
+                <header>Hinzufügen eines Symbols</header>
+                <content>
+                    <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Symbol" aus.
+                    	Ein Mausklick auf die gewünschte Position in der Karte setzt das Symbol an den gewünschten Ort.</p>
+                    <p>Einmal platziert kann das Symbol geändert werden (Größe und Symbol-Typ) und eine Beschreibung im Fenster unten links hinzugefügt werden (HTML oder Text).
+                    	Diese Beschreibung wird für die Nutzer der Zeichnung per Klick auf das Symbol sichtbar gemacht.</p>
+                    <p>Sie können jedes Element durch Mausklick ändern.
+                    	Gelöscht wird über die Option „Mehr“.
+                    	Sie können mehrere Symbole löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                </content>
+            </section>
+            <section help-key="maps-6-2">
+                <header>Hinzufügen von Text</header>
+                <content>
+                    <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Text" aus.
+                    	Ein Mausklick auf die gewünschte Position in der Karte setzt den Text an den gewünschten Ort.</p>
+                    <p>Einmal platziert, können Text und Farbe via Fenster unten links geändert werden.</p>
+                    <p>Sie können jedes Element durch Mausklick ändern.
+                    	Gelöscht wird über die Option „Mehr“.
+                    	Sie können mehrere Texte löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                </content>
+            </section>
+            <section help-key="maps-6-3">
+                <header>Hinzufügen einer Linie / Polygon</header>
+                <content>
+                    <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Linie" aus.
+                    	Um zu beginnen mit der linken Maustaste einmal klicken, um einen Richtungswechsel der Linie vorzunehmen wieder klicken.
+                    	Mit einem Doppelklick kann die Linienzeichnung beendet werden.
+                    	Liegt der Endpunkt auf dem Anfangspunkt so zeichnen Sie ein Polygon.</p>
+                    <p>Neue Punkte können zur Linie/Fläche hinzugefügt werden:
+                    	Klicken Sie auf ein Segment, positionieren Sie den neuen Punkt mit Mausklick und verschieben Sie ihn.</p>
+                    <p>Das untere linke Fenster ermöglicht:
+                		<ul>
+                    		<li>- Linie/Fläche: Farbe Linie/Polygon ändern und eine Beschreibung (Text oder HTML) hinzuzufügen.
+                    				Diese Beschreibung wird für die Nutzer der Zeichnung per Klick auf die Linie/Fläche sichtbar gemacht.</li>
+                    		<li>- Distanz /Fläche : Angaben zu Distanz, Fläche, Azimut</li>
+                    	</ul>
+                    </p>
+                    <p>Sie können jedes Element durch Mausklick ändern.
+                    	Durch Klick auf einen Punkt löschen Sie diesen.
+                    	Löschen der gesamten Linie/Fläche wird über die Option „Mehr“ gehandhabt.
+                    	Sie können mehrere Linien/Flächen löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                </content>
+            </section>
+            <section help-key="maps-6-4">
+                <header>Messen</header>
+                <content>
+                    <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Messen" aus.
+                    	Ein erster Mausklick in die Karte definiert den Ausgangspunkt der Messung, weiter Klicks fügen Segmente hinzu oder definieren eine Fläche.
+                    	Ein Doppelklick beendet die Messung oder klicken Sie auf den Ausgangspunkt, um die Fläche zu schließen.</p>
+                    <p>Die Messergebnisse Distanz /Fläche werden automatisch angezeigt.</p>
+                    <p>Sie können jedes Element durch Mausklick ändern.
+                    	Gelöscht wird über die Option „Mehr“.
+                    	Sie können mehrere Elemente löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                </content>
+            </section>
+            <section help-key="maps-6-5">
+                <header>Teilen einer Zeichnung /KML</header>
+                <content>
+                    <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" können die Zeichnungen (Symbole, Texte, Linien) geteilt werden.</p>
+                    <p>Unter "Link um ihre Zeichnung zu teilen" wird eine URL zur Verfügung gestellt, die Sie mit weiteren Nutzern teilen können.
+                    	Unter dieser URL können Sie später die Zeichnung auch weiter editieren.
+                    	Sie sollten diesen Link abspeichern für den Fall, dass sie später die Zeichnung ändern/löschen wollen.</p>
+                    <p>Unter "Mehr ..." können Sie Ihre Zeichnung auch als KML Datensatz herunter laden.</p>
                 </content>
             </section>
         </section>
