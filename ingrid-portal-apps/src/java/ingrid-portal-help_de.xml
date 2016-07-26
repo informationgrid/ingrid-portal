@@ -783,7 +783,7 @@
         <section help-key="maps-2">
             <header>Koordinatenanzeige</header>
             <content>
-                <p>Die Koordinaten des Cursors im Standardkoordinatensystem werden direkt unter der Hauptkarte angezeigt.</p>
+                <p>Die Koordinaten des Cursors im gewählten Koordinatensystem werden direkt unter der Hauptkarte angezeigt.</p>
 				<p>Mittels rechtem Mausklick auf einen Punkt in der Karte werden weitere Information in einem Zusatzfenster angezeigt.</p>
             </content>
         </section>
@@ -924,7 +924,7 @@
             </section>
         </section>
         <section help-key="maps-5">
-            <header>Verlinkung und Einbinden</header>
+            <header>Verlinken und Einbinden</header>
             <content>
             </content>
             <section help-key="maps-5-1">
