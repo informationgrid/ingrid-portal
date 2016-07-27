@@ -77,20 +77,20 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>
                     <preference name="SRC">
-                    	<value>/ingrid-portal-apps/cms/html/tools-uebersicht.html</value>
+                        <value>/ingrid-portal-apps/cms/html/tools-uebersicht.html</value>
                     </preference>
                     <preference name="HEIGHT">
-                    	<value>890</value>
+                        <value>890</value>
                     </preference>
                     <preference name="WIDTH">
-                    	<value>883</value>
+                        <value>883</value>
                     </preference>
                     <preference name="titleKey">
-				        <value>ingrid.application.overview</value>
-			       	</preference>
-			       	<preference name="ID">
-				        <value>ifrm</value>
-			       	</preference>
+                        <value>ingrid.application.overview</value>
+                       </preference>
+                       <preference name="ID">
+                        <value>ifrm</value>
+                       </preference>
                 </portlet>
             </portlets>
         </page>
@@ -101,17 +101,17 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>
                     <preference name="SRC">
-                    	<value>https://atlas.wsv.bvbs.bund.de/visualist/</value>
+                        <value>https://atlas.wsv.bvbs.bund.de/visualist/</value>
                     </preference>
                     <preference name="HEIGHT">
-                    	<value>1024</value>
+                        <value>1024</value>
                     </preference>
                     <preference name="WIDTH">
-                    	<value>883</value>
+                        <value>883</value>
                     </preference>
                     <preference name="titleKey">
-				        <value>ingrid.application.0.title</value>
-			       	</preference>
+                        <value>ingrid.application.0.title</value>
+                       </preference>
                 </portlet>
             </portlets>
         </page>
@@ -122,17 +122,17 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>
                     <preference name="SRC">
-                    	<value>https://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/</value>
+                        <value>https://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/</value>
                     </preference>
                     <preference name="HEIGHT">
-                    	<value>450</value>
+                        <value>450</value>
                     </preference>
                     <preference name="WIDTH">
-                    	<value>883</value>
+                        <value>883</value>
                     </preference>
                     <preference name="titleKey">
-				        <value>ingrid.application.1.title</value>
-			       	</preference>
+                        <value>ingrid.application.1.title</value>
+                       </preference>
                 </portlet>
             </portlets>
         </page>
@@ -143,17 +143,17 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::IFramePortalPortlet</name>
                     <preference name="SRC">
-                    	<value>https://atlas.wsv.bvbs.bund.de/wadaba-qs/map/</value>
+                        <value>https://atlas.wsv.bvbs.bund.de/wadaba-qs/map/</value>
                     </preference>
                     <preference name="HEIGHT">
-                    	<value>640</value>
+                        <value>640</value>
                     </preference>
                     <preference name="WIDTH">
-                    	<value>883</value>
+                        <value>883</value>
                     </preference>
                     <preference name="titleKey">
-				        <value>ingrid.application.2.title</value>
-			       	</preference>
+                        <value>ingrid.application.2.title</value>
+                       </preference>
                 </portlet>
             </portlets>
         </page>
@@ -265,10 +265,15 @@
             <action>copy-dir</action>
             <src>ingrid-webmap-client/</src>
         </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/frontend/src</src>
+            <dst>ingrid-webmap-client/frontend/prd</dst>
+        </file>
     </files>
     <sql>
-    	<!-- Use old templates for info portlet -->
-       	<execute>
+        <!-- Use old templates for info portlet -->
+           <execute>
             <![CDATA[UPDATE fragment_pref_value SET value='/WEB-INF/templates/chronicle_info.vm' WHERE value='/WEB-INF/templates/chronicle_info_new.vm']]>
         </execute>
         <execute>
@@ -360,7 +365,7 @@
         </execute>
         <!-- Revert feature page as default for about page -->
         <execute>
-        	<![CDATA[INSERT INTO tmp_table (item_key\, item_value) values ('main-menu_id'\,  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')) ]]>
+            <![CDATA[INSERT INTO tmp_table (item_key\, item_value) values ('main-menu_id'\,  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')) ]]>
         </execute>
         <execute>
             <![CDATA[UPDATE folder_menu SET OPTIONS = '/main-about.psml' WHERE OPTIONS = '/main-features.psml' AND parent_id  = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id') ]]>
@@ -370,14 +375,14 @@
         </execute>
         <!-- Replace main-menu option "main-search" with "default-page" -->
         <execute>
-        	<![CDATA[UPDATE folder_menu SET options = '/default-page.psml' WHERE options = '/main-search.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id')]]>
+            <![CDATA[UPDATE folder_menu SET options = '/default-page.psml' WHERE options = '/main-search.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id')]]>
         </execute>
         <!-- Set folder from hidden to display -->
         <execute>
-        	<![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/cms']]>
+            <![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/cms']]>
         </execute>
         <execute>
-        	<![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/application']]>
+            <![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/application']]>
         </execute>
         <!-- DONE with tmp_table -->
         <execute>
