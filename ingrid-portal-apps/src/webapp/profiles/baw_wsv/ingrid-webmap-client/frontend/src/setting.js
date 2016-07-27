@@ -1,4 +1,4 @@
-var settingDefaultTopicId = 'themen';
+var settingDefaultTopicId = 'favoriten';
 var settingExtent = '[6.8, 51.1, 11.2, 54]';
 var settingEpsgExtent = '[6.8, 51.1, 11.2, 54]';
 var settingEpsg = undefined;
@@ -7,7 +7,7 @@ var settingSearchServiceUrl = 'http://numis.niedersachsen.de/opensearch/query?q=
 var settingSearchNominatimUrl = 'http://nominatim.openstreetmap.org/search?format=json%26countrycodes=de';
 var settingCopyrightURL = undefined;
 // KML
-var settingKMLName = 'NUMIS';
+var settingKMLName = 'ITZBund';
 // WMS Import
 var settingDefaultWMSList = [];
 // Share
