@@ -15,6 +15,9 @@
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-apps</developerConnection>
     <tag>HEAD</tag>
   </scm>
+  <properties>
+    <measurement.client.version>1.0.0-SNAPSHOT</measurement.client.version>
+  </properties>
   <build>
     <finalName>ingrid-portal-apps</finalName>
     <sourceDirectory>src/java</sourceDirectory>
@@ -38,6 +41,49 @@
           <smtpHost>localhost</smtpHost>
           <toAddresses />
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-measurement-client</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>de.ingrid</groupId>
+                  <artifactId>measurement-client</artifactId>
+                  <type>zip</type>
+                  <outputDirectory>${project.build.directory}/${project.artifactId}</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>com.coderplus.maven.plugins</groupId>
+        <artifactId>copy-rename-maven-plugin</artifactId>
+        <version>1.0.1</version>
+        <executions>
+          <execution>
+            <id>rename-file</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>rename</goal>
+            </goals>
+            <configuration>
+              <sourceFile>${project.build.directory}/${project.artifactId}/measurement-client-${measurement.client.version}</sourceFile>
+              <destinationFile>${project.build.directory}/${project.artifactId}/measures</destinationFile>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
     </plugins>
@@ -324,6 +370,13 @@
           <artifactId>stax-api</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>de.ingrid</groupId>
+      <artifactId>measurement-client</artifactId>
+      <version>${measurement.client.version}</version>
+      <type>zip</type>
     </dependency>
 
 <!-- Diverses -->
