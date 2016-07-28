@@ -350,49 +350,65 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
     
     private LocationBean getBoundingBoxFromLayer(Node layerNode) {
     	LocationBean box = null;
-    	CoordTransformUtil coordUtils = CoordTransformUtil.getInstance();
-        
-        // iterate over bounding boxes until it could be transformed to WGS84
-        NodeList boundingBoxesNodes = xPathUtils.getNodeList(layerNode, "wms:BoundingBox");
-        for (int j = 0; j < boundingBoxesNodes.getLength(); j++) {
-            Node bboxNode = boundingBoxesNodes.item(j);
-            CoordType coordType = getCoordType(bboxNode, coordUtils);
-            double[] coordinates = null;
-            if (coordType == null) {
-                // if coordinate type could not be determined, then try the next available
-                // bounding box of the layer, which should use a different CRS
-                continue;
-                
-            } else if (coordType.equals(CoordTransformUtil.CoordType.COORDS_WGS84)) {
-                coordinates = getBoundingBoxCoordinates(bboxNode);
-                        
-            } else { // TRANSFORM
-                coordinates = getBoundingBoxCoordinates(bboxNode, coordUtils, coordType);
-                
-            }
-            if (coordinates != null) {
-                box = new LocationBean();
-                box.setLatitude1(coordinates[1]);
-                box.setLongitude1(coordinates[0]);
-                box.setLatitude2(coordinates[3]);
-                box.setLongitude2(coordinates[2]);
-                
-                // add a fallback for the name, since it's mandatory
-                String name = xPathUtils.getString(layerNode, "wms:Name");
-                if (name == null) name = xPathUtils.getString(layerNode, "wms:Title");
-                if (name == null) name ="UNKNOWN";
-                
-                box.setName(name);
-                box.setTopicId(box.getName());
-                box.setType( "F" );
-                
-                // finished!
-                break;                    
-            }
-            
-        }
     	
+    	Double west = xPathUtils.getDouble(layerNode, "wms:EX_GeographicBoundingBox/wms:westBoundLongitude");
+    	Double east = xPathUtils.getDouble(layerNode, "wms:EX_GeographicBoundingBox/wms:eastBoundLongitude");
+    	Double south = xPathUtils.getDouble(layerNode, "wms:EX_GeographicBoundingBox/wms:southBoundLatitude");
+    	Double north = xPathUtils.getDouble(layerNode, "wms:EX_GeographicBoundingBox/wms:northBoundLatitude");
+    	
+    	box = new LocationBean();
+        box.setLatitude1(west);
+        box.setLongitude1(south);
+        box.setLatitude2(east);
+        box.setLongitude2(north);
+        
         return box;
+    	
+//    	CoordTransformUtil coordUtils = CoordTransformUtil.getInstance();
+//    	
+//    	
+//        
+//        // iterate over bounding boxes until it could be transformed to WGS84
+//        NodeList boundingBoxesNodes = xPathUtils.getNodeList(layerNode, "wms:BoundingBox");
+//        for (int j = 0; j < boundingBoxesNodes.getLength(); j++) {
+//            Node bboxNode = boundingBoxesNodes.item(j);
+//            CoordType coordType = getCoordType(bboxNode, coordUtils);
+//            double[] coordinates = null;
+//            if (coordType == null) {
+//                // if coordinate type could not be determined, then try the next available
+//                // bounding box of the layer, which should use a different CRS
+//                continue;
+//                
+//            } else if (coordType.equals(CoordTransformUtil.CoordType.COORDS_WGS84)) {
+//                coordinates = getBoundingBoxCoordinates(bboxNode);
+//                        
+//            } else { // TRANSFORM
+//                coordinates = getBoundingBoxCoordinates(bboxNode, coordUtils, coordType);
+//                
+//            }
+//            if (coordinates != null) {
+//                box = new LocationBean();
+//                box.setLatitude1(coordinates[1]);
+//                box.setLongitude1(coordinates[0]);
+//                box.setLatitude2(coordinates[3]);
+//                box.setLongitude2(coordinates[2]);
+//                
+//                // add a fallback for the name, since it's mandatory
+//                String name = xPathUtils.getString(layerNode, "wms:Name");
+//                if (name == null) name = xPathUtils.getString(layerNode, "wms:Title");
+//                if (name == null) name ="UNKNOWN";
+//                
+//                box.setName(name);
+//                box.setTopicId(box.getName());
+//                box.setType( "F" );
+//                
+//                // finished!
+//                break;                    
+//            }
+//            
+//        }
+//    	
+//        return box;
     }
     
     /**
