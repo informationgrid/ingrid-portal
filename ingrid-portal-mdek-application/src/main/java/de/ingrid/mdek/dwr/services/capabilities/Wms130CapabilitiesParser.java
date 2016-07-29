@@ -362,6 +362,15 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         box.setLatitude2(east);
         box.setLongitude2(north);
         
+        // add a fallback for the name, since it's mandatory
+        String name = xPathUtils.getString( layerNode, "wms:Name" );
+        if (name == null) name = xPathUtils.getString( layerNode, "wms:Title" );
+        if (name == null) name = "UNKNOWN";
+
+        box.setName( name );
+        box.setTopicId( box.getName() );
+        box.setType( "F" );
+        
         return box;
     	
 //    	CoordTransformUtil coordUtils = CoordTransformUtil.getInstance();
