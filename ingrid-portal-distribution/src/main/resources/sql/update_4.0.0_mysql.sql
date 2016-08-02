@@ -51,10 +51,6 @@ UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id =
 UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id = (SELECT page_id FROM page WHERE path = '/search-catalog/search-catalog-hierarchy.psml'); 
 UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id = (SELECT page_id FROM page WHERE path = '/mdek/mdek_portal_admin.psml'); 
 UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id = (SELECT page_id FROM page WHERE path = '/application/main-application.psml'); 
-UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id = (SELECT page_id FROM page WHERE path = '/application/main-application-0.psml'); 
-UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id = (SELECT page_id FROM page WHERE path = '/application/main-application-1.psml'); 
-UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id = (SELECT page_id FROM page WHERE path = '/application/main-application-2.psml'); 
-UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id = (SELECT page_id FROM page WHERE path = '/cms/cms-0.psml'); 
 UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id = (SELECT page_id FROM page WHERE path = '/cms/cms-1.psml'); 
 UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id = (SELECT page_id FROM page WHERE path = '/cms/cms-2.psml'); 
 UPDATE fragment SET name = 'jetspeed-layouts::IngridClearLayout' WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-about-data-source.psml'); 
@@ -87,6 +83,10 @@ DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/se
 DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-features.psml');
 DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/main-environment.psml');
 DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/privacy.psml');
+DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/application/main-application-0.psml');
+DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/application/main-application-1.psml');
+DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/application/main-application-2.psml');
+DELETE FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/cms/cms-0.psml');
 
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::IngridWelcomePortlet';
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::ServiceTeaser';
@@ -273,6 +273,10 @@ DELETE FROM page WHERE path = '/main-environment.psml';
 DELETE FROM page WHERE path = '/privacy.psml';
 DELETE FROM page WHERE path = '/administration/admin-wms.psml';
 DELETE FROM page WHERE path = '/_role/user/myportal-personalize.psml';
+DELETE FROM page WHERE path = '/application/main-application-0.psml';
+DELETE FROM page WHERE path = '/application/main-application-1.psml';
+DELETE FROM page WHERE path = '/application/main-application-2.psml';
+DELETE FROM page WHERE path = '/cms/cms-0.psml';
 
 -- delete user default pages
 DELETE FROM page WHERE name = 'default-page.psml' AND path LIKE '/_user/%/default-page.psml' AND path NOT LIKE '%/template/%';
@@ -285,6 +289,8 @@ INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('sub-menu-about', (SELECT
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main-menu', (SELECT menu_id FROM folder_menu WHERE name = 'main-menu'));
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('sub-menu', (SELECT menu_id FROM folder_menu WHERE name = 'sub-menu'));
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('sub-menu-catalog', (SELECT menu_id FROM folder_menu WHERE name = 'sub-menu-catalog'));
+INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('sub-menu-start', (SELECT menu_id FROM folder_menu WHERE name = 'sub-menu-start'));
+INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('sub-menu-application', (SELECT menu_id FROM folder_menu WHERE name = 'sub-menu-application'));
 
 -- service-menu
 DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-menu') AND options = '/default-page.psml';
@@ -320,8 +326,10 @@ UPDATE folder_menu SET element_order = '2' WHERE parent_id = (SELECT temp_value 
 UPDATE folder_menu SET element_order = '3' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-menu') AND options = '/main-maps.psml';
 UPDATE folder_menu SET element_order = '4' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-menu') AND options = '/main-chronicle.psml';
 UPDATE folder_menu SET element_order = '5' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-menu') AND options = '/main-about.psml';
-UPDATE folder_menu SET element_order = '6' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-menu') AND options = '/application/main-application';
-UPDATE folder_menu SET element_order = '7' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-menu') AND options = '/mdek';
+UPDATE folder_menu SET element_order = '6' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-menu') AND options = '/application/main-application.psml';
+UPDATE folder_menu SET element_order = '7', parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-menu') WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-start') AND options = '/cms/cms-1.psml';
+UPDATE folder_menu SET element_order = '8', parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-menu') WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-start') AND options = '/cms/cms-2.psml';
+UPDATE folder_menu SET element_order = '9' WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-menu') AND options = '/mdek';
 
 -- sub-menu
 UPDATE folder_menu SET folder_id = (SELECT folder_id FROM folder WHERE path = '/') WHERE name = 'sub-menu';
@@ -339,6 +347,20 @@ DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WH
 
 -- sub-menu-catalog
 DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-catalog') AND options = '/search-catalog/search-catalog-thesaurus.psml';
+
+-- sub-menu-start
+DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-start');
+DELETE FROM folder_menu WHERE menu_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-start');
+
+-- sub-menu-application
+DELETE FROM folder_menu WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-application');
+DELETE FROM folder_menu WHERE menu_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'sub-menu-application');
+
+-- cms update
+UPDATE ingrid_cms SET item_description = 'Anleitungen' WHERE item_key = 'portal.cms.portlet.1';
+UPDATE ingrid_cms SET item_description = 'Veranstaltungen' WHERE item_key = 'portal.cms.portlet.2';
+DELETE FROM ingrid_cms_item WHERE fk_ingrid_cms_id = (SELECT id FROM ingrid_cms WHERE item_key = 'portal.cms.portlet.0');
+DELETE FROM ingrid_cms WHERE item_key = 'portal.cms.portlet.0';
 
 -- fragments preferences
 INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY)
