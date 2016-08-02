@@ -8,10 +8,6 @@
             <hidden>false</hidden>
         </page>
         <page>
-            <name>main-measures.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>main-chronicle.psml</name>
             <hidden>false</hidden>
         </page>
@@ -48,10 +44,6 @@
             <hidden>false</hidden>
         </page>
         <page>
-            <name>cms/cms-0.psml</name>
-            <hidden>true</hidden>
-        </page>
-        <page>
             <name>cms/cms-1.psml</name>
             <hidden>true</hidden>
         </page>
@@ -60,16 +52,80 @@
             <hidden>true</hidden>
         </page>
         <page>
-            <name>administration/admin-wms.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>application/main-application.psml</name>
             <hidden>true</hidden>
         </page>
         <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="0" row="4">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="5">
+                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="0" row="4">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="5">
+                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_user/template/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="0" row="4">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="5">
+                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
+                </portlet>
+            </portlets>
         </page>
         <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
@@ -136,6 +192,9 @@
             <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id';]]>
         </execute>
         <!-- Revert of replacing main-menu option "main-search" with "default-page" (BAW)-->
+        <execute>
+            <![CDATA[INSERT INTO tmp_table (item_key\, item_value) values ('main-menu_id'\,  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')); ]]>
+        </execute>
         <execute>
             <![CDATA[UPDATE folder_menu SET options = '/main-search.psml' WHERE options = '/default-page.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id');]]>
         </execute>

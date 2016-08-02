@@ -1,5 +1,4 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
-<h4>$MESSAGES.getString("sitemap.area.main")</h4>
 <ul class="link-list">
     <li>
         #set ($link = $renderResponse.encodeURL("/portal/main-search.psml"))
