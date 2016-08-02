@@ -27,7 +27,9 @@
     <options>/main-about.psml</options>
 <!--
 	Used only for profile baw_wsv
-    <options>/application/main-application</options>
+    <options>/application/main-application.psml</options>
+    <options>/cms/cms-1.psml</options>
+    <options>/cms/cms-2.psml</options>
 -->
     <options>/mdek</options>
   </menu>
@@ -50,26 +52,6 @@
     <options>/main-about-partner.psml</options>
     <options>/main-about-data-source.psml</options>
   </menu>
-
-<!--
-   Used only for profile baw_wsv
-  <menu name="sub-menu-application">
-    <options>/application/main-application</options>
-    <options>/application/main-application-0.psml</options>
-    <options>/application/main-application-1.psml</options>
-    <options>/application/main-application-2.psml</options>
-  </menu>
--->
-
-<!--
-   Used only for profile baw_wsv
-  <menu name="sub-menu-start">
-    <options>/default-page.psml</options>
-    <options>/cms/cms-0.psml</options>
-    <options>/cms/cms-1.psml</options>
-    <options>/cms/cms-2.psml</options>
-  </menu>
--->
 
   <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>

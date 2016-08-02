@@ -12,6 +12,7 @@
 
   <fragment id="main-search" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="search-simple-portlet" type="portlet" decorator="ingrid-clear" name="ingrid-portal-apps::SearchSimpleResult">
+      <property layout="OneColumn" name="row" value="0" />
       <preference name="titleKey" readOnly="false">
         <value>searchSimple.title.result</value>
       </preference>
@@ -20,8 +21,10 @@
       </preference>
     </fragment>
     <fragment id="main-search-similar" type="portlet" decorator="ingrid-clear" name="ingrid-portal-apps::SearchSimilar">
+      <property layout="OneColumn" name="row" value="1" />
     </fragment>
     <fragment id="main-search-results" type="portlet" name="ingrid-portal-apps::SearchResult">
+      <property layout="OneColumn" name="row" value="2" />
     </fragment>
   </fragment>
 

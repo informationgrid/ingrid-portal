@@ -8,6 +8,7 @@
 
   <fragment id="service-myportal" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="myportal-overview" type="portlet" name="ingrid-portal-apps::MyPortalOverviewPortlet">
+      <property layout="OneColumn" name="row" value="0" />
     </fragment>
   </fragment>
 

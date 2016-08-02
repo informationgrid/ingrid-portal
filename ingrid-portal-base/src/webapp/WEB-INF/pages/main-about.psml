@@ -1,11 +1,3 @@
-<!DOCTYPE doc [
-<!-- 
-for more entities look at
-http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
--->
-<!ENTITY Uuml	"&#x00DC;">
-]>
-
 <page>
   <defaults
      skin="orange"
@@ -20,6 +12,7 @@ http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
 
   <fragment id="main-about" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="main-about-1" type="portlet" name="ingrid-portal-apps::CMSPortlet">
+      <property layout="OneColumn" name="row" value="0" />
       <preference name="cmsKey" readOnly="false">
         <value>ingrid.about</value>
       </preference>

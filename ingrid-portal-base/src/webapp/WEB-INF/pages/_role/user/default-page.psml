@@ -13,6 +13,7 @@
   
   <fragment id="home" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="search-simple-portlet" type="portlet" name="ingrid-portal-apps::SearchSimple">
+      <property layout="OneColumn" name="row" value="0" />
       <preference name="titleKey" readOnly="false">
         <value>searchSimple.title.search</value>
       </preference>
@@ -21,6 +22,7 @@
       </preference>
     </fragment>
     <fragment id="home-1" type="portlet" name="ingrid-portal-apps::IngridInformPortlet">
+      <property layout="OneColumn" name="row" value="1" />
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/ingrid_inform_teaser.vm</value>
       </preference>
@@ -32,8 +34,10 @@
       </preference>
     </fragment>
     <fragment id="home-2" type="portlet" name="ingrid-portal-apps::CategoryTeaser">
+      <property layout="OneColumn" name="row" value="2" />
     </fragment>
     <fragment id="home-3" type="portlet" name="ingrid-portal-apps::RssNewsTeaser">
+      <property layout="OneColumn" name="row" value="3" />
       <preference name="noOfEntriesDisplayed" readOnly="false">
         <value>4</value>
       </preference>
@@ -45,6 +49,7 @@
       </preference>
     </fragment>
     <fragment id="home-4" type="portlet" name="ingrid-portal-apps::EnvironmentTeaser">
+      <property layout="OneColumn" name="row" value="4" />
       <preference name="titleKey" readOnly="false">
         <value>teaser.environment.title</value>
       </preference>
@@ -53,6 +58,7 @@
       </preference>
     </fragment>
     <fragment id="home-5" type="portlet" name="ingrid-portal-apps::InfoDefaultPageTeaser">
+      <property layout="OneColumn" name="row" value="5" />
     </fragment>
   </fragment>
   <security-constraints>

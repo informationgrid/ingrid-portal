@@ -9,6 +9,7 @@
 
   <fragment id="myportal-create-account" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="myportal-create-account-1" type="portlet" name="ingrid-portal-apps::MyPortalCreateAccountPortlet">
+      <property layout="OneColumn" name="row" value="0" />
     </fragment>
   </fragment>
 
