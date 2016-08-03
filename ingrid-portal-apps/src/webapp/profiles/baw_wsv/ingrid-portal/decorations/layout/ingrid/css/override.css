@@ -6,6 +6,15 @@
     height: unset;
 }
 
+.mobile__title {
+    color: #FFFFFF;
+    font-size: 25px;
+}
+
+.mobile__title:hover {
+    color: #FFFFFF;
+}
+
 .header__widgets__section {
-    padding: 0.5rem 0;
+    padding: 1.125rem 0;
 }

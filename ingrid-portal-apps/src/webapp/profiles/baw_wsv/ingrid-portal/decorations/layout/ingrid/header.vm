@@ -86,10 +86,13 @@
                 <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
                     <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/logo.gif')">
-                    <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/mobile-logo.svg')">
+                    <img class="mq-show-xxl mobile__logo" >
                     </a>
                 </div>
-                 #if($serviceMenu && !$serviceMenu.empty)
+                <div class="header__widgets__section" style="">
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">$MESSAGES.getString('ingrid.header.title.main')</a>
+                </div>
+                #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)
                 #end
             </div>
