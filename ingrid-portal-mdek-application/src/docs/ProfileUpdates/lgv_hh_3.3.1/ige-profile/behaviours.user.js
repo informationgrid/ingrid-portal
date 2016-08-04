@@ -33,20 +33,21 @@ define(["dojo/_base/declare",
         "dojo/cookie",
         "ingrid/message",
         "ingrid/dialog",
+        "ingrid/hierarchy/behaviours",
         "ingrid/utils/Grid", 
         "ingrid/utils/Syslist",
         "ingrid/grid/CustomGridEditors"
-], function(declare, array, Deferred, lang, topic, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilSyslist, Editors) {
-
-    return declare(null, {
+], function(declare, array, Deferred, lang, topic, on, aspect, dom, domClass, registry, cookie, message, dialog, behaviours, UtilGrid, UtilSyslist, Editors) {
+	return lang.mixin(behaviours, {
         
         openData : {
-            title : "Open Data",
-            description : "...",
+            title : "LGV: Open Data",
+            description : "Neue Anforderungen seitens des Hamburger Transparenzportals, aber auch der Geodateninfrastruktur Hamburg, machen es erforderlich, dass die Funktionalitäten der beiden Checkboxen 'Open Data' und 'Veröffentlichung gemäß HmbTG' angepasst werden müssen.",
+            defaultActive: true,
             run : function() {
                 // disable free text in categories by choosing a selectbox editor
                 var categories = registry.byId("categoriesOpenData");
-                categories.columns[categories.columnsById.title].editor = Editors.SelectboxEditor;
+                categories.columns[categories.columnsById.title].editor = this.SelectboxEditorDisplayValue;
 
                 // always show categories
                 topic.subscribe("/onObjectClassChange", function(data) {
@@ -57,6 +58,7 @@ define(["dojo/_base/declare",
                     }
                 });
                 
+                // (REDMINE-315)
                 topic.subscribe("/afterInitDialog/LinksDialog", function() {
 
                     var handleRequiredOfFileFormat = function(typeName) {
@@ -150,7 +152,7 @@ define(["dojo/_base/declare",
                                 
                                 // set Anwendungseinschränkungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
                                 var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
-                                registry.byId("availabilityUseConstraints").attr("value", entryNameLicense, true);
+                                UtilGrid.setTableData("availabilityUseAccessConstraints", [{title: entryNameLicense}]);
                                 
                                 // set publication condition to Internet
                                 registry.byId("extraInfoPublishArea").attr("value", 1, true);
@@ -169,6 +171,9 @@ define(["dojo/_base/declare",
                         
                         // remove all categories
                         UtilGrid.setTableData("categoriesOpenData", []);
+                        
+                        // remove all "Informationgegenstände"
+                        UtilGrid.setTableData("Informationsgegenstand", []);
                     }
                 });
                 
@@ -178,8 +183,8 @@ define(["dojo/_base/declare",
                 on(registry.byId("publicationHmbTG"), "Change", function(isChecked) {
                     if (isChecked) {
                         domClass.add("uiElement6020", "required");
-                        hmbTGAddressCheck = that.addAddressCheck();
-                        hmbTGDownloadCheck = that.addDownloadLinkCheck();
+                        if (!hmbTGAddressCheck) hmbTGAddressCheck = that.addAddressCheck();
+                        if (!hmbTGDownloadCheck) hmbTGDownloadCheck = that.addDownloadLinkCheck();
                         
                     } else {
                         // unregister from check for download link
@@ -201,6 +206,134 @@ define(["dojo/_base/declare",
                 });
             },
             
+            SelectboxEditorDisplayValue: function(args) {
+                var options;
+                var box;
+
+                // initialize the UI
+                this.init = function() {
+                    var data;
+                    if (args.column.listId)
+                        data = lang.clone(sysLists[args.column.listId]);
+                    else {
+                        data = [];
+                        for (var i = 0; i < args.column.options.length; i++) {
+                            data[i] = [args.column.options[i], args.column.values[i]];
+                        }
+                    }
+
+                    var store = new dojo.data.ItemFileWriteStore({
+                        data: {
+                            items: data
+                        }
+                    });
+                    box = new dijit.form.FilteringSelect({
+                        id: "activeCell_" + args.grid.id,
+                        store: store,
+                        searchAttr: "0",
+                        maxHeight: "150",
+                        style: "width:100%; padding:0; color: black; font-family: 10px Verdana, Helvetica, Arial, sans-serif;"
+                    }).placeAt(args.container);
+                    box.store.fetch();
+                    //$(args.container).append(box.domNode);
+                    box.focus();
+                };
+
+                /*********** REQUIRED METHODS ***********/
+
+                this.destroy = function() {
+                    // hide Tooltip if any
+                    // Tooltip.hide(box.domNode);
+                    // remove all data, events & dom elements created in the constructor
+                    box.destroy();
+                };
+
+                this.focus = function() {
+                    // set the focus on the main input control (if any)
+                    box.focus();
+                };
+
+                this.isValueChanged = function() {
+                    // return true if the value(s) being edited by the user has/have been changed
+                    if (box.get("value") == "")
+                        return false;
+                    return true;
+                };
+
+                this.serializeValue = function() {
+                    // return the value(s) being edited by the user in a serialized form
+                    // can be an arbitrary object
+                    // the only restriction is that it must be a simple object that can be passed around even
+                    // when the editor itself has been destroyed
+                    if (box.item === null)
+                        return "";
+                    return box.item[0][0]; // display text
+                };
+
+                this.loadValue = function(item) {
+                    // load the value(s) from the data item and update the UI
+                    // this method will be called immediately after the editor is initialized
+                    // it may also be called by the grid if if the row/cell being edited is updated via grid.updateRow/updateCell
+                    var search = item[args.column.field];
+                    var items = box.store._arrayOfTopLevelItems;
+                    var found = false;
+                    array.forEach(items, function(item, i) {
+                        if (item[0] == search) {
+                            box.set("value", i);
+                            found = true;
+                        }
+                    });
+                    if (!found) {
+                    	array.forEach(items, function(item, i) {
+                            if (item[1] == search) {
+                                box.set("value", i);
+                            }
+                        });
+                    }
+                };
+
+                this.applyValue = function(item, state) {
+                    // deserialize the value(s) saved to "state" and apply them to the data item
+                    // this method may get called after the editor itself has been destroyed
+                    // treat it as an equivalent of a Java/C# "static" method - no instance variables should be accessed
+                    item[args.column.field] = state;
+                };
+
+                this.validate = function() {
+                    // validate user input and return the result along with the validation message, if any
+                    // if the input is valid, return {valid:true,msg:null}
+                    //return { valid: false, msg: "This field is required" };
+                    return {
+                        valid: true,
+                        msg: null
+                    };
+                };
+
+
+                /*********** OPTIONAL METHODS***********/
+
+                this.hide = function() {
+                    // if implemented, this will be called if the cell being edited is scrolled out of the view
+                    // implement this is your UI is not appended to the cell itself or if you open any secondary
+                    // selector controls (like a calendar for a datepicker input)
+                };
+
+                this.show = function() {
+                    // pretty much the opposite of hide
+                };
+
+                this.position = function(cellBox) {
+                    // if implemented, this will be called by the grid if any of the cell containers are scrolled
+                    // and the absolute position of the edited cell is changed
+                    // if your UI is constructed as a child of document BODY, implement this to update the
+                    // position of the elements as the position of the cell changes
+                    // 
+                    // the cellBox: { top, left, bottom, right, width, height, visible }
+                };
+
+                this.init();
+            },
+            
             handleOpenDataChange: function() {
                 var that = this;
                 // tick checkbox if "open data" has been selected (REDMINE-194)
@@ -213,7 +346,7 @@ define(["dojo/_base/declare",
 
                         // set Anwendungseinschränkungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
                         var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
-                        registry.byId("availabilityUseConstraints").attr("value", entryNameLicense, true);
+                        UtilGrid.setTableData("availabilityUseAccessConstraints", [{title: entryNameLicense}]);
                     } else {
                         // remove "keine" from access constraints
                         var data = UtilGrid.getTableData('availabilityAccessConstraints');
@@ -229,18 +362,18 @@ define(["dojo/_base/declare",
                         }
 
                         // remove license set when open data was clicked
-                        registry.byId("availabilityUseConstraints").attr("value", "");
+                        UtilGrid.setTableData("availabilityUseAccessConstraints", []);
                     }
                 });
                 
-                // open data checkbox behaviour
+                // open data checkbox behaviour (REDMINE-117)
                 var openDataAddressCheck = null;
                 var openDataDownloadCheck = null;
                 on(registry.byId("isOpenData"), "Change", function(isChecked) {
                     var objClass = registry.byId("objectClass").get("value");
 
                     if (isChecked) {
-                        openDataAddressCheck = that.addAddressCheck();
+                    	if (!openDataAddressCheck) openDataAddressCheck = that.addAddressCheck();
                         // download link check already done in system behaviours
                         //openDataDownloadCheck = that.addDownloadLinkCheck();
                         
@@ -356,19 +489,21 @@ define(["dojo/_base/declare",
                 // and set value to "Ohne gesetzliche Verpflichtung"
                 if (isOpenDataChecked && !isHmbTGChecked) {
                     domClass.remove("uiElementAddInformationsgegenstand", "hide");
-                    infoSelect.set("displayedValue", "Ohne gesetzliche Verpflichtung");
-                    infoSelect.set("disabled", true);
+                    infoSelect.setData([{ informationHmbTG: "hmbtg_20_ohne_veroeffentlichungspflicht" }]);
+                    UtilGrid.updateOption("Informationsgegenstand", "editable", false);
+                    infoSelect.reinitLastColumn();
                 } else if (!isOpenDataChecked && !isHmbTGChecked) {
                     domClass.add("uiElementAddInformationsgegenstand", "hide");
-                    infoSelect.set("displayedValue", "");
+                    infoSelect.setData([]);
                 }
 
                 // as long as HmbTG is checked, we are allowed to modify the
                 // selectbox
                 if (isHmbTGChecked) {
                     domClass.remove("uiElementAddInformationsgegenstand", "hide");
-                    infoSelect.set("disabled", false);
+                    UtilGrid.updateOption("Informationsgegenstand", "editable", true);
                     domClass.add("uiElementAddInformationsgegenstand", "required");
+                    infoSelect.reinitLastColumn();
                 } else {
                     domClass.remove("uiElementAddInformationsgegenstand", "required");
                 }
