@@ -1,10 +1,25 @@
-<div class="formbody">
-  <h3>$MESSAGES.getString('admin.wms.headline')</h3>
-  <p>
-	<a target="_new" href="$wmsMapbenderInterface">$MESSAGES.getString('admin.wms.mapbender')</a>
-  </p>
-  <p>
-	<a target="_new" href="$wmsMaplabInterface">$MESSAGES.getString('admin.wms.maplab')</a>
-  </p>
+<div class="box box--fill box--small">
+    <div class="box__title ob-container">
+        <h4>$MESSAGES.getString('admin.wms.headline')</h4>
+    </div>
+    <div class="box__content ob-container">
+        <ul class="link-list">
+            <li>
+                <a href="$wmsMapbenderInterface">
+                    <svg class="icon">
+                        <use xlink:href="#internal-link">
+                    </svg>
+                    $MESSAGES.getString('admin.wms.mapbender')
+                </a>
+            </li>
+            <li>
+                <a href="$wmsMaplabInterface">
+                    <svg class="icon">
+                        <use xlink:href="#internal-link">
+                    </svg>
+                    $MESSAGES.getString('admin.wms.maplab')
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
-

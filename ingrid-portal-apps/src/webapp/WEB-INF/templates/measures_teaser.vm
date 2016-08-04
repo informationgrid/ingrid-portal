@@ -1,12 +1,26 @@
-<div class="portlet-section-body">
-#foreach ($rubric in $rubricList)
-    <p class="iconLink">
-      <span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doTeaser')
-$action.setParameter('rubric',"$rubric.FormValue")
-      <span><a href="$action">$MESSAGES.getString("$rubric.QueryValue")</a></span>
-      <span class="clearer"></span>
-    </p>
-#end
-</div>
+<article class="teaser ob-container">
+    <div class="teaser__graphic">
+        <svg class="icon"><use xlink:href="#dashboard"></use></svg>
+    </div>
+    <div class="teaser__box">
+        <div class="teaser__content ob-container">
+            #renderPortletTitle($MESSAGES.getString('teaser.measures.title') "h4")
+        </div>
+        <hr class="bx-top-0 bx-bot-0">
+        <div class="teaser__content ob-container">
+            <p>
+                <strong>$MESSAGES.getString('measures.teaser.new.title')</strong>
+                $MESSAGES.getString('measures.teaser.new.body')
+            </p>
+            <p>
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('action','doTeaser')
+                $action.setParameter('isMeasure', 'true')
+                <a class="link link--big" href="$action">
+                    <strong>$MESSAGES.getString('measures.teaser.new.link')</strong>
+                    <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
+                </a>
+            </p>
+        </div>
+    </div>
+</article>

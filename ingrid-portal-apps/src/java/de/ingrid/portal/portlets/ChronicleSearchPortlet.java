@@ -31,6 +31,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
@@ -70,6 +71,10 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
+
+        PortletPreferences prefs = request.getPreferences();
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
 
         // ----------------------------------
         // check for passed URL PARAMETERS (for bookmarking)
@@ -234,9 +239,9 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
             String dateSelect = af.getInput(ChronicleSearchForm.FIELD_TIME_SELECT);
             boolean dateSet = false;
             if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_PERIOD)) {
-                Date fromDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_FROM));
+                Date fromDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_FROM_SUBMIT));
                 if (fromDate != null) {
-                    Date toDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_TO));
+                    Date toDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_TO_SUBMIT));
                     if (toDate != null) {
                         String dateStr = df.format(fromDate);
                         query.put(Settings.QFIELD_DATE_FROM, dateStr);
@@ -246,7 +251,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
                     }
                 }
             } else if (dateSelect.equals(ChronicleSearchForm.FIELDV_TIME_SELECT_DATE)) {
-                Date atDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_AT));
+                Date atDate = ChronicleSearchForm.getDate(af.getInput(ChronicleSearchForm.FIELD_TIME_AT_SUBMIT));
                 if (atDate != null) {
                     String dateStr = df.format(atDate);
                     query.put(Settings.QFIELD_DATE_AT, dateStr);

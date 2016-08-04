@@ -1,0 +1,38 @@
+/*
+ *  Pieces/UI: Video
+ *______________________*/
+
+
+
+
+.video {
+    margin: rem(20px) 0;
+    position: relative;
+
+    iframe {
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+
+.video--4-3 {
+    &:before {
+        display: block;
+        content: '';
+        padding-top: 75%;
+        width: 100%;
+    }
+}
+
+.video--16-9 {
+    &:before {
+        display: block;
+        content: '';
+        padding-top: 56.25%;
+        width: 100%;
+    }
+}

@@ -1,0 +1,216 @@
+/*
+ *  Pieces/Layout: Footer
+ *______________________*/
+
+
+
+
+.footer {
+    background: color(faded) url($dir-img-template + 'footer-triangles.svg') no-repeat right 0;
+    background-size: 50% 100%;
+    overflow: hidden;
+    color: color(paris-m);
+    font-family: $font-brand;
+}
+
+.footer__top-link {
+    background: color(paris-m);
+    color: color(white);
+    cursor: pointer;
+    font-family: $font-brand;
+    padding: 1em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.footer__top{
+    padding: rem(22px 20px 18px 20px);
+
+    @include media(
+        $query: '768 - 940',
+        $css: (
+            text-align: center
+        )
+    );
+
+    @include media(
+        $query: '940 >',
+        $css: (
+            padding: rem(26px 20px),
+            text-align: left
+        )
+    );
+
+    p{
+        @include media(
+            $query: '940 >',
+            $css: (
+                margin-top: 0,
+                text-align: left,
+                vertical-align: sub
+            )
+        );
+    }
+}
+
+.footer__logo{
+    width: rem(82px);
+    fill: color(paris-m);
+    margin-top: 4px;
+
+    @include media(
+        $query: '768 - 940',
+        $css: (
+            margin-right: auto,
+            margin-left: auto
+        )
+    );
+    
+    @include media(
+        $query: '940 >',
+        $css: (
+            display: inline-block,
+            margin-right: rem(24px),            
+            vertical-align: middle
+        )
+    );
+}
+
+.footer__middle{
+    padding: rem(12px) 0;
+    text-align: center;
+    text-transform: uppercase;
+
+    @include media(
+        $query: '940 >',
+        $css: (
+            padding: rem(14px 20px),
+            text-align: left
+        )
+    );
+    
+    a{
+        color: inherit;
+        display: inline-block;
+        font-size: rem(16px);
+        font-family: inherit;
+        margin: 0 rem(24px);
+        
+        &:hover{
+            box-shadow: inset 0 -2px 0 0 currentColor;
+        }
+        
+        @include media(
+            $query: '768 >',
+            $css: (
+                margin-left: 0
+            )
+        );
+
+        @include media(
+            $query: '768 - 940',
+            $css: (
+                margin-top: 4px,
+                margin-bottom: 2px
+            )
+        );
+        
+        @include media(
+            $query: '940 >',
+            $css: (
+                margin-right: rem(48px),
+            )
+        );
+
+        &:first-child{
+            margin-left: 0;
+        }
+
+        &:last-child{
+            margin-right:0;
+        }
+    }
+}
+
+.footer__bottom{
+    padding: rem(10px 20px);
+
+    @include media(
+        $query: '940 >',
+        $css: (
+            padding: rem(8px 10px),
+        )
+    );
+}
+
+.social_media_icon{
+    line-height: 1em;
+    text-align: left;
+
+    @include media(
+        $query: '768 - 940',
+        $css: (
+            text-align: center
+        )
+    );
+        
+    @include media(
+        $query: '940 >',
+        $css: (
+            text-align: right
+        )
+    );
+
+    a{
+        border-radius: 50%;
+        display: inline-block;
+        font-size: rem(24px);
+        margin: rem(0 4px);
+        padding: rem(6px);
+        
+
+        &:first-child{
+            margin-left: 0;
+        }
+
+        &:last-child{
+            margin-right: 0;
+        }
+        
+        &:hover {
+            background: color(white);
+        }
+ 
+        @include media(
+            $query: '768 - 940',
+            $css: (
+                font-size: 24px
+            )
+        ); 
+    }
+    
+    .icon {
+        fill: color(paris-m);
+        font-size: rem(24px);
+    }
+}
+
+.copyright {
+    margin-bottom: 0;
+    margin-top: 10px;
+    
+    @include media(
+        $query: '768 >',
+        $css: (            
+            margin-top: 6px
+        )
+    );
+
+    @include media(
+        $query: '940 >',
+        $css: (
+            display: inline-block,
+            vertical-align: text-top
+        )
+    );   
+}

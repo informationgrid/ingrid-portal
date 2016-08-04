@@ -1,13 +1,26 @@
 ## ------------------------------
 ## search macros
 ## ------------------------------
-#macro (renderResultCounterCatalogue $pageSelector $catalogueName)
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
-$MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
-$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
-$MESSAGES.setMsgParam($catalogueName)
-$MESSAGES.getStringWithMsgParams('common.result.counter.catalog')
+#macro (renderResultCounterCatalogue $pageSelector $catalogueName $searchName)
+    #set($term = "")
+    #if($searchName)
+        #if($searchName.length() > 0)
+            #set($term = $searchName)
+        #end
+    #end
+    #if($term.lenght() > 0)
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.setMsgParam($term)
+        $MESSAGES.getStringWithMsgParams('common.result.counter.catalog.withsearchvalue')
+    #else
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
+        $MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
+        $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.setMsgParam($catalogueName)
+        $MESSAGES.getStringWithMsgParams('common.result.counter.catalog')
+    #end
 #end
 
 #macro (renderResultCounterCatalogueGrouping $pageSelector $catalogueName)
@@ -27,159 +40,443 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro (renderRankedResultCounterGrouping $pageSelector)
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
-$MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
-#end
-
-#macro (renderUnrankedResultCounter $pageSelector)
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
-$MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
-$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
-$MESSAGES.getStringWithMsgParams('common.result.counter.unranked')
-#end
-
-#macro (renderUnrankedResultCounterGrouping $pageSelector)
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
-#if($pageSelector.numberOfHits == 1)
-	$MESSAGES.getStringWithMsgParams('common.result.counter.unranked.grouped.singular')
-#else
-	$MESSAGES.getStringWithMsgParams('common.result.counter.unranked.grouped')	
-#end
-
-#end
-
-#macro (renderRankedPageNavigation $pageSelector)
-#set ($action = $renderResponse.createActionURL())
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
-$MESSAGES.setMsgParam("$pageSelector.numberOfPages")
-$MESSAGES.getStringWithMsgParams('common.result.navigation.ranked')
-	#if($pageSelector.selectorHasPreviousPage)
-        #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
-    	$action.setParameter('rstart', $pstart.toString())	
-    		<a href="$action">&laquo;</a>
-    	$action.setParameter('rstart', "0")	
-    		| <a href="$action">1</a> ..
+    #set($term = "")
+    #if($searchTerm)
+        #if($searchTerm.length() > 0)
+            #set($term = $searchTerm)
+        #end
     #end
-	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
-    	#if($pageId == $pageSelector.currentSelectorPage)
-    		| $pageId
-    	#else
-    		#set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
-    		$action.setParameter('rstart', $pstart.toString())
-    		| <a href="$action">$pageId</a>
-    	#end
-	#end
-    #if($pageSelector.selectorHasNextPage)
-        #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
-    	$action.setParameter('rstart', $pstart.toString())
-    		| <a href="$action">&raquo;</a>
+    #if($term.length() > 0)
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.setMsgParam("$term")
+        $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.withsearchvalue')
+    #else
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
     #end
+#end
+
+#macro (renderRankedPageNavigation $pageSelector $isBottom)
+
+#if($isBottom)
+    <p class="mq-hide-l">#renderRankedResultCounter($pageSelector)</p>
+#end
+
+## Default
+<ul class="pagination__list tx-right mq-hide-m">
+    #set ($pstart = 0)
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+    
+    #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+
+    #foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+        <li>
+        #if($pageId == $pageSelector.currentSelectorPage)
+            <a class="pagination__number is-active">$pageId</a>
+        #else
+            #set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
+            $action.setParameter('rstart', $pstart.toString())
+            <a class="pagination__number" href="$action">$pageId</a>
+        #end
+        </li>
+    #end
+    
+    #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    
+    #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+</ul>
+
+## Mobile
+<ul class="pagination__list mq-show-m">
+    #set ($pstart = 0)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+    
+    #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    
+    <li><a class="pagination__number is-active" >$pageSelector.currentSelectorPage</a></li>
+    <li><a class="pagination__number" >/</a></li>
+    #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li><a class="pagination__number" href="$action">$pageSelector.numberOfPages</a></li>
+    
+    #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    
+    #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+</ul>
 #end
 
 ## this navigation is used when "grouping by domain"
 ## -> renders pages just like with NO GROUPING and estimates starthits of oncoming pages
-#macro (renderRankedPageNavigationGroupingWithPages $pageSelector)
-#set ($action = $renderResponse.createActionURL())
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
-$MESSAGES.getStringWithMsgParams('common.result.navigation.ranked.grouped')
-	#if($pageSelector.selectorHasPreviousPage)
-        #set ($pstart = $pageSelector.currentSelectorPage - 1)
-    	$action.setParameter('currentSelectorPage', $pstart.toString())
-    		<a href="$action">&laquo;</a>
-    	$action.setParameter('currentSelectorPage', "1")
-    		| <a href="$action">1</a> ..
-	#end
-	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
-    	#if($pageId == $pageSelector.currentSelectorPage)
-    		| $pageId
-    	#else
-			$action.setParameter('currentSelectorPage', $pageId.toString())
-    		| <a href="$action">$pageId</a>
-    	#end
-	#end
-    #if($pageSelector.selectorHasNextPage)
-        #set ($pstart = $pageSelector.currentSelectorPage + 1)
-    	$action.setParameter('currentSelectorPage', $pstart.toString())
-    		| <a href="$action">&raquo;</a>
+#macro (renderRankedPageNavigationGroupingWithPages $pageSelector $isBottom)
+
+#if($isBottom)
+    <p class="mq-hide-l">#renderRankedResultCounterGrouping($pageSelector)</p>
+#end
+
+## Default
+<ul class="pagination__list tx-right mq-hide-m">
+    #set ($action = $renderResponse.createActionURL())
+    #set ($pstart = 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+    
+    #set ($pstart = $pageSelector.currentSelectorPage - 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    
+    #foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+        <li>
+        #if($pageId == $pageSelector.currentSelectorPage)
+            <a class="pagination__number is-active">$pageId</a>
+        #else
+            $action.setParameter('currentSelectorPage', $pageId.toString())
+            <a class="pagination__number" href="$action">$pageId</a>
+        #end
+        </li>
     #end
+    
+    #set ($pstart = $pageSelector.currentSelectorPage + 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    
+    #set ($pstart = $pageSelector.lastSelectorPage)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+</ul>
+
+## Mobile
+<ul class="pagination__list mq-show-m">
+    #set ($action = $renderResponse.createActionURL())
+    #set ($pstart = 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+    
+    #set ($pstart = $pageSelector.currentSelectorPage - 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    
+    <li><a class="pagination__number is-active">$pageSelector.currentSelectorPage</a></li>
+    <li><a class="pagination__number">/</a></li>
+    $action.setParameter('currentSelectorPage', $pageSelector.lastSelectorPage.toString())
+    <li><a class="pagination__number" href="$action">$pageSelector.lastSelectorPage</a></li>
+    
+    #set ($pstart = $pageSelector.currentSelectorPage + 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    
+    #set ($pstart = $pageSelector.lastSelectorPage)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+</ul>
 #end
 
 ## this navigation is used when grouping is active and is not "grouping by domain" (then see above) 
 ## -> renders only current page with ">>" to next page
-#macro (renderRankedPageNavigationGrouping $pageSelector)
-#set ($action = $renderResponse.createActionURL())
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
-$MESSAGES.getStringWithMsgParams('common.result.navigation.ranked.grouped')
-	#if($pageSelector.currentSelectorPage > 1)
-        #set ($pstart = $pageSelector.currentSelectorPage - 1)
-    	$action.setParameter('currentSelectorPage', $pstart.toString())
-    		<a href="$action">&laquo;</a>
-    	$action.setParameter('currentSelectorPage', "1")	
-    		| <a href="$action">1</a> ..
-	#end
-    		| $pageSelector.currentSelectorPage
-    #if($pageSelector.selectorHasNextPage)
-        #set ($pstart = $pageSelector.currentSelectorPage + 1)
-    	$action.setParameter('currentSelectorPage', $pstart.toString())
-    		| <a href="$action">&raquo;</a>
-    #end
+#macro (renderRankedPageNavigationGrouping $pageSelector $isBottom)
+
+#if($isBottom)
+    <p class="mq-hide-l">#renderRankedResultCounter($pageSelector)</p>
 #end
 
-#macro (renderUnrankedPageNavigationGrouping $pageSelector)
-#set ($action = $renderResponse.createActionURL())
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.currentSelectorPageUnranked")
-$MESSAGES.getStringWithMsgParams('common.result.navigation.unranked.grouped')
-	#if($pageSelector.currentSelectorPageUnranked > 1)
-        #set ($pstart = $pageSelector.currentSelectorPageUnranked - 1)
-    	$action.setParameter('currentSelectorPageUnranked', $pstart.toString())
-    		<a href="$action">&laquo;</a>
-    	$action.setParameter('currentSelectorPageUnranked', "1")	
-    		| <a href="$action">1</a> ..
-	#end
-    		| $pageSelector.currentSelectorPageUnranked
-    #if($pageSelector.selectorHasNextPage)
-        #set ($pstart = $pageSelector.currentSelectorPageUnranked + 1)
-    	$action.setParameter('currentSelectorPageUnranked', $pstart.toString())
-    		| <a href="$action">&raquo;</a>
+## Default
+<ul class="pagination__list tx-right mq-hide-m">
+    <li style="display:none">
+        <a class="pagination__left">
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+    #set ($action = $renderResponse.createActionURL())
+    #set ($pstart = $pageSelector.currentSelectorPage - 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    #if($pageSelector.currentSelectorPage > 1)
+        $action.setParameter('currentSelectorPage', "1")
+        <li>
+              <a class="pagination__number" href="$action"> 1 </a>
+       </li>
+       <li>...</li>
     #end
-#end
+    <li>
+        <a class="pagination__number is-active"> $pstart</a>
+    </li>
+    
+    #if($pageSelector.selectorHasNextPage)
+       #if($pageSelector.currentSelectorPage == 1)
+           <li>...</li>
+       #end
+       #set ($pstart = $pageSelector.currentSelectorPage + 1)
+        $action.setParameter('currentSelectorPage', $pstart.toString())
+        <li>
+              <a class="pagination__number" href="$action">$pstart</a>
+       </li>
+    #end
+    
+    #set ($pstart = $pageSelector.currentSelectorPage + 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.selectorHasNextPage)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    <li style="display:none">
+        <a class="pagination__right is-hidden">
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+</ul>
 
-#macro (renderUnrankedPageNavigation $pageSelector)
-#set ($action = $renderResponse.createActionURL())
-$MESSAGES.resetMsgParams()
-$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
-$MESSAGES.setMsgParam("$pageSelector.numberOfPages")
-$MESSAGES.getStringWithMsgParams('common.result.navigation.unranked')
-    #if($pageSelector.selectorHasPreviousPage)
-        #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
-    	$action.setParameter('nrstart', $pstart.toString())	
-    		<a href="$action">&laquo;</a>
-    	$action.setParameter('nrstart', "0")	
-    		| <a href="$action">1</a> ..
-    #end
-	#foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
-    	#if($pageId == $pageSelector.currentSelectorPage)
-    		| $pageId
-    	#else
-    		#set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
-    		$action.setParameter('nrstart', $pstart.toString())
-    		| <a href="$action">$pageId</a>
-    	#end
-	#end
-    #if($pageSelector.selectorHasNextPage)
-        #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
-    	$action.setParameter('nrstart', $pstart.toString())
-    		| <a href="$action">&raquo;</a>
-    #end
+## Mobile
+<ul class="pagination__list mq-show-m">
+    <li style="display:none">
+        <a class="pagination__left">
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+    #set ($action = $renderResponse.createActionURL())
+    #set ($pstart = $pageSelector.currentSelectorPage - 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    
+    <li>
+        <a class="pagination__number is-active"> $pageSelector.currentSelectorPage</a>
+    </li>
+    
+    #set ($pstart = $pageSelector.currentSelectorPage + 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <li>
+        <a class="pagination__right" #if($pageSelector.selectorHasNextPage)href="$action"#end>
+            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+        </a>
+    </li>
+    <li style="display:none">
+        <a class="pagination__right">
+            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+        </a>
+    </li>
+</ul>
 #end
 
 #macro (renderTitle $title)
 #if ($title && $title != "")$title#else $MESSAGES.getString('common.result.noTitle')#end
+#end
+
+#macro(renderSearchResultFacetFilter)
+    <aside class="sidebar js-accordion-multi">
+        <div class="sidebar__title js-accordion-toggle mq-show-l" onclick="onClickFilterEvent()">
+            Filter
+            #if($enableFacetSelection > 0 || $isSelection)
+                <svg class="icon-active"><use xlink:href="#check"></use></svg>
+            #end
+            <svg class="icon"><use xlink:href="#filter"></use></svg>
+            <svg class="icon"><use xlink:href="#cross"></use></svg>
+        </div>
+        <div class="sidebar__content js-accordion-content is-hidden">
+            #parse ('/WEB-INF/templates/facete/facete.vm')
+        </div>
+    </aside>
+#end
+
+#macro(renderSearchResultFacetSelection $entries $resourceMsgs $cat)
+    #foreach($entry in $entries)
+        #if(!$entry.getQuery())
+            #if($entry.getId() == 'area')
+                #foreach ($geothesaurus in $geothesaurusSelectTopics)
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("doRemoveGeothesaurus",  $geothesaurus.topicId)
+                    #set($title = "$geothesaurus.topicTitle")
+                    #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$title")
+                #end
+                #if($selectedMap)
+                    #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveMap",  "inside")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$selectedMap.doMapCoords.inside")
+                    #end
+                #end
+            #elseif($entry.getId() == 'attribute')
+                #if($doAddAttribute)
+                    ##Projektname
+                    #if($doAddAttribute.db_title)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "db_title")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.db_title")
+                    #end
+                    ##Institution
+                    #if($doAddAttribute.db_institute)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "db_institute")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.db_institute")
+                    #end
+                    ##Projektleiter
+                    #if($doAddAttribute.db_pm)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "db_pm")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.db_pm")
+                    #end
+                    ##Beteiligte
+                    #if($doAddAttribute.db_staff)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "db_staff")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.db_staff")
+                    #end
+                    ##Projektträger
+                    #if($doAddAttribute.db_org)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "db_org")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.db_org")
+                    #end
+                    ##Laufzeit
+                    #if($doAddAttribute.term_from)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "term_from")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.term_from")
+                    #end
+                    #if($doAddAttribute.term_to)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "term_to")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.term_to")
+                    #end
+                #end
+            #elseif($entry.getId() == 'area.address')
+                #if($doAddAreaAddress)
+                    ## Strasse
+                    #if($doAddAreaAddress.street)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAreaAddress",  "street")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAreaAddress.street")
+                    #end
+                    ## PLZ
+                    #if($doAddAreaAddress.zip)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAreaAddress",  "zip")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAreaAddress.zip")
+                    #end
+                    ## Ort
+                    #if($doAddAreaAddress.city)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAreaAddress",  "city")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAreaAddress.city")
+                    #end
+                #end
+            #elseif($entry.isSelect())
+                #if($entry.getFacets())
+                    #set($catName = $resourceMsgs.getString($entry.getName()))
+                    #renderSearchResultFacetSelection ($entry.getFacets() $resourceMsgs $catName)
+                #end
+            #end
+        #else
+            #if($entry.isSelect())
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
+                #renderSearchResultFacetSelectionItem($entry $action "$cat:$resourceMsgs.getString($entry.getName())")
+            #end
+            #if($entry.getFacets())
+                #set($catNameSub = $resourceMsgs.getString($entry.getName()))
+                #renderSearchResultFacetSelection ($entry.getFacets() $resourceMsgs $catNameSub)
+            #end
+        #end
+    #end
+#end
+
+#macro(renderSearchResultFacetSelectionItem $entry $action $title)
+    <div class="field-toggle field-toggle--check bx-bot-xs">
+        <input id="chk_fs_$entry.getId()" name="event" type="checkbox" onclick="location.href='$action'" checked>
+        <label class="field-toggle__label field-toggle__label--boxed" for="chk_fs_$entry.getId()">
+            <div class="field-toggle__icon field-toggle__icon-alt">
+                <svg class="icon">
+                    <use xlink:href="#tick">
+                </svg>
+            </div>
+            $title
+        </label>
+    </div>
 #end

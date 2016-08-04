@@ -60,28 +60,8 @@ public class DetailDataPreparerFactory {
 	
 	public DetailDataPreparer getDetailDataPreparer(String version) {
 		
-		if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_9_DSC_OBJECT)) {
-			return new DetailDataPreparerIdc1_0_9Object(context, iplugId, request, response);
-		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {
-			return new DetailDataPreparerIdc1_0_8Object(context, iplugId, request, response);
-		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
-			return new DetailDataPreparerIdc1_0_5Object(context, iplugId, request, response);
-		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
-			return new DetailDataPreparerIdc1_0_3Object(context, iplugId, request, response);
-		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
-			return new DetailDataPreparerIdc1_0_2Object(context, iplugId, request, response);
-		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_ADDRESS)) {
-			return new DetailDataPreparerIdc1_0_5Address(context, iplugId, request, response);
-		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
-			return new DetailDataPreparerIdc1_0_2Address(context, iplugId, request, response);
-		} else if (version.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {
-			return new DetailDataPreparer_UDK_5_0_Object(context, iplugId, dateFields, request, replacementFields);
-		} else if (version.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
-			return new DetailDataPreparer_UDK_5_0_Address(context, iplugId, dateFields, request, replacementFields);
-		} else if (version.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT) || version.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)) {
+		if (version.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT) || version.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)) {
 			return new DetailDataPreparerIDF2_0_0Generic(context, iplugId, request, response);
-		} else if (version.equals(IPlugVersionInspector.VERSION_UNKNOWN)) {
-			return new DetailDataPreparerGeneric(context, dateFields, request, replacementFields);
 		}
 		
 		return null;

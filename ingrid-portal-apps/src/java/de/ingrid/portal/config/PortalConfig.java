@@ -58,9 +58,6 @@ public class PortalConfig extends PropertiesConfiguration {
     /** timout for ranked queries in ms */
     public final static String QUERY_TIMEOUT_RANKED = "query.timeout.ranked";
 
-    /** timout for unranked queries in ms */
-    public final static String QUERY_TIMEOUT_UNRANKED = "query.timeout.unranked";
-
     /** default timeout for sns queries in ms */
     public final static String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
 
@@ -103,127 +100,73 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_PROFILE = "portal.profile";
 
-    public static final String PORTAL_ENABLE_SEARCH_TOPICS_SEARCHTERM = "portal.enable.search.topics.searchterm";
-    
     public static final String PORTAL_ENABLE_SEARCH_MEASURES_SEARCHTERM = "portal.enable.search.measures.searchterm";
-    
-    public static final String PORTAL_ENABLE_SEARCH_SERVICES_SEARCHTERM = "portal.enable.search.services.searchterm";
-    
-    public static final String PORTAL_ENABLE_SEARCH_TOPICS_GROUPING = "portal.enable.search.topics.grouping";
     
     public static final String PORTAL_ENABLE_SEARCH_MEASURES_GROUPING = "portal.enable.search.measures.grouping";
     
-    public static final String PORTAL_ENABLE_SEARCH_SERVICES_GROUPING = "portal.enable.search.services.grouping";
-    
-    public static final String PORTAL_ENABLE_SEARCH_TOPICS_DOSEARCH = "portal.enable.search.topics.dosearch";
-    
     public static final String PORTAL_ENABLE_SEARCH_MEASURES_DOSEARCH = "portal.enable.search.measures.dosearch";
-    
-    public static final String PORTAL_ENABLE_SEARCH_SERVICES_DOSEARCH = "portal.enable.search.services.dosearch";
-    
-    public static final String PORTAL_ENABLE_SEARCH_TOPICS_PROVIDER = "portal.enable.search.topics.provider";
     
     public static final String PORTAL_ENABLE_SEARCH_MEASURES_PROVIDER = "portal.enable.search.measures.provider";
     
-    public static final String PORTAL_ENABLE_SEARCH_SERVICES_PROVIDER = "portal.enable.search.services.provider";
-    
-    public static final String PORTAL_TOPIC_SELECTION_LIST_NUMBER = "portal.topic.selection.list.number";
-    
-    public static final String PORTAL_ENABLE_SEARCH_SERVICES_CATEGORY = "service.selection.enable.category";
-   
     public static final String PORTAL_ENABLE_SEARCH_CATALOG = "portal.enable.search.catalog";
 
-    public static final String PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS = "portal.enable.search.catalog.thesaurus";
-    
-    public static final String PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS_RESULT_ADDRESS = "portal.enable.search.catalog.thesaurus.result.address";
-    
     public static final String PORTAL_ENABLE_SEARCH_CATALOG_HIERARCHY_TREE = "portal.enable.search.catalog.hierarchy.tree";
     
-    public static final String PORTAL_ENABLE_DATASOURCE_RESEARCH = "portal.enable.datasource.research";
-
-    public static final String PORTAL_ENABLE_DATASOURCE_ADDRESSES = "portal.enable.datasource.addresses";
-
-	public static final String PORTAL_ENABLE_DATASOURCE_LAWS = "portal.enable.datasource.laws";
-    
-	public static final String PORTAL_ENABLE_DATASOURCE_CATALOG = "portal.enable.datasource.catalog";
-
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER = "portal.search.restrict.partner";
     
+    public static final String PORTAL_SEARCH_DEFAULT_DATASOURCE = "portal.search.default.datasource";
+    
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL = "portal.search.restrict.partner.level";
-        
-    public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS = "portal.search.display.providers";
-    public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS_ADDRESS = "portal.search.display.providers.address";
-    public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS_ENVINFO = "portal.search.display.providers.default";
-    public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS_LAW = "portal.search.display.providers.law";
-    public static final String PORTAL_SEARCH_DISPLAY_PROVIDERS_RESEARCH = "portal.search.display.providers.research";
+    
+    public static final String PORTAL_HIERARCHY_CATALOGNAME_HIDDEN = "portal.hierarchy.catalogname.hidden";
     
     public static final String PORTAL_LOGGER_RESOURCE = "portal.logger.resource";
 
     public static final String PORTAL_ENABLE_MEASURE = "portal.enable.measure";
 
-    public static final String PORTAL_ENABLE_SERVICE = "portal.enable.service";
-    
-    public static final String PORTAL_ENABLE_TOPIC = "portal.enable.topic";
-    
     public static final String PORTAL_ENABLE_ABOUT = "portal.enable.about";
     
     public static final String PORTAL_ENABLE_PARTNER = "portal.enable.partner";
     
-	public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
+public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
 
-	public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
+public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
 
-	public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
-	
-	public static final String PORTAL_ENABLE_SEARCH_RESULTS_UNRANKED = "portal.enable.search.results.unranked";
+public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
 
-	public static final String PORTAL_ENABLE_SEARCH_RESULTS_UNRANKED_ALLIPLUGS = "portal.enable.search.results.unranked.alliplugs";
-	
-	public static final String PORTAL_ENABLE_NEWSLETTER = "enable.newsletter.registration";
-	
-	public static final String PORTAL_ENABLE_ACCOUNT_QUESTION = "enable.account.registration.question";
-	
-	public static final String PORTAL_ENABLE_NEWSLETTER_CMS_INFO = "enable.newsletter.cms.info";
-	
-	public static final String THESAURUS_INFO_LINK = "thesaurus.info.use.link";
+public static final String PORTAL_ENABLE_ACCOUNT_QUESTION = "enable.account.registration.question";
 
-	public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
+public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
 
-	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
+public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
     
-	public static final String COMPONENT_MONITOR_ALERT_EMAIL_SENDER = "component.monitor.alert.email.sender";
+public static final String COMPONENT_MONITOR_ALERT_EMAIL_SENDER = "component.monitor.alert.email.sender";
 
-	public static final String COMPONENT_MONITOR_DEFAULT_EMAIL = "component.monitor.default.email";
+public static final String COMPONENT_MONITOR_DEFAULT_EMAIL = "component.monitor.default.email";
 
-	public static final String COMPONENT_MONITOR_SNS_LOGIN = "component.monitor.sns.login";
+public static final String COMPONENT_MONITOR_SNS_LOGIN = "component.monitor.sns.login";
 
-	public static final String COMPONENT_MONITOR_SNS_PASSWORD = "component.monitor.sns.password";
-	
-	public static final String COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT = "component.monitor.update.alert.email.subject";
-	
-	public static final String PORTAL_ENABLE_SEARCH_SEPERATOR = "portal.enable.search.seperator";
-	
-	public static final String THESAURUS_SEARCH_QUERY_TYPES = "thesaurus.search.query.types";
-	
-	public static final String THESAURUS_SEARCH_ADD_EN_TERM = "thesaurus.search.add.en.term";
-	
-	public static final String TEASER_WEATHER_DWD_PATH = "teaser.weather.dwd.path";
-	
-	public static final String TEASER_WEATHER_DWD_MOVIE = "teaser.weather.dwd.movie";
-	
-	// contains the short version of all supported languages
-	public static final String LANGUAGES_SHORT = "languages.short";
-	
-	// the specific language is added after this variable (e.g. languages.names.de) 
-	public static final String LANGUAGES_NAMES = "languages.names.";
-	
-	// the url to the upgrade server
+public static final String COMPONENT_MONITOR_SNS_PASSWORD = "component.monitor.sns.password";
+
+public static final String COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT = "component.monitor.update.alert.email.subject";
+
+public static final String TEASER_WEATHER_DWD_PATH = "teaser.weather.dwd.path";
+
+public static final String TEASER_WEATHER_DWD_MOVIE = "teaser.weather.dwd.movie";
+
+// contains the short version of all supported languages
+public static final String LANGUAGES_SHORT = "languages.short";
+
+// the specific language is added after this variable (e.g. languages.names.de) 
+public static final String LANGUAGES_NAMES = "languages.names.";
+
+// the url to the upgrade server
     public static final String UPGRADE_SERVER_URL = "upgrade.server.url";
     
     public static final String UPGRADE_SERVER_USERNAME = "upgrade.server.username";
     
     public static final String UPGRADE_SERVER_PASSWORD = "upgrade.server.password";
-	
+
     // disable button and textfield for edit partner/provider 
     public static final String DISABLE_PARTNER_PROVIDER_EDIT = "portal.disable.partner.provider.edit";
     
@@ -235,15 +178,9 @@ public class PortalConfig extends PropertiesConfiguration {
     
     // User admin: show max row of users in a table
     public static final String USER_ADMIN_MAX_ROW = "admin.user.max.row";
-	
-    public static final String PORTAL_ENABLE_FEATURE_TYPE = "portal.feature.type.enable";
-	
+
     public static final String PORTAL_SEARCH_LANGUAGE_INDEPENDENT = "portal.search.language.independent";
-	
-    public static final String PORTAL_ENABLE_SEARCH_SIMPLE_DATASOURCE_SELECTION = "portal.enable.search.simple.datasource.selection";
-	
-    public static final String PORTAL_ENABLE_SEARCH_SIMPLE_OPTIONAL_LINKS= "portal.enable.search.simple.optional.links";
-    
+
     public static final String PORTAL_ENABLE_APPLICATION= "portal.enable.application";
     
     // Hide CMS items for changing on admin page
@@ -251,7 +188,9 @@ public class PortalConfig extends PropertiesConfiguration {
     
     // Enable facete on search hits
     public static final String PORTAL_ENABLE_SEARCH_FACETE = "portal.search.facete.enable";
-
+    
+    public static final String PORTAL_SEARCH_FACETE_SUB_COUNT = "portal.search.facete.sub.count";
+    
     public static final String PORTAL_SEARCH_HIDDEN_DATATYPES = "portal.search.hidden.datatype";
     
     public static final String PORTAL_SEARCH_HIT_PARTNER_LOGO = "portal.search.hit.partner.logo";
@@ -273,6 +212,14 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_DETAIL_VIEW_LIMIT_REFERENCES = "portal.detail.view.limit.references";
     
+    public static final String PORTAL_SEARCH_EMPTY_QUERY = "portal.search.empty.query";
+
+    public static final String CATEGORY_TEASER_SEARCH_QUERY = "category.teaser.search.query";
+   
+    public static final String CATEGORY_TEASER_SEARCH_FACETS_TYP = "category.teaser.search.facets.typ";
+    
+    public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
+    
     // private stuff
     private static PortalConfig instance = null;
 
@@ -280,7 +227,6 @@ public class PortalConfig extends PropertiesConfiguration {
 
     private final static Logger log = LoggerFactory.getLogger(PortalConfig.class);
 
-	
     public static synchronized PortalConfig getInstance() {
         if (instance == null) {
             try {

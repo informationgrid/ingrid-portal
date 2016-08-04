@@ -1,12 +1,15 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #if ($success == 'true')
-<p>$MESSAGES.getString('account.confirmed.content')</p>
-<p class="iconLink">
-	<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
+#renderMessageSuccess($MESSAGES.getString('account.confirmed.content'))
 #set ($link = $renderResponse.encodeURL("${contextPath}/portal/service-myportal.psml"))
-	<span><a href="$link">$MESSAGES.getString('account.confirmed.link')</a></span>
-	<span class="clearer"></span>
-</p>
+<ul class="link-list">
+    <li>
+        <a href="$link">
+            <svg class="icon"><use xlink:href="#internal-link"></svg>
+            $MESSAGES.getString('account.confirmed.link')
+        </a>
+    </li>
+</ul>
 #else
-<p>$!{MESSAGES.getString($problemText)}</p>
+    #renderMessageError($!{MESSAGES.getString($problemText)})
 #end

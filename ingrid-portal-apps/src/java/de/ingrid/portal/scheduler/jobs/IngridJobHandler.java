@@ -68,7 +68,6 @@ import de.ingrid.utils.PlugDescription;
 public class IngridJobHandler {
 	private static final String[] component_types = {
 		"component.monitor.general.type.iplug",
-		"component.monitor.general.type.g2k",
 		"component.monitor.general.type.csw",
 		"component.monitor.general.type.sns",
 		"component.monitor.general.type.ibus",

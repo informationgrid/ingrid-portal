@@ -83,7 +83,7 @@ public interface WMSInterface {
      *            pass locale, pass null if default language
      * @return The url of the WMS view script on the Server.
      */
-    String getWMSViewerURL(String sessionId, boolean jsEnabled, Locale language);
+    String getWMSViewerURL(String sessionId, Locale language);
 
     /**
      * Returns the URL of the WMS SEARCH "MAP" with search functionality. The
@@ -100,7 +100,7 @@ public interface WMSInterface {
      *            pass locale, pass null if default language
      * @return The url of the WMS search script on the Server.
      */
-    String getWMSSearchURL(String sessionId, boolean jsEnabled, Locale language);
+    String getWMSSearchURL(String sessionId, Locale language);
 
     /**
      * Returns the URL of the WMS VIEWER or the WMS_SEARCH template of the
@@ -150,7 +150,7 @@ public interface WMSInterface {
      * @return The url of the WMS Server including the command to add the
      *         services.
      */
-    String getWMSAddedServiceURL(List services, String sessionId, boolean jsEnabled, Locale language, boolean isViewer);
+    String getWMSAddedServiceURL(List services, String sessionId, Locale language, boolean isViewer);
 
     /**
      * Returns the admin interfaces for the WMS component. There can be more

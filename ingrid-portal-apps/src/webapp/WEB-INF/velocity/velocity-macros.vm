@@ -10,6 +10,21 @@ $form.getInput($field)#end
 #macro (getHTMLEscapedFieldValue $field)
 $actionForm.getInputHTMLEscaped($field)#end
 
+#macro (addErrorFormClass $field)
+#if ($actionForm.hasErrorInField($field))class="field--error"#end
+#end
+
+#macro (addErrorFormClassText $field)
+#if ($actionForm.hasErrorInField($field))field--error#end
+#end
+
+#macro (addErrorFormMessage $field)
+#if ($actionForm.hasErrorInField($field))<small class="bx-top-xs">$MESSAGES.getString($actionForm.getErrorInField($field))</small>#end
+#end
+
+#macro (addErrorFormMessageBox $field)
+#if ($actionForm.hasErrorInField($field))#renderMessageError($MESSAGES.getString($actionForm.getErrorInField($field)))</small>#end
+#end
 
 #macro (getChecked $field $value)
 #if ($actionForm.isCurrentInput($field, $value)) checked="checked"#end
@@ -20,42 +35,69 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (displayFormErrorsByForm $form)
-#if ($form.hasErrors())
-<div>
-#foreach ($errorMsg in $form.getAllErrors())
-<h3 class="portlet-msg-error">$MESSAGES.getString($errorMsg)</h3>
-#end
-</div>
-#end
+    #if ($form.hasErrors())
+        <div>
+            #foreach ($errorMsg in $form.getAllErrors())
+                #renderMessageError($MESSAGES.getString($errorMsg))
+            #end
+        </div>
+    #end
 #end
 
 #macro (displayFormErrors)
-#displayFormErrorsByForm($actionForm)   
+    #displayFormErrorsByForm($actionForm)
+#end
+
+#macro (displayFormErrorQuery)
+    #if ($actionForm.hasErrors())
+        <div>
+            #foreach ($errorMsg in $actionForm.getAllErrors())
+                #if($errorMsg.indexOf('error.queryFormat') > -1)
+                    #renderMessageError($MESSAGES.getString($errorMsg))
+                #end
+            #end
+        </div>
+    #end
+#end
+
+#macro (displayFormError $field)
+    #if($field)
+        #set($tmpField = $field)
+    #else
+        #set($tmpField = "")
+    #end
+    #if ($actionForm.hasErrors())
+        #if($actionForm.hasErrorInField($tmpField))
+            #renderMessageError($MESSAGES.getString($actionForm.getErrorInField($tmpField)))
+        #else
+            #renderMessageError($MESSAGES.getString('common.form.error'))
+        #end
+    #end
 #end
 
 #macro (displayFormMessagesByForm $form)
-#if ($form.hasMessages())
-<div>
-#foreach ($msg in $form.getAllMessages())
-<h3 class="portlet-msg-info">$MESSAGES.getString($msg)</h3>
-#end
-</div>
-#end
+    #if ($form.hasMessages())
+        #foreach ($msg in $form.getAllMessages())
+            #renderMessageSuccess($MESSAGES.getString($msg))
+        #end
+    #end
 #end
 
 #macro (displayFormMessages)
-#displayFormMessagesByForm($actionForm) 
+    #displayFormMessagesByForm($actionForm) 
 #end
 
 
 #macro (displayFieldLabelByForm $form $fieldName $fieldLabel)
-#if ($form.hasErrorInField($fieldName))
-<span class="portlet-msg-error">$fieldLabel</span>#else
-$fieldLabel#end
+    #if ($form.hasErrorInField($fieldName))
+        #renderMessageError($fieldLabel)
+    #else
+        $fieldLabel
+    #end
 #end
 
 #macro (displayFieldLabel $fieldName $fieldLabel)
-#displayFieldLabelByForm($actionForm $fieldName $fieldLabel)
+    #displayFieldLabelByForm($actionForm $fieldName $fieldLabel)
 #end
 
 
@@ -73,146 +115,167 @@ $fieldLabel#end
 ## ------------------------------
 ## Administration macros
 ## ------------------------------
-#macro (renderDBBrowserNavigation $browser)
-<div class="contentNavigation">
-    <div class="contentNavigationLeft">
-    #if ($browser.hasPreviousPage())
-        #renderInputButtonClass("<<" "" "doFirst" "" "btn_admin")
-        #renderInputButtonClass("<" "" "doPrev" "" "btn_admin")
-    #end
-        &nbsp;
-    </div>
-    <div class="contentNavigationMiddle">$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</div>
-    <div class="contentNavigationRight">
-    #if ($browser.hasNextPage())
-        #renderInputButtonClass(">" "" "doNext" "" "btn_admin")
-        #renderInputButtonClass(">>" "" "doLast" "" "btn_admin")
-    #end
-    </div>
-    <p class="clearer"></p>
-</div>
-#end
-
 #macro (renderPaginationAndHint $browser $hint)
-    <div id="paginationAndHint">
-      <div id="dbBrowserHint">
-        <p>$hint</p>
-      </div>
-      <div id="pagination" style="float:right">    
-      <div id="btnPageFirst" class="btn_admin">
-        <div id="doFirst"#if($browser.hasPreviousPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
-        <div#if($browser.hasPreviousPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
-          <input#if($browser.hasPreviousPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0" type="image" src="../../decorations/layout/ingrid/images/button_page_first.png" onclick="" title="" name="doFirst" value="first">
-        </div>
-        <div id="doFirst right"#if($browser.hasPreviousPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
-      </div>
-      <div id="btnPagePrev" class="btn_admin">
-        <div id="doPrev"#if($browser.hasPreviousPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
-        <div#if($browser.hasPreviousPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
-          <input#if($browser.hasPreviousPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0" type="image" src="../../decorations/layout/ingrid/images/button_page_prev.png" onclick="" title="" name="doPrev" value="prev">
-        </div>
-        <div id="doPrev right"#if($browser.hasPreviousPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
-      </div>
-      <div id="paginationText" style="float:left">
-        <p>$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</p>
-      </div>
-      <div id="btnPageNext" class="btn_admin">
-        <div id="doNext"#if($browser.hasNextPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
-        <div#if($browser.hasNextPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
-          <input#if($browser.hasNextPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0" type="image" src="../../decorations/layout/ingrid/images/button_page_next.png" onclick="" title="" name="doNext" value="next">
-        </div>
-        <div id="doNext right"#if($browser.hasNextPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
-      </div>
-      <div id="btnPageLast" class="btn_admin">
-        <div id="doLast"#if($browser.hasNextPage()) class="btn_pg_left"#else class="btn_pg_left_disabled"#end></div>
-        <div#if($browser.hasNextPage()) class="btn_pg_center"#else class="btn_pg_center_disabled"#end>
-          <input#if($browser.hasNextPage()) class="btn"#else class="btn_disable" disabled="true"#end style="height:19px;padding:0" type="image" src="../../decorations/layout/ingrid/images/button_page_last.png" onclick="" title="" name="doLast" value="last">
-        </div>
-        <div id="doLast right"#if($browser.hasNextPage()) class="btn_pg_right"#else class="btn_pg_right_disabled"#end></div>
-      </div>
-      </div>
+    <div id="paginationAndHint" class="pagination">
+        <ul class="pagination__list tx-right mq-hide-m">
+            <li>
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('doFirst', 'first')
+                <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
+                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+                </a>
+            </li>
+            <li>
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('doPrev', 'prev')
+                <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
+                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
+                </a>
+            </li>
+            
+            <li>$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</li>
+            
+            <li>
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('doNext', 'next')
+                <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
+                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
+                </a>
+            </li>
+            
+            <li>
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('doLast', 'last')
+                <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
+                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+                </a>
+            </li>
+        </ul>
+        <ul class="pagination__list mq-show-m">
+            <li>
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('doFirst', 'first')
+                <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
+                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+                </a>
+            </li>
+            <li>
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('doPrev', 'prev')
+                <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
+                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
+                </a>
+            </li>
+            
+            <li>$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() / $browser.getTotalNumRows()</li>
+            
+            <li>
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('doNext', 'next')
+                <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
+                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
+                </a>
+            </li>
+            
+            <li>
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter('doLast', 'last')
+                <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
+                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+                </a>
+            </li>
+        </ul>
     </div>
+    #if($hint != "")
+        #renderMessageInfo($hint)
+    #end
 #end
 
-#macro (renderDBBrowserHeader $colNames $colTitles)
-<tr>
-    <td class="contentColumnHead"></td>
-    #foreach ($colTitle in $colTitles)
-        #set ($colLink = $renderResponse.createActionURL())
-        #set ($colIndex = $velocityCount - 1)
-        $colLink.setParameter("sortColumn", $colNames.get($colIndex))
-        <td class="contentColumnHead"><a href="$colLink" class="contentColumnHead">$colTitle</a></td>
-    #end
-</tr>
-#end
-
-#macro (renderDBHeader $colNames $colTitles)
-<tr height=30>
-    <td class="contentColumnHeadLight" style="font-weight:bold; vertical-align:middle;"></td>
-    #foreach ($colTitle in $colTitles)
-        #set ($colLink = $renderResponse.createActionURL())
-        #set ($colIndex = $velocityCount - 1)
-        $colLink.setParameter("sortColumn", $colNames.get($colIndex))
-        <td class="contentColumnHeadLight" style="font-weight:bold; vertical-align:middle;"><a href="$colLink" class="contentColumnHeadLight">$colTitle</a></td>
-    #end
-</tr>
+#macro (renderDBBrowserHeader $colNames $colTitles $colCheckboxes)
+    <thead>
+        <tr>
+            #foreach ($colTitle in $colTitles)
+                #set ($colLink = $renderResponse.createActionURL())
+                #set ($colIndex = $velocityCount - 1)
+                $colLink.setParameter("sortColumn", $colNames.get($colIndex))
+                <th class="table__sort-toggle js-column-sortable toggle-ignore">
+                #set ($addCheckbox = false)
+                
+                    #if($colCheckboxes)
+                        #foreach ($colCheckbox in $colCheckboxes)
+                            #if($colNames.get($colIndex) == $colCheckbox)
+                                #set ($addCheckbox = true)
+                                <div class="field-toggle field-toggle--check">
+                                <input id="chk_all" name="$colCheckbox" type="checkbox" onclick="ingrid_checkAll(document.getElementsByName('$colCheckbox'));">
+                                <label class="field-toggle__label field-toggle__label--highlight" for="chk_all">
+                                    <div class="field-toggle__icon field-toggle__icon-alt">
+                                        <svg class="icon">
+                                            <use xlink:href="#tick">
+                                        </use></svg>
+                                    </div>
+                                    <a href="$colLink" class="contentColumnHead"><strong>$colTitle</strong></a>
+                                </label>
+                            #end
+                        #end
+                    #end
+                    #if(!$addCheckbox)
+                        <a href="$colLink" class="contentColumnHead">$colTitle</a>
+                    #end
+                </th>
+            #end
+        </tr>
+    </thead>
 #end
 
 #macro (renderDBBrowserRow $rowId $rowValues)
-<tr>
-#if ($velocityCount % 2 == 0)
-    #set ($rowstyle = "contentRowEven")
-#else
-    #set ($rowstyle = "contentRowOdd")
-#end   
-    <td class="$rowstyle">
-        <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
-    </td>
-    <td class="$rowstyle">$rowId</td>
-#foreach ($rowValue in $rowValues)
-    <td class="$rowstyle">$rowValue</td>
-#end
-</tr>
+    <tr>
+        <td>
+            <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+        </td>
+        <td>$rowId</td>
+        #foreach ($rowValue in $rowValues)
+            <td>$rowValue</td>
+        #end
+    </tr>
 #end
 
 #macro (renderDBBrowserRowWithEditLink $rowId $rowValues)
-#if ($velocityCount % 2 == 0)
-    #set ($rowstyle = "contentRowEven")
-#else
-    #set ($rowstyle = "contentRowOdd")
-#end   
-<tr class="$rowstyle">
+<tr>
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('doEdit','Edit')
+    $action.setParameter("id", "$rowId")
     <td>
-        <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+        <div class="field-toggle field-toggle--check">
+            <input id="chk_$velocityCount" type="checkbox" name="id" value="$rowId">
+            <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
+            <div class="field-toggle__icon field-toggle__icon-alt">
+                <svg class="icon">
+                    <use xlink:href="#tick">
+                </svg>
+            </div>
+            <a href="$action">$rowId</a>
+            </label>
+        </div>
     </td>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('doEdit','Edit')
-$action.setParameter("id", "$rowId")
-    <td><a href="$action">$rowId</a></td>
-#foreach ($rowValue in $rowValues)
-    <td><a href="$action">$rowValue</a></td>
-#end
+    #foreach ($rowValue in $rowValues)
+        <td><a href="$action">$rowValue</a></td>
+    #end
 </tr>
 #end
 
 #macro (renderDBBrowserRowWithEditLinkNoSelection $rowId $rowValues)
 <tr>
-#if ($velocityCount % 2 == 0)
-    #set ($rowstyle = "contentRowEven")
-#else
-    #set ($rowstyle = "contentRowOdd")
-#end   
-    <td class="$rowstyle">
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('doEdit','Edit')
+    $action.setParameter("id", "$rowId")
+    <td>
         <input id="chk_$velocityCount" name="id" type="hidden" value="$rowId" />
+        <a href="$action">$rowId</a>
     </td>
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('doEdit','Edit')
-$action.setParameter("id", "$rowId")
-    <td class="$rowstyle"><a href="$action">$rowId</a></td>
-#foreach ($rowValue in $rowValues)
-    <td class="$rowstyle"><a href="$action">$rowValue</a></td>
-#end
-</tr>
+    #foreach ($rowValue in $rowValues)
+        <td><a href="$action">$rowValue</a></td>
+    #end
+    </tr>
 #end
 
 #macro (renderDBBrowserFooterButtons $buttons)
@@ -221,40 +284,53 @@ $action.setParameter("id", "$rowId")
 
 #macro (renderDBBrowserFooterButtonDisable $button)
     #if($button == "doDelete")
-        #renderInputButtonDisable("$MESSAGES.getString('component.forms.buttons.delete')" "" "doDelete" "" "float_left" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" "true")
+        #renderInputButtonDisable("$MESSAGES.getString('component.forms.buttons.delete')" "width:100%" "doDelete" "" "btn btn--secondary btn--small" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" "true")
     #end
 #end
 
 #macro (renderDBBrowserFooterButtonsDisable $buttons $disableDeleteButton)
-<div class="formfooter formfooter_border_style">
-#foreach ($button in $buttons)
-    #if($button == "doEdit")
-            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.edit')" "" "doEdit" "" "float_left")
-        <span class="float_left">&nbsp;</span>
-    #end
-    #if($button == "doDelete")
-        #if($disableDeleteButton == "true")
-            #renderDBBrowserFooterButtonDisable ($button)
-        #else
-            #renderInputButtonOnClick("$MESSAGES.getString('component.forms.buttons.delete')" "float:left" "doDelete" "" "float_left" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')")
+    #foreach ($button in $buttons)
+        #if($button == "doEdit")
+            <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.edit')" "width:100%" "doEdit" "" "btn btn--secondary btn--small")
+            </div>
+            <span>&nbsp;</span>
+        #end
+        #if($button == "doDelete")
+            <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+            #if($disableDeleteButton == "true")
+                #renderDBBrowserFooterButtonDisable ($button)
+            #else
+                #renderInputButtonOnClick("$MESSAGES.getString('component.forms.buttons.delete')" "width:100%" "doDelete" "" "btn btn--secondary btn--small" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')")
+            #end
+            </div>
+            <span>&nbsp;</span>
+        #end
+        #if($button == "doRefresh")
+            <div class="media__obj media__obj--right" style="margin-bottom: 0;">
+                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.refresh')" "width:100%" "doRefresh" "" "btn btn--secondary btn--small")
+            </div>
+            <span>&nbsp;</span>
+        #end
+        #if($button == "doNew")
+            <div class="media__obj media__obj--right" style="margin-bottom: 0;">
+                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.add')" "width:100%" "doNew" "" "btn btn--primary btn--small")
+            </div>
+        #end
+        #if($button == "doClear")
+            <span>&nbsp;</span>
+            <div class="media__obj media__obj--left" style="margin-bottom: 0;">
+                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset')" "width:100%" "doClear" "" "btn btn--secondary btn--small")
+            </div>
         #end
     #end
-    #if($button == "doRefresh")
-        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.refresh')" "" "doRefresh" "" "float_right")
-        <span class="float_right">&nbsp;</span>
-    #end
-    #if($button == "doNew")
-        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.add')" "" "doNew" "" "float_right")
-    #end
-    #if($button == "doClear")
-        <span class="float_left">&nbsp;</span>
-        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset')" "" "doClear" "" "float_left")
-    #end
-#end
-    <p class="clearer"></p>
-</div>
 #end
 
+#macro (renderHrefAction $buttonAction $buttontitle  $buttonclass $buttonstyle)
+    <a style="$buttonstyle" class="$buttonclass" href="$buttonAction">
+    $buttontitle
+    </a>
+#end
 
 #macro (renderDBBrowserFooter)
     #set ($buttons = ["doEdit", "doDelete", "doRefresh", "doNew"])
@@ -262,80 +338,104 @@ $action.setParameter("id", "$rowId")
 #end
 
 #macro (renderDBEditId $mode $id)
-#if ($mode == 'edit')
-    <input type="hidden" name="id" value="$!{id}"/>
-    <p>
-        <label class="float_left col2left_incr">Id</label><span>$!{id}</span>
-        <span class="clearer"></span>
-    </p>
-#else
-## new entity, but we add id so we have something to extract entity from request !
-    <input type="hidden" name="id" value="-1"/>
-#end
+    #if ($mode == 'edit')
+        <div class="media">
+            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                <input type="hidden" name="id" value="$!{id}"/>
+                <label>Id</label>
+            </div>
+            <div class="media__body">
+                $!{id}
+            </div>
+        </div>
+    #else
+    ## new entity, but we add id so we have something to extract entity from request !
+        <input type="hidden" name="id" value="-1"/>
+    #end
 #end
 
 #macro (renderDBEditTextArea $index $colName $colLabel $colValue)
-<p>
-    <label class="float_left col2left_incr" for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
-    <textarea class="float_left" cols="125" rows="2" name="${colName}$!{index}" id="${colName}$!{index}">$colValue</textarea>
-    <span class="clearer"></span>
-</p>
+<div class="media">
+    <div class="media__obj media__obj--large media__obj--left">
+        <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
+    </div>
+    <div class="media__body">
+        <textarea cols="125" rows="2" name="${colName}$!{index}" id="${colName}$!{index}">$colValue</textarea>
+    </div>
+</div>
 #end
 
-#macro (renderDBEditTextField $index $colName $colLabel $colValue)
-    #renderDBEditTextFieldDisable ($index $colName $colLabel $colValue "false")
+#macro (renderDBEditTextField $index $colName $colLabel $colValue $info)
+    #renderDBEditTextFieldDisable ($index $colName $colLabel $colValue "false" $info)
 #end
 
-#macro (renderDBEditTextFieldDisable $index $colName $colLabel $colValue $disable)
-    <p>
-        <label class="float_left col2left_incr" for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
-        
-    #if($disable == 'true')
-        <input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue" disabled/>
-    #else
-        <input class="float_left inputstyletext contentInput" type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
-    #end
-        <span class="clearer"></span>
-    </p>
+#macro (renderDBEditTextFieldDisable $index $colName $colLabel $colValue $disable $info)
+    <div class="media">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+            <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
+        </div>
+        <div class="media__body">
+        #if($disable == 'true')
+            <input type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue" disabled/>
+        #else
+            <input type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
+        #end
+        #if($info)
+            <div class="message--info" style="margin: 0.5rem 0;">
+                <div class="message__simple-content message-fill--info" style="">
+                    <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
+                    $info
+                </div>
+            </div>
+        #end
+        </div>
+    </div>
+#end
+
+#macro (renderDBEditSelectField $index $colName $colLabel $colValue $selectValues)
+    <div class="media">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+            <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
+        </div>
+        <div class="media__body">
+            <select class="js-selection" id="${colName}$!{index}" name="${colName}$!{index}">
+                #foreach ($selectValue in $selectValues)
+                <option id="$selectValue" value="$selectValue" class="selection-options #if($colValue == $selectValue) is-active" selected #else " #end >$selectValue</option>
+                #end
+            </select>
+        </div>
+    </div>
 #end
 
 #macro (renderDBEditFooter $mode)
-<div class="formfooter formfooter_border_style" align="right">
     #if ($mode == 'edit')
         #set ($butAction = 'doUpdate')
     #elseif ($mode == 'new')
         #set ($butAction = 'doSave')
     #end
-    #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.back')" "" "doCancel" "" "float_right")
+    <div class="media__obj media__obj--right" style="margin-bottom: 0;">
+        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.back')" "width:100%" "doCancel" "" "btn btn--secondary btn--small")
+    </div>
+    <span>&nbsp;</span>
     #if ($disableSaving && $disableSaving == 'true')
         ## do nothing
     #else
-        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.save')" "" $butAction "" "float_right")
+        <div class="media__obj media__obj--right" style="margin-bottom: 0;">
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.save')" "width:100%" $butAction "" "btn btn--primary btn--small")
+        </div>
     #end
-</div>
 #end
 
 #macro (renderTextField $label $id)
-<p>
-    <label class="float_left col2left_incr" for="query">#displayFieldLabel($id $label)</label>
-    <input class="float_left inputstyletext contentInput" id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" type="text">
-</p>
-#end
-
-#macro (getRowStyle $count $state)
-    #if ($count % 2 == 0)
-        #if ($state == 0)
-            #set ($rowstyle = "contentRowEven")
-        #else
-            #set ($rowstyle = "contentRowEvenError")
-        #end
-    #else
-        #if ($state == 0)
-            #set ($rowstyle = "contentRowOdd")
-        #else
-            #set ($rowstyle = "contentRowOddError")
-        #end
-    #end
+    <div class="media">
+        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+            <label for="query">$label</label>
+        </div>
+        <div class="media__body">
+            <input id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" #addErrorFormClass($id) type="text">
+            #addErrorFormMessage($id)
+        </div>
+    </div>
 #end
 
 #macro (renderInputButton $buttonvalue $buttonstyle $buttonname $buttontitle)
@@ -351,19 +451,8 @@ $action.setParameter("id", "$rowId")
 #end
 
 #macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
-    <div class="$buttonclass" style="$buttonstyle">
-        <div class="btn_left" id="$buttonname left"></div>
-        <div class="btn_center">
-            #if($buttondisable == "true")
-                <input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn_disable" onclick="$buttononclick" disabled />
-            #else
-                <input type="submit" value="$buttonvalue" name="$buttonname" title="$buttontitle" class="btn" onclick="$buttononclick" />
-            #end
-        </div>
-        <div class="btn_right" id="$buttonname right"></div>
-    </div>
+    <input type="submit" class="$buttonclass" style="$buttonstyle" value="$buttonvalue" name="$buttonname" title="$buttontitle" onclick="$buttononclick" #if($buttondisable == "true")disabled#end />
 #end
-
 
 #macro (renderInputButtonSearch $buttonvalue $buttonstyle $buttonname $buttontitle)
     #renderInputButtonSearchClass ("$buttonvalue" $buttonstyle $buttonname $buttontitle "")
@@ -392,8 +481,93 @@ $action.setParameter("id", "$rowId")
     </div>
 #end
 
-#macro(renderTopicImageRandom $index)
-	<div class="themen_image">
-		<img class="themen_image_style" height="96" width="210" src="/ingrid-portal-apps/images/topics/index_themen_${index}.png" alt="$MESSAGES.getString('teaser.environment.img.alt')" />
-	</div>
+#macro (renderPortletTitle $_title $_h $_h_class $_help $_helpStyle $_helpKey $line)
+    #if($line)<div class="teaser__box">#end
+    #if(!$_h || $_h == "")
+        #set($_h = "h1")
+    #end
+    <$_h #if($_h_class && $_h_class != "")class="$_h_class" #end>
+        $_title
+    </$_h>
+    #if($line)</div>#end
+#end
+
+#macro (renderPopUpIcon $_message $_class $_style $_title )
+    <div class="tooltip ob-circle js-popup #if($_class)$_class#end" #if($_title)data-title="$_title"#end data-content="$_message" #if($_style)style="$_style"#end>
+        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
+    </div>
+#end
+
+#macro (renderMessageInfo $_message)
+    <div class="message message--info">
+        <div class="message__simple-content message-fill--info">
+            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
+            $_message
+        </div>
+    </div>
+#end
+
+#macro (renderMessageError $_message)
+    <div class="message message--error">
+        <div class="message__simple-content message-fill--error">
+            <span class="">
+                <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
+            </span>
+            $_message
+        </div>
+    </div>
+#end
+
+#macro (renderMessageSuccess $_message)
+    <div class="message message--success">
+        <div class="message__simple-content message-fill--success">
+            <span class="message__circle"><svg class="icon"><use xlink:href="#tick"/></svg></span>
+            $_message
+        </div>
+    </div>
+#end
+
+#macro(renderUDKIcon $class $title)
+    <svg class="icon globe__icon" title="$title">
+        #if($class == "0")
+            ## Fachaufgabe
+            <use xlink:href="#checklist">
+        #elseif($class == "1")
+            ## Geodatensatz
+            <use xlink:href="#globe">
+        #elseif($class == "2")
+            ## Literatur
+            <use xlink:href="#book">
+        #elseif($class == "3")
+            ## Geodatendienst
+            <use xlink:href="#gears">
+        #elseif($class == "4")
+            ## Projekt
+            <use xlink:href="#folder">
+        #elseif($class == "5")
+            ## Datensammlung
+            <use xlink:href="#database">
+        #elseif($class == "6")
+            ## Informationssystem
+            <use xlink:href="#molecule">
+        #end
+    </svg>
+#end
+
+#macro(renderUDKAddressIcon $class $title)
+    <svg class="icon globe__icon" title="$title">
+        #if($class == "0")
+            ## Institution
+            <use xlink:href="#building">
+        #elseif($class == "1")
+            ## Einheit
+            <use xlink:href="#group">
+        #elseif($class == "2")
+            ## Person
+            <use xlink:href="#users">
+        #elseif($class == "3")
+            ## Freie Adresse
+            <use xlink:href="#envelope">
+        #end
+    </svg>
 #end

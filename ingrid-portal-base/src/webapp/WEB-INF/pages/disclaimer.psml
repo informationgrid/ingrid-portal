@@ -10,10 +10,9 @@
   <metadata name="meta_descr">ingrid.page.disclaimer.meta.description</metadata>
   <metadata name="meta_keywords">ingrid.page.disclaimer.meta.keywords</metadata>
 
-  <fragment id="disclaimer" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+  <fragment id="disclaimer" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="disclaimer-1" type="portlet" name="ingrid-portal-apps::CMSPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
+      <property layout="OneColumn" name="row" value="0" />
       <preference name="infoTemplate" readOnly="false">
         <value>/WEB-INF/templates/default_cms.vm</value>
       </preference>
@@ -23,16 +22,15 @@
       <preference name="cmsKey" readOnly="false">
         <value>ingrid.disclaimer</value>
       </preference>
+      <preference name="sectionStyle" readOnly="false">
+        <value>block--pad-top</value>
+      </preference>
+      <preference name="articleStyle" readOnly="false">
+        <value>content ob-container ob-box-narrow ob-box-center</value>
+      </preference>
     </fragment>
-    <fragment id="disclaimer-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/disclaimer_info.vm</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>disclaimer.info.title</value>
-      </preference>
+    <fragment id="privacy-1" type="portlet" name="ingrid-portal-apps::PrivacyPortlet">
+      <property layout="OneColumn" name="row" value="1" />
     </fragment>
   </fragment>
 

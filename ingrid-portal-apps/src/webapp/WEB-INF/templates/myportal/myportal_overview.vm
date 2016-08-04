@@ -3,40 +3,34 @@
 #set ($externalLogin = $renderRequest.getAttribute('de.ingrid.user.auth.info'))
 
 #if($userNameGiven)
-#set ($salutation = " $userNameGiven")
+    #set($salutation = " $userNameGiven")
 #end
 #if($userNameFamily)
-#set ($salutation = "$!{salutation} $userNameFamily")
-#end		
-<div class="section">
-	<p>
-        $MESSAGES.resetMsgParams()
-        $MESSAGES.setMsgParam("$!{salutation}")
-        $MESSAGES.getStringWithMsgParams('overview.welcome')
-	    <br />
-		$MESSAGES.getString('overview.content.description')
-	</p>
-	<ul class="internlinklist2">
+    #set($salutation = "$!{salutation} $userNameFamily")
+#end
+
+<p>
+    $MESSAGES.resetMsgParams()
+    $MESSAGES.setMsgParam("$!{salutation}")
+    $MESSAGES.getStringWithMsgParams('overview.welcome')
+    <br />
+    $MESSAGES.getString('overview.content.description')
+</p>
+<ul class="link-list">
+
 #if($externalLogin)
-        <li>
-            <a href="portal/main-maps.psml">$MESSAGES.getString('overview.content.entry0')</a>
-        </li>
+    <li>
+        <a href="/portal/main-maps.psml"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry0')</a>
+    </li>
 #end
-		<li>
-			<a href="portal/default-page.psml">$MESSAGES.getString('overview.content.entry1')</a>
-		</li>
 #if(!$externalLogin)
-		<li>
-			<a href="portal/myportal-edit-account.psml">$MESSAGES.getString('overview.content.entry2')</a>
-		</li>
+    <li>
+        <a href="/portal/myportal-edit-account.psml"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry2')</a>
+    </li>
 #end
-		<li>
-			<a href="portal/myportal-personalize.psml">$MESSAGES.getString('overview.content.entry3')</a>
-		</li>
 #if(!$externalLogin)
-		<li>
-			<a href="login/logout">$MESSAGES.getString('overview.content.entry4')</a>
-		</li>
+    <li>
+        <a href="/login/logout"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry4')</a>
+    </li>
 #end
-	</ul>  
-</div>
+</ul>

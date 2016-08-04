@@ -161,6 +161,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                     request.getLocale()), request.getLocale());
             Context context = getContext(request);
             context.put("MESSAGES", messages);
+            context.put("languages", Utils.getLanguagesShortAsArray());
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
             if(disablePartnerProviderEdit != null){
             	context.put("disablePartnerProviderEdit", PortalConfig.getInstance().getString(disablePartnerProviderEdit));

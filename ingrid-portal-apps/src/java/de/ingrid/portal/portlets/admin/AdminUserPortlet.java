@@ -35,7 +35,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -71,9 +70,6 @@ import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.jetspeed.security.UserResultList;
 import org.apache.velocity.context.Context;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,8 +80,6 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
-import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.om.IngridNewsletterData;
 import de.ingrid.portal.portlets.security.SecurityResources;
 import de.ingrid.portal.security.role.IngridRole;
 
@@ -350,18 +344,18 @@ public class AdminUserPortlet extends ContentPortlet {
 
             Map<String, String> attributeMap = new HashMap<String, String>();
             if (filterCriteria.get("filterCriteriaFirstName") != null && filterCriteria.get("filterCriteriaFirstName").length() > 0) {
-            	attributeMap.put(SecurityResources.USER_NAME_GIVEN, filterCriteria.get("filterCriteriaFirstName"));
+                attributeMap.put(SecurityResources.USER_NAME_GIVEN, filterCriteria.get("filterCriteriaFirstName"));
             }
             if (filterCriteria.get("filterCriteriaLastName") != null && filterCriteria.get("filterCriteriaLastName").length() > 0) {
-            	attributeMap.put(SecurityResources.USER_NAME_FAMILY, filterCriteria.get("filterCriteriaLastName"));
+                attributeMap.put(SecurityResources.USER_NAME_FAMILY, filterCriteria.get("filterCriteriaLastName"));
             }
             if (filterCriteria.get("filterCriteriaEmail") != null && filterCriteria.get("filterCriteriaEmail").length() > 0) {
-            	attributeMap.put(SecurityResources.USER_EMAIL, filterCriteria.get("filterCriteriaEmail"));
+                attributeMap.put(SecurityResources.USER_EMAIL, filterCriteria.get("filterCriteriaEmail"));
             }
 
             List<String> roles = new ArrayList<String>();
             if (filterCriteria.get("filterCriteriaRole") != null && filterCriteria.get("filterCriteriaRole").length() > 0) {
-            	roles.add(filterCriteria.get("filterCriteriaRole").replaceAll("\\*", "\\%"));
+                roles.add(filterCriteria.get("filterCriteriaRole").replaceAll("\\*", "\\%"));
             }
 
             String sortOrder = null;
@@ -369,7 +363,7 @@ public class AdminUserPortlet extends ContentPortlet {
             // fetch users, filtering via QueryContext
             // NOTICE: fetch max 10000 users ! Integer.MAX_VALUE leads to exception with Oracle DB !!!
             JetspeedPrincipalQueryContext qc = new JetspeedPrincipalQueryContext(
-            	userId, 0, 10000, sortOrder, roles, null, null, attributeMap);
+                userId, 0, 10000, sortOrder, roles, null, null, attributeMap);
 
             UserResultList ul = userManager.getUsersExtended(qc);
 
@@ -378,14 +372,14 @@ public class AdminUserPortlet extends ContentPortlet {
             }
 
             // iterate over all users
-    		for (User user : ul.getResults()) {
-    			
-    			// do not show admin user if not logged in as admin (superadmin) !
-    			if (!isAdmin && "admin".equals(user.getName())) {
-    				continue;
-    			}
-    			
-    			// and create UserInfo for view
+            for (User user : ul.getResults()) {
+                
+                // do not show admin user if not logged in as admin (superadmin) !
+                if (!isAdmin && "admin".equals(user.getName())) {
+                    continue;
+                }
+                
+                // and create UserInfo for view
                 UserInfo userInfo = new UserInfo();
                 userInfo.setId(user.getName());
                 
@@ -393,16 +387,16 @@ public class AdminUserPortlet extends ContentPortlet {
                 Collection<Role> userRoles = roleManager.getRolesForUser(user.getName());
                 boolean userIsAdminPortal = false;
                 for (Role r : userRoles) {
-                	// skip all admin-portal users if not logged in as admin (superadmin) !
-                	if (IngridRole.ROLE_ADMIN_PORTAL.equals(r.getName())) {
-                		userIsAdminPortal = true;
-                	}
-                	userInfo.addRole(r.getName());
+                    // skip all admin-portal users if not logged in as admin (superadmin) !
+                    if (IngridRole.ROLE_ADMIN_PORTAL.equals(r.getName())) {
+                        userIsAdminPortal = true;
+                    }
+                    userInfo.addRole(r.getName());
                 }
-    			// do not show admin-portal user if not logged in as admin (superadmin) !
-    			if (!isAdmin && userIsAdminPortal) {
-    				continue;
-    			}
+                // do not show admin-portal user if not logged in as admin (superadmin) !
+                if (!isAdmin && userIsAdminPortal) {
+                    continue;
+                }
 
                 userInfo.setFirstName(user.getInfoMap().get(SecurityResources.USER_NAME_GIVEN));
                 userInfo.setLastName(user.getInfoMap().get(SecurityResources.USER_NAME_FAMILY));
@@ -420,7 +414,7 @@ public class AdminUserPortlet extends ContentPortlet {
             }
 
         } catch (Exception e) {
-        	log.error("Error getting entities!", e);
+            log.error("Error getting entities!", e);
         }
 
         refreshBrowserState(request);
@@ -450,9 +444,9 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
         public void setFirstName(String firstName) {
-        	if (firstName == null) {
-        		firstName = "";
-        	}
+            if (firstName == null) {
+                firstName = "";
+            }
             this.put("firstName", firstName);
         }
         
@@ -461,9 +455,9 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
         public void setLastName(String lastName) {
-        	if (lastName == null) {
-        		lastName = "";
-        	}
+            if (lastName == null) {
+                lastName = "";
+            }
             this.put("lastName", lastName);
         }
 
@@ -472,9 +466,9 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
         public void setEmail(String email) {
-        	if (email == null) {
-        		email = "";
-        	}
+            if (email == null) {
+                email = "";
+            }
             this.put("email", email);
         }
         
@@ -564,9 +558,6 @@ public class AdminUserPortlet extends ContentPortlet {
             userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(AdminUserForm.FIELD_ATTENTION));
             userAttributes.put("user.custom.ingrid.user.interest", f.getInput(AdminUserForm.FIELD_INTEREST));
             userAttributes.put("user.custom.ingrid.user.profession", f.getInput(AdminUserForm.FIELD_PROFESSION));
-            userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f
-                    .getInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER));
-
 
             // generate login id
             String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
@@ -641,28 +632,6 @@ public class AdminUserPortlet extends ContentPortlet {
             String to = (String) userInfo.get("user.business-info.online.email");
             String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
             if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
-                if (((String)userAttributes.get("user.custom.ingrid.user.subscribe.newsletter")).equals("1")) {
-                	Session session = HibernateUtil.currentSession();
-                    Transaction tx = null;
-                    tx = session.beginTransaction();
-                    List newsletterDataList = session.createCriteria(IngridNewsletterData.class)
-                    .add(Restrictions.eq("emailAddress", to))
-                    .list();
-                    tx.commit();
-                    
-                    if (newsletterDataList.isEmpty()) {
-                    
-                        IngridNewsletterData data = new IngridNewsletterData(); 
-                        data.setFirstName((String)userAttributes.get("user.name.given"));
-                        data.setLastName((String)userAttributes.get("user.name.family"));
-                        data.setEmailAddress(to);
-                        data.setDateCreated(new Date());
-                        
-                        tx = session.beginTransaction();
-                        session.save(data);
-                        tx.commit();
-                    }                       	
-                }
                 f.addMessage("account.created.title");
             } else {
                 f.setError("", "account.created.problems.email");
@@ -684,10 +653,10 @@ public class AdminUserPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
     protected void doActionUpdate(ActionRequest request) {
-    	// is super admin ?
+        // is super admin ?
         boolean isAdmin = "admin".equals(request.getUserPrincipal().getName());
-    	
-    	AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
+        
+        AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
         f.clearErrors();
         f.clearMessages();
         f.populate(request);
@@ -721,23 +690,24 @@ public class AdminUserPortlet extends ContentPortlet {
                 user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.attention.from", true).setStringValue(f.getInput(AdminUserForm.FIELD_ATTENTION));
                 user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.interest", true).setStringValue(f.getInput(AdminUserForm.FIELD_INTEREST));
                 user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.profession", true).setStringValue(f.getInput(AdminUserForm.FIELD_PROFESSION));
-                user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.subscribe.newsletter", true).setStringValue(f.getInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER));
 
                 userManager.updateUser(user);
 
                 try {
                     // update password only if a old password was provided
-            		String oldPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_OLD);
-            		String newPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_NEW);
-            		PasswordCredential credential = userManager.getPasswordCredential(user);
-                	if(isAdmin){
-                		credential.setPassword(null, newPassword);
-                	}else{
-                        if (oldPassword != null && oldPassword.length() > 0) {
-                    		credential.setPassword(oldPassword, newPassword);
+                    String oldPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_OLD);
+                    String newPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_NEW);
+                    if(newPassword != null && newPassword.length() > 0){
+                        PasswordCredential credential = userManager.getPasswordCredential(user);
+                        if(isAdmin){
+                            credential.setPassword(null, newPassword);
+                        }else{
+                            if (oldPassword != null && oldPassword.length() > 0) {
+                                credential.setPassword(oldPassword, newPassword);
+                            }
                         }
-                	}
-            		userManager.storePasswordCredential(credential);
+                        userManager.storePasswordCredential(credential);
+                    }
                 } catch (PasswordAlreadyUsedException e) {
                     f.setError(AdminUserForm.FIELD_PASSWORD_NEW, "account.edit.error.password.in.use");
                     return;
@@ -745,7 +715,7 @@ public class AdminUserPortlet extends ContentPortlet {
                     f.setError(AdminUserForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
                     return;
                 } catch (SecurityException e) {
-                    f.setError("", "account.edit.error.wrong.password");
+                    f.setError(AdminUserForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
                     return;
                 }
             // also check for superadmin to be sure !
@@ -786,9 +756,9 @@ public class AdminUserPortlet extends ContentPortlet {
                                 try {
                                     // remove user's home folder
                                     if (log.isDebugEnabled()) {
-                                    	log.debug("Try to remove folder: " + innerFolder + innerUserName);
+                                        log.debug("Try to remove folder: " + innerFolder + innerUserName);
                                     }
-                                	Folder f = innerPageManager.getFolder(innerFolder + innerUserName);
+                                    Folder f = innerPageManager.getFolder(innerFolder + innerUserName);
                                     innerPageManager.removeFolder(f);
 
                                     return null;
@@ -902,9 +872,6 @@ public class AdminUserPortlet extends ContentPortlet {
 
             context.put("actionForm", f);
 
-            // show newsletter option if configured that way
-            context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
-
             setDefaultViewPage(viewEdit);
             
             return true;
@@ -932,9 +899,6 @@ public class AdminUserPortlet extends ContentPortlet {
         }
 
         context.put("actionForm", f);
-
-        // show newsletter option if configured that way
-        context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
 
         setDefaultViewPage(viewNew);
         return true;
@@ -1018,35 +982,33 @@ public class AdminUserPortlet extends ContentPortlet {
             f.setInput(AdminUserForm.FIELD_ATTENTION, replaceNull(userAttributes.get("user.custom.ingrid.user.attention.from")));
             f.setInput(AdminUserForm.FIELD_INTEREST, replaceNull(userAttributes.get("user.custom.ingrid.user.interest")));
             f.setInput(AdminUserForm.FIELD_PROFESSION, replaceNull(userAttributes.get("user.custom.ingrid.user.profession")));
-            f.setInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER, replaceNull(userAttributes.get(
-                    "user.custom.ingrid.user.subscribe.newsletter")));
 
             // set admin-portal role
             Collection<Role> userRoles = roleManager.getRolesForUser(user.getName());
             for (Role r : userRoles) {
-            	if (IngridRole.ROLE_ADMIN_PORTAL.equals(r.getName())) {
+                if (IngridRole.ROLE_ADMIN_PORTAL.equals(r.getName())) {
                     f.setInput(AdminUserForm.FIELD_CHK_ADMIN_PORTAL, "1");
-            	}
+                }
             }
 
             // set type of layout 
-        	// superadmin can apply role "admin-portal" to user !
+            // superadmin can apply role "admin-portal" to user !
             String layoutPermission = "";
             if ("admin".equals(request.getUserPrincipal().getName())) {
-            	layoutPermission = "admin";
+                layoutPermission = "admin";
             }
             f.setInput(AdminUserForm.FIELD_LAYOUT_PERMISSION, layoutPermission);
 
 
         } catch (Exception e) {
-        	log.error("Problems fetching user data.", e);
+            log.error("Problems fetching user data.", e);
         }
 
     }
 
     /** Replaces the input with "" if input is null. */
     private String replaceNull(String input) {
-    	return input == null ? "" : input;
+        return input == null ? "" : input;
     }
 
     protected List<String> getInitParameterList(PortletConfig config, String ipName) {

@@ -1,113 +1,140 @@
 #macro (renderNode $node)
-	#set ($action = $renderResponse.createActionURL())
-	$action.setParameter('nodeId',$node.id)
-	## highest nodes have level 1 ! (only root has level 0)
-	## NOTICE: NO FLOATS IN VELOCITY MATHs ! Use e.g. (3/2) instead ! :-(
-	#set ($leftMargin = ($node.level - 1) * 25)
-	#set ($iconLayerWidth = 35)
-	#set ($textLayerWidth = 825 - $leftMargin - $iconLayerWidth)
-	<p style="margin-left:${leftMargin}px; clear:left; overflow:hidden">	
-	## UDK Object/Address render params
-	#set($nodeTitle = $MESSAGES.getString($node.getName()))
-	#if($tool.hasContent(${node.udk_class}))
-		#if ($node.plugType == 'dsc_ecs')
-			## objects
-			#set($nodeIcon = "icn_udk_obj_${node.udk_class}.gif")
-			#set($nodeAlt = $Codelists.getCodeListValue('8000', $node.udk_class, $languageCode))
-		#else
-			## addresses
-			#set($nodeIcon = "icn_udk_adr_${node.udk_class}.gif")
-			#set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
-		#end
-		#if($node.udk_docId)
-			#set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docuuid=${node.udk_docId}#end")
-		#else
-			#set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
-		#end
-	#else
-		#set($nodeIcon = "ico_tree_folder_close.gif")
-		#set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
-		#set($nodeUrl = '')
-	#end
-	## render +/- and icon
-	<span style="float:left; width:${iconLayerWidth}px">
-	#if($node.isOpen())
-		#set ($renderSubNodes = true)
-		## render "-" and icon WITH ACTION -> node can be closed
-		$action.setParameter('action','doCloseNode')
-		<a id="$action" href="$action" onclick="makeScrollTopLink('$action')"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" /></a>
-		<a id="$action Icon" href="$action" onclick="makeScrollTopLink('$action')"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
-	#else
-		#set ($renderSubNodes = false)
-		#if ($node.expandable)
-    		## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
-       		$action.setParameter('action','doOpenNode')
-       		<a id="$action" href="$action" onclick="makeScrollTopLink('$action')"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" /></a>
-    		<a id="$action Icon" href="$action" onclick="makeScrollTopLink('$action')"><img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" /></a>
-		#else
-			## render " " and icon WITHOUT ACTION -> node can't be expanded
-			&nbsp;&nbsp;
-			<img src="/ingrid-portal-apps/images/$nodeIcon" alt="$nodeAlt" title="$nodeAlt" />
-		#end
-	#end
-	</span>
-	## render node text
-	<span style="float:left; width:${textLayerWidth}px">
-	<strong>#if($nodeUrl != '')<a href="$nodeUrl" target="_new" title="$MESSAGES.getString('common.tooltip.link.extern')">$nodeTitle</a>#else$nodeTitle#end</strong>
-	</span>
-	</p>
-	## render sub nodes
-	#if ($renderSubNodes)
-    	#foreach($childNode in $node.getChildren())
-    		#renderNode($childNode)
-    	#end
-	#end
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('nodeId',$node.id)
+    <ul class="js-accordion-multi">
+    ## UDK Object/Address render params
+    #set($nodeTitle = $MESSAGES.getString($node.getName()))
+    #if($tool.hasContent(${node.udk_class}))
+        #if ($node.plugType == 'dsc_ecs')
+            ## objects
+            #set($nodeIcon = "icn_udk_obj_${node.udk_class}.gif")
+            #set($nodeAlt = $Codelists.getCodeListValue('8000', $node.udk_class, $languageCode))
+        #else
+            ## addresses
+            #set($nodeIcon = "icn_udk_adr_${node.udk_class}.gif")
+            #set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
+        #end
+        #if($node.udk_docId)
+            #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docuuid=${node.udk_docId}#end")
+        #else
+            #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
+        #end
+    #else
+        #set($nodeIcon = "ico_tree_folder_close.gif")
+        #set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
+        #set($nodeUrl = '')
+    #end
+    ## render +/- and icon
+    #if($node.isOpen())
+        #set ($renderSubNodes = true)
+        $action.setParameter('action','doCloseNode')
+            <li class="tree__item tree__toggle #if($nodeUrl == '')js-accordion-toggle#end is-active">
+                <a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
+                    <svg class="tree__toggle__icon icon">
+                        <use xlink:href="#plus">
+                    </svg>
+                    <svg class="tree__toggle__icon icon">
+                        <use xlink:href="#minus">
+                    </svg>
+                </a>
+                #if($nodeUrl != '')
+                    #if ($node.plugType == 'dsc_ecs')
+                        #renderUDKIcon(${node.udk_class} $nodeAlt)
+                    #else
+                        #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
+                    #end
+                #end
+                <strong>#if($nodeUrl != '')<a href="$nodeUrl">$nodeTitle</a>#else$nodeTitle#end</strong>
+            </li>
+            <li class="tree__content js-accordion-content">
+                ## render sub nodes
+                #if ($renderSubNodes)
+                    #foreach($childNode in $node.getChildren())
+                        #if($childNode.getChildren().size() > 0 || $childNode.docId)
+                            #renderNode($childNode)
+                        #end
+                    #end
+                #end
+            </li>
+    #else
+        #set ($renderSubNodes = false)
+        #if ($node.expandable)
+            ## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
+               $action.setParameter('action','doOpenNode')
+            <li class="tree__item tree__toggle #if($nodeUrl == '')js-accordion-toggle#end">
+                <a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
+                    <svg class="tree__toggle__icon icon">
+                        <use xlink:href="#plus">
+                    </svg>
+                    <svg class="tree__toggle__icon icon">
+                        <use xlink:href="#minus">
+                    </svg>
+                </a>
+                #if($nodeUrl != '')
+                    #if ($node.plugType == 'dsc_ecs')
+                        #renderUDKIcon(${node.udk_class} $nodeAlt)
+                    #else
+                        #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
+                    #end
+                #end
+                ## render node text
+                <strong>#if($nodeUrl != '')<a href="$nodeUrl">$nodeTitle</a>#else$nodeTitle#end</strong>
+            </li>
+        #else
+            #if($nodeUrl != '')
+            <li class="tree__item">
+                #if ($node.plugType == 'dsc_ecs')
+                    #renderUDKIcon(${node.udk_class} $nodeAlt)
+                #else
+                    #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
+                #end
+                <a href="$nodeUrl">$nodeTitle</a>
+            </li>
+            #end
+        #end
+    #end
+    </ul>
 #end
 
-<div class="section">
-	<div class="formbody formbody_border_style">
-#foreach($plugNode in $ps.plugsRoot.getChildren())
-	#renderNode($plugNode)
-#end
-	</div>
-#set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
-    	<div class="formfooter formfooter_border_style">
-    		<div class="float_right">
-    			#renderInputButton($MESSAGES.getString('searchCatHierarchy.submit.reload') "" "submitReload" $MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip'))
-    		</div>
-    	</div>
-	</form>
+<div class="tree bx-bot-l">
+    #foreach($plugNode in $ps.plugsRoot.getChildren())
+        #renderNode($plugNode)
+    #end
 </div>
+#set ($action = $renderResponse.createActionURL())
+<form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
+    <p class="media__obj">
+        #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
+    </p>
+</form>
 <script type="text/javascript">
-document.onreadystatechange = function () {
-    if (document.readyState == "complete") {
-			var browser = whichBrowser();
-			if(browser.indexOf("Chrome") != -1)
-				document.body.scrollTop = $scrollTop;
-			else
-				document.documentElement.scrollTop = $scrollTop;
-
+    document.onreadystatechange = function () {
+        if (document.readyState == "complete") {
+                var browser = whichBrowser();
+                if(browser.indexOf("Chrome") != -1)
+                    document.body.scrollTop = $scrollTop;
+                else
+                    document.documentElement.scrollTop = $scrollTop;
+        }
     }
-}
-	function makeScrollTopLink(url){
-		var browser = whichBrowser();
-		
-		if(browser.indexOf("Chrome") != -1)
-    		var top = document.body.scrollTop;
-		else
-			var top = document.documentElement.scrollTop 
-		url = url.replace(/\s/g, "%20")
-		urlNew = url + "?scrollTop="+top;
-    	document.getElementById(url).href = urlNew;
-		document.getElementById(url+' Icon').href = urlNew;
-		console.debug("test");
-	}
-	whichBrowser = function(){
-  var N= navigator.appName, ua= navigator.userAgent, tem;
-  var M= ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
-  if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
-  M= M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
-  return M;
- };
-</script>    
+    function makeScrollTopLink(url){
+        var browser = whichBrowser();
+        
+        if(browser.indexOf("Chrome") != -1)
+            var top = document.body.scrollTop;
+        else
+            var top = document.documentElement.scrollTop 
+        url = url.replace(/\s/g, "%20")
+        urlNew = url + "?scrollTop="+top;
+        document.getElementById(url).href = urlNew;
+        document.getElementById(url+' Icon').href = urlNew;
+    }
+    
+    whichBrowser = function(){
+        var N= navigator.appName, ua= navigator.userAgent, tem;
+        var M= ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+        if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
+        M= M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
+        return M;
+    };
+</script>

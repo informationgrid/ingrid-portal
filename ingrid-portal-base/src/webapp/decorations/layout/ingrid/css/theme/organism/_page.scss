@@ -1,0 +1,23 @@
+/*
+ *  Pieces/Layout: Page
+ *______________________*/
+
+
+
+
+.page {
+	width: 100%;
+
+    @include media(
+        $query: '940 >',
+        $css: (
+            display: block,
+            position: static
+        )
+    );
+
+    &.is-fixed {
+    	left: 0;
+    	top: 0;
+    }
+}

@@ -69,9 +69,6 @@ abstract class SearchCatalog extends GenericVelocityPortlet {
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
-        context.put("enable_thesaurus", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG_THESAURUS, Boolean.FALSE));
-
         context.put("enable_hierarchy_tree", PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG_HIERARCHY_TREE, Boolean.FALSE));
 		

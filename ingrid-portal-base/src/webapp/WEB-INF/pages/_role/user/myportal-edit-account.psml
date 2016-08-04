@@ -7,43 +7,9 @@
   <title>Login</title>
   <metadata name="title" xml:lang="de">Mein Portal</metadata>
 
-  <fragment id="myportal-edit-account" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+  <fragment id="myportal-edit-account" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="myportal-edit-account-1" type="portlet" name="ingrid-portal-apps::MyPortalEditAccountPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
-    </fragment>
-    <fragment id="myportal-navigation" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/myportal/myportal_navigation.vm</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>myPortal.info.navigation.title</value>
-      </preference>
-      <preference name="currPage" readOnly="false">
-        <value>editAccount</value>
-      </preference>
-    </fragment>
-    <fragment id="service-contact-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
-      <property layout="TwoColumns" name="row" value="1" />
-      <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/newsletter_teaser.vm</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>teaser.newsletter.title</value>
-      </preference>
-    </fragment>
-    <fragment id="myportal-edit-account-2" type="portlet" decorator="ingrid-marginal-teaser" name="ingrid-portal-apps::InfoPortlet">
-      <property layout="TwoColumns" name="row" value="2" />
-      <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/myportal/login_teaser.vm</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>teaser.login.title</value>
-      </preference>
+      <property layout="OneColumn" name="row" value="0" />
     </fragment>
   </fragment>
 

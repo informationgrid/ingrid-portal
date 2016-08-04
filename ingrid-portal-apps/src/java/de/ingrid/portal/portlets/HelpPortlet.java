@@ -96,7 +96,7 @@ public class HelpPortlet extends GenericVelocityPortlet {
         if (helpKey == null) {
             helpKey = "index";
         }
-
+        context.put( "helpKey", helpKey );
         // read help chapter
         Object chapterObj = null;
         String myPath = "//section[@help-key='" + helpKey + "']/ancestor::chapter";

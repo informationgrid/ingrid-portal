@@ -777,7 +777,12 @@ public class UtilsSearch {
         // !!! NOTICE: see http://jira.media-style.com/browse/INGRID-1076
 
     	String basicDatatypeForQuery = null;
-    	
+    	String defaultDS = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_DEFAULT_DATASOURCE, null);
+    	boolean hasDefaultDS = false;
+    	if(request.getParameter(Settings.PARAM_DATASOURCE) == null && defaultDS != null && defaultDS.length() > 0){
+    	    selectedDS = defaultDS;
+    	    hasDefaultDS = true;
+    	}
     	// DO NOT ALWAYS ADD BASIC DATA TYPE !!! datatypes are connected with OR !!!
     	// see http://jira.media-style.com/browse/INGRID-1076
         if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_DATATYPE)) {
@@ -799,7 +804,7 @@ public class UtilsSearch {
         }
 
         if (basicDatatypeForQuery != null) {
-        	if(request.getParameter(Settings.PARAM_DATASOURCE) != null){
+        	if(request.getParameter(Settings.PARAM_DATASOURCE) != null || hasDefaultDS){
 	            query.addField(new FieldQuery(true, false,
 	            		Settings.QFIELD_DATATYPE, basicDatatypeForQuery));
         	}
@@ -1472,7 +1477,6 @@ public class UtilsSearch {
         List wmsServices = null;
 
         WMSInterface service = WMSInterfaceImpl.getInstance();
-        boolean hasJavaScript = Utils.isJavaScriptEnabled(request);
         PortletSession session = request.getPortletSession();
 
         // check for personalizes wms services
@@ -1495,12 +1499,12 @@ public class UtilsSearch {
 
         // create the wms url
         if (wmsServices.size() > 0) {
-            return service.getWMSAddedServiceURL(wmsServices, session.getId(), hasJavaScript, request.getLocale(),
+            return service.getWMSAddedServiceURL(wmsServices, session.getId(), request.getLocale(),
                     isViewer);
         } else if (isViewer) {
-            return service.getWMSViewerURL(session.getId(), hasJavaScript, request.getLocale());
+            return service.getWMSViewerURL(session.getId(), request.getLocale());
         } else {
-            return service.getWMSSearchURL(session.getId(), hasJavaScript, request.getLocale());
+            return service.getWMSSearchURL(session.getId(), request.getLocale());
         }
     }
 

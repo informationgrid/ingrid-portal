@@ -1,27 +1,26 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
-	<div class="formbody formbody_border_style">
     #renderPaginationAndHint($browser "")
-    <br style="clear:both" />
-		<table class="border fullwidth">
-#set ($colNames = ["id", "itemKey", "itemDescription"])
-#set ($colTitles = [$MESSAGES.getString('admin.cms.overview.id'), $MESSAGES.getString('admin.cms.overview.short'), $MESSAGES.getString('admin.cms.overview.description')])
-#renderDBBrowserHeader($colNames $colTitles)
-#foreach ($dbEntity in $dbEntities)
-	#set ($hideCms = "false")
-	#foreach ($cmsItem in $hideCmsItem)
-		#if($cmsItem == "$dbEntity.itemKey")
-			#set ($hideCms = "true")
-		#end
-	#end
-	#if($hideCms == "false")
-		#set ($rowId = $dbEntity.id)
-		#set ($rowValues = [$UtilsString.cutString($dbEntity.itemKey, 40, 40), $dbEntity.itemDescription])
-		#renderDBBrowserRowWithEditLinkNoSelection($rowId $rowValues)
-	#end
-#end
-		</table>
-	</div>
-#set ($buttons = ["doRefresh"])
-#renderDBBrowserFooterButtons($buttons)
+    <div class="table table--striped table--sortable">
+        <table class="js-table-sortable">
+        #set ($colNames = ["id", "itemKey", "itemDescription"])
+        #set ($colTitles = [$MESSAGES.getString('admin.cms.overview.id'), $MESSAGES.getString('admin.cms.overview.short'), $MESSAGES.getString('admin.cms.overview.description')])
+        #renderDBBrowserHeader($colNames $colTitles)
+        #foreach ($dbEntity in $dbEntities)
+            #set ($hideCms = "false")
+            #foreach ($cmsItem in $hideCmsItem)
+                #if($cmsItem == "$dbEntity.itemKey")
+                    #set ($hideCms = "true")
+                #end
+            #end
+            #if($hideCms == "false")
+                #set ($rowId = $dbEntity.id)
+                #set ($rowValues = [$UtilsString.cutString($dbEntity.itemKey, 40, 40), $dbEntity.itemDescription])
+                #renderDBBrowserRowWithEditLinkNoSelection($rowId $rowValues)
+            #end
+        #end
+        </table>
+    </div>
+    #set ($buttons = ["doRefresh"])
+    #renderDBBrowserFooterButtons($buttons)
 </form>

@@ -1,4 +1,3 @@
-
 #* Add the current layouts configuration values to the context *#
 #defineLayoutObjects()
 
@@ -6,143 +5,122 @@
 #parse($layoutDecoration.getResource("decorator-macros.vm"))
 
 #* Add all template constants to the current context *#
-#defineNavigationConstants()
+##defineNavigationConstants()
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
-  <head>
-  <base href="#BaseHref()" />
-  <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "NUMIS - Das niedersächsische Umweltportal")</title>
-  <meta http-equiv="Content-type" content="#ContentType()" />
-  <meta http-equiv="Content-style-type" content="text/css" />   
-  <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="description" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_descr"), "")" />
-  <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
-  <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
-  <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
-#set($currentPage = $site.getPageOrTemplate().url)
-#if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
-  <meta name="robots" content="noindex,follow" />
-#else
-  <meta name="robots" content="index,follow" />
-#end
-  <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
-  #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
-	<link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
-  #end
-<!--<link rel="stylesheet" media="screen, projection" type="text/css" href="styles/portal_u.css" />-->
+    <head>
+        #set($currentPage = $site.getPageOrTemplate().url)
+        <!--
+        #if($currentPage)
+            #if($currentPage != "/help.psml")
+                <base href="#BaseHref()" />
+            #end
+        #end
+        -->
+        <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')" />
+        <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "NUMIS - Das nieders&auml;chsische Umweltportal")</title>
+        <meta http-equiv="Content-type" content="#ContentType()" />
+        <meta http-equiv="Content-style-type" content="text/css" />   
+        <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
+        <meta name="description" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_descr"), "")" />
+        <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
+        <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
+        <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
 
-  #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
-  #includeHeaderResource()
-  #* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
-  <style>
-	html, body { width: auto; height: auto; }
-  </style>
-  #includeJavaScriptForHead()
-  #IncludeStylesheets()
+        #if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
+            <meta name="robots" content="noindex,follow" />
+        #else
+            <meta name="robots" content="index,follow" />
+        #end
+        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' />
+        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css')" />
+        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')" />
+        <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
+        #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
+            <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
+        #end
 
-  #* our decorator macros, see ./decorator-macros.vm *#
-  #decoratorIncludeJavaScriptForHead()
-  
-#if ($currentPage.startsWith('/main-search'))
-    <script src="/ingrid-portal-apps/javascript/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
-    <script type="text/javascript">
-        dojo.require("dijit.layout.ContentPane");
-        dojo.require("dijit.form.Button");
-    	dojo.require("dijit.Dialog");
-    </script>
-    <link rel="stylesheet" type="text/css" href="/ingrid-portal-apps/css/claro/claro.css"/>
-#end
-<script language="JavaScript" type="text/javascript">
-var xmlhttp=false;
-/*@cc_on @*/
-/*@if (@_jscript_version >= 5)
-// JScript gives us Conditional compilation, we can cope with old IE versions.
-// and security blocked creation of the objects.
-try {
-	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-} catch (e) {
-	try {
-   		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-  	} catch (E) {
-   		xmlhttp = false;
-  	}
-}
-@end @*/
-if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
-	try {
-		xmlhttp = new XMLHttpRequest();
-	} catch (e) {
-		xmlhttp=false;
-	}
-}
-if (!xmlhttp && window.createRequest) {
-	try {
-		xmlhttp = window.createRequest();
-	} catch (e) {
-		xmlhttp=false;
-	}
-}
-if (xmlhttp) {
-    xmlhttp.open('GET', '$jetspeed.getAbsoluteUrl('/detect-js.psml?js=1')', true);
-    xmlhttp.onreadystatechange = function () {};
-    xmlhttp.send(null);
-}	
-</script>
-
-  </head>
-  <body class="#PageBaseCSSClass() claro body-background">
-<!--  BEGIN: layout/html/ingrid/decorator.vm -->
-    <div class="#PageBaseCSSClass()">
-
-<!-- Identity Area inkl. service menu -->
-#includeIdentityArea()
-
-<!-- MAIN-NAVIGATION -->
-<div id="mainnav">
-  <h2 class="hide">Hauptmenu</h2>
-  <ul>
-#set($mainMenu = $site.getMenu("main-menu"))
-#if(!$mainMenu.empty)
-  #includeMainNavigation($mainMenu)
-#end
-  </ul>
-  <br class="clearer" />
-</div>
-
-<!-- sub navigation -->
-<div id="subnavBack"><a name="subnav"></a>
-  <div class="subnav_corner"><div class="subnav_corner_img"></div></div>
-  #set($currentPage = $site.getPageOrTemplate().url)
-  #if ($currentPage.startsWith('/administration'))
-#set($subMenu = $site.getMenu("sub-menu"))
-#if($subMenu && !$subMenu.empty)
-  #includeSubNavigation($subMenu false)
-#else
-  ## HACK: check current site and render "global" sub menue dependent from site ! -> thus we don't have to restructure pages in subfolders !
-  <!--#if($currentPage.startsWith('/search-') || $currentPage.startsWith('/main-search'))
-    #set($subMenu = $site.getMenu("sub-menu-search"))
-    #if($subMenu && !$subMenu.empty)
-      #includeSubNavigation($subMenu)
+        #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
+        ##includeHeaderResource()
+        #* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
+        ##includeJavaScriptForHead()
+        ##IncludeStylesheets()
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/style.css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/streamline-24px/styles.css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print"/>
+        #* our decorator macros, see ./decorator-macros.vm *#
+        #decoratorIncludeJavaScriptForHead()
+        #if($currentPage == "/main-search.psml")
+            <link rel="stylesheet" href="#GetPageResource('scripts/leaflet/leaflet.css')" />
+            <script src="#GetPageResource('scripts/leaflet/leaflet.js')"></script>
+        #end
+        <!-- Global scripts -->
+        <script src="#GetPageResource("scripts/modernizr.custom.min.js")"></script>
+        <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
+        <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
+    </head>
+    <body>
+    
+    #set($mainMenu = $site.getMenu("main-menu"))
+    #set($serviceMenu = $site.getMenu("service-menu"))
+    #set($footerMenu = $site.getMenu("footer-menu"))
+    #if(!$mainMenu.empty)
+        #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
     #end
-  #end
-    -->
-  <!--#if($currentPage.startsWith('/main-about') || $currentPage.startsWith('/main-feature'))
-    #set($subMenu = $site.getMenu("sub-menu-about"))
-    #if($subMenu && !$subMenu.empty)
-      ##includeSubNavigation($subMenu)
-    #end
-  #end-->
-#end
-#end
-</div>
-
-<!-- CONTENT BLOCK -->
-<div id="container">
-	<noscript>
-		<h3 class="portlet-msg-error js-error">$MESSAGES.getString('ingrid.page.javascript.required')</h3>
-		<br>
-	</noscript>  
-## $jetspeed.include($jetspeed.currentFragment)
-
-<!--  END: layout/html/ingrid/decorator.vm -->
+    <div class="page" >
+        <header class="header">
+            <div class="ob-box-padded-more ob-box-center">
+                <div class="header__widgets__section">
+                    <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                        <svg class="icon">
+                        <use xlink:href="#burger">
+                        </svg>
+                        <svg class="icon ob-fade">
+                        <use xlink:href="#cross">
+                        </svg>
+                    </div>
+                </div>
+                <div class="header__widgets__section">
+                    <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                        <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.svg')"></img>
+                        <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/mobile-logo.png')"></img>
+                    </a>
+                </div>
+                <div class="header__widgets__section">
+                    <a class="mq-hide-xxl desktop__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                        <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
+                        <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
+                    </a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">NUMIS</a>
+                </div>
+                 #if($serviceMenu && !$serviceMenu.empty)
+                    #includeServiceNavigation($serviceMenu)
+                #end
+            </div>
+        #if(!$mainMenu.empty)
+          #includeMainNavigation($mainMenu)
+        #end
+        </header>
+        <!--
+        #if($currentPage != "/main-maps.psml")
+            <section class="breadcrumb ob-box-padded-more mq-hide-l">
+                <div class="breadcrumb__title mq-hide-xxl">$MESSAGES.getString('ingrid.page.navigation.title'):</div>
+                <nav class="breadcrumb__list">
+                    <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
+                #if($currentPage)
+                    #if($currentPage == "/search-detail.psml")
+                        <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
+                        <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
+                    #end
+                    #if($currentPage != "/default-page.psml")
+                        <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
+                        <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
+                    #end
+                #end
+                </nav>
+            </section>
+        #end
+        -->

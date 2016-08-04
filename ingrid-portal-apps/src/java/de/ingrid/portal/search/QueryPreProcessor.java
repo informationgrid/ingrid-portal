@@ -70,13 +70,11 @@ public class QueryPreProcessor {
         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
         IngridQuery query = null;
         try {
-        	log.debug("The QueryString: " + queryString);
+            log.debug("The QueryString: " + queryString);
             query = QueryStringParser.parse(queryString);
             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-            	UtilsFacete.facetePrepareInGridQuery(request, query);
+                UtilsFacete.facetePrepareInGridQuery(request, query);
             }
-            
-            
         } catch (ParseException ex) {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
@@ -109,42 +107,42 @@ public class QueryPreProcessor {
 
         // always request ALL DATA !!! all kind of hits can be rendered in one page when datatypes are entered in query !
         String[] requestedMetadata = new String[] {
-        		// udk object metadata
-        		Settings.HIT_KEY_UDK_CLASS,
-        		Settings.HIT_KEY_UDK_CLASS.toLowerCase(),
-        		Settings.HIT_KEY_OBJ_ID,
-        		Settings.HIT_KEY_ORG_OBJ_ID,
-        		Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT,
-        		Settings.HIT_KEY_OBJ_SERV_TYPE,        		
-        		Settings.HIT_KEY_OBJ_SERV_TYPE_KEY,        		
-        		// udk address metadata
-        		Settings.HIT_KEY_ADDRESS_CLASS,
-        		Settings.HIT_KEY_ADDRESS_CLASS2,
-        		Settings.HIT_KEY_ADDRESS_CLASS3,
-        		Settings.HIT_KEY_ADDRESS_FIRSTNAME,
-        		Settings.HIT_KEY_ADDRESS_LASTNAME,
-        		Settings.HIT_KEY_ADDRESS_TITLE,
-        		Settings.HIT_KEY_ADDRESS_ADDRESS,
-        		Settings.HIT_KEY_ADDRESS_ADDRID,
-        		Settings.HIT_KEY_ADDRESS_ADDRID2,
-        		Settings.HIT_KEY_ADDRESS_ADDRID3,
-        		Settings.HIT_KEY_ADDRESS_INSTITUTION2,
-        		Settings.HIT_KEY_ADDRESS_INSTITUTION3,
-        		Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID,
-        		Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID3,
-        		// both
-        		Settings.HIT_KEY_WMS_URL,
-        		Settings.HIT_KEY_WMS_URL.toLowerCase(),
-        		Settings.RESULT_KEY_PARTNER,
-        		Settings.RESULT_KEY_PROVIDER,
-        		"kml",
-        		Settings.RESULT_KEY_ADDITIONAL_HTML_1,
-        		Settings.RESULT_KEY_CAPABILITIES_URL,
-        		Settings.RESULT_KEY_SERVICE_UUID
-        		// other dsc scripted iPlugs might deliver a direct URL, so always request URL !
-        		// NO, older SE iPlugs have a bug: extracted SE url is set empty when URL is requested :(
-        		// so let's skip URL for now ... (26. Sep. 2011)
-//        		Settings.RESULT_KEY_URL
+            // udk object metadata
+            Settings.HIT_KEY_UDK_CLASS,
+            Settings.HIT_KEY_UDK_CLASS.toLowerCase(),
+            Settings.HIT_KEY_OBJ_ID,
+            Settings.HIT_KEY_ORG_OBJ_ID,
+            Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT,
+            Settings.HIT_KEY_OBJ_SERV_TYPE,
+            Settings.HIT_KEY_OBJ_SERV_TYPE_KEY,
+            // udk address metadata
+            Settings.HIT_KEY_ADDRESS_CLASS,
+            Settings.HIT_KEY_ADDRESS_CLASS2,
+            Settings.HIT_KEY_ADDRESS_CLASS3,
+            Settings.HIT_KEY_ADDRESS_FIRSTNAME,
+            Settings.HIT_KEY_ADDRESS_LASTNAME,
+            Settings.HIT_KEY_ADDRESS_TITLE,
+            Settings.HIT_KEY_ADDRESS_ADDRESS,
+            Settings.HIT_KEY_ADDRESS_ADDRID,
+            Settings.HIT_KEY_ADDRESS_ADDRID2,
+            Settings.HIT_KEY_ADDRESS_ADDRID3,
+            Settings.HIT_KEY_ADDRESS_INSTITUTION2,
+            Settings.HIT_KEY_ADDRESS_INSTITUTION3,
+            Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID,
+            Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID3,
+            // both
+            Settings.HIT_KEY_WMS_URL,
+            Settings.HIT_KEY_WMS_URL.toLowerCase(),
+            Settings.RESULT_KEY_PARTNER,
+            Settings.RESULT_KEY_PROVIDER,
+            "kml",
+            Settings.RESULT_KEY_ADDITIONAL_HTML_1,
+            Settings.RESULT_KEY_CAPABILITIES_URL,
+            Settings.RESULT_KEY_SERVICE_UUID
+            // other dsc scripted iPlugs might deliver a direct URL, so always request URL !
+            // NO, older SE iPlugs have a bug: extracted SE url is set empty when URL is requested :(
+            // so let's skip URL for now ... (26. Sep. 2011)
+            // Settings.RESULT_KEY_URL
         };
         
         // set properties according to the session preferences
@@ -187,14 +185,14 @@ public class QueryPreProcessor {
             // no grouping when filter is set.
             // set GROUPING ! ONLY IF NO GROUPING IN Query String Input !
             if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_GROUPED)) {
-            	
-            	// IF NO GROUPING IN Query String input then use request parameters !!!
-            	// bookmarking has higher prio than user preferences (see below) !
+                
+                // IF NO GROUPING IN Query String input then use request parameters !!!
+                // bookmarking has higher prio than user preferences (see below) !
                 String grouping = request.getParameter(Settings.PARAM_GROUPING);
 
                 // If no grouping yet, adapt grouping to USER preferences
                 if (grouping == null) {
-                    grouping = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING);                	
+                    grouping = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_GROUPING);                    
                 }
 
                 // set grouping
@@ -221,7 +219,7 @@ public class QueryPreProcessor {
             int currentSelectorPage;
             try {
                 currentSelectorPage =
-                	(new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
+                    (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE))).intValue();
             } catch (Exception ex) {
                 currentSelectorPage = 1;
             }
@@ -235,9 +233,9 @@ public class QueryPreProcessor {
                 SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
             }
             // ensure correct size of Array ! Notice: currentSelectorPage is 1 for first page !
-        	while (currentSelectorPage >= groupedStartHits.size()) {
-        		groupedStartHits.add(new Integer(0));
-        	}
+            while (currentSelectorPage >= groupedStartHits.size()) {
+                groupedStartHits.add(new Integer(0));
+            }
 
             currentPage = 0;
             startHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
@@ -245,7 +243,7 @@ public class QueryPreProcessor {
 
         // set language for query
         if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_LANG)) {
-            //            UtilsSearch.processLanguage(query, request.getLocale());
+            // UtilsSearch.processLanguage(query, request.getLocale());
         }
         
         // add partner to query if the portal is restricted to a certain partner
@@ -257,165 +255,7 @@ public class QueryPreProcessor {
         //      TODO If no query should be submitted, return null
         // now with PlugDescription for determining type of Hit (Address, Object)
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, startHit, PortalConfig
-        		.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, true, requestedMetadata);
-    }
-
-    /**
-     * Prepares an unranked query for submitting to the ibus. If no query should be submitted,
-     * return null.
-     * 
-     * @param myQuery The query to submit.
-     * @param ds The datasource type of the query.
-     * @param startHit The hit count to start with.
-     * @return The QueryDescriptor describing the query or null if no query should be submitted.
-     */
-    public static QueryDescriptor createUnrankedQueryDescriptor(PortletRequest request) {
-        // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
-        // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll())
-        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
-        IngridQuery query = null;
-        try {
-            query = QueryStringParser.parse(queryString);
-            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-            	UtilsFacete.facetePrepareInGridQuery(request, query);
-            }
-            
-        } catch (ParseException ex) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
-                        + queryString, ex);
-            }
-        }
-
-        // get the datasource
-        String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
-
-        // set search sources according to the persistence preferences
-        // only for ds = PARAMV_DATASOURCE_ENVINFO AND if query has no custom datatype AND query has no custom metaclass
-        processQuerySources(request, ds, query);
-
-        // add basic data type dependent from query and GUI ! may manipulate the query.
-        // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
-        UtilsSearch.processBasicDataType(request, query, ds);
-
-        // change datasource dependent from query input
-        ds = UtilsSearch.determineFinalPortalDatasource(ds, query);
-
-        // start hit
-        int startHit = 0;
-        String stateStartHit = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_UNRANKED);
-        if (stateStartHit.length() != 0) {
-            startHit = (new Integer(stateStartHit)).intValue();
-        }
-
-        int currentPage = (int) (startHit / Settings.SEARCH_UNRANKED_HITS_PER_PAGE) + 1;
-
-        // set ranking ! ONLY IF NO RANKING IN Query String Input !
-        if (!UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED)) {
-            // switch ranking OFF
-            query.put(IngridQuery.RANKED, IngridQuery.NOT_RANKED);
-        }
-        // also add flag determining whether iPlugs with no results should be delivered !
-        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_RESULTS_UNRANKED_ALLIPLUGS, false)) {
-            // deliver also dummy hit of iPlugs with no result
-            query.addField(new FieldQuery(true, false, IngridQuery.GET_UNRANKED_IPLUGS_WITH_NO_RESULTS, "true"));
-        }
-
-        // set filter params. 
-        String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
-        if (filter != null && filter.length() > 0) {
-            String subject = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_SUBJECT);
-            if (filter.equals(Settings.RESULT_KEY_PARTNER)) {
-                if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_PARTNER)) {
-                    // set filter for partner 
-                    UtilsSearch.processPartner(query, new String[] { subject });
-                }
-            } else if (filter.equals(Settings.RESULT_KEY_PROVIDER)) {
-                if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_PROVIDER)) {
-                    // set filter for provider 
-                    UtilsSearch.processProvider(query, new String[] { subject });
-                }
-            } else if (filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-                if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_PLUG_ID)) {
-                    // set filter for iplugs 
-                    UtilsSearch.processIPlugs(query, new String[] { subject });
-                }
-            }
-        }
-
-        // ALWAYS GROUP BY iPlugs if no iPlug filter !
-        if (filter == null || !filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-            if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_GROUPED)) {
-                // grouping per iPlug !
-                query.put(Settings.QFIELD_GROUPED, IngridQuery.GROUPED_BY_PLUGID);
-            }
-        }
-
-        // process persistent partner/provider
-        processQueryPartnerProvider(request, query);
-
-        // Compute the new start hit for the always groued unranked query
-
-        // get the current page number, default to 1
-        int currentSelectorPage;
-        try {
-            currentSelectorPage = (new Integer(request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED)))
-                    .intValue();
-        } catch (Exception ex) {
-            currentSelectorPage = 1;
-        }
-
-        // get the grouping starthits history from session
-        // create and initialize if not exists
-        ArrayList groupedStartHits = null;
-        groupedStartHits = (ArrayList) SearchState.getSearchStateObject(request,
-                Settings.PARAM_GROUPING_STARTHITS_UNRANKED);
-        if (groupedStartHits == null) {
-            groupedStartHits = new ArrayList();
-            groupedStartHits.add(new Integer(0));
-            SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS_UNRANKED, groupedStartHits);
-        }
-        // set current page to 0 when the unranked search is showing a page > 0
-        // this will be ignored for showing the first page AND 
-        // navigate in the iplug detail page 'show all result of iplug'
-        if (currentSelectorPage > 1) {
-            currentPage = 0;
-        }
-        
-        int newStartHit;
-        // set new starthit to next expected result
-        // if we navigate through the iplug detail page 'show all result of iplug' use the former calulated start hit as a start
-        // otherwise use the grouped hit history to obtain the nest start hit.
-        if (filter != null && filter.equals(Settings.RESULT_KEY_PLUG_ID)) {
-            newStartHit = startHit;
-        } else {
-            newStartHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
-        }
-
-        // set language for query
-        if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_LANG)) {
-            //            UtilsSearch.processLanguage(query, request.getLocale());
-        }
-
-        UtilsSearch.processRestrictingPartners(query);
-
-        // add provider to the query if the provider was selected in simple search form
-        IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
-                IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
-        UtilsSearch.processRestrictingProvider(query, (String)sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER));
-
-        // need at least the docuuid to create a correct link if igc is connected
-        String[] requestedMetadata = new String[] {
-                // udk object metadata
-                Settings.HIT_KEY_OBJ_ID,
-                Settings.HIT_KEY_ORG_OBJ_ID,
-                Settings.HIT_KEY_UDK_CLASS,
-                Settings.HIT_KEY_UDK_CLASS.toLowerCase(),
-        };
-        
-        // TODO If no query should be submitted, return null
-        return new QueryDescriptor(query, Settings.SEARCH_UNRANKED_HITS_PER_PAGE, currentPage, newStartHit,
-                PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_UNRANKED, 120000), true, true, requestedMetadata);
+                .getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, true, requestedMetadata);
     }
 
     private static void processQuerySources(PortletRequest request, String ds, IngridQuery query) {
@@ -460,7 +300,6 @@ public class QueryPreProcessor {
                                 query.addClause(clauses[i]);
                             }
                         }
-
                     } catch (ParseException e) {
                         log.error("Error parsing sources query string.", e);
                     }
@@ -490,7 +329,6 @@ public class QueryPreProcessor {
                 } catch (ParseException e) {
                     log.error("Error parsing sources query string.", e);
                 }
-
             }
         }
     }
@@ -531,13 +369,13 @@ public class QueryPreProcessor {
      * @return the hash-code of the manipulated query
      */
     public static int getQueryCacheKey(IngridQuery query, String postfix) {
-    	IngridQueryTools queryTool = new IngridQueryTools();
-    	String cacheKey = "";
-    	
-    	String stringQuery = UtilsSearch.queryToString(query);
-    	cacheKey = queryTool.getComparableString(stringQuery,postfix);
-    	
-    	return cacheKey.hashCode();    	
+        IngridQueryTools queryTool = new IngridQueryTools();
+        String cacheKey = "";
+        
+        String stringQuery = UtilsSearch.queryToString(query);
+        cacheKey = queryTool.getComparableString(stringQuery,postfix);
+        
+        return cacheKey.hashCode();
     }
     
 }

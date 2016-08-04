@@ -1,0 +1,172 @@
+#set ($action = $renderResponse.createActionURL())
+<div class="tabs js-tabs">
+    #if($facetsTyp.size() > 1)
+    <div class="tab__select mq-show-l">
+        <span class="tab__select__text">$MESSAGES.getString('searchResult.facete.title.types')</span>
+        <svg class="tab__select__icon icon"><use xlink:href="#burger"></svg>
+        <svg class="tab__select__icon icon"><use xlink:href="#cross"></svg>
+    </div>
+    <nav class="tab__toggles ob-clear mq-hide-l">
+        #set($isActive = "")
+        #foreach ($cf in $config)
+            #set($facetParent = $cf.getId())
+            #set($facetParentName = $cf.getName())
+            #foreach ($typ in $facetsTyp)
+                #if($facetParent == $typ)
+                    #if($isActive == "")
+                        #set($isActive = true)
+                    #else
+                        #set($isActive = false)
+                    #end
+                    #if($cf.getFacets())
+                        #getTabs($facetParentName $cf.getFacets() $facetParent $isActive)
+                    #end
+                #end
+            #end
+        #end
+    </nav>
+    #end
+    #set($isActive = "")
+    #foreach ($cf in $config)
+        #set($facetParent = $cf.getId())
+        #set($facetParentName = $cf.getName())
+        #foreach ($typ in $facetsTyp)
+            #if($facetParent == $typ)
+                #if($isActive == "")
+                    #set($isActive = true)
+                #else
+                    #set($isActive = false)
+                #end
+                #if($cf.getFacets())
+                    #getTabsContent($facetParentName $cf.getFacets() $facetParent $isActive)
+                #end
+            #end
+        #end
+    #end
+</div>
+
+#macro (getTabs $facetName $facetList $parentFacet $isActive)
+    <div class="tab__toggle #if($isActive)is-active#end" data-tabid="$parentFacet">
+        <a href="#">$MESSAGES.getString($facetName)</a>
+    </div>
+    #foreach ($facet in $facetList)
+        #if($hits.get("FACETS").get("$parentFacet:$facet.getId()") && $hits.get("FACETS").get("$parentFacet:$facet.getId()") != "0")
+            #if($facet.getFacets())
+            <div class="tab__toggle" data-tabid="${parentFacet}_$facet.getId()">
+                <a href="#">$MESSAGES.getString($facet.getName())</a>
+            </div>
+            #end
+        #end
+    #end
+#end
+
+#macro (getTabsContent $facetName $facetList $parentFacet $isActive)
+    <div class="tab__content box #if(!$isActive)is-hidden#end" data-tabid="$parentFacet">
+        <section class="block">
+            <div class="ob-box-wide ob-box-padded ob-box-center">
+                <article class="content ob-container">
+                    <div class="tag-group">
+                        #if($parentFacet == "provider")
+                            #set($facetId = "partner")
+                        #else
+                            #set($facetId = $parentFacet)
+                        #end
+                        #getContent($facetList $parentFacet $facetId)
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+    #foreach ($facet in $facetList)
+        #if($hits.get("FACETS").get("$parentFacet:$facet.getId()") && $hits.get("FACETS").get("$parentFacet:$facet.getId()") != "0")
+            #if($facet.getFacets())
+            <div class="tab__content box is-hidden" data-tabid="${parentFacet}_$facet.getId()">
+                <section class="block">
+                    <div class="ob-box-wide ob-box-padded ob-box-center">
+                        <article class="content ob-container">
+                            <div class="tag-group">
+                                #set($facetId = $facet.getId())
+                                #getContent($facet.getFacets() $facet.getId() $facetId $parentFacet)
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+            #end
+        #end
+    #end
+#end
+
+#macro (getContent $facetList $parentFacet $facetId $parentFacetParam)
+    #set ($count = 0)
+    #set ($pf = $parentFacet)
+    #foreach ($facet in $facetList)
+        #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != "0") || $facet.isDisplay()))
+            #if($count % 5 == 0)
+                <div class="grid grid--gutter">
+            #end
+            #set ($count = $count + 1)
+            <div class="column column--1-5-m">
+                #set($facetParam = "$pf:$facet.getId();")
+                #if($parentFacetParam)
+                    #set($facetParam = "$parentFacetParam:$pf;$pf:$facet.getId();")
+                #end
+                <div class="mq-hide-l" style="padding: 0 0 20px 0;">
+                    <a class="tag" href="/freitextsuche?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
+                        #getIcon($facet)
+                        <div class="tx-center">
+                            #if($facet.getCodelistId())
+                                $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
+                            #else
+                                $MESSAGES.getString($facet.getName())
+                            #end
+                        </div>
+                        #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
+                            <div class="tx-center">($hits.get("FACETS").get("$facetId:$facet.getId()"))</div>
+                        #end
+                    </a>
+                </div>
+                <div class="mq-show-l">
+                    <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="/freitextsuche?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
+                        #getIcon($facet)
+                        <strong>
+                            #if($facet.getCodelistId())
+                                $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
+                            #else
+                                $MESSAGES.getString($facet.getName())
+                            #end
+                        </strong>
+                        ($hits.get("FACETS").get("$pf:$facet.getId()"))
+                    </a>
+                </div>
+            </div>
+            #if($count % 5 == 0)
+                </div>
+            #end
+        #end
+    #end
+#end
+
+#macro (getIcon $facet)
+<span class="mq-hide-l">
+    #getIconImage($facet "display: block;font-size: 60px;margin: auto;")
+</span>
+<span class="mq-show-l">
+    #getIconImage($facet)
+</span>
+#end
+
+#macro (getIconImage $facet $facetStyle)
+    #if($facet.getIcon())
+        #set($icon = $facet.getIcon())
+        #if($icon.startsWith("#"))
+            <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="$icon" /></svg>
+        #elseif($icon.startsWith("/"))
+            <img style="margin: auto;" class="bx-top-s" src="$icon"></img>
+        #else
+            <i class="icon bx-top-s $icon" style="$facetStyle"></i>
+        #end
+    #else
+       <i class="icon bx-top-s icon-question-mark" style="$facetStyle"></i>
+    #end
+#end

@@ -38,14 +38,8 @@ public class Settings {
     /** number of ranked hits per page */
     public final static int SEARCH_RANKED_HITS_PER_PAGE = 10;
 
-    /** number of unranked hits per page */
-    public final static int SEARCH_UNRANKED_HITS_PER_PAGE = 10;
-
     /** number of ranked pages displayed for selection ("selector pages") */
     public final static int SEARCH_RANKED_NUM_PAGES_TO_SELECT = 5;
-
-    /** number of unranked pages displayed for selection ("selector pages") */
-    public final static int SEARCH_UNRANKED_NUM_PAGES_TO_SELECT = 5;
 
     /* max. number of hits displayed for every iPlug (in unranked search) */
     // NOT NEEDED ANYMORE, WE ALWAYS DISPLAY ONE HIT PER GROUP !
@@ -53,8 +47,8 @@ public class Settings {
 
     public final static String SEARCH_INITIAL_DATASOURCE = Settings.PARAMV_DATASOURCE_ENVINFO;
 
-    /** maximum length of a row without white space in the left columnn, KEEP 80 ! depends on Characters, Uppercase takes 77 ! */
-    public final static int SEARCH_RANKED_MAX_ROW_LENGTH = 77;
+    /** maximum length of a row without white space in the left columnn, KEEP 80 ! depends on Characters, Uppercase takes 50 ! */
+    public final static int SEARCH_RANKED_MAX_ROW_LENGTH = 50;
     
     // ===========================================
     // PSML pages
@@ -328,12 +322,6 @@ public class Settings {
     /** when set ranked search has finished */
     public static final String MSG_SEARCH_FINISHED_RANKED = "search_finished_ranked";
 
-    /** cache for unranked search results */
-    public static final String MSG_SEARCH_RESULT_UNRANKED = "search_result_unranked";
-
-    /** when set ranked search has finished */
-    public static final String MSG_SEARCH_FINISHED_UNRANKED = "search_finished_unranked";
-
     // ------------- INFORMATION MESSAGES: KEYS (MSG_...) AND VALUES ("MSGV_...") -----------------------------
 
     /** this message indicates what kind of query has to be performed, e.g.
@@ -349,8 +337,6 @@ public class Settings {
     public static final String MSGV_NEW_QUERY = "new";
 
     public static final String MSGV_RANKED_QUERY = "ranked";
-
-    public static final String MSGV_UNRANKED_QUERY = "unranked";
 
     /** indicates whether JavaScript is active in Browser */
     public static final String MSG_HAS_JAVASCRIPT = "has_javascript";
@@ -398,7 +384,6 @@ public class Settings {
     public static final String PARAM_QUERY_STRING_EXT = "q_ext";
     
     public final static String PARAM_STARTHIT_RANKED = "rstart";
-    public final static String PARAM_STARTHIT_UNRANKED = "nrstart";
 
     public final static String PARAM_DATASOURCE = "ds";
 
@@ -406,8 +391,6 @@ public class Settings {
     
     // history of starthits of grouped pages
     public static final String PARAM_GROUPING_STARTHITS = "grouping_starthits";
-    public static final String PARAM_GROUPING_STARTHITS_UNRANKED = "grouping_starthits_unranked";
-    
 
     /** this parameter holds the type of filter for search result display (usually same as grouping: partner | provider) **/
     public static final String PARAM_FILTER = "filter";
@@ -429,7 +412,6 @@ public class Settings {
     public final static String PARAM_TAB = "tab";
 
     public static final String PARAM_CURRENT_SELECTOR_PAGE = "currentSelectorPage";
-    public static final String PARAM_CURRENT_SELECTOR_PAGE_UNRANKED = "currentSelectorPageUnranked";
     
 	public static final String PARAM_LOGIN_REDIRECT = "r";
 

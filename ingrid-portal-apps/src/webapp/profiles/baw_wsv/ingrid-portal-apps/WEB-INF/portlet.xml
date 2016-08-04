@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  **************************************************-
-  Ingrid Portal Apps
-  ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  -->
-
 <portlet-app id="ingrid-portal-apps" version="1.0">
 
 
@@ -78,6 +55,20 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
+        <portlet-preferences>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.HelpPortletResources</resource-bundle>
     </portlet>
 
@@ -104,7 +95,17 @@
             <title>Jobübersicht</title>
             <short-title>Jobübersicht</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="ContentRSSPortlet">
@@ -126,7 +127,17 @@
             <title>RSS Feeds administrieren</title>
             <short-title>RSS Feeds administrieren</short-title>
         </portlet-info>      
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>  
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="ContentPartnerPortlet">
@@ -148,7 +159,17 @@
             <title>Partner administrieren</title>
             <short-title>Partner administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="ContentProviderPortlet">
@@ -170,7 +191,17 @@
             <title>Anbieter administrieren</title>
             <short-title>Anbieter administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminUserPortlet">
@@ -192,7 +223,17 @@
             <title>Benutzer administrieren</title>
             <short-title>Benutzer administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
         <init-param>
             <description>This is the template in which you setup an email to be sent after user exists</description>
             <name>emailTemplate</name>
@@ -242,7 +283,21 @@
             <title>iPlugs/iBus administrieren</title>
             <short-title>iPlugs/iBus administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminCMSPortlet">
@@ -264,7 +319,17 @@
             <title>Inhalte administrieren</title>
             <short-title>Inhalte administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminWMSPortlet">
@@ -286,7 +351,21 @@
             <title>WMS Administration</title>
             <short-title>WMS Administration</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminStatisticsPortlet">
@@ -308,7 +387,21 @@
             <title>Statistiken</title>
             <short-title>Statistiken</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminHomepagePortlet">
@@ -331,7 +424,21 @@
             <title>Startseite administrieren</title>
             <short-title>Startseite administrieren</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
 
     <portlet id="AdminPortalProfilePortlet">
@@ -353,91 +460,21 @@
             <title>Portal Profile</title>
             <short-title>Portal Profile</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
-    </portlet>
-
-	<portlet id="MyPortalEditAboutInfoPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/about_partner.vm</value>
-        </init-param>
-        <portlet-name>MyPortalEditAboutInfoPortlet</portlet-name>
-        <display-name>MyPortalEditAboutInfoPortlet</display-name>
-        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
-        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
-                <name>infoTemplate</name>
-                <value>/WEB-INF/templates/myportal/myportal_navigation.vm</value>
+                <name>titleTag</name>
+                <value>h1</value>
             </preference>
             <preference>
-                <name>titleKey</name>
-                <value>myPortal.info.navigation.title</value>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
             </preference>
         </portlet-preferences>
-    </portlet>
-    
-    <portlet id="MyPortalEditNewsletterInfoPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/newsletter_teaser.vm</value>
-        </init-param>
-        <portlet-name>MyPortalEditNewsletterInfoPortlet</portlet-name>
-        <display-name>MyPortalEditNewsletterInfoPortlet</display-name>
-        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
-        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
-        <portlet-preferences>
-            <preference>
-                <name>infoTemplate</name>
-                <value>/WEB-INF/templates/newsletter_teaser.vm</value>
-            </preference>
-            <preference>
-                <name>titleKey</name>
-                <value>teaser.newsletter.title</value>
-            </preference>
-        </portlet-preferences>
-    </portlet>
-    
-    <portlet id="MyPortalEditAdvancedInfoPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/myportal/login_teaser.vm</value>
-        </init-param>
-        <portlet-name>MyPortalEditAdvancedInfoPortlet</portlet-name>
-        <display-name>MyPortalEditAdvancedInfoPortlet</display-name>
-        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
-        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
-        <portlet-preferences>
-            <preference>
-                <name>infoTemplate</name>
-                <value>/WEB-INF/templates/myportal/login_teaser.vm</value>
-            </preference>
-            <preference>
-                <name>titleKey</name>
-                <value>teaser.login.title</value>
-            </preference>
-        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
     
     <portlet id="AdminUserMigrationPortlet">
@@ -459,7 +496,7 @@
             <title>Portal User Migration</title>
             <short-title>Portal User Migration</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
         
     <!-- *********************** -->
@@ -481,7 +518,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>portlet-type</name>
@@ -498,6 +535,65 @@
             <preference>
                 <name>helpKey</name>
                 <value>search-1</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+            
+        </portlet-preferences>
+    </portlet>
+
+    <portlet id="SearchSimpleResult">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/search_simple_result.vm</value>
+        </init-param>
+        <portlet-name>SearchSimpleResult</portlet-name>
+        <display-name>Einfache Suche Result</display-name>
+        <description>This portlet displayes a search box for the home AND main search page.</description>
+        <portlet-class>de.ingrid.portal.portlets.SearchSimplePortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle>
+    </portlet>
+    
+    <portlet id="CategoryTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/category_teaser.vm</value>
+        </init-param>
+        <portlet-name>CategoryTeaser</portlet-name>
+        <display-name>Einfache Suche Ergebnisliste</display-name>
+        <description>This portlet displayes a search box for the home AND main search page.</description>
+        <portlet-class>de.ingrid.portal.portlets.CategoryTeaserPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>2</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>search.teaser.portlet.title</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded block--light</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -517,7 +613,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>portlet-type</name>
@@ -534,6 +630,10 @@
             <preference>
                 <name>cmsKey</name>
                 <value>portal.teaser.shortcut.query</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded block--light</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -557,7 +657,7 @@
             <title>Aktuelles</title>
             <short-title>RssNewsTeaser</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>portlet-type</name>
@@ -565,7 +665,7 @@
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>2</value>
+                <value>3</value>
             </preference>
             <preference>
                 <name>titleKey</name>
@@ -578,6 +678,10 @@
             <preference>
                 <name>noOfEntriesDisplayed</name>
                 <value>4</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -597,10 +701,17 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        
     </portlet>
 
     <portlet id="CMSPortlet">
@@ -618,7 +729,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>cmsKey</name>
@@ -627,6 +738,90 @@
         </portlet-preferences>
     </portlet>
 
+    <portlet id="AboutPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>AboutPortlet</portlet-name>
+        <display-name>CMS portlet</display-name>
+        <description>This portlet displays a content entry from the cms, specified by the preference 'cmsKey'.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>cmsKey</name>
+                <value>ingrid.about</value>
+            </preference>
+            <preference>
+                <name>helpKey</name>
+                <value>about-1</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <portlet id="DisclaimerPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>DisclaimerPortlet</portlet-name>
+        <display-name>CMS portlet</display-name>
+        <description>This portlet displays a content entry from the cms, specified by the preference 'cmsKey'.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>cmsKey</name>
+                <value>ingrid.disclaimer</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+    
+    <portlet id="PrivacyPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>PrivacyPortlet</portlet-name>
+        <display-name>CMS portlet</display-name>
+        <description>This portlet displays a content entry from the cms, specified by the preference 'cmsKey'.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>cmsKey</name>
+                <value>ingrid.privacy</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+    
     <portlet id="IngridInformPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -645,14 +840,6 @@
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
-                <name>portlet-type</name>
-                <value>ingrid-home-marginal</value>
-            </preference>
-            <preference>
-                <name>default-vertical-position</name>
-                <value>0</value>
-            </preference>
-            <preference>
                 <name>infoTemplate</name>
                 <value>/WEB-INF/templates/default_cms.vm</value>
             </preference>
@@ -668,7 +855,63 @@
                 <name>cmsKey</name>
                 <value>ingrid.teaser.inform</value>
             </preference>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
         </portlet-preferences>
+    </portlet>
+    
+    <portlet id="InfoDefaultPageTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_info.vm</value>
+        </init-param>
+        <portlet-name>InfoDefaultPageTeaser</portlet-name>
+        <display-name>Generisches Informationsportlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>5</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/info_teaser.vm</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>Info Portlet</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--pad-bottom</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
     </portlet>
 
     <portlet id="IngridWelcomePortlet">
@@ -688,14 +931,16 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
+            <!-- 
             <preference>
                 <name>portlet-type</name>
                 <value>ingrid-home</value>
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>3</value>
+                <value>5</value>
             </preference>
+             -->
             <preference>
                 <name>infoTemplate</name>
                 <value>/WEB-INF/templates/default_cms.vm</value>
@@ -711,7 +956,7 @@
         </portlet-preferences>
     </portlet>
 
-	<portlet id="ShortcutTeaser">
+    <portlet id="ShortcutTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
@@ -726,7 +971,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>portlet-type</name>
@@ -766,33 +1011,26 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+
+        <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
     </portlet>
-
-    <portlet id="ContactNewsletterPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/contact_newsletter.vm</value>
-        </init-param>
-        <portlet-name>ContactNewsletterPortlet</portlet-name>
-        <display-name>ContactNewsletterPortlet</display-name>
-        <description>TODO: Describe the portlet.</description>
-        <portlet-class>de.ingrid.portal.portlets.ContactNewsletterPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.ContactNewsletterResources</resource-bundle>            
-<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
-        <supported-locale>de</supported-locale>
-        <supported-locale>en</supported-locale>
-    </portlet>
-
 
     <portlet id="MyPortalLoginPortlet">
         <init-param>
@@ -809,10 +1047,17 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        
     </portlet>
 
     <portlet id="MyPortalOverviewPortlet">
@@ -830,7 +1075,17 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -885,7 +1140,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -907,7 +1176,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -924,7 +1207,6 @@
             <name>emailTemplate</name>
             <value>/WEB-INF/templates/myportal/forgottenPasswdEmail.vm</value>
         </init-param> 
-        
         <portlet-name>MyPortalPasswordForgottenPortlet</portlet-name>
         <display-name>MyPortalPasswordForgottenPortlet</display-name>
         <description>This portlet displays the myportal password forgotten dialog.</description>
@@ -934,7 +1216,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -956,7 +1252,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -978,7 +1274,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -1000,51 +1310,7 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
-<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
-        <supported-locale>de</supported-locale>
-        <supported-locale>en</supported-locale>
-    </portlet>
-
-    <portlet id="MyPortalPersonalizeSourcesPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/myportal/myportal_personalize_sources.vm</value>
-        </init-param>
-        
-        <portlet-name>MyPortalPersonalizeSourcesPortlet</portlet-name>
-        <display-name>MyPortalPersonalizeSourcesPortlet</display-name>
-        <description>This portlet displays the myportal personalization dialog: Sources.</description>
-        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizeSourcesPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
-<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
-        <supported-locale>de</supported-locale>
-        <supported-locale>en</supported-locale>
-    </portlet>
-
-    <portlet id="MyPortalPersonalizeSearchSettingsPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/myportal/myportal_personalize_search_settings.vm</value>
-        </init-param>
-        
-        <portlet-name>MyPortalPersonalizeSearchSettingsPortlet</portlet-name>
-        <display-name>MyPortalPersonalizeSearchSettingsPortlet</display-name>
-        <description>This portlet displays the myportal personalization dialog: SearchSettings.</description>
-        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizeSearchSettingsPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -1069,7 +1335,21 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ShowPartnerPortletResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.ShowPartnerPortletResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -1090,51 +1370,26 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ShowDataSourcePortletResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.ShowDataSourcePortletResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
     </portlet>
         
-    <!-- NOTICE: uses SearchSimple from Home -->
-    <portlet id="ServiceSearch">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/service_search.vm</value>
-        </init-param>
-        <portlet-name>ServiceSearch</portlet-name>
-        <display-name>Service</display-name>
-        <description>This portlet displayes a service search box.</description>
-        <portlet-class>de.ingrid.portal.portlets.ServiceSearchPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle>            
-<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
-        <supported-locale>de</supported-locale>
-        <supported-locale>en</supported-locale>
-    </portlet>
-    <portlet id="ServiceResult">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/empty.vm</value>
-        </init-param>
-        <portlet-name>ServiceResult</portlet-name>
-        <display-name>Service Suchergebnis</display-name>
-        <description>This portlet displays the search results of the service search (service catalogue).</description>
-        <portlet-class>de.ingrid.portal.portlets.ServiceResultPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.ServiceSearchResources</resource-bundle> 
-    </portlet>
-    
     <portlet id="MeasuresSearch">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -1155,85 +1410,8 @@
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
     </portlet>
-    <portlet id="MeasuresResult">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/empty.vm</value>
-        </init-param>
-        <portlet-name>MeasuresResult</portlet-name>
-        <display-name>Messwerte Suchergebnis</display-name>
-        <description>This portlet displays the search results of the measures search (measures catalogue).</description>
-        <portlet-class>de.ingrid.portal.portlets.MeasuresResultPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.MeasuresSearchResources</resource-bundle> 
-    </portlet>
-    
-    <portlet id="EnvironmentSearch">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/environment_search.vm</value>
-        </init-param>
-        <portlet-name>EnvironmentSearch</portlet-name>
-        <display-name>Themen</display-name>
-        <description>This portlet displays an environment search box.</description>
-        <portlet-class>de.ingrid.portal.portlets.EnvironmentSearchPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
-<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
-        <supported-locale>de</supported-locale>
-        <supported-locale>en</supported-locale>
-    </portlet>
-    <portlet id="EnvironmentResult">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/empty.vm</value>
-        </init-param>
-        <portlet-name>EnvironmentResult</portlet-name>
-        <display-name>Themen Suchergebnis</display-name>
-        <description>This portlet displays the search results of the environment topics search (environment topics catalogue).</description>
-        <portlet-class>de.ingrid.portal.portlets.EnvironmentResultPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle> 
-    </portlet>
 
-    <portlet id="SaveMapsPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/save_maps.vm</value>
-        </init-param>
-        <portlet-name>SaveMapsPortlet</portlet-name>
-        <display-name>KartenLinkSave</display-name>
-        <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.SaveMapsPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Kartenabschnitt als feste URLs</title>
-            <short-title>SaveMapsPortlet</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
-    </portlet>
-
-	<portlet id="ShowMapsPortlet">
+    <portlet id="ShowMapsPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
@@ -1270,7 +1448,17 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>            
+        <portlet-preferences>
+            <preference>
+                <name>helpKey</name>
+                <value>search-chronicle-1</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+        </portlet-preferences>
+        <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
@@ -1290,78 +1478,22 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+        </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.ChronicleSearchResources</resource-bundle> 
     </portlet>
 
     <!-- *********************** -->
     <!-- Search (general)        -->
     <!-- *********************** -->
-
-    <portlet id="SearchSettings">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_settings.vm</value>
-        </init-param>
-        <portlet-name>SearchSettings</portlet-name>
-        <display-name>Sucheinstellungen</display-name>
-        <description>This portlet displays and handles the search settings.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchSettingsPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Sucheinstellungen</title>
-            <short-title>SearchSettings</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchSavePortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_save.vm</value>
-        </init-param>
-        <portlet-name>SearchSavePortlet</portlet-name>
-        <display-name>SearchSavePortlet</display-name>
-        <description>This portlet displays and handles the search save dialog.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchSavePortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>SearchSavePortlet</title>
-            <short-title>SearchSavePortlet</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
-    </portlet>
-    
-    <portlet id="SearchHistory">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_history.vm</value>
-        </init-param>
-        <portlet-name>SearchHistory</portlet-name>
-        <display-name>Suchhistorie</display-name>
-        <description>This portlet displays and handles the search history.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchHistoryPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Suchhistorie</title>
-            <short-title>SearchHistory</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchSimpleResources</resource-bundle> 
-    </portlet>
     
     <portlet id="SearchSimilar">
         <init-param>
@@ -1403,6 +1535,16 @@
             <title>Suchergebnis</title>
             <short-title>SearchResult</short-title>
         </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>divStyle</name>
+                <value>ob-box-wide ob-box-padded ob-box-center ob-rel</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+        </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
     </portlet>
     
@@ -1568,461 +1710,21 @@
                 <name>helpKey</name>
                 <value>search-catalog-1</value>
             </preference>
-        </portlet-preferences>
-    </portlet>
-
-    <portlet id="SearchCatalogThesaurus">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_catalog/search_cat_thesaurus.vm</value>
-        </init-param>
-        <portlet-name>SearchCatalogThesaurus</portlet-name>
-        <display-name>KatalogSucheThesaurus</display-name>
-        <description>This portlet handles the Search in the UDKs via Thesaurus browsing.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchcatalog.SearchCatalogThesaurusPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>KatalogsucheThesaurus</title>
-            <short-title>CatalogThesaurus</short-title>
-        </portlet-info>
-        <portlet-preferences>
             <preference>
-                <name>helpKey</name>
-                <value>search-catalog-2</value>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
             </preference>
         </portlet-preferences>
-        <resource-bundle>de.ingrid.portal.resources.SearchCatalogResources</resource-bundle>
     </portlet>
 
-    <portlet id="SearchCatalogThesaurusResult">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_catalog/search_cat_thesaurus_result.vm</value>
-        </init-param>
-        <portlet-name>SearchCatalogThesaurusResult</portlet-name>
-        <display-name>KatalogSucheThesaurusErgebnisse</display-name>
-        <description>This portlet displays the search results found via Thesaurus Browsing.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchcatalog.SearchCatalogThesaurusResultPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>KatalogsucheThesaurusErgebnisse</title>
-            <short-title>CatalogThesaurusResult</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchCatalogResources</resource-bundle>
-    </portlet>
-
-    <!-- *********************** -->
-    <!-- Extended Search         -->
-    <!-- *********************** -->
-
-    <!-- NOTICE: Extended Search uses SearchSimple Portlet with other view template -->
-
-    <portlet id="SearchExtEnvTopicTerms">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_env_topic_terms.vm</value>
-        </init-param>
-        <portlet-name>SearchExtEnvTopicTerms</portlet-name>
-        <display-name>ErweiterteSucheUmwThemaSuchbegriffe</display-name>
-        <description>This portlet handles the input of the terms in the extended search for environment info.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTopicTermsPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>UmweltinfoThemaSuchbegriffe</title>
-            <short-title>EnvinfoTopicTerms</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtEnvTopicThesaurus">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_env_topic_thesaurus.vm</value>
-        </init-param>
-        <portlet-name>SearchExtEnvTopicThesaurus</portlet-name>
-        <display-name>ErweiterteSucheUmwThemaFachwoerterbuch</display-name>
-        <description>This portlet handles the input of the thesaurus terms in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTopicThesaurusPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>ThemaFachwoerterbuch</title>
-            <short-title>TopicThesaurus</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle>
-    </portlet>
-
-    <portlet id="SearchExtEnvPlaceGeothesaurus">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_env_place_geothesaurus.vm</value>
-        </init-param>
-        <portlet-name>SearchExtEnvPlaceGeothesaurus</portlet-name>
-        <display-name>ErweiterteSucheUmwRaumGeothesaurus</display-name>
-        <description>This portlet handles the input of the geothesaurus terms in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvPlaceGeothesaurusPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>RaumGeothesaurus</title>
-            <short-title>PlaceGeothesaurus</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtEnvPlaceMap">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_env_place_map.vm</value>
-        </init-param>
-        <portlet-name>SearchExtEnvPlaceMap</portlet-name>
-        <display-name>ErweiterteSucheUmwRaumKarte</display-name>
-        <description>This portlet handles the input of the map page in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvPlaceMapPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>RaumKarte</title>
-            <short-title>PlaceMap</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtEnvTimeConstraint">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_env_time_constraint.vm</value>
-        </init-param>
-        <portlet-name>SearchExtEnvTimeConstraint</portlet-name>
-        <display-name>ErweiterteSucheUmwZeitEinschraenkung</display-name>
-        <description>This portlet handles the input of the time constraint fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTimeConstraintPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>ZeitEinschraenkung</title>
-            <short-title>TimeConstraint</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtEnvTimeChronicle">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_env_time_chronicle.vm</value>
-        </init-param>
-        <portlet-name>SearchExtEnvTimeChronicle</portlet-name>
-        <display-name>ErweiterteSucheUmwZeitChronik</display-name>
-        <description>This portlet handles the input of the time references (chronicle) in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvTimeChroniclePortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>ZeitChronik</title>
-            <short-title>TimeChronicle</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtEnvAreaContents">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_env_area_contents.vm</value>
-        </init-param>
-        <portlet-name>SearchExtEnvAreaContents</portlet-name>
-        <display-name>ErweiterteSucheUmwSuchbereichInhalte</display-name>
-        <description>This portlet handles the input of the "search area"/"contents" fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvAreaContentsPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>SuchbereichInhalte</title>
-            <short-title>AreaContents</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtEnvAreaSources">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_env_area_sources.vm</value>
-        </init-param>
-        <portlet-name>SearchExtEnvAreaSources</portlet-name>
-        <display-name>ErweiterteSucheUmwSuchbereichDatenquellen</display-name>
-        <description>This portlet handles the input of the "searcharea"/"sources" fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvAreaSourcesPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>SuchbereichDatenquellen</title>
-            <short-title>AreaSources</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtEnvAreaPartner">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_env_area_partner.vm</value>
-        </init-param>
-        <portlet-name>SearchExtEnvAreaPartner</portlet-name>
-        <display-name>ErweiterteSucheUmwSuchbereichBundLaender</display-name>
-        <description>This portlet handles the input of the "envinfo"/"searcharea"/"partner" fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtEnvAreaPartnerPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>UmweltinfoSuchbereichBundLaender</title>
-            <short-title>EnvinfoAreaPartner</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtAdrTopicTerms">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_adr_topic_terms.vm</value>
-        </init-param>
-        <portlet-name>SearchExtAdrTopicTerms</portlet-name>
-        <display-name>ErweiterteSucheAdrThemaSuchbegriffe</display-name>
-        <description>This portlet handles the input of the terms in the extended search for addresses.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrTopicTermsPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>AdressenThemaSuchbegriffe</title>
-            <short-title>AddressTopicTerms</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtAdrTopicMode">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_adr_topic_mode.vm</value>
-        </init-param>
-        <portlet-name>SearchExtAdrTopicMode</portlet-name>
-        <display-name>ErweiterteSucheAdrThemaSuchmodus</display-name>
-        <description>This portlet handles the input of the mode in the extended search for addresses.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrTopicModePortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>ThemaSuchmodus</title>
-            <short-title>TopicMode</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtAdrPlaceReference">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_adr_place_reference.vm</value>
-        </init-param>
-        <portlet-name>SearchExtAdrPlaceReference</portlet-name>
-        <display-name>ErweiterteSucheAdrRaumRaumbezug</display-name>
-        <description>This portlet handles the input of the place reference in the extended search for addresses.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrPlaceReferencePortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>RaumRaumbezug</title>
-            <short-title>PlaceReference</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtAdrAreaPartner">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_adr_area_partner.vm</value>
-        </init-param>
-        <portlet-name>SearchExtAdrAreaPartner</portlet-name>
-        <display-name>ErweiterteSucheAdrSuchbereichBundLaender</display-name>
-        <description>This portlet handles the input of the "addresses"/"searcharea"/"partner" fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtAdrAreaPartnerPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>AdressenSuchbereichBundLaender</title>
-            <short-title>AddressAreaPartner</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-    
-    <portlet id="SearchExtResTopicTerms">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_res_topic_terms.vm</value>
-        </init-param>
-        <portlet-name>SearchExtResTopicTerms</portlet-name>
-        <display-name>ErweiterteSucheForschungThemaSuchbegriffe</display-name>
-        <description>This portlet handles the input of the terms in the extended search for research.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtResTopicTermsPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>ForschungThemaSuchbegriffe</title>
-            <short-title>ResearchTopicTerms</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtResTopicAttributes">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_res_topic_attributes.vm</value>
-        </init-param>
-        <portlet-name>SearchExtResTopicAttributes</portlet-name>
-        <display-name>ErweiterteSucheForschungThemaAttribute</display-name>
-        <description>This portlet handles the input of the attributes in the extended search for research.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtResTopicAttributesPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>ForschungThemaAttribute</title>
-            <short-title>ResearchTopicAttributes</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtLawTopicTerms">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_law_topic_terms.vm</value>
-        </init-param>
-        <portlet-name>SearchExtLawTopicTerms</portlet-name>
-        <display-name>ErweiterteSucheRechtThemaSuchbegriffe</display-name>
-        <description>This portlet handles the input of the terms in the extended search for law.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtLawTopicTermsPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>RechtThemaSuchbegriffe</title>
-            <short-title>LawTopicTerms</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="SearchExtLawTopicThesaurus">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_law_topic_thesaurus.vm</value>
-        </init-param>
-        <portlet-name>SearchExtLawTopicThesaurus</portlet-name>
-        <display-name>ErweiterteSucheRechtThemaFachwoerterbuch</display-name>
-        <description>This portlet handles the input of the thesaurus terms in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtLawTopicThesaurusPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>ThemaFachwoerterbuch</title>
-            <short-title>TopicThesaurus</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle>
-    </portlet>
-    
-    <portlet id="SearchLawEnvAreaPartner">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_extended/search_ext_law_area_partner.vm</value>
-        </init-param>
-        <portlet-name>SearchExtLawAreaPartner</portlet-name>
-        <display-name>ErweiterteSucheRechtSuchbereichBundLaender</display-name>
-        <description>This portlet handles the input of the "law"/"searcharea"/"partner" fragment in the extended search.</description>
-        <portlet-class>de.ingrid.portal.portlets.searchext.SearchExtLawAreaPartnerPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>RechtSuchbereichBundLaender</title>
-            <short-title>LawAreaPartner</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
-    </portlet>
-    
     <portlet id="LanguageSwitch">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -2045,36 +1747,33 @@
         <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
     
-    <portlet id="ShowFeaturesPortlet">
+    <portlet id="LanguageSwitchMobile">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/features.vm</value>
+            <value>/WEB-INF/templates/language_mobile.vm</value>
         </init-param>
-        <portlet-name>ShowFeaturesPortlet</portlet-name>
-        <display-name>Features Information</display-name>
-        <description>This portlet explains all the features the portal has to offer.</description>
-        <portlet-class>de.ingrid.portal.portlets.ShowFeaturesPortlet</portlet-class>
+        <portlet-name>LanguageSwitchMobile</portlet-name>
+        <display-name>Sprachauswahl</display-name>
+        <description>This portlet displayes a combo box containing different languages.</description>
+        <portlet-class>de.ingrid.portal.portlets.LanguageSwitchPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-info>
-            <title>FeatureInfo</title>
-            <short-title>FeatureInfo</short-title>
+            <title>SprachUmsteller</title>
+            <short-title>LangSwitch</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.FeaturesResources</resource-bundle> 
-<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
-        <supported-locale>de</supported-locale>
-        <supported-locale>en</supported-locale>
+        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
     </portlet>
 
-	<portlet id="IFramePortalPortlet">
+    <portlet id="IFramePortalPortlet">
         <description>Places an HTML IFrame inside a portlet for easily hosting other web application within a portlet. Sizes of both normal and maximized modes are configurable in edit mode.</description>
         <portlet-name>IFramePortalPortlet</portlet-name>
         <display-name>IFrame Portlet</display-name>
-        <portlet-class>de.ingrid.portal.portlets.IFramePortalPortlet</portlet-class>        
+        <portlet-class>de.ingrid.portal.portlets.IFramePortalPortlet</portlet-class>
         <init-param>
             <name>EditPage</name>
             <value>/WEB-INF/templates/edit-view/edit-prefs.vm</value>
@@ -2092,43 +1791,41 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.ApplicationResources</resource-bundle>
         <portlet-preferences>
-             <preference>
+            <preference>
                 <name>SCROLLING</name>
                 <value>AUTO</value>
             </preference>
-       </portlet-preferences>
-    </portlet>
-
-	<!-- *********************** -->
-    <!-- CMS Portlets            -->
-    <!-- *********************** -->
-	
-	
-	<portlet id="CMSPortlet0">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/default_cms.vm</value>
-        </init-param>
-        <portlet-name>CMSPortlet0</portlet-name>
-        <display-name>CMSPortlet0</display-name>
-        <description>This portlet displays the CMSPortlet0.</description>
-        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.CMSPortletResources</resource-bundle>            
-        <portlet-preferences>
             <preference>
-                <name>cmsKey</name>
-                <value>portal.cms.portlet.0</value>
+                <name>WIDTH</name>
+                <value>883</value>
+            </preference>
+            <preference>
+                <name>HEIGHT</name>
+                <value>890</value>
+            </preference>
+            <preference>
+                <name>SRC</name>
+                <value>/ingrid-portal-apps/cms/html/tools-uebersicht.html</value>
+            </preference>
+            <preference>
+                <name>ID</name>
+                <value>ifrm</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>ingrid.application.overview</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
             </preference>
         </portlet-preferences>
     </portlet>
-	
-	<portlet id="CMSPortlet1">
+
+    <!-- *********************** -->
+    <!-- CMS Portlets            -->
+    <!-- *********************** -->
+    <portlet id="CMSPortlet1">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
@@ -2143,11 +1840,15 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.CMSPortletResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.CMSPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>cmsKey</name>
                 <value>portal.cms.portlet.1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
             </preference>
         </portlet-preferences>
     </portlet>  
@@ -2167,13 +1868,17 @@
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
         </supports>
-        <resource-bundle>de.ingrid.portal.resources.CMSPortletResources</resource-bundle>            
+        <resource-bundle>de.ingrid.portal.resources.CMSPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
                 <name>cmsKey</name>
                 <value>portal.cms.portlet.2</value>
             </preference>
-        </portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+       </portlet-preferences>
     </portlet>
     
 </portlet-app>

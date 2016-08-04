@@ -1,0 +1,34 @@
+.footer__logo {
+    width: unset;
+}
+
+.header__logo {
+    height: unset;
+}
+
+.mobile__title {
+    color: #FFFFFF;
+    font-size: 25px;
+}
+
+.mobile__title:hover {
+    color: #FFFFFF;
+}
+
+.header__widgets__section {
+    padding: 1.125rem 0;
+}
+
+@media screen and (max-width: 640px) {
+  .column--2-3 {
+    width: 100%;
+  }
+}
+
+.block--light .box {
+  background: unset;
+}
+
+.block--light .tag{
+  background: #FFF;
+}

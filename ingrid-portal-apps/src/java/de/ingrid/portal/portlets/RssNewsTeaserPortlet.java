@@ -63,7 +63,9 @@ public class RssNewsTeaserPortlet extends GenericVelocityPortlet {
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", "teaser.environment.title");
         response.setTitle(messages.getString(titleKey));
-
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
+        
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
 

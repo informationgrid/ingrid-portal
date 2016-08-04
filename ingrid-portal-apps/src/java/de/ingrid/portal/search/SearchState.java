@@ -104,13 +104,6 @@ public class SearchState {
             String urlParam = Utils.toURLParam(Settings.PARAM_QUERY_STRING, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
-            // datasource (read from state)
-            if(Utils.isJavaScriptEnabled(request) == false){
-            	paramValue = getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE, msgTopic);
-                urlParam = Utils.toURLParam(Settings.PARAM_DATASOURCE, paramValue);
-                Utils.appendURLParameter(result, urlParam);
-            }
-            
             // ranking (read from state)
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_RANKING, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_RANKING, paramValue);
@@ -138,21 +131,11 @@ public class SearchState {
             urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_RANKED, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
-            // start hit of unranked search results (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_UNRANKED, msgTopic);
-            urlParam = Utils.toURLParam(Settings.PARAM_STARTHIT_UNRANKED, paramValue);
-            Utils.appendURLParameter(result, urlParam);
-
             // start pages (relevant for GROUPING)
 
             // current selector page (set only for grouping) (read from state)
             paramValue = getSearchStateObjectAsString(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, msgTopic);
             urlParam = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE, paramValue);
-            Utils.appendURLParameter(result, urlParam);
-
-            // current selector page (for unranked results) (read from state)
-            paramValue = getSearchStateObjectAsString(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, msgTopic);
-            urlParam = Utils.toURLParam(Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, paramValue);
             Utils.appendURLParameter(result, urlParam);
 
         } catch (Exception ex) {
@@ -293,9 +276,7 @@ public class SearchState {
             PortletMessaging.cancel(request, msgTopic, Settings.PARAM_QUERY_STRING);
             PortletMessaging.cancel(request, msgTopic, Settings.PARAM_DATASOURCE);
             PortletMessaging.cancel(request, msgTopic, Settings.PARAM_STARTHIT_RANKED);
-            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_STARTHIT_UNRANKED);
             PortletMessaging.cancel(request, msgTopic, Settings.PARAM_CURRENT_SELECTOR_PAGE);
-            PortletMessaging.cancel(request, msgTopic, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED);
             PortletMessaging.cancel(request, msgTopic, Settings.PARAM_RANKING);
             PortletMessaging.cancel(request, msgTopic, Settings.PARAM_GROUPING);
             PortletMessaging.cancel(request, msgTopic, Settings.PARAM_SUBJECT);
@@ -307,8 +288,6 @@ public class SearchState {
             PortletMessaging.cancel(request, msgTopic, Settings.MSG_QUERY);
             PortletMessaging.cancel(request, msgTopic, Settings.MSG_SEARCH_FINISHED_RANKED);
             PortletMessaging.cancel(request, msgTopic, Settings.MSG_SEARCH_RESULT_RANKED);
-            PortletMessaging.cancel(request, msgTopic, Settings.MSG_SEARCH_FINISHED_UNRANKED);
-            PortletMessaging.cancel(request, msgTopic, Settings.MSG_SEARCH_RESULT_UNRANKED);
             PortletMessaging.cancel(request, msgTopic, Settings.MSG_QUERY_EXECUTION_TYPE);
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {

@@ -1,5 +1,0 @@
-    <div class="formfooter formfooter_border_style">
-      <div align="right">
-        #renderInputButtonClass($MESSAGES.getString('searchExt.submit.addToQuery') "" "submitAddToQuery" $MESSAGES.getString('searchExt.submit.addToQuery.tooltip') "float_right")
-      </div>
-    </div>

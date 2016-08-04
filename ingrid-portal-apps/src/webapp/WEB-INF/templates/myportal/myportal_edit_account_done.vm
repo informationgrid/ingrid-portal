@@ -1,1 +1,1 @@
-<p>$MESSAGES.getString('account.edited.content')</p>
+#renderMessageSuccess($MESSAGES.getString('account.edited.content'))

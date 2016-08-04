@@ -1,67 +1,90 @@
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" enctype="" name="chronicle_search" id="chronicle_search">
-    <input type="hidden" name="action" value="doSearch"/>
-    <div class="formbody formbody_border_style">
-        <h2 class="nospace">$MESSAGES.getString('common.form.criteria')</h2>
-        #displayFormErrors()
-        <div class="float_left">  
-            <h3>#displayFieldLabel('event' "$MESSAGES.getString('chronicle.form.eventtype')")</h3>
-            <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <td>
-                        <input id="chk_all" name="event" type="checkbox" onclick="ingrid_checkAll(document.chronicle_search.event)" onkeypress="ingrid_checkAll(document.chronicle_search.event)" value="all" #getChecked('event' 'all')/> 
-                        <label for="chk_all" title="$MESSAGES.getString("chronicle.form.allEventtypes.tooltip")">$MESSAGES.getString('chronicle.form.allEventtypes')</label>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-<!--
-            <tr>
-                <td><input id="chk_1" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="test" #getChecked('event' "test")/>
-                <label for="chk_1">Aktionen</label></td>
-            </tr>
-                -->         
-#set ($numEvtypes = $evtypesList.size())
-#foreach ($evtype in $evtypesList)
-#if($velocityCount==1 || $velocityCount==4 || $velocityCount==7 || $velocityCount==10 || $velocityCount==13)<tr>#end
-                    <td>
-                        <input id="chk_$velocityCount" name="event" type="checkbox" onclick="ingrid_checkGroup(document.chronicle_search.event)" onkeypress="ingrid_checkGroup(document.chronicle_search.event)" value="$evtype.FormValue" #getChecked('event' "$evtype.FormValue")/> 
-                        <label for="chk_$velocityCount" title="$MESSAGES.getString("${evtype.QueryValue}.tooltip")">$MESSAGES.getString("$evtype.QueryValue")</label>
-                    </td>
-#if($velocityCount==$numEvtypes || $velocityCount==3 || $velocityCount==6 || $velocityCount==9 || $velocityCount==12 || $velocityCount==15)</tr>#end
-#end
-            </table>
-        </div>  
-        <span class="clearer"></span>
-        <div class="float_left">
-            <h3>#displayFieldLabel('time_select' "$MESSAGES.getString('chronicle.form.time')")</h3>
-            <table>
-                <tr>
-                    <td><input type="radio" class="radio_button" id="vonbis" name="time_select" value="period" #getChecked('time_select' 'period')/></td>
-                    <td><label for="from_yy">#displayFieldLabel('time_from' "$MESSAGES.getString('chronicle.form.time.from')")</label></td>
-                    <td><input class="inputstyletext" id="from_yy" size="10" maxlength="10" type="text" name="time_from" value="#getFieldValue('time_from')"/></td>
-                    <td><label for="till_yy">#displayFieldLabel('time_to' "$MESSAGES.getString('chronicle.form.time.to')")</label></td>
-                    <td><input class="inputstyletext" id="till_yy" size="10" maxlength="10" type="text" name="time_to" value="#getFieldValue('time_to')"/> &nbsp;$MESSAGES.getString('chronicle.form.time.format')</td>
-                </tr>
-                <tr>
-                    <td><input type="radio" class="radio_button" id="am" name="time_select" value="date" #getChecked('time_select' 'date')/></td>
-                    <td><label for="at_yy">#displayFieldLabel('time_at' "$MESSAGES.getString('chronicle.form.time.at')")</label></td>
-                    <td colspan="3"><input class="inputstyletext" id="at_yy" size="10" maxlength="10" type="text" name="time_at" value="#getFieldValue('time_at')"/> &nbsp;$MESSAGES.getString('chronicle.form.time.format')</td>
-                </tr>
-            </table>
-        </div>  
-        <span class="clearer"></span>
-        <div class="float_left">
-            <h3><label class="alignleft" for="qry">#displayFieldLabel('search' "$MESSAGES.getString('chronicle.form.term')")</label></h3>
-            <input class="qry_chronic inputstyletext" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"/>
-        </div>  
-        <span class="clearer"></span>
+<aside class="sidebar js-accordion-multi">
+    <div class="sidebar__title js-accordion-toggle mq-show-l" onclick="onClickFilterEvent()">
+        Info
+        <svg class="icon"><use xlink:href="#filter"></use></svg>
+        <svg class="icon"><use xlink:href="#cross"></use></svg>
     </div>
-    <div class="formfooter formfooter_border_style">
-        <div align="right">
-            #renderInputButtonSearchClass($MESSAGES.getString('common.form.button.show') "" "" $MESSAGES.getString('common.form.button.show.tooltip') "float_right")
+    <div class="sidebar__content js-accordion-content is-hidden">
+       <div class="portlet-section-body portlet_info">
+            <h1>$MESSAGES.getString('javax.portlet.title')</h1>
+            $MESSAGES.getString('chronicle.search.help')
+            <p>
+                <a href="$renderResponse.encodeURL('/portal/help.psml')?hkey=$helpKey">$MESSAGES.getString('chronicle.teaser.new.more')</a>
+            </p>
         </div>
     </div>
-</form>
+</aside>
+<article class="content ob-container ob-box-narrow">
+    <div class="sidebar-toggle mq-hide-l mq-show-xb js-sidebar-toggle">
+        <svg class="icon">
+            <use xlink:href="#arrow-thick">
+         </svg>
+    </div>
+    <h4>$MESSAGES.getString('chronicle.form.term')</h4>
+    <form action="$action" method="post" enctype="" name="chronicle_search" id="chronicle_search">
+        #displayFormErrorQuery()
+        <div class="search-form ob-clear ob-container ob-flex">
+            <input class="field field--large" type="text" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"></input>
+            <button class="btn btn--primary btn--medium btn--icon-transition">
+                <svg class="icon mq-show-m"><use xlink:href="#magnifier"></svg>
+                <div class="mq-hide-m">$MESSAGES.getString('common.form.button.show')</div>
+            </button>
+        </div>
+        <input type="hidden" name="action" value="doSearch"/>
+        <h4>$MESSAGES.getString('chronicle.form.eventtype')</h4>
+        <div class="field-toggle field-toggle--check bx-bot-xs" >
+            <input id="chk_all" name="event" type="checkbox" value="all" onclick="ingrid_checkAll(document.chronicle_search.event)" onkeypress="ingrid_checkAll(document.chronicle_search.event)" #getChecked('event' 'all')>
+            <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('event')" for="chk_all">
+                <div class="field-toggle__icon field-toggle__icon-alt">
+                    <svg class="icon">
+                        <use xlink:href="#tick">
+                    </svg>
+                </div>
+                $MESSAGES.getString('chronicle.form.allEventtypes')
+            </label>
+        </div>
+        #set ($numEvtypes = $evtypesList.size())
+        #foreach ($evtype in $evtypesList)
+            <div class="field-toggle field-toggle--check bx-bot-xs">
+                <input id="chk_$velocityCount" name="event" type="checkbox" value="$evtype.FormValue" onclick="ingrid_checkGroup(document.chronicle_search)" onkeypress="ingrid_checkGroup(document.chronicle_search)" #getChecked('event' "$evtype.FormValue")>
+                <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('event')" for="chk_$velocityCount">
+                    <div class="field-toggle__icon field-toggle__icon-alt">
+                        <svg class="icon">
+                            <use xlink:href="#tick">
+                        </svg>
+                    </div>
+                    $MESSAGES.getString("$evtype.QueryValue")
+                </label>
+            </div>
+        #end
+        <h4>#displayFieldLabel('time_select' "$MESSAGES.getString('chronicle.form.time')")</h4>
+        <div class="media ob-clear">
+            <div class="media__obj--left">
+                <label for="at_yy">Auswahl</label>
+                <select class="field js-selection" id="at_yy" name="time_select">
+                    <option id="vonbis" value="period" class="selection-options #if($actionForm.isCurrentInput('time_select', 'period')) is-active" selected #else " #end >von: ... bis: </option>
+                    <option id="am" value="date" class="selection-options #if($actionForm.isCurrentInput('time_select', 'date')) is-active" selected #else " #end >am: </option>
+                </select>
+            </div>
+            <div class="media__obj--left">
+                <div for="vonbis" class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+                    <label for="from_yy">$MESSAGES.getString('chronicle.form.time.from')</label>
+                    <input id="from_yy" class="field datepicker picker__input #addErrorFormClassText('time_from')" type="date" name="time_from" value="#getFieldValue('time_from')"></input>
+                </div>
+            </div>
+            <div class="media__obj--left">
+                <div for="vonbis" class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+                    <label for="till_yy" >$MESSAGES.getString('chronicle.form.time.to')</label>
+                    <input id="till_yy" class="field datepicker picker__input #addErrorFormClassText('time_to')" type="date" name="time_to" value="#getFieldValue('time_to')"></input>
+                </div>
+            </div>
+            <div class="media__obj--left">
+                <div for="am" class="selection-content  #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
+                    <label for="time_at" >$MESSAGES.getString('chronicle.form.time.at')</label>
+                    <input id="time_at" class="field datepicker picker__input #addErrorFormClassText('time_at')" type="date" name="time_at" value="#getFieldValue('time_at')"></input>
+                </div>
+            </div>
+        </div>
+    </form>
+</article>

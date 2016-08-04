@@ -1,63 +1,37 @@
-#parse ('/WEB-INF/templates/include_search_result_filter.vm')
-
-#if($enableFacete)
-    <div dojoType="dijit.layout.ContentPane" id="search_facete" style="display:none">
-       	#parse ('/WEB-INF/templates/facete/facete.vm')
-    </div>
-    
-    <div dojoType="dijit.layout.ContentPane" id="search_hits" class="nonjavascript">
-    <!-- RESULTS LEFT -->
-    #if ($RIGHT_COLUMN_DISABLED)
-      <div id="section">
-    #else
-      <div id="results_left">
+<div id="searchResult">
+    #parse ('/WEB-INF/templates/include_search_result_filter.vm')
+    #if($enableFacete)
+        #renderSearchResultFacetFilter()
     #end
-    #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
-      </div>
-    </div>
-#else
-	<!-- RESULTS LEFT -->
-    #if ($RIGHT_COLUMN_DISABLED)
-      <div id="section">
-    #else
-      <div id="results_left">
-    #end
-    #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
-      </div>
-#end
-
-	<!-- RESULTS RIGHT -->
-    #if (!$RIGHT_COLUMN_DISABLED)
-      <div id="results_right">
-    #parse ('/WEB-INF/templates/include_search_result_unranked.vm')
-      </div>
-    #end
-    
-      <div class="clearer"></div>
-	  
-	  
-  #if($adminContent)
-	<!--
+    <article class="content ob-container">
+        #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
+    </article>
+</div>
+#if($adminContent)
+    <!--
     #if($rankedResultList.get("FACETS"))
         Facets:
         $rankedResultList.get("FACETS")
     #end
     
-	#if($facetsQuery)
-   		Facets Query:
+    #if($facetsQuery)
+           Facets Query:
         #foreach($facete in $facetsQuery)
-        	$facete
+            $facete
         #end
     #end
     
-	#if($searchQuery)
+    #if($searchQuery)
         Search Query:
-    	$searchQuery
+        $searchQuery
     #end
     -->
-  #end
-  
-     <script type="text/javascript">
-     	document.getElementById('search_facete').style.display = "block";
-    	document.getElementById('search_hits').setAttribute('class', "javascript");
-     </script>
+#end
+<script >
+    // Resize facet map on filter click
+    function onClickFilterEvent(){
+        if(resizeMap){
+            resizeMap();
+        }
+    }
+</script>

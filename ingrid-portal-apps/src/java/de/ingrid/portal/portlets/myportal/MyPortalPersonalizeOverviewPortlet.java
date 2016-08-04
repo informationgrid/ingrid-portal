@@ -82,14 +82,12 @@ public class MyPortalPersonalizeOverviewPortlet extends GenericVelocityPortlet {
             fragments = root.getFragments();
             for (int i=0; i<fragments.size(); i++) {
                 Fragment f = (Fragment)fragments.get(i);
-                if (f.getLayoutColumn() == 0 && f.getLayoutRow() > 0) {
-                    List prefs = f.getPreferences();
-                    for (int j=0; j<prefs.size(); j++) {
-                        FragmentPreference pref = (FragmentPreference)prefs.get(j);
-                        String name = pref.getName();
-                        if (name.equals("titleKey")) {
-                            portletTitleKeys.add(f.getLayoutRow()-1, pref.getValueList().get(0));
-                        }
+                List prefs = f.getPreferences();
+                for (int j=0; j<prefs.size(); j++) {
+                    FragmentPreference pref = (FragmentPreference)prefs.get(j);
+                    String name = pref.getName();
+                    if (name.equals("titleKey")) {
+                        portletTitleKeys.add(i, pref.getValueList().get(0));
                     }
                 }
             }

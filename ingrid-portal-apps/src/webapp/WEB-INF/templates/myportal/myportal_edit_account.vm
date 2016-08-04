@@ -1,11 +1,17 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="edit_account" id="edit_account">
-	<input type="hidden" name="cmd" value="form_sent" />
-#set ($formType = 'edit')
-#parse ('/WEB-INF/templates/myportal/include_account_form.vm')
-	<div class="formfooter formfooter_border_style">
-		<div align="right">
-			#renderInputButtonClass($MESSAGES.getString('account.edit.submit') "" "" "" "float_right")
-		</div>
-	</div>
+    <input type="hidden" name="cmd" value="form_sent" />
+    #set ($formType = 'edit')
+    #parse ('/WEB-INF/templates/myportal/include_account_form.vm')
+    <div class="media__body media__obj--right">
+        #renderInputButtonClass("$MESSAGES.getString('account.edit.submit')" "width:100%" "" "" "btn btn--primary btn--medium")
+    </div>
 </form>
+<br/>
+<br/>
+<script >
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('edit_account');
+    }
+</script>

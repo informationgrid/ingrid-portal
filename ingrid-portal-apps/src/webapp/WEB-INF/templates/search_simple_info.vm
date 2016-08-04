@@ -1,6 +1,0 @@
-<div class="portlet-section-body">
-    <p>
-		$MESSAGES.getString('searchSimple.info.text')
-    </p>
-</div>
-		

@@ -124,9 +124,6 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
                         "user.custom.ingrid.user.attention.from")));
                 f.setInput(EditAccountForm.FIELD_INTEREST, replaceNull(userAttributes.get("user.custom.ingrid.user.interest")));
                 f.setInput(EditAccountForm.FIELD_PROFESSION, replaceNull(userAttributes.get("user.custom.ingrid.user.profession")));
-                f.setInput(EditAccountForm.FIELD_SUBSCRIBE_NEWSLETTER, replaceNull(userAttributes.get(
-                        "user.custom.ingrid.user.subscribe.newsletter")));
-
             } catch (SecurityException e) {
                 f.setError("", "account.edit.error.user.notfound");
                 log.error("Error getting current user.", e);
@@ -139,8 +136,6 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
 
         context.put("actionForm", f);
         
-        // show newsletter option if configured that way
-        context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
         // show question options
         context.put("enableAccountQuestion", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ACCOUNT_QUESTION, Boolean.TRUE));
         super.doView(request, response);
@@ -192,8 +187,6 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.attention.from", true).setStringValue(f.getInput(AdminUserForm.FIELD_ATTENTION));
             user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.interest", true).setStringValue(f.getInput(AdminUserForm.FIELD_INTEREST));
             user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.profession", true).setStringValue(f.getInput(AdminUserForm.FIELD_PROFESSION));
-            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.subscribe.newsletter", true).setStringValue(f.getInput(AdminUserForm.FIELD_SUBSCRIBE_NEWSLETTER));
-
             userManager.updateUser(user);
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
@@ -216,7 +209,7 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             f.setError(EditAccountForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
             return;
         } catch (SecurityException e) {
-            f.setError("", "account.edit.error.wrong.password");
+            f.setError(EditAccountForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
             return;
         }
 

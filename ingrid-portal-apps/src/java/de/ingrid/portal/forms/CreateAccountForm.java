@@ -67,8 +67,6 @@ public class CreateAccountForm extends ActionForm {
 
     public static final String FIELD_PROFESSION = "profession";
 
-    public static final String FIELD_SUBSCRIBE_NEWSLETTER = "subscribe_newsletter";
-
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
@@ -96,7 +94,6 @@ public class CreateAccountForm extends ActionForm {
         setInput(FIELD_AGE, request.getParameter(FIELD_AGE));
         setInput(FIELD_INTEREST, request.getParameter(FIELD_INTEREST));
         setInput(FIELD_PROFESSION, request.getParameter(FIELD_PROFESSION));
-        setInput(FIELD_SUBSCRIBE_NEWSLETTER, request.getParameter(FIELD_SUBSCRIBE_NEWSLETTER));
     }
 
     /**

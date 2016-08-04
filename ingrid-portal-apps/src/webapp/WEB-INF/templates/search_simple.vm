@@ -1,158 +1,24 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())
 $action.setParameter('action','doSearch')
-<div class="formbody formbody_search">
-    <div class="search_line"></div>
-    <form action="$action" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
-    	<input type="hidden" name="ds" value="$ds"/>
-    	<input type="hidden" name="action" value="doSearch"/>
-#if($enableDatasourceSelection && !$hasJavaScript)    	
-		<p class="datasource_selection">
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doChangeDS')
-#if($ds=="1")
-	<span id="envInfos" class="selected" title="$MESSAGES.getString('searchSimple.area.envInfos.tooltip')">$MESSAGES.getString('searchSimple.area.envInfos')</span>
-#else
-    $action.setParameter('ds','1')
-	<a id="envInfos" href="$renderResponse.encodeURL('/portal/main-search.psml?action=doChangeDS&amp;ds=1')" title="$MESSAGES.getString('searchSimple.area.envInfos.tooltip')">$MESSAGES.getString('searchSimple.area.envInfos')</a>	
+#if($page && $page.endsWith("default-page.psml"))
+    #set($isDefault = true)
 #end
-#if($enableDatasourceCatalog)
-	#if($enableSearchSeperator)
-		<span id="catalogSep" class="search_seperator">&nbsp;|&nbsp</span>
-	#else
-		&nbsp;	
-	#end
-    #if($ds=="5")
-    	<span id="catalog" class="selected" title="$MESSAGES.getString('searchSimple.area.catalog.tooltip')">$MESSAGES.getString('searchSimple.area.catalog')</span>
-    #else
-        $action.setParameter('ds','5')
-    	<a id="catalog" href="$renderResponse.encodeURL('/portal/main-search.psml?action=doChangeDS&amp;ds=5')" title="$MESSAGES.getString('searchSimple.area.catalog.tooltip')">$MESSAGES.getString('searchSimple.area.catalog')</a>	
-    #end
+<form action="$action" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
+#if($isDefault)
+    <div class="box box--fill box--large">
+        <div class="box__content ob-container">
 #end
-#if($enableDatasourceLaws)
-	#if($enableSearchSeperator)
-		<span id="lawsSep" class="search_seperator">&nbsp;|&nbsp</span>
-	#else
-		&nbsp;
-	#end
-    #if($ds=="4")
-    	<span id="laws" class="selected" title="$MESSAGES.getString('searchSimple.area.laws.tooltip')">$MESSAGES.getString('searchSimple.area.laws')</span>
-    #else
-        $action.setParameter('ds','4')
-    	<a id="laws" href="$renderResponse.encodeURL('/portal/main-search.psml?action=doChangeDS&amp;ds=4')" title="$MESSAGES.getString('searchSimple.area.laws.tooltip')">$MESSAGES.getString('searchSimple.area.laws')</a>	
-    #end
-#end
-#if($enableDatasourceResearch)
-	#if($enableSearchSeperator)
-		<span id="researchSep" class="search_seperator">&nbsp;|&nbsp</span>
-	#else
-		&nbsp;
-	#end
-    #if($ds=="3")
-    	<span id="research" class="selected" title="$MESSAGES.getString('searchSimple.area.research.tooltip')">$MESSAGES.getString('searchSimple.area.research')</span>
-    #else
-        $action.setParameter('ds','3')
-    	<a id="research" href="$renderResponse.encodeURL('/portal/main-search.psml?action=doChangeDS&amp;ds=3')" title="$MESSAGES.getString('searchSimple.area.research.tooltip')">$MESSAGES.getString('searchSimple.area.research')</a>	
-    #end
-#end
-#if($enableDatasourceAddresses)
-	#if($enableSearchSeperator)
-		<span id="addressesSep" class="search_seperator">&nbsp;|&nbsp</span>
-	#else
-		&nbsp;
-	#end
-    #if($ds=="2")
-    	<span id="addresses" class="selected" title="$MESSAGES.getString('searchSimple.area.addresses.tooltip')">$MESSAGES.getString('searchSimple.area.addresses')</span>
-    #else
-        $action.setParameter('ds','2')
-    	<a id="addresses" href="$renderResponse.encodeURL('/portal/main-search.psml?action=doChangeDS&amp;ds=2')" title="$MESSAGES.getString('searchSimple.area.addresses.tooltip')">$MESSAGES.getString('searchSimple.area.addresses')</a>	
-    #end
-#end
-    	</p>
-#end
-#displayFormErrors()
-      <label class="hide" for="qrystr">$MESSAGES.getString('searchSimple.query.search'): </label><input class="qrystr inputstyletext search_query_textarea" type="text" id="qrystr" name="q" value="#getHTMLEscapedFieldValue('q')" 
-		onfocus='if (this.value == "$MESSAGES.getString('searchSimple.query.initial')") this.value=""' onblur='if (this.value == "") this.value="$MESSAGES.getString('searchSimple.query.initial')"'/>
-		#renderInputButtonSearchClass($MESSAGES.getString('searchSimple.query.submit') "" "" $MESSAGES.getString('searchSimple.query.submit.tooltip') "search_query_button")
-		<span class="clearer"></span>
-#if($displayProviders)
-		<h3><label for="providers">$MESSAGES.getString('searchsimple.title.select.provider')</label></h3>
-		<select class="inputstyle" name="provider" id="provider">
-			<option value="all">$MESSAGES.getString('searchSimple.display.provider.all')</option>
-#foreach($provider in $providers)
-#if($selectedProviderIdent && $selectedProviderIdent == $provider.ident)
-			<option title="$provider.name" value="$provider.ident" selected="selected">$UtilsString.cutString($provider.name, 60)</option>
-#else
-			<option title="$provider.name" value="$provider.ident">$UtilsString.cutString($provider.name, 60)</option>
-#end
-#end
-		</select>
-#end
-    </form>
-#if($enableOptionalLinks)
-    <div class="optional-links">
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doSearchExtended')
-      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action" title="$MESSAGES.getString('searchSimple.extended.tooltip')">$MESSAGES.getString('searchSimple.extended')</a>
-#if ($titleKey=="searchSimple.title.history")
-      <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span class="selected">$MESSAGES.getString('searchSimple.history')</span>
-#else
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doSearchHistory')
-      <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action" title="$MESSAGES.getString('searchSimple.history.tooltip')">$MESSAGES.getString('searchSimple.history')</a>
-#end
-#if ($titleKey=="searchSimple.title.settings")
-	  <img src="/ingrid-portal-apps/images/icn_down.gif" alt="$MESSAGES.getString('common.alt.icon.active')" />&nbsp;<span class="selected">$MESSAGES.getString('searchSimple.settings')</span>
-#else
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doSearchSettings')
-	  <img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action" title="$MESSAGES.getString('searchSimple.settings.tooltip')">$MESSAGES.getString('searchSimple.settings')</a>
-#end
-#set ($link = $renderResponse.encodeURL("/portal/help.psml?hkey=search-tipps-1"))
-<script language="JavaScript" type="text/javascript">
-	document.write("<img src=\"/ingrid-portal-apps/images/icn_linkintern.gif\" alt=\"$MESSAGES.getString('common.alt.icon.intern')\" /><a href=\"javascript:ingrid_openWindow('$link',750,550);\" title=\"$MESSAGES.getString('searchSimple.search.tips.tooltip')\">$MESSAGES.getString('searchSimple.search.tips')</a>");
-</script>
-<noscript>
-	<img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$link" target="_new" title="$MESSAGES.getString('searchSimple.search.tips.tooltip')">$MESSAGES.getString('searchSimple.search.tips')</a>
-</noscript>
-#if($enableSave && $enableSave == "true")
-#set ($action = $renderResponse.createActionURL())
-$action.setParameter('action','doSaveQuery')
-<!-- only for logged on users -->
-    <img src="/ingrid-portal-apps/images/ico_save_search.gif" alt="$MESSAGES.getString('common.alt.icon.save')" /><a href="$action" title="$MESSAGES.getString('searchSimple.search.save.tooltip')">$MESSAGES.getString('searchSimple.search.save')</a>
-#end
+            <div class="search-form ob-clear ob-flex">
+                <input class="field field--large" type="text" placeholder="$MESSAGES.getString('searchSimple.query.initial')" id="qrystr" name="q" value="#if($actionForm.getInputHTMLEscaped('q') != $actionForm.getINITIAL_QUERY())#getHTMLEscapedFieldValue('q')#end">
+                <button id="btn_search" class="btn btn--primary btn--medium btn--icon-transition">
+                    <svg class="icon mq-show-m"><use xlink:href="#magnifier"></use></svg>
+                    <div class="mq-hide-m">$MESSAGES.getString('searchSimple.query.submit')</div>
+                </button>
+            </div>
+#if($isDefault)
+        </div>
     </div>
 #end
-</div>
-
-<script type="text/javascript">
-	if(${enableFacets}){
-    	if(document.getElementById('envInfos') != null){
-    		document.getElementById('envInfos').style.display = "none";
-    	}
-    	if(document.getElementById('laws') != null){
-    		document.getElementById('laws').style.display = "none";
-    	}
-    	if(document.getElementById('catalog') != null){
-    		document.getElementById('catalog').style.display = "none";
-    	}
-    	if(document.getElementById('addresses') != null){
-    		document.getElementById('addresses').style.display = "none";
-    	}
-    	if(document.getElementById('research') != null){
-    		document.getElementById('research').style.display = "none";
-    	}
-    	if(document.getElementById('lawsSep') != null){
-    		document.getElementById('lawsSep').style.display = "none";
-    	}
-    	if(document.getElementById('catalogSep') != null){
-    		document.getElementById('catalogSep').style.display = "none";
-    	}
-    	if(document.getElementById('addressesSep') != null){
-    		document.getElementById('addressesSep').style.display = "none";
-    	}
-    	if(document.getElementById('researchSep') != null){
-    		document.getElementById('researchSep').style.display = "none";
-		}
-	}
-</script>
+    #addErrorFormMessageBox('q')
+</form>

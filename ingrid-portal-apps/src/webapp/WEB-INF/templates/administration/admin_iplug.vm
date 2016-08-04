@@ -1,65 +1,139 @@
 #set ($action = $renderResponse.createActionURL())
-	<div class="formbody">
 
 #if($ibusURL && $ibusURL != "")
-  <h3>$MESSAGES.getString('admin.iplug.headline.ibus')</h3>
-  <p style="margin-left:4.5em">
-	<a target="_new" href="$ibusURL">$MESSAGES.getString('admin.iplug.headline.ibus')</a>
-  </p>
-#end		  
-
+    <div class="box box--fill box--small">
+        <div class="box__title ob-container">
+            <h4>$MESSAGES.getString('admin.iplug.headline.ibus')</h4>
+        </div>
+        <div class="box__content ob-container">
+            <ul class="link-list">
+                <li>
+                    <a href="$ibusURL">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString('admin.iplug.headline.ibus')
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+#end
 
 #if($SEIplugs.size() > 0)
-  <h3>$MESSAGES.getString('admin.iplug.headline.iplug.se')</h3>
-  #foreach($plug in $SEIplugs)
-    <p style="margin-left:4.5em">
-	#if($plug.getIplugAdminGuiUrl())
-      <a target="_new" href="$plug.getIplugAdminGuiUrl()">$plug.getDataSourceName()</a>
-	#else
-	  $plug.getDataSourceName() (kein Administrationsinterface angegeben!)
-	#end	
-    </p>
-  #end
-#end		  
+    <div class="box box--fill box--small">
+        <div class="box__title ob-container">
+            <h4>$MESSAGES.getString('admin.iplug.headline.iplug.se')</h4>
+        </div>
+        <div class="box__content ob-container">
+            <ul class="link-list">
+                #foreach($plug in $SEIplugs)
+                <li>
+                    #if($plug.getIplugAdminGuiUrl())
+                    <a href="$plug.getIplugAdminGuiUrl()">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $plug.getDataSourceName()
+                    </a>
+                    #else
+                        $plug.getDataSourceName() (kein Administrationsinterface angegeben!)
+                    #end
+                </li>
+                #end
+            </ul>
+        </div>
+    </div>
+#end          
 
-
-<h3>$MESSAGES.getString('admin.iplug.headline.iplug')</h3>
-<p>$MESSAGES.getString('admin.iplug.description')</p>
-#foreach($partnerNode in $tree.getChildren())
-	$action.setParameter('id',"$partnerNode.id")		
-	#if($partnerNode.isOpen())
-		$action.setParameter('action','doCloseNode')
-		<p><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;$partnerNode.name</p>
-        #foreach($providerNode in $partnerNode.getChildren())
-        	$action.setParameter('id',"$providerNode.id")		
-        	#if($providerNode.isOpen())
-        		$action.setParameter('action','doCloseNode')
-        		<p style="margin-left:4.5em"><a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_open.gif" alt="$MESSAGES.getString('common.alt.icon.minus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;$providerNode.name</p>
-        		#foreach($plugNode in $providerNode.getChildren())
-                    #set($plug = $plugNode.get("iplug"))
-					<p style="margin-left:9em">
-					#if($plug.getIplugAdminGuiUrl())
-                      <a target="_new" href="$plug.getIplugAdminGuiUrl()">$plugNode.name</a>
-					#else
-					  $plugNode.name (kein Administrationsinterface angegeben!)
-					#end
-                    </p>
-        		#end
-        	#else
-        		$action.setParameter('action','doOpenNode')		
-                <p style="margin-left:4.5em">
-                	<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;$providerNode.name
-                </p>
-        	#end
+<div class="box box--fill box--small">
+    <div class="box__title ob-container">
+        <h4>$MESSAGES.getString('admin.iplug.headline.iplug') #renderPopUpIcon("$MESSAGES.getString('admin.iplug.description')" "" "float:right;")</h4>
+    </div>
+    <div class="box__content ob-container">
+        #foreach($partnerNode in $tree.getChildren())
+            $action.setParameter('id',"$partnerNode.id")
+            <ul class="js-accordion-multi">
+            #if($partnerNode.isOpen())
+                $action.setParameter('action','doCloseNode')
+                <li class="tree__item tree__toggle is-active">
+                    <a id="$action" href="$action">
+                        <svg class="tree__toggle__icon icon">
+                            <use xlink:href="#plus">
+                        </svg>
+                        <svg class="tree__toggle__icon icon">
+                            <use xlink:href="#minus">
+                        </svg>
+                    </a>
+                    <strong>$partnerNode.name</strong>
+                </li>
+                <li class="tree__content js-accordion-content">
+                    <ul class="js-accordion-multi">
+                    #foreach($providerNode in $partnerNode.getChildren())
+                        $action.setParameter('id',"$providerNode.id")
+                        <li class="tree__content js-accordion-content">
+                            <ul class="js-accordion-multi">
+                            #if($providerNode.isOpen())
+                                $action.setParameter('action','doCloseNode')
+                                <li class="tree__item tree__toggle is-active">
+                                    <a id="$action" href="$action">
+                                        <svg class="tree__toggle__icon icon">
+                                            <use xlink:href="#plus">
+                                        </svg>
+                                        <svg class="tree__toggle__icon icon">
+                                            <use xlink:href="#minus">
+                                        </svg>
+                                    </a>
+                                    <strong>$providerNode.name</strong>
+                                </li>
+                                #foreach($plugNode in $providerNode.getChildren())
+                                    #set($plug = $plugNode.get("iplug"))
+                                    #if($plug.getIplugAdminGuiUrl())
+                                        <li class="tree__item">
+                                            <svg class="tree__icon icon" title="Informationssystem">
+                                                <use xlink:href="#external-link">
+                                                </use>
+                                            </svg>
+                                            <a href="$plug.getIplugAdminGuiUrl()">$plugNode.name</a>
+                                        </li>
+                                    #else
+                                      $plugNode.name (kein Administrationsinterface angegeben!)
+                                    #end
+                                #end
+                            #else
+                                $action.setParameter('action','doOpenNode')
+                                <li class="tree__item tree__toggle">
+                                    <a id="$action" href="$action">
+                                        <svg class="tree__toggle__icon icon">
+                                            <use xlink:href="#plus">
+                                        </svg>
+                                        <svg class="tree__toggle__icon icon">
+                                            <use xlink:href="#minus">
+                                        </svg>
+                                    </a>
+                                    <strong>$providerNode.name</strong>
+                                </li>
+                            #end
+                            </ul>
+                        </li>
+                    #end
+                    </ul>
+                </li>
+            #else
+                $action.setParameter('action','doOpenNode')
+                <li class="tree__item tree__toggle">
+                    <a id="$action" href="$action">
+                        <svg class="tree__toggle__icon icon">
+                            <use xlink:href="#plus">
+                        </svg>
+                        <svg class="tree__toggle__icon icon">
+                            <use xlink:href="#minus">
+                        </svg>
+                    </a>
+                    <strong>$partnerNode.name</strong>
+                </li>
+            #end
+            </ul>
         #end
-
-		
-	#else
-		$action.setParameter('action','doOpenNode')		
-        <p>
-        	<a href="$action"><img src="/ingrid-portal-apps/images/ico_tree_close.gif" alt="$MESSAGES.getString('common.alt.icon.plus')" />&nbsp;<img src="/ingrid-portal-apps/images/ico_tree_folder_close.gif" alt="$MESSAGES.getString('common.alt.icon.folder')" /></a>&nbsp;&nbsp;$partnerNode.name
-        </p>
-	#end
-#end
-	</div>
-
+    </div>
+</div>

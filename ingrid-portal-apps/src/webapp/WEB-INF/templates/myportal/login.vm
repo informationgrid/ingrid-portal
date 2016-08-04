@@ -1,42 +1,25 @@
 #set ($action = $renderResponse.createActionURL())
-
-<form action="$action" method="post" id="frm_login">
-<input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
-<input type="hidden" name="cmd" value="doLogin" />
-<div class="formbody formbody_border_style">
-		<div class="optional-links">
-			&nbsp;<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-create-account.psml" title="$MESSAGES.getString('login.form.newUser.tooltip')">$MESSAGES.getString('login.form.newUser')</a>&nbsp;&nbsp;  
-			<img src="/ingrid-portal-apps/images/icn_my_p_u.gif" alt="$MESSAGES.getString('login.alt.icon.key')" /><a href="portal/myportal-password-forgotten.psml" title="$MESSAGES.getString('login.form.passwdForgotten.tooltip')">$MESSAGES.getString('login.form.passwdForgotten')</a>
-		</div>
-		<br />
-#displayFormErrors()
-		<p>
-			<label class="hide" for="login">$MESSAGES.getString('login.form.username'): </label><input class="inputstyletext inputtextfont" type="text" id="login" name="${loginConstants.USERNAME}" value="#getFieldValue($loginConstants.USERNAME)" onFocus="clearUser()" />
-		</p>
-	    <p>
-			<label class="hide" for="passwd">$MESSAGES.getString('login.form.passwd'): </label><input class="inputstyletext inputtextfont" type="password" id="passwd" name="${loginConstants.PASSWORD}" value="#getFieldValue($loginConstants.PASSWORD)"  onFocus="clearPasswd()" />
-	    </p>
-		<span class="clearer"></span>
-		<br />
-##		<table cellpadding="0" cellspacing="0" class="formtable">
-##		<tr>
-##			<td><input id="auto_login" name="xx" type="checkbox" /></td>
-##			<td><label for="auto_login"><strong>$MESSAGES.getString('login.form.autoLogin')</strong></label></td>
-##	    </tr>
-##	    <tr>
-##	      <td></td>
-##	      <td><span style="padding-left:4px; display:block;">$MESSAGES.getString('login.form.autoLogin.text')</span></td>
-##	    </tr>
-##		</table>
-##		<span class="clearer"></span>
-</div>
-<div class="formfooter formfooter_border_style">
-	<div align="right">
-		#renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "" "" "" "float_right")
-    </div>
-</div>
+<form class="metamenu__box ob-container" action="$action" method="post" id="frm_login">
+    #set($name = "#getFieldValue($loginConstants.USERNAME)")
+    #set($pw = "#getFieldValue($loginConstants.PASSWORD)")
+    
+    <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
+    <input type="hidden" name="cmd" value="doLogin" />
+    <label for="login">$MESSAGES.getString('login.form.username')</label>
+    <input type="text" id="login" #addErrorFormClass('org.apache.jetspeed.login.username') name="${loginConstants.USERNAME}" placeholder="$MESSAGES.getString('login.form.username.initialValue')" value="#if($name != $MESSAGES.getString('login.form.username.initialValue'))#getFieldValue($loginConstants.USERNAME)#end" onFocus="clearUser()" class="field bx-bot-s">
+    #addErrorFormMessage('org.apache.jetspeed.login.username')
+    <label for="passwd">$MESSAGES.getString('login.form.passwd')</label>
+    <input type="password" id="passwd" #addErrorFormClass('org.apache.jetspeed.login.password') name="${loginConstants.PASSWORD}" placeholder="$MESSAGES.getString('login.form.passwd.initialValue')" value="#if($pw != $MESSAGES.getString('login.form.passwd.initialValue'))#getFieldValue($loginConstants.PASSWORD)#end" onFocus="clearPasswd()" class="field bx-bot-0">
+    #addErrorFormMessage('org.apache.jetspeed.login.password')
+    <p><a href="$renderResponse.encodeURL('/portal/myportal-password-forgotten.psml')" class="link">$MESSAGES.getString('login.form.passwdForgotten')</a></p>
+    #renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "" "doLogin" "" "btn btn--primary btn--small btn--block")
 </form>
-<!-- BESCHREIBUNG -->
-<p></p>
-<h2>$MESSAGES.getString('login.description.title')</h2>
-$MESSAGES.getString('login.description.content')
+<div class="metamenu__box ob-container">
+    #renderInputButtonOnClick($MESSAGES.getString('login.form.newUser') "" "" "" "btn btn--secondary btn--small btn--block" "location.href='$renderResponse.encodeURL('/portal/myportal-create-account.psml')'")
+</div>
+
+<script>
+if($actionForm.hasErrorInField('org.apache.jetspeed.login.username') || $actionForm.hasErrorInField('org.apache.jetspeed.login.password')){
+    $('#logged_on_link').addClass('is-active');
+}
+</script>

@@ -1,0 +1,6 @@
+#if (!$jetspeed.isHidden($f) || $jetspeed.WindowState != "minimized")
+    $f.renderedContent
+#end
+## END: Fragment: ${f.id} Decoration: ${decoratorId}
+
+
