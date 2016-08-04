@@ -633,7 +633,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--pad-top</value>
+                <value>block--padded</value>
             </preference>
         </portlet-preferences>
     </portlet>
