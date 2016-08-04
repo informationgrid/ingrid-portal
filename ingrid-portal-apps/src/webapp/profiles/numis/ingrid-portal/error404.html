@@ -57,39 +57,17 @@
                         </div>
                     </div>
                     <div class="header__widgets__section">
-                        <a class="header__widget header__logo" href="/startseite" title="Startseite von InGrid-Portal">
-                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
-                        <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg"></img>
+                        <a class="header__widget header__logo" href="/startseite" title="Startseite von NUMIS aufrufen">
+                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
+                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg"></img>
                         </a>
                     </div>
-                    <div class="header__widgets__section sub-header">
-                        <div class="header__widget mq-hide-l">
-                            <a href="#" class="header__widget__toggle js-header-toggle">
-                                <span class="header__widget__text">Deutsch</span>
-                                <svg class="header__widget__icon icon icon-xs">
-                                    <use xlink:href="#arrow-thick"></use>
-                                </svg>
-                            </a>
-                            <div class="metamenu">
-                                <form action="/portal/_ns:Ykxhbmd1YWdlU3dpdGNo/default-page.psml" method="get" name="LanguageForm" id="LanguageForm" style="display:inline; ">
-                                      <a class="metamenu__link link is-active" onclick="submitform($(this), 'de')">
-                                        <svg class="icon">
-                                            <use xlink:href="#tick"></use>
-                                        </svg>
-                                        Deutsch
-                                    </a>
-                                       <a class="metamenu__link link" onclick="submitform($(this), 'en')">Englisch</a>
-                                </form>
-                            </div>
-                        </div>
-                        <script type="text/javascript">
-                        function submitform(anchor, lang)
-                            {
-                                var form = anchor.closest('form');
-                                form.append('<input type="hidden" name="lang" value="'+ lang + '"/>');
-                                form.submit();
-                            }
-                        </script>
+                    <div class="header__widgets__section">
+                        <a class="mq-hide-xxl desktop__title" href="/startseite" title="Startseite von NUMIS aufrufen">
+                            <p class="main__title">NUMIS - Das niedersächsische Umweltportal</p>
+                            <p class="sub__title"></p>
+                        </a>
+                        <a class="mq-show-xxl mobile__title" href="/startseite" title="Startseite von NUMIS aufrufen">NUMIS</a>
                     </div>
                 </div> 
                 <nav class="nav-desktop mq-hide-xxl">

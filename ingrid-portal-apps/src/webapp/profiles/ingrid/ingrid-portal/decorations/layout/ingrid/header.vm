@@ -84,8 +84,8 @@
                 </div>
                 <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                    <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.svg')">
-                    <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/mobile-logo.svg')">
+                        <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.svg')">
+                        <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/mobile-logo.svg')">
                     </a>
                 </div>
                  #if($serviceMenu && !$serviceMenu.empty)
