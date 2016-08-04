@@ -24,3 +24,11 @@
     width: 100%;
   }
 }
+
+.block--light .box {
+  background: unset;
+}
+
+.block--light .tag{
+  background: #FFF;
+}

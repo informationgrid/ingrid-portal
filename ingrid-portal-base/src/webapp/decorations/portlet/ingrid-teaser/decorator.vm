@@ -40,7 +40,7 @@
             #if($akey && $akey.length() > 0)
                 <a name="$akey"></a>
             #end
-            #if($disableTitle != 1)
+            #if($disableTitle != 1 && $!jetspeed.getTitle($f) && $!jetspeed.getTitle($f).trim().length() > 0)
             <$titleTag class="$titleStyle">
                 $!jetspeed.getTitle($f)
                 <!--
