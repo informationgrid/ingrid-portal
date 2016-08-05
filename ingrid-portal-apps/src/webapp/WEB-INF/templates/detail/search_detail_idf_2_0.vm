@@ -501,7 +501,7 @@
         </div>
     #else
         #if($space != "")
-            #renderTextLabelLeft($title $space)
+            #renderTextLabelAbove($title $space)
         #end
     #end
 #end
@@ -620,7 +620,7 @@
         </ul>
     #else
         #if($space != "")
-            #renderTextLabelLeft($title $space)
+            #renderTextLabelAbove($title $space)
         #end
     #end
 #end
@@ -628,11 +628,19 @@
 
 ## Render label above text
 #macro (renderTextLabelAbove $title $body)
-     #if($tool.hasContent($body))
+  #renderTextLabelAboveSpace($title $body "")
+#end
+
+#macro (renderTextLabelAboveSpace $title $body $space)
+     #if($tool.hasContent($body) || $space != "")
         #if($tool.hasContent($title))
             <h4 class="title-font">$title</h4>
         #end
-        <p>$body</p>
+        #if($body)
+            <p>$body</p>
+        #else
+            <p>$space</p>
+        #end
     #end
 #end
 
