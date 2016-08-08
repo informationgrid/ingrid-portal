@@ -18,11 +18,6 @@
 </p>
 <ul class="link-list">
 
-#if($externalLogin)
-    <li>
-        <a href="/portal/main-maps.psml"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry0')</a>
-    </li>
-#end
 #if(!$externalLogin)
     <li>
         <a href="/portal/myportal-edit-account.psml"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry2')</a>
