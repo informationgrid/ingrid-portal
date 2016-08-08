@@ -1,6 +1,102 @@
-#set ($type = $TOOL.getAddressClassType())
+##Render header 
+#macro (renderDetailHeader $title $type $modTime)
+    <section class="block block--light block--pad-top">
+        <div class="ob-box-wide ob-box-padded ob-box-center">
+            <article id="detail_meta_header" class="content ob-container">
+                <form class="box box--medium">
+                    <div class="box__content ob-container">
+                        <h6 class="tx-light tx-upper tx-brand bx-bot-0">$MESSAGES.getString("t02_address.mod_time"): $modTime</h6>
+                        <h1 class="bx-top-0 bx-bot-s">$title</h1>
+                        <h3 class="bx-top-0">
+                            #renderUDKAddressIcon($type)
+                            #renderAddressType($type)
+                        </h3>
+                    </div>
+                    <hr class="hr-thick bx-top-0 bx-bot-0">
+                    <div class="tabs tabs--wide js-tabs bx-top-0 bx-bot-0">
+                        <div class="tab__select mq-show-l">
+                            <span class="tab__select__text">$MESSAGES.getString("general_tab")</span>
+                            <svg class="tab__select__icon icon"><use xlink:href="#burger"></svg>
+                            <svg class="tab__select__icon icon"><use xlink:href="#cross"></svg>
+                        </div>
+                        <nav class="tab__toggles ob-clear mq-hide-l">
+                            ## Allgemeines
+                            <div class="tab__toggle is-active" data-tabid="tab-1"><a href="#">$MESSAGES.getString("general_tab")</a></div>
+                            ## Verweise
+                            #set($xpathList = ["./idf:objectReference"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-2"><a href="#">$MESSAGES.getString("references_tab")</a></div>
+                            #end
+                            ## Raum/Zeit
+                            #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-3"><a href="#">$MESSAGES.getString("spacial_reference_tab")</a></div>
+                            #end
+                            ## Fachbezug
+                            #if($type == "1")
+                                #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
+                                #if($TOOL.aNodeOfListExist($xpathList))
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #elseif($type == "2")
+                                #set($xpathList = ["./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/organisationName","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:editionDate","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:issueIdentification","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:page","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:ISBN","./gmd:identificationInfo/*/gmd:resourceFormat/gmd:MD_Format/gmd:name","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:otherCitationDetails","./gmd:identificationInfo/*/gmd:supplementalInformation"])
+                                #if($TOOL.aNodeOfListExist($xpathList))
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #elseif($type == "3")
+                                #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
+                                #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:identificationInfo/*/srv:serviceType","./gmd:identificationInfo/*/srv:serviceTypeVersion","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:identificationInfo/*/gmd:environmentDescription","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation","./gmd:identificationInfo/*/gmd:supplementalInformation/gmd:abstract","./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata","./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint"])
+                                #if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #elseif($type == "4")
+                                #set($xpathList = ["./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty","./gmd:individualName","./gmd:identificationInfo/*/gmd:supplementalInformation"])
+                                #if($TOOL.aNodeOfListExist($xpathList))
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #elseif($type == "5")
+                                #set($xpathList = ["./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation"])
+                                #if($TOOL.aNodeOfListExist($xpathList))
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #elseif($type == "6")
+                                #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
+                                #set($xpathList = ["./gmd:identificationInfo/*/srv:serviceType","./gmd:identificationInfo/*/srv:serviceTypeVersion","./gmd:identificationInfo/*/gmd:environmentDescription","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation","./gmd:identificationInfo/*/srv:containsOperations"])
+                                #if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
+                                    <div class="tab__toggle" data-tabid="tab-4"><a href="#">$MESSAGES.getString("subject_reference_tab")</a></div>
+                                #end
+                            #end
+                            ## Datenqualität
+                            #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-5"><a href="#">$MESSAGES.getString("data_quality")</a></div>
+                            #end
+                            ## Verfügbarkeit
+                            #set($xpathList = ["./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:version/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:fileDecompressionTechnique/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:specification/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue","./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-6"><a href="#">$MESSAGES.getString("availability_tab")</a></div>
+                            #end
+                            ## Zusätzliche Info
+                            #set($xpathList = ["./gmd:identificationInfo//gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:language/gmd:LanguageCode/@codeListValue"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-7"><a href="#">$MESSAGES.getString("additional_information_tab")</a></div>
+                            #end
+                            ## Zusatzfelder
+                            #set($xpathList = ["./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"])
+                            #set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))
+                            #if($tabtitle)
+                                <div class="tab__toggle" data-tabid="tab-8"><a href="#">$tabtitle</a></div>
+                            #end
+                        </nav>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </section>
+#end
 
-#renderDetailHeader ($TOOL.getAddressClassTitle($type) $type $TOOL.convertDateString($TOOL.getValueFromXPath("./idf:last-modified")) false )
+#set ($type = $TOOL.getAddressClassType())
+#renderDetailHeader ($TOOL.getAddressClassTitle($type) $type $TOOL.convertDateString($TOOL.getValueFromXPath("./idf:last-modified")))
 <section id="detail_meta" class="block">
     <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
         <article class="content ob-container ob-box-wide">

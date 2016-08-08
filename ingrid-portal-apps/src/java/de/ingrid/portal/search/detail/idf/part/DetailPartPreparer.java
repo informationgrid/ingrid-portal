@@ -380,6 +380,9 @@ public class DetailPartPreparer {
     }
 
     public String getCountryValue(String value){
+        if(UtilsCountryCodelist.getCodeFromShortcut3(value) == null){
+            return value;
+        }
         return UtilsCountryCodelist.getNameFromCode(UtilsCountryCodelist.getCodeFromShortcut3(value), this.request.getLocale().getLanguage().toString());
     }
     public ArrayList<String> mergeList(ArrayList<String> list1, ArrayList<String> list2){
