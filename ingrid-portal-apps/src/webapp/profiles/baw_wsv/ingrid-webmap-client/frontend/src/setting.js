@@ -9,6 +9,7 @@ var settingSearchBwaLocatorUrl = 'https://atlas.wsv.bund.de/bwastr-locator/rest/
 var settingSearchBwaLocatorGeoUrl = 'https://atlas.wsv.bund.de/bwastr-locator/rest/geokodierung/query';
 var settingSearchBwaLocatorStationUrl = 'https://atlas.wsv.bund.de/bwastr-locator/rest/stationierung/query';
 var settingCopyrightURL = undefined;
+var settingSitemapURL = undefined;
 // KML
 var settingKMLName = 'ITZBund';
 // WMS Import
