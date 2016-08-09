@@ -1023,19 +1023,19 @@ require([
 
 			<!-- MAIN TAB 2 START -->
 			<div id="oldView" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.original" />">
-			<div id="oldContent" class="inputContainer field grey"></div>
+				<div id="oldContent" class="inputContainer field grey"></div>
+			</div>
+			<!-- MAIN TAB 2 END -->
+	
+			<!-- MAIN TAB 3 START -->
+			<div id="currentView" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.modified" />">
+				<div id="currentContent" class="inputContainer field grey"></div>
+			</div>
+			<!-- MAIN TAB 3 END -->
+		
 		</div>
-		<!-- MAIN TAB 2 END -->
-
-		<!-- MAIN TAB 3 START -->
-		<div id="currentView" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder" title="<fmt:message key="dialog.compare.modified" />">
-		<div id="currentContent" class="inputContainer field grey"></div>
+	<!-- MAIN TAB CONTAINER END -->
 	</div>
-	<!-- MAIN TAB 3 END -->
-
-</div>
-<!-- MAIN TAB CONTAINER END -->
-</div>
 <!-- CONTENT END -->
 </body>
 </html>

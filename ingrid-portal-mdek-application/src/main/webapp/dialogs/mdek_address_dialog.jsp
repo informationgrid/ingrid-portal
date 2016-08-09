@@ -332,7 +332,7 @@
     </script>
 </head>
 <body>
-    <div class="" style="width:100%;">
+    <div data-dojo-type="dijit/layout/ContentPane">
     	<div id="winNavi">
             	<a href="javascript:void(0);" onclick="window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-2#maintanance-of-objects-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no')" title="<fmt:message key="general.help" />">[?]</a>
         </div>
