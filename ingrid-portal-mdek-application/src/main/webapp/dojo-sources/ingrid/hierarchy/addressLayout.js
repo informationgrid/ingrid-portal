@@ -28,10 +28,12 @@ define([
     "dojo/dom-class",
     "dojo/Deferred",
     "dojo/on",
+    "dojox/widget/Standby",
     "dijit/registry",
     "dijit/form/Button",
     "dijit/form/ValidationTextBox",
     "dijit/form/SimpleTextarea",
+    "ingrid/utils/Catalog",
     "ingrid/utils/UI",
     "ingrid/utils/Syslist",
     "ingrid/utils/Thesaurus",
@@ -42,8 +44,8 @@ define([
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/validation",
     "ingrid/hierarchy/dirty"
-], function(declare, lang, array, query, domClass, Deferred, on, registry, Button, ValidationTextBox, SimpleTextarea,
-            UtilUI, UtilSyslist, UtilThesaurus,
+], function(declare, lang, array, query, domClass, Deferred, on, Standby, registry, Button, ValidationTextBox, SimpleTextarea,
+            UtilCatalog, UtilUI, UtilSyslist, UtilThesaurus,
             message, layoutCreator, igeEvents, gridEditors, gridFormatters, validator, dirty) {
         
     return declare( null, {
@@ -141,7 +143,39 @@ define([
             var storeProps = {data: {identifier: '1',label: '0'}};
             layoutCreator.createFilteringSelect("addressOwner", null, storeProps, null);
         
-            //new dijit.layout.ContentPane({}, "contentFrameAddress");
+            var owner = registry.byId("addressOwner");
+            
+            // show a busy state when lazy loading data
+            var standby = new Standby({target: "addressOwner"});
+            document.body.appendChild(standby.domNode);
+        	standby.startup();
+            
+            /* make select box lazy loading */
+            owner.isLoaded = function() {
+            	return this._isLoaded;
+            }
+            owner._startSearchFromInput = function() {
+            	this.item = undefined;
+            	if (this.isLoaded()) {
+            		this._startSearch(this.focusNode.value);
+            	} else {
+            		standby.show();
+            		UtilCatalog.updateResponsibleUserAddressList(currentUdk).then( lang.hitch( this, function() {
+            			standby.hide();
+	            		this._isLoaded = true;
+	            		this._startSearch(this.focusNode.value);
+            		} ) );
+            	}
+            }
+            owner.loadDropDown = function(/*Function*/ loadCallback){
+            	standby.show();
+            	UtilCatalog.updateResponsibleUserAddressList(currentUdk).then( lang.hitch( this, function() {
+            		standby.hide();
+            		this._isLoaded = true;
+            		this._startSearchAll(); 
+            	} ) );
+    		};
+            
         },
         
         

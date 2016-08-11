@@ -1501,6 +1501,15 @@ define([
         onAfterSave: function() {},
         onAfterPublish: function() {},
         onAfterLoad: function() {},
+        
+        _getAddressOwner: function(uuid) {
+        	var def2 = new Deferred();
+        	AddressService.getAddressData(uuid, function(address) {
+        		var name = UtilAddress.createAddressTitle(address);
+        		def2.resolve(name);
+        	});
+        	return def2.promise;
+        },
 
         _setData: function(nodeData) {
             // set a flag so that no dirty flag is set!
@@ -1515,7 +1524,10 @@ define([
                     // show container to correctly layout the elements
                     style.set(dom.byId("contentFrameBodyAddress"), "display", "block");
                     def = ingridAddressLayout.create()
-                    .then(lang.partial(this._initResponsibleUserAddressList, nodeData))
+                    .then(lang.partial(this._getAddressOwner, nodeData.addressOwner))
+                    .then(function(name) {
+                    	nodeData.addressOwnerName = name; 
+                    })
                     .then(lang.hitch(this, lang.partial(this._setAddressData, nodeData)));
                     break;
                 case "O":
@@ -1525,13 +1537,9 @@ define([
                     ingridObjectLayout.additionalFieldWidgets = this.additionalFieldWidgets;
                     def = ingridObjectLayout.create()
                     // get name of owner
-                    .then(function() {
-                    	var def2 = new Deferred();
-                    	AddressService.getAddressData(nodeData.objectOwner, function(address) {
-                    		nodeData.objectOwnerName = UtilAddress.createAddressTitle(address);
-                    		def2.resolve();
-                    	});
-                    	return def2.promise;
+                    .then(lang.partial(this._getAddressOwner, nodeData.objectOwner))
+                    .then(function(name) {
+                    	nodeData.objectOwnerName = name; 
                     })
                     .then(lang.hitch(this, lang.partial(this._setObjectData, nodeData)));
                     break;
@@ -1567,7 +1575,20 @@ define([
             // ------------------ Header ------------------
             registry.byId("addressTitle").attr("value", UtilAddress.createAddressTitle(nodeData), true);
             registry.byId("addressType").attr("value", UtilAddress.getAddressType(nodeData.addressClass), true); // call onChange when changing this value!
-            registry.byId("addressOwner").attr("value", nodeData.addressOwner, true);
+            //registry.byId("addressOwner").attr("value", nodeData.addressOwner, true);
+            
+            // object owner select is now lazy loading
+            // only set current owner and not all other users that can become the owner
+            var list = [[nodeData.addressOwnerName, nodeData.addressOwner]];
+    		UtilStore.updateWriteStore("addressOwner", list, {
+                identifier: "1",
+                label: "0",
+                items: list
+            });
+            
+            var owner = registry.byId("addressOwner");
+            owner.attr("value", nodeData.addressOwner, true);
+            owner._isLoaded = false;
 
             var workStateStr = message.get("general.workState." + nodeData.workState);
             dom.byId("addressWorkState").innerHTML = (nodeData.isMarkedDeleted ? workStateStr + "<br>(" + message.get("general.state.markedDeleted") + ")" : workStateStr);
@@ -2667,105 +2688,6 @@ define([
         /*******************************************
          *            Helper functions             *
          *******************************************/
-
-        
-
-        _initResponsibleUserAddressList: function(nodeData) {
-            var def = new Deferred();
-
-            if (nodeData.uuid == "newNode") {
-                // var selectWidget = registry.byId("addressOwner");
-
-                var parentUuid = nodeData.parentUuid;
-                var self = this;
-                if (parentUuid !== null) {
-                    // new node && not root
-                    SecurityService.getResponsibleUsersForNewAddress(parentUuid, false, true, {
-                        callback: function(userList) {
-                            var list = [];
-                            array.forEach(userList, function(user) {
-                                var title = UtilAddress.createAddressTitle(user.address);
-                                var uuid = user.address.uuid;
-                                list.push([title, uuid]);
-                            });
-                            UtilStore.updateWriteStore("addressOwner", list, {
-                                identifier: "1",
-                                label: "0"
-                            });
-                            def.resolve(nodeData);
-                        },
-                        errorHandler: function(errMsg, err) {
-                            console.debug(errMsg);
-                            console.debug(err);
-                            def.reject(err);
-                        }
-                    });
-                } else {
-                    // new root node
-                    // get all users from the users groups that have root permission and the catalog admin
-                    var getUsersDef = UtilSecurity.getUsersFromCurrentGroupsWithRootPermission();
-                    var getCatAdminDef = UtilSecurity.getCatAdmin();
-
-                    var defList = new DeferredList([getUsersDef, getCatAdminDef], false, false, true);
-                    defList.then(function(resultList) {
-                        var list = [];
-
-                        // Add all users from the current group
-                        for (var i in resultList[0][1]) {
-                            // Iterate over the users from the current group
-                            var user = resultList[0][1][i];
-                            var title = UtilAddress.createAddressTitle(user.address);
-                            var uuid = user.address.uuid;
-                            list.push([title, uuid]);
-                        }
-
-                        // Add the catalog administrator
-                        // only if the current user is not the cat admin himself
-                        if (UtilSecurity.currentUser.role != 1) {
-                            var catAdmin = resultList[1][1];
-                            var catAdminTitle = UtilAddress.createAddressTitle(catAdmin.address);
-                            var catAdminUuid = catAdmin.address.uuid;
-                            list.push([catAdminTitle, catAdminUuid]);
-                        }
-
-                        UtilStore.updateWriteStore("addressOwner", list, {
-                            identifier: "1",
-                            label: "0"
-                        });
-                        def.resolve(nodeData);
-                    }, function(errMsg, err) {
-                        def.reject(err);
-                    });
-                }
-
-                return def;
-            }
-
-
-
-            SecurityService.getUsersWithWritePermissionForAddress(nodeData.uuid, false, false, {
-                callback: function(userList) {
-                    var list = [];
-                    array.forEach(userList, function(user) {
-                        var title = UtilAddress.createAddressTitle(user.address);
-                        var uuid = user.address.uuid;
-                        list.push([title, uuid]);
-                    });
-                    UtilStore.updateWriteStore("addressOwner", list, {
-                        label: "0",
-                        identifier: "1"
-                    });
-                    def.resolve(nodeData);
-                },
-                errorHandler: function(errMsg, err) {
-                    console.debug(errMsg);
-                    console.debug(err);
-                    def.reject(err);
-                }
-            });
-
-            return def;
-        },
 
         // Looks for the node widget with uuid = nodeData.uuid and updates the
         // tree data (label, type, etc.) according to the given nodeData
