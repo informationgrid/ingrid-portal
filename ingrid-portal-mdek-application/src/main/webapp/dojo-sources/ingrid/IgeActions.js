@@ -1524,7 +1524,15 @@ define([
                     // additional fields will be determined once during initialization!
                     ingridObjectLayout.additionalFieldWidgets = this.additionalFieldWidgets;
                     def = ingridObjectLayout.create()
-                    .then(lang.partial(this._initResponsibleUserObjectList, nodeData))
+                    // get name of owner
+                    .then(function() {
+                    	var def2 = new Deferred();
+                    	AddressService.getAddressData(nodeData.objectOwner, function(address) {
+                    		nodeData.objectOwnerName = UtilAddress.createAddressTitle(address);
+                    		def2.resolve();
+                    	});
+                    	return def2.promise;
+                    })
                     .then(lang.hitch(this, lang.partial(this._setObjectData, nodeData)));
                     break;
                 default:
@@ -1704,7 +1712,19 @@ define([
                 dom.byId("lastEditor").innerHTML = message.get("general.unknown");
             }
 
-            registry.byId("objectOwner").attr("value", nodeData.objectOwner, true);
+            // object owner select is now lazy loading
+            // only set current owner and not all other users that can become the owner
+            var list = [[nodeData.objectOwnerName, nodeData.objectOwner]];
+    		UtilStore.updateWriteStore("objectOwner", list, {
+                identifier: "1",
+                label: "0",
+                items: list
+            });
+            
+            var owner = registry.byId("objectOwner");
+            owner.attr("value", nodeData.objectOwner, true);
+            owner._isLoaded = false;
+            
 
             if (nodeData.writePermission === true) {
                 style.set("permissionObjLock", "display", "none");
@@ -2648,103 +2668,7 @@ define([
          *            Helper functions             *
          *******************************************/
 
-        _initResponsibleUserObjectList: function(nodeData) {
-            var def = new Deferred();
-
-            if (nodeData.uuid == "newNode") {
-                // var selectWidget = registry.byId("objectOwner");
-
-                var parentUuid = nodeData.parentUuid;
-                var self = this;
-                if (parentUuid !== null) {
-                    // new node && not root
-                    SecurityService.getResponsibleUsersForNewObject(parentUuid, false, true, {
-                        callback: function(userList) {
-                            var list = [];
-                            array.forEach(userList, function(user) {
-                                var title = UtilAddress.createAddressTitle(user.address);
-                                var uuid = user.address.uuid;
-                                list.push([title, uuid]);
-                            });
-                            UtilStore.updateWriteStore("objectOwner", list, {
-                                identifier: "1",
-                                label: "0",
-                                items: list
-                            });
-
-                            def.resolve(nodeData);
-                        },
-                        errorHandler: function(errMsg, err) {
-                            console.debug(errMsg);
-                            console.debug(err);
-                            def.reject(err);
-                        }
-                    });
-                } else {
-                    // new root node
-                    // get all users from the current users groups that have root permission and the catalog admin
-                    var getUsersDef = UtilSecurity.getUsersFromCurrentGroupsWithRootPermission();
-                    var getCatAdminDef = UtilSecurity.getCatAdmin();
-
-                    var defList = new DeferredList([getUsersDef, getCatAdminDef], false, false, true);
-                    defList.then(function(resultList) {
-                        var list = [];
-
-                        // Add all users from the current group
-                        for (var i in resultList[0][1]) {
-                            // Iterate over the users from the current group
-                            var user = resultList[0][1][i];
-                            var title = UtilAddress.createAddressTitle(user.address);
-                            var uuid = user.address.uuid;
-                            list.push([title, uuid]);
-                        }
-
-                        // Add the catalog administrator
-                        // only if the current user is not the cat admin himself
-                        if (UtilSecurity.currentUser.role != 1) {
-                            var catAdmin = resultList[1][1];
-                            var catAdminTitle = UtilAddress.createAddressTitle(catAdmin.address);
-                            var catAdminUuid = catAdmin.address.uuid;
-                            list.push([catAdminTitle, catAdminUuid]);
-                        }
-
-                        UtilStore.updateWriteStore("objectOwner", list, {
-                            identifier: "1",
-                            label: "0",
-                            items: list
-                        });
-                        def.resolve(nodeData);
-                    }, def.reject);
-                }
-
-                return def;
-            }
-
-
-            SecurityService.getUsersWithWritePermissionForObject(nodeData.uuid, false, false, {
-                callback: function(userList) {
-                    var list = [];
-                    array.forEach(userList, function(user) {
-                        var title = UtilAddress.createAddressTitle(user.address);
-                        var uuid = user.address.uuid;
-                        list.push([title, uuid]);
-                    });
-                    UtilStore.updateWriteStore("objectOwner", list, {
-                        identifier: "1",
-                        label: "0",
-                        items: list
-                    });
-                    def.resolve(nodeData);
-                },
-                errorHandler: function(errMsg, err) {
-                    console.debug(errMsg);
-                    console.debug(err);
-                    def.reject(err);
-                }
-            });
-
-            return def;
-        },
+        
 
         _initResponsibleUserAddressList: function(nodeData) {
             var def = new Deferred();

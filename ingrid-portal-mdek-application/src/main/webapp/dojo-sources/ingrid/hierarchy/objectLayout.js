@@ -186,6 +186,30 @@ define([
                 registry.byId("objectClass").onChange = lang.hitch(igeEvents, igeEvents.selectUDKClass);
 
                 layoutCreator.createFilteringSelect("objectOwner", null, storeProps, null);
+                var owner = registry.byId("objectOwner");
+                
+                /* make select box lazy loading */
+                owner.isLoaded = function() {
+	            	return this._isLoaded;
+	            }
+                owner._startSearchFromInput = function() {
+                	this.item = undefined;
+	            	if (!this.isLoaded()) {
+	            		UtilCatalog.updateResponsibleUserObjectList(currentUdk).then( lang.hitch( this, function() {
+		            		this._isLoaded = true;
+		            		this._startSearch(this.focusNode.value);
+	            		} ) );
+	            	}
+	            	this._startSearch(this.focusNode.value);
+	            }
+                owner.loadDropDown = function(/*Function*/ loadCallback){
+                	UtilCatalog.updateResponsibleUserObjectList(currentUdk).then( lang.hitch( this, function() {
+	            		this._isLoaded = true;
+	            		this._startSearchAll(); 
+	            	} ) );
+	    		};
+                
+                
             },
 
             createGeneralInfo: function() {

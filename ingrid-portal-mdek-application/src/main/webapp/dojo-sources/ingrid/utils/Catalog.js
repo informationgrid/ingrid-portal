@@ -22,9 +22,13 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/_base/array",
     "dojo/Deferred",
-    "ingrid/message"
-], function(declare, Deferred, message) {
+    "dojo/DeferredList",
+    "ingrid/message",
+    "ingrid/utils/Store",
+    "ingrid/utils/Security"
+], function(declare, array, Deferred, DeferredList, message, UtilStore, UtilSecurity) {
     return declare(null, {
         // Constants that should be used by getGenericValuesDef and setGenericValuesDef
         AUTOSAVE_INTERVAL : "AUTOSAVE_INTERVAL",
@@ -174,6 +178,105 @@ define([
                 }
                 return [];
             });
+            return def;
+        },
+        
+        updateResponsibleUserObjectList: function(nodeData) {
+            var def = new Deferred();
+            var UtilAddress = require("ingrid/utils/Address");
+
+            if (nodeData.uuid == "newNode") {
+                // var selectWidget = registry.byId("objectOwner");
+
+                var parentUuid = nodeData.parentUuid;
+                var self = this;
+                if (parentUuid !== null) {
+                    // new node && not root
+                    SecurityService.getResponsibleUsersForNewObject(parentUuid, false, true, {
+                        callback: function(userList) {
+                            var list = [];
+                            array.forEach(userList, function(user) {
+                                var title = UtilAddress.createAddressTitle(user.address);
+                                var uuid = user.address.uuid;
+                                list.push([title, uuid]);
+                            });
+                            UtilStore.updateWriteStore("objectOwner", list, {
+                                identifier: "1",
+                                label: "0",
+                                items: list
+                            });
+
+                            def.resolve(nodeData);
+                        },
+                        errorHandler: function(errMsg, err) {
+                            console.debug(errMsg);
+                            console.debug(err);
+                            def.reject(err);
+                        }
+                    });
+                } else {
+                    // new root node
+                    // get all users from the current users groups that have root permission and the catalog admin
+                    var getUsersDef = UtilSecurity.getUsersFromCurrentGroupsWithRootPermission();
+                    var getCatAdminDef = UtilSecurity.getCatAdmin();
+
+                    var defList = new DeferredList([getUsersDef, getCatAdminDef], false, false, true);
+                    defList.then(function(resultList) {
+                        var list = [];
+
+                        // Add all users from the current group
+                        for (var i in resultList[0][1]) {
+                            // Iterate over the users from the current group
+                            var user = resultList[0][1][i];
+                            var title = UtilAddress.createAddressTitle(user.address);
+                            var uuid = user.address.uuid;
+                            list.push([title, uuid]);
+                        }
+
+                        // Add the catalog administrator
+                        // only if the current user is not the cat admin himself
+                        if (UtilSecurity.currentUser.role != 1) {
+                            var catAdmin = resultList[1][1];
+                            var catAdminTitle = UtilAddress.createAddressTitle(catAdmin.address);
+                            var catAdminUuid = catAdmin.address.uuid;
+                            list.push([catAdminTitle, catAdminUuid]);
+                        }
+
+                        UtilStore.updateWriteStore("objectOwner", list, {
+                            identifier: "1",
+                            label: "0",
+                            items: list
+                        });
+                        def.resolve(nodeData);
+                    }, def.reject);
+                }
+
+                return def;
+            }
+
+
+            SecurityService.getUsersWithWritePermissionForObject(nodeData.uuid, false, false, {
+                callback: function(userList) {
+                    var list = [];
+                    array.forEach(userList, function(user) {
+                        var title = UtilAddress.createAddressTitle(user.address);
+                        var uuid = user.address.uuid;
+                        list.push([title, uuid]);
+                    });
+                    UtilStore.updateWriteStore("objectOwner", list, {
+                        identifier: "1",
+                        label: "0",
+                        items: list
+                    });
+                    def.resolve(nodeData);
+                },
+                errorHandler: function(errMsg, err) {
+                    console.debug(errMsg);
+                    console.debug(err);
+                    def.reject(err);
+                }
+            });
+
             return def;
         }
             

@@ -27,7 +27,9 @@
 		<title>Tables Test</title>
 
         <script type="text/javascript">
-            require(["ingrid/dialog", "dojo/parser", "dojo/on", "dojo/dom", "dojo/_base/lang", "dijit/form/Button", "dijit/registry", "ingrid/hierarchy/History"], function(dialog, parser, on, dom, lang, Button, registry, History) {
+            require(["ingrid/dialog", "dojo/parser", "dojo/on", "dojo/_base/array", "dojo/dom", "dojo/_base/lang", "dijit/form/Button", "dijit/form/Select", "dojo/data/ObjectStore",
+                     "dojo/store/Memory", "dijit/registry", "ingrid/hierarchy/History", "ingrid/utils/Address", "ingrid/utils/Store", "ingrid/layoutCreator"], 
+                     function(dialog, parser, on, array, dom, lang, Button, Select, ObjectStore, Memory, registry, History, UtilAddress, UtilStore, layoutCreator) {
                 parser.parse();
                 var backBtn = registry.byId("btnBack");
                 var nextBtn = registry.byId("btnNext");
@@ -49,7 +51,6 @@
                 
                 var printStack = function() {
                     var result = "";
-                    debugger;
                     for (var i=0; i<History.stack.length; i++) {
                         if (History.pointer === i) result += "* ";
                         result += History.stack[i].title + "<br>";
@@ -63,6 +64,83 @@
                 }
                 
                 printStack();
+
+                /* var store = new Memory({
+                  data: [
+                    { id: "foo", label: "Foo" },
+                    { id: "bar", label: "Bar" }
+                  ]
+                });
+                var os = new ObjectStore({ objectStore: store });
+	            var dynSelect = new Select({
+	                store: os
+	            }); */
+                
+                var storeProps = {
+                    data: {
+                        identifier: '1',
+                        label: '0'
+                    }
+                };
+	            
+	            // layoutCreator.createSelectBox("dynSelect", null, storeProps, null);
+	            layoutCreator.createFilteringSelect("dynSelect", null, storeProps, null);
+	            var dynSelect = registry.byId("dynSelect");
+	            var parentUuid = "71FE85D0-67AA-485D-900D-924B10855B21";
+	            
+	            var loadResponsibleUsers = function(callback) {
+	            	SecurityService.getResponsibleUsersForNewObject(parentUuid, false, true, {
+	                    callback: function(userList) {
+	                        var list = [];
+	                        array.forEach(userList, function(user) {
+	                            var title = UtilAddress.createAddressTitle(user.address);
+	                            var uuid = user.address.uuid;
+	                            list.push([title, uuid]);
+	                        });
+	                        
+	                        UtilStore.updateWriteStore("dynSelect", list, {
+	                            identifier: "1",
+	                            label: "0",
+	                            items: list
+	                        });
+	                        
+	                        callback();
+	                    },
+	                    errorHandler: function(errMsg, err) {
+	                        console.debug(errMsg);
+	                        console.debug(err);
+	                    }
+	                });
+	            };
+	            
+	            dynSelect.isLoaded = function() {
+	            	return this._isLoaded;
+	            }
+	            dynSelect._startSearchFromInput = function() {
+	            	if (!this.isLoaded()) {
+	            		loadResponsibleUsers( lang.hitch( this, function() {
+		            		this._isLoaded = true;
+		            		this._startSearch(this.focusNode.value);
+	            		} ) );
+	            	}
+	            	this._startSearch(this.focusNode.value);
+	            }
+	            dynSelect.loadDropDown = function(/*Function*/ loadCallback){
+	            	loadResponsibleUsers( lang.hitch( this, function() {
+	            		this._isLoaded = true;
+	            		this._startSearchAll(); 
+	            	} ) );
+	    		};
+	    		
+	    		var list = [["aaaa", "xxxx"]];
+	    		UtilStore.updateWriteStore("dynSelect", list, {
+                    identifier: "1",
+                    label: "0",
+                    items: list
+                });
+	    		
+	    		dynSelect.set("value", "xxxx");
+	    		
             });
             
             
@@ -94,5 +172,7 @@
         </div>
 
         <div id="termContainer"></div>
+        
+        <div id="dynSelect"></div>
 	</body>
 </html>

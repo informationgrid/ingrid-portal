@@ -25,9 +25,8 @@ define([
     "ingrid/message",
     "dojo/Deferred",
     "dojo/promise/all",
-    "ingrid/utils/LoadingZone",
-    "ingrid/utils/UI"
-], function(declare, message, Deferred, all, LoadingZone, UtilUI) {
+    "ingrid/utils/LoadingZone"
+], function(declare, message, Deferred, all, LoadingZone) {
     return declare(null, {
 
         // This object holds the current user permissions (See de.ingrid.mdek.beans.security.Permission for content)
@@ -80,6 +79,7 @@ define([
         },
 
         getUsersFromCurrentGroupsWithRootPermission: function() {
+        	var UtilUI = require("ingrid/utils/UI");
             var def = new Deferred();
             var getUsersFromGroupDefList = [];
             for (var i = 0; i < this.currentGroups.length; i++) {
