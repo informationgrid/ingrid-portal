@@ -50,8 +50,16 @@ if (contentLabel && contentLabel.size() > 0) {
     var isChecked = contentLabel.get(0).get("data") == "true";
     if (isChecked) {
         
+        var objRow = SQL.first("SELECT obj_class FROM t01_object WHERE id=?", [id]);
+        var objClass = objRow.get("obj_class");
+
         var i;
-        var dataIdentification = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification");
+        var dataIdentification;
+        if (objClass.equals("3")) {
+            dataIdentification = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/srv:SV_ServiceIdentification");
+        } else {
+            dataIdentification = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification");
+        }
         
         var path = ["gmd:resourceFormat", "gmd:graphicOverview", "gmd:resourceMaintenance","gmd:pointOfContact", "gmd:status","gmd:credit","gmd:purpose"];
         
