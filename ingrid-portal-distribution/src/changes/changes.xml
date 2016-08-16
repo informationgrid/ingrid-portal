@@ -32,6 +32,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-398">
                 IGE: Fixed deletion of groups.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-407">
+                IGE: Fixed required fields in user administration.
+            </action>
         </release>
 
         <release version="3.6.2.1" date="2016-07-08" description="Release 3.6.2.1">
