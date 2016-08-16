@@ -707,6 +707,10 @@
         <supported-locale>en</supported-locale>
         <portlet-preferences>
             <preference>
+                <name>startWithEntry</name>
+                <value>0</value>
+            </preference>
+            <preference>
                 <name>sectionStyle</name>
                 <value>block--padded</value>
             </preference>
@@ -807,6 +811,10 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
             <preference>
                 <name>cmsKey</name>
                 <value>ingrid.privacy</value>
