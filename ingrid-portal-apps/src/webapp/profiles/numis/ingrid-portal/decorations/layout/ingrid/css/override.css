@@ -285,6 +285,10 @@ thead {
     padding:5px 0 0 0;
 }
 
+.mobile__logo {
+    height: 2.5rem;
+}
+
 .desktop__title p {
     margin: 0 0 10px -25px;
 }
@@ -298,10 +302,37 @@ thead {
     font-size: 16px;
 }
 
+.mobile__title {
+     font-size: 27px;
+}
+
 .mobile__title:hover {
     color: #FFFFFF;
 }
 
 .footer__logo {
     width: 3.125rem;
+}
+
+@media screen and (max-width: 768px) {
+  .header__widgets__section {
+      padding: 0.525rem 0;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 939px) {
+  .header__widgets__section {
+      padding: 1.025rem 0;
+  }
+}
+
+.search-result .icon {
+    fill: #2c5c91;
+    font-size: 1.2rem;
+    margin: -2px 0;
+    
+}
+
+.search-result h4 a {
+    margin: 0 0 0 5px;
 }
