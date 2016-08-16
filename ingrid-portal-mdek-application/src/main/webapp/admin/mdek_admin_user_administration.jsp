@@ -698,6 +698,7 @@
                     registry.byId("userDataAddressPostCode").set("value", "");
                     registry.byId("userDataAddressCity").set("value", "");
                     registry.byId("userDataAddressPhone").set("value", "");
+                    checkFields();
                 }
             }
 
