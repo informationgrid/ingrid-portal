@@ -28,6 +28,9 @@
       <preference name="articleStyle" readOnly="false">
         <value>content ob-container ob-box-narrow ob-box-center</value>
       </preference>
+      <preference name="titleTag" readOnly="false">
+        <value>h1</value>
+      </preference>
     </fragment>
     <fragment id="privacy-1" type="portlet" name="ingrid-portal-apps::PrivacyPortlet">
       <property layout="OneColumn" name="row" value="1" />

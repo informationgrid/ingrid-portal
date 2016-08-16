@@ -22,6 +22,9 @@
       <preference name="sectionStyle" readOnly="false">
         <value>block--padded</value>
       </preference>
+      <preference name="titleTag" readOnly="false">
+        <value>h1</value>
+      </preference>
     </fragment>
   </fragment>
 
