@@ -122,7 +122,7 @@
                                 <i class="icon bx-top-s icon-rss-2" style="display: block;font-size: 60px;margin: auto;"></i>
                             </span>
                             <div class="tx-center">
-                                Aktuelles
+                                $MESSAGES.getString('category.news.title')
                             </div>
                             <div class="tx-center">&nbsp;</div>
                         </a>
@@ -136,7 +136,7 @@
                                 <i class="icon bx-top-s icon-rss-2" style=""></i>
                             </span>
                             <strong>
-                                Aktuelles
+                                $MESSAGES.getString('category.news.title')
                             </strong>
                             &nbsp;
                         </a>
