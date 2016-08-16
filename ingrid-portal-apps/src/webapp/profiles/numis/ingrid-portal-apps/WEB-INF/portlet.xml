@@ -232,6 +232,10 @@
                 <name>sectionStyle</name>
                 <value>block--padded</value>
             </preference>
+            <preference>
+                <name>divStyle</name>
+                <value>ob-box-padded-more ob-box-center</value>
+            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
         <init-param>

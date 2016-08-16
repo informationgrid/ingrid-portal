@@ -72,7 +72,7 @@
         <section help-key="about-6">
             <header>InGrid – Die Software hinter NUMIS</header>
             <content>
-                <p>Die InGrid-Softwarekomponenten werden im Rahmen des Projekts “InGrid - Pflege und Weiterentwicklung der InGrid-Softwarekomponenten zum Betrieb von Internetportalen und Metadatenkatalogen” (VKoopUIS-Projekt Nr. 50) unter dem Dach “Verwaltungskooperation Umweltinformationssysteme” (VKoopUIS) weiter entwickelt. Nähere Informationen erhalten Sie auf der <a href="http://www.ingrid-oss.eu/" target="_new">Projekt-Webseite</a>||LINK ZU |.</p>
+                <p>Die InGrid-Softwarekomponenten werden im Rahmen des Projekts “InGrid - Pflege und Weiterentwicklung der InGrid-Softwarekomponenten zum Betrieb von Internetportalen und Metadatenkatalogen” (VKoopUIS-Projekt Nr. 50) unter dem Dach “Verwaltungskooperation Umweltinformationssysteme” (VKoopUIS) weiter entwickelt. Nähere Informationen erhalten Sie auf der <a href="http://www.ingrid-oss.eu/" target="_new">Projekt-Webseite</a>.</p>
             </content>
         </section>
     </chapter>
@@ -549,7 +549,7 @@
     <chapter>
         <header>Suchergebnisliste</header>
         <section help-key="search-results-1">
-            <header> </header>
+            <header>Suchergebnisliste</header>
             <content>
                 <p>Nach dem Absenden einer Suchanfrage erhalten Sie die
                     Ergebnisliste. Sie gliedert sich in die Hauptergebnisliste
@@ -625,7 +625,7 @@
     <chapter>
         <header>Kataloge</header>
         <section help-key="search-catalog-1">
-            <header> </header>
+            <header>Kataloge</header>
             <content>
                 <p>Die angeschlossenen Kataloge und deren Inhalte werden in 
                     einem Hierarchie-Baum dargestellt.
@@ -640,7 +640,7 @@
     <chapter>
         <header>Messwerte</header>
         <section help-key="search-measure-1">
-            <header> </header>
+            <header>Messwerte</header>
             <content>
                 <p>In der Karte werden alle Stationen aus einem gewählten Messnetz angezeigt. Die Messnetzauswahl findet sich unter dem Weltkugel-Symbol im Seitenmenübereich. Vorgehalten werden immer die Messwerte der letzten sechs Monate.</p>
             </content>
@@ -702,7 +702,7 @@
     <chapter>
         <header>Karten</header>
         <section help-key="maps-1">
-            <header> </header>
+            <header>Karten</header>
              <content>
                 <p>Die Kartenanwendung des NUMIS-Portals ist eine intuitive Anwendung für die Suche, Anzeige und Nutzung von Informationen geografischer Art. Sie ermöglicht die interaktive Darstellung von Karten und eingeblendeten Fachdaten mit Hilfe eines standardmässigen Web-Browsers.</p>
                 <p>Als Benutzer können Sie zahlreiche Parameter dieser Karte festlegen, zum Beispiel den dargestellten räumlichen Bereich und die Bildgrösse sowie den Typus der angezeigten Informationen oder den Kartenhintergrund.</p>
@@ -1002,14 +1002,14 @@
         <section help-key="search-category-1">
             <header>Durchstöbern Sie das Portal nach Kategorien</header>
             <content>
-                <p>Durch die Auswahl einer Kategorie, werden Ihnen alle vorhandenen Treffer der ausgewählten Kategorie im Portal angezeigt.</p>
+                <p>Durch die Auswahl einer Kategorie, werden Ihnen alle vorhandenen Treffer zur ausgewählten Kategorie im Portal angezeigt.</p>
             </content>
         </section>
     </chapter>
     <chapter>
         <header>Aktuelles</header>
         <section help-key="rss-news-1">
-            <header> </header>
+            <header>Aktuelles</header>
             <content>
                 <p>Unter „Aktuelles“ werden aktuelle Meldungen zum Thema „Umwelt“ von Bundesbehörden und niedersächsischen Landesbehörden angezeigt. Die aktuellste Meldung steht dabei immer oben. Es wird jeweils nur der Titel und eine Kurzbeschreibung der Meldung dargestellt. Durch einen Klick auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
             </content>
@@ -1018,7 +1018,7 @@
     <chapter>
         <header>NUMIS informiert</header>
         <section help-key="ingrid-inform-1">
-            <header> </header>
+            <header>NUMIS informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
                     <a href="/impressum">Betreiber von NUMIS</a> 

@@ -1,7 +1,6 @@
 #macro (renderDBBrowserHeaderComp $colNames $colTitles)
     <thead>
         <tr>
-            <th></th>
             #foreach ($colTitle in $colTitles)
                 #set ($colLink = $renderResponse.createActionURL())
                 #set ($colIndex = $velocityCount - 1)
@@ -33,7 +32,7 @@
         #set ($model = $jobHandler.getFilteredJobs($sortColumn, $sortAsc, $filterMap, $inverse))
     #end
     #foreach ($entry in $model)
-           #set ($jobId = $entry.name)
+        #set ($jobId = $entry.name)
         #set ($jobData = $entry.getJobDataMap())
         #if($jobData.containsKey("component.monitor.general.timer.num"))
             #set( $prevTime = $jobHandler.getTrigger($entry.getName(), $entry.getGroup()).getPreviousFireTime())
@@ -46,23 +45,22 @@
             #set ($jobStatus = 0)
             #set ($activeState = 1)
         #else
-               #set ($jobStatus = $jobData.getInt("component.monitor.general.status"))
+            #set ($jobStatus = $jobData.getInt("component.monitor.general.status"))
             #set ($activeState = $jobData.getInt("component.monitor.general.active"))
         #end
         
         #set ($count = $count + 1)
         <tr>
         $action.setParameter("id", "$jobId")
-        <td>
-            #if($running)
-                ##<input id="stop_$count" name="id" type="button" value="x" title="Stop running job" class="btn" style="background-color:red; height:15px; width:15px; padding:0;" />
-            #elseif($entry.getGroup() == "monitor")
-                <input id="chk_$count" name="id" type="checkbox" value="$jobId" />
-            #end
-        </td>
+        #if($running)
+            ##<input id="stop_$count" name="id" type="button" value="x" title="Stop running job" class="btn" style="background-color:red; height:15px; width:15px; padding:0;" />
+        #elseif($entry.getGroup() == "monitor")
+            <td><div class="field-toggle field-toggle--check"><input id="chk_$count" name="id" type="checkbox" value="$jobId" />
+        #end
+        
         ## for non monitoring jobs
         #if ($entry.getGroup() != "monitor")
-            <td><a href="$action">$jobId</a></td>
+            <td><label class="field-toggle__label field-toggle__label--highlight"><a href="$action">$jobId</a><label></td>
             <td><a href="$action">DEFAULT</a></td>
             <td>
             #if($running)
@@ -86,7 +84,14 @@
             #end
             <td><a href="$action">$interval</a></td>
         #else
-            <td><a href="$action" title="$jobId">$!jobData.getString("component.monitor.general.title")</a></td>
+            <label class="field-toggle__label field-toggle__label--highlight" for="chk_$count">
+            <div class="field-toggle__icon field-toggle__icon-alt">
+	            <svg class="icon">
+	                <use xlink:href="#tick">
+	            </svg>
+	        </div>
+            <a href="$action" title="$jobId">$!jobData.getString("component.monitor.general.title")</a>
+            </label></div></td>
             <td><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
             <td>
             #if($running)
@@ -164,8 +169,11 @@
         #fillTable($filterMap false false)
         </table>
     </div>
-    #renderDBBrowserFooterButtons($buttons)
+    #renderDBBrowserFooterButtonsDisable($buttons true)
 </form>
+<script>
+ingrid_enableButtonByCheckbox('id', 'doDelete');
+</script>
 <span class="mq-hide-l">&nbsp;</span>
 <hr/>
 #set ($action = $renderResponse.createActionURL())
