@@ -148,7 +148,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                     IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
                     similarRoot = DisplayTreeFactory.getTreeFromQueryTerms(query);
                     session.setAttribute("similarRoot", similarRoot);
-                    if (similarRoot.getChildren().size() == 1) {
+                    if (similarRoot.getChildren().size() > 0) {
                         openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId(), request
                                 .getLocale());
                     }
