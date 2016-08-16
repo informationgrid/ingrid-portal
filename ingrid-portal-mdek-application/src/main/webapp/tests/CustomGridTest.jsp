@@ -53,7 +53,7 @@
                 layoutCreator.createSelectBox("filterSelect", null, selectBoxProps, addSelectBoxData);
 
                 // filter table content on change of relation type filter
-                on(registry.byId("filterSelect"), "onChange", function(filterKey) {
+                on(registry.byId("filterSelect"), "change", function(filterKey) {
                     console.debug("filterTable id: " + filterKey);
                     if (filterKey == "0") {
                         UtilGrid.getTable("grid").setRowFilter(null);

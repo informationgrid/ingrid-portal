@@ -2670,7 +2670,7 @@ define([
         },
 
         setupColumnSort: function() {
-            on(this.headers, "onclick", this, function(e) {
+            on(this.headers, "click", this, function(e) {
                 if (domClass.contains(e.target, "slick-resizable-handle")) {
                     return;
                 }

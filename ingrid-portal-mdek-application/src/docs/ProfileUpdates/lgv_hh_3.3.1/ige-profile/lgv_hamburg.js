@@ -189,7 +189,6 @@ if ( contentLabel && contentLabel.size() > 0) {
 // ========================================================================================================================
 // Wenn "OpenData" gesetzt, dann neues Keyword "#opendata_hh#" und Felder ein-/ausblenden ... (REDMINE-117)
 // TODO:
-//   - nachfolgendes Javascript (JS) hinzufügen z.B. in Feld "Allgemeines - Open Data"
 //   - nachfolgendes IDF-Mapping hinzufügen (z.B. in neuem Zusätzlichem Feld, das immer versteckt wird !)
 // ========================================================================================================================
 
