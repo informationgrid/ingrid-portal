@@ -383,7 +383,7 @@ INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 (SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-about')),
 'titleTag', 0),
 ((SELECT max_key+7 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-(SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-sitemap')),
+(SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::InfoPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-sitemap')),
 'titleTag', 0);
 
 INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES

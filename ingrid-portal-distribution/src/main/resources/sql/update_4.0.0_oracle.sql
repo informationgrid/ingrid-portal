@@ -413,15 +413,18 @@ INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 ((SELECT max_key+4 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
 (SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::InfoPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-sitemap')),
-'sectionStyle', 0),
+'sectionStyle', 0);
+INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 ((SELECT max_key+5 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
 (SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'disclaimer')),
-'titleTag', 0),
+'titleTag', 0);
+INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 ((SELECT max_key+6 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
 (SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main-about')),
-'titleTag', 0),
+'titleTag', 0);
+INSERT INTO fragment_pref (PREF_ID, FRAGMENT_ID, NAME, IS_READ_ONLY) VALUES
 ((SELECT max_key+7 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-(SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-sitemap')),
+(SELECT fragment_id  FROM fragment WHERE name= 'ingrid-portal-apps::InfoPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'service-sitemap')),
 'titleTag', 0);
 
 INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
@@ -439,13 +442,16 @@ INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VAL
 INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+4 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+4 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-0, 'block'||chr(45)||'-padded'),
+0, 'block'||chr(45)||'-padded');
+INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+5 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+5 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-0, 'h1'),
+0, 'h1');
+INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+6 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+6 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
-0, 'h1'),
+0, 'h1');
+INSERT INTO fragment_pref_value (PREF_VALUE_ID, PREF_ID, VALUE_ORDER, VALUE) VALUES
 ((SELECT max_key+7 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'),
 (SELECT max_key+7 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'),
 0, 'h1');
