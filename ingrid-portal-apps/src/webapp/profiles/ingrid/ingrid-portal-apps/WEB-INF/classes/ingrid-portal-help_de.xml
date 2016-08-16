@@ -26,6 +26,9 @@
                         <a href="?hkey=about-1">Über InGrid</a>
                     </li>
                     <li>
+                        <a href="?hkey=search-category-1">Kategorien</a>
+                    </li>
+                    <li>
                         <a href="?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     <li>
@@ -120,7 +123,7 @@
                     </li>
                     </ul>
             </content>
-        </section>                    
+        </section>
     </chapter>
     <chapter>
         <header>Experteneingabe</header>
@@ -299,8 +302,8 @@
                     gezielt einzeln durchsuchen. Dazu wird die Syntax
                     ‚Feldname:Wert’ verwandt.</p>
                 <p>Die Feldnamen beziehen sich direkt auf die im Suchindex abgelegten Felder und sind somit
-                	abhängig von der Indexierung einzelner Datenquellen (iPlugs).
-                	Allen iPlugs ist die Angabe eines Datentyps eigen, der die Art der Inhalte beschreibt und im Feld 'Datatype' abgelegt ist.</p>
+                    abhängig von der Indexierung einzelner Datenquellen (iPlugs).
+                    Allen iPlugs ist die Angabe eines Datentyps eigen, der die Art der Inhalte beschreibt und im Feld 'Datatype' abgelegt ist.</p>
                 <p>Beispiel: ‚datatype:www’ (Es wird nach
                     Webseiten gesucht, die aus dem Internet dem Suchindex hinzugefügt wurden.)</p>
                 <p>Folgende Werte stehen für das Feld 'datatype' zur Verfügung:</p>
@@ -654,7 +657,7 @@
                     eingegebene Suchausdruck analysiert und in Form von Alternativ-Begriffen zur
                     Verfügung gestellt.</p>
                 <p>Bei Klick auf <b>Ähnliche Begriffe</b> bekommen Sie die Begriffe
-                	Ihrer Suchanfrage dargestellt. Wenn Sie auf das Pluszeichen klicken,
+                    Ihrer Suchanfrage dargestellt. Wenn Sie auf das Pluszeichen klicken,
                     erhalten Sie zu jedem eingegebenen Suchbegriff die ähnlichen
                     Begriffe angeboten. Durch das Ankreuzen der einzelnen Begriffe
                     und Klick auf den Button <b>Zur Suchanfrage
@@ -703,7 +706,7 @@
                    In den Suchkategorien finden sich die Unterkategorien Strahlung, Luft und Klima oder Wasser zur Recherche.</p>
                 <p>Verschiedene Web-Seiten können beim Indexieren diesen Kategorien zugeordnet werden.</p>
             </content>
-        </section>        
+        </section>
     </chapter>
     <chapter>
         <header>Chronik</header>
@@ -761,7 +764,7 @@
             <header>Koordinatenanzeige</header>
             <content>
                 <p>Die Koordinaten des Cursors im gewählten Koordinatensystem werden direkt unter der Hauptkarte angezeigt.</p>
-				<p>Mittels rechtem Mausklick auf einen Punkt in der Karte werden weitere Information in einem Zusatzfenster angezeigt.</p>
+                <p>Mittels rechtem Mausklick auf einen Punkt in der Karte werden weitere Information in einem Zusatzfenster angezeigt.</p>
             </content>
         </section>
         <section help-key="maps-3">
@@ -790,7 +793,7 @@
                 <header>Zentrieren auf Koordinaten</header>
                 <content>
                     <p>Um die Karte auf einen Punkt zu zentrieren, müssen lediglich die Koordinaten des Punktes in das Suchfeld im oberen Teil der Karte eingegeben und Return gedrückt werden.</p>
-					<p>Im Defaultkoordinatensystem z.B. ""6468101.33 963106.56"</p>
+                    <p>Im Defaultkoordinatensystem z.B. ""6468101.33 963106.56"</p>
                 </content>
             </section>
             <section help-key="maps-3-5">
@@ -798,7 +801,7 @@
                 <content>
                     <p>Das Suchfeld im oberen Teil der Karte ermöglicht den sofortigen Zugriff auf Städte- und Ortsnamen, Postleitzahlen, 
                        Geographische Bezeichnungen oder Gewässer oder Straßen.</p>
-					<p>Einfach den Namen eingeben und aus der Auswahlliste auswählen, um die Karte entsprechend zu zentrieren.</p>
+                    <p>Einfach den Namen eingeben und aus der Auswahlliste auswählen, um die Karte entsprechend zu zentrieren.</p>
                 </content>
             </section>
             <section help-key="maps-3-6">
@@ -811,13 +814,13 @@
             <section help-key="maps-3-7">
                 <header>Geolokalisierung</header>
                 <content>
-                	<p>Die Schaltfläche mit dem Punkt rechts oben in der Karte erlaubt es, Ihre Position mittels GPS zu bestimmen.
-                    	Mit einem ersten Klick, wird diese rot angezeigt und Ihre Position erscheint als roter Punkt auf der Karte.</p>
-					<p>Der Pfeil oberhalb des roten Punktes zeigt die Richtung an, in welche Sie schauen.
-						Wenn Sie Ihr Gerät bewegen, dreht sich der Pfeil.</p>
-					<p>Klicken Sie erneut auf die Schaltfläche "Geolokalisierung" wird die Karte entsprechend der Richtung des Gerätes orientiert.
-						Nordrichtung wird durch das Symbol in der oberen rechten Bildschirmecke angezeigt.
-						Um den "Geolokalisierung" Modus zu verlassen klicken Sie erneut auf die Schaltfläche.</p>
+                    <p>Die Schaltfläche mit dem Punkt rechts oben in der Karte erlaubt es, Ihre Position mittels GPS zu bestimmen.
+                        Mit einem ersten Klick, wird diese rot angezeigt und Ihre Position erscheint als roter Punkt auf der Karte.</p>
+                    <p>Der Pfeil oberhalb des roten Punktes zeigt die Richtung an, in welche Sie schauen.
+                        Wenn Sie Ihr Gerät bewegen, dreht sich der Pfeil.</p>
+                    <p>Klicken Sie erneut auf die Schaltfläche "Geolokalisierung" wird die Karte entsprechend der Richtung des Gerätes orientiert.
+                        Nordrichtung wird durch das Symbol in der oberen rechten Bildschirmecke angezeigt.
+                        Um den "Geolokalisierung" Modus zu verlassen klicken Sie erneut auf die Schaltfläche.</p>
                 </content>
             </section>
         </section>
@@ -829,15 +832,15 @@
                 <header>Suche nach Karten (Volltextsuche)</header>
                 <content>
                     <p>Mit der "Suche" im oberen Teil der Karte können Sie Suchbegriffe eingeben (z.B. "Moor", "Strasse", "Erdbeben" usw.) und nach Beschreibungen aller eingebundenen elektronischen Geodaten suchen.
-                    	Wenn Sie ein Resultat auswählen, wird es direkt im Kartenviewer dargestellt.</p>
+                        Wenn Sie ein Resultat auswählen, wird es direkt im Kartenviewer dargestellt.</p>
                 </content>
             </section>
             <section help-key="maps-4-2">
                 <header>Suche nach Karten (Verzeichnisstruktur)</header>
                 <content>
                     <p>Unter "Rubrik wechseln" können Sie zwischen Gliederung nach "Themen" oder "Anbietern" der eingebundenen Geodaten wählen.
-                    	Wenn Sie Karten auswählen, werden sie im Kartenviewer angezeigt und wandern in die Sektion "Dargestellte Karten".
-                    	Im Auswahlbereich ("Themen" oder "Anbieter") wird die ausgewählte Karte dann rot hervorgehoben, um zu zeigen, dass die Karte bereits dargestellt wird.</p>
+                        Wenn Sie Karten auswählen, werden sie im Kartenviewer angezeigt und wandern in die Sektion "Dargestellte Karten".
+                        Im Auswahlbereich ("Themen" oder "Anbieter") wird die ausgewählte Karte dann rot hervorgehoben, um zu zeigen, dass die Karte bereits dargestellt wird.</p>
                 </content>
             </section>
             <section help-key="maps-4-3">
@@ -850,14 +853,14 @@
                 <header>Ändern der Transparenz einer Karte</header>
                 <content>
                     <p>Klicken Sie auf das Zahnrad Symbol der Karte im Bereich "Dargestellte Karten".
-                    	Die Transparenz der ausgewählten Karte kann durch das verschieben des horizontalen Reglers individuell angepasst werden.</p>
+                        Die Transparenz der ausgewählten Karte kann durch das verschieben des horizontalen Reglers individuell angepasst werden.</p>
                 </content>
             </section>
             <section help-key="maps-4-5">
                 <header>Ändern der Reihenfolge der Karten</header>
                 <content>
                     <p>Klicken Sie auf das Zahnrad Symbol der Karte im Bereich "Dargestellte Karten".
-                    	Die Position der ausgewählten Karte kann durch Klicken auf die Pfeile verändert werden.</p>
+                        Die Position der ausgewählten Karte kann durch Klicken auf die Pfeile verändert werden.</p>
                 </content>
             </section>
             <section help-key="maps-4-6">
@@ -870,15 +873,15 @@
                 <header>Anzeigen von Legende und Zusatzinformationen</header>
                 <content>
                     <p>Klicken Sie auf das Informations-Symbol der Karte im Bereich "Dargestellte Karten".
-                    	Es wird die Legende und weitere Informationen zur Karte in einem eigenen Fenster angezeigt.</p>
+                        Es wird die Legende und weitere Informationen zur Karte in einem eigenen Fenster angezeigt.</p>
                 </content>
             </section>
             <section help-key="maps-4-8">
                 <header>Detailinformationen von Kartenelement</header>
                 <content>
                     <p>Sofern vorhanden, können bei Vektordatensätze (Punkt, Linien, Polygon) die Attribute der einzelnen Kartenelemente durch einen einfachen Mausklick abgerufen werden.
-                    	Die Informationen werden in  einem eigenen Fenster "Objekt-Information" angezeigt.
-                    	Bei mehreren übereinanderligenden Karten werden alle unter der Maus liegenden Kartenelemente im Fenster angezeigt.</p>
+                        Die Informationen werden in  einem eigenen Fenster "Objekt-Information" angezeigt.
+                        Bei mehreren übereinanderligenden Karten werden alle unter der Maus liegenden Kartenelemente im Fenster angezeigt.</p>
                 </content>
             </section>
             <section help-key="maps-4-9">
@@ -892,11 +895,11 @@
                 <header>Drucken</header>
                 <content>
                     <p>Die Kartenansicht und die für deren Verständnis nötigen Elemente (Massstab etc.) kann als pdf-Datei ausgegeben werden.
-                    	Diese Datei kann dann gespeichert oder ausgedruckt werden.</p>
+                        Diese Datei kann dann gespeichert oder ausgedruckt werden.</p>
                     <p>Die Funktion "Drucken" lässt ein Dialogfenster erscheinen, wo die Parameter für die Erzeugung der pdf-Datei gewählt werden können.
-                    	Diese Parameter sind der Kartenmasstab und A4/A3 Orientierung.
-                    	Der Druckbereich der Karte wird hervorgehoben und kann mit der Maus verschoben werden.
-                    	Die Legende kann über Aktivierung der Checkbox mit ausgegeben werden.</p>
+                        Diese Parameter sind der Kartenmasstab und A4/A3 Orientierung.
+                        Der Druckbereich der Karte wird hervorgehoben und kann mit der Maus verschoben werden.
+                        Die Legende kann über Aktivierung der Checkbox mit ausgegeben werden.</p>
                 </content>
             </section>
         </section>
@@ -909,8 +912,8 @@
                 <content>
                     <p>Über die Funktion "Link teilen" im Bereich "Teilen" kann die aktuelle Darstellung (Karten, Ort, Zoomstufe) als Link (URL) kopiert, abgespeichert und als e-mail oder andere Soziale Medien weiterversendet werden.</p>
                     <p>Unter "Einbetten" wird der HTML code für die Integration in ihre Website als iFrame automatisch generiert.
-                    	Die "Vorschau" zeigt Ihnen die Darstellung, hier kann auch die Grösse des Kartenfensters angepasst werden.
-                    	Es genügt, den generierten Code in den Source Code ihrer Website zu kopieren.</p>
+                        Die "Vorschau" zeigt Ihnen die Darstellung, hier kann auch die Grösse des Kartenfensters angepasst werden.
+                        Es genügt, den generierten Code in den Source Code ihrer Website zu kopieren.</p>
                 </content>
             </section>
         </section>
@@ -922,57 +925,57 @@
                 <header>Hinzufügen eines Symbols</header>
                 <content>
                     <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Symbol" aus.
-                    	Ein Mausklick auf die gewünschte Position in der Karte setzt das Symbol an den gewünschten Ort.</p>
+                        Ein Mausklick auf die gewünschte Position in der Karte setzt das Symbol an den gewünschten Ort.</p>
                     <p>Einmal platziert kann das Symbol geändert werden (Größe und Symbol-Typ) und eine Beschreibung im Fenster unten links hinzugefügt werden (HTML oder Text).
-                    	Diese Beschreibung wird für die Nutzer der Zeichnung per Klick auf das Symbol sichtbar gemacht.</p>
+                        Diese Beschreibung wird für die Nutzer der Zeichnung per Klick auf das Symbol sichtbar gemacht.</p>
                     <p>Sie können jedes Element durch Mausklick ändern.
-                    	Gelöscht wird über die Option „Mehr“.
-                    	Sie können mehrere Symbole löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                        Gelöscht wird über die Option „Mehr“.
+                        Sie können mehrere Symbole löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
                 </content>
             </section>
             <section help-key="maps-6-2">
                 <header>Hinzufügen von Text</header>
                 <content>
                     <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Text" aus.
-                    	Ein Mausklick auf die gewünschte Position in der Karte setzt den Text an den gewünschten Ort.</p>
+                        Ein Mausklick auf die gewünschte Position in der Karte setzt den Text an den gewünschten Ort.</p>
                     <p>Einmal platziert, können Text und Farbe via Fenster unten links geändert werden.</p>
                     <p>Sie können jedes Element durch Mausklick ändern.
-                    	Gelöscht wird über die Option „Mehr“.
-                    	Sie können mehrere Texte löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                        Gelöscht wird über die Option „Mehr“.
+                        Sie können mehrere Texte löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
                 </content>
             </section>
             <section help-key="maps-6-3">
                 <header>Hinzufügen einer Linie / Polygon</header>
                 <content>
                     <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Linie" aus.
-                    	Um zu beginnen mit der linken Maustaste einmal klicken, um einen Richtungswechsel der Linie vorzunehmen wieder klicken.
-                    	Mit einem Doppelklick kann die Linienzeichnung beendet werden.
-                    	Liegt der Endpunkt auf dem Anfangspunkt so zeichnen Sie ein Polygon.</p>
+                        Um zu beginnen mit der linken Maustaste einmal klicken, um einen Richtungswechsel der Linie vorzunehmen wieder klicken.
+                        Mit einem Doppelklick kann die Linienzeichnung beendet werden.
+                        Liegt der Endpunkt auf dem Anfangspunkt so zeichnen Sie ein Polygon.</p>
                     <p>Neue Punkte können zur Linie/Fläche hinzugefügt werden:
-                    	Klicken Sie auf ein Segment, positionieren Sie den neuen Punkt mit Mausklick und verschieben Sie ihn.</p>
+                        Klicken Sie auf ein Segment, positionieren Sie den neuen Punkt mit Mausklick und verschieben Sie ihn.</p>
                     <p>Das untere linke Fenster ermöglicht:
-                		<ul>
-                    		<li>- Linie/Fläche: Farbe Linie/Polygon ändern und eine Beschreibung (Text oder HTML) hinzuzufügen.
-                    				Diese Beschreibung wird für die Nutzer der Zeichnung per Klick auf die Linie/Fläche sichtbar gemacht.</li>
-                    		<li>- Distanz /Fläche : Angaben zu Distanz, Fläche, Azimut</li>
-                    	</ul>
+                        <ul>
+                            <li>- Linie/Fläche: Farbe Linie/Polygon ändern und eine Beschreibung (Text oder HTML) hinzuzufügen.
+                                    Diese Beschreibung wird für die Nutzer der Zeichnung per Klick auf die Linie/Fläche sichtbar gemacht.</li>
+                            <li>- Distanz /Fläche : Angaben zu Distanz, Fläche, Azimut</li>
+                        </ul>
                     </p>
                     <p>Sie können jedes Element durch Mausklick ändern.
-                    	Durch Klick auf einen Punkt löschen Sie diesen.
-                    	Löschen der gesamten Linie/Fläche wird über die Option „Mehr“ gehandhabt.
-                    	Sie können mehrere Linien/Flächen löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                        Durch Klick auf einen Punkt löschen Sie diesen.
+                        Löschen der gesamten Linie/Fläche wird über die Option „Mehr“ gehandhabt.
+                        Sie können mehrere Linien/Flächen löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
                 </content>
             </section>
             <section help-key="maps-6-4">
                 <header>Messen</header>
                 <content>
                     <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Messen" aus.
-                    	Ein erster Mausklick in die Karte definiert den Ausgangspunkt der Messung, weiter Klicks fügen Segmente hinzu oder definieren eine Fläche.
-                    	Ein Doppelklick beendet die Messung oder klicken Sie auf den Ausgangspunkt, um die Fläche zu schließen.</p>
+                        Ein erster Mausklick in die Karte definiert den Ausgangspunkt der Messung, weiter Klicks fügen Segmente hinzu oder definieren eine Fläche.
+                        Ein Doppelklick beendet die Messung oder klicken Sie auf den Ausgangspunkt, um die Fläche zu schließen.</p>
                     <p>Die Messergebnisse Distanz /Fläche werden automatisch angezeigt.</p>
                     <p>Sie können jedes Element durch Mausklick ändern.
-                    	Gelöscht wird über die Option „Mehr“.
-                    	Sie können mehrere Elemente löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                        Gelöscht wird über die Option „Mehr“.
+                        Sie können mehrere Elemente löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
                 </content>
             </section>
             <section help-key="maps-6-5">
@@ -980,8 +983,8 @@
                 <content>
                     <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" können die Zeichnungen (Symbole, Texte, Linien) geteilt werden.</p>
                     <p>Unter "Link um ihre Zeichnung zu teilen" wird eine URL zur Verfügung gestellt, die Sie mit weiteren Nutzern teilen können.
-                    	Unter dieser URL können Sie später die Zeichnung auch weiter editieren.
-                    	Sie sollten diesen Link abspeichern für den Fall, dass sie später die Zeichnung ändern/löschen wollen.</p>
+                        Unter dieser URL können Sie später die Zeichnung auch weiter editieren.
+                        Sie sollten diesen Link abspeichern für den Fall, dass sie später die Zeichnung ändern/löschen wollen.</p>
                     <p>Unter "Mehr ..." können Sie Ihre Zeichnung auch als KML Datensatz herunter laden.</p>
                 </content>
             </section>
@@ -996,7 +999,7 @@
                     <p>Es können nur WMS Dienste dargestellt werden, die das Projektionsystem unterstützen und dem WMS OGC Standard entsprechen.</p>
                     <p>Die WMS Datensätze sind meistens erst ab einem bestimmtem Massstab sichtbar, deswegen muss in den entsprechenden Kartenausschnitt zentriert und ein entsprechender Massstab ausgewählt werden.</p>
                     <p>Die Geschwindigkeit der Darstellung des WMS Datensatzes, ebenso wie dessen Verfügbarkeit ist von der Infrastruktur des zuständigen Betreibers abhängig.
-                    	Bitte beachten sie auch Datennutzungsbedingungen der einzelnen WMS Anbieter.</p>
+                        Bitte beachten sie auch Datennutzungsbedingungen der einzelnen WMS Anbieter.</p>
                     <p>Die WMS Datensätze können über die Druckfunktionen als PDF gespeichert werden.</p>
                     <p>Aktivierung des Dialogs duch Klick auf "WMS Import".</p>
                 </content>
@@ -1005,7 +1008,7 @@
                 <header>KML Import</header>
                 <content>
                     <p>Es können online oder lokal (Ausnahme: bei der Nutzung von InternetExplorer) gespeicherte KML files dargestellt werden.
-                    	Es können nur KML Dateien fehlerfrei dargestellt werden, die dem KML OGC Standard entsprechen.</p>
+                        Es können nur KML Dateien fehlerfrei dargestellt werden, die dem KML OGC Standard entsprechen.</p>
                     <p>Die geladene KML Datei wird unter "Dargestellte Karten" angezeigt und kann dort normal bearbeitet werden.</p>
                     <p>Aktivierung des Dialogs duch Klick auf "KML Import".</p>
                 </content>
@@ -1014,14 +1017,23 @@
                 <header>Vergleichen</header>
                 <content>
                     <p>Es ist möglich eine Karte dynamisch ein-/auszublenden und so mit den restlichen Karten zu verglichen.
-                    	Wählt man unter Werkzeuge „Vergleichen“ dann erscheint eine rote Linie mit einem Cursor in der Mitte der Karte, der beliebig verschoben werden kann.</p>
+                        Wählt man unter Werkzeuge „Vergleichen“ dann erscheint eine rote Linie mit einem Cursor in der Mitte der Karte, der beliebig verschoben werden kann.</p>
                     <p>Die erste selektierte Karte (von oben) kann nun mit Hilfe der roten Linie ein-/ausgeblendet werden.
-                    	Mit Festhalten der linken Maustaste kann die rote Linie beliebig nach rechts oder links verschoben werden und die Karte "weggewischt" werden.</p>
+                        Mit Festhalten der linken Maustaste kann die rote Linie beliebig nach rechts oder links verschoben werden und die Karte "weggewischt" werden.</p>
                 </content>
             </section>
         </section>
     </chapter>
-	<chapter>
+    <chapter>
+        <header>Kategorien</header>
+        <section help-key="search-category-1">
+            <header>Durchstöbern Sie das Portal nach Kategorien</header>
+            <content>
+                <p>Durch die Auswahl einer Kategorie, werden Ihnen alle vorhandenen Treffer der ausgewählten Kategorie im Portal angezeigt.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
         <header>Aktuelles</header>
         <section help-key="rss-news-1">
             <header>Aktuelles</header>

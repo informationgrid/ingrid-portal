@@ -455,15 +455,11 @@
                     <td>database  </td>  
                     <td> Es wird nach Metadaten der Klasse 'Datensammlung/Datenbank' gesucht</td>
                     </tr>
-                    
-                    
+
                     <tr>
                     <td>service </td>  
                     <td> Es wird nach Metadaten der Klasse 'Dienst/Anwendung/Informationssystem' gesucht</td>
                     </tr>
-                   
-                
-                    
                 </table>
                 <br></br>
             </content>
@@ -549,8 +545,6 @@
                eingegeben werden. </p>
             </content>
         </section>
-<!--                    
--->
     </chapter>
     <chapter>
         <header>Suchergebnisliste</header>
@@ -1001,6 +995,15 @@
                         Mit Festhalten der linken Maustaste kann die rote Linie beliebig nach rechts oder links verschoben werden und die Karte "weggewischt" werden.</p>
                 </content>
             </section>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Kategorien</header>
+        <section help-key="search-category-1">
+            <header>Durchstöbern Sie das Portal nach Kategorien</header>
+            <content>
+                <p>Durch die Auswahl einer Kategorie, werden Ihnen alle vorhandenen Treffer der ausgewählten Kategorie im Portal angezeigt.</p>
+            </content>
         </section>
     </chapter>
     <chapter>
