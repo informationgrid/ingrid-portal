@@ -1,9 +1,9 @@
 <h3>$MESSAGES.getString('news.archive.header')</h3>
 #foreach($rssEntry in $rssEntries)
 <hr>
-<div class="resultset">
+<div class="search-result">
     <h4 class="bx-bot-0">
-        <i class="icon bx-top-s icon-rss-2"></i>
+        <i class="icon icon-rss-2"></i>
         <a href="$!rssEntry.link">$!rssEntry.title</a>
         <small><span class="tx-darker"><strong>$date.format('d.M.yyyy H:mm',$rssEntry.publishedDate)</strong></span></small>
     </h4>

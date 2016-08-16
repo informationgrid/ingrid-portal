@@ -111,8 +111,39 @@
                 #if($parentFacetParam)
                     #set($facetParam = "$parentFacetParam:$pf;$pf:$facet.getId();")
                 #end
+                #if($count == 1)
+                    ## Add RSS category
+                    <div class="mq-hide-l" style="padding: 0 0 20px 0;">
+                        <a class="tag" href="$renderResponse.encodeURL('/portal/rss-news.psml')" style="padding:10px 0;">
+                            <span class="mq-hide-l">
+                                <i class="icon bx-top-s icon-rss-2" style="display: block;font-size: 60px;margin: auto;"></i>
+                            </span>
+                            <span class="mq-show-l">
+                                <i class="icon bx-top-s icon-rss-2" style="display: block;font-size: 60px;margin: auto;"></i>
+                            </span>
+                            <div class="tx-center">
+                                Aktuelles
+                            </div>
+                            <div class="tx-center">&nbsp;</div>
+                        </a>
+                    </div>
+                    <div class="mq-show-l">
+                        <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/rss-news.psml')">
+                            <span class="mq-hide-l">
+                                <i class="icon bx-top-s icon-rss-2" style=""></i>
+                            </span>
+                            <span class="mq-show-l">
+                                <i class="icon bx-top-s icon-rss-2" style=""></i>
+                            </span>
+                            <strong>
+                                Aktuelles
+                            </strong>
+                            &nbsp;
+                        </a>
+                    </div>
+                #end
                 <div class="mq-hide-l" style="padding: 0 0 20px 0;">
-                    <a class="tag" href="/freitextsuche?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
+                    <a class="tag" href="$renderResponse.encodeURL('/portal/main-search.psml')?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
                         #getIcon($facet)
                         <div class="tx-center">
                             #if($facet.getCodelistId())
@@ -127,7 +158,7 @@
                     </a>
                 </div>
                 <div class="mq-show-l">
-                    <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="/freitextsuche?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
+                    <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/main-search.psml')?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
                         #getIcon($facet)
                         <strong>
                             #if($facet.getCodelistId())
@@ -160,13 +191,13 @@
     #if($facet.getIcon())
         #set($icon = $facet.getIcon())
         #if($icon.startsWith("#"))
-            <svg class="icon bx-top-s" style="$facetStyle"><use xlink:href="$icon" /></svg>
+            <svg class="icon bx-top-s" style="#if($facetStyle)$facetStyle#end"><use xlink:href="$icon" /></svg>
         #elseif($icon.startsWith("/"))
             <img style="margin: auto;" class="bx-top-s" src="$icon"></img>
         #else
-            <i class="icon bx-top-s $icon" style="$facetStyle"></i>
+            <i class="icon bx-top-s $icon" style="#if($facetStyle)$facetStyle#end"></i>
         #end
     #else
-       <i class="icon bx-top-s icon-question-mark" style="$facetStyle"></i>
+       <i class="icon bx-top-s icon-question-mark" style="#if($facetStyle)$facetStyle#end"></i>
     #end
 #end

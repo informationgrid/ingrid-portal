@@ -6,7 +6,7 @@ Organisation, Firma: $!{map.get("user.employer")}
 Telefon: $!{map.get("user.business-info.telecom.telephone")}
 Email: $!{map.get("user.business-info.online.email")}
 Tätigkeitsbereich: $!{map.get("user.area.of.profession")}
-Mein Interesse an Informationen ist: $!{map.get("user.interest.in.enviroment.info")}
+Mein Interesse an Umweltinformationen ist: $!{map.get("user.interest.in.enviroment.info")}
 InGrid-Portal Newsletter: $!{map.get("user.subscribed.to.newsletter")}
 
 Nachricht:

@@ -31,7 +31,7 @@
                                 #set ($action = $renderResponse.createActionURL())
                                 $action.setParameter("doFilter", "")
                                 $action.setParameter("filterCriteriaProviderIdent", "")
-                                $action.setParameter("filterCriteriaProviderIdent", "")
+                                $action.setParameter("filterCriteriaProviderName", "")
                                 #renderHrefAction($action $MESSAGES.getString("component.forms.text.filter.clear") "btn btn--secondary btn--small" "width:100%")
                             #end
                             <p>
