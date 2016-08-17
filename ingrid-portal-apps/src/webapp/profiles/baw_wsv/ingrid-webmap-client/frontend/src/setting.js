@@ -1,3 +1,4 @@
+// Default
 var settingDefaultTopicId = 'favoriten';
 var settingExtent = '[6.8, 51.1, 11.2, 54]';
 var settingEpsgExtent = '[6.8, 51.1, 11.2, 54]';
@@ -10,6 +11,7 @@ var settingSearchBwaLocatorGeoUrl = 'https://atlas.wsv.bund.de/bwastr-locator/re
 var settingSearchBwaLocatorStationUrl = 'https://atlas.wsv.bund.de/bwastr-locator/rest/stationierung/query';
 var settingCopyrightURL = undefined;
 var settingSitemapURL = undefined;
+var settingUseGeodesic = true;
 // KML
 var settingKMLName = 'ITZBund';
 // WMS Import

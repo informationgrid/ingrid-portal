@@ -11,6 +11,7 @@ var settingSearchBwaLocatorGeoUrl = 'https://atlas.wsv.bund.de/bwastr-locator/re
 var settingSearchBwaLocatorStationUrl = 'https://atlas.wsv.bund.de/bwastr-locator/rest/stationierung/query';
 var settingCopyrightURL = undefined;
 var settingSitemapURL = undefined;
+var settingUseGeodesic = true;
 // KML
 var settingKMLName = 'INGRID';
 // WMS Import
