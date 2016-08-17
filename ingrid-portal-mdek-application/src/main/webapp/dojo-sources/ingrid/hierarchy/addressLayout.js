@@ -247,6 +247,9 @@ define([
             
             //DELETED TextArea: "addressNotes" (INGRID33-10)
             new SimpleTextarea({"class": "textAreaFull"}, "addressTasks");
+            
+            new ValidationTextBox({style: "width:100%;"}, "addressHoursOfService");
+            
         },
         
         createAddressThesaurus: function(){

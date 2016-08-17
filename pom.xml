@@ -26,7 +26,7 @@
 
   <properties>
     <org.apache.portals.jetspeed.version>2.3.0</org.apache.portals.jetspeed.version>
-    <mdek.version>3.6.2.1</mdek.version>
+    <mdek.version>3.6.3-SNAPSHOT</mdek.version>
     <webmap-client.version>4.0.0-SNAPSHOT</webmap-client.version>
   </properties>
 

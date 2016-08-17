@@ -74,6 +74,7 @@ public class MdekAddressBean {
 	private String poboxPostalCode;
 	private String pobox;
 	private String task;
+	private String hoursOfService;
 
 	private Integer typeOfRelation;
 	private String nameOfRelation;
@@ -496,5 +497,13 @@ public class MdekAddressBean {
 
     public void setExtraInfoPublishArea(Integer extraInfoPublishArea) {
         this.extraInfoPublishArea = extraInfoPublishArea;
+    }
+
+    public String getHoursOfService() {
+        return hoursOfService;
+    }
+
+    public void setHoursOfService(String hoursOfService) {
+        this.hoursOfService = hoursOfService;
     }
 }

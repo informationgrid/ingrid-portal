@@ -1618,6 +1618,7 @@ define([
             registry.byId("addressZipPOBox").attr("value", nodeData.poboxPostalCode, true);
             //DELETED: "addressNotes" (INGRID33-10)
             registry.byId("addressTasks").attr("value", nodeData.task, true);
+            registry.byId("addressHoursOfService").attr("value", nodeData.hoursOfService, true);
             UtilStore.updateWriteStore("addressCom", nodeData.communication, false);
 
             // -- Thesaurus --
@@ -2202,6 +2203,7 @@ define([
             nodeData.poboxPostalCode = registry.byId("addressZipPOBox").get("value");
             //DELETED: "addressNotes" (INGRID33-10)
             nodeData.task = registry.byId("addressTasks").get("value");
+            nodeData.hoursOfService = registry.byId("addressHoursOfService").get("value");
             nodeData.communication = this._getTableData("addressCom");
 
             // replace syslist entries with name and leave it if it's a free entry
