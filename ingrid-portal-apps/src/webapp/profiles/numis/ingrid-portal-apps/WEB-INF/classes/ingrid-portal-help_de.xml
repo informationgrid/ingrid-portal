@@ -137,7 +137,7 @@
     <chapter>
         <header>Experteneingabe</header>
         <section help-key="search-expert-1">
-            <header>Experteneingabe</header>
+            <header display="false">Experteneingabe</header>
             <content>
                 <p>Alle Einstellungen der Such-Oberfläche und  
                     spezielle Einstellungen darüber hinaus lassen sich auch
@@ -549,7 +549,7 @@
     <chapter>
         <header>Suchergebnisliste</header>
         <section help-key="search-results-1">
-            <header>Suchergebnisliste</header>
+            <header display="false">Suchergebnisliste</header>
             <content>
                 <p>Nach dem Absenden einer Suchanfrage erhalten Sie die
                     Ergebnisliste. Sie gliedert sich in die Hauptergebnisliste
@@ -625,7 +625,7 @@
     <chapter>
         <header>Kataloge</header>
         <section help-key="search-catalog-1">
-            <header>Kataloge</header>
+            <header display="false">Kataloge</header>
             <content>
                 <p>Die angeschlossenen Kataloge und deren Inhalte werden in 
                     einem Hierarchie-Baum dargestellt.
@@ -640,7 +640,7 @@
     <chapter>
         <header>Messwerte</header>
         <section help-key="search-measure-1">
-            <header>Messwerte</header>
+            <header display="false">Messwerte</header>
             <content>
                 <p>In der Karte werden alle Stationen aus einem gewählten Messnetz angezeigt. Die Messnetzauswahl findet sich unter dem Weltkugel-Symbol im Seitenmenübereich. Vorgehalten werden immer die Messwerte der letzten sechs Monate.</p>
             </content>
@@ -660,7 +660,7 @@
     <chapter>
         <header>Chronik</header>
         <section help-key="search-chronicle-1">
-            <header>Chronik</header>
+            <header display="false">Chronik</header>
             <content>
                 <p>Die <b>Chronik</b> ist eine Sammlung aktueller und
                     historischer Ereignisse, die unsere Umweltsituation
@@ -702,7 +702,7 @@
     <chapter>
         <header>Karten</header>
         <section help-key="maps-1">
-            <header>Karten</header>
+            <header display="false">Karten</header>
              <content>
                 <p>Die Kartenanwendung des NUMIS-Portals ist eine intuitive Anwendung für die Suche, Anzeige und Nutzung von Informationen geografischer Art. Sie ermöglicht die interaktive Darstellung von Karten und eingeblendeten Fachdaten mit Hilfe eines standardmässigen Web-Browsers.</p>
                 <p>Als Benutzer können Sie zahlreiche Parameter dieser Karte festlegen, zum Beispiel den dargestellten räumlichen Bereich und die Bildgrösse sowie den Typus der angezeigten Informationen oder den Kartenhintergrund.</p>
@@ -1009,7 +1009,7 @@
     <chapter>
         <header>Aktuelles</header>
         <section help-key="rss-news-1">
-            <header>Aktuelles</header>
+            <header display="false">Aktuelles</header>
             <content>
                 <p>Unter „Aktuelles“ werden aktuelle Meldungen zum Thema „Umwelt“ von Bundesbehörden und niedersächsischen Landesbehörden angezeigt. Die aktuellste Meldung steht dabei immer oben. Es wird jeweils nur der Titel und eine Kurzbeschreibung der Meldung dargestellt. Durch einen Klick auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
             </content>
@@ -1018,7 +1018,7 @@
     <chapter>
         <header>NUMIS informiert</header>
         <section help-key="ingrid-inform-1">
-            <header>NUMIS informiert</header>
+            <header display="false">NUMIS informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
                     <a href="/impressum">Betreiber von NUMIS</a> 
