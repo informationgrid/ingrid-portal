@@ -12,6 +12,7 @@ var settingSearchBwaLocatorStationUrl = 'https://atlas.wsv.bund.de/bwastr-locato
 var settingCopyrightURL = undefined;
 var settingSitemapURL = undefined;
 var settingUseGeodesic = true;
+var settingDefaultMousePositionIndex = 0;
 // KML
 var settingKMLName = 'ITZBund';
 // WMS Import

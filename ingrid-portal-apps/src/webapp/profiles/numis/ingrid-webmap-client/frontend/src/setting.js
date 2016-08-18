@@ -12,6 +12,7 @@ var settingSearchBwaLocatorStationUrl = undefined;
 var settingCopyrightURL = undefined;
 var settingSitemapURL = undefined;
 var settingUseGeodesic = true;
+var settingDefaultMousePositionIndex = 6;
 // KML
 var settingKMLName = 'NUMIS';
 // WMS Import
