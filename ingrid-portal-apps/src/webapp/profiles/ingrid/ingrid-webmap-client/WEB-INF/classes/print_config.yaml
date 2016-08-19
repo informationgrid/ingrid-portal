@@ -49,11 +49,25 @@ layouts:
       pageSize: A4
       rotation: true
 
+      items:
+
+#---------------------------------------
+# Title
+#---------------------------------------
+        - !columns
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${title}
+
 #---------------------------------------
 # Map
 #---------------------------------------
-      items:
         - !map
+          absoluteX: 22
+          absoluteY: 800
           width: 550
           height: 760
 
@@ -62,7 +76,7 @@ layouts:
 #---------------------------------------
         - !columns
           absoluteX: 20
-          absoluteY: 58
+          absoluteY: 38
           width: 123
           items:
               - !image
@@ -75,7 +89,7 @@ layouts:
 # North arrow
 #---------------------------------------
         - !columns
-          absoluteY: 820
+          absoluteY: 790
           absoluteX: 420
           width: 150
           items:
@@ -90,7 +104,7 @@ layouts:
 # QRCode
 #---------------------------------------
         - !columns
-          absoluteY: 125
+          absoluteY: 100
           absoluteX: 509
           width: 64
           items:
@@ -104,7 +118,7 @@ layouts:
 # Copyright
 #---------------------------------------
         - !columns
-          absoluteY: 85
+          absoluteY: 65
           absoluteX: 30
           width: 300
           items:
@@ -119,8 +133,8 @@ layouts:
 #---------------------------------------
         - !columns
           condition: thirdPartyDataOwner
-          absoluteY: 75
-          absoluteX: 25
+          absoluteY: 55
+          absoluteX: 30
           width: 300
           items:
             - !text
@@ -129,20 +143,6 @@ layouts:
               align: left
               text: |
                 ${thirdPartyDataOwner}
-
-#---------------------------------------
-# Description
-#---------------------------------------
-        - !columns
-          absoluteY: 58
-          absoluteX: 153
-          width: 405
-          items:
-            - !text
-              fontSize: 6
-              align: left
-              text: |
-                ${title}
 
 #---------------------------------------
 # Third party data warning
@@ -190,15 +190,35 @@ layouts:
                 Attenzione: questi dati provengono da terze parti. La loro disponibilità è soggetta al provider esterno. I termini e le condizioni dei rispettivi proprietari dei dati devono essere rispettate.
 
 #---------------------------------------
-# Disclaimer
+# Description
 #---------------------------------------
         - !columns
-          absoluteY: 46
-          absoluteX: 153
-          width: 405
+          absoluteX: 42
+          absoluteY: 780
+          width: 150
+          condition: comment
+          nbColumns: 1
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - backgroundColor: white
           items:
             - !text
-              fontSize: 6
+              condition: langde
+              fontSize: 10
+              align: left
+              text: |
+                Kommentar:
+            - !text
+              condition: langen
+              fontSize: 10
+              align: left
+              text: |
+                Comment:
+            - !text
+              fontSize: 10
               align: left
               text: |
                 ${comment}
@@ -207,7 +227,7 @@ layouts:
 # Timestamp
 #---------------------------------------
         - !columns
-          absoluteY: 81
+          absoluteY: 61
           absoluteX: 232
           width: 140
           nbColumns: 1
@@ -233,7 +253,7 @@ layouts:
 # Scalesbar
 #-------------------------------------
         - !columns
-          absoluteY: 107
+          absoluteY: 87
           absoluteX: 378
           width: 128
           config:
@@ -244,7 +264,7 @@ layouts:
                 text: ' '
                 backgroundColor: white
         - !columns
-          absoluteY: 102
+          absoluteY: 82
           absoluteX: 381
           width: 124
           nbColumns: 1
@@ -301,11 +321,26 @@ layouts:
       items:
 
 ##---------------------------------------
-## Legend
+## Legend title
 ##---------------------------------------
         - !columns
           absoluteX: 22
           absoluteY: 820
+          width: 551
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
+##---------------------------------------
+## Legend
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 800
           width: 551
           condition: "enableLegends"
           items:
@@ -333,20 +368,34 @@ layouts:
       rotation: true
       pageSize: A4
       landscape: true
+      items:
+
+#---------------------------------------
+# Title
+#---------------------------------------
+        - !columns
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${title}
+
 #---------------------------------------
 # Map
 #---------------------------------------
-      items:
         - !map
+          absoluteX: 22
+          absoluteY: 555
           width: 802
-          height: 530
+          height: 520
 
 #---------------------------------------
 # Logo
 #---------------------------------------
         - !columns
           absoluteX: 20
-          absoluteY: 45
+          absoluteY: 35
           width: 123
           items:
               - !image
@@ -359,7 +408,7 @@ layouts:
 # North arrow
 #---------------------------------------
         - !columns
-          absoluteY: 565
+          absoluteY: 545
           absoluteX: 660
           width: 150
           items:
@@ -374,8 +423,8 @@ layouts:
 # QRCode
 #---------------------------------------
         - !columns
-          absoluteY: 108
-          absoluteX: 759
+          absoluteY: 98
+          absoluteX: 761
           width: 64
           items:
             - !image
@@ -388,7 +437,7 @@ layouts:
 # Copyright
 #---------------------------------------
         - !columns
-          absoluteY: 70
+          absoluteY: 60
           absoluteX: 25
           width: 300
           items:
@@ -403,7 +452,7 @@ layouts:
 #---------------------------------------
         - !columns
           condition: thirdPartyDataOwner
-          absoluteY: 60
+          absoluteY: 50
           absoluteX: 25
           width: 300
           items:
@@ -413,20 +462,6 @@ layouts:
               align: left
               text: |
                 ${thirdPartyDataOwner}
-
-#---------------------------------------
-# Description
-#---------------------------------------
-        - !columns
-          absoluteY: 45
-          absoluteX: 153
-          width: 675
-          items:
-            - !text
-              fontSize: 7
-              align: left
-              text: |
-                ${title}
 
 #---------------------------------------
 # Third party data warning
@@ -474,15 +509,35 @@ layouts:
                 Attenzione: questi dati provengono da terze parti. La loro disponibilità è soggetta al provider esterno. I termini e le condizioni dei rispettivi proprietari dei dati devono essere rispettate.
 
 #---------------------------------------
-# Disclaimer
+# Description
 #---------------------------------------
         - !columns
-          absoluteY: 37
-          absoluteX: 153
-          width: 675
+          absoluteX: 42
+          absoluteY: 535
+          width: 150
+          condition: comment
+          nbColumns: 1
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - backgroundColor: white
           items:
             - !text
-              fontSize: 7
+              condition: langde
+              fontSize: 10
+              align: left
+              text: |
+                Kommentar:
+            - !text
+              condition: langen
+              fontSize: 10
+              align: left
+              text: |
+                Comment:
+            - !text
+              fontSize: 10
               align: left
               text: |
                 ${comment}
@@ -491,7 +546,7 @@ layouts:
 # Timestamp
 #---------------------------------------
         - !columns
-          absoluteY: 69
+          absoluteY: 59
           absoluteX: 480 
           width: 140
           nbColumns: 1
@@ -517,7 +572,7 @@ layouts:
 # Scalesbar
 #-------------------------------------
         - !columns
-          absoluteY: 93
+          absoluteY: 83
           absoluteX: 626
           width: 128
           config:
@@ -528,7 +583,7 @@ layouts:
                 text: ' '
                 backgroundColor: white
         - !columns
-          absoluteY: 88
+          absoluteY: 78
           absoluteX: 629
           width: 124
           nbColumns: 1
@@ -585,12 +640,27 @@ layouts:
       landscape: true
       items:
 
+##---------------------------------------
+## Legend title
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 575
+          width: 798
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
 ##--------------------------------------
 ## Legend
 ##--------------------------------------
         - !columns
           absoluteX: 22
-          absoluteY: 575
+          absoluteY: 555
           width: 798
           condition: "enableLegends"
           items:
@@ -617,11 +687,25 @@ layouts:
       pageSize: A3
       rotation: true
 
+      items:
+
+#---------------------------------------
+# Title
+#---------------------------------------
+        - !columns
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${title}
+
 #---------------------------------------
 # Map
 #---------------------------------------
-      items:
         - !map
+          absoluteY: 1150
+          absoluteX: 22
           width: 802
           height: 1108
 
@@ -630,7 +714,7 @@ layouts:
 #---------------------------------------
         - !columns
           absoluteX: 20
-          absoluteY: 58
+          absoluteY: 38
           width: 123
           items:
               - !image
@@ -643,7 +727,7 @@ layouts:
 # North arrow
 #---------------------------------------
         - !columns
-          absoluteY: 1140
+          absoluteY: 1120
           absoluteX: 660
           width: 150
           items:
@@ -658,8 +742,8 @@ layouts:
 # QRCode
 #---------------------------------------
         - !columns
-          absoluteY: 125
-          absoluteX: 759
+          absoluteY: 105
+          absoluteX: 760
           width: 64
           items:
             - !image
@@ -672,7 +756,7 @@ layouts:
 # Copyright
 #---------------------------------------
         - !columns
-          absoluteY: 85
+          absoluteY: 65
           absoluteX: 30
           width: 405
           items:
@@ -687,8 +771,8 @@ layouts:
 #---------------------------------------
         - !columns
           condition: thirdPartyDataOwner
-          absoluteY: 75
-          absoluteX: 67
+          absoluteY: 55
+          absoluteX: 30
           width: 405
           items:
             - !text
@@ -697,20 +781,6 @@ layouts:
               align: left
               text: |
                 ${thirdPartyDataOwner}
-
-#---------------------------------------
-# Description
-#---------------------------------------
-        - !columns
-          absoluteY: 58
-          absoluteX: 153
-          width: 675
-          items:
-            - !text
-              fontSize: 6
-              align: left
-              text: |
-                ${title}
 
 #---------------------------------------
 # Third party data warning
@@ -758,15 +828,35 @@ layouts:
                 Attenzione: questi dati provengono da terze parti. La loro disponibilità è soggetta al provider esterno. I termini e le condizioni dei rispettivi proprietari dei dati devono essere rispettate.
 
 #---------------------------------------
-# Disclaimer
+# Description
 #---------------------------------------
         - !columns
-          absoluteY: 52
-          absoluteX: 153
-          width: 675
+          absoluteX: 42
+          absoluteY: 1120
+          width: 150
+          condition: comment
+          nbColumns: 1
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - backgroundColor: white
           items:
             - !text
-              fontSize: 6
+              condition: langde
+              fontSize: 10
+              align: left
+              text: |
+                Kommentar:
+            - !text
+              condition: langen
+              fontSize: 10
+              align: left
+              text: |
+                Comment:
+            - !text
+              fontSize: 10
               align: left
               text: |
                 ${comment}
@@ -775,7 +865,7 @@ layouts:
 # Timestamp
 #---------------------------------------
         - !columns
-          absoluteY: 81
+          absoluteY: 61
           absoluteX: 480
           width: 140
           nbColumns: 1
@@ -801,7 +891,7 @@ layouts:
 # Scalesbar
 #-------------------------------------
         - !columns
-          absoluteY: 107
+          absoluteY: 87
           absoluteX: 626
           width: 128
           config:
@@ -812,7 +902,7 @@ layouts:
                 text: ' '
                 backgroundColor: white
         - !columns
-          absoluteY: 102
+          absoluteY: 82
           absoluteX: 629
           width: 124
           nbColumns: 1
@@ -869,11 +959,26 @@ layouts:
       items:
 
 ##---------------------------------------
-## Legend
+## Legend title
 ##---------------------------------------
         - !columns
           absoluteX: 22
           absoluteY: 820
+          width: 551
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
+##---------------------------------------
+## Legend
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 800
           width: 551
           condition: "enableLegends"
           items:
@@ -901,20 +1006,34 @@ layouts:
       rotation: true
       pageSize: A3
       landscape: true
+      items:
+
+#---------------------------------------
+# Title
+#---------------------------------------
+        - !columns
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${title}
+
 #---------------------------------------
 # Map
 #---------------------------------------
-      items:
         - !map
+          absoluteX: 20
+          absoluteY: 800
           width: 1150
-          height: 777
+          height: 767
 
 #---------------------------------------
 # Logo
 #---------------------------------------
         - !columns
           absoluteX: 20
-          absoluteY: 45
+          absoluteY: 35
           width: 123
           items:
               - !image
@@ -927,7 +1046,7 @@ layouts:
 # North arrow
 #---------------------------------------
         - !columns
-          absoluteY: 783
+          absoluteY: 763
           absoluteX: 1008
           width: 150
           items:
@@ -942,7 +1061,7 @@ layouts:
 # QRCode
 #---------------------------------------
         - !columns
-          absoluteY: 108
+          absoluteY: 96
           absoluteX: 1107
           width: 64
           items:
@@ -956,7 +1075,7 @@ layouts:
 # Copyright
 #---------------------------------------
         - !columns
-          absoluteY: 70
+          absoluteY: 60
           absoluteX: 25
           width: 300
           items:
@@ -971,7 +1090,7 @@ layouts:
 #---------------------------------------
         - !columns
           condition: thirdPartyDataOwner
-          absoluteY: 60
+          absoluteY: 50
           absoluteX: 25
           width: 300
           items:
@@ -981,20 +1100,6 @@ layouts:
               align: left
               text: |
                 ${thirdPartyDataOwner}
-
-#---------------------------------------
-# Description
-#---------------------------------------
-        - !columns
-          absoluteY: 45
-          absoluteX: 153
-          width: 1023
-          items:
-            - !text
-              fontSize: 7
-              align: left
-              text: |
-                ${title}
 
 #---------------------------------------
 # Third party data warning
@@ -1042,15 +1147,35 @@ layouts:
                 Attenzione: questi dati provengono da terze parti. La loro disponibilità è soggetta al provider esterno. I termini e le condizioni dei rispettivi proprietari dei dati devono essere rispettate.
 
 #---------------------------------------
-# Disclaimer
+# Description
 #---------------------------------------
         - !columns
-          absoluteY: 38
-          absoluteX: 153
-          width: 1023
+          absoluteX: 42
+          absoluteY: 763
+          width: 150
+          condition: comment
+          nbColumns: 1
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - backgroundColor: white
           items:
             - !text
-              fontSize: 7
+              condition: langde
+              fontSize: 10
+              align: left
+              text: |
+                Kommentar:
+            - !text
+              condition: langen
+              fontSize: 10
+              align: left
+              text: |
+                Comment:
+            - !text
+              fontSize: 10
               align: left
               text: |
                 ${comment}
@@ -1059,7 +1184,7 @@ layouts:
 # Timestamp
 #---------------------------------------
         - !columns
-          absoluteY: 67
+          absoluteY: 77
           absoluteX: 828 
           width: 140
           nbColumns: 1
@@ -1085,7 +1210,7 @@ layouts:
 # Scalesbar
 #-------------------------------------
         - !columns
-          absoluteY: 93
+          absoluteY: 83
           absoluteX: 974
           width: 128
           config:
@@ -1096,7 +1221,7 @@ layouts:
                 text: ' '
                 backgroundColor: white
         - !columns
-          absoluteY: 88
+          absoluteY: 78
           absoluteX: 977
           width: 124
           nbColumns: 1
@@ -1153,12 +1278,27 @@ layouts:
       landscape: true
       items:
 
+##---------------------------------------
+## Legend title
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 575
+          width: 798
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
 ##--------------------------------------
 ## Legend
 ##--------------------------------------
         - !columns
           absoluteX: 22
-          absoluteY: 575
+          absoluteY: 555
           width: 798
           condition: "enableLegends"
           items:
