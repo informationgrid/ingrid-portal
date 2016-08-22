@@ -86,7 +86,7 @@
                         <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
                         <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
                     </a>
-                    <a class="mq-show-xxl mobile__title" href="$renderResponse.encodeURL('/portal/default-page.psml')">NUMIS</a>
+                    <a class="mq-show-xxl mobile__title" href="$renderResponse.encodeURL('/portal/default-page.psml')">NUMIS <span class="mq-hide-l">- Das nieders&auml;chsische Umweltportal</span></a>
                 </div>
             </div>
         </header>

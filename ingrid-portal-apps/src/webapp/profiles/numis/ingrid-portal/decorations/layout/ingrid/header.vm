@@ -94,7 +94,7 @@
                         <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
                         <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
                     </a>
-                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">NUMIS</a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">NUMIS <span class="mq-hide-l">- Das niedersächsische Umweltportal</span></a>
                 </div>
                  #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)

@@ -316,7 +316,11 @@ thead {
 
 @media screen and (max-width: 768px) {
   .header__widgets__section {
-      padding: 0.525rem 0;
+    padding: 0.525rem 0;
+  }
+  
+  .sub-header{
+    padding: 1.125rem 0;
   }
 }
 
