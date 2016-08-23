@@ -193,6 +193,15 @@
     );
 }
 
+.column--1-6-m {
+    @include media(
+        $query: '768 >',
+        $css: (
+            width: 16%
+        )
+    );
+}
+
 .column--1-4-l {
     @include media(
         $query: '840 >',

@@ -63,18 +63,16 @@
 #macro (getTabsContent $facetName $facetList $parentFacet $isActive)
     <div class="tab__content box #if(!$isActive)is-hidden#end" data-tabid="$parentFacet">
         <section class="block">
-            <div class="ob-box-wide ob-box-padded ob-box-center">
-                <article class="content ob-container">
-                    <div class="tag-group">
-                        #if($parentFacet == "provider")
-                            #set($facetId = "partner")
-                        #else
-                            #set($facetId = $parentFacet)
-                        #end
-                        #getContent($facetList $parentFacet $facetId)
-                    </div>
-                </article>
-            </div>
+            <article class="content ob-container">
+                <div class="tag-group">
+                    #if($parentFacet == "provider")
+                        #set($facetId = "partner")
+                    #else
+                        #set($facetId = $parentFacet)
+                    #end
+                    #getContent($facetList $parentFacet $facetId)
+                </div>
+            </article>
         </section>
     </div>
     #foreach ($facet in $facetList)
@@ -82,14 +80,12 @@
             #if($facet.getFacets())
             <div class="tab__content box is-hidden" data-tabid="${parentFacet}_$facet.getId()">
                 <section class="block">
-                    <div class="ob-box-wide ob-box-padded ob-box-center">
-                        <article class="content ob-container">
-                            <div class="tag-group">
-                                #set($facetId = $facet.getId())
-                                #getContent($facet.getFacets() $facet.getId() $facetId $parentFacet)
-                            </div>
-                        </article>
-                    </div>
+                    <article class="content ob-container">
+                        <div class="tag-group">
+                            #set($facetId = $facet.getId())
+                            #getContent($facet.getFacets() $facet.getId() $facetId $parentFacet)
+                        </div>
+                    </article>
                 </section>
             </div>
             #end
@@ -102,17 +98,13 @@
     #set ($pf = $parentFacet)
     #foreach ($facet in $facetList)
         #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != "0") || $facet.isDisplay()))
-            #if($count % 5 == 0)
+            #if($count % 6 == 0)
                 <div class="grid grid--gutter">
             #end
             #set ($count = $count + 1)
-            <div class="column column--1-5-m">
-                #set($facetParam = "$pf:$facet.getId();")
-                #if($parentFacetParam)
-                    #set($facetParam = "$parentFacetParam:$pf;$pf:$facet.getId();")
-                #end
-                #if($count == 1)
-                    ## Add RSS category
+            #if($count == 1)
+                ## Add RSS category
+                <div class="column column--1-6-m">
                     <div class="mq-hide-l" style="padding: 0 0 20px 0;">
                         <a class="tag" href="$renderResponse.encodeURL('/portal/rss-news.psml')" style="padding:10px 0;">
                             <span class="mq-hide-l">
@@ -141,6 +133,12 @@
                             &nbsp;
                         </a>
                     </div>
+                 </div>
+            #end
+            <div class="column column--1-6-m">
+                #set($facetParam = "$pf:$facet.getId();")
+                #if($parentFacetParam)
+                    #set($facetParam = "$parentFacetParam:$pf;$pf:$facet.getId();")
                 #end
                 <div class="mq-hide-l" style="padding: 0 0 20px 0;">
                     <a class="tag" href="$renderResponse.encodeURL('/portal/main-search.psml')?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
@@ -171,7 +169,7 @@
                     </a>
                 </div>
             </div>
-            #if($count % 5 == 0)
+            #if($count % 6 == 0)
                 </div>
             #end
         #end
