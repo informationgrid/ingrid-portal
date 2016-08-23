@@ -183,6 +183,10 @@ define(["dojo/_base/declare",
                 on(registry.byId("publicationHmbTG"), "Change", function(isChecked) {
                     if (isChecked) {
                         domClass.add("uiElement6020", "required");
+                        
+                        // add required state for "Nutzungsbedingungen" (email: 16.08.2016 10:32)
+                        domClass.add("uiElementN027", "required");
+                        
                         if (!hmbTGAddressCheck) hmbTGAddressCheck = that.addAddressCheck();
                         if (!hmbTGDownloadCheck) hmbTGDownloadCheck = that.addDownloadLinkCheck();
                         
@@ -196,7 +200,10 @@ define(["dojo/_base/declare",
                             hmbTGDownloadCheck.remove();
                             hmbTGDownloadCheck = null;
                         }
-                            
+
+                        // remove required state for "Nutzungsbedingungen"
+                        domClass.remove("uiElementN027", "required");
+
                         // remove required field unless open data checkbox is still selected
                         if (!registry.byId("isOpenData").checked) {
                             domClass.remove("uiElement6020", "required");
