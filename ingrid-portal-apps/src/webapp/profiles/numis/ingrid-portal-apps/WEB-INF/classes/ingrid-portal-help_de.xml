@@ -627,13 +627,7 @@
         <section help-key="search-catalog-1">
             <header display="false">Kataloge</header>
             <content>
-                <p>Die angeschlossenen Kataloge und deren Inhalte werden in 
-                    einem Hierarchie-Baum dargestellt.
-                    In jedem Katalog kann nach Objekten (hier "Umweltinformationen") 
-                    oder Adressen navigiert werden. Die Detaildarstellung eines Eintrags 
-                    erfolgt erst auf Anfrage, d.h. bei Klick auf dessen Titel, gleich 
-                    wie in der <a href="?hkey=search-results-2">Hauptergebnisliste</a> bei 
-                    der freien Suche.</p>
+                <p>Die angeschlossenen Kataloge und deren Inhalte werden in einem Hierarchie-Baum dargestellt. In jedem Katalog kann durch Klick auf "+" durch Objekte und Adressen navigiert werden. Die Detaildarstellung eines Eintrags erfolgt auf Anfrage, d.h. bei Klick auf dessen Titel, analog zur Funktion der <a href="?hkey=search-results-2">Hauptergebnisliste</a> bei der Suche.</p> 
             </content>
         </section>
     </chapter>
@@ -1031,10 +1025,8 @@
         <section help-key="myingrid-1">
             <header>Anmeldung</header>
             <content>
-                <p>Über die Anmeldung erhalten Sie Zugang zum InGrid Editor innerhalb des Portals, sofern Sie als IGE Benutzer eingerichtet sind</p>
-                <p>Der Systemadministrator kann verschiedenste Aspekte des Portals administrieren, wie z.B. die Quelle der Nachrichten unter Aktuelles oder Portal Inhalte pflegen.</p>
-                <p>Haben Sie bereits einen Benutzernamen und ein Passwort, so
-                    geben Sie beides hier ein und klicken auf <b>Anmelden</b>.</p>
+                <p>Über die Anmeldung erhalten Sie die Möglichkeit, verschiedene Einstellungen des Portals auf Ihre Bedürfnisse hin zu personalisieren. Je nach Berechtigung erhalten Katalogbetreiber und -autoren Zugang zu den jeweiligen Administrationskomponenten des Portals bzw. der angeschlossenen Datenkataloge.</p>
+                <p>Haben Sie bereits einen Benutzernamen und ein Passwort, so geben Sie beides hier ein und klicken auf <b>Anmelden</b>.</p>
             </content>
             <section help-key="myingrid-2">
                 <header>Neuer Benutzer</header>
