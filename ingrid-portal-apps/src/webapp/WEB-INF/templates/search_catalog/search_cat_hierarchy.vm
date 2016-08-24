@@ -127,7 +127,6 @@
         url = url.replace(/\s/g, "%20")
         urlNew = url + "?scrollTop="+top;
         document.getElementById(url).href = urlNew;
-        document.getElementById(url+' Icon').href = urlNew;
     }
     
     whichBrowser = function(){
