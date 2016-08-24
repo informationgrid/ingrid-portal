@@ -123,7 +123,7 @@
         if(browser.indexOf("Chrome") != -1)
             var top = document.body.scrollTop;
         else
-            var top = document.documentElement.scrollTop 
+            var top = document.documentElement.scrollTop;
         url = url.replace(/\s/g, "%20")
         urlNew = url + "?scrollTop="+top;
         document.getElementById(url).href = urlNew;

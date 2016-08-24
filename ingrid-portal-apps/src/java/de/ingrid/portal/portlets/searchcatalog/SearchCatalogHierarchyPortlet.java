@@ -144,6 +144,11 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
         scrollTop = request.getParameter("scrollTop");
+        
+        if(scrollTop == null){
+            scrollTop = "0";
+        }
+        
         if (action == null) {
             action = "";
         }
