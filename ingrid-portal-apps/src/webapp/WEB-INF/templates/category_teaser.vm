@@ -141,7 +141,7 @@
                     #set($facetParam = "$parentFacetParam:$pf;$pf:$facet.getId();")
                 #end
                 <div class="mq-hide-l" style="padding: 0 0 20px 0;">
-                    <a class="tag" href="$renderResponse.encodeURL('/portal/main-search.psml')?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
+                    <a class="tag" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
                         #getIcon($facet)
                         <div class="tx-center">
                             #if($facet.getCodelistId())
@@ -156,7 +156,7 @@
                     </a>
                 </div>
                 <div class="mq-show-l">
-                    <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/main-search.psml')?ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
+                    <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
                         #getIcon($facet)
                         <strong>
                             #if($facet.getCodelistId())
