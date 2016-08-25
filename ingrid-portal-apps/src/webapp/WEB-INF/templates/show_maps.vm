@@ -17,7 +17,7 @@ var url = '$mapUrl' + '?lang=$lang';
 if($hasKML){
     var kml = '$kmlUrl';
 	if(!kml.startsWith("http")){
-	    kml = location.origin + "/" + kml;
+	    kml = location.origin + "/ingrid-webmap-client/rest/data/" + kml;
 	}
 	
     url = url + "&layers=KML||" + kml;

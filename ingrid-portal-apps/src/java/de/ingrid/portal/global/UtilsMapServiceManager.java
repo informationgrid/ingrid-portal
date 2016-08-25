@@ -284,7 +284,7 @@ public class UtilsMapServiceManager {
 		}
 		
 		if(kmlFile != null && kmlFile.length() > 0){
-			data.put("kml_url", "./kml/" + kmlFile);
+			data.put("kml_url", "kml/" + kmlFile);
 			data.put("kml_path", getTmpDirectory(getConfig().getString("temp_service_path", null)));
 		}
 		return data;
