@@ -29,12 +29,19 @@
     </properties>
     <body>
         <release version="4.0.0-SNAPSHOT" date="2016-xx-xx" description="Release 4.0.0">
+            <action type="update" dev="wemove" issue="REDMINE-239">
+                PORTAL: New Layout in responsive design.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-398">
                 IGE: Fixed deletion of groups.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-407">
                 IGE: Fixed required fields in user administration.
             </action>
+            <action type="update" dev="wemove" issue="REDMINE-325">
+                MapClient: New OL3 mapclient based on GEOADMIN.
+            </action>
+            
         </release>
 
         <release version="3.6.2.1" date="2016-07-08" description="Release 3.6.2.1">
