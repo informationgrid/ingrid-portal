@@ -111,8 +111,8 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         LoginForm frm = (LoginForm) Utils.getActionForm(request, LoginForm.SESSION_KEY, LoginForm.class);
 
         String errorCode = request.getParameter("errorCode");
+        frm.clearErrors();
         if (errorCode != null) {
-            frm.clearErrors();
             if (errorCode.equals(LoginConstants.ERROR_UNKNOWN_USER.toString())) {
                 frm.setError(LoginForm.FIELD_USERNAME, "login.error.unknownUser");
             } else if (errorCode.equals(LoginConstants.ERROR_INVALID_PASSWORD.toString())) {
@@ -311,7 +311,6 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         //userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(CreateAccountForm.FIELD_ATTENTION));
         //userAttributes.put("user.custom.ingrid.user.interest", f.getInput(CreateAccountForm.FIELD_INTEREST));
         //userAttributes.put("user.custom.ingrid.user.profession", f.getInput(CreateAccountForm.FIELD_PROFESSION));
-        //userAttributes.put("user.custom.ingrid.user.subscribe.newsletter", f.getInput(CreateAccountForm.FIELD_SUBSCRIBE_NEWSLETTER));
         
         return userAttributes;
     }

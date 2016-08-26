@@ -480,6 +480,7 @@ public class MdekMapper implements DataMapperInterface {
         mdekAddress.setPobox((String) adr.get(MdekKeys.POST_BOX));
         mdekAddress.setPoboxPostalCode((String) adr.get(MdekKeys.POST_BOX_POSTAL_CODE));
         mdekAddress.setTask((String) adr.get(MdekKeys.FUNCTION));
+        mdekAddress.setHoursOfService((String) adr.get(MdekKeys.HOURS_OF_SERVICE));
         mdekAddress.setCommunication(mapToCommunicationTable((List<IngridDocument>) adr.get(MdekKeys.COMMUNICATION)));
 
         // Thesaurus
@@ -716,6 +717,7 @@ public class MdekMapper implements DataMapperInterface {
         udkAdr.put(MdekKeys.POST_BOX, data.getPobox());
         udkAdr.put(MdekKeys.POST_BOX_POSTAL_CODE, data.getPoboxPostalCode());
         udkAdr.put(MdekKeys.FUNCTION, data.getTask());
+        udkAdr.put(MdekKeys.HOURS_OF_SERVICE, data.getHoursOfService());
         udkAdr.put(MdekKeys.COMMUNICATION, mapFromCommunicationTable(data.getCommunication()));
 
         //Thesaurus

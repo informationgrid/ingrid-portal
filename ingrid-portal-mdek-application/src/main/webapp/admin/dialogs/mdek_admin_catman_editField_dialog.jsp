@@ -163,7 +163,7 @@
                             writeColumn(column, countColumn);
                         });
                         domClass.remove("span_formColumns", "hide");
-                        on(registry.byId("formWidth"), "onChange", updateAvailableTableWidth);
+                        on(registry.byId("formWidth"), "change", updateAvailableTableWidth);
                         setTimeout(updateAvailableTableWidth, 1000);
                         // fall through!
                     case "thesaurusControl":

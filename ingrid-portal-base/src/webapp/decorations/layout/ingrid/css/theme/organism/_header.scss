@@ -1,0 +1,319 @@
+/*
+ *  Pieces/Layout: Header
+ *______________________*/
+
+
+
+
+.header {
+    color: color(white);
+    margin: auto;
+    position: relative;
+    z-index: 2;
+
+    @include media(
+        $query: '< 940',
+        $css: (
+            background: color(fruit-salad),
+        )
+    );
+
+    // Mobile navigation is open
+    &.is-hiding {
+        ~ * {
+            @include media(
+                $query: '< 940',
+                $css: (
+                display: none
+                )
+            );
+        }
+    }
+}
+
+.header__widgets__section {
+    font-family: $font-brand;
+    display: inline-block;
+    padding: rem(18px) 0;
+    vertical-align: bottom;
+
+    @include media(
+        $query: '768 - 940',
+        $css: (
+            padding: rem(24px) 0
+        )
+    );
+
+    @include media(
+        $query: '940 >',
+        $css: (
+            padding: rem(20px) 0
+        )
+    );
+}
+
+.header__widget {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    vertical-align: bottom;
+
+    @include media(
+        $query: '< 940',
+        $css: (
+            font-size: rem(16px)
+        )
+    );
+
+    > a {
+        color: color(white);
+
+        @include media(
+            $query: '940 >',
+            $css: (
+                color: color(paris-m)
+            )
+        );
+
+        .no-touchevents &:hover {
+            color: color(paris-m);
+
+            @include media(
+                $query: '940 >',
+                $css: (
+                    color: color(fruit-salad)
+                )
+            );
+        }
+    }
+}
+
+.header__widget__toggle {
+    position: relative;
+
+    &.is-active {
+        &:before,
+        &:after {
+            border-style: solid;
+            content: '';
+            height: 0;
+            left: 50%;
+            margin-left: rem(-12px);
+            position: absolute;
+            top: 100%;
+            width: 0;
+            z-index: 3;
+        }
+
+        &:before {
+            border-color: transparent transparent color(light-grey) transparent;
+            border-width: 0 12px 12px 12px;
+        }
+
+        &:after {
+            border-color: transparent transparent color(white) transparent;
+            border-width: 0 11px 11px 11px;
+            margin: 1px 0 0 -11px;
+        }
+    }
+}
+
+.header__widget__icon {
+    fill: currentColor;
+    font-size: rem(24px);
+    position: relative;
+
+    @include media(
+        $query: '768 >',
+        $css: (
+            font-size: rem(18px)
+        )
+    );
+
+    @include media(
+        $query: '768 - 940',
+        $css: (
+            top: 4px
+        )
+    );
+
+    @include media(
+        $query: '940 >',
+        $css: (
+            height: rem(14px),
+            top: 2px
+        )
+    );
+
+    &.is-active {
+        fill: color(paris-m);
+
+        @include media(
+            $query: '940 >',
+            $css: (
+                fill: color(fruit-salad)
+            )
+        );
+    }
+}
+
+
+.header__widget__text {
+    color: inherit;
+
+    @include media(
+        $query: '940 >',
+        $css: (
+            font-size: rem(14px)
+        )
+    );
+}
+
+.nav-toggle{
+    background: currentColor;
+    color: color(salem) !important;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 68px;
+    height: 100%;
+    transition: width .25s;
+    z-index: 1;
+
+    @include media(
+        $query: '768 >',
+        $css: (
+            width: 88px
+        )
+    );
+
+    &:after {
+        border-style: solid;
+        border-width: 0 0 60px 12px;
+        border-color: transparent transparent color(fruit-salad) transparent;
+        content: '';
+        height: 0;
+        position: absolute;
+        right: 0;
+        width: 0;   
+
+        @include media(
+            $query: '768 - 940',
+            $css: (
+                border-width: 0 0 76px 20px
+            )
+        );
+    }
+
+    &.is-active {
+        width: 100%;
+
+        &:after {
+            display: none;
+        }
+    }
+
+    .icon {
+        fill: color(white);
+        font-size: rem(32px);
+        position: absolute;
+        top: 50%;
+        transform: translateX(-4px);
+        transition: opacity .25s;
+        left: 50%;
+        margin: -.5em 0 0 -.5em;
+
+        @include media(
+            $query: '768 >',
+            $css: (
+                font-size: rem(36px)
+            )
+        );
+    }
+}
+
+.header__logo{
+    margin-left: rem(66px);
+
+    @include media(
+        $query: '480 - 768',
+        $css: (
+            margin-left: rem(80px)
+        )
+    );
+
+    @include media(
+        $query: '768 >',
+        $css: (
+            margin-left: rem(100px)
+        )
+    );
+
+    @include media(
+        $query: '960 >',
+        $css: (
+            height: rem(64px)
+        )
+    );
+    
+}
+
+.mobile__logo{
+    height: rem(24px);
+
+    @include media(
+        $query: '768 >',
+        $css: (
+            height: rem(28px)
+        )
+    );
+}
+
+.header__logo{
+    @include media(
+        $query: '940 >',
+        $css: (
+            width: rem(270px),
+            margin-left: 0
+        )
+    );
+}
+
+.sub-header{
+    float: right;
+    line-height: 1;
+    margin-right: rem(10px);
+    
+    @include media(
+        $query: '768 - 940',
+        $css: (
+            margin-top: rem(10px),
+        )
+    );
+
+    .header__widget{
+        &:not(:first-child) {
+            margin-left: rem(12px);
+
+            @include media(
+                $query: '480 >',
+                $css: (
+                    margin-left: rem(20px),
+                )
+            );
+        }
+    }
+
+    .icon-xs{
+        margin-bottom: rem(3px);
+
+        @include media(
+            $query: '940 >',
+            $css: (
+                margin-bottom: 0,
+                top: 3px
+            )
+        ); 
+    }
+}

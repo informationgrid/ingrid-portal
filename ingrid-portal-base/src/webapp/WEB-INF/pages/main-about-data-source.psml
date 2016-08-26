@@ -1,24 +1,19 @@
-<!DOCTYPE doc [
-<!-- 
-for more entities look at
-http://www.oasis-open.org/docbook/xmlcharent/0.3/iso-lat1.ent
--->
-<!ENTITY Uuml	"&#x00DC;">
-]>
-
 <page>
   <defaults
      skin="orange"
      layout-decorator="ingrid"
      portlet-decorator="ingrid-teaser"
   />
-  <title>About InGrid-Portal</title>
-  <!--<metadata name="title" xml:lang="de">&Uuml;ber InGrid-Portal</metadata>-->
+  <title>ingrid.page.data.source.tooltip</title>
+  <short-title>ingrid.page.data.source</short-title>
+  <metadata name="meta_title">ingrid.page.data.source.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.data.source.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.data.source.meta.keywords</metadata>
+   <!--<metadata name="title" xml:lang="de">&Uuml;ber InGrid-Portal</metadata>-->
 
-  <fragment id="main-about-data-source" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+  <fragment id="main-about-data-source" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="main-about-data-source-1" type="portlet" name="ingrid-portal-apps::ShowDataSourcePortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
+      <property layout="OneColumn" name="row" value="0" />
     </fragment>
   </fragment>
 

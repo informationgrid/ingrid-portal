@@ -1,0 +1,31 @@
+/*
+ *  Base: Normalise
+ *________________________
+
+    A very simple CSS reset.
+    Nothing else should ever
+    go in here.
+
+*/
+
+
+
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    color: color(dim-grey);
+    font: 14px/1.6 $font-sans;
+    margin: 0;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}

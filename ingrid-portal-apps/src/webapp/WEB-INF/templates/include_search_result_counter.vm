@@ -1,17 +1,2 @@
-	  <div class="resultset_nav float_left">
-#if ($IS_RANKED)
-	## RANKED (left column stuff)
-	#if($grouping)
-		#renderRankedResultCounterGrouping($rankedPageSelector)
-	#else
-		#renderRankedResultCounter($rankedPageSelector)
-	#end
-#else
-	## UNRANKED (right column stuff)
-	#if($grouping_right)
-		#renderUnrankedResultCounterGrouping($unrankedPageSelector)
-	#else
-		#renderUnrankedResultCounter($unrankedPageSelector)
-	#end
-#end
-      </div>
+## RANKED (left column stuff)
+#renderRankedResultCounterGrouping($rankedPageSelector)

@@ -1,49 +1,58 @@
 <script type="text/javascript">
-	function validate_form(msg) {
-		if (!document.mdek_admin_login.user.value) {
-		  alert(msg);
-		  return false;
-		}
-		return true;
-	}
-	
-	function catalogChanged() {
-		var index = document.mdek_admin_login.catalog.selectedIndex;
-		document.mdek_admin_login.user.options.length = 0;
-		for (i=0;i<$userLists[index].length;i++) {
-			document.mdek_admin_login.user.options[i] = new Option($userLists[index][i],$userLists[index][i]);
-		}		
-	}
-	
-	function userChanged() {
-	}
+    function validate_form(msg) {
+        if (!document.mdek_admin_login.user.value) {
+          alert(msg);
+          return false;
+        }
+        return true;
+    }
+    
+    function catalogChanged() {
+        var index = document.mdek_admin_login.catalog.selectedIndex;
+        document.mdek_admin_login.user.options.length = 0;
+        for (i=0;i<$userLists[index - 1].length;i++) {
+            document.mdek_admin_login.user.options[i] = new Option($userLists[index - 1][i],$userLists[index - 1][i]);
+        }        
+    }
+    
+    function userChanged() {
+    }
 </script>
 
 #set ($action = $renderResponse.createActionURL())
 #if ($igeError)
-	$igeError
+    $igeError
 #end
 <form action="$action" method="post" name="mdek_admin_login" id="mdek_admin_login" onsubmit="return validate_form('$MESSAGES.getString('mdek.admin.login.alert')')" target="_blank">
-	<div class="formbody formbody_border_style">
-		<table>
-			<tr><td>
-		<h3>$MESSAGES.getString('entry.text.catalog'):</h3>
-		<select size="8" id="catalog" name="catalog" onchange="catalogChanged();" style="min-width:100px;">
-#foreach ($entry in $catalogList)
-	<option value="$entry.plugId">$entry.catName ($entry.plugId)</option>
-#end
-		</select>
-		</td><td>
-		<h3>$MESSAGES.getString('entry.text.user'):</h3> 
-		<select size="8" id="user" name="user" onchange="userChanged();" style="min-width:150px;">
-		</select>
-        </td></tr>
-        </table>
-	</div>
-	<div class="formfooter formfooter_border_style">
-	    <span style="padding-left:4px; position: absolute;">
-		#renderInputButtonClass("$MESSAGES.getString('entry.button.ige')" "" "doLoginIGE" "" "float_left")
-	    </span>
-		<p class="clearer"/>
+    <div class="box box--fill box--small">
+        <div class="box__content ob-container">
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                    <label for="catalog">$MESSAGES.getString('entry.text.catalog')</label>
+                </div>
+                <div class="media__body">
+                    <select id="catalog" name="catalog" onchange="catalogChanged();">
+                        <option disabled selected value>
+                        #foreach ($entry in $catalogList)
+                            <option value="$entry.plugId">$entry.catName ($entry.plugId)</option>
+                        #end
+                    </select>
+                </div>
+            </div>
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                    <label for="user">$MESSAGES.getString('entry.text.user')</label>
+                </div>
+                <div class="media__body">
+                    <select id="user" name="user" onchange="userChanged();">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="media__obj media__obj--right">
+        #renderInputButtonClass("$MESSAGES.getString('entry.button.ige')" "width:100%" "doLoginIGE" "" "btn btn--primary btn--medium")
     </div>
 </form>
+<br />
+<br />

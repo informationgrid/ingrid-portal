@@ -1,70 +1,65 @@
 #macro (renderHit $hit)
-	#if($hit.is_address)
-		#parse ('/WEB-INF/templates/include_search_result_address_hit.vm')
-	#else
-		#parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
-	#end
+    #if($hit.is_address)
+        #parse ('/WEB-INF/templates/include_search_result_address_hit.vm')
+    #else
+        #parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
+    #end
 #end
-	
-## set flag indicating how to render stuff (e.g. in includes)
-#set ($IS_RANKED = true)
-
-#parse ('/WEB-INF/templates/include_search_result_filter.vm')
-<div dojoType="dijit.layout.ContentPane" id="search_facete_address" style="display:none">
-   	#parse ('/WEB-INF/templates/facete/facete.vm')
+<div id="searchResult">
+    #if($enableFacete)
+        #renderSearchResultFacetFilter()
+    #end
+    <article class="content ob-container">
+        <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
+        #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+        #parse ('/WEB-INF/templates/include_search_result_filter.vm')
+        <br />
+        #if($rankedResultList && "$rankedResultList.length()" != "0")
+            #foreach($rs in $rankedResultList.getWrapperHits())
+                #if($grouping)
+                    #parse ('/WEB-INF/templates/include_search_result_group_header.vm')
+                #end
+                #set ($topHit = true)
+                #renderHit($rs)
+                #if($rs.subhit)
+                    #set ($rs = $rs.subhit)
+                    #set ($topHit = false)
+                    #set ($subHitLeftMargin = 40)
+                    #renderHit($rs)
+                #end
+                #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
+              #end
+        #else
+                <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
+        #end
+        #parse ('/WEB-INF/templates/include_search_result_navigation_bottom.vm')
+    </article>
 </div>
-<div dojoType="dijit.layout.ContentPane" id="search_hits_address" class="nonjavascript">
-<!-- RESULTS LEFT -->
-    <div class="section">  
-#parse ('/WEB-INF/templates/include_search_result_counter.vm')
-#parse ('/WEB-INF/templates/include_search_result_navigation.vm')
-      <br />
-
-#if($rankedResultList && "$rankedResultList.length()" != "0")
-	#foreach($rs in $rankedResultList.getWrapperHits())
-		#if($grouping)
-			#parse ('/WEB-INF/templates/include_search_result_group_header.vm')
-		#end
-		#set ($topHit = true)
-		#renderHit($rs)
-        #if($rs.subhit)
-			#set ($rs = $rs.subhit)
-			#set ($topHit = false)
-			#set ($subHitLeftMargin = 40)
-			#renderHit($rs)
-		#end
-		#parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
-	  #end
-#else
-		<p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
-#end
-#parse ('/WEB-INF/templates/include_search_result_counter.vm')
-#parse ('/WEB-INF/templates/include_search_result_navigation.vm')
-    </div>
-  <div class="clearer"></div>
-  #if($adminContent)
+#if($adminContent)
     <!--
     #if($rankedResultList.get("FACETS"))
         Facets:
         $rankedResultList.get("FACETS")
     #end
     
-	#if($facetsQuery)
-   		Facets Query:
+    #if($facetsQuery)
+           Facets Query:
         #foreach($facete in $facetsQuery)
-        	$facete
+            $facete
         #end
     #end
     
-	#if($searchQuery)
+    #if($searchQuery)
         Search Query:
-    	$searchQuery
+        $searchQuery
     #end
     -->
-  #end
-</div>
-
-<script type="text/javascript">
- 	document.getElementById('search_facete_address').style.display = "block";
-	document.getElementById('search_hits_address').setAttribute('class', "javascript");
- </script>
+#end
+<script >
+    // Resize facet map on filter click
+    function onClickFilterEvent(){
+        if(resizeMap){
+            resizeMap();
+        }
+    }
+</script>

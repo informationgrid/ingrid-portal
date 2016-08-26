@@ -3,21 +3,24 @@
     window.open('/ingrid-portal-mdek-application/index.jsp?${autoStartQueryString}');
  //--></script>
 #end
+
 #if($noBackendUser)
-<p>$MESSAGES.getString('entry.error.noBackendUser')</p>
+    <div class="message message--error">
+        <div class="message__simple-content message-fill--error">
+            <span class="">
+                <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
+            </span>
+            $MESSAGES.getString('entry.error.noBackendUser')
+        </div>
+    </div>
 #else
-<div class="section">    
-  <p>$MESSAGES.getString('entry.text.login')</p>
-  
-<!--
-	<a href="../ingrid-portal-mdek/dump_session.jsp">/ingrid-portal-mdek/dump_session.jsp</a> <br>
-    <a href="../ingrid-portal-mdek-application/dump_session.jsp">/ingrid-portal-mdek-application/dump_session.jsp</a> <br>
-    <a href="../ingrid-portal-mdek-application/test_dwr_security.jsp">/ingrid-portal-mdek-application/test_dwr_security.jsp</a><br>
-    <a href="../ingrid-portal-mdek-application/mdek_admin_entry.jsp">/ingrid-portal-mdek-application/mdek_admin_entry.jsp</a>
--->
-  <div class="formfooter formfooter_border_style" style="padding: 10px;">
-		#renderInputButtonOnClick("$MESSAGES.getString('entry.button.ige')" "" "Verweis" "" "float_left" "javaScript:void(window.open('/ingrid-portal-mdek-application/start.jsp?lang=$language', '_erfassung'));")
-	<p class="clearer"/>
-  </div>
-</div>
+    <div class="box box--fill box--small">
+        <div class="box__content ob-container">
+            <p>$MESSAGES.getString('entry.text.login')</p>
+        </div>
+    </div>
+    <div class="media__obj media__obj--right">
+        #renderInputButtonOnClick("$MESSAGES.getString('entry.button.ige')" "width:100%;" "Verweis" "" "btn btn--primary btn--medium" "javaScript:void(window.open('/ingrid-portal-mdek-application/start.jsp?lang=$language', '_erfassung'));")
+    </div>
 #end
+<br/>

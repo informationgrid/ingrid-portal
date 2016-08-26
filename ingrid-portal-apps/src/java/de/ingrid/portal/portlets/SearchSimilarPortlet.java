@@ -90,7 +90,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
 
         // if no query display "nothing"
         IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
-        if (query == null) {
+        if (query == null || query.getTerms().length == 0) {
             setDefaultViewPage(TEMPLATE_NO_QUERY);
             super.doView(request, response);
             return;
@@ -148,7 +148,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                     IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
                     similarRoot = DisplayTreeFactory.getTreeFromQueryTerms(query);
                     session.setAttribute("similarRoot", similarRoot);
-                    if (similarRoot.getChildren().size() == 1) {
+                    if (similarRoot.getChildren().size() > 0) {
                         openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId(), request
                                 .getLocale());
                     }

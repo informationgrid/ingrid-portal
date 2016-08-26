@@ -132,7 +132,7 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
             String profileName = request.getParameter("profile");
             String databasePostfix = "_mysql";
             if (UtilsDB.isOracle()) {
-            	databasePostfix = "_oracle";
+                databasePostfix = "_oracle";
             }
             String profileDescriptor = getPortletConfig().getPortletContext().getRealPath(
                     "/profiles/" + profileName + "/profile" + databasePostfix + ".xml");
@@ -169,25 +169,25 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                             String portletName = (String) portletNames.get(j);
                             //portletRegistry.getPortletDefinitionByIdentifier("IngridInformPortlet").getPreferenceSet();//portletRegistry.getAllPortletDefinitions();
                             try {
-                            	List portletPrefsNames  = null;
-                            	List<FragmentPreference> prefs = new ArrayList<FragmentPreference>();
-                            	
+                                List portletPrefsNames  = null;
+                                List<FragmentPreference> prefs = new ArrayList<FragmentPreference>();
+                                
                                 int row = profile.getInt("pages.page(" + i + ").portlets.portlet(" + j + ")[@row]");
                                 int col = profile.getInt("pages.page(" + i + ").portlets.portlet(" + j + ")[@col]");
                                 try {
-                                	// get the hidden information if it is available
-                                	portletPrefsNames = profile.getList("pages.page(" + i + ").portlets.portlet("+j+").preference[@name]");
-                                	for (int k = 0; k < portletPrefsNames.size(); k++) {
-                                		FragmentPreference f = pageManager.newFragmentPreference();
-                                		// set the name of the preference
-                                		f.setName((String)portletPrefsNames.get(k));
-                                		// get the values for this preference
-                                		List<String> pl = (List<String>)(List<?>) profile.getList("pages.page(" + i + ").portlets.portlet("+j+").preference("+k+").value");
-                                		f.setValueList(pl);
-                                		prefs.add(f);
-                                	}
+                                    // get the hidden information if it is available
+                                    portletPrefsNames = profile.getList("pages.page(" + i + ").portlets.portlet("+j+").preference[@name]");
+                                    for (int k = 0; k < portletPrefsNames.size(); k++) {
+                                        FragmentPreference f = pageManager.newFragmentPreference();
+                                        // set the name of the preference
+                                        f.setName((String)portletPrefsNames.get(k));
+                                        // get the values for this preference
+                                        List<String> pl = (List<String>)(List<?>) profile.getList("pages.page(" + i + ").portlets.portlet("+j+").preference("+k+").value");
+                                        f.setValueList(pl);
+                                        prefs.add(f);
+                                    }
                                 } catch (Exception e) {
-                                	log.error(e.toString());
+                                    log.error(e.toString());
                                 }
                                 UtilsPageLayout.positionPortletOnPage(pageManager, p, (Fragment) p.getRootFragment(), portletName,
                                         row, col, prefs);
@@ -221,8 +221,8 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                             copy(srcFileName, dstFileName);
                         }
                     }else if(actionName.equalsIgnoreCase("copy-dir")){
-                    	if (!srcFileName.equals(dstFileName)) {
-                    		copyDir(srcFileName, dstFileName);
+                        if (!srcFileName.equals(dstFileName)) {
+                            copyDir(srcFileName, dstFileName);
                         }
                     }
                 }
@@ -293,25 +293,25 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
     private static void copyDir(String source, String dest) throws IOException {
         File sourceDir = new File(source);
         File destDir = new File(dest);
-		File[] sourceFiles = sourceDir.listFiles();
+        File[] sourceFiles = sourceDir.listFiles();
         
         if(!destDir.exists()){
-        	if(sourceDir != null){
-        		if(sourceDir.isDirectory()){
-            		destDir.mkdir();
-            	}
-        	}
+            if(sourceDir != null){
+                if(sourceDir.isDirectory()){
+                    destDir.mkdir();
+                }
+            }
         }
         
-    	for (int i = 0; i < sourceFiles.length; i++) {
-    		File sourceFile = sourceFiles[i];
-    		File destFile = new File(dest.concat("/").concat(sourceFile.getName()));
-			
-    		if(sourceFile.isDirectory()){
-    			copyDir(sourceFile.getAbsolutePath(), destFile.getAbsolutePath());
-    		}else{
-    			copy(sourceFile, destFile);
-    		}
-		}
+        for (int i = 0; i < sourceFiles.length; i++) {
+            File sourceFile = sourceFiles[i];
+            File destFile = new File(dest.concat("/").concat(sourceFile.getName()));
+            
+            if(sourceFile.isDirectory()){
+                copyDir(sourceFile.getAbsolutePath(), destFile.getAbsolutePath());
+            }else{
+                copy(sourceFile, destFile);
+            }
+        }
     }
 }

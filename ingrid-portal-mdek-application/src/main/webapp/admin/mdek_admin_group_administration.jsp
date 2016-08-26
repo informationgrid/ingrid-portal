@@ -210,7 +210,6 @@
                             def.resolve();
                         },
                         errorHandler: function(errMsg, err) {
-                            pageGroupAdmin.displayErrorMessage(err);
                             console.debug(errMsg);
                             pageGroupAdmin.displayDeleteGroupError(err);
                             def.reject();
@@ -374,7 +373,6 @@
 
 
                     console.debug("store group:");
-                    var self = this;
                     var def = pageGroupAdmin.storeGroup(group, true);
                     def.then(function(storedGroup) {
                         console.debug("update group name");
@@ -394,7 +392,7 @@
                                 err.message.indexOf("NO_RIGHT_TO_ADD_USER_PERMISSION") != -1 ||
                                 err.message.indexOf("NO_RIGHT_TO_REMOVE_OBJECT_PERMISSION") != -1 ||
                                 err.message.indexOf("NO_RIGHT_TO_REMOVE_ADDRESS_PERMISSION") != -1) {
-                                self.reloadCurrentGroup();
+                            	pageGroupAdmin.reloadCurrentGroup();
                             }
                         }
                     });
@@ -471,14 +469,12 @@
             // Initialize the group table
             pageGroupAdmin.initGroupList = function() {
                 var groupList = UtilGrid.getTable("groups");
-
-                var self = this;
-                //on(groupList, "deleteRow", function(invocation){
-                on(groupList, "onDeleteItems", function(msg) {
-                    console.debug("delete group:");
+                aspect.after(groupList, "onDeleteItems", function(a, req) {
+                    var msg = req[0];
+                	console.debug("delete group:");
                     console.debug(msg.item);
                     var groupToDelete = msg.items[0];
-                    var def = self.deleteGroup(groupToDelete, function() {
+                    var def = pageGroupAdmin.deleteGroup(groupToDelete).then(null, function() {
                         UtilGrid.addTableDataRow("groups", groupToDelete);
                     });
                     return def;
@@ -653,8 +649,8 @@
                         deferred.resolve(groupDetails);
                     },
                     errorHandler: function(errMsg, err) {
-                        pageGroupAdmin.displayErrorMessage(err);
                         console.debug(errMsg);
+                        pageGroupAdmin.displayCreateGroupErrorMessage(err);
                         deferred.reject(err);
                     }
                 });

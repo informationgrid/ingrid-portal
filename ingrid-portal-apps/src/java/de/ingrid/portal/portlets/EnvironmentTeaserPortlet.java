@@ -56,6 +56,8 @@ public class EnvironmentTeaserPortlet extends GenericVelocityPortlet {
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", "teaser.environment.title");
         response.setTitle(messages.getString(titleKey));
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
 
         // get topics
         List topics = UtilsDB.getEnvTopics(messages);
@@ -63,14 +65,14 @@ public class EnvironmentTeaserPortlet extends GenericVelocityPortlet {
         
         int randomTopicImage = 0;
         if(request.getPortletSession().getAttribute("randomTopicImage") != null){
-        	randomTopicImage = (Integer) request.getPortletSession().getAttribute("randomTopicImage");
+            randomTopicImage = (Integer) request.getPortletSession().getAttribute("randomTopicImage");
         }
 
         context.put("randomTopicImage", randomTopicImage);
         
         randomTopicImage++;
         if(randomTopicImage > 5){
-        	randomTopicImage = 0;
+            randomTopicImage = 0;
         }
         request.getPortletSession().setAttribute("randomTopicImage", randomTopicImage);
         

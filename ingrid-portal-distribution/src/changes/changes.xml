@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  **************************************************-
-  Ingrid Portal Distribution
-  ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-
-  http://ec.europa.eu/idabc/eupl5
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  -->
-
 <document>
     <properties>
         <title>Changes InGrid Portal</title>
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="4.0.0" date="2016-08-26" description="Release 4.0.0">
+            <action type="update" dev="wemove" issue="REDMINE-239">
+                PORTAL: New Layout in responsive design.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-398">
+                IGE: Fixed deletion of groups.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-407">
+                IGE: Fixed required fields in user administration.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-380">
+                IGE: Fixed field hours of service as required.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-124">
+                IGE: Speed up user rights loading of an address or a object.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-325">
+                MapClient: New OL3 mapclient based on GEOADMIN.
+            </action>
+        </release>
+
         <release version="3.6.2.1" date="2016-07-08" description="Release 3.6.2.1">
             <action type="update" dev="wemove" issue="REDMINE-324">
                 IGE: Improved behaviour of grid to avoid creation of empty rows.

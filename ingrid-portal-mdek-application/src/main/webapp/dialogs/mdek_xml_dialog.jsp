@@ -70,6 +70,7 @@
                     callback: lang.partial(handleResult, 'xmlContainerWorking', def2)
                 } );
             }
+            var self = this;
             all([def1, def2]).then(function(results) {
                 // if a published version exists
                 if (results[0]) {
@@ -78,6 +79,7 @@
                 } else {
                     domAttr.set("xmlDiffContainer", {innerHTML: message.get("dialog.xml.noPublishedVersion")});
                 }
+	            self.resize();
             });
             
         });
@@ -110,27 +112,29 @@
 </head>
 
 <body>
-    <div id="xmlLoadingZone" style="float: right;">
-        <img id="imageZone" src="img/ladekreis.gif" />
-    </div>
-    <!-- MAIN TAB CONTAINER START -->
-    <div data-dojo-type="dijit/layout/TabContainer" selectedChild="xmlWorkingVersion" style="height:800px; width:100%;" >
-        <!-- TAB 1 START -->
-        <div id="xmlWorkingVersion" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.xml.version.working" />">
-            <pre style="font-size: 12px;"><code id="xmlContainerWorking" style="border: 0;"></code></pre>
-        </div>
-        <!-- TAB 2 START -->
-        <div id="xmlPublishedVersion" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.xml.version.published" />">
-            <pre style="font-size: 12px;"><code id="xmlContainerPublished" style="border: 0;"></code></pre>
-        </div>
-        <!-- TAB 3 START -->
-        <div id="xmlDiffVersion" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.xml.version.diff" />">
-            <pre style="font-size: 12px;"><code id="xmlDiffContainer" style="border: 0;"></code></pre>
-            <div id="diffContentLegend" class="inputContainer field grey">
-                <span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.insertedText" /><br/>
-                <span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.deletedText" /><br/>
-                <fmt:message key="dialog.compare.otherColor" /> - <fmt:message key="dialog.compare.movedText" /></div>
-            </div>
-        </div>
-    </div>
+	<div data-dojo-type="dijit/layout/ContentPane">
+	    <div id="xmlLoadingZone" style="float: right;">
+	        <img id="imageZone" src="img/ladekreis.gif" />
+	    </div>
+	    <!-- MAIN TAB CONTAINER START -->
+	    <div data-dojo-type="dijit/layout/TabContainer" selectedChild="xmlWorkingVersion" style="height:800px; width:100%;" >
+	        <!-- TAB 1 START -->
+	        <div id="xmlWorkingVersion" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.xml.version.working" />">
+	            <pre style="font-size: 12px;"><code id="xmlContainerWorking" style="border: 0;"></code></pre>
+	        </div>
+	        <!-- TAB 2 START -->
+	        <div id="xmlPublishedVersion" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.xml.version.published" />">
+	            <pre style="font-size: 12px;"><code id="xmlContainerPublished" style="border: 0;"></code></pre>
+	        </div>
+	        <!-- TAB 3 START -->
+	        <div id="xmlDiffVersion" data-dojo-type="dijit/layout/ContentPane" title="<fmt:message key="dialog.xml.version.diff" />">
+	            <pre style="font-size: 12px;"><code id="xmlDiffContainer" style="border: 0;"></code></pre>
+	            <div id="diffContentLegend" class="inputContainer field grey">
+	                <span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #009933;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.insertedText" /><br/>
+	                <span style="font-weight: normal; text-decoration: none; color: #ffffff; background-color: #990033;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - <fmt:message key="dialog.compare.deletedText" /><br/>
+	                <fmt:message key="dialog.compare.otherColor" /> - <fmt:message key="dialog.compare.movedText" /></div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </body>

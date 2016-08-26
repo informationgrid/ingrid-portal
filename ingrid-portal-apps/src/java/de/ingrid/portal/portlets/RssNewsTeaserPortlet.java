@@ -63,11 +63,13 @@ public class RssNewsTeaserPortlet extends GenericVelocityPortlet {
         PortletPreferences prefs = request.getPreferences();
         String titleKey = prefs.getValue("titleKey", "teaser.environment.title");
         response.setTitle(messages.getString(titleKey));
-
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
+        
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
 
-        int noOfEntriesDisplayed = Integer.parseInt(prefs.getValue("noOfEntriesDisplayed", "3"));
+        int noOfEntriesDisplayed = Integer.parseInt(prefs.getValue("noOfEntriesDisplayed", "4"));
         
         /* used number of entries from ingrid-portal-apps.properties if property portal.rss.news.number is define */
         if(PortalConfig.getInstance().getString(PortalConfig.PORTAL_RSS_NEWS_NUMBER) != null){

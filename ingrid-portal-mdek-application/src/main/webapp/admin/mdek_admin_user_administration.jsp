@@ -550,8 +550,8 @@
             }
 
             function addRequiredBehaviour() {
-                on(registry.byId("userDataAddressSurname"), "onChange", checkFields);
-                on(registry.byId("userDataAddressForename"), "onChange", checkFields);
+                on(registry.byId("userDataAddressSurname"), "change", checkFields);
+                on(registry.byId("userDataAddressForename"), "change", checkFields);
             }
 
             // 1) if a forename or surname has text and the institution is empty -> the other field also is required
@@ -698,6 +698,7 @@
                     registry.byId("userDataAddressPostCode").set("value", "");
                     registry.byId("userDataAddressCity").set("value", "");
                     registry.byId("userDataAddressPhone").set("value", "");
+                    checkFields();
                 }
             }
 

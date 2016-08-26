@@ -72,16 +72,6 @@ import de.ingrid.utils.udk.UtilsLanguageCodelist;
 public class SearchDetailPortlet extends GenericVelocityPortlet {
     private final static Logger log = LoggerFactory.getLogger(SearchDetailPortlet.class);
 
-    private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/search_detail_generic.vm";
-
-    private final static String TEMPLATE_DETAIL_UNIVERSAL = "/WEB-INF/templates/search_detail_universal.vm";
-
-    private final static String TEMPLATE_DETAIL_ECS = "/WEB-INF/templates/search_detail.vm";
-
-    private final static String TEMPLATE_DETAIL_ECS_ADDRESS = "/WEB-INF/templates/search_detail_address.vm";
-
-    private final static String TEMPLATE_DETAIL_IDF = "/WEB-INF/templates/search_detail_idf.vm";
-
     private final static String TEMPLATE_DETAIL_IDF_2_0_0 = "/WEB-INF/templates/detail/search_detail_idf_2_0.vm";
     
     // ecs fields that represent a date, used for date parsing and formating
@@ -368,29 +358,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 
                 DetailDataPreparerFactory ddpf = new DetailDataPreparerFactory(context, iplugId, dateFields, request, response, replacementFields);
                 
-                if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_9_DSC_OBJECT)) {
-                  setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {
-                	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_OBJECT)) {
-                	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_3_DSC_OBJECT)) {
-                	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_OBJECT)) {
-                	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {
-                	setDefaultViewPage(TEMPLATE_DETAIL_ECS);
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
-                	setDefaultViewPage(TEMPLATE_DETAIL_ECS_ADDRESS);
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_5_DSC_ADDRESS)) {
-                	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
-                	setDefaultViewPage(TEMPLATE_DETAIL_UNIVERSAL);
-                } else if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT) || iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)) {
+                if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT) || iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_IDF_2_0_0);
-                } else {
-                	setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                 }
+                
                 // if "testIDF"-Parameter exist, use DetailDataPreparer for "IDF" version
                 // TODO: remove code after the iplugs deliver IDF records
                 if (testIDF != null) {

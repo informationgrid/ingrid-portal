@@ -105,7 +105,8 @@ define([
                         var dlg = null;
                         selectClassDef.then(function(addressClass) {
                             // hide dialog to show error dialogs correctly
-                            dlg.destroyRecursive();
+                        	// Is this still needed? Leads to an error when creating a person!
+                            // dlg.destroyRecursive();
                             self._createNewAddress(addressClass, selectedNode);
                         });
 

@@ -42,8 +42,7 @@
                     on(_container_, "Load", init);
 
                     var syncRowsInTableProgress = false;
-
-                    
+                    var _this = _container_;
 
                     function init() {
                         var url = userLocale == "de" ? "js/data/additionalFormTypes_de.json" : "js/data/additionalFormTypes.json";
@@ -119,7 +118,7 @@
                             registry.byId("formColumnType").set('value', column.type);
                             registry.byId("formColumnField").set('value', column.id);
                             registry.byId("formColumnField").set('disabled', true);
-                            this.editMode = true;
+                            _this.editMode = true;
                             registry.byId("formColumnWidth").set('value', column.width);
                             registry.byId("formColumnIndex").set('value', column.indexName);
                             //if (column.allowFreeEntries) {
@@ -286,7 +285,7 @@
                         });
                         console.debug(column.options);
 
-                        if (!this.editMode && (lang.trim(column.id).length == 0 || query("#formColumnsContent #admin_" + column.id).length > 0)) {
+                        if (!_this.editMode && (lang.trim(column.id).length == 0 || query("#formColumnsContent #admin_" + column.id).length > 0)) {
                             exitDialog = false;
                             message = "Bitte vergeben Sie eine eindeutige ID!";
                         }

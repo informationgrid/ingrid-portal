@@ -1,28 +1,35 @@
 #macro (getInputStyleText $fieldName)#if ($actionForm.hasErrorInField($fieldName)) inputstyleerror#else inputstyletext#end#end
-
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
-	<input type="hidden" name="mode" value="$mode"/>
-	<div class="formbody formbody_border_style">
-   		<h2 class="nospace">$MESSAGES.getString('component.forms.text.new.job')</h2>
-    	#displayFormErrors()
-    	
-    	<p>
-    	<label class="float_left col2left_incr" for="id">#displayFieldLabel('id' $MESSAGES.getString('component.forms.text.component.id'))*</label>
-       	<input class="float_left inputstyletext contentInput" id="id" name="id" value="#getFieldValue('id')" type="text">
-    	</p>
-    	<p class="clearer" />
-    	<p>
-        	<label class="float_left col2left_incr" for="type">#displayFieldLabel('type' $MESSAGES.getString('component.forms.text.component.type'))*</label>
-        	<select class="float_left inputstyletext contentInput" name="type">
-    		#foreach($type in $componentTypes)
-    			<option value="$type"#getSelectedFlag('type' $type)>$MESSAGES.getString($type)</option>
-    		#end			
-    		</select>
-    	</p>
-		<p class="clearer" />
-	</div>
-	#renderDBEditFooter($mode)
+    <input type="hidden" name="mode" value="$mode"/>
+    <div class="box box--fill box--small">
+        <div class="box__title ob-container">
+            <h4>$MESSAGES.getString('component.forms.text.new.job')</h4>
+        </div>
+        #displayFormError()
+        <div class="box__content ob-container">
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                    <label for="id">$MESSAGES.getString('component.forms.text.component.id')*</label>
+                </div>
+                <div class="media__body">
+                   <input id="id" name="id" value="#getFieldValue('id')" type="text" #addErrorFormClass('id')>
+                    #addErrorFormMessage('id')
+                </div>
+            </div>
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                    <label for="type">$MESSAGES.getString('component.forms.text.component.type')*</label>
+                </div>
+                <div class="media__body">
+                    <select name="type">
+                    #foreach($type in $componentTypes)
+                        <option value="$type"#getSelectedFlag('type' $type)>$MESSAGES.getString($type)</option>
+                    #end
+                    </select>
+                </div>
+            </div>
+         </div>
+    </div>
+    #renderDBEditFooter($mode)
 </form>
-
-		

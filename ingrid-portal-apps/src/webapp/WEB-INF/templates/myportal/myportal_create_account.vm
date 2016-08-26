@@ -1,11 +1,17 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="create_account" id="create_account">
-	<input type="hidden" name="cmd" value="form_sent" />
-#set ($formType = 'create')
-#parse ('/WEB-INF/templates/myportal/include_account_form.vm')
-	<div class="formfooter formfooter_border_style">
-		<div align="right">
-			#renderInputButtonClass($MESSAGES.getString('account.create.submit') "" "" "" "float_right")
-		</div>
-	</div>
+    <input type="hidden" name="cmd" value="form_sent" />
+    #set ($formType = 'create')
+    #parse ('/WEB-INF/templates/myportal/include_account_form.vm')
+    <div class="media__body media__obj--right">
+        #renderInputButtonClass("$MESSAGES.getString('account.create.submit')" "width:100%" "" "" "btn btn--primary btn--medium")
+    </div>
 </form>
+<br/>
+<br/>
+<script >
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('create_account');
+    }
+</script>

@@ -1,30 +1,50 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
-  <p>$MESSAGES.getString("showpartner.intro")</p>
-  <ul class="innermenu">
-#foreach( $key in $partners.keySet() ) 
-	#set($partnerHash = $partners.get($key))
-	#set($partner = $partnerHash.partner)
-	#if($partnerHash.providers)
-	#set ($link = $renderResponse.encodeURL("/portal/main-about-partner.psml#$partner.ident"))
-	<li><a href="$link">$partner.name</a></li>
-	#end
-#end
-	<br/>
-  </ul>
-#foreach( $key in $partners.keySet() ) 
-	#set($partnerHash = $partners.get($key))
-	#set($partner = $partnerHash.partner)
-	#if($partnerHash.providers)
-  <a name="$partner.ident"></a>
-  <div class="line"><hr /></div>
-  <h3>$partner.name</h3>
-<ul>
-		#set($providers = $partnerHash.providers)
-		#foreach($provider in $providers)
-			#if($provider.provider)
-			<li>#if($provider.provider.url && $provider.provider.url != "")<a href="$provider.provider.url" target="_new">$provider.provider.name</a>#else$provider.provider.name#end</li>
-			#end
-		#end
+<p>$MESSAGES.getString("showpartner.intro")</p>
+#if($partners.size() > 1)
+<ul class="link-list">
+    #foreach( $key in $partners.keySet() ) 
+        #set($partnerHash = $partners.get($key))
+        #set($partner = $partnerHash.partner)
+        #if($partnerHash.providers)
+        #set ($link = "#$partner.ident")
+        <li>
+            <a href="$link">
+                <svg class="icon">
+                    <use xlink:href="#internal-link">
+                </svg>
+            $partner.name
+            </a>
+        </li>
+        #end
+    #end
+    <br/>
 </ul>
-	#end
+#end
+#foreach( $key in $partners.keySet() ) 
+    #set($partnerHash = $partners.get($key))
+    #set($partner = $partnerHash.partner)
+    #if($partnerHash.providers)
+        #if($partners.size() > 1)
+        <a name="$partner.ident"></a>
+        <hr />
+        <h4>$partner.name</h4>
+        #end
+        <ul class="link-list">
+                #set($providers = $partnerHash.providers)
+                #foreach($provider in $providers)
+                    #if($provider.provider)
+                        <li>
+                        #if($provider.provider.url && $provider.provider.url != "")
+                            <a href="$provider.provider.url">
+                                <svg class="icon"><use xlink:href="#external-link"></svg>
+                                $provider.provider.name
+                            </a>
+                        #else
+                            <span style="display: block; padding: 0.5625rem 0.5625rem 0.5625rem 1.5rem; position: relative;">$provider.provider.name</span>
+                        #end
+                        </li>
+                    #end
+                #end
+        </ul>
+    #end
 #end

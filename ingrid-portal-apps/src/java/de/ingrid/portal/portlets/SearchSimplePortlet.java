@@ -23,7 +23,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -46,9 +45,7 @@ import de.ingrid.portal.forms.SearchSimpleForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsFacete;
-import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
@@ -66,13 +63,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class SearchSimplePortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(SearchSimplePortlet.class);
-
-    // VIEW TEMPLATES
-
-    private final static String TEMPLATE_SEARCH_SIMPLE = "/WEB-INF/templates/search_simple.vm";
-
-    private final static String TEMPLATE_SEARCH_EXTENDED = "/WEB-INF/templates/search_extended/search_ext.vm";
+    private final static Logger log = LoggerFactory.getLogger( SearchSimplePortlet.class );
 
     // TITLE KEYS
 
@@ -88,85 +79,25 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
      */
     private final static String TITLE_KEY_RESULT = "searchSimple.title.result";
 
-    /**
-     * key of title for main exstended search pages, passed from page per
-     * Preferences
-     */
-    private final static String TITLE_KEY_EXTENDED = "searchSimple.title.extended";
-
-    // ACTION VALUES
-
-    /** value of action parameter if datasource was clicked */
-    private final static String PARAMV_ACTION_NEW_DATASOURCE = "doChangeDS";
-
-    /** value of action parameter if "search settings" was clicked */
-    private final static String PARAMV_ACTION_SEARCH_SETTINGS = "doSearchSettings";
-
-    /** value of action parameter if "search history" was clicked */
-    private final static String PARAMV_ACTION_SEARCH_HISTORY = "doSearchHistory";
-
-    /** value of action parameter if "Extended Search" was clicked */
-    private final static String PARAMV_ACTION_SEARCH_EXTENDED = "doSearchExtended";
-
-    /** value of action parameter if "save query" was clicked */
-    private static final String PARAMV_ACTION_SAVE_QUERY = "doSaveQuery";
-
-    // PAGES
-
-    /** search-history page -> displays and handles search settings */
-    private final static String PAGE_SEARCH_HISTORY = "/portal/search-history.psml";
-
-    /** search-settings page -> displays and handles search settings */
-    private final static String PAGE_SEARCH_SETTINGS = "/portal/search-settings.psml";
-
-    /** save query page -> displays and handles save query functionality */
-    private final static String PAGE_SAVE_QUERY = "/portal/search-save.psml";
-
-    /**
-     * main extended search page for datasource "environmentinfos" -> envinfo:
-     * topic/terms
-     */
-    private final static String PAGE_SEARCH_EXT_ENV = "/portal/search-extended/search-ext-env-topic-terms.psml";
-
-    /**
-     * main extended search page for datasource "address" -> address:
-     * topic/terms
-     */
-    private final static String PAGE_SEARCH_EXT_ADR = "/portal/search-extended/search-ext-adr-topic-terms.psml";
-
-    /**
-     * main extended search page for datasource "research" -> research:
-     * topic/attributes
-     */
-    private final static String PAGE_SEARCH_EXT_RES = "/portal/search-extended/search-ext-res-topic-attributes.psml";
-
-    /**
-     * main extended search page for datasource "law" -> law:
-     * topic/attributes
-     */
-    private final static String PAGE_SEARCH_EXT_LAW = "/portal/search-extended/search-ext-law-topic-terms.psml";
-    
     /*
      * (non-Javadoc)
      * 
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
     public void init(PortletConfig config) throws PortletException {
-        super.init(config);
+        super.init( config );
     }
 
     /*
      * (non-Javadoc)
      * 
      * @see javax.portlet.GenericPortlet#doView(javax.portlet.RenderRequest,
-     *      javax.portlet.RenderResponse)
+     * javax.portlet.RenderResponse)
      */
-    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
-            throws PortletException, IOException {
-    	Context context = getContext(request);
-        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
-                request.getLocale()), request.getLocale());
-        context.put("MESSAGES", messages);
+    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException {
+        Context context = getContext( request );
+        IngridResourceBundle messages = new IngridResourceBundle( getPortletConfig().getResourceBundle( request.getLocale() ), request.getLocale() );
+        context.put( "MESSAGES", messages );
 
         // ----------------------------------
         // read PREFERENCES (title passed from page)
@@ -175,43 +106,32 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // TITLE DETERMINES PAGE
         // ----------------------------------
         PortletPreferences prefs = request.getPreferences();
-        String titleKey = prefs.getValue("titleKey", TITLE_KEY_SEARCH);
-        context.put("titleKey", titleKey);
+        String titleKey = prefs.getValue( "titleKey", TITLE_KEY_SEARCH );
+        context.put( "titleKey", titleKey );
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
         
-        // set the help Tooltip which cannot be transported through the context when nested fragments are used in a psml-file
-        //prefs.setValue("helpToolTip", messages.getString("ingrid.page.help.link.title"));
-        //prefs.setValue("helpToolTip", "bla");
-
-        // set view template, we use the same portlet for Simple- and Extended
-        // Search, just
-        // the view template differs !
-        setDefaultViewPage(TEMPLATE_SEARCH_SIMPLE);
-        if (titleKey.equals(TITLE_KEY_EXTENDED)) {
-            setDefaultViewPage(TEMPLATE_SEARCH_EXTENDED);
-        }
-
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
         // ADAPT OUR PERMANENT STATE (MESSAGES)
         // ----------------------------------
-        String [] actions = request.getParameterValues(Settings.PARAM_ACTION);
+        String[] actions = request.getParameterValues( Settings.PARAM_ACTION );
         String action = null;
-        if(actions != null){
-        	if(Utils.isJavaScriptEnabled(request)){
-        		action = actions[actions.length-1];
-        	}else{
-        		if(actions.length>1){
-        			action = actions[actions.length-1];
-        		}
-        	}
+        if (actions != null) {
+            if (actions.length > 1) {
+                action = actions[actions.length - 1];
+            }
+        }
+        if (action == null) {
+            action = request.getParameter( Settings.PARAM_ACTION );
         }
         if (action == null) {
             action = "";
         }
-        if (action.equals(Settings.PARAMV_ACTION_NEW_SEARCH) || action.equals(PARAMV_ACTION_NEW_DATASOURCE)) {
+        if (action.equals( Settings.PARAMV_ACTION_NEW_SEARCH )) {
             // reset relevant search stuff, we perform a new one !
-            SearchState.resetSearchState(request);
-            SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY);
+            SearchState.resetSearchState( request );
+            SearchState.adaptSearchState( request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_NEW_QUERY );
         }
 
         // NOTICE: if no query string in request, we keep the old query string
@@ -219,69 +139,62 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // displayed. BUT WE REMOVE THE INGRID QUERY from state -> leads to
         // empty result portlet,
         // empty similar portlet etc.
-        String queryInRequest = request.getParameter(Settings.PARAM_QUERY_STRING);
+        String queryInRequest = request.getParameter( Settings.PARAM_QUERY_STRING );
 
         // get queryString extension from request
-        String queryExtInRequest = request.getParameter(Settings.PARAM_QUERY_STRING_EXT);
+        String queryExtInRequest = request.getParameter( Settings.PARAM_QUERY_STRING_EXT );
         if (queryExtInRequest != null) {
-            queryInRequest = queryInRequest.concat(" ").concat(queryExtInRequest);
+            queryInRequest = queryInRequest.concat( " " ).concat( queryExtInRequest );
         }
 
-        if (!SearchState.adaptSearchStateIfNotNull(request, Settings.PARAM_QUERY_STRING, queryInRequest)) {
-            SearchState.resetSearchStateObject(request, Settings.MSG_QUERY);
+        if (!SearchState.adaptSearchStateIfNotNull( request, Settings.PARAM_QUERY_STRING, queryInRequest )) {
+            SearchState.resetSearchStateObject( request, Settings.MSG_QUERY );
         }
 
         // NOTICE: if no datasource in request WE KEEP THE OLD ONE IN THE STATE,
         // so it is
         // displayed (but not bookmarkable)
-        SearchState.adaptSearchStateIfNotNull(request, Settings.PARAM_DATASOURCE, request
-                .getParameter(Settings.PARAM_DATASOURCE));
+        SearchState.adaptSearchStateIfNotNull( request, Settings.PARAM_DATASOURCE, request.getParameter( Settings.PARAM_DATASOURCE ) );
 
         // grouping
-        SearchState.adaptSearchStateIfNotNull(request, Settings.PARAM_GROUPING, request
-                .getParameter(Settings.PARAM_GROUPING));
+        SearchState.adaptSearchStateIfNotNull( request, Settings.PARAM_GROUPING, request.getParameter( Settings.PARAM_GROUPING ) );
 
         // ----------------------------------
         // set data for view template
         // ----------------------------------
 
         // set datasource
-        String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+        String selectedDS = SearchState.getSearchStateObjectAsString( request, Settings.PARAM_DATASOURCE );
         if (selectedDS.length() == 0) {
             selectedDS = Settings.SEARCH_INITIAL_DATASOURCE;
-            SearchState.adaptSearchState(request, Settings.PARAM_DATASOURCE, selectedDS);
+            SearchState.adaptSearchState( request, Settings.PARAM_DATASOURCE, selectedDS );
         }
-        context.put("ds", selectedDS);
+        context.put( "ds", selectedDS );
 
         // Update Action Form (simple search form content)
         // NOTICE: we use get method without instantiation, so we can do special
         // initialisation !
-        SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
-                PortletSession.APPLICATION_SCOPE);
+        SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm( request, SearchSimpleForm.SESSION_KEY, PortletSession.APPLICATION_SCOPE );
         if (af == null) {
-            af = (SearchSimpleForm) Utils.addActionForm(request, SearchSimpleForm.SESSION_KEY, SearchSimpleForm.class,
-                    PortletSession.APPLICATION_SCOPE);
-            af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
+            af = (SearchSimpleForm) Utils.addActionForm( request, SearchSimpleForm.SESSION_KEY, SearchSimpleForm.class, PortletSession.APPLICATION_SCOPE );
+            af.setINITIAL_QUERY( messages.getString( "searchSimple.query.initial" ) );
             af.init();
         }
 
         // handle change of locale for initial string !
-        if (af.getInput(SearchSimpleForm.FIELD_QUERY).equals(af.getINITIAL_QUERY())) {
-            af.setINITIAL_QUERY(messages.getString("searchSimple.query.initial"));
-            af.setInput(SearchSimpleForm.FIELD_QUERY, af.getINITIAL_QUERY());
+        if (af.getInput( SearchSimpleForm.FIELD_QUERY ).equals( af.getINITIAL_QUERY() )) {
+            af.setINITIAL_QUERY( messages.getString( "searchSimple.query.initial" ) );
+            af.setInput( SearchSimpleForm.FIELD_QUERY, af.getINITIAL_QUERY() );
         }
 
         // NOTICE: this may be former query, if no query in request ! we keep
         // that one for convenience
         // (although this state is not bookmarkable !)
-        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
-        if(queryString.length() == 0 && af != null){
-        	queryString = af.getInput("q");
-        }
-        af.setInput(SearchSimpleForm.FIELD_QUERY, queryString);
+        String queryString = SearchState.getSearchStateObjectAsString( request, Settings.PARAM_QUERY_STRING );
+        af.setInput( SearchSimpleForm.FIELD_QUERY, queryString );
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
-        context.put("actionForm", af);
+        context.put( "actionForm", af );
 
         // ----------------------------------
         // prepare Search, Search will be performed in SearchResult portlet
@@ -295,16 +208,14 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // - we have no query parameter in our URL (e.g. we entered from other
         // page)
         // - the enterd query is empty or initial value
-        if (action.equals(PARAMV_ACTION_NEW_DATASOURCE) || action.equals(PARAMV_ACTION_SEARCH_SETTINGS)
-                || action.equals(PARAMV_ACTION_SEARCH_HISTORY) || action.equals(PARAMV_ACTION_SEARCH_EXTENDED)
-                || queryInRequest == null || !validInput) {
+        if (queryInRequest == null || !validInput) {
             setUpNewQuery = false;
         }
         if (setUpNewQuery) {
             // set up Ingrid Query -> triggers search in result portlet
-            String errCode = setUpQuery(request, af.getInput(SearchSimpleForm.FIELD_QUERY));
+            String errCode = setUpQuery( request, af.getInput( SearchSimpleForm.FIELD_QUERY ), false);
             if (errCode != null) {
-                af.setError(SearchSimpleForm.FIELD_QUERY, messages.getString(errCode));
+                af.setError( SearchSimpleForm.FIELD_QUERY, messages.getString( errCode ) );
             }
         }
 
@@ -314,189 +225,100 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // main-search, search-settings ...)
         // title also depends on search state (query submitted or not ...)
         // ----------------------------------
-        if (titleKey.equals(TITLE_KEY_RESULT)) {
+        if (titleKey.equals( TITLE_KEY_RESULT )) {
             // we're on main search page, check whether there's a query and
             // adapt title
-            if (SearchState.getSearchStateObject(request, Settings.MSG_QUERY) == null) {
+            if (SearchState.getSearchStateObject( request, Settings.MSG_QUERY ) == null) {
                 titleKey = TITLE_KEY_SEARCH;
             }
         }
-        response.setTitle(messages.getString(titleKey));
+        response.setTitle( messages.getString( titleKey ) );
 
-        // enable the save button if the query was set AND a user is logged on
-        if (validInput && Utils.getLoggedOn(request)) {
-            context.put("enableSave", "true");
-        }
+        context.put( "enableFacets", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, Boolean.FALSE ) );
 
-        // enable/disable providers drop down
-        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS)
-        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_ENVINFO) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_ENVINFO)
-        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_ADDRESS) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_ADDRESS)
-        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_LAW) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_LAW)
-        		|| selectedDS.equals(Settings.PARAMV_DATASOURCE_RESEARCH) && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_DISPLAY_PROVIDERS_RESEARCH)
-        		) {
-        	String partner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
-            List providers;
-            if (partner == null || partner.length() == 0) {
-                providers = UtilsDB.getProviders();
-            } else {
-                providers = UtilsDB.getProvidersFromPartnerKey(partner);
-            }
-            context.put("displayProviders", Boolean.TRUE);
-            context.put("providers", providers);
-            context.put("UtilsString", new UtilsString());
-            // get selected provider
-            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
-                    IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
-            String provider = request.getParameter(Settings.PARAM_PROVIDER);
-            if (provider != null) {
-                sessionPrefs.put(IngridSessionPreferences.RESTRICTING_PROVIDER, provider);
-            }
-            context.put("selectedProviderIdent", sessionPrefs.get(IngridSessionPreferences.RESTRICTING_PROVIDER));
-        }
-
-        context.put("enableDatasourceResearch", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_DATASOURCE_RESEARCH, Boolean.TRUE));
-        context.put("enableDatasourceAddresses", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_DATASOURCE_ADDRESSES, Boolean.TRUE));
-        context.put("enableDatasourceLaws", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_DATASOURCE_LAWS, Boolean.TRUE));
-        context.put("enableDatasourceCatalog", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_DATASOURCE_CATALOG, Boolean.FALSE));
-        context.put("enableSearchSeperator", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_SEARCH_SEPERATOR, Boolean.FALSE));
-        context.put("enableDatasourceSelection", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_SEARCH_SIMPLE_DATASOURCE_SELECTION, Boolean.TRUE));
-        context.put("enableOptionalLinks", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_SEARCH_SIMPLE_OPTIONAL_LINKS, Boolean.TRUE));
-        context.put("enableFacets", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, Boolean.FALSE));
-       
-        // Set up query 
-        if(Utils.isJavaScriptEnabled(request)){
-        	ContentPage page = (ContentPage) request.getAttribute("org.apache.jetspeed.Page");
-            Map<String, String[]> params = request.getParameterMap();
-            if(page != null && (params != null && params.size() == 0)){
-            	if(Settings.PAGE_SEARCH_RESULT.indexOf(page.getPath()) > 0 && queryString != null && queryString.length() > 0){
-            		if(af != null){
-            			if(!queryString.equals(af.getINITIAL_QUERY())){
-		            		response.setTitle(messages.getString(TITLE_KEY_RESULT));
-		            		UtilsFacete.setAttributeToSession(request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true);
-		            		setUpQuery(request, queryString);
-            			}
-            		}
+        // Set up query
+        ContentPage page = (ContentPage) request.getAttribute( "org.apache.jetspeed.Page" );
+        boolean setQuery = false;
+        Map<String, String[]> params = request.getParameterMap();
+        if (page != null && (params != null && params.size() == 0)) {
+            if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > 0 && queryString != null && queryString.length() > 0) {
+                if (af != null) {
+                    if (!queryString.equals( af.getINITIAL_QUERY() )) {
+                        response.setTitle( messages.getString( TITLE_KEY_RESULT ) );
+                        UtilsFacete.setAttributeToSession( request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true );
+                        setUpQuery( request, queryString, false );
+                        setQuery = true;
+                    }
                 }
             }
         }
-        super.doView(request, response);
+        if(setQuery == false){
+            if(Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && request.getParameter("ct") != null){
+                String initalQuery = PortalConfig.getInstance().getString( PortalConfig.CATEGORY_TEASER_SEARCH_QUERY, "" ).trim();
+                if(initalQuery.length() > 0){
+                    setUpQuery(request, initalQuery, true);
+                }
+            } else if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && request.getParameter("q") == null){
+                String initalQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_SEARCH_EMPTY_QUERY, "" ).trim();
+                if(initalQuery.length() > 0){
+                    setUpQuery(request, initalQuery, true);
+                }
+            }  
+        }
+        if(page != null){
+            context.put( "page", page.getPath());
+        }
+        super.doView( request, response );
     }
 
     /*
      * (non-Javadoc)
      * 
      * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,
-     *      javax.portlet.ActionResponse)
+     * javax.portlet.ActionResponse)
      */
-    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
-            IOException {
-        String action = request.getParameter(Settings.PARAM_ACTION);
+    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
+        String action = request.getParameter( Settings.PARAM_ACTION );
         if (action == null) {
             return;
         }
 
-        // adapt SearchState (base for generating URL params FOR BOOKMARKING !!!)
+        // adapt SearchState (base for generating URL params FOR BOOKMARKING
+        // !!!)
         // Reset all Stuff which are remains of former state and shouldn't be
         // taken into account on any action in SimpleSearch form
-        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, null);
-        SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_UNRANKED, null);
-        SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, null);
-        SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE_UNRANKED, null);
+        SearchState.adaptSearchState( request, Settings.PARAM_STARTHIT_RANKED, null );
+        SearchState.adaptSearchState( request, Settings.PARAM_CURRENT_SELECTOR_PAGE, null );
 
-        SearchState.adaptSearchState(request, Settings.PARAM_FILTER, null);
-        SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, null);        
+        SearchState.adaptSearchState( request, Settings.PARAM_FILTER, null );
+        SearchState.adaptSearchState( request, Settings.PARAM_SUBJECT, null );
 
-        if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_NEW_SEARCH)) {
-        	// adapt current SearchState (base for generating URL params for render
+        if (action.equalsIgnoreCase( Settings.PARAMV_ACTION_NEW_SEARCH )) {
+            // adapt current SearchState (base for generating URL params for
+            // render
             // request):
             // - query string
-        	
-        	// set querystring to search state if the delete button was not pressed
-        	if (request.getParameter("doDeleteQuery") == null) {        	
-	        	SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, request
-	                    .getParameter(Settings.PARAM_QUERY_STRING));
-        	} else {
-	        	SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, "");
-	        	SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm(request, SearchSimpleForm.SESSION_KEY,
-	                    PortletSession.APPLICATION_SCOPE);
-	        	af.setInput("q", "");
-        	}
 
-        	// Adapt search state to settings of IngridSessionPreferences !!!
-        	// On new search, no temporary stuff from bookmarks etc. should be used !
-            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
-                    IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
-            sessionPrefs.adaptSearchState(request);
+            // set querystring to search state if the delete button was not
+            // pressed
+            if (request.getParameter( "doDeleteQuery" ) == null) {
+                SearchState.adaptSearchState( request, Settings.PARAM_QUERY_STRING, request.getParameter( Settings.PARAM_QUERY_STRING ) );
+            } else {
+                SearchState.adaptSearchState( request, Settings.PARAM_QUERY_STRING, "" );
+                SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm( request, SearchSimpleForm.SESSION_KEY, PortletSession.APPLICATION_SCOPE );
+                af.setInput( "q", "" );
+            }
+
+            // Adapt search state to settings of IngridSessionPreferences !!!
+            // On new search, no temporary stuff from bookmarks etc. should be
+            // used !
+            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences( request, IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class );
+            sessionPrefs.adaptSearchState( request );
 
             // check if submit or requery or delete query
-            if (request.getParameter("doSetQuery") == null && request.getParameter("doDeleteQuery") == null) {
+            if (request.getParameter( "doSetQuery" ) == null && request.getParameter( "doDeleteQuery" ) == null) {
                 // redirect to our page wih parameters for bookmarking
-                actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));
-            }
-
-        } else if (action.equalsIgnoreCase(PARAMV_ACTION_NEW_DATASOURCE)) {
-            String newDatasource = request.getParameter(Settings.PARAM_DATASOURCE);
-
-            // adapt SearchState (base for generating URL params for render
-            // request):
-            // - set datasource
-            SearchState.adaptSearchState(request, Settings.PARAM_DATASOURCE, newDatasource);
-
-            // don't populate action form, this is no submit, so no form
-            // parameters are in request !
-            // TODO use JavaScript to submit form on datasource change ! then
-            // populate ActionForm,
-            // in that way we don't loose query changes on data source change,
-            // when changes weren't submitted before
-
-            // redirect to MAIN page with parameters for bookmarking, ONLY IF
-            // WE'RE "ON MAIN PAGE"
-            // Otherwise go to startpage of extended search for selected
-            // datasource without support for bookmarking !
-            if (getDefaultViewPage().equals(TEMPLATE_SEARCH_SIMPLE)) {
-                // we're in main search
-                actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)));
-            } else {
-                // we're in extended search
-                if (newDatasource.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ENV));
-                } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ADR));
-                } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_RES));
-                } else if (newDatasource.equals(Settings.PARAMV_DATASOURCE_LAW)) {
-                    actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_LAW));
-                }
-            }
-
-        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_SETTINGS)) {
-            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_SETTINGS + SearchState.getURLParamsMainSearch(request)));
-
-        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_HISTORY)) {
-            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_HISTORY + SearchState.getURLParamsMainSearch(request)));
-
-        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SAVE_QUERY)) {
-            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SAVE_QUERY + SearchState.getURLParamsMainSearch(request)));
-
-        } else if (action.equalsIgnoreCase(PARAMV_ACTION_SEARCH_EXTENDED)) {
-            String currentDatasource = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
-            if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_ENVINFO)) {
-                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ENV));
-            } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_ADDRESS)) {
-                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_ADR));
-            } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_RESEARCH)) {
-                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_RES));
-            } else if (currentDatasource.equals(Settings.PARAMV_DATASOURCE_LAW)) {
-                actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_SEARCH_EXT_LAW));
+                actionResponse.sendRedirect( actionResponse.encodeURL( Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch( request ) ) );
             }
         }
     }
@@ -509,18 +331,17 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
      * @param queryString
      * @return null if OK, otherwise "Error Code" (for resourceBundle)
      */
-    private String setUpQuery(PortletRequest request, String queryString) {
+    private String setUpQuery(PortletRequest request, String queryString, boolean isInitial) {
         // Create IngridQuery
         IngridQuery query = null;
         try {
-            query = QueryStringParser.parse(queryString);
+            query = QueryStringParser.parse( queryString );
         } catch (Throwable t) {
             if (log.isDebugEnabled()) {
-                log.debug("Problems creating IngridQuery, parsed query string: " + queryString, t);
+                log.debug( "Problems creating IngridQuery, parsed query string: " + queryString, t );
             } else {
-                log.debug("Problems creating IngridQuery, parsed query string: " + queryString + ". switch to log level debug to see the exeption details.");
+                log.debug( "Problems creating IngridQuery, parsed query string: " + queryString + ". switch to log level debug to see the exeption details." );
             }
-
             return "searchSimple.error.queryFormat";
         }
 
@@ -533,9 +354,11 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // is used in
         // simpleTermsPortlet and also in resultPortlet to determine whether
         // query should be executed !
-        SearchState.adaptSearchState(request, Settings.MSG_QUERY, query);
-        SearchState.adaptSearchState(request, Settings.PARAM_QUERY_STRING, queryString);
-
+        SearchState.adaptSearchState( request, Settings.MSG_QUERY, query );
+        if(!isInitial){
+            SearchState.adaptSearchState( request, Settings.PARAM_QUERY_STRING, queryString );
+        }
+        
         return null;
     }
 }

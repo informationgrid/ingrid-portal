@@ -34,6 +34,7 @@ define([
     "dojo/dom-class",
     "dojo/dom-style",
     "dojox/validate",
+    "dojox/widget/Standby",
     "dijit/registry",
     "dijit/Tooltip",
     "dijit/form/Button",
@@ -60,7 +61,7 @@ define([
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/validation"
-], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, validate,
+], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, validate, Standby,
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
             UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog,
@@ -186,6 +187,40 @@ define([
                 registry.byId("objectClass").onChange = lang.hitch(igeEvents, igeEvents.selectUDKClass);
 
                 layoutCreator.createFilteringSelect("objectOwner", null, storeProps, null);
+                var owner = registry.byId("objectOwner");
+                
+                // show a busy state when lazy loading data
+                var standby = new Standby({target: "objectOwner"});
+                document.body.appendChild(standby.domNode);
+            	standby.startup();
+                
+                /* make select box lazy loading */
+                owner.isLoaded = function() {
+	            	return this._isLoaded;
+	            }
+                owner._startSearchFromInput = function() {
+                	this.item = undefined;
+	            	if (this.isLoaded()) {
+	            		this._startSearch(this.focusNode.value);
+	            	} else {
+	            		standby.show();
+	            		UtilCatalog.updateResponsibleUserObjectList(currentUdk).then( lang.hitch( this, function() {
+	            			standby.hide();
+		            		this._isLoaded = true;
+		            		this._startSearch(this.focusNode.value);
+	            		} ) );
+	            	}
+	            }
+                owner.loadDropDown = function(/*Function*/ loadCallback){
+                	standby.show();
+                	UtilCatalog.updateResponsibleUserObjectList(currentUdk).then( lang.hitch( this, function() {
+                		standby.hide();
+	            		this._isLoaded = true;
+	            		this._startSearchAll(); 
+	            	} ) );
+	    		};
+                
+                
             },
 
             createGeneralInfo: function() {

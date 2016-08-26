@@ -1,31 +1,39 @@
 #set ($action = $renderResponse.createActionURL())
 <form action="$action" method="post" name="frmAdminUserMigration" id="frmAdminUserMigration">
-	<div class="formbody formbody_border_style">
-		<p>
-		<textarea rows="30" cols="125" id="xmlData" name="xmlData">$!xmlData</textarea>
-		</p>
-	</div>
-<div class="formfooter formfooter_border_style" align="right">
-   	#renderInputButtonClass("Export" "" "doExport" "" "float_right")
-</div>
+    <div class="box box--fill box--small">
+        <div class="box__content ob-container">
+            <p>
+                <textarea rows="30" cols="125" id="xmlData" name="xmlData">$!xmlData</textarea>
+            </p>
+        </div>
+    </div>
+    <div class="media__obj media__obj--right">
+        #renderInputButtonClass("Export" "width:100%" "doExport" "" "btn btn--secondary btn--small")
+    </div>
 </form>
+<span class="mq-hide-l">&nbsp;</span>
 <form action="$action" method="post" name="frmAdminUserMigrationImport" id="frmAdminUserMigrationImport">
-	<div class="formbody formbody_border_style">
-		<p>
-		$MESSAGES.getString('account.view.path.file')<br/><br/>
-		<input type="text" id="path" name="path" size="100"></input>
-		</p>
-		#if($sqlStatements)
-    		<p>$MESSAGES.getString('account.view.sql.tip')</p>
-    		<p>
-			#foreach ($sql in $sqlStatements)
-    			$!sql<br/>
-			#end
-			</p>
-		#end	
-			
-	</div>
-<div class="formfooter formfooter_border_style" align="right">
-   	#renderInputButtonClass("Import" "" "doImport" "" "float_right")
-</div>
+    <div class="box box--fill box--small">
+        <div class="box__content ob-container">
+            <div class="media">
+                <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                    <label for="path">$MESSAGES.getString('account.view.path.file')</label>
+                </div>
+                <div class="media__body">
+                    <input type="text" id="path" name="path" size="100"></input>
+                </div>
+            </div>
+            #if($sqlStatements)
+                <p>$MESSAGES.getString('account.view.sql.tip')</p>
+                <p>
+                #foreach ($sql in $sqlStatements)
+                    $!sql<br/>
+                #end
+                </p>
+            #end
+        </div>
+    </div>
+    <div class="media__obj media__obj--right">
+        #renderInputButtonClass("Import" "width:100%" "doImport" "" "btn btn--secondary btn--small")
+    </div>
 </form>

@@ -289,10 +289,10 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().contains("CRS:84"), is( true ));
         assertThat(result.getCoupledResources().get(0).getRef1SpatialSystemTable().contains("EPSG 4230: ED50 / geographisch"), is( true ));        
         assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().size(), is(1));
-        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLatitude1(), is(41.75));
-        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLongitude1(), is(-71.63));
-        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLatitude2(), is(42.90));
-        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLongitude2(), is(-70.78));
+        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLatitude1(), is(-71.63));
+        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLongitude1(), is(41.75));
+        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLatitude2(), is(-70.78));
+        assertThat(result.getCoupledResources().get(0).getSpatialRefLocationTable().get(0).getLongitude2(), is(42.90));
         assertThat(result.getCoupledResources().get(1).getRef1ObjectIdentifier(), is("78910"));
         assertThat(result.getCoupledResources().get(1).getTitle(), is("Roads at 1:1M scale"));
         assertThat(result.getCoupledResources().get(1).getGeneralDescription(), is("Roads at a scale of 1 to 1 million."));
@@ -376,10 +376,10 @@ public class GetCapabilitiesServiceTest {
         // these coordinates did not need a transformation
         assertThat(result.getBoundingBoxes().size(), is(1));
         assertThat(result.getBoundingBoxes().get(0).getName(), is("Raumbezug von: Naturschutz"));
-        assertThat(result.getBoundingBoxes().get(0).getLatitude1(), is(51.2575719691118));
-        assertThat(result.getBoundingBoxes().get(0).getLongitude1(), is(6.32836880550564));
-        assertThat(result.getBoundingBoxes().get(0).getLatitude2(), is(54.0294452991844));
-        assertThat(result.getBoundingBoxes().get(0).getLongitude2(), is(11.6580524828798));
+        assertThat(result.getBoundingBoxes().get(0).getLatitude1(), is(6.32836880550564));
+        assertThat(result.getBoundingBoxes().get(0).getLongitude1(), is(51.2575719691118));
+        assertThat(result.getBoundingBoxes().get(0).getLatitude2(), is(11.6580524828798));
+        assertThat(result.getBoundingBoxes().get(0).getLongitude2(), is(54.0294452991844));
         
         assertThat(result.getAddress().getFirstname(), is("Dorothea"));
         assertThat(result.getAddress().getLastname(), is("Pielke"));

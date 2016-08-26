@@ -1,7 +1,4 @@
-      <div class="formfooter formfooter_border_style">
-        <div align="right">
 $action.setParameter('action','doOriginalSettings')
-          <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('admin.action.reset')</a></span>
-          #renderInputButtonClass("$MESSAGES.getString('common.form.button.save')" "" "" "" "float_right")
-        </div>
-      </div>
+<div class="media__obj media__obj--right">
+    #renderInputButtonClass("$MESSAGES.getString('common.form.button.save')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--medium")
+</div>

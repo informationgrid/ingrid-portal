@@ -55,21 +55,21 @@ import de.ingrid.utils.query.TermQuery;
  * @author joachim@wemove.com
  */
 public class DisplayTreeFactory {
-	
-	// keys for accessing node data
-	static private String NODE_LEVEL = "level"; 
-	static private String NODE_PLUG_TYPE = "plugType"; 
-	static private String NODE_PLUG_ID = "plugId"; 
-	static private String NODE_DOC_ID = "docId"; 
-	static private String NODE_UDK_DOC_ID = "udk_docId"; 
-	static private String NODE_UDK_CLASS = "udk_class"; 
-	static private String NODE_EXPANDABLE = "expandable"; 
+    
+    // keys for accessing node data
+    static private String NODE_LEVEL = "level"; 
+    static private String NODE_PLUG_TYPE = "plugType"; 
+    static private String NODE_PLUG_ID = "plugId"; 
+    static private String NODE_DOC_ID = "docId"; 
+    static private String NODE_UDK_DOC_ID = "udk_docId"; 
+    static private String NODE_UDK_CLASS = "udk_class"; 
+    static private String NODE_EXPANDABLE = "expandable"; 
 
     public static DisplayTreeNode getTreeFromQueryTerms(IngridQuery query) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
         if (query == null) {
-        	return root;
+            return root;
         }
         TermQuery[] terms = UtilsSearch.getAllTerms(query);
         terms = UtilsSearch.removeDoubleTerms(terms);
@@ -234,54 +234,61 @@ public class DisplayTreeFactory {
 
         String partnerRestriction = PortalConfig.getInstance().getString(
                 PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
+        boolean hiddenCatalogName = PortalConfig.getInstance().getBoolean(
+                PortalConfig.PORTAL_HIERARCHY_CATALOGNAME_HIDDEN, false);
         
         for (int i = 0; i < plugs.length; i++) {
-        	PlugDescription plug = plugs[i];
+            PlugDescription plug = plugs[i];
 
-            String[] partners = plug.getPartners();
-            StringBuffer partnerNameBuffer = new StringBuffer("");
-            for (int j = 0; j < partners.length; j++) {
-            	partnerNameBuffer.append(UtilsDB.getPartnerFromKey(partners[j]));
-            }
-
-            // Partner node
-            String partnerName = partnerNameBuffer.toString();
-            if (partnerNode == null || 
-            		!partnerNode.getName().equals(partnerName)) {
-                partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);            	
-                partnerNode.setType(DisplayTreeNode.GENERIC);
-                partnerNode.put(NODE_LEVEL, new Integer(1));
-                partnerNode.put(NODE_EXPANDABLE, new Boolean(true));
-                // no "plugid", no "docid" !
-                if(partnerRestriction == null || partnerRestriction.length() < 1){
-                	partnerNode.setParent(root);
-                    root.addChild(partnerNode);
+            if(hiddenCatalogName == false){
+                String[] partners = plug.getPartners();
+                StringBuffer partnerNameBuffer = new StringBuffer("");
+                for (int j = 0; j < partners.length; j++) {
+                    partnerNameBuffer.append(UtilsDB.getPartnerFromKey(partners[j]));
+                }
+    
+                // Partner node
+                String partnerName = partnerNameBuffer.toString();
+                if (partnerNode == null || 
+                        !partnerNode.getName().equals(partnerName)) {
+                    partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);                
+                    partnerNode.setType(DisplayTreeNode.GENERIC);
+                    partnerNode.put(NODE_LEVEL, new Integer(1));
+                    partnerNode.put(NODE_EXPANDABLE, new Boolean(true));
+                    // no "plugid", no "docid" !
+                    if(partnerRestriction == null || partnerRestriction.length() < 1){
+                        partnerNode.setParent(root);
+                        root.addChild(partnerNode);
+                    }
+                    
                 }
                 
+                // catalog node
+                String catalogName = plug.getDataSourceName();
+                if (catalogNode == null || 
+                        !catalogNode.getName().equals(catalogName)) {
+                    catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);                
+                    catalogNode.setType(DisplayTreeNode.GENERIC);
+                    catalogNode.put(NODE_LEVEL, new Integer(2));
+                    catalogNode.put(NODE_EXPANDABLE, new Boolean(true));
+                    // no "plugid", no "docid" !
+                     if(partnerRestriction != null && partnerRestriction.length() > 0){
+                         catalogNode.setParent(root);
+                         root.addChild(catalogNode);
+                     }else{
+                        catalogNode.setParent(partnerNode);
+                         partnerNode.addChild(catalogNode);
+                     }
+                    
+                }
             }
-            
-            // catalog node
-            String catalogName = plug.getDataSourceName();
-            if (catalogNode == null || 
-            		!catalogNode.getName().equals(catalogName)) {
-            	catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);            	
-            	catalogNode.setType(DisplayTreeNode.GENERIC);
-            	catalogNode.put(NODE_LEVEL, new Integer(2));
-            	catalogNode.put(NODE_EXPANDABLE, new Boolean(true));
-                // no "plugid", no "docid" !
-            	 if(partnerRestriction != null && partnerRestriction.length() > 0){
-             		catalogNode.setParent(root);
-             		root.addChild(catalogNode);
-                 }else{
-                	catalogNode.setParent(partnerNode);
-                 	partnerNode.addChild(catalogNode);
-                 }
-            	
-            }
-
             // iPlug Node
             String name = "searchCatHierarchy.tree.unknown";
             String type = null;
+            if(hiddenCatalogName){
+                catalogNode = root;
+            }
+            
             if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS) && IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
                 name = "searchCatHierarchy.tree.objects";
                 type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
@@ -290,13 +297,13 @@ public class DisplayTreeFactory {
                 type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
                 addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
             } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
-            	name = "searchCatHierarchy.tree.objects";
-            	type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
-            	addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
+                name = "searchCatHierarchy.tree.objects";
+                type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
+                addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
             } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-            	name = "searchCatHierarchy.tree.addresses";
-            	type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
-            	addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
+                name = "searchCatHierarchy.tree.addresses";
+                type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
+                addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
             }
         }
         return root;
@@ -320,8 +327,8 @@ public class DisplayTreeFactory {
         String plugId = (String) nodeToOpen.get(NODE_PLUG_ID);
 
         if (plugType == null || plugId == null) {
-        	// no iplug node, is parent folder
-        	return;
+            // no iplug node, is parent folder
+            return;
         }
 
         // get ALL children (IngridHits)
@@ -333,25 +340,25 @@ public class DisplayTreeFactory {
         PlugDescription pd = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
         CatalogTreeDataProvider ctdp = CatalogTreeDataProviderFactory.getDetailDataPreparer(IPlugVersionInspector.getIPlugVersion(pd));
         
-		if (udkDocId == null) {
-			hits = ctdp.getTopEntities(plugId, plugType);
-		} else {
-			hits = ctdp.getSubEntities(udkDocId, plugId, plugType, null);			
-		}
+        if (udkDocId == null) {
+            hits = ctdp.getTopEntities(plugId, plugType);
+        } else {
+            hits = ctdp.getSubEntities(udkDocId, plugId, plugType, null);            
+        }
 
-		// keys for extracting data
-    	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+        // keys for extracting data
+        if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
             key_udkDocId = Settings.HIT_KEY_OBJ_ID;
             key_udkClass = Settings.HIT_KEY_UDK_CLASS;
 
-    	} else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+        } else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
             key_udkDocId = Settings.HIT_KEY_ADDRESS_ADDRID;
             key_udkClass = Settings.HIT_KEY_ADDRESS_CLASS;
-    	}
+        }
 
         // set up according children nodes in tree
-    	int parentLevel = ((Integer) nodeToOpen.get(NODE_LEVEL)).intValue();
-    	int childrenLevel = parentLevel + 1;
+        int parentLevel = ((Integer) nodeToOpen.get(NODE_LEVEL)).intValue();
+        int childrenLevel = parentLevel + 1;
         ArrayList childNodes = new ArrayList(hits.size());
         Iterator it = hits.iterator();
         while (it.hasNext()) {
@@ -363,19 +370,19 @@ public class DisplayTreeFactory {
             String nodeName = detail.getTitle();
             // different node text, when person
             if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-            	if (udkClass.equals("2") || udkClass.equals("3")) {
-            		String[] titleElements = new String[] {
-                		UtilsSearch.getDetailValue(detail, "T02_address.address_value"),
-            			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRESS),
-            			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_TITLE),
-            			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_FIRSTNAME),
-            			UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME)
-            		};
-            		String personStr =  UtilsString.concatStringsIfNotNull(titleElements, " ");
-            		if (personStr != null && personStr.length() > 0) {
-            			nodeName = personStr;
-            		}
-            	}
+                if (udkClass.equals("2") || udkClass.equals("3")) {
+                    String[] titleElements = new String[] {
+                        UtilsSearch.getDetailValue(detail, "T02_address.address_value"),
+                        UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRESS),
+                        UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_TITLE),
+                        UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_FIRSTNAME),
+                        UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME)
+                    };
+                    String personStr =  UtilsString.concatStringsIfNotNull(titleElements, " ");
+                    if (personStr != null && personStr.length() > 0) {
+                        nodeName = personStr;
+                    }
+                }
             }
 
             // check whether child node has children as well -> request only 1 child !
@@ -437,9 +444,9 @@ public class DisplayTreeFactory {
                 String aName = ((DisplayTreeNode) a).getName().toLowerCase();
                 String bName = ((DisplayTreeNode) b).getName().toLowerCase();
 
-            	// Get the collator for the German Locale (for correct sorting of ä,ö,ü ...)  
-            	Collator germanCollator = Collator.getInstance(Locale.GERMAN);
-            	return germanCollator.compare(aName, bName);
+                // Get the collator for the German Locale (for correct sorting of ä,ö,ü ...)  
+                Collator germanCollator = Collator.getInstance(Locale.GERMAN);
+                return germanCollator.compare(aName, bName);
             } catch (Exception e) {
                 return 0;
             }

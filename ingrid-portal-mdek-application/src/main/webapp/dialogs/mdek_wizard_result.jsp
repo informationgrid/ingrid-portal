@@ -980,7 +980,7 @@ require([
                             UtilUI.updateBlockerDivInfo( "layers" );
                             def.resolve( bean );
                         },
-                        errorHandler:function(message) { console.log("errorHandler::"+message); UtilUI.updateBlockerDivInfo( "layers" ); displayErrorMessage(message);},
+                        errorHandler:function(message) { console.log("errorHandler::"+message); UtilUI.removeBlockerDivInfo( "layers" ); UtilUI.exitLoadingState(); displayErrorMessage(message);},
                         exceptionHandler:function(errorString) {
                             // try to create the dataset a second later if backend was busy
                             if (errorString.indexOf( "[USER_HAS_RUNNING_JOBS]" ) != -1) {
@@ -990,6 +990,8 @@ require([
                                 console.log( "exceptionHandler::"+errorString );
                                 displayErrorMessage(errorString);
                             }
+                            UtilUI.removeBlockerDivInfo( "layers" );
+                            UtilUI.exitLoadingState();
                         }
                     });
                 } );

@@ -2472,21 +2472,33 @@
                                         <button id="buttonGetAddressFromParent">
                                             <fmt:message key="ui.adr.details.buttonInherit" />
                                         </button>
-                            </div>
+                                    </div>
                                 </span>
                             </div>
-                        <span id="uiElement4440" class="outer optional">
-                            <div>
-                                <span class="label">
-                                    <label for="addressTasks" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4440)">
-                                        <fmt:message key="ui.adr.details.tasks" />
-                                    </label>
-                                </span>
-                                <span class="input">
-                                    <input type="text" id="addressTasks" />
-                                </span>
-                            </div>
-                        </span>
+	                        <span id="uiElement4440" class="outer optional">
+	                            <div>
+	                                <span class="label">
+	                                    <label for="addressTasks" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4440)">
+	                                        <fmt:message key="ui.adr.details.tasks" />
+	                                    </label>
+	                                </span>
+	                                <span class="input">
+	                                    <input type="text" id="addressTasks" />
+	                                </span>
+	                            </div>
+	                        </span>
+	                        <span id="uiElement4450" class="outer optional">
+                                <div>
+                                    <span class="label">
+                                        <label for="addressHoursOfService" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4450)">
+                                            <fmt:message key="ui.adr.details.addressHoursOfService" />
+                                        </label>
+                                    </span>
+                                    <span class="input">
+                                        <input type="text" id="addressHoursOfService" />
+                                    </span>
+                                </div>
+                            </span>
                         </div>
                         <div class="fill"></div>
                     </div>

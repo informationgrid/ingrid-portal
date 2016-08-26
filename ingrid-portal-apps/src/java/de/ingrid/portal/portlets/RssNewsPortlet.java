@@ -65,19 +65,24 @@ public class RssNewsPortlet extends GenericVelocityPortlet
 
         // read preferences
         PortletPreferences prefs = request.getPreferences();
+        String helpKey = prefs.getValue( "helpKey", "");
+        context.put( "helpKey", helpKey );
 
-        int noOfEntriesDisplayed = Integer.parseInt(prefs.getValue("startWithEntry", "3"));
-        
+        /*
+        int noOfEntriesDisplayed = Integer.parseInt(prefs.getValue("startWithEntry", "4"));
+        */
         /* used number of entries from ingrid-portal-apps.properties if property portal.rss.news.number is define */
+        /*
         if(PortalConfig.getInstance().getString(PortalConfig.PORTAL_RSS_NEWS_NUMBER) != null){
-        	noOfEntriesDisplayed = Integer.parseInt((PortalConfig.getInstance().getString(PortalConfig.PORTAL_RSS_NEWS_NUMBER)));
+            noOfEntriesDisplayed = Integer.parseInt((PortalConfig.getInstance().getString(PortalConfig.PORTAL_RSS_NEWS_NUMBER)));
         }
+        */
         
         List rssEntries = null;
         
         try {
             tx = session.beginTransaction();
-            rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).setFirstResult(noOfEntriesDisplayed).list();
+            rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).list();
             tx.commit();
         } catch (Throwable t) {
             if (tx != null) {

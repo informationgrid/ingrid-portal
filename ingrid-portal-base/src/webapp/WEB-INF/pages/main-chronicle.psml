@@ -11,27 +11,15 @@
   <metadata name="meta_descr">ingrid.page.chronicle.meta.description</metadata>
   <metadata name="meta_keywords">ingrid.page.chronicle.meta.keywords</metadata>
 
-  <fragment id="main-chronicle" type="layout" name="jetspeed-layouts::IngridTwoColumns">
+  <fragment id="main-chronicle" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="main-chronicle-input" type="portlet" name="ingrid-portal-apps::ChronicleSearch">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="0" />
+      <property layout="OneColumn" name="row" value="0" />
       <preference name="helpKey" readOnly="false">
         <value>search-chronicle-1</value>
       </preference>
     </fragment>
-    <fragment id="main-chronicle-results" type="portlet" decorator="clear" name="ingrid-portal-apps::ChronicleResult">
-      <property layout="TwoColumns" name="row" value="1" />
-      <property layout="TwoColumns" name="column" value="0" />
-    </fragment>
-    <fragment id="main-chronicle-info" type="portlet" decorator="ingrid-marginal-header" name="ingrid-portal-apps::InfoPortlet">
-      <property layout="TwoColumns" name="row" value="0" />
-      <property layout="TwoColumns" name="column" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/chronicle_info_new.vm</value>
-      </preference>
-      <preference name="titleKey" readOnly="false">
-        <value>chronicleSearch.info.title</value>
-      </preference>
+    <fragment id="main-chronicle-results" type="portlet" name="ingrid-portal-apps::ChronicleResult">
+      <property layout="OneColumn" name="row" value="1" />
     </fragment>
   </fragment>
 

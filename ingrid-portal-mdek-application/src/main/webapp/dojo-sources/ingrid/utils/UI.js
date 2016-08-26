@@ -206,6 +206,14 @@ define([
                 this.enterLoadingState();
             }
         },
+        
+        removeBlockerDivInfo: function(id) {
+        	var waitInfo = dom.byId( "waitInfo" );
+        	if (waitInfo) {
+	        	construct.destroy( "waitInfo_" + id );
+	            delete waitInfo.data[id];
+        	}
+        },
 
         initBlockerDivInfo: function(/* STRING */id, /* INTEGER */max, /* STRING */text, /* INTEGER */current) {
             var waitInfo = dom.byId( "waitInfo" );

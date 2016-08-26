@@ -1,0 +1,48 @@
+/*
+ *  Molecule: Filter
+ *______________________*/
+
+
+
+
+.filter {
+
+}
+
+.filter__title {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+
+    .no-touchevents &:hover {
+        color: color(fruit-salad);
+    }
+}
+
+.filter__title__icon {
+    fill: color(dim-grey);
+    font-size: rem(12px);
+    transform: scaleY(1);
+    
+    .sidebar & {
+        position: absolute;
+        right: rem(10px);
+        top: rem(18px);
+    }
+
+    .is-active > & {
+        transform: scaleY(-1);
+    }
+}
+
+.filter__checks {
+    border-bottom: 1px solid color(gainsboro);
+    
+    .field-toggle{
+        margin-top: (16px);
+    }
+    
+    .field-toggle__label{
+        border: none;
+    }
+}

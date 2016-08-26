@@ -98,10 +98,6 @@
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://dev.informationgrid.eu/newsletter</loc>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
         <loc>https://dev.informationgrid.eu/datenschutzbestimmung</loc>
         <changefreq>monthly</changefreq>
     </url>

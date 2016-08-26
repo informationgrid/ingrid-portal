@@ -1,0 +1,98 @@
+/*
+ *  Molecule/UI: Sidebar Filter
+ *______________________*/
+
+
+.sidebar__filter{
+    .field-toggle--check{
+        display: block;
+    }
+
+    .field-toggle__label--highlight{
+        margin-bottom: rem(16px);
+    }
+
+    .icon-xs{
+        vertical-align: inherit;
+    }
+}
+
+.sidebar-filter-header{
+    border-bottom: 1px solid color(gainsboro);
+    color: color(black);
+    font-family: $font-brand;
+    font-size: rem(18px);
+    font-weight: 700;
+    margin: 0;
+    padding: rem(8px) 0;
+    position: relative;
+
+    .icon{
+        bottom: rem(12px);
+        fill: color(dim-grey);
+        position: absolute;
+        right: 0;
+    }
+}
+
+.is-active > .sidebar-header-icon{
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.sidebar-filter-subheader{
+    border-bottom: 1px solid color(gainsboro);
+    color: color(black);
+    cursor: pointer;
+    font-size: rem(14px);
+    padding: rem(12px) 0;
+
+    .no-touchevents &:hover {
+        color: color(fruit-salad);
+    }
+
+    &.is-active{
+        font-weight: 700;
+    }
+
+    .icon{
+        fill: color(dim-grey);
+        font-size: 12px;
+        left: 0;
+        position: relative;
+        top: 0;
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+}
+
+.is-active > .sidebar-subheader-icon{
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.sidebar-filter-content{
+    padding-left: rem(16px);
+
+    li{
+        margin-top: rem(12px);
+    }
+
+    ul a{
+        color: color(black);
+
+        .no-touchevents &:hover {
+            color: color(fruit-salad);
+        }
+    }
+}
+
+.sidebar-filter-content-icon{
+    fill: color(dim-grey);
+    font-size: rem(12px);
+    position: relative;
+    top: 0;
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    left: 0;
+}

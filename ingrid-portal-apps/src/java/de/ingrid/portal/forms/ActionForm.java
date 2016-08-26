@@ -211,6 +211,9 @@ public abstract class ActionForm implements Serializable {
         return errors.containsKey(field);
     }
 
+    public String getErrorInField(String field) {
+        return (String) errors.get(field);
+    }
     /**
      * Return all encapsulated error messages. Remove empty error messages !
      * NOTICE: empty error messages ("") can be added for a field, so the field

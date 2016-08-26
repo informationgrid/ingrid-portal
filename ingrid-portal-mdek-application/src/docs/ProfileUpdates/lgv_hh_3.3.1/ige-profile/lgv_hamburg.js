@@ -23,50 +23,13 @@
 // JS Code für LGV HH 3.3.1 zum Hinzufügen in "Gesamtkatalogmanagement -> Zusätzliche Felder"
 
 // ========================================================================================================================
-// Defaultwerte bei neuem Objekt der Objektklasse "Geodatensatz" (REDMINE-119)
-// TODO:
-//   - nachfolgendes Javascript (JS) hinzufügen z.B. in 1. Feld "Allgemeines - Kurzbezeichnung"
-// ========================================================================================================================
-// ------------------------
-// JS
-// ------------------------
-// default values when creating new objects of class 1 - geodata (REDMINE-119)
-dojo.subscribe("/onObjectClassChange", function(data) { 
-    if (currentUdk.uuid === "newNode" && data.objClass === "Class1") { 
-        dijit.byId("ref1BasisText").set("value", "keine Angabe");
-        dijit.byId("ref1DataSet").set("value", "5"); // "Datensatz"
-        UtilGrid.setTableData("thesaurusInspire", [{title: 99999}]); // "Kein INSPIRE-Thema"
-        UtilGrid.setTableData("extraInfoConformityTable", [{specification:"INSPIRE-Richtlinie", level:3}]); // "nicht evaluiert"
-        UtilGrid.setTableData("ref1SpatialSystem", [{title:"EPSG 25832: ETRS89 / UTM Zone 32N"}]);
-        dijit.byId("availabilityDataFormatInspire").set("value", "Geographic Markup Language (GML)");
-    }
-});
-
-
-// ========================================================================================================================
 // Zusätzliches Feld -> Checkbox: "Veröffentlichung gemäß HmbTG" (REDMINE-192)
 // TODO:
 // - Zusätzliches Feld anlegen unter "Allgemeines - Kategorien"
 //   - Checkbox (Id:'publicationHmbTG', Sichtbarkeit:anzeigen, Beschriftung:'Veröffentlichung gemäß HmbTG', Hilfetext:?)
 //   - nachfolgendes Javascript (JS) und IDF-Mapping hinzufügen
 // ========================================================================================================================
-// ------------------------
-// JS
-// ------------------------
-dojo.connect(dijit.byId("publicationHmbTG"), "onChange", function(isChecked) {
-    if (isChecked) {
-        dojo.addClass("uiElementAddInformationsgegenstand", "required");
-    } else {
-        dojo.removeClass("uiElementAddInformationsgegenstand", "required");
-    }
-});
 
-// tick checkbox if "open data" has been selected (REDMINE-194)
-dojo.connect(dijit.byId("isOpenData"), "onClick", function() {
-    if (this.checked) {
-        dijit.byId("publicationHmbTG").set("value", true);
-    }
-});
 
 // ------------------------
 // IDF
@@ -87,8 +50,16 @@ if (contentLabel && contentLabel.size() > 0) {
     var isChecked = contentLabel.get(0).get("data") == "true";
     if (isChecked) {
         
+        var objRow = SQL.first("SELECT obj_class FROM t01_object WHERE id=?", [id]);
+        var objClass = objRow.get("obj_class");
+
         var i;
-        var dataIdentification = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification");
+        var dataIdentification;
+        if (objClass.equals("3")) {
+            dataIdentification = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/srv:SV_ServiceIdentification");
+        } else {
+            dataIdentification = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification");
+        }
         
         var path = ["gmd:resourceFormat", "gmd:graphicOverview", "gmd:resourceMaintenance","gmd:pointOfContact", "gmd:status","gmd:credit","gmd:purpose"];
         
@@ -218,93 +189,8 @@ if ( contentLabel && contentLabel.size() > 0) {
 // ========================================================================================================================
 // Wenn "OpenData" gesetzt, dann neues Keyword "#opendata_hh#" und Felder ein-/ausblenden ... (REDMINE-117)
 // TODO:
-//   - nachfolgendes Javascript (JS) hinzufügen z.B. in Feld "Allgemeines - Open Data"
 //   - nachfolgendes IDF-Mapping hinzufügen (z.B. in neuem Zusätzlichem Feld, das immer versteckt wird !)
 // ========================================================================================================================
-// ------------------------
-// JS
-// ------------------------
-var openDataAddressCheck = null;
-
-dojo.connect(dijit.byId("isOpenData"), "onChange", function(isChecked) {
-    
-    if (this.checked) {
-        // add check for address of type publisher (Herausgeber) when publishing
-        // we check name and not id cause is combo box ! id not adapted yet if not saved !
-        openDataAddressCheck = dojo.subscribe("/onBeforeObjectPublish", function(/*Array*/notPublishableIDs) {
-            // get name of codelist entry for entry-id "10" = "publisher"/"Herausgeber"
-            var entryNamePublisher = UtilSyslist.getSyslistEntryName(505, 10);
-        
-            // check if entry already exists in table
-            var data = UtilGrid.getTableData("generalAddress");
-            var containsPublisher = dojo.some(data, function(item) { if (item.nameOfRelation == entryNamePublisher) return true; });
-            if (!containsPublisher)
-                notPublishableIDs.push("generalAddress");
-        });
-        
-        // SHOW mandatory fields ONLY IF EXPANDED !
-        dojo.addClass("uiElement5064", "showOnlyExpanded"); // INSPIRE-Themen
-        dojo.addClass("uiElement3520", "showOnlyExpanded"); // Fachliche Grundlage
-        dojo.addClass("uiElement5061", "showOnlyExpanded"); // Datensatz/Datenserie
-        dojo.addClass("uiElement3565", "showOnlyExpanded"); // Datendefizit
-        dojo.addClass("uiElementN006", "showOnlyExpanded"); // Geothesaurus-Raumbezug
-        dojo.addClass("uiElement3500", "showOnlyExpanded"); // Raumbezugssystem
-        dojo.addClass("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
-        dojo.addClass("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
-        dojo.addClass("uiElementN024", "showOnlyExpanded"); // Konformität
-        dojo.addClass("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
-        
-    } else {
-        // unregister from check for publisher address
-        if (openDataAddressCheck)
-            dojo.unsubscribe(openDataAddressCheck);
-
-        // ALWAYS SHOW mandatory fields !
-        dojo.removeClass("uiElement5064", "showOnlyExpanded"); // INSPIRE-Themen
-        dojo.removeClass("uiElement3520", "showOnlyExpanded"); // Fachliche Grundlage
-        dojo.removeClass("uiElement5061", "showOnlyExpanded"); // Datensatz/Datenserie
-        dojo.removeClass("uiElement3565", "showOnlyExpanded"); // Datendefizit
-        dojo.removeClass("uiElementN006", "showOnlyExpanded"); // Geothesaurus-Raumbezug
-        dojo.removeClass("uiElement3500", "showOnlyExpanded"); // Raumbezugssystem
-        dojo.removeClass("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
-        dojo.removeClass("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
-        dojo.removeClass("uiElementN024", "showOnlyExpanded"); // Konformität
-        dojo.removeClass("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
-
-        // Tab containers may be rendered for the first time and needs to be layouted
-        igeEvents.refreshTabContainers();
-    }
-    
-});
-
-dojo.connect(dijit.byId("isOpenData"), "onClick", function() {
-    
-    if (this.checked) {
-        // set publication condition to Internet
-        dijit.byId("extraInfoPublishArea").attr("value", 1, true);
-
-        // set Anwendungseinschränkungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
-        var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
-        dijit.byId("availabilityUseConstraints").attr("value", entryNameLicense, true);
-
-    } else {
-        // remove "keine" from access constraints
-        var data = UtilGrid.getTableData('availabilityAccessConstraints');
-        var posToRemove = 0;
-        var entryExists = dojo.some(data, function(item) {
-            if (item.title == "keine") {
-                return true;
-            }
-            posToRemove++;
-        });
-        if (entryExists) {
-            UtilGrid.removeTableDataRow('availabilityAccessConstraints', [posToRemove]);
-        }
-
-        // remove license set when open data was clicked
-        dijit.byId("availabilityUseConstraints").attr("value", "");
-    }
-});
 
 // ------------------------
 // IDF
@@ -320,33 +206,10 @@ if (!(sourceRecord instanceof DatabaseSourceRecord)) {
 
 //var id = sourceRecord.get(DatabaseSourceRecord.ID);
 // add "#opendata_hh#" keyword if opendata keyword set ! (opendata keyword is set if checkbox Open Data activated !
-var openDataKeyword = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[gco:CharacterString='opendata']");
-var openDataKeywordHH = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[gco:CharacterString='#opendata_hh#']");
+var openDataKeyword = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[gco:CharacterString='opendata']");
+var openDataKeywordHH = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[gco:CharacterString='#opendata_hh#']");
 if (openDataKeyword && !openDataKeywordHH) {
     var hhKeyword = openDataKeyword.addElementAsSibling("gmd:keyword");
     hhKeyword.addElement("gco:CharacterString").addText("#opendata_hh#");
 }
 
-// ========================================================================================================================
-// Zusätzlicher Javascript Code für "Open Data"-Checkbox (REDMINE-315)
-// ========================================================================================================================
-// ------------------------
-// JS
-// ------------------------
-dojo.subscribe("/afterInitDialog/LinksDialog", function() {
-
-    var handleRequiredOfFileFormat = function(typeName) {
-        var typeKey = UtilSyslist.getSyslistEntryKey(2000, typeName);
-        var container = require("dojo/dom").byId("uiElement2240");
-
-        // If "Datendownload" then make it required
-        if (typeKey == 9990) {
-            dojo.addClass(container, "required");
-        } else {
-            dojo.removeClass(container, "required");
-        }
-    };
-
-    dojo.connect(dijit.byId("linksFromFieldName"), "onChange", handleRequiredOfFileFormat);
-
-});

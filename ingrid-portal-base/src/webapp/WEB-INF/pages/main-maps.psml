@@ -1,8 +1,8 @@
 <page>
   <defaults
      skin="orange"
-     layout-decorator="ingrid-plain"
-     portlet-decorator="clear"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-clear"
   />
   <title>ingrid.page.maps.tooltip</title>
   <short-title>ingrid.page.maps</short-title>
@@ -11,12 +11,15 @@
   <metadata name="meta_keywords">ingrid.page.maps.meta.keywords</metadata>
 
 
-<fragment id="main-maps" type="layout" name="jetspeed-layouts::IngridClearLayout">
+  <fragment id="main-maps" type="layout" name="jetspeed-layouts::IngridClearLayout">
     <fragment id="main-maps-1" type="portlet" name="ingrid-portal-apps::ShowMapsPortlet">
       <property layout="OneColumn" name="row" value="0" />
+      <preference name="helpKey" readOnly="false">
+        <value>maps-1</value>
+      </preference>
     </fragment>
-</fragment>
- <security-constraints>
+  </fragment>
+  <security-constraints>
     <security-constraints-ref>public-view</security-constraints-ref>
   </security-constraints>
 </page>

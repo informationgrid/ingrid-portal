@@ -1,41 +1,62 @@
-#set ($MESSAGES = $portletConfig.getResourceBundle($renderRequest.Locale))
+#set($disableTitle = $jetspeed.getPreferenceFirstValue($f, "disableTitle"))
 
-#set($decoration = $f.decoration)
-#set($actions = $decoration.actions)
-#set($_actions = $layoutDecoration.actions)
+##Default style values
+#set($titleTag = "h2")
+#set($titleStyle = "bx-top-0")
+#set($sectionStyle = "")
+#set($divStyle = "ob-box-wide ob-box-padded ob-box-center")
+#set($articleStyle = "content ob-container")
 
-## Begin: Fragment: ${f.id} Decoration: ${decoratorId}
-<div id="${f.id}" class="section">
-    <div class="section-header">
-        #set($akey = $jetspeed.getPreferenceFirstValue($f, "titleKey")) 
-        #if($akey && $akey.length() > 0)
-            <a name="$akey"></a>
-        #end
-        <h1>$!jetspeed.getTitle($f)</h1>
-        <span class="portlet_info">
-        #set($hkey = $jetspeed.getPreferenceFirstValue($f, "helpKey")) 
-        #if($hkey && $hkey.length() > 0)
-            #set($hpath = "${jetspeed.basePath}/help.psml?hkey=$hkey")
-            #if($MESSAGES)
-                #set($hTitle = $MESSAGES.getString('ingrid.page.help.link.title'))
-            #else
-                ## try to get it form the preferences as it was done with the titleKey and helpKey
-                #set($hTitle = $jetspeed.getPreferenceFirstValue($f, "helpToolTip"))
+## Jetspeed style values
+#set($titleTagJetspeed = $jetspeed.getPreferenceFirstValue($f, 'titleTag'))
+#if($titleTagJetspeed && $titleTagJetspeed.length() > 0)
+    #set($titleTag = $titleTagJetspeed)
+#end
+
+#set($titleStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'titleStyle'))
+#if($titleStyleJetspeed && $titleStyleJetspeed.length() > 0)
+    #set($titleStyle = $titleStyleJetspeed)
+#end
+
+#set($sectionStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'sectionStyle'))
+#if($sectionStyleJetspeed && $sectionStyleJetspeed.length() > 0)
+    #set($sectionStyle = $sectionStyleJetspeed)
+#end
+
+#set($divStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'divStyle'))
+#if($divStyleJetspeed && $divStyleJetspeed.length() > 0)
+    #set($divStyle = $divStyleJetspeed)
+#end
+
+#set($articleStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'articleStyle'))
+#if($articleStyleJetspeed && $articleStyleJetspeed.length() > 0)
+    #set($articleStyle = $articleStyleJetspeed)
+#end
+
+<section id="${f.id}" class="block $sectionStyle">
+    <div class="$divStyle">
+        <article class="$articleStyle">
+            #set($akey = $jetspeed.getPreferenceFirstValue($f, "titleKey")) 
+            #if($akey && $akey.length() > 0)
+                <a name="$akey"></a>
             #end
-        <script language="JavaScript" type="text/javascript">
-            document.write("<a href=\"javascript:ingrid_openWindow('$hpath',950,550);\" title=\"$hTitle\">&nbsp;</a>");
-        </script>
-        <noscript>
-            <a href="$hpath" target="_new" title="$hTitle">&nbsp;</a>
-        </noscript>
-        #end
-        </span>
-        <span class="clearer"></span>
+            #if($disableTitle != 1 && $!jetspeed.getTitle($f) && $!jetspeed.getTitle($f).trim().length() > 0)
+            <$titleTag class="$titleStyle">
+                $!jetspeed.getTitle($f)
+                <!--
+                #set($helpkey = $jetspeed.getPreferenceFirstValue($f, "helpKey"))
+                #if($helpkey)
+                    <div class="tooltip ob-circle js-popup" data-content="<p>Lorem ipsum dolor sit amet, consectetur adipsiicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><p><a href=&quot;#&quot;>Read more</a></p>">
+                        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
+                    </div>
+                #end
+                -->
+            </$titleTag>
+            #end
+            #if (!$jetspeed.isHidden($f) || $jetspeed.WindowState != "minimized")
+                $f.renderedContent
+            #end
+        </article>
     </div>
-    #if (!$jetspeed.isHidden($f) || $jetspeed.WindowState != "minimized")
-    $f.renderedContent
-    #end
-</div>
+</section>
 ## END: Fragment: ${f.id} Decoration: ${decoratorId}
-
-

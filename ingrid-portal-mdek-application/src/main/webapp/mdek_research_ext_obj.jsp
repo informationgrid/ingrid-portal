@@ -143,7 +143,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
             });
         
         
-            on(registry.byId("objTimeRef1"), "onChange", function(value) {displayTimeToInput(value);});
+            on(registry.byId("objTimeRef1"), "change", function(value) {displayTimeToInput(value);});
             registry.byId("objTimeRef1").setValue("am");
         
             aspect.after(pageNav, "onPageSelected", startSearch);

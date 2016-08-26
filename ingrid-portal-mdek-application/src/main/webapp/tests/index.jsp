@@ -78,6 +78,7 @@
 
 <script type='text/javascript' src='../dwr/interface/SNSService.js'></script>
 <script type='text/javascript' src='../dwr/interface/TreeService.js'></script>
+<script type='text/javascript' src='../dwr/interface/SecurityService.js'></script>
 <script type="text/javascript" src="../js/error_handler.js"></script>
 
 

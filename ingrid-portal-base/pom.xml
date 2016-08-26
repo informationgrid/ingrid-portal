@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>3.6.2.1</version>
+    <version>4.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -19,6 +19,29 @@
     <finalName>ingrid-portal</finalName>
     <sourceDirectory>src/java</sourceDirectory>
     <plugins>
+
+    <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/scripts/leaflet/**/*</exclude>
+            <exclude>**/scripts/pickadate/**/*</exclude>
+            <exclude>**/css/datepicker/**/*</exclude>
+            <exclude>**/css/streamline-24px/**/*</exclude>
+            <exclude>**/css/streamline-24px-filled-in/**/*</exclude>
+            <exclude>**/fastclick.min.js</exclude>
+            <exclude>**/jquery-2.1.4.min.js</exclude>
+            <exclude>**/modernizr.custom.min.js</exclude>
+            <exclude>**/fastclick.min.js</exclude>
+            <exclude>**/*.properties</exclude>
+            <exclude>**/*.json</exclude>
+            <exclude>**/*.sql</exclude>
+            <exclude>**/*.xml</exclude>
+            <exclude>**/*.xsl</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
 
       <!-- Overlay war with jetspeed stuff -->
       <plugin>
@@ -149,7 +172,31 @@
           </execution>
         </executions>
       </plugin>
-
+      <plugin>
+          <groupId>nl.geodienstencentrum.maven</groupId>
+          <artifactId>sass-maven-plugin</artifactId>
+          <version>2.17</version>
+          <executions>
+              <execution>
+                  <phase>prepare-package</phase>
+                  <goals>
+                      <goal>update-stylesheets</goal>
+                  </goals>
+              </execution>
+          </executions>
+          <configuration>
+              <resources>
+                  <resource>
+                      <!-- Set source and destination dirs -->
+                      <source>
+                          <directory>${project.basedir}/src/webapp/decorations/layout/ingrid/css</directory>
+                      </source>
+                      <destination>${project.build.directory}/${project.build.finalName}/decorations/layout/ingrid/css</destination>
+                  </resource>
+              </resources>
+              <outputName>styles.css</outputName>
+          </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>

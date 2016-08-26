@@ -1,21 +1,12 @@
-      <div class="resultset_nav">
-#if ($IS_RANKED)
-	## RANKED (left column stuff)
-	#if($grouping)
-		#if($grouping == 'domain')
-			#renderRankedPageNavigationGroupingWithPages($rankedPageSelector)
-		#else
-			#renderRankedPageNavigationGrouping($rankedPageSelector)
-		#end
+<div class="pagination bx-top-m mq-hide-l">
+## RANKED (left column stuff)
+#if($grouping)
+	#if($grouping == 'domain')
+		#renderRankedPageNavigationGroupingWithPages($rankedPageSelector)
 	#else
-		#renderRankedPageNavigation($rankedPageSelector)
+		#renderRankedPageNavigationGrouping($rankedPageSelector)
 	#end
 #else
-	## UNRANKED (right column stuff)
-	#if($grouping_right)
-		#renderUnrankedPageNavigationGrouping($unrankedPageSelector)
-	#else
-		#renderUnrankedPageNavigation($unrankedPageSelector)
-	#end
+	#renderRankedPageNavigation($rankedPageSelector)
 #end
-      </div>
+</div>

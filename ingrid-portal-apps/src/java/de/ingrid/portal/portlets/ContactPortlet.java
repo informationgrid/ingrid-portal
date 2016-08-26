@@ -72,7 +72,6 @@ import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.jcaptcha.CaptchaServiceSingleton;
 import de.ingrid.portal.om.IngridCMS;
 import de.ingrid.portal.om.IngridCMSItem;
-import de.ingrid.portal.om.IngridNewsletterData;
 
 public class ContactPortlet extends GenericVelocityPortlet {
 
@@ -138,8 +137,6 @@ public class ContactPortlet extends GenericVelocityPortlet {
         	context.put("contactIntroPostEmail", localizedItem.getItemValue());
         }
         
-        // show newsletter option if configured that way
-        context.put("enableNewsletter", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_NEWSLETTER, Boolean.TRUE));
 
         // ----------------------------------
         // check for passed RENDER PARAMETERS and react
@@ -275,41 +272,6 @@ public class ContactPortlet extends GenericVelocityPortlet {
                          mailData.put("user.interest.in.enviroment.info", messages
                                  .getString("contact.report.email.interest.in.enviroment.info."
                                          + cf.getInput(ContactForm.FIELD_INTEREST)));
-                         if (cf.hasInput(ContactForm.FIELD_NEWSLETTER)) {
-                             Session session = HibernateUtil.currentSession();
-                             Transaction tx = null;
-
-                             try {
-
-                                 mailData.put("user.subscribed.to.newsletter", "yes");
-                                 // check for email address in newsletter list
-                                 tx = session.beginTransaction();
-                                 List newsletterDataList = session.createCriteria(IngridNewsletterData.class).add(
-                                         Restrictions.eq("emailAddress", cf.getInput(ContactForm.FIELD_EMAIL))).list();
-                                 tx.commit();
-                                 // register for newsletter if not already registered
-                                 if (newsletterDataList.isEmpty()) {
-                                     IngridNewsletterData data = new IngridNewsletterData();
-                                     data.setFirstName(cf.getInput(ContactForm.FIELD_FIRSTNAME));
-                                     data.setLastName(cf.getInput(ContactForm.FIELD_LASTNAME));
-                                     data.setEmailAddress(cf.getInput(ContactForm.FIELD_EMAIL));
-                                     data.setDateCreated(new Date());
-
-                                     tx = session.beginTransaction();
-                                     session.save(data);
-                                     tx.commit();
-                                 }
-                             } catch (Throwable t) {
-                                 if (tx != null) {
-                                     tx.rollback();
-                                 }
-                                 throw new PortletException(t.getMessage());
-                             } finally {
-                                 HibernateUtil.closeSession();
-                             }
-                         } else {
-                             mailData.put("user.subscribed.to.newsletter", "no");
-                         }
                          mailData.put("message.body", cf.getInput(ContactForm.FIELD_MESSAGE));
 
                          Locale locale = request.getLocale();
