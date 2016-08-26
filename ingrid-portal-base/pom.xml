@@ -20,6 +20,29 @@
     <sourceDirectory>src/java</sourceDirectory>
     <plugins>
 
+    <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/scripts/leaflet/**/*</exclude>
+            <exclude>**/scripts/pickadate/**/*</exclude>
+            <exclude>**/css/datepicker/**/*</exclude>
+            <exclude>**/css/streamline-24px/**/*</exclude>
+            <exclude>**/css/streamline-24px-filled-in/**/*</exclude>
+            <exclude>**/fastclick.min.js</exclude>
+            <exclude>**/jquery-2.1.4.min.js</exclude>
+            <exclude>**/modernizr.custom.min.js</exclude>
+            <exclude>**/fastclick.min.js</exclude>
+            <exclude>**/*.properties</exclude>
+            <exclude>**/*.json</exclude>
+            <exclude>**/*.sql</exclude>
+            <exclude>**/*.xml</exclude>
+            <exclude>**/*.xsl</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+
       <!-- Overlay war with jetspeed stuff -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
