@@ -16,7 +16,7 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
-    <measurement.client.version>1.0.0</measurement.client.version>
+    <measurement.client.version>1.0.1-SNAPSHOT</measurement.client.version>
   </properties>
   <build>
     <finalName>ingrid-portal-apps</finalName>
