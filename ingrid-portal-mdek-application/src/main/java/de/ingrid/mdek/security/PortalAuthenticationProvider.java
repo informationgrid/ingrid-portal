@@ -94,12 +94,19 @@ public class PortalAuthenticationProvider implements AuthenticationProvider {
         } else {
             ses = req.getSession();
         }
-        
+
         ServletContext ctx = ses.getServletContext().getContext("/ingrid-portal-mdek");
 
         String forcedIgeUser = null;
         if (ctx != null) {
-            forcedIgeUser = (String) ctx.getAttribute("ige.force.userName");
+            // ID of session is shared between contexts /ingrid-portal-mdek and /ingrid-portal-mdek-application
+            // due to set sessionCookiePath="/" in context files !
+            // see https://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Common_Attributes
+            // But NO session attributes are transferred. So we set the "forced user" as context attribute
+            // with the session id, so forced users are bound to session !!!
+            // Is set as context attribute in ingrid-portal-mdek MdekAdminLoginPortlet.processActionIgeLogin() ! 
+            String sharedSessionId = ses.getId();
+            forcedIgeUser = (String) ctx.getAttribute("ige.force.userName:" + sharedSessionId);
         }
         return forcedIgeUser;
     }
