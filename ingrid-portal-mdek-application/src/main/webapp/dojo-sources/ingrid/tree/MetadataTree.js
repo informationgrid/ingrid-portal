@@ -161,6 +161,15 @@ define("ingrid/tree/MetadataTree", [
         
         refreshChildren: function(/*TreeNode*/node) {
             var self = this;
+            
+            // remove all children, which can contain other nodes which need to be updated
+            // this will also collapse all children
+            node.setChildItems([]);
+            
+            // also remove any children loaded inside the cache, so that when a node is expanded
+            // new data is requested instead of showing old state
+            self.model.childrenCache = {};
+            
             return this.model.store.getChildren(node.item).then(function(updatedChildren) {
                 try {
                     array.forEach(updatedChildren, function(copiedNode) {
