@@ -157,9 +157,6 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                     .getRequest().getSession(true);
 
             frm.populate(request);
-            if (!frm.validate()) {
-                return;
-            }
 
             if (frm.getInput(LoginConstants.DESTINATION) != null)
                 session.setAttribute(LoginConstants.DESTINATION, frm.getInput(LoginConstants.DESTINATION));
