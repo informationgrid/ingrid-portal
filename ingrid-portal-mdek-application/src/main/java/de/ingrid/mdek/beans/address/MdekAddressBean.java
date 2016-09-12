@@ -67,6 +67,7 @@ public class MdekAddressBean {
 	private String nameForm;
 	private String titleOrFunction;
 	private String street;
+	private String administrativeArea;
 	private Integer countryCode;
 	private String countryName;
 	private String postalCode;
@@ -505,5 +506,13 @@ public class MdekAddressBean {
 
     public void setHoursOfService(String hoursOfService) {
         this.hoursOfService = hoursOfService;
+    }
+
+    public String getAdministrativeArea() {
+        return administrativeArea;
+    }
+
+    public void setAdministrativeArea(String administrativeArea) {
+        this.administrativeArea = administrativeArea;
     }
 }

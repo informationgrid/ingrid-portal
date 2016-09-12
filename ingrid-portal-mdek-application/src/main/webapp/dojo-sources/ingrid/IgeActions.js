@@ -1611,6 +1611,7 @@ define([
 
             // ------------------ Address and Function ------------------
             registry.byId("addressStreet").attr("value", nodeData.street, true);
+            registry.byId("addressAdministrativeArea").attr("value", nodeData.administrativeArea, true);
             registry.byId("addressCountry").attr("value", nodeData.countryCode == -1 ? null : nodeData.countryCode, true);
             registry.byId("addressZipCode").attr("value", nodeData.postalCode, true);
             registry.byId("addressCity").attr("value", nodeData.city, true);
@@ -2194,6 +2195,7 @@ define([
 
             // ------------------ Address and Function ------------------
             nodeData.street = registry.byId("addressStreet").get("value");
+            nodeData.administrativeArea = registry.byId("addressAdministrativeArea").get("value");
             nodeData.countryCode = registry.byId("addressCountry").get("value");
             nodeData.countryName = registry.byId("addressCountry").get("displayedValue");
             //UtilList.getSelectDisplayValue(registry.byId("addressCountry"), registry.byId("addressCountry").get('value'));//registry.byId("addressCountry").getDisplayValue();

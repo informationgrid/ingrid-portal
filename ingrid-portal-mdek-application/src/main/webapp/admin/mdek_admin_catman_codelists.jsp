@@ -58,7 +58,7 @@
 
             
             var MAINTAINABLE_LIST_IDS = [];
-            var CAN_SET_DEFAULT_LIST_IDS = [1350, 1370];
+            var CAN_SET_DEFAULT_LIST_IDS = [1350, 1370, 6250];
             var IDS_WITH_DATA_COLUMNS = ["1100"];
 
             createDOMElements();
