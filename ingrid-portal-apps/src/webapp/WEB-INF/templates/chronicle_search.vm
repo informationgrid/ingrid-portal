@@ -61,10 +61,10 @@
         <h4>#displayFieldLabel('time_select' "$MESSAGES.getString('chronicle.form.time')")</h4>
         <div class="media ob-clear">
             <div class="media__obj--left">
-                <label for="at_yy">Auswahl</label>
+                <label for="at_yy">$MESSAGES.getString('chronicle.form.time.select')</label>
                 <select class="field js-selection" id="at_yy" name="time_select">
-                    <option id="vonbis" value="period" class="selection-options #if($actionForm.isCurrentInput('time_select', 'period')) is-active" selected #else " #end >von: ... bis: </option>
-                    <option id="am" value="date" class="selection-options #if($actionForm.isCurrentInput('time_select', 'date')) is-active" selected #else " #end >am: </option>
+                    <option id="vonbis" value="period" class="selection-options #if($actionForm.isCurrentInput('time_select', 'period')) is-active" selected #else " #end >$MESSAGES.getString('chronicle.form.time.select.fromto')</option>
+                    <option id="am" value="date" class="selection-options #if($actionForm.isCurrentInput('time_select', 'date')) is-active" selected #else " #end >$MESSAGES.getString('chronicle.form.time.select.at')</option>
                 </select>
             </div>
             <div class="media__obj--left">
