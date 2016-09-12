@@ -93,11 +93,11 @@ define(["dojo/_base/declare",
                 }
             };
 
-            on(minWidget, "change", maxWidget, function() {
-                this.validate();
+            on(minWidget, "change", function() {
+                maxWidget.validate();
             });
-            on(maxWidget, "change", minWidget, function() {
-                this.validate();
+            on(maxWidget, "change", function() {
+                minWidget.validate();
             });
         },
 

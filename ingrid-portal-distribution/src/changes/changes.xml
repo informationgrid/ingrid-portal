@@ -12,6 +12,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-416">
                 IGE: Fixed reloading of tree including all sub nodes.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-422">
+                IGE: Fixed validation of spatial reference height.
+            </action>
         </release>
 
         <release version="4.0.0" date="2016-08-26" description="Release 4.0.0">
