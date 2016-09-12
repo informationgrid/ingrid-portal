@@ -1767,6 +1767,7 @@ define([
             UtilAddress.addAddressTitles(addressTable);
             UtilList.addAddressLinkLabels(addressTable);
             UtilStore.updateWriteStore("generalAddress", addressTable);
+            registry.byId("isAdvCompatible").attr("value", nodeData.advCompatible, false);
 
             // Comments
             var commentData = UtilList.addDisplayDates(nodeData.commentTable);
@@ -2297,6 +2298,8 @@ define([
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
             nodeData.objectClass = registry.byId("objectClass").get("value").substr(5, 1); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
+            nodeData.advCompatible = registry.byId("isAdvCompatible").checked ? true : false; // in case value is NULL!
+            
             // Comments
             nodeData.commentTable = currentUdk.commentStore;
 
