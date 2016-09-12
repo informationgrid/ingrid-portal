@@ -75,6 +75,7 @@ public class MdekDataBean {
 	private List<MdekAddressBean> generalAddressTable;
 	private List<CommentBean> commentTable;
 	private Boolean openData;
+	private Boolean advCompatible;
 	private List<String> openDataCategories;
 
 	// Spatial
@@ -2027,5 +2028,15 @@ public class MdekDataBean {
 
     public void setAvailabilityUseAccessConstraints(List<String> availabilityUseAccessConstraints) {
         this.availabilityUseAccessConstraints = availabilityUseAccessConstraints;
+    }
+
+
+    public Boolean getAdvCompatible() {
+        return advCompatible  == null ? false : advCompatible;
+    }
+
+
+    public void setAdvCompatible(Boolean advCompatible) {
+        this.advCompatible = advCompatible;
     }
 }

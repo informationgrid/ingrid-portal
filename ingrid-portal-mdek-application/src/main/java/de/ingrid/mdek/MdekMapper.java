@@ -112,6 +112,8 @@ public class MdekMapper implements DataMapperInterface {
         if (responsibleUser != null) {
             mdekObj.setObjectOwner(responsibleUser.getUuid());
         }
+        
+        mdekObj.setAdvCompatible( "Y".equals(obj.get(MdekKeys.IS_ADV_COMPATIBLE)) ? true : false );
 
         // QA Fields
         MdekAddressBean assignerUser = getDetailedAddressRepresentation((IngridDocument) obj.get(MdekKeys.ASSIGNER_USER));
@@ -748,6 +750,7 @@ public class MdekMapper implements DataMapperInterface {
         IngridDocument responsibleUser = new IngridDocument();
         responsibleUser.put(MdekKeys.UUID, data.getObjectOwner());
         udkObj.put(MdekKeys.RESPONSIBLE_USER, responsibleUser);
+        udkObj.put(MdekKeys.IS_ADV_COMPATIBLE, data.getAdvCompatible());
         
         // extrahieren des int Wertes für die Objekt-Klasse
         udkObj.put(MdekKeys.CLASS, data.getObjectClass());

@@ -299,6 +299,7 @@ define([
 
                 new CheckBox({}, "isInspireRelevant");
                 new CheckBox({}, "isOpenData");
+                new CheckBox({}, "isAdvCompatible");
                 // show open data checkbox only for specific classes
                 rules.applyRuleOpenData();
 

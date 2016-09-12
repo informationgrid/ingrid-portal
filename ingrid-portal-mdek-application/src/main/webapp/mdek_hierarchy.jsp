@@ -315,6 +315,11 @@
                                     <input type="checkbox" id="isInspireRelevant" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6000)"><fmt:message key="ui.obj.general.inspireRelevant" /></label>
                                 </div>
                             </span>
+                            <span id="uiElement6005" class="outer">
+                                <div class="input checkboxContainer">
+                                    <input type="checkbox" id="isAdvCompatible" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6005)"><fmt:message key="ui.obj.general.advCompatible" /></label>
+                                </div>
+                            </span>
                             <span id="uiElement6010" class="outer halfWidth">
                                 <div class="input checkboxContainer">
                                     <input type="checkbox" id="isOpenData" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6010)"><fmt:message key="ui.obj.general.openData" /></label>
