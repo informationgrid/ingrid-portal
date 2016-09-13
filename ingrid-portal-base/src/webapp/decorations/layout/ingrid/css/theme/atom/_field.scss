@@ -66,7 +66,13 @@ label {
 
     + .picker{
         margin-top: rem(-20px);
-        width: 50%;
+        width: 90%;
+        @include media(
+        $query: '640 >',
+            $css: (
+            width: 50%
+            )
+            );
     }
 
     + .media{
