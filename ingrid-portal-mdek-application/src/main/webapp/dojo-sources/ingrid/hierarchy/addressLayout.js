@@ -242,6 +242,10 @@ define([
                 return UtilSyslist.getSyslistEntry(6200);
             });
             
+            layoutCreator.createComboBox("addressAdministrativeArea", null, lang.clone(storeProps), function(){
+                return UtilSyslist.getSyslistEntry(6250);
+            });
+            
             var button = new Button({}, "buttonGetAddressFromParent");
             on(button, "Click", lang.hitch(igeEvents, igeEvents.getAddressDataFromParent));
             

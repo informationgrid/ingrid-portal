@@ -2461,7 +2461,19 @@
                                             </span>
                                         </div>
                                     </span>
-                                    <span id="uiElement4405" class="outer" style="width:100%;">
+                                    <span id="uiElement4435" class="outer halfWidth">
+                                        <div>
+                                            <span id="addressAdministrativeAreaLabel" class="label">
+                                                <label for="addressAdministrativeArea" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4435)">
+                                                    <fmt:message key="ui.adr.details.administrativeArea" />
+                                                </label>
+                                            </span>
+                                            <span class="input">
+                                                <input autoComplete="false" style="width:100%;" listId="6200" maxHeight="200" id="addressAdministrativeArea" />
+                                            </span>
+                                        </div>
+                                    </span>
+                                    <span id="uiElement4405" class="outer halfWidth">
                                         <div>
                                             <span id="addressCountryLabel" class="label">
                                                 <label for="addressCountry" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4405)">

@@ -972,6 +972,7 @@ define({
 	"ui.sysList.6020":"Availability - Usage Limitations",
 	"ui.sysList.6100":"INSPIRE-Topics",
 	"ui.sysList.6200":"ISO code list countries",
+	"ui.sysList.6250":"Administrative Areas",
 	"ui.sysList.6300":"INSPIRE - data format",
 	"ui.sysList.6400":"Categories (Open Data)",
 	"ui.sysList.6500":"Licences",

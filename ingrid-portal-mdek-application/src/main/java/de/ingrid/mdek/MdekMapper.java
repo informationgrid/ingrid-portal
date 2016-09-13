@@ -471,6 +471,7 @@ public class MdekMapper implements DataMapperInterface {
 
         mdekAddress.setNameForm(mapToKeyValuePair(adr, MdekKeys.NAME_FORM_KEY, MdekKeys.NAME_FORM).getValue());
         mdekAddress.setTitleOrFunction(mapToKeyValuePair(adr, MdekKeys.TITLE_OR_FUNCTION_KEY, MdekKeys.TITLE_OR_FUNCTION).getValue());
+        mdekAddress.setAdministrativeArea(mapToKeyValuePair(adr, MdekKeys.ADMINISTRATIVE_AREA_CODE, MdekKeys.ADMINISTRATIVE_AREA_NAME).getValue());
         mdekAddress.setCountryName(mapToKeyValuePair(adr, MdekKeys.COUNTRY_CODE, MdekKeys.COUNTRY_NAME).getValue());
         mdekAddress.setHideAddress("Y".equals(adr.get(MdekKeys.HIDE_ADDRESS)) ? true : false);
 
@@ -700,6 +701,13 @@ public class MdekMapper implements DataMapperInterface {
             udkAdr.put(MdekKeys.TITLE_OR_FUNCTION, kvp.getValue());
             udkAdr.put(MdekKeys.TITLE_OR_FUNCTION_KEY, kvp.getKey());
         }
+        
+        kvp = mapFromKeyValue(MdekKeys.ADMINISTRATIVE_AREA_CODE, data.getAdministrativeArea());
+        if (kvp.getValue() != null || kvp.getKey() != -1) {
+            udkAdr.put(MdekKeys.ADMINISTRATIVE_AREA_NAME, kvp.getValue());
+            udkAdr.put(MdekKeys.ADMINISTRATIVE_AREA_CODE, kvp.getKey());
+        }
+        
         kvp = mapFromKeyValue(MdekKeys.COUNTRY_CODE, data.getCountryName());
         if (kvp.getValue() != null || kvp.getKey() != -1) {
             udkAdr.put(MdekKeys.COUNTRY_NAME, kvp.getValue());
@@ -998,6 +1006,9 @@ public class MdekMapper implements DataMapperInterface {
         }
         if (null == addr.getCountryCode()) {
             addr.setCountryCode(sysListMapper.getInitialKeyFromListId(6200));
+        }
+        if (null == addr.getAdministrativeArea()) {
+            addr.setAdministrativeArea(sysListMapper.getInitialValueFromListId(6250));
         }
     }
 
