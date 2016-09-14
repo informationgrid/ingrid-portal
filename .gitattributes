@@ -21,3 +21,6 @@
 *.eot binary
 *.ttf binary
 *.woff binary
+*.dmp binary
+*.exe binary
+
