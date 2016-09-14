@@ -11,3 +11,9 @@
 *.gif binary
 *.ico binary
 *.svg binary
+*.jar binary
+*.zip binary
+*.gz binary
+*.tar binary
+*.psd binary
+*.dll binary
