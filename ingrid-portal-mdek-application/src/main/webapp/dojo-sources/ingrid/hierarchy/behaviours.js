@@ -44,6 +44,27 @@ define(["dojo/_base/declare",
 
     return declare(null, {
         
+        advCompatible : {
+            title : "AdV kompatibel",
+            description : "Wenn aktiviert, dann muss jeder Ansprechpartner in einem Datensatz ein Verwaltungsgebiet eingetragen haben, bevor dieser veröffentlicht werden kann.",
+            defaultActive : true,
+            run : function() {
+                topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                    var pointOfContacts = UtilGrid.getTableData("generalAddress").filter(function(row) { return row.typeOfRelation === 7 });
+                    pointOfContacts.forEach(function(contact) {
+                        if (!contact.administrativeArea || contact.administrativeArea.trim().length === 0) {
+                            notPublishableIDs.push( ["generalAddress", "Bitte ergänzen Sie das Verwaltungsgebiet in mind. einer Adresse der Rolle 'Ansprechpartner'."] );
+                        }
+                    });
+                });
+                
+                
+                // TODO: AdV-Produktgruppe wird bei Aktivierung der Checkbox "AdV kompatibel" verpflichtend.
+                
+                // TODO: Bei De-Aktivierung der Checkbox "AdV kompatibel" sollten die Einträge der Produktgruppe wieder entfernt werden
+            }
+        },
+        
         inspireIsoConnection: {
             title: "Inspire / ISO - Connection",
             description: "Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Thema hinzugefügt. " +

@@ -103,6 +103,7 @@ require([
             renderTextWithTitle(previewImageUrlOld, previewImageUrlNew, "<fmt:message key='ui.obj.general.previewImage' />");
 
             renderTextWithTitle(nodeDataOld.inspireRelevant ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", nodeDataNew.inspireRelevant ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.inspireRelevant' />");
+            renderTextWithTitle(nodeDataOld.advCompatible ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", nodeDataNew.advCompatible ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.advCompatible' />");
             renderTextWithTitle(nodeDataOld.openData ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", nodeDataNew.openData ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.openData' />");
             renderList(nodeDataOld.openDataCategories, nodeDataNew.openDataCategories, "<fmt:message key='ui.obj.general.categoriesOpenData' />");
 
