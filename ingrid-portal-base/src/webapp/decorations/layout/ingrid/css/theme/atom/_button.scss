@@ -75,14 +75,21 @@
     @include media(
         $query: '< 480',
         $css: (
-            padding: rem(4px 8px) 0
+            padding: rem(8px)
         )
     );
 
     @include media(
         $query: '480 - 640',
         $css: (
-            padding: rem(10px 14px 6px) 
+            padding: rem(14px) 
+        )
+    );
+
+    @include media(
+        $query: '640 >',
+        $css: (
+            padding: rem(8px) 
         )
     );
 
