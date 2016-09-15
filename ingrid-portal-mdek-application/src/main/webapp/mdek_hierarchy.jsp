@@ -310,12 +310,20 @@
                                     </div>
                                 </div></div>
                             </span>
-                            <span id="uiElement6000" class="outer">
-                                <div class="input checkboxContainer">
+                            <span id="uiElement6000" class="outer checkboxContainer">
+                                <div class="input checkboxContainer input-inline">
                                     <input type="checkbox" id="isInspireRelevant" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6000)"><fmt:message key="ui.obj.general.inspireRelevant" /></label>
                                 </div>
+                                <span id="uiElement6001" class="hidden">
+                                    <div class="input checkboxContainer input-inline">
+                                        <input type="radio" id="isInspireConform"/><label for="isInspireConform" class="inActive"><fmt:message key="ui.obj.general.inspireConform" /></label>
+                                    </div>
+                                    <div class="input checkboxContainer input-inline">
+                                        <input type="radio" id="notInspireConform" /><label for="notInspireConform" class="inActive"><fmt:message key="ui.obj.general.notInspireConform" /></label>
+                                    </div>
+                                </span>
                             </span>
-                            <span id="uiElement6005" class="outer">
+                            <span id="uiElement6005" class="outer hidden">
                                 <div class="input checkboxContainer">
                                     <input type="checkbox" id="isAdvCompatible" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6005)"><fmt:message key="ui.obj.general.advCompatible" /></label>
                                 </div>

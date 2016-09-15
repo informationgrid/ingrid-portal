@@ -264,6 +264,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setDq127Table(mapToDqTable(127, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
 
             mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)) ? true : false);
             mdekObj.setOpenData(isOpenData);
             mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             
@@ -318,6 +319,7 @@ public class MdekMapper implements DataMapperInterface {
             break;
         case 3:
             mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)) ? true : false);
             mdekObj.setOpenData(isOpenData);
             mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             IngridDocument td3Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
@@ -367,6 +369,7 @@ public class MdekMapper implements DataMapperInterface {
             break;
         case 6:
             mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)) ? true : false);
             mdekObj.setOpenData(isOpenData);
             mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             IngridDocument td6Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
@@ -847,9 +850,9 @@ public class MdekMapper implements DataMapperInterface {
 
         // determine inspire relevant value
         Boolean isInspireRelevant = data.getInspireRelevant();
-        String isInspireRelevantValue = "N";
-        if (isInspireRelevant != null && isInspireRelevant == true)
-            isInspireRelevantValue = "Y";
+        String isInspireRelevantValue = (isInspireRelevant != null && isInspireRelevant == true) ? "Y" : "N";
+        Boolean isInspireConform = data.getInspireConform();
+        String isInspireConformValue = (isInspireConform != null && isInspireConform == true) ? "Y" : "N";
         
         // determine open data value
         Boolean isOpenData = data.getOpenData();
@@ -875,6 +878,7 @@ public class MdekMapper implements DataMapperInterface {
             udkObj.put(MdekKeys.DATA_QUALITY_LIST, dqList);
             
             udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);
+            udkObj.put(MdekKeys.IS_INSPIRE_CONFORM, isInspireConformValue);
             udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
             udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
 
@@ -936,6 +940,7 @@ public class MdekMapper implements DataMapperInterface {
             td3Map.put(MdekKeys.COUPLING_TYPE, data.getRef3CouplingType());
             
             udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);
+            udkObj.put(MdekKeys.IS_INSPIRE_CONFORM, isInspireConformValue);
             udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
             udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
             
@@ -978,6 +983,7 @@ public class MdekMapper implements DataMapperInterface {
             td6Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef6ServiceType());
 
             udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);
+            udkObj.put(MdekKeys.IS_INSPIRE_CONFORM, isInspireConformValue);
             udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
             udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
             

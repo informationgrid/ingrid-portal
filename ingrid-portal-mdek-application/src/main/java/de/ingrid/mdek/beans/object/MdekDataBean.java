@@ -123,6 +123,7 @@ public class MdekDataBean {
 	
 	// Thesaurus
 	private Boolean inspireRelevant;
+	private Boolean inspireConform;
 	private List<Integer> thesaurusInspireTermsList;
 	private List<SNSTopic> thesaurusTermsTable;
 	private List<Integer> thesaurusTopicsList;
@@ -2038,5 +2039,15 @@ public class MdekDataBean {
 
     public void setAdvCompatible(Boolean advCompatible) {
         this.advCompatible = advCompatible;
+    }
+
+
+    public Boolean getInspireConform() {
+        return inspireConform;
+    }
+
+
+    public void setInspireConform(Boolean inspireConform) {
+        this.inspireConform = inspireConform;
     }
 }
