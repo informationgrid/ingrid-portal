@@ -191,7 +191,15 @@ $(function () {
         // We have to use vanilla JS here because jQuery cannot currently manipulate classes on <svg> elements.
         var icons = this.querySelectorAll('.icon');
         for (var i = 0, j = icons.length; i < j; i++) {
-            icons[i].classList.toggle('ob-fade');
+            var icon = icons[i];
+            if(icon.attributes["class"]){
+                var iconClass = icon.attributes["class"].value.trim();
+                if(iconClass.indexOf('ob-fade') > -1){
+                    icon.attributes["class"].value = iconClass.replace('ob-fade', '');
+                }else{
+                    icon.attributes["class"].value = iconClass + ' ob-fade';
+                }
+            }
         }
 
         if (nav.hasClass('is-active')) {
