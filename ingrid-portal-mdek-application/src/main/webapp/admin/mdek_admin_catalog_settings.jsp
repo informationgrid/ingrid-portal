@@ -112,9 +112,16 @@
             
             function removeBehaviours() {
                 for (var behave in behaviour) {
-                    if (!behaviour[behave].title) continue;
+                    var entry = behaviour[behave];
+                    if (!entry.title) continue;
                     var check = registry.byId("behaviour_" + behave);
                     if (check) check.destroy();
+                    if (entry.children) {
+                        for (var child in entry.children) {
+                            var checkChild = registry.byId("behaviour_" + child);
+                            if (checkChild) checkChild.destroy();
+                        }
+                    }
                 }
                 domConstruct.empty("behaviourContent");
             }
@@ -233,12 +240,31 @@
                 for (var behave in behaviour) {
                     var box = registry.byId("behaviour_" + behave);
                     if (box) {
+                        var entry = behaviour[behave];
                         var currentState = box.checked;
-                        if (behaviour[behave].defaultActive !== currentState) {
+                        if (entry.defaultActive !== currentState) {
                             modifiedBehaviours.push({
                                 id: behave,
                                 active: currentState
                             })
+                        }
+                    } else {
+                        var children = behaviour[behave].children;
+                        if (children) {
+                            for (var child in children) {
+                                var boxChild = registry.byId("behaviour_" + child);
+                                if (boxChild) {
+                                    var childEntry = children[child];
+                                    var currentStateChild = boxChild.checked;
+                                    if (childEntry.defaultActive !== currentStateChild) {
+                                        modifiedBehaviours.push({
+                                            id: child,
+                                            parent: behave,
+                                            active: currentStateChild
+                                        })
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -286,17 +312,29 @@
             
             function renderSystemBehaviours() {
                 for (var behave in behaviour) {
-                    if (!behaviour[behave].title) continue;
-                    console.log(behaviour[behave].title);
-                    domConstruct.place( renderRow(behaviour[behave], behave), "behaviourContent" );
+                    var entry = behaviour[behave];
+                    if (!entry.title) continue;
+                    console.log(entry.title);
+                    domConstruct.place( renderRow(entry, behave), "behaviourContent" );
+                    
+                    if (entry.children) {
+                        for (var child in entry.children) {
+                            var childEntry = entry.children[child];
+                            domConstruct.place( renderRow(childEntry, child, true), "behaviourContent" );
+                        }
+                    }
                 }
             }
             
-            function renderRow(data, id) {
-                var row = domConstruct.toDom("<span class='input'></span>");
+            function renderRow(data, id, padding) {
+                var pad = padding ? " intend" : "";
+                var row = domConstruct.toDom("<span class='input" + pad + "'></span>");
                 var label = domConstruct.toDom("<label class='inActive' title='" + data.description + "'></label>");
-                var cb = new CheckBox({id: "behaviour_" + id, checked: data.defaultActive});
-                label.appendChild(cb.domNode);
+                // only render checkbox if it's a real behaviour and not a category
+                if (data.run) {
+                    var cb = new CheckBox({id: "behaviour_" + id, checked: data.defaultActive});
+                    label.appendChild(cb.domNode);
+                }
                 label.appendChild(domConstruct.toDom(data.title));
                 
                 row.appendChild(label);

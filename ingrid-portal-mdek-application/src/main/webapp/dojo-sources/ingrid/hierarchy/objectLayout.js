@@ -2284,17 +2284,33 @@ define([
                 UtilCatalog.getOverrideBehavioursDef().then(function(data) {
                     // mark behaviours with override values
                     array.forEach(data, function(item) {
-                        behaviour[item.id].override = item.active;
+                        if (item.parent) {
+                            behaviour[item.parent].children[item.id].override = item.active;
+                        } else {
+                            behaviour[item.id].override = item.active;
+                        }
                     });
                     for (var behave in behaviour) {
-                        if (!behaviour[behave].title) continue;
+                        var entry = behaviour[behave];
+                        if (!entry.title) continue;
                         // run behaviour if 
                         // 1) activated by default and not overriden
                         // 2) activate if explicitly overriden
-                        if ((behaviour[behave].defaultActive && behaviour[behave].override === undefined)
-                                || (behaviour[behave].override === true)) {
+                        if ((entry.defaultActive && entry.override === undefined)
+                                || (entry.override === true)) {
                             console.debug("execute behaviour: " + behave);
-                            behaviour[behave].run();
+                            entry.run();
+                        }
+                        // check for child behaviours
+                        if (entry.children) {
+                            for (var child in entry.children) {
+                                var childEntry = entry.children[child];
+                                if ((childEntry.defaultActive && childEntry.override === undefined)
+                                        || (childEntry.override === true)) {
+                                    console.debug("execute behaviour: " + child);
+                                    childEntry.run();
+                                }
+                            }
                         }
                     }
                 }, function(error) {
