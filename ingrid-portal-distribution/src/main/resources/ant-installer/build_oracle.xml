@@ -201,9 +201,6 @@
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
-            <transaction src="${updateOracle361}"/>
-            <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
     
@@ -228,9 +225,6 @@
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
-            <transaction src="${updateOracle361}"/>
-            <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
     
@@ -254,9 +248,6 @@
             <transaction src="${updateOracle320d}"/>
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
-            <transaction src="${updateOracle361}"/>
-            <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
     
@@ -276,9 +267,6 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle331}"/>
             <transaction src="${updateOracle341}"/>
-            <transaction src="${updateOracle361}"/>
-            <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
     
@@ -297,9 +285,6 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle341}"/>
-            <transaction src="${updateOracle361}"/>
-            <transaction src="${updateOracle362}"/>
-            <transaction src="${updateOracle400}"/>
         </sql>
     </target>
     
