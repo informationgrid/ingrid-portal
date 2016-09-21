@@ -42,9 +42,9 @@
     <meta name="igc-objektklasse" content="${udkObjClassName}" />
     <meta name="igc-icon" content="https://dev.informationgrid.eu/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
   #end
-  <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
+  <meta name="author" content="$MESSAGES.getString('footer.copyright')" />
   <meta name="keywords" content="" />
-  <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
+  <meta name="copyright" content="$MESSAGES.getString('footer.copyright')" />
   <meta name="robots" content="index,follow" />
   <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
   <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' />

@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div class="footer__top-link mq-show-l js-top">nach oben</div>
+            <div class="footer__top-link mq-show-l js-top">$MESSAGES.getString('footer.top')</div>
         </footer>
         <!-- Popup -->
         <div class="popup">

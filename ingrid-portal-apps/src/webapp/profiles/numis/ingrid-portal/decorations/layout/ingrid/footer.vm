@@ -5,7 +5,7 @@
                     <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
                         <img class="footer__logo" src="#GetPageResource("images/template/mobile-logo.png")"></img>
                     </a>
-                    <p class="copyright">© Niedersächsisches Ministerium für Umwelt, Energie und Klimaschutz</p>
+                    <p class="copyright">$MESSAGES.getString("ingrid.page.copyright")</p>
                 </div>
             </div>
             <hr class="bx-top-0 bx-bot-0">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="footer__top-link mq-show-l js-top">nach oben</div>
+            <div class="footer__top-link mq-show-l js-top">$MESSAGES.getString("ingrid.page.top")</div>
         </footer>
 #end
         <!-- Popup -->
