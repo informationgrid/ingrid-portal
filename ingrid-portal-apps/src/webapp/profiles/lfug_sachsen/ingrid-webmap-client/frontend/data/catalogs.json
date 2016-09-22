@@ -1,18 +1,18 @@
 {
     "topics": [{
-        "defaultBackground": "bgSachsenPortalU",
+        "defaultBackground": "-1307170764",
         "langs": "de,en",
-        "selectedLayers": ["-939320166","676843792","1731380385","-1392156188","76345501","-1307170764"],
+        "selectedLayers": ["-939320166","676843792","1731380385","-1392156188","76345501"],
         "activatedLayers": [],
-        "backgroundLayers": ["bgSachsenPortalU","osmLayer","webatlasde_light","webatlasde_grau"],
+        "backgroundLayers": ["-1307170764","osmLayer","webatlasde_light","webatlasde_grau"],
         "id": "themen"
     },
     {
-        "defaultBackground": "bgSachsenPortalU",
+        "defaultBackground": "-1307170764",
         "langs": "de,en",
-        "selectedLayers": ["-939320166","676843792","1731380385","-1392156188","76345501","-1307170764"],
+        "selectedLayers": ["-939320166","676843792","1731380385","-1392156188","76345501"],
         "activatedLayers": [],
-        "backgroundLayers": ["bgSachsenPortalU","osmLayer","webatlasde_light","webatlasde_grau"],
+        "backgroundLayers": ["-1307170764","osmLayer","webatlasde_light","webatlasde_grau"],
         "id": "anbieter"
     }]
 }
