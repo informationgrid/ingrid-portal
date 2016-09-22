@@ -101,6 +101,7 @@ require([
             var previewImageUrlOld = IgeEvents._filterPreviewImage(nodeDataOld.linksToUrlTable);
             var previewImageUrlNew = IgeEvents._filterPreviewImage(nodeDataNew.linksToUrlTable);
             renderTextWithTitle(previewImageUrlOld, previewImageUrlNew, "<fmt:message key='ui.obj.general.previewImage' />");
+            renderList(nodeDataOld.previewImageDescription, nodeDataNew.previewImageDescription, "<fmt:message key='ui.obj.general.previewImageDescription' />");
 
             renderTextWithTitle(nodeDataOld.inspireRelevant ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", nodeDataNew.inspireRelevant ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.inspireRelevant' />");
             renderTextWithTitle(nodeDataOld.openData ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", nodeDataNew.openData ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.openData' />");

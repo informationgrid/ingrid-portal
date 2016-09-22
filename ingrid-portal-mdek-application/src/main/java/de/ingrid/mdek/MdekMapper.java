@@ -96,6 +96,7 @@ public class MdekMapper implements DataMapperInterface {
 
         // General
         mdekObj.setGeneralShortDescription((String) obj.get(MdekKeys.DATASET_ALTERNATE_NAME));
+        mdekObj.setPreviewImageDescription((String) obj.get(MdekKeys.PREVIEW_IMAGE_DESCRIPTION));
         mdekObj.setGeneralDescription((String) obj.get(MdekKeys.ABSTRACT));
         mdekObj.setUuid((String) obj.get(MdekKeys.UUID));
         mdekObj.setParentUuid((String) obj.get(MdekKeys.PARENT_UUID));
@@ -739,6 +740,7 @@ public class MdekMapper implements DataMapperInterface {
         // General
         udkObj.put(MdekKeys.ABSTRACT, data.getGeneralDescription());
         udkObj.put(MdekKeys.DATASET_ALTERNATE_NAME, data.getGeneralShortDescription());
+        udkObj.put(MdekKeys.PREVIEW_IMAGE_DESCRIPTION, data.getPreviewImageDescription());
         udkObj.put(MdekKeys.UUID, data.getUuid());
         udkObj.put(MdekKeys.PARENT_UUID, data.getParentUuid());
         udkObj.put(MdekKeys.ORIGINAL_CONTROL_IDENTIFIER, data.getOrgObjId());

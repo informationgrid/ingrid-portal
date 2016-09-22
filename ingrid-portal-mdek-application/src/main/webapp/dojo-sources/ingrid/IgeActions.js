@@ -1760,6 +1760,7 @@ define([
 
             // --- General ---
             registry.byId("generalShortDesc").attr("value", nodeData.generalShortDescription, true);
+            registry.byId("previewImageDescription").attr("value", nodeData.previewImageDescription, true);
             registry.byId("generalDesc").attr("value", nodeData.generalDescription, true);
             var addressTable = nodeData.generalAddressTable;
             //UtilList.addTableIndices(addressTable);
@@ -2294,6 +2295,7 @@ define([
             // ------------------ Object Content ------------------
             // --- General ---
             nodeData.generalShortDescription = registry.byId("generalShortDesc").get("value");
+            nodeData.previewImageDescription = registry.byId("previewImageDescription").get("value");
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
             nodeData.objectClass = registry.byId("objectClass").get("value").substr(5, 1); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");

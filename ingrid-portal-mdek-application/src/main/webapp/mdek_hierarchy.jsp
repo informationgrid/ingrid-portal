@@ -287,6 +287,16 @@
                                     </div>
                                 </span></div>
                             </span>
+                            <span id="uiElement5105" class="outer optional">
+                                <div><span class="label">
+                                    <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5105)">
+                                        <fmt:message key="ui.obj.general.previewImageDescription" />
+                                    </label>
+                                </span><span class="input">
+                                    <div type="text" maxLength="255" id="previewImageDescription" name="previewImageDescription" class="fullWidth">
+                                    </div>
+                                </span></div>
+                            </span>
                             <span id="uiElement1010" class="outer">
                             	<div><span id="generalDescLabel" class="label">
                                     <label for="generalDesc" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1010)">

@@ -71,6 +71,7 @@ public class MdekDataBean {
 
 	// General
 	private String generalShortDescription;
+	private String previewImageDescription;
 	private String generalDescription;
 	private List<MdekAddressBean> generalAddressTable;
 	private List<CommentBean> commentTable;
@@ -2027,5 +2028,15 @@ public class MdekDataBean {
 
     public void setAvailabilityUseAccessConstraints(List<String> availabilityUseAccessConstraints) {
         this.availabilityUseAccessConstraints = availabilityUseAccessConstraints;
+    }
+
+
+    public String getPreviewImageDescription() {
+        return previewImageDescription;
+    }
+
+
+    public void setPreviewImageDescription(String previewImageDescription) {
+        this.previewImageDescription = previewImageDescription;
     }
 }

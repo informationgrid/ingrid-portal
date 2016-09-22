@@ -6,6 +6,9 @@
     </properties>
     <body>
         <release version="4.0.1-SNAPSHOT" date="??" description="Release 4.0.1">
+            <action type="add" dev="wemove" issue="REDMINE-377">
+                IGE: Add new field "File description" to objects.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-417">
                 IGE: Fixed massive problems when parallel IGE logins via Portal-Admin, was not session specific.
             </action>

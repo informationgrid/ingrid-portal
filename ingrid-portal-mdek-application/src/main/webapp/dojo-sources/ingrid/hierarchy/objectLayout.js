@@ -266,6 +266,10 @@ define([
                 var previewImage = new ValidationTextBox({
                     style: "width:100%;"
                 }, "generalPreviewImage");
+                
+                var previewImage = new ValidationTextBox({
+                    style: "width:100%;"
+                }, "previewImageDescription");
 
                 // show a tooltip when hovering over image
                 previewImage.tooltip = new Tooltip({
