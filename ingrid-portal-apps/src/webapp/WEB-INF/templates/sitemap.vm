@@ -9,6 +9,18 @@
         $MESSAGES.getString("sitemap.area.main.search")</a>
         <p>$MESSAGES.getString("sitemap.area.main.search.description")</p>
     </li>
+    #if($enableMeasure)
+        <li>
+            #set ($link = $renderResponse.encodeURL("/portal/main-measures.psml"))
+            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.measures.tooltip")">
+                <svg class="icon">
+                    <use xlink:href="#internal-link">
+                </svg>
+                $MESSAGES.getString("sitemap.area.main.measures")
+            </a>
+            <p>$MESSAGES.getString("sitemap.area.main.measures.description")</p>
+        </li>
+    #end
     #if ($enableSearchCatalog)
     <li>
         #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
@@ -19,20 +31,6 @@
             $MESSAGES.getString("sitemap.area.main.search.catalogs")
         </a>
         <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.description")</p>
-        <div class="search-result--nested">
-            <ul>
-                <li>
-                    #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
-                    <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.tooltip")">
-                        <svg class="icon">
-                            <use xlink:href="#internal-link">
-                        </svg>
-                        $MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy")
-                    </a>
-                    <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.description")</p>
-                </li>
-            </ul>
-        </div>
     </li>
     #end
     #if ($enableApplication)
@@ -118,18 +116,6 @@
             </li>
         </ul>
     </li>
-    #end
-    #if($enableMeasure)
-        <li>
-            #set ($link = $renderResponse.encodeURL("/portal/main-measures.psml"))
-            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.measures.tooltip")">
-                <svg class="icon">
-                    <use xlink:href="#internal-link">
-                </svg>
-                $MESSAGES.getString("sitemap.area.main.measures")
-            </a>
-            <p>$MESSAGES.getString("sitemap.area.main.measures.description")</p>
-        </li>
     #end
     #if($enableMaps || $enableChronicle)
         #if($enableMaps)
