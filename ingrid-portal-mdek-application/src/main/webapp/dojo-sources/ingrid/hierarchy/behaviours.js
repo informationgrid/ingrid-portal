@@ -190,6 +190,34 @@ define(["dojo/_base/declare",
 		        on(registry.byId("isInspireRelevant"), "Change", updateUseConstraintsBehaviour);
 		        on(registry.byId("isOpenData"), "Change", updateUseConstraintsBehaviour);
             }
+        },
+        
+        showFileDescription: {
+            title: "Dateibeschreibung - Einblenden bei vorhandenem Bild",
+            description: "Das Feld \"Dateibeschreibung\" wird nur dann eingeblendet, wenn auch ein Link zur Vorschaugrafik eingegeben worden ist.",
+            defaultActive: true,
+            run: function() {
+                // set field initially hidden
+                domClass.add("uiElement5105", "hidden");
+                
+                // react when object is loaded (passive)
+                on(registry.byId("generalPreviewImage"), "Change", function(value) {
+                    if (value.trim().length === 0) {
+                        domClass.add("uiElement5105", "hidden");
+                    } else {
+                        domClass.remove("uiElement5105", "hidden");
+                    }
+                });
+                
+                // react on user input (active)
+                on(registry.byId("generalPreviewImage"), "KeyUp", function() {
+                    if (this.get("value").trim().length === 0) {
+                        domClass.add("uiElement5105", "hidden");
+                    } else {
+                        domClass.remove("uiElement5105", "hidden");
+                    }
+                });
+            }
         }
         
         /*
