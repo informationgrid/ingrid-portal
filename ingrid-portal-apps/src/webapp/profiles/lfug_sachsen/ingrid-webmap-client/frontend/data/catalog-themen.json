@@ -1,0 +1,74 @@
+{
+    "results": {
+        "root": {
+            "category": "root",
+            "staging": "prod",
+            "id": 0,
+            "children": [{
+                "category": "cat70",
+                "staging": "prod",
+                "selectedOpen": false,
+                "label": "Abfall & Abwasser",
+                "id": 1,
+                "children": []
+            },
+            {
+                "category": "cat70",
+                "staging": "prod",
+                "selectedOpen": false,
+                "label": "Boden",
+                "id": 5,
+                "children": []
+            },
+            {
+                "category": "cat70",
+                "staging": "prod",
+                "selectedOpen": false,
+                "label": "Energie",
+                "id": 8,
+                "children": []
+            },
+            {
+                "category": "cat70",
+                "staging": "prod",
+                "selectedOpen": false,
+                "label": "Hochwasser",
+                "id": 11,
+                "children": []
+            },
+            {
+                "category": "cat70",
+                "staging": "prod",
+                "selectedOpen": false,
+                "label": "Geologie",
+                "id": 18,
+                "children": []
+            },
+            {
+                "category": "cat70",
+                "staging": "prod",
+                "selectedOpen": false,
+                "label": "Lärm",
+                "id": 22,
+                "children": []
+            },
+            {
+                "category": "cat70",
+                "staging": "prod",
+                "selectedOpen": false,
+                "label": "Natur & Landschaft",
+                "id": 24,
+                "children": []
+            },
+            {
+                "category": "cat70",
+                "staging": "prod",
+                "selectedOpen": false,
+                "label": "Wasser",
+                "id": 29,
+                "children": []
+            }]
+        }
+    },
+    "last_id": 47
+}
