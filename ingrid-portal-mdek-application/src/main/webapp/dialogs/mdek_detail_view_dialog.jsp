@@ -505,8 +505,8 @@ require([
             renderAddressList(nodeData.generalAddressTable);
             // preview image
             var previewImageUrl = IgeEvents._filterPreviewImage(nodeData.linksToUrlTable);
-            renderTextWithTitle(previewImageUrl, "<fmt:message key='ui.obj.general.previewImage' />");
-            renderTextWithTitle(nodeData.previewImageDescription, "<fmt:message key='ui.obj.general.previewImageDescription' />");
+            renderTextWithTitle(previewImageUrl.url, "<fmt:message key='ui.obj.general.previewImage' />");
+            renderTextWithTitle(previewImageUrl.description, "<fmt:message key='ui.obj.general.previewImageDescription' />");
 
             renderTextWithTitle(nodeData.inspireRelevant ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.inspireRelevant' />");
             renderTextWithTitle(nodeData.openData ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.openData' />");
