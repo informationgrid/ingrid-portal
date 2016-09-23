@@ -1,6 +1,7 @@
 rmdir /Q /S dijit\tests
 rmdir /Q /S dijit\themes\themeTesterImages
 rmdir /Q /S dojo\tests
+rmdir /Q /S dojo\testsDOH
 rmdir /Q /S dojox\analytics\tests
 rmdir /Q /S dojox\app\tests
 rmdir /Q /S dojox\atom\tests

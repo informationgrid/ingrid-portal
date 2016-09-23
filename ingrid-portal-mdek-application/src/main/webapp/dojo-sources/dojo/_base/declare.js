@@ -3,7 +3,13 @@ define(["./kernel", "../has", "./lang"], function(dojo, has, lang){
 	//		dojo/_base/declare
 
 	var mix = lang.mixin, op = Object.prototype, opts = op.toString,
-		xtor = new Function, counter = 0, cname = "constructor";
+		xtor, counter = 0, cname = "constructor";
+
+	if(!has("csp-restrictions")){
+		xtor = new Function;
+	}else{
+		xtor = function(){};
+	}
 
 	function err(msg, cls){ throw new Error("declare" + (cls ? " " + cls : "") + ": " + msg); }
 
@@ -305,7 +311,7 @@ define(["./kernel", "../has", "./lang"], function(dojo, has, lang){
 				target[name] = t;
 			}
 		}
-		if(has("bug-for-in-skips-shadowed")){
+		if(has("bug-for-in-skips-shadowed") && source){
 			for(var extraNames= lang._extraNames, i= extraNames.length; i;){
 				name = extraNames[--i];
 				t = source[name];

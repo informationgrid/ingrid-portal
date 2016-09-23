@@ -29,7 +29,7 @@ If your desired contribution is more than a non-trivial fix, you should discuss 
 
 We require all contributions, to be covered under the Dojo Foundation's [Contributor License Agreement][cla].  This can
 be done electronically and essentially ensures that you are making it clear that your contributions are your
-contributions, you have the legal right to contribute and you are transferring the copyright of your works to the Dojo 
+contributions, you have the legal right to contribute and you are transferring the copyright of your works to the Dojo
 Foundation.
 
 If you are an unfamiliar contributor to the committer assessing your pull request, it is best to make it clear how
@@ -58,7 +58,7 @@ actions will be performed via the `git` command line.
 ## 1. Fork the Repository
 
 When logged in to your GitHub account, and you are viewing one of the main repositories, you will see the *Fork* button.
-Clicking this button will show you which repositories your can fork to.  Choose your own account.  Once the process
+Clicking this button will show you which organizations your can fork to.  Choose your own account.  Once the process
 finishes, you will have your own repository that is "forked" from the official one.
 
 Forking is a GitHub term and not a git term.  Git is a wholly distributed source control system and simply worries
@@ -194,7 +194,7 @@ documentation appropriately or added the appropriate inline documentation.
 
 If the pull request changes the functional behaviour or is fixing a defect, the unit test cases should be modified to
 reflect this.  The committer reviewing your pull request is likely to request the appropriate changes in the test
-cases.  Dojo utilises its own test harness called [D.O.H.][] and is available as part of the [dojo/util][] repository.
+cases.  Dojo utilises [Intern][] for all new tests, and has legacy support for its previous generation test harness called [D.O.H.][] and is available as part of the [dojo/util][] repository. All new tests should be authored using Intern.
 
 It is expected that you will have tested your changes against the existing test cases and appropriate platforms prior to
 submitting your pull request.
@@ -219,6 +219,7 @@ unfamiliar to those who are just starting to contribute.
 [claCheck]: http://dojofoundation.org/about/claCheck
 [Creating a Pull Request]: https://help.github.com/articles/creating-a-pull-request
 [Fork a Repo]: https://help.github.com/articles/fork-a-repo
+[Intern]: http://theintern.io/
 [styleguide]: http://dojotoolkit.org/reference-guide/developer/styleguide.html
 [DojoDoc]: http://dojotoolkit.org/reference-guide/developer/markup.html
 [D.O.H.]: http://dojotoolkit.org/reference-guide/util/doh.html

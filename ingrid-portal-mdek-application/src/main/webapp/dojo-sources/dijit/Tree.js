@@ -81,6 +81,9 @@ define([
 			this.labelNode[this.labelType == "html" ? "innerHTML" : "innerText" in this.labelNode ?
 				"innerText" : "textContent"] = val;
 			this._set("label", val);
+			if(has("dojo-bidi")){
+				this.applyTextDir(this.labelNode);
+			}
 		},
 
 		// labelType: [const] String
@@ -917,6 +920,7 @@ define([
 							this.domNode.removeAttribute("aria-labelledby");
 						}
 						rn.labelNode.setAttribute("role", "presentation");
+						rn.labelNode.removeAttribute("aria-selected");
 						rn.containerNode.setAttribute("role", "tree");
 						rn.containerNode.setAttribute("aria-expanded", "true");
 						rn.containerNode.setAttribute("aria-multiselectable", !this.dndController.singular);
@@ -1037,7 +1041,7 @@ define([
 				return all(array.map(paths, function(path){
 					// normalize path to use identity
 					path = array.map(path, function(item){
-						return lang.isString(item) ? item : tree.model.getIdentity(item);
+						return item && lang.isObject(item) ? tree.model.getIdentity(item) : item;
 					});
 
 					if(path.length){
