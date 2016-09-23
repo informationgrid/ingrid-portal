@@ -267,7 +267,7 @@ define([
                     style: "width:100%;"
                 }, "generalPreviewImage");
                 
-                var previewImage = new ValidationTextBox({
+                new ValidationTextBox({
                     style: "width:100%;"
                 }, "previewImageDescription");
 
