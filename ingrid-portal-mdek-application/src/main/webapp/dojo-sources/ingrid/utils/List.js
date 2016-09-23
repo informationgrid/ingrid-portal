@@ -311,13 +311,14 @@ define([
             return foundValue;
         },
 
-        urlToListEntry: function(url) {
+        urlToListEntry: function(url, description) {
             var urlObject = {};
             urlObject.name = "preview-image";
             urlObject.relationType = 9000;
             urlObject.relationTypeName = "Bildvorschau";
             urlObject.url = url;
             urlObject.urlType = 1;
+            if (description) urlObject.description = description; 
             return urlObject;
         },
 

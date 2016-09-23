@@ -847,7 +847,8 @@ define([
             var urlLinkTable = nodeData.linksToUrlTable;
 
             var url = this._filterPreviewImage(urlLinkTable);
-            registry.byId("generalPreviewImage").set("value", url);
+            registry.byId("generalPreviewImage").set("value", url.url);
+            registry.byId("previewImageDescription").set("value", url.description);
 
             var linkTable = objLinkTable.concat(urlLinkTable);
             // Replace relationTypeName with name from according syslist entry. Leave it if it's a free entry.
@@ -876,11 +877,11 @@ define([
             });
 
             if (foundObjectIndex !== null) {
-                var url = urlList[foundObjectIndex].url;
+                var url = urlList[foundObjectIndex];
                 urlList.splice(foundObjectIndex, 1);
                 return url;
             } else {
-                return "";
+                return { url: "", description: "" };
             }
         },
 
