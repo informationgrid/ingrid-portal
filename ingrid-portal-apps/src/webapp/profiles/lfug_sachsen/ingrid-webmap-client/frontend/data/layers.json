@@ -234,9 +234,9 @@
         "hasLegend": true,
         "type": "wms",
         "timeEnabled": false,
-        "queryable": true,
+        "queryable": false,
         "version": "1.1.1",
-        "tooltip": true,
+        "tooltip": false,
         "opacity": 1,
         "searchable": true,
         "crossOrigin": false
