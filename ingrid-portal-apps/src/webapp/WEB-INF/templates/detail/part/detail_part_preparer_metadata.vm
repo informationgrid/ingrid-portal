@@ -606,9 +606,10 @@
                         <h2 class="print-title is-hidden">$MESSAGES.getString("$tabtitle")<h2>
                         #renderSectionTitle($MESSAGES.getString("additional_information"))
                         <div class="search-result--nested">
-                            #renderTextLabelAbove($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364738']/idf:data"))
-                            #renderTextLabelAbove($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364739']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField21364739']/idf:data"))
-                            #renderTextLabelAbove($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField27131904']/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[@id='additionalField27131904']/idf:data"))
+                            #set($nodelist = $TOOL.getNodeListFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField"))
+                            #foreach($number in [0..$nodelist.getLength()])
+                                #renderTextLabelAbove($TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[$number]/idf:title[@lang='$lang']") $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[$number]/idf:data"))
+                            #end
                         </div>
                      </div>
                 </div>
