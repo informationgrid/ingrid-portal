@@ -162,19 +162,10 @@ define([
 
             // class specials !
 
-            // Fields only mandatory for Geoinformation/Karte(1)
             // NOTICE: div excluded from normal show/hide mechanism (displaytype="exclude")
             if (clazz == "Class1") {
-                // "Kodierungsschema der geographischen Daten" 
-                UtilUI.setMandatory(dom.byId("uiElement1315"));
-
                 // show / hide DQ input dependent from INSPIRE Thema !
                 rules.applyRule7();
-
-            } else if (isObjectClass) {
-                // "Kodierungsschema der geographischen Daten" only in class 1
-                UtilUI.setHide(dom.byId("uiElement1315"));
-                registry.byId("availabilityDataFormatInspire").set("value", "");
             }
 
             // Fields only mandatory for Geoinformation/Karte(1) and Geodatendienst(3)

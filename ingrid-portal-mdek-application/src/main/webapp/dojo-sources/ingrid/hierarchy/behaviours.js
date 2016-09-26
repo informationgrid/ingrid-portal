@@ -218,7 +218,28 @@ define(["dojo/_base/declare",
                     }
                 });
             }
-        }
+        },
+        
+        encodingSchemeForGeodatasets: {
+            title: "Kodierungsschema nur für Geodatensätze",
+            description: "Für Geodatensätze wird das Feld \"Kodierungsschema der geographischen Daten\" angezeigt, für andere Klassen ist es ausgeblendet.",
+            defaultActive: true,
+            run: function() {
+                topic.subscribe("/onObjectClassChange", function(data) {
+                    if (data.objClass === "Class1") {
+                        // set field initially hidden
+                        // "Kodierungsschema der geographischen Daten" 
+                        domClass.remove("uiElement1315", "hide");
+    
+                    } else {
+                        // "Kodierungsschema der geographischen Daten" only in class 1
+                        domClass.add("uiElement1315", "hide");
+                        // remove any previous value from now hidden field
+                        registry.byId("availabilityDataFormatInspire").set("value", "");
+                    }
+                });
+            }
+        }        
         
         /*
          * ABORTED: The ATOM URL has to be maintained when automatically inserted into document. It's better to adapt the context help
