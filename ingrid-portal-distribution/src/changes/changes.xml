@@ -6,6 +6,12 @@
     </properties>
     <body>
         <release version="4.0.1-SNAPSHOT" date="??" description="Release 4.0.1">
+            <action type="fix" dev="wemove" issue="REDMINE-446">
+                PORTAL: Optimize detail view.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-447">
+                PORTAL: Fix displaying of additional fields on portal detail view.
+            </action>
             <action type="add" dev="wemove" issue="REDMINE-377">
                 IGE: Add new field "File description" to objects.
             </action>
@@ -17,6 +23,15 @@
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-422">
                 IGE: Fixed validation of spatial reference height.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-448">
+                MapClient: GetMap-URL on print.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-449">
+                MapClient: Fix tooltip function depend on layer settings.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-450">
+                MapClient: Remove check of WMS layer URL with host 'wms.geo'.
             </action>
         </release>
 
