@@ -636,7 +636,7 @@
         #if($tool.hasContent($title))
             <h4 class="title-font">$title</h4>
         #end
-        #if($body)
+        #if($tool.hasContent($body))
             <p>$body</p>
         #else
             <p>$space</p>
