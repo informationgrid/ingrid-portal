@@ -199,6 +199,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         
         int limitReferences = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_VIEW_LIMIT_REFERENCES, 100);
         
+        String serviceType = null;
+        
+        serviceType = XPathUtils.getString(rootNode, "./gmd:identificationInfo/*/srv:serviceType");
+        if(serviceType != null){
+            serviceType = serviceType.trim();
+        }
+        
         if(XPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i<nodeList.getLength();i++){
@@ -216,42 +223,43 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String type = "";
                 String attachedToField = "";
                 String entryId = "";
-                String serviceType = "";
                 String description = "";
+                String tmp = null;
                 
                 xpathExpression = "./@uuid";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    uuid = XPathUtils.getString(node, xpathExpression).trim();
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    uuid = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:objectName";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    title = XPathUtils.getString(node, xpathExpression).trim();
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    title = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:objectType";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    type = XPathUtils.getString(node, xpathExpression).trim();
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    type = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:attachedToField";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    attachedToField = XPathUtils.getString(node, xpathExpression).trim();
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    attachedToField = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:attachedToField/@entry-id";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    entryId = XPathUtils.getString(node, xpathExpression);
-                }
-                
-                xpathExpression = "./gmd:identificationInfo/*/srv:serviceType";
-                if(XPathUtils.nodeExists(this.rootNode, xpathExpression)){
-                    serviceType = XPathUtils.getString(rootNode, xpathExpression);
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    entryId = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:description";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    description = XPathUtils.getString(node, xpathExpression).trim();
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    description = tmp.trim();
                 }
                 
                 HashMap<String, Object> link = new HashMap<String, Object>();

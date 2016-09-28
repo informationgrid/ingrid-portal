@@ -96,7 +96,11 @@
 #end
 
 #set ($type = $TOOL.getAddressClassType())
-#renderDetailHeader ($TOOL.getAddressClassTitle($type) $type $TOOL.convertDateString($TOOL.getValueFromXPath("./idf:last-modified")))
+#set($tmp = $TOOL.getAddressClassTitle($type))
+#set($tmp2 = $TOOL.convertDateString($TOOL.getValueFromXPath("./idf:last-modified")))
+#renderDetailHeader ($tmp $type $tmp2)
+#set($tmp = "")
+#set($tmp2 = "")
 <section id="detail_meta" class="block">
     <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
         <article class="content ob-container ob-box-wide">
@@ -109,14 +113,24 @@
                         ## Beschreibung
                         #renderSectionTitle($MESSAGES.getString("detail_description"))
                         ## Beschreibung
-                        #renderTextLabelAbove($TOOL.getValueFromXPath("./gmd:alternateTitle") $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName")))
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:alternateTitle"))
+                        #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName")))
+                        #renderTextLabelAbove($tmp $tmp2)
+                        #set($tmp = "")
+                        #set($tmp2 = "")
                     #end
                     ## Adressen
-                    #renderMultiLineAddresses($MESSAGES.getString("addresses") $TOOL.getNodeListFromXPath("."))
+                    #set($tmp = $TOOL.getNodeListFromXPath("."))
+                    #renderMultiLineAddresses($MESSAGES.getString("addresses") $tmp)
+                    #set($tmp = "")
                     ## Übergeordnete Adressen 
-                    #renderLinkList($MESSAGES.getString("superior_address") $TOOL.getReference("./idf:superiorParty", false) "true")
+                    #set($tmp = $TOOL.getReference("./idf:superiorParty", false))
+                    #renderLinkList($MESSAGES.getString("superior_address") $tmp "true")
+                    #set($tmp = "")
                     ## Untergeordnete Adressen 
-                    #renderLinkList($MESSAGES.getString("subordinated_addresses") $TOOL.getReference("./idf:subordinatedParty", false) "true")
+                    #set($tmp = $TOOL.getReference("./idf:subordinatedParty", false))
+                    #renderLinkList($MESSAGES.getString("subordinated_addresses") $tmp "true")
+                    #set($tmp = "")
                 </div>
             </div>
             #set($xpathList = ["./idf:objectReference"])
@@ -126,7 +140,9 @@
                     <div class="box__content ob-container">
                         <h2 class="print-title is-hidden">$MESSAGES.getString("references_tab")<h2>
                         ## Datenbezüge
-                        #renderLinkList($MESSAGES.getString("search.detail.dataRelations") $TOOL.getReference("./idf:objectReference", true) "true")
+                        #set($tmp = $TOOL.getReference("./idf:objectReference", true))
+                        #renderLinkList($MESSAGES.getString("search.detail.dataRelations") $tmp "true")
+                        #set($tmp = "")
                     </div>
                 </div>
             #end
