@@ -785,8 +785,8 @@
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.data_language") $tmp)
                         #set($tmp = "")
                         ## Veröffentlichung
-                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_SecurityConstraints/gmd:classification/gmd:MD_ClassificationCode/@codeListValue"))
-                        #renderTextLabelAbove($MESSAGES.getString("t01_object.publish_id") $TOOL.getPublishId($tmp))
+                        #set($tmp = $TOOL.getPublishId($TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_SecurityConstraints/gmd:classification/gmd:MD_ClassificationCode/@codeListValue")))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.publish_id") $tmp)
                         #set($tmp = "")
                         ## Eignung/Nutzung
                         #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage"))
