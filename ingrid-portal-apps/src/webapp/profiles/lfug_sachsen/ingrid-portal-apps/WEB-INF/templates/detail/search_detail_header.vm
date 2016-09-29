@@ -22,7 +22,7 @@
   <head>
   <link rel="prefetch" href="/decorations/layout/ingrid/images/template/icons.svg" />
   #if(!$pageTitle || $pageTitle == "")
-    <title>SachsenPortalU</title>
+    <title>SachsenPortalU - Das Umweltportal Sachsen</title>
   #else
     $MESSAGES.resetMsgParams()
     $MESSAGES.setMsgParam($pageTitle)
