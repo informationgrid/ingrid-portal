@@ -1,0 +1,195 @@
+.nav-desktop {
+  background: #004792;
+}
+
+a {
+  color: #004792;
+}
+
+a:hover{
+  color: #1e3151;
+}
+
+.btn {
+  border: 1px solid #004792;
+}
+
+.btn--primary {
+  background: #004792;
+}
+
+.search-form input {
+  border-color: #004792;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, select:focus, textarea:focus {
+  outline: 2px solid #004792;
+}
+
+.btn--primary:hover:not([disabled]), .btn--primary:focus:not([disabled]), .btn--primary:active:not([disabled]) {
+  background: #1e3151;
+  border-color: #1e3151;
+}
+
+.btn--secondary {
+  color: #004792 !important;
+}
+
+.btn--secondary:hover:not([disabled]), .btn--secondary:focus:not([disabled]), .btn--secondary:active:not([disabled]) {
+  background: #004792 none repeat scroll 0 0;
+  color: #FFFFFF !important;
+}
+.teaser__box {
+  border-top: 4px solid #004792;
+}
+
+.nav-desktop__title:hover, .nav-desktop__title.is-selected, .nav-desktop__title.is-active {
+  background: #1e3151 none repeat scroll 0 0;
+}
+
+.pagination__number:hover, .pagination__number.is-active {
+  box-shadow: 0 -4px 0 0 #004792 inset;
+  color: #004792;
+}
+
+.nav-desktop__dropdown {
+  border-top: 4px solid #1e3151;
+}
+
+.nav-desktop__dropdown a:hover, .nav-desktop__dropdown a:active {
+  color: #004792 !important;
+}
+@media screen and (max-width: 939px) {
+  .header {
+    background: #ffffff none repeat scroll 0 0;
+    border-bottom: 4px solid #1e3151;
+  }
+}
+
+.nav-toggle {
+  background: #1e3151 none repeat scroll 0 0;
+}
+
+.nav-toggle::after {
+  border-color: transparent transparent #ffffff;
+}
+
+.nav-overlay {
+  background: #004792;
+}
+
+.nav__foot a:hover {
+  background: #1e3151 none repeat scroll 0 0;
+}
+
+.nav-overlay__item--level1 {
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.no-touchevents .nav-overlay__item--level1:hover, .nav-overlay__item--level1.is-active {
+  background: #1e3151 none repeat scroll 0 0;
+  color: #fff;
+}
+
+.nav-overlay__level2__content {
+  background: #004792;
+}
+
+.nav-overlay__item--level2, .nav-overlay__item--level3 {
+  color: #FFFFFF;
+}
+
+.tab__toggle.is-active a {
+  color: #004792;
+}
+
+.tab__toggles a:hover, .tab__toggles a.is-active {
+  color: #004792;
+}
+
+.tab__toggles a:hover, .tab__toggles .is-active a {
+  box-shadow: 0 -2px 0 0 #004792 inset, 0 4px 0 0 #004792;
+}
+
+thead {
+  border-bottom: 2px solid #004792;
+}
+
+.tab__select {
+  background: #004792 none repeat scroll 0 0;
+}
+
+.tab__select:hover, .tab__select.is-active {
+  background: #004792 none repeat scroll 0 0;
+}
+
+@media screen and (max-width: 480px) {
+  .header__logo {
+    margin-left: 3.475rem;
+  }
+}
+
+.desktop-logo {
+  margin: 0 0 0 -64px;
+}
+
+.desktop__title {
+}
+
+.desktop__title p {
+  margin: 0 0 10px -6rem;
+}
+
+.desktop__title p.main__title {
+  font-size: 27px;
+  font-weight: bold;
+  color: #004792;
+}
+
+.mobile__logo {
+  height: 2.5rem;
+}
+
+.mobile__title {
+  font-size: 27px;
+  padding: 0 5px;
+}
+
+.mobile__title:hover {
+  color: #004792;
+}
+
+@media screen and (max-width: 768px) {
+  .header__widgets__section {
+    padding: 0.525rem 0;
+  }
+  
+  .sub-header{
+    padding: 1.125rem 0;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 939px) {
+  .header__widgets__section {
+    padding: 1.025rem 0;
+  }
+}
+
+.header__widget > a {
+  color: #004792;
+}
+
+.header__widget__icon.is-active {
+  fill: #99bf86;
+}
+
+.no-touchevents .header__widget > a:hover {
+  color: #1e3151;
+}
+
+.no-touchevents .filter__title:hover {
+  color: #004792;
+}
+.no-touchevents .sidebar-filter-subheader:hover {
+  color: #004792;
+}
