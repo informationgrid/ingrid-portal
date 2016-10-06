@@ -1,3 +1,4 @@
+#if(!$closeSimilarSection)
 <br />
 <div class="js-accordion-multi">
     #set ($action = $renderResponse.createActionURL())
@@ -68,6 +69,7 @@
         </div>
     </form>
 </div>
+#end
 ## Close HTML tags (see "search_simple_result.vm") 
                 </div>
             </div>
