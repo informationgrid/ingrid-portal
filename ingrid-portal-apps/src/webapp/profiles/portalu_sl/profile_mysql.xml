@@ -113,6 +113,15 @@
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>
         </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/frontend/src</src>
+            <dst>ingrid-webmap-client/frontend/prd</dst>
+        </file>
     </files>
     <sql>
         <!-- Disable language switcher -->
