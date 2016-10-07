@@ -10,65 +10,1560 @@
                 "selectedOpen": false,
                 "label": "Abfall & Abwasser",
                 "id": 1,
-                "children": []
+                "children": [{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 2,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Verdichtungsgebiete",
+                        "id": 3,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Verdichtungsgebiete",
+                            "layerBodId": "-24530477",
+                            "id": 4
+                        }]
+                    }],
+                    "label": "Verdichtungsgebiete"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 5,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Klaeranlagen",
+                        "id": 6,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Kommunale Klaeranlagen",
+                            "layerBodId": "442939059",
+                            "id": 7
+                        }]
+                    }],
+                    "label": "Kommunale Klaeranlagen"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 8,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Aufgabentraeger",
+                        "id": 9,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Aufgabentraeger der oeffentlichen Abwasserbeseitigung",
+                            "layerBodId": "-1574391975",
+                            "id": 10
+                        }]
+                    }],
+                    "label": "Aufgabenträger der öffentlichen Abwasserbeseitigung"
+                }]
             },
             {
                 "category": "cat70",
                 "staging": "prod",
                 "selectedOpen": false,
                 "label": "Boden",
-                "id": 5,
-                "children": []
+                "id": 11,
+                "children": [{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 12,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "BUEK400",
+                        "id": 13,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Bodenuebersichtskarte 1:400.000",
+                            "layerBodId": "1200197126",
+                            "id": 14
+                        }]
+                    }],
+                    "label": "Bodenübersichtskarte Sachsen (BÜK400)"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 15,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Bodenkundliche Aufschluesse",
+                        "id": 16,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Bodenkundliche Aufschluesse",
+                            "layerBodId": "-414479197",
+                            "id": 17
+                        }]
+                    }],
+                    "label": "Bodenkundliche Aufschlüsse Sachsens"
+                }]
             },
             {
                 "category": "cat70",
                 "staging": "prod",
                 "selectedOpen": false,
                 "label": "Energie",
-                "id": 8,
-                "children": []
+                "id": 18,
+                "children": [{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 19,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Wasserkraftanlagen",
+                        "id": 20,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Wasserkraftanlagen",
+                            "layerBodId": "1806620623",
+                            "id": 21
+                        }]
+                    }],
+                    "label": "Wasserkraftanlagen"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 22,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "GTK50",
+                        "id": 23,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Entzugsleistung in Watt pro Meter für 2400 Betriebsstunden - bis 130m Bohrtiefe",
+                            "layerBodId": "-1418872417",
+                            "id": 24
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Entzugsleistung in Watt pro Meter für 2400 Betriebsstunden - bis 100m Bohrtiefe",
+                            "layerBodId": "-1418872416",
+                            "id": 25
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Entzugsleistung in Watt pro Meter für 2400 Betriebsstunden - bis 70m Bohrtiefe",
+                            "layerBodId": "-1418872415",
+                            "id": 26
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Entzugsleistung in Watt pro Meter für 2400 Betriebsstunden - bis 40m Bohrtiefe",
+                            "layerBodId": "-1418872414",
+                            "id": 27
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Entzugsleistung in Watt pro Meter für 1800 Betriebsstunden - bis 130m Bohrtiefe",
+                            "layerBodId": "-1418872413",
+                            "id": 28
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Entzugsleistung in Watt pro Meter für 1800 Betriebsstunden - bis 100m Bohrtiefe",
+                            "layerBodId": "-1418872412",
+                            "id": 29
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Entzugsleistung in Watt pro Meter für 1800 Betriebsstunden - bis 70m Bohrtiefe",
+                            "layerBodId": "-1418872411",
+                            "id": 30
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Entzugsleistung in Watt pro Meter für 1800 Betriebsstunden - bis 40m Bohrtiefe",
+                            "layerBodId": "-1418872410",
+                            "id": 31
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Uebersicht GTK50",
+                            "layerBodId": "-1418872409",
+                            "id": 32
+                        }]
+                    }],
+                    "label": "Geothermische Karte der Entzugsleistung"
+                }]
             },
             {
                 "category": "cat70",
                 "staging": "prod",
                 "selectedOpen": false,
                 "label": "Hochwasser",
-                "id": 11,
-                "children": []
+                "id": 33,
+                "children": [{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 34,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Gefahrenhinweiskarte",
+                        "id": 35,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Wassertiefen HQextrem",
+                            "layerBodId": "-1864623386",
+                            "id": 36
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Spezifischer Abfluss bei HQextrem",
+                            "layerBodId": "-1864623385",
+                            "id": 37
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Ueberschwemmungsgebiet HQextrem",
+                            "layerBodId": "-1864623384",
+                            "id": 38
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Ueberschwemmungsgebiet HQ100",
+                            "layerBodId": "-1864623383",
+                            "id": 39
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Ueberschwemmungsgebiet HQ20",
+                            "layerBodId": "-1864623382",
+                            "id": 40
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Bearbeitete Gewaesser",
+                            "layerBodId": "-1864623381",
+                            "id": 41
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Sonderrisiken",
+                            "id": 42,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Wasserversorgung",
+                                "layerBodId": "-1864623379",
+                                "id": 43
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Industriebetriebe",
+                                "layerBodId": "-1864623378",
+                                "id": 44
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Energieanlagen",
+                                "layerBodId": "-1864623377",
+                                "id": 45
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Klaeranlagen",
+                                "layerBodId": "-1968750039",
+                                "id": 46
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Krankenhaeuser",
+                                "layerBodId": "-1968750038",
+                                "id": 47
+                            }]
+                        }]
+                    }],
+                    "label": "Überschwemmungskarte"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 48,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Intensitaetskarte HQ 100",
+                        "id": 49,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Extremhochwasser",
+                            "layerBodId": "-47365160",
+                            "id": 50
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Wassertiefe bei HQ100",
+                            "layerBodId": "-47365159",
+                            "id": 51
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Gewaesserachse",
+                            "layerBodId": "-47365158",
+                            "id": 52
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Stationierung",
+                            "layerBodId": "-47365157",
+                            "id": 53
+                        }]
+                    }],
+                    "label": "Überschwemmte Flächen bei hundertjährlichem Hochwasser (Intensitätskarte HQ 100)"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 54,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Schadenspotentialkarte",
+                        "id": 55,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Schadenpotential HQextrem",
+                            "layerBodId": "1269955504",
+                            "id": 56
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Ueberschwemmungsgebiet HQextrem",
+                            "layerBodId": "1269955505",
+                            "id": 57
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Ueberschwemmungsgebiet HQ100",
+                            "layerBodId": "1269955506",
+                            "id": 58
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Ueberschwemmungsgebiet HQ20",
+                            "layerBodId": "1269955507",
+                            "id": 59
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Bearbeitete Gewaesser",
+                            "layerBodId": "1269955508",
+                            "id": 60
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Sonderrisiken",
+                            "id": 61,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Wasserversorgung",
+                                "layerBodId": "1269955510",
+                                "id": 62
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Industriebetriebe",
+                                "layerBodId": "1269955511",
+                                "id": 63
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Energieanlagen",
+                                "layerBodId": "1269955512",
+                                "id": 64
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Klaeranlagen",
+                                "layerBodId": "1269955513",
+                                "id": 65
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Krankenhaeuser",
+                                "layerBodId": "713915039",
+                                "id": 66
+                            }]
+                        }]
+                    }],
+                    "label": "Schadenspotentialkarte"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 67,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Hochwasserereignisse - ueberschwemmte Flaechen",
+                        "id": 68,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Ueberschwemmte Flaechen 2002",
+                            "layerBodId": "236795585",
+                            "id": 69
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Ueberschwemmte Flaechen 2013 Elbe Mulde",
+                            "layerBodId": "236795586",
+                            "id": 70
+                        }]
+                    }],
+                    "label": "Überschwemmte Flächen Hochwasser August 2002"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 71,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Hochwassergefaehrdung",
+                        "id": 72,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Extremhochwasser",
+                            "layerBodId": "878269215",
+                            "id": 73
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Gefaehrdung bei HQ200/300",
+                            "layerBodId": "878269216",
+                            "id": 74
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Gefaehrdung bei HQ100",
+                            "layerBodId": "878269217",
+                            "id": 75
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Gefaehrdung bei HQ50",
+                            "layerBodId": "878269218",
+                            "id": 76
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Gefaehrdung bei HQ20/25",
+                            "layerBodId": "878269219",
+                            "id": 77
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Grenze des Bearbeitungsabschnittes",
+                            "layerBodId": "878269220",
+                            "id": 78
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Gewaesserachse",
+                            "layerBodId": "878269221",
+                            "id": 79
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Stationierung",
+                            "layerBodId": "878269222",
+                            "id": 80
+                        }]
+                    }],
+                    "label": "Gefahrenkarten für Ortslagen"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 81,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Ueberschwemmungsgebiete (UEG)",
+                        "id": 82,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Ueberschwemmungsgebiete (UEG)",
+                            "layerBodId": "-1223787035",
+                            "id": 83
+                        }]
+                    }],
+                    "label": "Festgesetzte Überschwemmungsgebiete"
+                }]
             },
             {
                 "category": "cat70",
                 "staging": "prod",
                 "selectedOpen": false,
                 "label": "Geologie",
-                "id": 18,
-                "children": []
+                "id": 84,
+                "children": [{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 85,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Zentrale Aufschlussdatenbank Sachsens",
+                        "id": 86,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Aufschlussdaten",
+                            "layerBodId": "-1128124538",
+                            "id": 87
+                        }]
+                    }],
+                    "label": "Zentrale Aufschlussdatenbank Sachsens"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 88,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Geologie",
+                        "id": 89,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Geologie",
+                            "layerBodId": "699203401",
+                            "id": 90
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Stoerungen",
+                            "layerBodId": "699203402",
+                            "id": 91
+                        }]
+                    }],
+                    "label": "Geologische Übersichtskarten"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 92,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Rohstoffe",
+                        "id": 93,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Sonstige Industrieminerale",
+                            "layerBodId": "-1189879832",
+                            "id": 94
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Torf",
+                            "layerBodId": "-1189879831",
+                            "id": 95
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Erze",
+                            "layerBodId": "-1189879830",
+                            "id": 96
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Kaolin",
+                            "layerBodId": "-1189879829",
+                            "id": 97
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Bentonit",
+                            "layerBodId": "-1189879828",
+                            "id": 98
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Tone und Spezialtone",
+                            "layerBodId": "-1189879827",
+                            "id": 99
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Lehme und Mergel",
+                            "layerBodId": "-1189879826",
+                            "id": 100
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Sande und Spezialsande",
+                            "layerBodId": "-1189879825",
+                            "id": 101
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Kiessande und Kiese",
+                            "layerBodId": "-1189879824",
+                            "id": 102
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Hartgestein",
+                            "layerBodId": "-1189879823",
+                            "id": 103
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Karbonatgesteine",
+                            "layerBodId": "1768430951",
+                            "id": 104
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Steine-Erden-Abbaue",
+                            "layerBodId": "1768430952",
+                            "id": 105
+                        }]
+                    }],
+                    "label": "Karte der oberflächennahen Rohstoffe (KOR 50)"
+                }]
             },
             {
                 "category": "cat70",
                 "staging": "prod",
                 "selectedOpen": false,
                 "label": "Lärm",
-                "id": 22,
-                "children": []
+                "id": 106,
+                "children": [{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 107,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Lärmkartierung",
+                        "id": 108,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "kartierte Gemeinden",
+                            "layerBodId": "-1224059375",
+                            "id": 109
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Schallpegel Night (22-6 Uhr)",
+                            "layerBodId": "-1224059374",
+                            "id": 110
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Schallpegel DEN (24 h Pegel)",
+                            "layerBodId": "-1224059373",
+                            "id": 111
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "kartierte Hauptverkehrsstrassen",
+                            "layerBodId": "-1224059372",
+                            "id": 112
+                        }]
+                    }],
+                    "label": "Lärmkartierung"
+                }]
             },
             {
                 "category": "cat70",
                 "staging": "prod",
                 "selectedOpen": false,
                 "label": "Natur & Landschaft",
-                "id": 24,
-                "children": []
+                "id": 113,
+                "children": [{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 114,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "NATURA2000",
+                        "id": 115,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Europaeische Vogelschutzgebiete",
+                            "layerBodId": "-376398344",
+                            "id": 116
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "FFH Gebiete",
+                            "layerBodId": "-376398343",
+                            "id": 117
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "FFH Fledermausquartiere",
+                            "layerBodId": "-376398342",
+                            "id": 118
+                        }]
+                    }],
+                    "label": "Natura 2000"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 119,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Schutzgebiete",
+                        "id": 120,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Landschaftsschutzgebiete",
+                            "layerBodId": "263923415",
+                            "id": 121
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Naturschutzgebiete",
+                            "layerBodId": "263923416",
+                            "id": 122
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Nationalpark",
+                            "layerBodId": "263923417",
+                            "id": 123
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Flaechennaturdenkmaeler",
+                            "layerBodId": "263923418",
+                            "id": 124
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Naturpark",
+                            "layerBodId": "263923419",
+                            "id": 125
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Biosphaerenreservat",
+                            "layerBodId": "263923420",
+                            "id": 126
+                        }]
+                    }],
+                    "label": "Schutzgebiete in Sachsen"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 127,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "BTLNK",
+                        "id": 128,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "BTLNK Flaechen",
+                            "layerBodId": "26546400",
+                            "id": 129
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "BTLNK Linie",
+                            "layerBodId": "26546401",
+                            "id": 130
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "BTLNK Punkte",
+                            "layerBodId": "26546402",
+                            "id": 131
+                        }]
+                    }],
+                    "label": "BTLNK"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 132,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Potentiell natuerliche Vegetation",
+                        "id": 133,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Potentielle natuerliche Vegetation 1:300000",
+                            "layerBodId": "613777153",
+                            "id": 134
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Potentielle natuerliche Vegetation 1:50000",
+                            "layerBodId": "613777154",
+                            "id": 135
+                        }]
+                    }],
+                    "label": "Potentielle Natuerliche Vegetation (PNV) in Sachsen"
+                }]
             },
             {
                 "category": "cat70",
                 "staging": "prod",
                 "selectedOpen": false,
                 "label": "Wasser",
-                "id": 29,
-                "children": []
+                "id": 136,
+                "children": [{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 137,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Einzugsgebiete",
+                        "id": 138,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Haupteinzugsgebiete",
+                            "layerBodId": "1133028786",
+                            "id": 139
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Teileinzugsgebiete",
+                            "layerBodId": "1133028787",
+                            "id": 140
+                        }]
+                    }],
+                    "label": "Einzugsgebiete"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 141,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Wasserschutzgebiete",
+                        "id": 142,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Heilquellenschutzgebiete",
+                            "layerBodId": "-1224284059",
+                            "id": 143
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "TWSG fuer Talsperren",
+                            "layerBodId": "-1224284058",
+                            "id": 144
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "TWSG fuer Fliessgewaesser",
+                            "layerBodId": "-1224284057",
+                            "id": 145
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "TWSG fuer Grundwasser/Uferfiltrat",
+                            "layerBodId": "-1224284056",
+                            "id": 146
+                        }]
+                    }],
+                    "label": "Wasserschutzgebiete"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 147,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Pegelmessnetz",
+                        "id": 148,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Pegel",
+                            "layerBodId": "-576943146",
+                            "id": 149
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Hochwassermeldepegel",
+                            "layerBodId": "-576943145",
+                            "id": 150
+                        }]
+                    }],
+                    "label": "Pegelmessnetz des Landeshochwasserzentrums"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 151,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "OWB",
+                        "id": 152,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Oberflaechenwasserbeschaffenheit",
+                            "layerBodId": "2002059743",
+                            "id": 153
+                        }]
+                    }],
+                    "label": "Oberflächenwasserbeschaffenheit"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 154,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Strukturguete",
+                        "id": 155,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Strukturerfassung in 7 Stufen",
+                            "layerBodId": "-1686066356",
+                            "id": 156
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Querbauwerke",
+                            "layerBodId": "-1686066355",
+                            "id": 157
+                        }]
+                    }],
+                    "label": "Strukturkartierung"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 158,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Gewaesserdurchgaengigkeit",
+                        "id": 159,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Gewaesserdurchgaengigkeit",
+                            "layerBodId": "1850073433",
+                            "id": 160
+                        }]
+                    }],
+                    "label": "Gewässerdurchgängigkeit"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 161,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Grundwasser",
+                        "id": 162,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "alle Daten",
+                            "layerBodId": "1644504325",
+                            "id": 163
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "letzte Quellschuettung (Monatsmittel)",
+                            "layerBodId": "1644504326",
+                            "id": 164
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "letzter Grundwasserstand (Monatsmittel)",
+                            "layerBodId": "1644504327",
+                            "id": 165
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "aktueller Grundwasserstand",
+                            "layerBodId": "1644504328",
+                            "id": 166
+                        }]
+                    }],
+                    "label": "Grundwassermessstellen"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 167,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Wasserkraftanlagen",
+                        "id": 168,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Wasserkraftanlagen",
+                            "layerBodId": "1806620623",
+                            "id": 169
+                        }]
+                    }],
+                    "label": "Wasserkraftanlagen"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 170,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Wasserschutzgebiete",
+                        "id": 171,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Heilquellenschutzgebiete",
+                            "layerBodId": "-1224284059",
+                            "id": 172
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "TWSG fuer Talsperren",
+                            "layerBodId": "-1224284058",
+                            "id": 173
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "TWSG fuer Fliessgewaesser",
+                            "layerBodId": "-1224284057",
+                            "id": 174
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "TWSG fuer Grundwasser/Uferfiltrat",
+                            "layerBodId": "-1224284056",
+                            "id": 175
+                        }]
+                    }],
+                    "label": "Wasserschutzgebiete"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 176,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Aufgabentraeger der oeffentlichen Wasserversorgung",
+                        "id": 177,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Aufgabentraeger der oeffentlichen Wasserversorgung",
+                            "layerBodId": "580315384",
+                            "id": 178
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Teilzweckverband",
+                            "layerBodId": "580315385",
+                            "id": 179
+                        }]
+                    }],
+                    "label": "Aufgabenträger der öffentlichen Wasserversorgung"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 180,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Raumeinheiten der Grundwasserkoerper",
+                        "id": 181,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Grundwasserkoerper (GWK)",
+                            "layerBodId": "1876264609",
+                            "id": 182
+                        }]
+                    }],
+                    "label": "WRRL Lage der Grundwasserkörper"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 184,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Zustand der Wasserkoerper",
+                        "id": 185,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "GWK Chemie",
+                            "layerBodId": "-1820761049",
+                            "id": 186
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "GWK Menge",
+                            "layerBodId": "-1820761048",
+                            "id": 187
+                        }]
+                    }],
+                    "label": "WRRL Zustand der Grundwasserkörper"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 188,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Zustand der Wasserkoerper",
+                        "id": 189,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Chemischer Zustand - Fliessgewaesser",
+                            "layerBodId": "899472431",
+                            "id": 190
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Chemischer Zustand - Standgewaesser",
+                            "layerBodId": "899472432",
+                            "id": 191
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Chemie - Beruecksichtigung der natuerlichen Hintergrundkonzentration",
+                            "id": 192,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Fliessgewaesser - Beruecksichtigung der natuerlichen Hintergrundkonzentration",
+                                "layerBodId": "899472434",
+                                "id": 193
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Standgewaesser - Beruecksichtigung der natuerlichen Hintergrundkonzentration",
+                                "layerBodId": "899472435",
+                                "id": 194
+                            }]
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Oekologischer Zustand/Potenzial - Fliessgewaesser",
+                            "layerBodId": "899472436",
+                            "id": 195
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Oekologischer Zustand/Potenzial - Standgewaesser",
+                            "layerBodId": "899472437",
+                            "id": 196
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Oekologie / Chemie Trinkwasserrelevanz",
+                            "id": 197,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "[Oekologie / Chemie Trinkwasserrelevanz  -Fliessgewaesser",
+                                "layerBodId": "899472439",
+                                "id": 198
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Oekologie / Chemie Trinkwasserrelevanz - Standgewaesser",
+                                "layerBodId": "899472440",
+                                "id": 199
+                            }]
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Oekologie - Fuer Einstufung massgebliche Biokomponenten",
+                            "id": 200,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Standgewaesser",
+                                "layerBodId": "2113841665",
+                                "id": 201
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Fliessgewaesser",
+                                "layerBodId": "2113841666",
+                                "id": 202
+                            }]
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Oekologie - Beruecksichtigung der natuerlichen Hintergrundkonzentration",
+                            "layerBodId": "2113841667",
+                            "id": 203
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Oekologie - Ueberschreitung der spezifischen Schadstoffe",
+                            "layerBodId": "2113841668",
+                            "id": 204
+                        }]
+                    }],
+                    "label": "WRRL Zustand der Oberflächenwasserkörper"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 205,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Bewirtschaftungsziele",
+                        "id": 206,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Grundwasserkoerper Menge",
+                            "layerBodId": "1660424915",
+                            "id": 207
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Grundwasserkoerper Chemie",
+                            "layerBodId": "1660424916",
+                            "id": 208
+                        }]
+                    }],
+                    "label": "WRRL Bewirtschaftungsziele der Grundwasserkörper"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 209,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Bewirtschaftungsziele",
+                        "id": 210,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "CHEMIE - Bewirtschaftungsziele",
+                            "id": 211,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Chemie: Fliessgewaesser-Wasserkoerper",
+                                "layerBodId": "85691100",
+                                "id": 212
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Chemie: Standgewaesser-Wasserkoerper",
+                                "layerBodId": "85691101",
+                                "id": 213
+                            }]
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "OEKOLOGIE - Bewirtschaftungsziele",
+                            "id": 214,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Oekologie: Fliessgewaesser-Wasserkoerper",
+                                "layerBodId": "85691103",
+                                "id": 215
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Oekologie: Standgewaesser-Wasserkoerper",
+                                "layerBodId": "85691104",
+                                "id": 216
+                            }]
+                        }]
+                    }],
+                    "label": "WRRL Bewirtschaftungsziele der Oberflächenwasserkörper"
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "id": 217,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "HUEK",
+                        "id": 218,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "hydrogeologischer Teilraum",
+                            "layerBodId": "-1316067059",
+                            "id": 219
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "hydrogeologischer Raum",
+                            "layerBodId": "-1316067058",
+                            "id": 220
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "hydrogeologischer Grossraum",
+                            "layerBodId": "-1316067057",
+                            "id": 221
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Schutzpotential der Grundwasserueberdeckung",
+                            "layerBodId": "-1316067056",
+                            "id": 222
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Geologie",
+                            "layerBodId": "-1316067055",
+                            "id": 223
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Durchlaessigkeit",
+                            "layerBodId": "-1316067054",
+                            "id": 224
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Geochemie",
+                            "layerBodId": "-1316067053",
+                            "id": 225
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Gesteinsart",
+                            "layerBodId": "-1316067052",
+                            "id": 226
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Hohlraum",
+                            "layerBodId": "-1316067051",
+                            "id": 227
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Verfestigung",
+                            "layerBodId": "-1316067050",
+                            "id": 228
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Deckschichten",
+                            "layerBodId": "-2143373086",
+                            "id": 229
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Stoerungen",
+                            "layerBodId": "-2143373085",
+                            "id": 230
+                        }]
+                    }],
+                    "label": "Hydrogeologische Übersichtskarte"
+                }]
             }]
         }
     },
-    "last_id": 47
+    "last_id": 231
 }
