@@ -45,7 +45,7 @@ define([
                             msg.resultHandler.resolve(res);
                         },
                         errorHandler: function(errorMessage) {
-                            console.debug("Error in js/js: Error while getting path to node: " + errorMessage);
+                            console.error("Error in js/js: Error while getting path to node: " + errorMessage);
                             dialog.show(message.get("general.warning"), string.substitute(message.get("general.warning.unknownId"), [msg.id]), dialog.WARNING);
                             msg.resultHandler.reject();
                         }
@@ -75,7 +75,7 @@ define([
                             msg.resultHandler.resolve(res);
                         },
                         errorHandler: function(message) {
-                            console.debug("Error in js/js: Error while getting path to address: " + message);
+                            console.error("Error in js/js: Error while getting path to address: " + message);
                             msg.resultHandler.reject();
                         }
                     });

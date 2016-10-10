@@ -209,8 +209,8 @@ define([
                             def.resolve(nodeData);
                         },
                         errorHandler: function(errMsg, err) {
-                            console.debug(errMsg);
-                            console.debug(err);
+                            console.error(errMsg);
+                            console.error(err);
                             def.reject(err);
                         }
                     });
@@ -271,8 +271,8 @@ define([
                     def.resolve(nodeData);
                 },
                 errorHandler: function(errMsg, err) {
-                    console.debug(errMsg);
-                    console.debug(err);
+                    console.error(errMsg);
+                    console.error(err);
                     def.reject(err);
                 }
             });
@@ -306,8 +306,8 @@ define([
                             def.resolve(nodeData);
                         },
                         errorHandler: function(errMsg, err) {
-                            console.debug(errMsg);
-                            console.debug(err);
+                            console.error(errMsg);
+                            console.error(err);
                             def.reject(err);
                         }
                     });
@@ -369,8 +369,8 @@ define([
                     def.resolve(nodeData);
                 },
                 errorHandler: function(errMsg, err) {
-                    console.debug(errMsg);
-                    console.debug(err);
+                    console.error(errMsg);
+                    console.error(err);
                     def.reject(err);
                 }
             });

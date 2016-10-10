@@ -155,7 +155,7 @@ define([
                 errorHandler: function(errMsg, err) {
                     //hideLoadingZone();
                     displayErrorMessage(err);
-                    console.debug(errMsg);
+                    console.error(errMsg);
                     deferred.reject(err);
                 }
             });

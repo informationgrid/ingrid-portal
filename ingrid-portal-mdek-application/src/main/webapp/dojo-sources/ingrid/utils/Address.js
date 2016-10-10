@@ -132,7 +132,7 @@ define([
                         },
                         errorHandler:function(message) {
                             UtilUI.exitLoadingState();
-                            console.debug("Error: "+message);
+                            console.error("Error: " + message);
                         }
                 });
             },
