@@ -116,7 +116,8 @@ html> /**/ body .bottomRight {
                 }
             }
 
-            function showError() {
+            function showError(err) {
+                console.error(err);
                 var resultDiv = dom.byId("resultList");
                 if (resultDiv) {
                     resultDiv.innerHTML = "<fmt:message key='ui.obj.spatial.connectionError' />";
@@ -151,7 +152,7 @@ html> /**/ body .bottomRight {
                                 label += ", " + topicList[i].type;
                             }
                             var checkBox = new CheckBox({
-                                id: topicList[i].topicId,
+                                // id: topicList[i].topicId,
                                 name: label,
                                 topic: topicList[i]
                             });
