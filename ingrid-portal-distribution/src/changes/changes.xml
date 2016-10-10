@@ -24,6 +24,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-422">
                 IGE: Fixed validation of spatial reference height.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-457">
+                IGE: Fixed geo thesaurus not shown when also search on research page.
+            </action>
 			<action type="fix" dev="wemove" issue="REDMINE-448">
                 MapClient: GetMap-URL on print.
             </action>
