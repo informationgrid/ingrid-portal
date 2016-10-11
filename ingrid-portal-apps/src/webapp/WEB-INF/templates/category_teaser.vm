@@ -137,6 +137,9 @@
             #end
             <div class="column column--1-6-m">
                 #set($facetParam = "$pf:$facet.getId();")
+                #if($facet.getParentId())
+                    #set($facetParam = "$facet.getParentId():$facet.getId();")
+                #end
                 #if($parentFacetParam)
                     #set($facetParam = "$parentFacetParam:$pf;$pf:$facet.getId();")
                 #end

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class IngridFacet {
 
     private String id;
+    private String parentId;
     private String name;
     private String query;
     private String queryType;
@@ -180,5 +181,11 @@ public class IngridFacet {
     }
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+    public String getParentId() {
+        return parentId;
+    }
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

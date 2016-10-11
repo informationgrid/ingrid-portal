@@ -224,6 +224,13 @@ public class FacetsConfig {
                     }
                 }
                 
+                if (facetNode.getChildren( "parentId" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "parentId" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setParentId( node.getValue().toString() );
+                    }
+                }
+                
                 if (facetNode.getChildren( "icon" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "icon" ).get( 0 );
                     if (node != null) {
