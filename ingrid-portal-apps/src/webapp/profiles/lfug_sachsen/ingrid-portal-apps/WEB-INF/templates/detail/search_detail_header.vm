@@ -78,11 +78,12 @@
                 <div class="header__widgets__section">
                     <span class="header__widget header__logo"></span>
                     <a class="header__widget" href="$renderResponse.encodeURL('/portal/default-page.psml')">
-                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/title.gif">
-                        <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/logo_alt.gif">
+                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/title.png">
+                        <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/logo_mobile.png">
                     </a>
+                    <a class="mq-show-xxl mobile__title" href="$renderResponse.encodeURL('/portal/default-page.psml')">SachsenPortalU</a>
                     <a class="header__widget" href="$renderResponse.encodeURL('/portal/default-page.psml')">
-                        <img class="mq-hide-xxl desktop-logo-2" src="/decorations/layout/ingrid/images/logo.gif">
+                        <img class="mq-hide-xxl desktop-logo-2" src="/decorations/layout/ingrid/images/template/logo.png">
                     </a>
                 </div>
             </div>

@@ -86,11 +86,12 @@
                 <div class="header__widgets__section">
                     <span class="header__widget header__logo"></span>
                     <a class="header__widget" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                        <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/title.gif')">
-                        <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/logo_alt.gif')">
+                        <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/title.png')">
+                        <img class="mq-show-xxl mq-hide-s mobile__logo" src="#GetPageResource('images/template/logo_mobile.png')">
                     </a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">SachsenPortalU</a>
                     <a class="header__widget" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                        <img class="mq-hide-xxl desktop-logo-2" src="#GetPageResource('images/logo.gif')">
+                        <img class="mq-hide-xxl desktop-logo-2" src="#GetPageResource('images/template/logo.png')">
                     </a>
                 </div>
                  #if($serviceMenu && !$serviceMenu.empty)

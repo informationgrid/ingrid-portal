@@ -199,3 +199,38 @@ thead {
 .footer__middle a {
     color: #487143;
 }
+
+@media screen and (max-width: 768px) {
+  .header__widgets__section {
+    padding: 0.525rem 0;
+  }
+  
+  .sub-header{
+    padding: 1.125rem 0;
+  }
+  
+  .header__widgets__section  .header__widget {
+    vertical-align: text-bottom;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 939px) {
+  .header__widgets__section {
+      padding: 1.025rem 0;
+  }
+  
+  .header__widgets__section  .header__widget {
+    vertical-align: text-bottom;
+  }
+}
+
+.mobile__title {
+    font-size: 27px;
+}
+.mobile__title {
+    color: #ffffff;
+}
+
+.mobile__title:hover {
+    color: #FFFFFF;
+}
