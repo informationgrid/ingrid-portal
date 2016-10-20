@@ -21,11 +21,11 @@
  * **************************************************#
  */
 .footer__logo {
-    width: unset;
+    width: auto;
 }
 
 .header__logo {
-    height: unset;
+    height: auto;
 }
 
 .mobile__title {
@@ -48,7 +48,7 @@
 }
 
 .block--light .tab__content {
-  background: unset;
+  background: transparent;
 }
 
 .block--light .tag{
