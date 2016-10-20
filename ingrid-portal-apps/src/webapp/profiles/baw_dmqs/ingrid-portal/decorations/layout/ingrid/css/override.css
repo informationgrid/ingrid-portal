@@ -1,0 +1,248 @@
+/*
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+a {
+  color: #2c63b1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #2c63b1;
+}
+
+label {
+    color: #2c63b1;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #2c63b1;
+}
+
+#btn_search {
+  background: #4a7cc1;
+  border-color: #2c63b1;
+}
+
+#btn_search:hover {
+  background: #2c63b1;
+}
+
+.nav-desktop {
+  background: #f7f7f7;
+}
+
+.nav-desktop__title:hover, .nav-desktop__title.is-selected, .nav-desktop__title.is-active {
+  color: #FFFFFF;
+  background: #4a7cc1;
+}
+
+.nav-desktop__title {
+    color: #2c63b1;
+}
+
+.search-form input {
+  border-color: #2c63b1;
+}
+
+.popup__header {
+  border-bottom: 2px solid #4a7cc1;
+}
+
+.teaser__box {
+  border-top: 4px solid #4a7cc1;
+}
+
+
+.sidebar__widget__title {
+    border-bottom: 1px solid #ddd;
+    color: #61656c;
+}
+
+.sidebar-filter-subheader {
+    color: #4a7cc1;
+}
+
+input:checked + .field-toggle__label--boxed, input:checked + .field-toggle__label--highlight {
+    color: #4a7cc1;
+}
+
+.dropmenu a {
+    color: #2c63b1;
+}
+
+.nav-desktop__title .icon {
+    fill: #2c63b1;
+}
+
+.nav-desktop__dropdown li {
+	background: #4a7cc1;
+	border-top: 0px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+.nav-desktop__dropdown li:hover {
+	background: #2c63b1;
+}
+
+.nav-desktop__dropdown li a {
+	color: #FFFFFF;
+}
+
+.nav-desktop__dropdown li a:hover {
+	color: #FFFFFF !important;
+}
+
+.nav-desktop__title:hover .icon, .nav-desktop__title.is-selected .icon, .nav-desktop__title.is-active .icon {
+    fill: #FFFFFF;
+}
+
+.header {
+    background: #FFFFFF;
+}
+
+.nav-desktop__dropdown {
+    border-top: 4px solid #2c63b1;
+}
+
+.nav-toggle {
+    color: #2c63b1 !important;
+}
+
+.nav-toggle::after {
+    border-color: transparent transparent #FFFFFF;
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    border-bottom: 4px solid #4a7cc1;
+  }
+}
+
+.js-nav-mobile-toggle {
+	
+}
+.nav-overlay {
+    background: #f7f7f7;
+}
+
+.nav__foot a {
+    color: #2c63b1;
+}
+
+.nav__foot a:hover {
+    color: #ffffff;
+    background: #4a7cc1;
+}
+
+.no-touchevents .nav-overlay__item--level1:hover, .nav-overlay__item--level1.is-active {
+    background: #4a7cc1;
+}
+
+.nav-overlay__item--level1 {
+    border-bottom: 1px solid #2c63b1;
+    color: #2c63b1;
+}
+
+.nav-overlay__item--level1:hover {
+    background: #4a7cc1;
+    color: #FFFFFF;
+}
+
+.nav-overlay__item--level2, .nav-overlay__item--level3 {
+    color: #FFFFFF;
+}
+
+.nav-overlay__level2__content {
+    background: #4a7cc1;
+}
+
+.nav-overlay__item--level2:hover, .nav-overlay__item--level3:hover {
+    background: #2c63b1;
+    color: #FFFFFF;
+}
+
+.btn {
+    border: 1px solid #2c63b1;
+}
+
+.btn--primary {
+    background: #4a7cc1;
+}
+
+.btn--primary:not([disabled]):hover, .btn--primary:not([disabled]):focus, .btn--primary:not([disabled]):active {
+  background: #2c63b1;
+  border-color: #2c63b1;
+}
+
+.btn--secondary {
+    color: #4a7cc1 !important;
+}
+
+.btn--secondary:not([disabled]):hover, .btn--secondary:not([disabled]):focus, .btn--secondary:not([disabled]):active {
+  background: #2c63b1;
+  color: #FFFFFF !important;
+}
+
+.link-list a:hover {
+    color: #2c63b1;
+}
+
+.tx-light {
+	color: #ff7445 !important;
+}
+
+.header__widget__icon.is-active {
+    fill: #ff7445;
+}
+
+@media screen and (min-width: 940px) {
+  .header__logo {
+    width: 20.875rem;
+    margin-left: 0;
+  }
+}
+
+.tab__toggles a:hover, .tab__toggles .is-active a {
+    box-shadow: 0 -2px 0 0 #4a7cc1 inset, 0 4px 0 0 #4a7cc1;
+}
+
+.tab__toggles a:hover, .tab__toggles a.is-active {
+  color: #4a7cc1;
+}
+
+.tab__toggle.is-active a {
+    color: #4a7cc1;
+}
+
+thead {
+    border-bottom: 2px solid #ff7445;
+}
+
+.tab__select {
+    background: #4a7cc1;
+}
+
+.tab__select:hover, .tab__select.is-active {
+    background: #2c63b1;
+}

@@ -1,0 +1,85 @@
+#macro (includeMobileNavigation)
+    <div class="nav-overlay is-fixed">
+        <ul class="nav__mobile nav__foot">
+            <li>
+                <a href="$renderResponse.encodeURL('/portal/help.psml')" title="$MESSAGES.getString('footer.help.tooltip')">$MESSAGES.getString('footer.help')</a>
+            </li>
+            <li>
+                <a href="$renderResponse.encodeURL('/portal/service-contact.psml')" title="$MESSAGES.getString('footer.contact.tooltip')">$MESSAGES.getString('footer.contact')</a>
+            </li>
+            <li>
+                <a href="$renderResponse.encodeURL('/portal/service-sitemap.psml')" title="$MESSAGES.getString('footer.sitemap.tooltip')">$MESSAGES.getString('footer.sitemap')</a>
+            </li>
+            <li>
+                <a href="$renderResponse.encodeURL('/portal/disclaimer.psml')" title="$MESSAGES.getString('footer.disclaimer.tooltip')">$MESSAGES.getString('footer.disclaimer')</a>
+            </li>
+        </ul>
+    </div>
+#end
+#* Add the current layouts configuration values to the context *#
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+  <head>
+  <link rel="prefetch" href="/decorations/layout/ingrid/images/template/icons.svg" />
+  #if(!$pageTitle || $pageTitle == "")
+    <title>InGrid-Portal</title>
+  #else
+    $MESSAGES.resetMsgParams()
+    $MESSAGES.setMsgParam($pageTitle)
+    <title>$MESSAGES.getStringWithMsgParams('header.title')</title>
+  #end
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-style-type" content="text/css" />   
+  <meta http-equiv="content-language" content="DE" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
+  <meta name="description" content="$pageDescription" />
+  #if($data.get("general").get("udkObjClass"))
+    #set($udkObjClass = $data.get("general").get("udkObjClass"))
+    #set($udkObjClassName = $data.get("general").get("udkObjClassName"))
+  #end
+  #if($udkObjClass)
+    <meta name="igc-objektklasse" content="${udkObjClassName}" />
+    <meta name="igc-icon" content="https://dev.informationgrid.eu/ingrid-portal-apps/images/icn_udk_obj_${udkObjClass}.gif" />
+  #end
+  <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
+  <meta name="keywords" content="" />
+  <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
+  <meta name="robots" content="index,follow" />
+  <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
+  <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' />
+  <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css" />
+  <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css" />
+
+  <link rel="stylesheet" href="/decorations/layout/ingrid/css/style.css">
+  <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css">
+  <link rel="stylesheet" href="/decorations/layout/ingrid/css/streamline-24px/styles.css">
+  <link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print"/>
+  <!-- Global scripts -->
+  <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
+  <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+  <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+  </head>
+
+    #includeMobileNavigation()
+    <div class="page" >
+        <header class="header">
+            <div class="ob-box-padded-more ob-box-center">
+                <div class="header__widgets__section">
+                    <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                        <svg class="icon">
+                        <use xlink:href="#burger">
+                        </svg>
+                        <svg class="icon ob-fade">
+                        <use xlink:href="#cross">
+                        </svg>
+                    </div>
+                </div>
+                <div class="header__widgets__section">
+                    <a class="header__widget header__logo" href="$renderResponse.encodeURL('/portal/default-page.psml')">
+                    <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.png">
+                    <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png">
+                    </a>
+                </div>
+            </div>
+        </header>
