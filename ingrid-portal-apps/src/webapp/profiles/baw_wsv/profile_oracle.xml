@@ -166,5 +166,9 @@
         <execute>
             <![CDATA[DROP TABLE tmp_table]]>
         </execute>
+        <!-- Disable language switcher -->
+        <execute>
+            <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link']]>
+        </execute>
     </sql>
 </profile>
