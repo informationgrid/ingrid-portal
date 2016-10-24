@@ -254,3 +254,11 @@ thead {
 .no-touchevents .header__widget > a:hover {
   color: #ff7445;
 }
+
+.footer {
+    color: #2c63b1;
+}
+
+.footer__top-link {
+    background: #2c63b1;
+}
