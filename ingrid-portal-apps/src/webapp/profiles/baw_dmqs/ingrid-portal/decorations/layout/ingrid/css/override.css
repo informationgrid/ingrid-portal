@@ -246,3 +246,11 @@ thead {
 .tab__select:hover, .tab__select.is-active {
     background: #2c63b1;
 }
+
+.header__widget > a {
+    color: #2c63b1;
+}
+
+.no-touchevents .header__widget > a:hover {
+  color: #ff7445;
+}
