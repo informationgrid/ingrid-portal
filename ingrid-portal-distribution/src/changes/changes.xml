@@ -36,6 +36,12 @@
 			<action type="fix" dev="wemove" issue="REDMINE-450">
                 MapClient: Remove check of WMS layer URL with host 'wms.geo'.
             </action>
+			<action type="fix" dev="wemove" issue="REDMINE-471">
+                MapClient: Fix zoom to layer on search result list.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-472">
+                MapClient: Fix add service on search result list.
+            </action>
         </release>
 
         <release version="4.0.0" date="2016-08-26" description="Release 4.0.0">
