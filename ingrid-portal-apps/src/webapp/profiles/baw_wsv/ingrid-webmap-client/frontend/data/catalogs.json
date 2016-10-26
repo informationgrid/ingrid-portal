@@ -1,26 +1,26 @@
 {
-    "topics": [{
-        "defaultBackground": "osmLayer",
-        "langs": "de,en",
-        "selectedLayers": [],
-        "activatedLayers": [],
-        "backgroundLayers": ["osmLayer","webatlasde_light","webatlasde_grau"],
-        "id": "favoriten"
-    },
-    {
-        "defaultBackground": "osmLayer",
-        "langs": "de,en",
-        "selectedLayers": [],
-        "activatedLayers": [],
-        "backgroundLayers": ["osmLayer","webatlasde_light","webatlasde_grau"],
-        "id": "themen"
-    },
-    {
-        "defaultBackground": "osmLayer",
-        "langs": "de,en",
-        "selectedLayers": [],
-        "activatedLayers": [],
-        "backgroundLayers": ["osmLayer","webatlasde_light","webatlasde_grau"],
-        "id": "anbieter"
-    }]
+  "topics": [{
+    "defaultBackground": "osmLayer",
+    "langs": "de,en",
+    "selectedLayers": [],
+    "activatedLayers": [],
+    "backgroundLayers": ["osmLayer","webatlasde_light","webatlasde_grau"],
+    "id": "favoriten"
+  },
+  {
+    "defaultBackground": "osmLayer",
+    "langs": "de,en",
+    "selectedLayers": [],
+    "activatedLayers": [],
+    "backgroundLayers": ["osmLayer","webatlasde_light","webatlasde_grau"],
+    "id": "themen"
+  },
+  {
+    "defaultBackground": "osmLayer",
+    "langs": "de,en",
+    "selectedLayers": [],
+    "activatedLayers": [],
+    "backgroundLayers": ["osmLayer","webatlasde_light","webatlasde_grau"],
+    "id": "anbieter"
+  }]
 }

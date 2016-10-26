@@ -26,7 +26,7 @@ var settingExtent = '[6.8, 51.1, 11.2, 54]';
 var settingEpsgExtent = '[6.8, 51.1, 11.2, 54]';
 var settingEpsg = undefined;
 var settingShortURLService = undefined;
-var settingSearchServiceUrl = 'http://numis.niedersachsen.de/opensearch/query?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+t011_obj_serv.type:view+cache:off+datatype:metadata+ranking:score%26ingrid=1%26h=100';
+var settingSearchServiceUrl = 'https://geoportal.wsv.res.bund.de/opensearch/query?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+t011_obj_serv.type:view+cache:off+datatype:metadata+ranking:score%26ingrid=1%26h=100';
 var settingSearchNominatimUrl = 'http://nominatim.openstreetmap.org/search?format=json%26countrycodes=de';
 var settingSearchBwaLocatorUrl = 'https://atlas.wsv.bund.de/bwastr-locator/rest/bwastrinfo/query?limit=200%26searchfield=all';
 var settingSearchBwaLocatorGeoUrl = 'https://atlas.wsv.bund.de/bwastr-locator/rest/geokodierung/query';

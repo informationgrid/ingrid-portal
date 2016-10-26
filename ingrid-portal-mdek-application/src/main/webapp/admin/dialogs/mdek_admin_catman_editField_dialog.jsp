@@ -108,6 +108,19 @@
                 });
 
                 on(registry.byId("formMandatory"), "Change", mandatoryChanged);
+                
+                on(registry.byId("formWithSyslist"), "Change", toggleListFields);
+            }
+            
+            function toggleListFields(checked) {
+                if (checked) {
+                    domClass.remove("span_formListSyslistId", "hide");
+                    domClass.add("span_formListTable", "hide");
+                } else {
+                    domClass.add("span_formListSyslistId", "hide");
+                    domClass.remove("span_formListTable", "hide");
+                    registry.byId("formListOptions").resize();
+                }                
             }
 
             function mandatoryChanged(checked) {
@@ -192,6 +205,10 @@
                             setTimeout(function() {
                                 registry.byId("formListOptions_en").reinitLastColumn();
                             }, 100);
+                            if (profileObjectToEdit.useSyslist) {
+                                registry.byId("formWithSyslist").set("checked", true);
+                                registry.byId("formListSyslistId").set("value", profileObjectToEdit.useSyslist);
+                            }
                         }
                         // fall through!
                     case "numberControl":
@@ -468,6 +485,9 @@
                 array.forEach(pageAdditionalFields.profileData.languages, function(lang) {
                     if (data.type == "selectControl") {
                         data.allowFreeEntries = registry.byId("formAsCombobox").get("checked");
+                        if (registry.byId("formWithSyslist").get("checked")) {
+                            data.useSyslist = registry.byId("formListSyslistId").get("value");
+                        }
                         data.options[lang] = UtilGrid.getTableData("formListOptions_" + lang);
                     } else if (data.type == "numberControl") {
                         data.unit[lang] = registry.byId("formUnits_" + lang).get("value");
@@ -758,20 +778,44 @@
                 </span>
                 <span id="span_formListOptions" class="outer halfWidth hide">
                     <div>
-                        <span class="label">
-                            <label for="formListOptions" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10107)">
-                                <fmt:message key="dialog.admin.additionalfields.options" />
-                            </label>
-                        </span>
-                        <div class="tableContainer">
-                            <div id="formListOptions" data-dojo-type="dijit/layout/TabContainer" doLayout="false" style="">
+                        <span id="span_formListTable">
+                            <span class="label">
+                                <label for="formListOptions" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10107)">
+                                    <fmt:message key="dialog.admin.additionalfields.options" />
+                                </label>
+                            </span>
+                            <div class="tableContainer">
+                                <div id="formListOptions" data-dojo-type="dijit/layout/TabContainer" doLayout="false" style="">
+                                </div>
                             </div>
-                        </div>
-                        <span class="input">
-                            <input id="formAsCombobox" data-dojo-type="dijit/form/CheckBox" value="required">
-                            <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10114)">
-                                <fmt:message key="dialog.admin.additionalfields.allowFreeEntries" />
-                            </label>
+                        </span>
+                        <span class="outer">
+                            <div>
+                                <span class="input">
+                                    <input id="formAsCombobox" data-dojo-type="dijit/form/CheckBox" value="required">
+                                    <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10114)">
+                                        <fmt:message key="dialog.admin.additionalfields.allowFreeEntries" />
+                                    </label>
+                                </span>
+                            </div>
+                        </span>
+                        
+                        <span class="outer halfWidth">
+                            <div>
+                                <span class="input">
+                                    <input id="formWithSyslist" data-dojo-type="dijit/form/CheckBox" value="required">
+                                    <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10115)">
+                                        <fmt:message key="dialog.admin.additionalfields.listWithSyslist" />
+                                    </label>
+                                </span>
+                            </div>
+                        </span>
+                        <span id="span_formListSyslistId" class="outer halfWidth hide">
+                            <div>
+                            <span class="input">
+                                <input id="formListSyslistId" data-dojo-type="dijit/form/TextBox" style="width: 100%;">
+                            </span>
+                            </div>
                         </span>
                     </div>
                 </span>

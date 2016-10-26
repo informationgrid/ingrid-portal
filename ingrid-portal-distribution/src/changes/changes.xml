@@ -15,6 +15,9 @@
             <action type="add" dev="wemove" issue="REDMINE-377">
                 IGE: Add new field "File description" to objects.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-476">
+                IGE: Possibility to add a list with a connected syslist as an additional field.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-417">
                 IGE: Fixed massive problems when parallel IGE logins via Portal-Admin, was not session specific.
             </action>
@@ -35,6 +38,12 @@
             </action>
 			<action type="fix" dev="wemove" issue="REDMINE-450">
                 MapClient: Remove check of WMS layer URL with host 'wms.geo'.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-471">
+                MapClient: Fix zoom to layer on search result list.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-472">
+                MapClient: Fix add service on search result list.
             </action>
         </release>
 
