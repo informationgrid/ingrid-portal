@@ -489,7 +489,7 @@ define([
                                 value: item[0]
                             });
                         });
-                        UtilStore.updateWriteStore(additionalField.id, entries, storeProps);
+                        UtilStore.updateWriteStore(additionalField.id, entries, storeProps.data);
                     });
                     storeProps.data.items = [];
                     
