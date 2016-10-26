@@ -22,6 +22,74 @@
  */
 // JS Code für BAW DMGS zum Hinzufügen in "Gesamtkatalogmanagement -> Zusätzliche Felder"
 
+
+// ========================================================================================================================
+// Zusätzliches Feld -> Liste: "BAW/WSV Auftragsnummer"
+// - Zusätzliches Feld anlegen unter "Allgemeines - Kategorien"
+//   - Liste (Id:'bawAuftragsnummer', Sichtbarkeit: Pflichtfeld, Beschriftung:'BAW/WSV Auftragsnummer', Hilfetext:?)
+//   - nachfolgendes Javascript in Feld IDF-Mapping hinzufügen
+// ========================================================================================================================
+
+
+// ------------------------
+// IDF
+// ------------------------
+importPackage(Packages.de.ingrid.iplug.dsc.om);
+//add Namespaces to Utility for convenient handling of NS !
+DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
+DOM.addNS("gco", "http://www.isotc211.org/2005/gco");
+
+if (!(sourceRecord instanceof DatabaseSourceRecord)) {
+  throw new IllegalArgumentException("Record is no DatabaseRecord!");
+}
+
+var id = sourceRecord.get(DatabaseSourceRecord.ID);
+var igcProfileControlId = XPATH.getString(igcProfileControlNode, "igcp:id");
+var simSpatialDimensionRecord = SQL.all("SELECT add1.data FROM additional_field_data add1 WHERE add1.obj_id=? AND add1.field_key=?", [id, igcProfileControlId]);
+if (simSpatialDimensionRecord && simSpatialDimensionRecord.size() > 0) {
+	var simSpatialDimension = simSpatialDimensionRecord.get(0).get("data");
+    if (simSpatialDimension) {
+        
+        var objRow = SQL.first("SELECT obj_class FROM t01_object WHERE id=?", [id]);
+        var objClass = objRow.get("obj_class");
+
+        var i;
+        var dataIdentification;
+        if (objClass.equals("3")) {
+            dataIdentification = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/srv:SV_ServiceIdentification");
+        } else {
+            dataIdentification = DOM.getElement(idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/gmd:MD_DataIdentification");
+        }
+        
+        var path = ["gmd:resourceFormat", "gmd:graphicOverview", "gmd:resourceMaintenance","gmd:pointOfContact", "gmd:status","gmd:credit","gmd:purpose"];
+        
+        // find first present node from paths
+        var nodeBeforeInsert = null;
+        for (i=0; i<path.length; i++) {
+            // get the last occurrence of this path if any
+            nodeBeforeInsert = DOM.getElement(dataIdentification, path[i]+"[last()]");
+            if (nodeBeforeInsert) { break; }
+        }
+        
+        // write keyword and thesaurus
+        var keywords;
+        var keywordsParent;
+        if (nodeBeforeInsert) {
+            keywordsParent = nodeBeforeInsert.addElementAsSibling("gmd:descriptiveKeywords");
+        } else {
+            keywordsParent = dataIdentification.addElement("gmd:descriptiveKeywords");
+        }
+        keywords = keywordsParent.addElement("gmd:MD_Keywords");
+        keywords.addElement("gmd:keyword/gco:CharacterString").addText(simSpatialDimension);
+        keywords.addElement("gmd:type/gmd:MD_KeywordTypeCode").addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode").addAttribute("codeListValue", "discipline");
+        var thesCitation = keywords.addElement("gmd:thesaurusName/gmd:CI_Citation");
+        thesCitation.addElement("gmd:title/gco:CharacterString").addText("DEBUNDBAWAUFTRAGNR");
+        var ciDate = thesCitation.addElement("gmd:date/gmd:CI_Date");
+        ciDate.addElement("gmd:date/gco:Date").addText("2016-05-12");
+        ciDate.addElement("gmd:dateType/gmd:CI_DateTypeCode").addAttribute("codeList", "http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode").addAttribute("codeListValue", "publication");
+    }
+}
+
 // ========================================================================================================================
 // Zusätzliches Feld -> Liste: "Simulation / Räumliche Dimensionalität"
 // TODO:
