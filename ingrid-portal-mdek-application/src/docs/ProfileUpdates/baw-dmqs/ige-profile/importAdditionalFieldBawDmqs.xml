@@ -4,26 +4,12 @@
       <checkboxControl>
         <scriptedCswMappingImport><![CDATA[// ------------------------
 
-function getIdFromProfileList(ctrlId, keyword) {
-    // find the keyword in local lookup list
-    var id = "-1";
-    var items = XPATH.getNodeList(igcProfile, "//igcp:selectControl[./igcp:id='" + ctrlId + "']/igcp:selectionList/igcp:items[./@lang='de']/igcp:item");
-    for (var j=0; j<items.getLength(); j++ ) {
-        var item = items.item(j);
-        if (item.getTextContent() == keyword) {
-            id = XPATH.getString(item, "./@id");
-            break;
-        }
-    }
-    return id;
-}
-
 // import BAW Auftragsnummer, remove from general keywords
 var keywords = XPATH.getNodeList(source, "//gmd:descriptiveKeywords/gmd:MD_Keywords[normalize-space(./gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString)='DEBUNDBAWAUFTRAGNR']/gmd:keyword/gco:CharacterString");
 for (var i=0; i<keywords.getLength(); i++ ) {
     var keyword = keywords.item(i).getTextContent();
     // find the keyword in local lookup list
-    var id = getIdFromProfileList('bawAuftragsnummer', keyword);
+    var id = codeListService.getSysListEntryKey(10100, keyword, "", false);
     
     var targetEl = target.getDocumentElement();
     var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
@@ -34,13 +20,12 @@ for (var i=0; i<keywords.getLength(); i++ ) {
     XPATH.removeElementAtXPath(targetEl, "//uncontrolled-term[.='"+keyword+"']");
 }
 
-
 // import Simulation: Räumliche Dimensionalität, remove from general keywords
 var keywords = XPATH.getNodeList(source, "//gmd:descriptiveKeywords/gmd:MD_Keywords[normalize-space(./gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString)='BAW-DMQS Spatial Dimensions']/gmd:keyword/gco:CharacterString");
 for (var i=0; i<keywords.getLength(); i++ ) {
     var keyword = keywords.item(i).getTextContent();
     // find the keyword in local lookup list
-    var id = getIdFromProfileList('simSpatialDimension', keyword);
+    var id = codeListService.getSysListEntryKey(10101, keyword, "", false); 
     
     var targetEl = target.getDocumentElement();
     var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
@@ -56,7 +41,7 @@ var keywords = XPATH.getNodeList(source, "//gmd:descriptiveKeywords/gmd:MD_Keywo
 for (var i=0; i<keywords.getLength(); i++ ) {
     var keyword = keywords.item(i).getTextContent();
     // find the keyword in local lookup list
-    var id = getIdFromProfileList('simProcess', keyword);
+    var id = codeListService.getSysListEntryKey(10102, keyword, "", false); 
 
     var targetEl = target.getDocumentElement();
     var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
@@ -72,7 +57,8 @@ var keywords = XPATH.getNodeList(source, "//gmd:descriptiveKeywords/gmd:MD_Keywo
 for (var i=0; i<keywords.getLength(); i++ ) {
     var keyword = keywords.item(i).getTextContent();
     // find the keyword in local lookup list
-    var id = getIdFromProfileList('simModelType', keyword);
+    var id = codeListService.getSysListEntryKey(10103, keyword, "", false);
+    log.info("got ID: " + id);
     var targetEl = target.getDocumentElement();
     var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
     var additionalValue = DOM.addElement(additionalValues, "general-additional-value").addAttribute("line", (i+1));
@@ -101,9 +87,12 @@ for (var i=0; i<dqQualityNodes.getLength(); i++ ) {
     var targetEl = target.getDocumentElement();
     var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
     
+    var simParamTypeVal = XPATH.getString(dqQualityNode, "gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString");
+    if (simParamTypeVal == null) continue;
+    
     var records = [ 
               {"key":"simParamName", "value":XPATH.getString(dqQualityNode, "gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:result/gmd:DQ_QuantitativeResult/gmd:valueType/gco:RecordType")},
-              {"key":"simParamType", "value":XPATH.getString(dqQualityNode, "gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString"), "id":getIdFromProfileList('simParamType', XPATH.getString(dqQualityNode, "gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString"))},
+              {"key":"simParamType", "value":simParamTypeVal,"id":codeListService.getSysListEntryKey(10104, simParamTypeVal, "", false)},
               {"key":"simParamUnit", "value":XPATH.getString(dqQualityNode, "gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:result/gmd:DQ_QuantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:name")},
               {"key":"simParamValue", "value":XPATH.getString(dqQualityNode, "gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record")},
               {"key":"simParamInfo", "value":XPATH.getString(dqQualityNode, "gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:result/@xlink:href")},
@@ -112,14 +101,99 @@ for (var i=0; i<dqQualityNodes.getLength(); i++ ) {
  
     var record;
     for (record in records) {
-	    var additionalValue = additionalValues.appendChild(targetEl.getOwnerDocument().createElement("general-additional-value"));
-	    XMLUtils.createOrReplaceAttribute(additionalValue, "line", (i+1));
-	    XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-key"), records[record].key);
-	    var fieldData = XPATH.createElementFromXPath(additionalValue, "field-data");
-	    XMLUtils.createOrReplaceAttribute(fieldData, "id", records[record].id ? records[record].id : "-1");
-	    XMLUtils.createOrReplaceTextNode(fieldData, records[record].value);
-	    XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-key-parent"), "simParamTable");
+        var additionalValue = additionalValues.appendChild(targetEl.getOwnerDocument().createElement("general-additional-value"));
+        XMLUtils.createOrReplaceAttribute(additionalValue, "line", (i+1));
+        XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-key"), records[record].key);
+        var fieldData = XPATH.createElementFromXPath(additionalValue, "field-data");
+        XMLUtils.createOrReplaceAttribute(fieldData, "id", records[record].id ? records[record].id : "-1");
+        XMLUtils.createOrReplaceTextNode(fieldData, records[record].value);
+        XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-key-parent"), "simParamTable");
     }
+}
+
+// change address import: 
+//  * remove institutions if they have no email address
+//  * in addresses that hold references to that address, remove the reference to the institution and change type to "Freie Adresse"
+var unitsWithoutEmail = XPATH.getNodeList(targetEl, "//addresses/address/address-instance[not(communication/communication-medium/@id=3) and type-of-address/@id=0]");
+for (var i=0; i<unitsWithoutEmail.getLength(); i++ ) {
+    var unitsWithoutEmailNode = unitsWithoutEmail.item(i);
+    var unitsWithoutEmailsUUID = XPATH.getString(unitsWithoutEmailNode, "./address-identifier");
+    // get all referencing addresses
+    var referencingAdresses = XPATH.getNodeList(targetEl, "//addresses/address/address-instance[./parent-address/address-identifier = '" + unitsWithoutEmailsUUID + "']");
+    for (var j=0; j<referencingAdresses.getLength(); j++ ) {
+        var referencingAdressesNode = referencingAdresses.item(j);
+        // change type of address to "Freie Adresse"
+        XMLUtils.createOrReplaceAttribute(XPATH.getNode(referencingAdressesNode, "./type-of-address"), "id", "3");
+        // remove reference to institution
+        XPATH.removeElementAtXPath(referencingAdressesNode, "./parent-address");
+    }
+    // remove the institution
+    XMLUtils.remove( unitsWithoutEmailNode )
+}
+
+// set address type of "gmd:contact" adresses to pointOfContactMd
+var contactMdNodes = XPATH.getNodeList(source, "//gmd:contact/gmd:CI_ResponsibleParty");
+for (var i=0; i<contactMdNodes.getLength(); i++) {
+    var contactMdNode = contactMdNodes.item(i);
+    var ContactMdUUID = createUUIDFromAddress(contactMdNode);
+    var relatedAddresses = XPATH.getNodeList(targetEl, "//related-address[./type-of-relation/@entry-id=7 and address-identifier='"+ContactMdUUID+"']");
+    for (var j=0; j<relatedAddresses.getLength(); j++) {
+        var relatedAddressNode = relatedAddresses.item(j);
+        XMLUtils.createOrReplaceAttribute(XPATH.getNode(relatedAddressNode, "./type-of-relation"), "entry-id", "12");
+        XMLUtils.createOrReplaceTextNode(XPATH.getNode(relatedAddressNode, "./type-of-relation"), "pointOfContactMd");
+    }
+}
+
+
+
+function createUUIDFromAddress(source) {
+    log.debug("create UUID from address node: " + source);
+    var isoUuid = XPATH.getString(source, "./@uuid");
+    var organisationName = XPATH.getString(source, "gmd:organisationName/gco:CharacterString");
+    var individualName = XPATH.getString(source, "gmd:individualName/gco:CharacterString");
+    var email = XPATH.getString(source, "gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString");
+    
+    var idString = "";
+    if (hasValue(organisationName)) {
+        idString += organisationName;
+    }
+    if (hasValue(individualName)) {
+        idString += individualName;
+    }
+    if (hasValue(email)) {
+        idString += email;
+    }
+    
+    var uuid;
+    // first check for valid uuid to be used for address identification
+    if (hasValue(isoUuid)) {
+        uuid = isoUuid;
+    } else if (hasValue(idString) && (hasValue(email) || (hasValue(organisationName) && hasValue(individualName)))) {
+        // otherwise create a uuid from the content, to try to find an address
+        // this should work if same address was referenced without a uuid
+        uuid = createUUIDFromString(idString.toString());
+    } else {
+        // if no content was given, create a completely new uuid
+        protocol(INFO, "Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)")
+        protocol(INFO, "A new random UUID will be created!")
+        log.info("Insufficient data for UUID creation (no 'email' or only one of 'individualName' or 'organisationName' has been set for this address: email='" + email + "', individualName='" + individualName + "', organisationName='" + organisationName + "'!)");
+        log.info("A new random UUID will be created!");
+        uuid = createUUID();
+    }
+    log.info("Created UUID from Address:" + uuid);
+    
+    return uuid;
+}
+
+function createUUIDFromString(str) {
+    // replace multiple white spaces by ' '
+    var uuid = java.util.UUID.nameUUIDFromBytes((new java.lang.String(str).replaceAll("\\s+", " ")).getBytes());
+    var idcUuid = new java.lang.StringBuffer(uuid.toString().toUpperCase());
+    while (idcUuid.length() < 36) {
+        idcUuid.append("0");
+    }
+    uuid = idcUuid.toString();
+    return uuid;
 }
 
         ]]></scriptedCswMappingImport>
