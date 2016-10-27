@@ -1892,5 +1892,33 @@
             </preference>
        </portlet-preferences>
     </portlet>
+
+    <portlet id="CMSPortlet3">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>CMSPortlet3</portlet-name>
+        <display-name>CMSPortlet3</display-name>
+        <description>This portlet displays the CMSPortlet3.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.CMSPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>cmsKey</name>
+                <value>portal.cms.portlet.3</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+       </portlet-preferences>
+    </portlet>
     
 </portlet-app>
