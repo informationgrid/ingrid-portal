@@ -33,7 +33,7 @@ INSERT INTO ingrid_cms_item (id, fk_ingrid_cms_id, item_lang, item_title, item_v
 -- Change portlet iFrame to CMS of page '/application/main-application.psml'
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('fragment_tmp', (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/application/main-application.psml')));
 
-UPDATE fragment SET name = "ingrid-portal-apps::CMSPortlet3" WHERE name = 'ingrid-portal-apps::IFramePortalPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'fragment_tmp');
+UPDATE fragment SET name = 'ingrid-portal-apps::CMSPortlet3' WHERE name = 'ingrid-portal-apps::IFramePortalPortlet' AND parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'fragment_tmp');
 
 -- delete temporary table
 DROP TABLE ingrid_temp;
