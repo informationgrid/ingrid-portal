@@ -178,7 +178,7 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 					}
 				}else if(addressType.equals("3")){
 					if(XPathUtils.nodeExists(tmpNode, "./idf:addressIndividualName")){
-						tmpTitle = getIndividualName(XPathUtils.getString(node, "./idf:addressIndividualName").trim());
+						tmpTitle = getIndividualName(XPathUtils.getString(tmpNode, "./idf:addressIndividualName").trim());
 					}else if(XPathUtils.nodeExists(tmpNode, "./idf:addressOrganisationName")){
 						tmpTitle = XPathUtils.getString(tmpNode, "./idf:addressOrganisationName").trim();
 					}
