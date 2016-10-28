@@ -11,6 +11,15 @@
                 #displayFormError()
                 <div class="media">
                     <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="bemerkungen">$MESSAGES.getString('contact.form.message')*</label>
+                    </div>
+                    <div class="media__body">
+                        <textarea name="message" id="bemerkungen" #addErrorFormClass('message')>#getFieldValue('message')</textarea>
+                        #addErrorFormMessage('message')
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label for="activity">$MESSAGES.getString('contact.form.activity')</label>
                     </div>
                     <div class="media__body">
