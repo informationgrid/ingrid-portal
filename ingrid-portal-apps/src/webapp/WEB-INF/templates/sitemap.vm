@@ -83,6 +83,7 @@
         </a>
         <p>$MESSAGES.getString("sitemap.application.main.description")</p>
         <div class="search-result--nested">
+<!--
             <ul>
                 <li>
                     #set ($link = $renderResponse.encodeURL("/portal/main-maps.psml"))
@@ -175,8 +176,22 @@
                     <p>$MESSAGES.getString("sitemap.application.extern6.description")</p>
                 </li>
             </ul>
+-->
+            <ul>
+                <li>
+                    #set ($link = $renderResponse.encodeURL("/portal/application/main-application.psml"))
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.main2.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.main2")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.main2.description")</p>
+                </li>
+            </ul>
         </div>
     </li>
+<!--
     <li>
         #set ($link = $renderResponse.encodeURL("/portal/application/main-application.psml"))
         <a href="$link" title="$MESSAGES.getString("sitemap.application.main2.tooltip")">
@@ -220,6 +235,27 @@
                 </li>
             </ul>
         </div>
+    </li>
+-->
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/cms/cms-1.psml"))
+        <a href="$link" title="$MESSAGES.getString("Zu den Anleitungen und Tutorials im GeoPortal.WSV")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.default.page.manual")
+        </a>
+        <p>$MESSAGES.getString("Anleitungen und Tutorials im GeoPortal.WSV")</p>
+    </li>
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/cms/cms-2.psml"))
+        <a href="$link" title="$MESSAGES.getString("Informationsveranstaltungen zum GeoPortal.WSV")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("Veranstaltungen")
+        </a>
+        <p>$MESSAGES.getString("Informationsveranstaltungen zum GeoPortal.WSV")</p>
     </li>
     #end
     #if($enableAbout)
