@@ -363,7 +363,6 @@
 
 	<target name="RemoveFiles" depends="RemoveOldLibs">
     	<delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/profiles"/>
-		<delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client"/>
     </target>
     
     <target name="MoveFiles" depends="RemoveOldLibs">
