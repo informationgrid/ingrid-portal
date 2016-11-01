@@ -360,10 +360,6 @@
         <!-- remove tomcat working dir to force compilation of JSPs -->
         <delete dir="${installDir}/${tomcat-artifact}/work"/>
     </target>
-
-	<target name="RemoveFiles" depends="RemoveOldLibs">
-    	<delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/profiles"/>
-    </target>
     
     <target name="MoveFiles" depends="RemoveOldLibs">
     	<move toDir="${installDir}/${tomcat-artifact}">
