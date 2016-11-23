@@ -54,7 +54,7 @@
     <property name="libraryDir"         value="${tomcat-artifact}/webapps/ROOT/META-INF,apache-tomcat-6.0.35/webapps/ROOT/META-INF" />
     <property name="libraryIdent"       value="MANIFEST.MF" />
     <property name="versionsWithConfigurations"  value="" />
-    <property name="minSupportedVersion" value="3.5.0" />
+    <property name="minSupportedVersion" value="4.0.0" />
 
     <import file="build-installer-utils.xml"  as="utils" />
     <import file="build-patch.xml"            as="patch" />
@@ -300,11 +300,7 @@
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ROOT.war" dest="${installDir}/${tomcat-artifact}/webapps/ROOT"/>
         <move file="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/assembly/alternate/shibboleth.xml.bak" tofile="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/assembly/alternate/shibboleth.xml" failonerror="false"/>
 
-        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client">
-            <patternset>
-                <exclude name="WEB-INF/classes/application.properties" />
-            </patternset>
-        </unwar>
+        <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client"></unwar>
         <move toDir="${installDir}/${tomcat-artifact}/webapps">
             <fileset dir="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/deploy">
                 <include name="**/ingrid-portal-apps.war"/>
