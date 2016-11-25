@@ -33,6 +33,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-457">
                 IGE: Fixed geo thesaurus not shown when also search on research page.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-466">
+                IGE: Fixed pasting an address node to the address root node.
+            </action>
 			<action type="fix" dev="wemove" issue="REDMINE-448">
                 MapClient: GetMap-URL on print.
             </action>
