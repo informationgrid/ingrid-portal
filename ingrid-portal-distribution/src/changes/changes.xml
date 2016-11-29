@@ -6,6 +6,9 @@
     </properties>
     <body>
         <release version="4.0.1-SNAPSHOT" date="??" description="Release 4.0.1">
+		    <action type="fix" dev="wemove" issue="REDMINE-496">
+                PORTAL: Fix enable (delete) button on checkbox selection.
+            </action>
 		    <action type="fix" dev="wemove" issue="REDMINE-479">
                 PORTAL: Fix detail view with free addresses.
             </action>
