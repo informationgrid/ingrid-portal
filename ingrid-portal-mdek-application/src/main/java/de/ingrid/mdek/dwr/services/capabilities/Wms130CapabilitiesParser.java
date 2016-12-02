@@ -297,7 +297,10 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         unionLocation.setType( "F" );
         
         for (LocationBean layerLocation : boundingBoxesFromLayers) {
-            if (unionLocation.getLatitude1() == null) unionLocation.setLatitude1(layerLocation.getLatitude1());
+            if (unionLocation.getLatitude1() == null) {
+                if (layerLocation.getLatitude1() == null) continue;
+                unionLocation.setLatitude1(layerLocation.getLatitude1());
+            }
             if (unionLocation.getLatitude1() > layerLocation.getLatitude1())
                 unionLocation.setLatitude1(layerLocation.getLatitude1());
             
