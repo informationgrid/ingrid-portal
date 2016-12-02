@@ -500,7 +500,9 @@ require([
 
         // Fees
         if (applyAll || registry.byId( "assistantFeesCheckbox" ).checked) {
-            registry.byId( "availabilityUseConstraints" ).setValue( lang.trim( registry.byId( "assistantFees" ).getValue() ) );
+            // write value to "Nutzungsbedingungen" (useConstraints) (REDMINE-273)
+            var value = registry.byId( "assistantFees" ).getValue();
+            UtilStore.updateWriteStore("availabilityUseAccessConstraints", UtilList.listToTableData( [value] ));
         }
 
         // Access Constraints

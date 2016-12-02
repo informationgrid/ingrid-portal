@@ -39,6 +39,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-466">
                 IGE: Fixed pasting an address node to the address root node.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-273">
+                IGE: Support useConstraints in getCapabilities-assistant.
+            </action>
 			<action type="fix" dev="wemove" issue="REDMINE-448">
                 MapClient: GetMap-URL on print.
             </action>
