@@ -111,26 +111,6 @@ for (var i=0; i<dqQualityNodes.getLength(); i++ ) {
     }
 }
 
-// change address import: 
-//  * remove institutions if they have no email address
-//  * in addresses that hold references to that address, remove the reference to the institution and change type to "Freie Adresse"
-var unitsWithoutEmail = XPATH.getNodeList(targetEl, "//addresses/address/address-instance[not(communication/communication-medium/@id=3) and type-of-address/@id=0]");
-for (var i=0; i<unitsWithoutEmail.getLength(); i++ ) {
-    var unitsWithoutEmailNode = unitsWithoutEmail.item(i);
-    var unitsWithoutEmailsUUID = XPATH.getString(unitsWithoutEmailNode, "./address-identifier");
-    // get all referencing addresses
-    var referencingAdresses = XPATH.getNodeList(targetEl, "//addresses/address/address-instance[./parent-address/address-identifier = '" + unitsWithoutEmailsUUID + "']");
-    for (var j=0; j<referencingAdresses.getLength(); j++ ) {
-        var referencingAdressesNode = referencingAdresses.item(j);
-        // change type of address to "Freie Adresse"
-        XMLUtils.createOrReplaceAttribute(XPATH.getNode(referencingAdressesNode, "./type-of-address"), "id", "3");
-        // remove reference to institution
-        XPATH.removeElementAtXPath(referencingAdressesNode, "./parent-address");
-    }
-    // remove the institution
-    XMLUtils.remove( unitsWithoutEmailNode )
-}
-
 // set address type of "gmd:contact" adresses to pointOfContactMd
 var contactMdNodes = XPATH.getNodeList(source, "//gmd:contact/gmd:CI_ResponsibleParty");
 for (var i=0; i<contactMdNodes.getLength(); i++) {

@@ -69,12 +69,6 @@
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="3">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="4">
-                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
-                </portlet>
-                <portlet col="0" row="5">
                     <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
             </portlets>
@@ -93,14 +87,9 @@
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="3">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="4">
-                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
-                </portlet>
-                <portlet col="0" row="5">
                     <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
+
             </portlets>
         </page>
         <page>
@@ -117,14 +106,9 @@
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="3">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="4">
-                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
-                </portlet>
-                <portlet col="0" row="5">
                     <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
+
             </portlets>
         </page>
         <page>
@@ -137,7 +121,7 @@
         </page>
         <page>
             <name>disclaimer.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
       </pages>
     <files>
@@ -157,7 +141,7 @@
         <execute>
             <![CDATA[DROP TABLE tmp_table]]>
         </execute>
-        <!-- Enable language switcher -->
+        <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link';]]>
         </execute>
