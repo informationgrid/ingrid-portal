@@ -187,19 +187,25 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			"AddressNode as modUserNode " +
 				"inner join modUserNode.t02AddressWork modUserAddr " +
 		"where " +
-			"oMeta.expiryState = " + state.getDbValue() +
-			" and obj.responsibleUuid = responsibleUserNode.addrUuid " +
+            "obj.responsibleUuid = responsibleUserNode.addrUuid " +
 			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
 			" and modUserNode.addrUuid = obj.modUuid";
 		if (begin != null) {
 			qString += " and obj.modTime >= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin) +"'";
 		}
-        if (end != null) {
-            if (de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED.equals( state )) {
-                // if final mail already sent, we use date when email was sent to determine whether again expired !
-                // Also check if date not set, then is again expired (state after date was introduced)
+		// differ between querying for EXPIRED (to send another expiry email) or for first expiry email !
+        if (de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED.equals( state )) {
+            // if query for EXPIRED we compare with "=" not "<=" we only want entities already expired !
+            qString += " and oMeta.expiryState = " + state.getDbValue(); 
+            if (end != null) {
+                // if expiry mail already sent, we use date when email was sent to determine whether again expired !
+                // Also check if date not set, then send email (state after date was introduced)
                 qString += " and (oMeta.lastexpiryTime is null OR oMeta.lastexpiryTime <= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) + "')";
-            } else {
+            }
+        } else {
+            // if not query for EXPIRE we compare with "<=" so notification and expire mails can be sent.                
+            qString += " and oMeta.expiryState <= " + state.getDbValue(); 
+            if (end != null) {
                 qString += " and obj.modTime <= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) + "'";
             }
         }
@@ -253,21 +259,27 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		"where " +
 			// exclude hidden user addresses !
 			AddressType.getHQLExcludeIGEUsersViaNode("addrNode") +
-			" and aMeta.expiryState = " + state.getDbValue() +
 			" and adr.responsibleUuid = responsibleUserNode.addrUuid " +
 			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
 			" and modUserNode.addrUuid = adr.modUuid";
 		if (begin != null) {
 			qString += " and adr.modTime >= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin) + "'";
 		}
-        if (end != null) {
-            if (de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED.equals( state )) {
-                // if final mail already sent, we use date when email was sent to determine whether again expired !
-                // Also check if date not set, then is again expired (state after date was introduced)
+        // differ between querying for EXPIRED (to send another expiry email) or for first expiry email !
+        if (de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED.equals( state )) {
+            // if query for EXPIRED we compare with "=" not "<=" we only want entities already expired !
+            qString += " and aMeta.expiryState = " + state.getDbValue(); 
+            if (end != null) {
+                // if expiry mail already sent, we use date when email was sent to determine whether again expired !
+                // Also check if date not set, then send email (state after date was introduced)
                 qString += " and (aMeta.lastexpiryTime is null OR aMeta.lastexpiryTime <= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) + "')";
-            } else {
+            }
+        } else {
+            // if not query for EXPIRE we compare with "<=" so notification and expire mails can be sent.                
+            qString += " and aMeta.expiryState <= " + state.getDbValue(); 
+            if (end != null) {
                 qString += " and adr.modTime <= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) + "'";
-            }            
+            }
         }
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, numAddressesMax, "");
