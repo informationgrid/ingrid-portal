@@ -33,6 +33,9 @@
             <action type="add" dev="wemove" issue="REDMINE-476">
                 IGE: Possibility to add a list with a connected syslist as an additional field.
             </action>
+            <action type="update" dev="wemove" issue="REDMINE-107">
+                IGE: Send emails in intervals if objects/addresses are expired (optional).
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-417">
                 IGE: Fixed massive problems when parallel IGE logins via Portal-Admin, was not session specific.
             </action>
