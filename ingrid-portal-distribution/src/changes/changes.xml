@@ -54,6 +54,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-273">
                 IGE: Support useConstraints in getCapabilities-assistant.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-507">
+                IGE: Fix IE 11 bug where right click was not recognized, after expanding a tree node.
+            </action>
 			<action type="fix" dev="wemove" issue="REDMINE-448">
                 MapClient: GetMap-URL on print.
             </action>

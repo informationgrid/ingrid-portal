@@ -128,7 +128,13 @@
                                 showRoot: false,
                                 sortByClass: UtilCatalog.catalogData.sortByClass === "Y",
                                 onClick: TreeActions.clickHandler,
-                                onMouseDown: lang.partial(TreeActions.mouseDownHandler, TreeActions)
+                                // the onMouseDown handler is not always called in IE 11 when expanding a tree and right clicking
+                                // a node immediately afterwards. That's why we register on the DNDController of the widget
+                                // where the event is still received.
+                                //onMouseDown: lang.partial(TreeActions.mouseDownHandler, TreeActions)
+                                onLoad: function() {
+                                    this.dndController.onMouseDown = lang.hitch(this, lang.partial(TreeActions.mouseDownHandler, TreeActions));
+                                }
                             }, "dataTree");
                             tree.onLoadDeferred.then(pageHierachy.dataTreePromise.resolve);
                             TreeActions.createTreeMenu();
