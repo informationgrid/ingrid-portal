@@ -83,7 +83,7 @@
 	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		<property name="jobDetail" ref="checkForExpiredDatasetsJob" />
 		<property name="startDelay" value="10000" />
-		<property name="repeatInterval" value="600000" />
+		<property name="repeatInterval" value="${workflow.expiryJob.repeatInterval}" />
 	</bean>
 	<!-- Scheduler Factory -->
 
