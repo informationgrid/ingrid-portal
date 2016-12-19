@@ -133,6 +133,8 @@ public class MdekEmailUtils {
 			// No receiver specified. Initialize MAIL_RECEIVER with null
 			MAIL_RECEIVER = null;
 		}
+
+        log.info("Force emails to this email address ? (if not null): " + MAIL_RECEIVER);
 	}
 
 	public static void sendObjectAssignedToQAMail(MdekDataBean data) {

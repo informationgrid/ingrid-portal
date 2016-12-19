@@ -98,9 +98,10 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 	            datasetsAgainExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);			    
 			}
 
-			log.debug("Number of datasets to notify found: "+datasetsWillExpireList.size());
-			log.debug("Number of datasets to expire found: "+datasetsExpiredList.size());
-            log.debug("Number of datasets again expired found: "+datasetsAgainExpiredList.size());
+            log.info("" + plugId + ":");
+			log.info("  Number of entities to notify found: "+datasetsWillExpireList.size());
+			log.info("  Number of entities expired found: "+datasetsExpiredList.size());
+            log.info("  Number of entities again expired found: "+datasetsAgainExpiredList.size());
 			MdekEmailUtils.sendExpiryNotificationMails(datasetsWillExpireList);
 			// NOTICE: Entities expired for the first time and entities again expired are handled
 			// the same way (same email and update of expiry states/time) so we merge lists !
