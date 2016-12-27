@@ -39,6 +39,9 @@
             <action type="update" dev="wemove" issue="REDMINE-107">
                 IGE: Send emails in intervals if objects/addresses are expired (optional).
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-459">
+                IGE: Add new fields "Vorschaugrafik" / "Dateibeschreibung" to "additional fields".
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-417">
                 IGE: Fixed massive problems when parallel IGE logins via Portal-Admin, was not session specific.
             </action>

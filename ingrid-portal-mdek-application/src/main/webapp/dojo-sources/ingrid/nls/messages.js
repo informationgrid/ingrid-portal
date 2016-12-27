@@ -851,6 +851,8 @@ define({
     "ui.3650.description":"Description",
     "ui.3670.description":"Service-Urls",
     "ui.5000.description":"Short Description",
+    "ui.5100.description":"Preview Image",
+    "ui.5105.description":"File Description",
     "ui.5020.description":"Height - Maximum",
     "ui.5021.description":"Height - Scale",
     "ui.5022.description":"Height - Geodetic System",
