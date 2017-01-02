@@ -31,6 +31,10 @@ var profile = {
 		{
 			name: "dojox",
 			location: "./dojox"
+		},
+		{
+			name: "themes",
+			location: "./themes"
 		}
 	],
 
@@ -155,6 +159,7 @@ var profile = {
 		"dom-qsa": true,
 		"dom-qsa2.1": true,
 		"dom-qsa3": true,
+		"dom-contains": true,
 		"json-parse": true,
 		"json-stringify": true,
 

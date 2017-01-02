@@ -1,12 +1,12 @@
 define([
-	"../dojo/_base/declare",
+	"dojo/_base/declare",
 	"./_WidgetsInTemplateMixin",
 	"dojo/i18n!./nls/common",
 	"dojo/text!./templates/actionBar.html",
 	"./form/Button"		// used by template
 ], function(declare, _WidgetsInTemplateMixin, strings, actionBarMarkup) {
 
-	return declare("dijit/_ConfirmDialogMixin", _WidgetsInTemplateMixin, {
+	return declare("dijit._ConfirmDialogMixin", _WidgetsInTemplateMixin, {
 		// summary:
 		//		Mixin for Dialog/TooltipDialog with OK/Cancel buttons.
 

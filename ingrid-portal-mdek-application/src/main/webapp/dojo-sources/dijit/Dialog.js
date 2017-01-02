@@ -42,6 +42,8 @@ define([
 	var resolvedDeferred = new Deferred();
 	resolvedDeferred.resolve(true);
 
+	function nop(){}
+
 	var _DialogBase = declare("dijit._DialogBase" + (has("dojo-bidi") ? "_NoBidi" : ""), [_TemplatedMixin, _FormMixin, _DialogMixin, _CssStateMixin], {
 		templateString: template,
 
@@ -204,15 +206,17 @@ define([
 			//		Position the dialog in the viewport.  If no relative offset
 			//		in the viewport has been determined (by dragging, for instance),
 			//		center the dialog.  Otherwise, use the Dialog's stored relative offset,
-			//		adjusted by the viewport's scroll.
+			//		clipped to fit inside the viewport (which may have been shrunk).
+			//		Finally, adjust position according to viewport's scroll.
+
 			if(!domClass.contains(this.ownerDocumentBody, "dojoMove")){    // don't do anything if called during auto-scroll
 				var node = this.domNode,
 					viewport = winUtils.getBox(this.ownerDocument),
 					p = this._relativePosition,
-					bb = p ? null : domGeometry.position(node),
-					l = Math.floor(viewport.l + (p ? p.x : (viewport.w - bb.w) / 2)),
-					t = Math.floor(viewport.t + (p ? p.y : (viewport.h - bb.h) / 2))
-					;
+					bb = domGeometry.position(node),
+					l = Math.floor(viewport.l + (p ? Math.min(p.x, viewport.w - bb.w) : (viewport.w - bb.w) / 2)),
+					t = Math.floor(viewport.t + (p ? Math.min(p.y, viewport.h - bb.h) : (viewport.h - bb.h) / 2));
+
 				domStyle.set(node, {
 					left: l + "px",
 					top: t + "px"
@@ -304,6 +308,7 @@ define([
 				fadeIn.stop();
 				delete this._fadeInDeferred;
 			}));
+			this._fadeInDeferred.then(undefined, nop);	// avoid spurious CancelError message to console
 
 			// If delay is 0, code below will delete this._fadeInDeferred instantly, so grab promise while we can.
 			var promise = this._fadeInDeferred.promise;
@@ -351,6 +356,7 @@ define([
 				fadeOut.stop();
 				delete this._fadeOutDeferred;
 			}));
+			this._fadeOutDeferred.then(undefined, nop);	// avoid spurious CancelError message to console
 
 			// fire onHide when the promise resolves.
 			this._fadeOutDeferred.then(lang.hitch(this, 'onHide'));
@@ -408,12 +414,14 @@ define([
 								delete this._singleChildOriginalStyle;
 							}
 						}
-						array.forEach([this.domNode, this.containerNode, this.titleBar], function(node){
-							domStyle.set(node, {
-								position: "static",
-								width: "auto",
-								height: "auto"
-							});
+						array.forEach([this.domNode, this.containerNode, this.titleBar, this.actionBarNode], function(node){
+							if(node){	// because titleBar may not be defined
+								domStyle.set(node, {
+									position: "static",
+									width: "auto",
+									height: "auto"
+								});
+							}
 						});
 						this.domNode.style.position = "absolute";
 					}
@@ -442,10 +450,18 @@ define([
 					domGeometry.setMarginBox(this.domNode, dim);
 
 					// And then size this.containerNode
-					var contentDim = utils.marginBox2contentBox(this.domNode, dim),
-						centerSize = {domNode: this.containerNode, region: "center"};
-					utils.layoutChildren(this.domNode, contentDim,
-						[ {domNode: this.titleBar, region: "top"}, centerSize ]);
+					var layoutNodes = [];
+					if(this.titleBar){
+						layoutNodes.push({domNode: this.titleBar, region: "top"});
+					}
+					if(this.actionBarNode){
+						layoutNodes.push({domNode: this.actionBarNode, region: "bottom"});
+					}
+					var centerSize = {domNode: this.containerNode, region: "center"};
+					layoutNodes.push(centerSize);
+
+					var contentDim = utils.marginBox2contentBox(this.domNode, dim);
+					utils.layoutChildren(this.domNode, contentDim, layoutNodes);
 
 					// And then if this.containerNode has a single layout widget child, size it too.
 					// Otherwise, make this.containerNode show a scrollbar if it's overflowing.

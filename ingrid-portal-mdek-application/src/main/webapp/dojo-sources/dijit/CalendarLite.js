@@ -7,6 +7,7 @@ define([
 	"dojo/date/stamp", // stamp.fromISOString
 	"dojo/dom", // dom.setSelectable
 	"dojo/dom-class", // domClass.contains
+	"dojo/dom-attr",
 	"dojo/_base/lang", // lang.getObject, lang.hitch
 	"dojo/on",
 	"dojo/sniff", // has("ie") has("webkit")
@@ -16,7 +17,7 @@ define([
 	"dojo/text!./templates/Calendar.html",
 	"./a11yclick",	// not used directly, but template has ondijitclick in it
 	"./hccss"    // not used directly, but sets CSS class on <body>
-], function(array, declare, cldrSupplemental, date, locale, stamp, dom, domClass, lang, on, has, string, _WidgetBase, _TemplatedMixin, template){
+], function(array, declare, cldrSupplemental, date, locale, stamp, dom, domClass, domAttr, lang, on, has, string, _WidgetBase, _TemplatedMixin, template){
 
 
 	// module:
@@ -72,6 +73,12 @@ define([
 		// tabIndex: String
 		//		Order fields are traversed when user hits the tab key
 		tabIndex: "0",
+
+		// dayOffset: Integer
+		//		(Optional) The first day of week override. By default the first day of week is determined
+		//		for the current locale (extracted from the CLDR).
+		//		Special value -1 (default value), means use locale dependent value.
+		dayOffset: -1,
 
 		// currentFocus: Date
 		//		Date object containing the currently focused date, or the date which would be focused
@@ -154,7 +161,7 @@ define([
 			// summary:
 			//		Convert Number into Date, or copy Date object.   Then, round to nearest day,
 			//		setting to 1am to avoid issues when DST shift occurs at midnight, see #8521, #9366)
-			if(value){
+			if(value || value === 0){
 				value = new this.dateClassObj(value);
 				value.setHours(1, 0, 0, 0);
 			}
@@ -188,7 +195,7 @@ define([
 				daysInMonth = this.dateModule.getDaysInMonth(month),
 				daysInPreviousMonth = this.dateModule.getDaysInMonth(this.dateModule.add(month, "month", -1)),
 				today = new this.dateClassObj(),
-				dayOffset = cldrSupplemental.getFirstDayOfWeek(this.lang);
+				dayOffset = this.dayOffset >= 0 ? this.dayOffset : cldrSupplemental.getFirstDayOfWeek(this.lang);
 			if(dayOffset > firstDay){
 				dayOffset -= 7;
 			}
@@ -252,7 +259,13 @@ define([
 				template.dijitDateValue = dateVal;
 
 				// Set Date string (ex: "13").
-				this._setText(this.dateLabels[idx], date.getDateLocalized ? date.getDateLocalized(this.lang) : date.getDate());
+
+				var localizedDate = date.getDateLocalized ? date.getDateLocalized(this.lang) : date.getDate()
+				this._setText(this.dateLabels[idx], localizedDate);
+				domAttr.set(template, 'aria-label', locale.format(date, {
+					selector: 'date',
+					formatLength: 'long'
+				}));
 			}, this);
 		},
 
@@ -313,7 +326,7 @@ define([
 			// Markup for days of the week (referenced from template)
 			var d = this.dowTemplateString,
 				dayNames = this.dateLocaleModule.getNames('days', this.dayWidth, 'standAlone', this.lang),
-				dayOffset = cldrSupplemental.getFirstDayOfWeek(this.lang);
+				dayOffset = this.dayOffset >= 0 ? this.dayOffset : cldrSupplemental.getFirstDayOfWeek(this.lang);
 			this.dayCellsHtml = string.substitute([d, d, d, d, d, d, d].join(""), {d: ""}, function(){
 				return dayNames[dayOffset++ % 7];
 			});
@@ -417,7 +430,7 @@ define([
 			//		protected
 			evt.stopPropagation();
 			evt.preventDefault();
-			for(var node = evt.target; node && !node.dijitDateValue; node = node.parentNode){
+			for(var node = evt.target; node && !node.dijitDateValue && node.dijitDateValue !== 0; node = node.parentNode){
 				;
 			}
 			if(node && !domClass.contains(node, "dijitCalendarDisabledDate")){

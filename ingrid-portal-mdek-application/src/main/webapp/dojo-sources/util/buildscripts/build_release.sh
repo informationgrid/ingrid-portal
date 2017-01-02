@@ -103,7 +103,7 @@ SOURCE_RELEASE_DIR=$SOURCE_DIR/release
 CDN_OUTPUT_DIR=$ROOT_DIR/$CDN_OUTPUT_NAME
 
 # Repositories that are a part of the Dojo Toolkit
-ALL_REPOS="demos dijit dojo dojox util"
+ALL_REPOS="demos dijit dojo dojox themes util"
 
 zip="zip -dd -ds 1m -rq"
 
@@ -169,6 +169,10 @@ for REPO in $ALL_REPOS; do
 
 	if [ -f "package.json" ]; then
 		VERSION_FILES=package.json
+	fi
+
+	if [ -f "bower.json" ]; then
+		VERSION_FILES="$VERSION_FILES bower.json"
 	fi
 
 	if [ $REPO == "dojo" ]; then
