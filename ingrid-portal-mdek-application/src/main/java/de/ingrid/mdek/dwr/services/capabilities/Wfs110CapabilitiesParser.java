@@ -31,10 +31,15 @@ import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import de.ingrid.geo.utils.transformation.CoordTransformUtil;
+import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
 import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
+import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
 import de.ingrid.utils.xml.Wfs110NamespaceContext;
@@ -109,6 +114,10 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
         // add found keywords to our result bean
         keywords.addAll(keywordsFeatureType);
         result.getKeywords().addAll(keywords);
+        
+        List<LocationBean> union = getBoundingBoxesFromLayers(doc);
+        result.setBoundingBoxes( union );
+        
         
         // get contact information
         result.setAddress(getAddress(doc));
@@ -228,6 +237,39 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
         result.setOperations(operations);
         return result;
         
+    }
+    
+    /**
+     * @param doc
+     * @return
+     */
+    private List<LocationBean> getBoundingBoxesFromLayers(Document doc) {
+        List<LocationBean> bboxes = new ArrayList<LocationBean>();
+        NodeList layers = xPathUtils.getNodeList(doc, "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType");
+        for (int i = 0; i < layers.getLength(); i++) {
+            Node layer = layers.item(i);
+            
+            String[] lower = xPathUtils.getString( layer, "ows:WGS84BoundingBox/ows:LowerCorner" ).split( " " );
+            String[] upper = xPathUtils.getString( layer, "ows:WGS84BoundingBox/ows:UpperCorner" ).split( " " );
+            
+            LocationBean box = new LocationBean();
+            box.setLatitude1(Double.valueOf( lower[0] ));
+            box.setLongitude1(Double.valueOf( lower[1] ));
+            box.setLatitude2(Double.valueOf( upper[0] ));
+            box.setLongitude2(Double.valueOf( upper[1] ));
+            
+            // add a fallback for the name, since it's mandatory
+            String name = xPathUtils.getString(layer, "wfs:Name");
+            String title = xPathUtils.getString(layer, "wfs:Title");
+            if (name == null) name = title; 
+            if (name == null) name ="UNKNOWN";
+            
+            box.setName(title);
+            box.setTopicId(box.getName());
+            
+            bboxes.add(box);
+        }
+        return bboxes;
     }
 
     /**

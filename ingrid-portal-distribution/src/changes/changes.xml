@@ -63,6 +63,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-507">
                 IGE: Fix IE 11 bug where right click was not recognized, after expanding a tree node.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-371">
+                IGE: Fixed getCapabilities-assistant to extract bounding box from WFS-Service. 
+            </action>
 			<action type="fix" dev="wemove" issue="REDMINE-448">
                 MapClient: GetMap-URL on print.
             </action>
