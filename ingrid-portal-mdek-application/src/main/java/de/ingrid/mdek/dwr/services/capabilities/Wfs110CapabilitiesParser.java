@@ -30,6 +30,7 @@ import java.util.List;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -42,6 +43,7 @@ import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
+import de.ingrid.mdek.beans.object.SpatialReferenceSystemBean;
 import de.ingrid.utils.xml.Wfs110NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -117,6 +119,9 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
         
         List<LocationBean> union = getBoundingBoxesFromLayers(doc);
         result.setBoundingBoxes( union );
+        
+        List<SpatialReferenceSystemBean> spatialReferenceSystems = getSpatialReferenceSystems( doc );
+        result.setSpatialReferenceSystems( spatialReferenceSystems );
         
         
         // get contact information
@@ -237,6 +242,42 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
         result.setOperations(operations);
         return result;
         
+    }
+    
+    /**
+     * @param doc
+     * @return
+     */
+    private List<SpatialReferenceSystemBean> getSpatialReferenceSystems(Document doc) {
+        List<SpatialReferenceSystemBean> result = new ArrayList<SpatialReferenceSystemBean>();
+        String[] crs = xPathUtils.getStringArray(doc, "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType/wfs:DefaultSRS");
+        String[] crsOther = xPathUtils.getStringArray(doc, "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType/wfs:OtherSRS");
+        String[] crsAll = (String[]) ArrayUtils.addAll( crs, crsOther );
+        
+        List<String> uniqueCrs = new ArrayList<String>();
+        
+        // check codelists for matching entryIds
+        for (String item : crsAll) {
+            SpatialReferenceSystemBean srsBean = new SpatialReferenceSystemBean();
+            
+            String[] splittedItem = item.split(":");
+            Integer itemId = Integer.valueOf(splittedItem[splittedItem.length-1]);
+            
+            String value = syslistCache.getValueFromListId(100, itemId, false);
+            if (value == null || value.isEmpty()) {
+                srsBean.setId(-1);
+                srsBean.setName(item);            
+            } else {
+                srsBean.setId(itemId);
+                srsBean.setName(value);            
+            }
+            if (!uniqueCrs.contains( srsBean.getName() )) {
+                result.add(srsBean);
+                uniqueCrs.add( srsBean.getName() );
+            }
+        }
+        
+        return result;
     }
     
     /**
