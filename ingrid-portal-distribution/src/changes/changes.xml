@@ -63,6 +63,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-507">
                 IGE: Fix IE 11 bug where right click was not recognized, after expanding a tree node.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-335">
+                IGE: Map service type version according to GDI-DE.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-370">
                 IGE: Fixed getCapabilities-assistant to extract spatial reference systems from WFS-Service. 
             </action>
