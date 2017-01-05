@@ -85,6 +85,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
         versionSyslistMap = new HashMap<String, Integer>();
         versionSyslistMap.put( "1.1.0", 1 );
         versionSyslistMap.put( "2.0", 2 );
+        versionSyslistMap.put( "2.0.0", 2 );
     }
     
     /* (non-Javadoc)
