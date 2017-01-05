@@ -26,7 +26,9 @@
 package de.ingrid.mdek.dwr.services.capabilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.xpath.XPathExpressionException;
 
@@ -37,6 +39,7 @@ import org.w3c.dom.NodeList;
 
 import de.ingrid.geo.utils.transformation.CoordTransformUtil;
 import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
@@ -76,9 +79,14 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private static final String XPATH_EXT_WFS_SERVICECONTACT = "/wfs:WFS_Capabilities/ows:ServiceProvider/ows:ServiceContact";
     private static final String XPATH_EXP_WFS_EXTENDED_CAPABILITIES = "/wfs:WFS_Capabilities/ows:OperationsMetadata/ows:ExtendedCapabilities/inspire_dls:ExtendedCapabilities";
 
+    private Map<String, Integer> versionSyslistMap;
 
     public Wfs110CapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new Wfs110NamespaceContext()), syslistCache);
+        
+        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap.put( "1.1.0", 1 );
+        versionSyslistMap.put( "2.0", 2 );
     }
     
     /* (non-Javadoc)
@@ -93,7 +101,12 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
         result.setDataServiceType(3); // download
         result.setTitle(xPathUtils.getString(doc, XPATH_EXP_WFS_TITLE));
         result.setDescription(xPathUtils.getString(doc, XPATH_EXP_WFS_ABSTRACT));
-        result.setVersions(getNodesContentAsList(doc, XPATH_EXP_WFS_VERSION));
+
+        List<String> versionList = getNodesContentAsList(doc, XPATH_EXP_WFS_VERSION);
+        List<String> mappedVersionList = mapVersionsFromCodelist(MdekSysList.OBJ_SERV_VERSION_WFS.getDbValue(), versionList, versionSyslistMap);
+        result.setVersions(mappedVersionList);
+        
+        String version = versionList.get(0);
         
         // Fees
         result.setFees(xPathUtils.getString(doc, XPATH_EXP_WFS_FEES));
@@ -139,7 +152,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
             getCapabilitiesOp.setMethodCall("GetCapabilities");
     
             List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
-            paramList.add(new OperationParameterBean("VERSION=version", "Request version", "", true, false));
+            paramList.add(new OperationParameterBean("VERSION=" + version, "Request version", "", true, false));
             paramList.add(new OperationParameterBean("SERVICE=WFS", "Service type", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
             paramList.add(new OperationParameterBean("UPDATESEQUENCE=string", "Sequence number or string for cache control", "", true, false));
