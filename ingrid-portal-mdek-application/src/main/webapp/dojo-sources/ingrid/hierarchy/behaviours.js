@@ -239,7 +239,49 @@ define(["dojo/_base/declare",
                     }
                 });
             }
-        }        
+        },
+        
+        foldersInHierarchy: {
+            title: "Ordnerstruktur in Hierarchiebaum",
+            description: "Fügt die Auswahl einer Klasse vom Typ Ordner hinzu, so dass Daten besser strukturiert werden können.",
+            defaultActive: true,
+            type: "SYSTEM",
+            run: function() {
+                // add new object class
+                sysLists[8000].push(["Ordner", "1000", "N", ""]);
+                
+                // handle folder class selection
+                topic.subscribe("/onObjectClassChange", function(data) {
+                    if (data.objClass === "Class1000") {
+                        domClass.add("contentFrameBodyObject", "hide");
+    
+                    } else {
+                        domClass.remove("contentFrameBodyObject", "hide");
+                    }
+                });
+                
+                // handle toolbar when folder is selected
+                // -> only disable toolbar buttons that are not needed (be careful with IgeToolbar-Class-behaviour)
+                topic.subscribe("/selectNode", function(message) {
+                    // do not handle if another tree was selected!
+                    if (message.id && message.id != "dataTree") return;
+
+                    var selectedNode = message.node;
+                    
+                    // if we didn't select a folder then leave
+                    if (selectedNode.objectClass !== 1000) return;
+                    
+                    // disable all buttons when a folder was clicked
+                    registry.byId("toolbarBtnShowComments").set("disabled", true);
+                    registry.byId("toolbarBtnShowChanges").set("disabled", true);
+                    registry.byId("toolbarBtnFinalSave").set("disabled", true);
+                    registry.byId("toolbarBtnreassign").set("disabled", true);
+                    registry.byId("toolbarBtnDiscard").set("disabled", true);
+                    registry.byId("toolbarBtnISO").set("disabled", true);
+                    registry.byId("toolbarBtnPrintDoc").set("disabled", true);
+                });
+            }
+        }
         
         /*
          * ABORTED: The ATOM URL has to be maintained when automatically inserted into document. It's better to adapt the context help

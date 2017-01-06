@@ -2295,7 +2295,7 @@ define([
             // --- General ---
             nodeData.generalShortDescription = registry.byId("generalShortDesc").get("value");
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
-            nodeData.objectClass = registry.byId("objectClass").get("value").substr(5, 1); // Value is a string: "Classx" where x is the class
+            nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
             // Comments
             nodeData.commentTable = currentUdk.commentStore;
