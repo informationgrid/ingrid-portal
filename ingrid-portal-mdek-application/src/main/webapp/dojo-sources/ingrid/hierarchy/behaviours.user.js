@@ -20,18 +20,30 @@
  * limitations under the Licence.
  * **************************************************#
  */
-define(["dojo/_base/lang", 
-        "ingrid/hierarchy/behaviours"
-], function(lang, behaviours) {
+define([
+    "dojo/_base/lang",
+    "dojo/dom-class",
+    "dojo/query",
+    "ingrid/hierarchy/behaviours",
+    "ingrid/widgets/UvpPhases"
+], function (lang, domClass, query, behaviours, UvpPhases) {
 
     return lang.mixin(behaviours, {
-        /*
-        behaviourId: {
-            title: "Verhalten",
-            description: "Beschreibung des Verhaltens",
+
+        uvpPhaseField: {
+            title: "UVP Phasen Feld",
+            description: "Hinzufügen von dynamischen Feldern",
             defaultActive: true,
-            run: function() {}
+            run: function () {
+                new UvpPhases().placeAt("generalContent");
+                // hide all rubrics
+                query(".rubric", "contentFrameBodyObject").forEach(function (item) {
+                    if (item.id !== "general") {
+                        domClass.add(item, "hide");
+                    }
+                });
+            }
         }
-        */
-    } );
+
+    });
 });

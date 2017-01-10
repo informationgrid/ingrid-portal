@@ -1180,14 +1180,7 @@ public class MdekMapper implements DataMapperInterface {
                 tableRows = null;
             else {
                 for (List<AdditionalFieldBean> row : additionalField.getTableRows()) {
-                    List<IngridDocument> rowDoc = new ArrayList<IngridDocument>();
-                    for (AdditionalFieldBean column : row) {
-                        IngridDocument columnDoc = new IngridDocument();
-                        columnDoc.put(MdekKeys.ADDITIONAL_FIELD_KEY, column.getIdentifier());
-                        columnDoc.put(MdekKeys.ADDITIONAL_FIELD_DATA,         column.getValue());
-                        columnDoc.put(MdekKeys.ADDITIONAL_FIELD_LIST_ITEM_ID, column.getListId());
-                        rowDoc.add(columnDoc);
-                    }
+                    List<IngridDocument> rowDoc = mapFromAdditionalFields( row );
                     tableRows.add(rowDoc);
                 }
             }
@@ -1837,14 +1830,7 @@ public class MdekMapper implements DataMapperInterface {
             if (tableRows != null) {
                 List<List<AdditionalFieldBean>> tableData = new ArrayList<List<AdditionalFieldBean>>();
                 for (List<IngridDocument> row : tableRows) {
-                    List<AdditionalFieldBean> rowsData = new ArrayList<AdditionalFieldBean>();
-                    for (IngridDocument column : row) {
-                        AdditionalFieldBean columnData = new AdditionalFieldBean();
-                        columnData.setIdentifier(column.getString(MdekKeys.ADDITIONAL_FIELD_KEY));
-                        columnData.setValue(column.getString(MdekKeys.ADDITIONAL_FIELD_DATA));
-                        columnData.setListId(column.getString(MdekKeys.ADDITIONAL_FIELD_LIST_ITEM_ID));
-                        rowsData.add(columnData);
-                    }
+                    List<AdditionalFieldBean> rowsData = mapToAdditionalFields(row);
                     tableData.add(rowsData);
                 }
                 additionalField.setTableRows(tableData);
