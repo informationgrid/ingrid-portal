@@ -249,6 +249,7 @@
                                     <strong><fmt:message key="ui.obj.header.creationTime" />:</strong><span id="creationTime">26.06.1998</span>
                                     | <strong><fmt:message key="ui.obj.header.modificationTime" />:</strong><span id="modificationTime">27.09.2000</span>
                                     | <strong><fmt:message key="ui.obj.header.uuid" />:</strong><span id="uuid" class="oneClickMark">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</span>
+                                    <span id="origIdSpan">| <strong><fmt:message key="ui.obj.header.orgObjId" />:</strong><span id="orgObjId" class="oneClickMark">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</span></span>
                                     <br><strong><fmt:message key="ui.obj.header.modUser" />:</strong><span id="lastEditor">---</span>
                                 </td>
                             </tr>
