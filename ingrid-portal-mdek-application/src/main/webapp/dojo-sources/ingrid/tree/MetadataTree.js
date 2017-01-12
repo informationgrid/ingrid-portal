@@ -251,13 +251,13 @@ define("ingrid/tree/MetadataTree", [
                     if (dstIsRootNode && !UtilSecurity.canCreateRootNodes())
                         canBePasted = false;
         
-                    if (node.nodeAppType[0] == srcNode.nodeAppType[0]) {
+                    if (node.nodeAppType == srcNode.nodeAppType) {
                         if (node.nodeAppType == "O") {
                             //return true; // Objects can be pasted anywhere below objects
                         } else if (node.nodeAppType == "A") {
                             var srcType = srcNode.objectClass;
                             var dstType = node.objectClass;
-                            if (typeof(dstType) == "undefined" || dstType[0] === null) {
+                            if (typeof(dstType) == "undefined" || dstType === null) {
                                 // Target is either addressRoot or addressFreeRoot
                                 if (node.id == "addressFreeRoot") {
                                     canBePasted = canBePasted && (srcType >= 2);  // Only Addresses can be converted to free addresses

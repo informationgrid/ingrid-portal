@@ -6,6 +6,27 @@
     </properties>
     <body>
         <release version="4.0.1-SNAPSHOT" date="??" description="Release 4.0.1">
+		    <action type="add" dev="wemove" issue="REDMINE-452">
+                PORTAL: Add profile portalu_sl.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-519">
+                PORTAL: Also allow browsing catalog only containing addresses.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-517">
+                PORTAL: Fix copyright in footer.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-505">
+                PORTAL: Fix close main menu by empty portal search and on mobile view.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-504">
+                PORTAL: Fix duplicate URL parameter 'elementSetName' by display XML document of metadata on detail view.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-496">
+                PORTAL: Fix enable (delete) button on checkbox selection.
+            </action>
+		    <action type="fix" dev="wemove" issue="REDMINE-479">
+                PORTAL: Fix detail view with free addresses.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-446">
                 PORTAL: Optimize detail view.
             </action>
@@ -15,8 +36,20 @@
             <action type="add" dev="wemove" issue="REDMINE-377">
                 IGE: Add new field "File description" to objects.
             </action>
+			<action type="add" dev="wemove" issue="REDMINE-157">
+                IGE: Add ORIG_UUID to hierarchy page, object preview and compare view.
+            </action>
             <action type="add" dev="wemove" issue="REDMINE-476">
                 IGE: Possibility to add a list with a connected syslist as an additional field.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-509">
+                IGE: Make EMail Settings configurable via mdek.override.properties.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-107">
+                IGE: Send emails in intervals if objects/addresses are expired (optional).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-459">
+                IGE: Add new fields "Vorschaugrafik" / "Dateibeschreibung" to "additional fields".
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-417">
                 IGE: Fixed massive problems when parallel IGE logins via Portal-Admin, was not session specific.
@@ -29,6 +62,24 @@
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-457">
                 IGE: Fixed geo thesaurus not shown when also search on research page.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-466">
+                IGE: Fixed pasting an address node to the address root node.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-273">
+                IGE: Support useConstraints in getCapabilities-assistant.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-507">
+                IGE: Fix IE 11 bug where right click was not recognized, after expanding a tree node.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-335">
+                IGE: Map service type version according to GDI-DE.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-370">
+                IGE: Fixed getCapabilities-assistant to extract spatial reference systems from WFS-Service. 
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-371">
+                IGE: Fixed getCapabilities-assistant to extract bounding box from WFS-Service. 
             </action>
 			<action type="fix" dev="wemove" issue="REDMINE-448">
                 MapClient: GetMap-URL on print.

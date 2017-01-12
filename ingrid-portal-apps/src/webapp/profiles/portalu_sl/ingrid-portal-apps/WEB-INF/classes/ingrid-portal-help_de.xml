@@ -35,20 +35,38 @@
     <chapter>
         <header>Über PortalU</header>
         <section help-key="about-1">
-            <header>Porträt</header>
+            <header>Konzept und Aufgabe von PortalU</header>
             <content>
-                <p>Dieser Bereich dient der Darstellung des Portals oder des Portal-Betreibers.</p>
-                <p>Die Inhalte können als Administrator dynamisch im Portal gepflegt werden (<b>Inhalt > ingrid.about</b>).</p>
+                <p>PortalU Saarland bietet einen zentralen Zugriff auf zahlreiche
+                   umweltrelevante Webseiten, Metainformationen zu Umweltdaten, Messwerte, Karten,
+                   aktuelle Nachrichten und Veranstaltungshinweise, historische Umweltereignisse und
+                   Zuständigkeiten der Behörden. Mit dieser Informationsbreite richtet sich PortalU sowohl
+                   an interessierte Laien als auch an ein versiertes Fachpublikum. </p>
+                <p>Das Informationsangebot wird kontinuierlich ausgebaut.</p>
+                <p>Grundlage für die Konzeption des PortalU Saarland ist das saarländische Umweltinformationsgesetz SUIG,
+                   welches die saarländische Umsetzung der EU-Umweltinformationsrichtlinie (2003/4/EG
+                   des europäischen Parlament und des Rates über den Zugang der Öffentlichkeit zu Umweltinformationen) ist.</p>
             </content>
         </section>
         <section help-key="about-2">
-            <header>Informationsanbieter</header>
+            <header>Informationsanbieter in PortalU</header>
             <content>
-                <p>Hier werden alle im System eingepflegten Partner und die Ihnen zugeordneten Informationsanbieter angezeigt.</p>
-                <p>Als Administrator können diese im Bereich <b>Partner</b> und <b>Anbieter</b> gepflegt werden.</p>
+                <p>In PortalU können alle behördlichen Umweltinformationen aufgenommen werden.</p>
+                <p>Bietet Ihre Behörde oder Institution umweltrelevante behördliche
+        Informationen, die noch nicht in PortalU zu finden sind? Dann wenden Sie sich bitte 
+        an unsere Kontaktadresse.</p>
             </content>
         </section>
         <section help-key="about-3">
+            <header>InGrid - Die Software hinter PortalU</header>
+            <content>
+                <p>Die InGrid-Softwarekomponenten werden im Rahmen des Projekts
+                   "InGrid - Pflege und Weiterentwicklung der InGrid-Softwarekomponenten zum Betrieb von
+                   Internetportalen und Metadatenkatalogen" (VKoopUIS-Projekt Nr. 50) unter dem Dach
+                   "Verwaltungskooperation Umweltinformationssysteme" (VKoopUIS) weiter entwickelt.
+                   Nähere Informationen erhalten Sie auf der <a href="http://www.ingrid-oss.eu/4.0.0/">Projekt-Webseite.</a></p>
+            </content>
+        </section>        <section help-key="about4">
             <header>Datenquellen</header>
             <content>
                 <p>Hier werden alle angeschlossenen iPlugs angezeigt.</p>
@@ -61,15 +79,25 @@
         <section help-key="search-1">
             <header>Sucheingabe</header>
             <content>
-                <p>Suchen ist ganz einfach. Geben Sie in das Suchfeld einen oder 
-                   mehrere Begriffe ein und klicken Sie anschließend auf die 
-                   Schaltfläche <b>Suche</b>.</p>
-                <p>SachsenPortalU durchsucht alle
-                   eingebundenen Informationen: Webseiten, Kataloge und
-                   Datenbanken, die für Ihre Suche von Interesse sind. Die 
-                   Ergebnisse Ihrer Suchanfrage werden in einer 
-                   <a href="?hkey=search-results-1">Suchergebnisseite</a> 
-                   wiedergegeben.</p>
+                <p>Über die Suche können Sie einen oder mehrere Suchbegriffe eingeben.
+                    Gefunden werden diejenigen Seiten, die alle Suchbegriffe enthalten.</p>
+                <p>Mit Hilfe der Facetten "Ergebnistypen" und "Anbieter" können Sie Ihre
+                    Suchanfrage weiter spezifizieren. Hinter den Ergebnistypen und Anbietern
+                    sehen Sie in Klammern direkt die Anzahl der jeweiligen Treffer zu Ihrer
+                    Suchanfrage. Bei Klick auf einen Ergebnistyp oder Anbieter wird die Suchergebnisliste
+                    auf die jeweilige Auswahl eingeschränkt. Um die Einschränkung aufzuheben, klicken
+                    Sie auf "Alle Einschränkungen löschen" oder auf den gewünschten Eintrag in der Liste
+                    der grau hinterlegten, aktiven Einschränkungen oberhalb der Ergebnisliste. Sie
+                    können beliebig viele Einschränkungen aus- und wieder abwählen.</p>
+                <p>Mit den Funktionalitäten "Nach Ort suchen" und "Auf Karte festlegen" können
+                    Sie Ihre Suchanfrage räumlich einschränken. Um die Einschränkungen anzuwenden,
+                    klicken Sie auf "Auswahl anwenden". Die gewählten Einschränkungen erscheinen
+                    ebenfalls in der Liste der grau hinterlegten, aktiven Einschränkungen oberhalb der Ergebnisliste.</p>
+                <p>Auf den Suchergebnisseiten haben Sie unterhalb des Suchfeldes die Möglichkeit, Ihre Suchanfrage
+                    um ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen eingegebene Suchausdruck
+                    durch den Semantic Network Service(SNS) des Umweltbundesamtes analysiert.
+                    Die ähnlichen Begriffe werden angezeigt und können der Suchanfrage zur
+                    Verfeinerung hinzu gefügt werden.</p>
             </content>
         </section>
         <section help-key="search-2">
@@ -1010,7 +1038,8 @@
             <header>Aktuelles</header>
             <content>
                 <p>Unter <b>Aktuelles</b> werden aktuelle
-                    Meldungen von Informationsanbietern auf der Startseite gelistet. Die aktuellste Meldung steht
+                    Meldungen des Ministeriums für Umwelt und Verbraucherschutz auf der Startseite gelistet. Die aktuellste Meldung steht
+
                     dabei immer oben. Es wird jeweils nur der Titel und eine
                     Kurzbeschreibung der Meldung angezeigt. Durch einen Klick
                     auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>

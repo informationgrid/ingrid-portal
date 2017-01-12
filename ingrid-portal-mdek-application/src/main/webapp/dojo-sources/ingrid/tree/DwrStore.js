@@ -73,7 +73,7 @@ define([
                     queryDef = this.getSubUsers(parentId)
                         .then(function(children) {
                             array.forEach(children, function(child) {
-                                child.parent = parentId;
+                                child.parent = query.parent;
                                 // mem.data.push( child );//, options );                                
                             });
                             return children;

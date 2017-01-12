@@ -128,7 +128,13 @@
                                 showRoot: false,
                                 sortByClass: UtilCatalog.catalogData.sortByClass === "Y",
                                 onClick: TreeActions.clickHandler,
-                                onMouseDown: lang.partial(TreeActions.mouseDownHandler, TreeActions)
+                                // the onMouseDown handler is not always called in IE 11 when expanding a tree and right clicking
+                                // a node immediately afterwards. That's why we register on the DNDController of the widget
+                                // where the event is still received.
+                                //onMouseDown: lang.partial(TreeActions.mouseDownHandler, TreeActions)
+                                onLoad: function() {
+                                    this.dndController.onMouseDown = lang.hitch(this, lang.partial(TreeActions.mouseDownHandler, TreeActions));
+                                }
                             }, "dataTree");
                             tree.onLoadDeferred.then(pageHierachy.dataTreePromise.resolve);
                             TreeActions.createTreeMenu();
@@ -243,6 +249,7 @@
                                     <strong><fmt:message key="ui.obj.header.creationTime" />:</strong><span id="creationTime">26.06.1998</span>
                                     | <strong><fmt:message key="ui.obj.header.modificationTime" />:</strong><span id="modificationTime">27.09.2000</span>
                                     | <strong><fmt:message key="ui.obj.header.uuid" />:</strong><span id="uuid" class="oneClickMark">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</span>
+                                    <span id="origIdSpan" title="<fmt:message key="ui.obj.header.orgObjId.tooltip" />">| <strong><fmt:message key="ui.obj.header.orgObjId" />:</strong><span id="orgObjId" class="oneClickMark">XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</span></span>
                                     <br><strong><fmt:message key="ui.obj.header.modUser" />:</strong><span id="lastEditor">---</span>
                                 </td>
                             </tr>

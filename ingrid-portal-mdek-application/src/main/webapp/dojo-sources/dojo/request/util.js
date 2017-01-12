@@ -43,7 +43,7 @@ define([
 		return freeze(response);
 	}
 	function dataHandler (response) {
-		return response.data || response.text;
+		return response.data !== undefined ? response.data : response.text;
 	}
 
 	exports.deferred = function deferred(response, cancel, isValid, isReady, handleResponse, last){
@@ -119,9 +119,9 @@ define([
 	exports.parseArgs = function parseArgs(url, options, skipData){
 		var data = options.data,
 			query = options.query;
-		
+
 		if(data && !skipData){
-			if(typeof data === 'object'){
+			if(typeof data === 'object' && !(data instanceof ArrayBuffer || data instanceof Blob )){
 				options.data = ioQuery.objectToQuery(data);
 			}
 		}

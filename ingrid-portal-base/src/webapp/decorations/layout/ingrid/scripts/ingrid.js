@@ -43,12 +43,12 @@ function ingrid_checkAll(group) {
 
 function ingrid_enableButtonByCheckbox(id, buttonName){
     var checkboxes = document.getElementsByName(id);
-    for(var index in checkboxes){
+    for (var i=0; i<checkboxes.length; i++){
         //bind event to each checkbox
-        checkboxes[index].onchange = function() {
+        checkboxes[i].onclick = function() {
             var isCheckboxSelect = false;
-            for(var i in checkboxes){
-                if(checkboxes[i].checked){
+            for (var j=0; j<checkboxes.length; j++){
+                if(checkboxes[j].checked){
                     isCheckboxSelect = true;
                 }
             }

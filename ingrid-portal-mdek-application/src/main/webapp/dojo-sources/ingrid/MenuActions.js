@@ -1369,7 +1369,7 @@ define([
             var selectedNode = this.getSelectedNode(msg);
 
             defMain.then(function(res) {
-                dialog.show(message.get("general.info"), string.substitute(message.get("info.address.inherit.to.children"), [res]), dialog.INFO);
+                dialog.show(message.get("dialog.general.info"), string.substitute(message.get("info.address.inherit.to.children"), [res]), dialog.INFO);
             });
 
             dialog.show(message.get("general.warning"), string.substitute(message.get("warning.address.inherit.to.children"), [selectedNode.label]), dialog.WARNING, [{

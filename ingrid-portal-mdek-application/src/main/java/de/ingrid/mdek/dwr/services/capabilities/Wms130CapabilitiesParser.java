@@ -26,8 +26,10 @@
 package de.ingrid.mdek.dwr.services.capabilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.xpath.XPathExpressionException;
@@ -41,6 +43,7 @@ import org.w3c.dom.NodeList;
 import de.ingrid.geo.utils.transformation.CoordTransformUtil;
 import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
 import de.ingrid.mdek.SysListCache;
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.LocationBean;
@@ -76,9 +79,14 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private static final String XPATH_EXP_WMS_KEYWORDS = "/wms:WMS_Capabilities/wms:Service/wms:KeywordList/wms:Keyword";
     private static final String XPATH_EXP_WMS_EXTENDED_CAPABILITIES = "/wms:WMS_Capabilities/wms:Capability/inspire_vs:ExtendedCapabilities";
 
+    private Map<String, Integer> versionSyslistMap;
     
     public Wms130CapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new Wms130NamespaceContext()), syslistCache);
+        
+        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap.put( "1.1.1", 1 );
+        versionSyslistMap.put( "1.3.0", 2 );
     }
     
     /* (non-Javadoc)
@@ -93,8 +101,12 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         result.setDataServiceType(2); // view
         result.setTitle(xPathUtils.getString(doc, XPATH_EXP_WMS_1_3_0_TITLE));
         result.setDescription(xPathUtils.getString(doc, XPATH_EXP_WMS_1_3_0_ABSTRACT));
-        result.setVersions(getNodesContentAsList(doc, XPATH_EXP_WMS_1_3_0_VERSION));
-        String version = result.getVersions().get(0);
+        
+        List<String> versionList = getNodesContentAsList(doc, XPATH_EXP_WMS_1_3_0_VERSION);
+        List<String> mappedVersionList = mapVersionsFromCodelist(MdekSysList.OBJ_SERV_VERSION_WMS.getDbValue(), versionList, versionSyslistMap);
+        result.setVersions(mappedVersionList);
+        
+        String version = versionList.get(0);
         
         // Fees
         result.setFees(xPathUtils.getString(doc, XPATH_EXP_WMS_FEES));
@@ -297,7 +309,10 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         unionLocation.setType( "F" );
         
         for (LocationBean layerLocation : boundingBoxesFromLayers) {
-            if (unionLocation.getLatitude1() == null) unionLocation.setLatitude1(layerLocation.getLatitude1());
+            if (unionLocation.getLatitude1() == null) {
+                if (layerLocation.getLatitude1() == null) continue;
+                unionLocation.setLatitude1(layerLocation.getLatitude1());
+            }
             if (unionLocation.getLatitude1() > layerLocation.getLatitude1())
                 unionLocation.setLatitude1(layerLocation.getLatitude1());
             

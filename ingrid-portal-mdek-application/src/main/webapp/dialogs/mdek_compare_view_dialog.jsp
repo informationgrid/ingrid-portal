@@ -384,9 +384,9 @@ require([
 
             // administrative data
             renderSectionTitel("<fmt:message key='dialog.compare.object.administrative' />");
-            var oldObjId = nodeDataOld.orgObjId ? nodeDataOld.orgObjId : nodeDataOld.uuid;
-            var newObjId = nodeDataNew.orgObjId ? nodeDataNew.orgObjId : nodeDataNew.uuid;
-            renderTextWithTitle(oldObjId, newObjId, "<fmt:message key='dialog.compare.object.id' />");
+            renderTextWithTitle(nodeDataOld.uuid, nodeDataNew.uuid, "<fmt:message key='dialog.compare.object.id' />");
+            if (nodeDataOld.orgObjId || nodeDataNew.orgObjId)
+                renderTextWithTitle(nodeDataOld.orgObjId, nodeDataNew.orgObjId, "<fmt:message key='dialog.compare.object.orgId' />");        
             renderTextWithTitle(UtilCatalog.catalogData.catalogName, UtilCatalog.catalogData.catalogName, "<fmt:message key='dialog.compare.object.catalog' />");
         }
 

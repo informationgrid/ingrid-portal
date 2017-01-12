@@ -40,6 +40,14 @@ body,html {
     margin: 0;
 }
 
+.dijitHidden {
+  display: none;
+}
+
+.dijitTreeNode, .dijitTreeContent {
+  cursor: pointer !important;
+}
+
 html,body {
     width: 100%;
     height: 100%;

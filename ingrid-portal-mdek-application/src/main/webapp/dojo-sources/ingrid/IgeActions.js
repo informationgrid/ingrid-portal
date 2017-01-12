@@ -130,6 +130,7 @@ define([
     "dojo/topic",
     "dojo/string",
     "dojo/dom",
+    "dojo/dom-class",
     "dojo/dom-style",
     "dijit/registry",
     "dijit/form/FilteringSelect",
@@ -156,7 +157,7 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/requiredChecks"
-], function(declare, lang, array, Deferred, DeferredList, ready, query, topic, string, dom, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
+], function(declare, lang, array, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
     ingridObjectLayout, ingridAddressLayout, message, dialog, UtilUI, UtilAddress, UtilList, UtilTree, UtilStore, UtilString, UtilSyslist, UtilGrid, UtilGeneral, UtilDOM, UtilSecurity, dirty,
     CustomGrid, rules, checks) {
     return declare(null, {
@@ -1727,6 +1728,13 @@ define([
             dom.byId("creationTime").innerHTML = nodeData.creationTime;
             dom.byId("modificationTime").innerHTML = nodeData.modificationTime;
             dom.byId("uuid").innerHTML = nodeData.uuid;
+            if (nodeData.orgObjId) {
+            	dom.byId("orgObjId").innerHTML = nodeData.orgObjId;
+            	domClass.remove("origIdSpan", "hide");
+            } else {
+            	dom.byId("orgObjId").innerHTML = "";
+            	domClass.add("origIdSpan", "hide");
+            }
 
             if (nodeData.lastEditor !== null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
                 dom.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);

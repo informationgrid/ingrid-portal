@@ -26,17 +26,27 @@
 package de.ingrid.mdek.dwr.services.capabilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import de.ingrid.geo.utils.transformation.CoordTransformUtil;
+import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
+import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
+import de.ingrid.mdek.beans.object.SpatialReferenceSystemBean;
 import de.ingrid.utils.xml.Wfs110NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
@@ -69,9 +79,14 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private static final String XPATH_EXT_WFS_SERVICECONTACT = "/wfs:WFS_Capabilities/ows:ServiceProvider/ows:ServiceContact";
     private static final String XPATH_EXP_WFS_EXTENDED_CAPABILITIES = "/wfs:WFS_Capabilities/ows:OperationsMetadata/ows:ExtendedCapabilities/inspire_dls:ExtendedCapabilities";
 
+    private Map<String, Integer> versionSyslistMap;
 
     public Wfs110CapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new Wfs110NamespaceContext()), syslistCache);
+        
+        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap.put( "1.1.0", 1 );
+        versionSyslistMap.put( "2.0", 2 );
     }
     
     /* (non-Javadoc)
@@ -86,7 +101,12 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
         result.setDataServiceType(3); // download
         result.setTitle(xPathUtils.getString(doc, XPATH_EXP_WFS_TITLE));
         result.setDescription(xPathUtils.getString(doc, XPATH_EXP_WFS_ABSTRACT));
-        result.setVersions(getNodesContentAsList(doc, XPATH_EXP_WFS_VERSION));
+
+        List<String> versionList = getNodesContentAsList(doc, XPATH_EXP_WFS_VERSION);
+        List<String> mappedVersionList = mapVersionsFromCodelist(MdekSysList.OBJ_SERV_VERSION_WFS.getDbValue(), versionList, versionSyslistMap);
+        result.setVersions(mappedVersionList);
+        
+        String version = versionList.get(0);
         
         // Fees
         result.setFees(xPathUtils.getString(doc, XPATH_EXP_WFS_FEES));
@@ -110,6 +130,13 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
         keywords.addAll(keywordsFeatureType);
         result.getKeywords().addAll(keywords);
         
+        List<LocationBean> union = getBoundingBoxesFromLayers(doc);
+        result.setBoundingBoxes( union );
+        
+        List<SpatialReferenceSystemBean> spatialReferenceSystems = getSpatialReferenceSystems( doc );
+        result.setSpatialReferenceSystems( spatialReferenceSystems );
+        
+        
         // get contact information
         result.setAddress(getAddress(doc));
         
@@ -125,7 +152,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
             getCapabilitiesOp.setMethodCall("GetCapabilities");
     
             List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
-            paramList.add(new OperationParameterBean("VERSION=version", "Request version", "", true, false));
+            paramList.add(new OperationParameterBean("VERSION=" + version, "Request version", "", true, false));
             paramList.add(new OperationParameterBean("SERVICE=WFS", "Service type", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
             paramList.add(new OperationParameterBean("UPDATESEQUENCE=string", "Sequence number or string for cache control", "", true, false));
@@ -228,6 +255,75 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
         result.setOperations(operations);
         return result;
         
+    }
+    
+    /**
+     * @param doc
+     * @return
+     */
+    private List<SpatialReferenceSystemBean> getSpatialReferenceSystems(Document doc) {
+        List<SpatialReferenceSystemBean> result = new ArrayList<SpatialReferenceSystemBean>();
+        String[] crs = xPathUtils.getStringArray(doc, "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType/wfs:DefaultSRS");
+        String[] crsOther = xPathUtils.getStringArray(doc, "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType/wfs:OtherSRS");
+        String[] crsAll = (String[]) ArrayUtils.addAll( crs, crsOther );
+        
+        List<String> uniqueCrs = new ArrayList<String>();
+        
+        // check codelists for matching entryIds
+        for (String item : crsAll) {
+            SpatialReferenceSystemBean srsBean = new SpatialReferenceSystemBean();
+            
+            String[] splittedItem = item.split(":");
+            Integer itemId = Integer.valueOf(splittedItem[splittedItem.length-1]);
+            
+            String value = syslistCache.getValueFromListId(100, itemId, false);
+            if (value == null || value.isEmpty()) {
+                srsBean.setId(-1);
+                srsBean.setName(item);            
+            } else {
+                srsBean.setId(itemId);
+                srsBean.setName(value);            
+            }
+            if (!uniqueCrs.contains( srsBean.getName() )) {
+                result.add(srsBean);
+                uniqueCrs.add( srsBean.getName() );
+            }
+        }
+        
+        return result;
+    }
+    
+    /**
+     * @param doc
+     * @return
+     */
+    private List<LocationBean> getBoundingBoxesFromLayers(Document doc) {
+        List<LocationBean> bboxes = new ArrayList<LocationBean>();
+        NodeList layers = xPathUtils.getNodeList(doc, "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType");
+        for (int i = 0; i < layers.getLength(); i++) {
+            Node layer = layers.item(i);
+            
+            String[] lower = xPathUtils.getString( layer, "ows:WGS84BoundingBox/ows:LowerCorner" ).split( " " );
+            String[] upper = xPathUtils.getString( layer, "ows:WGS84BoundingBox/ows:UpperCorner" ).split( " " );
+            
+            LocationBean box = new LocationBean();
+            box.setLatitude1(Double.valueOf( lower[0] ));
+            box.setLongitude1(Double.valueOf( lower[1] ));
+            box.setLatitude2(Double.valueOf( upper[0] ));
+            box.setLongitude2(Double.valueOf( upper[1] ));
+            
+            // add a fallback for the name, since it's mandatory
+            String name = xPathUtils.getString(layer, "wfs:Name");
+            String title = xPathUtils.getString(layer, "wfs:Title");
+            if (name == null) name = title; 
+            if (name == null) name ="UNKNOWN";
+            
+            box.setName(title);
+            box.setTopicId(box.getName());
+            
+            bboxes.add(box);
+        }
+        return bboxes;
     }
 
     /**

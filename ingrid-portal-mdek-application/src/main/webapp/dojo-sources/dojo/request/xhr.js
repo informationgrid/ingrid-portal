@@ -12,11 +12,11 @@ define([
 		return typeof XMLHttpRequest !== 'undefined';
 	});
 	has.add('dojo-force-activex-xhr', function(){
-		return has('activex') && !document.addEventListener && window.location.protocol === 'file:';
+		return has('activex') && window.location.protocol === 'file:';
 	});
 
 	has.add('native-xhr2', function(){
-		if(!has('native-xhr')){ return; }
+		if(!has('native-xhr') || has('dojo-force-activex-xhr')){ return; }
 		var x = new XMLHttpRequest();
 		return typeof x['addEventListener'] !== 'undefined' &&
 			(typeof opera === 'undefined' || typeof x['upload'] !== 'undefined');
@@ -71,15 +71,31 @@ define([
 				error = e;
 			}
 		}
-
+		var handleError;
 		if(error){
 			this.reject(error);
-		}else if(util.checkStatus(_xhr.status)){
-			this.resolve(response);
 		}else{
-			error = new RequestError('Unable to load ' + response.url + ' status: ' + _xhr.status, response);
-
-			this.reject(error);
+			try{
+				handlers(response);
+			}catch(e){
+				handleError = e;
+			}
+			if(util.checkStatus(_xhr.status)){
+				if(!handleError){
+					this.resolve(response);
+				}else{
+					this.reject(handleError);
+				}
+			}else{
+				if(!handleError){
+					error = new RequestError('Unable to load ' + response.url + ' status: ' + _xhr.status, response);
+					this.reject(error);
+				}else{
+					error = new RequestError('Unable to load ' + response.url + ' status: ' + _xhr.status +
+						' and an error in handleAs: transformation of response', response);
+    				this.reject(error);
+				}
+			}
 		}
 	}
 
@@ -115,7 +131,7 @@ define([
 					response.total = evt.total;
 					dfd.progress(response);
 				} else if(response.xhr.readyState === 3){
-					response.loaded = evt.position;
+					response.loaded = ('loaded' in evt) ? evt.loaded : evt.position;
 					dfd.progress(response);
 				}
 			}
@@ -199,7 +215,8 @@ define([
 			remover = addListeners(_xhr, dfd, response);
 		}
 
-		var data = options.data,
+		// IE11 treats data: undefined different than other browsers
+		var data = typeof(options.data) === 'undefined' ? null : options.data,
 			async = !options.sync,
 			method = options.method;
 

@@ -59,7 +59,7 @@
                   <groupId>de.ingrid</groupId>
                   <artifactId>measurement-client</artifactId>
                   <type>zip</type>
-                  <outputDirectory>${project.build.directory}/${project.artifactId}</outputDirectory>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -68,19 +68,24 @@
       </plugin>
 
       <plugin>
-        <groupId>com.coderplus.maven.plugins</groupId>
-        <artifactId>copy-rename-maven-plugin</artifactId>
-        <version>1.0.1</version>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.1</version>
         <executions>
           <execution>
-            <id>rename-file</id>
+            <id>copy-resources</id>
+            <!-- here the phase you need -->
             <phase>prepare-package</phase>
             <goals>
-              <goal>rename</goal>
+              <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <sourceFile>${project.build.directory}/${project.artifactId}/measurement-client-${measurement.client.version}</sourceFile>
-              <destinationFile>${project.build.directory}/${project.artifactId}/measures</destinationFile>
+              <outputDirectory>${project.build.directory}/${project.artifactId}/measures</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/measurement-client-${measurement.client.version}</directory>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
             </configuration>
           </execution>
         </executions>
