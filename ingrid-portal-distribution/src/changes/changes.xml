@@ -9,6 +9,9 @@
 		    <action type="add" dev="wemove" issue="REDMINE-452">
                 PORTAL: Add profile portalu_sl.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-517">
+                PORTAL: Fix copyright in footer.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-505">
                 PORTAL: Fix close main menu by empty portal search and on mobile view.
             </action>
