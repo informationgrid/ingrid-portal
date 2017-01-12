@@ -233,7 +233,7 @@ input:checked + .field-toggle__label--boxed, input:checked + .field-toggle__labe
 }
 
 .tx-light {
-    color: rgb(248, 170, 0) !important;
+    color: rgb(79, 79, 78) !important;
 }
 
 .header__widget__icon.is-active {
