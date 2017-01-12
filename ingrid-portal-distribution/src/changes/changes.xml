@@ -33,6 +33,9 @@
             <action type="add" dev="wemove" issue="REDMINE-476">
                 IGE: Possibility to add a list with a connected syslist as an additional field.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-378">
+                Add new field "gridPosAccuracy" with behaviour.
+              </action>
             <action type="update" dev="wemove" issue="REDMINE-509">
                 IGE: Make EMail Settings configurable via mdek.override.properties.
             </action>
