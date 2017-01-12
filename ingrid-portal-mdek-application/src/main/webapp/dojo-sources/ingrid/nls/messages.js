@@ -344,6 +344,7 @@ define({
 	"dialog.compare.object.linksToTable.title":"Objects referenced by this object",
 	"dialog.compare.object.administrative":"Administrative settings",
 	"dialog.compare.object.id":"Object-ID",
+	"dialog.compare.object.orgId":"Original-Object-ID",
 	"dialog.compare.object.catalog":"Catalogue",
 
 	"dialog.links.selectObject.title":"Select object",
