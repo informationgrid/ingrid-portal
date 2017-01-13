@@ -81,6 +81,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-371">
                 IGE: Fixed getCapabilities-assistant to extract bounding box from WFS-Service. 
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-521">
+                IGE: Added dirty check for additional fields.
+            </action>
 			<action type="fix" dev="wemove" issue="REDMINE-448">
                 MapClient: GetMap-URL on print.
             </action>
