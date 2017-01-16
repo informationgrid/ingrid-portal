@@ -295,10 +295,6 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private List<SpatialReferenceSystemBean> getSpatialReferenceSystems(Document doc) {
         List<SpatialReferenceSystemBean> result = new ArrayList<SpatialReferenceSystemBean>();
         String[] crs = xPathUtils.getStringArray(doc, "/wfs20:WFS_Capabilities/wfs20:FeatureTypeList/wfs20:FeatureType/wfs20:DefaultCRS");
-        
-        // sometimes DefaultSRS is found here, which is not according to the specification (http://www.opengeospatial.org/standards/wfs)
-        if (crs.length == 0) crs = xPathUtils.getStringArray(doc, "/wfs20:WFS_Capabilities/wfs20:FeatureTypeList/wfs20:FeatureType/wfs20:DefaultSRS");
-        
         String[] crsOther = xPathUtils.getStringArray(doc, "/wfs20:WFS_Capabilities/wfs20:FeatureTypeList/wfs20:FeatureType/wfs20:OtherCRS");
         String[] crsAll = (String[]) ArrayUtils.addAll( crs, crsOther );
         
