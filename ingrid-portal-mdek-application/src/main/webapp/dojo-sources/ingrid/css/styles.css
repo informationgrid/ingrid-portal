@@ -171,6 +171,7 @@ table.sectionTopTable{ padding: 5px 5px 2px 3px; }
 .checkboxContainer label.inActive { padding: 0; }
 .checkboxContainer label.inActive .dijitCheckBox { margin-right: 5px; }
 .checkboxContainer label.noRightMargin { padding:0 0 0 3px; }
+.input-inline { display: inline }
 div .inputContainer h2 { padding-bottom: 5px; }
 
 /* BUTTONS */

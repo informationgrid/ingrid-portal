@@ -41,6 +41,7 @@ define([
     "dijit/form/ValidationTextBox",
     "dijit/form/SimpleTextarea",
     "dijit/form/CheckBox",
+    "dijit/form/RadioButton",
     "dijit/form/NumberTextBox",
     "dijit/form/DateTextBox",
     "dijit/layout/TabContainer",
@@ -62,7 +63,7 @@ define([
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/validation"
 ], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, validate, Standby,
-            registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, NumberTextBox, DateTextBox,
+            registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, RadioButton, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
             UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog,
             message, dialog, layoutCreator, rules, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
@@ -427,6 +428,46 @@ define([
                 }];
                 layoutCreator.createDataGrid("ref1SpatialSystem", null, ref1SpatialSystemStructure, null);
 
+                
+                /* Add spatialRepresentationInfo (REDMINE-381) */
+                new CheckBox({}, "ref1TranfParamAvail");
+                new NumberTextBox({style: "width:100%;"}, "ref1NumDimensions");
+                new ValidationTextBox({style: "width:100%;"}, "ref1TAxisDimName");
+                new NumberTextBox({style: "width:100%;"}, "ref1TAxisDimSize");
+                new ValidationTextBox({style: "width:100%;"}, "ref1CellGeometry");
+                
+                var geoRectified = new RadioButton({
+                    checked: true,
+                    value: "true",
+                    name: "isGeoRectified",
+                }, "isGeoRectified");
+                geoRectified.startup();
+                var geoReferenced = new RadioButton({
+                    checked: false,
+                    value: "false",
+                    name: "isGeoRectified",
+                }, "isGeoReferenced");
+                geoReferenced.startup();
+                
+                new CheckBox({}, "ref1GridFormatCheckpoint");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatDescription");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatCornerPoint");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatPointInPixel");
+                
+                new CheckBox({}, "ref1GridFormatControlpoint");
+                new CheckBox({}, "ref1GridFormatOrientationParam");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatGeoreferencedParam");
+
+                on(geoRectified, "change", function(checked) {
+                    if (checked) {
+                        domClass.remove("geoRectifiedWrapper", "hide");
+                        domClass.add("geoReferencedWrapper", "hide");
+                    } else {
+                        domClass.add("geoRectifiedWrapper", "hide");
+                        domClass.remove("geoReferencedWrapper", "hide");
+                    }
+                });
+                
                 var ref1ScaleStructure = [{
                     field: 'scale',
                     name: message.get("ui.obj.type1.scaleTable.header.scale"),

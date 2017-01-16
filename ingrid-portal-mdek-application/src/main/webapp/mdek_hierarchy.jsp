@@ -553,24 +553,211 @@
                             <div id="ref1VFormat" class="inputContainer optional" style="padding:5px;">
                                 <span id="uiElementN005">
                                     <span id="ref1VFormatLabel" class="label">
-                                        <label for="ref1VFormat" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7014)">
+                                        <label for="ref1VFormatFields" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7014)">
                                             <fmt:message key="ui.obj.type1.vectorFormat.title" />
                                         </label>
                                     </span>
-                                    <div id="ref1VFormat" class="outlined">
-                                            <span id="uiElement5063" class="outer" style="width:33%;">
-											     <div>
+                                    <div id="ref1VFormatFields" class="outlined">
+                                        <span id="uiElement5063" class="outer" style="width:33%;">
+									     <div>
+                                            <span class="label">
+                                                <label for="ref1VFormatTopology" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5063)">
+                                                    <fmt:message key="ui.obj.type1.vectorFormat.topology" />
+                                                </label>
+                                            </span>
+                                            <span class="input">
+                                                <input style="width:100%;" listId="528" id="ref1VFormatTopology" />
+                                            </span></div>
+                                        </span>
+                                        <span id="uiElementN001" class="outer" style="width:67%;">
+									     <div>
+                                            <span class="label hidden">
+                                                <label for="ref1VFormatDetails" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10001)">
+                                                    weitere Angaben
+                                                </label>
+                                            </span>
+                                            <div class="input tableContainer">
+                                                <div id="ref1VFormatDetails" autoHeight="4" interactive="true">
+                                                </div>
+                                            </div></div>
+                                        </span>
+									<span>&nbsp;</span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div id="ref1GridFormat" class="inputContainer optional" style="padding:5px;">
+                                <span id="uiElementN030">
+                                    <span id="ref1VFormatLabel" class="label">
+                                        <label for="ref1GridFormatFields" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7016)">
+                                            <fmt:message key="ui.obj.type1.gridFormat.title" />
+                                        </label>
+                                    </span>
+                                    <div id="ref1GridFormatFields" class="outlined">
+                                        <span id="uiElement50xx" class="outer outer halfWidth">
+                                            <div>
                                                 <span class="label">
-                                                    <label for="ref1VFormatTopology" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5063)">
-                                                        <fmt:message key="ui.obj.type1.vectorFormat.topology" />
+                                                    <label for="ref1TranfParamAvail" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                        <fmt:message key="ui.obj.type1.gridFormat.tranfParamAvail" />
                                                     </label>
                                                 </span>
                                                 <span class="input">
-                                                    <input style="width:100%;" listId="528" id="ref1VFormatTopology" />
-                                                </span></div>
+                                                    <input style="width:100%;" listId="528" id="ref1TranfParamAvail" />
+                                                </span>
+                                            </div>
+                                        </span>
+                                        <span id="uiElement50xx" class="outer outer halfWidth">
+                                            <div>
+                                                <span class="label">
+                                                    <label for="ref1NumDimensions" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                        <fmt:message key="ui.obj.type1.gridFormat.numDimensions" />
+                                                    </label>
+                                                </span>
+                                                <span class="input">
+                                                    <input style="width:100%;" listId="528" id="ref1NumDimensions" />
+                                                </span>
+                                            </div>
+                                        </span>
+                                        
+                                        <span id="uiElement50xx" class="outer" style="width:25%;">
+                                            <div>
+                                                <span class="label">
+                                                    <label for="ref1TAxisDimName" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                        <fmt:message key="ui.obj.type1.gridFormat.axisDimName" />
+                                                    </label>
+                                                </span>
+                                                <span class="input">
+                                                    <input style="width:100%;" listId="528" id="ref1TAxisDimName" />
+                                                </span>
+                                            </div>
+                                        </span>
+                                        <span id="uiElement50xx" class="outer" style="width:25%;">
+                                            <div>
+                                                <span class="label">
+                                                    <label for="ref1TAxisDimSize" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                        <fmt:message key="ui.obj.type1.gridFormat.axisDimSize" />
+                                                    </label>
+                                                </span>
+                                                <span class="input">
+                                                    <input style="width:100%;" listId="528" id="ref1TAxisDimSize" />
+                                                </span>
+                                            </div>
+                                        </span>
+                                        <span id="uiElement50xx" class="outer outer halfWidth">
+                                            <div>
+                                                <span class="label">
+                                                    <label for="ref1CellGeometry" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                        <fmt:message key="ui.obj.type1.gridFormat.cellGeometry" />
+                                                    </label>
+                                                </span>
+                                                <span class="input">
+                                                    <input style="width:100%;" listId="528" id="ref1CellGeometry" />
+                                                </span>
+                                            </div>
+                                        </span>
+                                        
+                                        <hr>
+                                        
+                                        <span id="uiElement60xx" class="outer">
+                                            <div class="input checkboxContainer input-inline">
+                                                <input type="radio" id="isGeoRectified"/><label for="isGeoRectified" class="inActive"><fmt:message key="ui.obj.type1.gridFormat.geoRectified" /></label>
+                                            </div>
+                                            <div class="input checkboxContainer input-inline">
+                                                <input type="radio" id="isGeoReferenced" /><label for="isGeoReferenced" class="inActive"><fmt:message key="ui.obj.type1.gridFormat.geoReferenced" /></label>
+                                            </div>
+                                        </span>
+                                        
+                                        <div id="geoRectifiedWrapper">
+                                            <span id="uiElement50xx" class="outer halfWidth">
+                                                <div>
+                                                    <span class="label">
+                                                        <label for="ref1GridFormatCheckpoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                            <fmt:message key="ui.obj.type1.gridFormat.rectified.checkpoint" />
+                                                        </label>
+                                                    </span>
+                                                    <span class="input">
+                                                        <input style="width:100%;" id="ref1GridFormatCheckpoint" />
+                                                    </span>
+                                                </div>
                                             </span>
-                                            <span id="uiElementN001" class="outer" style="width:67%;">
-											     <div>
+                                            <span id="uiElement50xx" class="outer halfWidth">
+                                                <div>
+                                                    <span class="label">
+                                                        <label for="ref1VFormatTopology" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                            <fmt:message key="ui.obj.type1.gridFormat.rectified.description" />
+                                                        </label>
+                                                    </span>
+                                                    <span class="input">
+                                                        <input style="width:100%;" id="ref1GridFormatDescription" />
+                                                    </span>
+                                                </div>
+                                            </span>
+                                            <span id="uiElement50xx" class="outer halfWidth">
+                                                <div>
+                                                    <span class="label">
+                                                        <label for="ref1GridFormatCornerPoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                            <fmt:message key="ui.obj.type1.gridFormat.rectified.cornerPoint" />
+                                                        </label>
+                                                    </span>
+                                                    <span class="input">
+                                                        <input style="width:100%;" id="ref1GridFormatCornerPoint" />
+                                                    </span>
+                                                </div>
+                                            </span>
+                                            <span id="uiElement50xx" class="outer halfWidth">
+                                                <div>
+                                                    <span class="label">
+                                                        <label for="ref1GridFormatPointInPixel" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                            <fmt:message key="ui.obj.type1.gridFormat.rectified.pointInPixel" />
+                                                        </label>
+                                                    </span>
+                                                    <span class="input">
+                                                        <input style="width:100%;" id="ref1GridFormatPointInPixel" />
+                                                    </span>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        
+                                        <div id="geoReferencedWrapper" class="hide">
+                                            <span id="uiElement50xx" class="outer halfWidth">
+                                                <div>
+                                                    <span class="label">
+                                                        <label for="ref1GridFormatControlpoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                            <fmt:message key="ui.obj.type1.gridFormat.referenced.controlPoint" />
+                                                        </label>
+                                                    </span>
+                                                    <span class="input">
+                                                        <input style="width:100%;" id="ref1GridFormatControlpoint" />
+                                                    </span>
+                                                </div>
+                                            </span>
+                                            <span id="uiElement50xx" class="outer halfWidth">
+                                                <div>
+                                                    <span class="label">
+                                                        <label for="ref1GridFormatOrientationParam" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                            <fmt:message key="ui.obj.type1.gridFormat.referenced.orientationParam" />
+                                                        </label>
+                                                    </span>
+                                                    <span class="input">
+                                                        <input style="width:100%;" id="ref1GridFormatOrientationParam" />
+                                                    </span>
+                                                </div>
+                                            </span>
+                                            <span id="uiElement50xx" class="outer">
+                                                <div>
+                                                    <span class="label">
+                                                        <label for="ref1GridFormatGeoreferencedParam" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 50xx)">
+                                                            <fmt:message key="ui.obj.type1.gridFormat.referenced.georeferencedParam" />
+                                                        </label>
+                                                    </span>
+                                                    <span class="input">
+                                                        <input style="width:100%;" id="ref1GridFormatGeoreferencedParam" />
+                                                    </span>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        
+                                        <span id="uiElementN001" class="outer" style="width:67%;">
+                                            <div>
                                                 <span class="label hidden">
                                                     <label for="ref1VFormatDetails" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10001)">
                                                         weitere Angaben
@@ -579,12 +766,12 @@
                                                 <div class="input tableContainer">
                                                     <div id="ref1VFormatDetails" autoHeight="4" interactive="true">
                                                     </div>
-                                                </div></div>
-                                            </span>
-											<span>&nbsp;</span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                        <span>&nbsp;</span>
                                     </div>
                                 </span>
-								
                             </div>
                             <div class="inputContainer">
                                 <span id="uiElementN002" class="outer">
