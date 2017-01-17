@@ -924,6 +924,175 @@
                         }]
                     }],
                     "label": "Potentielle Natuerliche Vegetation (PNV) in Sachsen"
+                },{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "Biotopkartierung",
+                    "id": 233,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Biotope",
+                        "id": 234,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Biotope (Flaechen)",
+                            "layerBodId": "-1068992692",
+                            "id": 235
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Biotope (Linien)",
+                            "layerBodId": "-1068992691",
+                            "id": 236
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Biotope (Punkte)",
+                            "layerBodId": "-1068992690",
+                            "id": 237
+                        }]
+                    }]
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "FFH-Behandlungsgrundsätze",
+                    "id": 238,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Behandlungsgrundsaetze",
+                        "id": 239,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Behandlungsgrundsaetze (Flaechen)",
+                            "layerBodId": "-336522073",
+                            "id": 240
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Behandlungsgrundsaetze (Linien)",
+                            "layerBodId": "-336522072",
+                            "id": 241
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Behandlungsgrundsaetze (Punkte)",
+                            "layerBodId": "-336522071",
+                            "id": 242
+                        }]
+                    }]
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "FFH-Maßnahmen",
+                    "id": 243,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Massnahmen",
+                        "id": 244,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Massnahmen (Flaechen)",
+                            "layerBodId": "-293312859",
+                            "id": 245
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Massnahmen (Linien)",
+                            "layerBodId": "-293312858",
+                            "id": 246
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Massnahmen (Punkte)",
+                            "layerBodId": "-293312857",
+                            "id": 247
+                        }]
+                    }]
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "FFH-Arthabitate",
+                    "id": 248,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Habitate",
+                        "id": 249,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Habitate (Flaechen)",
+                            "layerBodId": "371812521",
+                            "id": 250
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Habitate (Linien)",
+                            "layerBodId": "371812522",
+                            "id": 251
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Habitate (Punkte)",
+                            "layerBodId": "371812523",
+                            "id": 252
+                        }]
+                    }]
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "FFH-Lebensraumtypen",
+                    "id": 253,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "LRT",
+                        "id": 254,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "LRT-Flaechen",
+                            "layerBodId": "1964649908",
+                            "id": 255
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "LRT-Linien",
+                            "layerBodId": "1964649909",
+                            "id": 256
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "LRT-Punkte",
+                            "layerBodId": "1964649910",
+                            "id": 257
+                        }]
+                    }]
                 }]
             },
             {
@@ -1565,5 +1734,5 @@
             }]
         }
     },
-    "last_id": 231
+    "last_id": 257
 }
