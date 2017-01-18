@@ -161,7 +161,9 @@
                 if (profileObjectToEdit.isLegacy) {
                     // remove CSW Script Field for Legacy elements
                     registry.byId("formScript").removeChild(registry.byId("formIsoScript"));
+                    registry.byId("formScript").removeChild(registry.byId("formIsoScriptImport"));
                     registry.byId("formIsoScript").destroy();
+                    registry.byId("formIsoScriptImport").destroy();
                 }
 
                 // fill form elements with available data
@@ -221,6 +223,7 @@
                         setAndShowField("span_formTitle", "formTitle", profileObjectToEdit.label);
                         setAndShowField("span_formHelp", "formHelp", profileObjectToEdit.helpMessage);
                         registry.byId("formIsoScript").set("value", profileObjectToEdit.scriptedCswMapping);
+                        registry.byId("formIsoScriptImport").set("value", profileObjectToEdit.scriptedCswMappingImport);
                         setAndShowField("span_formIndex", "formIndex", profileObjectToEdit.indexName);
                         setAndShowField("span_formWidth", "formWidth", profileObjectToEdit.width);
                         setAndShowField("span_formIndex", "formIndex", profileObjectToEdit.indexName);
@@ -506,8 +509,8 @@
                 }
 
                 data.scriptedProperties = registry.byId("formJsScript").get("value");
-                if (registry.byId("formIsoScript"))
-                    data.scriptedCswMapping = registry.byId("formIsoScript").get("value");
+                if (registry.byId("formIsoScript")) data.scriptedCswMapping = registry.byId("formIsoScript").get("value");
+                if (registry.byId("formIsoScriptImport")) data.scriptedCswMappingImport = registry.byId("formIsoScriptImport").get("value");
                 data.indexName = registry.byId("formIndex").get("value");
                 data.width = registry.byId("formWidth").get("value");
                 data.widthUnit = "%";
@@ -768,6 +771,7 @@
                             <div data-dojo-type="dijit/layout/TabContainer" doLayout="false" id="formScript" style="width:100%;" selected="formJsScript">
                                 <input data-dojo-type="dijit/form/SimpleTextarea" id="formJsScript" class="innerPadding" style="width: 100%;" rows="6" title="<fmt:message key="dialog.admin.additionalfields.JS" />"/>
                                 <input data-dojo-type="dijit/form/SimpleTextarea" id="formIsoScript" class="innerPadding fullWidth" rows="6" title="<fmt:message key="dialog.admin.additionalfields.CSW" />"/>
+                                <input data-dojo-type="dijit/form/SimpleTextarea" id="formIsoScriptImport" class="innerPadding fullWidth" rows="6" title="<fmt:message key="dialog.admin.additionalfields.CSWimport" />"/>
                             </div>
                             <button data-dojo-type="dijit/form/Button" style="float:right;" type="button" onclick="pageAdditionalFieldsDlg.checkSyntax()" label="<fmt:message key="dialog.admin.additionalfields.btnCheckSyntax" />" >
                             </button>
