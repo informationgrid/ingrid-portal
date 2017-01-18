@@ -42,6 +42,9 @@
             <action type="add" dev="wemove" issue="REDMINE-476">
                 IGE: Possibility to add a list with a connected syslist as an additional field.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-456">
+                IGE: Add field for mapping code to import additional fields.
+            </action>
             <action type="update" dev="wemove" issue="REDMINE-509">
                 IGE: Make EMail Settings configurable via mdek.override.properties.
             </action>
