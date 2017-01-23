@@ -130,6 +130,7 @@ define([
     "dojo/topic",
     "dojo/string",
     "dojo/dom",
+    "dojo/dom-class",
     "dojo/dom-style",
     "dijit/registry",
     "dijit/form/FilteringSelect",
@@ -156,7 +157,7 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/requiredChecks"
-], function(declare, lang, array, Deferred, DeferredList, ready, query, topic, string, dom, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
+], function(declare, lang, array, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
     ingridObjectLayout, ingridAddressLayout, message, dialog, UtilUI, UtilAddress, UtilList, UtilTree, UtilStore, UtilString, UtilSyslist, UtilGrid, UtilGeneral, UtilDOM, UtilSecurity, dirty,
     CustomGrid, rules, checks) {
     return declare(null, {
@@ -1727,6 +1728,13 @@ define([
             dom.byId("creationTime").innerHTML = nodeData.creationTime;
             dom.byId("modificationTime").innerHTML = nodeData.modificationTime;
             dom.byId("uuid").innerHTML = nodeData.uuid;
+            if (nodeData.orgObjId) {
+            	dom.byId("orgObjId").innerHTML = nodeData.orgObjId;
+            	domClass.remove("origIdSpan", "hide");
+            } else {
+            	dom.byId("orgObjId").innerHTML = "";
+            	domClass.add("origIdSpan", "hide");
+            }
 
             if (nodeData.lastEditor !== null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
                 dom.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
@@ -2051,6 +2059,7 @@ define([
             UtilStore.updateWriteStore("ref1SpatialSystem", UtilList.listToTableData(nodeData.ref1SpatialSystemTable));
 
             registry.byId("ref1AltAccuracy").attr("value", nodeData.ref1AltAccuracy, true);
+            registry.byId("ref1GridPosAccuracy").attr("value", nodeData.ref1GridPosAccuracy, true);
             registry.byId("ref1PosAccuracy").attr("value", nodeData.ref1PosAccuracy, true);
             registry.byId("ref1BasisText").attr("value", nodeData.ref1BasisText, true);
             registry.byId("ref1DataBasisText").attr("value", nodeData.ref1DataBasisText, true);
@@ -2601,6 +2610,7 @@ define([
             nodeData.ref1VFormatTopology = registry.byId("ref1VFormatTopology").get("value");
 
             nodeData.ref1AltAccuracy = UtilGeneral.getNumberFromDijit("ref1AltAccuracy");
+            nodeData.ref1GridPosAccuracy = UtilGeneral.getNumberFromDijit("ref1GridPosAccuracy");
             nodeData.ref1PosAccuracy = UtilGeneral.getNumberFromDijit("ref1PosAccuracy");
             nodeData.ref1BasisText = registry.byId("ref1BasisText").get("value");
             nodeData.ref1DataBasisText = registry.byId("ref1DataBasisText").get("value");

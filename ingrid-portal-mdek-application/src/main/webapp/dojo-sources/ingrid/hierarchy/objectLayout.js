@@ -132,9 +132,9 @@ define([
 
                 this.createReferences();
                 console.debug("initAdditionalFields");
-                var defAddFields = this.initAdditionalFields();
-                console.debug("connect dirty flags");
-                this.connectDirtyFlagsEvents();
+                var defAddFields = this.initAdditionalFields()
+                    .then(this.connectDirtyFlagsEvents);
+                
                 console.debug("init CTS");
                 // apply atomatic transformation of bounding box if selected in table
                 this.initCTS();
@@ -460,6 +460,9 @@ define([
                 new NumberTextBox({
                     style: "width:100%;"
                 }, "ref1PosAccuracy");
+                new NumberTextBox({
+                    style: "width:100%;"
+                }, "ref1GridPosAccuracy");
 
                 var tabSymbols = new TabContainer({
                     style: "width: 100%;",
