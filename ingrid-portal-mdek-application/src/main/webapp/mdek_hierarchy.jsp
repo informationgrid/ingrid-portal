@@ -738,33 +738,43 @@
                                 <a href="#sectionBottomContent" title="<fmt:message key="general.up" />"><img src="img/ic_up_blue.gif" width="9" height="6" alt="^" /></a>
                             </div>
                         </div>
-                            <span id="uiElement3565" class="outer">
-                                <div><span class="label">
-                                    <label for="ref1Coverage" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3565)">
-                                        <fmt:message key="ui.obj.type1.coverage" />
-                                    </label>
-                                </span>
-                                <span class="input">
-                                    <input type="text" id="ref1Coverage" min="0" max="100" name="ref1Coverage" class="" decimal="," /> %</span>
-                                </div>
-                            </span>
                             <div class="inputContainer">
-                                    <span id="uiElement5069" class="outer halfWidth">
-                                        <div><span class="label">
-                                            <label for="ref1AltAccuracy" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5069)">
-                                                <fmt:message key="ui.obj.type1.sizeAccuracy" />
-                                            </label>
-                                        </span><span class="input"><input type="text" id="ref1AltAccuracy" name="ref1AltAccuracy" class="" decimal="," /></span>
-                                        </div>
+                                <span id="uiElement3565" class="outer halfWidth">
+                                    <div><span class="label">
+                                        <label for="ref1Coverage" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3565)">
+                                            <fmt:message key="ui.obj.type1.coverage" />
+                                        </label>
                                     </span>
-                                    <span id="uiElement3530" class="outer halfWidth">
-                                        <div><span class="label">
-                                            <label for="ref1PosAccuracy" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3530)">
-                                                <fmt:message key="ui.obj.type1.posAccuracy" />
-                                            </label>
-                                        </span><span class="input"><input type="text" id="ref1PosAccuracy" name="ref1PosAccuracy" class="" decimal="," /></span>
-                                        </div>
-                                    </span>
+                                    <span class="input">
+                                        <input type="text" id="ref1Coverage" min="0" max="100" name="ref1Coverage" class="" decimal="," /> %</span>
+                                    </div>
+                                </span>
+                                <span id="uiElement5071" class="outer halfWidth optional">
+                                    <div><span class="label">
+                                        <label for="ref1GridPosAccuracy" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5071)">
+                                            <fmt:message key="ui.obj.type1.gridPosAccuracy" />
+                                        </label>
+                                    </span><span class="input"><input type="text" id="ref1GridPosAccuracy" name="ref1GridPosAccuracy" class="" decimal="," /></span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
+                                <span id="uiElement5069" class="outer halfWidth">
+                                    <div><span class="label">
+                                        <label for="ref1AltAccuracy" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5069)">
+                                            <fmt:message key="ui.obj.type1.sizeAccuracy" />
+                                        </label>
+                                    </span><span class="input"><input type="text" id="ref1AltAccuracy" name="ref1AltAccuracy" class="" decimal="," /></span>
+                                    </div>
+                                </span>
+                                <span id="uiElement3530" class="outer halfWidth">
+                                    <div><span class="label">
+                                        <label for="ref1PosAccuracy" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3530)">
+                                            <fmt:message key="ui.obj.type1.posAccuracy" />
+                                        </label>
+                                    </span><span class="input"><input type="text" id="ref1PosAccuracy" name="ref1PosAccuracy" class="" decimal="," /></span>
+                                    </div>
+                                </span>
                             </div>
                         <!-- BELOW HERE ARE THE DQ TABELS with special IDs so validation, content read etc. works automatically (see eventSubscriber.js, rules_validation.js) ! -->
                         <!-- Further the tables are shown DEPENDENT FROM CHOSEN INSPIRE THEME, see rules_requires.js applyRule7() -->
