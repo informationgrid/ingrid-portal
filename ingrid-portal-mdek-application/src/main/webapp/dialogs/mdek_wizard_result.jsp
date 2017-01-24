@@ -559,8 +559,9 @@ require([
             if (applyAll || locationList[i].selection == 1) {
                 var topic = locationList[i];
                 var topicId = locationList[i].topicId;
+                var type = locationList[i].type;
                 var targetGrid = "spatialRefAdminUnit";
-                if ( !topicId ) targetGrid = "spatialRefLocation";
+                if ( type === "F" || !topicId ) targetGrid = "spatialRefLocation";
                 
                 var storeData = UtilGrid.getTableData( targetGrid );
                 var storedTopicIdx = null;

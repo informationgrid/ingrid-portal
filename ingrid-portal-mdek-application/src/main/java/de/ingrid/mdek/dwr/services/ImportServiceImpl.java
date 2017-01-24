@@ -194,7 +194,7 @@ public class ImportServiceImpl {
         
         ImportEntitiesThread importThread;
         ProtocolInfoBean infoBean = controlMap.get(getCurrentUserId());
-        importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, infoBean.getImportData(), fileType, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent);
+        importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, fileType, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent);
         importThread.start();
         try {
             importThread.join(3000);
@@ -332,7 +332,6 @@ class ImportEntitiesThread extends Thread {
 
 	private final CatalogRequestHandler catalogRequestHandler;
 	private final UserData currentUser;
-	private final List<byte[]> importData;
 	private final String targetObjectUuid;
 	private final String targetAddressUuid;
 	private final boolean publishImmediately;
@@ -344,13 +343,12 @@ class ImportEntitiesThread extends Thread {
     private final boolean copyNodeIfPresent;
 	
 	public ImportEntitiesThread(CatalogRequestHandler catalogRequestHandler, 
-	        UserData currentUser, List<byte[]> importData, String fileDataType, 
+	        UserData currentUser, String fileDataType, 
 	        String targetObjectUuid, String targetAddressUuid, 
 	        boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent) {
 		super();
 		this.catalogRequestHandler = catalogRequestHandler;
 		this.currentUser = currentUser;
-		this.importData = importData;
 		this.targetObjectUuid = targetObjectUuid;
 		this.targetAddressUuid = targetAddressUuid;
 		this.publishImmediately = publishImmediately;
@@ -362,7 +360,7 @@ class ImportEntitiesThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			catalogRequestHandler.importEntities(currentUser, importData, targetObjectUuid, targetAddressUuid, fileDataType, publishImmediately, doSeparateImport, copyNodeIfPresent);
+			catalogRequestHandler.importEntities(currentUser, targetObjectUuid, targetAddressUuid, fileDataType, publishImmediately, doSeparateImport, copyNodeIfPresent);
 		} catch(MdekException ex) {
 			log.error("Exception while importing entities.", ex);
 			setException(ex);

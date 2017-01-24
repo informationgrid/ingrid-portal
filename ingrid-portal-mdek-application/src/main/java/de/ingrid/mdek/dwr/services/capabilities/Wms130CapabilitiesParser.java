@@ -44,6 +44,7 @@ import de.ingrid.geo.utils.transformation.CoordTransformUtil;
 import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
 import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.MdekUtils.MdekSysList;
+import de.ingrid.mdek.MdekUtils.SpatialReferenceType;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.LocationBean;
@@ -383,8 +384,9 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
         if (name == null) name = "UNKNOWN";
 
         box.setName( name );
+        // shall be a free spatial reference, but needs an ID to check for duplications!
         box.setTopicId( box.getName() );
-        box.setType( "F" );
+        box.setType( SpatialReferenceType.FREI.getDbValue() );
         
         return box;
     	

@@ -278,11 +278,10 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
         return result;
     }
 
-    public void importEntities(UserData currentUser, List<byte[]> importData, String targetObjectUuid, String targetAddressUuid,
+    public void importEntities(UserData currentUser, String targetObjectUuid, String targetAddressUuid,
             String frontendMappingProtocol, boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent) {
         IngridDocument response = mdekCallerCatalog.importEntities(
                 currentUser.getPlugId(),
-                importData,
                 targetObjectUuid, targetAddressUuid,
                 publishImmediately, doSeparateImport,
                 copyNodeIfPresent, frontendMappingProtocol,
