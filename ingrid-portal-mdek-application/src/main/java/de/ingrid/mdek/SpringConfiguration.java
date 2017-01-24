@@ -41,66 +41,80 @@ import de.ingrid.mdek.persistence.db.DaoFactory;
 import de.ingrid.mdek.security.AuthenticationProvider;
 import de.ingrid.mdek.security.PortalAuthenticationProvider;
 import de.ingrid.mdek.security.TomcatAuthenticationProvider;
+import de.ingrid.mdek.upload.storage.FileSystemStorage;
+import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.userrepo.DbUserRepoManager;
 
 @Configuration
 public class SpringConfiguration {
-    
-    @Profile("http")
-    public static class HttpCommunicationProfile {
-        
-        @Bean
-        public ICodeListCommunication httpCommunication(Config config) {
-            HttpCLCommunication communication = new HttpCLCommunication();
-            communication.setRequestUrl( config.codelistRequestUrl );
-            communication.setUsername( config.codelistUsername );
-            communication.setPassword( config.codelistPassword );
-            return communication;
-        }
-    }
-    
-    @Profile("ingrid")
-    public static class IngridCommunicationProfile {
-        
-        @Bean
-        public ICodeListCommunication httpCommunication() {
-            IngridCLCommunication communication = new IngridCLCommunication();
-            return communication;
-        }
-    }
-    
-    @Bean
-    public Config globalConfig() {
-        Config config = new ConfigBuilder<Config>(Config.class).build();
-        try {
-            config.initialize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return config;
-    }
 
-    @Bean
-    public CodeListService codeListService( ICodeListCommunication communication, Config config, List<ICodeListPersistency> persistencies ) {
-        CodeListService service = new CodeListService();
-        
-        service.setPersistencies( persistencies );
-        service.setComm( communication );
-        service.setDefaultPersistency( config.codelistDefaultPersistency );
-        return service;
-    }
-    
-    @Bean
-    public AuthenticationProvider authenticationProvider(Config config, @Value("#{daoFactory}") DaoFactory dao ) {
-        if (config.noPortal) {
-            TomcatAuthenticationProvider provider = new TomcatAuthenticationProvider();
-            DbUserRepoManager manager = new DbUserRepoManager();
-            manager.setDaoFactory( dao );
-            provider.setRepoManager( manager );
-            return provider;
-        } else {
-            return new PortalAuthenticationProvider();
-        }
-    }
+	@Profile("http")
+	public static class HttpCommunicationProfile {
 
+		@Bean
+		public ICodeListCommunication httpCommunication(Config config) {
+			HttpCLCommunication communication = new HttpCLCommunication();
+			communication.setRequestUrl(config.codelistRequestUrl);
+			communication.setUsername(config.codelistUsername);
+			communication.setPassword(config.codelistPassword);
+			return communication;
+		}
+	}
+
+	@Profile("ingrid")
+	public static class IngridCommunicationProfile {
+
+		@Bean
+		public ICodeListCommunication httpCommunication() {
+			IngridCLCommunication communication = new IngridCLCommunication();
+			return communication;
+		}
+	}
+
+	@Bean
+	public Config globalConfig() {
+		Config config = new ConfigBuilder<Config>(Config.class).build();
+		try {
+			config.initialize();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return config;
+	}
+
+	@Bean
+	public CodeListService codeListService(ICodeListCommunication communication, Config config,
+			List<ICodeListPersistency> persistencies) {
+		CodeListService service = new CodeListService();
+
+		service.setPersistencies(persistencies);
+		service.setComm(communication);
+		service.setDefaultPersistency(config.codelistDefaultPersistency);
+		return service;
+	}
+
+	@Bean
+	public AuthenticationProvider authenticationProvider(Config config, @Value("#{daoFactory}") DaoFactory dao) {
+		if (config.noPortal) {
+			TomcatAuthenticationProvider provider = new TomcatAuthenticationProvider();
+			DbUserRepoManager manager = new DbUserRepoManager();
+			manager.setDaoFactory(dao);
+			provider.setRepoManager(manager);
+			return provider;
+		} else {
+			return new PortalAuthenticationProvider();
+		}
+	}
+
+	@Bean
+	public Storage storage(Config config) {
+		Storage instance = null;
+		switch (config.uploadImpl) {
+		case "FileSystemStorage":
+		default:
+			instance = new FileSystemStorage(config.uploadBaseDir);
+
+		}
+		return instance;
+	}
 }

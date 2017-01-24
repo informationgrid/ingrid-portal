@@ -142,6 +142,17 @@ public class Config {
     @DefaultValue("smtp")
     public String workflowMailSmtpProtocol;
     
+    /**
+     * UPLOAD
+     */
+    @PropertyValue("upload.impl")
+    @DefaultValue("FileSystemStorage")
+    public String uploadImpl;
+    
+    @PropertyValue("upload.basedir")
+    @DefaultValue("")
+    public String uploadBaseDir;
+    
 
     /**
      * VARIOUS 
