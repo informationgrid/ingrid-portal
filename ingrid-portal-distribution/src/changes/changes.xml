@@ -110,6 +110,12 @@
             </action>
         </release>
 
+        <release version="3.6.2.9-SNAPSHOT" date="2017-xx-xx" description="Release 3.6.2.9">
+            <action type="fix" dev="wemove" issue="REDMINE-530">
+                IGE: Fixed moving a subtree to the root node.
+            </action>
+        </release>
+
         <release version="4.0.0" date="2016-08-26" description="Release 4.0.0">
             <action type="update" dev="wemove" issue="REDMINE-239">
                 PORTAL: New Layout in responsive design.
