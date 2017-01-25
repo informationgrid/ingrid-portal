@@ -167,7 +167,7 @@ public class FileSystemStorage implements Storage {
 				throw ex;
 			}
 		}
-		return (String[])result.stream().map(p -> p.toString()).toArray();
+		return result.stream().map(p -> p.toString()).toArray(size -> new String[size]);
 	}
 	
 	/**
