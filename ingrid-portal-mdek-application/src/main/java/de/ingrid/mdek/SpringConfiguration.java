@@ -41,6 +41,8 @@ import de.ingrid.mdek.persistence.db.DaoFactory;
 import de.ingrid.mdek.security.AuthenticationProvider;
 import de.ingrid.mdek.security.PortalAuthenticationProvider;
 import de.ingrid.mdek.security.TomcatAuthenticationProvider;
+import de.ingrid.mdek.upload.auth.AuthService;
+import de.ingrid.mdek.upload.auth.PortalAuthService;
 import de.ingrid.mdek.upload.storage.FileSystemStorage;
 import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.userrepo.DbUserRepoManager;
@@ -104,6 +106,16 @@ public class SpringConfiguration {
 		} else {
 			return new PortalAuthenticationProvider();
 		}
+	}
+
+	/**
+	 * Upload service
+	 */
+	
+	@Bean
+	public AuthService authService(Config config) {
+		AuthService instance = new PortalAuthService();
+		return instance;
 	}
 
 	@Bean

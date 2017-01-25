@@ -1,9 +1,7 @@
 package de.ingrid.mdek.upload.storage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
 
 /**
  * Storage defines the interface for classes, that are responsible for
@@ -11,47 +9,58 @@ import java.nio.file.Path;
  */
 public interface Storage {
 	/**
-	 * List all files in a directory
-	 * @param file The directory
-	 * @return File[]
+	 * List all files in a path
+	 * @param path The path
+	 * @return String[]
+	 * @throws IOException 
 	 */
-	File[] list(Path path);
+	String[] list(String path) throws IOException;
 	
 	/**
-	 * Check if a file exists
-	 * @param file The file
+	 * Check if a path exists
+	 * @param path The path
 	 * @return boolean
 	 */
-	boolean exists(File file);
+	boolean exists(String path);
 	
 	/**
-	 * Get the data from a file
+	 * Check if a path denotes a directory
+	 * @param path The path
+	 * @return boolean
+	 */
+	boolean isDirectory(String path);
+	
+	/**
+	 * Get the content of a file
 	 * @param file The file
 	 * @return InputStream
-	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	InputStream read(File file) throws FileNotFoundException;
+	InputStream read(String file) throws IOException;
 
 	/**
-	 * Write data to a file and extract archives
+	 * Write data to a file in a path and extract archives contained in data
+	 * @param path The path
 	 * @param file The file
 	 * @param data The data
 	 * @param replace Boolean indicating whether to replace an existing file or not
-	 * @return File[]
-	 * @throws Exception 
+	 * @return String[] The list of created files
+	 * @throws IOException
 	 */
-	File[] write(File file, InputStream data, boolean replace) throws Exception;
+	String[] write(String path, String file, InputStream data, boolean replace) throws IOException;
 	
 	/**
 	 * Delete a file
 	 * @param file The file
+	 * @throws IOException
 	 */
-	void delete(File file);
+	void delete(String file) throws IOException;
 	
 	/**
-	 * Create a alias for a directory
-	 * @param oldFile The original path
-	 * @param newFile The alias
+	 * Create an alias for a path
+	 * @param oldPath The original path
+	 * @param newPath The alias
+	 * @throws IOException
 	 */
-	void alias(Path oldPath, Path newPath);
+	void alias(String oldPath, String newPath) throws IOException;
 }

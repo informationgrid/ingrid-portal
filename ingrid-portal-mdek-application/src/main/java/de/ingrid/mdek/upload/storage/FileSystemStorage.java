@@ -1,18 +1,14 @@
-/**
- * 
- */
 package de.ingrid.mdek.upload.storage;
 
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.CopyOption;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,48 +39,43 @@ public class FileSystemStorage implements Storage {
 		this.uploadBaseDir = uploadBaseDir;
 	}
 
-	/**
-	 * @see de.ingrid.mdek.upload.storage.Storage#list(java.nio.file.Path)
-	 */
 	@Override
-	public File[] list(Path path) {
-		path = getRealPath(path.toFile());
-		return path.toFile().listFiles(new FileFilter() {
-		    @Override
-		    public boolean accept(File pathname) {
-		        return pathname.isFile();
-		    }
-		});
+	public String[] list(String path) throws IOException {
+		Path realPath = getRealPath(path);
+        List<String> files = new ArrayList<String>();
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(realPath)) {
+            for (Path entry: stream) {
+            	if (Files.isRegularFile(entry)) {
+            		files.add(this.stripPath(entry.toString()));
+            	}
+            }
+        }
+        return files.toArray(new String[files.size()]);
+    }
+
+	@Override
+	public boolean exists(String path) {
+		Path realPath = getRealPath(path);
+		return Files.exists(realPath);
 	}
 
-	/**
-	 * @see de.ingrid.mdek.upload.storage.Storage#exists(java.io.File)
-	 */
 	@Override
-	public boolean exists(File file) {
-		java.nio.file.Path path = getRealPath(file);
-		return path.toFile().exists();
+	public boolean isDirectory(String path) {
+		Path realPath = getRealPath(path);
+		return Files.isDirectory(realPath);
 	}
 
-	/**
-	 * @see de.ingrid.mdek.upload.storage.Storage#read(java.io.File)
-	 */
 	@Override
-	public InputStream read(File file) throws FileNotFoundException {
-		java.nio.file.Path path = getRealPath(file);
-		return new FileInputStream(path.toFile());
+	public InputStream read(String file) throws IOException {
+		Path realPath = getRealPath(file);
+		return Files.newInputStream(realPath);
 	}
 
-	/**
-	 * @see de.ingrid.mdek.upload.storage.Storage#write(java.io.File,
-	 *      java.io.InputStream)
-	 */
 	@Override
-	public File[] write(File file, InputStream data, boolean replace) throws Exception {
-		file = this.sanitize(file);
-		
-		java.nio.file.Path path = getRealPath(file);
-		Files.createDirectories(path.getParent());
+	public String[] write(String path, String file, InputStream data, boolean replace) throws IOException {
+		Path filePath = Paths.get(path, file);
+		Path realPath = getRealPath(this.sanitize(filePath.toString()));
+		Files.createDirectories(realPath.getParent());
 		
 		// copy file
 		List<CopyOption> copyOptionList = new ArrayList<CopyOption>();
@@ -93,19 +84,19 @@ public class FileSystemStorage implements Storage {
 		}
 		CopyOption[] copyOptions = copyOptionList.toArray(new CopyOption[copyOptionList.size()]);
 		
-		Files.copy(data, path, copyOptions);
-		File[] result = new File[] { file };
+		Files.copy(data, realPath, copyOptions);
+		String[] result = new String[] { realPath.toString() };
 
 		// extract archives
 		try {
-			String contentType = Files.probeContentType(path);
+			String contentType = Files.probeContentType(realPath);
 			if (contentType.contains("zip") || contentType.contains("compressed")) {
-				result = this.uncompress(path, copyOptions);
+				result = this.uncompress(realPath, copyOptions);
 				// delete archive
-				path.toFile().delete();
+				Files.delete(realPath);
 			}
 		} catch (Exception ex) {
-			log.error("Post processing of '"+path+"' failed due to the following exception:\n"+ex.toString());
+			log.error("Post processing of '"+realPath+"' failed due to the following exception:\n"+ex.toString());
 		}
 		
 		// prepare result
@@ -115,20 +106,14 @@ public class FileSystemStorage implements Storage {
 		return result;
 	}
 
-	/**
-	 * @see de.ingrid.mdek.upload.storage.Storage#delete(java.io.File)
-	 */
 	@Override
-	public void delete(File file) {
-		java.nio.file.Path path = getRealPath(file);
-		path.toFile().delete();
+	public void delete(String file) throws IOException {
+		Path realPath = getRealPath(file);
+		Files.delete(realPath);
 	}
 
-	/**
-	 * @see de.ingrid.mdek.upload.storage.Storage#alias(java.nio.file.Path, jjava.nio.file.Path)
-	 */
 	@Override
-	public void alias(Path oldPath, Path newPath) {
+	public void alias(String oldPath, String newPath) throws IOException {
 		// TODO create a symbolic link
 	}
 
@@ -136,11 +121,11 @@ public class FileSystemStorage implements Storage {
 	 * Uncompress the file denoted by path
 	 * @param path
 	 * @param copyOptions
-	 * @return File[]
+	 * @return String[]
 	 * @throws Exception
 	 */
-	private File[] uncompress(java.nio.file.Path path, CopyOption... copyOptions) throws Exception {
-		List<File> result = new ArrayList<File>(); 
+	private String[] uncompress(Path path, CopyOption... copyOptions) throws Exception {
+		List<Path> result = new ArrayList<Path>(); 
 		try (InputStream fis = FileUtils.openInputStream(path.toFile());
 				InputStream bis = new BufferedInputStream(fis)) {
 			InputStream bcis = null;
@@ -154,16 +139,15 @@ public class FileSystemStorage implements Storage {
 			InputStream is = bcis != null ? bcis : bis;
 			try (ArchiveInputStream ais = new ArchiveStreamFactory().createArchiveInputStream(is)) {
 				ArchiveEntry entry = ais.getNextEntry();
-				File parent = path.getParent().toFile();
+				Path parent = path.getParent();
 				while (entry != null) {
-					File file = new File(parent, entry.getName());
-					file = this.sanitize(file);
+					Path file = Paths.get(this.sanitize(parent.toString()), this.sanitize(entry.getName()));
 					if (entry.isDirectory()) {
 						// handle directory
-						file.mkdirs();
+						Files.createDirectories(file);
 					} else {
 						// handle file
-						Files.copy(ais, file.toPath(), copyOptions);
+						Files.copy(ais, file, copyOptions);
 						result.add(file);
 					}
 					entry = ais.getNextEntry();
@@ -172,9 +156,9 @@ public class FileSystemStorage implements Storage {
 			catch (Exception ex) {
 				log.error("Failed to uncompress '"+path+"'. Cleaning up...");
 				// delete all extracted files, if one file fails
-				for (File file : result) {
+				for (Path file : result) {
 					try {
-						file.delete();
+						Files.delete(file);
 					}
 					catch (Exception ex1) {
 						log.error("Could not delete '"+file+"' while cleaning up from failed uncompressing.");
@@ -183,17 +167,17 @@ public class FileSystemStorage implements Storage {
 				throw ex;
 			}
 		}
-		return result.toArray(new File[result.size()]);
+		return (String[])result.stream().map(p -> p.toString()).toArray();
 	}
 	
 	/**
 	 * Replace forbidden characters from a path
-	 * @param file
-	 * @return File
+	 * @param path
+	 * @return String
 	 */
-	private File sanitize(File file) {
+	private String sanitize(String path) {
 		// TODO remove forbidden characters
-		return file;
+		return path;
 	}
 	
 	/**
@@ -201,17 +185,17 @@ public class FileSystemStorage implements Storage {
 	 * @param file
 	 * @return Path
 	 */
-	private Path getRealPath(File file) {
-		return FileSystems.getDefault().getPath(this.uploadBaseDir, file.getPath());
+	private Path getRealPath(String file) {
+		return FileSystems.getDefault().getPath(this.uploadBaseDir, file);
 	}
 	
 	/**
 	 * Remove the upload base directory from a path
-	 * @param file
-	 * @return File
+	 * @param path
+	 * @return String
 	 */
-	private File stripPath(File file) {
+	private String stripPath(String path) {
 		Path basePath = FileSystems.getDefault().getPath(this.uploadBaseDir);
-		return new File(file.getPath().replace(basePath.toString(), ""));
+		return path.replace(basePath.toString(), "");
 	}
 }
