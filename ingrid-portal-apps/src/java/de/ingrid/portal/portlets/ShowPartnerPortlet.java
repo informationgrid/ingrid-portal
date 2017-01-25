@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -63,6 +64,10 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
+        PortletPreferences prefs = request.getPreferences();
+        String titleKey = prefs.getValue("titleKey", "showpartner.title");
+        response.setTitle(messages.getString(titleKey));
+        
         String[] hideIPlugIdList = PortalConfig.getInstance().getStringArray(PortalConfig.HIDE_IPLUG_ID_LIST);
         if(hideIPlugIdList != null){
         	context.put("hideIPlugIdList", hideIPlugIdList);

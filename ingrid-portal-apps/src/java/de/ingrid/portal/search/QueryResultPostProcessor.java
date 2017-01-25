@@ -158,6 +158,14 @@ public class QueryResultPostProcessor {
 
             Object additionalHtml = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_ADDITIONAL_HTML_1);
             hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, additionalHtml);
+            
+            Object phase = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_PHASE);
+            if(phase != null){
+                if(phase.toString().length() > 0){
+                    hit.put(Settings.RESULT_KEY_PHASE, Integer.parseInt(phase.toString()));
+                }
+            }
+            
             boolean doNotShowMaps = false;
             String firstResourceId = null;
             

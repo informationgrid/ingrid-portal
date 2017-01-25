@@ -97,10 +97,23 @@
                     <span class="tx-light">$!rs.provider</span>
                 </small>
             #end
-            <small>
-                <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.source'):</strong></span>
-                <span class="tx-light">$!rs.source</span>
-            </small>
+            #if($!rs.phase)
+                <small>
+                    <span class="tx-darkest"><strong>Status:</strong></span>
+                    #if($!rs.phase > 3)
+                        <span class="tx-light">Zulassungsentscheidung</span>
+                    #elseif($!rs.phase > 2)
+                        <span class="tx-light">Er&ouml;rterungstermin</span>
+                    #else
+                        <span class="tx-light">&Ouml;ffentliche Auslegung</span>
+                    #end
+                </small>
+            #else
+                <small>
+                    <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.source'):</strong></span>
+                    <span class="tx-light">$!rs.source</span>
+                </small>
+            #end
             #if($adminContent)
                 <small>
                     <span class="tx-darkest"><strong>Score:</strong></span>

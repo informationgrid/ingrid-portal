@@ -176,6 +176,8 @@ public class Settings {
 
     public final static String RESULT_KEY_ADDITIONAL_HTML_1 = "additional_html_1";
 
+    public final static String RESULT_KEY_PHASE = "phase";
+
     public final static String RESULT_KEY_RUBRIC = "topic";
     public final static String RESULT_KEY_TOPIC = "topic";
 
