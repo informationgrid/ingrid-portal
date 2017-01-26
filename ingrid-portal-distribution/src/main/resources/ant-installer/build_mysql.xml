@@ -25,6 +25,8 @@
         MySql Configuration Build Script
     </description>
 
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
     <!-- =============================================
          = PROPERTIES                                =
          ============================================= -->
@@ -145,10 +147,15 @@
         </echo>
 
         <basename property="dbName" file="${_dbUrl}"/>
+        <propertyregex property="mysqlUrlName"
+              input="${_dbUrl}"
+              regexp="(.*)/.*"
+              select="\1"
+              casesensitive="false" />
 
         <sql    driver    ="${mySqlDriverClass}"
                 classpath ="${mySqlDbDriver}"
-                url       ="jdbc:mysql://localhost/mysql"
+                url       ="${mysqlUrlName}"
                 userid    ="${_adminUser}"
                 password  ="${_adminPassword}"
                 onerror   ="continue"
@@ -300,7 +307,7 @@
         </echo>
     </target>
     
-	<target name="PortalDbUpdateFrom350" if="useMysql">
+    <target name="PortalDbUpdateFrom350" if="useMysql">
         <echo>MySQL-Portal Daten importieren (ab 3.5.0)
         </echo>
 
@@ -317,11 +324,11 @@
             <transaction src="${updateMySQL361}"/>
             <transaction src="${updateMySQL362}"/>
             <transaction src="${updateMySQL400}"/>
-			<transaction src="${updateMySQL401}"/>
+            <transaction src="${updateMySQL401}"/>
         </sql>
     </target>
-	
-	<target name="PortalDbUpdateFrom361" if="useMysql">
+    
+    <target name="PortalDbUpdateFrom361" if="useMysql">
         <echo>MySQL-Portal Daten importieren (ab 3.6.1)
         </echo>
 
@@ -336,8 +343,8 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL362}"/>
-			<transaction src="${updateMySQL400}"/>
-			<transaction src="${updateMySQL401}"/>
+            <transaction src="${updateMySQL400}"/>
+            <transaction src="${updateMySQL401}"/>
         </sql>
     </target>
 
@@ -356,7 +363,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL400}"/>
-			<transaction src="${updateMySQL401}"/>
+            <transaction src="${updateMySQL401}"/>
         </sql>
     </target>
     <target name="PortalDbUpdateFrom400" if="useMysql">
@@ -386,10 +393,15 @@
         </echo>
 
         <basename property="dbMdekName" file="${_mdekDBUrl}"/>
+        <propertyregex property="mysqlMdekUrlName"
+              input="${_mdekDBUrl}"
+              regexp="(.*)/.*"
+              select="\1"
+              casesensitive="false" />
 
         <sql    driver    ="${mySqlDriverClass}"
                 classpath ="${mySqlDbDriver}"
-                url       ="jdbc:mysql://localhost/mysql"
+                url       ="${mysqlMdekUrlName}"
                 userid    ="${_adminUser}"
                 password  ="${_adminPassword}"
                 onerror   ="continue" 
