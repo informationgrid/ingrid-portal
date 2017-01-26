@@ -3,6 +3,7 @@ package de.ingrid.mdek.upload.storage;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.SequenceInputStream;
 import java.nio.file.CopyOption;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
@@ -12,6 +13,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
@@ -20,7 +22,6 @@ import org.apache.commons.compress.compressors.CompressorException;
 import org.apache.commons.compress.compressors.CompressorStreamFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * FileSystemStorage manages files in the server file system
@@ -29,19 +30,22 @@ public class FileSystemStorage implements Storage {
 
 	private final static Logger log = Logger.getLogger(FileSystemStorage.class);
 	
-	private String uploadBaseDir = null;
+	private String docsDir = null;
+	private String partsDir = null;
 
 	/**
 	 * Constructor
-	 * @param uploadBaseDir
+	 * @param docsDir
+	 * @param partsDir
 	 */
-	public FileSystemStorage(@Value("${upload.basedir}") String uploadBaseDir) {
-		this.uploadBaseDir = uploadBaseDir;
+	public FileSystemStorage(String docsDir, String partsDir) {
+		this.docsDir = docsDir;
+		this.partsDir = partsDir;
 	}
 
 	@Override
 	public String[] list(String path) throws IOException {
-		Path realPath = getRealPath(path);
+		Path realPath = getRealPath(path, this.docsDir);
         List<String> files = new ArrayList<String>();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(realPath)) {
             for (Path entry: stream) {
@@ -55,26 +59,26 @@ public class FileSystemStorage implements Storage {
 
 	@Override
 	public boolean exists(String path) {
-		Path realPath = getRealPath(path);
+		Path realPath = getRealPath(path, this.docsDir);
 		return Files.exists(realPath);
 	}
 
 	@Override
 	public boolean isDirectory(String path) {
-		Path realPath = getRealPath(path);
+		Path realPath = getRealPath(path, this.docsDir);
 		return Files.isDirectory(realPath);
 	}
 
 	@Override
 	public InputStream read(String file) throws IOException {
-		Path realPath = getRealPath(file);
+		Path realPath = getRealPath(file, this.docsDir);
 		return Files.newInputStream(realPath);
 	}
 
 	@Override
-	public String[] write(String path, String file, InputStream data, boolean replace) throws IOException {
+	public String[] write(String path, String file, InputStream data, Integer size, boolean replace) throws IOException {
 		Path filePath = Paths.get(path, file);
-		Path realPath = getRealPath(this.sanitize(filePath.toString()));
+		Path realPath = getRealPath(this.sanitize(filePath.toString()), this.docsDir);
 		Files.createDirectories(realPath.getParent());
 		
 		// copy file
@@ -85,6 +89,9 @@ public class FileSystemStorage implements Storage {
 		CopyOption[] copyOptions = copyOptionList.toArray(new CopyOption[copyOptionList.size()]);
 		
 		Files.copy(data, realPath, copyOptions);
+		if (Files.size(realPath) != size) {
+			throw new IOException("The file size is different to the expected size");
+		}
 		String[] result = new String[] { realPath.toString() };
 
 		// extract archives
@@ -106,9 +113,45 @@ public class FileSystemStorage implements Storage {
 		return result;
 	}
 
+
+	@Override
+	public void writePart(String id, Integer index, InputStream data, Integer size) throws IOException {
+		String file = id+"-"+index;
+		Path realPath = getRealPath(file, this.partsDir);
+		Files.createDirectories(realPath.getParent());
+		Files.copy(data, realPath);
+		if (Files.size(realPath) != size) {
+			throw new IOException("The file size is different to the expected size");
+		}
+	}
+
+	@Override
+	public String[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace)
+			throws IOException {
+		// combine parts into stream
+		Vector<InputStream> streams = new Vector<InputStream>();
+		Path[] parts = new Path[totalParts];
+		for (int i=0; i<totalParts; i++) {
+			String part = id+"-"+i;
+			Path realPath = getRealPath(part, this.partsDir);
+			streams.add(Files.newInputStream(realPath));
+			parts[i] = realPath;
+		}
+		
+		// delegate to write method
+		InputStream data = new SequenceInputStream(streams.elements());
+		String[] files = this.write(path, file, data, size, replace);
+		
+		// delete parts
+		for (Path part : parts) {
+			Files.delete(part);
+		}
+		return files;
+	}
+
 	@Override
 	public void delete(String file) throws IOException {
-		Path realPath = getRealPath(file);
+		Path realPath = getRealPath(file, this.docsDir);
 		Files.delete(realPath);
 	}
 
@@ -183,10 +226,11 @@ public class FileSystemStorage implements Storage {
 	/**
 	 * Get the real path of a requested path
 	 * @param file
+	 * @param basePath
 	 * @return Path
 	 */
-	private Path getRealPath(String file) {
-		return FileSystems.getDefault().getPath(this.uploadBaseDir, file);
+	private Path getRealPath(String file, String basePath) {
+		return FileSystems.getDefault().getPath(basePath, file);
 	}
 	
 	/**
@@ -195,7 +239,7 @@ public class FileSystemStorage implements Storage {
 	 * @return String
 	 */
 	private String stripPath(String path) {
-		Path basePath = FileSystems.getDefault().getPath(this.uploadBaseDir);
+		Path basePath = FileSystems.getDefault().getPath(this.docsDir);
 		return path.replace(basePath.toString(), "");
 	}
 }

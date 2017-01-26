@@ -43,7 +43,6 @@ import de.ingrid.mdek.security.PortalAuthenticationProvider;
 import de.ingrid.mdek.security.TomcatAuthenticationProvider;
 import de.ingrid.mdek.upload.auth.AuthService;
 import de.ingrid.mdek.upload.auth.PortalAuthService;
-import de.ingrid.mdek.upload.storage.FileSystemStorage;
 import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.userrepo.DbUserRepoManager;
 
@@ -122,9 +121,9 @@ public class SpringConfiguration {
 	public Storage storage(Config config) {
 		Storage instance = null;
 		switch (config.uploadImpl) {
-		case "FileSystemStorage":
+		case "de.ingrid.mdek.upload.storage.FileSystemStorage":
 		default:
-			instance = new FileSystemStorage(config.uploadBaseDir);
+			instance = new de.ingrid.mdek.upload.storage.FileSystemStorage(config.docsdir, config.partsdir);
 
 		}
 		return instance;

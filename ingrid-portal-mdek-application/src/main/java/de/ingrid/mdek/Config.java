@@ -149,11 +149,14 @@ public class Config {
     @DefaultValue("FileSystemStorage")
     public String uploadImpl;
     
-    @PropertyValue("upload.basedir")
+    @PropertyValue("upload.docsdir")
     @DefaultValue("")
-    public String uploadBaseDir;
+    public String docsdir;
     
-
+    @PropertyValue("upload.partsdir")
+    @DefaultValue("")
+    public String partsdir;
+    
     /**
      * VARIOUS 
      */
