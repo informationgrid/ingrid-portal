@@ -209,7 +209,7 @@ define([
                     { field: 'auslegungSize', name: 'Größe', width: '50px', editable: true },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
-                id = "auslegungsTable_" + counter;
+                var id = "auslegungsTable_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Antrag auf Entscheidung über die Zulässigkeit des Vorhabens", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "auslegungsTable", field: registry.byId(id) });
@@ -306,7 +306,7 @@ define([
                     { field: 'dateText', name: 'Beschreibung', width: '300px', editable: true },
                     { field: 'dateValue', name: 'Datum', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
-                id = "eroerterungDateTable_" + counter;
+                var id = "eroerterungDateTable_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Erörterungstermin", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "eroerterungDateTable", field: registry.byId(id) });
@@ -435,7 +435,7 @@ define([
                 var self = this;
                 var delButton = new Button({
                     label: "Phase löschen",
-                    class: "right optional",
+                    "class": "right optional",
                     onClick: function () {
                         dialog.show("Phase löschen", "Möchten Sie wirklich diese Phase entfernen?", dialog.WARN, [
                             {
