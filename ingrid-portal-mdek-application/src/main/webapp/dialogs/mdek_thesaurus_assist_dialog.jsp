@@ -46,8 +46,9 @@ require([
     "ingrid/utils/Thesaurus",
     "ingrid/utils/Events",
     "ingrid/dialog",
+    "ingrid/message",
     "ingrid/layoutCreator"
-], function(array, on, dom, topic, style, registry, UtilGrid, UtilList, UtilStore, UtilThesaurus, UtilEvents, dialog, layoutCreator) {
+], function(array, on, dom, topic, style, registry, UtilGrid, UtilList, UtilStore, UtilThesaurus, UtilEvents, dialog, message, layoutCreator) {
 
         on(_container_, "Load", function() {
             init();
@@ -135,10 +136,7 @@ require([
 
 
         function showStatus(msg) {
-            var status = dom.byId("statusText");
-            if (status) {
-                status.innerHTML = msg;
-            }
+            dialog.show(message.get("dialog.general.warning"), msg, dialog.WARNING);
         }
 
         function createTables() {

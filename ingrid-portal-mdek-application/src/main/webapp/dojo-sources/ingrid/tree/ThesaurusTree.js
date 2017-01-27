@@ -27,11 +27,12 @@ define("ingrid/tree/ThesaurusTree", [
     "dojo/window",
     "dojo/Deferred",
     "dijit/Tree",
+    "ingrid/message",
     "ingrid/tree/SnsStore",
     "ingrid/utils/Tree",
     "dojo/store/Observable",
     "dijit/tree/ObjectStoreModel"
-], function(declare, array, lang, wnd, Deferred, Tree, SnsStore, UtilTree, Observable, ObjectStoreModel) {
+], function(declare, array, lang, wnd, Deferred, Tree, message, SnsStore, UtilTree, Observable, ObjectStoreModel) {
 
     var ThesaurusTree = declare( "ingrid.tree.ThesaurusTree", [ Tree ], {
 
@@ -40,6 +41,7 @@ define("ingrid/tree/ThesaurusTree", [
                 data: [],
                 serviceType: this.service,
                 rootUrl: this.rootUrl,
+                showStatus: this.showStatus,
                 getChildren: function(object){
                     // Add a getChildren() method to store for the data model where
                     // children objects point to their parent (aka relational model)
@@ -113,11 +115,11 @@ define("ingrid/tree/ThesaurusTree", [
                     });
                 },
                 errorHandler: function(msg) {
-                    _this.showStatus("<fmt:message key='sns.connectionError' />");
+                    _this.showStatus(message.get("sns.connectionError"));
                     def.reject();
                 },
                 exceptionHandler: function(msg) {
-                    _this.showStatus("<fmt:message key='sns.connectionError' />");
+                    _this.showStatus(message.get("sns.connectionError"));
                     def.reject();
                 }
             });

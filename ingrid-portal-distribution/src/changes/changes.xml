@@ -93,6 +93,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-530">
                 IGE: Fixed moving a subtree to the root node.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-532">
+                IGE: Added error message when Thesaurus could not be reached.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-448"><action type="fix" dev="wemove" issue="REDMINE-448">
                 MapClient: GetMap-URL on print.
             </action>
