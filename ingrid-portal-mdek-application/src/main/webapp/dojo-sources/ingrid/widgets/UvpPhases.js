@@ -5,6 +5,7 @@ define([
     "dojo/dom-construct",
     "dojo/dom-class",
     "dojo/query",
+    "dojo/topic",
     "dijit/_WidgetBase",
     "dijit/registry",
     "dijit/form/Button",
@@ -17,7 +18,7 @@ define([
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "dojo/NodeList-traverse"
-], function (declare, array, lang, construct, domClass, query, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
+], function (declare, array, lang, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
     creator, dialog, IgeEvents, CustomGrid, Editors, Formatters) {
 
         return declare("UVPPhases", [_WidgetBase], {
@@ -75,6 +76,15 @@ define([
                 
                 var clearFixDiv = construct.toDom("<div class='clear' style='text-align: center'></div>");
                 construct.place(this.addButton.domNode, clearFixDiv);
+                
+                topic.subscribe("/loadRequest", function(data) {
+                    console.log("recognized loaded data:", data);
+                    if (data.appType === "O") {
+                        domClass.remove(self.addButton.domNode, "hide");
+                    } else {
+                        domClass.add(self.addButton.domNode, "hide");
+                    }
+                });
                 
                 construct.place(clearFixDiv, "contentFrameBodyObject", "after");
             },
