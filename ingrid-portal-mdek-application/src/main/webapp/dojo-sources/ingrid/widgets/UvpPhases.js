@@ -46,7 +46,6 @@ define([
                 var self = this;
                 this.addButton = new Button({
                     label: "Phase hinzufügen",
-                    class: "right",
                     onClick: function () {
                         // alert("Will show a dialog here ...");
                         dialog.show("Phase erstellen", "Wählen Sie die zu erstellende Phase aus:", dialog.INFO, [
@@ -73,7 +72,11 @@ define([
 
                     }
                 });
-                construct.place(this.addButton.domNode, "sectionTopObject");
+                
+                var clearFixDiv = construct.toDom("<div class='clear' style='text-align: center'></div>");
+                construct.place(this.addButton.domNode, clearFixDiv);
+                
+                construct.place(clearFixDiv, "contentFrameBodyObject", "after");
             },
 
             attr: function (type, value) {
@@ -177,16 +180,21 @@ define([
                     creator.createRubric({
                         id: rubric,
                         help: "Hilfetext ...",
-                        label: counter + ". Öffentliche Auslegung"
+                        label: counter + ". Beteiligung der Öffentlichkeit"
                     })
                 );
 
                 /**
                  * Datum
                  */
-                var id = "datePhase1_" + counter;
-                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: "Datum", help: "...", isMandatory: false, visible: "optional", style: "width:25%" }));
-                phaseFields.push({ key: "date", field: registry.byId(id) });
+                var idDateFrom = "publicDateFrom_" + counter;
+                var idDateTo = "publicDateTo_" + counter;
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: "Auslegungszeitraum von", help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: "bis", help: "...", isMandatory: false, visible: "optional", style: "width:25%" }));
+                phaseFields.push({ key: "dateFrom", field: registry.byId(idDateFrom) });
+                phaseFields.push({ key: "dateTo", field: registry.byId(idDateTo) });
+                
+                // TODO: add behaviour for mandatory date field?
 
                 // layout fix!
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
@@ -202,10 +210,12 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "auslegungsTable_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Auslegungsinformationen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: "Antrag auf Entscheidung über die Zulässigkeit des Vorhabens", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "auslegungsTable", field: registry.byId(id) });
 
+                // TODO: at least one document validation
+                
                 /**
                  * Antragsunterlagen
                  */
@@ -217,39 +227,41 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "antraegeTable_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Antragsunterlagen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: "UVP-Bericht nach § 6 UVPG", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "antraegeTable", field: registry.byId(id) });
 
+                // TODO: at least one document validation
+                
                 /**
                  * Berichte und Empfehlungen
                  */
-                structure = [
-                    { field: 'berichteLabel', name: 'Titel', width: '300px', editable: true },
-                    { field: 'berichteLink', name: 'Link', width: '200px', editable: true },
-                    { field: 'berichteType', name: 'Typ', width: '50px', editable: true },
-                    { field: 'berichteSize', name: 'Größe', width: '50px', editable: true },
-                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-                ];
-                id = "berichteTable_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Berichte und Empfehlungen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-                    structure, rubric);
-                phaseFields.push({ key: "berichteTable", field: registry.byId(id) });
+//                structure = [
+//                    { field: 'berichteLabel', name: 'Titel', width: '300px', editable: true },
+//                    { field: 'berichteLink', name: 'Link', width: '200px', editable: true },
+//                    { field: 'berichteType', name: 'Typ', width: '50px', editable: true },
+//                    { field: 'berichteSize', name: 'Größe', width: '50px', editable: true },
+//                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
+//                ];
+//                id = "berichteTable_" + counter;
+//                creator.createDomDataGrid({ id: id, name: "Berichte und Empfehlungen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+//                    structure, rubric);
+//                phaseFields.push({ key: "berichteTable", field: registry.byId(id) });
 
                 /**
                  * Weitere Unterlagen
                  */
-                structure = [
-                    { field: 'weitereLabel', name: 'Titel', width: '300px', editable: true },
-                    { field: 'weitereLink', name: 'Link', width: '200px', editable: true },
-                    { field: 'weitereType', name: 'Typ', width: '50px', editable: true },
-                    { field: 'weitereSize', name: 'Größe', width: '50px', editable: true },
-                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-                ];
-                id = "weitereTable_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Weitere Unterlagen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-                    structure, rubric);
-                phaseFields.push({ key: "weitereTable", field: registry.byId(id) });
+//                structure = [
+//                    { field: 'weitereLabel', name: 'Titel', width: '300px', editable: true },
+//                    { field: 'weitereLink', name: 'Link', width: '200px', editable: true },
+//                    { field: 'weitereType', name: 'Typ', width: '50px', editable: true },
+//                    { field: 'weitereSize', name: 'Größe', width: '50px', editable: true },
+//                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
+//                ];
+//                id = "weitereTable_" + counter;
+//                creator.createDomDataGrid({ id: id, name: "Weitere Unterlagen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+//                    structure, rubric);
+//                phaseFields.push({ key: "weitereTable", field: registry.byId(id) });
 
                 this.phases.push({
                     key: "phase1",
@@ -257,31 +269,7 @@ define([
                     fields: phaseFields
                 });
 
-                var self = this;
-                var delButton = new Button({
-                    label: "Phase löschen",
-                    class: "right optional",
-                    onClick: function () {
-                        dialog.show("Phase löschen", "Möchten Sie wirklich diese Phase entfernen?", dialog.WARN, [
-                            {
-                                caption: "Ja",
-                                action: function () {
-                                    // delete all widgets of this phase
-                                    var phase = array.filter(self.phases, function (phase) { return phase.pos === counter; })[0];
-                                    self.removePhase(rubric, phase);
-                                }
-                            }, {
-                                caption: "Nein",
-                                action: function () { }
-                            }
-                        ]);
-
-                    }
-                });
-                construct.place(delButton.domNode, rubric);
-
-                // layout fix!
-                construct.place(construct.toDom("<div class='clear'></div>"), rubric);
+                this.addDeletePhaseButton(rubric, counter);
 
                 // add values to the created phase
                 this.addValuesToPhase(phaseFields, values);
@@ -305,13 +293,35 @@ define([
                     })
                 );
 
-                var id = "date_" + counter;
-                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: "Datum", help: "...", isMandatory: false, visible: "optional", style: "width:25%" }));
-                phaseFields.push({ key: "date", field: registry.byId(id) });
-
-                construct.place(construct.toDom("<div class='clear'></div>"), rubric);
-
+//                var id = "date_" + counter;
+//                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: "Datum", help: "...", isMandatory: false, visible: "optional", style: "width:25%" }));
+//                phaseFields.push({ key: "date", field: registry.byId(id) });
+//
+//                construct.place(construct.toDom("<div class='clear'></div>"), rubric);
+                
+                /**
+                 * 
+                 */
                 var structure = [
+                    { field: 'dateText', name: 'Beschreibung', width: '300px', editable: true },
+                    { field: 'dateValue', name: 'Datum', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
+                ];
+                id = "eroerterungDateTable_" + counter;
+                creator.createDomDataGrid({ id: id, name: "Erörterungstermin", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                    structure, rubric);
+                phaseFields.push({ key: "eroerterungDateTable", field: registry.byId(id) });
+                
+                /**
+                 * 
+                 */
+                id = "eroerterungDateDescriptionTable_" + counter;
+                creator.addToSection(rubric, creator.createDomTextarea({id: id, name: "Bekanntmachungstext", help: "...", isMandatory: false, visible: "optional", rows: 10, style: "width:100%"}));
+                phaseFields.push({ key: "eroerterungDateDescriptionTable", field: registry.byId(id) });
+
+                /**
+                 * 
+                 */
+                structure = [
                     { field: 'eroerterungLabel', name: 'Titel', width: '300px', editable: true },
                     { field: 'eroerterungLink', name: 'Link', width: '200px', editable: true },
                     { field: 'eroerterungType', name: 'Typ', width: '50px', editable: true },
@@ -319,7 +329,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "eroerterungTable_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Bekanntmachung", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: "Bekanntmachung", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "eroerterungTable", field: registry.byId(id) });
 
@@ -329,6 +339,8 @@ define([
                     fields: phaseFields
                 });
 
+                this.addDeletePhaseButton(rubric, counter);
+                
                 // add values to the created phase
                 this.addValuesToPhase(phaseFields, values);
 
@@ -347,22 +359,31 @@ define([
                     creator.createRubric({
                         id: rubric,
                         help: "Hilfetext ...",
-                        label: counter + ". Zulassungsentscheidung"
+                        label: counter + ". Entscheidung über die Zulassung"
                     })
                 );
 
+                /**
+                 * 
+                 */
                 var id = "date_" + counter;
-                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: "Datum", help: "...", isMandatory: false, visible: "optional", style: "width:25%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: "Datum der Entscheidung über die Zulassung", help: "...", isMandatory: true, visible: "optional", style: "width:50%" }));
                 phaseFields.push({ key: "date", field: registry.byId(id) });
 
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
 
+                /**
+                 * 
+                 */
                 id = "zulassung_" + counter;
-                creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: "Zulassungsentscheidung", help: "...", isMandatory: false, visible: "optional", rows: 3, style: "width:100%" }));
+                creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: "Bekanntmachungstext der Zulassungsentscheidung", help: "...", isMandatory: true, visible: "optional", rows: 3, style: "width:100%" }));
                 var textarea = registry.byId(id);
                 this.addValidatorForTextarea(textarea);
                 phaseFields.push({ key: "zulassung", field: textarea });
 
+                /**
+                 * 
+                 */
                 var structure = [
                     { field: 'auslegungLabel', name: 'Titel', width: '300px', editable: true },
                     { field: 'auslegungLink', name: 'Link', width: '200px', editable: true },
@@ -371,10 +392,13 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "auslegungTable_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Auslegungsinformationen ", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: "Zulassungsdokument", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "auslegungTable", field: registry.byId(id) });
 
+                /**
+                 * 
+                 */
                 structure = [
                     { field: 'beschlussLabel', name: 'Titel', width: '300px', editable: true },
                     { field: 'beschlussLink', name: 'Link', width: '200px', editable: true },
@@ -383,7 +407,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "beschlussTable_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Beschluss/Bescheid", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: "Planungsunterlagen", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "beschlussTable", field: registry.byId(id) });
 
@@ -392,7 +416,9 @@ define([
                     pos: counter,
                     fields: phaseFields
                 });
-
+                
+                this.addDeletePhaseButton(rubric, counter);
+                
                 // add values to the created phase
                 this.addValuesToPhase(phaseFields, values);
 
@@ -403,6 +429,34 @@ define([
 
             openPhase: function (rubric) {
                 setTimeout(function () { IgeEvents.toggleFields(rubric, "showAll"); }, 500);
+            },
+            
+            addDeletePhaseButton: function(rubric, counter) {
+                var self = this;
+                var delButton = new Button({
+                    label: "Phase löschen",
+                    class: "right optional",
+                    onClick: function () {
+                        dialog.show("Phase löschen", "Möchten Sie wirklich diese Phase entfernen?", dialog.WARN, [
+                            {
+                                caption: "Ja",
+                                action: function () {
+                                    // delete all widgets of this phase
+                                    var phase = array.filter(self.phases, function (phase) { return phase.pos === counter; })[0];
+                                    self.removePhase(rubric, phase);
+                                }
+                            }, {
+                                caption: "Nein",
+                                action: function () { }
+                            }
+                        ]);
+
+                    }
+                });
+                construct.place(delButton.domNode, rubric);
+                
+                // layout fix!
+                construct.place(construct.toDom("<div class='clear'></div>"), rubric);
             },
 
             removePhase: function (rubric, phase) {
