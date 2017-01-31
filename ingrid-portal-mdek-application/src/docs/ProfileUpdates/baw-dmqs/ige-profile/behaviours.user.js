@@ -35,8 +35,32 @@ define("ingrid/hierarchy/behaviours.user", ["dojo/_base/lang", "dojo/dom",
             defaultActive: true,
             run: function() {
               try {
+            	  
+              // load custom syslists
+              UtilSyslist.readSysListData(10103).then(function(entry) {
+            	  sysLists[10103] = entry;
+            	  
+                  // refresh table to display the right values since the syslist might not be loaded
+                  var c = registry.byId("simModelTypeTable");
+                  if (c) {
+                	  c.invalidateAllRows();
+                      c.render();
+                  }
+              });
+              // load custom syslists
+              UtilSyslist.readSysListData(10104).then(function(entry) {
+            	  sysLists[10104] = entry;
+            	  
+                  // refresh table to display the right values since the syslist might not be loaded
+                  var c = registry.byId("simParamTable");
+                  if (c) {
+                	  c.invalidateAllRows();
+                      c.render();
+                  }
+              });
+            	  
 
-              // hide elemene that cannot be set hidden in GUI "Zus�tzliche Felder"
+              // hide elemene that cannot be set hidden in GUI "Zusaetzliche Felder"
               // hide "Vorschaugrafik"
               UtilUI.setHide('uiElement5100');
               // hide Vectorgrafik Rahmen
