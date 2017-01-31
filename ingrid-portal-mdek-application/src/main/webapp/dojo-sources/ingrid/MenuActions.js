@@ -1359,7 +1359,7 @@ define([
         },
 
         openCreateObjectWizardDialog: function() {
-            dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp?c=" + userLocale, 350, 170, true);
+            dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp?c=" + userLocale, 350, null, true);
         },
 
         inheritAddressToChildren: function(msg) {
