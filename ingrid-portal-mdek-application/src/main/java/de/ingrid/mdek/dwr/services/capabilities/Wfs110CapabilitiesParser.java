@@ -40,6 +40,7 @@ import org.w3c.dom.NodeList;
 import de.ingrid.geo.utils.transformation.CoordTransformUtil;
 import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
 import de.ingrid.mdek.MdekUtils.MdekSysList;
+import de.ingrid.mdek.MdekUtils.SpatialReferenceType;
 import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
@@ -319,7 +320,9 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
             if (name == null) name ="UNKNOWN";
             
             box.setName(title);
+            // shall be a free spatial reference, but needs an ID to check for duplications!
             box.setTopicId(box.getName());
+            box.setType( SpatialReferenceType.FREI.getDbValue() );
             
             bboxes.add(box);
         }

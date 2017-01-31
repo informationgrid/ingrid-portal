@@ -151,6 +151,7 @@ public class MdekDataBean {
 	private List<VectorFormatDetailsBean> ref1VFormatDetails;
 	private List<ScaleBean> ref1Scale;
 	private Double ref1AltAccuracy;
+	private Double ref1GridPosAccuracy;
 	private Double ref1PosAccuracy;
 	private List<LinkDataBean> ref1SymbolsText;
 	private List<LinkDataBean> ref1KeysText;
@@ -2027,5 +2028,15 @@ public class MdekDataBean {
 
     public void setAvailabilityUseAccessConstraints(List<String> availabilityUseAccessConstraints) {
         this.availabilityUseAccessConstraints = availabilityUseAccessConstraints;
+    }
+
+
+    public Double getRef1GridPosAccuracy() {
+        return ref1GridPosAccuracy;
+    }
+
+
+    public void setRef1GridPosAccuracy(Double ref1GridPosAccuracy) {
+        this.ref1GridPosAccuracy = ref1GridPosAccuracy;
     }
 }

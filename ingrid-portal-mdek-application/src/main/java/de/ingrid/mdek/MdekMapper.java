@@ -274,6 +274,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
             mdekObj.setRef1Coverage((Double) td1Map.get(MdekKeys.DEGREE_OF_RECORD));
             mdekObj.setRef1AltAccuracy((Double) td1Map.get(MdekKeys.POS_ACCURACY_VERTICAL));
+            mdekObj.setRef1GridPosAccuracy((Double) td1Map.get(MdekKeys.GRID_POS_ACCURACY));
             mdekObj.setRef1PosAccuracy((Double) td1Map.get(MdekKeys.RESOLUTION));
             mdekObj.setRef1BasisText((String) td1Map.get(MdekKeys.TECHNICAL_BASE));
             mdekObj.setRef1DataBasisText((String) td1Map.get(MdekKeys.DATA));
@@ -875,6 +876,7 @@ public class MdekMapper implements DataMapperInterface {
             td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
             td1Map.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
             td1Map.put(MdekKeys.POS_ACCURACY_VERTICAL, data.getRef1AltAccuracy());
+            td1Map.put(MdekKeys.GRID_POS_ACCURACY, data.getRef1GridPosAccuracy());
             td1Map.put(MdekKeys.RESOLUTION, data.getRef1PosAccuracy());
             td1Map.put(MdekKeys.TECHNICAL_BASE, data.getRef1BasisText());
             td1Map.put(MdekKeys.DATA, data.getRef1DataBasisText());
@@ -1180,14 +1182,7 @@ public class MdekMapper implements DataMapperInterface {
                 tableRows = null;
             else {
                 for (List<AdditionalFieldBean> row : additionalField.getTableRows()) {
-                    List<IngridDocument> rowDoc = new ArrayList<IngridDocument>();
-                    for (AdditionalFieldBean column : row) {
-                        IngridDocument columnDoc = new IngridDocument();
-                        columnDoc.put(MdekKeys.ADDITIONAL_FIELD_KEY, column.getIdentifier());
-                        columnDoc.put(MdekKeys.ADDITIONAL_FIELD_DATA,         column.getValue());
-                        columnDoc.put(MdekKeys.ADDITIONAL_FIELD_LIST_ITEM_ID, column.getListId());
-                        rowDoc.add(columnDoc);
-                    }
+                    List<IngridDocument> rowDoc = mapFromAdditionalFields( row );
                     tableRows.add(rowDoc);
                 }
             }
@@ -1837,14 +1832,7 @@ public class MdekMapper implements DataMapperInterface {
             if (tableRows != null) {
                 List<List<AdditionalFieldBean>> tableData = new ArrayList<List<AdditionalFieldBean>>();
                 for (List<IngridDocument> row : tableRows) {
-                    List<AdditionalFieldBean> rowsData = new ArrayList<AdditionalFieldBean>();
-                    for (IngridDocument column : row) {
-                        AdditionalFieldBean columnData = new AdditionalFieldBean();
-                        columnData.setIdentifier(column.getString(MdekKeys.ADDITIONAL_FIELD_KEY));
-                        columnData.setValue(column.getString(MdekKeys.ADDITIONAL_FIELD_DATA));
-                        columnData.setListId(column.getString(MdekKeys.ADDITIONAL_FIELD_LIST_ITEM_ID));
-                        rowsData.add(columnData);
-                    }
+                    List<AdditionalFieldBean> rowsData = mapToAdditionalFields(row);
                     tableData.add(rowsData);
                 }
                 additionalField.setTableRows(tableData);

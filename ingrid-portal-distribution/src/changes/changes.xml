@@ -6,8 +6,14 @@
     </properties>
     <body>
         <release version="4.0.1-SNAPSHOT" date="??" description="Release 4.0.1">
-		    <action type="add" dev="wemove" issue="REDMINE-452">
+            <action type="add" dev="wemove" issue="REDMINE-452"><action type="add" dev="wemove" issue="REDMINE-452">
                 PORTAL: Add profile portalu_sl.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-519">
+                PORTAL: Also allow browsing catalog only containing addresses.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-517">
+                PORTAL: Fix copyright in footer.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-505">
                 PORTAL: Fix close main menu by empty portal search and on mobile view.
@@ -18,7 +24,7 @@
             <action type="fix" dev="wemove" issue="REDMINE-496">
                 PORTAL: Fix enable (delete) button on checkbox selection.
             </action>
-		    <action type="fix" dev="wemove" issue="REDMINE-479">
+            <action type="fix" dev="wemove" issue="REDMINE-479">   <action type="fix" dev="wemove" issue="REDMINE-479">
                 PORTAL: Fix detail view with free addresses.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-446">
@@ -30,8 +36,17 @@
             <action type="add" dev="wemove" issue="REDMINE-377">
                 IGE: Add new field "File description" to objects.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-157">
+                IGE: Add ORIG_UUID to hierarchy page, object preview and compare view.
+            </action>
             <action type="add" dev="wemove" issue="REDMINE-476">
                 IGE: Possibility to add a list with a connected syslist as an additional field.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-456">
+                IGE: Add field for mapping code to import additional fields.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-378">
+                Add new field "gridPosAccuracy" with behaviour.
             </action>
             <action type="update" dev="wemove" issue="REDMINE-509">
                 IGE: Make EMail Settings configurable via mdek.override.properties.
@@ -72,20 +87,35 @@
             <action type="fix" dev="wemove" issue="REDMINE-371">
                 IGE: Fixed getCapabilities-assistant to extract bounding box from WFS-Service. 
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-448">
+            <action type="fix" dev="wemove" issue="REDMINE-521">
+                IGE: Added dirty check for additional fields.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-530">
+                IGE: Fixed moving a subtree to the root node.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-532">
+                IGE: Added error message when Thesaurus could not be reached.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-448"><action type="fix" dev="wemove" issue="REDMINE-448">
                 MapClient: GetMap-URL on print.
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-449">
+            <action type="fix" dev="wemove" issue="REDMINE-449">
                 MapClient: Fix tooltip function depend on layer settings.
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-450">
+            <action type="fix" dev="wemove" issue="REDMINE-450">
                 MapClient: Remove check of WMS layer URL with host 'wms.geo'.
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-471">
+            <action type="fix" dev="wemove" issue="REDMINE-471">
                 MapClient: Fix zoom to layer on search result list.
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-472">
+            <action type="fix" dev="wemove" issue="REDMINE-472">
                 MapClient: Fix add service on search result list.
+            </action>
+        </release>
+
+        <release version="3.6.2.9-SNAPSHOT" date="2017-xx-xx" description="Release 3.6.2.9">
+            <action type="fix" dev="wemove" issue="REDMINE-530">
+                IGE: Fixed moving a subtree to the root node.
             </action>
         </release>
 

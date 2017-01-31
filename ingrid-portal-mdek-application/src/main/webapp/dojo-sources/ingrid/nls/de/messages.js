@@ -343,6 +343,7 @@ define({
 	"dialog.compare.object.linksToTable.title":"Untergeordnete Objektreferenzen",
 	"dialog.compare.object.administrative":"Administrative Angaben",
 	"dialog.compare.object.id":"Objekt-ID",
+	"dialog.compare.object.orgId":"Original-Objekt-ID",
 	"dialog.compare.object.catalog":"Katalog",
 
 	"dialog.links.selectObject.title":"Objekt ausw&auml;hlen",

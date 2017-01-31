@@ -21,3 +21,7 @@ INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, he
 (49, 0, 3230, 3, 'de', 'Version', 'Angaben zu Version der dem Dienst zugrunde liegenden Spezifikation. Bitte alle Versionen eintragen, die vom Dienst unterstützt werden.', '"OGC:WMS 1.1.1", "OGC:WMS 1.3.0"');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1049, 0, 3230, 3, 'en', 'Service Version', 'Details on the version of the underlying base specification of the service. Please enter all versions supported by the service.', '"OGC:WMS 1.1.1", "OGC:WMS 1.3.0"');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1610, 0, 5071, -1, 'de', 'Rasterpositionsgenauigkeit', 'Positionsgenauigkeit im Raster/Gitter im Vergleich zu den Sollwerten.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1611, 0, 5071, -1, 'en', 'Gridded Data Positional Accuracy', 'Closeness of gridded data position values to values accepted as or being true.', '');

@@ -315,6 +315,7 @@ define([
 
                 if (tree.nodesToCut !== null) {
                     var invalidPaste = array.some(tree.nodesToCut, function(nodeItem) {
+                        // the target node must not be under the node which is going to be cut
                         return (targetNode.item == nodeItem || this._isChildOf(targetNode, nodeItem));
                     }, this);
 
@@ -409,7 +410,7 @@ define([
                         if (tree.copySubTree) {
                             var parentOfNewNode = array.some(tree.nodesToCopy, function(nodeItem) {
                                 return this._isChildOf(newNode, nodeItem);
-                            });
+                            }, this);
                             if (parentOfNewNode) {
                                 dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
                                 return;
@@ -1472,7 +1473,7 @@ define([
         },
 
         _isChildOf: function(childNode, targetNode) {
-            if (!childNode.getParent()) {
+            if (!childNode.getParent() || !childNode.getParent().item) {
                 return false;
             } else if (childNode.getParent().item.id == targetNode.id) {
                 return true;
