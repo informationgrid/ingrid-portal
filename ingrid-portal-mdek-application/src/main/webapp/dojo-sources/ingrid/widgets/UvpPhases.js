@@ -17,9 +17,10 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
-    "dojo/NodeList-traverse"
+    "./upload/UploadWidget",
+    "dojo/NodeList-traverse",
 ], function (declare, array, lang, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
-    creator, dialog, IgeEvents, CustomGrid, Editors, Formatters) {
+    creator, dialog, IgeEvents, CustomGrid, Editors, Formatters, UploadWidget) {
 
         return declare("UVPPhases", [_WidgetBase], {
 
@@ -222,6 +223,7 @@ define([
                 var id = "auslegungsTable_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Antrag auf Entscheidung über die Zulässigkeit des Vorhabens", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "auslegungsTable", field: registry.byId(id) });
 
                 // TODO: at least one document validation
@@ -239,6 +241,7 @@ define([
                 id = "antraegeTable_" + counter;
                 creator.createDomDataGrid({ id: id, name: "UVP-Bericht nach § 6 UVPG", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "antraegeTable", field: registry.byId(id) });
 
                 // TODO: at least one document validation
@@ -256,6 +259,7 @@ define([
 //                id = "berichteTable_" + counter;
 //                creator.createDomDataGrid({ id: id, name: "Berichte und Empfehlungen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
 //                    structure, rubric);
+//              this.addUploadLink(id);
 //                phaseFields.push({ key: "berichteTable", field: registry.byId(id) });
 
                 /**
@@ -271,6 +275,7 @@ define([
 //                id = "weitereTable_" + counter;
 //                creator.createDomDataGrid({ id: id, name: "Weitere Unterlagen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
 //                    structure, rubric);
+//                this.addUploadLink(id);
 //                phaseFields.push({ key: "weitereTable", field: registry.byId(id) });
 
                 this.phases.push({
@@ -319,6 +324,7 @@ define([
                 var id = "eroerterungDateTable_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Erörterungstermin", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "eroerterungDateTable", field: registry.byId(id) });
                 
                 /**
@@ -341,6 +347,7 @@ define([
                 id = "eroerterungTable_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Bekanntmachung", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "eroerterungTable", field: registry.byId(id) });
 
                 this.phases.push({
@@ -404,6 +411,7 @@ define([
                 id = "auslegungTable_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Zulassungsdokument", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "auslegungTable", field: registry.byId(id) });
 
                 /**
@@ -419,6 +427,7 @@ define([
                 id = "beschlussTable_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Planungsunterlagen", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "beschlussTable", field: registry.byId(id) });
 
                 this.phases.push({
@@ -521,6 +530,32 @@ define([
                         return true;
                     }
                 };
+            },
+            
+            addUploadLink: function (id) {
+                var table = registry.byId(id);
+                if (table) {
+                    var uploader = new UploadWidget({
+                        uploadUrl: "rest/document"
+                    });
+                    var container = construct.create("span", {
+                        "class": "functionalLink",
+                        innerHTML: "<img src='img/ic_fl_popup.gif' width='10' height='9' alt='Popup' />"
+                    }, table.domNode.parentNode, "before");
+                    var link = construct.create("a", {
+                        id: id+"_uploadLink",
+                        title: "Dokument-Upload [Popup]",
+                        innerHTML: "Dokument-Upload",
+                        style: {
+                            cursor: "pointer"
+                        },
+                        onclick: lang.hitch(this, function() {
+                            uploader.open().then(lang.hitch(this, function(documents) {
+                                console.log(documents);
+                            }));
+                        })
+                    }, container);
+                }
             }
         });
 
