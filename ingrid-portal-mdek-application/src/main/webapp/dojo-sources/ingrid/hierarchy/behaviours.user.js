@@ -21,19 +21,41 @@
  * **************************************************#
  */
 define([
+    "dojo/_base/array",
     "dojo/_base/lang",
     "dojo/dom",
     "dojo/dom-class",
     "dojo/dom-style",
     "dojo/query",
+    "dojo/topic",
     "dijit/registry",
     "ingrid/IgeEvents",
     "ingrid/layoutCreator",
     "ingrid/hierarchy/behaviours",
     "ingrid/widgets/UvpPhases"
-], function (lang, dom, domClass, domStyle, query, registry, IgeEvents, creator, behaviours, UvpPhases) {
+], function (array, lang, dom, domClass, domStyle, query, topic, registry, IgeEvents, creator, behaviours, UvpPhases) {
 
     return lang.mixin(behaviours, {
+
+        uvpDocumentTypes: {
+            title: "UVP Dokumenten Typen",
+            description: "Definition der Dokumententypen: UVP, ...",
+            defaultActive: true,
+            type: "SYSTEM",
+            run: function() {
+                sysLists[8000] = [
+                    ["UVP", "10", "N", ""],
+                    ["Ausländische UVP", "11", "N", ""],
+                    ["Vorprüfung", "12", "N", ""]
+                ];
+
+                topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
+                    // remove all assistants
+                    data.assistants.splice(0, data.assistants.length);
+
+                });
+            }
+        },
 
         uvpPhaseField: {
             title: "UVP Phasen Feld",
@@ -60,6 +82,7 @@ define([
                 this.createFields();
                 
                 // TODO: additional fields according to #490 and #473
+
             },
             
             hideDefaultFields: function() {
@@ -69,6 +92,10 @@ define([
                 domClass.add(dom.byId("objectOwnerLabel").parentNode, "hide");
                 
                 domClass.add(registry.byId("toolbarBtnISO").domNode, "hide");
+
+                domClass.add("uiElement5000", "hide");
+                domClass.add("uiElement5100", "hide");
+                domClass.add("uiElement6010", "hide");
                 
                 // hide all rubrics
                 query(".rubric", "contentFrameBodyObject").forEach(function (item) {
