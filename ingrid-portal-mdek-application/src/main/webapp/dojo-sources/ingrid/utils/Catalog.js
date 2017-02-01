@@ -171,14 +171,13 @@ define([
         
         getOverrideBehavioursDef : function() {
             var self = this;
-            var def = this.getGenericValuesDef([this.BEHAVIOURS])
-            .then(function(data) {
-                if (data[self.BEHAVIOURS] && data[self.BEHAVIOURS] !== "") {
-                    return JSON.parse(data[self.BEHAVIOURS]);
-                }
-                return [];
-            });
-            return def;
+            return this.getGenericValuesDef([this.BEHAVIOURS])
+                .then(function(data) {
+                    if (data[self.BEHAVIOURS] && data[self.BEHAVIOURS] !== "") {
+                        return JSON.parse(data[self.BEHAVIOURS]);
+                    }
+                    return [];
+                });
         },
         
         updateResponsibleUserObjectList: function(nodeData) {
