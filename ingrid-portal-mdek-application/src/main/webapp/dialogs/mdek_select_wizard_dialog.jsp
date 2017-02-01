@@ -42,20 +42,36 @@
         "dojo/topic",
         "dijit/form/RadioButton",
         "ingrid/dialog",
-        "dijit/registry"
+        "dijit/registry",
+        "dijit/layout/BorderContainer",
+        "dijit/layout/ContentPane"
     ], function(array, construct, on, dom, query, topic, RadioButton, dialog, registry) {
         var thisDialog = _container_;
+        var alreadyChecked = false;
 
         on(_container_, "Load", function () {
             var types = sysLists[8000];
+            var assistants = [
+                ['<fmt:message key="dialog.wizard.select.create" />', "assistantCreate"],
+                ['<fmt:message key="dialog.wizard.select.getCap" />', "assistantGetCap"]
+            ];
 
             console.log("Publishing event: '/afterInitDialog/ChooseWizard'");
-            topic.publish("/afterInitDialog/ChooseWizard", { types: types });
+            topic.publish("/afterInitDialog/ChooseWizard", { types: types, assistants: assistants });
 
-            createObjectTypesRadioBoxes(types);
+            addRadioBoxes(types, "wizardObjTypes");
+
+            if (assistants.length > 0) {
+                addRadioBoxes(assistants, "wizardAssistantTypes");
+            } else {
+                query("#wizardAssistantTypesContainer").addClass("hide");
+                query("#wizardAssistantTypesContainer + div").addClass("hide");
+            }
+
+            registry.byId("pageCreateWizardContainer").resize();
         });
 
-        function createObjectTypesRadioBoxes(types) {
+        function addRadioBoxes(types, containerId) {
             array.forEach(types, function(item) {
                 var wrapper = construct.create("div", {
                     "class": "spaceBelow"
@@ -63,7 +79,8 @@
                 var radio = new RadioButton({
                     value: item[1],
                     name: "assistantRadioSelect",
-                    showLabel: true
+                    showLabel: true,
+                    checked: !alreadyChecked
                 });
                 construct.place(radio.domNode, wrapper);
                 construct.create("label", {
@@ -71,7 +88,8 @@
                     "class": "inActive",
                     innerHTML: " " + item[0]
                 }, wrapper);
-                construct.place(wrapper, "wizardObjTypes");
+                construct.place(wrapper, containerId);
+                alreadyChecked = true;
             });
         }
 
@@ -106,37 +124,29 @@
 
 <body>
 
-	<div layoutAlign="client">
-		<div class="content">
-			<div>
-				<fmt:message key="dialog.wizard.select.title" />
-			</div>
-			<br>
+    <div id="pageCreateWizardContainer" data-dojo-type="dijit/layout/BorderContainer" style="width: 100%; height: 300px;">
+        <div data-dojo-type="dijit/layout/ContentPane" style="background-color: white" data-dojo-props="region:'top'">
+            <fmt:message key="dialog.wizard.select.title" />
+        </div>
 
-    		<span style="float:left;">
-    			<div class="checkboxContainer" id="resultList">
-                    <h2 class="spaceBelow"><fmt:message key="dialog.wizard.objectTypes" /></h2>
-                    <div id="wizardObjTypes">
-                        <!-- dynamically created checkboxes to represent the different types to be created -->
-                    </div>
-
-                    <h2 class="spaceBelow"><fmt:message key="dialog.wizard.assistents" /></h2>
-					<div class="spaceBelow">
-						<input type="radio" name="assistantRadioSelect" id="assistantRadioSelect1" value="assistantCreate" data-dojo-type="dijit/form/RadioButton" style="vertical-align: text-bottom;" checked>
-						<label for="assistantRadioSelect1" class="inActive"><fmt:message key="dialog.wizard.select.create" /></label>
-					</div>
-					<div class="spaceBelow">
-						<input type="radio" name="assistantRadioSelect" id="assistantRadioSelect2" value="assistantGetCap" data-dojo-type="dijit/form/RadioButton" style="vertical-align: text-bottom;">
-						<label for="assistantRadioSelect2" class="inActive"><fmt:message key="dialog.wizard.select.getCap" /></label>
-					</div>
-    			</div>
-    		</span>
-    		
-			<div id="dialogButtonBar" class="dijitDialogPaneActionBar inputContainer grey" style="height:37px;">
-		        <span style="float:right; padding:5px 0;"><button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.wizard.select.continue" />" onclick="pageCreateWizard.createObject()"><fmt:message key="dialog.wizard.select.continue" /></button></span>
-			</div>
-	  	</div>
-	</div>
+        <div id="wizardAssistantTypesContainer" data-dojo-type="dijit/layout/ContentPane" style="padding: 10px" data-dojo-props="region:'left'">
+            <h2 class="spaceBelow"><fmt:message key="dialog.wizard.assistents" /></h2>
+            <div id="wizardAssistantTypes">
+                <!-- dynamically created radio boxes to represent the different assistants -->
+            </div>
+        </div>
+        
+        <div data-dojo-type="dijit/layout/ContentPane" style="padding: 10px" data-dojo-props="region:'center'">
+            <h2 class="spaceBelow"><fmt:message key="dialog.wizard.objectTypes" /></h2>
+            <div id="wizardObjTypes">
+                <!-- dynamically created radio boxes to represent the different types to be created -->
+            </div>
+        </div>
+    </div>
+    
+    <div id="dialogButtonBar" class="dijitDialogPaneActionBar inputContainer grey" style="height:37px;">
+        <span style="float:right; padding:5px 0;"><button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.wizard.select.continue" />" onclick="pageCreateWizard.createObject()"><fmt:message key="dialog.wizard.select.continue" /></button></span>
+    </div>
 
 </body>
 </html>
