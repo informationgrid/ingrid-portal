@@ -1602,7 +1602,7 @@
             <!-- Nominatim URL requesting results, query = terms in ingrid query or full ingrid query if no terms ! -->
             <preference>
                 <name>nominatimURL</name>
-                <value>https://geoportal.wsv.bvbs.bund.de/nominatim/search?format=json&amp;countrycodes=de</value>
+                <value>https://geoportal.wsv.res.bund.de/nominatim/search?format=json&amp;countrycodes=de</value>
 <!--
                 <value>http://nominatim.openstreetmap.org/search?format=json&amp;countrycodes=de</value>
 -->
@@ -1658,12 +1658,12 @@
             <!-- BWaStr URL requesting results, query = terms in ingrid query or full ingrid query if no terms ! -->
             <preference>
                 <name>bwastrLocatorURL</name>
-                <value>https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/rest/jsonCallback/query?searchID=searchterm&amp;url=http://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/rest/bwastrinfo/query?limit=200%26searchfield=all</value>
+                <value>https://geoportal.wsv.res.bund.de/ingrid-webmap-client/rest/jsonCallback/query?searchID=searchterm&amp;url=http://atlas.wsv.res.bund.de/bwastr-locator-qs/rest/bwastrinfo/query?limit=200%26searchfield=all</value>
             </preference>
             <!-- BWaStr URL requesting coordinates ! -->
             <preference>
                 <name>bwastrGeokodierungURL</name>
-                <value>https://geoportal.wsv.bvbs.bund.de/ingrid-webmap-client/rest/jsonCallback/queryPost?url=http://atlas.wsv.bvbs.bund.de/bwastr-locator-qs/rest/geokodierung/query</value>
+                <value>https://geoportal.wsv.res.bund.de/ingrid-webmap-client/rest/jsonCallback/queryPost?url=http://atlas.wsv.res.bund.de/bwastr-locator-qs/rest/geokodierung/query</value>
             </preference>
             <!-- GetMap URL rendering map ! BBOX parameter computed from BWaStr Geokodierung. -->
             <preference>
@@ -1885,6 +1885,34 @@
             <preference>
                 <name>cmsKey</name>
                 <value>portal.cms.portlet.2</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+       </portlet-preferences>
+    </portlet>
+
+    <portlet id="CMSPortlet3">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>CMSPortlet3</portlet-name>
+        <display-name>CMSPortlet3</display-name>
+        <description>This portlet displays the CMSPortlet3.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.CMSPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>cmsKey</name>
+                <value>portal.cms.portlet.3</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>

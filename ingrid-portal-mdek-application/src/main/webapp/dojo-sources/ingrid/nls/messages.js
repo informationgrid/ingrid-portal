@@ -344,6 +344,7 @@ define({
 	"dialog.compare.object.linksToTable.title":"Objects referenced by this object",
 	"dialog.compare.object.administrative":"Administrative settings",
 	"dialog.compare.object.id":"Object-ID",
+	"dialog.compare.object.orgId":"Original-Object-ID",
 	"dialog.compare.object.catalog":"Catalogue",
 
 	"dialog.links.selectObject.title":"Select object",
@@ -851,6 +852,8 @@ define({
     "ui.3650.description":"Description",
     "ui.3670.description":"Service-Urls",
     "ui.5000.description":"Short Description",
+    "ui.5100.description":"Preview Image",
+    "ui.5105.description":"File Description",
     "ui.5020.description":"Height - Maximum",
     "ui.5021.description":"Height - Scale",
     "ui.5022.description":"Height - Geodetic System",

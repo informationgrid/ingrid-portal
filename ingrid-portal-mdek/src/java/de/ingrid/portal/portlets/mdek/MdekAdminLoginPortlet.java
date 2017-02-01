@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Mdek
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -72,9 +72,14 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     private final static String TEMPLATE_START = "/WEB-INF/templates/mdek/mdek_admin_login.vm";
 
     // Possible Actions
-    private final static String PARAMV_ACTION_DO_LOGIN_ADMIN 	= "doLoginAdmin";
+    
+    // NOT USED ANYMORE !!!!?
+//    private final static String PARAMV_ACTION_DO_LOGIN_ADMIN 	= "doLoginAdmin";
+
     private final static String PARAMV_ACTION_DO_LOGIN_IGE 		= "doLoginIGE";
-    private enum ACTION {ADMIN_LOGIN, IGE_LOGIN, UNKNOWN};
+    // NOT USED ANYMORE !!!!?
+//    private enum ACTION {ADMIN_LOGIN, IGE_LOGIN, UNKNOWN};
+    private enum ACTION {IGE_LOGIN, UNKNOWN};
 
     
     private final static String CATALOG			= "CATALOG";
@@ -123,9 +128,12 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
             IOException {
 
     	switch (getAction(request)) {
+        // NOT USED ANYMORE !!!!?
+/*
     	case ADMIN_LOGIN:
     		processActionAdminLogin(request, actionResponse);
     		break;
+*/
     	case IGE_LOGIN:
     		processActionIgeLogin(request, actionResponse);
     		break;
@@ -140,6 +148,8 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
      * @param request
      * @param actionResponse
      */
+    // NOT USED ANYMORE !!!!?
+/*
     private void processActionAdminLogin(ActionRequest request, ActionResponse actionResponse) {
     	try {
     		String plugId = request.getParameter("catalog");
@@ -164,7 +174,7 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
 			log.error("Could not redirect to page: /ingrid-portal-mdek-application/start.jsp?debug=true", e);
 		}
 	}
-    
+*/
     /**
      * Login to the IngridEditor page with a chosen mdek user
      * @param request
@@ -185,10 +195,16 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
 
     		log.info("Portal-Administrator logs into IGE of catalog " + plugId +
     			" as user: " + request.getParameter("user"));
-    		// put the user name of the mdek-user into the context
-    		// this name will be retrieved from mdek-application later
-    		// (this had to be done this way, since sessions are not application wide!)
-    		getPortletContext().setAttribute("ige.force.userName", request.getParameter("user"));
+
+            // ID of session is shared between contexts /ingrid-portal-mdek and /ingrid-portal-mdek-application
+    		// due to set sessionCookiePath="/" in context files !
+    		// see https://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Common_Attributes
+            // But NO session attributes are transferred. So we set the "forced user" as context attribute
+            // with the session id, so forced users are bound to session !!!
+            // This name will be retrieved from mdek-application later and because we add session id to key
+    		// every logged in Portal-Admin will get it's chosen user !
+            String mySessionId = request.getPortletSession().getId();
+    		getPortletContext().setAttribute("ige.force.userName:" + mySessionId, request.getParameter("user"));
 			actionResponse.sendRedirect("/ingrid-portal-mdek-application/start.jsp?debug=true&lang=" + request.getLocale().getLanguage());
 		} catch (IOException e) {
 			log.error("Could not redirect to page: /ingrid-portal-mdek-application/start.jsp?debug=true", e);
@@ -196,9 +212,12 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
 	}
 
 	private static ACTION getAction(ActionRequest request) {
+	    // NOT USED ANYMORE !!!!?
+/*	    
     	if (request.getParameter(PARAMV_ACTION_DO_LOGIN_ADMIN) != null)
     		return ACTION.ADMIN_LOGIN;
-    	else if (request.getParameter(PARAMV_ACTION_DO_LOGIN_IGE) != null)
+*/
+    	if (request.getParameter(PARAMV_ACTION_DO_LOGIN_IGE) != null)
     		return ACTION.IGE_LOGIN;
     	else
     		return ACTION.UNKNOWN;

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -180,7 +180,7 @@ define([
                 },
                 errorHandler: function(mes) {
                     dialog.show(message.get("general.error"), message.get("init.error.userNotFound"), dialog.WARNING);
-                    console.debug("Error: " + mes);
+                    console.error("Error: " + mes);
                     def.reject(mes);
                 }
             });
@@ -644,9 +644,8 @@ define([
                     errorHandler: function(mes) {
                         //UtilDWR.exitLoadingState();
                         //displayErrorMessage(err);
-                        console.debug("Error: " + mes);
+                        console.error("Error: " + mes);
                         dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-                        console.debug("Error: " + mes);
                         def.reject(mes);
                     }
                 });
@@ -669,7 +668,7 @@ define([
                     errorHandler: function(mes) {
                         //UtilDWR.exitLoadingState();
                         dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-                        console.debug("Error: " + mes);
+                        console.error("Error: " + mes);
                         def.reject(mes);
                     }
                 });
@@ -704,7 +703,7 @@ define([
                         errorHandler: function(mes) {
                             //UtilDWR.exitLoadingState();
                             dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-                            console.debug("Error: " + mes);
+                            console.error("Error: " + mes);
                             def.reject(mes);
                         }
                     });
@@ -727,7 +726,7 @@ define([
                             errorHandler: function(mes) {
                                 //UtilDWR.exitLoadingState();
                                 dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-                                console.debug("Error: " + mes);
+                                console.error("Error: " + mes);
                                 def.reject(mes);
                             }
                         });
@@ -842,7 +841,7 @@ define([
                         sysGuis = sysGuiList;
                     },
                     errorHandler: function(errMsg, err) {
-                        console.debug(errMsg);
+                        console.error(errMsg);
                         deferred.reject(err);
                     }
                 });

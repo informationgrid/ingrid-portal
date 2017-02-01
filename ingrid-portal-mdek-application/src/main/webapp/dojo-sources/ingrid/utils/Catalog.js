@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -209,8 +209,8 @@ define([
                             def.resolve(nodeData);
                         },
                         errorHandler: function(errMsg, err) {
-                            console.debug(errMsg);
-                            console.debug(err);
+                            console.error(errMsg);
+                            console.error(err);
                             def.reject(err);
                         }
                     });
@@ -271,8 +271,8 @@ define([
                     def.resolve(nodeData);
                 },
                 errorHandler: function(errMsg, err) {
-                    console.debug(errMsg);
-                    console.debug(err);
+                    console.error(errMsg);
+                    console.error(err);
                     def.reject(err);
                 }
             });
@@ -306,8 +306,8 @@ define([
                             def.resolve(nodeData);
                         },
                         errorHandler: function(errMsg, err) {
-                            console.debug(errMsg);
-                            console.debug(err);
+                            console.error(errMsg);
+                            console.error(err);
                             def.reject(err);
                         }
                     });
@@ -369,8 +369,8 @@ define([
                     def.resolve(nodeData);
                 },
                 errorHandler: function(errMsg, err) {
-                    console.debug(errMsg);
-                    console.debug(err);
+                    console.error(errMsg);
+                    console.error(err);
                     def.reject(err);
                 }
             });

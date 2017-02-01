@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -130,6 +130,7 @@ define([
     "dojo/topic",
     "dojo/string",
     "dojo/dom",
+    "dojo/dom-class",
     "dojo/dom-style",
     "dijit/registry",
     "dijit/form/FilteringSelect",
@@ -156,7 +157,7 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/requiredChecks"
-], function(declare, lang, array, Deferred, DeferredList, ready, query, topic, string, dom, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
+], function(declare, lang, array, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
     ingridObjectLayout, ingridAddressLayout, message, dialog, UtilUI, UtilAddress, UtilList, UtilTree, UtilStore, UtilString, UtilSyslist, UtilGrid, UtilGeneral, UtilDOM, UtilSecurity, dirty,
     CustomGrid, rules, checks) {
     return declare(null, {
@@ -480,7 +481,7 @@ define([
                     errorHandler: function(message) {
                         UtilUI.exitLoadingState();
                         //					msg.resultHandler.reject("Error in js/js: Error while creating a new node.");
-                        console.debug("Error in js/js: Error while creating a new node.");
+                        console.error("Error in js/js: Error while creating a new node.");
                         msg.resultHandler.reject(message);
                     }
                 });
@@ -532,7 +533,7 @@ define([
                     errorHandler: function(message) {
                         UtilUI.exitLoadingState();
                         //					msg.resultHandler.reject("Error in js/js: Error while creating a new address.");
-                        console.debug("Error in js/js: Error while creating a new address.");
+                        console.error("Error in js/js: Error while creating a new address.");
                         msg.resultHandler.reject(new Error(message));
                     }
                 });
@@ -585,7 +586,7 @@ define([
                 //			timeout:10000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while saving addressData:");
+                    console.error("Error in js/js: Error while saving addressData:");
                     onSaveDef.reject(err);
                 }
             });
@@ -660,7 +661,7 @@ define([
                         }]);
 
                     } else {
-                        console.debug("Error in js/js: Error while saving nodeData:");
+                        console.error("Error in js/js: Error while saving nodeData:");
                         onSaveDef.reject(err);
                     }
                 }
@@ -731,7 +732,7 @@ define([
                         }], 382, 220);
 
                     } else {
-                        console.debug("Error in js/js: Error while publishing nodeData:");
+                        console.error("Error in js/js: Error while publishing nodeData:");
                         onPublishDef.reject(ex);
                     }
                 }
@@ -796,7 +797,7 @@ define([
                         ], 382, 220);
 
                     } else {
-                        console.debug("Error in js/js: Error while publishing address:");
+                        console.error("Error in js/js: Error while publishing address:");
                         onPublishDef.reject(msg);
                     }
                 }
@@ -841,7 +842,7 @@ define([
                 //			timeout:10000,
                 errorHandler: function(errMsg, err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while deleting address working copy: " + errMsg);
+                    console.error("Error in js/js: Error while deleting address working copy: " + errMsg);
                     // Wrap the dwr error in a javscript Error object
                     //var e = new Error(errMsg);
                     //e.message = err;
@@ -902,7 +903,7 @@ define([
                             }
                         }]);
                     } else {
-                        console.debug("Error in js/js: Error while deleting object: " + err);
+                        console.error("Error in js/js: Error while deleting object: " + err);
                         msg.resultHandler.reject(err);
                     }
                 }
@@ -962,7 +963,7 @@ define([
                             }]);
 
                         } else {
-                            console.debug("Error in js/js: Error while deleting object: " + err);
+                            console.error("Error in js/js: Error while deleting object: " + err);
                             msg.resultHandler.reject(err);
                         }
                     }
@@ -1034,7 +1035,7 @@ define([
                         }]);
 
                     } else {
-                        console.debug("Error in js/eventSubscriber.js: handleChangePublicationCondition:");
+                        console.error("Error in js/eventSubscriber.js: handleChangePublicationCondition:");
                         msg.resultHandler.reject(errObj);
                     }
                 }
@@ -1092,7 +1093,7 @@ define([
                 //			timeout:10000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while marking a node for a cut operation: " + err);
+                    console.error("Error in js/js: Error while marking a node for a cut operation: " + err);
                     displayErrorMessage(err);
                     msg.resultHandler.reject(err);
                 }
@@ -1111,7 +1112,7 @@ define([
                 //			timeout:10000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while marking an address for a cut operation: " + err);
+                    console.error("Error in js/js: Error while marking an address for a cut operation: " + err);
                     msg.resultHandler.reject(err);
                 }
             });
@@ -1130,7 +1131,7 @@ define([
                 //			timeout:30000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while marking a node for a copy operation: " + err);
+                    console.error("Error in js/js: Error while marking a node for a copy operation: " + err);
                     msg.resultHandler.reject(err);
                 }
             });
@@ -1148,7 +1149,7 @@ define([
                 //			timeout:30000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while marking an address for a copy operation: " + err);
+                    console.error("Error in js/js: Error while marking an address for a copy operation: " + err);
                     msg.resultHandler.reject(err);
                 }
             });
@@ -1201,7 +1202,7 @@ define([
                         }], 382, 220);
 
                     } else {
-                        console.debug("Error in js/js: Error while moving nodeData:");
+                        console.error("Error in js/js: Error while moving nodeData:");
                         msg.resultHandler.reject(err);
                     }
                 }
@@ -1231,7 +1232,7 @@ define([
                 //			timeout:30000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while moving address:");
+                    console.error("Error in js/js: Error while moving address:");
                     msg.resultHandler.reject(err);
                 }
             });
@@ -1276,7 +1277,7 @@ define([
                             resultHandler: onCopyOpFinishedDef
                         });
                     } else {
-                        console.debug("Error in js/js: Error while copying nodes: " + err);
+                        console.error("Error in js/js: Error while copying nodes: " + err);
                         onCopyDef.reject(err);
                     }
                 }
@@ -1326,7 +1327,7 @@ define([
                             resultHandler: onCopyOpFinishedDef
                         });
                     } else {
-                        console.debug("Error in js/js: Error while copying addresses: " + err);
+                        console.error("Error in js/js: Error while copying addresses: " + err);
                         onCopyDef.reject(err);
                     }
                 }
@@ -1357,7 +1358,7 @@ define([
                 },
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while assigning node to QA: " + err);
+                    console.error("Error in js/js: Error while assigning node to QA: " + err);
                     onForwardDef.reject(err);
                 }
             });
@@ -1388,7 +1389,7 @@ define([
                 },
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while assigning address to QA: " + err);
+                    console.error("Error in js/js: Error while assigning address to QA: " + err);
                     onPublishDef.reject(err);
                 }
             });
@@ -1420,7 +1421,7 @@ define([
                 },
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while reassigning node to Author: " + err);
+                    console.error("Error in js/js: Error while reassigning node to Author: " + err);
                     onForwardDef.reject(err);
                 }
             });
@@ -1458,7 +1459,7 @@ define([
                 },
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while reassigning address to Author: " + err);
+                    console.error("Error in js/js: Error while reassigning address to Author: " + err);
                     onPublishDef.reject(err);
                 }
             });
@@ -1727,6 +1728,13 @@ define([
             dom.byId("creationTime").innerHTML = nodeData.creationTime;
             dom.byId("modificationTime").innerHTML = nodeData.modificationTime;
             dom.byId("uuid").innerHTML = nodeData.uuid;
+            if (nodeData.orgObjId) {
+            	dom.byId("orgObjId").innerHTML = nodeData.orgObjId;
+            	domClass.remove("origIdSpan", "hide");
+            } else {
+            	dom.byId("orgObjId").innerHTML = "";
+            	domClass.add("origIdSpan", "hide");
+            }
 
             if (nodeData.lastEditor !== null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
                 dom.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
@@ -2032,6 +2040,7 @@ define([
             UtilStore.updateWriteStore("ref1SpatialSystem", UtilList.listToTableData(nodeData.ref1SpatialSystemTable));
 
             registry.byId("ref1AltAccuracy").attr("value", nodeData.ref1AltAccuracy, true);
+            registry.byId("ref1GridPosAccuracy").attr("value", nodeData.ref1GridPosAccuracy, true);
             registry.byId("ref1PosAccuracy").attr("value", nodeData.ref1PosAccuracy, true);
             registry.byId("ref1BasisText").attr("value", nodeData.ref1BasisText, true);
             registry.byId("ref1DataBasisText").attr("value", nodeData.ref1DataBasisText, true);
@@ -2397,7 +2406,8 @@ define([
 
             // add url to preview image to url table
             var previewUrl = registry.byId("generalPreviewImage").get("value");
-            if (previewUrl) urlLinks.push(UtilList.urlToListEntry(previewUrl));
+            var previewUrlDescription = registry.byId("previewImageDescription").get("value");
+            if (previewUrl) urlLinks.push(UtilList.urlToListEntry(previewUrl, previewUrlDescription));
 
             nodeData.linksToObjectTable = objLinks;
             nodeData.linksToUrlTable = urlLinks;
@@ -2562,6 +2572,7 @@ define([
             nodeData.ref1VFormatTopology = registry.byId("ref1VFormatTopology").get("value");
 
             nodeData.ref1AltAccuracy = UtilGeneral.getNumberFromDijit("ref1AltAccuracy");
+            nodeData.ref1GridPosAccuracy = UtilGeneral.getNumberFromDijit("ref1GridPosAccuracy");
             nodeData.ref1PosAccuracy = UtilGeneral.getNumberFromDijit("ref1PosAccuracy");
             nodeData.ref1BasisText = registry.byId("ref1BasisText").get("value");
             nodeData.ref1DataBasisText = registry.byId("ref1DataBasisText").get("value");

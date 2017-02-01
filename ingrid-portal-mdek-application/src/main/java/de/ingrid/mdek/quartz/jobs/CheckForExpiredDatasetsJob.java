@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -57,18 +57,21 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
 	private ConnectionFacade connectionFacade;
 	private Integer notifyDaysBeforeExpiry;
+    private Boolean repeatExpiryCheck;
 	private Integer numAddressesMax;
 	private Integer numObjectsMax;
 
 	protected void executeInternal(JobExecutionContext ctx)
 			throws JobExecutionException {
 		log.debug("Executing CheckForExpiredDatasetsJob...");
-		// 1. Get all objects that: will expire soon & first notification has not been sent
-		// 2. Get all objects that: are expired & final notification has not been sent
-		// 3.1. Get emails for the objects
-		// 3.2. sort the objects by the target email
-		// 3.3. send the mails
-		// 4. update the expiry state of all objects in the db
+		// 1. Get all objects/addresses that: will expire soon & first notification has not been sent
+		// 2. Get all objects/addresses that: are expired & final notification has not been sent
+        // 3. Get all objects/addresses that: are expired & final notification has already been sent
+		//    but has to be sent again, see https://dev.informationgrid.eu/redmine/issues/107
+		// 4.1. Get emails for the objects/addresses
+		// 4.2. sort the objects/addresses by the target email
+		// 4.3. send the mails
+		// 5. update the expiry state and time (email sent) of all objects/addresses notified
 
 		IMdekClientCaller caller = connectionFacade.getMdekClientCaller();
 		List<String> iplugList = caller.getRegisteredIPlugs();
@@ -89,13 +92,23 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
 			List<ExpiredDataset> datasetsWillExpireList = getExpiredDatasets(expireCal.getTime(), notifyCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.INITIAL, plugId);
 			List<ExpiredDataset> datasetsExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
+			List<ExpiredDataset> datasetsAgainExpiredList = new ArrayList<ExpiredDataset>(0);
+			if (repeatExpiryCheck) {
+	            // fetch entities already expired but where mail has to be sent again, see https://dev.informationgrid.eu/redmine/issues/107
+	            datasetsAgainExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);			    
+			}
 
-			log.debug("Number of datasets to notify found: "+datasetsWillExpireList.size());
-			log.debug("Number of datasets to expire found: "+datasetsExpiredList.size());
+            log.info("" + plugId + ":");
+			log.info("  Number of entities to notify found: "+datasetsWillExpireList.size());
+			log.info("  Number of entities expired found: "+datasetsExpiredList.size());
+            log.info("  Number of entities again expired found: "+datasetsAgainExpiredList.size());
 			MdekEmailUtils.sendExpiryNotificationMails(datasetsWillExpireList);
+			// NOTICE: Entities expired for the first time and entities again expired are handled
+			// the same way (same email and update of expiry states/time) so we merge lists !
+            datasetsExpiredList.addAll(datasetsAgainExpiredList);
 			MdekEmailUtils.sendExpiryMails(datasetsExpiredList);
 
-			log.debug("Updating expiry states.");
+			log.debug("Updating expiry states and time.");
 			updateExpiryState(datasetsWillExpireList, de.ingrid.mdek.MdekUtils.ExpiryState.TO_BE_EXPIRED, plugId);
 			updateExpiryState(datasetsExpiredList, de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);
 			log.debug("CheckForExpiredDatasetsJob done.");
@@ -107,10 +120,14 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		IMdekCallerAddress mdekCallerAddress = connectionFacade.getMdekCallerAddress();
 		String catAdminUuid = getCatAdminUuid(plugId);
 
+		// set the date we sent our email !
+		String expiry_time = de.ingrid.mdek.MdekUtils.dateToTimestamp(Calendar.getInstance().getTime());
+
 		for (ExpiredDataset expiredDataset : expiredDatasetList) {
 			IngridDocument doc = new IngridDocument();
 			doc.put(MdekKeys.UUID, expiredDataset.getUuid());
 			doc.put(MdekKeys.EXPIRY_STATE, state.getDbValue());
+            doc.put(MdekKeys.LASTEXPIRY_TIME, expiry_time);
 
 			if (expiredDataset.getType() == ExpiredDataset.Type.ADDRESS) {
 				mdekCallerAddress.updateAddressPart(plugId, doc, IdcEntityVersion.ALL_VERSIONS, catAdminUuid);
@@ -171,14 +188,28 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 			"AddressNode as modUserNode " +
 				"inner join modUserNode.t02AddressWork modUserAddr " +
 		"where " +
-			"oMeta.expiryState <= " + state.getDbValue() +
-			" and obj.responsibleUuid = responsibleUserNode.addrUuid " +
+            "obj.responsibleUuid = responsibleUserNode.addrUuid " +
 			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
-			" and obj.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) +
 			" and modUserNode.addrUuid = obj.modUuid";
 		if (begin != null) {
-			qString += " and obj.modTime >= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin);
+			qString += " and obj.modTime >= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin) +"'";
 		}
+		// differ between querying for EXPIRED (to send another expiry email) or for first expiry email !
+        if (de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED.equals( state )) {
+            // if query for EXPIRED we compare with "=" not "<=" we only want entities already expired !
+            qString += " and oMeta.expiryState = " + state.getDbValue(); 
+            if (end != null) {
+                // if expiry mail already sent, we use date when email was sent to determine whether again expired !
+                // Also check if date not set, then send email (state after date was introduced)
+                qString += " and (oMeta.lastexpiryTime is null OR oMeta.lastexpiryTime <= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) + "')";
+            }
+        } else {
+            // if not query for EXPIRE we compare with "<=" so notification and expire mails can be sent.                
+            qString += " and oMeta.expiryState <= " + state.getDbValue(); 
+            if (end != null) {
+                qString += " and obj.modTime <= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) + "'";
+            }
+        }
 		qString += " order by obj.objClass, obj.objName";
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, numObjectsMax, "");
@@ -229,14 +260,28 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 		"where " +
 			// exclude hidden user addresses !
 			AddressType.getHQLExcludeIGEUsersViaNode("addrNode") +
-			" and aMeta.expiryState <= " + state.getDbValue() +
 			" and adr.responsibleUuid = responsibleUserNode.addrUuid " +
 			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
-			" and adr.modTime <= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) +
 			" and modUserNode.addrUuid = adr.modUuid";
 		if (begin != null) {
-			qString += " and adr.modTime >= " + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin);
+			qString += " and adr.modTime >= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(begin) + "'";
 		}
+        // differ between querying for EXPIRED (to send another expiry email) or for first expiry email !
+        if (de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED.equals( state )) {
+            // if query for EXPIRED we compare with "=" not "<=" we only want entities already expired !
+            qString += " and aMeta.expiryState = " + state.getDbValue(); 
+            if (end != null) {
+                // if expiry mail already sent, we use date when email was sent to determine whether again expired !
+                // Also check if date not set, then send email (state after date was introduced)
+                qString += " and (aMeta.lastexpiryTime is null OR aMeta.lastexpiryTime <= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) + "')";
+            }
+        } else {
+            // if not query for EXPIRE we compare with "<=" so notification and expire mails can be sent.                
+            qString += " and aMeta.expiryState <= " + state.getDbValue(); 
+            if (end != null) {
+                qString += " and adr.modTime <= '" + de.ingrid.mdek.MdekUtils.dateToTimestamp(end) + "'";
+            }
+        }
 
 		IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, numAddressesMax, "");
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -307,6 +352,10 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 	public void setNotifyDaysBeforeExpiry(Integer notifyDaysBeforeExpiry) {
 		this.notifyDaysBeforeExpiry = notifyDaysBeforeExpiry < 1 ? 14 : notifyDaysBeforeExpiry;
 	}
+
+    public void setRepeatExpiryCheck(Boolean repeatExpiryCheck) {
+        this.repeatExpiryCheck = repeatExpiryCheck;
+    }
 
 	public void setNumAddressesMax(Integer numAddressesMax) {
 		this.numAddressesMax = numAddressesMax;

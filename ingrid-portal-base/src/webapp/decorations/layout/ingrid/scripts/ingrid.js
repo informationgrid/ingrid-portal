@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -43,12 +43,12 @@ function ingrid_checkAll(group) {
 
 function ingrid_enableButtonByCheckbox(id, buttonName){
     var checkboxes = document.getElementsByName(id);
-    for(var index in checkboxes){
+    for (var i=0; i<checkboxes.length; i++){
         //bind event to each checkbox
-        checkboxes[index].onchange = function() {
+        checkboxes[i].onclick = function() {
             var isCheckboxSelect = false;
-            for(var i in checkboxes){
-                if(checkboxes[i].checked){
+            for (var j=0; j<checkboxes.length; j++){
+                if(checkboxes[j].checked){
                     isCheckboxSelect = true;
                 }
             }

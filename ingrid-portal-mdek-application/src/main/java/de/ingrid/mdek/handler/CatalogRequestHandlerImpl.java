@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -278,11 +278,10 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
         return result;
     }
 
-    public void importEntities(UserData currentUser, List<byte[]> importData, String targetObjectUuid, String targetAddressUuid,
+    public void importEntities(UserData currentUser, String targetObjectUuid, String targetAddressUuid,
             String frontendMappingProtocol, boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent) {
         IngridDocument response = mdekCallerCatalog.importEntities(
                 currentUser.getPlugId(),
-                importData,
                 targetObjectUuid, targetAddressUuid,
                 publishImmediately, doSeparateImport,
                 copyNodeIfPresent, frontendMappingProtocol,

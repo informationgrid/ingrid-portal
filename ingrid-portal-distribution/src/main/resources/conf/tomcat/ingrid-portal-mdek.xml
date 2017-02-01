@@ -13,9 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+
+<!--
+Context param sessionCookiePath="/" shares ID of session with other
+sessions where same parameter is set in context !
+see https://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Common_Attributes
+We do this to share session id between contexts
+/ingrid-portal-mdek and /ingrid-portal-mdek-application for setting
+session specific attribute "ige.force.userName" !
+-->
 <Context path="/ingrid-portal-mdek" 
          docBase="ingrid-portal-mdek" 
-         crossContext="true">
+         crossContext="true"
+         sessionCookiePath="/">
 
   <Resource name="jdbc/mdek" auth="Container"
           factory="org.apache.commons.dbcp.BasicDataSourceFactory"

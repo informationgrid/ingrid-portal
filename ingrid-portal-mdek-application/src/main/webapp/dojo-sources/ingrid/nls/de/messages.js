@@ -343,6 +343,7 @@ define({
 	"dialog.compare.object.linksToTable.title":"Untergeordnete Objektreferenzen",
 	"dialog.compare.object.administrative":"Administrative Angaben",
 	"dialog.compare.object.id":"Objekt-ID",
+	"dialog.compare.object.orgId":"Original-Objekt-ID",
 	"dialog.compare.object.catalog":"Katalog",
 
 	"dialog.links.selectObject.title":"Objekt ausw&auml;hlen",
@@ -850,6 +851,8 @@ define({
     "ui.3650.description":"Erl&auml;uterungen",
     "ui.3670.description":"Service-Urls",
     "ui.5000.description":"Kurzbezeichnung",
+    "ui.5100.description":"Vorschaugrafik",
+    "ui.5105.description":"Dateibeschreibung",
     "ui.5020.description":"H&ouml;he - Maximum",
     "ui.5021.description":"H&ouml;he - Ma&szlig;einheit",
     "ui.5022.description":"H&ouml;he - Vertikaldatum",

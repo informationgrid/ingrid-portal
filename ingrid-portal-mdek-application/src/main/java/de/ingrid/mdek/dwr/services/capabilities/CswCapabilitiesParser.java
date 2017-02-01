@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -26,13 +26,16 @@
 package de.ingrid.mdek.dwr.services.capabilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
 
 import de.ingrid.mdek.SysListCache;
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.OperationBean;
@@ -75,8 +78,13 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
     private final static String XPATH_EXP_CSW_ACCESS_CONSTRAINTS = "/csw:Capabilities/ows:ServiceIdentification/ows:AccessConstraints";
     private final static String XPATH_EXP_CSW_ONLINE_RESOURCE = "/csw:Capabilities/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:OnlineResource";
     
+    private Map<String, Integer> versionSyslistMap;
+    
     public CswCapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new Csw202NamespaceContext()), syslistCache);
+        
+        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap.put( "2.0.2", 1 );
     }
     
     /* (non-Javadoc)
@@ -91,7 +99,10 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
         result.setDataServiceType(1); // discovery
         result.setTitle(xPathUtils.getString(doc, XPATH_EXP_CSW_TITLE));
         result.setDescription(xPathUtils.getString(doc, XPATH_EXP_CSW_ABSTRACT));
-        result.setVersions(getNodesContentAsList(doc, XPATH_EXP_CSW_VERSION));
+        
+        List<String> versionList = getNodesContentAsList(doc, XPATH_EXP_CSW_VERSION);
+        List<String> mappedVersionList = mapVersionsFromCodelist(MdekSysList.OBJ_SERV_VERSION_CSW.getDbValue(), versionList, versionSyslistMap);
+        result.setVersions(mappedVersionList);
         
         // Fees
         result.setFees(xPathUtils.getString(doc, XPATH_EXP_CSW_FEES));

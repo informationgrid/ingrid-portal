@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -118,7 +118,7 @@ public class QueryResultPostProcessor {
         tmpString = tmpString.toLowerCase();
 
         // THIS IS THE iPlugClass from PD !!! :(
-        if (tmpString.contains("dsc") && tmpString.contains("search")) {
+        if (tmpString.contains("igesearchplug") || (tmpString.contains("dsc") && tmpString.contains("search"))) {
             processDSCHit(hit, detail, ds);
         } else if (tmpString.equals("de.ingrid.iplug.se.nutchsearcher") || tmpString.equals("de.ingrid.iplug.se.seiplug")) {
             hit.put(Settings.RESULT_KEY_TYPE, "www-style");

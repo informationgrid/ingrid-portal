@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -132,9 +132,9 @@ define([
 
                 this.createReferences();
                 console.debug("initAdditionalFields");
-                var defAddFields = this.initAdditionalFields();
-                console.debug("connect dirty flags");
-                this.connectDirtyFlagsEvents();
+                var defAddFields = this.initAdditionalFields()
+                    .then(this.connectDirtyFlagsEvents);
+                
                 console.debug("init CTS");
                 // apply atomatic transformation of bounding box if selected in table
                 this.initCTS();
@@ -266,6 +266,10 @@ define([
                 var previewImage = new ValidationTextBox({
                     style: "width:100%;"
                 }, "generalPreviewImage");
+                
+                new ValidationTextBox({
+                    style: "width:100%;"
+                }, "previewImageDescription");
 
                 // show a tooltip when hovering over image
                 previewImage.tooltip = new Tooltip({
@@ -456,6 +460,9 @@ define([
                 new NumberTextBox({
                     style: "width:100%;"
                 }, "ref1PosAccuracy");
+                new NumberTextBox({
+                    style: "width:100%;"
+                }, "ref1GridPosAccuracy");
 
                 var tabSymbols = new TabContainer({
                     style: "width: 100%;",
@@ -2271,7 +2278,9 @@ define([
                 UtilCatalog.getOverrideBehavioursDef().then(function(data) {
                     // mark behaviours with override values
                     array.forEach(data, function(item) {
-                        behaviour[item.id].override = item.active;
+                        if (behaviour[item.id]) {
+                            behaviour[item.id].override = item.active;
+                        }
                     });
                     for (var behave in behaviour) {
                         if (!behaviour[behave].title) continue;

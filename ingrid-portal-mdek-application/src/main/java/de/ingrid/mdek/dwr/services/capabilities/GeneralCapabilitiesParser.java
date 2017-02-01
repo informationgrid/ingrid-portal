@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.xpath.XPathExpressionException;
 
@@ -73,7 +74,7 @@ public class GeneralCapabilitiesParser {
     protected SysListCache syslistCache;
 
     protected ConnectionFacade connectionFacade;
-
+    
     public GeneralCapabilitiesParser(XPathUtils xPathUtils, SysListCache syslistCache) {
         this.xPathUtils = xPathUtils;
         this.syslistCache = syslistCache;
@@ -238,10 +239,24 @@ public class GeneralCapabilitiesParser {
         for (int i = 0; i < versionNodes.getLength(); i++) {
             String content = versionNodes.item(i).getTextContent();
             if (content.trim().length() > 0) {
-                list.add(content);
+                    list.add( content );
             }
         }
         return list;
+    }
+    
+    protected List<String> mapVersionsFromCodelist(Integer listId, List<String> versionList, Map<String, Integer> versionSyslistMap) {
+        List<String> mappedVersionList = new ArrayList<String>(); 
+        for (String version : versionList) {
+            Integer entryId = versionSyslistMap.get( version );
+            String value = version;
+            
+            if (entryId != null) {
+                value = syslistCache.getValueFromListId( listId, entryId, true );
+            }
+            mappedVersionList.add( value );
+        }
+        return mappedVersionList;
     }
     
     protected List<UrlBean> getOnlineResources(Document doc, String xPath) {

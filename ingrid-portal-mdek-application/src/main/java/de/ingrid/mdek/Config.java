@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-base-webapp
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -107,9 +107,52 @@ public class Config {
     @DefaultValue("0")
     public int codelistDefaultPersistency;
 
+    /**
+     * MAIL
+     */
+    @PropertyValue("workflow.mail.sender")
+    @DefaultValue("")
+    public String workflowMailSender;
+
+    @PropertyValue("workflow.mail.receiver")
+    @DefaultValue("")
+    public String workflowMailReceiver;
+
+    @PropertyValue("workflow.mail.smtp")
+    @DefaultValue("")
+    public String workflowMailSmtpHost;
+
+    @PropertyValue("workflow.mail.smtp.user")
+    @DefaultValue("")
+    public String workflowMailSmtpUser;
+    
+    @PropertyValue("workflow.mail.smtp.password")
+    @DefaultValue("")
+    public String workflowMailSmtpPassword;
+    
+    @PropertyValue("workflow.mail.smtp.port")
+    @DefaultValue("")
+    public String workflowMailSmtpPort;
+    
+    @PropertyValue("workflow.mail.smtp.ssl")
+    @DefaultValue("false")
+    public boolean workflowMailSmtpSSL;
+    
+    @PropertyValue("workflow.mail.smtp.protocol")
+    @DefaultValue("smtp")
+    public String workflowMailSmtpProtocol;
+    
+
+    /**
+     * VARIOUS 
+     */
     @PropertyValue("installation.standalone")
     @DefaultValue("false")
     public boolean noPortal;
+
+    @PropertyValue("mdek.directLink")
+    @DefaultValue("")
+    public String mdekDirectLink;
 
 
     public void initialize() throws IOException {

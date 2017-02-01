@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -189,6 +189,77 @@ define(["dojo/_base/declare",
 
 		        on(registry.byId("isInspireRelevant"), "Change", updateUseConstraintsBehaviour);
 		        on(registry.byId("isOpenData"), "Change", updateUseConstraintsBehaviour);
+            }
+        },
+        
+        showFileDescription: {
+            title: "Dateibeschreibung - Einblenden bei vorhandenem Bild",
+            description: "Das Feld \"Dateibeschreibung\" wird nur dann eingeblendet, wenn auch ein Link zur Vorschaugrafik eingegeben worden ist.",
+            defaultActive: true,
+            run: function() {
+                // set field initially hidden
+                domClass.add("uiElement5105", "hidden");
+                
+                // react when object is loaded (passive)
+                on(registry.byId("generalPreviewImage"), "Change", function(value) {
+                    if (value.trim().length === 0) {
+                        domClass.add("uiElement5105", "hidden");
+                    } else {
+                        domClass.remove("uiElement5105", "hidden");
+                    }
+                });
+                
+                // react on user input (active)
+                on(registry.byId("generalPreviewImage"), "KeyUp", function() {
+                    if (this.get("value").trim().length === 0) {
+                        domClass.add("uiElement5105", "hidden");
+                    } else {
+                        domClass.remove("uiElement5105", "hidden");
+                    }
+                });
+            }
+        },
+        
+        encodingSchemeForGeodatasets: {
+            title: "Kodierungsschema nur für Geodatensätze",
+            description: "Für Geodatensätze wird das Feld \"Kodierungsschema der geographischen Daten\" angezeigt, für andere Klassen ist es ausgeblendet.",
+            defaultActive: true,
+            run: function() {
+                topic.subscribe("/onObjectClassChange", function(data) {
+                    if (data.objClass === "Class1") {
+                        // set field initially hidden
+                        // "Kodierungsschema der geographischen Daten" 
+                        domClass.remove("uiElement1315", "hide");
+    
+                    } else {
+                        // "Kodierungsschema der geographischen Daten" only in class 1
+                        domClass.add("uiElement1315", "hide");
+                        // remove any previous value from now hidden field
+                        registry.byId("availabilityDataFormatInspire").set("value", "");
+                    }
+                });
+            }
+        } ,
+        
+        dqGriddedDataPositionalAccuracy: {
+            title: "Verhalten für die Rasterpositionsgenauigkeit",
+            description: "Das Element ist optional und wird nicht per default eingeblendet. Es wird nur aktiviert, wenn 'Digitale Repräsentation' den Wert 'Raster' hat.",
+            defaultActive: true,
+            run: function() {
+                aspect.after(registry.byId("ref1Representation"), "onDataChanged", function() {
+                    console.log("data: ", this.getData());
+                    var hasGridType = array.some(this.getData(), function(row) {
+                        // 2 === Raster, Gitter
+                        return row.title === 2 || row.title === "2"; 
+                    });
+                    
+                    // show field if grid type was found in table, otherwise hide it
+                    if (hasGridType) {
+                        domClass.remove("uiElement5071", "hide");
+                    } else {
+                        domClass.add("uiElement5071", "hide");
+                    }
+                });
             }
         }
         

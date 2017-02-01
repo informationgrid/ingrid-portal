@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -30,8 +30,10 @@ define([
     "dijit/form/DateTextBox",
     "dijit/Tooltip",
     "ingrid/utils/String",
+    "ingrid/utils/Syslist",
+    "ingrid/utils/Store",
     "ingrid/utils/General"
-], function(declare, construct, array, lang, on, aspect, DateTextBox, Tooltip, UtilString, UtilGeneral) {
+], function(declare, construct, array, lang, on, aspect, DateTextBox, Tooltip, UtilString, UtilSyslist, UtilStore, UtilGeneral) {
 
     return declare("ingrid.grid.Editors", null, {
 
@@ -193,9 +195,20 @@ define([
             // initialize the UI
             this.init = function() {
                 var data;
-                if (args.column.listId)
+                if (args.column.listId) {
                     data = lang.clone(sysLists[args.column.listId]);
-                else {
+
+                    // if no codelist was found try to get it from the backend
+                    if (!data) {
+                        data = [];
+                        UtilSyslist.readSysListData(args.column.listId).then(function(entry) {
+                            UtilStore.updateWriteStore("activeCell_" + args.grid.id, entry, {
+                                identifier: '1',
+                                label: '0'
+                            } );
+                        });
+                    }
+                } else {
                     data = [];
                     for (var i = 0; i < args.column.options.length; i++) {
                         data[i] = [args.column.options[i], args.column.values[i]];

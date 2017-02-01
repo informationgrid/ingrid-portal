@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -119,6 +119,13 @@ public class GetCapabilitiesServiceTest {
         
         when(sysListMapper.getValueFromListId(2000, 5066, false)).thenReturn("Verweis zu Dienst");
         
+        when(sysListMapper.getValueFromListId(5151, 1, true)).thenReturn("OGC:CSW 2.0.2");
+        when(sysListMapper.getValueFromListId(5152, 1, true)).thenReturn("OGC:WMS 1.1.1");
+        when(sysListMapper.getValueFromListId(5152, 2, true)).thenReturn("OGC:WMS 1.3.0");
+        when(sysListMapper.getValueFromListId(5153, 1, true)).thenReturn("OGC:WFS 1.1.0");
+        when(sysListMapper.getValueFromListId(5153, 2, true)).thenReturn("OGC:WFS 2.0");
+        when(sysListMapper.getValueFromListId(5154, 1, true)).thenReturn("OGC:CTS 1.0");
+        
         when(sysListMapper.getKeyFromListId(6000, "conformant")).thenReturn(1);
         
         when(sysListMapper.getConnectionFacade()).thenReturn( connFacade );
@@ -210,7 +217,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WMS"));
         assertThat(result.getDataServiceType(), is(2));
-        assertThat(result.getVersions().get(0), is("1.1.1"));
+        assertThat(result.getVersions().get(0), is("OGC:WMS 1.1.1"));
         assertThat(result.getTitle(), is("Acme Corp. Map Server"));
         assertThat(result.getFees(), is("none"));
         assertThat(result.getAccessConstraints().get(0), is("none"));
@@ -266,7 +273,7 @@ public class GetCapabilitiesServiceTest {
         
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WMS"));
-        assertThat(result.getVersions().get(0), is("1.3.0"));
+        assertThat(result.getVersions().get(0), is("OGC:WMS 1.3.0"));
         assertThat(result.getTitle(), is("Acme Corp. Map Server"));
         assertThat(result.getFees(), is("none"));
         assertThat(result.getAccessConstraints().get(0), is("none"));
@@ -346,7 +353,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WMS"));
         assertThat(result.getDataServiceType(), is(2));
-        assertThat(result.getVersions().get(0), is("1.3.0"));
+        assertThat(result.getVersions().get(0), is("OGC:WMS 1.3.0"));
         assertThat(result.getTitle(), is("Naturschutz"));
         assertThat(result.getFees(), is("none"));
         assertThat(result.getAccessConstraints().get(0), is("none"));
@@ -407,7 +414,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WFS"));
         assertThat(result.getDataServiceType(), is(3));
-        assertThat(result.getVersions().get(0), is("1.1.0"));
+        assertThat(result.getVersions().get(0), is("OGC:WFS 1.1.0"));
         
         assertThat(result.getTitle(), is("WFS_Geotourismus"));
         assertThat(result.getFees(), is(""));
@@ -447,9 +454,9 @@ public class GetCapabilitiesServiceTest {
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WFS"));
         assertThat(result.getDataServiceType(), is(3));
-        assertThat(result.getVersions().get(0), is("2.0.0"));
-        assertThat(result.getVersions().get(1), is("1.1.0"));
-        assertThat(result.getVersions().get(2), is("1.0.0"));
+        assertThat(result.getVersions().get(0), is("OGC:WFS 2.0"));
+        assertThat(result.getVersions().get(1), is("OGC:WFS 1.1.0"));
+        assertThat(result.getVersions().get(2), is("OGC:WFS 2.0"));
         assertThat(result.getTitle(), is("OGC Member WFS"));
         assertThat(result.getFees(), is("NONE"));
         assertThat(result.getAccessConstraints().get(0), is("NONE"));
@@ -490,9 +497,9 @@ public class GetCapabilitiesServiceTest {
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WFS"));
         assertThat(result.getDataServiceType(), is(3));
-        assertThat(result.getVersions().get(0), is("2.0.0"));
-        assertThat(result.getVersions().get(1), is("1.1.0"));
-        assertThat(result.getVersions().get(2), is("1.0.0"));
+        assertThat(result.getVersions().get(0), is("OGC:WFS 2.0"));
+        assertThat(result.getVersions().get(1), is("OGC:WFS 1.1.0"));
+        assertThat(result.getVersions().get(2), is("OGC:WFS 2.0"));
         assertThat(result.getTitle(), is("OGC Member WFS"));
         assertThat(result.getFees(), is("NONE"));
         assertThat(result.getAccessConstraints().get(0), is("NONE"));

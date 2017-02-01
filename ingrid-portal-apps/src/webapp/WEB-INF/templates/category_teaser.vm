@@ -137,6 +137,9 @@
             #end
             <div class="column column--1-6-m">
                 #set($facetParam = "$pf:$facet.getId();")
+                #if($facet.getParentId())
+                    #set($facetParam = "$facet.getParentId():$facet.getId();")
+                #end
                 #if($parentFacetParam)
                     #set($facetParam = "$parentFacetParam:$pf;$pf:$facet.getId();")
                 #end
@@ -156,7 +159,7 @@
                     </a>
                 </div>
                 <div class="mq-show-l">
-                    <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
+                    <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
                         #getIcon($facet)
                         <strong>
                             #if($facet.getCodelistId())

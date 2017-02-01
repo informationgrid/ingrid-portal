@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -33,11 +33,11 @@
 
             var pageAdditionalFieldsColumnDlg = _container_;
 
-            require(["dojo/on", "dojo/aspect", "dojo/dom", "dojo/query", "dojo/_base/array", "dojo/_base/lang", "dojo/dom-style",
+            require(["dojo/on", "dojo/aspect", "dojo/dom", "dojo/dom-class", "dojo/query", "dojo/_base/array", "dojo/_base/lang", "dojo/dom-style",
                     "dijit/registry", "dijit/form/TextBox", "dijit/layout/ContentPane", "dojo/data/ItemFileReadStore", "dijit/form/Select",
                     "ingrid/utils/Grid", "ingrid/dialog", "ingrid/layoutCreator"
                 ],
-                function(on, aspect, dom, query, array, lang, style, registry, TextBox, ContentPane, ItemFileReadStore, Select, UtilGrid, dialog, layoutCreator) {
+                function(on, aspect, dom, domClass, query, array, lang, style, registry, TextBox, ContentPane, ItemFileReadStore, Select, UtilGrid, dialog, layoutCreator) {
 
                     on(_container_, "Load", init);
 
@@ -56,10 +56,23 @@
                             searchAttr: "name",
                             style: "width:100%;float:left;"
                         }, "formColumnType");
+                        
+                        on(registry.byId("formColumnWithSyslist"), "Change", toggleListFields);
 
                         fillFields(pageAdditionalFieldsColumnDlg.customParams.column);
                         layoutForms();
                         on(select, "Change", layoutForms);
+                    }
+                    
+                    function toggleListFields(checked) {
+                        if (checked) {
+                            domClass.remove("span_formColumnListSyslistId", "hide");
+                            domClass.add("span_formColumnListTable", "hide");
+                        } else {
+                            domClass.add("span_formColumnListSyslistId", "hide");
+                            domClass.remove("span_formColumnListTable", "hide");
+                            registry.byId("formColumnOptions").resize();
+                        }                
                     }
 
                     function fillFields(column) {
@@ -123,6 +136,10 @@
                             registry.byId("formColumnIndex").set('value', column.indexName);
                             //if (column.allowFreeEntries) {
                             registry.byId("columnAsCombobox").set("checked", column.allowFreeEntries);
+                            if (column.useSyslist) {
+                                registry.byId("formColumnWithSyslist").set("checked", true);
+                                registry.byId("formColumnListSyslistId").set("value", column.useSyslist);
+                            }
                             //}
                             registry.byId("saveAddColumn").set("label", "<fmt:message key='dialog.admin.additionalfields.btnUpdate' />");
 
@@ -275,6 +292,9 @@
                         if (column.type == "selectControl") {
                             column.options = {};
                             column.allowFreeEntries = registry.byId("columnAsCombobox").get("checked");
+                            if (registry.byId("formColumnWithSyslist").get("checked")) {
+                                column.useSyslist = registry.byId("formColumnListSyslistId").get("value");
+                            }
                         }
 
                         array.forEach(pageAdditionalFields.profileData.languages, function(lang) {
@@ -351,20 +371,43 @@
                     </span>
 					<span id="span_formColumnOptions" class="outer">
                         <div>
-                            <span class="label">
-                                <label for="formColumnOptions" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10153)">
-                                    <fmt:message key="dialog.admin.additionalfields.options" />
-                                </label>
+                            <span id="span_formColumnListTable">
+                                <span class="label">
+                                    <label for="formColumnOptions" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10153)">
+                                        <fmt:message key="dialog.admin.additionalfields.options" />
+                                    </label>
+                                </span>
+                                <div class="tableContainer">
+                                    <!--<div id="formColumnOptions" interactive="true" class="hideTableHeader"></div>-->
+    								<div id="formColumnOptions" data-dojo-type="dijit/layout/TabContainer" doLayout="false"></div>
+                                </div>
                             </span>
-                            <div class="tableContainer">
-                                <!--<div id="formColumnOptions" interactive="true" class="hideTableHeader"></div>-->
-								<div id="formColumnOptions" data-dojo-type="dijit/layout/TabContainer" doLayout="false"></div>
-                            </div>
-                            <span class="input">
-                                <input id="columnAsCombobox" data-dojo-type="dijit/form/CheckBox" value="required">
-                                <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10156)">
-                                    <fmt:message key="dialog.admin.additionalfields.allowFreeEntries" />
-                                </label>
+                            <span class="outer">
+                                <div>
+                                    <span class="input">
+                                        <input id="columnAsCombobox" data-dojo-type="dijit/form/CheckBox" value="required">
+                                        <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10156)">
+                                            <fmt:message key="dialog.admin.additionalfields.allowFreeEntries" />
+                                        </label>
+                                    </span>
+                                </div>
+                            </span>
+                            <span class="outer halfWidth">
+                                <div>
+                                    <span class="input">
+                                        <input id="formColumnWithSyslist" data-dojo-type="dijit/form/CheckBox" value="required">
+                                        <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10115)">
+                                            <fmt:message key="dialog.admin.additionalfields.listWithSyslist" />
+                                        </label>
+                                    </span>
+                                </div>
+                            </span>
+                            <span id="span_formColumnListSyslistId" class="outer halfWidth hide">
+                                <div>
+                                <span class="input">
+                                    <input id="formColumnListSyslistId" data-dojo-type="dijit/form/TextBox" title="Syslist-ID" style="width: 100%;">
+                                </span>
+                                </div>
                             </span>
                         </div>
                     </span>

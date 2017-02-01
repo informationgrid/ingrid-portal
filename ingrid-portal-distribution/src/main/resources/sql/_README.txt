@@ -23,7 +23,8 @@ Auf Oracle muss die Datenbank (User) manuell erzeugt und der dump importiert wer
         
 initiale IGE-Datenbank (mdek):
 ------------------------------
-Wird von installer eingelesen. Auf Oracle muss die Datenbank existieren (User MDEK).
+Wird von installer eingelesen.
+Auf Oracle muss die Datenbank mit den initialen Inhalten existieren.
 
 mdek_0_"plattform".sql
 

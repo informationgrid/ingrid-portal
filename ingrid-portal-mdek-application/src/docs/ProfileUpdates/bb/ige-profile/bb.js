@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -32,7 +32,7 @@ if (XPATH.nodeExists( idfDoc, "//idf:idfMdMetadata/gmd:identificationInfo/srv:SV
 
 
 // ------------------------
-// IDF - REDMINE-354
+// IDF - REDMINE-354,-644
 // ------------------------
 importPackage(Packages.de.ingrid.iplug.dsc.om);
 //add Namespaces to Utility for convenient handling of NS !
@@ -78,7 +78,7 @@ if (objClass.equals("3") || objClass.equals("6")) {
 
 
 //------------------------
-// IDF - REDMINE-355
+// IDF - REDMINE-355,-508
 //------------------------
 importPackage(Packages.de.ingrid.iplug.dsc.om);
 //add Namespaces to Utility for convenient handling of NS !
@@ -111,12 +111,16 @@ var extractSubDomain = function(email) {
 	}
 };
 // helper function to append the sub-domain at the right place
+// NOTICE: Was changed due to removal of "#" in catalog namespace, see REDMINE-508
 var appendDomain = function(uuid, domain) {
-	var end = uuid.indexOf("#");
+//	log.info("appendDomain uuid, domain: '" + uuid + "', '" + domain + "'");
+	var end = uuid.lastIndexOf("/");
 	if (end == -1) {
 		return uuid + "/" + domain;
 	}
-	return uuid.substring(0, end) + "/" + domain + uuid.substring(end);
+	var newUuid = uuid.substring(0, end+1) + domain + "#" + uuid.substring(end+1);
+//	log.info("new uuid: '" + newUuid + "'");
+	return newUuid;
 };
 
 // modify namespace e.g.: //gmd:identificationInfo/gmd:MD_DataIdentification/@uuid="http://portalu.de/igc_bb#45C506E5-3E9D-4DE2-9073-C3DB636CE7CF

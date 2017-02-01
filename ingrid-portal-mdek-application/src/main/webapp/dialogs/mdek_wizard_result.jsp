@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -500,7 +500,9 @@ require([
 
         // Fees
         if (applyAll || registry.byId( "assistantFeesCheckbox" ).checked) {
-            registry.byId( "availabilityUseConstraints" ).setValue( lang.trim( registry.byId( "assistantFees" ).getValue() ) );
+            // write value to "Nutzungsbedingungen" (useConstraints) (REDMINE-273)
+            var value = registry.byId( "assistantFees" ).getValue();
+            UtilStore.updateWriteStore("availabilityUseAccessConstraints", UtilList.listToTableData( [value] ));
         }
 
         // Access Constraints
@@ -557,8 +559,9 @@ require([
             if (applyAll || locationList[i].selection == 1) {
                 var topic = locationList[i];
                 var topicId = locationList[i].topicId;
+                var type = locationList[i].type;
                 var targetGrid = "spatialRefAdminUnit";
-                if ( !topicId ) targetGrid = "spatialRefLocation";
+                if ( type === "F" || !topicId ) targetGrid = "spatialRefLocation";
                 
                 var storeData = UtilGrid.getTableData( targetGrid );
                 var storedTopicIdx = null;

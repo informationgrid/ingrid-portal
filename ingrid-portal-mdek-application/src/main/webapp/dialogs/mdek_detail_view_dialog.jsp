@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -505,7 +505,8 @@ require([
             renderAddressList(nodeData.generalAddressTable);
             // preview image
             var previewImageUrl = IgeEvents._filterPreviewImage(nodeData.linksToUrlTable);
-            renderTextWithTitle(previewImageUrl, "<fmt:message key='ui.obj.general.previewImage' />");
+            renderTextWithTitle(previewImageUrl.url, "<fmt:message key='ui.obj.general.previewImage' />");
+            renderTextWithTitle(previewImageUrl.description, "<fmt:message key='ui.obj.general.previewImageDescription' />");
 
             renderTextWithTitle(nodeData.inspireRelevant ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.inspireRelevant' />");
             renderTextWithTitle(nodeData.openData ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.openData' />");
@@ -827,8 +828,9 @@ require([
 
                 // administrative data
                 renderSectionTitel("<fmt:message key='dialog.compare.object.administrative' />");
-                var objId = nodeData.orgObjId ? nodeData.orgObjId : nodeData.uuid;
-                renderTextWithTitle(objId, "<fmt:message key='dialog.compare.object.id' />");
+                renderTextWithTitle(nodeData.uuid, "<fmt:message key='dialog.compare.object.id' />");
+                if (nodeData.orgObjId)
+                	renderTextWithTitle(nodeData.orgObjId, "<fmt:message key='dialog.compare.object.orgId' />");                
                 renderTextWithTitle(UtilCatalog.catalogData.catalogName, "<fmt:message key='dialog.compare.object.catalog' />");
 
                 // additional fields

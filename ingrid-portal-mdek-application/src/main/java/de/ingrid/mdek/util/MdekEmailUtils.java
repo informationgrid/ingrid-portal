@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -32,7 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -50,8 +49,10 @@ import org.apache.velocity.app.Velocity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.ingrid.mdek.Config;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.MdekUtilsSecurity.IdcPermission;
+import de.ingrid.mdek.SpringConfiguration;
 import de.ingrid.mdek.beans.CatalogBean;
 import de.ingrid.mdek.beans.CommentBean;
 import de.ingrid.mdek.beans.SNSLocationUpdateResult;
@@ -73,6 +74,9 @@ public class MdekEmailUtils {
 
 	private final static Logger log = Logger.getLogger(MdekEmailUtils.class);
 
+	@Autowired
+	private SpringConfiguration springConfig;
+	
 	// Set in the init method
 	private static String MAIL_SENDER;
 	private static String MAIL_RECEIVER;
@@ -106,19 +110,21 @@ public class MdekEmailUtils {
 		mdekCallerObject = connectionFacade.getMdekCallerObject();
 		mdekCallerAddress = connectionFacade.getMdekCallerAddress();
 
-		ResourceBundle resourceBundle = ResourceBundle.getBundle("mdek");
-		MAIL_SENDER = resourceBundle.getString("workflow.mail.sender");
-		MAIL_SMTP_HOST = resourceBundle.getString("workflow.mail.smtp");
-		MAIL_SMTP_USER = resourceBundle.getString("workflow.mail.smtp.user");
-		MAIL_SMTP_PASSWORD = resourceBundle.getString("workflow.mail.smtp.password");
-		MAIL_SMTP_PORT = resourceBundle.getString("workflow.mail.smtp.port");
-		MAIL_SMTP_SSL = Boolean.parseBoolean(resourceBundle.getString("workflow.mail.smtp.ssl"));
-		MAIL_SMTP_PROTOCOL = resourceBundle.getString("workflow.mail.smtp.protocol");
-		MDEK_DIRECT_LINK = resourceBundle.getString("mdek.directLink");
+		// read global config from spring config, also taking *.override.props into account
+		Config globalConfig = springConfig.globalConfig();
+
+		MAIL_SENDER = globalConfig.workflowMailSender;
+		MAIL_SMTP_HOST = globalConfig.workflowMailSmtpHost;
+		MAIL_SMTP_USER = globalConfig.workflowMailSmtpUser;
+		MAIL_SMTP_PASSWORD = globalConfig.workflowMailSmtpPassword;
+		MAIL_SMTP_PORT = globalConfig.workflowMailSmtpPort;
+		MAIL_SMTP_SSL = globalConfig.workflowMailSmtpSSL;
+		MAIL_SMTP_PROTOCOL = globalConfig.workflowMailSmtpProtocol;
+		MDEK_DIRECT_LINK = globalConfig.mdekDirectLink;
 
 		// Check if a receiver email was specified.
 		try {
-			MAIL_RECEIVER = resourceBundle.getString("workflow.mail.receiver").trim();
+			MAIL_RECEIVER = globalConfig.workflowMailReceiver.trim();
 			if (MAIL_RECEIVER.length() == 0) {
 				MAIL_RECEIVER = null;
 			}
@@ -127,6 +133,8 @@ public class MdekEmailUtils {
 			// No receiver specified. Initialize MAIL_RECEIVER with null
 			MAIL_RECEIVER = null;
 		}
+
+        log.info("Force emails to this email address ? (if not null): " + MAIL_RECEIVER);
 	}
 
 	public static void sendObjectAssignedToQAMail(MdekDataBean data) {

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -161,6 +161,15 @@ define("ingrid/tree/MetadataTree", [
         
         refreshChildren: function(/*TreeNode*/node) {
             var self = this;
+            
+            // remove all children, which can contain other nodes which need to be updated
+            // this will also collapse all children
+            node.setChildItems([]);
+            
+            // also remove any children loaded inside the cache, so that when a node is expanded
+            // new data is requested instead of showing old state
+            self.model.childrenCache = {};
+            
             return this.model.store.getChildren(node.item).then(function(updatedChildren) {
                 try {
                     array.forEach(updatedChildren, function(copiedNode) {
@@ -242,13 +251,13 @@ define("ingrid/tree/MetadataTree", [
                     if (dstIsRootNode && !UtilSecurity.canCreateRootNodes())
                         canBePasted = false;
         
-                    if (node.nodeAppType[0] == srcNode.nodeAppType[0]) {
+                    if (node.nodeAppType == srcNode.nodeAppType) {
                         if (node.nodeAppType == "O") {
                             //return true; // Objects can be pasted anywhere below objects
                         } else if (node.nodeAppType == "A") {
                             var srcType = srcNode.objectClass;
                             var dstType = node.objectClass;
-                            if (typeof(dstType) == "undefined" || dstType[0] === null) {
+                            if (typeof(dstType) == "undefined" || dstType === null) {
                                 // Target is either addressRoot or addressFreeRoot
                                 if (node.id == "addressFreeRoot") {
                                     canBePasted = canBePasted && (srcType >= 2);  // Only Addresses can be converted to free addresses

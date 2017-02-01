@@ -1,0 +1,130 @@
+<profile xmlns="http://www.portalu.de/igc-profile" version="1.0.0">
+  <layoutRubric>
+    <controls>
+      <checkboxControl>
+        <scriptedCswMappingImport><![CDATA[// ------------------------
+
+function getIdFromProfileList(ctrlId, keyword) {
+    // find the keyword in local lookup list
+    var id = "-1";
+    var items = XPATH.getNodeList(igcProfile, "//igcp:selectControl[./igcp:id='" + ctrlId + "']/igcp:selectionList/igcp:items[./@lang='de']/igcp:item");
+    for (var j=0; j<items.getLength(); j++ ) {
+        var item = items.item(j);
+        if (item.getTextContent() == keyword) {
+            id = XPATH.getString(item, "./@id");
+            break;
+        }
+    }
+    return id;
+}
+
+
+// import Simulation: Räumliche Dimensionalität, remove from general keywords
+var keywords = XPATH.getNodeList(source, "//gmd:descriptiveKeywords/gmd:MD_Keywords[normalize-space(./gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString)='BAW-DMQS Spatial Dimensions']/gmd:keyword/gco:CharacterString");
+for (var i=0; i<keywords.getLength(); i++ ) {
+    var keyword = keywords.item(i).getTextContent();
+    // find the keyword in local lookup list
+    var id = getIdFromProfileList('simSpatialDimension', keyword);
+    
+    var targetEl = target.getDocumentElement();
+    var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
+    var additionalValue = DOM.addElement(additionalValues, "general-additional-value");
+    additionalValue.addElement("field-key").addText("simSpatialDimension");
+    additionalValue.addElement("field-data").addAttribute("id", id).addText(keyword);
+    // remove keyword from uncontroled terms
+    XPATH.removeElementAtXPath(targetEl, "//uncontrolled-term[.='"+keyword+"']");
+}
+
+// import Simulation: Verfahren, remove from general keywords
+var keywords = XPATH.getNodeList(source, "//gmd:descriptiveKeywords/gmd:MD_Keywords[normalize-space(./gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString)='BAW-DMQS Modelling Method']/gmd:keyword/gco:CharacterString");
+for (var i=0; i<keywords.getLength(); i++ ) {
+    var keyword = keywords.item(i).getTextContent();
+    // find the keyword in local lookup list
+    var id = getIdFromProfileList('simProcess', keyword);
+
+    var targetEl = target.getDocumentElement();
+    var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
+    var additionalValue = DOM.addElement(additionalValues, "general-additional-value");
+    additionalValue.addElement("field-key").addText("simProcess");
+    additionalValue.addElement("field-data").addAttribute("id", id).addText(keyword);
+    // remove keyword from uncontroled terms
+    XPATH.removeElementAtXPath(targetEl, "//uncontrolled-term[.='"+keyword+"']");
+}
+
+// import Simulation: Modellart, remove from general keywords
+var keywords = XPATH.getNodeList(source, "//gmd:descriptiveKeywords/gmd:MD_Keywords[normalize-space(./gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString)='BAW-DMQS Modelling Type']/gmd:keyword/gco:CharacterString");
+for (var i=0; i<keywords.getLength(); i++ ) {
+    var keyword = keywords.item(i).getTextContent();
+    // find the keyword in local lookup list
+    var id = getIdFromProfileList('simModelType', keyword);
+    var targetEl = target.getDocumentElement();
+    var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
+    var additionalValue = DOM.addElement(additionalValues, "general-additional-value").addAttribute("line", (i+1));
+    additionalValue.addElement("field-key").addText("simModelType");
+    additionalValue.addElement("field-data").addAttribute("id", id).addText(keyword);
+    additionalValue.addElement("field-key-parent").addText("simModelTypeTable");
+    // remove keyword from uncontroled terms
+    XPATH.removeElementAtXPath(targetEl, "//uncontrolled-term[.='"+keyword+"']");
+}
+
+// import Simulation: Zeitliche Auflösung
+var values = XPATH.getNodeList(source, "//gmd:DQ_AccuracyOfATimeMeasurement/gmd:result/gmd:DQ_QuantitativeResult[./gmd:valueUnit/gml:UnitDefinition/gml:name='second']/gmd:value/gco:Record");
+for (var i=0; i<values.getLength(); i++ ) {
+    var value = values.item(i).getTextContent();
+    var targetEl = target.getDocumentElement();
+    var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
+    var additionalValue = DOM.addElement(additionalValues, "general-additional-value");
+    additionalValue.addElement("field-key").addText("dqAccTimeMeas");
+    additionalValue.addElement("field-data").addText(value);
+}
+
+// import Simulation: DQS Daten
+var dqQualityNodes = XPATH.getNodeList(source, "//gmd:DQ_DataQuality[./gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='model']");
+for (var i=0; i<dqQualityNodes.getLength(); i++ ) {
+    var dqQualityNode = dqQualityNodes.item(i);
+    var targetEl = target.getDocumentElement();
+    var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
+    
+    var records = [ 
+              {"key":"simParamName", "value":XPATH.getString(dqQualityNode, "gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:result/gmd:DQ_QuantitativeResult/gmd:valueType/gco:RecordType")},
+              {"key":"simParamType", "value":XPATH.getString(dqQualityNode, "gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString"), "id":getIdFromProfileList('simParamType', XPATH.getString(dqQualityNode, "gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString"))},
+              {"key":"simParamUnit", "value":XPATH.getString(dqQualityNode, "gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:result/gmd:DQ_QuantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:name")},
+              {"key":"simParamValue", "value":XPATH.getString(dqQualityNode, "gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record")},
+              {"key":"simParamInfo", "value":XPATH.getString(dqQualityNode, "gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:result/@xlink:href")},
+              {"key":"simParamMdInfo", "value":XPATH.getString(dqQualityNode, "gmd:lineage/gmd:LI_Lineage/gmd:source/@xlink:href")}
+            ];
+ 
+    var record;
+    for (record in records) {
+	    var additionalValue = additionalValues.appendChild(targetEl.getOwnerDocument().createElement("general-additional-value"));
+	    XMLUtils.createOrReplaceAttribute(additionalValue, "line", (i+1));
+	    XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-key"), records[record].key);
+	    var fieldData = XPATH.createElementFromXPath(additionalValue, "field-data");
+	    XMLUtils.createOrReplaceAttribute(fieldData, "id", records[record].id ? records[record].id : "-1");
+	    XMLUtils.createOrReplaceTextNode(fieldData, records[record].value);
+	    XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-key-parent"), "simParamTable");
+    }
+}
+
+        ]]></scriptedCswMappingImport>
+      </checkboxControl>
+      <selectControl>
+        <id>simSpatialDimension</id>
+        <selectionList>
+	        <items lang='de'>
+		        <item id="2">2D</item>
+		        <item id="5">3D</item>
+	        </items>
+        </selectionList>
+      </selectControl>
+      <selectControl>
+        <id>simParamType</id>
+        <selectionList>
+            <items lang='de'>
+                <item id="7">Peilung</item>
+            </items>
+        </selectionList>
+      </selectControl>
+    </controls>
+  </layoutRubric>
+</profile>

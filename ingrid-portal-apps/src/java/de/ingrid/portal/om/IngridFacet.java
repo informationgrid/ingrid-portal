@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class IngridFacet {
 
     private String id;
+    private String parentId;
     private String name;
     private String query;
     private String queryType;
@@ -180,5 +181,11 @@ public class IngridFacet {
     }
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+    public String getParentId() {
+        return parentId;
+    }
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

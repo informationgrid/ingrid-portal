@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -26,13 +26,16 @@
 package de.ingrid.mdek.dwr.services.capabilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
 
 import de.ingrid.mdek.SysListCache;
+import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.OperationBean;
@@ -80,9 +83,13 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
     private final static String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeMethod']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
     private static final String XPATH_EXT_WCTS_SERVICECONTACT = "/wcts:Capabilities/owsgeo:ServiceProvider/owsgeo:ServiceContact";
 
+    private Map<String, Integer> versionSyslistMap;
     
     public WctsCapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new WctsNamespaceContext()), syslistCache);
+        
+        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap.put( "1.0", 1 );
     }
     
     /* (non-Javadoc)
@@ -97,7 +104,10 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
         result.setDataServiceType(4); // transformation
         result.setTitle(xPathUtils.getString(doc, XPATH_EXP_WCTS_TITLE));
         result.setDescription(xPathUtils.getString(doc, XPATH_EXP_WCTS_ABSTRACT));
-        result.setVersions(getNodesContentAsList(doc, XPATH_EXP_WCTS_VERSION));
+        
+        List<String> versionList = getNodesContentAsList(doc, XPATH_EXP_WCTS_VERSION);
+        List<String> mappedVersionList = mapVersionsFromCodelist(MdekSysList.OBJ_SERV_VERSION_WCTS.getDbValue(), versionList, versionSyslistMap);
+        result.setVersions(mappedVersionList);
         
         // Fees
         result.setFees(xPathUtils.getString(doc, XPATH_EXP_WCTS_FEES));

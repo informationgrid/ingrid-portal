@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -162,19 +162,10 @@ define([
 
             // class specials !
 
-            // Fields only mandatory for Geoinformation/Karte(1)
             // NOTICE: div excluded from normal show/hide mechanism (displaytype="exclude")
             if (clazz == "Class1") {
-                // "Kodierungsschema der geographischen Daten" 
-                UtilUI.setMandatory(dom.byId("uiElement1315"));
-
                 // show / hide DQ input dependent from INSPIRE Thema !
                 rules.applyRule7();
-
-            } else if (isObjectClass) {
-                // "Kodierungsschema der geographischen Daten" only in class 1
-                UtilUI.setHide(dom.byId("uiElement1315"));
-                registry.byId("availabilityDataFormatInspire").set("value", "");
             }
 
             // Fields only mandatory for Geoinformation/Karte(1) and Geodatendienst(3)
@@ -847,7 +838,8 @@ define([
             var urlLinkTable = nodeData.linksToUrlTable;
 
             var url = this._filterPreviewImage(urlLinkTable);
-            registry.byId("generalPreviewImage").set("value", url);
+            registry.byId("generalPreviewImage").set("value", url.url);
+            registry.byId("previewImageDescription").set("value", url.description);
 
             var linkTable = objLinkTable.concat(urlLinkTable);
             // Replace relationTypeName with name from according syslist entry. Leave it if it's a free entry.
@@ -876,11 +868,11 @@ define([
             });
 
             if (foundObjectIndex !== null) {
-                var url = urlList[foundObjectIndex].url;
+                var url = urlList[foundObjectIndex];
                 urlList.splice(foundObjectIndex, 1);
                 return url;
             } else {
-                return "";
+                return { url: "", description: "" };
             }
         },
 

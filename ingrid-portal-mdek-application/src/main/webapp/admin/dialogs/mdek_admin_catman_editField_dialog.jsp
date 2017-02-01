@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -108,6 +108,19 @@
                 });
 
                 on(registry.byId("formMandatory"), "Change", mandatoryChanged);
+                
+                on(registry.byId("formWithSyslist"), "Change", toggleListFields);
+            }
+            
+            function toggleListFields(checked) {
+                if (checked) {
+                    domClass.remove("span_formListSyslistId", "hide");
+                    domClass.add("span_formListTable", "hide");
+                } else {
+                    domClass.add("span_formListSyslistId", "hide");
+                    domClass.remove("span_formListTable", "hide");
+                    registry.byId("formListOptions").resize();
+                }                
             }
 
             function mandatoryChanged(checked) {
@@ -148,7 +161,9 @@
                 if (profileObjectToEdit.isLegacy) {
                     // remove CSW Script Field for Legacy elements
                     registry.byId("formScript").removeChild(registry.byId("formIsoScript"));
+                    registry.byId("formScript").removeChild(registry.byId("formIsoScriptImport"));
                     registry.byId("formIsoScript").destroy();
+                    registry.byId("formIsoScriptImport").destroy();
                 }
 
                 // fill form elements with available data
@@ -192,6 +207,10 @@
                             setTimeout(function() {
                                 registry.byId("formListOptions_en").reinitLastColumn();
                             }, 100);
+                            if (profileObjectToEdit.useSyslist) {
+                                registry.byId("formWithSyslist").set("checked", true);
+                                registry.byId("formListSyslistId").set("value", profileObjectToEdit.useSyslist);
+                            }
                         }
                         // fall through!
                     case "numberControl":
@@ -204,6 +223,7 @@
                         setAndShowField("span_formTitle", "formTitle", profileObjectToEdit.label);
                         setAndShowField("span_formHelp", "formHelp", profileObjectToEdit.helpMessage);
                         registry.byId("formIsoScript").set("value", profileObjectToEdit.scriptedCswMapping);
+                        registry.byId("formIsoScriptImport").set("value", profileObjectToEdit.scriptedCswMappingImport);
                         setAndShowField("span_formIndex", "formIndex", profileObjectToEdit.indexName);
                         setAndShowField("span_formWidth", "formWidth", profileObjectToEdit.width);
                         setAndShowField("span_formIndex", "formIndex", profileObjectToEdit.indexName);
@@ -468,6 +488,9 @@
                 array.forEach(pageAdditionalFields.profileData.languages, function(lang) {
                     if (data.type == "selectControl") {
                         data.allowFreeEntries = registry.byId("formAsCombobox").get("checked");
+                        if (registry.byId("formWithSyslist").get("checked")) {
+                            data.useSyslist = registry.byId("formListSyslistId").get("value");
+                        }
                         data.options[lang] = UtilGrid.getTableData("formListOptions_" + lang);
                     } else if (data.type == "numberControl") {
                         data.unit[lang] = registry.byId("formUnits_" + lang).get("value");
@@ -486,8 +509,8 @@
                 }
 
                 data.scriptedProperties = registry.byId("formJsScript").get("value");
-                if (registry.byId("formIsoScript"))
-                    data.scriptedCswMapping = registry.byId("formIsoScript").get("value");
+                if (registry.byId("formIsoScript")) data.scriptedCswMapping = registry.byId("formIsoScript").get("value");
+                if (registry.byId("formIsoScriptImport")) data.scriptedCswMappingImport = registry.byId("formIsoScriptImport").get("value");
                 data.indexName = registry.byId("formIndex").get("value");
                 data.width = registry.byId("formWidth").get("value");
                 data.widthUnit = "%";
@@ -748,6 +771,7 @@
                             <div data-dojo-type="dijit/layout/TabContainer" doLayout="false" id="formScript" style="width:100%;" selected="formJsScript">
                                 <input data-dojo-type="dijit/form/SimpleTextarea" id="formJsScript" class="innerPadding" style="width: 100%;" rows="6" title="<fmt:message key="dialog.admin.additionalfields.JS" />"/>
                                 <input data-dojo-type="dijit/form/SimpleTextarea" id="formIsoScript" class="innerPadding fullWidth" rows="6" title="<fmt:message key="dialog.admin.additionalfields.CSW" />"/>
+                                <input data-dojo-type="dijit/form/SimpleTextarea" id="formIsoScriptImport" class="innerPadding fullWidth" rows="6" title="<fmt:message key="dialog.admin.additionalfields.CSWimport" />"/>
                             </div>
                             <button data-dojo-type="dijit/form/Button" style="float:right;" type="button" onclick="pageAdditionalFieldsDlg.checkSyntax()" label="<fmt:message key="dialog.admin.additionalfields.btnCheckSyntax" />" >
                             </button>
@@ -758,20 +782,44 @@
                 </span>
                 <span id="span_formListOptions" class="outer halfWidth hide">
                     <div>
-                        <span class="label">
-                            <label for="formListOptions" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10107)">
-                                <fmt:message key="dialog.admin.additionalfields.options" />
-                            </label>
-                        </span>
-                        <div class="tableContainer">
-                            <div id="formListOptions" data-dojo-type="dijit/layout/TabContainer" doLayout="false" style="">
+                        <span id="span_formListTable">
+                            <span class="label">
+                                <label for="formListOptions" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10107)">
+                                    <fmt:message key="dialog.admin.additionalfields.options" />
+                                </label>
+                            </span>
+                            <div class="tableContainer">
+                                <div id="formListOptions" data-dojo-type="dijit/layout/TabContainer" doLayout="false" style="">
+                                </div>
                             </div>
-                        </div>
-                        <span class="input">
-                            <input id="formAsCombobox" data-dojo-type="dijit/form/CheckBox" value="required">
-                            <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10114)">
-                                <fmt:message key="dialog.admin.additionalfields.allowFreeEntries" />
-                            </label>
+                        </span>
+                        <span class="outer">
+                            <div>
+                                <span class="input">
+                                    <input id="formAsCombobox" data-dojo-type="dijit/form/CheckBox" value="required">
+                                    <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10114)">
+                                        <fmt:message key="dialog.admin.additionalfields.allowFreeEntries" />
+                                    </label>
+                                </span>
+                            </div>
+                        </span>
+                        
+                        <span class="outer halfWidth">
+                            <div>
+                                <span class="input">
+                                    <input id="formWithSyslist" data-dojo-type="dijit/form/CheckBox" value="required">
+                                    <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10115)">
+                                        <fmt:message key="dialog.admin.additionalfields.listWithSyslist" />
+                                    </label>
+                                </span>
+                            </div>
+                        </span>
+                        <span id="span_formListSyslistId" class="outer halfWidth hide">
+                            <div>
+                            <span class="input">
+                                <input id="formListSyslistId" data-dojo-type="dijit/form/TextBox" style="width: 100%;">
+                            </span>
+                            </div>
                         </span>
                     </div>
                 </span>

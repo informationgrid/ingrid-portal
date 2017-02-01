@@ -373,13 +373,13 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     #set ($action = $renderResponse.createActionURL())
                     $action.setParameter("doRemoveGeothesaurus",  $geothesaurus.topicId)
                     #set($title = "$geothesaurus.topicTitle")
-                    #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$title")
+                    #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $title")
                 #end
                 #if($selectedMap)
                     #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveMap",  "inside")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$selectedMap.doMapCoords.inside")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $selectedMap.doMapCoords.inside")
                     #end
                 #end
             #elseif($entry.getId() == 'attribute')
@@ -388,42 +388,42 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     #if($doAddAttribute.db_title)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveAttribute",  "db_title")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.db_title")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.db_title")
                     #end
                     ##Institution
                     #if($doAddAttribute.db_institute)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveAttribute",  "db_institute")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.db_institute")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.db_institute")
                     #end
                     ##Projektleiter
                     #if($doAddAttribute.db_pm)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveAttribute",  "db_pm")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.db_pm")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.db_pm")
                     #end
                     ##Beteiligte
                     #if($doAddAttribute.db_staff)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveAttribute",  "db_staff")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.db_staff")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.db_staff")
                     #end
                     ##Projektträger
                     #if($doAddAttribute.db_org)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveAttribute",  "db_org")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.db_org")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.db_org")
                     #end
                     ##Laufzeit
                     #if($doAddAttribute.term_from)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveAttribute",  "term_from")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.term_from")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.term_from")
                     #end
                     #if($doAddAttribute.term_to)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveAttribute",  "term_to")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAttribute.term_to")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.term_to")
                     #end
                 #end
             #elseif($entry.getId() == 'area.address')
@@ -432,20 +432,26 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     #if($doAddAreaAddress.street)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveAreaAddress",  "street")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAreaAddress.street")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAreaAddress.street")
                     #end
                     ## PLZ
                     #if($doAddAreaAddress.zip)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveAreaAddress",  "zip")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAreaAddress.zip")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAreaAddress.zip")
                     #end
                     ## Ort
                     #if($doAddAreaAddress.city)
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("doRemoveAreaAddress",  "city")
-                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()):$doAddAreaAddress.city")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAreaAddress.city")
                     #end
+                #end
+            #elseif($entry.getId() == 'type')
+                #if($entry.getFacets())
+                    #set($catNameKey = "$entry.getName()" + ".single")
+                    #set($catName = $resourceMsgs.getString($catNameKey))
+                    #renderSearchResultFacetSelection ($entry.getFacets() $resourceMsgs $catName)
                 #end
             #elseif($entry.isSelect())
                 #if($entry.getFacets())
@@ -457,7 +463,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
             #if($entry.isSelect())
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
-                #renderSearchResultFacetSelectionItem($entry $action "$cat:$resourceMsgs.getString($entry.getName())")
+                #renderSearchResultFacetSelectionItem($entry $action "$cat: $resourceMsgs.getString($entry.getName())")
             #end
             #if($entry.getFacets())
                 #set($catNameSub = $resourceMsgs.getString($entry.getName()))

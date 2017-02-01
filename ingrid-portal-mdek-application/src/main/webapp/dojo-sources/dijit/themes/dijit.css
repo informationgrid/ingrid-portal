@@ -47,13 +47,18 @@ table.dijitInline {
 
 .dijitHidden {
 	/* To hide unselected panes in StackContainer etc. */
-	display: none !important;
+	position: absolute; /* remove from normal document flow to simulate display: none */
+	visibility: hidden; /* hide element from view, but don't break scrolling, see #18612 */
+}
+.dijitHidden * {
+	visibility: hidden !important; /* hide visibility:visible descendants of class=dijitHidden nodes, see #18799 */
 }
 
 .dijitVisible {
 	/* To show selected pane in StackContainer etc. */
 	display: block !important;	/* override user's display:none setting via style setting or indirectly via class */
 	position: relative;			/* to support setting width/height, see #2033 */
+	visibility: visible;
 }
 
 .dj_ie6 .dijitComboBox .dijitInputContainer,
@@ -401,6 +406,7 @@ div.dijitArrowButton {
 	left: 0;
 	#filter: ""; /* make this show up in IE6 after the rendering of the widget */
 	white-space: nowrap;
+	pointer-events: none;   /* so cut/paste context menu shows up when right clicking */
 }
 
 .dijitTimeTextBox {
@@ -1169,12 +1175,23 @@ body .dijitAlignClient { position: absolute; }
 
 /* Calendar */
 
-.dijitCalendarContainer {
+.dijitCalendarContainer table {
 	width: auto;	/* in case user has specified a width for the TABLE nodes, see #10553 */
+	clear: both;    /* clear margin created for left/right month arrows; needed on IE10 for CalendarLite */
 }
 .dijitCalendarContainer th, .dijitCalendarContainer td {
 	padding: 0;
 	vertical-align: middle;
+}
+
+.dijitCalendarMonthContainer {
+	text-align: center;
+}
+.dijitCalendarDecrementArrow {
+	float: left;
+}
+.dijitCalendarIncrementArrow {
+	float: right;
 }
 
 .dijitCalendarYearLabel {
@@ -2112,6 +2129,19 @@ div.dijitTabDisabled, .dj_ie div.dijitTabDisabled {
 
 .dijitNumberTextBox .dijitInputInner {
 	text-align: inherit; /* input */
+}
+
+.dijitNumberTextBox input.dijitInputInner,
+.dijitCurrencyTextBox input.dijitInputInner,
+.dijitSpinner input.dijitInputInner {
+	text-align: right;
+}
+
+.dj_ie8 .dijitNumberTextBox input.dijitInputInner, .dj_ie9 .dijitNumberTextBox input.dijitInputInner,
+.dj_ie8 .dijitCurrencyTextBox input.dijitInputInner, .dj_ie9 .dijitCurrencyTextBox input.dijitInputInner,
+.dj_ie8 .dijitSpinner input.dijitInputInner, .dj_ie9 .dijitSpinner input.dijitInputInner {
+	/* workaround bug where caret invisible in empty textboxes */
+	padding-right: 1px !important;
 }
 
 .dijitToolbar .dijitSelect {
