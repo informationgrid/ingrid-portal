@@ -128,12 +128,11 @@ define([
                                 // 1) it's a system behaviour
                                 // 2) activated by default and not overridden
                                 // 3) activate if explicitly overridden
-                                if (
-                                        (behaviours[behave].type === "SYSTEM" 
-                                            && behaviours[behave].defaultActive 
-                                            && behaviours[behave].override === undefined
-                                        )
-                                        || (behaviours[behave].override === true)) {
+                                if (behaviours[behave].type === "SYSTEM" &&
+                                        (
+                                            (behaviours[behave].defaultActive && behaviours[behave].override === undefined)
+                                            || behaviours[behave].override === true
+                                        )) {
                                     console.debug("execute system behaviour: " + behave);
                                     behaviours[behave].run();
                                 }
