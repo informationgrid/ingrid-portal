@@ -232,7 +232,6 @@
                         queryTerm = lang.trim(queryTerm);
 
                         if (queryTerm == "") {
-                            showStatus("");
                             return;
                         }
 

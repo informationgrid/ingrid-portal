@@ -97,9 +97,6 @@ define([
                         callback: function(res) {
                             _this._handleRootTopics(res);
                             deferred.resolve(res);
-                            // if (!_this.treeWidget) return;
-                            // _this.showStatus("");
-                            // callback_function();
                         },
                         errorHandler: function(msg) {
                             deferred.reject(msg);
@@ -119,7 +116,6 @@ define([
                         preHook: _this.showLoadingZone,
                         postHook: _this.hideLoadingZone,
                         callback: function(res) {
-                            //_this.showStatus("");
                             _this._handleSubTopics(res);
                             deferred.resolve(res);                            
                         },
@@ -181,7 +177,6 @@ define([
                         _this.hideLoadingZone();
                     },
                     callback: function(res) {
-                        _this.showStatus("");
                         var topTerm = _this._getTopTermNode(res[0]);
                         console.debug("expandPath");
                         _this._expandPath(treePane.rootNode, topTerm, res[0], def);

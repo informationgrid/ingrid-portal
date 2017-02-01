@@ -91,7 +91,6 @@ require([
                         res = res.concat(inspireTopics);
                         UtilList.addSNSTopicLabels(res);
                         UtilStore.updateWriteStore("keywordsList", res);
-                        showStatus("");
                         dom.byId("numberOfTerms").innerHTML = "<fmt:message key='sns.numberOfTerms' />" + " " + resultsNum;
                     } else {
                         // Show status that no results were found?

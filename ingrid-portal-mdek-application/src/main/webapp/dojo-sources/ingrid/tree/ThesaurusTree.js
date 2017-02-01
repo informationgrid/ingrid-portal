@@ -103,8 +103,6 @@ define("ingrid/tree/ThesaurusTree", [
                 // preHook: this.showLoadingZone,
                 // postHook: this.hideLoadingZone,
                 callback: function(res) {
-                    _this.showStatus("");
-                    //var topTerm = _this._getTopTermNode(res[0]);
                     console.debug("expandPath");
                     var path = _this.preparePath(res[0]);
                     _this.set("paths", [path])
