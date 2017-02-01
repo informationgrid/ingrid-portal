@@ -303,8 +303,6 @@ define([
 
                 new CheckBox({}, "isInspireRelevant");
                 new CheckBox({}, "isOpenData");
-                // show open data checkbox only for specific classes
-                rules.applyRuleOpenData();
 
                 var categoriesStructure = [{
                     field: 'title',
