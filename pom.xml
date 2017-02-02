@@ -8,7 +8,7 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>4.1.0-SNAPSHOT-UVP</version>
+  <version>4.1.0-SNAPSHOT-UVP</version>
   <name>InGrid Portal</name>
   <description>This is the portal where documents can be searched through the iBus and new documents can be managed by the InGrid Editor.</description>
   <scm>
@@ -27,8 +27,8 @@
 
   <properties>
     <org.apache.portals.jetspeed.version>2.3.0</org.apache.portals.jetspeed.version>
-    <mdek.version>4.0.1-SNAPSHOT</mdek.version>
-    <webmap-client.version>4.0.1-SNAPSHOT</webmap-client.version>
+    <mdek.version>4.0.1</mdek.version>
+    <webmap-client.version>4.0.1</webmap-client.version>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -52,12 +52,12 @@
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-utils</artifactId>
-        <version>3.6.2</version>
+        <version>4.0.1</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-codelist-service</artifactId>
-        <version>4.0.1-SNAPSHOT</version>
+        <version>4.0.1</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>

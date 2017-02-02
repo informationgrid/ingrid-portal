@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -39,8 +39,9 @@ define(["dojo/_base/declare",
         "ingrid/utils/Grid", 
         "ingrid/utils/UI", 
         "ingrid/utils/List", 
-        "ingrid/utils/Syslist"
-], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist) {
+        "ingrid/utils/Syslist",
+        "ingrid/hierarchy/behaviours/opendata"
+], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist, openData) {
 
     return declare(null, {
         
@@ -261,7 +262,9 @@ define(["dojo/_base/declare",
                     }
                 });
             }
-        }
+        },
+
+        openData: openData
         
         /*
          * ABORTED: The ATOM URL has to be maintained when automatically inserted into document. It's better to adapt the context help

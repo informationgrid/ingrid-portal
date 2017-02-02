@@ -5,8 +5,8 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="4.0.1-SNAPSHOT" date="??" description="Release 4.0.1">
-            <action type="add" dev="wemove" issue="REDMINE-452"><action type="add" dev="wemove" issue="REDMINE-452">
+        <release version="4.0.1" date="2017-02-01" description="Release 4.0.1">
+            <action type="add" dev="wemove" issue="REDMINE-452">
                 PORTAL: Add profile portalu_sl.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-519">
@@ -24,7 +24,7 @@
             <action type="fix" dev="wemove" issue="REDMINE-496">
                 PORTAL: Fix enable (delete) button on checkbox selection.
             </action>
-            <action type="fix" dev="wemove" issue="REDMINE-479">   <action type="fix" dev="wemove" issue="REDMINE-479">
+            <action type="fix" dev="wemove" issue="REDMINE-479">
                 PORTAL: Fix detail view with free addresses.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-446">
@@ -96,7 +96,7 @@
             <action type="fix" dev="wemove" issue="REDMINE-532">
                 IGE: Added error message when Thesaurus could not be reached.
             </action>
-            <action type="fix" dev="wemove" issue="REDMINE-448"><action type="fix" dev="wemove" issue="REDMINE-448">
+            <action type="fix" dev="wemove" issue="REDMINE-448">
                 MapClient: GetMap-URL on print.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-449">
