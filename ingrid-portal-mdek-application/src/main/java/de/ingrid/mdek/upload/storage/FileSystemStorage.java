@@ -59,28 +59,21 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public boolean exists(String path) {
-        Path realPath = this.getRealPath(path, this.docsDir);
+    public boolean exists(String path, String file) {
+        Path realPath = this.getRealPath(path, file, this.docsDir);
         return Files.exists(realPath);
     }
 
     @Override
-    public boolean isDirectory(String path) {
-        Path realPath = this.getRealPath(path, this.docsDir);
-        return Files.isDirectory(realPath);
-    }
-
-    @Override
-    public InputStream read(String file) throws IOException {
-        Path realPath = this.getRealPath(file, this.docsDir);
+    public InputStream read(String path, String file) throws IOException {
+        Path realPath = this.getRealPath(path, file, this.docsDir);
         return Files.newInputStream(realPath);
     }
 
     @Override
     public String[] write(String path, String file, InputStream data, Integer size, boolean replace)
             throws IOException {
-        Path filePath = Paths.get(path, file);
-        Path realPath = this.getRealPath(this.sanitize(filePath.toString()), this.docsDir);
+        Path realPath = this.getRealPath(path, file, this.docsDir);
         Files.createDirectories(realPath.getParent());
 
         // copy file
@@ -152,8 +145,8 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public void delete(String file) throws IOException {
-        Path realPath = this.getRealPath(file, this.docsDir);
+    public void delete(String path, String file) throws IOException {
+        Path realPath = this.getRealPath(path, file, this.docsDir);
         Files.delete(realPath);
     }
 
@@ -225,8 +218,20 @@ public class FileSystemStorage implements Storage {
      * @return String
      */
     private String sanitize(String path) {
-        // TODO remove forbidden characters
-        return path;
+        // replace slashes
+        return path.replaceAll("\\s*[/\\\\]+\\s*", "-");
+    }
+
+    /**
+     * Get the real path of a requested path
+     *
+     * @param path
+     * @param file
+     * @param basePath
+     * @return Path
+     */
+    private Path getRealPath(String path, String file, String basePath) {
+        return FileSystems.getDefault().getPath(basePath, this.sanitize(path), this.sanitize(file));
     }
 
     /**
@@ -237,7 +242,7 @@ public class FileSystemStorage implements Storage {
      * @return Path
      */
     private Path getRealPath(String file, String basePath) {
-        return FileSystems.getDefault().getPath(basePath, file);
+        return FileSystems.getDefault().getPath(basePath, this.sanitize(file));
     }
 
     /**
@@ -248,6 +253,6 @@ public class FileSystemStorage implements Storage {
      */
     private String stripPath(String path) {
         Path basePath = FileSystems.getDefault().getPath(this.docsDir);
-        return path.replace(basePath.toString(), "");
+        return path.replace(basePath.toString(), "").replaceAll("^[/\\\\]+", "");
     }
 }

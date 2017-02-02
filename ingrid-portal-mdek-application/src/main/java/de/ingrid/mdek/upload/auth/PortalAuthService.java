@@ -17,13 +17,14 @@ public class PortalAuthService implements AuthService {
         if (fileAction == null) {
             return false;
         }
+        if (fileAction == Action.READ) {
+            return true;
+        }
 
         // check for user in session
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("userName");
-
-        // TODO fix for production
-        return true || username != null;
+        return username != null;
     }
 
 }

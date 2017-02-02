@@ -3,6 +3,7 @@ define([
     'dojo/_base/lang',
     'dojo/_base/array',
     'dojo/Deferred',
+    'dojo/json',
     'dojo/on',
     'dojo/query',
     'dojo/dom',
@@ -17,6 +18,7 @@ define([
     lang,
     array,
     Deferred,
+    json,
     on,
     query,
     dom,
@@ -27,10 +29,10 @@ define([
     template,
     styles
 ) {
+    // TODO nicer dialogs
     return declare([_WidgetBase], {
 
         uploadUrl: "",
-        path: "",
 
         uploader: null,
         dialog: null,
@@ -58,7 +60,12 @@ define([
             this.dialog.startup();
         },
 
-        open: function() {
+        /**
+         * Show the upload dialog
+         * @param path The upload path
+         * @return Deferred
+         */
+        open: function(path) {
             this.deferred = new Deferred();
 
             // uploader styles
@@ -76,21 +83,30 @@ define([
                 element: this.dialog.containerNode,
                 template: this.templateEl,
                 autoUpload: false,
+                text: {
+                    defaultResponseError: "Upload fehlgeschlagen",
+                    formatProgress: "{percent}% von {total_size}",
+                    failUpload: "Upload fehlgeschlagen",
+                    waitingForResponse: "Wird bearbeitet...",
+                    paused: "Pausiert"
+                },
+                messages: {
+                    tooManyFilesError: "Sie können nur eine Datei einfügen",
+                    unsupportedBrowser: "Fehler - Ihr Browser unterstützt keine Art von Dateiupload"
+                },
                 request: {
                     endpoint: this.uploadUrl,
                     filenameParam: "filename",
                     inputName: "file",
                     uuidName: "id",
                     totalFileSizeName: "size",
-                    params: {
-                        path: this.path,
-                        replace: true
-                    }
+                    params: this.getUploadParams(path, false)
                 },
                 retry: {
                     enableAuto: true,
                     autoAttemptDelay: 5,
-                    maxAutoAttempts: 10
+                    maxAutoAttempts: 10,
+                    autoRetryNote: "Wiederhole {retryNum}/{maxAuto}..."
                 },
                 chunking: {
                     enabled: true,
@@ -114,6 +130,21 @@ define([
                         array.forEach(succeeded, function(id) {
                             this.documents = this.documents.concat(this.resultParts[id]);
                         }, this);
+                    }),
+                    onError: lang.hitch(this, function(id, name, errorReason, xhrOrXdr) {
+                        if (xhrOrXdr.status == 409) {
+                            this.uploader.pauseUpload(id);
+                            // TODO nicer dialog with file name input field
+                            if (confirm("Die Datei existiert bereits. Soll die existierende Datei überschrieben werden?")) {
+                                // retry with new name replace parameter set to true
+                                this.uploader.setName(id, name);
+                                this.uploader.setParams(this.getUploadParams(path, true), id);
+                                this.uploader.continueUpload(id);
+                            }
+                        }
+                        else {
+                            alert(qq.format("Fehler beim Upload von '{}': {}", name, errorReason));
+                        }
                     })
                 }
             });
@@ -130,6 +161,13 @@ define([
             this.dialog.show();
 
             return this.deferred;
+        },
+
+        getUploadParams: function(path, replace) {
+            return {
+                path: path,
+                replace: replace
+            };
         },
 
         close: function() {

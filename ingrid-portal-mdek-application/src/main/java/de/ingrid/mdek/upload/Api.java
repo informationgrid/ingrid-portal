@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.net.URI;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -23,8 +27,6 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +37,8 @@ import de.ingrid.mdek.upload.storage.Storage;
 @Component
 @Path("/document")
 public class Api {
+
+    private static final String UTF_8 = "UTF-8";
 
     @Context
     HttpServletRequest request;
@@ -53,24 +57,26 @@ public class Api {
      * @throws Exception
      */
     @GET
-    @Path("{path : .+}")
+    @Path("{path : [^/]+}/{file : .+}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response download(@PathParam("path") String path) throws Exception {
+    public Response download(
+            @PathParam("path") String path,
+            @PathParam("file") String file) throws Exception {
         // check permission
-        if (!this.authService.isAuthorized(this.request, path, Action.READ.name())) {
-            return Response.status(403).entity("You are not authorized to read the document.").build();
+        if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.READ.name())) {
+            throw new NotAuthorizedException("You are not authorized to read the document.");
         }
 
         // check file existence
-        if (!this.storage.exists(path)) {
-            return Response.status(404).entity("The requested document does not exist on the server.").build();
+        if (!this.storage.exists(path, file)) {
+            throw new NotFoundException("The requested document does not exist on the server.");
         }
 
         // read file
         StreamingOutput fileStream = new StreamingOutput() {
             @Override
             public void write(java.io.OutputStream output) {
-                try (InputStream data = Api.this.storage.read(path)) {
+                try (InputStream data = Api.this.storage.read(path, file)) {
                     IOUtils.copy(data, output);
                     output.flush();
                 }
@@ -90,7 +96,7 @@ public class Api {
      * Upload a document or part of a document
      *
      * @param path The path to the document
-     * @param fileName The filename of the document
+     * @param file The filename of the document
      * @param id Unique id of the document
      * @param size The size of the document in bytes
      * @param replace Boolean whether to replace an existing document or not (if false, an error will be returned, if
@@ -109,7 +115,7 @@ public class Api {
     @Produces(MediaType.APPLICATION_JSON)
     public Response upload(
             @FormDataParam("path") String path,
-            @FormDataParam("filename") String fileName,
+            @FormDataParam("filename") String file,
             @FormDataParam("id") String id,
             @FormDataParam("size") Integer size,
             @FormDataParam("replace") boolean replace,
@@ -120,8 +126,13 @@ public class Api {
             @FormDataParam("parts_offset") Integer partsOffset,
             @Context UriInfo uriInfo) throws Exception {
         // check permission
-        if (!this.authService.isAuthorized(this.request, fileName, Action.CREATE.name())) {
-            return Response.status(403).entity("You are not authorized to upload the document.").build();
+        if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.CREATE.name())) {
+            throw new NotAuthorizedException("You are not authorized to upload the document.");
+        }
+
+        // check if file exists already
+        if (!replace && this.storage.exists(path, file)) {
+            throw new ConflictException("The file already exists.");
         }
 
         String[] files = new String[0];
@@ -132,7 +143,7 @@ public class Api {
         }
         else {
             // store file
-            files = this.storage.write(path, fileName, fileInputStream, size, replace);
+            files = this.storage.write(path, file, fileInputStream, size, replace);
         }
         return this.createUploadResponse(files, uriInfo);
     }
@@ -141,7 +152,7 @@ public class Api {
      * Combine previously uploaded parts of a document
      *
      * @param path The path to the document
-     * @param fileName The filename of the document
+     * @param file The filename of the document
      * @param id Unique id of the document
      * @param size The size of the document in bytes
      * @param replace Boolean whether to replace an existing document or not (if false, an error will be returned, if
@@ -157,19 +168,19 @@ public class Api {
     @Produces(MediaType.APPLICATION_JSON)
     public Response uploadPartsCompleted(
             @FormParam("path") String path,
-            @FormParam("filename") String fileName,
+            @FormParam("filename") String file,
             @FormParam("id") String id,
             @FormParam("size") Integer size,
             @FormParam("replace") boolean replace,
             @FormParam("parts_total") Integer partsTotal,
             @Context UriInfo uriInfo) throws Exception {
         // check permission
-        if (!this.authService.isAuthorized(this.request, fileName, Action.CREATE.name())) {
-            return Response.status(403).entity("You are not authorized to upload the document.").build();
+        if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.CREATE.name())) {
+            throw new NotAuthorizedException("You are not authorized to upload the document.");
         }
 
         // store files
-        String[] files = this.storage.combineParts(path, fileName, id, partsTotal, size, replace);
+        String[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace);
         return this.createUploadResponse(files, uriInfo);
     }
 
@@ -181,26 +192,26 @@ public class Api {
      * @throws Exception
      */
     @DELETE
-    @Path("{path : .+}")
+    @Path("{path : [^/]+}/{file : .+}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("path") String path) throws Exception {
+    public Response delete(
+            @PathParam("path") String path,
+            @PathParam("file") String file) throws Exception {
         // check permission
-        if (!this.authService.isAuthorized(this.request, path, Action.DELETE.name())) {
-            return Response.status(403).entity("You are not authorized to delete the document.").build();
+        if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.DELETE.name())) {
+            throw new NotAuthorizedException("You are not authorized to delete the document.");
         }
 
         // check file existence
-        if (!this.storage.exists(path)) {
-            return Response.status(404).entity("The requested document does not exist on the server.").build();
+        if (!this.storage.exists(path, file)) {
+            throw new NotFoundException("The requested document does not exist on the server.");
         }
 
         // delete file
-        this.storage.delete(path);
+        this.storage.delete(path, file);
 
         // build response
-        JSONObject result = new JSONObject();
-        result.put("success", true);
-        return Response.status(204).entity(result.toString()).build();
+        return ApiResponse.get(Response.Status.NO_CONTENT).build();
     }
 
     /**
@@ -209,23 +220,33 @@ public class Api {
      * @param files
      * @param uriInfo
      * @return Response
-     * @throws JSONException
+     * @throws Exception
      */
-    private Response createUploadResponse(String[] files, UriInfo uriInfo) throws JSONException {
+    private Response createUploadResponse(String[] files, UriInfo uriInfo) throws Exception {
         // create file URIs
-        // NOTE: path method of UriBuilder appends argument, so we can't reuse
-        // it
+        // NOTE: path method of UriBuilder appends argument, so we can't reuse it
         URI[] fileUris = new URI[files.length];
         for (int i = 0, count = files.length; i < count; i++) {
-            fileUris[i] = uriInfo.getAbsolutePathBuilder().path(files[i]).build();
+            fileUris[i] = this.toUri(files[i], uriInfo);
         }
         String createdFile = files.length > 0 ? files[0] : "";
-        URI uri = uriInfo.getAbsolutePathBuilder().path(createdFile).build();
+        URI uri = this.toUri(createdFile, uriInfo);
 
         // build response
-        JSONObject result = new JSONObject();
-        result.put("success", true);
-        result.put("files", fileUris);
-        return Response.created(uri).entity(result.toString()).build();
+        Map<String, URI[]> data = new HashMap<String, URI[]>();
+        data.put("files", fileUris);
+        return ApiResponse.get(Response.Status.CREATED, data).header("Location", uri).build();
+    }
+
+    /**
+     * Get the absolute URI of a file
+     *
+     * @param file
+     * @param uriInfo
+     * @return URI
+     * @throws Exception
+     */
+    private URI toUri(String file, UriInfo uriInfo) throws Exception {
+        return uriInfo.getAbsolutePathBuilder().path(URLEncoder.encode(file, UTF_8).replaceAll("%2F", "/")).build();
     }
 }

@@ -533,6 +533,8 @@ define([
             },
             
             addUploadLink: function (id) {
+                // TODO set placeholder text, if currentUdk has not uuid yet 
+                // and reveal upload link after first save
                 var table = registry.byId(id);
                 if (table) {
                     var uploader = new UploadWidget({
@@ -550,8 +552,11 @@ define([
                             cursor: "pointer"
                         },
                         onclick: lang.hitch(this, function() {
-                            uploader.open().then(lang.hitch(this, function(documents) {
+                            var path = currentUdk.uuid;
+                            uploader.open(path).then(lang.hitch(this, function(documents) {
                                 console.log(documents);
+                                var data = table.data;
+                                // TODO add documents to table data
                             }));
                         })
                     }, container);

@@ -17,29 +17,23 @@ public interface Storage {
     String[] list(String path) throws IOException;
 
     /**
-     * Check if a path exists
+     * Check if a file exists
      *
      * @param path The path
+     * @param file The file
      * @return boolean
      */
-    boolean exists(String path);
-
-    /**
-     * Check if a path denotes a directory
-     *
-     * @param path The path
-     * @return boolean
-     */
-    boolean isDirectory(String path);
+    boolean exists(String path, String file);
 
     /**
      * Get the content of a file
      *
+     * @param path The path
      * @param file The file
      * @return InputStream
      * @throws IOException
      */
-    InputStream read(String file) throws IOException;
+    InputStream read(String path, String file) throws IOException;
 
     /**
      * Write data to a file in a path and extract archives contained in data
@@ -83,10 +77,11 @@ public interface Storage {
     /**
      * Delete a file
      *
+     * @param path The path
      * @param file The file
      * @throws IOException
      */
-    void delete(String file) throws IOException;
+    void delete(String path, String file) throws IOException;
 
     /**
      * Create an alias for a path
