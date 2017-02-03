@@ -4,12 +4,14 @@ define([
     'dojo/_base/array',
     'dojo/Deferred',
     'dojo/json',
+    'dojo/string',
     'dojo/on',
     'dojo/query',
     'dojo/dom',
     'dojo/dom-construct',
     'dijit/_WidgetBase',
     'dijit/Dialog',
+    "ingrid/dialog",
     './fine-uploader/fine-uploader',
     'dojo/text!./template/UploadWidget.html',
     'dojo/text!./template/UploadWidget.css'
@@ -19,17 +21,18 @@ define([
     array,
     Deferred,
     json,
+    string,
     on,
     query,
     dom,
     domConstruct,
     _WidgetBase,
     Dialog,
+    IngridDialog,
     qq,
     template,
     styles
 ) {
-    // TODO nicer dialogs
     return declare([_WidgetBase], {
 
         uploadUrl: "",
@@ -103,13 +106,18 @@ define([
                     params: this.getUploadParams(path, false)
                 },
                 retry: {
-                    enableAuto: true,
+                    enableAuto: false,
                     autoAttemptDelay: 5,
-                    maxAutoAttempts: 10,
+                    maxAutoAttempts: 3,
                     autoRetryNote: "Wiederhole {retryNum}/{maxAuto}..."
                 },
                 chunking: {
                     enabled: true,
+                    concurrent: {
+                        // when concurrency is enabled, onError will be called with
+                        // an xhr with status 0 which makes correct error handling impossible
+                        enabled: false
+                    },
                     paramNames: {
                         chunkSize: "parts_size",
                         partByteOffset: "parts_offset",
@@ -117,7 +125,7 @@ define([
                         totalParts: "parts_total"
                     },
                     success: {
-                        endpoint: this.uploadUrl+"/done"
+                        endpoint: this.uploadUrl
                     }
                 },
                 callbacks: {
@@ -134,18 +142,29 @@ define([
                     onError: lang.hitch(this, function(id, name, errorReason, xhrOrXdr) {
                         if (xhrOrXdr.status == 409) {
                             this.uploader.pauseUpload(id);
-                            // TODO nicer dialog with file name input field
-                            if (confirm("Die Datei existiert bereits. Soll die existierende Datei überschrieben werden?")) {
-                                // retry with new name replace parameter set to true
-                                this.uploader.setName(id, name);
-                                this.uploader.setParams(this.getUploadParams(path, true), id);
-                                this.uploader.continueUpload(id);
-                            }
+                            // TODO add file name input field?
+                            var message = string.substitute("Die Datei '${0}' existiert bereits. Soll die existierende Datei überschrieben werden?", [name]);
+                            IngridDialog.show("Upload", message, IngridDialog.INFO, [{
+                                caption: "Ja",
+                                action: lang.hitch(this, function() {
+                                    // retry with new name replace parameter set to true
+                                    this.uploader.setName(id, name);
+                                    this.uploader.setParams(this.getUploadParams(path, true), id);
+                                    this.uploader.retry(id);
+                                })
+                            }, {
+                                caption: "Nein",
+                                action: IngridDialog.CLOSE_ACTION
+                            }]);
                         }
                         else {
-                            alert(qq.format("Fehler beim Upload von '{}': {}", name, errorReason));
+                            var message = string.substitute("Fehler beim Upload von '${0}': ${1}", [name, errorReason]);
+                            IngridDialog.show("Fehler", message, IngridDialog.WARNING);
                         }
                     })
+                },
+                showMessage: function(message) {
+                    IngridDialog.show("Info", message, IngridDialog.INFO);
                 }
             });
             this.clickHandles = [
@@ -153,6 +172,15 @@ define([
                     this.uploader.uploadStoredFiles();
                 })),
                 on(dom.byId("trigger-finish"), "click", lang.hitch(this, function() {
+                    // remove duplicates
+                    var lookup = {};
+                    this.documents = array.filter(this.documents, function(item) {
+                        if(lookup[item] !== true) {
+                            lookup[item] = true;
+                            return true;
+                        }
+                        return false;
+                    });
                     this.deferred.resolve(this.documents);
                     this.documents = [];
                     this.dialog.hide();

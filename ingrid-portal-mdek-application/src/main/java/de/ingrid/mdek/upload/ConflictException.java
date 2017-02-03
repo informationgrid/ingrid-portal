@@ -1,7 +1,6 @@
 package de.ingrid.mdek.upload;
 
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 public class ConflictException extends WebApplicationException {
@@ -13,7 +12,6 @@ public class ConflictException extends WebApplicationException {
      * @param message
      */
     public ConflictException(String message) {
-        super(Response.status(Response.Status.CONFLICT)
-            .entity(message).type(MediaType.TEXT_PLAIN).build());
+        super(ApiResponse.get(Response.Status.CONFLICT, message).build());
     }
 }

@@ -88,7 +88,7 @@ public class Api {
 
         // build response
         ResponseBuilder response = Response.ok(fileStream, MediaType.APPLICATION_OCTET_STREAM);
-        response.header("Content-Disposition", "attachment; filename=\"" + path + "\"");
+        response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
         return response.build();
     }
 
@@ -163,7 +163,6 @@ public class Api {
      * @throws Exception
      */
     @POST
-    @Path("/done")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response uploadPartsCompleted(

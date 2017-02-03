@@ -16,16 +16,17 @@ public class ApiResponse {
     private ResponseBuilder builder = null;
 
     private Integer status = Response.Status.OK.getStatusCode();
-
-    private Throwable ex = null;
-    private Map<String, ?> data;
+    private String error = null;
+    private Map<String, ?> data = null;
 
     /**
      * Constructor
      * @param status The response status
+     * @param error The error text (null in case of no error)
      */
-    private ApiResponse(Response.Status status) {
+    private ApiResponse(Response.Status status, String error) {
         this.status = status.getStatusCode();
+        this.error = error;
         this.builder = Response.status(this.status);
     }
 
@@ -34,7 +35,16 @@ public class ApiResponse {
      * @param status The response status
      */
     public static ResponseBuilder get(Response.Status status) {
-        return new ApiResponse(status).build();
+        return new ApiResponse(status, null).build();
+    }
+
+    /**
+     * Get a response builder from a response status
+     * @param status The response status
+     * @param error The error text
+     */
+    public static ResponseBuilder get(Response.Status status, String error) {
+        return new ApiResponse(status, error).build();
     }
 
     /**
@@ -43,7 +53,19 @@ public class ApiResponse {
      * @param data Map of additional response data
      */
     public static ResponseBuilder get(Response.Status status, Map<String,?> data) {
-        ApiResponse response = new ApiResponse(status);
+        ApiResponse response = new ApiResponse(status, null);
+        response.data = data;
+        return response.build();
+    }
+
+    /**
+     * Get a response builder from a response status and data
+     * @param status The response status
+     * @param error The error text
+     * @param data Map of additional response data
+     */
+    public static ResponseBuilder get(Response.Status status, String error, Map<String,?> data) {
+        ApiResponse response = new ApiResponse(status, error);
         response.data = data;
         return response.build();
     }
@@ -53,8 +75,7 @@ public class ApiResponse {
      * @param ex The exception
      */
     public static ResponseBuilder get(Throwable ex) {
-        ApiResponse response = new ApiResponse(Response.Status.INTERNAL_SERVER_ERROR);
-        response.ex = ex;
+        ApiResponse response = new ApiResponse(Response.Status.INTERNAL_SERVER_ERROR, ex.getMessage());
         return response.build();
     }
 
@@ -63,8 +84,7 @@ public class ApiResponse {
      * @param ex The exception
      */
     public static ResponseBuilder get(WebApplicationException ex) {
-        ApiResponse response = new ApiResponse(Response.Status.fromStatusCode(ex.getResponse().getStatus()));
-        response.ex = ex;
+        ApiResponse response = new ApiResponse(Response.Status.fromStatusCode(ex.getResponse().getStatus()), ex.getMessage());
         return response.build();
     }
 
@@ -78,15 +98,17 @@ public class ApiResponse {
         String resultType = MediaType.TEXT_PLAIN;
         try {
             JSONObject result = new JSONObject();
-            if (this.ex == null) {
+            if (this.error == null) {
                 result.put("success", true);
             }
             else {
                 result.put("success", false);
-                result.put("error", this.ex.getMessage());
+                result.put("error", this.error);
             }
-            for (Entry<String, ?> item : this.data.entrySet()) {
-                result.put(item.getKey(), item.getValue());
+            if (this.data != null) {
+                for (Entry<String, ?> item : this.data.entrySet()) {
+                    result.put(item.getKey(), item.getValue());
+                }
             }
             resultStr = result.toString();
             resultType = MediaType.APPLICATION_JSON;
