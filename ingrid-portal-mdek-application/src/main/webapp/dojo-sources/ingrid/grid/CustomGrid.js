@@ -169,7 +169,9 @@ define([
             minWidth: 30,
             rerenderOnResize: false,
             headerCssClass: null,
-            hidden: false
+            hidden: false,
+            listId: null,
+            partialSearch: false
         },
 
         columnRowMoveHandler: {
