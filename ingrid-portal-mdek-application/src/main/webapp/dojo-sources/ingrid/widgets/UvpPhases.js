@@ -79,7 +79,7 @@ define([
                 
                 topic.subscribe("/loadRequest", function(data) {
                     console.log("recognized loaded data:", data);
-                    if (data.appType === "O") {
+                    if (data.appType === "O" && data.id !== "objectRoot") {
                         domClass.remove(self.addButton.domNode, "hide");
                     } else {
                         domClass.add(self.addButton.domNode, "hide");

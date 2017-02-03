@@ -46,11 +46,6 @@ define([
             defaultActive: true,
             type: "SYSTEM",
             run: function() {
-                sysLists[8000] = [
-                    ["UVP", "10", "N", ""],
-                    ["Ausländische UVP", "11", "N", ""],
-                    ["Vorprüfung", "12", "N", ""]
-                ];
 
                 topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
                     // remove all assistants
@@ -61,7 +56,38 @@ define([
                 UtilSyslist.readSysListData(9000).then(function(entry) {
                     sysLists[9000] = entry;
                 });
+                UtilSyslist.readSysListData(8001).then(function(entry) {
+                    sysLists[8001] = entry;
+                });
+
+                // get availbale object classes from codelist 8001
+                UtilSyslist.listIdObjectClass = 8001;
+
+                this.hideMenuItems();
+
+                topic.subscribe("/selectNode", function(message) {
+                    if (message.id === "dataTree") {
+                        if (message.node.id === "objectRoot") {
+                            console.log("disable create new object");
+                            registry.byId("toolbarBtnNewDoc").set("disabled", true);
+
+                        } else {
+                            console.log("enable create new object");
+                            registry.byId("toolbarBtnNewDoc").set("disabled", false);
+                        }
+                    }
+                });
+            },
+
+            hideMenuItems: function() {
+                topic.subscribe("/onMenuBarCreate", function(excludedItems) {
+                    excludedItems.push("menuPageStatistics", "menuPageQualityEditor", "menuPageQualityAssurance",
+                        "menuPageResearchThesaurus");
+                });
+                // TODO: remove stack container or do not let them initialized
+                // registry.byId("stackContainer").removeChild(registry.byId("pageStatistics"));
             }
+
         },
 
         uvpPhaseField: {
@@ -90,8 +116,31 @@ define([
                 
                 // TODO: additional fields according to #490 and #473
 
+                var self = this;
+                topic.subscribe("/onObjectClassChange", function(clazz) {
+                    self.prepareDocument(clazz);
+                });
                 
+                topic.subscribe("/onTreeContextMenu", function(node) {
+                    console.log("context menu called from:", node);
+                    if (node.item.id === "objectRoot") {
+                        registry.byId("menuItemNew").set("disabled", true);
+                    } else {
+                        registry.byId("menuItemNew").set("disabled", false);
+                    }
+                });
+            },
 
+            prepareDocument: function(classInfo) {
+                console.log("Prepare document for class: ", classInfo);
+                var objClass = classInfo.objClass;
+                if (objClass === "Class10") {
+
+                } else if (objClass === "Class11") {
+
+                } else if (objClass === "Class12") {
+                    
+                }
             },
             
             hideDefaultFields: function() {
@@ -104,6 +153,7 @@ define([
 
                 domClass.add("uiElement5000", "hide");
                 domClass.add("uiElement5100", "hide");
+                domClass.add("uiElement5105", "hide");
                 domClass.add("uiElement6010", "hide");
                 
                 // hide all rubrics
@@ -138,8 +188,10 @@ define([
                     { id: id, name: "Vorhabensnummer", help: "...", isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
                     structure, rubric
                 );
-                domClass.add(registry.byId(id).domNode, "hideTableHeader");
-                // phaseFields.push({ key: "auslegungsTable", field: registry.byId(id) });
+                var categoryWidget = registry.byId(id);
+                domClass.add(categoryWidget.domNode, "hideTableHeader");
+                
+                require("ingrid/IgeActions").additionalFieldWidgets.push(categoryWidget);
             }
         }
 
