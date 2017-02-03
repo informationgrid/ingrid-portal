@@ -86,7 +86,6 @@ define([
     
     
                 // get guiIds that are going to be configured for visibility
-                //fetchGuiIdList();
                 self.initGeneralEventListener(); // for release activate!
     
                 // wait for page rendered before 
@@ -97,12 +96,7 @@ define([
                     // create the containers where external pages shall be loaded into
                     self.createMenuPages();
     
-                    // create the menu bar
-                    igeMenuBar.create(registry.byId("menubarPane"));
                     self.initSessionKeepalive();
-//                        .then(null, function(err) {
-//                            dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING, null, null, null, err.stack);
-//                        });
     
                     // select a page initially
                     deferred2.then(function() {
@@ -137,6 +131,11 @@ define([
                                     behaviours[behave].run();
                                 }
                             }
+
+                            // create the menu bar after system behaviours are run, so that they can have an influence
+                            // on the menu structure
+                            igeMenuBar.create(registry.byId("menubarPane"));
+
                         }, function(error) {
                             console.error("Error executing behvaiour:", error);
                         });
@@ -219,12 +218,6 @@ define([
 
             return def.promise;
         },
-
-        // initPageHeader: function() {
-        //     // Display the current user and role
-        //     UtilSecurity.getRoleName(UtilSecurity.currentUser.role);
-        //     UtilAddress.createAddressTitle(UtilSecurity.currentUser.address);
-        // },
 
         create: function() {
 
@@ -351,15 +344,6 @@ define([
                     executeScripts: true
                 });
 
-                /*var fieldSettings = new dojox.layout.ContentPane({
-                        id: "fieldSettings",
-                        title: "fieldSettings",
-                        layoutAlign: "client",
-                        style: "padding: 0px; width: 864px !important; height: 100%;",
-                        href: "admin/mdek_admin_catalog_field_settings.jsp",
-                        executeScripts: true
-                    });*/
-
                 var generalSettings = new XContentPane({
                     id: "generalSettings",
                     title: "generalSettings",
@@ -463,15 +447,6 @@ define([
                     executeScripts: true
                 });
 
-                /*var adminAdditionalFields = new dojox.layout.ContentPane({
-                        id: "adminAdditionalFields",
-                        title: "adminAdditionalFields",
-                        layoutAlign: "client",
-                        style: "padding: 0px; width: 1000px;",
-                        href: "admin/mdek_admin_catman_additional_fields.jsp",
-                        executeScripts: true
-                    });*/
-
                 var adminFormFields = new XContentPane({
                     id: "adminFormFields",
                     title: "adminFormFields",
@@ -523,11 +498,6 @@ define([
                     parseOnLoad: false
                 });
 
-
-                /*var controller = new dijit.layout.StackController({
-                        containerId: "stackContainer"
-                    }).placeAt("menubarPane");*/
-
                 // the first child also will be selected and shown!!!
                 sc.addChild(dashboard);
 
@@ -558,7 +528,6 @@ define([
                 sc.addChild(adminSearchTerms);
                 sc.addChild(adminLocations);
                 sc.addChild(adminDeleteAddress);
-
 
                 sc.startup();
             };
