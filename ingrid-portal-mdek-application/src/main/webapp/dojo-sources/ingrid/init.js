@@ -51,8 +51,10 @@ define([
     "ingrid/utils/String",
     "ingrid/utils/General",
     "ingrid/hierarchy/dirty",
+    "ingrid/hierarchy/behaviours.user",
     "dojo/_base/sniff"
-], function(declare, unload, dom, has, array, lang, Deferred, on, keys, topic, DomConstruct, wnd, dialog, message, StackContainer, BorderContainer, ContentPane, XContentPane, registry, igeMenuBar, layoutCreator, menuEventHandler, IgeActions, PageNavigation, UtilSecurity, UtilAddress, UtilCatalog, UtilString, UtilGeneral, dirty) {
+], function(declare, unload, dom, has, array, lang, Deferred, on, keys, topic, DomConstruct, wnd, dialog, message, StackContainer, BorderContainer, ContentPane, XContentPane, registry, 
+        igeMenuBar, layoutCreator, menuEventHandler, IgeActions, PageNavigation, UtilSecurity, UtilAddress, UtilCatalog, UtilString, UtilGeneral, dirty, behaviours) {
     return declare(null, {
 
         global: this,
@@ -110,6 +112,36 @@ define([
                                 label: 'label'
                             }
                         }, null, "js/data/languageCode.json");
+                        
+                        // execute additional system behaviours
+                        UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                            
+                            // mark behaviours with override values
+                            array.forEach(data, function(item) {
+                                if (behaviours[item.id]) {
+                                    behaviours[item.id].override = item.active;
+                                }
+                            });
+                            for (var behave in behaviours) {
+                                if (!behaviours[behave].title) continue;
+                                // run behaviour if 
+                                // 1) it's a system behaviour
+                                // 2) activated by default and not overridden
+                                // 3) activate if explicitly overridden
+                                if (behaviours[behave].type === "SYSTEM" &&
+                                        (
+                                            (behaviours[behave].defaultActive && behaviours[behave].override === undefined)
+                                            || behaviours[behave].override === true
+                                        )) {
+                                    console.debug("execute system behaviour: " + behave);
+                                    behaviours[behave].run();
+                                }
+                            }
+                        }, function(error) {
+                            console.error("Error executing behvaiour:", error);
+                        });
+                        
+                        
                         // the connect has to be called delayed, otherwise onChange will be 
                         // triggered immediately and the page would be switching always
                         // -> not when set initially?! (see declaration of selectbox!)
