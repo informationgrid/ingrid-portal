@@ -65,16 +65,26 @@ define([
 
                 this.hideMenuItems();
 
+                this.handleTreeOperations();
+
+            },
+
+            handleTreeOperations: function() {
                 topic.subscribe("/selectNode", function(message) {
                     if (message.id === "dataTree") {
                         if (message.node.id === "objectRoot") {
-                            console.log("disable create new object");
+                            console.log("disable create/paste new object");
                             registry.byId("toolbarBtnNewDoc").set("disabled", true);
-
-                        } else {
-                            console.log("enable create new object");
-                            registry.byId("toolbarBtnNewDoc").set("disabled", false);
+                            registry.byId("toolbarBtnPaste").set("disabled", true);
                         }
+                    }
+                });
+
+                topic.subscribe("/onTreeContextMenu", function(node) {
+                    console.log("context menu called from:", node);
+                    if (node.item.id === "objectRoot") {
+                        registry.byId("menuItemNew").set("disabled", true);
+                        registry.byId("menuItemPaste").set("disabled", true);
                     }
                 });
             },
@@ -119,15 +129,6 @@ define([
                 var self = this;
                 topic.subscribe("/onObjectClassChange", function(clazz) {
                     self.prepareDocument(clazz);
-                });
-                
-                topic.subscribe("/onTreeContextMenu", function(node) {
-                    console.log("context menu called from:", node);
-                    if (node.item.id === "objectRoot") {
-                        registry.byId("menuItemNew").set("disabled", true);
-                    } else {
-                        registry.byId("menuItemNew").set("disabled", false);
-                    }
                 });
             },
 
