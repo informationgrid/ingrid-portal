@@ -223,6 +223,8 @@ define([
                 box = new dijit.form.FilteringSelect({
                     id: "activeCell_" + args.grid.id,
                     store: store,
+                    autoComplete: args.column.partialSearch ? false : true,
+                    queryExpr: args.column.partialSearch ? "*${0}*" : "${0}*",
                     searchAttr: "0",
                     maxHeight: "150",
                     style: "width:100%; padding:0; color: black; font-family: 10px Verdana, Helvetica, Arial, sans-serif;"

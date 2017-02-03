@@ -28,6 +28,8 @@ define([
     "ingrid/utils/Catalog"
 ], function(declare, Deferred, array, UtilCatalog){
         var lib =  declare(null, {
+
+            listIdObjectClass: 8000,
         
              // Utility functions for DOM
 
@@ -138,6 +140,10 @@ define([
                 }
                  
                 return listData;
+            },
+
+            getObjectClassList: function() {
+                return sysLists[ this.listIdObjectClass ];
             }
 
             

@@ -182,7 +182,7 @@ define([
                 };
                 layoutCreator.createSelectBox("objectClass", null, storeProps, function() {
                     // add a prefix for each value to stay compatible!
-                    return UtilSyslist.getSyslistEntry(8000, "Class");
+                    return UtilSyslist.getSyslistEntry(UtilSyslist.listIdObjectClass, "Class");
                 });
                 registry.byId("objectClass").onChange = lang.hitch(igeEvents, igeEvents.selectUDKClass);
 
