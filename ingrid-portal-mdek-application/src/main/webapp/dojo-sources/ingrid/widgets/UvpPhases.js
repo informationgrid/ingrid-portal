@@ -69,7 +69,7 @@ define([
                                     self.openPhase(rubric);
                                 }
                             }
-                        ]);
+                        ], 500);
 
                     }
                 });
@@ -100,10 +100,6 @@ define([
             },
 
             createFieldsFromValues: function (values) {
-//                console.log("convert to fields");
-//                if (values === null || values.length === 0) {
-//                    construct.place(construct.toDom("<div class='outer no-phase'><div><div class='outlined'>Keine Phasen vorhanden.</div></div></div>"), this.addButton.domNode, "before");
-//                }
 
                 array.forEach(values, function (phase) {
                     var phaseValues = phase[0].tableRows;

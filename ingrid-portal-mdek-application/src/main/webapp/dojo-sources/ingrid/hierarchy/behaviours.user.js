@@ -31,9 +31,12 @@ define([
     "dijit/registry",
     "ingrid/IgeEvents",
     "ingrid/layoutCreator",
+    "ingrid/grid/CustomGridEditors",
+    "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/behaviours",
+    "ingrid/utils/Syslist",
     "ingrid/widgets/UvpPhases"
-], function (array, lang, dom, domClass, domStyle, query, topic, registry, IgeEvents, creator, behaviours, UvpPhases) {
+], function (array, lang, dom, domClass, domStyle, query, topic, registry, IgeEvents, creator, Editors, Formatters, behaviours, UtilSyslist, UvpPhases) {
 
     return lang.mixin(behaviours, {
 
@@ -52,7 +55,11 @@ define([
                 topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
                     // remove all assistants
                     data.assistants.splice(0, data.assistants.length);
+                });
 
+                // load custom syslists
+                UtilSyslist.readSysListData(9000).then(function(entry) {
+                    sysLists[9000] = entry;
                 });
             }
         },
@@ -83,6 +90,8 @@ define([
                 
                 // TODO: additional fields according to #490 and #473
 
+                
+
             },
             
             hideDefaultFields: function() {
@@ -110,8 +119,27 @@ define([
                 
                 new UvpPhases().placeAt("generalContent");
                 
-                // creator.addToSection(rubric, creator.createDomTextarea({id: this.prefix + "description", name: "Bekanntmachungstext", help: "...", isMandatory: true, visible: "optional", rows: 10, style: "width:100%"}));
-
+                /**
+                 * Vorhabensnummer
+                 */
+                var structure = [
+                    { 
+                        field: 'categoryId', 
+                        name: 'Kategorie', 
+                        type: Editors.SelectboxEditor, 
+                        editable: true, 
+                        listId: 9000,
+                        formatter: lang.partial(Formatters.SyslistCellFormatter, 9000),
+                        partialSearch: true
+                    }
+                ];
+                var id = "uvpgCategory";
+                creator.createDomDataGrid(
+                    { id: id, name: "Vorhabensnummer", help: "...", isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
+                    structure, rubric
+                );
+                domClass.add(registry.byId(id).domNode, "hideTableHeader");
+                // phaseFields.push({ key: "auslegungsTable", field: registry.byId(id) });
             }
         }
 
