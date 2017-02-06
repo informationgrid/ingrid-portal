@@ -65,6 +65,11 @@
         <script type="text/javascript" src="js/error_handler.js"></script>
         <script type="text/javascript" src="js/highlight.js"></script>
 
+        <!-- UVP nominatim search -->
+        <script type="text/javascript" src="js/leaflet/leaflet.js"></script>
+        <script type="text/javascript" src="js/leaflet/leaflet-areaselect.js"></script>
+        <link rel="stylesheet" href="js/leaflet/leaflet.css" />
+
         <!-- DWR Services -->
         <script type='text/javascript' src='dwr/interface/UtilityService.js'></script>
         <script type='text/javascript' src='dwr/interface/CatalogService.js'></script>

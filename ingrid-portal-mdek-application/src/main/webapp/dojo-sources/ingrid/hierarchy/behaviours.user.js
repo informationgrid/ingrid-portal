@@ -23,20 +23,24 @@
 define([
     "dojo/_base/array",
     "dojo/_base/lang",
+    "dojo/aspect",
     "dojo/dom",
+    "dojo/dom-construct",
     "dojo/dom-class",
     "dojo/dom-style",
     "dojo/query",
     "dojo/topic",
     "dijit/registry",
+    "dijit/form/Button",
     "ingrid/IgeEvents",
     "ingrid/layoutCreator",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/behaviours",
     "ingrid/utils/Syslist",
-    "ingrid/widgets/UvpPhases"
-], function (array, lang, dom, domClass, domStyle, query, topic, registry, IgeEvents, creator, Editors, Formatters, behaviours, UtilSyslist, UvpPhases) {
+    "ingrid/widgets/UvpPhases",
+    "ingrid/widgets/NominatimSearch"
+], function (array, lang, aspect, dom, construct, domClass, domStyle, query, topic, registry, Button, IgeEvents, creator, Editors, Formatters, behaviours, UtilSyslist, UvpPhases, NominatimSearch) {
 
     return lang.mixin(behaviours, {
 
@@ -168,7 +172,7 @@ define([
             createFields: function() {
                 var rubric = "general";
                 
-                new UvpPhases().placeAt("generalContent");
+                new UvpPhases({ id: "UVPPhases" }).placeAt("generalContent");
                 
                 /**
                  * Vorhabensnummer
@@ -184,6 +188,12 @@ define([
                         partialSearch: true
                     }
                 ];
+
+                this.createSpatial(rubric);
+
+                /**
+                 * Category
+                 */
                 var id = "uvpgCategory";
                 creator.createDomDataGrid(
                     { id: id, name: "Vorhabensnummer", help: "...", isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
@@ -193,6 +203,53 @@ define([
                 domClass.add(categoryWidget.domNode, "hideTableHeader");
                 
                 require("ingrid/IgeActions").additionalFieldWidgets.push(categoryWidget);
+
+            },
+
+            createSpatial: function(rubric) {
+                // spatial reference
+                creator.addToSection(rubric, creator.createDomTextbox({id: this.prefix + "spatialValue", name: "Raumbezug", help: "...", isMandatory: true, visible: "optional", style: "width:100%"}));
+                var spatialInput = registry.byId(this.prefix + "spatialValue");
+                spatialInput.set("disabled", true);
+                
+                var self = this;
+                var spatialViewButton = new Button({
+                    id: this.prefix + "btnSpatialValueShow",
+                    label: "Anzeigen",
+                    disabled: true,
+                    "class": "optional show right",
+                    onClick: function() {
+                        var val = spatialInput.get("value");
+                        var fixedValue = val.indexOf(": ") === -1 ? val : val.substr(val.indexOf(": ") + 2);
+                        var arrayValue = fixedValue.split(',');
+                        
+                        self.nominatimSearch._zoomToBoundingBox([arrayValue[1],arrayValue[3],arrayValue[0],arrayValue[2]], true);
+                    }
+                }).placeAt(rubric);
+                // layout fix!
+                construct.place(construct.toDom("<div class='clear'></div>"), rubric);
+                
+                spatialInput.on("change", function(value) {
+                    if (value === "") {
+                        spatialViewButton.set("disabled", true);
+                    } else {
+                        spatialViewButton.set("disabled", false);
+                    }
+                });
+
+                /**
+                 * Map
+                 */
+                this.nominatimSearch = new NominatimSearch().placeAt(rubric);
+                aspect.after(this.nominatimSearch, "onData", function(meta, args) {
+                    var bbox = args[0];
+                    var title = args[1];
+                    console.log("Received bbox:", bbox);
+                    if (title) bbox = title + ": " + bbox;
+                    spatialInput.set("value", bbox);
+                });
+
+                require("ingrid/IgeActions").additionalFieldWidgets.push(spatialInput);
             }
         }
 

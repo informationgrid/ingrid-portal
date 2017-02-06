@@ -278,3 +278,50 @@ div.rubricBottom span.rubricButtons .dijitButtonNode:hover { background-color:#A
 .v_line {
     border-left: 1px #ccc dashed;
 }
+
+/* Nominatim Search */
+.mapWrapper .map {
+	height: 300px;
+	width: 500px;
+	margin-left: 5px;
+    display: inline-block;
+}
+.mapWrapper .info {
+	display: inline-block;
+    vertical-align: top;
+    width: 184px;
+    border: 1px solid #999;
+    background-color: #eee;
+    overflow: auto;
+    height: 300px;
+}
+
+.mapWrapper .info .item {
+    border-bottom: 1px solid #999;
+    padding: 3px 5px;
+    cursor: pointer;
+}
+
+.mapWrapper .info .item:last-child {
+	border-bottom: none;
+}
+
+.mapWrapper .info .item.active, .mapWrapper .info .item:hover {
+    background-color: #fff;
+}
+
+.leaflet-areaselect-shade {
+    position: absolute;
+    background: rgba(0,0,0, 0.4);
+}
+.leaflet-areaselect-handle {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #666;
+    -moz-box-shadow: 1px 1px rgba(0,0,0, 0.2);
+    -webkit-box-shadow: 1px 1px rgba(0,0,0, 0.2);
+    box-shadow: 1px 1px rgba(0,0,0, 0.2);
+    width: 14px;
+    height: 14px;
+    cursor: move;
+}

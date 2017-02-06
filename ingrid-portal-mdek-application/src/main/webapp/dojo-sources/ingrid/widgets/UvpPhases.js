@@ -197,8 +197,8 @@ define([
                 var idDateTo = "publicDateTo_" + counter;
                 creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: "Auslegungszeitraum von", help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
                 creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: "bis", help: "...", isMandatory: false, visible: "optional", style: "width:25%" }));
-                phaseFields.push({ key: "dateFrom", field: registry.byId(idDateFrom) });
-                phaseFields.push({ key: "dateTo", field: registry.byId(idDateTo) });
+                phaseFields.push({ key: "publicDateFrom", field: registry.byId(idDateFrom) });
+                phaseFields.push({ key: "publicDateTo", field: registry.byId(idDateTo) });
                 
                 // TODO: add behaviour for mandatory date field?
 
@@ -322,7 +322,9 @@ define([
                  */
                 id = "eroerterungDateDescriptionTable_" + counter;
                 creator.addToSection(rubric, creator.createDomTextarea({id: id, name: "Bekanntmachungstext", help: "...", isMandatory: false, visible: "optional", rows: 10, style: "width:100%"}));
-                phaseFields.push({ key: "eroerterungDateDescriptionTable", field: registry.byId(id) });
+                var textarea = registry.byId(id);
+                this.addValidatorForTextarea(textarea);
+                phaseFields.push({ key: "eroerterungDateDescriptionTable", field: textarea });
 
                 /**
                  * 
