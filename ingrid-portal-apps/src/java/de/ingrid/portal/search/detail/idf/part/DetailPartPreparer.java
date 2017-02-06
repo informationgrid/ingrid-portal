@@ -319,21 +319,33 @@ public class DetailPartPreparer {
                 for (int j=0; j<headXpathExpressions.size();j++){
                     String headXpathExpression = headXpathExpressions.get(j);
                     if(XPathUtils.nodeExists(node, headXpathExpression)){
-                        String value = XPathUtils.getString(node, headXpathExpression).trim();
-                        if(headXpathExpression.endsWith("date")){
-                            value = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");
-                        }
-                        if(headCodeList != null){
-                            for (int k=0; k<headCodeList.size();k++){
-                                String codelist = headCodeList.get(k);
-                                String tmpValue = sysCodeList.getNameByCodeListValue(codelist, value).trim();
-                                if(tmpValue.length() > 0){
-                                    value = tmpValue;
-                                    break;
+                        NodeList valueNodeList = XPathUtils.getNodeList(node, headXpathExpression);
+                        String valueConcated = "";
+                        for (int k=0; k<valueNodeList.getLength();k++) {
+                            if (valueConcated.length() > 0) {
+                                valueConcated += ";";
+                            }
+                            String value = valueNodeList.item( k ).getTextContent().trim();
+                            if(headXpathExpression.endsWith("date")){
+                                value = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");
+                                valueConcated += value;
+                                break;
+                            }
+                            if(headCodeList != null){
+                                for (int l=0; l<headCodeList.size();l++){
+                                    String codelist = headCodeList.get(l);
+                                    String tmpValue = sysCodeList.getNameByCodeListValue(codelist, value).trim();
+                                    if(tmpValue.length() > 0){
+                                        value = tmpValue;
+                                        valueConcated += value;
+                                        break;
+                                    }
                                 }
+                            } else {
+                                valueConcated += value;
                             }
                         }
-                        row.add(value);
+                        row.add(valueConcated);
                     }else{
                         row.add("");
                     }
