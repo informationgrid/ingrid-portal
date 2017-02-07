@@ -90,6 +90,16 @@ html {
     height: 100%;
 }
 
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-truncate.left {
+    direction: rtl;
+}
+
 /* LOGO */
 .claro { font: 11px/16px Verdana,Helvetica,Arial,sans-serif; }
 .claro #logo { float:left; padding-right:10px; }

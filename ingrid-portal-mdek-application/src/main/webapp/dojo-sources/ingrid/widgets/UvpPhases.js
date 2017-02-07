@@ -212,9 +212,9 @@ define([
                  */
                 var structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 var id = "legitimacyDocs_" + counter;
@@ -230,9 +230,9 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "reportArticle6Docs_" + counter;
@@ -248,9 +248,9 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "reportsRecommendationsDocs_" + counter;
@@ -264,9 +264,9 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "moreDocs_" + counter;
@@ -332,9 +332,9 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "considerationDocs_" + counter;
@@ -396,9 +396,9 @@ define([
                  */
                 var structure = [
                    { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "approvalDocs_" + counter;
@@ -412,9 +412,9 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "designDocs_" + counter;
@@ -524,14 +524,67 @@ define([
                     }
                 };
             },
-            
+
             addUploadLink: function (tableId) {
                 var table = registry.byId(tableId);
                 if (table) {
                     var uploader = new UploadWidget({
                         uploadUrl: "rest/document"
-                    })
+                    });
 
+                    // upload handler
+                    var handleUploads = function(uploads) {
+                        // get existing table data
+                        var rows = table.data;
+
+                        // create map from uploads array
+                        var uploadMap = {};
+                        array.forEach(uploads, function (upload) {
+                            uploadMap[upload.uri] = upload;
+                        });
+                        // update existing uploads
+                        array.forEach(rows, function (row) {
+                            var uri = row['link'];
+                            if (uri && uploadMap[uri]) {
+                                var upload = uploadMap[uri];
+                                row['type'] = upload.type;
+                                row['size'] = upload.size;
+                                delete uploadMap[uri]
+                            }
+                        });
+                        // map back to list
+                        uploads = [];
+                        for (uri in uploadMap) {
+                            uploads.push(uploadMap[uri]);
+                        }
+
+                        // fill existing rows without link
+                        array.forEach(rows, function (row) {
+                            var uri = row['link'];
+                            if (!uri) {
+                                var upload = uploads.shift();
+                                if (upload) {
+                                    row['link'] = upload.uri;
+                                    row['type'] = upload.type;
+                                    row['size'] = upload.size;
+                                }
+                            }
+                        });
+
+                        // add remaining uploads
+                        array.forEach(uploads, function (upload) {
+                            rows.push({
+                                link: upload.uri,
+                                type: upload.type,
+                                size: upload.size
+                            });
+                        });
+
+                        // store changes
+                        UtilStore.updateWriteStore(tableId, rows);
+                    }
+
+                    // create interface
                     var inactiveHint = construct.create("span", {
                         id: tableId+"_uploadHint",
                         'class': "right",
@@ -557,51 +610,7 @@ define([
                         onclick: lang.hitch(this, function() {
                             var path = currentUdk.uuid;
                             uploader.open(path).then(lang.hitch(this, function(uploads) {
-                                // get existing table data
-                                var rows = table.data;
-
-                                // create map from uploads array
-                                var uploadMap = {};
-                                array.forEach(uploads, function (upload) {
-                                    uploadMap[upload.uri] = upload;
-                                });
-                                // update existing uploads
-                                array.forEach(rows, function (row) {
-                                    var uri = row['link'];
-                                    if (uri && uploadMap[uri]) {
-                                        var upload = uploadMap[uri];
-                                        row['type'] = upload.type;
-                                        row['size'] = upload.size;
-                                        delete uploadMap[uri]
-                                    }
-                                });
-                                // map back to list
-                                uploads = [];
-                                for (uri in uploadMap) {
-                                    uploads.push(uploadMap[uri]);
-                                }
-
-                                // fill existing rows without link
-                                array.forEach(rows, function (row) {
-                                    var uri = row['link'];
-                                    if (!uri) {
-                                        var upload = uploads.shift();
-                                        if (upload) {
-                                            row['link'] = upload.uri;
-                                            row['type'] = upload.type;
-                                            row['size'] = upload.size;
-                                        }
-                                    }
-                                });
-                                // add remaining uploads
-                                array.forEach(uploads, function (upload) {
-                                    rows.push({
-                                        link: upload.uri,
-                                        type: upload.type,
-                                        size: upload.size
-                                    });
-                                });
-                                UtilStore.updateWriteStore(tableId, rows);
+                                handleUploads(uploads);
                             }));
                         })
                     }, linkContainer);
@@ -625,7 +634,7 @@ define([
                         topic.subscribe("/onBeforeObjectPublish", function() {
                             setLinkState();
                         })
-                    )
+                    );
                 }
             }
         });

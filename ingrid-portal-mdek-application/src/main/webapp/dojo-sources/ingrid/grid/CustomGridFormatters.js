@@ -122,7 +122,29 @@ define(["dojo/_base/declare",
 
             renderIconClass: function(row, cell, value, columnDef, dataContext) {
                 return "<div class=\"TreeIcon TreeIcon" + value + "\"></div>";
-            }
+            },
 
+            LinkCellFormatter: function(row, cell, value, columnDef, dataContext) {
+                if (!value) {
+                    return value;
+                }
+                return "<a href=\"" + value + "\" target=\"_blank\">" +
+                    "<span class=\"text-truncate left\" style=\"width: " + (columnDef.width-20) + "px\">" + value + "</span>" +
+                    "</a>";
+            },
+
+            BytesCellFormatter: function(row, cell, value, columnDef, dataContext) {
+                if (parseInt(value) != value) {
+                    return value;
+                }
+                if (value == 0) {
+                    return '0B';
+                }
+                var k = 1000,
+                    dm = 3,
+                    sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                    i = Math.floor(Math.log(value) / Math.log(k));
+                return parseFloat((value / Math.pow(k, i)).toFixed(dm)) + sizes[i];
+             }
         })();
     });
