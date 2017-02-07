@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -51,6 +51,9 @@ define([
 ], function(declare, dom, domClass, on, aspect, topic, wnd, Deferred, lang, array, registry, Menu, MenuItem, MenuBar, MenuBarItem, MenuSeparator, PopupMenuBarItem, message, dialog, UtilQA, UtilSecurity, UtilUI, UtilGrid) {
     return declare(null, {
 
+        // list of MenuBarItem-IDs, which are not supposed to be shown
+        excludedMenuItems: [],
+
         selectChild: function(child) {
             // set label of menu item to show where we are
             dom.byId("currentPageName").innerHTML = this.getMenuString(child);
@@ -64,83 +67,113 @@ define([
         },
 
         create: function(pane) {
-            var menu = new MenuBar({}).placeAt(pane.domNode);
+            var menu = new MenuBar({ id: "igeMenuBar" }).placeAt(pane.domNode);
             var self = this;
-            menu.addChild(new MenuBarItem({
-                id: "menuPageDashboard",
-                label: "<div class='image18px iconDashboard'></div>",
-                onClick: function() {
-                    self.selectChild("pageDashboard");
-                }
-            }));
-            menu.addChild(new MenuBarItem({
-                id: "menuPageHierarchy",
-                label: message.get("menu.main.hierarchyAcquisition"),
-                onClick: function() {
-                    self.selectChild("pageHierarchy");
-                }
-            }));
 
-            var researchMenu = new Menu({});
-            researchMenu.addChild(new MenuItem({
-                id: "menuPageResearch",
-                label: message.get("menu.main.research.search"),
-                onClick: function() {
-                    self.selectChild("pageResearch");
-                }
-            }));
-            researchMenu.addChild(new MenuItem({
-                id: "menuPageResearchThesaurus",
-                label: message.get("menu.main.research.thesaurusNavigator"),
-                onClick: function() {
-                    self.selectChild("pageResearchThesaurus");
-                }
-            }));
-            researchMenu.addChild(new MenuItem({
-                id: "menuPageResearchDB",
-                label: message.get("menu.main.research.databaseSearch"),
-                onClick: function() {
-                    self.selectChild("pageResearchDB");
-                }
-            }));
-            menu.addChild(new dijit.PopupMenuBarItem({
-                id: "submenuResearch",
-                label: message.get("menu.main.research"),
-                popup: researchMenu
-            }));
+            // give external behaviours the chance to remove certain menu pages
+            topic.publish("/onMenuBarCreate", this.excludedMenuItems);
 
-            var qualityMenu = new Menu({});
-            qualityMenu.addChild(new MenuItem({
-                id: "menuPageQualityEditor",
-                label: message.get("menu.main.qualityAssurance.editor"),
-                onClick: function() {
-                    self.selectChild("pageQualityEditor");
-                }
-            }));
-            if (UtilQA.isQAActive() && UtilSecurity.isCurrentUserQA()) {
-                qualityMenu.addChild(new MenuItem({
-                    id: "menuPageQualityAssurance",
-                    label: message.get("menu.main.qualityAssurance.qa"),
+            if (this.excludedMenuItems.indexOf("menuPageDashboard") === -1) {
+                menu.addChild(new MenuBarItem({
+                    id: "menuPageDashboard",
+                    label: "<div class='image18px iconDashboard'></div>",
                     onClick: function() {
-                        self.selectChild("pageQualityAssurance");
+                        self.selectChild("pageDashboard");
                     }
                 }));
             }
 
-            menu.addChild(new dijit.PopupMenuBarItem({
-                id: "submenuQualityAssurance",
-                label: message.get("menu.main.qualityAssurance"),
-                popup: qualityMenu
-            }));
+            if (this.excludedMenuItems.indexOf("menuPageHierarchy") === -1) {
+                menu.addChild(new MenuBarItem({
+                    id: "menuPageHierarchy",
+                    label: message.get("menu.main.hierarchyAcquisition"),
+                    onClick: function() {
+                        self.selectChild("pageHierarchy");
+                    }
+                }));
+            }
 
-            menu.addChild(new MenuBarItem({
-                id: "menuPageStatistics",
-                label: message.get("menu.main.statistics"),
-                onClick: function() {
-                    self.selectChild("pageStatistics");
+            var researchMenu = new Menu({});
+            if (this.excludedMenuItems.indexOf("menuPageResearch") === -1) {
+                researchMenu.addChild(new MenuItem({
+                    id: "menuPageResearch",
+                    label: message.get("menu.main.research.search"),
+                    onClick: function() {
+                        self.selectChild("pageResearch");
+                    }
+                }));
+            }
+                
+            if (this.excludedMenuItems.indexOf("menuPageResearchThesaurus") === -1) {
+                researchMenu.addChild(new MenuItem({
+                    id: "menuPageResearchThesaurus",
+                    label: message.get("menu.main.research.thesaurusNavigator"),
+                    onClick: function() {
+                        self.selectChild("pageResearchThesaurus");
+                    }
+                }));
+            }
+        
+
+            if (this.excludedMenuItems.indexOf("menuPageResearchDB") === -1) {
+                researchMenu.addChild(new MenuItem({
+                    id: "menuPageResearchDB",
+                    label: message.get("menu.main.research.databaseSearch"),
+                    onClick: function() {
+                        self.selectChild("pageResearchDB");
+                    }
+                }));
+            }
+            
+
+            if (researchMenu.getChildren().length > 0) {
+                menu.addChild(new dijit.PopupMenuBarItem({
+                    id: "submenuResearch",
+                    label: message.get("menu.main.research"),
+                    popup: researchMenu
+                }));
+            }
+
+            var qualityMenu = new Menu({});
+            if (this.excludedMenuItems.indexOf("menuPageQualityEditor") === -1) {
+                qualityMenu.addChild(new MenuItem({
+                    id: "menuPageQualityEditor",
+                    label: message.get("menu.main.qualityAssurance.editor"),
+                    onClick: function() {
+                        self.selectChild("pageQualityEditor");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageQualityAssurance") === -1) {
+                if (UtilQA.isQAActive() && UtilSecurity.isCurrentUserQA()) {
+                    qualityMenu.addChild(new MenuItem({
+                        id: "menuPageQualityAssurance",
+                        label: message.get("menu.main.qualityAssurance.qa"),
+                        onClick: function() {
+                            self.selectChild("pageQualityAssurance");
+                        }
+                    }));
                 }
-            }));
+            }
 
+            if (qualityMenu.getChildren().length > 0) {
+                menu.addChild(new dijit.PopupMenuBarItem({
+                    id: "submenuQualityAssurance",
+                    label: message.get("menu.main.qualityAssurance"),
+                    popup: qualityMenu
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageStatistics") === -1) {
+                menu.addChild(new MenuBarItem({
+                    id: "menuPageStatistics",
+                    label: message.get("menu.main.statistics"),
+                    onClick: function() {
+                        self.selectChild("pageStatistics");
+                    }
+                }));
+            }
             //---------------------------------------
             // add the Administration with submenus
             //---------------------------------------
@@ -154,20 +187,25 @@ define([
 
             //---------------------------------------
             var adminMenuCatalog = new Menu({});
-            adminMenuCatalog.addChild(new MenuItem({
-                id: "menuPageCatalogSettings",
-                label: message.get("menu.admin.main.catalog.settings"),
-                onClick: function() {
-                    self.selectChild("catalogSettings");
-                }
-            }));
-            adminMenuCatalog.addChild(new MenuItem({
-                id: "menuPageGeneralSettings",
-                label: message.get("menu.admin.main.catalog.generalSettings"),
-                onClick: function() {
-                    self.selectChild("generalSettings");
-                }
-            }));
+            if (this.excludedMenuItems.indexOf("menuPageCatalogSettings") === -1) {
+                adminMenuCatalog.addChild(new MenuItem({
+                    id: "menuPageCatalogSettings",
+                    label: message.get("menu.admin.main.catalog.settings"),
+                    onClick: function() {
+                        self.selectChild("catalogSettings");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageGeneralSettings") === -1) {
+                adminMenuCatalog.addChild(new MenuItem({
+                    id: "menuPageGeneralSettings",
+                    label: message.get("menu.admin.main.catalog.generalSettings"),
+                    onClick: function() {
+                        self.selectChild("generalSettings");
+                    }
+                }));
+            }
             /*
             adminMenuCatalog.addChild(new MenuItem({
                 id: "menuPageBehaviourSettings",
@@ -180,143 +218,191 @@ define([
 
             //---------------------------------------
             var adminMenuUserManagement = new Menu({});
-            adminMenuUserManagement.addChild(new MenuItem({
-                id: "menuPageUserManagement",
-                label: message.get("menu.admin.main.user.userAdmin"),
-                onClick: function() {
-                    self.selectChild("userManagement");
-                }
-            }));
-            adminMenuUserManagement.addChild(new MenuItem({
-                id: "menuPageGroupManagement",
-                label: message.get("menu.admin.main.user.groupAdmin"),
-                onClick: function() {
-                    self.selectChild("groupManagement");
-                }
-            }));
-            adminMenuUserManagement.addChild(new MenuItem({
-                id: "menuPagePermissionOverview",
-                label: message.get("menu.admin.main.user.permissions"),
-                onClick: function() {
-                    self.selectChild("permissionOverview");
-                }
-            }));
+            if (this.excludedMenuItems.indexOf("menuPageUserManagement") === -1) {
+                adminMenuUserManagement.addChild(new MenuItem({
+                    id: "menuPageUserManagement",
+                    label: message.get("menu.admin.main.user.userAdmin"),
+                    onClick: function() {
+                        self.selectChild("userManagement");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageGroupManagement") === -1) {
+                adminMenuUserManagement.addChild(new MenuItem({
+                    id: "menuPageGroupManagement",
+                    label: message.get("menu.admin.main.user.groupAdmin"),
+                    onClick: function() {
+                        self.selectChild("groupManagement");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPagePermissionOverview") === -1) {
+                adminMenuUserManagement.addChild(new MenuItem({
+                    id: "menuPagePermissionOverview",
+                    label: message.get("menu.admin.main.user.permissions"),
+                    onClick: function() {
+                        self.selectChild("permissionOverview");
+                    }
+                }));
+            }
 
             //---------------------------------------
             var adminMenuCatManagement = new Menu({});
-            adminMenuCatManagement.addChild(new MenuItem({
-                id: "menuPageAdminAnalysis",
-                label: message.get("menu.admin.main.management.analysis"),
-                onClick: function() {
-                    self.selectChild("adminAnalysis");
-                }
-            }));
-            adminMenuCatManagement.addChild(new MenuItem({
-                id: "menuPageAdminDublet",
-                label: message.get("menu.admin.main.management.duplicates"),
-                onClick: function() {
-                    self.selectChild("adminDublet");
-                }
-            }));
-            adminMenuCatManagement.addChild(new MenuItem({
-                label: message.get("menu.admin.main.management.urls"),
-                id: "menuPageAdminURL",
-                onClick: function() {
-                    self.selectChild("adminURL");
-                }
-            }));
-            adminMenuCatManagement.addChild(new MenuItem({
-                id: "menuPageAdminCodeLists",
-                label: message.get("menu.admin.main.management.codelists"),
-                onClick: function() {
-                    self.selectChild("adminCodeLists");
-                }
-            }));
-            /*adminMenuCatManagement.addChild(new MenuItem({
-                label: "Zusätzliche Felder",
-				onClick: function(){
-					self.selectChild("adminAdditionalFields");
-				}	
-            }));*/
-            adminMenuCatManagement.addChild(new MenuItem({
-                id: "menuPageAdminFormFields",
-                label: message.get("menu.admin.main.management.additionalFields"),
-                onClick: function() {
-                    self.selectChild("adminFormFields");
-                }
-            }));
-            adminMenuCatManagement.addChild(new MenuItem({
-                id: "menuPageAdminDeleteAddress",
-                label: message.get("menu.admin.main.management.deleteAddress"),
-                onClick: function() {
-                    self.selectChild("adminDeleteAddress");
-                }
-            }));
-            adminMenuCatManagement.addChild(new MenuItem({
-                id: "menuPageAdminSearchTerms",
-                label: message.get("menu.admin.main.management.searchTerms"),
-                onClick: function() {
-                    self.selectChild("adminSearchTerms");
-                }
-            }));
-            adminMenuCatManagement.addChild(new MenuItem({
-                id: "menuPageAdminLocations",
-                label: message.get("menu.admin.main.management.spatialSearchTerms"),
-                onClick: function() {
-                    self.selectChild("adminLocations");
-                }
-            }));
+            if (this.excludedMenuItems.indexOf("menuPageAdminAnalysis") === -1) {
+                adminMenuCatManagement.addChild(new MenuItem({
+                    id: "menuPageAdminAnalysis",
+                    label: message.get("menu.admin.main.management.analysis"),
+                    onClick: function() {
+                        self.selectChild("adminAnalysis");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageAdminDublet") === -1) {
+                adminMenuCatManagement.addChild(new MenuItem({
+                    id: "menuPageAdminDublet",
+                    label: message.get("menu.admin.main.management.duplicates"),
+                    onClick: function() {
+                        self.selectChild("adminDublet");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageAdminURL") === -1) {
+                adminMenuCatManagement.addChild(new MenuItem({
+                    label: message.get("menu.admin.main.management.urls"),
+                    id: "menuPageAdminURL",
+                    onClick: function() {
+                        self.selectChild("adminURL");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageAdminCodeLists") === -1) {
+                adminMenuCatManagement.addChild(new MenuItem({
+                    id: "menuPageAdminCodeLists",
+                    label: message.get("menu.admin.main.management.codelists"),
+                    onClick: function() {
+                        self.selectChild("adminCodeLists");
+                    }
+                }));
+            }
+
+            /*if (this.excludedMenuItems.indexOf("menuPageStatistics") === -1) {
+                adminMenuCatManagement.addChild(new MenuItem({
+                    label: "Zusätzliche Felder",
+                    onClick: function(){
+                        self.selectChild("adminAdditionalFields");
+                    }	
+                }));
+            }*/
+
+            if (this.excludedMenuItems.indexOf("menuPageAdminFormFields") === -1) {
+                adminMenuCatManagement.addChild(new MenuItem({
+                    id: "menuPageAdminFormFields",
+                    label: message.get("menu.admin.main.management.additionalFields"),
+                    onClick: function() {
+                        self.selectChild("adminFormFields");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageAdminDeleteAddress") === -1) {
+                adminMenuCatManagement.addChild(new MenuItem({
+                    id: "menuPageAdminDeleteAddress",
+                    label: message.get("menu.admin.main.management.deleteAddress"),
+                    onClick: function() {
+                        self.selectChild("adminDeleteAddress");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageAdminSearchTerms") === -1) {
+                adminMenuCatManagement.addChild(new MenuItem({
+                    id: "menuPageAdminSearchTerms",
+                    label: message.get("menu.admin.main.management.searchTerms"),
+                    onClick: function() {
+                        self.selectChild("adminSearchTerms");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageAdminLocations") === -1) {
+                adminMenuCatManagement.addChild(new MenuItem({
+                    id: "menuPageAdminLocations",
+                    label: message.get("menu.admin.main.management.spatialSearchTerms"),
+                    onClick: function() {
+                        self.selectChild("adminLocations");
+                    }
+                }));
+            }
+
 
             //---------------------------------------
             var adminMenuImport = new Menu({});
-            adminMenuImport.addChild(new MenuItem({
-                id: "menuPageAdminExport",
-                label: message.get("menu.admin.main.importExport.export"),
-                onClick: function() {
-                    self.selectChild("adminExport");
-                }
-            }));
-            adminMenuImport.addChild(new MenuItem({
-                id: "menuPageAdminImport",
-                label: message.get("menu.admin.main.importExport.import"),
-                onClick: function() {
-                    self.selectChild("adminImport");
-                }
-            }));
+            if (this.excludedMenuItems.indexOf("menuPageAdminExport") === -1) {
+                adminMenuImport.addChild(new MenuItem({
+                    id: "menuPageAdminExport",
+                    label: message.get("menu.admin.main.importExport.export"),
+                    onClick: function() {
+                        self.selectChild("adminExport");
+                    }
+                }));
+            }
+
+            if (this.excludedMenuItems.indexOf("menuPageAdminImport") === -1) {
+                adminMenuImport.addChild(new MenuItem({
+                    id: "menuPageAdminImport",
+                    label: message.get("menu.admin.main.importExport.import"),
+                    onClick: function() {
+                        self.selectChild("adminImport");
+                    }
+                }));
+            }
 
             //menu.addChild(new MenuSeparator());
 
             // only show all menus to mdek admin!
             if (UtilSecurity.currentUser.role == 1) {
-                menu.addChild(new dijit.PopupMenuBarItem({
-                    id: "menuPageAdminMenuCatalog",
-                    label: message.get("menu.admin.main.catalog"),
-                    popup: adminMenuCatalog
-                }));
+                if (adminMenuCatalog.getChildren().length > 0) {
+                    menu.addChild(new dijit.PopupMenuBarItem({
+                        id: "menuPageAdminMenuCatalog",
+                        label: message.get("menu.admin.main.catalog"),
+                        popup: adminMenuCatalog
+                    }));
+                }
             }
 
             // no user management for Authors
             if (UtilSecurity.currentUser.role != 3) {
-                menu.addChild(new dijit.PopupMenuBarItem({
-                    id: "menuPageAdminMenuUserManagement",
-                    label: message.get("menu.admin.main.user"),
-                    popup: adminMenuUserManagement
-                }));
+                if (adminMenuUserManagement.getChildren().length > 0) {
+                    menu.addChild(new dijit.PopupMenuBarItem({
+                        id: "menuPageAdminMenuUserManagement",
+                        label: message.get("menu.admin.main.user"),
+                        popup: adminMenuUserManagement
+                    }));
+                }
             }
 
             // only all menus for cat-admin
             if (UtilSecurity.currentUser.role == 1) {
-                menu.addChild(new dijit.PopupMenuBarItem({
-                    id: "menuPageAdminMenuCatManagement",
-                    label: message.get("menu.admin.main.management"),
-                    popup: adminMenuCatManagement
-                }));
+                if (adminMenuCatManagement.getChildren().length > 0) {
+                    menu.addChild(new dijit.PopupMenuBarItem({
+                        id: "menuPageAdminMenuCatManagement",
+                        label: message.get("menu.admin.main.management"),
+                        popup: adminMenuCatManagement
+                    }));
+                }
 
-                menu.addChild(new dijit.PopupMenuBarItem({
-                    id: "menuPageAdminMenuImport",
-                    label: message.get("menu.admin.main.importExport"),
-                    popup: adminMenuImport
-                }));
+                if (adminMenuImport.getChildren().length > 0) {
+                    menu.addChild(new dijit.PopupMenuBarItem({
+                        id: "menuPageAdminMenuImport",
+                        label: message.get("menu.admin.main.importExport"),
+                        popup: adminMenuImport
+                    }));
+                }
             }
         },
 

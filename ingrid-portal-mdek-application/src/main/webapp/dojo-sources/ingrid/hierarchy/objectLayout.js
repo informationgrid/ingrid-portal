@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -132,9 +132,9 @@ define([
 
                 this.createReferences();
                 console.debug("initAdditionalFields");
-                var defAddFields = this.initAdditionalFields();
-                console.debug("connect dirty flags");
-                this.connectDirtyFlagsEvents();
+                var defAddFields = this.initAdditionalFields()
+                    .then(this.connectDirtyFlagsEvents);
+                
                 console.debug("init CTS");
                 // apply atomatic transformation of bounding box if selected in table
                 this.initCTS();
@@ -182,7 +182,7 @@ define([
                 };
                 layoutCreator.createSelectBox("objectClass", null, storeProps, function() {
                     // add a prefix for each value to stay compatible!
-                    return UtilSyslist.getSyslistEntry(8000, "Class");
+                    return UtilSyslist.getSyslistEntry(UtilSyslist.listIdObjectClass, "Class");
                 });
                 registry.byId("objectClass").onChange = lang.hitch(igeEvents, igeEvents.selectUDKClass);
 
@@ -303,8 +303,6 @@ define([
 
                 new CheckBox({}, "isInspireRelevant");
                 new CheckBox({}, "isOpenData");
-                // show open data checkbox only for specific classes
-                rules.applyRuleOpenData();
 
                 var categoriesStructure = [{
                     field: 'title',
@@ -460,6 +458,9 @@ define([
                 new NumberTextBox({
                     style: "width:100%;"
                 }, "ref1PosAccuracy");
+                new NumberTextBox({
+                    style: "width:100%;"
+                }, "ref1GridPosAccuracy");
 
                 var tabSymbols = new TabContainer({
                     style: "width: 100%;",

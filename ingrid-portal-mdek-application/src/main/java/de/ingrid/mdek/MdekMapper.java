@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -274,6 +274,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
             mdekObj.setRef1Coverage((Double) td1Map.get(MdekKeys.DEGREE_OF_RECORD));
             mdekObj.setRef1AltAccuracy((Double) td1Map.get(MdekKeys.POS_ACCURACY_VERTICAL));
+            mdekObj.setRef1GridPosAccuracy((Double) td1Map.get(MdekKeys.GRID_POS_ACCURACY));
             mdekObj.setRef1PosAccuracy((Double) td1Map.get(MdekKeys.RESOLUTION));
             mdekObj.setRef1BasisText((String) td1Map.get(MdekKeys.TECHNICAL_BASE));
             mdekObj.setRef1DataBasisText((String) td1Map.get(MdekKeys.DATA));
@@ -875,6 +876,7 @@ public class MdekMapper implements DataMapperInterface {
             td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
             td1Map.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
             td1Map.put(MdekKeys.POS_ACCURACY_VERTICAL, data.getRef1AltAccuracy());
+            td1Map.put(MdekKeys.GRID_POS_ACCURACY, data.getRef1GridPosAccuracy());
             td1Map.put(MdekKeys.RESOLUTION, data.getRef1PosAccuracy());
             td1Map.put(MdekKeys.TECHNICAL_BASE, data.getRef1BasisText());
             td1Map.put(MdekKeys.DATA, data.getRef1DataBasisText());

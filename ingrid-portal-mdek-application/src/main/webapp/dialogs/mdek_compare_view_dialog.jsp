@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -384,9 +384,9 @@ require([
 
             // administrative data
             renderSectionTitel("<fmt:message key='dialog.compare.object.administrative' />");
-            var oldObjId = nodeDataOld.orgObjId ? nodeDataOld.orgObjId : nodeDataOld.uuid;
-            var newObjId = nodeDataNew.orgObjId ? nodeDataNew.orgObjId : nodeDataNew.uuid;
-            renderTextWithTitle(oldObjId, newObjId, "<fmt:message key='dialog.compare.object.id' />");
+            renderTextWithTitle(nodeDataOld.uuid, nodeDataNew.uuid, "<fmt:message key='dialog.compare.object.id' />");
+            if (nodeDataOld.orgObjId || nodeDataNew.orgObjId)
+                renderTextWithTitle(nodeDataOld.orgObjId, nodeDataNew.orgObjId, "<fmt:message key='dialog.compare.object.orgId' />");        
             renderTextWithTitle(UtilCatalog.catalogData.catalogName, UtilCatalog.catalogData.catalogName, "<fmt:message key='dialog.compare.object.catalog' />");
         }
 

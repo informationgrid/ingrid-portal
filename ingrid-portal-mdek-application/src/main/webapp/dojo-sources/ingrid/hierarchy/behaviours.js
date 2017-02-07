@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -39,8 +39,9 @@ define(["dojo/_base/declare",
         "ingrid/utils/Grid", 
         "ingrid/utils/UI", 
         "ingrid/utils/List", 
-        "ingrid/utils/Syslist"
-], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist) {
+        "ingrid/utils/Syslist",
+        "ingrid/hierarchy/behaviours/opendata"
+], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist, openData) {
 
     return declare(null, {
         
@@ -241,6 +242,28 @@ define(["dojo/_base/declare",
             }
         },
         
+        dqGriddedDataPositionalAccuracy: {
+            title: "Verhalten für die Rasterpositionsgenauigkeit",
+            description: "Das Element ist optional und wird nicht per default eingeblendet. Es wird nur aktiviert, wenn 'Digitale Repräsentation' den Wert 'Raster' hat.",
+            defaultActive: true,
+            run: function() {
+                aspect.after(registry.byId("ref1Representation"), "onDataChanged", function() {
+                    console.log("data: ", this.getData());
+                    var hasGridType = array.some(this.getData(), function(row) {
+                        // 2 === Raster, Gitter
+                        return row.title === 2 || row.title === "2"; 
+                    });
+                    
+                    // show field if grid type was found in table, otherwise hide it
+                    if (hasGridType) {
+                        domClass.remove("uiElement5071", "hide");
+                    } else {
+                        domClass.add("uiElement5071", "hide");
+                    }
+                });
+            }
+        },
+        
         foldersInHierarchy: {
             title: "Ordnerstruktur in Hierarchiebaum",
             description: "Fügt die Auswahl einer Klasse vom Typ Ordner hinzu, so dass Daten besser strukturiert werden können.",
@@ -281,7 +304,9 @@ define(["dojo/_base/declare",
                     registry.byId("toolbarBtnPrintDoc").set("disabled", true);
                 });
             }
-        }
+        },
+
+        openData: openData
         
         /*
          * ABORTED: The ATOM URL has to be maintained when automatically inserted into document. It's better to adapt the context help

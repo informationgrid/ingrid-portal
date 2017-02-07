@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -315,6 +315,7 @@ define([
 
                 if (tree.nodesToCut !== null) {
                     var invalidPaste = array.some(tree.nodesToCut, function(nodeItem) {
+                        // the target node must not be under the node which is going to be cut
                         return (targetNode.item == nodeItem || this._isChildOf(targetNode, nodeItem));
                     }, this);
 
@@ -409,7 +410,7 @@ define([
                         if (tree.copySubTree) {
                             var parentOfNewNode = array.some(tree.nodesToCopy, function(nodeItem) {
                                 return this._isChildOf(newNode, nodeItem);
-                            });
+                            }, this);
                             if (parentOfNewNode) {
                                 dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
                                 return;
@@ -1358,7 +1359,7 @@ define([
         },
 
         openCreateObjectWizardDialog: function() {
-            dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp?c=" + userLocale, 350, 170, true);
+            dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp?c=" + userLocale, 500, null, true);
         },
 
         inheritAddressToChildren: function(msg) {
@@ -1472,7 +1473,7 @@ define([
         },
 
         _isChildOf: function(childNode, targetNode) {
-            if (!childNode.getParent()) {
+            if (!childNode.getParent() || !childNode.getParent().item) {
                 return false;
             } else if (childNode.getParent().item.id == targetNode.id) {
                 return true;
