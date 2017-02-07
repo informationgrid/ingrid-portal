@@ -43,16 +43,15 @@
         "dojo/topic",
         "dijit/form/Button",
         "dijit/form/RadioButton",
-        "ingrid/dialog",
         "dijit/registry",
-        "dijit/layout/BorderContainer",
-        "dijit/layout/ContentPane"
-    ], function(array, lang, construct, on, dom, query, topic, Button, RadioButton, dialog, registry) {
+        "ingrid/dialog",
+        "ingrid/utils/Syslist"
+    ], function(array, lang, construct, on, dom, query, topic, Button, RadioButton, registry, dialog, Syslists) {
         var thisDialog = _container_;
         var alreadyChecked = false;
 
         on(_container_, "Load", function () {
-            var types = sysLists[8000];
+            var types = Syslists.getObjectClassList();
             var assistants = [
                 ['<fmt:message key="dialog.wizard.select.create" />', "assistantCreate"],
                 ['<fmt:message key="dialog.wizard.select.getCap" />', "assistantGetCap"]

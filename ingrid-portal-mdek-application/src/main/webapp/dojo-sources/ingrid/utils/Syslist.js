@@ -23,10 +23,11 @@
 
 define([
     "dojo/_base/declare",
+    "dojo/_base/lang",
     "dojo/Deferred",
     "dojo/_base/array",
     "ingrid/utils/Catalog"
-], function(declare, Deferred, array, UtilCatalog){
+], function(declare, lang, Deferred, array, UtilCatalog){
         var lib =  declare(null, {
 
             listIdObjectClass: 8000,
@@ -41,7 +42,7 @@ define([
                 var def = new Deferred();
                 if (sysLists[id].length == 0)
                     console.debug("empty syslist: " + id);
-                var syslist = dojo.clone(sysLists[id]);
+                var syslist = lang.clone(sysLists[id]);
                 // add a prefix to each value
                 if (valuePrefix) {
                     array.forEach(syslist, function(item) {
@@ -142,8 +143,11 @@ define([
                 return listData;
             },
 
+            /**
+             * Get an immutable list of all object types.
+             */
             getObjectClassList: function() {
-                return sysLists[ this.listIdObjectClass ];
+                return lang.clone(sysLists[ this.listIdObjectClass ]);
             }
 
             
