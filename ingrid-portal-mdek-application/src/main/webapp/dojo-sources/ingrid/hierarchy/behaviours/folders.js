@@ -25,8 +25,10 @@ define(["dojo/_base/declare",
   "dojo/dom-class",
   "dojo/query",
   "dojo/topic",
-  "dijit/registry"
-], function (declare, array, domClass, query, topic, registry) {
+  "dijit/registry",
+  "ingrid/message",
+  "ingrid/utils/Syslist"
+], function (declare, array, domClass, query, topic, registry, message, Syslist) {
 
   return declare(null, {
     title: "Ordnerstruktur in Hierarchiebaum",
@@ -35,7 +37,7 @@ define(["dojo/_base/declare",
     type: "SYSTEM",
     run: function () {
       // add new object class
-      sysLists[8000].push(["Ordner", "1000", "N", ""]);
+      sysLists[Syslist.listIdObjectClass].push([message.get("tree.folder"), "1000", "N", ""]);
 
       // handle folder class selection
       topic.subscribe("/onObjectClassChange", function (data) {
@@ -48,14 +50,14 @@ define(["dojo/_base/declare",
       });
 
       topic.subscribe("/afterInitDialog/ChooseWizard", function (data) {
-        var pos = data.types.indexOf("Ordner");
+        var pos = data.types.indexOf(message.get("tree.folder"));
         data.types.splice(pos, 1);
 
         data.buttons.push( {
-          label: "Ordner erstellen",
+          label: message.get("tree.folder.create"),
           callback: function(closeDialog) {
             registry.byId("objectClass").set("value", "Class1000");
-            registry.byId("objectName").set("value", "Neuer Ordner");
+            registry.byId("objectName").set("value", message.get("tree.folder.new"));
             closeDialog();
           }
         });
