@@ -40,8 +40,10 @@ define(["dojo/_base/declare",
         "ingrid/utils/UI", 
         "ingrid/utils/List", 
         "ingrid/utils/Syslist",
-        "ingrid/hierarchy/behaviours/opendata"
-], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist, openData) {
+        "ingrid/hierarchy/behaviours/opendata",
+        "ingrid/hierarchy/behaviours/folders"
+], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
+    openData, foldersInHierarchy) {
 
     return declare(null, {
         
@@ -240,7 +242,7 @@ define(["dojo/_base/declare",
                     }
                 });
             }
-        } ,
+        },
         
         dqGriddedDataPositionalAccuracy: {
             title: "Verhalten für die Rasterpositionsgenauigkeit",
@@ -263,6 +265,8 @@ define(["dojo/_base/declare",
                 });
             }
         },
+        
+        foldersInHierarchy: foldersInHierarchy,
 
         openData: openData
         
