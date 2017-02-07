@@ -35,29 +35,31 @@
 
     require([
         "dojo/_base/array",
+        "dojo/_base/lang",
         "dojo/dom-construct",
         "dojo/on",
         "dojo/dom",
         "dojo/query",
         "dojo/topic",
+        "dijit/form/Button",
         "dijit/form/RadioButton",
-        "ingrid/dialog",
         "dijit/registry",
-        "dijit/layout/BorderContainer",
-        "dijit/layout/ContentPane"
-    ], function(array, construct, on, dom, query, topic, RadioButton, dialog, registry) {
+        "ingrid/dialog",
+        "ingrid/utils/Syslist"
+    ], function(array, lang, construct, on, dom, query, topic, Button, RadioButton, registry, dialog, Syslists) {
         var thisDialog = _container_;
         var alreadyChecked = false;
 
         on(_container_, "Load", function () {
-            var types = sysLists[8000];
+            var types = Syslists.getObjectClassList();
             var assistants = [
                 ['<fmt:message key="dialog.wizard.select.create" />', "assistantCreate"],
                 ['<fmt:message key="dialog.wizard.select.getCap" />', "assistantGetCap"]
             ];
+            var extraButtons = [];
 
             console.log("Publishing event: '/afterInitDialog/ChooseWizard'");
-            topic.publish("/afterInitDialog/ChooseWizard", { types: types, assistants: assistants });
+            topic.publish("/afterInitDialog/ChooseWizard", { types: types, assistants: assistants, buttons: extraButtons });
 
             addRadioBoxes(types, "wizardObjTypes");
 
@@ -67,6 +69,8 @@
                 query("#wizardAssistantTypesContainer").addClass("hide");
                 query("#wizardAssistantTypesContainer + div").addClass("hide");
             }
+
+            addExtraButtons(extraButtons);
 
             registry.byId("pageCreateWizardContainer").resize();
         });
@@ -78,6 +82,7 @@
                 });
                 var radio = new RadioButton({
                     value: item[1],
+                    id: "assistantRadioSelect_" + item[1],
                     name: "assistantRadioSelect",
                     showLabel: true,
                     checked: !alreadyChecked
@@ -110,6 +115,16 @@
                 // otherwise we just pre-set the object type 
                 registry.byId("objectClass").set("value", "Class" + type);
             }
+        }
+
+        function addExtraButtons(buttons) {
+            array.forEach(buttons, function(button) {
+                var btn = new Button({
+                    label: button.label,
+                    onClick: lang.partial(button.callback, closeThisDialog)
+                });
+                construct.place(btn.domNode, "wizardExtraButtons");
+            });
         }
 
         function closeThisDialog() {
@@ -145,6 +160,7 @@
     </div>
     
     <div id="dialogButtonBar" class="dijitDialogPaneActionBar inputContainer grey" style="height:37px;">
+        <span style="float:left; padding:5px 0;" id="wizardExtraButtons"></span>
         <span style="float:right; padding:5px 0;"><button data-dojo-type="dijit/form/Button" title="<fmt:message key="dialog.wizard.select.continue" />" onclick="pageCreateWizard.createObject()"><fmt:message key="dialog.wizard.select.continue" /></button></span>
     </div>
 
