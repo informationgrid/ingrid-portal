@@ -12,6 +12,6 @@ public class ConflictException extends WebApplicationException {
      * @param message
      */
     public ConflictException(String message) {
-        super(ApiResponse.get(Response.Status.CONFLICT, message).build());
+        super(message, Response.Status.CONFLICT.getStatusCode());
     }
 }

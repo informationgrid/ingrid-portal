@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.net.URI;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 
 import de.ingrid.mdek.upload.auth.AuthService;
 import de.ingrid.mdek.upload.storage.Action;
+import de.ingrid.mdek.upload.storage.Item;
 import de.ingrid.mdek.upload.storage.Storage;
 
 @Component
@@ -135,7 +136,7 @@ public class Api {
             throw new ConflictException("The file already exists.");
         }
 
-        String[] files = new String[0];
+        Item[] files = new Item[0];
         boolean isPartialUpload = partsTotal != null;
         if (isPartialUpload) {
             // store part
@@ -179,7 +180,7 @@ public class Api {
         }
 
         // store files
-        String[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace);
+        Item[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace);
         return this.createUploadResponse(files, uriInfo);
     }
 
@@ -210,7 +211,7 @@ public class Api {
         this.storage.delete(path, file);
 
         // build response
-        return ApiResponse.get(Response.Status.NO_CONTENT).build();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     /**
@@ -221,20 +222,21 @@ public class Api {
      * @return Response
      * @throws Exception
      */
-    private Response createUploadResponse(String[] files, UriInfo uriInfo) throws Exception {
-        // create file URIs
-        // NOTE: path method of UriBuilder appends argument, so we can't reuse it
-        URI[] fileUris = new URI[files.length];
-        for (int i = 0, count = files.length; i < count; i++) {
-            fileUris[i] = this.toUri(files[i], uriInfo);
-        }
-        String createdFile = files.length > 0 ? files[0] : "";
-        URI uri = this.toUri(createdFile, uriInfo);
+    private Response createUploadResponse(Item[] files, UriInfo uriInfo) throws Exception {
+        // get first URI for location header
+        String createdFile = files.length > 0 ? files[0].getUri() : "";
+        URI uri = this.toAbsoluteUri(createdFile, uriInfo);
 
         // build response
-        Map<String, URI[]> data = new HashMap<String, URI[]>();
-        data.put("files", fileUris);
-        return ApiResponse.get(Response.Status.CREATED, data).header("Location", uri).build();
+        List<Item> uploads = new ArrayList<Item>();
+        for (int i = 0, count = files.length; i < count; i++) {
+            // update the item URIs
+            Item upload = files[i];
+            upload.setUri(this.toAbsoluteUri(createdFile, uriInfo).toString());
+            uploads.add(upload);
+        }
+        UploadResponse uploadResponse = new UploadResponse(uploads);
+        return Response.created(uri).entity(uploadResponse).build();
     }
 
     /**
@@ -245,7 +247,7 @@ public class Api {
      * @return URI
      * @throws Exception
      */
-    private URI toUri(String file, UriInfo uriInfo) throws Exception {
+    private URI toAbsoluteUri(String file, UriInfo uriInfo) throws Exception {
         return uriInfo.getAbsolutePathBuilder().path(URLEncoder.encode(file, UTF_8).replaceAll("%2F", "/")).build();
     }
 }

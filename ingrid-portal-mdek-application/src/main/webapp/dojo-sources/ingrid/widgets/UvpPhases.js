@@ -17,10 +17,11 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
+    "ingrid/utils/Store",
     "./upload/UploadWidget",
     "dojo/NodeList-traverse",
 ], function (declare, array, lang, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
-    creator, dialog, IgeEvents, CustomGrid, Editors, Formatters, UploadWidget) {
+    creator, dialog, IgeEvents, CustomGrid, Editors, Formatters, UtilStore, UploadWidget) {
 
         return declare("UVPPhases", [_WidgetBase], {
 
@@ -524,20 +525,30 @@ define([
                 };
             },
             
-            addUploadLink: function (id) {
-                // TODO set placeholder text, if currentUdk has not uuid yet 
-                // and reveal upload link after first save
-                var table = registry.byId(id);
+            addUploadLink: function (tableId) {
+                var table = registry.byId(tableId);
                 if (table) {
                     var uploader = new UploadWidget({
                         uploadUrl: "rest/document"
-                    });
-                    var container = construct.create("span", {
+                    })
+
+                    var inactiveHint = construct.create("span", {
+                        id: tableId+"_uploadHint",
+                        'class': "right",
+                        innerHTML: "Dokument-Upload inaktiv",
+                        style: {
+                            cursor: "help"
+                        },
+                        onclick: function(e) {
+                            dialog.showContextHelp(e, "Die Upload Funktionalität steht nach dem ersten Speichern zur Verfügung.");
+                        }
+                    }, table.domNode.parentNode, "before");
+                    var linkContainer = construct.create("span", {
                         "class": "functionalLink",
                         innerHTML: "<img src='img/ic_fl_popup.gif' width='10' height='9' alt='Popup' />"
                     }, table.domNode.parentNode, "before");
                     var link = construct.create("a", {
-                        id: id+"_uploadLink",
+                        id: tableId+"_uploadLink",
                         title: "Dokument-Upload [Popup]",
                         innerHTML: "Dokument-Upload",
                         style: {
@@ -545,15 +556,77 @@ define([
                         },
                         onclick: lang.hitch(this, function() {
                             var path = currentUdk.uuid;
-                            uploader.open(path).then(lang.hitch(this, function(documents) {
-                                console.log(documents);
-                                var data = table.data;
-                                // TODO add documents to table data
+                            uploader.open(path).then(lang.hitch(this, function(uploads) {
+                                // get existing table data
+                                var rows = table.data;
+
+                                // create map from uploads array
+                                var uploadMap = {};
+                                array.forEach(uploads, function (upload) {
+                                    uploadMap[upload.uri] = upload;
+                                });
+                                // update existing uploads
+                                array.forEach(rows, function (row) {
+                                    var uri = row['link'];
+                                    if (uri && uploadMap[uri]) {
+                                        var upload = uploadMap[uri];
+                                        row['type'] = upload.type;
+                                        row['size'] = upload.size;
+                                        delete uploadMap[uri]
+                                    }
+                                });
+                                // map back to list
+                                uploads = [];
+                                for (uri in uploadMap) {
+                                    uploads.push(uploadMap[uri]);
+                                }
+
+                                // fill existing rows without link
+                                array.forEach(rows, function (row) {
+                                    var uri = row['link'];
+                                    if (!uri) {
+                                        var upload = uploads.shift();
+                                        if (upload) {
+                                            row['link'] = upload.uri;
+                                            row['type'] = upload.type;
+                                            row['size'] = upload.size;
+                                        }
+                                    }
+                                });
+                                // add remaining uploads
+                                array.forEach(uploads, function (upload) {
+                                    rows.push({
+                                        link: upload.uri,
+                                        type: upload.type,
+                                        size: upload.size
+                                    });
+                                });
+                                UtilStore.updateWriteStore(tableId, rows);
                             }));
                         })
-                    }, container);
+                    }, linkContainer);
+
+                    // link state handler
+                    var setLinkState = function() {
+                        var isActive = currentUdk.uuid !== "newNode";
+                        if (isActive) {
+                            domClass.remove(linkContainer, "hide");
+                            domClass.add(inactiveHint, "hide");
+                        }
+                        else {
+                            domClass.remove(inactiveHint, "hide");
+                            domClass.add(linkContainer, "hide");
+                        }
+                    }
+
+                    // adapt upload interface to currentUdk state
+                    setLinkState();
+                    this.own(
+                        topic.subscribe("/onBeforeObjectPublish", function() {
+                            setLinkState();
+                        })
+                    )
                 }
             }
         });
-
     });

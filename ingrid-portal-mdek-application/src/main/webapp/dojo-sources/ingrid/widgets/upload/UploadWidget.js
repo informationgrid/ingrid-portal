@@ -2,16 +2,19 @@ define([
     'dojo/_base/declare',
     'dojo/_base/lang',
     'dojo/_base/array',
+    'dojo/request/xhr',
     'dojo/Deferred',
     'dojo/json',
     'dojo/string',
     'dojo/on',
+    'dojo/aspect',
     'dojo/query',
     'dojo/dom',
     'dojo/dom-construct',
     'dijit/_WidgetBase',
-    'dijit/Dialog',
-    "ingrid/dialog",
+    'dijit/ConfirmDialog',
+    'dijit/form/Button',
+    'ingrid/dialog',
     './fine-uploader/fine-uploader',
     'dojo/text!./template/UploadWidget.html',
     'dojo/text!./template/UploadWidget.css'
@@ -19,15 +22,18 @@ define([
     declare,
     lang,
     array,
+    xhr,
     Deferred,
     json,
     string,
     on,
+    aspect,
     query,
     dom,
     domConstruct,
     _WidgetBase,
     Dialog,
+    Button,
     IngridDialog,
     qq,
     template,
@@ -43,11 +49,10 @@ define([
 
         styleEl: null,
         templateEl: null,
-        clickHandles: [],
+        uploadHandle: null,
 
         resultParts: {},
-
-        documents: [],
+        uploads: [],
 
         postCreate: function() {
             this.inherited(arguments);
@@ -56,9 +61,43 @@ define([
             this.dialog = new Dialog({
                 title: "Dokument-Upload",
                 style: "width: 840px",
-                onHide: lang.hitch(this, function() {
+                execute: lang.hitch(this, function(cancelEvent) {
+                    // resolve the deferred created in open method
+                    // with the uploaded documents
+                    var uploads = this.removeDuplicates(this.uploads);
+                    this.deferred.resolve(uploads);
+                }),
+                onHide: lang.hitch(this, function(cancelEvent) {
+                    // empty the upload list
+                    this.uploads = [];
                     this.close();
                 })
+            });
+            // override dialog.hide to allow to ask for confirmation, if the user
+            // attempts to cancel the dialog with already finished uploads
+            this.dialog.origHide = this.dialog.hide;
+            this.dialog.hide = lang.hitch(this, function(cancelEvent) {
+                // cancel event only exists, if the cancel button was clicked
+                if (cancelEvent && this.uploads.length > 0) {
+                    var message = string.substitute("Abgeschlossene Dokument-Uploads werden nicht übernommen und vom Server gelöscht!<br><br>Wollen Sie das Fenster wirklich schließen ohne die Dokument-Uploads zu übernehmen?");
+                    IngridDialog.show("Ungespeicherte Dokument-Uploads", message, IngridDialog.INFO, [{
+                        caption: "Ja",
+                        action: lang.hitch(this, function() {
+                            // delete documents from server?
+                            var uploads = this.removeDuplicates(this.uploads);
+                            array.forEach(uploads, function (upload) {
+                                xhr.del(upload.uri);
+                            }, this);
+                            this.dialog.origHide();
+                        })
+                    }, {
+                        caption: "Nein",
+                        action: IngridDialog.CLOSE_ACTION
+                    }]);
+                }
+                else {
+                    this.dialog.origHide();
+                }
             });
             this.dialog.startup();
         },
@@ -66,13 +105,15 @@ define([
         /**
          * Show the upload dialog
          * @param path The upload path
-         * @return Deferred
+         * @return Deferred that resolves to an array of upload items with properties uri, type, size
          */
         open: function(path) {
             this.deferred = new Deferred();
 
             // uploader styles
-            this.styleEl = domConstruct.create("style", { innerHTML: styles.replace(/url\("/g, 'url("../fine-uploader/') });
+            this.styleEl = domConstruct.create("style", {
+                innerHTML: styles.replace(/url\("/g, 'url("../fine-uploader/')
+            });
             query("head").forEach(lang.hitch(this, function(node) {
                 domConstruct.place(this.styleEl, node, "last");
             }));
@@ -130,21 +171,21 @@ define([
                 },
                 callbacks: {
                     onComplete: lang.hitch(this, function(id, name, responseJSON) {
-                        // collect response files by id
+                        // collect files from response by id
                         this.resultParts[id] = responseJSON.files;
                     }),
                     onAllComplete: lang.hitch(this, function(succeeded, failed) {
-                        // combine succeeded files into result
+                        // combine succeeded uploads into result
                         array.forEach(succeeded, function(id) {
-                            this.documents = this.documents.concat(this.resultParts[id]);
+                            this.uploads = this.uploads.concat(this.resultParts[id]);
                         }, this);
                     }),
                     onError: lang.hitch(this, function(id, name, errorReason, xhrOrXdr) {
-                        if (xhrOrXdr.status == 409) {
+                        if (xhrOrXdr && xhrOrXdr.status == 409) {
                             this.uploader.pauseUpload(id);
                             // TODO add file name input field?
                             var message = string.substitute("Die Datei '${0}' existiert bereits. Soll die existierende Datei überschrieben werden?", [name]);
-                            IngridDialog.show("Upload", message, IngridDialog.INFO, [{
+                            IngridDialog.show("Upload Konflikt", message, IngridDialog.INFO, [{
                                 caption: "Ja",
                                 action: lang.hitch(this, function() {
                                     // retry with new name replace parameter set to true
@@ -158,7 +199,7 @@ define([
                             }]);
                         }
                         else {
-                            var message = string.substitute("Fehler beim Upload von '${0}': ${1}", [name, errorReason]);
+                            var message = name ? string.substitute("Fehler beim Upload von '${0}': ${1}", [name, errorReason]) : errorReason;
                             IngridDialog.show("Fehler", message, IngridDialog.WARNING);
                         }
                     })
@@ -167,30 +208,53 @@ define([
                     IngridDialog.show("Info", message, IngridDialog.INFO);
                 }
             });
-            this.clickHandles = [
-                on(dom.byId("trigger-upload"), "click", lang.hitch(this, function() {
+
+            // add upload button handler
+            var uploadBtns = query(".qq-upload-button-upload", this.dialog.containerNode);
+            if (uploadBtns.length > 0) {
+                this.uploadHandle = on(uploadBtns[0], "click", lang.hitch(this, function() {
                     this.uploader.uploadStoredFiles();
-                })),
-                on(dom.byId("trigger-finish"), "click", lang.hitch(this, function() {
-                    // remove duplicates
-                    var lookup = {};
-                    this.documents = array.filter(this.documents, function(item) {
-                        if(lookup[item] !== true) {
-                            lookup[item] = true;
-                            return true;
-                        }
-                        return false;
-                    });
-                    this.deferred.resolve(this.documents);
-                    this.documents = [];
-                    this.dialog.hide();
                 }))
-            ];
+            }
+
+            // show uploader
             this.dialog.show();
 
             return this.deferred;
         },
 
+        /**
+         * Called, when the uploader window is closed
+         */
+        close: function() {
+            // cleanup all resources that were created in the open method
+            if (this.styleEl) {
+                domConstruct.destroy(this.styleEl);
+            }
+            if (this.templateEl) {
+                domConstruct.destroy(this.templateEl);
+            }
+            if (this.uploadHandle) {
+                this.uploadHandle.remove();
+            }
+            delete this.uploader;
+        },
+
+        /**
+         * Called, when the widget is destroyed
+         */
+        destroy: function() {
+            // cleanup all resources that were created in the post create method
+            this.dialog.destroy();
+            this.inherited(arguments);
+        },
+
+        /**
+         * Get parameters for uploader
+         * @param path The path for uploads
+         * @param replace Boolean whether to replace existing files or not
+         * @return Object
+         */
         getUploadParams: function(path, replace) {
             return {
                 path: path,
@@ -198,10 +262,19 @@ define([
             };
         },
 
-        close: function() {
-            domConstruct.destroy(this.styleEl);
-            array.forEach(this.clickHandles, function(handle) {
-                handle.remove();
+        /**
+         * Remove duplicates from the upload list
+         * @param uploads Array of uploads
+         * @return Array
+         */
+        removeDuplicates(uploads) {
+            var lookup = {};
+            return array.filter(uploads, function(upload) {
+                if(lookup[upload.uri] !== true) {
+                    lookup[upload.uri] = true;
+                    return true;
+                }
+                return false;
             });
         }
     });

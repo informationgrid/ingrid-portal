@@ -43,10 +43,10 @@ public interface Storage {
      * @param data The data
      * @param size The size of the file in bytes (used to verify)
      * @param replace Boolean indicating whether to replace an existing file or not
-     * @return String[] The list of created files
+     * @return Item[] The list of created files
      * @throws IOException
      */
-    String[] write(String path, String file, InputStream data, Integer size, boolean replace) throws IOException;
+    Item[] write(String path, String file, InputStream data, Integer size, boolean replace) throws IOException;
 
     /**
      * Write a file part
@@ -68,10 +68,10 @@ public interface Storage {
      * @param totalParts The number of parts
      * @param size The size of the file in bytes (used to verify)
      * @param replace Boolean indicating whether to replace an existing file or not
-     * @return String[] The list of created files
+     * @return Item[] The list of created files
      * @throws IOException
      */
-    String[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace)
+    Item[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace)
             throws IOException;
 
     /**

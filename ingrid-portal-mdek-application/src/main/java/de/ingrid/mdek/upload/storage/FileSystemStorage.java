@@ -71,7 +71,7 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public String[] write(String path, String file, InputStream data, Integer size, boolean replace)
+    public Item[] write(String path, String file, InputStream data, Integer size, boolean replace)
             throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
         Files.createDirectories(realPath.getParent());
@@ -87,13 +87,13 @@ public class FileSystemStorage implements Storage {
         if (Files.size(realPath) != size) {
             throw new IOException("The file size is different to the expected size");
         }
-        String[] result = new String[] { realPath.toString() };
+        String[] files = new String[] { realPath.toString() };
 
         // extract archives
         try {
             String contentType = Files.probeContentType(realPath);
             if (contentType.contains("zip") || contentType.contains("compressed")) {
-                result = this.uncompress(realPath, copyOptions);
+                files = this.uncompress(realPath, copyOptions);
                 // delete archive
                 Files.delete(realPath);
             }
@@ -103,8 +103,13 @@ public class FileSystemStorage implements Storage {
         }
 
         // prepare result
-        for (int i = 0, count = result.length; i < count; i++) {
-            result[i] = this.stripPath(result[i]);
+        Item[] result = new Item[files.length];
+        for (int i = 0, count = files.length; i < count; i++) {
+            Path filePath = Paths.get(files[i]);
+            String fileType = Files.probeContentType(filePath);
+            long fileSize = Files.size(filePath);
+            Item item = new Item(this.stripPath(files[i]), fileType, fileSize);
+            result[i] = item;
         }
         return result;
     }
@@ -121,7 +126,7 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public String[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace)
+    public Item[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace)
             throws IOException {
         // combine parts into stream
         Vector<InputStream> streams = new Vector<InputStream>();
@@ -135,13 +140,13 @@ public class FileSystemStorage implements Storage {
 
         // delegate to write method
         InputStream data = new SequenceInputStream(streams.elements());
-        String[] files = this.write(path, file, data, size, replace);
+        Item[] result = this.write(path, file, data, size, replace);
 
         // delete parts
         for (Path part : parts) {
             Files.delete(part);
         }
-        return files;
+        return result;
     }
 
     @Override
@@ -181,7 +186,7 @@ public class FileSystemStorage implements Storage {
                 ArchiveEntry entry = ais.getNextEntry();
                 Path parent = path.getParent();
                 while (entry != null) {
-                    Path file = Paths.get(this.sanitize(parent.toString()), this.sanitize(entry.getName()));
+                    Path file = Paths.get(parent.toString(), this.sanitize(entry.getName()));
                     if (entry.isDirectory()) {
                         // handle directory
                         Files.createDirectories(file);

@@ -12,6 +12,6 @@ public class NotAuthorizedException extends WebApplicationException {
      * @param message
      */
     public NotAuthorizedException(String message) {
-        super(ApiResponse.get(Response.Status.UNAUTHORIZED, message).build());
+        super(message, Response.Status.UNAUTHORIZED.getStatusCode());
     }
 }
