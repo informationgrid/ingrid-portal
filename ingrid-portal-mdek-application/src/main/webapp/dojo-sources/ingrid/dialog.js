@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -104,22 +104,11 @@ define([
             var self = this;
             on(dialogWnd, "Hide", function() {
                 self.closeDialog(dlgId);
-                /*if (dojo.isIE > 8) {
-                    if (registry.byId("dataFormContainer"))
-                        registry.byId("dataFormContainer").layout();
-                }*/
             });
 
             dialogWnd.startup();
             dialogWnd.show();
             style.set(dlgId + "_underlay", "display", "block");
-
-            // resize dialog into viewport if it's too heigh
-            //var windowHeight = dojo.window.getBox().h;
-            //on(dialogWnd, "onLoad", function(){
-            //    if (style(dlgId, "height") > windowHeight)
-            //        style(dlgId, "height", (windowHeight)+"px");
-            //});
 
             return dialogWnd;
         },
@@ -237,14 +226,6 @@ define([
                 registry.byId("InfoDialog").destroyRecursive();
             }
 
-            /*dialogWnd = new dojox.widget.Dialog({
-                    id:    "InfoDialog",
-                    title: caption,
-                    showTitle: true,
-                    modal: true,
-                    dimensions: [width, height]
-                    //style: "width: "+width+"px;"// height: "+height+"px;"
-                });*/
             var dialogWnd = new Dialog({
                 id: "InfoDialog",
                 title: caption,
@@ -262,7 +243,7 @@ define([
             var content = '<div class="dijitDialogPaneContentArea popupContent" style="overflow:auto; height: ' + (contentHeight) + 'px;" >';
             if (type == this.INFO)
                 text = '<strong>' + text + '</strong>';
-            //content += '<div class="popupContent" style="word-wrap: break-word; height: ' + (contentHeight) + 'px;" >' + text + '</div>';
+
             content += text;
             if (errorstack) {
                 content += "<pre>" + errorstack + "</pre>";

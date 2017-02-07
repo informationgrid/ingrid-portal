@@ -3,7 +3,7 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>4.1.0-SNAPSHOT-UVP</version>
+        <version>4.1.0-SNAPSHOT-UVP</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.ingrid.portal</groupId>
@@ -178,7 +178,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils-ige</artifactId>
-            <version>4.0.1-SNAPSHOT</version>
+            <version>4.0.1</version>
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
@@ -481,7 +481,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils-geo</artifactId>
-            <version>3.5.0</version>
+            <version>4.0.1</version>
         </dependency>
         <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
         <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>

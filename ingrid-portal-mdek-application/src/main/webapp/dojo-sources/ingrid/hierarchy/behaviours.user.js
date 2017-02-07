@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -21,19 +21,88 @@
  * **************************************************#
  */
 define([
+    "dojo/_base/array",
     "dojo/_base/lang",
+    "dojo/aspect",
     "dojo/dom",
+    "dojo/dom-construct",
     "dojo/dom-class",
     "dojo/dom-style",
     "dojo/query",
+    "dojo/topic",
     "dijit/registry",
+    "dijit/form/Button",
     "ingrid/IgeEvents",
     "ingrid/layoutCreator",
+    "ingrid/grid/CustomGridEditors",
+    "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/behaviours",
-    "ingrid/widgets/UvpPhases"
-], function (lang, dom, domClass, domStyle, query, registry, IgeEvents, creator, behaviours, UvpPhases) {
+    "ingrid/utils/Syslist",
+    "ingrid/widgets/UvpPhases",
+    "ingrid/widgets/NominatimSearch"
+], function (array, lang, aspect, dom, construct, domClass, domStyle, query, topic, registry, Button, IgeEvents, creator, Editors, Formatters, behaviours, UtilSyslist, UvpPhases, NominatimSearch) {
 
     return lang.mixin(behaviours, {
+
+        uvpDocumentTypes: {
+            title: "UVP Dokumenten Typen",
+            description: "Definition der Dokumententypen: UVP, ...",
+            defaultActive: true,
+            type: "SYSTEM",
+            run: function() {
+
+                topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
+                    // remove all assistants
+                    data.assistants.splice(0, data.assistants.length);
+                });
+
+                // load custom syslists
+                UtilSyslist.readSysListData(9000).then(function(entry) {
+                    sysLists[9000] = entry;
+                });
+                UtilSyslist.readSysListData(8001).then(function(entry) {
+                    sysLists[8001] = entry;
+                });
+
+                // get availbale object classes from codelist 8001
+                UtilSyslist.listIdObjectClass = 8001;
+
+                this.hideMenuItems();
+
+                this.handleTreeOperations();
+
+            },
+
+            handleTreeOperations: function() {
+                topic.subscribe("/selectNode", function(message) {
+                    if (message.id === "dataTree") {
+                        if (message.node.id === "objectRoot") {
+                            console.log("disable create/paste new object");
+                            registry.byId("toolbarBtnNewDoc").set("disabled", true);
+                            registry.byId("toolbarBtnPaste").set("disabled", true);
+                        }
+                    }
+                });
+
+                topic.subscribe("/onTreeContextMenu", function(node) {
+                    console.log("context menu called from:", node);
+                    if (node.item.id === "objectRoot") {
+                        registry.byId("menuItemNew").set("disabled", true);
+                        registry.byId("menuItemPaste").set("disabled", true);
+                    }
+                });
+            },
+
+            hideMenuItems: function() {
+                topic.subscribe("/onMenuBarCreate", function(excludedItems) {
+                    excludedItems.push("menuPageStatistics", "menuPageQualityEditor", "menuPageQualityAssurance",
+                        "menuPageResearchThesaurus");
+                });
+                // TODO: remove stack container or do not let them initialized
+                // registry.byId("stackContainer").removeChild(registry.byId("pageStatistics"));
+            }
+
+        },
 
         uvpPhaseField: {
             title: "UVP Phasen Feld",
@@ -60,6 +129,23 @@ define([
                 this.createFields();
                 
                 // TODO: additional fields according to #490 and #473
+
+                var self = this;
+                topic.subscribe("/onObjectClassChange", function(clazz) {
+                    self.prepareDocument(clazz);
+                });
+            },
+
+            prepareDocument: function(classInfo) {
+                console.log("Prepare document for class: ", classInfo);
+                var objClass = classInfo.objClass;
+                if (objClass === "Class10") {
+
+                } else if (objClass === "Class11") {
+
+                } else if (objClass === "Class12") {
+                    
+                }
             },
             
             hideDefaultFields: function() {
@@ -69,6 +155,11 @@ define([
                 domClass.add(dom.byId("objectOwnerLabel").parentNode, "hide");
                 
                 domClass.add(registry.byId("toolbarBtnISO").domNode, "hide");
+
+                domClass.add("uiElement5000", "hide");
+                domClass.add("uiElement5100", "hide");
+                domClass.add("uiElement5105", "hide");
+                domClass.add("uiElement6010", "hide");
                 
                 // hide all rubrics
                 query(".rubric", "contentFrameBodyObject").forEach(function (item) {
@@ -81,10 +172,84 @@ define([
             createFields: function() {
                 var rubric = "general";
                 
-                new UvpPhases().placeAt("generalContent");
+                new UvpPhases({ id: "UVPPhases" }).placeAt("generalContent");
                 
-                // creator.addToSection(rubric, creator.createDomTextarea({id: this.prefix + "description", name: "Bekanntmachungstext", help: "...", isMandatory: true, visible: "optional", rows: 10, style: "width:100%"}));
+                /**
+                 * Vorhabensnummer
+                 */
+                var structure = [
+                    { 
+                        field: 'categoryId', 
+                        name: 'Kategorie', 
+                        type: Editors.SelectboxEditor, 
+                        editable: true, 
+                        listId: 9000,
+                        formatter: lang.partial(Formatters.SyslistCellFormatter, 9000),
+                        partialSearch: true
+                    }
+                ];
 
+                this.createSpatial(rubric);
+
+                /**
+                 * Category
+                 */
+                var id = "uvpgCategory";
+                creator.createDomDataGrid(
+                    { id: id, name: "Vorhabensnummer", help: "...", isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
+                    structure, rubric
+                );
+                var categoryWidget = registry.byId(id);
+                domClass.add(categoryWidget.domNode, "hideTableHeader");
+                
+                require("ingrid/IgeActions").additionalFieldWidgets.push(categoryWidget);
+
+            },
+
+            createSpatial: function(rubric) {
+                // spatial reference
+                creator.addToSection(rubric, creator.createDomTextbox({id: this.prefix + "spatialValue", name: "Raumbezug", help: "...", isMandatory: true, visible: "optional", style: "width:100%"}));
+                var spatialInput = registry.byId(this.prefix + "spatialValue");
+                spatialInput.set("disabled", true);
+                
+                var self = this;
+                var spatialViewButton = new Button({
+                    id: this.prefix + "btnSpatialValueShow",
+                    label: "Anzeigen",
+                    disabled: true,
+                    "class": "optional show right",
+                    onClick: function() {
+                        var val = spatialInput.get("value");
+                        var fixedValue = val.indexOf(": ") === -1 ? val : val.substr(val.indexOf(": ") + 2);
+                        var arrayValue = fixedValue.split(',');
+                        
+                        self.nominatimSearch._zoomToBoundingBox([arrayValue[1],arrayValue[3],arrayValue[0],arrayValue[2]], true);
+                    }
+                }).placeAt(rubric);
+                // layout fix!
+                construct.place(construct.toDom("<div class='clear'></div>"), rubric);
+                
+                spatialInput.on("change", function(value) {
+                    if (value === "") {
+                        spatialViewButton.set("disabled", true);
+                    } else {
+                        spatialViewButton.set("disabled", false);
+                    }
+                });
+
+                /**
+                 * Map
+                 */
+                this.nominatimSearch = new NominatimSearch().placeAt(rubric);
+                aspect.after(this.nominatimSearch, "onData", function(meta, args) {
+                    var bbox = args[0];
+                    var title = args[1];
+                    console.log("Received bbox:", bbox);
+                    if (title) bbox = title + ": " + bbox;
+                    spatialInput.set("value", bbox);
+                });
+
+                require("ingrid/IgeActions").additionalFieldWidgets.push(spatialInput);
             }
         }
 

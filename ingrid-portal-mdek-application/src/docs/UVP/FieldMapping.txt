@@ -1,0 +1,54 @@
+Vorhabensbezeichnung:
+  objectName
+
+Bekanntmachungstext:
+  generalDescription
+
+Federführende Behörde:
+  generalAddressTable
+
+Vorhabensnummer:
+  additionalFields->uvpgCategory->[categoryId]
+
+
+=== Beteiligung der Öffentlichkeit ===
+Auslegungszeitraum von:
+  UVPPhases->[phase1]->publicDateFrom
+
+bis:
+  UVPPhases->[phase1]->publicDateTo
+
+Antrag auf Entscheidung über die Zulässigkeit des Vorhabens:
+  UVPPhases->[phase1]->legitimacyDocs->[label, link, type, size, expires]
+
+UVP-Bericht nach § 6 UVPG:
+  UVPPhases->[phase1]->reportArticle6Docs->[label, link, type, size, expires]
+
+Berichte und Empfehlungen:
+  UVPPhases->[phase1]->reportsRecommendationsDocs->[label, link, type, size, expires]
+
+Weitere Unterlagen:
+  UVPPhases->[phase1]->moreDocs->[label, link, type, size, expires]
+
+=== Erörterungstermin ===
+Erörterungstermin:
+  UVPPhases->[phase2]->considerationDateTable->[dateText, dateValue]
+
+Bekanntmachungstext:
+  UVPPhases->[phase2]->considerationDateDescription
+
+Bekanntmachung
+  UVPPhases->[phase2]->considerationDocs->[label, link, type, size, expires]
+
+=== Entscheidung über die Zulassung ===
+Datum der Entscheidung über die Zulassung:
+  UVPPhases->[phase3]->approvalDate
+
+Bekanntmachungstext der Zulassungsentscheidung:
+  UVPPhases->[phase3]->approvalDescription
+
+Zulassungsdokument:
+  UVPPhases->[phase3]->approvalDocs->[label, link, type, size, expires]
+
+Planungsunterlagen:
+  UVPPhases->[phase3]->designDocs->[label, link, type, size, expires]

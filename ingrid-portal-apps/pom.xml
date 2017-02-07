@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>4.1.0-SNAPSHOT-UVP</version>
+    <version>4.1.0-SNAPSHOT-UVP</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -16,7 +16,7 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
-    <measurement.client.version>1.0.1-SNAPSHOT</measurement.client.version>
+    <measurement.client.version>1.0.1</measurement.client.version>
   </properties>
   <build>
     <finalName>ingrid-portal-apps</finalName>
@@ -232,7 +232,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-ibus-client</artifactId>
-      <version>3.5.0</version>
+      <version>3.6.2</version>
       <exclusions>
         <exclusion>
           <groupId>net.sf.ehcache</groupId>

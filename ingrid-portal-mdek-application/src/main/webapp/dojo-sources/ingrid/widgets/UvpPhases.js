@@ -70,7 +70,7 @@ define([
                                     self.openPhase(rubric);
                                 }
                             }
-                        ]);
+                        ], 500);
 
                     }
                 });
@@ -80,7 +80,7 @@ define([
                 
                 topic.subscribe("/loadRequest", function(data) {
                     console.log("recognized loaded data:", data);
-                    if (data.appType === "O") {
+                    if (data.appType === "O" && data.id !== "objectRoot") {
                         domClass.remove(self.addButton.domNode, "hide");
                     } else {
                         domClass.add(self.addButton.domNode, "hide");
@@ -101,10 +101,6 @@ define([
             },
 
             createFieldsFromValues: function (values) {
-//                console.log("convert to fields");
-//                if (values === null || values.length === 0) {
-//                    construct.place(construct.toDom("<div class='outer no-phase'><div><div class='outlined'>Keine Phasen vorhanden.</div></div></div>"), this.addButton.domNode, "before");
-//                }
 
                 array.forEach(values, function (phase) {
                     var phaseValues = phase[0].tableRows;
@@ -201,9 +197,9 @@ define([
                 var idDateFrom = "publicDateFrom_" + counter;
                 var idDateTo = "publicDateTo_" + counter;
                 creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: "Auslegungszeitraum von", help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: "bis", help: "...", isMandatory: false, visible: "optional", style: "width:25%" }));
-                phaseFields.push({ key: "dateFrom", field: registry.byId(idDateFrom) });
-                phaseFields.push({ key: "dateTo", field: registry.byId(idDateTo) });
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: "bis", help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
+                phaseFields.push({ key: "publicDateFrom", field: registry.byId(idDateFrom) });
+                phaseFields.push({ key: "publicDateTo", field: registry.byId(idDateTo) });
                 
                 // TODO: add behaviour for mandatory date field?
 
@@ -211,72 +207,72 @@ define([
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
 
                 /**
-                 * Auslegungsinformationen
+                 * Antrag auf Entscheidung über die Zulässigkeit des Vorhabens
                  */
                 var structure = [
-                    { field: 'auslegungLabel', name: 'Titel', width: '300px', editable: true },
-                    { field: 'auslegungLink', name: 'Link', width: '200px', editable: true },
-                    { field: 'auslegungType', name: 'Typ', width: '50px', editable: true },
-                    { field: 'auslegungSize', name: 'Größe', width: '50px', editable: true },
+                    { field: 'label', name: 'Titel', width: '300px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'type', name: 'Typ', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
-                var id = "auslegungsTable_" + counter;
+                var id = "legitimacyDocs_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Antrag auf Entscheidung über die Zulässigkeit des Vorhabens", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "auslegungsTable", field: registry.byId(id) });
+                phaseFields.push({ key: "legitimacyDocs", field: registry.byId(id) });
 
                 // TODO: at least one document validation
                 
                 /**
-                 * Antragsunterlagen
+                 * UVP-Bericht nach § 6 UVPG
                  */
                 structure = [
-                    { field: 'antraegeLabel', name: 'Titel', width: '300px', editable: true },
-                    { field: 'antraegeLink', name: 'Link', width: '200px', editable: true },
-                    { field: 'antraegeType', name: 'Typ', width: '50px', editable: true },
-                    { field: 'antraegeSize', name: 'Größe', width: '50px', editable: true },
+                    { field: 'label', name: 'Titel', width: '300px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'type', name: 'Typ', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
-                id = "antraegeTable_" + counter;
+                id = "reportArticle6Docs_" + counter;
                 creator.createDomDataGrid({ id: id, name: "UVP-Bericht nach § 6 UVPG", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "antraegeTable", field: registry.byId(id) });
+                phaseFields.push({ key: "reportArticle6Docs", field: registry.byId(id) });
 
                 // TODO: at least one document validation
                 
                 /**
                  * Berichte und Empfehlungen
                  */
-//                structure = [
-//                    { field: 'berichteLabel', name: 'Titel', width: '300px', editable: true },
-//                    { field: 'berichteLink', name: 'Link', width: '200px', editable: true },
-//                    { field: 'berichteType', name: 'Typ', width: '50px', editable: true },
-//                    { field: 'berichteSize', name: 'Größe', width: '50px', editable: true },
-//                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-//                ];
-//                id = "berichteTable_" + counter;
-//                creator.createDomDataGrid({ id: id, name: "Berichte und Empfehlungen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-//                    structure, rubric);
-//              this.addUploadLink(id);
-//                phaseFields.push({ key: "berichteTable", field: registry.byId(id) });
+                structure = [
+                    { field: 'label', name: 'Titel', width: '300px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'type', name: 'Typ', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
+                ];
+                id = "reportsRecommendationsDocs_" + counter;
+                creator.createDomDataGrid({ id: id, name: "Berichte und Empfehlungen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                    structure, rubric);
+                this.addUploadLink(id);
+                phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id) });
 
                 /**
                  * Weitere Unterlagen
                  */
-//                structure = [
-//                    { field: 'weitereLabel', name: 'Titel', width: '300px', editable: true },
-//                    { field: 'weitereLink', name: 'Link', width: '200px', editable: true },
-//                    { field: 'weitereType', name: 'Typ', width: '50px', editable: true },
-//                    { field: 'weitereSize', name: 'Größe', width: '50px', editable: true },
-//                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-//                ];
-//                id = "weitereTable_" + counter;
-//                creator.createDomDataGrid({ id: id, name: "Weitere Unterlagen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-//                    structure, rubric);
-//                this.addUploadLink(id);
-//                phaseFields.push({ key: "weitereTable", field: registry.byId(id) });
+                structure = [
+                    { field: 'label', name: 'Titel', width: '300px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'type', name: 'Typ', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
+                ];
+                id = "moreDocs_" + counter;
+                creator.createDomDataGrid({ id: id, name: "Weitere Unterlagen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                    structure, rubric);
+                this.addUploadLink(id);
+                phaseFields.push({ key: "moreDocs", field: registry.byId(id) });
 
                 this.phases.push({
                     key: "phase1",
@@ -307,48 +303,44 @@ define([
                         label: counter + ". Erörterungstermin"
                     })
                 );
-
-//                var id = "date_" + counter;
-//                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: "Datum", help: "...", isMandatory: false, visible: "optional", style: "width:25%" }));
-//                phaseFields.push({ key: "date", field: registry.byId(id) });
-//
-//                construct.place(construct.toDom("<div class='clear'></div>"), rubric);
                 
                 /**
-                 * 
+                 * Erörterungstermin
                  */
                 var structure = [
                     { field: 'dateText', name: 'Beschreibung', width: '300px', editable: true },
                     { field: 'dateValue', name: 'Datum', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
-                var id = "eroerterungDateTable_" + counter;
+                var id = "considerationDate_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Erörterungstermin", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "eroerterungDateTable", field: registry.byId(id) });
+                phaseFields.push({ key: "considerationDate", field: registry.byId(id) });
                 
                 /**
-                 * 
+                 * Bekanntmachungstext
                  */
-                id = "eroerterungDateDescriptionTable_" + counter;
+                id = "considerationDateDescription_" + counter;
                 creator.addToSection(rubric, creator.createDomTextarea({id: id, name: "Bekanntmachungstext", help: "...", isMandatory: false, visible: "optional", rows: 10, style: "width:100%"}));
-                phaseFields.push({ key: "eroerterungDateDescriptionTable", field: registry.byId(id) });
+                var textarea = registry.byId(id);
+                this.addValidatorForTextarea(textarea);
+                phaseFields.push({ key: "considerationDateDescription", field: textarea });
 
                 /**
-                 * 
+                 * Bekanntmachung
                  */
                 structure = [
-                    { field: 'eroerterungLabel', name: 'Titel', width: '300px', editable: true },
-                    { field: 'eroerterungLink', name: 'Link', width: '200px', editable: true },
-                    { field: 'eroerterungType', name: 'Typ', width: '50px', editable: true },
-                    { field: 'eroerterungSize', name: 'Größe', width: '50px', editable: true },
+                    { field: 'label', name: 'Titel', width: '300px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'type', name: 'Typ', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
-                id = "eroerterungTable_" + counter;
+                id = "considerationDocs_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Bekanntmachung", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "eroerterungTable", field: registry.byId(id) });
+                phaseFields.push({ key: "considerationDocs", field: registry.byId(id) });
 
                 this.phases.push({
                     key: "phase2",
@@ -381,54 +373,54 @@ define([
                 );
 
                 /**
-                 * 
+                 * Datum der Entscheidung über die Zulassung
                  */
-                var id = "date_" + counter;
+                var id = "approvalDate_" + counter;
                 creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: "Datum der Entscheidung über die Zulassung", help: "...", isMandatory: true, visible: "optional", style: "width:50%" }));
-                phaseFields.push({ key: "date", field: registry.byId(id) });
+                phaseFields.push({ key: "approvalDate", field: registry.byId(id) });
 
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
 
                 /**
-                 * 
+                 * Bekanntmachungstext der Zulassungsentscheidung
                  */
-                id = "zulassung_" + counter;
+                id = "approvalDescription_" + counter;
                 creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: "Bekanntmachungstext der Zulassungsentscheidung", help: "...", isMandatory: true, visible: "optional", rows: 3, style: "width:100%" }));
                 var textarea = registry.byId(id);
                 this.addValidatorForTextarea(textarea);
-                phaseFields.push({ key: "zulassung", field: textarea });
+                phaseFields.push({ key: "approvalDescription", field: textarea });
 
                 /**
-                 * 
+                 * Zulassungsdokument
                  */
                 var structure = [
-                    { field: 'auslegungLabel', name: 'Titel', width: '300px', editable: true },
-                    { field: 'auslegungLink', name: 'Link', width: '200px', editable: true },
-                    { field: 'auslegungType', name: 'Typ', width: '50px', editable: true },
-                    { field: 'auslegungSize', name: 'Größe', width: '50px', editable: true },
+                   { field: 'label', name: 'Titel', width: '300px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'type', name: 'Typ', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
-                id = "auslegungTable_" + counter;
+                id = "approvalDocs_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Zulassungsdokument", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "auslegungTable", field: registry.byId(id) });
+                phaseFields.push({ key: "approvalDocs", field: registry.byId(id) });
 
                 /**
-                 * 
+                 * Planungsunterlagen
                  */
                 structure = [
-                    { field: 'beschlussLabel', name: 'Titel', width: '300px', editable: true },
-                    { field: 'beschlussLink', name: 'Link', width: '200px', editable: true },
-                    { field: 'beschlussType', name: 'Typ', width: '50px', editable: true },
-                    { field: 'beschlussSize', name: 'Größe', width: '50px', editable: true },
+                    { field: 'label', name: 'Titel', width: '300px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'type', name: 'Typ', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
-                id = "beschlussTable_" + counter;
+                id = "designDocs_" + counter;
                 creator.createDomDataGrid({ id: id, name: "Planungsunterlagen", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "beschlussTable", field: registry.byId(id) });
+                phaseFields.push({ key: "designDocs", field: registry.byId(id) });
 
                 this.phases.push({
                     key: "phase3",
