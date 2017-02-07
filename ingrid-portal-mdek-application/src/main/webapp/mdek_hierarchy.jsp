@@ -225,7 +225,7 @@
                                     </label>
                                 </td>
                                 <td class="col2">
-                                    <select autoComplete="false" required="true" style="width: 100%; margin:0px;" id="objectClass"></select>
+                                    <select autoComplete="false" required="true" style="width: 100%; margin:0px;" disabled="disabled" id="objectClass"></select>
                                 </td>
                                 <td class="col3">
                                     <img id="permissionObjLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" />
