@@ -83,6 +83,7 @@
                 });
                 var radio = new RadioButton({
                     value: item[1],
+                    id: "assistantRadioSelect_" + item[1],
                     name: "assistantRadioSelect",
                     showLabel: true,
                     checked: !alreadyChecked
