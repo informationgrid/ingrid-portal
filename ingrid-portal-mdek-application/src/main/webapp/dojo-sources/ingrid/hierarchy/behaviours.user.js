@@ -124,6 +124,8 @@ define([
             type: "SYSTEM",
             run: function() {
 
+                this.addIconClasses();
+
                 topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
                     // remove all assistants
                     data.assistants.splice(0, data.assistants.length);
@@ -145,7 +147,24 @@ define([
                         self.handleTreeOperations();
                     }
                 });
+            },
 
+            addIconClasses: function() {
+                query("head")[0].append(
+                    // construct.toDom('<link rel="stylesheet" type="text/css" href="lightbox_stylesheet.css">')
+                    construct.toDom(
+                        '<style type="text/css">' +
+                            '.TreeIconClass10_V {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif");}' +
+                            '.TreeIconClass10_B {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -16px;}' +
+                            '.TreeIconClass10_VB {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -32px;}' +
+                            '.TreeIconClass12_V {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -48px;}' +
+                            '.TreeIconClass12_B {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -64px;}' +
+                            '.TreeIconClass12_VB {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -80px;}' +
+                            '.TreeIconClass11_V {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -96px;}' +
+                            '.TreeIconClass11_B {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -112px;}' +
+                            '.TreeIconClass11_VB {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -128px;}' +
+                        '</style>')
+                );
             },
 
             handleTreeOperations: function() {
