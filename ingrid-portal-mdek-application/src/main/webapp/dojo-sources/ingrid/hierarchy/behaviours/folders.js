@@ -37,7 +37,15 @@ define(["dojo/_base/declare",
     type: "SYSTEM",
     run: function () {
       // add new object class
-      sysLists[Syslist.listIdObjectClass].push([message.get("tree.folder"), "1000", "N", ""]);
+      // delay execution to give other behaviours time to manipulate list id
+      topic.subscribe("/additionalSyslistsLoaded", function() {
+        var objectClasses = sysLists[Syslist.listIdObjectClass];
+        if (objectClasses) {
+          objectClasses.push([message.get("tree.folder"), "1000", "N", ""]);
+        } else {
+          alert("Syslist not found: " + Syslist.listIdObjectClass);
+        }
+      });
 
       // handle folder class selection
       topic.subscribe("/onObjectClassChange", function (data) {
@@ -65,6 +73,15 @@ define(["dojo/_base/declare",
 
       // handle toolbar when folder is selected
       // -> only disable toolbar buttons that are not needed (be careful with IgeToolbar-Class-behaviour)
+      var self = this;
+      topic.subscribe("/onPageInitialized", function(page) {
+        if (page === "Hiearchy") {
+          self.handleFolderSelect();
+        }
+      });
+    },
+
+    handleFolderSelect: function() {
       topic.subscribe("/selectNode", function (message) {
         // do not handle if another tree was selected!
         if (message.id && message.id != "dataTree") return;
@@ -76,14 +93,13 @@ define(["dojo/_base/declare",
 
         var enabledButtons = ["toolbarBtnNewDoc", "toolbarBtnCut", "toolbarBtnCopy", "toolbarBtnCopySubTree", "toolbarBtnPaste", "toolbarBtnSave", "toolbarBtnDelSubTree", "toolbarBtnHelp"];
         var toolbarButtons = query("#myToolBar .dijitButton");
-        setTimeout(function () {
-          array.forEach(toolbarButtons, function (btn) {
-            if (enabledButtons.indexOf(btn.getAttribute("widgetid")) === -1) {
-              registry.getEnclosingWidget(btn).set("disabled", true);
-            }
-          });
-        }, 10);
+        array.forEach(toolbarButtons, function (btn) {
+          if (enabledButtons.indexOf(btn.getAttribute("widgetid")) === -1) {
+            registry.getEnclosingWidget(btn).set("disabled", true);
+          }
+        });
       });
     }
+
   })();
 });
