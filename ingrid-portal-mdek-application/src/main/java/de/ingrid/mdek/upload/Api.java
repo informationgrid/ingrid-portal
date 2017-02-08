@@ -73,6 +73,11 @@ public class Api {
             throw new NotFoundException("The requested document does not exist on the server.");
         }
 
+        // check file reference and expire date
+        if (Documents.isExpired(path+"/"+file)) {
+            throw new NotFoundException("The requested document does not exist on the server.");
+        }
+
         // read file
         StreamingOutput fileStream = new StreamingOutput() {
             @Override
@@ -232,7 +237,7 @@ public class Api {
         for (int i = 0, count = files.length; i < count; i++) {
             // update the item URIs
             Item upload = files[i];
-            upload.setUri(this.toAbsoluteUri(createdFile, uriInfo).toString());
+            upload.setUri(this.toAbsoluteUri(upload.getUri(), uriInfo).toString());
             uploads.add(upload);
         }
         UploadResponse uploadResponse = new UploadResponse(uploads);

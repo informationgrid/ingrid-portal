@@ -40,6 +40,9 @@ define([
 
             counter: 1,
 
+            // TODO put into configuration?
+            uploadUrl: "rest/document",
+
             buildRendering: function () {
                 this.domNode = construct.create("div");
 
@@ -212,7 +215,7 @@ define([
                  */
                 var structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.uploadUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
                     { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
@@ -230,7 +233,7 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.uploadUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
                     { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
@@ -248,7 +251,7 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.uploadUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
                     { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
@@ -264,7 +267,7 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.uploadUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
                     { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
@@ -332,7 +335,7 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.uploadUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
                     { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
@@ -396,7 +399,7 @@ define([
                  */
                 var structure = [
                    { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.uploadUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
                     { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
@@ -412,7 +415,7 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.uploadUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
                     { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
@@ -528,12 +531,25 @@ define([
             addUploadLink: function (tableId) {
                 var table = registry.byId(tableId);
                 if (table) {
+                    // create uploader instance
                     var uploader = new UploadWidget({
-                        uploadUrl: "rest/document"
+                        uploadUrl: this.uploadUrl
                     });
+
+                    // get the absolute upload url
+                    var a = construct.create("a", { href: this.uploadUrl });
+                    var absoluteUploadUrl = a.href;
+                    if (absoluteUploadUrl.charAt(absoluteUploadUrl.length-1) !== "/") {
+                        absoluteUploadUrl += "/";
+                    }
 
                     // upload handler
                     var handleUploads = function(uploads) {
+                        // make upload uris relative
+                        array.forEach(uploads, function (upload) {
+                            upload.uri = upload.uri.replace(absoluteUploadUrl, '');
+                        });
+
                         // get existing table data
                         var rows = table.data;
 

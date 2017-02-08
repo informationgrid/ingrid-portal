@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.nio.file.CopyOption;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -98,6 +99,10 @@ public class FileSystemStorage implements Storage {
                 Files.delete(realPath);
             }
         }
+        catch (FileAlreadyExistsException faex) {
+            // file already exists must be returned to the client
+            throw faex;
+        }
         catch (Exception ex) {
             log.error("Post processing of '" + realPath + "' failed due to the following exception:\n" + ex.toString());
         }
@@ -155,11 +160,6 @@ public class FileSystemStorage implements Storage {
         Files.delete(realPath);
     }
 
-    @Override
-    public void alias(String oldPath, String newPath) throws IOException {
-        // TODO create a symbolic link
-    }
-
     /**
      * Uncompress the file denoted by path
      *
@@ -199,6 +199,10 @@ public class FileSystemStorage implements Storage {
                     entry = ais.getNextEntry();
                 }
             }
+            catch (FileAlreadyExistsException faex) {
+                // file already exists must be returned to the client
+                throw faex;
+            }
             catch (Exception ex) {
                 log.error("Failed to uncompress '" + path + "'. Cleaning up...");
                 // delete all extracted files, if one file fails
@@ -223,8 +227,8 @@ public class FileSystemStorage implements Storage {
      * @return String
      */
     private String sanitize(String path) {
-        // replace slashes
-        return path.replaceAll("\\s*[/\\\\]+\\s*", "-");
+        // TODO which characters are forbidden?
+        return path;
     }
 
     /**

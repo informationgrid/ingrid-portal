@@ -82,13 +82,4 @@ public interface Storage {
      * @throws IOException
      */
     void delete(String path, String file) throws IOException;
-
-    /**
-     * Create an alias for a path
-     *
-     * @param oldPath The original path
-     * @param newPath The alias
-     * @throws IOException
-     */
-    void alias(String oldPath, String newPath) throws IOException;
 }
