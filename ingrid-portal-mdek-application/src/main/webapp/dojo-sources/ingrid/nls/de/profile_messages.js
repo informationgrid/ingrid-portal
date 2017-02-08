@@ -9,6 +9,10 @@ define({
     "uvp.form.address":"Federführende Behörde",
     "uvp.form.plans":"Vorhaben",
 
+    "uvp.form.categories.uvp":"UVP Vorhaben",
+    "uvp.form.categories.uvpNegative":"Negative Vorprüfungen",
+    "uvp.form.categories.uvpForeign":"Ausländische Vorprüfungen",
+
     "uvp.form.categoryIds":"Vorhabensnummer",
     "uvp.form.spatial":"Raumbezug",
     "uvp.form.showSpatial":"Anzeigen",
