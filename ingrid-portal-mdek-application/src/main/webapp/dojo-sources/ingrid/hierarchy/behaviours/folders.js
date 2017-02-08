@@ -59,7 +59,7 @@ define(["dojo/_base/declare",
 
       topic.subscribe("/afterInitDialog/ChooseWizard", function (data) {
         var pos = data.types.indexOf(message.get("tree.folder"));
-        data.types.splice(pos, 1);
+        if (pos !== -1) data.types.splice(pos, 1);
 
         data.buttons.push( {
           label: message.get("tree.folder.create"),
