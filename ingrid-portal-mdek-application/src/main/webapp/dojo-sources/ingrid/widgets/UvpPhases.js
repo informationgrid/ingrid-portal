@@ -13,13 +13,14 @@ define([
     "dijit/form/_FormValueWidget",
     "ingrid/layoutCreator",
     "ingrid/dialog",
+    "ingrid/message",
     "ingrid/IgeEvents",
     "ingrid/grid/CustomGrid",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "dojo/NodeList-traverse"
 ], function (declare, array, lang, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
-    creator, dialog, IgeEvents, CustomGrid, Editors, Formatters) {
+    creator, dialog, message, IgeEvents, CustomGrid, Editors, Formatters) {
 
         return declare("UVPPhases", [_WidgetBase], {
 
@@ -46,24 +47,24 @@ define([
 
                 var self = this;
                 this.addButton = new Button({
-                    label: "Phase hinzufügen",
+                    label: message.get("uvp.form.addPhase"),
                     onClick: function () {
                         // alert("Will show a dialog here ...");
-                        dialog.show("Phase erstellen", "Wählen Sie die zu erstellende Phase aus:", dialog.INFO, [
+                        dialog.show(message.get("uvp.form.dialog.addPhase.title"), message.get("uvp.form.dialog.addPhase.text"), dialog.INFO, [
                             {
-                                caption: "Öffentliche Auslegung",
+                                caption: message.get("uvp.form.dialog.addPhase.phase1"),
                                 action: function () {
                                     var rubric = lang.hitch(self, self.addPhase1)();
                                     self.openPhase(rubric);
                                 }
                             }, {
-                                caption: "Erörterungstermin",
+                                caption: message.get("uvp.form.dialog.addPhase.phase2"),
                                 action: function () {
                                     var rubric = lang.hitch(self, self.addPhase2)();
                                     self.openPhase(rubric);
                                 }
                             }, {
-                                caption: "Zulassungsentscheidung",
+                                caption: message.get("uvp.form.dialog.addPhase.phase3"),
                                 action: function () {
                                     var rubric = lang.hitch(self, self.addPhase3)();
                                     self.openPhase(rubric);
@@ -186,7 +187,7 @@ define([
                     creator.createRubric({
                         id: rubric,
                         help: "Hilfetext ...",
-                        label: counter + ". Beteiligung der Öffentlichkeit"
+                        label: counter + ". " + message.get("uvp.form.phase1.rubric")
                     })
                 );
 
@@ -195,8 +196,8 @@ define([
                  */
                 var idDateFrom = "publicDateFrom_" + counter;
                 var idDateTo = "publicDateTo_" + counter;
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: "Auslegungszeitraum von", help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: "bis", help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase1.dateFrom"), help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase1.dateTo"), help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
                 phaseFields.push({ key: "publicDateFrom", field: registry.byId(idDateFrom) });
                 phaseFields.push({ key: "publicDateTo", field: registry.byId(idDateTo) });
                 
@@ -216,7 +217,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 var id = "legitimacyDocs_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Antrag auf Entscheidung über die Zulässigkeit des Vorhabens", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.legitimacyDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "legitimacyDocs", field: registry.byId(id) });
 
@@ -233,7 +234,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "reportArticle6Docs_" + counter;
-                creator.createDomDataGrid({ id: id, name: "UVP-Bericht nach § 6 UVPG", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportArticle6Docs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "reportArticle6Docs", field: registry.byId(id) });
 
@@ -250,7 +251,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "reportsRecommendationsDocs_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Berichte und Empfehlungen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id) });
 
@@ -265,7 +266,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "moreDocs_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Weitere Unterlagen", help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "moreDocs", field: registry.byId(id) });
 
@@ -295,7 +296,7 @@ define([
                     creator.createRubric({
                         id: rubric,
                         help: "Hilfetext ...",
-                        label: counter + ". Erörterungstermin"
+                        label: counter + ". " + message.get("uvp.form.phase2.rubric")
                     })
                 );
                 
@@ -307,7 +308,7 @@ define([
                     { field: 'dateValue', name: 'Datum', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 var id = "considerationDate_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Erörterungstermin", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDate"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "considerationDate", field: registry.byId(id) });
                 
@@ -315,7 +316,7 @@ define([
                  * Bekanntmachungstext
                  */
                 id = "considerationDateDescription_" + counter;
-                creator.addToSection(rubric, creator.createDomTextarea({id: id, name: "Bekanntmachungstext", help: "...", isMandatory: false, visible: "optional", rows: 10, style: "width:100%"}));
+                creator.addToSection(rubric, creator.createDomTextarea({id: id, name: message.get("uvp.form.phase2.considerationDateDescription"), help: "...", isMandatory: false, visible: "optional", rows: 10, style: "width:100%"}));
                 var textarea = registry.byId(id);
                 this.addValidatorForTextarea(textarea);
                 phaseFields.push({ key: "considerationDateDescription", field: textarea });
@@ -331,7 +332,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "considerationDocs_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Bekanntmachung", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "considerationDocs", field: registry.byId(id) });
 
@@ -361,7 +362,7 @@ define([
                     creator.createRubric({
                         id: rubric,
                         help: "Hilfetext ...",
-                        label: counter + ". Entscheidung über die Zulassung"
+                        label: counter + ". " + message.get("uvp.form.phase3.rubric")
                     })
                 );
 
@@ -369,7 +370,7 @@ define([
                  * Datum der Entscheidung über die Zulassung
                  */
                 var id = "approvalDate_" + counter;
-                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: "Datum der Entscheidung über die Zulassung", help: "...", isMandatory: true, visible: "optional", style: "width:50%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: message.get("uvp.form.phase3.approvalDate"), help: "...", isMandatory: true, visible: "optional", style: "width:50%" }));
                 phaseFields.push({ key: "approvalDate", field: registry.byId(id) });
 
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
@@ -378,7 +379,7 @@ define([
                  * Bekanntmachungstext der Zulassungsentscheidung
                  */
                 id = "approvalDescription_" + counter;
-                creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: "Bekanntmachungstext der Zulassungsentscheidung", help: "...", isMandatory: true, visible: "optional", rows: 3, style: "width:100%" }));
+                creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: message.get("uvp.form.phase3.approvalDescription"), help: "...", isMandatory: true, visible: "optional", rows: 3, style: "width:100%" }));
                 var textarea = registry.byId(id);
                 this.addValidatorForTextarea(textarea);
                 phaseFields.push({ key: "approvalDescription", field: textarea });
@@ -394,7 +395,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "approvalDocs_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Zulassungsdokument", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "approvalDocs", field: registry.byId(id) });
 
@@ -409,7 +410,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "designDocs_" + counter;
-                creator.createDomDataGrid({ id: id, name: "Planungsunterlagen", help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "designDocs", field: registry.byId(id) });
 
@@ -436,10 +437,10 @@ define([
             addDeletePhaseButton: function(rubric, counter) {
                 var self = this;
                 var delButton = new Button({
-                    label: "Phase löschen",
+                    label: message.get("uvp.form.deletePhase"),
                     "class": "right optional",
                     onClick: function () {
-                        dialog.show("Phase löschen", "Möchten Sie wirklich diese Phase entfernen?", dialog.WARN, [
+                        dialog.show(message.get("uvp.form.deletePhase"), message.get("uvp.form.deletePhase.confirmText"), dialog.WARN, [
                             {
                                 caption: "Ja",
                                 action: function () {

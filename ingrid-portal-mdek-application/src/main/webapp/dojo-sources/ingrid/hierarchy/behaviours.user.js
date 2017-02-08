@@ -33,6 +33,7 @@ define([
     "dojo/topic",
     "dijit/registry",
     "dijit/form/Button",
+    "ingrid/message",
     "ingrid/IgeEvents",
     "ingrid/layoutCreator",
     "ingrid/grid/CustomGridEditors",
@@ -42,7 +43,7 @@ define([
     "ingrid/utils/Syslist",
     "ingrid/widgets/UvpPhases",
     "ingrid/widgets/NominatimSearch"
-], function(array, lang, aspect, Deferred, dom, construct, domClass, domStyle, query, topic, registry, Button, IgeEvents, creator, Editors, Formatters, behaviours, Catalog, UtilSyslist, UvpPhases, NominatimSearch) {
+], function(array, lang, aspect, Deferred, dom, construct, domClass, domStyle, query, topic, registry, Button, message, IgeEvents, creator, Editors, Formatters, behaviours, Catalog, UtilSyslist, UvpPhases, NominatimSearch) {
 
     return lang.mixin(behaviours, {
 
@@ -205,14 +206,14 @@ define([
             run: function() {
 
                 // rename default fields
-                query("#generalDescLabel label").addContent("Bekanntmachungstext", "only");
-                query("#objectNameLabel label").addContent("Vorhabenbezeichnung", "only");
-                query("#general .titleBar .titleCaption").addContent("Bekanntmachung", "only");
-                query("#general .titleBar").attr("title", "Für die allgemeine Vorhabenbeschreibung sollte der Einfachheit halber der Text der Bekanntmachung verwendet werden.");
-                dom.byId("generalAddressTableLabelText").innerHTML = "Federführende Behörde";
+                query("#generalDescLabel label").addContent(message.get("uvp.form.generalDescription"), "only");
+                query("#objectNameLabel label").addContent(message.get("uvp.form.planDescription"), "only");
+                query("#general .titleBar .titleCaption").addContent(message.get("uvp.form.consideration"), "only");
+                query("#general .titleBar").attr("title", message.get("uvp.form.consideration.tooltip"));
+                dom.byId("generalAddressTableLabelText").innerHTML = message.get("uvp.form.address");
 
                 // rename Objekte root node
-                registry.byId("dataTree").rootNode.getChildren()[0].set("label", "Vorhaben");
+                registry.byId("dataTree").rootNode.getChildren()[0].set("label", message.get("uvp.form.plans"));
 
                 // do not override my address title
                 IgeEvents.setGeneralAddressLabel = function() { };
@@ -289,7 +290,7 @@ define([
                  */
                 var id = "uvpgCategory";
                 creator.createDomDataGrid(
-                    { id: id, name: "Vorhabensnummer", help: "...", isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
+                    { id: id, name: message.get("uvp.form.categoryIds"), help: "...", isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
                     structure, rubric
                 );
                 var categoryWidget = registry.byId(id);
@@ -301,14 +302,14 @@ define([
 
             createSpatial: function(rubric) {
                 // spatial reference
-                creator.addToSection(rubric, creator.createDomTextbox({ id: this.prefix + "spatialValue", name: "Raumbezug", help: "...", isMandatory: true, visible: "optional", style: "width:100%" }));
+                creator.addToSection(rubric, creator.createDomTextbox({ id: this.prefix + "spatialValue", name: message.get("uvp.form.spatial"), help: "...", isMandatory: true, visible: "optional", style: "width:100%" }));
                 var spatialInput = registry.byId(this.prefix + "spatialValue");
                 spatialInput.set("disabled", true);
 
                 var self = this;
                 var spatialViewButton = new Button({
                     id: this.prefix + "btnSpatialValueShow",
-                    label: "Anzeigen",
+                    label: message.get("uvp.form.showSpatial"),
                     disabled: true,
                     "class": "optional show right",
                     onClick: function() {
