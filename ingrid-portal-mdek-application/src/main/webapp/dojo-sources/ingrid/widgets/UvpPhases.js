@@ -82,9 +82,9 @@ define([
                 var clearFixDiv = construct.toDom("<div class='clear' style='text-align: center'></div>");
                 construct.place(this.addButton.domNode, clearFixDiv);
                 
-                topic.subscribe("/loadRequest", function(data) {
-                    console.log("recognized loaded data:", data);
-                    if (data.appType === "O" && data.id !== "objectRoot") {
+                topic.subscribe("/selectNode", function(message) {
+                    var data = message.node;
+                    if (data.nodeAppType === "O" && data.id !== "objectRoot" && data.objectClass !== 1000) {
                         domClass.remove(self.addButton.domNode, "hide");
                     } else {
                         domClass.add(self.addButton.domNode, "hide");

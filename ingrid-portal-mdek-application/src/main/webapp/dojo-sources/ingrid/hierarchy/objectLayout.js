@@ -2281,12 +2281,16 @@ define([
                         }
                     });
                     for (var behave in behaviour) {
-                        if (!behaviour[behave].title) continue;
+                        if (!behaviour[behave].title) continue; 
                         // run behaviour if 
-                        // 1) activated by default and not overriden
-                        // 2) activate if explicitly overriden
-                        if ((behaviour[behave].defaultActive && behaviour[behave].override === undefined)
-                                || (behaviour[behave].override === true)) {
+                        // 1) activated by default and not overridden
+                        // 2) activate if explicitly overridden
+                        // 3) ignore system behaviours, which were already executed
+                        if (behaviour[behave].type !== "SYSTEM" &&
+                                (
+                                    (behaviour[behave].defaultActive && behaviour[behave].override === undefined)
+                                    || behaviour[behave].override === true
+                                )) {
                             console.debug("execute behaviour: " + behave);
                             behaviour[behave].run();
                         }

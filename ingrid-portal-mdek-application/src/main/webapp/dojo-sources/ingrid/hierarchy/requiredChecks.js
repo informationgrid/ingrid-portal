@@ -80,8 +80,8 @@ define(["dojo/_base/declare",
             // reset must be done when saved normally also or object is reloaded!
             // array.forEach(query(".required .input .dijit"), function(e) { console.debug(e.widgetId); registry.byId(e.getAttribute("widgetid")).set("required", false); })
             var publishable       = true;
-            var notPublishableIDs = []
-                , notSaveableIDs = [];
+            var notPublishableIDs = [], 
+                notSaveableIDs = [];
 
             // check first general validity
             this.checkValidityOfInputElements(notSaveableIDs);
@@ -96,7 +96,6 @@ define(["dojo/_base/declare",
                 }
             });
             array.forEach(grids, function(id) {
-                var grid = UtilGrid.getTable(id);
                 if (UtilGrid.getTableData(id).length === 0) {
                     notPublishableIDs.push( [id, message.get( "validation.error.empty.table" )] );
                 }

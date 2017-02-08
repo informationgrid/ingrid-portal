@@ -24,6 +24,7 @@ define([
     "dojo/_base/array",
     "dojo/_base/lang",
     "dojo/aspect",
+    "dojo/Deferred",
     "dojo/dom",
     "dojo/dom-construct",
     "dojo/dom-class",
@@ -37,15 +38,86 @@ define([
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/behaviours",
+    "ingrid/utils/Catalog",
     "ingrid/utils/Syslist",
     "ingrid/widgets/UvpPhases",
     "ingrid/widgets/NominatimSearch"
-], function (array, lang, aspect, dom, construct, domClass, domStyle, query, topic, registry, Button, IgeEvents, creator, Editors, Formatters, behaviours, UtilSyslist, UvpPhases, NominatimSearch) {
+], function(array, lang, aspect, Deferred, dom, construct, domClass, domStyle, query, topic, registry, Button, IgeEvents, creator, Editors, Formatters, behaviours, Catalog, UtilSyslist, UvpPhases, NominatimSearch) {
 
     return lang.mixin(behaviours, {
 
+        uvpInitialFolders: {
+            title: "UVP: Initiale Ordner",
+            description: "Anlegen der initialen Ordner, falls diese noch nicht bereits vorhanden sind.",
+            defaultActive: true,
+            type: "SYSTEM",
+            initFlagName: "uvp_initialized",
+            run: function() {
+                var self = this;
+                this.getInitFlag().then(function(isInitialized) {
+                    console.log("init flag: ", isInitialized);
+                    if (!isInitialized) {
+                        self.createFolders();
+                        self.storeInitFlag();
+                    }
+                });
+            },
+
+            createFolders: function() {
+                var def = new Deferred();
+                var def2 = new Deferred();
+                var self = this;
+                ObjectService.createNewNode(null, function(objNode) {
+                    objNode.nodeAppType = "O";
+                    objNode.objectClass = "1000";
+                    objNode.objectName = "UVPs";
+                    ObjectService.saveNodeData(objNode, "true", false, {
+                        callback: def.resolve,
+                        errorHandler: self.handleCreateError
+                    });
+                });
+                ObjectService.createNewNode(null, function(objNode) {
+                    objNode.nodeAppType = "O";
+                    objNode.objectClass = "1000";
+                    objNode.objectName = "negative UVPs";
+                    def.then(function() {
+                        ObjectService.saveNodeData(objNode, "true", false, {
+                            callback: def2.resolve,
+                            errorHandler: self.handleCreateError
+                        });
+                    })
+                });
+                ObjectService.createNewNode(null, function(objNode) {
+                    objNode.nodeAppType = "O";
+                    objNode.objectClass = "1000";
+                    objNode.objectName = "Ausländische UVPs";
+                    def2.then(function() {
+                        ObjectService.saveNodeData(objNode, "true", false, {
+                            errorHandler: self.handleCreateError
+                        });
+                    });
+                });
+            },
+
+            handleCreateError: function(error) {
+                console.error("Error during initial folder creation for UVP:", error);
+            },
+
+            getInitFlag: function() {
+                var self = this;
+                return Catalog.getGenericValuesDef([this.initFlagName])
+                    .then(function(values) { return values[self.initFlagName]; });
+            },
+
+            storeInitFlag: function() {
+                var obj = {};
+                obj[this.initFlagName] = true;
+                Catalog.storeGenericValuesDef(obj);
+            }
+        },
+
         uvpDocumentTypes: {
-            title: "UVP Dokumenten Typen",
+            title: "UVP Dokumenten Typen und Verhalten",
             description: "Definition der Dokumententypen: UVP, ...",
             defaultActive: true,
             type: "SYSTEM",
@@ -57,11 +129,8 @@ define([
                 });
 
                 // load custom syslists
-                UtilSyslist.readSysListData(9000).then(function(entry) {
-                    sysLists[9000] = entry;
-                });
-                UtilSyslist.readSysListData(8001).then(function(entry) {
-                    sysLists[8001] = entry;
+                topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
+                    ids.push(8001, 9000);
                 });
 
                 // get availbale object classes from codelist 8001
@@ -69,17 +138,31 @@ define([
 
                 this.hideMenuItems();
 
-                this.handleTreeOperations();
+                var self = this;
+                topic.subscribe("/onPageInitialized", function(page) {
+                    if (page === "Hiearchy") {
+                        self.handleTreeOperations();
+                    }
+                });
 
             },
 
             handleTreeOperations: function() {
                 topic.subscribe("/selectNode", function(message) {
                     if (message.id === "dataTree") {
+                        // do not allow to add new objects directly under the root node
                         if (message.node.id === "objectRoot") {
                             console.log("disable create/paste new object");
                             registry.byId("toolbarBtnNewDoc").set("disabled", true);
                             registry.byId("toolbarBtnPaste").set("disabled", true);
+                        } else if (message.node.parent === "objectRoot") {
+                            // do not allow to rename or delete the folders directly under the root node
+                            registry.byId("toolbarBtnCut").set("disabled", true);
+                            registry.byId("toolbarBtnCopy").set("disabled", true);
+                            registry.byId("toolbarBtnCopySubTree").set("disabled", true);
+                            registry.byId("toolbarBtnPaste").set("disabled", true);
+                            registry.byId("toolbarBtnSave").set("disabled", true);
+                            registry.byId("toolbarBtnDelSubTree").set("disabled", true);
                         }
                     }
                 });
@@ -89,6 +172,16 @@ define([
                     if (node.item.id === "objectRoot") {
                         registry.byId("menuItemNew").set("disabled", true);
                         registry.byId("menuItemPaste").set("disabled", true);
+                    } else if (node.item.parent === "objectRoot") {
+                        registry.byId("menuItemPreview").set("disabled", true);
+                        registry.byId("menuItemCut").set("disabled", true);
+                        registry.byId("menuItemCopySingle").set("disabled", true);
+                        registry.byId("menuItemCopy").set("disabled", true);
+                        registry.byId("menuItemPaste").set("disabled", true);
+                        registry.byId("menuItemDelete").set("disabled", true);
+                        registry.byId("menuItemPublicationCondition1").set("disabled", true);
+                        registry.byId("menuItemPublicationCondition2").set("disabled", true);
+                        registry.byId("menuItemPublicationCondition3").set("disabled", true);
                     }
                 });
             },
@@ -109,7 +202,7 @@ define([
             description: "Hinzufügen von dynamischen Feldern",
             defaultActive: true,
             prefix: "uvp_",
-            run: function () {
+            run: function() {
 
                 // rename default fields
                 query("#generalDescLabel label").addContent("Bekanntmachungstext", "only");
@@ -117,17 +210,17 @@ define([
                 query("#general .titleBar .titleCaption").addContent("Bekanntmachung", "only");
                 query("#general .titleBar").attr("title", "Für die allgemeine Vorhabenbeschreibung sollte der Einfachheit halber der Text der Bekanntmachung verwendet werden.");
                 dom.byId("generalAddressTableLabelText").innerHTML = "Federführende Behörde";
-                
+
                 // rename Objekte root node
                 registry.byId("dataTree").rootNode.getChildren()[0].set("label", "Vorhaben");
-                
+
                 // do not override my address title
-                IgeEvents.setGeneralAddressLabel = function() {};
-                
+                IgeEvents.setGeneralAddressLabel = function() { };
+
                 this.hideDefaultFields();
-                
+
                 this.createFields();
-                
+
                 // TODO: additional fields according to #490 and #473
 
                 var self = this;
@@ -144,45 +237,45 @@ define([
                 } else if (objClass === "Class11") {
 
                 } else if (objClass === "Class12") {
-                    
+
                 }
             },
-            
+
             hideDefaultFields: function() {
                 domStyle.set("widget_objectName", "width", "550px");
-                
+
                 domClass.add(dom.byId("objectClassLabel").parentNode, "hide");
                 domClass.add(dom.byId("objectOwnerLabel").parentNode, "hide");
-                
+
                 domClass.add(registry.byId("toolbarBtnISO").domNode, "hide");
 
                 domClass.add("uiElement5000", "hide");
                 domClass.add("uiElement5100", "hide");
                 domClass.add("uiElement5105", "hide");
                 domClass.add("uiElement6010", "hide");
-                
+
                 // hide all rubrics
-                query(".rubric", "contentFrameBodyObject").forEach(function (item) {
+                query(".rubric", "contentFrameBodyObject").forEach(function(item) {
                     if (item.id !== "general") {
                         domClass.add(item, "hide");
                     }
                 });
             },
-            
+
             createFields: function() {
                 var rubric = "general";
-                
+
                 new UvpPhases({ id: "UVPPhases" }).placeAt("generalContent");
-                
+
                 /**
                  * Vorhabensnummer
                  */
                 var structure = [
-                    { 
-                        field: 'categoryId', 
-                        name: 'Kategorie', 
-                        type: Editors.SelectboxEditor, 
-                        editable: true, 
+                    {
+                        field: 'categoryId',
+                        name: 'Kategorie',
+                        type: Editors.SelectboxEditor,
+                        editable: true,
                         listId: 9000,
                         formatter: lang.partial(Formatters.SyslistCellFormatter, 9000),
                         partialSearch: true
@@ -201,17 +294,17 @@ define([
                 );
                 var categoryWidget = registry.byId(id);
                 domClass.add(categoryWidget.domNode, "hideTableHeader");
-                
+
                 require("ingrid/IgeActions").additionalFieldWidgets.push(categoryWidget);
 
             },
 
             createSpatial: function(rubric) {
                 // spatial reference
-                creator.addToSection(rubric, creator.createDomTextbox({id: this.prefix + "spatialValue", name: "Raumbezug", help: "...", isMandatory: true, visible: "optional", style: "width:100%"}));
+                creator.addToSection(rubric, creator.createDomTextbox({ id: this.prefix + "spatialValue", name: "Raumbezug", help: "...", isMandatory: true, visible: "optional", style: "width:100%" }));
                 var spatialInput = registry.byId(this.prefix + "spatialValue");
                 spatialInput.set("disabled", true);
-                
+
                 var self = this;
                 var spatialViewButton = new Button({
                     id: this.prefix + "btnSpatialValueShow",
@@ -222,13 +315,13 @@ define([
                         var val = spatialInput.get("value");
                         var fixedValue = val.indexOf(": ") === -1 ? val : val.substr(val.indexOf(": ") + 2);
                         var arrayValue = fixedValue.split(',');
-                        
-                        self.nominatimSearch._zoomToBoundingBox([arrayValue[1],arrayValue[3],arrayValue[0],arrayValue[2]], true);
+
+                        self.nominatimSearch._zoomToBoundingBox([arrayValue[1], arrayValue[3], arrayValue[0], arrayValue[2]], true);
                     }
                 }).placeAt(rubric);
                 // layout fix!
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
-                
+
                 spatialInput.on("change", function(value) {
                     if (value === "") {
                         spatialViewButton.set("disabled", true);
