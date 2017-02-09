@@ -81,14 +81,25 @@ define([
                 ObjectService.createNewNode(null, function(objNode) {
                     objNode.nodeAppType = "O";
                     objNode.objectClass = "1000";
-                    objNode.objectName = message.get("uvp.form.categories.uvpNegative");
+                    objNode.objectName = message.get("uvp.form.categories.uvpInFront");
                     def.then(function() {
                         ObjectService.saveNodeData(objNode, "true", false, {
                             callback: def2.resolve,
                             errorHandler: self.handleCreateError
                         });
-                    })
+                    });
                 });
+                // ObjectService.createNewNode(null, function(objNode) {
+                //     objNode.nodeAppType = "O";
+                //     objNode.objectClass = "1000";
+                //     objNode.objectName = message.get("uvp.form.categories.uvpNegative");
+                //     def.then(function() {
+                //         ObjectService.saveNodeData(objNode, "true", false, {
+                //             callback: def2.resolve,
+                //             errorHandler: self.handleCreateError
+                //         });
+                //     });
+                // });
                 ObjectService.createNewNode(null, function(objNode) {
                     objNode.nodeAppType = "O";
                     objNode.objectClass = "1000";
@@ -113,7 +124,7 @@ define([
 
             storeInitFlag: function() {
                 var obj = {};
-                obj[this.initFlagName] = true;
+                obj[this.initFlagName] = 1;
                 Catalog.storeGenericValuesDef(obj);
             }
         },
@@ -123,7 +134,7 @@ define([
             description: "Definition der Dokumententypen: UVP, ...",
             defaultActive: true,
             type: "SYSTEM",
-            specialNodes: [message.get("uvp.form.categories.uvp"), message.get("uvp.form.categories.uvpNegative"), message.get("uvp.form.categories.uvpForeign")],
+            specialNodes: [message.get("uvp.form.categories.uvp"), message.get("uvp.form.categories.uvpNegative"), message.get("uvp.form.categories.uvpForeign"), message.get("uvp.form.categories.uvpInFront")],
             run: function() {
 
                 this.addIconClasses();
@@ -153,6 +164,11 @@ define([
                         uvpType = array.filter(data.types, function(t) { return t[1] === "11"; });
                         data.types.splice(0, data.types.length);
                         data.types.push(uvpType[0]);
+
+                    } else if (parentTitlePos === 3) {
+                        uvpType = array.filter(data.types, function(t) { return t[1] === "13" || t[1] === "14"; });
+                        data.types.splice(0, data.types.length);
+                        array.forEach(uvpType, function(t) { data.types.push(t); });
 
                     }
                 });
@@ -210,6 +226,12 @@ define([
                         '.TreeIconClass11, .TreeIconClass11_V {background-image:url("img/uvp/uvp_icons.gif"); background-position: -96px;}' +
                         '.TreeIconClass11_B {background-image:url("img/uvp/uvp_icons.gif"); background-position: -112px;}' +
                         '.TreeIconClass11_BV {background-image:url("img/uvp/uvp_icons.gif"); background-position: -128px;}' +
+                        '.TreeIconClass13, .TreeIconClass11_V {background-image:url("img/uvp/uvp_icons.gif"); background-position: -144px;}' +
+                        '.TreeIconClass13_B {background-image:url("img/uvp/uvp_icons.gif"); background-position: -160px;}' +
+                        '.TreeIconClass13_BV {background-image:url("img/uvp/uvp_icons.gif"); background-position: -176px;}' +
+                        '.TreeIconClass14, .TreeIconClass11_V {background-image:url("img/uvp/uvp_icons.gif"); background-position: -192px;}' +
+                        '.TreeIconClass14_B {background-image:url("img/uvp/uvp_icons.gif"); background-position: -208px;}' +
+                        '.TreeIconClass14_BV {background-image:url("img/uvp/uvp_icons.gif"); background-position: -224px;}' +
                         '</style>')
                 );
             },
@@ -270,14 +292,13 @@ define([
             description: "Einrichtung der UVP spezifischen Felder",
             defaultActive: true,
             prefix: "uvp_",
+            uvpPhaseField: null,
             run: function() {
 
                 // rename default fields
-                query("#generalDescLabel label").addContent(message.get("uvp.form.generalDescription"), "only");
                 query("#objectNameLabel label").addContent(message.get("uvp.form.planDescription"), "only");
                 query("#general .titleBar .titleCaption").addContent(message.get("uvp.form.consideration"), "only");
                 query("#general .titleBar").attr("title", message.get("uvp.form.consideration.tooltip"));
-                dom.byId("generalAddressTableLabelText").innerHTML = message.get("uvp.form.address");
 
                 // rename Objekte root node
                 registry.byId("dataTree").rootNode.getChildren()[0].set("label", message.get("uvp.form.plans"));
@@ -300,11 +321,23 @@ define([
             prepareDocument: function(classInfo) {
                 console.log("Prepare document for class: ", classInfo);
                 var objClass = classInfo.objClass;
-                if (objClass === "Class10") {
+                if (objClass === "Class10") { // UVP Vorhaben
+                    domClass.remove("uiElementAdduvpgCategory", "hide");
+                    query("#generalDescLabel label").addContent(message.get("uvp.form.generalDescription"), "only");
+                    query("#generalAddressTableLabel label").addContent(message.get("uvp.form.address"), "only");
+                    this.uvpPhaseField.availablePhases = [1, 2, 3];
 
-                } else if (objClass === "Class11") {
+                } else if (objClass === "Class11") { // ausländische
+                    domClass.add("uiElementAdduvpgCategory", "hide");
+                    query("#generalDescLabel label").addContent(message.get("uvp.form.foreign.generalDescription"), "only");
+                    query("#generalAddressTableLabel label").addContent(message.get("uvp.form.foreign.address"), "only");
+                    this.uvpPhaseField.availablePhases = [1, 3];
 
-                } else if (objClass === "Class12") {
+                } else if (objClass === "Class12") { // negative
+
+                } else if (objClass === "Class13") { // Raumordnungsverfahren
+
+                } else if (objClass === "Class14") { // Linienbestimmungen
 
                 }
             },
@@ -334,7 +367,8 @@ define([
                 var rubric = "general";
                 var newFieldsToDirtyCheck = [];
 
-                new UvpPhases({ id: "UVPPhases" }).placeAt("generalContent");
+                this.uvpPhaseField = new UvpPhases({ id: "UVPPhases" });
+                this.uvpPhaseField.placeAt("generalContent");
 
                 this.createSpatial(rubric);
                 newFieldsToDirtyCheck.push(this.prefix + "spatialValue");
@@ -381,11 +415,14 @@ define([
                     "class": "optional show right",
                     onClick: function() {
                         var val = spatialInput.get("value");
-                        var fixedValue = val.indexOf(": ") === -1 ? val : val.substr(val.indexOf(": ") + 2);
-                        var arrayValue = fixedValue.split(',');
+                        if (val !== "") {
+                            var fixedValue = val.indexOf(": ") === -1 ? val : val.substr(val.indexOf(": ") + 2);
+                            var arrayValue = fixedValue.split(',');
 
-                        self.nominatimSearch._zoomToBoundingBox([arrayValue[1], arrayValue[3], arrayValue[0], arrayValue[2]], true);
+                            self.nominatimSearch._zoomToBoundingBox([arrayValue[1], arrayValue[3], arrayValue[0], arrayValue[2]], true);
+                        }
                         domClass.remove("uvpNominatimSearch", "hide");
+                        self.nominatimSearch.map.invalidateSize();
                         dom.byId("uvp_spatial").focus();
                     }
                 }).placeAt(rubric);

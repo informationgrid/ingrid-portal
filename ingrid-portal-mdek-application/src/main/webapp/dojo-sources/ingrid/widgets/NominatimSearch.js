@@ -12,11 +12,10 @@ define([
     "dijit/registry",
     "dijit/_WidgetBase",
     "dijit/_Templated",
-    "ingrid/layoutCreator",
-    "dijit/form/Button"
+    "ingrid/layoutCreator"
     // "ingrid/widgets/leaflet",
     // "ingrid/widgets/leaflet-areaselect"
-], function(declare, array, lang, construct, domClass, query, on, request, json, registry, _WidgetBase, _Templated, creator, Button){
+], function(declare, array, lang, construct, domClass, query, on, request, json, registry, _WidgetBase, _Templated, creator){
 
     return declare("NominatimSearch", [_WidgetBase, dijit._Templated], {
         
@@ -168,7 +167,7 @@ define([
         
         _resetInput: function() {
             registry.byId(this.prefix + "spatial").set("value", "");
-            query(".mapWrapper", this.domNode).addClass("hide");
+            // query(".mapWrapper", this.domNode).addClass("hide");
         },
         
         _determineLocationInfo: function(box) {

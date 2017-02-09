@@ -30,10 +30,13 @@ define([
             // phases consists of 0 or n containers, which itself contain additional fields
             // e.g.: [ { key: "öffentl. Auslegung", fields: [addField11, addField12]}, {key: "zulassungs.", fields: [addField21, addField22]}, ... ]
             // so each item of phases is a container of type 
-            //   - "Öffentliche Auslegung"
-            //   - "Erörterungstermin"
-            //   - "Zulassungsentscheidung"
+            //   - 1) "Öffentliche Auslegung"
+            //   - 2) "Erörterungstermin"
+            //   - 3) "Zulassungsentscheidung"
             phases: [],
+
+            // define which phases can be created through the dialog
+            availablePhases: [1,2,3],
 
             addButton: null,
 
@@ -56,29 +59,35 @@ define([
                 this.addButton = new Button({
                     label: message.get("uvp.form.addPhase"),
                     onClick: function () {
-                        // alert("Will show a dialog here ...");
-                        dialog.show(message.get("uvp.form.dialog.addPhase.title"), message.get("uvp.form.dialog.addPhase.text"), dialog.INFO, [
-                            {
+                        var buttons = [];
+                        if (self.availablePhases.indexOf(1) !== -1) {
+                            buttons.push({
                                 caption: message.get("uvp.form.dialog.addPhase.phase1"),
                                 action: function () {
                                     var rubric = lang.hitch(self, self.addPhase1)();
                                     self.openPhase(rubric);
                                 }
-                            }, {
+                            });
+                        }
+                        if (self.availablePhases.indexOf(2) !== -1) {
+                            buttons.push({
                                 caption: message.get("uvp.form.dialog.addPhase.phase2"),
                                 action: function () {
                                     var rubric = lang.hitch(self, self.addPhase2)();
                                     self.openPhase(rubric);
                                 }
-                            }, {
+                            });
+                        }
+                        if (self.availablePhases.indexOf(3) !== -1) {
+                            buttons.push({
                                 caption: message.get("uvp.form.dialog.addPhase.phase3"),
                                 action: function () {
                                     var rubric = lang.hitch(self, self.addPhase3)();
                                     self.openPhase(rubric);
                                 }
-                            }
-                        ], 500);
-
+                            });
+                        }
+                        dialog.show(message.get("uvp.form.dialog.addPhase.title"), message.get("uvp.form.dialog.addPhase.text"), dialog.INFO, buttons, 500);
                     }
                 });
                 
@@ -218,17 +227,11 @@ define([
                 /**
                  * Antrag auf Entscheidung über die Zulässigkeit des Vorhabens
                  */
-                var structure = [
-                    { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
-                    { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
-                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-                ];
+                
                 var id = "legitimacyDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.legitimacyDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-                    structure, rubric);
+                    this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "legitimacyDocs", field: registry.byId(id) });
 
@@ -237,17 +240,10 @@ define([
                 /**
                  * UVP-Bericht nach § 6 UVPG
                  */
-                structure = [
-                    { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
-                    { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
-                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-                ];
                 id = "reportArticle6Docs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportArticle6Docs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-                    structure, rubric);
+                    this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "reportArticle6Docs", field: registry.byId(id) });
 
@@ -256,34 +252,20 @@ define([
                 /**
                  * Berichte und Empfehlungen
                  */
-                structure = [
-                    { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
-                    { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
-                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-                ];
                 id = "reportsRecommendationsDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-                    structure, rubric);
+                    this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id) });
 
                 /**
                  * Weitere Unterlagen
                  */
-                structure = [
-                    { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
-                    { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
-                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-                ];
                 id = "moreDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-                    structure, rubric);
+                    this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "moreDocs", field: registry.byId(id) });
 
@@ -332,7 +314,6 @@ define([
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDate"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
-                this.addUploadLink(id);
                 phaseFields.push({ key: "considerationDate", field: registry.byId(id) });
                 
                 /**
@@ -348,17 +329,10 @@ define([
                 /**
                  * Bekanntmachung
                  */
-                structure = [
-                    { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
-                    { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
-                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-                ];
                 id = "considerationDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-                    structure, rubric);
+                    this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "considerationDocs", field: registry.byId(id) });
 
@@ -411,7 +385,7 @@ define([
                  */
                 id = "approvalDescription_" + counter;
                 newFieldsToDirtyCheck.push( id );
-                creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: message.get("uvp.form.phase3.approvalDescription"), help: "...", isMandatory: true, visible: "optional", rows: 3, style: "width:100%" }));
+                creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: message.get("uvp.form.phase3.approvalDescription"), help: "...", isMandatory: true, visible: "optional", rows: 10, style: "width:100%" }));
                 var textarea = registry.byId(id);
                 this.addValidatorForTextarea(textarea);
                 phaseFields.push({ key: "approvalDescription", field: textarea });
@@ -419,34 +393,20 @@ define([
                 /**
                  * Zulassungsdokument
                  */
-                var structure = [
-                   { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
-                    { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
-                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-                ];
                 id = "approvalDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-                    structure, rubric);
+                    this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "approvalDocs", field: registry.byId(id) });
 
                 /**
                  * Planungsunterlagen
                  */
-                structure = [
-                    { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
-                    { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
-                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-                ];
                 id = "designDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-                    structure, rubric);
+                    this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "designDocs", field: registry.byId(id) });
 
@@ -467,6 +427,16 @@ define([
                 array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
 
                 return rubric;
+            },
+
+            getDocTableStructure: function() {
+                return [
+                    { field: 'label', name: 'Titel', width: '290px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: false, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
+                    { field: 'type', name: 'Typ', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '60px', editable: false, formatter: Formatters.BytesCellFormatter },
+                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
+                ];
             },
 
             openPhase: function (rubric) {
@@ -583,29 +553,29 @@ define([
                         });
                         // update existing uploads
                         array.forEach(rows, function (row) {
-                            var uri = row['link'];
+                            var uri = row.link;
                             if (uri && uploadMap[uri]) {
                                 var upload = uploadMap[uri];
-                                row['type'] = upload.type;
-                                row['size'] = upload.size;
-                                delete uploadMap[uri]
+                                row.type = upload.type;
+                                row.size = upload.size;
+                                delete uploadMap[uri];
                             }
                         });
                         // map back to list
                         uploads = [];
-                        for (uri in uploadMap) {
+                        for (var uri in uploadMap) {
                             uploads.push(uploadMap[uri]);
                         }
 
                         // fill existing rows without link
                         array.forEach(rows, function (row) {
-                            var uri = row['link'];
+                            var uri = row.link;
                             if (!uri) {
                                 var upload = uploads.shift();
                                 if (upload) {
-                                    row['link'] = upload.uri;
-                                    row['type'] = upload.type;
-                                    row['size'] = upload.size;
+                                    row.link = upload.uri;
+                                    row.type = upload.type;
+                                    row.size = upload.size;
                                 }
                             }
                         });
@@ -639,7 +609,7 @@ define([
                         "class": "functionalLink",
                         innerHTML: "<img src='img/ic_fl_popup.gif' width='10' height='9' alt='Popup' />"
                     }, table.domNode.parentNode, "before");
-                    var link = construct.create("a", {
+                    construct.create("a", {
                         id: tableId+"_uploadLink",
                         title: "Dokument-Upload [Popup]",
                         innerHTML: "Dokument-Upload",
@@ -665,7 +635,7 @@ define([
                             domClass.remove(inactiveHint, "hide");
                             domClass.add(linkContainer, "hide");
                         }
-                    }
+                    };
 
                     // adapt upload interface to currentUdk state
                     setLinkState();

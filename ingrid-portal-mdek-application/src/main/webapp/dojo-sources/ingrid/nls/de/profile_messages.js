@@ -9,7 +9,9 @@ define({
     "uvp.form.address":"Federführende Behörde",
     "uvp.form.plans":"Vorhaben",
 
+
     "uvp.form.categories.uvp":"UVP Vorhaben",
+    "uvp.form.categories.uvpInFront":"Vorgelagerte Verfahren",
     "uvp.form.categories.uvpNegative":"Negative Vorprüfungen",
     "uvp.form.categories.uvpForeign":"Ausländische Vorprüfungen",
 
@@ -50,5 +52,8 @@ define({
     "uvp.form.table.docs.expires":"Gültig bis",
 
     "uvp.form.deletePhase":"Phase löschen",
-    "uvp.form.deletePhase.confirmText":"Möchten Sie wirklich diese Phase entfernen?"
+    "uvp.form.deletePhase.confirmText":"Möchten Sie wirklich diese Phase entfernen?",
+
+    "uvp.form.foreign.address":"Kontakt deutsche Behörde",
+    "uvp.form.foreign.generalDescription":"Vorhabenbeschreibung"
 });
