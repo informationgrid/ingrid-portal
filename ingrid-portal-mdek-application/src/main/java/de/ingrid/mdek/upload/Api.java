@@ -73,11 +73,6 @@ public class Api {
             throw new NotFoundException("The requested document does not exist on the server.");
         }
 
-        // check file reference and expire date
-        if (Documents.isExpired(path+"/"+file)) {
-            throw new NotFoundException("The requested document does not exist on the server.");
-        }
-
         // read file
         StreamingOutput fileStream = new StreamingOutput() {
             @Override
