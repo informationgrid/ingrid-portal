@@ -375,10 +375,9 @@ define([
                 spatialInput.set("disabled", true);
 
                 var self = this;
-                var spatialViewButton = new Button({
+                new Button({
                     id: this.prefix + "btnSpatialValueShow",
                     label: message.get("uvp.form.showSpatial"),
-                    disabled: true,
                     "class": "optional show right",
                     onClick: function() {
                         var val = spatialInput.get("value");
@@ -386,29 +385,31 @@ define([
                         var arrayValue = fixedValue.split(',');
 
                         self.nominatimSearch._zoomToBoundingBox([arrayValue[1], arrayValue[3], arrayValue[0], arrayValue[2]], true);
+                        domClass.remove("uvpNominatimSearch", "hide");
+                        dom.byId("uvp_spatial").focus();
                     }
                 }).placeAt(rubric);
                 // layout fix!
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
 
-                spatialInput.on("change", function(value) {
-                    if (value === "") {
-                        spatialViewButton.set("disabled", true);
-                    } else {
-                        spatialViewButton.set("disabled", false);
-                    }
-                });
-
                 /**
                  * Map
                  */
-                this.nominatimSearch = new NominatimSearch().placeAt(rubric);
+                this.nominatimSearch = new NominatimSearch({
+                    id: "uvpNominatimSearch",
+                    collapseOnEmptyInput: false,
+                    hideOnStartup: true
+                }).placeAt(rubric);
                 aspect.after(this.nominatimSearch, "onData", function(meta, args) {
                     var bbox = args[0];
                     var title = args[1];
                     console.log("Received bbox:", bbox);
                     if (title) bbox = title + ": " + bbox;
                     spatialInput.set("value", bbox);
+                    domClass.add("uvpNominatimSearch", "hide");
+                });
+                aspect.after(this.nominatimSearch, "onClose", function() {
+                    domClass.add("uvpNominatimSearch", "hide");
                 });
 
                 require("ingrid/IgeActions").additionalFieldWidgets.push(spatialInput);

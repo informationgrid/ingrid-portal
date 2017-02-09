@@ -15,7 +15,7 @@ define({
 
     "uvp.form.categoryIds":"Vorhabensnummer",
     "uvp.form.spatial":"Raumbezug",
-    "uvp.form.showSpatial":"Anzeigen",
+    "uvp.form.showSpatial":"Anzeigen / Ändern",
 
     "uvp.form.addPhase":"Phase hinzufügen",
     "uvp.form.dialog.addPhase.title":"Phase erstellen",

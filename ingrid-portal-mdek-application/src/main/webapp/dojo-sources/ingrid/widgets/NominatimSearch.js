@@ -27,6 +27,8 @@ define([
         areaSelect: null,
         
         collapseOnEmptyInput: true,
+
+        hideOnStartup: false,
         
         templateString: 
             "<span>" +
@@ -52,6 +54,9 @@ define([
             
             if (this.collapseOnEmptyInput) {
                 query(".mapWrapper", this.domNode).addClass("hide");
+            }
+            if (this.hideOnStartup) {
+                domClass.add(this.domNode, "hide");
             }
         },
         
@@ -147,10 +152,6 @@ define([
             this.map.fitBounds(latLonBounds);
         },
         
-        closeView: function() {
-            query(".mapWrapper", this.domNode).addClass("hide");
-        },
-        
         _onAcceptView: function() {
             var bounds = this.areaSelect.getBounds();
             var self = this;
@@ -162,6 +163,7 @@ define([
         
         _onClose: function() {
             this._resetInput();
+            this.onClose();
         },
         
         _resetInput: function() {
@@ -183,6 +185,7 @@ define([
         
         // PUBLIC METHODS
         onData: function(bbox, title) {},
+        onClose: function() {},
         validate: function() { return true; }
     });
 

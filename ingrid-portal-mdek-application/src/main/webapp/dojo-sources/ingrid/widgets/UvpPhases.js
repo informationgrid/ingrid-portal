@@ -498,6 +498,8 @@ define([
                 // remove phase from array
                 var pos = array.indexOf(this.phases, phase);
                 this.phases.splice(pos, 1);
+
+                // TODO: remove dirty checks on removed fields
             },
 
             addValuesToPhase: function (phaseFields, values) {
