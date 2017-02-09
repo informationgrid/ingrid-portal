@@ -333,6 +333,26 @@
           <groupId>xml-apis</groupId>
           <artifactId>xml-apis</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.glassfish.jersey.containers</groupId>
+          <artifactId>jersey-container-servlet</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.glassfish.jersey.media</groupId>
+          <artifactId>jersey-media-multipart</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.glassfish.jersey.media</groupId>
+          <artifactId>jersey-media-moxy</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.glassfish.jersey.ext</groupId>
+          <artifactId>jersey-spring3</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.rauschig</groupId>
+          <artifactId>jarchivelib</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
