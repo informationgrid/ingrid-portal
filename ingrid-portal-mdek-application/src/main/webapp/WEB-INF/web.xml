@@ -59,7 +59,26 @@
         <servlet-name>js-servlet</servlet-name>
         <url-pattern>/generated/*</url-pattern>
     </servlet-mapping>
-
+    
+<!-- rest api servlet -->
+    <servlet>
+        <servlet-name>rest-api-servlet</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <!-- specify multiple packages using ; as separator -->
+            <param-value>de.ingrid.mdek.upload</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jersey.config.server.provider.classnames</param-name>
+            <param-value>org.glassfish.jersey.filter.LoggingFilter;org.glassfish.jersey.media.multipart.MultiPartFeature</param-value>
+        </init-param>        
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rest-api-servlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+    
 <!-- Uncomment the following security-constraint to restrict access to the mdek-application to the role 'admin' -->
 <!--
 	<security-constraint>

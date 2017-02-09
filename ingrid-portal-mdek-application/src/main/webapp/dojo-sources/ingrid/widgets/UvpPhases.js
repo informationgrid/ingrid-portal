@@ -19,9 +19,11 @@ define([
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
-    "dojo/NodeList-traverse"
+    "ingrid/utils/Store",
+    "./upload/UploadWidget",
+    "dojo/NodeList-traverse",
 ], function (declare, array, lang, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
-    creator, dialog, message, IgeEvents, CustomGrid, Editors, Formatters, dirty) {
+    creator, dialog, message, IgeEvents, CustomGrid, Editors, Formatters, dirty, UtilStore, UploadWidget) {
 
         return declare("UVPPhases", [_WidgetBase], {
 
@@ -39,6 +41,10 @@ define([
             valueAsTableData: true,
 
             counter: 1,
+
+            // TODO put URLs into configuration?
+            uploadUrl: "rest/document",
+            downloadBaseUrl: "http://localhost:8080/ingrid-portal-mdek-application/rest/document/",
 
             buildRendering: function () {
                 this.domNode = construct.create("div");
@@ -214,15 +220,16 @@ define([
                  */
                 var structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 var id = "legitimacyDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.legitimacyDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "legitimacyDocs", field: registry.byId(id) });
 
                 // TODO: at least one document validation
@@ -232,15 +239,16 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "reportArticle6Docs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportArticle6Docs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "reportArticle6Docs", field: registry.byId(id) });
 
                 // TODO: at least one document validation
@@ -250,15 +258,16 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "reportsRecommendationsDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id) });
 
                 /**
@@ -266,15 +275,16 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "moreDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "moreDocs", field: registry.byId(id) });
 
                 this.phases.push({
@@ -322,6 +332,7 @@ define([
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDate"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "considerationDate", field: registry.byId(id) });
                 
                 /**
@@ -339,15 +350,16 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "considerationDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "considerationDocs", field: registry.byId(id) });
 
                 this.phases.push({
@@ -409,15 +421,16 @@ define([
                  */
                 var structure = [
                    { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "approvalDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "approvalDocs", field: registry.byId(id) });
 
                 /**
@@ -425,15 +438,16 @@ define([
                  */
                 structure = [
                     { field: 'label', name: 'Titel', width: '300px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: true },
+                    { field: 'link', name: 'Link', width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
                     { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '50px', editable: true },
+                    { field: 'size', name: 'Größe', width: '50px', editable: true, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "designDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
+                this.addUploadLink(id);
                 phaseFields.push({ key: "designDocs", field: registry.byId(id) });
 
                 this.phases.push({
@@ -541,7 +555,126 @@ define([
                         return true;
                     }
                 };
+            },
+
+            addUploadLink: function (tableId) {
+                var table = registry.byId(tableId);
+                if (table) {
+                    // create uploader instance
+                    var uploader = new UploadWidget({
+                        uploadUrl: this.uploadUrl
+                    });
+
+                    // upload handler
+                    var handleUploads = lang.hitch(this, function (uploads) {
+                        // make upload URIs relative for storage
+                        // NOTE: the server response contains absolute download URIs
+                        array.forEach(uploads, function (upload) {
+                            upload.uri = upload.uri.replace(this.downloadBaseUrl, '');
+                        }, this);
+
+                        // get existing table data
+                        var rows = table.data;
+
+                        // create map from uploads array
+                        var uploadMap = {};
+                        array.forEach(uploads, function (upload) {
+                            uploadMap[upload.uri] = upload;
+                        });
+                        // update existing uploads
+                        array.forEach(rows, function (row) {
+                            var uri = row['link'];
+                            if (uri && uploadMap[uri]) {
+                                var upload = uploadMap[uri];
+                                row['type'] = upload.type;
+                                row['size'] = upload.size;
+                                delete uploadMap[uri]
+                            }
+                        });
+                        // map back to list
+                        uploads = [];
+                        for (uri in uploadMap) {
+                            uploads.push(uploadMap[uri]);
+                        }
+
+                        // fill existing rows without link
+                        array.forEach(rows, function (row) {
+                            var uri = row['link'];
+                            if (!uri) {
+                                var upload = uploads.shift();
+                                if (upload) {
+                                    row['link'] = upload.uri;
+                                    row['type'] = upload.type;
+                                    row['size'] = upload.size;
+                                }
+                            }
+                        });
+
+                        // add remaining uploads
+                        array.forEach(uploads, function (upload) {
+                            rows.push({
+                                link: upload.uri,
+                                type: upload.type,
+                                size: upload.size
+                            });
+                        });
+
+                        // store changes
+                        UtilStore.updateWriteStore(tableId, rows);
+                    });
+
+                    // create interface
+                    var inactiveHint = construct.create("span", {
+                        id: tableId+"_uploadHint",
+                        'class': "right",
+                        innerHTML: "Dokument-Upload inaktiv",
+                        style: {
+                            cursor: "help"
+                        },
+                        onclick: function (e) {
+                            dialog.showContextHelp(e, "Die Upload Funktionalität steht nach dem ersten Speichern zur Verfügung.");
+                        }
+                    }, table.domNode.parentNode, "before");
+                    var linkContainer = construct.create("span", {
+                        "class": "functionalLink",
+                        innerHTML: "<img src='img/ic_fl_popup.gif' width='10' height='9' alt='Popup' />"
+                    }, table.domNode.parentNode, "before");
+                    var link = construct.create("a", {
+                        id: tableId+"_uploadLink",
+                        title: "Dokument-Upload [Popup]",
+                        innerHTML: "Dokument-Upload",
+                        style: {
+                            cursor: "pointer"
+                        },
+                        onclick: lang.hitch(this, function () {
+                            var path = currentUdk.uuid;
+                            uploader.open(path).then(lang.hitch(this, function (uploads) {
+                                handleUploads(uploads);
+                            }));
+                        })
+                    }, linkContainer);
+
+                    // link state handler
+                    var setLinkState = function () {
+                        var isActive = currentUdk.uuid !== "newNode";
+                        if (isActive) {
+                            domClass.remove(linkContainer, "hide");
+                            domClass.add(inactiveHint, "hide");
+                        }
+                        else {
+                            domClass.remove(inactiveHint, "hide");
+                            domClass.add(linkContainer, "hide");
+                        }
+                    }
+
+                    // adapt upload interface to currentUdk state
+                    setLinkState();
+                    this.own(
+                        topic.subscribe("/onBeforeObjectPublish", function () {
+                            setLinkState();
+                        })
+                    );
+                }
             }
         });
-
     });

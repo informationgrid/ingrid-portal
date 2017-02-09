@@ -1,0 +1,17 @@
+package de.ingrid.mdek.upload;
+
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+
+public class ConflictException extends WebApplicationException {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Constructor
+     * @param message
+     */
+    public ConflictException(String message) {
+        super(message, Response.Status.CONFLICT.getStatusCode());
+    }
+}
