@@ -123,7 +123,7 @@ define([
 
             // uploader
             this.uploader = new qq.FineUploader({
-                debug: true,
+                debug: false,
                 element: this.dialog.containerNode,
                 template: this.templateEl,
                 autoUpload: false,
