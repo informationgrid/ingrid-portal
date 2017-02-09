@@ -181,10 +181,11 @@ define([
                         }, this);
                     }),
                     onError: lang.hitch(this, function(id, name, errorReason, xhrOrXdr) {
+                        var message = null;
                         if (xhrOrXdr && xhrOrXdr.status == 409) {
                             this.uploader.pauseUpload(id);
                             // TODO add file name input field?
-                            var message = string.substitute("Die Datei '${0}' existiert bereits. Soll die existierende Datei überschrieben werden?", [name]);
+                            message = string.substitute("Die Datei '${0}' existiert bereits. Soll die existierende Datei überschrieben werden?", [name]);
                             IngridDialog.show("Upload Konflikt", message, IngridDialog.INFO, [{
                                 caption: "Ja",
                                 action: lang.hitch(this, function() {
@@ -199,7 +200,7 @@ define([
                             }]);
                         }
                         else {
-                            var message = name ? string.substitute("Fehler beim Upload von '${0}': ${1}", [name, errorReason]) : errorReason;
+                            message = name ? string.substitute("Fehler beim Upload von '${0}': ${1}", [name, errorReason]) : errorReason;
                             IngridDialog.show("Fehler", message, IngridDialog.WARNING);
                         }
                     })
@@ -214,7 +215,7 @@ define([
             if (uploadBtns.length > 0) {
                 this.uploadHandle = on(uploadBtns[0], "click", lang.hitch(this, function() {
                     this.uploader.uploadStoredFiles();
-                }))
+                }));
             }
 
             // show uploader
@@ -267,7 +268,7 @@ define([
          * @param uploads Array of uploads
          * @return Array
          */
-        removeDuplicates(uploads) {
+        removeDuplicates: function(uploads) {
             var lookup = {};
             return array.filter(uploads, function(upload) {
                 if(lookup[upload.uri] !== true) {

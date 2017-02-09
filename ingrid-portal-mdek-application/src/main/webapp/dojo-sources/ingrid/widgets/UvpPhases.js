@@ -21,7 +21,7 @@ define([
     "ingrid/hierarchy/dirty",
     "ingrid/utils/Store",
     "./upload/UploadWidget",
-    "dojo/NodeList-traverse",
+    "dojo/NodeList-traverse"
 ], function (declare, array, lang, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
     creator, dialog, message, IgeEvents, CustomGrid, Editors, Formatters, dirty, UtilStore, UploadWidget) {
 

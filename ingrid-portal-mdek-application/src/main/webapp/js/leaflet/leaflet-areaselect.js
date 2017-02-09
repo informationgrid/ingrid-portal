@@ -4,7 +4,7 @@ L.AreaSelect = L.Class.extend({
     options: {
         width: 200,
         height: 300,
-        keepAspectRatio: false,
+        keepAspectRatio: false
     },
 
     initialize: function(options) {
@@ -61,7 +61,7 @@ L.AreaSelect = L.Class.extend({
         if (!!this._container)
             return;
         
-        this._container = L.DomUtil.create("div", "leaflet-areaselect-container", this.map._controlContainer)
+        this._container = L.DomUtil.create("div", "leaflet-areaselect-container", this.map._controlContainer);
         this._topShade = L.DomUtil.create("div", "leaflet-areaselect-shade", this._container);
         this._bottomShade = L.DomUtil.create("div", "leaflet-areaselect-shade", this._container);
         this._leftShade = L.DomUtil.create("div", "leaflet-areaselect-shade", this._container);
@@ -179,4 +179,4 @@ L.AreaSelect = L.Class.extend({
 
 L.areaSelect = function(options) {
     return new L.AreaSelect(options);
-}
+};
