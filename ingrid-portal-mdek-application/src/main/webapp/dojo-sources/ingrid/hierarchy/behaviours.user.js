@@ -71,7 +71,7 @@ define([
                 ObjectService.createNewNode(null, function(objNode) {
                     objNode.nodeAppType = "O";
                     objNode.objectClass = "1000";
-                    objNode.objectName = "UVPs";
+                    objNode.objectName = message.get("uvp.form.categories.uvp");
                     ObjectService.saveNodeData(objNode, "true", false, {
                         callback: def.resolve,
                         errorHandler: self.handleCreateError
@@ -80,7 +80,7 @@ define([
                 ObjectService.createNewNode(null, function(objNode) {
                     objNode.nodeAppType = "O";
                     objNode.objectClass = "1000";
-                    objNode.objectName = "negative UVPs";
+                    objNode.objectName = message.get("uvp.form.categories.uvpNegative");
                     def.then(function() {
                         ObjectService.saveNodeData(objNode, "true", false, {
                             callback: def2.resolve,
@@ -91,7 +91,7 @@ define([
                 ObjectService.createNewNode(null, function(objNode) {
                     objNode.nodeAppType = "O";
                     objNode.objectClass = "1000";
-                    objNode.objectName = "Ausländische UVPs";
+                    objNode.objectName = message.get("uvp.form.categories.uvpForeign");
                     def2.then(function() {
                         ObjectService.saveNodeData(objNode, "true", false, {
                             errorHandler: self.handleCreateError
@@ -122,13 +122,38 @@ define([
             description: "Definition der Dokumententypen: UVP, ...",
             defaultActive: true,
             type: "SYSTEM",
+            specialNodes: [message.get("uvp.form.categories.uvp"), message.get("uvp.form.categories.uvpNegative"), message.get("uvp.form.categories.uvpForeign")],
             run: function() {
 
                 this.addIconClasses();
 
+                var self = this;
                 topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
+                    var uvpType = null;
+
                     // remove all assistants
                     data.assistants.splice(0, data.assistants.length);
+
+                    var parentTitlePos = self.checkForSpecialParent();
+                    // var parentTitle = registry.byId("dataTree").selectedNode.getParent().item.title;
+                    console.debug("parent title is: ", self.specialNodes[parentTitlePos]);
+
+                    if (parentTitlePos === 0) {
+                        uvpType = array.filter(data.types, function(t) { return t[1] === "10"; });
+                        data.types.splice(0, data.types.length);
+                        data.types.push(uvpType[0]);
+
+                    } else if (parentTitlePos === 1) {
+                        uvpType = array.filter(data.types, function(t) { return t[1] === "12"; });
+                        data.types.splice(0, data.types.length);
+                        data.types.push(uvpType[0]);
+
+                    } else if (parentTitlePos === 2) {
+                        uvpType = array.filter(data.types, function(t) { return t[1] === "11"; });
+                        data.types.splice(0, data.types.length);
+                        data.types.push(uvpType[0]);
+
+                    }
                 });
 
                 // load custom syslists
@@ -141,7 +166,6 @@ define([
 
                 this.hideMenuItems();
 
-                var self = this;
                 topic.subscribe("/onPageInitialized", function(page) {
                     if (page === "Hiearchy") {
                         self.handleTreeOperations();
@@ -149,20 +173,42 @@ define([
                 });
             },
 
+            /**
+             * Get the array position of the special parent node, defined in "specialNodes"-array.
+             */
+            checkForSpecialParent: function() {
+                var tree = registry.byId("dataTree");
+                var newNode = tree.getNodesByItem("newNode")[0];
+
+                // if new node is not yet created (because parent is still expanding)
+                // use the selected node as the parent
+                var parent = newNode ? newNode.getParent() : tree.selectedNode;
+
+                // search for the special parent up to the root node
+                while (parent && parent.item) {
+                    var position = this.specialNodes.indexOf(parent.item.title);
+                    if (position !== -1) {
+                        return position;
+                    }
+                    parent = parent.getParent();
+                }
+                return null;
+            },
+
             addIconClasses: function() {
                 query("head")[0].append(
                     // construct.toDom('<link rel="stylesheet" type="text/css" href="lightbox_stylesheet.css">')
                     construct.toDom(
                         '<style type="text/css">' +
-                            '.TreeIconClass10_V {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif");}' +
-                            '.TreeIconClass10_B {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -16px;}' +
-                            '.TreeIconClass10_VB {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -32px;}' +
-                            '.TreeIconClass12_V {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -48px;}' +
-                            '.TreeIconClass12_B {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -64px;}' +
-                            '.TreeIconClass12_VB {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -80px;}' +
-                            '.TreeIconClass11_V {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -96px;}' +
-                            '.TreeIconClass11_B {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -112px;}' +
-                            '.TreeIconClass11_VB {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -128px;}' +
+                        '.TreeIconClass10_V {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif");}' +
+                        '.TreeIconClass10_B {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -16px;}' +
+                        '.TreeIconClass10_VB {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -32px;}' +
+                        '.TreeIconClass12_V {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -48px;}' +
+                        '.TreeIconClass12_B {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -64px;}' +
+                        '.TreeIconClass12_VB {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -80px;}' +
+                        '.TreeIconClass11_V {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -96px;}' +
+                        '.TreeIconClass11_B {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -112px;}' +
+                        '.TreeIconClass11_VB {background-image:url("dojo-sources/ingrid/images/uvp_icons.gif"); background-position: -128px;}' +
                         '</style>')
                 );
             },
@@ -209,7 +255,8 @@ define([
             hideMenuItems: function() {
                 topic.subscribe("/onMenuBarCreate", function(excludedItems) {
                     excludedItems.push("menuPageStatistics", "menuPageQualityEditor", "menuPageQualityAssurance",
-                        "menuPageResearchThesaurus");
+                        "menuPageResearchThesaurus", "menuPageAdminAnalysis", "menuPageAdminURL", "menuPageAdminDeleteAddress",
+                        "menuPageAdminSearchTerms", "menuPageAdminLocations");
                 });
                 // TODO: remove stack container or do not let them initialized
                 // registry.byId("stackContainer").removeChild(registry.byId("pageStatistics"));
