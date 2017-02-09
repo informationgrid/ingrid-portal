@@ -539,12 +539,12 @@ define([
                     });
 
                     // upload handler
-                    var handleUploads = function(uploads) {
+                    var handleUploads = lang.hitch(this, function (uploads) {
                         // make upload URIs relative for storage
                         // NOTE: the server response contains absolute download URIs
                         array.forEach(uploads, function (upload) {
                             upload.uri = upload.uri.replace(this.downloadBaseUrl, '');
-                        });
+                        }, this);
 
                         // get existing table data
                         var rows = table.data;
@@ -594,7 +594,7 @@ define([
 
                         // store changes
                         UtilStore.updateWriteStore(tableId, rows);
-                    }
+                    });
 
                     // create interface
                     var inactiveHint = construct.create("span", {
@@ -604,7 +604,7 @@ define([
                         style: {
                             cursor: "help"
                         },
-                        onclick: function(e) {
+                        onclick: function (e) {
                             dialog.showContextHelp(e, "Die Upload Funktionalität steht nach dem ersten Speichern zur Verfügung.");
                         }
                     }, table.domNode.parentNode, "before");
@@ -619,16 +619,16 @@ define([
                         style: {
                             cursor: "pointer"
                         },
-                        onclick: lang.hitch(this, function() {
+                        onclick: lang.hitch(this, function () {
                             var path = currentUdk.uuid;
-                            uploader.open(path).then(lang.hitch(this, function(uploads) {
+                            uploader.open(path).then(lang.hitch(this, function (uploads) {
                                 handleUploads(uploads);
                             }));
                         })
                     }, linkContainer);
 
                     // link state handler
-                    var setLinkState = function() {
+                    var setLinkState = function () {
                         var isActive = currentUdk.uuid !== "newNode";
                         if (isActive) {
                             domClass.remove(linkContainer, "hide");
@@ -643,7 +643,7 @@ define([
                     // adapt upload interface to currentUdk state
                     setLinkState();
                     this.own(
-                        topic.subscribe("/onBeforeObjectPublish", function() {
+                        topic.subscribe("/onBeforeObjectPublish", function () {
                             setLinkState();
                         })
                     );
