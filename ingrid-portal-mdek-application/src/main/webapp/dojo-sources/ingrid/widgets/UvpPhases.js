@@ -18,9 +18,10 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
+    "ingrid/hierarchy/dirty",
     "dojo/NodeList-traverse"
 ], function (declare, array, lang, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
-    creator, dialog, message, IgeEvents, CustomGrid, Editors, Formatters) {
+    creator, dialog, message, IgeEvents, CustomGrid, Editors, Formatters, dirty) {
 
         return declare("UVPPhases", [_WidgetBase], {
 
@@ -180,6 +181,7 @@ define([
             addPhase1: function (values) {
                 this.removePhaseInfo();
                 var phaseFields = [];
+                var newFieldsToDirtyCheck = [];
                 var counter = this.counter;
 
                 var rubric = "phase1_" + counter;
@@ -196,6 +198,7 @@ define([
                  */
                 var idDateFrom = "publicDateFrom_" + counter;
                 var idDateTo = "publicDateTo_" + counter;
+                newFieldsToDirtyCheck.push( idDateFrom, idDateTo );
                 creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase1.dateFrom"), help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
                 creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase1.dateTo"), help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
                 phaseFields.push({ key: "publicDateFrom", field: registry.byId(idDateFrom) });
@@ -217,6 +220,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 var id = "legitimacyDocs_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.legitimacyDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "legitimacyDocs", field: registry.byId(id) });
@@ -234,6 +238,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "reportArticle6Docs_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportArticle6Docs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "reportArticle6Docs", field: registry.byId(id) });
@@ -251,6 +256,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "reportsRecommendationsDocs_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id) });
@@ -266,6 +272,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "moreDocs_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "moreDocs", field: registry.byId(id) });
@@ -283,12 +290,16 @@ define([
 
                 this.counter++;
 
+                // add dirty check on new fields
+                array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+
                 return rubric;
             },
 
             addPhase2: function (values) {
                 this.removePhaseInfo();
                 var phaseFields = [];
+                var newFieldsToDirtyCheck = [];
                 var counter = this.counter;
 
                 var rubric = "phase2_" + counter;
@@ -308,6 +319,7 @@ define([
                     { field: 'dateValue', name: 'Datum', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 var id = "considerationDate_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDate"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "considerationDate", field: registry.byId(id) });
@@ -316,6 +328,7 @@ define([
                  * Bekanntmachungstext
                  */
                 id = "considerationDateDescription_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.addToSection(rubric, creator.createDomTextarea({id: id, name: message.get("uvp.form.phase2.considerationDateDescription"), help: "...", isMandatory: false, visible: "optional", rows: 10, style: "width:100%"}));
                 var textarea = registry.byId(id);
                 this.addValidatorForTextarea(textarea);
@@ -332,6 +345,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "considerationDocs_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "considerationDocs", field: registry.byId(id) });
@@ -349,12 +363,16 @@ define([
 
                 this.counter++;
 
+                // add dirty check on new fields
+                array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+
                 return rubric;
             },
 
             addPhase3: function (values) {
                 this.removePhaseInfo();
                 var phaseFields = [];
+                var newFieldsToDirtyCheck = [];
                 var counter = this.counter;
 
                 var rubric = "phase3_" + counter;
@@ -370,6 +388,7 @@ define([
                  * Datum der Entscheidung über die Zulassung
                  */
                 var id = "approvalDate_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: message.get("uvp.form.phase3.approvalDate"), help: "...", isMandatory: true, visible: "optional", style: "width:50%" }));
                 phaseFields.push({ key: "approvalDate", field: registry.byId(id) });
 
@@ -379,6 +398,7 @@ define([
                  * Bekanntmachungstext der Zulassungsentscheidung
                  */
                 id = "approvalDescription_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: message.get("uvp.form.phase3.approvalDescription"), help: "...", isMandatory: true, visible: "optional", rows: 3, style: "width:100%" }));
                 var textarea = registry.byId(id);
                 this.addValidatorForTextarea(textarea);
@@ -395,6 +415,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "approvalDocs_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "approvalDocs", field: registry.byId(id) });
@@ -410,6 +431,7 @@ define([
                     { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
                 id = "designDocs_" + counter;
+                newFieldsToDirtyCheck.push( id );
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     structure, rubric);
                 phaseFields.push({ key: "designDocs", field: registry.byId(id) });
@@ -426,6 +448,9 @@ define([
                 this.addValuesToPhase(phaseFields, values);
 
                 this.counter++;
+
+                // add dirty check on new fields
+                array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
 
                 return rubric;
             },

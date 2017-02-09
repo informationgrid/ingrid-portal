@@ -39,11 +39,12 @@ define([
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/behaviours",
+    "ingrid/hierarchy/dirty",
     "ingrid/utils/Catalog",
     "ingrid/utils/Syslist",
     "ingrid/widgets/UvpPhases",
     "ingrid/widgets/NominatimSearch"
-], function(array, lang, aspect, Deferred, dom, construct, domClass, domStyle, query, topic, registry, Button, message, IgeEvents, creator, Editors, Formatters, behaviours, Catalog, UtilSyslist, UvpPhases, NominatimSearch) {
+], function(array, lang, aspect, Deferred, dom, construct, domClass, domStyle, query, topic, registry, Button, message, IgeEvents, creator, Editors, Formatters, behaviours, dirty, Catalog, UtilSyslist, UvpPhases, NominatimSearch) {
 
     return lang.mixin(behaviours, {
 
@@ -265,8 +266,8 @@ define([
         },
 
         uvpPhaseField: {
-            title: "UVP Phasen Feld",
-            description: "Hinzufügen von dynamischen Feldern",
+            title: "UVP Profil",
+            description: "Einrichtung der UVP spezifischen Felder",
             defaultActive: true,
             prefix: "uvp_",
             run: function() {
@@ -331,8 +332,12 @@ define([
 
             createFields: function() {
                 var rubric = "general";
+                var newFieldsToDirtyCheck = [];
 
                 new UvpPhases({ id: "UVPPhases" }).placeAt("generalContent");
+
+                this.createSpatial(rubric);
+                newFieldsToDirtyCheck.push(this.prefix + "spatialValue");
 
                 /**
                  * Vorhabensnummer
@@ -349,12 +354,8 @@ define([
                     }
                 ];
 
-                this.createSpatial(rubric);
-
-                /**
-                 * Category
-                 */
                 var id = "uvpgCategory";
+                newFieldsToDirtyCheck.push(id);
                 creator.createDomDataGrid(
                     { id: id, name: message.get("uvp.form.categoryIds"), help: "...", isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
                     structure, rubric
@@ -364,6 +365,7 @@ define([
 
                 require("ingrid/IgeActions").additionalFieldWidgets.push(categoryWidget);
 
+                array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
             },
 
             createSpatial: function(rubric) {
