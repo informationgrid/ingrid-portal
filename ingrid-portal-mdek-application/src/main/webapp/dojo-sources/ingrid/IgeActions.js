@@ -258,7 +258,7 @@ define([
             // If the current user does not have write permission on the current obj/adr, don't display a dialog,
             // clear the dirty flag and return as normal
             if (this.global.currentUdk.writePermission === false && this.global.currentUdk.uuid != "newNode") {
-                lang.hitch(dirty, dirty.resetDirtyFlag);
+                lang.hitch(dirty, dirty.resetDirtyFlag)();
                 return false;
             }
 
@@ -287,7 +287,7 @@ define([
             }, {
                 caption: message.get("general.no"),
                 action: function() {
-                    lang.hitch(dirty, dirty.resetDirtyFlag);
+                    lang.hitch(dirty, dirty.resetDirtyFlag)();
                     deferred.resolve("DISCARD");
                 }
             }, {
