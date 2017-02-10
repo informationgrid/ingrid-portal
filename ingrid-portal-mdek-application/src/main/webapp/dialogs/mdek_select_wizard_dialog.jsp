@@ -52,6 +52,8 @@
         var thisDialog = _container_;
         var alreadyChecked = false;
 
+        var objClassTopic = null;
+
         on(_container_, "Load", function () {
             var types = Syslists.getObjectClassList();
             var assistants = [
@@ -76,6 +78,10 @@
 
             // remove new node if cancel the dialog
             on( this, "Cancel", function() {
+
+                // manually remove subscriber
+                objClassTopic.remove();
+
                 // delete node from tree
                 UtilTree.deleteNode("dataTree", "newNode");
 
@@ -90,6 +96,16 @@
 
                 // reset dirty flag
                 lang.hitch(dirty, dirty.resetDirtyFlag)();
+            });
+
+            // update tree node icon when object class has changed
+            objClassTopic = topic.subscribe("/onObjectClassChange", function(data) {
+                console.log("!!!");
+                // update tree node icon after selection
+                var selectedNode = registry.byId("dataTree").selectedNode;
+                var iconNode = query(".TreeIcon", selectedNode.domNode);
+                iconNode[0].classList.forEach(function(cl) { if (cl.indexOf("TreeIconClass") === 0) iconNode.removeClass(cl); })
+                iconNode.addClass("TreeIconClass" + data.objClass.substr(5) + "_B");
             });
 
             registry.byId("pageCreateWizardContainer").resize();
@@ -131,10 +147,15 @@
                 } else {
                     dialog.showPage("<fmt:message key='dialog.wizard.getCap.title' />", "dialogs/mdek_get_capabilities_wizard_dialog.jsp", 755, 750, true);
                 }
+
             } else {
                 // otherwise we just pre-set the object type 
                 registry.byId("objectClass").set("value", "Class" + type);
+
             }
+
+            // remove subscriber
+            setTimeout(objClassTopic.remove, 100);
         }
 
         function addExtraButtons(buttons) {
@@ -149,6 +170,10 @@
 
         function closeThisDialog() {
             thisDialog.hide();
+            topic.publish("/selectNode", {
+                id: "dataTree",
+                node: { id: "newNode" }
+            });
         }
 
         pageCreateWizard.createObject = createObject;
