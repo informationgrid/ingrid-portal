@@ -55,5 +55,8 @@ define({
     "uvp.form.deletePhase.confirmText":"Möchten Sie wirklich diese Phase entfernen?",
 
     "uvp.form.foreign.address":"Kontakt deutsche Behörde",
-    "uvp.form.foreign.generalDescription":"Vorhabenbeschreibung"
+    "uvp.form.foreign.generalDescription":"Vorhabenbeschreibung",
+
+    "uvp.form.spatial.address":"Kontaktdaten der verfahrensführenden Behörde",
+    "uvp.form.spatial.generalDescription":"Beschreibung der Planung oder Maßnahme nach § 1 ROV oder dem Landesrecht"
 });

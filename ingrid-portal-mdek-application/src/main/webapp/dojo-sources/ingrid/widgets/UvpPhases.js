@@ -94,6 +94,7 @@ define([
                 var clearFixDiv = construct.toDom("<div class='clear' style='text-align: center'></div>");
                 construct.place(this.addButton.domNode, clearFixDiv);
                 
+                // show phase button depending on the selected node
                 topic.subscribe("/selectNode", function(message) {
                     var data = message.node;
                     if (data.nodeAppType === "O" && data.id !== "objectRoot" && data.objectClass !== 1000) {
