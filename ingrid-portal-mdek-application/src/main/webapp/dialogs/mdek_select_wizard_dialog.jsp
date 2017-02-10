@@ -45,8 +45,10 @@
         "dijit/form/RadioButton",
         "dijit/registry",
         "ingrid/dialog",
-        "ingrid/utils/Syslist"
-    ], function(array, lang, construct, on, dom, query, topic, Button, RadioButton, registry, dialog, Syslists) {
+        "ingrid/hierarchy/dirty",
+        "ingrid/utils/Syslist",
+        "ingrid/utils/Tree"
+    ], function(array, lang, construct, on, dom, query, topic, Button, RadioButton, registry, dialog, dirty, Syslists, UtilTree) {
         var thisDialog = _container_;
         var alreadyChecked = false;
 
@@ -71,6 +73,24 @@
             }
 
             addExtraButtons(extraButtons);
+
+            // remove new node if cancel the dialog
+            on( this, "Cancel", function() {
+                // delete node from tree
+                UtilTree.deleteNode("dataTree", "newNode");
+
+                // select root node
+                UtilTree.selectNode("dataTree", "objectRoot", true);
+
+                // activate events when root node is selected (hide form)
+                topic.publish("/selectNode", {
+                    id: "dataTree",
+                    node: { id: "objectRoot" }
+                });
+
+                // reset dirty flag
+                lang.hitch(dirty, dirty.resetDirtyFlag)();
+            });
 
             registry.byId("pageCreateWizardContainer").resize();
         });
