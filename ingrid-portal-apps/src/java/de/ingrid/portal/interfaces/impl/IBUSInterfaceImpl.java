@@ -460,6 +460,11 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         return plugs;
     }
     
+    @Override
+    public IBus getIBus() {
+        return bus;
+    }
+    
     private void injectCache(HashMap map) {
     	if (!map.containsKey("cache")) {
 	    	if (cache) {
