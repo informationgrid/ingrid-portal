@@ -107,7 +107,7 @@ define(["dojo/_base/declare",
             },
 
             addIconClasses: function() {
-                query("head")[0].append(
+                query("head")[0].appendChild(
                     // construct.toDom('<link rel="stylesheet" type="text/css" href="lightbox_stylesheet.css">')
                     construct.toDom(
                         '<style type="text/css">' +
