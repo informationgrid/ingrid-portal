@@ -217,6 +217,13 @@ thead {
 }
 .nav-toggle:after {
   border-color: transparent transparent #2C5C91 transparent;
+  border-width: 0 0 70px 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-toggle:after {
+    border-width: 0 0 58px 20px;
+  }
 }
 
 .nav-toggle .icon {
@@ -272,7 +279,7 @@ thead {
 }
 
 .desktop__title p {
-    margin: 0 0 15px -25px;
+    margin: 0 0 15px;
 }
 
 .desktop__title p.main__title {

@@ -77,15 +77,17 @@
                 </div>
                 <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$renderResponse.encodeURL('/portal/default-page.psml')">
+                        <!--
                         <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg">
                         <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png">
+                        -->
                     </a>
                 </div>
                 <div class="header__widgets__section">
                     <a class="mq-hide-xxl desktop__title" href="$renderResponse.encodeURL('/portal/default-page.psml')">
                         <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
                     </a>
-                    <a class="mq-show-xxl mobile__title" href="$renderResponse.encodeURL('/portal/default-page.psml')">PortalU <span class="mq-hide-l">- Das Umweltportal Saarland</span></a>
+                    <a class="mq-show-xxl mobile__title" href="$renderResponse.encodeURL('/portal/default-page.psml')">$MESSAGES.getString('ingrid.header.title.main')</a>
                 </div>
             </div>
         </header>
