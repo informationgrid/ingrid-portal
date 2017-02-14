@@ -40,6 +40,9 @@ define(["dojo/_base/declare",
                     self.handleTreeOperations();
                 }
             });
+            
+            
+            this.setTreeSortFunction();
         },
 
         handleTreeOperations: function() {
@@ -87,6 +90,27 @@ define(["dojo/_base/declare",
                     registry.byId("menuItemPublicationCondition3").set("disabled", true);
                 }
             });
+        },
+
+        setTreeSortFunction: function() {
+            Catalog.catalogData.treeSortFunction = function(query, children) {
+                console.log("query", query);
+                console.log("children", children);
+                if (query.parent === "objectRoot") {
+                    var sortOrder = [
+                        message.get("uvp.form.categories.uvp"),
+                        message.get("uvp.form.categories.uvpInFront"),
+                        message.get("uvp.form.categories.uvpNegative"),
+                        message.get("uvp.form.categories.uvpForeign")
+                    ];
+                    return children.sort(function(child1, child2) {
+                        var pos1 = sortOrder.indexOf(child1.title)+"";
+                        var pos2 = sortOrder.indexOf(child2.title);
+                        return pos1.localeCompare(pos2, {kn: true}, {numeric: true});
+                    });
+                }
+                return children;
+            };
         }
     })();
 });

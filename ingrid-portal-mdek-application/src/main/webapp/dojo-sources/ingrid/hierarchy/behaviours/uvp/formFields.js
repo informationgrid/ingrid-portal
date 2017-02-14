@@ -53,9 +53,6 @@ define(["dojo/_base/declare",
             query("#general .titleBar .titleCaption").addContent(message.get("uvp.form.consideration"), "only");
             query("#general .titleBar").attr("title", message.get("uvp.form.consideration.tooltip"));
 
-            // rename Objekte root node
-            registry.byId("dataTree").rootNode.getChildren()[0].set("label", message.get("uvp.form.plans"));
-
             // do not override my address title
             IgeEvents.setGeneralAddressLabel = function() { };
 

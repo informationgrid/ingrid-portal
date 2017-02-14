@@ -21,8 +21,10 @@
  * **************************************************#
  */
 define(["dojo/_base/declare",
-    "dojo/topic"
-], function(declare, topic) {
+    "dojo/topic",
+    "dijit/registry",
+    "ingrid/message"
+], function(declare, topic, registry, message) {
 
     return declare(null, {
         title: "UVP: Generelle Änderungen",
@@ -31,6 +33,13 @@ define(["dojo/_base/declare",
         type: "SYSTEM",
         run: function() {
             this.hideMenuItems();
+
+            // rename Objekte root node
+            topic.subscribe("/onPageInitialized", function(page) {
+                if (page === "Hiearchy") {
+                    registry.byId("dataTree").rootNode.getChildren()[0].set("label", message.get("uvp.tree.objectNode"));
+                }
+            });
         },
 
         hideMenuItems: function() {
