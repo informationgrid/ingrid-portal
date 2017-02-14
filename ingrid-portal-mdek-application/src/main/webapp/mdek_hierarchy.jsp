@@ -47,9 +47,6 @@
 
                     createLayout();
 
-                    // send event to be able to hook into this phase
-                    topic.publish("/onPageInitialized", "Hiearchy");
-
                     function createLayout() {
 
                         var contentBorderContainer = new BorderContainer({
@@ -127,6 +124,7 @@
                             var tree = new MetadataTree({
                                 showRoot: false,
                                 sortByClass: UtilCatalog.catalogData.sortByClass === "Y",
+                                sortFunction: UtilCatalog.catalogData.treeSortFunction,
                                 onClick: TreeActions.clickHandler,
                                 // the onMouseDown handler is not always called in IE 11 when expanding a tree and right clicking
                                 // a node immediately afterwards. That's why we register on the DNDController of the widget
@@ -136,7 +134,12 @@
                                     this.dndController.onMouseDown = lang.hitch(this, lang.partial(TreeActions.mouseDownHandler, TreeActions));
                                 }
                             }, "dataTree");
-                            tree.onLoadDeferred.then(pageHierachy.dataTreePromise.resolve);
+                            tree.onLoadDeferred.then(function() {
+                                // send event to be able to hook into this phase
+                                topic.publish("/onPageInitialized", "Hiearchy");
+
+                                pageHierachy.dataTreePromise.resolve();
+                            });
                             TreeActions.createTreeMenu();
                             igeActions.dataTree = tree;
                             contentBorderContainer.startup();

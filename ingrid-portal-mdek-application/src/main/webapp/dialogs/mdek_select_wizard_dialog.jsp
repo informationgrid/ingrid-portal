@@ -100,7 +100,6 @@
 
             // update tree node icon when object class has changed
             objClassTopic = topic.subscribe("/onObjectClassChange", function(data) {
-                console.log("!!!");
                 // update tree node icon after selection
                 var selectedNode = registry.byId("dataTree").selectedNode;
                 var iconNode = query(".TreeIcon", selectedNode.domNode);
