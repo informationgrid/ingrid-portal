@@ -205,7 +205,7 @@ define([
                     creator.createRubric({
                         id: rubric,
                         help: "Hilfetext ...",
-                        label: counter + ". " + message.get("uvp.form.phase1.rubric")
+                        label: message.get("uvp.form.phase1.rubric")
                     })
                 );
 
@@ -215,8 +215,8 @@ define([
                 var idDateFrom = "publicDateFrom_" + counter;
                 var idDateTo = "publicDateTo_" + counter;
                 newFieldsToDirtyCheck.push( idDateFrom, idDateTo );
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase1.dateFrom"), help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase1.dateTo"), help: "...", isMandatory: true, visible: "optional", style: "width:25%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase1.dateFrom"), help: "...", visible: "required showOnlyExpanded", style: "width:33%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase1.dateTo"), help: "...", visible: "required showOnlyExpanded", style: "width:33%" }));
                 phaseFields.push({ key: "publicDateFrom", field: registry.byId(idDateFrom) });
                 phaseFields.push({ key: "publicDateTo", field: registry.byId(idDateTo) });
                 
@@ -231,7 +231,7 @@ define([
                 
                 var id = "legitimacyDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.legitimacyDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.legitimacyDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "legitimacyDocs", field: registry.byId(id) });
@@ -243,7 +243,7 @@ define([
                  */
                 id = "reportArticle6Docs_" + counter;
                 newFieldsToDirtyCheck.push( id );
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportArticle6Docs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportArticle6Docs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "reportArticle6Docs", field: registry.byId(id) });
@@ -276,6 +276,22 @@ define([
                     fields: phaseFields
                 });
 
+                /**
+                 * Bekanntmachung
+                 */
+                id = "publicationDocs_" + counter;
+                newFieldsToDirtyCheck.push( id );
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.publicationDocs"), help: "...", visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                    this.getDocTableStructure(), rubric);
+                this.addUploadLink(id);
+                phaseFields.push({ key: "publicationDocs", field: registry.byId(id) });
+
+                this.phases.push({
+                    key: "phase1",
+                    pos: counter,
+                    fields: phaseFields
+                });
+
                 this.addDeletePhaseButton(rubric, counter);
 
                 // add values to the created phase
@@ -300,39 +316,27 @@ define([
                     creator.createRubric({
                         id: rubric,
                         help: "Hilfetext ...",
-                        label: counter + ". " + message.get("uvp.form.phase2.rubric")
+                        label: message.get("uvp.form.phase2.rubric")
                     })
                 );
-                
-                /**
-                 * Erörterungstermin
-                 */
-                var structure = [
-                    { field: 'dateText', name: 'Beschreibung', width: '300px', editable: true },
-                    { field: 'dateValue', name: 'Datum', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
-                ];
-                var id = "considerationDate_" + counter;
-                newFieldsToDirtyCheck.push( id );
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDate"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
-                    structure, rubric);
-                phaseFields.push({ key: "considerationDate", field: registry.byId(id) });
-                
-                /**
-                 * Bekanntmachungstext
-                 */
-                id = "considerationDateDescription_" + counter;
-                newFieldsToDirtyCheck.push( id );
-                creator.addToSection(rubric, creator.createDomTextarea({id: id, name: message.get("uvp.form.phase2.considerationDateDescription"), help: "...", isMandatory: false, visible: "optional", rows: 10, style: "width:100%"}));
-                var textarea = registry.byId(id);
-                this.addValidatorForTextarea(textarea);
-                phaseFields.push({ key: "considerationDateDescription", field: textarea });
 
+                /**
+                 * Datum
+                 */
+                var idDateFrom = "considerDateFrom_" + counter;
+                var idDateTo = "considerDateTo_" + counter;
+                newFieldsToDirtyCheck.push( idDateFrom, idDateTo );
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase2.dateFrom"), help: "...", visible: "required showOnlyExpanded", style: "width:33%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase2.dateTo"), help: "...", visible: "required showOnlyExpanded", style: "width:33%" }));
+                phaseFields.push({ key: "considerDateFrom", field: registry.byId(idDateFrom) });
+                phaseFields.push({ key: "considerDateTo", field: registry.byId(idDateTo) });
+                
                 /**
                  * Bekanntmachung
                  */
-                id = "considerationDocs_" + counter;
+                var id = "considerationDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "considerationDocs", field: registry.byId(id) });
@@ -367,7 +371,7 @@ define([
                     creator.createRubric({
                         id: rubric,
                         help: "Hilfetext ...",
-                        label: counter + ". " + message.get("uvp.form.phase3.rubric")
+                        label: message.get("uvp.form.phase3.rubric")
                     })
                 );
 
@@ -376,7 +380,7 @@ define([
                  */
                 var id = "approvalDate_" + counter;
                 newFieldsToDirtyCheck.push( id );
-                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: message.get("uvp.form.phase3.approvalDate"), help: "...", isMandatory: true, visible: "optional", style: "width:50%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: message.get("uvp.form.phase3.approvalDate"), help: "...", visible: "required showOnlyExpanded", style: "width:50%" }));
                 phaseFields.push({ key: "approvalDate", field: registry.byId(id) });
 
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
@@ -386,7 +390,7 @@ define([
                  */
                 id = "approvalDescription_" + counter;
                 newFieldsToDirtyCheck.push( id );
-                creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: message.get("uvp.form.phase3.approvalDescription"), help: "...", isMandatory: true, visible: "optional", rows: 10, style: "width:100%" }));
+                creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: message.get("uvp.form.phase3.approvalDescription"), help: "...", visible: "required showOnlyExpanded", rows: 10, style: "width:100%" }));
                 var textarea = registry.byId(id);
                 this.addValidatorForTextarea(textarea);
                 phaseFields.push({ key: "approvalDescription", field: textarea });
@@ -396,7 +400,7 @@ define([
                  */
                 id = "approvalDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "approvalDocs", field: registry.byId(id) });
@@ -406,7 +410,7 @@ define([
                  */
                 id = "designDocs_" + counter;
                 newFieldsToDirtyCheck.push( id );
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: "...", isMandatory: true, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "designDocs", field: registry.byId(id) });
@@ -432,11 +436,11 @@ define([
 
             getDocTableStructure: function() {
                 return [
-                    { field: 'label', name: 'Titel', width: '290px', editable: true },
-                    { field: 'link', name: 'Link', width: '200px', editable: false, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
-                    { field: 'type', name: 'Typ', width: '50px', editable: true },
-                    { field: 'size', name: 'Größe', width: '60px', editable: false, formatter: Formatters.BytesCellFormatter },
-                    { field: 'expires', name: 'Gültig bis', width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
+                    { field: 'label', name: message.get("uvp.form.table.docs.title"), width: '290px', editable: true },
+                    { field: 'link', name: message.get("uvp.form.table.docs.link"), width: '200px', editable: false, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
+                    { field: 'type', name: message.get("uvp.form.table.docs.type"), width: '50px', editable: true },
+                    { field: 'size', name: message.get("uvp.form.table.docs.size"), width: '60px', editable: false, formatter: Formatters.BytesCellFormatter },
+                    { field: 'expires', name: message.get("uvp.form.table.docs.expires"), width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
             },
 

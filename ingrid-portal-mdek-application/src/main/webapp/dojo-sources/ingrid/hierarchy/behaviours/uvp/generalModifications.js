@@ -21,10 +21,11 @@
  * **************************************************#
  */
 define(["dojo/_base/declare",
+    "dojo/cookie",
     "dojo/topic",
     "dijit/registry",
     "ingrid/message"
-], function(declare, topic, registry, message) {
+], function(declare, cookie, topic, registry, message) {
 
     return declare(null, {
         title: "UVP: Generelle Änderungen",
@@ -33,6 +34,8 @@ define(["dojo/_base/declare",
         type: "SYSTEM",
         run: function() {
             this.hideMenuItems();
+
+            this.disableInfoDialogs();
 
             // rename Objekte root node
             topic.subscribe("/onPageInitialized", function(page) {
@@ -50,6 +53,14 @@ define(["dojo/_base/declare",
             });
             // TODO: remove stack container or do not let them initialized
             // registry.byId("stackContainer").removeChild(registry.byId("pageStatistics"));
+        },
+
+        disableInfoDialogs: function() {
+            var MenuActions = require("ingrid/MenuActions");
+            // set cookie to hide copy dialog
+            cookie(MenuActions.COOKIE_HIDE_COPY_HINT, true, {
+                expires: 730
+            });
         }
 
     })();

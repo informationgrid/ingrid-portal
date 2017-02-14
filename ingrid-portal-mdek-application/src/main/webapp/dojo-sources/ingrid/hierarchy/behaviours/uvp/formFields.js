@@ -38,9 +38,11 @@ define(["dojo/_base/declare",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
+    "ingrid/utils/Grid",
+    "ingrid/utils/Syslist",
     "ingrid/widgets/UvpPhases",
     "ingrid/widgets/NominatimSearch"
-], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, Button, message, creator, IgeEvents, Editors, Formatters, dirty, UvpPhases, NominatimSearch) {
+], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, Button, message, creator, IgeEvents, Editors, Formatters, dirty, UtilGrid, UtilSyslist, UvpPhases, NominatimSearch) {
     return declare(null, {
         title: "UVP: Formularfelder",
         description: "Hier werden die zusätzlichen Felder im Formular erzeugt sowie überflüssige ausgeblendet.",
@@ -49,7 +51,7 @@ define(["dojo/_base/declare",
         uvpPhaseField: null,
         run: function() {
             // rename default fields
-            query("#objectNameLabel label").addContent(message.get("uvp.form.planDescription"), "only");
+            // query("#objectNameLabel label").addContent(message.get("uvp.form.planDescription"), "only");
             query("#general .titleBar .titleCaption").addContent(message.get("uvp.form.consideration"), "only");
             query("#general .titleBar").attr("title", message.get("uvp.form.consideration.tooltip"));
 
@@ -65,6 +67,13 @@ define(["dojo/_base/declare",
             var self = this;
             topic.subscribe("/onObjectClassChange", function(clazz) {
                 self.prepareDocument(clazz);
+            });
+
+            // disable editing the address table and automatically set point of contact type
+            UtilGrid.getTable("generalAddress").options.editable = false;
+            topic.subscribe("/onBeforeDialogAccept/AddressesFromTree", function() {
+                var pointOfContactName = UtilSyslist.getSyslistEntryName(505, 7);
+                UtilGrid.addTableDataRow("generalAddress", {nameOfRelation: pointOfContactName});
             });
         },
 

@@ -48,7 +48,7 @@ define([
         _setMapIdAttr: { node: "mapIdNode", type: "attribute", attribute: "id" },
             
         postCreate: function(){
-            construct.place( creator.createDomTextbox({id: this.prefix + "spatial", name: "Suche nach einem Raumbezug", help: "...", isMandatory: false, visible: "show", style: "width:100%"}), this.domNode, "first" );
+            construct.place( creator.createDomTextbox({id: this.prefix + "spatial", name: "Suche nach einer Adresse/Raumbezug", help: "...", isMandatory: false, visible: "show", style: "width:100%"}), this.domNode, "first" );
             on(registry.byId(this.prefix + "spatial"), "keyup", lang.partial(this._handleSpatialSearch, this));
             
             if (this.collapseOnEmptyInput) {
