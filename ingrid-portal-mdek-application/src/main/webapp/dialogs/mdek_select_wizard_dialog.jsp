@@ -98,18 +98,16 @@
                 lang.hitch(dirty, dirty.resetDirtyFlag)();
             });
 
-            // update tree node icon when object class has changed
-            objClassTopic = topic.subscribe("/onObjectClassChange", function(data) {
-                console.log("!!!");
-                // update tree node icon after selection
-                var selectedNode = registry.byId("dataTree").selectedNode;
-                var iconNode = query(".TreeIcon", selectedNode.domNode);
-                iconNode[0].classList.forEach(function(cl) { if (cl.indexOf("TreeIconClass") === 0) iconNode.removeClass(cl); })
-                iconNode.addClass("TreeIconClass" + data.objClass.substr(5) + "_B");
-            });
-
             registry.byId("pageCreateWizardContainer").resize();
         });
+
+        function setTreeIcon(clazz) {
+            // TODO: should we better get the newNode-node? could be a race condition here
+            var selectedNode = registry.byId("dataTree").selectedNode;
+            var iconNode = query(".TreeIcon", selectedNode.domNode);
+            iconNode[0].classList.forEach(function(cl) { if (cl.indexOf("TreeIconClass") === 0) iconNode.removeClass(cl); })
+            iconNode.addClass("TreeIconClass" + clazz + "_B");
+        }
 
         function addRadioBoxes(types, containerId) {
             array.forEach(types, function(item) {
@@ -151,11 +149,10 @@
             } else {
                 // otherwise we just pre-set the object type 
                 registry.byId("objectClass").set("value", "Class" + type);
+                setTreeIcon(type);
 
             }
 
-            // remove subscriber
-            setTimeout(objClassTopic.remove, 100);
         }
 
         function addExtraButtons(buttons) {
