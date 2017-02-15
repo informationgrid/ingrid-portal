@@ -37,13 +37,15 @@ require([
     "dojo/dom-class",
     "dojo/dom-style",
     "dojo/string",
+    "dojo/topic",
     "dijit/registry",
+    "dijit/form/Select",
     "ingrid/utils/LoadingZone",
     "ingrid/utils/General",
     "ingrid/utils/String",
     "ingrid/dialog",
     "ingrid/tree/MetadataTree"
-], function(array, lang, on, dom, domClass, style, string, registry, LoadingZone, UtilGeneral, UtilString, dialog, MetadataTree) {
+], function(array, lang, on, dom, domClass, style, string, topic, registry, Select, LoadingZone, UtilGeneral, UtilString, dialog, MetadataTree) {
             
         var isStartUp = true;
         var currentFile = null;
@@ -77,9 +79,26 @@ require([
         
         on(_container_, "Load", function(){
             initTree();
+            initSelectbox();
             initCheckboxBehaviour();
             refreshImportProcessInfo();
         });
+
+        function initSelectbox() {
+            var importTypes = [
+                { label: "InGrid Catalog", value: "igc" },
+                { label: "CSW 2.0.2 AP ISO 1.0 (Single Metadata file / ZIP Archive)", value: "csw202" },
+                { label: "ArcGIS ISO-Editor (Single Metadata file / ZIP Archive)", value: "arcgis1" }
+            ];
+
+            // give external behaviours the chance to modify the import list
+            topic.publish("/afterInitDialog/Import", { types: importTypes });
+
+            new Select({
+                options: importTypes,
+                style: "width: 100%"
+            }, "importFileType");
+        }
         
         function initCheckboxBehaviour() {
             var importFileType    = registry.byId("importFileType");
@@ -97,9 +116,6 @@ require([
         }
         
         function resetImport() {
-            // FIXME: what is set here?
-            //registry.byId("importTreeParentDataset").set("value");
-            //registry.byId("importTreeParentAddress").set("value");
             registry.byId("publishImportedDatasetsCheckbox").set("value", false);
             registry.byId("radioSeparateImport").set("value", false);
             registry.byId("importFileType").set("value", "igc");
@@ -157,7 +173,6 @@ require([
         }
         
         function startTreeImport(force) {
-            //var file                    = dwr.util.getValue("importFile");
             var fileType                = registry.byId("importFileType").get("value");
             var parentObjectUuid        = (importTreeSelectedParentDataset !== null && importTreeSelectedParentDataset.id != "objectRoot") ? importTreeSelectedParentDataset.id : null;
             var parentAddressUuid       = (importTreeSelectedParentAddress !== null) ? importTreeSelectedParentAddress.id : null;
@@ -336,9 +351,7 @@ require([
             if (infoBean.finished === true) {
                 registry.byId('importButton').set("disabled", false);
                 dom.byId("importInfoTitle").innerHTML ="<fmt:message key='dialog.admin.import.lastProcessInfo' />";
-                //style.set("importProgressBarContainer", "display", "block");
                 dom.byId("importInfoNumImportedObjects").innerHTML = "";
-                //style.set("importInfoNumImportedObjects", "display", "none");
             // conversion is still in progress
             } else {
                 registry.byId('importButton').set("disabled", true);
@@ -377,7 +390,6 @@ require([
                     style.set("importInfoEndDateContainer","display","none");
                     
                     style.set("importInfoNumImportedObjectContainer","display","none");
-                    //style.set("importInfoNumImportedObjects","display","none");
                     style.set("importInfoNumImportedAddressContainer","display","none");
                     dom.byId("importInfoNumImportedObjects").innerHTML = "";
                     dom.byId("importInfoNumImportedAddresses").innerHTML = "";
@@ -475,14 +487,6 @@ require([
                 return exception.message;
             }
         }
-        
-        /* function showLoadingZone() {
-            style.set("importLoadingZone","visibility","visible");
-        }
-        
-        function hideLoadingZone() {
-            style.set("importLoadingZone","visibility","hidden");
-        } */
         
         function toggleMoreInfo() {
             var currentState = style.get("importMoreInfo", "display");
@@ -614,8 +618,7 @@ require([
                         </label>
                     </td>
                     <td>
-                        <!-- Select box all in one line ! Due to strange bug with dojo and firefox/chrome newest versions ! ??? -->
-                        <select data-dojo-type="dijit/form/Select" id="importFileType" style="width:100%;"><option value="igc">InGrid Catalog</option><option value="csw202">CSW 2.0.2 AP ISO 1.0 (Single Metadata file / ZIP Archive)</option><option value="arcgis1">ArcGIS ISO-Editor (Single Metadata file / ZIP Archive)</option></select>
+                        <select id="importFileType" autoComplete="false" style="width: 100%; margin:0px;"></select>
                     </td>
                 </tr>
                 <tr id="publishImportedDatasets" class="hide">
