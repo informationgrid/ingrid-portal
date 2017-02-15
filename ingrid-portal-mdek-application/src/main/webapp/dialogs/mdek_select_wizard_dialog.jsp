@@ -79,9 +79,6 @@
             // remove new node if cancel the dialog
             on( this, "Cancel", function() {
 
-                // manually remove subscriber
-                objClassTopic.remove();
-
                 // delete node from tree
                 UtilTree.deleteNode("dataTree", "newNode");
 
