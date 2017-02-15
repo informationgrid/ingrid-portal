@@ -166,7 +166,7 @@
             thisDialog.hide();
             topic.publish("/selectNode", {
                 id: "dataTree",
-                node: { id: "newNode" }
+                node: { id: "newNode", nodeAppType: "O" }
             });
         }
 
