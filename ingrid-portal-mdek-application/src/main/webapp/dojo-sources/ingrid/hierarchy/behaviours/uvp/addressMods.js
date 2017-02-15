@@ -33,6 +33,7 @@ define([
         defaultActive: true,
         forAddress: true,
         run: function() {
+            // domClass.add("uiElement4571_at0", "hide"); // Veröffentlichung
             domClass.add("adrThesaurus", "hide");  // Verschlagwortung
             domClass.add("uiElement4440", "hide"); // Aufgaben
             domClass.add("uiElement4450", "hide"); // Servicezeiten

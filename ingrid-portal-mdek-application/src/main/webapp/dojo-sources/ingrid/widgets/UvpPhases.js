@@ -97,9 +97,9 @@ define([
                 // show phase button depending on the selected node
                 topic.subscribe("/selectNode", function(message) {
                     var data = message.node;
-                    if (data.nodeAppType === "O" &&
+                    if (data.nodeAppType === "O" && (
                         (data.id !== "objectRoot" && data.objectClass !== 1000) ||
-                        data.id === "newNode") {
+                        data.id === "newNode")) {
                         domClass.remove(self.addButton.domNode, "hide");
                     } else {
                         domClass.add(self.addButton.domNode, "hide");
@@ -228,27 +228,27 @@ define([
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
 
                 /**
-                 * Antrag auf Entscheidung über die Zulässigkeit des Vorhabens
+                 * Auslegungsinformationen
                  */
 
-                var id = "legitimacyDocs_" + counter;
+                var id = "technicalDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.legitimacyDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.technicalDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "legitimacyDocs", field: registry.byId(id) });
+                phaseFields.push({ key: "technicalDocs", field: registry.byId(id) });
 
                 // TODO: at least one document validation
 
                 /**
-                 * UVP-Bericht nach § 6 UVPG
+                 * Antragsunterlagen
                  */
-                id = "reportArticle6Docs_" + counter;
+                id = "applicationDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportArticle6Docs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.applicationDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "reportArticle6Docs", field: registry.byId(id) });
+                phaseFields.push({ key: "applicationDocs", field: registry.byId(id) });
 
                 // TODO: at least one document validation
 
