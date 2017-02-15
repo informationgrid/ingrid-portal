@@ -3,7 +3,8 @@ define({
     "tree.nodeCopySingle":"Vorhaben/Adressen kopieren",
     "tree.newNodeName":"Neues Vorhaben",
 
-    "uvp.tree.objectNode": "Verfahren",
+    "uvp.title":"UVP Editor",
+    "uvp.tree.objectNode":"Verfahren",
 
     "uvp.form.generalDescription":"Allgemeine Vorhabenbeschreibung",
     "uvp.form.planDescription":"Vorhabenbezeichnung",

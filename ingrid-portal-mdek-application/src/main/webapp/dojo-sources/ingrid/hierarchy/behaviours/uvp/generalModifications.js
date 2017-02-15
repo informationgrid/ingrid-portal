@@ -22,10 +22,11 @@
  */
 define(["dojo/_base/declare",
     "dojo/cookie",
+    "dojo/query",
     "dojo/topic",
     "dijit/registry",
     "ingrid/message"
-], function(declare, cookie, topic, registry, message) {
+], function(declare, cookie, query, topic, registry, message) {
 
     return declare(null, {
         title: "UVP: Generelle Änderungen",
@@ -33,9 +34,13 @@ define(["dojo/_base/declare",
         defaultActive: true,
         type: "SYSTEM",
         run: function() {
+            this.replaceImages();
+
             this.hideMenuItems();
 
             this.disableInfoDialogs();
+
+            this.adaptImportPage();
 
             // rename Objekte root node
             topic.subscribe("/onPageInitialized", function(page) {
@@ -60,6 +65,24 @@ define(["dojo/_base/declare",
             // set cookie to hide copy dialog
             cookie(MenuActions.COOKIE_HIDE_COPY_HINT, true, {
                 expires: 730
+            });
+        },
+
+        replaceImages: function() {
+            // var titleImageNode = query("#title img")[0];
+            // domAttr.set(titleImageNode, "src", "xxx.gif");
+            query("#title").addContent(
+                "<h1 style='color: white; padding: 5px'>" + message.get("uvp.title") + "</h1>",
+                "only"
+            );
+        },
+
+        adaptImportPage: function() {
+            // only allow InGridCatalog datatypes for import
+            topic.subscribe("/afterInitDialog/Import", function( data ) {
+                var filteredTypes = data.types.filter(function(t) { return t.value === "igc"; });
+                data.types.splice(0, data.types.length);
+                data.types.push(filteredTypes[0]);
             });
         }
 
