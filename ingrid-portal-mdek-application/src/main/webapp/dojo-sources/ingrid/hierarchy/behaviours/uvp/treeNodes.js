@@ -64,7 +64,7 @@ define(["dojo/_base/declare",
                         registry.byId("toolbarBtnDelSubTree").set("disabled", true);
                         // also disable editing of object name
                         registry.byId("objectName").set("disabled", true);
-                    } else {
+                    } else if (message.node.nodeAppType === "O") {
                         registry.byId("objectName").set("disabled", false);
                     }
                 }

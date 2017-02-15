@@ -27,8 +27,9 @@ define([
     "ingrid/hierarchy/behaviours/uvp/docTypes",
     "ingrid/hierarchy/behaviours/uvp/generalModifications",
     "ingrid/hierarchy/behaviours/uvp/treeNodes",
-    "ingrid/hierarchy/behaviours/uvp/formFields"
-], function(lang, behaviours, initialFolders, docTypes, generalModifications, treeNodes, formFields) {
+    "ingrid/hierarchy/behaviours/uvp/formFields",
+    "ingrid/hierarchy/behaviours/uvp/addressMods"
+], function(lang, behaviours, initialFolders, docTypes, generalModifications, treeNodes, formFields, addressMods) {
 
     return lang.mixin(behaviours, {
 
@@ -56,7 +57,12 @@ define([
         /**
          * Create fields for all the uvp classes and show only those fields according to the class.
          */
-        uvpPhaseField: formFields
+        uvpPhaseField: formFields,
+
+        /**
+         * Modify the display of the address form fields.
+         */
+        uvpAddressModifications: addressMods
 
     });
 });
