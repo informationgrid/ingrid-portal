@@ -131,9 +131,15 @@ define(["dojo/_base/declare",
                 if (baseUrl && baseUrl.length > 0 && baseUrl.charAt(baseUrl.length-1) !== "/") {
                     baseUrl += "/";
                 }
-                return "<a href=\"" + baseUrl + value + "\" target=\"_blank\">" +
-                    "<span class=\"text-truncate left\" style=\"width: 100%\">" + value + "</span>" +
-                    "</a>";
+
+                var link = null;
+                if (value.indexOf("http") === 0) {
+                    link = value;
+                } else {
+                    link = baseUrl + value;
+                }
+                return "<span class=\"text-truncate left\" style=\"width: 100%\">" + value +
+                    " <a href=\"" + link + "\" title=\"" + link + "\" target=\"_blank\"><img src=\"img/ic_fl_popup.gif\" width=\"10\" height=\"9\" alt=\"Popup\">Link</a></span>";
             },
 
             BytesCellFormatter: function(row, cell, value, columnDef, dataContext) {
