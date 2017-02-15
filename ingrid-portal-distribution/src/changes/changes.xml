@@ -5,6 +5,12 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="4.0.2-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.2">
+            <action type="fix" dev="wemove" issue="REDMINE-548">
+                IGE: Tree on duplicate page must not show addresses.
+            </action>
+        </release>
+
         <release version="4.0.1" date="2017-02-01" description="Release 4.0.1">
             <action type="add" dev="wemove" issue="REDMINE-452">
                 PORTAL: Add profile portalu_sl.
