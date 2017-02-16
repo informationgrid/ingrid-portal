@@ -32,7 +32,7 @@ define(["dojo/_base/declare",
         title: "UVP: Verhalten der Baumknoten",
         description: "Definition des Verhaltens, was bei der Auswahl des Wurzelknotens und der darunterliegenden Ordner geschehen soll.",
         defaultActive: true,
-        type: "SYSTEM",
+        type: "SYSTEM", // execute on IGE page load
         run: function() {
             var self = this;
             topic.subscribe("/onPageInitialized", function(page) {

@@ -31,7 +31,7 @@ define([
         title: "UVP: Adressenänderungen",
         description: "Hier werden die Verschlagwortung, Aufgabe und Servicezeiten entfernt.",
         defaultActive: true,
-        forAddress: true,
+        forAddress: true, // execute only on address form initialization
         run: function() {
             // domClass.add("uiElement4571_at0", "hide"); // Veröffentlichung
             domClass.add("adrThesaurus", "hide");  // Verschlagwortung

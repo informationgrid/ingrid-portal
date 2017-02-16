@@ -47,6 +47,7 @@ define([
 
             // TODO put URLs into configuration?
             uploadUrl: "rest/document",
+            // ATTENTION: this URL must be the same as in the backend to make them relativ inside the document tables!!!!!
             downloadBaseUrl: "http://localhost:8080/ingrid-portal-mdek-application/rest/document/",
 
             buildRendering: function() {
