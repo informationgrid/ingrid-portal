@@ -44,7 +44,6 @@ define({
 
     "uvp.form.phase3.rubric":"Entscheidung über die Zulassung",
     "uvp.form.phase3.approvalDate":"Datum der Entscheidung",
-    "uvp.form.phase3.approvalDescription":"Bekanntmachungstext",
     "uvp.form.phase3.dateFrom":"Zeitraum der Auslegung von",
     "uvp.form.phase3.dateTo":"bis",
     "uvp.form.phase3.approvalDocs":"Auslegungsinformationen ",

@@ -382,16 +382,6 @@ define([
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
 
                 /**
-                 * Bekanntmachungstext der Zulassungsentscheidung
-                 */
-                id = "approvalDescription_" + counter;
-                newFieldsToDirtyCheck.push(id);
-                creator.addToSection(rubric, creator.createDomTextarea({ id: id, name: message.get("uvp.form.phase3.approvalDescription"), help: "...", visible: "required showOnlyExpanded", rows: 10, style: "width:100%" }));
-                var textarea = registry.byId(id);
-                this.addValidatorForTextarea(textarea);
-                phaseFields.push({ key: "approvalDescription", field: textarea });
-
-                /**
                  * Zulassungsdokument
                  */
                 id = "approvalDocs_" + counter;

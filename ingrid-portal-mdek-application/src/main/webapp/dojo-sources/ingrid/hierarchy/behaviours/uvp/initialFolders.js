@@ -105,7 +105,7 @@ define(["dojo/_base/declare",
             var obj = {};
             obj[this.initFlagName] = 1;
             Catalog.storeGenericValuesDef(obj);
-        },
+        }
 
     })();
 });
