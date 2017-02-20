@@ -1,10 +1,5 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())
-#if($kmlUrl)
-    #set($hasKML = true)
-#else
-    #set($hasKML = false)
-#end
 <style>
 
 html, body {
@@ -24,14 +19,33 @@ html, body {
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css" />
 <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
-<script src="$restUrl"></script>
+<script src="$restUrlMarker"></script>
 
 <script>
 
-var map = L.map('map').setView([51.505, -0.09], 13);
+function showMarker(m) {
+    
+    jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
+        var d = JSON.parse(data);
+        // create an orange rectangle
+        m.target.bbox=L.rectangle(d, {color: "#ff7800", weight: 1});
+        map.addLayer(m.target.bbox);
+    });
+}
+
+function hideMarker(m) {
+    map.removeLayer(m.target.bbox);
+}
+
+
+var map = L.map('map').setView([51, 8], 13);
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+L.tileLayer.wms("http://atlas.wsv.bund.de/bwastr/wms?", {
+    layers: 'Gewaessernetz,Kilometermarken',
+    format: 'image/png'
 }).addTo(map);
 
 var mapMarkers = L.markerClusterGroup();
@@ -41,6 +55,10 @@ var mapMarkers = L.markerClusterGroup();
             var title = a[2];
             var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
             marker.bindPopup('<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>');
+            marker.uuid = a[3];
+            marker.bbox = null;
+            marker.on('popupopen', showMarker);
+            marker.on('popupclose', hideMarker);
             mapMarkers.addLayer(marker);
         }
 
