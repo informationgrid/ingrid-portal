@@ -22,12 +22,17 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.TimeZone;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -132,6 +137,22 @@ public class DetailPartPreparer {
                         value = messages.getString("general.yes");
                     }
                 }
+            }
+        }
+        return value;
+    }
+    
+    public String getDateValueFromXPath(String xpathExpression) {
+        String value = null;
+        Node node = XPathUtils.getNode(this.rootNode, xpathExpression);
+        if(node != null){
+            if(node.getTextContent().length() > 0){
+                value = node.getTextContent().trim();
+                try {
+                    Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(value);
+                    value = new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
+                } catch (Exception e) {
+                } 
             }
         }
         return value;

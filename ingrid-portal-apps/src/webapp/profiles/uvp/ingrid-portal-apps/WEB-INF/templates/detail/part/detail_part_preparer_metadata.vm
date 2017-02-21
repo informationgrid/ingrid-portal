@@ -204,8 +204,8 @@
                                                 <div class="search-result--nested">
                                                 ## Zeitraum der Auslegung
                                                     #if($step == "phase1")
-                                                        #set($from = $TOOL.getValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
-                                                        #set($to = $TOOL.getValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
+                                                        #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
+                                                        #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
                                                         #if($from && $to)
                                                             #renderTextLabelAbove("Zeitraum der Auslegung" "<b>Von:</b> $from <b>Bis:</b> $to")
                                                         #end
@@ -248,8 +248,8 @@
     
                                                 ## Zeitraum der Erörterung
                                                     #if($step == "phase2")
-                                                        #set($from = $TOOL.getValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
-                                                        #set($to = $TOOL.getValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
+                                                        #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
+                                                        #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
                                                         #if($from && $to)
                                                             #renderTextLabelAbove("Zeitraum der Er&ouml;rterung" "<b>Von:</b> $from <b>Bis:</b> $to")
                                                         #end
@@ -264,7 +264,7 @@
     
                                                 ## Datum der Entscheidung
                                                     #if($step == "phase3")
-                                                        #set($from = $TOOL.getValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
+                                                        #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
                                                         #if($from)
                                                             #renderTextLabelAbove("Datum der Entscheidung" "<b>Von:</b> $from")
                                                         #end
