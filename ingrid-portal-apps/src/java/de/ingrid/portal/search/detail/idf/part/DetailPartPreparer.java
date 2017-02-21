@@ -299,6 +299,10 @@ public class DetailPartPreparer {
     }
     
     public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, ArrayList<String> headTitles, ArrayList<String> headXpathExpressions, ArrayList<String> headCodeList) {
+        return getNodeListTable(title, xpathExpression, headTitles, headXpathExpressions, headCodeList, null);
+    }
+    
+    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, ArrayList<String> headTitles, ArrayList<String> headXpathExpressions, ArrayList<String> headCodeList, ArrayList<String> headTypes) {
         HashMap<String, Object> element = new HashMap<String, Object>();
         if(XPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
@@ -309,6 +313,11 @@ public class DetailPartPreparer {
             ArrayList<String> head = new ArrayList<String>();
             head.addAll(headTitles);
             element.put("head", head);
+            if(headTypes != null){
+                ArrayList<String> types = new ArrayList<String>();
+                types.addAll(headTypes);
+                element.put("types", types);
+            }
             ArrayList<ArrayList<String>> body = new ArrayList<ArrayList<String>>();
             element.put("body", body);
             
