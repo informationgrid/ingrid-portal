@@ -7,6 +7,8 @@ html, body {
     height: 100%;
 }
 </style>
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
+<script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
 <div id="map" style="width:100%;position:fixed;"></div>
 <script language="JavaScript" type="text/javascript">
     var map = new L.Map('map');

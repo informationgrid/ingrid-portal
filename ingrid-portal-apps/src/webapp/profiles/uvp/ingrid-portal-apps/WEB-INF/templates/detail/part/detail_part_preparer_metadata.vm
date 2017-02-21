@@ -39,7 +39,41 @@
                                                 ## UVP-Nummer
                                                 #renderTextList("UVP-Nummer" $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "."))
                                                 ## Raumbezug
-                                                #renderTextLabelAbove("Raumbezug" $TOOL.getValueFromXPath("./spatialValue"))
+                                                #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
+                                                #if($spatialValue)
+                                                    #set($spatialValueSplit = $spatialValue.split(":"))
+                                                    #if($spatialValueSplit.size() == 2)
+                                                        #set($spatial = $spatialValueSplit.get(1))
+                                                        #set($spatialEntries = $spatial.split(","))
+                                                        #if($spatialEntries.size() == 4)
+                                                            #renderSectionTitle("Raumbezug")
+                                                            <link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
+                                                            <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
+                                                            <div id="map" style="height: 400px; width:100%;"></div>
+                                                            <script language="JavaScript" type="text/javascript">
+                                                                var map = new L.Map('map');
+                                                                var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                                                                var osmAttrib='';
+                                                                var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 20, attribution: osmAttrib});
+                                                                
+                                                                var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
+                                                                northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
+                                                                bounds = L.latLngBounds(southWest, northEast);
+                                                                
+                                                                map.fitBounds(bounds);
+                                                            
+                                                                map.addLayer(osm);
+                                                                var rect = L.rectangle(bounds, {color: 'blue', weight: 1}).on('click', function (e) {
+                                                                    var popLocation= e.latlng;
+                                                                    var popup = L.popup()
+                                                                    .setLatLng(popLocation)
+                                                                    .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
+                                                                    .openOn(map);
+                                                                }).addTo(map);
+                                                            </script>
+                                                        #end
+                                                    #end
+                                                #end
                                                 ## Addressen
                                                 #renderSectionTitle("Adressen")
                                                 #set($nodelist = $TOOL.getNodeListFromXPath("./addresses/address"))
