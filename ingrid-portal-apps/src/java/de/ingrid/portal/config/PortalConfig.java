@@ -57,6 +57,9 @@ public class PortalConfig extends PropertiesConfiguration {
 
     /** timout for ranked queries in ms */
     public final static String QUERY_TIMEOUT_RANKED = "query.timeout.ranked";
+    
+    /** requested fields for search queries in portal */
+    public final static String QUERY_REQUESTED_FIELDS = "portal.query.requestedfields";
 
     /** default timeout for sns queries in ms */
     public final static String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
