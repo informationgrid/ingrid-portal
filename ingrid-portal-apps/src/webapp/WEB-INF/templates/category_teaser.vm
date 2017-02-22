@@ -96,16 +96,36 @@
 #macro (getContent $facetList $parentFacet $facetId $parentFacetParam)
     #set ($count = 0)
     #set ($pf = $parentFacet)
+    #set ($facetListSize = $facetList.size())
+    #if($enableRss)
+        #set ($facetListSize = $facetListSize + 1)
+    #end
+    #set($list = [])
     #foreach ($facet in $facetList)
-        #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != "0") || $facet.isDisplay()))
-            #if($count % 6 == 0)
+        #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") == 0)))
+            #if(!$facet.isDisplay())
+                #set ($facetListSize = $facetListSize - 1)
+            #else
+                #set($bar = $list.add($facet))
+            #end
+        #else
+            #set($bar = $list.add($facet))
+        #end
+    #end
+    #if($facetListSize > 6 || $facetListSize < 0)
+        #set ($facetListSize = 6)
+    #end
+    
+    #foreach ($facet in $list)
+        #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != 0) || $facet.isDisplay()))
+            #if($count % $facetListSize == 0)
                 <div class="grid grid--gutter">
             #end
             #set ($count = $count + 1)
             #if($enableRss)
                 #if($count == 1)
                     ## Add RSS category
-                    <div class="column column--1-6-m">
+                    <div class="column column--1-${facetListSize}-m">
                         <div class="mq-hide-l" style="padding: 0 0 20px 0;">
                             <a class="tag" href="$renderResponse.encodeURL('/portal/rss-news.psml')" style="padding:10px 0;">
                                 <span class="mq-hide-l">
@@ -137,7 +157,7 @@
                      </div>
                 #end
             #end
-            <div class="column column--1-6-m">
+            <div class="column column--1-${facetListSize}-m">
                 #set($facetParam = "$pf:$facet.getId();")
                 #if($facet.getParentId())
                     #set($facetParam = "$facet.getParentId():$facet.getId();")
@@ -178,7 +198,7 @@
                     </a>
                 </div>
             </div>
-            #if($count % 6 == 0)
+            #if($count % $facetListSize == 0 || $count >= $facetList.size())
                 </div>
             #end
         #end
