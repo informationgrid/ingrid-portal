@@ -86,7 +86,7 @@
         <p>
             $!rs.abstract 
         </p>
-        <p>
+        <p> 
             #set( $bwastr_name = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-bwastr_name") )
             #set( $bwstr-strecken_name = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-strecken_name") )
             #if($bwastr_name && $bwstr-strecken_name)
@@ -95,20 +95,6 @@
                 <span class="tx-light">$!bwastr_name, $!bwstr-strecken_name</span>
             </small>
             #end
-            #set ($showProvider = true)
-            #if($grouping && $grouping == 'provider')
-                #set ($showProvider = false)
-            #end
-            #if($showProvider)
-                <small>
-                    <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.provider'):</strong></span>
-                    <span class="tx-light">$!rs.provider</span>
-                </small>
-            #end
-            <small>
-                <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.source'):</strong></span>
-                <span class="tx-light">$!rs.source</span>
-            </small>
             #if($adminContent)
                 <small>
                     <span class="tx-darkest"><strong>Score:</strong></span>
