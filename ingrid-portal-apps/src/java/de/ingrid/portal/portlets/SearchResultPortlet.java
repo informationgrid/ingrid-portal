@@ -413,6 +413,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         }
         context.put("rankedResultList", rankedHits);
         context.put("rankedSearchFinished", rankedSearchFinished);
+        context.put( "UTIL_SEARCH", UtilsSearch.class );
         //context.put("providerMap", getProviderMap());
 
         super.doView(request, response);
