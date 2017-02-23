@@ -245,6 +245,10 @@
                                     ## Free Address -> Name or Organisation
                                     #if($TOOL.nodeExist("./idf:addressIndividualName", $hierarchyPartyNode))
                                         <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressIndividualName", null, $hierarchyPartyNode))</a>
+                                        #if($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
+                                            <br>
+                                            $TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode)
+                                        #end
                                     #elseif($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
                                         <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode)</a>
                                     #end
