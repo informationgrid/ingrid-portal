@@ -492,8 +492,20 @@
             #end
             #foreach($tr in $entry.body)
                 <tr>
+                #set($num = 0)
                 #foreach($td in $tr)
-                    <td>$td</td>
+                    #if($entry.types)
+                        #set($bodyType = $entry.types.get($num))
+                        #if($bodyType == "link")
+                            <td><a href="$td">$td</a></td>
+                        #else
+                            <td>$td</td>
+                        #end
+                    #else
+                        <td>$td</td>
+                    #end
+                    
+                    #set($num = $num + 1)
                 #end
                 </tr>
             #end
