@@ -99,6 +99,10 @@ textarea:focus {
     color: rgb(79, 79, 78);
 }
 
+.no-touchevents .filter__title:hover {
+    color: rgb(44, 99, 177)
+}
+
 .sidebar-filter-subheader {
     color: rgb(44, 99, 177);
 }
