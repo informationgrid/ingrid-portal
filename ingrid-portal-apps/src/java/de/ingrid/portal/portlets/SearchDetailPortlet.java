@@ -34,6 +34,7 @@ import java.util.Scanner;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
@@ -113,6 +114,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
 	    long startTimer = 0;
+	    
 	    if (log.isDebugEnabled()) {
 	        log.debug("Start building detail view.");
 	        startTimer = System.currentTimeMillis();
@@ -408,6 +410,13 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         if (log.isDebugEnabled()) {
             log.debug("Finished preparing detail data for view within " + (System.currentTimeMillis() - startTimer) + "ms.");
             startTimer = System.currentTimeMillis();
+        }
+        
+        // Add page title by hit title 
+        if(context.get("title") != null){
+            org.w3c.dom.Element title = response.createElement("title");
+            title.setTextContent((String) context.get("title") + " - " + messages.getString("search.detail.portal.institution"));
+            response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, title);
         }
         super.doView(request, response);
         if (log.isDebugEnabled()) {
