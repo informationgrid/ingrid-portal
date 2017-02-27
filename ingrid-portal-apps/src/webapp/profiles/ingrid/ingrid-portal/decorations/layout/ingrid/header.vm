@@ -9,6 +9,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
+        #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
+        #includeHeaderResource()
         #set($currentPage = $site.getPageOrTemplate().url)
         <!--
         #if($currentPage)
@@ -42,8 +44,6 @@
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
         #end
 
-        #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
-        ##includeHeaderResource()
         #* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
         ##includeJavaScriptForHead()
         ##IncludeStylesheets()

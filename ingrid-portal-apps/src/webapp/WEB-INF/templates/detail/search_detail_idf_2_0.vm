@@ -779,7 +779,6 @@
     #set($pageDescription = $pageDescription.replace('"',"'"))
     #set($pageDescription = $stringTool.cutString($pageDescription,300))
 #end
-#parse('WEB-INF/templates/detail/search_detail_header.vm')
 
 #set ($action = $renderResponse.createActionURL())
 ## Remove comment for new detail view
@@ -794,8 +793,3 @@
         </div>
     </section>
 #end
-
-## ***************************
-## include the footer here
-## ***************************
-#parse('WEB-INF/templates/detail/search_detail_footer.vm')

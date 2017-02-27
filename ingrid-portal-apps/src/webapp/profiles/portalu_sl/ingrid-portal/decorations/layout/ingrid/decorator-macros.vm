@@ -62,6 +62,11 @@
                 #set($elemSelected = true)
             #end
         #end
+        
+        #if($currentPage == "/search-detail.psml" && $element.url=="/main-search.psml")
+            #set($elemSelected = true)
+        #end
+        
         #if ($element.url.startsWith('/main-about'))
             #set($subMenu = $site.getMenu("sub-menu-about"))
             <li class="nav-desktop__item dropmenu__box">
