@@ -8,7 +8,7 @@ CREATE TABLE ingrid_temp (
   temp_value mediumint
 );
 
-UPDATE page SET default_layout_decorator = 'ingrid', default_portlet_decorator = 'clear' WHERE path = '/search-detail.psml';
+UPDATE page SET default_layout_decorator = 'ingrid-untitled', default_portlet_decorator = 'clear' WHERE path = '/search-detail.psml';
 
 -- delete temporary table
 DROP TABLE IF EXISTS ingrid_temp;
