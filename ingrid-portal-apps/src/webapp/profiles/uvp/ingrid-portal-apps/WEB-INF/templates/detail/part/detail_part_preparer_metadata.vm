@@ -211,41 +211,145 @@
                                                         #end
                                                     #end
                                                 ## Antrag auf Entscheidung über die Zulässigkeit des Vorhabens
-                                                    #set($tableTitle = "Antrag auf Entscheidung &uuml;ber die Zul&auml;ssigkeit des Vorhabens")
-                                                    #set($headTitles = ["Name","Link","Typ","Gr&ouml;&szlig;e","G&uuml;ltig bis"])
-                                                    #set($headTypes = ["text","link","text","text","text"])
-                                                    #set($headXpathExpressions = ["./label", "./link", "./type", "./size", "./expires"])
-                                                    #set($tmp = $TOOL.getNodeListTable($tableTitle, "./steps/step[$number]/docs[@type='technicalDocs']/doc", $headTitles, $headXpathExpressions, [], $headTypes))
-                                                    #renderTable($tmp)
+                                                    #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
+                                                    #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                                    #set($entryLength = $nodelist.getLength())
+                                                    #if($entryLength > 0)
+                                                        #renderGroupTitle("Antrag auf Entscheidung &uuml;ber die Zul&auml;ssigkeit des Vorhabens")
+                                                        #foreach($entryNumber in [1..$entryLength])
+                                                            <p>
+                                                                #set($entryType = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/type"))
+                                                                #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
+                                                                #set($entryLink = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/link"))
+                                                                #set($entryLabel = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/label"))
+                                                                #if($entryLink)
+                                                                <a class="link" href="$entryLink">
+                                                                    <svg class="icon">
+                                                                        <use xlink:href="#internal-link">
+                                                                    </svg>
+                                                                    $entryLabel
+                                                                </a>
+                                                                #else
+                                                                    $entryLabel
+                                                                #end
+                                                                #if($entryType || $entrySize)
+                                                                    <span class="tx-light">(#if($entryType)$entryType#end#if($entrySize) $entrySize#end)</span>
+                                                                #end
+                                                            </p>
+                                                        #end
+                                                    #end
                                                 ## UVP-Bericht nach § 6 UVPG
-                                                    #set($tableTitle = "UVP-Bericht nach § 6 UVPG")
-                                                    #set($headTitles = ["Name","Link","Typ","Gr&ouml;&szlig;e","G&uuml;ltig bis"])
-                                                    #set($headTypes = ["text","link","text","text","text"])
-                                                    #set($headXpathExpressions = ["./label", "./link", "./type", "./size", "./expires"])
-                                                    #set($tmp = $TOOL.getNodeListTable($tableTitle, "./steps/step[$number]/docs[@type='applicationDocs']/doc", $headTitles, $headXpathExpressions, [], $headTypes))
-                                                    #renderTable($tmp)
+                                                    #set($xpathExpression = "./steps/step[$number]/docs[@type='applicationDocs']/doc")
+                                                    #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                                    #set($entryLength = $nodelist.getLength())
+                                                    #if($entryLength > 0)
+                                                        #renderGroupTitle("UVP-Bericht nach &sect; 6 UVPG")
+                                                        #foreach($entryNumber in [1..$entryLength])
+                                                            <p>
+                                                                #set($entryType = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/type"))
+                                                                #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
+                                                                #set($entryLink = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/link"))
+                                                                #set($entryLabel = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/label"))
+                                                                #if($entryLink)
+                                                                <a class="link" href="$entryLink">
+                                                                    <svg class="icon">
+                                                                        <use xlink:href="#internal-link">
+                                                                    </svg>
+                                                                    $entryLabel
+                                                                </a>
+                                                                #else
+                                                                    $entryLabel
+                                                                #end
+                                                                #if($entryType || $entrySize)
+                                                                    <span class="tx-light">(#if($entryType)$entryType#end#if($entrySize) $entrySize#end)</span>
+                                                                #end
+                                                            </p>
+                                                        #end
+                                                    #end
                                                 ## Berichte und Empfehlungen
-                                                    #set($tableTitle = "Berichte und Empfehlungen")
-                                                    #set($headTitles = ["Name","Link","Typ","Gr&ouml;&szlig;e","G&uuml;ltig bis"])
-                                                    #set($headTypes = ["text","link","text","text","text"])
-                                                    #set($headXpathExpressions = ["./label", "./link", "./type", "./size", "./expires"])
-                                                    #set($tmp = $TOOL.getNodeListTable($tableTitle, "./steps/step[$number]/docs[@type='reportsRecommendationsDocs']/doc", $headTitles, $headXpathExpressions, [], $headTypes))
-                                                    #renderTable($tmp)
+                                                    #set($xpathExpression = "./steps/step[$number]/docs[@type='reportsRecommendationsDocs']/doc")
+                                                    #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                                    #set($entryLength = $nodelist.getLength())
+                                                    #if($entryLength > 0)
+                                                        #renderGroupTitle("Berichte und Empfehlungen")
+                                                        #foreach($entryNumber in [1..$entryLength])
+                                                            <p>
+                                                                #set($entryType = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/type"))
+                                                                #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
+                                                                #set($entryLink = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/link"))
+                                                                #set($entryLabel = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/label"))
+                                                                #if($entryLink)
+                                                                <a class="link" href="$entryLink">
+                                                                    <svg class="icon">
+                                                                        <use xlink:href="#internal-link">
+                                                                    </svg>
+                                                                    $entryLabel
+                                                                </a>
+                                                                #else
+                                                                    $entryLabel
+                                                                #end
+                                                                #if($entryType || $entrySize)
+                                                                    <span class="tx-light">(#if($entryType)$entryType#end#if($entrySize) $entrySize#end)</span>
+                                                                #end
+                                                            </p>
+                                                        #end
+                                                    #end
                                                 ## Weitere Unterlagen
-                                                    #set($tableTitle = "Weitere Unterlagen")
-                                                    #set($headTitles = ["Name","Link","Typ","Gr&ouml;&szlig;e","G&uuml;ltig bis"])
-                                                    #set($headTypes = ["text","link","text","text","text"])
-                                                    #set($headXpathExpressions = ["./label", "./link", "./type", "./size", "./expires"])
-                                                    #set($tmp = $TOOL.getNodeListTable($tableTitle, "./steps/step[$number]/docs[@type='moreDocs']/doc", $headTitles, $headXpathExpressions, [], $headTypes))
-                                                    #renderTable($tmp)
+                                                    #set($xpathExpression = "./steps/step[$number]/docs[@type='moreDocs']/doc")
+                                                    #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                                    #set($entryLength = $nodelist.getLength())
+                                                    #if($entryLength > 0)
+                                                        #renderGroupTitle("Weitere Unterlagen")
+                                                        #foreach($entryNumber in [1..$entryLength])
+                                                            <p>
+                                                                #set($entryType = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/type"))
+                                                                #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
+                                                                #set($entryLink = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/link"))
+                                                                #set($entryLabel = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/label"))
+                                                                #if($entryLink)
+                                                                <a class="link" href="$entryLink">
+                                                                    <svg class="icon">
+                                                                        <use xlink:href="#internal-link">
+                                                                    </svg>
+                                                                    $entryLabel
+                                                                </a>
+                                                                #else
+                                                                    $entryLabel
+                                                                #end
+                                                                #if($entryType || $entrySize)
+                                                                    <span class="tx-light">(#if($entryType)$entryType#end#if($entrySize) $entrySize#end)</span>
+                                                                #end
+                                                            </p>
+                                                        #end
+                                                    #end
                                                 ## Bekanntmachung
-                                                    #set($tableTitle = "Bekanntmachung")
-                                                    #set($headTitles = ["Name","Link","Typ","Gr&ouml;&szlig;e","G&uuml;ltig bis"])
-                                                    #set($headTypes = ["text","link","text","text","text"])
-                                                    #set($headXpathExpressions = ["./label", "./link", "./type", "./size", "./expires"])
-                                                    #set($tmp = $TOOL.getNodeListTable($tableTitle, "./steps/step[$number]/docs[@type='publicationDocs']/doc", $headTitles, $headXpathExpressions, [], $headTypes))
-                                                    #renderTable($tmp)
-    
+                                                    #set($xpathExpression = "./steps/step[$number]/docs[@type='publicationDocs']/doc")
+                                                    #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                                    #set($entryLength = $nodelist.getLength())
+                                                    #if($entryLength > 0)
+                                                        #renderGroupTitle("Bekanntmachung")
+                                                        #foreach($entryNumber in [1..$entryLength])
+                                                            <p>
+                                                                #set($entryType = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/type"))
+                                                                #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
+                                                                #set($entryLink = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/link"))
+                                                                #set($entryLabel = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/label"))
+                                                                #if($entryLink)
+                                                                <a class="link" href="$entryLink">
+                                                                    <svg class="icon">
+                                                                        <use xlink:href="#internal-link">
+                                                                    </svg>
+                                                                    $entryLabel
+                                                                </a>
+                                                                #else
+                                                                    $entryLabel
+                                                                #end
+                                                                #if($entryType || $entrySize)
+                                                                    <span class="tx-light">(#if($entryType)$entryType#end#if($entrySize) $entrySize#end)</span>
+                                                                #end
+                                                            </p>
+                                                        #end
+                                                    #end
                                                 ## Zeitraum der Erörterung
                                                     #if($step == "phase2")
                                                         #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
@@ -255,12 +359,33 @@
                                                         #end
                                                     #end
                                                 ## Informationen zum Erörterungstermin
-                                                    #set($tableTitle = "Informationen zum Er&ouml;rterungstermin")
-                                                    #set($headTitles = ["Name","Link","Typ","Gr&ouml;&szlig;e","G&uuml;ltig bis"])
-                                                    #set($headTypes = ["text","link","text","text","text"])
-                                                    #set($headXpathExpressions = ["./label", "./link", "./type", "./size", "./expires"])
-                                                    #set($tmp = $TOOL.getNodeListTable($tableTitle, "./steps/step[$number]/docs[@type='considerationDocs']/doc", $headTitles, $headXpathExpressions, [], $headTypes))
-                                                    #renderTable($tmp)
+                                                    #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
+                                                    #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                                    #set($entryLength = $nodelist.getLength())
+                                                    #if($entryLength > 0)
+                                                        #renderGroupTitle("Informationen zum Er&ouml;rterungstermin")
+                                                        #foreach($entryNumber in [1..$entryLength])
+                                                            <p>
+                                                                #set($entryType = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/type"))
+                                                                #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
+                                                                #set($entryLink = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/link"))
+                                                                #set($entryLabel = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/label"))
+                                                                #if($entryLink)
+                                                                <a class="link" href="$entryLink">
+                                                                    <svg class="icon">
+                                                                        <use xlink:href="#internal-link">
+                                                                    </svg>
+                                                                    $entryLabel
+                                                                </a>
+                                                                #else
+                                                                    $entryLabel
+                                                                #end
+                                                                #if($entryType || $entrySize)
+                                                                    <span class="tx-light">(#if($entryType)$entryType#end#if($entrySize) $entrySize#end)</span>
+                                                                #end
+                                                            </p>
+                                                        #end
+                                                    #end
     
                                                 ## Datum der Entscheidung
                                                     #if($step == "phase3")
@@ -270,19 +395,61 @@
                                                         #end
                                                     #end
                                                 ## Auslegungsinformationen
-                                                    #set($tableTitle = "Auslegungsinformationen")
-                                                    #set($headTitles = ["Name","Link","Typ","Gr&ouml;&szlig;e","G&uuml;ltig bis"])
-                                                    #set($headTypes = ["text","link","text","text","text"])
-                                                    #set($headXpathExpressions = ["./label", "./link", "./type", "./size", "./expires"])
-                                                    #set($tmp = $TOOL.getNodeListTable($tableTitle, "./steps/step[$number]/docs[@type='approvalDocs']/doc", $headTitles, $headXpathExpressions, [], $headTypes))
-                                                    #renderTable($tmp)
+                                                    #set($xpathExpression = "./steps/step[$number]/docs[@type='approvalDocs']/doc")
+                                                    #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                                    #set($entryLength = $nodelist.getLength())
+                                                    #if($entryLength > 0)
+                                                        #renderGroupTitle("Auslegungsinformationen")
+                                                        #foreach($entryNumber in [1..$entryLength])
+                                                            <p>
+                                                                #set($entryType = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/type"))
+                                                                #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
+                                                                #set($entryLink = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/link"))
+                                                                #set($entryLabel = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/label"))
+                                                                #if($entryLink)
+                                                                <a class="link" href="$entryLink">
+                                                                    <svg class="icon">
+                                                                        <use xlink:href="#internal-link">
+                                                                    </svg>
+                                                                    $entryLabel
+                                                                </a>
+                                                                #else
+                                                                    $entryLabel
+                                                                #end
+                                                                #if($entryType || $entrySize)
+                                                                    <span class="tx-light">(#if($entryType)$entryType#end#if($entrySize) $entrySize#end)</span>
+                                                                #end
+                                                            </p>
+                                                        #end
+                                                    #end
                                                 ## Entscheidung
-                                                    #set($tableTitle = "Entscheidung")
-                                                    #set($headTitles = ["Name","Link","Typ","Gr&ouml;&szlig;e","G&uuml;ltig bis"])
-                                                    #set($headTypes = ["text","link","text","text","text"])
-                                                    #set($headXpathExpressions = ["./label", "./link", "./type", "./size", "./expires"])
-                                                    #set($tmp = $TOOL.getNodeListTable($tableTitle, "./steps/step[$number]/docs[@type='designDocs']/doc", $headTitles, $headXpathExpressions, [], $headTypes))
-                                                    #renderTable($tmp)
+                                                    #set($xpathExpression = "./steps/step[$number]/docs[@type='designDocs']/doc")
+                                                    #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                                    #set($entryLength = $nodelist.getLength())
+                                                    #if($entryLength > 0)
+                                                        #renderGroupTitle("Entscheidung")
+                                                        #foreach($entryNumber in [1..$entryLength])
+                                                            <p>
+                                                                #set($entryType = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/type"))
+                                                                #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
+                                                                #set($entryLink = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/link"))
+                                                                #set($entryLabel = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/label"))
+                                                                #if($entryLink)
+                                                                <a class="link" href="$entryLink">
+                                                                    <svg class="icon">
+                                                                        <use xlink:href="#internal-link">
+                                                                    </svg>
+                                                                    $entryLabel
+                                                                </a>
+                                                                #else
+                                                                    $entryLabel
+                                                                #end
+                                                                #if($entryType || $entrySize)
+                                                                    <span class="tx-light">(#if($entryType)$entryType#end#if($entrySize) $entrySize#end)</span>
+                                                                #end
+                                                            </p>
+                                                        #end
+                                                    #end
                                                 </div>
                                             </div>
                                         </div>
