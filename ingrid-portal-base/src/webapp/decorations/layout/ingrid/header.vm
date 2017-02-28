@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
-        ##includeHeaderResource()
+        #includeHeaderResource()
         #set($currentPage = $site.getPageOrTemplate().url)
         <!--
         #if($currentPage)
