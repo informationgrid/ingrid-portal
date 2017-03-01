@@ -338,13 +338,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         </facets>
     </facet>
-    <!-- Raumbezug -->
-    <!-- Standard - Kann nicht erweitert werden -->
-    <facet>
-        <name>searchResult.facete.title.area</name>
-        <id>area</id>
-    </facet>
-        <!-- Kategorien -->
+    <!-- Kategorien -->
     <facet>
         <name>Kategorien</name>
         <id>category</id>
