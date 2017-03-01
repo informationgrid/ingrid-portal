@@ -142,313 +142,153 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Wärmeerzeugung, Bergbau und Energie -->
             <facet>
                 <name>Wärmeerzeugung\, Bergbau und Energie</name>
-                <query>categories:"energie"</query>
+                <query>baseCategory:"UVP-1"</query>
                 <id>energie</id>
-                <icon>icon-fire</icon>
             </facet>
         <!-- Steine und Erden, Glas, Keramik, Baustoffe -->
             <facet>
                 <name>Steine und Erden\, Glas\, Keramik\, Baustoffe</name>
-                <query>categories:"steine"</query>
+                <query>baseCategory:"UVP-2"</query>
                 <id>baustoffe</id>
-                <icon>icon-bricks</icon>
             </facet>
         <!-- Stahl, Eisen und sonstige Metalle einschließlich Verarbeitung -->
             <facet>
                 <name>Stahl\, Eisen und sonstige Metalle einschließlich Verarbeitung</name>
-                <query>categories:"stahl"</query>
+                <query>baseCategory:"UVP-3"</query>
                 <id>verarbeitung</id>
-                <icon>icon-flag-4</icon>
             </facet>
         <!-- Chemische Erzeugnisse, Arzneimittel, Mineralölraffination und Weiterverarbeitung -->
             <facet>
                 <name>Chemische Erzeugnisse\, Arzneimittel\, Mineralölraffination und Weiterverarbeitung</name>
-                <query>categories:"arzneimittel"</query>
+                <query>baseCategory:"UVP-4"</query>
                 <id>chemie</id>
-                <icon>icon-add-2</icon>
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
             <facet>
                 <name>Oberflächenbehandlung von Kunststoffen</name>
-                <query>categories:"kunststoffen"</query>
+                <query>baseCategory:"UVP-5"</query>
                 <id>kunststoff</id>
-                <icon>icon-layers-1</icon>
             </facet>
         <!-- Holz, Zellstoff -->
             <facet>
                 <name>Holz\, Zellstoff</name>
-                <query>categories:"holz"</query>
+                <query>baseCategory:"UVP-6"</query>
                 <id>holzzellstoff</id>
-                <icon>icon-tree-pine</icon>
             </facet>
         <!-- Nahrungs-, Genuss- und Futtermittel, landwirtschaftliche Erzeugnisse -->
             <facet>
                 <name>Nahrungs-\, Genuss- und Futtermittel\, landwirtschaftliche Erzeugnisse</name>
-                <query>categories:"erzeugnisse"</query>
+                <query>baseCategory:"UVP-7"</query>
                 <id>erzeugnisse</id>
-                <icon>icon-apple</icon>
             </facet>
         <!-- Verwertung und Beseitigung von Abfällen und sonstigen Stoffen -->
             <facet>
                 <name>Verwertung und Beseitigung von Abfällen und sonstigen Stoffen</name>
-                <query>categories:"abfaellen"</query>
+                <query>baseCategory:"UVP-8"</query>
                 <id>verwertungbeseitigungabfaellen</id>
-                <icon>icon-loop-3</icon>
             </facet>
         <!-- Lagerung von Stoffen und Gemischen -->
             <facet>
                 <name>Lagerung von Stoffen und Gemischen</name>
-                <query>categories:"lagerung"</query>
+                <query>baseCategory:"UVP-9"</query>
                 <id>lagerungstoffengemischen</id>
-                <icon>icon-mine-cart</icon>
             </facet>
         <!-- Sonstige Industrieanlagen -->
             <facet>
                 <name>Sonstige Industrieanlagen</name>
-                <query>categories:"industrieanlagen"</query>
+                <query>baseCategory:"UVP-10"</query>
                 <id>industrieanlagen</id>
-                <icon>icon-factory</icon>
             </facet>
         <!-- Kernenergie -->
             <facet>
                 <name>Kernenergie</name>
-                <query>categories:"kernenergie"</query>
+                <query>baseCategory:"UVP-11"</query>
                 <id>kernenergie</id>
-                <icon>icon-nuclear-1</icon>
             </facet>
         <!-- Abfalldeponien -->
             <facet>
                 <name>Abfalldeponien</name>
-                <query>categories:"abfalldeponien"</query>
+                <query>baseCategory:"UVP-12"</query>
                 <id>abfalldeponien</id>
-                <icon>icon-basket-3</icon>
             </facet>
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
             <facet>
-                <name>Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers</name>
-                <query>categories:"gewaesser"</query>
+                <name>Wasserwirtschaftliche Vorhaben </name>
+                <query>baseCategory:"UVP-3"</query>
                 <id>wasservorhaben</id>
-                <icon>icon-boat</icon>
             </facet>
         <!-- Verkehrsvorhaben -->
             <facet>
                 <name>Verkehrsvorhaben</name>
-                <query>categories:"verkehrsvorhaben"</query>
+                <query>baseCategory:"UVP-14"</query>
                 <id>verkehrsvorhaben</id>
-                <icon>icon-road</icon>
             </facet>
         <!-- Bergbau und dauerhafte Speicherung von Kohlendioxid -->
             <facet>
-                <name>Bergbau und dauerhafte Speicherung von Kohlendioxid</name>
-                <query>categories:"bergbau"</query>
+                <name>Bergbau- und Abbauvorhaben, dauerhafte Speicherung von Kohlendioxid</name>
+                <query>baseCategory:"UVP-15"</query>
                 <id>bergbaukohlendioxid</id>
-                <icon>icon-diamond</icon>
             </facet>
         <!-- Flurbereinigung -->
             <facet>
                 <name>Flurbereinigung</name>
-                <query>categories:"flurbereinigung"</query>
+                <query>baseCategory:"UVP-16"</query>
                 <id>flurbereinigung</id>
-                <icon>icon-sync-1</icon>
             </facet>
         <!-- Forstliche und landwirtschaftliche Vorhaben -->
             <facet>
                 <name>Forstliche und landwirtschaftliche Vorhaben</name>
-                <query>categories:"forst"</query>
+                <query>baseCategory:"UVP-17"</query>
                 <id>forstlandvorhaben</id>
-                <icon>icon-hand-eco</icon>
             </facet>
         <!-- Bauvorhaben -->
             <facet>
-                <name>Bauvorhaben</name>
-                <query>categories:"bauvorhaben"</query>
+                <name>Bauvorhaben, Fremdenverkehr, Freizeit, ohne Bebauungsplan</name>
+                <query>baseCategory:"UVP-18"</query>
                 <id>bauvorhaben</id>
-                <icon>icon-buildings-1</icon>
             </facet>
         <!-- Leitungsanlagen und andere Anlagen -->
             <facet>
-                <name>Leitungsanlagen und andere Anlagen</name>
-                <query>categories:"leitungsanlagen"</query>
+                <name>Leitungsanlagen und vergleichbare Anlagen</name>
+                <query>baseCategory:"UVP-19"</query>
                 <id>anlagen</id>
-                <icon>icon-plug-2</icon>
             </facet>
-        </facets>
-    </facet>
-    <!-- Behörden -->
-    <!-- Standard - Kann nicht erweitert werden -->
-    <facet>
-        <name>searchResult.facete.title.provider</name>
-        <id>behoerden</id>
-        <facets>
-           <facet>
-               <name>Hamburger Behörde für Wirtschaft\, Verkehr und Innovation</name>
-               <id>behoerden_1</id>
-               <query>t012_obj_adr.adr_id:ECFA1662-C132-4C2A-919D-01B463BEA13F</query>
-           </facet>
-           <facet>
-               <name>Staatliches Gewerbeaufsichtsamt Hannover</name>
-               <id>behoerden_2</id>
-               <query>t012_obj_adr.adr_id:3AC1A17C-62D0-4D7D-8F8F-60C45491A3F3</query>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:4931AF34-B976-40BE-B0F8-CA01191A3A77</query>
-               <name>Staatliches Gewerbeaufsichtsamt Emden</name>
-               <id>behoerden_3</id>
-           </facet>
-           <facet> 
-               <query>t012_obj_adr.adr_id:C3929B49-FA32-4CBC-A469-F42BAFB67D80</query>
-               <name>Staatliches Gewerbeaufsichtsamt Oldenburg</name>
-               <id>behoerden_4</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:9F841908-DEFF-4A33-866A-37B44117C2E1</query>
-               <name>Niedersächsischer Landesbetrieb für Wasserwirtschaft\, Küsten- und Naturschutz</name>
-               <id>behoerden_5</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:F67341BC-2B02-4669-BAD6-A24FFE3D4A73</query>
-               <name>Goslar</name>
-               <id>behoerden_6</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:285584A5-30D2-4654-A8BC-73AC51055BBE</query>
-               <name>Niedersächsische Gewerbeaufsicht</name>
-               <id>behoerden_7</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:C2541685-6055-4601-9813-C91FA8FF713F</query>
-               <name>Niedersächsisches Hafenamt</name>
-               <id>behoerden_8</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:32935309-3069-447B-BA9E-C891A42282A3</query>
-               <name>Betriebsstelle Eichamt Osnabrück</name>
-               <id>behoerden_9</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:A89C82FC-C97E-4288-A2FD-6566C07DA9DC</query>
-               <name>Kreisstraßenmeisterei Duderstadt</name>
-               <id>behoerden_10</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:6F726D0A-C267-495E-B744-328B35532F68</query>
-               <name>Straßenmeisterei Vorsfelde</name>
-               <id>behoerden_11</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:78FDCED6-3CEE-47FB-AE11-7DE7780EEB01</query>
-               <name>Straßenmeisterei Vechta</name>
-               <id>behoerden_12</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:8C050C32-67BA-4821-91C9-C2B05D0C7535</query>
-               <name>Straßenmeisterei Stadthagen</name>
-               <id>behoerden_13</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:C0898F3D-3D9D-484F-ACE8-EF9123396E3F</query>
-               <name>Göttingen</name>
-               <id>behoerden_14</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:A67D3F70-9061-4830-B825-CBD774F5E94D</query>
-               <name>Wasser- und Schifffahrtsamt Meppen</name>
-               <id>behoerden_15</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:3738428A-12A8-4BD2-8EDC-61C8FF2D4A5E</query>
-               <name>Straßenbauamt Hannover</name>
-               <id>behoerden_16</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:792C6E2B-9CB9-4C1C-B919-A87D1D2C4DF9</query>
-               <name>Gifhorn</name>
-               <id>behoerden_17</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:1A5CAE88-B017-4205-92A5-BF5A02D50FFD</query>
-               <name>Oldenburg</name>
-               <id>behoerden_18</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:182843F3-38F6-459C-93D4-9828D01DB465</query>
-               <name>Staatliches Gewerbeaufsichtsamt Hildesheim</name>
-               <id>behoerden_19</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:6D5559BE-7524-4181-BD65-08A7508CD44A</query>
-               <name>Stade</name>
-               <id>behoerden_20</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:4FA01205-F738-4586-9995-A6736960905D</query>
-               <name>Lüchow-Dannenberg</name>
-               <id>behoerden_21</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:0919E782-880E-43E8-A824-39FCD5FF41E9</query>
-               <name>Schaumburg</name>
-               <id>behoerden_22</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:5D6E454A-868B-4258-8F43-9A7A96BE4C95</query>
-               <name>Peine</name>
-               <id>behoerden_23</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:F0ED4CB5-76D9-4550-AE32-9D0FB18376E1</query>
-               <name>Osterholz</name>
-               <id>behoerden_24</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:00C3334F-30BD-425B-AF07-6C8DB2FE4DE8</query>
-               <name>Holzminden</name>
-               <id>behoerden_25</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:AD908A61-A96F-4D72-8C0E-51A23868F6AC</query>
-               <name>Cuxhaven</name>
-               <id>behoerden_26</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:2AE59FBD-FFE5-466A-8162-61BC3D3BD09B</query>
-               <name>Northeim</name>
-               <id>behoerden_27</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:C1C7C099-FCEC-4917-8641-9D68ADF4B06D</query>
-               <name>Aurich</name>
-               <id>behoerden_28</id>
-           </facet>
-           <facet>
-               <query>t012_obj_adr.adr_id:3AC1A17C-62D0-4D7D-8F8F-60C45491A3F3</query>
-               <name>Staatliches Gewerbeaufsichtsamt Hannover</name>
-               <id>behoerden_29</id>
-           </facet>
         </facets>
     </facet>
     <!-- Status -->
     <facet>
-        <name>Status</name>
-        <id>status</id>
+        <name>Verfahrens-Typ</name>
+        <id>procedure</id>
         <facets>
-        <!-- Öffentliche Auslegung -->
+        <!-- UVP Verfahren -->
             <facet>
-                <name>Öffentliche Auslegung</name>
-                <query>phase:2</query>
-                <id>status_auslegung</id>
+                <name>UVP Verfahren</name>
+                <query>t01_object.obj_class:10</query>
+                <id>procedure_10</id>
             </facet>
-        <!-- Erörterungstermin -->
+        <!-- Vorprüfungen mit negativem Ergebnis -->
             <facet>
-                <name>Erörterungstermin</name>
-                <query>phase:3</query>
-                <id>status_eroerterungstermin</id>
+                <name>Vorprüfungen mit negativem Ergebnis</name>
+                <query>t01_object.obj_class:12</query>
+                <id>procedure_12</id>
             </facet>
-        <!-- Zulassungsentscheidung -->
+        <!-- Ausländisches Verfahren -->
             <facet>
-                <name>Zulassungsentscheidung</name>
-                <query>phase:4</query>
-                <id>status_zulassungsentscheidung</id>
+                <name>Ausländisches Verfahren</name>
+                <query>t01_object.obj_class:11</query>
+                <id>procedure_11</id>
+            </facet>
+        <!-- Raumordnungsverfahren -->
+            <facet>
+                <name>Raumordnungsverfahren</name>
+                <query>t01_object.obj_class:13</query>
+                <id>procedure_13</id>
+            </facet>
+            <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
+            <facet>
+                <name>Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht</name>
+                <query>t01_object.obj_class:14</query>
+                <id>procedure_14</id>
             </facet>
         </facets>
     </facet>
@@ -513,154 +353,116 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Wärmeerzeugung, Bergbau und Energie -->
             <facet>
                 <name>Wärmeerzeugung\, Bergbau und Energie</name>
-                <query>categories:"energie"</query>
+                <query>baseCategory:"UVP-1"</query>
                 <id>energie</id>
-                <parentId>type</parentId>
-                <icon>icon-fire</icon>
             </facet>
         <!-- Steine und Erden, Glas, Keramik, Baustoffe -->
             <facet>
                 <name>Steine und Erden\, Glas\, Keramik\, Baustoffe</name>
-                <query>categories:"steine"</query>
+                <query>baseCategory:"UVP-2"</query>
                 <id>baustoffe</id>
-                <parentId>type</parentId>
-                <icon>icon-bricks</icon>
             </facet>
         <!-- Stahl, Eisen und sonstige Metalle einschließlich Verarbeitung -->
             <facet>
                 <name>Stahl\, Eisen und sonstige Metalle einschließlich Verarbeitung</name>
-                <query>categories:"stahl"</query>
+                <query>baseCategory:"UVP-3"</query>
                 <id>verarbeitung</id>
-                <parentId>type</parentId>
-                <icon>icon-flag-4</icon>
             </facet>
         <!-- Chemische Erzeugnisse, Arzneimittel, Mineralölraffination und Weiterverarbeitung -->
             <facet>
                 <name>Chemische Erzeugnisse\, Arzneimittel\, Mineralölraffination und Weiterverarbeitung</name>
-                <query>categories:"arzneimittel"</query>
+                <query>baseCategory:"UVP-4"</query>
                 <id>chemie</id>
-                <parentId>type</parentId>
-                <icon>icon-add-2</icon>
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
             <facet>
                 <name>Oberflächenbehandlung von Kunststoffen</name>
-                <query>categories:"kunststoffen"</query>
+                <query>baseCategory:"UVP-5"</query>
                 <id>kunststoff</id>
-                <parentId>type</parentId>
-                <icon>icon-layers-1</icon>
             </facet>
         <!-- Holz, Zellstoff -->
             <facet>
                 <name>Holz\, Zellstoff</name>
-                <query>categories:"holz"</query>
+                <query>baseCategory:"UVP-6"</query>
                 <id>holzzellstoff</id>
-                <parentId>type</parentId>
-                <icon>icon-tree-pine</icon>
             </facet>
         <!-- Nahrungs-, Genuss- und Futtermittel, landwirtschaftliche Erzeugnisse -->
             <facet>
                 <name>Nahrungs-\, Genuss- und Futtermittel\, landwirtschaftliche Erzeugnisse</name>
-                <query>categories:"erzeugnisse"</query>
+                <query>baseCategory:"UVP-7"</query>
                 <id>erzeugnisse</id>
-                <parentId>type</parentId>
-                <icon>icon-apple</icon>
             </facet>
         <!-- Verwertung und Beseitigung von Abfällen und sonstigen Stoffen -->
             <facet>
                 <name>Verwertung und Beseitigung von Abfällen und sonstigen Stoffen</name>
-                <query>categories:"abfaellen"</query>
+                <query>baseCategory:"UVP-8"</query>
                 <id>verwertungbeseitigungabfaellen</id>
-                <parentId>type</parentId>
-                <icon>icon-loop-3</icon>
             </facet>
         <!-- Lagerung von Stoffen und Gemischen -->
             <facet>
                 <name>Lagerung von Stoffen und Gemischen</name>
-                <query>categories:"lagerung"</query>
+                <query>baseCategory:"UVP-9"</query>
                 <id>lagerungstoffengemischen</id>
-                <parentId>type</parentId>
-                <icon>icon-mine-cart</icon>
             </facet>
         <!-- Sonstige Industrieanlagen -->
             <facet>
                 <name>Sonstige Industrieanlagen</name>
-                <query>categories:"industrieanlagen"</query>
+                <query>baseCategory:"UVP-10"</query>
                 <id>industrieanlagen</id>
-                <parentId>type</parentId>
-                <icon>icon-factory</icon>
             </facet>
         <!-- Kernenergie -->
             <facet>
                 <name>Kernenergie</name>
-                <query>categories:"kernenergie"</query>
+                <query>baseCategory:"UVP-11"</query>
                 <id>kernenergie</id>
-                <parentId>type</parentId>
-                <icon>icon-nuclear-1</icon>
             </facet>
         <!-- Abfalldeponien -->
             <facet>
                 <name>Abfalldeponien</name>
-                <query>categories:"abfalldeponien"</query>
+                <query>baseCategory:"UVP-12"</query>
                 <id>abfalldeponien</id>
-                <parentId>type</parentId>
-                <icon>icon-basket-3</icon>
             </facet>
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
             <facet>
-                <name>Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers</name>
-                <query>categories:"gewaesser"</query>
+                <name>Wasserwirtschaftliche Vorhaben </name>
+                <query>baseCategory:"UVP-3"</query>
                 <id>wasservorhaben</id>
-                <parentId>type</parentId>
-                <icon>icon-boat</icon>
             </facet>
         <!-- Verkehrsvorhaben -->
             <facet>
                 <name>Verkehrsvorhaben</name>
-                <query>categories:"verkehrsvorhaben"</query>
+                <query>baseCategory:"UVP-14"</query>
                 <id>verkehrsvorhaben</id>
-                <parentId>type</parentId>
-                <icon>icon-road</icon>
             </facet>
         <!-- Bergbau und dauerhafte Speicherung von Kohlendioxid -->
             <facet>
-                <name>Bergbau und dauerhafte Speicherung von Kohlendioxid</name>
-                <query>categories:"bergbau"</query>
+                <name>Bergbau- und Abbauvorhaben, dauerhafte Speicherung von Kohlendioxid</name>
+                <query>baseCategory:"UVP-15"</query>
                 <id>bergbaukohlendioxid</id>
-                <parentId>type</parentId>
-                <icon>icon-diamond</icon>
             </facet>
         <!-- Flurbereinigung -->
             <facet>
                 <name>Flurbereinigung</name>
-                <query>categories:"flurbereinigung"</query>
+                <query>baseCategory:"UVP-16"</query>
                 <id>flurbereinigung</id>
-                <parentId>type</parentId>
-                <icon>icon-sync-1</icon>
             </facet>
         <!-- Forstliche und landwirtschaftliche Vorhaben -->
             <facet>
                 <name>Forstliche und landwirtschaftliche Vorhaben</name>
-                <query>categories:"forst"</query>
+                <query>baseCategory:"UVP-17"</query>
                 <id>forstlandvorhaben</id>
-                <parentId>type</parentId>
-                <icon>icon-hand-eco</icon>
             </facet>
         <!-- Bauvorhaben -->
             <facet>
-                <name>Bauvorhaben</name>
-                <query>categories:"bauvorhaben"</query>
+                <name>Bauvorhaben, Fremdenverkehr, Freizeit, ohne Bebauungsplan</name>
+                <query>baseCategory:"UVP-18"</query>
                 <id>bauvorhaben</id>
-                <parentId>type</parentId>
-                <icon>icon-buildings-1</icon>
             </facet>
         <!-- Leitungsanlagen und andere Anlagen -->
             <facet>
-                <name>Leitungsanlagen und andere Anlagen</name>
-                <query>categories:"leitungsanlagen"</query>
+                <name>Leitungsanlagen und vergleichbare Anlagen</name>
+                <query>baseCategory:"UVP-19"</query>
                 <id>anlagen</id>
-                <parentId>type</parentId>
-                <icon>icon-plug-2</icon>
             </facet>
         </facets>
     </facet>
