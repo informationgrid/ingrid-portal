@@ -123,7 +123,12 @@ public class QueryPreProcessor {
         IngridQuery query = null;
         try {
             log.debug("The QueryString: " + queryString);
-            query = QueryStringParser.parse(queryString);
+            
+            if(queryString != null && queryString.trim().length() > 0){
+                query = QueryStringParser.parse(queryString);
+            }else{
+                query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
+            }
             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
                 UtilsFacete.facetePrepareInGridQuery(request, query);
             }
