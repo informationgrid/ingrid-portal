@@ -32,6 +32,8 @@
     </div>
 </div>
 
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
+<script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
 <script language="JavaScript" type="text/javascript">
     var map = new L.Map('map');
     var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
