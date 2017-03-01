@@ -258,9 +258,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             if(rankedHits == null){
                 // process query, create QueryDescriptor
                 qd = QueryPreProcessor.createRankedQueryDescriptor(request);
-                if(query != null){
-                    qd.setQuery( query );
-                }
                 if (qd != null) {
                     controller.addQuery("ranked", qd);
                     SearchState.resetSearchStateObject(request, Settings.MSG_SEARCH_FINISHED_RANKED);
