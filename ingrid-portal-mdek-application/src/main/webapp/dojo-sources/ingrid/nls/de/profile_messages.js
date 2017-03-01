@@ -49,7 +49,7 @@ define({
     "uvp.form.phase3.approvalDocs":"Auslegungsinformationen ",
     "uvp.form.phase3.designDocs":"Entscheidung",
 
-    "uvp.form.table.docs.title":"(sprechender) Dokumentenname",
+    "uvp.form.table.docs.title":"Dokument",
     "uvp.form.table.docs.link":"Link",
     "uvp.form.table.docs.type":"Typ",
     "uvp.form.table.docs.size":"Größe",

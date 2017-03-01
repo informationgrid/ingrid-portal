@@ -73,6 +73,9 @@ define([
                     this.close();
                 })
             });
+            this.dialog.set("buttonOk", "Übernehmen");
+            this.setOkEnabled(false);
+
             // override dialog.hide to allow to ask for confirmation, if the user
             // attempts to cancel the dialog with already finished uploads
             this.dialog.origHide = this.dialog.hide;
@@ -103,6 +106,14 @@ define([
         },
 
         /**
+         * Set the enabled status of the OK button
+         * @param isEnabled
+         */
+        setOkEnabled: function(isEnabled) {
+            this.dialog.okButton.set("disabled", !isEnabled);
+        },
+
+        /**
          * Show the upload dialog
          * @param path The upload path
          * @return Deferred that resolves to an array of upload items with properties uri, type, size
@@ -126,7 +137,7 @@ define([
                 debug: false,
                 element: this.dialog.containerNode,
                 template: this.templateEl,
-                autoUpload: false,
+                autoUpload: true,
                 text: {
                     defaultResponseError: "Upload fehlgeschlagen",
                     formatProgress: "{percent}% von {total_size}",
@@ -170,6 +181,9 @@ define([
                     }
                 },
                 callbacks: {
+                    onUpload: lang.hitch(this, function(id, name) {
+                        this.setOkEnabled(false);
+                    }),
                     onComplete: lang.hitch(this, function(id, name, responseJSON) {
                         // collect files from response by id
                         this.resultParts[id] = responseJSON.files;
@@ -179,6 +193,7 @@ define([
                         array.forEach(succeeded, function(id) {
                             this.uploads = this.uploads.concat(this.resultParts[id]);
                         }, this);
+                        this.setOkEnabled(true);
                     }),
                     onError: lang.hitch(this, function(id, name, errorReason, xhrOrXdr) {
                         var message = null;
