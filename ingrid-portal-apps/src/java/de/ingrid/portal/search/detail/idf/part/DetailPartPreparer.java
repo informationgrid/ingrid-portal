@@ -107,6 +107,11 @@ public class DetailPartPreparer {
         return iPlugId;
     }
 
+    public void setValueToContext(String key, String value) {
+        this.context.put( key, value );
+    }
+
+    
     public String getValueFromXPath(String xpathExpression) {
         return getValueFromXPath(xpathExpression, null);
     }

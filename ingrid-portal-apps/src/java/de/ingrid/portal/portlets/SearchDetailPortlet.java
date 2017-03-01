@@ -412,13 +412,14 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             startTimer = System.currentTimeMillis();
         }
         
+        super.doView(request, response);
+        
         // Add page title by hit title 
         if(context.get("title") != null){
             org.w3c.dom.Element title = response.createElement("title");
             title.setTextContent((String) context.get("title") + " - " + messages.getString("search.detail.portal.institution"));
             response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, title);
         }
-        super.doView(request, response);
         if (log.isDebugEnabled()) {
             log.debug("Finished rendering detail data view within " + (System.currentTimeMillis() - startTimer) + "ms.");
         }
