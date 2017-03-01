@@ -2,7 +2,7 @@
 #defineLayoutObjects()
 
 #* Loads our custom macros *#
-#parse($layoutDecoration.getResource("decorator-macros.vm"))
+#parse("/decorations/layout/ingrid/decorator-macros.vm")
 
 #* Add all template constants to the current context *#
 ##defineNavigationConstants()
@@ -19,8 +19,7 @@
             #end
         #end
         -->
-        <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')" />
-        <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "UVP - Umweltverträglichkeitsprüfungen")</title>
+        <link rel="prefetch" href="/decorations/layout/ingrid/images/template/icons.svg" />
         <meta http-equiv="Content-type" content="#ContentType()" />
         <meta http-equiv="Content-style-type" content="text/css" />   
         <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
@@ -37,9 +36,9 @@
             <meta name="robots" content="index,follow" />
         #end
         <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' />
-        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css')" />
-        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')" />
-        <!-- <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" /> -->
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css" />
+        <!-- <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" /> -->
         #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
         #end
@@ -54,9 +53,9 @@
         #* our decorator macros, see ./decorator-macros.vm *#
         #decoratorIncludeJavaScriptForHead()
         <!-- Global scripts -->
-        <script src="#GetPageResource("scripts/modernizr.custom.min.js")"></script>
-        <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
-        <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
     </head>
     <body>
     
@@ -82,8 +81,8 @@
                 <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
                         <!--
-                        <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.svg')">
-                        <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/mobile-logo.png')">
+                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg">
+                        <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>
                         -->
                     </a>
                 </div>
