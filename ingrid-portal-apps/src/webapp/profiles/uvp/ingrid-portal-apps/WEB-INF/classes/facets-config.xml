@@ -142,115 +142,115 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Wärmeerzeugung, Bergbau und Energie -->
             <facet>
                 <name>Wärmeerzeugung\, Bergbau und Energie</name>
-                <query>baseCategory:"UVP-1"</query>
+                <query>uvp_category:"UVPG-1"</query>
                 <id>energie</id>
             </facet>
         <!-- Steine und Erden, Glas, Keramik, Baustoffe -->
             <facet>
                 <name>Steine und Erden\, Glas\, Keramik\, Baustoffe</name>
-                <query>baseCategory:"UVP-2"</query>
+                <query>uvp_category:"UVPG-2"</query>
                 <id>baustoffe</id>
             </facet>
         <!-- Stahl, Eisen und sonstige Metalle einschließlich Verarbeitung -->
             <facet>
                 <name>Stahl\, Eisen und sonstige Metalle einschließlich Verarbeitung</name>
-                <query>baseCategory:"UVP-3"</query>
+                <query>uvp_category:"UVPG-3"</query>
                 <id>verarbeitung</id>
             </facet>
         <!-- Chemische Erzeugnisse, Arzneimittel, Mineralölraffination und Weiterverarbeitung -->
             <facet>
                 <name>Chemische Erzeugnisse\, Arzneimittel\, Mineralölraffination und Weiterverarbeitung</name>
-                <query>baseCategory:"UVP-4"</query>
+                <query>uvp_category:"UVPG-4"</query>
                 <id>chemie</id>
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
             <facet>
                 <name>Oberflächenbehandlung von Kunststoffen</name>
-                <query>baseCategory:"UVP-5"</query>
+                <query>uvp_category:"UVPG-5"</query>
                 <id>kunststoff</id>
             </facet>
         <!-- Holz, Zellstoff -->
             <facet>
                 <name>Holz\, Zellstoff</name>
-                <query>baseCategory:"UVP-6"</query>
+                <query>uvp_category:"UVPG-6"</query>
                 <id>holzzellstoff</id>
             </facet>
         <!-- Nahrungs-, Genuss- und Futtermittel, landwirtschaftliche Erzeugnisse -->
             <facet>
                 <name>Nahrungs-\, Genuss- und Futtermittel\, landwirtschaftliche Erzeugnisse</name>
-                <query>baseCategory:"UVP-7"</query>
+                <query>uvp_category:"UVPG-7"</query>
                 <id>erzeugnisse</id>
             </facet>
         <!-- Verwertung und Beseitigung von Abfällen und sonstigen Stoffen -->
             <facet>
                 <name>Verwertung und Beseitigung von Abfällen und sonstigen Stoffen</name>
-                <query>baseCategory:"UVP-8"</query>
+                <query>uvp_category:"UVPG-8"</query>
                 <id>verwertungbeseitigungabfaellen</id>
             </facet>
         <!-- Lagerung von Stoffen und Gemischen -->
             <facet>
                 <name>Lagerung von Stoffen und Gemischen</name>
-                <query>baseCategory:"UVP-9"</query>
+                <query>uvp_category:"UVPG-9"</query>
                 <id>lagerungstoffengemischen</id>
             </facet>
         <!-- Sonstige Industrieanlagen -->
             <facet>
                 <name>Sonstige Industrieanlagen</name>
-                <query>baseCategory:"UVP-10"</query>
+                <query>uvp_category:"UVPG-10"</query>
                 <id>industrieanlagen</id>
             </facet>
         <!-- Kernenergie -->
             <facet>
                 <name>Kernenergie</name>
-                <query>baseCategory:"UVP-11"</query>
+                <query>uvp_category:"UVPG-11"</query>
                 <id>kernenergie</id>
             </facet>
         <!-- Abfalldeponien -->
             <facet>
                 <name>Abfalldeponien</name>
-                <query>baseCategory:"UVP-12"</query>
+                <query>uvp_category:"UVPG-12"</query>
                 <id>abfalldeponien</id>
             </facet>
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
             <facet>
                 <name>Wasserwirtschaftliche Vorhaben </name>
-                <query>baseCategory:"UVP-3"</query>
+                <query>uvp_category:"UVPG-3"</query>
                 <id>wasservorhaben</id>
             </facet>
         <!-- Verkehrsvorhaben -->
             <facet>
                 <name>Verkehrsvorhaben</name>
-                <query>baseCategory:"UVP-14"</query>
+                <query>uvp_category:"UVPG-14"</query>
                 <id>verkehrsvorhaben</id>
             </facet>
         <!-- Bergbau und dauerhafte Speicherung von Kohlendioxid -->
             <facet>
                 <name>Bergbau- und Abbauvorhaben, dauerhafte Speicherung von Kohlendioxid</name>
-                <query>baseCategory:"UVP-15"</query>
+                <query>uvp_category:"UVPG-15"</query>
                 <id>bergbaukohlendioxid</id>
             </facet>
         <!-- Flurbereinigung -->
             <facet>
                 <name>Flurbereinigung</name>
-                <query>baseCategory:"UVP-16"</query>
+                <query>uvp_category:"UVPG-16"</query>
                 <id>flurbereinigung</id>
             </facet>
         <!-- Forstliche und landwirtschaftliche Vorhaben -->
             <facet>
                 <name>Forstliche und landwirtschaftliche Vorhaben</name>
-                <query>baseCategory:"UVP-17"</query>
+                <query>uvp_category:"UVPG-17"</query>
                 <id>forstlandvorhaben</id>
             </facet>
         <!-- Bauvorhaben -->
             <facet>
                 <name>Bauvorhaben, Fremdenverkehr, Freizeit, ohne Bebauungsplan</name>
-                <query>baseCategory:"UVP-18"</query>
+                <query>uvp_category:"UVPG-18"</query>
                 <id>bauvorhaben</id>
             </facet>
         <!-- Leitungsanlagen und andere Anlagen -->
             <facet>
                 <name>Leitungsanlagen und vergleichbare Anlagen</name>
-                <query>baseCategory:"UVP-19"</query>
+                <query>uvp_category:"UVPG-19"</query>
                 <id>anlagen</id>
             </facet>
         </facets>
@@ -353,115 +353,115 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Wärmeerzeugung, Bergbau und Energie -->
             <facet>
                 <name>Wärmeerzeugung\, Bergbau und Energie</name>
-                <query>baseCategory:"UVP-1"</query>
+                <query>uvp_category:"UVPG-1"</query>
                 <id>energie</id>
             </facet>
         <!-- Steine und Erden, Glas, Keramik, Baustoffe -->
             <facet>
                 <name>Steine und Erden\, Glas\, Keramik\, Baustoffe</name>
-                <query>baseCategory:"UVP-2"</query>
+                <query>uvp_category:"UVPG-2"</query>
                 <id>baustoffe</id>
             </facet>
         <!-- Stahl, Eisen und sonstige Metalle einschließlich Verarbeitung -->
             <facet>
                 <name>Stahl\, Eisen und sonstige Metalle einschließlich Verarbeitung</name>
-                <query>baseCategory:"UVP-3"</query>
+                <query>uvp_category:"UVPG-3"</query>
                 <id>verarbeitung</id>
             </facet>
         <!-- Chemische Erzeugnisse, Arzneimittel, Mineralölraffination und Weiterverarbeitung -->
             <facet>
                 <name>Chemische Erzeugnisse\, Arzneimittel\, Mineralölraffination und Weiterverarbeitung</name>
-                <query>baseCategory:"UVP-4"</query>
+                <query>uvp_category:"UVPG-4"</query>
                 <id>chemie</id>
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
             <facet>
                 <name>Oberflächenbehandlung von Kunststoffen</name>
-                <query>baseCategory:"UVP-5"</query>
+                <query>uvp_category:"UVPG-5"</query>
                 <id>kunststoff</id>
             </facet>
         <!-- Holz, Zellstoff -->
             <facet>
                 <name>Holz\, Zellstoff</name>
-                <query>baseCategory:"UVP-6"</query>
+                <query>uvp_category:"UVPG-6"</query>
                 <id>holzzellstoff</id>
             </facet>
         <!-- Nahrungs-, Genuss- und Futtermittel, landwirtschaftliche Erzeugnisse -->
             <facet>
                 <name>Nahrungs-\, Genuss- und Futtermittel\, landwirtschaftliche Erzeugnisse</name>
-                <query>baseCategory:"UVP-7"</query>
+                <query>uvp_category:"UVPG-7"</query>
                 <id>erzeugnisse</id>
             </facet>
         <!-- Verwertung und Beseitigung von Abfällen und sonstigen Stoffen -->
             <facet>
                 <name>Verwertung und Beseitigung von Abfällen und sonstigen Stoffen</name>
-                <query>baseCategory:"UVP-8"</query>
+                <query>uvp_category:"UVPG-8"</query>
                 <id>verwertungbeseitigungabfaellen</id>
             </facet>
         <!-- Lagerung von Stoffen und Gemischen -->
             <facet>
                 <name>Lagerung von Stoffen und Gemischen</name>
-                <query>baseCategory:"UVP-9"</query>
+                <query>uvp_category:"UVPG-9"</query>
                 <id>lagerungstoffengemischen</id>
             </facet>
         <!-- Sonstige Industrieanlagen -->
             <facet>
                 <name>Sonstige Industrieanlagen</name>
-                <query>baseCategory:"UVP-10"</query>
+                <query>uvp_category:"UVPG-10"</query>
                 <id>industrieanlagen</id>
             </facet>
         <!-- Kernenergie -->
             <facet>
                 <name>Kernenergie</name>
-                <query>baseCategory:"UVP-11"</query>
+                <query>uvp_category:"UVPG-11"</query>
                 <id>kernenergie</id>
             </facet>
         <!-- Abfalldeponien -->
             <facet>
                 <name>Abfalldeponien</name>
-                <query>baseCategory:"UVP-12"</query>
+                <query>uvp_category:"UVPG-12"</query>
                 <id>abfalldeponien</id>
             </facet>
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
             <facet>
                 <name>Wasserwirtschaftliche Vorhaben </name>
-                <query>baseCategory:"UVP-3"</query>
+                <query>uvp_category:"UVPG-3"</query>
                 <id>wasservorhaben</id>
             </facet>
         <!-- Verkehrsvorhaben -->
             <facet>
                 <name>Verkehrsvorhaben</name>
-                <query>baseCategory:"UVP-14"</query>
+                <query>uvp_category:"UVPG-14"</query>
                 <id>verkehrsvorhaben</id>
             </facet>
         <!-- Bergbau und dauerhafte Speicherung von Kohlendioxid -->
             <facet>
                 <name>Bergbau- und Abbauvorhaben, dauerhafte Speicherung von Kohlendioxid</name>
-                <query>baseCategory:"UVP-15"</query>
+                <query>uvp_category:"UVPG-15"</query>
                 <id>bergbaukohlendioxid</id>
             </facet>
         <!-- Flurbereinigung -->
             <facet>
                 <name>Flurbereinigung</name>
-                <query>baseCategory:"UVP-16"</query>
+                <query>uvp_category:"UVPG-16"</query>
                 <id>flurbereinigung</id>
             </facet>
         <!-- Forstliche und landwirtschaftliche Vorhaben -->
             <facet>
                 <name>Forstliche und landwirtschaftliche Vorhaben</name>
-                <query>baseCategory:"UVP-17"</query>
+                <query>uvp_category:"UVPG-17"</query>
                 <id>forstlandvorhaben</id>
             </facet>
         <!-- Bauvorhaben -->
             <facet>
                 <name>Bauvorhaben, Fremdenverkehr, Freizeit, ohne Bebauungsplan</name>
-                <query>baseCategory:"UVP-18"</query>
+                <query>uvp_category:"UVPG-18"</query>
                 <id>bauvorhaben</id>
             </facet>
         <!-- Leitungsanlagen und andere Anlagen -->
             <facet>
                 <name>Leitungsanlagen und vergleichbare Anlagen</name>
-                <query>baseCategory:"UVP-19"</query>
+                <query>uvp_category:"UVPG-19"</query>
                 <id>anlagen</id>
             </facet>
         </facets>
