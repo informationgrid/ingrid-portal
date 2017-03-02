@@ -375,6 +375,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     #set($title = "$geothesaurus.topicTitle")
                     #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $title")
                 #end
+            #elseif($entry.getId() == 'area.map')
                 #if($selectedMap)
                     #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
                         #set ($action = $renderResponse.createActionURL())
