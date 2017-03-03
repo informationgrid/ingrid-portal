@@ -336,8 +336,18 @@
                 #else
                     $entryLabel
                 #end
-                #if($entryType && $entryType.length() > 0 || $entrySize && $entrySize.length() > 0)
-                    <span class="tx-light">(#if($entryType)$entryType#end#if($entrySize) $entrySize#end)</span>
+                #if($entryLink && $entryLink.length() > 0 || $entrySize && $entrySize.length() > 0)
+                    #set($span ="(")
+                    #if($entryLink)
+                        #set ($entryLinkSplit = $entryLink.split("/"))
+                        #set ($entryLinkSplitSize = $entryLinkSplit.size() - 1)
+                        #set($span = "$span$entryLinkSplit.get($entryLinkSplitSize)")
+                    #end
+                    #if($entrySize) 
+                        #set($span = "$span $entrySize")
+                    #end
+                    #set($span = "$span )")
+                    <span class="tx-light">$span</span>
                 #end
                 </p>
             #end
