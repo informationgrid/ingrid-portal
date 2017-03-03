@@ -26,6 +26,12 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
             </portlets>
         </page>
         <page>
@@ -35,6 +41,12 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
             </portlets>
         </page>
         <page>
@@ -43,6 +55,12 @@
             <portlets>
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
                 </portlet>
             </portlets>
         </page>
