@@ -67,13 +67,41 @@
                                                                 map.fitBounds(bounds);
                                                             
                                                                 map.addLayer(osm);
-                                                                var rect = L.rectangle(bounds, {color: 'blue', weight: 1}).on('click', function (e) {
+                                                                var rect = L.rectangle(bounds, {color: 'blue', weight: 3, fill: false}).on('click', function (e) {
                                                                     var popLocation= e.latlng;
                                                                     var popup = L.popup()
                                                                     .setLatLng(popLocation)
                                                                     .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
                                                                     .openOn(map);
                                                                 }).addTo(map);
+                                                                
+                                                                // Controls
+                                                                var HomeControl = L.Control.extend({
+                                                                    options: {
+                                                                        position: 'topleft'
+                                                                    },
+                                                                    onAdd: function (map) {
+                                                                        // create the control container with a particular class name
+                                                                        var container = L.DomUtil.create('div', 'leaflet-control-home leaflet-bar');
+                                                                        var link = L.DomUtil.create('a', 'icon small icon-crosshair-2-1', container);
+                                                                        link.href = '#';
+                                                                        link.style = 'padding-top:5px;';
+                                                                        link.title = 'Zoom auf Raumbezug';
+                                                                        
+                                                                        // ... initialize other DOM elements, add listeners, etc.
+                                                                        L.DomEvent.addListener(link, 'click', this._homeClick, this);
+                                                                
+                                                                        return container;
+                                                                    },
+                                                                    _homeClick: function(e) {
+                                                                        L.DomEvent.stop(e);
+                                                                        if(bounds){
+                                                                            map.fitBounds(bounds);
+                                                                        }
+                                                                    }
+                                                                });
+                                                                
+                                                                map.addControl(new HomeControl({}));
                                                             </script>
                                                         #end
                                                     #end
