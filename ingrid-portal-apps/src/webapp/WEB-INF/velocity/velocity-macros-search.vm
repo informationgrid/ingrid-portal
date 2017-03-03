@@ -448,15 +448,13 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                         #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAreaAddress.city")
                     #end
                 #end
-            #elseif($entry.getId() == 'type')
+            #elseif($entry.isSelect())
                 #if($entry.getFacets())
                     #set($catNameKey = "$entry.getName()" + ".single")
                     #set($catName = $resourceMsgs.getString($catNameKey))
-                    #renderSearchResultFacetSelection ($entry.getFacets() $resourceMsgs $catName)
-                #end
-            #elseif($entry.isSelect())
-                #if($entry.getFacets())
-                    #set($catName = $resourceMsgs.getString($entry.getName()))
+                    #if($catName.indexOf(".single") > -1)
+                        #set($catName = $resourceMsgs.getString($entry.getName()))
+                    #end
                     #renderSearchResultFacetSelection ($entry.getFacets() $resourceMsgs $catName)
                 #end
             #end
