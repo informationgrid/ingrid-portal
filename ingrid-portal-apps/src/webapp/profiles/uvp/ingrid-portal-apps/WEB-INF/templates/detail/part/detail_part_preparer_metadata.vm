@@ -107,10 +107,10 @@
                                                             #foreach($numberParent in [1..$entryLengthParent])
                                                                 #set($idParent = $TOOL.getValueFromXPath("./addresses/address[$number]/parent[$numberParent]/@id"))
                                                                 #set($nameParent = $TOOL.getValueFromXPath("./addresses/address[$number]/parent[$numberParent]/name"))
-                                                                    <a href="?cmd=doShowAddressDetail&docuuid=$idParent&plugid=$TOOL.getiPlugId()">$nameParent</a>
+                                                                    $nameParent
                                                                     <br>
                                                             #end
-                                                                <a href="?cmd=doShowAddressDetail&docuuid=$id&plugid=$TOOL.getiPlugId()">$name</a>
+                                                                $name
                                                             </p>
                                                             <p>
                                                                 #if($street && $street.length() > 0)
