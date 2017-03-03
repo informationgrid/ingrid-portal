@@ -548,8 +548,7 @@ define([
                             var uri = row.link;
                             if (uri && uploadMap[uri]) {
                                 var upload = uploadMap[uri];
-                                row.type = upload.type;
-                                row.size = upload.size;
+                                row = getRowData(row, upload);
                                 delete uploadMap[uri];
                             }
                         });
@@ -565,25 +564,33 @@ define([
                             if (!uri) {
                                 var upload = uploads.shift();
                                 if (upload) {
-                                    row.link = upload.uri;
-                                    row.type = upload.type;
-                                    row.size = upload.size;
+                                    row = getRowData(row, upload);
                                 }
                             }
                         });
 
                         // add remaining uploads
                         array.forEach(uploads, function(upload) {
-                            rows.push({
-                                link: upload.uri,
-                                type: upload.type,
-                                size: upload.size
-                            });
+                            rows.push(getRowData({}, upload));
                         });
 
                         // store changes
                         UtilStore.updateWriteStore(tableId, rows);
                     });
+                    
+                    var getRowData = function(row, data) {
+                        if (!row.label || row.label.length == 0) {
+                            var file = data.uri;
+                            var lastDotPos = file.lastIndexOf(".");
+                            var name = file.substring(file.lastIndexOf('/')+1, 
+                                    lastDotPos === -1 ? file.length : lastDotPos);
+                            row.label = name.replace(/_/g, " ");
+                        }
+                        row.link = data.uri;
+                        row.type = data.type;
+                        row.size = data.size;
+                        return row;
+                    }
 
                     // create interface
                     var inactiveHint = construct.create("span", {
@@ -597,10 +604,12 @@ define([
                             dialog.showContextHelp(e, "Die Upload Funktionalität steht nach dem ersten Speichern zur Verfügung.");
                         }
                     }, table.domNode.parentNode, "before");
+
                     var linkContainer = construct.create("span", {
                         "class": "functionalLink",
                         innerHTML: "<img src='img/ic_fl_popup.gif' width='10' height='9' alt='Popup' />"
                     }, table.domNode.parentNode, "before");
+
                     construct.create("a", {
                         id: tableId + "_uploadLink",
                         title: "Dokument-Upload [Popup]",
