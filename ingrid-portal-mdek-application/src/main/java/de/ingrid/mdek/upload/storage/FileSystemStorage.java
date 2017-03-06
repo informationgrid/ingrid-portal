@@ -72,7 +72,7 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public Item[] write(String path, String file, InputStream data, Integer size, boolean replace)
+    public Item[] write(String path, String file, InputStream data, Integer size, boolean replace, boolean extract)
             throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
         Files.createDirectories(realPath.getParent());
@@ -90,21 +90,23 @@ public class FileSystemStorage implements Storage {
         }
         String[] files = new String[] { realPath.toString() };
 
-        // extract archives
-        try {
-            String contentType = Files.probeContentType(realPath);
-            if (contentType.contains("zip") || contentType.contains("compressed")) {
-                files = this.uncompress(realPath, copyOptions);
-                // delete archive
-                Files.delete(realPath);
+        if (extract) {
+            // extract archives
+            try {
+                String contentType = Files.probeContentType(realPath);
+                if (contentType.contains("zip") || contentType.contains("compressed")) {
+                    files = this.uncompress(realPath, copyOptions);
+                    // delete archive
+                    Files.delete(realPath);
+                }
             }
-        }
-        catch (FileAlreadyExistsException faex) {
-            // file already exists must be returned to the client
-            throw faex;
-        }
-        catch (Exception ex) {
-            log.error("Post processing of '" + realPath + "' failed due to the following exception:\n" + ex.toString());
+            catch (FileAlreadyExistsException faex) {
+                // file already exists must be returned to the client
+                throw faex;
+            }
+            catch (Exception ex) {
+                log.error("Post processing of '" + realPath + "' failed due to the following exception:\n" + ex.toString());
+            }
         }
 
         // prepare result
@@ -131,7 +133,7 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public Item[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace)
+    public Item[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract)
             throws IOException {
         // combine parts into stream
         Vector<InputStream> streams = new Vector<InputStream>();
@@ -145,7 +147,7 @@ public class FileSystemStorage implements Storage {
 
         // delegate to write method
         InputStream data = new SequenceInputStream(streams.elements());
-        Item[] result = this.write(path, file, data, size, replace);
+        Item[] result = this.write(path, file, data, size, replace, extract);
 
         // delete parts
         for (Path part : parts) {

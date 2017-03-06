@@ -59,7 +59,7 @@ public class Api {
      */
     @GET
     @Path("{path : [^/]+}/{file : .+}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces({MediaType.APPLICATION_OCTET_STREAM, MediaType.APPLICATION_JSON})
     public Response download(
             @PathParam("path") String path,
             @PathParam("file") String file) throws Exception {
@@ -144,7 +144,7 @@ public class Api {
         }
         else {
             // store file
-            files = this.storage.write(path, file, fileInputStream, size, replace);
+            files = this.storage.write(path, file, fileInputStream, size, replace, false);
         }
         return this.createUploadResponse(files, uriInfo);
     }
@@ -180,7 +180,7 @@ public class Api {
         }
 
         // store files
-        Item[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace);
+        Item[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, false);
         return this.createUploadResponse(files, uriInfo);
     }
 
