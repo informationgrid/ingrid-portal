@@ -238,9 +238,7 @@
                                                     #if($step == "phase1")
                                                         #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
                                                         #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
-                                                        #if($from && $to)
-                                                            #renderTextLabelAbove("Zeitraum der Auslegung" "<b>Von:</b> $from <b>Bis:</b> $to")
-                                                        #end
+                                                        #renderDate ("Zeitraum der Auslegung" $from $to)
                                                     #end
                                                 ## Antrag auf Entscheidung über die Zulässigkeit des Vorhabens
                                                     #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
@@ -271,9 +269,7 @@
                                                     #if($step == "phase2")
                                                         #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
                                                         #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
-                                                        #if($from && $to)
-                                                            #renderTextLabelAbove("Zeitraum der Er&ouml;rterung" "<b>Von:</b> $from <b>Bis:</b> $to")
-                                                        #end
+                                                        #renderDate ("Zeitraum der Er&ouml;rterung" $from $to)
                                                     #end
                                                 ## Informationen zum Erörterungstermin
                                                     #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
@@ -284,9 +280,7 @@
                                                 ## Datum der Entscheidung
                                                     #if($step == "phase3")
                                                         #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
-                                                        #if($from)
-                                                            #renderTextLabelAbove("Datum der Entscheidung" "<b>Von:</b> $from")
-                                                        #end
+                                                        #renderDate ("Zeitraum der Er&ouml;rterung" $from)
                                                     #end
                                                 ## Auslegungsinformationen
                                                     #set($xpathExpression = "./steps/step[$number]/docs[@type='approvalDocs']/doc")
@@ -310,6 +304,36 @@
             </article>
         </div>
     </section>
+#end
+
+#macro (renderDate $dateTitle $dateFrom $dateTo)
+    #if($dateFrom || $dateTo)
+        #renderGroupTitle($dateTitle)
+        #if($dateFrom)
+        <div class="table--unlined">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Von</th>
+                        <td>$dateFrom</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        #end
+        #if($dateTo)
+        <div class="table--unlined">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Bis</th>
+                        <td>$dateTo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        #end
+    #end
 #end
 
 #macro (renderTableToList $title $entryLength $xpathExpression $entryNumber)
