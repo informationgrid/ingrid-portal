@@ -6,7 +6,7 @@
             <article id="detail_meta_header" class="content ob-container">
                 <form class="box box--medium">
                     <div class="box__content ob-container">
-                        <h6 class="tx-light tx-brand bx-bot-0">Zuletzt ge&auml;ndert: $TOOL.getValueFromXPath("./date")</h6>
+                        <h6 class="tx-light tx-brand bx-bot-0">Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</h6>
                         <h1 class="bx-top-0 bx-bot-s">$TOOL.getValueFromXPath("./name")</h1>
                         ## Set title to context because other xPath expression (DEFAULT: "./idf:title")
                         ## used to get title.
