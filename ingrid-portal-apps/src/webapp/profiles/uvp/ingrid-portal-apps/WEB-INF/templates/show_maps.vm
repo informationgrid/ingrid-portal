@@ -1,3 +1,5 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+#set ($action = $renderResponse.createActionURL())
 <style>
 html, body {
     height: 100%;
@@ -7,34 +9,21 @@ html, body {
     height: 100%;
 }
 </style>
-<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
-<script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
+
 <div id="map" style="width:100%;position:fixed;"></div>
+
+#parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+<script src="$restUrlMarker"></script>
 <script language="JavaScript" type="text/javascript">
-    var map = new L.Map('map');
-    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var osmAttrib='';
-    var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 20, attribution: osmAttrib});
-    
-    // start the map in South-East England
-    map.setView(new L.LatLng(51.3, 10),6);
 
-    map.addLayer(osm);
+    var map = addLeafletMap(null, new L.LatLng(51.3, 10));
+
 </script>
-#parse ('/WEB-INF/templates/show_maps_markers.vm')
-<style>
-    .info {
-        padding: 6px 8px;
-        font: 14px/16px Arial, Helvetica, sans-serif;
-        background: white;
-        background: rgba(255,255,255,0.8);
-        box-shadow: 0 0 15px rgba(0,0,0,0.2);
-        border-radius: 5px;
-    }
 
-    .legend {
-        text-align: left;
-        line-height: 18px;
-        color: #555;
-    }
-</style>
+#parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
+
+<script>
+
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapMarkers.getBounds(), new L.LatLng(51.3, 10))
+
+</script>

@@ -51,22 +51,14 @@
                                                         #set($spatialEntries = $spatial.split(","))
                                                         #if($spatialEntries.size() == 4)
                                                             #renderSectionTitle("Raumbezug")
-                                                            <link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
-                                                            <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
+                                                            #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                                                             <div id="map" style="height: 400px; width:100%;"></div>
                                                             <script language="JavaScript" type="text/javascript">
-                                                                var map = new L.Map('map');
-                                                                var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                                                                var osmAttrib='';
-                                                                var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 20, attribution: osmAttrib});
-                                                                
                                                                 var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
                                                                 northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
                                                                 bounds = L.latLngBounds(southWest, northEast);
                                                                 
-                                                                map.fitBounds(bounds);
-                                                            
-                                                                map.addLayer(osm);
+                                                                var map = addLeafletMap(bounds, new L.LatLng(51.3, 10));
                                                                 var rect = L.rectangle(bounds, {color: 'blue', weight: 3, fill: false}).on('click', function (e) {
                                                                     var popLocation= e.latlng;
                                                                     var popup = L.popup()
@@ -75,33 +67,7 @@
                                                                     .openOn(map);
                                                                 }).addTo(map);
                                                                 
-                                                                // Controls
-                                                                var HomeControl = L.Control.extend({
-                                                                    options: {
-                                                                        position: 'topleft'
-                                                                    },
-                                                                    onAdd: function (map) {
-                                                                        // create the control container with a particular class name
-                                                                        var container = L.DomUtil.create('div', 'leaflet-control-home leaflet-bar');
-                                                                        var link = L.DomUtil.create('a', 'icon small icon-crosshair-2-1', container);
-                                                                        link.href = '#';
-                                                                        link.style = 'padding-top:5px;';
-                                                                        link.title = 'Zoom auf Raumbezug';
-                                                                        
-                                                                        // ... initialize other DOM elements, add listeners, etc.
-                                                                        L.DomEvent.addListener(link, 'click', this._homeClick, this);
-                                                                
-                                                                        return container;
-                                                                    },
-                                                                    _homeClick: function(e) {
-                                                                        L.DomEvent.stop(e);
-                                                                        if(bounds){
-                                                                            map.fitBounds(bounds);
-                                                                        }
-                                                                    }
-                                                                });
-                                                                
-                                                                map.addControl(new HomeControl({}));
+                                                                addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', bounds, new L.LatLng(51.3, 10))
                                                             </script>
                                                         #end
                                                     #end

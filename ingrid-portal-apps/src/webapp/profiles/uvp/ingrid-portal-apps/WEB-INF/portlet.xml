@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<portlet-app id="ingrid-portal-apps" version="1.0">
+<portlet-app id="ingrid-portal-apps" version="2.0">
 
 
     <!-- ************************** -->
@@ -1316,7 +1316,7 @@
         <portlet-name>ShowMapsPortlet</portlet-name>
         <display-name>Karten</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.ShowMapsUVPPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1324,36 +1324,8 @@
         </supports>
         <portlet-info>
             <title>Karten</title>
-            <short-title>ShowMapsPortlet</short-title>
+            <short-title>ShowMapsUVPPortlet</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
-    </portlet>
-
-    <portlet id="ShowMapsPortletTeaser">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/show_maps_teaser.vm</value>
-        </init-param>
-        <portlet-name>ShowMapsPortletTeaser</portlet-name>
-        <display-name>Karten Teaser</display-name>
-        <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Karten</title>
-            <short-title>ShowMapsPortletTeaser</short-title>
-        </portlet-info>
-        <portlet-preferences>
-            <preference>
-                <name>disableTitle</name>
-                <value>1</value>
-            </preference>
-        </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
 
@@ -1449,7 +1421,7 @@
         <portlet-name>SearchResult</portlet-name>
         <display-name>Suchergebnis</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.SearchResultUVPPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
