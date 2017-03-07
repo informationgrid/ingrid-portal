@@ -61,7 +61,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
         context.put("lang", request.getLocale().getLanguage());
-        context.put("mapUrl", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_URL, "/ingrid-webmap-client/frontend/prd/index.ingrid.html" ));
+        context.put("mapUrl", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_URL, "/ingrid-webmap-client/frontend/prd/" ));
         // read preferences
         PortletPreferences prefs = request.getPreferences();
         String hKey = prefs.getValue("helpKey", null);
