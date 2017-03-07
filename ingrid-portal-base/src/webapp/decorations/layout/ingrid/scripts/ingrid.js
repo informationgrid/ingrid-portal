@@ -308,3 +308,50 @@ function goToByScroll(id, time){
 function openURL(url){
     window.location = url;
 }
+
+function addLeafletMap(bounds, latlng){
+    var map = new L.Map('map');
+    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib='';
+    var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 20, attribution: osmAttrib});
+    if(bounds){
+        map.fitBounds(bounds);
+    }else{
+        map.setView(latlng,6);
+    }
+
+    map.addLayer(osm);
+    return map; 
+}
+
+function addLeafletHomeControl(map, title, position, icon, bounds, latlng){
+ // Controls
+    var HomeControl = L.Control.extend({
+        options: {
+            position: position ? position : 'topleft'
+        },
+        onAdd: function (map) {
+            // create the control container with a particular class name
+            var container = L.DomUtil.create('div', 'leaflet-control-home leaflet-bar');
+            var link = L.DomUtil.create('a', 'icon small ' + icon, container);
+            link.href = '#';
+            link.style = 'padding-top:5px;';
+            link.title = title;
+            
+            // ... initialize other DOM elements, add listeners, etc.
+            L.DomEvent.addListener(link, 'click', this._homeClick, this);
+    
+            return container;
+        },
+        _homeClick: function(e) {
+            L.DomEvent.stop(e);
+            if(bounds){
+                map.fitBounds(bounds);
+            }else{
+                map.setView(latlng,6);
+            }
+        }
+    });
+    
+    map.addControl(new HomeControl({}));
+}
