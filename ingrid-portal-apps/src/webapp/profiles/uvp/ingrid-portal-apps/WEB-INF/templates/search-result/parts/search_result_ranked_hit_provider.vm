@@ -1,0 +1,15 @@
+#set ($showProvider = true)
+#if($grouping && $grouping == 'provider')
+    #set ($showProvider = false)
+#end
+#if($showProvider)
+    #if($rs.get("detail"))
+        #set($uvp_address = "$UTIL_SEARCH.getDetailValue($rs.get('detail'), 'uvp_address')")
+        #if($uvp_address)
+            <small>
+                <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.provider'):</strong></span>
+                <span class="tx-light">$uvp_address</span>
+            </small>
+        #end
+    #end
+#end
