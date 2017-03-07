@@ -309,29 +309,12 @@
 #macro (renderDate $dateTitle $dateFrom $dateTo)
     #if($dateFrom || $dateTo)
         #renderGroupTitle($dateTitle)
+        <p>
         #if($dateFrom)
-        <div class="table--unlined">
-            <table>
-                <tbody>
-                    <tr>
-                        <th>Von</th>
-                        <td>$dateFrom</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            $dateFrom
         #end
         #if($dateTo)
-        <div class="table--unlined">
-            <table>
-                <tbody>
-                    <tr>
-                        <th>Bis</th>
-                        <td>$dateTo</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            - $dateTo
         #end
     #end
 #end
