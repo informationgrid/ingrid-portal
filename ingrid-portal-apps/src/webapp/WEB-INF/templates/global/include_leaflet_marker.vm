@@ -1,0 +1,30 @@
+<script>
+    function showMarker(m) {
+        jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
+            var d = JSON.parse(data);
+            // create an orange rectangle
+            m.target.bbox=L.rectangle(d, {color: "blue", weight: 3, fill: false});
+            map.addLayer(m.target.bbox);
+        });
+    }
+    
+    function hideMarker(m) {
+        map.removeLayer(m.target.bbox);
+    }
+
+    var mapMarkers = L.markerClusterGroup();
+    for (var i = 0; i < markers.length; i++) {
+        var a = markers[i];
+        var title = a[2];
+        var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
+        marker.bindPopup('<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>');
+        marker.uuid = a[3];
+        marker.bbox = null;
+        marker.on('popupopen', showMarker);
+        marker.on('popupclose', hideMarker);
+        mapMarkers.addLayer(marker);
+    }
+
+    map.addLayer(mapMarkers);
+    map.fitBounds(mapMarkers.getBounds());
+</script>
