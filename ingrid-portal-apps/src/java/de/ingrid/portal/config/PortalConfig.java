@@ -57,6 +57,9 @@ public class PortalConfig extends PropertiesConfiguration {
 
     /** timout for ranked queries in ms */
     public final static String QUERY_TIMEOUT_RANKED = "query.timeout.ranked";
+    
+    /** requested fields for search queries in portal */
+    public final static String QUERY_REQUESTED_FIELDS = "portal.query.requestedfields";
 
     /** default timeout for sns queries in ms */
     public final static String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
@@ -127,6 +130,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_ENABLE_ABOUT = "portal.enable.about";
     
     public static final String PORTAL_ENABLE_PARTNER = "portal.enable.partner";
+    
+    public static final String PORTAL_ENABLE_SOURCES = "portal.enable.sources";
     
     public static final String PORTAL_ENABLE_RSS = "portal.enable.rss";
     

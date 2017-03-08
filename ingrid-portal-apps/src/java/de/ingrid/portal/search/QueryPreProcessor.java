@@ -53,6 +53,58 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 public class QueryPreProcessor {
 
     private final static Logger log = LoggerFactory.getLogger(QueryPreProcessor.class);
+    
+    /**
+     * <p>Get the list of fields to be requested from the portal configuration. This enabled the
+     * portal profiling to add new fields or remove not used fields to optimize query 
+     * performance.</p>
+     * 
+     * <p>The initial List was:</p>
+     * 
+     * <pre>
+     *    // always request ALL DATA !!! all kind of hits can be rendered in one page when datatypes are entered in query !
+        String[] requestedMetadata = new String[] {
+            // udk object metadata
+            Settings.HIT_KEY_UDK_CLASS,
+            Settings.HIT_KEY_UDK_CLASS.toLowerCase(),
+            Settings.HIT_KEY_OBJ_ID,
+            Settings.HIT_KEY_ORG_OBJ_ID,
+            Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT,
+            Settings.HIT_KEY_OBJ_SERV_TYPE,
+            Settings.HIT_KEY_OBJ_SERV_TYPE_KEY,
+            // udk address metadata
+            Settings.HIT_KEY_ADDRESS_CLASS,
+            Settings.HIT_KEY_ADDRESS_CLASS2,
+            Settings.HIT_KEY_ADDRESS_CLASS3,
+            Settings.HIT_KEY_ADDRESS_FIRSTNAME,
+            Settings.HIT_KEY_ADDRESS_LASTNAME,
+            Settings.HIT_KEY_ADDRESS_TITLE,
+            Settings.HIT_KEY_ADDRESS_ADDRESS,
+            Settings.HIT_KEY_ADDRESS_ADDRID,
+            Settings.HIT_KEY_ADDRESS_ADDRID2,
+            Settings.HIT_KEY_ADDRESS_ADDRID3,
+            Settings.HIT_KEY_ADDRESS_INSTITUTION2,
+            Settings.HIT_KEY_ADDRESS_INSTITUTION3,
+            Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID,
+            Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID3,
+            // both
+            Settings.HIT_KEY_WMS_URL,
+            Settings.HIT_KEY_WMS_URL.toLowerCase(),
+            Settings.RESULT_KEY_PARTNER,
+            Settings.RESULT_KEY_PROVIDER,
+            "kml",
+            Settings.RESULT_KEY_ADDITIONAL_HTML_1,
+            Settings.RESULT_KEY_CAPABILITIES_URL,
+            Settings.RESULT_KEY_SERVICE_UUID
+            // other dsc scripted iPlugs might deliver a direct URL, so always request URL !
+            // NO, older SE iPlugs have a bug: extracted SE url is set empty when URL is requested :(
+            // so let's skip URL for now ... (26. Sep. 2011)
+            // Settings.RESULT_KEY_URL
+        };
+        </pre>
+     * 
+     */
+    private final static String[] REQUESTED_FIELDS = PortalConfig.getInstance().getStringArray( PortalConfig.QUERY_REQUESTED_FIELDS ); 
 
     /**
      * Prepares an ranked query for submitting to the ibus. If no query should be submitted,
@@ -110,48 +162,6 @@ public class QueryPreProcessor {
 
         int currentPage = (int) (startHit / Settings.SEARCH_RANKED_HITS_PER_PAGE) + 1;
 
-        // always request ALL DATA !!! all kind of hits can be rendered in one page when datatypes are entered in query !
-        String[] requestedMetadata = new String[] {
-            // udk object metadata
-            Settings.HIT_KEY_UDK_CLASS,
-            Settings.HIT_KEY_UDK_CLASS.toLowerCase(),
-            Settings.HIT_KEY_OBJ_ID,
-            Settings.HIT_KEY_ORG_OBJ_ID,
-            Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT,
-            Settings.HIT_KEY_OBJ_SERV_TYPE,
-            Settings.HIT_KEY_OBJ_SERV_TYPE_KEY,
-            // udk address metadata
-            Settings.HIT_KEY_ADDRESS_CLASS,
-            Settings.HIT_KEY_ADDRESS_CLASS2,
-            Settings.HIT_KEY_ADDRESS_CLASS3,
-            Settings.HIT_KEY_ADDRESS_FIRSTNAME,
-            Settings.HIT_KEY_ADDRESS_LASTNAME,
-            Settings.HIT_KEY_ADDRESS_TITLE,
-            Settings.HIT_KEY_ADDRESS_ADDRESS,
-            Settings.HIT_KEY_ADDRESS_ADDRID,
-            Settings.HIT_KEY_ADDRESS_ADDRID2,
-            Settings.HIT_KEY_ADDRESS_ADDRID3,
-            Settings.HIT_KEY_ADDRESS_INSTITUTION2,
-            Settings.HIT_KEY_ADDRESS_INSTITUTION3,
-            Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID,
-            Settings.HIT_KEY_ADDRESS_ADDR_FROM_ID3,
-            // both
-            Settings.HIT_KEY_WMS_URL,
-            Settings.HIT_KEY_WMS_URL.toLowerCase(),
-            Settings.RESULT_KEY_PARTNER,
-            Settings.RESULT_KEY_PROVIDER,
-            "kml",
-            Settings.RESULT_KEY_ADDITIONAL_HTML_1,
-            Settings.RESULT_KEY_CAPABILITIES_URL,
-            Settings.RESULT_KEY_SERVICE_UUID,
-            Settings.RESULT_KEY_PHASE
-
-            // other dsc scripted iPlugs might deliver a direct URL, so always request URL !
-            // NO, older SE iPlugs have a bug: extracted SE url is set empty when URL is requested :(
-            // so let's skip URL for now ... (26. Sep. 2011)
-            // Settings.RESULT_KEY_URL
-        };
-        
         // set properties according to the session preferences
         IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
                 IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
@@ -262,7 +272,7 @@ public class QueryPreProcessor {
         //      TODO If no query should be submitted, return null
         // now with PlugDescription for determining type of Hit (Address, Object)
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, startHit, PortalConfig
-                .getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, true, requestedMetadata);
+                .getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, true, REQUESTED_FIELDS);
     }
 
     private static void processQuerySources(PortletRequest request, String ds, IngridQuery query) {

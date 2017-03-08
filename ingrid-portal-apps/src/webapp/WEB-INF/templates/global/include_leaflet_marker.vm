@@ -1,0 +1,54 @@
+<script>
+    function showMarker(m) {
+        jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
+            var d = JSON.parse(data);
+            // create an orange rectangle
+            m.target.bbox=L.rectangle(d, {color: "blue", weight: 3, fill: false});
+            if(map){
+                map.addLayer(m.target.bbox);
+            }
+        });
+    }
+    
+    function hideMarker(m) {
+        if(map){
+            map.removeLayer(m.target.bbox);
+        }
+    }
+
+    var mapMarkers = L.markerClusterGroup();
+    if(markers){
+        for (var i = 0; i < markers.length; i++) {
+            var a = markers[i];
+            var title = a[2];
+            var category = a[4];
+            var procedure = a[5];
+            var popUpHtml = '';
+            
+            if(procedure && procedure.length > 0){
+                popUpHtml += procedure + '<br>';
+            }
+            
+            popUpHtml = '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
+            
+            if(category && category.length > 0){
+                popUpHtml += '<br>' + category;
+            }
+            
+            var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
+            marker.bindPopup(popUpHtml);
+            marker.uuid = a[3];
+            marker.bbox = null;
+            marker.on('popupopen', showMarker);
+            marker.on('popupclose', hideMarker);
+            mapMarkers.addLayer(marker);
+        }
+    
+        if(markers.length > 0){
+            if(map){
+                map.addLayer(mapMarkers);
+                map.fitBounds(mapMarkers.getBounds());
+            }
+        }
+    }
+</script>

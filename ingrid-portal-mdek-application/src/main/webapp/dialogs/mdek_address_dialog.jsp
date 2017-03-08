@@ -235,14 +235,14 @@
 
                 var selectedItem = registry.byId("treeAdr").selectedNode.item;
 
-                        if (selectedItem) {
-                            var nodeId = selectedItem.id;
-                            if (nodeId != "addressRoot" && nodeId != "addressFreeRoot") {
-                                addAddressToStore(nodeId);
-                            }
-                        }
-                        registry.byId("pageDialog").hide();
+                if (selectedItem) {
+                    var nodeId = selectedItem.id;
+                    if (nodeId != "addressRoot" && nodeId != "addressFreeRoot") {
+                        addAddressToStore(nodeId);
                     }
+                }
+                registry.byId("pageDialog").hide();
+            }
 
             function addSelectedAddress() {
                 if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/Addresses")) return;

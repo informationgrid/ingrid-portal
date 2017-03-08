@@ -1,0 +1,9 @@
+#if($rs.get("detail"))
+    #set($uvp_category = "$UTIL_SEARCH.getDetailValue($rs.get('detail'), 'uvp_category')")
+    #set($uvp_categories = $uvp_category.split(","))
+    <ul class="tag-group">
+    #foreach($category in $uvp_categories)
+        <li class="tag tag--small">$MESSAGES.getString("searchResult.categories.uvp.$category.trim()")</li>
+    #end
+    </ul>
+#end

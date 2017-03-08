@@ -32,22 +32,16 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
-<script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
+#parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+<script src="$restUrlMarker"></script>
 <script language="JavaScript" type="text/javascript">
-    var map = new L.Map('map');
-    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var osmAttrib='';
-    var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 20, attribution: osmAttrib});
+    var bounds;
     var selectedMap = '$selectedMap.webmapclientCoords';
-    
-    // start the map in South-East England
-    map.setView(new L.LatLng(51.3, 10),5);
-    
     if(selectedMap.indexOf("y1") > -1){
-        map.fitBounds([[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]]);
+        bounds = [[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]];
     }
-    map.addLayer(osm);
+    
+    var map = addLeafletMap(bounds, new L.LatLng(51.3, 10));
     
     window.onresize = function(event) {
         resizeMap();
@@ -66,13 +60,14 @@
         }
     }
 </script>
-#parse ('/WEB-INF/templates/show_maps_markers.vm')
-<style>
-    .info {
-        display: none;
+#parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
+<script>
+    if(!bounds){
+        if(markers.length > 0){
+            if(mapMarkers){
+                bounds = mapMarkers.getBounds();
+            }
+        }
     }
-
-    .legend {
-        display: none;
-    }
-</style>
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', bounds, new L.LatLng(51.3, 10))
+</script>
