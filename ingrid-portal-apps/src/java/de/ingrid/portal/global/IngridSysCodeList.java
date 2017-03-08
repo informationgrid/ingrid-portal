@@ -96,4 +96,20 @@ public class IngridSysCodeList {
         }
     	return "";
     }
+    
+    public String getDataByCodeListValue(String codeListId, String entryId) {
+        CodeListService clService = CodeListServiceFactory.instance();
+        
+        CodeList cl = clService.getCodeList(codeListId);
+        if (cl != null) {
+            for (CodeListEntry entry : cl.getEntries()) {
+                if (entry.getId().equalsIgnoreCase(entryId)) {
+                    return entry.getData(); 
+                }
+            }
+        }else{
+            log.debug("Codelist does not exist for codeListId: " + codeListId);
+        }
+        return "";
+    }
 }
