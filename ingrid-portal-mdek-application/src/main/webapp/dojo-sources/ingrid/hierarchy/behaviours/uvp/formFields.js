@@ -71,10 +71,13 @@ define(["dojo/_base/declare",
 
             // disable editing the address table and automatically set point of contact type
             UtilGrid.getTable("generalAddress").options.editable = false;
-            topic.subscribe("/onBeforeDialogAccept/AddressesFromTree", function() {
+
+            var handleAddressAdd = function() {
                 var pointOfContactName = UtilSyslist.getSyslistEntryName(505, 7);
                 UtilGrid.addTableDataRow("generalAddress", {nameOfRelation: pointOfContactName});
-            });
+            };
+            topic.subscribe("/onBeforeDialogAccept/AddressesFromTree", handleAddressAdd);
+            topic.subscribe("/onBeforeDialogAccept/Addresses", handleAddressAdd);
         },
 
         prepareDocument: function(classInfo) {
