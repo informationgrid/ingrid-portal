@@ -35,6 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.IBusQueryResultIterator;
@@ -46,12 +48,17 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
     private final static Logger log = LoggerFactory.getLogger(ShowMapsUVPPortlet.class);
 
-    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "lon_center", "lat_center", "t01_object.obj_id" };
+    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class" };
     private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
 
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
+        
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()), request.getLocale());
+        
+        IngridSysCodeList sysCodeList = new IngridSysCodeList(request.getLocale());
         try {
             if (resourceID.equals( "marker" )) {
                 response.setContentType( "application/javascript" );
@@ -65,8 +72,14 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                     Object[] lat_center = (Object[]) detail.get( "lat_center" );
                     Object[] lon_center = (Object[]) detail.get( "lon_center" );
                     if (lat_center != null && lon_center != null) {
-                        s.append( "[" ).append( lat_center[0].toString() ).append( "," ).append( lon_center[0].toString() ).append( ",'" )
-                                .append( detail.get( "title" ).toString() ).append( "','" ).append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "']" );
+                        s.append( "[" )
+                            .append( lat_center[0].toString() ).append( "," )
+                            .append( lon_center[0].toString() ).append( ",'" )
+                            .append( detail.get( "title" ).toString() ).append( "','" )
+                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
+                            .append( messages.getString( "searchResult.categories.uvp." + UtilsSearch.getDetailValue( detail, "uvp_category" )) ).append( "','" )
+                            .append( sysCodeList.getNameByCodeListValue( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) )
+                        .append( "']" );
                         if (it.hasNext()) {
                             s.append( "," );
                         }

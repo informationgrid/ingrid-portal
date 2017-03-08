@@ -33,7 +33,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.IngridSysCodeList;
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.IBusQueryResultIterator;
 import de.ingrid.utils.IngridHit;
@@ -49,17 +53,27 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
 
     private final static Logger log = LoggerFactory.getLogger(SearchResultUVPPortlet.class);
 
-    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "lon_center", "lat_center", "t01_object.obj_id" };
+    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class" };
     private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
     
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
+        
+        IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                request.getLocale()), request.getLocale());
+        
+        IngridSysCodeList sysCodeList = new IngridSysCodeList(request.getLocale());
         try {
             if (resourceID.equals( "marker" )) {
                 response.setContentType( "application/javascript" );
                 response.getWriter().write( "var markers = [" );
-                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "http ranking:score") ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
+                
+                String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING) + " ranking:score";
+                if(queryString == null || queryString.length() == 0){
+                    queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "http ranking:score") ;
+                }
+                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
                         .getIBus() );
                 while (it.hasNext()) {
                     StringBuilder s = new StringBuilder();
@@ -68,8 +82,14 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                     Object[] lat_center = (Object[]) detail.get( "lat_center" );
                     Object[] lon_center = (Object[]) detail.get( "lon_center" );
                     if (lat_center != null && lon_center != null) {
-                        s.append( "[" ).append( lat_center[0].toString() ).append( "," ).append( lon_center[0].toString() ).append( ",'" )
-                                .append( detail.get( "title" ).toString() ).append( "','" ).append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "']" );
+                        s.append( "[" )
+                            .append( lat_center[0].toString() ).append( "," )
+                            .append( lon_center[0].toString() ).append( ",'" )
+                            .append( detail.get( "title" ).toString() ).append( "','" )
+                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
+                            .append( messages.getString( "searchResult.categories.uvp." + UtilsSearch.getDetailValue( detail, "uvp_category" )) ).append( "','" )
+                            .append( sysCodeList.getNameByCodeListValue( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) )
+                        .append( "']" );
                         if (it.hasNext()) {
                             s.append( "," );
                         }

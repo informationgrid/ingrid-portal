@@ -63,8 +63,10 @@
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 <script>
     if(!bounds){
-        if(mapMarkers){
-            bounds = mapMarkers.getBounds();
+        if(markers.length > 0){
+            if(mapMarkers){
+                bounds = mapMarkers.getBounds();
+            }
         }
     }
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', bounds, new L.LatLng(51.3, 10))
