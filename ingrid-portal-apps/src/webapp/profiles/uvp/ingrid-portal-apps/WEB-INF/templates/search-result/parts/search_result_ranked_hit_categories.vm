@@ -2,8 +2,14 @@
     #set($uvp_category = "$UTIL_SEARCH.getDetailValue($rs.get('detail'), 'uvp_category')")
     #set($uvp_categories = $uvp_category.split(","))
     <ul class="tag-group">
+    #set($categories = [])
     #foreach($category in $uvp_categories)
-        <li class="tag tag--small">$MESSAGES.getString("searchResult.categories.uvp.$category.trim()")</li>
+        #if($categories.indexOf($category) < 0)
+            #set($tmp = $categories.add($category.trim()))
+        #end
+    #end
+    #foreach($category in $categories)
+        <li class="tag tag--small">$MESSAGES.getString("searchResult.categories.uvp.$category")</li>
     #end
     </ul>
 #end
