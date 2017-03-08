@@ -107,6 +107,28 @@ define([
                     }
                 });
 
+                var handler = topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                    // iterate over all phases
+                    array.forEach(self.phases, function(phase) {
+                        array.forEach(phase.fields, function(phaseField) {
+                            // only check doc tables
+                            if (phaseField.isDocTable) {
+                                // check all rows if they have title, link and size (mandatory)
+                                var data = phaseField.field.data;
+                                var hasInvalidRows = data.some(function(item) {
+                                    // check label, link and size if they have any value
+                                    return !item.label || !item.link || !item.size ||
+                                        item.label.trim().length === 0 ||
+                                        item.link.trim().length === 0;
+                                });
+                                if (hasInvalidRows) {
+                                    notPublishableIDs.push( [phaseField.field.id, message.get("validation.error.document.table.invalid")] );
+                                }
+                            }
+                        });
+                    });
+                });
+
                 construct.place(clearFixDiv, "contentFrameBodyObject", "after");
             },
 
@@ -237,7 +259,7 @@ define([
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.technicalDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "technicalDocs", field: registry.byId(id) });
+                phaseFields.push({ key: "technicalDocs", field: registry.byId(id), isDocTable: true });
 
                 // TODO: at least one document validation
 
@@ -249,7 +271,7 @@ define([
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.applicationDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "applicationDocs", field: registry.byId(id) });
+                phaseFields.push({ key: "applicationDocs", field: registry.byId(id), isDocTable: true });
 
                 // TODO: at least one document validation
 
@@ -261,7 +283,7 @@ define([
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id) });
+                phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id), isDocTable: true });
 
                 /**
                  * Weitere Unterlagen
@@ -271,7 +293,7 @@ define([
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "moreDocs", field: registry.byId(id) });
+                phaseFields.push({ key: "moreDocs", field: registry.byId(id), isDocTable: true });
 
                 /**
                  * Bekanntmachung
@@ -281,7 +303,7 @@ define([
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.publicationDocs"), help: "...", visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "publicationDocs", field: registry.byId(id) });
+                phaseFields.push({ key: "publicationDocs", field: registry.byId(id), isDocTable: true });
 
                 this.phases.push({
                     key: "phase1",
@@ -336,7 +358,7 @@ define([
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "considerationDocs", field: registry.byId(id) });
+                phaseFields.push({ key: "considerationDocs", field: registry.byId(id), isDocTable: true });
 
                 this.phases.push({
                     key: "phase2",
@@ -390,7 +412,7 @@ define([
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "approvalDocs", field: registry.byId(id) });
+                phaseFields.push({ key: "approvalDocs", field: registry.byId(id), isDocTable: true });
 
                 /**
                  * Planungsunterlagen
@@ -400,7 +422,7 @@ define([
                 creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
-                phaseFields.push({ key: "designDocs", field: registry.byId(id) });
+                phaseFields.push({ key: "designDocs", field: registry.byId(id), isDocTable: true });
 
                 this.phases.push({
                     key: "phase3",
@@ -423,10 +445,10 @@ define([
 
             getDocTableStructure: function() {
                 return [
-                    { field: 'label', name: message.get("uvp.form.table.docs.title"), width: '290px', editable: true },
-                    { field: 'link', name: message.get("uvp.form.table.docs.link"), width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
+                    { field: 'label', name: message.get("uvp.form.table.docs.title") + "*", width: '290px', editable: true },
+                    { field: 'link', name: message.get("uvp.form.table.docs.link") + "*", width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
                     { field: 'type', name: message.get("uvp.form.table.docs.type"), width: '50px', editable: true },
-                    { field: 'size', name: message.get("uvp.form.table.docs.size"), width: '60px', editable: false, formatter: Formatters.BytesCellFormatter },
+                    { field: 'size', name: message.get("uvp.form.table.docs.size") + "*", width: '60px', editable: false, formatter: Formatters.BytesCellFormatter },
                     { field: 'expires', name: message.get("uvp.form.table.docs.expires"), width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
             },
