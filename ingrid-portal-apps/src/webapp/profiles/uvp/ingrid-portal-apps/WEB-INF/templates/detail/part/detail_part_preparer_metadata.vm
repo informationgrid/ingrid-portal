@@ -40,8 +40,28 @@
                                             <div class="search-result--nested">
                                                 ## Allgemeine Vorhabenbeschreibung
                                                 #renderTextLabelAbove("Allgemeine Vorhabenbeschreibung" $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
-                                                ## UVP-Nummer
-                                                #renderTextList("UVP-Nummer" $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "."))
+                                                #set($nodeList = $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "."))
+                                                #if($nodeList.size() > 0)
+                                                    #set($uvpNums = [])
+                                                    #set($uvpCats = [])
+                                                    #foreach($number in [1..$nodeList.size()])
+                                                        #set($uvpNum = $TOOL.getValueFromXPath("./uvpgs/uvpg[$number]"))
+                                                        #if($uvpNums.indexOf($uvpNum) < 0)
+                                                            #set($tmp = $uvpNums.add($uvpNum))
+                                                        #end
+                                                        #set($uvpCat = $TOOL.getValueFromXPath("./uvpgs/uvpg[$number]/@id"))
+                                                        #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$codeList.getDataByCodeListValue('9000', $uvpCat)"))
+                                                        #if($uvpCatValue != "searchResult.categories.uvp.")
+                                                            #if($uvpCats.indexOf($uvpCatValue) < 0)
+                                                                #set($tmp = $uvpCats.add($uvpCatValue))
+                                                            #end
+                                                        #end
+                                                    #end
+                                                    ## UVP-Kategorie
+                                                    #renderTextList("UVP-Kategorie" $uvpCats)
+                                                    ## UVP-Nummer
+                                                    #renderTextList("UVP-Nummer" $uvpNums)
+                                                #end
                                                 ## Raumbezug
                                                 #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
                                                 #if($spatialValue)
