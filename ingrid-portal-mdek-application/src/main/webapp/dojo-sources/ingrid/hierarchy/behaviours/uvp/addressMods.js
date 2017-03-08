@@ -23,9 +23,11 @@
 define([
     "dojo/_base/declare",
     "dojo/dom-class",
+    "dojo/query",
     "dojo/topic",
-    "dijit/registry"
-], function(declare, domClass, topic, registry) {
+    "dijit/registry",
+    "ingrid/message"
+], function(declare, domClass, query, topic, registry, message) {
 
     return declare(null, {
         title: "UVP: Adressenänderungen",
@@ -37,6 +39,8 @@ define([
             domClass.add("adrThesaurus", "hide");  // Verschlagwortung
             domClass.add("uiElement4440", "hide"); // Aufgaben
             domClass.add("uiElement4450", "hide"); // Servicezeiten
+
+            query("#address .titleCaption").addContent(message.get("uvp.address.form.categories.address"), "only");
 
             // set "Deutschland" as default when creating a new address
             topic.subscribe("/createAddressRequest", function() {

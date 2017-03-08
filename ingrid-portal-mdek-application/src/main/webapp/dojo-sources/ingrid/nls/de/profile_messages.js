@@ -70,5 +70,7 @@ define({
     "ui.toolbar.DelSubTreeCaption":"Ausgewähltes Verfahren/Teilbaum löschen",
     "ui.toolbar.finalDeleteCaption":"Ausgewähltes Verfahren/Teilbaum endgültig löschen",
     "ui.toolbar.PreviousCaption":"Klicken, um zum vorherigen Verfahren/Adresse zu gehen. Gedrückt halten für Verlauf.",
-    "ui.toolbar.NextCaption":"Klicken, um zum nächsten Verfahren/Adresse zu gehen. Gedrückt halten für Verlauf."
+    "ui.toolbar.NextCaption":"Klicken, um zum nächsten Verfahren/Adresse zu gehen. Gedrückt halten für Verlauf.",
+
+    "uvp.address.form.categories.address":"Adresse"
 });

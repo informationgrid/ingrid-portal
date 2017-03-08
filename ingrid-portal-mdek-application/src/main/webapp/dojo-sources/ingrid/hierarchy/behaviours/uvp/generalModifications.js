@@ -42,6 +42,8 @@ define(["dojo/_base/declare",
 
             this.adaptImportPage();
 
+            query("head title").addContent("UVP Editor", "only");
+
             // rename Objekte root node
             topic.subscribe("/onPageInitialized", function(page) {
                 if (page === "Hiearchy") {
