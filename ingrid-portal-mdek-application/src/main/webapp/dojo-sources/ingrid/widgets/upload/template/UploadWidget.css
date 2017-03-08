@@ -383,3 +383,7 @@ INPUT.qq-edit-filename.qq-editing {
 .right {
   float: right;
 }
+
+.qq-header-text {
+    padding: 0 0 10px 0;
+}
