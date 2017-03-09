@@ -256,7 +256,7 @@ define([
 
                 var id = "technicalDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.technicalDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.technicalDocs"), help: "...", visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "technicalDocs", field: registry.byId(id), isDocTable: true });
@@ -268,7 +268,7 @@ define([
                  */
                 id = "applicationDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.applicationDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.applicationDocs"), help: "...", visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "applicationDocs", field: registry.byId(id), isDocTable: true });
@@ -280,7 +280,7 @@ define([
                  */
                 id = "reportsRecommendationsDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: "...", isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id), isDocTable: true });
@@ -290,7 +290,7 @@ define([
                  */
                 id = "moreDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: "...", isMandatory: false, visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: "...", isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "moreDocs", field: registry.byId(id), isDocTable: true });
@@ -300,7 +300,7 @@ define([
                  */
                 id = "publicationDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.publicationDocs"), help: "...", visible: "optional", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.publicationDocs"), help: "...", visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "publicationDocs", field: registry.byId(id), isDocTable: true });
@@ -355,7 +355,7 @@ define([
                  */
                 var id = "considerationDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: "...", visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "considerationDocs", field: registry.byId(id), isDocTable: true });
@@ -409,7 +409,7 @@ define([
                  */
                 id = "approvalDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: "...", visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "approvalDocs", field: registry.byId(id), isDocTable: true });
@@ -419,7 +419,7 @@ define([
                  */
                 id = "designDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: "...", visible: "required showOnlyExpanded", rows: "3", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: "...", visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "designDocs", field: registry.byId(id), isDocTable: true });

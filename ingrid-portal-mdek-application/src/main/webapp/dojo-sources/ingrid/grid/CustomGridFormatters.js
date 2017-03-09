@@ -147,7 +147,7 @@ define(["dojo/_base/declare",
                     return value;
                 }
                 if (value === 0) {
-                    return '0B';
+                    return '0 B';
                 }
                 var k = 1000,
                     dm = 1,
@@ -156,12 +156,15 @@ define(["dojo/_base/declare",
                 return parseFloat((value / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
             },
 
+            /**
+             * Format numbers as MB unless the value is smaller than 0.1 MB, where KB is used.
+             */
             MegaBytesCellFormatter: function(row, cell, value, columnDef, dataContext) {
                 if (parseInt(value) != value) {
                     return value;
                 }
                 if (value === 0) {
-                    return '0MB';
+                    return '0 MB';
                 }
                 var k = 1000,
                     sizes = ['B', 'KB', 'MB'],
