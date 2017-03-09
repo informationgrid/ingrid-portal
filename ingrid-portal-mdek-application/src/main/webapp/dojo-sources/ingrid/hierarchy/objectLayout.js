@@ -2281,7 +2281,9 @@ define([
                         }
                     });
                     for (var behave in behaviour) {
-                        if (!behaviour[behave].title) continue; 
+                        // ignore invalid or address behaviours
+                        if (!behaviour[behave].title || behaviour[behave].forAddress) continue; 
+                        
                         // run behaviour if 
                         // 1) activated by default and not overridden
                         // 2) activate if explicitly overridden

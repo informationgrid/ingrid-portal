@@ -73,7 +73,11 @@ define("ingrid/tree/MetadataTree", [
         // register a function to decide which nodes not to make selectable
         excludeFunction: null,
         
+        // sort nodes in tree by their object class
         sortByClass: false,
+
+        // use special sort function to determine the order of the nodes
+        sortFunction: null,
 
         getPreIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
             var myClass = "TreePreIcon";
@@ -119,7 +123,7 @@ define("ingrid/tree/MetadataTree", [
                 getChildren: function(object){
                     // Add a getChildren() method to store for the data model where
                     // children objects point to their parent (aka relational model)
-                    return this.query({parent: object.id, nodeAppType: object.nodeAppType}, { sortByClass: self.sortByClass });
+                    return this.query({parent: object.id, nodeAppType: object.nodeAppType}, { sortByClass: self.sortByClass, sortFunction: self.sortFunction });
                 }
             } );
 

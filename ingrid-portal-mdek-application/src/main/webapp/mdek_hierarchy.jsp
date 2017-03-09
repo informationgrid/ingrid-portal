@@ -38,17 +38,14 @@
         <script type="text/javascript" src="generated/dynamicJS.js?lang=<%=currLang%>&c=<%=java.lang.Math.random()%>"></script>
         <script type="text/javascript">
             var pageHierachy = _container_;
-            require(["dojo/Deferred", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/registry", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct", "dojo/dom-class",
+            require(["dojo/Deferred", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/registry", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct", "dojo/dom-class", "dojo/topic",
                     "ingrid/tree/MetadataTree", "ingrid/IgeToolbar", "ingrid/IgeActions", "ingrid/tree/HierarchyTreeActions", "ingrid/utils/Catalog", "dojo/ready"
                 ],
-                function(Deferred, BorderContainer, ContentPane, registry, lang, dom, construct, domClass, MetadataTree, IgeToolbar, igeActions, TreeActions, UtilCatalog, ready) {
+                function(Deferred, BorderContainer, ContentPane, registry, lang, dom, construct, domClass, topic, MetadataTree, IgeToolbar, igeActions, TreeActions, UtilCatalog, ready) {
 
                     pageHierachy.dataTreePromise = new Deferred();
 
                     createLayout();
-
-                    // do a refresh on the top div to do the layout
-                    //registry.byId("contentContainer").resize();
 
                     function createLayout() {
 
@@ -127,6 +124,7 @@
                             var tree = new MetadataTree({
                                 showRoot: false,
                                 sortByClass: UtilCatalog.catalogData.sortByClass === "Y",
+                                sortFunction: UtilCatalog.catalogData.treeSortFunction,
                                 onClick: TreeActions.clickHandler,
                                 // the onMouseDown handler is not always called in IE 11 when expanding a tree and right clicking
                                 // a node immediately afterwards. That's why we register on the DNDController of the widget
@@ -136,7 +134,12 @@
                                     this.dndController.onMouseDown = lang.hitch(this, lang.partial(TreeActions.mouseDownHandler, TreeActions));
                                 }
                             }, "dataTree");
-                            tree.onLoadDeferred.then(pageHierachy.dataTreePromise.resolve);
+                            tree.onLoadDeferred.then(function() {
+                                // send event to be able to hook into this phase
+                                topic.publish("/onPageInitialized", "Hiearchy");
+
+                                pageHierachy.dataTreePromise.resolve();
+                            });
                             TreeActions.createTreeMenu();
                             igeActions.dataTree = tree;
                             contentBorderContainer.startup();

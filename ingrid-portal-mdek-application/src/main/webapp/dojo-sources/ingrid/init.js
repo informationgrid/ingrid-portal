@@ -81,7 +81,7 @@ define([
                 .then(function() {
                 
                 var deferred2 = self.initCatalogData()
-                    .then(self.fetchSysLists);
+                    .then(lang.hitch(self, self.fetchSysLists));
     
     
     
@@ -135,6 +135,13 @@ define([
                             // create the menu bar after system behaviours are run, so that they can have an influence
                             // on the menu structure
                             igeMenuBar.create(registry.byId("menubarPane"));
+
+                            var ids = [];
+                            topic.publish("/collectAdditionalSyslistsToLoad", ids);
+                            self.fetchSysListsByIds(ids)
+                                .then(function() {
+                                    topic.publish("/additionalSyslistsLoaded");
+                                });
 
                         }, function(error) {
                             console.error("Error executing behvaiour:", error);
@@ -613,23 +620,17 @@ define([
 
             };
 
-            this.fetchSysLists = function() {
+            this.fetchSysListsByIds = function(lstIds) {
                 var def = new Deferred();
 
                 // Setting the language code to "de". Uncomment the previous block to enable language specific settings depending on the browser language
                 var languageCode = UtilCatalog.getCatalogLanguage();
-                console.debug("LanguageShort is: " + languageCode);
-
-                var lstIds = [100, 101, 102, 502, 505, 510, 515, 518, 520, 523, 525, 526, 527, 528, 1100, 1230, 1320, 1350, 1370, 1400, 1410, 2000,
-                    3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5151, 5152, 5153, 5154, 5180, 5200, 5300, 6000, 6005, 6010, 6020, 6100, 6200, 6300,
-                    6400, 6500, 7109, 7112, 7113, 7114, 7115, 7120, 7125, 7126, 7127, 8000, 99999999
-                ];
-
+                // console.debug("LanguageShort is: " + languageCode);
+                
                 CatalogService.getSysListsRemoveMetadata(lstIds, languageCode, {
-                    //preHook: UtilDWR.enterLoadingState,
-                    //postHook: UtilDWR.exitLoadingState,
                     callback: function(res) {
-                        sysLists = res;
+                        if (!window.sysLists) sysLists = {};
+                        lang.mixin(sysLists, res);
 
                         // only if not sorted in backend, e.g. INSPIRE Themes (6100) !
                         array.forEach(lstIds, function(id) {
@@ -643,8 +644,6 @@ define([
                         def.resolve();
                     },
                     errorHandler: function(mes) {
-                        //UtilDWR.exitLoadingState();
-                        //displayErrorMessage(err);
                         console.error("Error: " + mes);
                         dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
                         def.reject(mes);
@@ -654,7 +653,15 @@ define([
                 return def.promise;
             };
 
+            this.fetchSysLists = function() {
 
+                var lstIds = [100, 101, 102, 502, 505, 510, 515, 518, 520, 523, 525, 526, 527, 528, 1100, 1230, 1320, 1350, 1370, 1400, 1410, 2000,
+                    3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5151, 5152, 5153, 5154, 5180, 5200, 5300, 6000, 6005, 6010, 6020, 6100, 6200, 6300,
+                    6400, 6500, 7109, 7112, 7113, 7114, 7115, 7120, 7125, 7126, 7127, 8000, 99999999
+                ];
+
+                return this.fetchSysListsByIds(lstIds);
+            };
 
             this.initCurrentUserPermissions = function() {
                 var def = new Deferred();

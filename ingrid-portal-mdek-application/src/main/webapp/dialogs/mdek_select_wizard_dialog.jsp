@@ -45,10 +45,14 @@
         "dijit/form/RadioButton",
         "dijit/registry",
         "ingrid/dialog",
-        "ingrid/utils/Syslist"
-    ], function(array, lang, construct, on, dom, query, topic, Button, RadioButton, registry, dialog, Syslists) {
+        "ingrid/hierarchy/dirty",
+        "ingrid/utils/Syslist",
+        "ingrid/utils/Tree"
+    ], function(array, lang, construct, on, dom, query, topic, Button, RadioButton, registry, dialog, dirty, Syslists, UtilTree) {
         var thisDialog = _container_;
         var alreadyChecked = false;
+
+        var objClassTopic = null;
 
         on(_container_, "Load", function () {
             var types = Syslists.getObjectClassList();
@@ -72,8 +76,35 @@
 
             addExtraButtons(extraButtons);
 
+            // remove new node if cancel the dialog
+            on( this, "Cancel", function() {
+
+                // delete node from tree
+                UtilTree.deleteNode("dataTree", "newNode");
+
+                // select root node
+                UtilTree.selectNode("dataTree", "objectRoot", true);
+
+                // activate events when root node is selected (hide form)
+                topic.publish("/selectNode", {
+                    id: "dataTree",
+                    node: { id: "objectRoot" }
+                });
+
+                // reset dirty flag
+                lang.hitch(dirty, dirty.resetDirtyFlag)();
+            });
+
             registry.byId("pageCreateWizardContainer").resize();
         });
+
+        function setTreeIcon(clazz) {
+            // TODO: should we better get the newNode-node? could be a race condition here
+            var selectedNode = registry.byId("dataTree").selectedNode;
+            var iconNode = query(".TreeIcon", selectedNode.domNode);
+            iconNode[0].classList.forEach(function(cl) { if (cl.indexOf("TreeIconClass") === 0) iconNode.removeClass(cl); })
+            iconNode.addClass("TreeIconClass" + clazz + "_B");
+        }
 
         function addRadioBoxes(types, containerId) {
             array.forEach(types, function(item) {
@@ -111,10 +142,14 @@
                 } else {
                     dialog.showPage("<fmt:message key='dialog.wizard.getCap.title' />", "dialogs/mdek_get_capabilities_wizard_dialog.jsp", 755, 750, true);
                 }
+
             } else {
                 // otherwise we just pre-set the object type 
                 registry.byId("objectClass").set("value", "Class" + type);
+                setTreeIcon(type);
+
             }
+
         }
 
         function addExtraButtons(buttons) {
@@ -129,6 +164,10 @@
 
         function closeThisDialog() {
             thisDialog.hide();
+            topic.publish("/selectNode", {
+                id: "dataTree",
+                node: { id: "newNode", nodeAppType: "O" }
+            });
         }
 
         pageCreateWizard.createObject = createObject;

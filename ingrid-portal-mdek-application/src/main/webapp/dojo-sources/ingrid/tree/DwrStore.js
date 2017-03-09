@@ -104,6 +104,8 @@ define([
                                     return compareClass;
                                 }
                             } );
+                        } else if (options.sortFunction) {
+                            return options.sortFunction(query, children);
                         } else {
                             return children;
                         }
