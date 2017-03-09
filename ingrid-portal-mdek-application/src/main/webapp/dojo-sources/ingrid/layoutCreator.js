@@ -129,7 +129,7 @@ define([
                         options.enableAddRow = gridProperties.interactive == "true";
                         options.editable = true;
                     }
-                    if (gridProperties.forceGridHeight) {
+                    if (gridProperties.forceGridHeight !== undefined) {
                         options.forceGridHeight = gridProperties.forceGridHeight == "true";
                     }
                     if (gridProperties.defaultHideScrollbar) {
@@ -527,7 +527,8 @@ define([
                 
                 var gridWidget = this.createDataGrid(additionalField.id, null, structure, null, {
                     interactive: "true",
-                    autoHeight: additionalField.rows
+                    autoHeight: additionalField.rows,
+                    forceGridHeight: additionalField.forceGridHeight
                 });
             },
 
