@@ -120,7 +120,7 @@
                                                                 #set($nodelistParent = $TOOL.getNodeListFromXPath("./addresses/address[$number]/parent"))
                                                                 #set($entryLengthParent = $nodelistParent.getLength())
                                                                 #if($entryLengthParent > 0)
-                                                                    #foreach($numberParent in [1..$entryLengthParent])
+                                                                    #foreach($numberParent in [$entryLengthParent..1])
                                                                         #set($idParent = $TOOL.getValueFromXPath("./addresses/address[$number]/parent[$numberParent]/@id"))
                                                                         #set($nameParent = $TOOL.getValueFromXPath("./addresses/address[$number]/parent[$numberParent]/name"))
                                                                             $nameParent
