@@ -32,7 +32,7 @@ define({
     "uvp.form.phase1.dateFrom": "Zeitraum der Auslegung von",
     "uvp.form.phase1.dateTo": "bis",
     "uvp.form.phase1.technicalDocs": "Auslegungsinformationen",
-    "uvp.form.phase1.applicationDocs": "Antragsunterlagen",
+    "uvp.form.phase1.applicationDocs": "UVP Bericht/Antragsunterlagen",
     "uvp.form.phase1.reportsRecommendationsDocs": "Berichte und Empfehlungen",
     "uvp.form.phase1.moreDocs": "Weitere Unterlagen",
     "uvp.form.phase1.publicationDocs": "Bekanntmachung",
