@@ -228,6 +228,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
     
     public static final String PORTAL_MAPCLIENT_QUERY = "portal.mapclient.query";
+    
+    public static final String PORTAL_PARTNER_LIST_QUERY = "portal.partner.list.query";
 
     // private stuff
     private static PortalConfig instance = null;
