@@ -7,7 +7,7 @@
             #if($address.get("url"))
                 <a href="$address.get("url")">
                     #if($address.get("institution") && $address.get("institution").length() > 0)
-                        $address.get("institution")
+                        $address.get("institution").replaceAll("\n","<br>")
                         <br>
                     #end
                     $address.get("address_value") $address.get("title") $address.get("firstname") $address.get("lastname")
@@ -15,7 +15,7 @@
             #else
                 <span style="display: block; padding: 0.5625rem 0.5625rem 0.5625rem 1.5rem; position: relative;">
                     #if($address.get("institution") && $address.get("institution").length() > 0)
-                        $address.get("institution")
+                        $address.get("institution").replaceAll("\n","<br>")
                         <br>
                     #end
                     $address.get("address_value") $address.get("title") $address.get("firstname") $address.get("lastname")
