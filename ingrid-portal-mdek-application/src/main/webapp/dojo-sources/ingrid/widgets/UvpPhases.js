@@ -298,12 +298,12 @@ define([
                 /**
                  * Bekanntmachung
                  */
-                id = "publicationDocs_" + counter;
-                newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.publicationDocs"), help: "...", visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
-                    this.getDocTableStructure(), rubric);
-                this.addUploadLink(id);
-                phaseFields.push({ key: "publicationDocs", field: registry.byId(id), isDocTable: true });
+                // id = "publicationDocs_" + counter;
+                // newFieldsToDirtyCheck.push(id);
+                // creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.publicationDocs"), help: "...", visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
+                //     this.getDocTableStructure(), rubric);
+                // this.addUploadLink(id);
+                // phaseFields.push({ key: "publicationDocs", field: registry.byId(id), isDocTable: true });
 
                 this.phases.push({
                     key: "phase1",
