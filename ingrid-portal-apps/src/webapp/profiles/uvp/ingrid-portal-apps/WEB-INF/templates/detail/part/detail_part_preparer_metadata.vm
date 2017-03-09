@@ -252,10 +252,10 @@
                                                         #set($entryLength = $nodelist.getLength())
                                                         #renderTableToList("Weitere Unterlagen" $entryLength $xpathExpression $entryNumber)
                                                     ## Bekanntmachung
-                                                        #set($xpathExpression = "./steps/step[$number]/docs[@type='publicationDocs']/doc")
-                                                        #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                                                        #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Bekanntmachung" $entryLength $xpathExpression $entryNumber)
+                                                        ##set($xpathExpression = "./steps/step[$number]/docs[@type='publicationDocs']/doc")
+                                                        ##set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                                        ##set($entryLength = $nodelist.getLength())
+                                                        ##renderTableToList("Bekanntmachung" $entryLength $xpathExpression $entryNumber)
                                                     ## Zeitraum der Erörterung
                                                         #if($step == "phase2")
                                                             #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
