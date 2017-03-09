@@ -20,13 +20,15 @@
  * limitations under the Licence.
  * **************************************************#
  */
-define(["dojo/_base/declare",
+define([
+    "dojo/_base/declare",
+    "dojo/_base/array",
     "dojo/Deferred",
     "dojo/topic",
     "dijit/registry",
     "ingrid/message",
     "ingrid/utils/Catalog"
-], function(declare, Deferred, topic, registry, message, Catalog) {
+], function(declare, array, Deferred, topic, registry, message, Catalog) {
 
     return declare(null, {
         title: "UVP: Verhalten der Baumknoten",
@@ -46,6 +48,8 @@ define(["dojo/_base/declare",
         },
 
         handleTreeOperations: function() {
+            var self = this;
+
             topic.subscribe("/selectNode", function(message) {
                 if (message.id === "dataTree") {
                     // do not allow to add new objects directly under the root node
@@ -58,8 +62,8 @@ define(["dojo/_base/declare",
                         registry.byId("toolbarBtnCut").set("disabled", true);
                         registry.byId("toolbarBtnCopy").set("disabled", true);
                         registry.byId("toolbarBtnCopySubTree").set("disabled", true);
-                        // TODO: allow paste for children of this node (see below)
-                        registry.byId("toolbarBtnPaste").set("disabled", true);
+                        // activity of paste-option is handled by below function
+                        // registry.byId("toolbarBtnPaste").set("disabled", true);
                         registry.byId("toolbarBtnSave").set("disabled", true);
                         registry.byId("toolbarBtnDelSubTree").set("disabled", true);
                         // also disable editing of object name
@@ -67,11 +71,21 @@ define(["dojo/_base/declare",
                     } else if (message.node.nodeAppType === "O") {
                         registry.byId("objectName").set("disabled", false);
                     }
+
+                    var tree = registry.byId("dataTree");
+                    var nodes = tree.nodesToCopy ? tree.nodesToCopy : tree.nodesToCut;
+                    if (nodes) {
+                        var node = tree.getNodesByItem(message.node.id)[0];
+                        var hasValidParent = self._checkValidParent(node, nodes);
+                        
+                        if (!hasValidParent) registry.byId("toolbarBtnPaste").set("disabled", true);
+                    }
                 }
             });
 
             topic.subscribe("/onTreeContextMenu", function(node) {
-                console.log("context menu called from:", node);
+                
+                // handle actions on root node and folders directly beneath it
                 if (node.item.id === "objectRoot") {
                     registry.byId("menuItemNew").set("disabled", true);
                     registry.byId("menuItemPaste").set("disabled", true);
@@ -80,14 +94,22 @@ define(["dojo/_base/declare",
                     registry.byId("menuItemCut").set("disabled", true);
                     registry.byId("menuItemCopySingle").set("disabled", true);
                     registry.byId("menuItemCopy").set("disabled", true);
-                    // TODO: should we able to paste nodes into another root folder with a different document type?
-                    // we should be able to paste children of this node under this top node, but not
-                    // nodes from other folders where only certain classes may appear
-                    registry.byId("menuItemPaste").set("disabled", true);
+                    // activity of paste-option is handled by below function
+                    // registry.byId("menuItemPaste").set("disabled", true);
                     registry.byId("menuItemDelete").set("disabled", true);
                     registry.byId("menuItemPublicationCondition1").set("disabled", true);
                     registry.byId("menuItemPublicationCondition2").set("disabled", true);
                     registry.byId("menuItemPublicationCondition3").set("disabled", true);
+                }
+
+                // check if copied/cut nodes can be inserted (under correct node)
+                // we should be able to paste children of this node under this top node, but not
+                // nodes from other folders where only certain classes may appear
+                var tree = registry.byId("dataTree");
+                var nodes = tree.nodesToCopy ? tree.nodesToCopy : tree.nodesToCut;
+                if (nodes) {
+                    var hasValidParent = self._checkValidParent(node, nodes);
+                    if (!hasValidParent) registry.byId("menuItemPaste").set("disabled", true);
                 }
             });
         },
@@ -111,6 +133,32 @@ define(["dojo/_base/declare",
                 }
                 return children;
             };
+        },
+
+        _getTopParentNode: function(node) {
+            var tree = registry.byId("dataTree");
+            while (node && node.item.parent !== "objectRoot") {
+                node = tree.getNodesByItem(node.item.parent)[0];
+            }
+            return node;
+        },
+
+        /**
+         * Check if under the selected node a list of nodes can be inserted.
+         * 
+         * @param {object} selectedNode is the node to insert other nodes
+         * @param {object[]} nodesToInsert are the nodes to be inserted
+         */
+        _checkValidParent: function(selectedNode, nodesToInsert) {
+            var rootFolderNode = this._getTopParentNode(selectedNode);
+            var rootFolderLabel = rootFolderNode.label;
+            return array.every(nodesToInsert, function(nodeToInsert) {
+                var insertClass = nodeToInsert.objectClass;
+                return (insertClass === 10 && rootFolderLabel === message.get("uvp.form.categories.uvp"))
+                    || (insertClass === 11 && rootFolderLabel === message.get("uvp.form.categories.uvpForeign"))
+                    || (insertClass === 12 && rootFolderLabel === message.get("uvp.form.categories.uvpNegative"))
+                    || ((insertClass === 13 || insertClass === 14) && rootFolderLabel === message.get("uvp.form.categories.uvpInFront"));
+            });
         }
     })();
 });
