@@ -4,11 +4,14 @@
 #end
 #if($showProvider)
     #if($rs.get("detail"))
-        #set($uvp_address = "$UTIL_SEARCH.getDetailValue($rs.get('detail'), 'uvp_address')")
+        #set($uvp_address = $rs.get('detail').get('uvp_address'))
         #if($uvp_address)
             <small>
                 <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.provider'):</strong></span>
-                <span class="tx-light">$uvp_address</span>
+                #foreach($address in $uvp_address)
+                    <br>
+                    <span class="tx-light">$address.replaceAll("\n","<br>")</span>
+                #end
             </small>
         #end
     #end
