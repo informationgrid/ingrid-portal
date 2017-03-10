@@ -24,3 +24,12 @@
 .research__icon{
     vertical-align: middle;
 }
+
+#detail_meta .search-result--nested {
+    @include media(
+        $query: '< 960px',
+        $css: (
+            margin-left: 0,
+        )
+    );
+}
