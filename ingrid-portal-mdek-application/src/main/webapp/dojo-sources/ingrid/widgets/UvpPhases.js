@@ -2,6 +2,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/_base/lang",
+    "dojo/aspect",
     "dojo/dom-construct",
     "dojo/dom-class",
     "dojo/query",
@@ -22,7 +23,7 @@ define([
     "ingrid/utils/Store",
     "./upload/UploadWidget",
     "dojo/NodeList-traverse"
-], function(declare, array, lang, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
+], function(declare, array, lang, aspect, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
     creator, dialog, message, IgeEvents, CustomGrid, Editors, Formatters, dirty, UtilStore, UploadWidget) {
 
         return declare("UVPPhases", [_WidgetBase], {
@@ -38,6 +39,9 @@ define([
             // define which phases can be created through the dialog
             availablePhases: [1, 2, 3],
 
+            // toggled state of phases (needed when saving document)
+            expandedPhases: [],
+
             addButton: null,
 
             // handle data as complex value
@@ -51,46 +55,14 @@ define([
             downloadBaseUrl: "http://localhost:8080/ingrid-portal-mdek-application/rest/document/",
 
             buildRendering: function() {
+                var self = this;
                 this.domNode = construct.create("div");
 
                 var addWidgets = require("ingrid/IgeActions");
                 addWidgets.additionalFieldWidgets.push(this);
 
-                var self = this;
-                this.addButton = new Button({
-                    label: message.get("uvp.form.addPhase"),
-                    onClick: function() {
-                        var buttons = [];
-                        if (self.availablePhases.indexOf(1) !== -1) {
-                            buttons.push({
-                                caption: message.get("uvp.form.dialog.addPhase.phase1"),
-                                action: function() {
-                                    var rubric = lang.hitch(self, self.addPhase1)();
-                                    self.openPhase(rubric);
-                                }
-                            });
-                        }
-                        if (self.availablePhases.indexOf(2) !== -1) {
-                            buttons.push({
-                                caption: message.get("uvp.form.dialog.addPhase.phase2"),
-                                action: function() {
-                                    var rubric = lang.hitch(self, self.addPhase2)();
-                                    self.openPhase(rubric);
-                                }
-                            });
-                        }
-                        if (self.availablePhases.indexOf(3) !== -1) {
-                            buttons.push({
-                                caption: message.get("uvp.form.dialog.addPhase.phase3"),
-                                action: function() {
-                                    var rubric = lang.hitch(self, self.addPhase3)();
-                                    self.openPhase(rubric);
-                                }
-                            });
-                        }
-                        dialog.show(message.get("uvp.form.dialog.addPhase.title"), message.get("uvp.form.dialog.addPhase.text"), dialog.INFO, buttons, 500);
-                    }
-                });
+                // create button which creates the different phases
+                this.addButton = this._createPhaseButton();
 
                 var clearFixDiv = construct.toDom("<div class='clear' style='text-align: center'></div>");
                 construct.place(this.addButton.domNode, clearFixDiv);
@@ -129,6 +101,8 @@ define([
                     });
                 });
 
+                this.handleToggledState();
+
                 construct.place(clearFixDiv, "contentFrameBodyObject", "after");
             },
 
@@ -144,14 +118,21 @@ define([
 
             createFieldsFromValues: function(values) {
 
-                array.forEach(values, function(phase) {
+                array.forEach(values, function(phase, index) {
                     var phaseValues = phase[0].tableRows;
+                    var rubricId = null;
                     switch (phase[0].identifier) {
-                        case "phase1": this.addPhase1(phaseValues); break;
-                        case "phase2": this.addPhase2(phaseValues); break;
-                        case "phase3": this.addPhase3(phaseValues); break;
+                        case "phase1": rubricId = this.addPhase1(phaseValues); break;
+                        case "phase2": rubricId = this.addPhase2(phaseValues); break;
+                        case "phase3": rubricId = this.addPhase3(phaseValues); break;
                         default: console.error("dynamic rubric not supported: " + phase[0].identifier);
                     }
+
+                    // recover toggled state
+                    if (this.expandedPhases.indexOf(index) !== -1) {
+                        IgeEvents.toggleFields(rubricId, "showAll");
+                    }
+
                 }, this);
             },
 
@@ -226,13 +207,13 @@ define([
                 var counter = this.counter;
 
                 var rubric = "phase1_" + counter;
-                creator.addElementToObjectForm(
-                    creator.createRubric({
-                        id: rubric,
-                        help: "Hilfetext ...",
-                        label: message.get("uvp.form.phase1.rubric")
-                    })
-                );
+                var rubricDiv = creator.createRubric({
+                    id: rubric,
+                    help: "Hilfetext ...",
+                    label: message.get("uvp.form.phase1.rubric")
+                });
+                domClass.add(rubricDiv, "phase");
+                creator.addElementToObjectForm(rubricDiv);
 
                 /**
                  * Datum
@@ -331,13 +312,13 @@ define([
                 var counter = this.counter;
 
                 var rubric = "phase2_" + counter;
-                creator.addElementToObjectForm(
-                    creator.createRubric({
-                        id: rubric,
-                        help: "Hilfetext ...",
-                        label: message.get("uvp.form.phase2.rubric")
-                    })
-                );
+                var rubricDiv = creator.createRubric({
+                    id: rubric,
+                    help: "Hilfetext ...",
+                    label: message.get("uvp.form.phase2.rubric")
+                });
+                domClass.add(rubricDiv, "phase");
+                creator.addElementToObjectForm(rubricDiv);
 
                 /**
                  * Datum
@@ -386,13 +367,13 @@ define([
                 var counter = this.counter;
 
                 var rubric = "phase3_" + counter;
-                creator.addElementToObjectForm(
-                    creator.createRubric({
-                        id: rubric,
-                        help: "Hilfetext ...",
-                        label: message.get("uvp.form.phase3.rubric")
-                    })
-                );
+                var rubricDiv = creator.createRubric({
+                    id: rubric,
+                    help: "Hilfetext ...",
+                    label: message.get("uvp.form.phase3.rubric")
+                });
+                domClass.add(rubricDiv, "phase");
+                creator.addElementToObjectForm(rubricDiv);
 
                 /**
                  * Datum der Entscheidung über die Zulassung
@@ -448,7 +429,7 @@ define([
                     { field: 'label', name: message.get("uvp.form.table.docs.title") + "*", width: '290px', editable: true },
                     { field: 'link', name: message.get("uvp.form.table.docs.link") + "*", width: '200px', editable: true, formatter: lang.partial(Formatters.LinkCellFormatter, this.downloadBaseUrl) },
                     // { field: 'type', name: message.get("uvp.form.table.docs.type"), width: '50px', editable: true }, // do not display type (#1081)
-                    { field: 'size', name: message.get("uvp.form.table.docs.size") + "*", width: '60px', editable: false, formatter: Formatters.MegaBytesCellFormatter },
+                    { field: 'size', name: message.get("uvp.form.table.docs.size") + "*", width: '60px', editable: true, formatter: Formatters.MegaBytesCellFormatter },
                     { field: 'expires', name: message.get("uvp.form.table.docs.expires"), width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
             },
@@ -541,6 +522,63 @@ define([
                 };
             },
 
+            _createPhaseButton: function() {
+                var self = this;
+                return new Button({
+                    label: message.get("uvp.form.addPhase"),
+                    onClick: function() {
+                        var buttons = [];
+                        if (self.availablePhases.indexOf(1) !== -1) {
+                            buttons.push({
+                                caption: message.get("uvp.form.dialog.addPhase.phase1"),
+                                action: function() {
+                                    var rubric = lang.hitch(self, self.addPhase1)();
+                                    self.openPhase(rubric);
+                                }
+                            });
+                        }
+                        if (self.availablePhases.indexOf(2) !== -1) {
+                            buttons.push({
+                                caption: message.get("uvp.form.dialog.addPhase.phase2"),
+                                action: function() {
+                                    var rubric = lang.hitch(self, self.addPhase2)();
+                                    self.openPhase(rubric);
+                                }
+                            });
+                        }
+                        if (self.availablePhases.indexOf(3) !== -1) {
+                            buttons.push({
+                                caption: message.get("uvp.form.dialog.addPhase.phase3"),
+                                action: function() {
+                                    var rubric = lang.hitch(self, self.addPhase3)();
+                                    self.openPhase(rubric);
+                                }
+                            });
+                        }
+                        dialog.show(message.get("uvp.form.dialog.addPhase.title"), message.get("uvp.form.dialog.addPhase.text"), dialog.INFO, buttons, 500);
+                    }
+                });
+            },
+
+            handleToggledState: function() {
+                var self = this;
+
+                // remember toggled state of rubrics before save
+                topic.subscribe("/onBeforeObjectSave", function() {
+                    self.expandedPhases = [];
+                    query(".rubric.phase").forEach(function(rubric, index) {
+                        if (domClass.contains(rubric, "expanded")) {
+                            self.expandedPhases.push(index);
+                        }
+                    });
+                });
+
+                // remove toggled state if we load a new document
+                topic.subscribe("/loadRequest", function() {
+                    self.expandedPhases = [];
+                });
+            },
+
             addUploadLink: function(tableId) {
                 var table = registry.byId(tableId);
                 if (table) {
@@ -601,7 +639,7 @@ define([
                     });
                     
                     var getRowData = function(row, data) {
-                        if (!row.label || row.label.length == 0) {
+                        if (!row.label || row.label.length === 0) {
                             var file = data.uri;
                             var lastDotPos = file.lastIndexOf(".");
                             var name = file.substring(file.lastIndexOf('/')+1, 
@@ -612,7 +650,7 @@ define([
                         row.type = data.type;
                         row.size = data.size;
                         return row;
-                    }
+                    };
 
                     // create interface
                     var inactiveHint = construct.create("span", {
