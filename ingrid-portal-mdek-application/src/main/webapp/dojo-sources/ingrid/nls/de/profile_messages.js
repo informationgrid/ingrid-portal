@@ -3,6 +3,8 @@ define({
     "tree.nodeCopySingle": "Vorhaben/Adressen kopieren",
     "tree.newNodeName": "Neues Vorhaben",
 
+    "dialog.wizard.selectTitle": "Verfahrensschritte auswählen",
+
     "uvp.title": "UVP Editor",
     "uvp.tree.objectNode": "Verfahren",
 
