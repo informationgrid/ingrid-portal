@@ -489,6 +489,7 @@ define({
         "ui.toolbar.toggleFieldsCaption": "Show required fields",
         "ui.toolbar.HelpCaption": "Help",
         "ui.toolbar.NewDocCaption": "Create new",
+        "ui.toolbar.NewFolderCaption": "Create new folder",
         "ui.toolbar.PrintDocCaption": "Print preview",
         "ui.toolbar.ISOCaption": "ISO-XML View",
         "ui.toolbar.CutCaption": "Cut Objects/Addresses/Subtrees",

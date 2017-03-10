@@ -1230,7 +1230,7 @@ define([
                             if (tree.selectedNode == nodeToDelete) {
                                 // If the current node was marked as deleted, reload the
                                 // current node (updates permissions, etc.)
-                                UtilTree.reloadNode("dataTree", nodeToDelete);
+                                // FIXME: UtilTree.reloadNode("dataTree", nodeToDelete);
                                 tree.model.store.setValue(nodeToDelete.item, "userWritePermission", false);
                             } else {
                                 // Otherwise update the node that was marked as deleted
