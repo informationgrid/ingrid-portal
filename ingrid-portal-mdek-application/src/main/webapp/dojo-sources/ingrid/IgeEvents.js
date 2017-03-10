@@ -108,10 +108,15 @@ define([
             var val = UtilAddress.getAddressClass(addressType);
             if (val !== -1) {
                 this.setSelectedClass("AddressType" + val);
+                topic.publish("/onAddressClassChange", {
+                    addressClass: val,
+                    previousClass: this.previousClass
+                });
                 var self = this;
                 setTimeout(function() {
                     self.refreshTabContainers("contentFrameBodyAddress");
                 }, 100);
+                this.previousClass = val;
             }
         },
 

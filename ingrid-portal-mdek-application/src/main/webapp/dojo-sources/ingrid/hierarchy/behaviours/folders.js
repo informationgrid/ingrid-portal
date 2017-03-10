@@ -60,6 +60,14 @@ define(["dojo/_base/declare",
           domClass.remove("contentFrameBodyObject", "hide");
         }
       });
+      topic.subscribe("/onAddressClassChange", function(data) {
+        if (data.addressClass === 1000) {
+          domClass.add("contentFrameBodyAddress", "hide");
+
+        } else {
+          domClass.remove("contentFrameBodyAddress", "hide");
+        }
+      });
 
       // add button to create document wizard dialog
       /*topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
@@ -124,14 +132,25 @@ define(["dojo/_base/declare",
         id: "menuItemNewFolder",
         label: message.get("tree.folder.create"),
         onClick: function () {
-          self._createNewFolder(HierarchyTreeActions.menu.clickedNode.item.id);
+          var nodeItem = HierarchyTreeActions.menu.clickedNode.item;
+          self._createNewFolder(nodeItem.id, nodeItem.nodeAppType);
         }
       }), 2);
     },
 
-    _createNewFolder: function(parentUuid) {
+    _createNewFolder: function(parentUuid, type) {
       if (parentUuid === "objectRoot") parentUuid = null;
 
+      if (type === "O") {
+        this._createNewObjectFolder(parentUuid);
+      } else {
+        this._createNewAddressFolder(parentUuid);
+      }
+    },
+
+    _createNewObjectFolder: function(parentUuid) {
+      var self = this;
+      
       ObjectService.createNewNode(null, function(objNode) {
         objNode.nodeAppType = "O";
         objNode.objectClass = "1000";
@@ -142,25 +161,52 @@ define(["dojo/_base/declare",
             // refresh tree node to show newly created folder
             var tree = registry.byId("dataTree");
             var node = tree.getNodesByItem(objNode.parentUuid ? objNode.parentUuid : "objectRoot" )[0];
-            tree.refreshChildren(node)
-              .then(function() {
-                return tree._expandNode(node);
-              })
-              .then(function() {
-                TreeUtils.selectNode("dataTree", res.uuid, true);
-
-                topic.publish("/loadRequest", {
-                  id: res.uuid,
-                  appType: res.nodeAppType,
-                  node: tree.getNodesByItem(res.uuid)[0].item
-                });
-              });
+            self._updateTree(tree, node, res);
           },
           errorHandler: function(err) {
             console.error("Error saving folder node: ", err);
           }
         });
       });
+    },
+
+    _createNewAddressFolder: function(parentUuid) {
+      var self = this;
+
+      AddressService.createNewAddress(null, function(addressNode) {
+        addressNode.nodeAppType = "A";
+        addressNode.addressClass = "1000";
+        addressNode.nodeDocType = "Class1000_B";
+        addressNode.parentUuid = parentUuid;
+        addressNode.name = message.get("tree.folder.new");
+        AddressService.saveAddressData(addressNode, "true", false, {
+          callback: function(res) {
+            // refresh tree node to show newly created folder
+            var tree = registry.byId("dataTree");
+            var node = tree.getNodesByItem(addressNode.parentUuid ? addressNode.parentUuid : "addressRoot" )[0];
+            self._updateTree(tree, node, res);
+          },
+          errorHandler: function(err) {
+            console.error("Error saving folder node: ", err);
+          }
+        });
+      });
+    },
+
+    _updateTree: function(tree, parentNode, folderNode) {
+      tree.refreshChildren(parentNode)
+        .then(function() {
+          return tree._expandNode(parentNode);
+        })
+        .then(function() {
+          TreeUtils.selectNode("dataTree", folderNode.uuid, true);
+
+          topic.publish("/loadRequest", {
+            id: folderNode.uuid,
+            appType: folderNode.nodeAppType,
+            node: tree.getNodesByItem(folderNode.uuid)[0].item
+          });
+        });
     },
 
     _addToolbarButton: function() {
@@ -174,7 +220,8 @@ define(["dojo/_base/declare",
         disabled: true,
         iconClass: "image18px tabIconNewFolder",
         onClick: function() {
-          self._createNewFolder(tree.selectedNode.item.id);
+          var nodeItem = tree.selectedNode.item;
+          self._createNewFolder(nodeItem.id, nodeItem.nodeAppType);
         }
       };
       registry.byId("myToolBar").addChild(new Button(params), 1);

@@ -523,6 +523,8 @@ define([
                             res.nodeDocType = "InstitutionPerson_B";
                         } else if (res.addressClass == 3) {
                             res.nodeDocType = "PersonAddress_B";
+                        } else if (res.addressClass == 1000) {
+                            res.nodeDocType = "Class1000_B";
                         }
 
                         msg.resultHandler.resolve(res);
