@@ -50,38 +50,43 @@ define([
         handleTreeOperations: function() {
             var self = this;
 
-            topic.subscribe("/selectNode", function(message) {
-                if (message.id === "dataTree") {
-                    // do not allow to add new objects directly under the root node
-                    if (message.node.id === "objectRoot") {
-                        console.log("disable create/paste new object");
-                        registry.byId("toolbarBtnNewDoc").set("disabled", true);
-                        registry.byId("toolbarBtnPaste").set("disabled", true);
-                    } else if (message.node.parent === "objectRoot") {
-                        // do not allow to rename or delete the folders directly under the root node
-                        registry.byId("toolbarBtnCut").set("disabled", true);
-                        registry.byId("toolbarBtnCopy").set("disabled", true);
-                        registry.byId("toolbarBtnCopySubTree").set("disabled", true);
-                        // activity of paste-option is handled by below function
-                        // registry.byId("toolbarBtnPaste").set("disabled", true);
-                        registry.byId("toolbarBtnSave").set("disabled", true);
-                        registry.byId("toolbarBtnDelSubTree").set("disabled", true);
-                        // also disable editing of object name
-                        registry.byId("objectName").set("disabled", true);
-                    } else if (message.node.nodeAppType === "O") {
-                        registry.byId("objectName").set("disabled", false);
-                    }
+            // subscribe a bit later to move behaviour after folders-behaviour!
+            setTimeout(function() {
+                topic.subscribe("/selectNode", function(message) {
+                    if (message.id === "dataTree") {
+                        // do not allow to add new objects directly under the root node
+                        if (message.node.id === "objectRoot") {
+                            console.log("disable create/paste new object");
+                            registry.byId("toolbarBtnNewDoc").set("disabled", true);
+                            registry.byId("toolbarBtnPaste").set("disabled", true);
+                            registry.byId("toolbarBtnNewFolder").set("disabled", true);
+                        } else if (message.node.parent === "objectRoot") {
+                            registry.byId("toolbarBtnNewFolder").set("disabled", false);
+                            // do not allow to rename or delete the folders directly under the root node
+                            registry.byId("toolbarBtnCut").set("disabled", true);
+                            registry.byId("toolbarBtnCopy").set("disabled", true);
+                            registry.byId("toolbarBtnCopySubTree").set("disabled", true);
+                            // activity of paste-option is handled by below function
+                            // registry.byId("toolbarBtnPaste").set("disabled", true);
+                            registry.byId("toolbarBtnSave").set("disabled", true);
+                            registry.byId("toolbarBtnDelSubTree").set("disabled", true);
+                            // also disable editing of object name
+                            registry.byId("objectName").set("disabled", true);
+                        } else if (message.node.nodeAppType === "O") {
+                            registry.byId("objectName").set("disabled", false);
+                        }
 
-                    var tree = registry.byId("dataTree");
-                    var nodes = tree.nodesToCopy ? tree.nodesToCopy : tree.nodesToCut;
-                    if (nodes) {
-                        var node = tree.getNodesByItem(message.node.id)[0];
-                        var hasValidParent = self._checkValidParent(node, nodes);
-                        
-                        if (!hasValidParent) registry.byId("toolbarBtnPaste").set("disabled", true);
+                        var tree = registry.byId("dataTree");
+                        var nodes = tree.nodesToCopy ? tree.nodesToCopy : tree.nodesToCut;
+                        if (nodes) {
+                            var node = tree.getNodesByItem(message.node.id)[0];
+                            var hasValidParent = self._checkValidParent(node, nodes);
+                            
+                            if (!hasValidParent) registry.byId("toolbarBtnPaste").set("disabled", true);
+                        }
                     }
-                }
-            });
+                });
+            }, 0);
 
             topic.subscribe("/onTreeContextMenu", function(node) {
                 
