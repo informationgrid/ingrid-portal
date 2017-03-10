@@ -23,6 +23,7 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -77,9 +78,25 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             .append( lon_center[0].toString() ).append( ",'" )
                             .append( detail.get( "title" ).toString() ).append( "','" )
                             .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
-                            .append( messages.getString( "searchResult.categories.uvp." + UtilsSearch.getDetailValue( detail, "uvp_category" )) ).append( "','" )
-                            .append( sysCodeList.getNameByCodeListValue( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) )
-                        .append( "']" );
+                            .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) );
+                        
+                        ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
+                        s.append( "'," ).append( "[" );
+                        if(categories != null && categories.size() > 0){
+                            int index = 0;
+                            s.append( "'" );
+                            for (String category : categories) {
+                                s.append( messages.getString( "searchResult.categories.uvp." + category.trim() ) );
+                                if(index < categories.size() - 1){
+                                    s.append( "','" );
+                                }else{
+                                    s.append( "'" );
+                                }
+                                index ++;
+                            }
+                        }
+                        s.append( "]" );
+                        s.append( "]" );
                         if (it.hasNext()) {
                             s.append( "," );
                         }
@@ -127,5 +144,20 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         request.setAttribute( "restUrlBBOX", restUrl.toString() );
         
         super.doView(request, response);
+    }
+    
+    private ArrayList<String> getIndexValue(Object obj){
+        ArrayList<String> array = new ArrayList<String>();
+        if(obj instanceof String[]){
+            String [] tmp = (String[]) obj;
+            for (String s : tmp) {
+                array.add( s );
+            }
+        }else if(obj instanceof ArrayList){
+            array = (ArrayList) obj;
+        }else {
+            array.add( obj.toString() );
+        }
+        return array;
     }
 }

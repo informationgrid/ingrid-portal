@@ -21,18 +21,23 @@
         for (var i = 0; i < markers.length; i++) {
             var a = markers[i];
             var title = a[2];
-            var category = a[4];
-            var procedure = a[5];
+            var categories = a[5];
+            var procedure = a[4];
             var popUpHtml = '';
             
+            popUpHtml += '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
+            
             if(procedure && procedure.length > 0){
-                popUpHtml += procedure + '<br>';
+                popUpHtml += '<div class="map_popup_proc">' + procedure + '</div>';
             }
             
-            popUpHtml = '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
-            
-            if(category && category.length > 0){
-                popUpHtml += '<br>' + category;
+            if(categories && categories.length > 0){
+                popUpHtml += '<div class="map_popup_cat">';
+                for (category in categories){
+                    var value = categories[category];
+                    popUpHtml += value + '<br>';
+                }
+                popUpHtml += '</div>';
             }
             
             var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
