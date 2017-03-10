@@ -7,7 +7,8 @@
                 <form class="box box--medium">
                     <div class="box__content ob-container">
                         <h6 class="tx-light tx-brand bx-bot-0">Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</h6>
-                        <h1 class="bx-top-0 bx-bot-s">$TOOL.getValueFromXPath("./name")</h1>
+                        <h1 class="bx-top-0 bx-bot-s mq-hide-xxl">$TOOL.getValueFromXPath("./name")</h1>
+                        <h2 class="bx-top-0 bx-bot-s mq-show-xxl">$TOOL.getValueFromXPath("./name")</h2>
                         ## Set title to context because other xPath expression (DEFAULT: "./idf:title")
                         ## used to get title.
                         ## Title will be read from context and set to page head title tag.
@@ -28,12 +29,7 @@
                             <div class="js-accordion-content">
                                 <div class="sidebar__widget js-accordion-multi">
                                     <div class="sidebar__widget__title filter__title js-accordion-toggle is-active">
-                                        <h2>
-                                        Allgemein
-                                        <svg class="filter__title__icon icon">
-                                            <use xlink:href="#arrow-thick">
-                                        </use></svg>
-                                        </h2>
+                                        #renderAccordionTitle("Allgemein")
                                     </div>
                                     <div class="sidebar__widget__content js-accordion-content">
                                         <div class="js-accordion">
@@ -215,12 +211,7 @@
                                         #end
                                         <div class="sidebar__widget js-accordion-multi">
                                             <div class="sidebar__widget__title filter__title js-accordion-toggle">
-                                                <h2>
-                                                $step_title
-                                                <svg class="filter__title__icon icon">
-                                                    <use xlink:href="#arrow-thick">
-                                                </use></svg>
-                                                </h2>
+                                                #renderAccordionTitle($step_title)
                                             </div>
                                             <div class="sidebar__widget__content js-accordion-content is-hidden">
                                                 <div class="js-accordion">
@@ -356,4 +347,19 @@
             #set($entryLabel = "")
         #end
     #end
+#end
+
+#macro (renderAccordionTitle $title)
+    <h2 class="mq-hide-xxl">
+        $title
+        <svg class="filter__title__icon icon">
+            <use xlink:href="#arrow-thick"></use>
+        </svg>
+    </h2>
+    <h3 class="mq-show-xxl">
+        $title
+        <svg class="filter__title__icon icon">
+            <use xlink:href="#arrow-thick"></use>
+        </svg>
+    </h3>
 #end
