@@ -488,6 +488,7 @@ define({
     "ui.toolbar.toggleFieldsCaption": "Nur Pflichtfelder aufklappen",
     "ui.toolbar.HelpCaption": "Hilfe",
     "ui.toolbar.NewDocCaption": "Neu anlegen",
+    "ui.toolbar.NewFolderCaption": "Neuen Ordner anlegen",
     "ui.toolbar.PrintDocCaption": "Vorschau und Druckansicht",
     "ui.toolbar.ISOCaption": "ISO-XML Anzeige",
     "ui.toolbar.CutCaption": "Objekte/Adressen/Teilbaum ausschneiden",

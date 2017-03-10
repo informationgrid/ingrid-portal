@@ -48,6 +48,7 @@
 .tabIconPrevious     {background-position: -647px;}
 .tabIconNext         {background-position: -665px;}
 .tabIconISO          {background-position: -683px;}
+.tabIconNewFolder    {background-position: -699px;}
 
 /* disabled icons */
 .dijitDisabled .dijitIcon, .IconDisabled { opacity: 0.3; filter: alpha(opacity=30);}
