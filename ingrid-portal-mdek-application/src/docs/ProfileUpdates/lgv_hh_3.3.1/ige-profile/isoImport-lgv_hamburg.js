@@ -28,7 +28,7 @@ var keywords = XPATH.getNodeList(source, "//gmd:identificationInfo//gmd:descript
     
 for (var i=0; i<keywords.getLength(); i++ ) {
   var keyword = keywords.item(i).getTextContent();
-  if ("#opendata_hh#".equals(keyword)) {
+  if ("hmbtg".equals(keyword)) {
     var targetEl = target.getDocumentElement();
     var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
     var additionalValue = additionalValues.appendChild(targetEl.getOwnerDocument().createElement("general-additional-value"));
@@ -53,4 +53,7 @@ for (var i=0; i<keywords.getLength(); i++ ) {
     XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-key"), "informationHmbTG"); 
     XMLUtils.createOrReplaceAttribute(XPATH.createElementFromXPath(additionalValue, "field-data"), "id", keyword);
     XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-key-parent"), "Informationsgegenstand");
+
+    // remove keyword from general information
+    XMLUtils.remove(XPATH.getNode(targetEl, "/igc/data-sources/data-source/data-source-instance/subject-terms/uncontrolled-term[.='" + keyword + "']"));
 }
