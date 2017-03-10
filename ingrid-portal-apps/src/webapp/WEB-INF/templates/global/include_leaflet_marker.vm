@@ -33,6 +33,7 @@
             
             if(categories && categories.length > 0){
                 popUpHtml += '<div class="map_popup_cat">';
+                popUpHtml += '<b>Kategorie:</b><br>';
                 for (category in categories){
                     var value = categories[category];
                     popUpHtml += value + '<br>';
