@@ -318,3 +318,15 @@ thead {
 .leaflet-right {
     z-index: 0 !important;
 }
+
+.map_popup_cat {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 0.5em;
+}
+
+.map_popup_proc {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 0.5em;
+}
