@@ -523,6 +523,8 @@ define([
                             res.nodeDocType = "InstitutionPerson_B";
                         } else if (res.addressClass == 3) {
                             res.nodeDocType = "PersonAddress_B";
+                        } else if (res.addressClass == 1000) {
+                            res.nodeDocType = "Class1000_B";
                         }
 
                         msg.resultHandler.resolve(res);
@@ -2281,6 +2283,9 @@ define([
                     nodeData.organisation = registry.byId("headerAddressType3Institution").get("value");
                     // -- Extra Info --
                     nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress3").get("value");
+                    break;
+                case 1000:
+                    nodeData.name = registry.byId("addressTitle").get("value");
                     break;
                 default:
                     console.debug("Error in _getAddressData - Address Class must be 0, 1, 2 or 3!");

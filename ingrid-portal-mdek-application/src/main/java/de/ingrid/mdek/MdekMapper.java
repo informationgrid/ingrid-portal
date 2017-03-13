@@ -563,6 +563,9 @@ public class MdekMapper implements DataMapperInterface {
         case 3:
             nodeDocType = "PersonAddress";
             break;
+        case 1000:
+            nodeDocType = "Class1000";
+            break;
         default:
             nodeDocType = "Institution";
             break;
@@ -665,6 +668,9 @@ public class MdekMapper implements DataMapperInterface {
             }
 
             title = title.trim();
+            break;
+        case 1000:
+            title = adr.getString( MdekKeys.NAME );
             break;
         }
 
