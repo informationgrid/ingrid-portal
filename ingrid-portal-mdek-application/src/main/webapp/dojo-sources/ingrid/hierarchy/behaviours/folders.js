@@ -63,9 +63,18 @@ define(["dojo/_base/declare",
       topic.subscribe("/onAddressClassChange", function(data) {
         if (data.addressClass === 1000) {
           domClass.add("contentFrameBodyAddress", "hide");
+          query("#addressTypeLabel").parent().addClass("hide");
+          query("#addressOwnerLabel").parent().addClass("hide");
+          query("label[for=addressTitle]").addContent(message.get("ui.adr.general.title") + "*", "only");
+          registry.byId("addressTitle").set("disabled", false);
 
         } else {
           domClass.remove("contentFrameBodyAddress", "hide");
+          query("#addressTypeLabel").parent().removeClass("hide");
+          query("#addressOwnerLabel").parent().removeClass("hide");
+          query("label[for=addressTitle]").addContent(message.get("ui.adr.header.addressTitle") + "*", "only");
+          registry.byId("addressTitle").set("disabled", true);
+          registry.byId("dataFormContainer").resize();
         }
       });
 

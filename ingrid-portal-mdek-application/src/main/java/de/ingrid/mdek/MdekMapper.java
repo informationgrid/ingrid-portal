@@ -669,6 +669,9 @@ public class MdekMapper implements DataMapperInterface {
 
             title = title.trim();
             break;
+        case 1000:
+            title = adr.getString( MdekKeys.NAME );
+            break;
         }
 
         return title;

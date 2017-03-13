@@ -167,6 +167,9 @@ define([
                             title = adr.organisation;
                         }
                         break;
+                    case 1000: // FOLDER
+                        title = adr.name;
+                        break;
                     default:
                         break;
                 }

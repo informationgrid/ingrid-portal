@@ -2265,6 +2265,9 @@ define([
                     // -- Extra Info --
                     nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress3").get("value");
                     break;
+                case 1000:
+                    nodeData.name = registry.byId("addressTitle").get("value");
+                    break;
                 default:
                     console.debug("Error in _getAddressData - Address Class must be 0, 1, 2 or 3!");
                     break;
