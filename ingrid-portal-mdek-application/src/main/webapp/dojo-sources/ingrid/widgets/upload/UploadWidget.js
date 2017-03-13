@@ -58,7 +58,9 @@ define([
             this.inherited(arguments);
 
             // dialog
+            // TODO: should be created when upload link was clicked
             this.dialog = new Dialog({
+                // id: "uploadDialog",
                 title: "Dokument-Upload",
                 style: "width: 840px",
                 execute: lang.hitch(this, function(cancelEvent) {
@@ -250,9 +252,12 @@ define([
             if (this.templateEl) {
                 domConstruct.destroy(this.templateEl);
             }
+
             if (this.uploadHandle) {
                 this.uploadHandle.remove();
             }
+
+            this.uploader.reset();
             delete this.uploader;
         },
 
