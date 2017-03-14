@@ -95,18 +95,13 @@ define(["dojo/_base/declare",
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.foreign.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 3];
 
-            } else if (objClass === "Class12") { // negative
+            } else if (objClass === "Class12") { // negative (not implemented yet)
 
-            } else if (objClass === "Class13") { // Raumordnungsverfahren
+            } else if (objClass === "Class13" || objClass === "Class14") { // Raumordnungsverfahren or Linienbestimmungen
+                domClass.remove("uiElementAdduvpgCategory", "hide");
                 query("#generalDescLabel label").addContent(message.get("uvp.form.spatial.generalDescription"), "only");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.spatial.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 2, 3];
-
-            } else if (objClass === "Class14") { // Linienbestimmungen
-                query("#generalDescLabel label").addContent(message.get("uvp.form.spatial.generalDescription"), "only");
-                query("#generalAddressTableLabel label").addContent(message.get("uvp.form.spatial.address"), "only");
-                this.uvpPhaseField.availablePhases = [1, 2, 3];
-
             }
         },
 
