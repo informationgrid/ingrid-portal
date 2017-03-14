@@ -152,7 +152,17 @@ public class DetailPartPreparer {
                 value = node.getTextContent().trim();
                 try {
                     Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(value);
-                    value = new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
+                    if(cal != null){
+                        if(cal.getTime() != null){
+                            int hours = cal.getTime().getHours();
+                            int minutes = cal.getTime().getMinutes();
+                            int seconds = cal.getTime().getSeconds();
+                            if(hours > 0 || minutes > 0 || seconds > 0){
+                                return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
+                            }
+                        }
+                    }
+                    return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
                 } catch (Exception e) {
                 } 
             }
