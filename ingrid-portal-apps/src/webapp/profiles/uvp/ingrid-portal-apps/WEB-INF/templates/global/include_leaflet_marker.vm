@@ -86,14 +86,14 @@
     
     var overlayers = {};
     if(mapMarkers10.getLayers().length > 0){
-        overlayers["UVP Vorhaben"]  = mapMarkers10;
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 13px; padding:0 8px; \"></span>UVP Vorhaben"]  = mapMarkers10;
     }
     if(mapMarkers11.getLayers().length > 0){
-        overlayers["Ausl&#228;ndische Verfahren"]  = mapMarkers11;
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 13px; padding:0 8px; \"></span>Ausl&#228;ndische Verfahren"]  = mapMarkers11;
     }
     
     if(mapMarkers1314.getLayers().length > 0){
-        overlayers["Vorgelagerte Verfahren"]  = mapMarkers1314;
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_red.png'); background-size: 13px 13px; padding:0 8px; \"></span>Vorgelagerte Verfahren"]  = mapMarkers1314;
     }
     L.control.layers({}, overlayers, {position: 'topright'}).addTo(map);
     
