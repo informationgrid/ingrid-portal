@@ -1,0 +1,86 @@
+<script>
+    function showMarker(m) {
+        jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
+            var d = JSON.parse(data);
+            // create an orange rectangle
+            m.target.bbox=L.rectangle(d, {color: "blue", weight: 3, fill: false});
+            if(map){
+                map.addLayer(m.target.bbox);
+            }
+        });
+    }
+    
+    function hideMarker(m) {
+        if(map){
+            map.removeLayer(m.target.bbox);
+        }
+    }
+
+    // All markers
+    var mapMarkers = L.markerClusterGroup();
+    // "UVP Vorhaben" markers
+    var mapMarkers10 = L.markerClusterGroup();
+    // "Ausländische Verfahren" markers
+    var mapMarkers11 = L.markerClusterGroup();
+    // "Vorgelagerte Verfahren" markers
+    var mapMarkers1314 = L.markerClusterGroup();
+    if(markers){
+        for (var i = 0; i < markers.length; i++) {
+            var a = markers[i];
+            var title = a[2];
+            var categories = a[6];
+            var procedureId = a[4];
+            var procedure = a[5];
+            var popUpHtml = '';
+            
+            popUpHtml += '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
+            
+            if(procedure && procedure.length > 0){
+                popUpHtml += '<div class="map_popup_proc">' + procedure + '</div>';
+            }
+            
+            if(categories && categories.length > 0){
+                popUpHtml += '<div class="map_popup_cat">';
+                popUpHtml += '<b>Kategorie:</b><br>';
+                for (category in categories){
+                    var value = categories[category];
+                    popUpHtml += value + '<br>';
+                }
+                popUpHtml += '</div>';
+            }
+            
+            var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
+            marker.bindPopup(popUpHtml);
+            marker.uuid = a[3];
+            marker.bbox = null;
+            marker.on('popupopen', showMarker);
+            marker.on('popupclose', hideMarker);
+            mapMarkers.addLayer(marker);
+            if(procedureId == '10'){
+                mapMarkers10.addLayer(marker);
+            } else if(procedureId == '11'){
+                mapMarkers11.addLayer(marker);
+            } else {
+                mapMarkers1314.addLayer(marker);
+            }
+        }
+    
+        if(markers.length > 0){
+            if(map){
+                map.addLayer(mapMarkers10);
+                map.addLayer(mapMarkers11);
+                map.addLayer(mapMarkers1314);
+                map.fitBounds(mapMarkers.getBounds());
+            }
+        }
+    }
+    
+    var overlayers = {
+        "UVP Vorhaben": mapMarkers10,
+        "Vorgelagerte Verfahren": mapMarkers1314,
+        "Ausländische Verfahren": mapMarkers11
+    };
+    
+    L.control.layers({}, overlayers, {position: 'topright'}).addTo(map);
+    
+</script>

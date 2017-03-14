@@ -15,15 +15,12 @@ html, body {
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script src="$restUrlMarker"></script>
 <script language="JavaScript" type="text/javascript">
-
-    var map = addLeafletMap(null, new L.LatLng(51.3, 10));
-
+    var osm = getOSMLayer(5, 20)
+    var map = addLeafletMap([osm], null, new L.LatLng(51.3, 10));
 </script>
 
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 
 <script>
-
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapMarkers.getBounds(), new L.LatLng(51.3, 10))
-
 </script>

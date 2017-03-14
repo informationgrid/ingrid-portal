@@ -41,7 +41,8 @@
         bounds = [[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]];
     }
     
-    var map = addLeafletMap(bounds, new L.LatLng(51.3, 10));
+    var osm = getOSMLayer(5, 20);
+    var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
     
     window.onresize = function(event) {
         resizeMap();

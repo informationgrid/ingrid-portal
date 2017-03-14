@@ -64,7 +64,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if (resourceID.equals( "marker" )) {
                 response.setContentType( "application/javascript" );
                 response.getWriter().write( "var markers = [" );
-                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "http ranking:score") ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
+                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "datatype:metadata ranking:score") ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
                         .getIBus() );
                 while (it.hasNext()) {
                     StringBuilder s = new StringBuilder();
@@ -78,24 +78,27 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             .append( lon_center[0].toString() ).append( ",'" )
                             .append( detail.get( "title" ).toString() ).append( "','" )
                             .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
-                            .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) );
+                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
+                            .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'");
                         
-                        ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
-                        s.append( "'," ).append( "[" );
-                        if(categories != null && categories.size() > 0){
-                            int index = 0;
-                            s.append( "'" );
-                            for (String category : categories) {
-                                s.append( messages.getString( "searchResult.categories.uvp." + category.trim() ) );
-                                if(index < categories.size() - 1){
-                                    s.append( "','" );
-                                }else{
-                                    s.append( "'" );
+                        if(detail.get( "uvp_category" ) != null){
+                            ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
+                            s.append( "," ).append( "[" );
+                            if(categories != null && categories.size() > 0){
+                                int index = 0;
+                                s.append( "'" );
+                                for (String category : categories) {
+                                    s.append( messages.getString( "searchResult.categories.uvp." + category.trim() ) );
+                                    if(index < categories.size() - 1){
+                                        s.append( "','" );
+                                    }else{
+                                        s.append( "'" );
+                                    }
+                                    index ++;
                                 }
-                                index ++;
                             }
+                            s.append( "]" );
                         }
-                        s.append( "]" );
                         s.append( "]" );
                         if (it.hasNext()) {
                             s.append( "," );

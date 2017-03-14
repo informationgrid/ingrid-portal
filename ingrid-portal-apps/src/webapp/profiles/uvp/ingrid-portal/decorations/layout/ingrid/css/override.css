@@ -315,10 +315,6 @@ thead {
     width: 2.5rem;
 }
 
-.leaflet-right {
-    z-index: 0 !important;
-}
-
 .map_popup_cat {
     font-size: 0.9em;
     color: grey;
@@ -329,4 +325,17 @@ thead {
     font-size: 0.9em;
     color: grey;
     margin-top: 0.5em;
+}
+
+/*
+    Leaflet
+*/
+
+.leaflet-control-layers-overlays label {
+    padding: 5px 0;
+    font-weight: normal;
+}
+
+.leaflet-control-layers-overlays label div span{
+    padding: 0px 5px;
 }
