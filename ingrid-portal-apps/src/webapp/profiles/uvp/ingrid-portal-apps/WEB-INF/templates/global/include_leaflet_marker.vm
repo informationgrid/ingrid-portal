@@ -1,3 +1,4 @@
+#parse("/WEB-INF/templates/global/include_leaflet_pins.vm")
 <script>
     function showMarker(m) {
         jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
@@ -32,7 +33,7 @@
             var procedureId = a[4];
             var procedure = a[5];
             var popUpHtml = '';
-            
+            var icon = iconGreen;
             popUpHtml += '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
             
             if(procedure && procedure.length > 0){
@@ -49,7 +50,15 @@
                 popUpHtml += '</div>';
             }
             
-            var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
+            if(procedureId == '10'){
+                icon = iconBlue;
+            } else if(procedureId == '11'){
+                icon = iconBlack;
+            } else {
+                icon = iconRed;
+            }
+            
+            var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
             marker.bindPopup(popUpHtml);
             marker.uuid = a[3];
             marker.bbox = null;
