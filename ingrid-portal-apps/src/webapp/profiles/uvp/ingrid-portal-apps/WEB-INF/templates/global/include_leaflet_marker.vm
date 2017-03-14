@@ -84,12 +84,17 @@
         }
     }
     
-    var overlayers = {
-        "UVP Vorhaben": mapMarkers10,
-        "Vorgelagerte Verfahren": mapMarkers1314,
-        "Ausländische Verfahren": mapMarkers11
-    };
+    var overlayers = {};
+    if(mapMarkers10.getLayers().length > 0){
+        overlayers["UVP Vorhaben"]  = mapMarkers10;
+    }
+    if(mapMarkers11.getLayers().length > 0){
+        overlayers["Ausl&#228;ndische Verfahren"]  = mapMarkers11;
+    }
     
+    if(mapMarkers1314.getLayers().length > 0){
+        overlayers["Vorgelagerte Verfahren"]  = mapMarkers1314;
+    }
     L.control.layers({}, overlayers, {position: 'topright'}).addTo(map);
     
 </script>
