@@ -157,8 +157,8 @@
                 // set class delayed since new object request also sets class before
                 setTimeout(function () {
                     registry.byId("objectClass").set("value", "Class" + type);
-                }, 100);
-                setTreeIcon(type);
+                    setTreeIcon(type);
+                }, 300);
 
             }
 
