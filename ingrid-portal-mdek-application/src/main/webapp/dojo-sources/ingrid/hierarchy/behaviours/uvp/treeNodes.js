@@ -159,11 +159,12 @@ define([
             var rootFolderLabel = rootFolderNode.label;
             return array.every(nodesToInsert, function(nodeToInsert) {
                 var insertClass = nodeToInsert.objectClass;
-                return (insertClass === 10 && rootFolderLabel === message.get("uvp.form.categories.uvp"))
+                return (insertClass === 1000 && this._getTopParentNode({item: {parent: nodeToInsert}}).label === rootFolderLabel)
+                    || (insertClass === 10 && rootFolderLabel === message.get("uvp.form.categories.uvp"))
                     || (insertClass === 11 && rootFolderLabel === message.get("uvp.form.categories.uvpForeign"))
                     || (insertClass === 12 && rootFolderLabel === message.get("uvp.form.categories.uvpNegative"))
                     || ((insertClass === 13 || insertClass === 14) && rootFolderLabel === message.get("uvp.form.categories.uvpInFront"));
-            });
+            }, this);
         }
     })();
 });
