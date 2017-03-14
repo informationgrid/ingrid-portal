@@ -70,10 +70,13 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                 response.setContentType( "application/javascript" );
                 response.getWriter().write( "var markers = [" );
                 
-                String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING) + " ranking:score";
+                String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
                 if(queryString == null || queryString.length() == 0){
-                    queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "http ranking:score") ;
+                    queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "datatype:metadata ranking:score") ;
+                }else{
+                    queryString += " ranking:score";
                 }
+                
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
                         .getIBus() );
                 while (it.hasNext()) {
@@ -89,8 +92,7 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                             .append( detail.get( "title" ).toString() ).append( "','" )
                             .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
                             .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
-                            .append( sysCodeList.getNameByCodeListValue( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) )
-                        .append( "']" );
+                            .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'" );
 
                         if(detail.get( "uvp_category" ) != null){
                             ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));

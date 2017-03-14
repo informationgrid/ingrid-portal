@@ -309,10 +309,10 @@ function openURL(url){
     window.location = url;
 }
 
-function getOSMLayer(minZoom, maxZoom){
+function getOSMLayer(){
     var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib='';
-    var osm = new L.TileLayer(osmUrl, {minZoom: minZoom, maxZoom: maxZoom, attribution: osmAttrib});
+    var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
     
     return osm;
 }
