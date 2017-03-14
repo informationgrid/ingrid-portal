@@ -309,18 +309,24 @@ function openURL(url){
     window.location = url;
 }
 
-function addLeafletMap(bounds, latlng){
-    var map = new L.Map('map');
+function getOSMLayer(minZoom, maxZoom){
     var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib='';
-    var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 20, attribution: osmAttrib});
+    var osm = new L.TileLayer(osmUrl, {minZoom: minZoom, maxZoom: maxZoom, attribution: osmAttrib});
+    
+    return osm;
+}
+
+function addLeafletMap(baselayers, bounds, latlng){
+    var map = new L.Map('map', {
+       layers: baselayers
+    });
     if(bounds){
         map.fitBounds(bounds);
     }else{
         map.setView(latlng,6);
     }
 
-    map.addLayer(osm);
     return map; 
 }
 
