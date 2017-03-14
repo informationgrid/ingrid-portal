@@ -74,7 +74,8 @@
                                                                 northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
                                                                 bounds = L.latLngBounds(southWest, northEast);
                                                                 
-                                                                var map = addLeafletMap(bounds, new L.LatLng(51.3, 10));
+                                                                var osm = getOSMLayer();
+                                                                var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
                                                                 var rect = L.rectangle(bounds, {color: 'blue', weight: 3, fill: false}).on('click', function (e) {
                                                                     var popLocation= e.latlng;
                                                                     var popup = L.popup()
