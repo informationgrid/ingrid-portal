@@ -143,7 +143,7 @@
 .TreeIconPersonAddress {background-position: 0px;}
 
 /* status b */
-.TreeIconClass1000_B {background-position: -464px;}
+.TreeIconClass1000, .TreeIconClass1000_B {background-position: -464px;}
 .TreeIconClass0_B {background-position: -512px;}
 .TreeIconClass1_B {background-position: -624px;}
 .TreeIconClass2_B {background-position: -736px;}
