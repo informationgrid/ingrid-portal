@@ -22,11 +22,12 @@
  */
 define(["dojo/_base/declare",
     "dojo/cookie",
+    "dojo/dom-construct",
     "dojo/query",
     "dojo/topic",
     "dijit/registry",
     "ingrid/message"
-], function(declare, cookie, query, topic, registry, message) {
+], function(declare, cookie, construct, query, topic, registry, message) {
 
     return declare(null, {
         title: "UVP: Generelle Änderungen",
@@ -41,6 +42,8 @@ define(["dojo/_base/declare",
             this.disableInfoDialogs();
 
             this.adaptImportPage();
+
+            this.addCssClasses();
 
             query("head title").addContent("UVP Editor", "only");
 
@@ -86,6 +89,16 @@ define(["dojo/_base/declare",
                 data.types.splice(0, data.types.length);
                 data.types.push(filteredTypes[0]);
             });
+        },
+
+        addCssClasses: function() {
+            query("head")[0].appendChild(
+                // construct.toDom('<link rel="stylesheet" type="text/css" href="lightbox_stylesheet.css">')
+                construct.toDom(
+                    '<style type="text/css">' +
+                    '#objSearch .expandContent, #adrSearch .expandContent {display: none;}' +
+                    '</style>')
+            );
         }
 
     })();
