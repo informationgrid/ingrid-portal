@@ -76,7 +76,6 @@ require([
     function getNonFolderParentItem(parentId) {
         var parent = null;
         do {
-            debugger;
             var parentNode = TreeUtil.getNodeById("dataTree", parentId);
             if (parentNode.item.objectClass !== 1000) {
                 parent = parentNode.item;
