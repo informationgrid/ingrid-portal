@@ -1,6 +1,7 @@
 
 -- Execute on ORACLE portal database before migration
 
+
 -- REMOVE DEFAULT SYSDATE, causes error when migrating
 
 ALTER TABLE ingrid_anniversary MODIFY fetched DEFAULT NULL;

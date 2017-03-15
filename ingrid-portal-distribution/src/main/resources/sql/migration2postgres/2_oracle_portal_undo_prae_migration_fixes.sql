@@ -1,6 +1,7 @@
 
 -- Execute on ORACLE portal database after migration to undo changes for migration
 
+
 -- ADD DEFAULT SYSDATE again
 
 ALTER TABLE ingrid_anniversary MODIFY fetched DEFAULT SYSDATE;

@@ -1,5 +1,6 @@
 
--- Execute on migrated POSTGRES portal database to add stuff removed from migration
+-- Execute on migrated POSTGRES portal database (from ORACLE) to add stuff removed from migration
+
 
 -- ADD CURRENT_TIMESTAMP as default
 

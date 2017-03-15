@@ -15,8 +15,8 @@ Im folgenden ist das Vorgehen auf Windows beschrieben, unter Unix ist dies adäq
 Vorgehen Migration auf Windows nach PostgreSQL 9.5.5
 ----------------------------------------------------
 
-Migrationstool installieren:
-----------------------------
+1. Migrationstool installieren:
+-------------------------------
 - im PostgreSQL StartMenu "Application Stack Builder" starten, um zusätzliche Software für Postgres zu installieren
 - nach Auswahl der vorhandenen Postgres Installation erscheinen die zusätzlichen Anwendungen, hier folgendes wählen:
   - "Registration Required and Trial Products" -> "EnterpriseDB Tools" -> "Migration Toolkit ..."
@@ -31,12 +31,12 @@ Migrationstool installieren:
   nach JAVA_HOME/jre/lib/ext kopieren.
 
 
-Konfiguration Migrationstool:
------------------------------
+2. Konfiguration Migrationstool:
+--------------------------------
 - im folgenden wird das Migration Toolkit Installationsverzeichnis als MTK_HOME bezeichnet
 - Quell- und Zieldatenbank werden eingestellt unter:
     MTK_HOME/etc/toolkit.properties
-  Die Zieldatenbank muss im Postgres Server bereits existieren (z.B. CREATE DATABASE igc_test).
+  Die Zieldatenbank muss im Postgres Server bereits existieren (z.B. CREATE DATABASE ingrid_portal).
 
   Eine MySQL Migration hätte beispielhaft folgenden Inhalt:
   
@@ -61,8 +61,8 @@ Konfiguration Migrationstool:
 - Weitere Hilfe s. https://www.enterprisedb.com/docs/en/9.5/migrate/EDB_Postgres_Migration_Guide.1.14.html
 
 
-Fix Quelldatenbank vor Migration:
----------------------------------
+3. Fix Quelldatenbank vor Migration:
+------------------------------------
 - die Portal Datenbank muss vor dem Migrieren bearbeitet werden, um Fehler bei der Migration zu verhindern
 - dazu folgendes Skript ausführen, abhängig von Quelldatenbank:
 	MySQL:
@@ -71,26 +71,53 @@ Fix Quelldatenbank vor Migration:
 		1_oracle_portal_prae_migration_fixes.sql
 	
 
-Ausführen Migration:
---------------------
+4. Ausführen Migration:
+-----------------------
+Hier unterscheidet sich das Vorgehen abhängig von der Quelldatenbank.
+Die Oracle Migration migriert Schema und Daten korrekt in einem Aufruf.
+Die MySQL Migration ist aufwendiger, da zuerst das Schema separat migriert werden muss, um die Spaltennamen korrekt abzubilden.
+
+4.1. Ausführen Migration ORACLE:
+--------------------------------
 - nach MTK_HOME/bin wechseln
 - Ausführen der batch Datei runMTK.bat
-
-  Beispielhaft für MySQL Migration:
-
-    .\runMTK.bat -sourcedbtype mysql -targetdbtype postgresql -targetSchema public ingrid_portal  
 
   Beispielhaft für Oracle Migration:
 
     .\runMTK.bat -sourcedbtype oracle -targetdbtype postgresql -targetSchema public INGRID_PORTAL
     
 - das Schema der Quelldatenbank wird in der Postgres Datenbank ins Schema public migriert, dies ist das default Schema und wird im IGE iPlug per default so erwartet.
+
+4.1. Ausführen Migration MYSQL:
+-------------------------------
+Die Default-Migration von MySQL bildet die Spaltennamen exakt mit Groß-/Kleinschreibung nach Postgres ab, setzt also die Spaltennamen in "" (z.B. fragment."FRAGMENT_ID").
+Zum Referenzieren der Spalten (SQL) muss dann wieder die exakte Schreibweise in "" angegeben werden, was sehr nachteilig ist.
+Damit die Groß-/Kleinschreibung keine Rolle spielt wird mit dem Migrationstool das Schema zunächst offline migriert, verändert und eingespielt.
+Dafür wie folgt vorgehen:
+  
+- nach MTK_HOME/bin wechseln
+- Ausführen der batch Datei runMTK.bat zur offline Migration des Schemas. Das Schema wird im Beispiel nach C:\mtkOffline gespielt:
+
+    .\runMTK.bat -sourcedbtype mysql -targetdbtype postgresql -targetSchema public -offlineMigration C:\mtkOffline -schemaOnly ingrid_portal
+    
+- Editieren der Datei mtk_public_ddl.sql unter C:\mtkOffline :
+
+    Alle " mit Leerzeichen ersetzen
+
+- Einspielen der Datei mtk_public_ddl.sql in der Zieldatenbank unter dem Schema public, dies ist das default Schema und wird im IGE iPlug per default so erwartet.
+
+- Ausführen der batch Datei runMTK.bat zum Einspielen der Daten aus der MySQL Datenbank nach Postgres:
+
+    .\runMTK.bat -sourcedbtype mysql -targetdbtype postgresql -targetSchema public -dataOnly ingrid_portal
+
+4.2. Migration Hilfe
+--------------------
 - eine Ausgabe aller möglichen Migrations-Parameter ist wie folgt möglich:
     .\runMTK.bat -help
 - Weitere Hilfe s. https://www.enterprisedb.com/docs/en/9.5/migrate/EDB_Postgres_Migration_Guide.1.23.html
 
 
-Fix Quelldatenbank nach Migration:
+5. Fix Quelldatenbank nach Migration:
 ----------------------------------
 - nach getätigter Migration kann die Quelldatenbank wieder in den ursprünglichen Zustand zurückversetzt werden
 - dazu folgendes Skript ausführen, abhängig von Quelldatenbank:
@@ -100,11 +127,14 @@ Fix Quelldatenbank nach Migration:
 		2_oracle_portal_undo_prae_migration_fixes.sql
 
 
-Fix Zieldatenbank nach Migration:
-----------------------------------
-- der migrierten Postgres Datenbank müssen noch die Änderungen hinzugefügt werden, die vor der Migration auf der Quelldatenbank entfernt wurden
-- dazu folgendes Skript ausführen:
-	3_postgres_portal_post_migration_fixes.sql
+6. Fix Zieldatenbank nach Migration:
+------------------------------------
+- auf der migrierten Postgres Datenbank müssen noch Änderungen ausgeführt werden, um z.B. fehlende Indexes oder default Werte hinzuzufügen
+- dazu folgendes Skript auf Postgres ausführen, abhängig von Quelldatenbank:
+	MySQL:
+		3_mysql2postgres_portal_post_migration_fixes.sql
+	Oracle:
+		3_oracle2postgres_portal_post_migration_fixes.sql
 
 Alle Skripte wurden auf der Portaldatenbank in der Version 3.6.2 oder 4.0.0 getestet.
 Die Skripte können aber auch für andere Portal Versionen angewandt werden, da sich das Schema bzgl. der Skript Inhalte nicht verändert hat.

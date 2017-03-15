@@ -1,6 +1,7 @@
 
 -- Execute on MYSQL portal database after migration to undo changes for migration
 
+
 -- ADD DEFAULT CURRENT_TIMESTAMP again
 
 ALTER TABLE ingrid_anniversary MODIFY fetched TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;

@@ -1,6 +1,7 @@
 
 -- Execute on MYSQL portal database before migration
 
+
 -- REMOVE DEFAULT CURRENT_TIMESTAMP, not migrated correctly
 
 ALTER TABLE ingrid_anniversary ALTER fetched DROP DEFAULT;
