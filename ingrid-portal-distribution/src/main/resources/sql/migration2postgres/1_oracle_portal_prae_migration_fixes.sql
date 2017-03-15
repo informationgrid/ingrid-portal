@@ -18,6 +18,6 @@ ALTER TABLE ingrid_principal_pref MODIFY modified_date DEFAULT NULL;
 
 ALTER TABLE ingrid_rss_source MODIFY lastUpdate DEFAULT NULL;
 
-ALTER TABLE  ingrid_rss_store MODIFY published_date DEFAULT NULL;
+ALTER TABLE ingrid_rss_store MODIFY published_date DEFAULT NULL;
 
-ALTER TABLE   ingrid_tiny_url MODIFY tiny_date DEFAULT NULL;
+ALTER TABLE ingrid_tiny_url MODIFY tiny_date DEFAULT NULL;
