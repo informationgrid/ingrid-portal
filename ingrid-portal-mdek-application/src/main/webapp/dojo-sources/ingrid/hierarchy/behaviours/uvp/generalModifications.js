@@ -33,6 +33,7 @@ define(["dojo/_base/declare",
         title: "UVP: Generelle Änderungen",
         description: "Hier werden Menüpunkte ausgeblendet und sonstige allgemeine Änderungen am Editor vorgenommen.",
         defaultActive: true,
+        category: "UVP",
         type: "SYSTEM", // execute on IGE page load
         run: function() {
             this.replaceImages();

@@ -47,9 +47,12 @@ define(["dojo/_base/declare",
         title: "UVP: Formularfelder",
         description: "Hier werden die zusätzlichen Felder im Formular erzeugt sowie überflüssige ausgeblendet.",
         defaultActive: true,
+        category: "UVP",
         prefix: "uvp_",
         uvpPhaseField: null,
+        params: [{id: "categoryCodelist", label: "Codelist (Kategorie)", default: 9000}],
         run: function() {
+
             // rename default fields
             // query("#objectNameLabel label").addContent(message.get("uvp.form.planDescription"), "only");
             query("#general .titleBar .titleCaption").addContent(message.get("uvp.form.consideration"), "only");
@@ -126,6 +129,11 @@ define(["dojo/_base/declare",
             });
         },
 
+        _getCategoryCodelist: function() {
+            var codeListParam = array.filter(this.params, function(p) { return p.id === "categoryCodelist"; })[0];
+            return codeListParam.value ? +codeListParam.value : +codeListParam.default;
+        },
+
         createFields: function() {
             var rubric = "general";
             var newFieldsToDirtyCheck = [];
@@ -139,14 +147,15 @@ define(["dojo/_base/declare",
             /**
              * Vorhabensnummer
              */
+            var codelist = this._getCategoryCodelist();
             var structure = [
                 {
                     field: 'categoryId',
                     name: 'Kategorie',
                     type: Editors.SelectboxEditor,
                     editable: true,
-                    listId: 9000,
-                    formatter: lang.partial(Formatters.SyslistCellFormatter, 9000),
+                    listId: codelist,
+                    formatter: lang.partial(Formatters.SyslistCellFormatter, codelist),
                     partialSearch: true
                 }
             ];

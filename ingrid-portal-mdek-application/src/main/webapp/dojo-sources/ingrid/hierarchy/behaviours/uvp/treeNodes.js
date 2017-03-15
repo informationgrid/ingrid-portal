@@ -34,6 +34,7 @@ define([
         title: "UVP: Verhalten der Baumknoten",
         description: "Definition des Verhaltens, was bei der Auswahl des Wurzelknotens und der darunterliegenden Ordner geschehen soll.",
         defaultActive: true,
+        category: "UVP",
         type: "SYSTEM", // execute on IGE page load
         run: function() {
             var self = this;

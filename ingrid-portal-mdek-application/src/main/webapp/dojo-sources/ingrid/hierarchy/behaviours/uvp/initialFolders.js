@@ -30,6 +30,7 @@ define(["dojo/_base/declare",
         title: "UVP: Initiale Ordner",
         description: "Anlegen der initialen Ordner, falls diese noch nicht bereits vorhanden sind.",
         defaultActive: true,
+        category: "UVP",
         type: "SYSTEM", // execute on IGE page load
         initFlagName: "uvp_initialized",
         run: function() {
