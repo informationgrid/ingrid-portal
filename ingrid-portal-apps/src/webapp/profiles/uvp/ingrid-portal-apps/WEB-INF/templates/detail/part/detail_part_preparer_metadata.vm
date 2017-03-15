@@ -216,11 +216,11 @@
                                     #foreach($number in [1..$nodelist.getLength()])
                                         #set($step = $TOOL.getValueFromXPath("./steps/step[$number]/@type"))
                                         #if($step == "phase1")
-                                            #set($step_title = "&Ouml;ffentliche Auslegung")
+                                            #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase1')")
                                         #elseif($step == "phase2")
-                                            #set($step_title = "Er&ouml;rterungstermin")
+                                            #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase2')")
                                         #elseif($step == "phase3")
-                                            #set($step_title = "Entscheidung &uuml;ber die Zulassung")
+                                            #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase3')")
                                         #end
                                         <div class="sidebar__widget js-accordion-multi">
                                             <div class="sidebar__widget__title filter__title js-accordion-toggle">

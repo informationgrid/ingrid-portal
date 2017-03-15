@@ -49,7 +49,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
     private final static Logger log = LoggerFactory.getLogger(ShowMapsUVPPortlet.class);
 
-    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class" };
+    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class", "uvp_steps"};
     private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
 
     @Override
@@ -98,7 +98,33 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                                 }
                             }
                             s.append( "]" );
+                        }else{
+                            s.append( "," ).append( "[" );
+                            s.append( "]" );
                         }
+                        
+                        if(detail.get( "uvp_steps" ) != null){
+                            ArrayList<String> steps = getIndexValue(detail.get( "uvp_steps" ));
+                            s.append( "," ).append( "[" );
+                            if(steps != null && steps.size() > 0){
+                                int index = 0;
+                                s.append( "'" );
+                                for (String step : steps) {
+                                    s.append( messages.getString( "common.steps.uvp." + step.trim() ) );
+                                    if(index < steps.size() - 1){
+                                        s.append( "','" );
+                                    }else{
+                                        s.append( "'" );
+                                    }
+                                    index ++;
+                                }
+                            }
+                            s.append( "]" );
+                        }else{
+                            s.append( "," ).append( "[" );
+                            s.append( "]" );
+                        }
+                        
                         s.append( "]" );
                         if (it.hasNext()) {
                             s.append( "," );

@@ -32,6 +32,7 @@
             var categories = a[6];
             var procedureId = a[4];
             var procedure = a[5];
+            var steps = a[7];
             var popUpHtml = '';
             var icon = iconGreen;
             popUpHtml += '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
@@ -49,7 +50,12 @@
                 }
                 popUpHtml += '</div>';
             }
-            
+            if(steps && steps.length > 0){
+                popUpHtml += '<div class="map_popup_cat">';
+                popUpHtml += '<b>Letzter Verfahrensschritt:</b><br>';
+                popUpHtml += steps[steps.length - 1] + '<br>';
+                popUpHtml += '</div>';
+            }
             if(procedureId == '10'){
                 icon = iconBlue;
             } else if(procedureId == '11'){
