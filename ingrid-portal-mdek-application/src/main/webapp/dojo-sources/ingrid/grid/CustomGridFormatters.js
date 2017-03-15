@@ -26,21 +26,15 @@ define(["dojo/_base/declare",
     "ingrid/utils/General",
     "ingrid/utils/String",
     "ingrid/utils/Grid",
+    "ingrid/utils/Syslist",
     "ingrid/message"
-], function(declare, array, domClass, UtilGeneral, UtilString, UtilGrid, message) {
+], function(declare, array, domClass, UtilGeneral, UtilString, UtilGrid, Syslist, message) {
 
         return declare(null, {
 
             SyslistCellFormatter: function(syslist, row, cell, value, columnDef, dataContext) {
-                var result = value == undefined ? "" : value + "";
-                var list = sysLists[syslist];
-                array.some(list, function(item) {
-                    if (item[1] == result) {
-                        result = item[0];
-                        return true;
-                    }
-                });
-                return result;
+                var result = Syslist.getSyslistEntryName(syslist, value);
+                return result ? result : value;
             },
 
             ListCellFormatter: function(row, cell, value, columnDef, dataContext) {

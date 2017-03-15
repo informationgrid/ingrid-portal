@@ -1,0 +1,38 @@
+version: '2'
+services:
+  mysql:
+    image: awallat/ingrid-mysql
+    container_name: mysql-ingrid
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_ROOT_HOST=%%
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+    restart: always
+    ports:
+      - 81:80
+    volumes:
+      - /sessions
+    links:
+      - mysql:mysql
+
+  # tomcat:
+  #   image: awallat/ingrid-tomcat
+  #   container_name: tomcat
+  #   environment:
+  #     - JPDA_ACTIVE=true
+  #     - JPDA_ADDRESS=8000
+  #   volumes:
+  #     - C:\Projects\ingrid-git\ingrid-portal\ingrid-portal-mdek-application\target\ingrid-portal-mdek-application:/usr/local/tomcat/webapps/ingrid-portal-mdek-application
+  #   ports:
+  #     - 8000:8000
+  #     - 8080:8080
+  #     - 11000:11000
+  #   links:
+  #     - mysql:mysql
