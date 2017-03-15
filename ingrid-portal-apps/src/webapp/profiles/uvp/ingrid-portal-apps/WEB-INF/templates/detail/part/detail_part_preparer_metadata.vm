@@ -36,27 +36,39 @@
                                             <div class="search-result--nested">
                                                 ## Allgemeine Vorhabenbeschreibung
                                                 #renderTextLabelAbove("Allgemeine Vorhabenbeschreibung" $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
-                                                #set($nodeList = $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "."))
-                                                #if($nodeList.size() > 0)
-                                                    #set($uvpNums = [])
-                                                    #set($uvpCats = [])
-                                                    #foreach($number in [1..$nodeList.size()])
-                                                        #set($uvpNum = $TOOL.getValueFromXPath("./uvpgs/uvpg[$number]"))
-                                                        #if($uvpNums.indexOf($uvpNum) < 0)
-                                                            #set($tmp = $uvpNums.add($uvpNum))
-                                                        #end
-                                                        #set($uvpCat = $TOOL.getValueFromXPath("./uvpgs/uvpg[$number]/@id"))
-                                                        #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$codeList.getDataByCodeListValue('9000', $uvpCat)"))
-                                                        #if($uvpCatValue != "searchResult.categories.uvp.")
-                                                            #if($uvpCats.indexOf($uvpCatValue) < 0)
-                                                                #set($tmp = $uvpCats.add($uvpCatValue))
-                                                            #end
-                                                        #end
+                                                ## UVP Kategorien
+                                                #set($uvpCats = [])
+                                                #foreach($tmpCat in $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "./@category"))
+                                                    #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$tmpCat"))
+                                                    #if($uvpCats.indexOf($uvpCatValue) < 0)
+                                                        #set($tmp = $uvpCats.add($uvpCatValue))
                                                     #end
-                                                    ## UVP-Kategorie
-                                                    #renderTextList("UVP-Kategorie" $uvpCats)
-                                                    ## UVP-Nummer
-                                                    #renderTextList("UVP-Nummer" $uvpNums)
+                                                #end
+                                                #renderTextList("UVP-Kategorie" $uvpCats)
+                                                    
+                                                ## UVP-Nummer
+                                                #set($nodeList = $TOOL.getNodeListFromXPath("./uvpgs/uvpg"))
+                                                #if($nodeList.length > 0)
+                                                    <h4 class="title-font">
+                                                        UVP-Nummer
+                                                        <div class="tooltip ob-circle js-popup" data-title="$MESSAGES.getString('search.detail.categories.uvp.explanation.title')" data-content="$MESSAGES.getString('search.detail.categories.uvp.explanation.default')" style="">
+                                                            <svg class="tooltip__icon icon"><use xlink:href="#attention"></use></svg>
+                                                        </div>
+                                                    </h4>
+                                                    <ul class="list list--bullets bx-top-s">
+                                                    #set ($length = $nodeList.length - 1)
+                                                    #foreach($index in [0..$length])
+                                                        #set($node = $nodeList.item($index))
+                                                        #set($catNum = $node.getTextContent())
+                                                        #set($catType = $TOOL.getValueFromXPath("./@type", "", $node))
+                                                        <li>
+                                                            $node.getTextContent()
+                                                            #if($catType)
+                                                                #set($messageKey = "search.detail.categories.uvp.explanation.${catType}")
+                                                            #end
+                                                        </li>
+                                                    #end
+                                                    </ul>
                                                 #end
                                                 ## Raumbezug
                                                 #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
