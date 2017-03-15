@@ -96,7 +96,7 @@ Damit die Groß-/Kleinschreibung keine Rolle spielt wird mit dem Migrationstool 
 Dafür wie folgt vorgehen:
   
 - nach MTK_HOME/bin wechseln
-- Ausführen der batch Datei runMTK.bat zur offline Migration des Schemas. Das Schema wird im Beispiel nach C:\mtkOffline gespielt:
+- Ausführen der batch Datei runMTK.bat zur offline Migration des Schemas. Das Schema wird im Beispiel nach C:\mtkOffline gespielt, das Verzeichnis muss existieren:
 
     .\runMTK.bat -sourcedbtype mysql -targetdbtype postgresql -targetSchema public -offlineMigration C:\mtkOffline -schemaOnly ingrid_portal
     
