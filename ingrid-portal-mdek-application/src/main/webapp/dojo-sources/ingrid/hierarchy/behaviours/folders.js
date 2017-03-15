@@ -111,6 +111,7 @@ define(["dojo/_base/declare",
     },
 
     handleNodeSelect: function() {
+      var self = this;
       topic.subscribe("/selectNode", function(message) {
         // do not handle if another tree was selected!
         if (message.id && message.id != "dataTree") return;
@@ -119,6 +120,7 @@ define(["dojo/_base/declare",
 
         // if we selected a folder
         if (selectedNode.objectClass === 1000) {
+          registry.byId("toolbarBtnNewFolder").set("disabled", false);
 
           var enabledButtons = ["toolbarBtnNewDoc", "toolbarBtnNewFolder", "toolbarBtnCut", "toolbarBtnCopy", "toolbarBtnCopySubTree", "toolbarBtnPaste", "toolbarBtnSave", "toolbarBtnDelSubTree", "toolbarBtnHelp"];
           var toolbarButtons = query("#myToolBar .dijitButton");
@@ -129,9 +131,27 @@ define(["dojo/_base/declare",
           });
         } else {
           // if we selected another node
-          registry.byId("toolbarBtnNewFolder").set("disabled", false);
+
+          // do not allow to create a folder under free addresses!
+          var disable = self.isFolderDisabledForNode(selectedNode);
+          registry.byId("toolbarBtnNewFolder").set("disabled", disable);
         }
       });
+    },
+
+    isFolderDisabledForNode: function(node) {
+      var excludedId = "addressFreeRoot";
+
+      // check starting node
+      if (node.id === excludedId) return true;
+
+      // check all parents
+      var parentId = node.parent;
+      while (parentId && parentId !== excludedId) {
+            var parentNode = TreeUtils.getNodeById("dataTree", parentId);
+            parentId = parentNode.item.parent;
+      }
+      return parentId !== null && parentId !== undefined;
     },
 
     _addToContextMenu: function() {
@@ -186,7 +206,8 @@ define(["dojo/_base/declare",
         addressNode.nodeAppType = "A";
         addressNode.addressClass = "1000";
         addressNode.nodeDocType = "Class1000_B";
-        addressNode.parentUuid = parentUuid;
+        // no folder under address free root!!!
+        addressNode.parentUuid = parentUuid === "addressRoot" ? null : parentUuid;
         addressNode.name = message.get("tree.folder.new");
         AddressService.saveAddressData(addressNode, "true", false, {
           callback: function(res) {
