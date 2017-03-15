@@ -114,6 +114,12 @@ define([
                             array.forEach(data, function(item) {
                                 if (behaviours[item.id]) {
                                     behaviours[item.id].override = item.active;
+                                    if (item.params) {
+                                        array.forEach(item.params, function(p) {
+                                            var behaviourParam = array.filter(behaviours[item.id].params, function(param) { return param.id === p.id; })[0];
+                                            lang.mixin(behaviourParam, p);
+                                        });
+                                    }
                                 }
                             });
                             for (var behave in behaviours) {

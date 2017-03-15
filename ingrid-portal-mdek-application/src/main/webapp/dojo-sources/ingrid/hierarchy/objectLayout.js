@@ -2278,6 +2278,12 @@ define([
                     array.forEach(data, function(item) {
                         if (behaviour[item.id]) {
                             behaviour[item.id].override = item.active;
+                            if (item.params) {
+                                array.forEach(item.params, function(p) {
+                                    var behaviourParam = array.filter(behaviour[item.id].params, function(param) { return param.id === p.id; })[0];
+                                    lang.mixin(behaviourParam, p);
+                                });
+                            }
                         }
                     });
                     for (var behave in behaviour) {
