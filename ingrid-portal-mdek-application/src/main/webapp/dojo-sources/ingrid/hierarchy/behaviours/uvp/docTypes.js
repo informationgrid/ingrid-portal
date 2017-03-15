@@ -36,7 +36,7 @@ define(["dojo/_base/declare",
         defaultActive: true,
         type: "SYSTEM",
         category: "UVP",
-        params: [{id: "loadCodelists", label: "Zu ladende Codelisten", default: "8001,9000"} ],
+        params: [{id: "loadCodelists", label: "Zu ladende Codelisten", "default": "8001,9000"} ],
         specialNodes: [message.get("uvp.form.categories.uvp"), message.get("uvp.form.categories.uvpNegative"), message.get("uvp.form.categories.uvpForeign"), message.get("uvp.form.categories.uvpInFront")],
         run: function() {
 
@@ -79,7 +79,7 @@ define(["dojo/_base/declare",
             // load custom syslists
             topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
                 var codeListParam = array.filter(self.params, function(p) { return p.id === "loadCodelists"; })[0];
-                var values = codeListParam.value ? codeListParam.value : codeListParam.default;
+                var values = codeListParam.value ? codeListParam.value : codeListParam["default"];
                 array.forEach(values.split(","), function(listId) {
                     ids.push(listId);
                 });

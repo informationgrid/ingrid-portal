@@ -50,7 +50,7 @@ define(["dojo/_base/declare",
         category: "UVP",
         prefix: "uvp_",
         uvpPhaseField: null,
-        params: [{id: "categoryCodelist", label: "Codelist (Kategorie)", default: 9000}],
+        params: [{id: "categoryCodelist", label: "Codelist (Kategorie)", "default": 9000}],
         run: function() {
 
             // rename default fields
@@ -131,7 +131,7 @@ define(["dojo/_base/declare",
 
         _getCategoryCodelist: function() {
             var codeListParam = array.filter(this.params, function(p) { return p.id === "categoryCodelist"; })[0];
-            return codeListParam.value ? +codeListParam.value : +codeListParam.default;
+            return codeListParam.value ? +codeListParam.value : +codeListParam["default"];
         },
 
         createFields: function() {
