@@ -109,11 +109,17 @@ define(["dojo/_base/declare",
           // handle actions on root node and folders directly beneath it
           on(HierarchyTreeActions.menu, "open", function() {
             var node = registry.byId("dataTree").selectedNode;
+            
             if (node.item.id === "objectRoot" || node.item.id === "addressRoot") {
               domClass.remove("menuItemNewFolder", "hidden");
               registry.byId("menuItemNewFolder").set("disabled", false);
+
             } else if (node.item.id === "addressFreeRoot") {
               registry.byId("menuItemNewFolder").set("disabled", true);
+
+            } else if (node.item.objectClass === 1000) {
+              registry.byId("menuItemPreview").set("disabled", true);
+
             } else {
               registry.byId("menuItemNewFolder").set("disabled", false);
             }
