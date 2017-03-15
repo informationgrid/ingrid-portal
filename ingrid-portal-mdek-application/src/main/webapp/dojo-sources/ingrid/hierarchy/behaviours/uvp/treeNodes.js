@@ -24,11 +24,12 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/Deferred",
+    "dojo/on",
     "dojo/topic",
     "dijit/registry",
     "ingrid/message",
     "ingrid/utils/Catalog"
-], function(declare, array, Deferred, topic, registry, message, Catalog) {
+], function(declare, array, Deferred, on, topic, registry, message, Catalog) {
 
     return declare(null, {
         title: "UVP: Verhalten der Baumknoten",
@@ -87,36 +88,44 @@ define([
                         }
                     }
                 });
+
             }, 0);
 
+            var HierarchyTreeActions = require("ingrid/tree/HierarchyTreeActions");
+            var lastSelectedNode = null;
             topic.subscribe("/onTreeContextMenu", function(node) {
-                
-                // handle actions on root node and folders directly beneath it
-                if (node.item.id === "objectRoot") {
-                    registry.byId("menuItemNew").set("disabled", true);
-                    registry.byId("menuItemPaste").set("disabled", true);
-                } else if (node.item.parent === "objectRoot") {
-                    registry.byId("menuItemPreview").set("disabled", true);
-                    registry.byId("menuItemCut").set("disabled", true);
-                    registry.byId("menuItemCopySingle").set("disabled", true);
-                    registry.byId("menuItemCopy").set("disabled", true);
-                    // activity of paste-option is handled by below function
-                    // registry.byId("menuItemPaste").set("disabled", true);
-                    registry.byId("menuItemDelete").set("disabled", true);
-                    registry.byId("menuItemPublicationCondition1").set("disabled", true);
-                    registry.byId("menuItemPublicationCondition2").set("disabled", true);
-                    registry.byId("menuItemPublicationCondition3").set("disabled", true);
-                }
+                lastSelectedNode = node;
+            });
+            on(HierarchyTreeActions.menu, "open", function() {
+                setTimeout(function() {
+                    // handle actions on root node and folders directly beneath it
+                    if (lastSelectedNode.item.id === "objectRoot") {
+                        registry.byId("menuItemNew").set("disabled", true);
+                        registry.byId("menuItemPaste").set("disabled", true);
+                        registry.byId("menuItemNewFolder").set("disabled", true);
+                    } else if (lastSelectedNode.item.parent === "objectRoot") {
+                        registry.byId("menuItemPreview").set("disabled", true);
+                        registry.byId("menuItemCut").set("disabled", true);
+                        registry.byId("menuItemCopySingle").set("disabled", true);
+                        registry.byId("menuItemCopy").set("disabled", true);
+                        // activity of paste-option is handled by below function
+                        // registry.byId("menuItemPaste").set("disabled", true);
+                        registry.byId("menuItemDelete").set("disabled", true);
+                        registry.byId("menuItemPublicationCondition1").set("disabled", true);
+                        registry.byId("menuItemPublicationCondition2").set("disabled", true);
+                        registry.byId("menuItemPublicationCondition3").set("disabled", true);
+                    }
 
-                // check if copied/cut nodes can be inserted (under correct node)
-                // we should be able to paste children of this node under this top node, but not
-                // nodes from other folders where only certain classes may appear
-                var tree = registry.byId("dataTree");
-                var nodes = tree.nodesToCopy ? tree.nodesToCopy : tree.nodesToCut;
-                if (nodes) {
-                    var hasValidParent = self._checkValidParent(node, nodes);
-                    if (!hasValidParent) registry.byId("menuItemPaste").set("disabled", true);
-                }
+                    // check if copied/cut nodes can be inserted (under correct node)
+                    // we should be able to paste children of this node under this top node, but not
+                    // nodes from other folders where only certain classes may appear
+                    var tree = registry.byId("dataTree");
+                    var nodes = tree.nodesToCopy ? tree.nodesToCopy : tree.nodesToCut;
+                    if (nodes) {
+                        var hasValidParent = self._checkValidParent(lastSelectedNode, nodes);
+                        if (!hasValidParent) registry.byId("menuItemPaste").set("disabled", true);
+                    }
+                }, 0);
             });
         },
 
