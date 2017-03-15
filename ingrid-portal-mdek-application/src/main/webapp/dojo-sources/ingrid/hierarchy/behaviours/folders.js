@@ -24,6 +24,7 @@ define(["dojo/_base/declare",
   "dojo/_base/array",
   "dojo/_base/lang",
   "dojo/dom-class",
+  "dojo/on",
   "dojo/query",
   "dojo/topic",
   "dijit/MenuItem",
@@ -32,7 +33,7 @@ define(["dojo/_base/declare",
   "ingrid/message",
   "ingrid/utils/Syslist",
   "ingrid/utils/Tree"
-], function(declare, array, lang, domClass, query, topic, MenuItem, Button, registry, message, Syslist, TreeUtils) {
+], function(declare, array, lang, domClass, on, query, topic, MenuItem, Button, registry, message, Syslist, TreeUtils) {
 
   return declare(null, {
     title: "Ordnerstruktur in Hierarchiebaum",
@@ -96,12 +97,27 @@ define(["dojo/_base/declare",
       // handle toolbar when folder is selected
       // -> only disable toolbar buttons that are not needed (be careful with IgeToolbar-Class-behaviour)
       var self = this;
+
       topic.subscribe("/onPageInitialized", function(page) {
         if (page === "Hiearchy") {
+          var HierarchyTreeActions = require("ingrid/tree/HierarchyTreeActions");
           self.handleNodeSelect();
 
           // add creation of folder to context menu
           self._addToContextMenu();
+
+          // handle actions on root node and folders directly beneath it
+          on(HierarchyTreeActions.menu, "open", function() {
+            var node = registry.byId("dataTree").selectedNode;
+            if (node.item.id === "objectRoot" || node.item.id === "addressRoot") {
+              domClass.remove("menuItemNewFolder", "hidden");
+              registry.byId("menuItemNewFolder").set("disabled", false);
+            } else if (node.item.id === "addressFreeRoot") {
+              registry.byId("menuItemNewFolder").set("disabled", true);
+            } else {
+              registry.byId("menuItemNewFolder").set("disabled", false);
+            }
+          });
 
           // add toolbar buttons
           self._addToolbarButton();
@@ -164,7 +180,7 @@ define(["dojo/_base/declare",
           var nodeItem = HierarchyTreeActions.menu.clickedNode.item;
           self._createNewFolder(nodeItem.id, nodeItem.nodeAppType);
         }
-      }), 2);
+      }), 1);
     },
 
     _createNewFolder: function(parentUuid, type) {
