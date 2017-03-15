@@ -239,27 +239,27 @@
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
                                                         #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
                                                         #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Antrag auf Entscheidung &uuml;ber die Zul&auml;ssigkeit des Vorhabens" $entryLength $xpathExpression $entryNumber)
+                                                        #renderTableToList("Antrag auf Entscheidung &uuml;ber die Zul&auml;ssigkeit des Vorhabens" $entryLength $xpathExpression $entryNumber "technicalDocs")
                                                     ## UVP-Bericht nach § 6 UVPG
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='applicationDocs']/doc")
                                                         #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
                                                         #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("UVP-Bericht nach &sect; 6 UVPG" $entryLength $xpathExpression $entryNumber)
+                                                        #renderTableToList("UVP-Bericht nach &sect; 6 UVPG" $entryLength $xpathExpression $entryNumber "applicationDocs")
                                                     ## Berichte und Empfehlungen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='reportsRecommendationsDocs']/doc")
                                                         #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
                                                         #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Berichte und Empfehlungen" $entryLength $xpathExpression $entryNumber)
+                                                        #renderTableToList("Berichte und Empfehlungen" $entryLength $xpathExpression $entryNumber "reportsRecommendationsDocs")
                                                     ## Weitere Unterlagen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='moreDocs']/doc")
                                                         #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
                                                         #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Weitere Unterlagen" $entryLength $xpathExpression $entryNumber)
+                                                        #renderTableToList("Weitere Unterlagen" $entryLength $xpathExpression $entryNumber "moreDocs")
                                                     ## Bekanntmachung
                                                         ##set($xpathExpression = "./steps/step[$number]/docs[@type='publicationDocs']/doc")
                                                         ##set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
                                                         ##set($entryLength = $nodelist.getLength())
-                                                        ##renderTableToList("Bekanntmachung" $entryLength $xpathExpression $entryNumber)
+                                                        ##renderTableToList("Bekanntmachung" $entryLength $xpathExpression $entryNumber "publicationDocs")
                                                     ## Zeitraum der Erörterung
                                                         #if($step == "phase2")
                                                             #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
@@ -270,7 +270,7 @@
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
                                                         #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
                                                         #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Informationen zum Er&ouml;rterungstermin" $entryLength $xpathExpression $entryNumber)
+                                                        #renderTableToList("Informationen zum Er&ouml;rterungstermin" $entryLength $xpathExpression $entryNumber "considerationDocs")
         
                                                     ## Datum der Entscheidung
                                                         #if($step == "phase3")
@@ -281,12 +281,12 @@
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='approvalDocs']/doc")
                                                         #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
                                                         #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Auslegungsinformationen" $entryLength $xpathExpression $entryNumber)
+                                                        #renderTableToList("Auslegungsinformationen" $entryLength $xpathExpression $entryNumber "approvalDocs")
                                                     ## Entscheidung
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='designDocs']/doc")
                                                         #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
                                                         #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Entscheidung" $entryLength $xpathExpression $entryNumber)
+                                                        #renderTableToList("Entscheidung" $entryLength $xpathExpression $entryNumber "designDocs")
                                                     </div>
                                                 </div>
                                             </div>
@@ -315,13 +315,14 @@
     #end
 #end
 
-#macro (renderTableToList $title $entryLength $xpathExpression $entryNumber)
+#macro (renderTableToList $title $entryLength $xpathExpression $entryNumber $tableId)
     #if($entryLength > 0)
         #renderGroupTitle($title)
         #foreach($entryNumber in [1..$entryLength])
             #set($entryType = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/type"))
-            #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
             #set($entryLink = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/link"))
+            
+            #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
             #set($entryLabel = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/label"))
             #if($entryLabel && $entryLabel.length() > 0 || $entryLink && $entryLink.length() > 0)
                 <p>
@@ -339,18 +340,18 @@
                 #else
                     $entryLabel
                 #end
-                #if($entryLink && $entryLink.length() > 0 || $entrySize && $entrySize.length() > 0)
-                    #set($span ="(")
+                #if($entryLink && $entryLink.length() > 0)
+                    <span class="tx-light">
+                    (
                     #if($entryLink)
                         #set ($entryLinkSplit = $entryLink.split("/"))
                         #set ($entryLinkSplitSize = $entryLinkSplit.size() - 1)
-                        #set($span = "$span$entryLinkSplit.get($entryLinkSplitSize)")
+                        $entryLinkSplit.get($entryLinkSplitSize)
                     #end
-                    #if($entrySize) 
-                        #set($span = "$span $entrySize")
-                    #end
-                    #set($span = "$span )")
-                    <span class="tx-light">$span</span>
+                    <span id="$tableId$entryNumber"></span>
+                    <script> getFileSize('$entryLink', '$tableId$entryNumber')</script>
+                    )
+                    </span>
                 #end
                 </p>
             #end
