@@ -349,7 +349,7 @@
                         $entryLinkSplit.get($entryLinkSplitSize)
                     #end
                     <span id="$tableId$entryNumber"></span>
-                    <script> getFileSize('$entryLink', '$tableId$entryNumber')</script>
+                    <script> getFileSize('$restUrlHttpGet?url=$entryLink', '$tableId$entryNumber')</script>
                     )
                     </span>
                 #end
