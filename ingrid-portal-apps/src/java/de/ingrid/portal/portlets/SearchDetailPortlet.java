@@ -24,7 +24,6 @@ package de.ingrid.portal.portlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +43,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
-import org.apache.commons.httpclient.util.HttpURLConnection;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -96,7 +94,6 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     URL url = new URL(paramURL);
                     java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
                     con.setRequestMethod("HEAD");
-                    response.setContentType( "application/json" );
                     if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
                         response.getWriter().write( con.getContentLength() + "" );
                     }
