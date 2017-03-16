@@ -366,14 +366,18 @@ function getFileSize(url, htmlId)
 {
     var fileSize = '';
     var http = new XMLHttpRequest();
-    http.open('HEAD', url, true);
+    http.open('GET', url, true);
     http.onreadystatechange = function() {
         if (this.readyState == this.DONE) {
             if (this.status === 200) {
-                fileSize = this.getResponseHeader('content-length');
-                if(fileSize){
-                    var element = document.getElementById(htmlId);
-                    element.innerHTML = convertfileSize(fileSize, true);
+                if(this.responseText){
+                    fileSize = this.responseText;
+                    if(fileSize){
+                        var element = document.getElementById(htmlId);
+                        if(element){
+                            element.innerHTML = convertfileSize(fileSize, true);
+                        }
+                    }
                 }
             }
         }

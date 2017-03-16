@@ -24,6 +24,8 @@ package de.ingrid.portal.portlets;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,7 +40,11 @@ import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 
+import org.apache.commons.httpclient.util.HttpURLConnection;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -80,6 +86,28 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     
     private HashMap replacementFields = new HashMap();
 
+    public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
+        String resourceID = request.getResourceID();
+        
+        try {
+            if (resourceID.equals( "httpURL" )) {
+                String paramURL = request.getParameter( "url" );
+                if(paramURL != null){
+                    URL url = new URL(paramURL);
+                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("HEAD");
+                    response.setContentType( "application/json" );
+                    if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
+                        response.getWriter().write( con.getContentLength() + "" );
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            log.error( "Error creating resource for resource ID: " + resourceID, e );
+        }
+    }
+    
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -133,6 +161,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("stringTool", new UtilsString());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
         context.put("piwik", PortalConfig.getInstance().getString(PortalConfig.ENABLE_PIWIK));
+        
+        ResourceURL restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURL" );
+        request.setAttribute( "restUrlHttpGet", restUrl.toString() );
         
         try {
         	// check whether we come from google (no IngridSessionPreferences)
