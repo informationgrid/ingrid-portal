@@ -20,3 +20,14 @@ the webapplication is started and can be accessed by the URL:
 
 For complete function the backend (ingrid-mdek aka ingird-iplug-ige) also has to be started.
 
+# Debug
+
+Execute the following commands or use the `run.bat` script file.
+
+```
+set MAVEN_OPTS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n
+mvn jetty:run -Denv=dev
+```
+
+In Eclipse start a new remote debug session via socket attach to port 8000 on 127.0.0.1.
+
