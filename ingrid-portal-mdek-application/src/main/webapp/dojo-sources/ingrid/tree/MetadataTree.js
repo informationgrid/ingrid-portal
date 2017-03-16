@@ -199,7 +199,8 @@ define("ingrid/tree/MetadataTree", [
             this.nodesToCopy = nodes;
             this.copySubTree = copySubTree;
             if (this.nodesToCut) {
-                array.forEach(this.nodesToCut, function(node) {
+                array.forEach(this.nodesToCut, function(nodeItem) {
+                    var node = UtilTree.getNodeById("dataTree", nodeItem.id);
                     domClass.remove(node.id, "nodeCut");
                 });
                 this.nodesToCut = null;
