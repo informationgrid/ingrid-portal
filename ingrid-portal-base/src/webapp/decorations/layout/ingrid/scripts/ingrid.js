@@ -364,18 +364,20 @@ function addLeafletHomeControl(map, title, position, icon, bounds, latlng){
 
 function getFileSize(url, htmlId)
 {
-    var fileSize = '';
+    var respJson;
     var http = new XMLHttpRequest();
     http.open('GET', url, true);
     http.onreadystatechange = function() {
         if (this.readyState == this.DONE) {
             if (this.status === 200) {
-                if(this.responseText){
-                    fileSize = this.responseText;
-                    if(fileSize){
-                        var element = document.getElementById(htmlId);
-                        if(element){
-                            element.innerHTML = convertfileSize(fileSize, true);
+                if(this.response){
+                    respJson = JSON.parse(this.response);
+                    if(respJson){
+                        if(respJson.contentLength){
+                            var element = document.getElementById(htmlId);
+                            if(element){
+                                element.innerHTML = convertfileSize(respJson.contentLength, true);
+                            }
                         }
                     }
                 }
@@ -399,5 +401,12 @@ function convertfileSize(bytes, si) {
         bytes /= thresh;
         ++u;
     } while(Math.abs(bytes) >= thresh && u < units.length - 1);
-    return bytes.toFixed(1)+' '+units[u];
+    
+    var unit = units[u];
+    var val = bytes.toFixed(1);
+    
+    if((units[u] == units[0]) && (val / 1000 >= 0.1)){
+        return (val / 1009).toFixed(1) + ' ' + units[1];
+    }
+    return bytes.toFixed(1) + ' ' + units[u];
 }

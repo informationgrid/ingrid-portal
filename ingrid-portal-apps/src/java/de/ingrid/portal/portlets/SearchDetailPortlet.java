@@ -94,9 +94,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     URL url = new URL(paramURL);
                     java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
                     con.setRequestMethod("HEAD");
+                    response.setContentType( "application/javascript" );
+                    StringBuilder s = new StringBuilder();
+                    response.getWriter().write( "{" );
                     if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
-                        response.getWriter().write( con.getContentLength() + "" );
+                        s.append( "\"contentLength\":");
+                        s.append( "\"" + con.getContentLength() + "\"" );
                     }
+                    response.getWriter().write( s.toString() );
+                    response.getWriter().write( "}" );
                 }
             }
 
