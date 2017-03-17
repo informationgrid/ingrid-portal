@@ -35,7 +35,7 @@
         #else
             <meta name="robots" content="index,follow" />
         #end
-        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' />
+        <link rel="stylesheet" href=#GetPageResource('css/google/robotocondensed/v13/css/fonts.css') />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css" />
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
