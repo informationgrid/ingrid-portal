@@ -13,6 +13,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HEAD;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -50,6 +51,37 @@ public class Api {
     @Autowired
     private AuthService authService;
 
+    
+    /**
+     * Get HEAD request and return the Content-Length Header.
+     *
+     * @param path The path and filename of the document
+     * @return Response
+     * @throws Exception
+     */
+    @HEAD
+    @Path("{path : [^/]+}/{file : .+}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response head(
+            @PathParam("path") String path,
+            @PathParam("file") String file) throws Exception {
+        // check permission
+        if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.READ.name())) {
+            throw new NotAuthorizedException("You are not authorized to read the document.");
+        }
+
+        // check file existence
+        if (!this.storage.exists(path, file)) {
+            throw new NotFoundException("The requested document does not exist on the server.");
+        }
+
+        // build response
+        ResponseBuilder response = Response.ok(MediaType.APPLICATION_OCTET_STREAM);
+        response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
+        response.header("Content-Length", Api.this.storage.getSize( path, file ));
+        return response.build();
+    }    
+    
     /**
      * Download a document
      *
@@ -90,6 +122,7 @@ public class Api {
         // build response
         ResponseBuilder response = Response.ok(fileStream, MediaType.APPLICATION_OCTET_STREAM);
         response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
+        response.header("Content-Length", Api.this.storage.getSize( path, file ));
         return response.build();
     }
 

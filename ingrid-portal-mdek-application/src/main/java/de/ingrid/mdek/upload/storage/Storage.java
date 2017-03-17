@@ -26,6 +26,15 @@ public interface Storage {
     boolean exists(String path, String file);
 
     /**
+     * Get size of a file in bytes.
+     *
+     * @param path The path
+     * @param file The file
+     * @return long
+     */
+    long getSize(String path, String file) throws IOException;
+    
+    /**
      * Get the content of a file
      *
      * @param path The path

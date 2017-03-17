@@ -66,6 +66,13 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
+    public long getSize(String path, String file) throws IOException {
+        Path realPath = this.getRealPath(path, file, this.docsDir);
+        return Files.size( realPath);
+    }
+    
+    
+    @Override
     public InputStream read(String path, String file) throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
         return Files.newInputStream(realPath);
