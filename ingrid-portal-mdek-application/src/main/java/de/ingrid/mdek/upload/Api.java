@@ -24,7 +24,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.StreamingOutput;
-import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -51,7 +50,6 @@ public class Api {
     @Autowired
     private AuthService authService;
 
-    
     /**
      * Get HEAD request and return the Content-Length Header.
      *
@@ -80,8 +78,8 @@ public class Api {
         response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
         response.header("Content-Length", Api.this.storage.getSize( path, file ));
         return response.build();
-    }    
-    
+    }
+
     /**
      * Download a document
      *
@@ -140,7 +138,6 @@ public class Api {
      * @param partsIndex The index of the current part of the document (only for partial upload)
      * @param partsSize The size of the current part of the document in bytes (only for partial upload)
      * @param partsOffset The byte offset of the current part of the document (only for partial upload)
-     * @param uriInfo
      * @return Response
      * @throws Exception
      */
@@ -157,8 +154,8 @@ public class Api {
             @FormDataParam("parts_total") Integer partsTotal,
             @FormDataParam("parts_index") Integer partsIndex,
             @FormDataParam("parts_size") Integer partsSize,
-            @FormDataParam("parts_offset") Integer partsOffset,
-            @Context UriInfo uriInfo) throws Exception {
+            @FormDataParam("parts_offset") Integer partsOffset
+            ) throws Exception {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.CREATE.name())) {
             throw new NotAuthorizedException("You are not authorized to upload the document.");
@@ -179,7 +176,7 @@ public class Api {
             // store file
             files = this.storage.write(path, file, fileInputStream, size, replace, false);
         }
-        return this.createUploadResponse(files, uriInfo);
+        return this.createUploadResponse(files);
     }
 
     /**
@@ -192,7 +189,6 @@ public class Api {
      * @param replace Boolean whether to replace an existing document or not (if false, an error will be returned, if
      *            the document exists)
      * @param partsTotal The number of parts of the document
-     * @param uriInfo
      * @return Response
      * @throws Exception
      */
@@ -205,8 +201,8 @@ public class Api {
             @FormParam("id") String id,
             @FormParam("size") Integer size,
             @FormParam("replace") boolean replace,
-            @FormParam("parts_total") Integer partsTotal,
-            @Context UriInfo uriInfo) throws Exception {
+            @FormParam("parts_total") Integer partsTotal
+            ) throws Exception {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.CREATE.name())) {
             throw new NotAuthorizedException("You are not authorized to upload the document.");
@@ -214,7 +210,7 @@ public class Api {
 
         // store files
         Item[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, false);
-        return this.createUploadResponse(files, uriInfo);
+        return this.createUploadResponse(files);
     }
 
     /**
@@ -251,21 +247,20 @@ public class Api {
      * Create the upload response from a list of files
      *
      * @param files
-     * @param uriInfo
      * @return Response
      * @throws Exception
      */
-    private Response createUploadResponse(Item[] files, UriInfo uriInfo) throws Exception {
+    private Response createUploadResponse(Item[] files) throws Exception {
         // get first URI for location header
         String createdFile = files.length > 0 ? files[0].getUri() : "";
-        URI uri = this.toAbsoluteUri(createdFile, uriInfo);
+        URI uri = this.toUri(createdFile);
 
         // build response
         List<Item> uploads = new ArrayList<Item>();
         for (int i = 0, count = files.length; i < count; i++) {
             // update the item URIs
             Item upload = files[i];
-            upload.setUri(this.toAbsoluteUri(upload.getUri(), uriInfo).toString());
+            upload.setUri(this.toUri(upload.getUri()).toString());
             uploads.add(upload);
         }
         UploadResponse uploadResponse = new UploadResponse(uploads);
@@ -273,19 +268,17 @@ public class Api {
     }
 
     /**
-     * Get the absolute URI of a file
+     * Get the URI of a file
      *
      * @param file
-     * @param uriInfo
      * @return URI
      * @throws Exception
      */
-    private URI toAbsoluteUri(String file, UriInfo uriInfo) throws Exception {
-        return uriInfo.getAbsolutePathBuilder()
-                .path(
-                        URLEncoder.encode( file, UTF_8 )
-                                .replaceAll( "%2F", "/" )
-                                .replaceAll( "%5C", "/" ) )
-                .build();
+    private URI toUri(String file) throws Exception {
+        return new URI(
+                    URLEncoder.encode( file, UTF_8 )
+                            .replaceAll( "%2F", "/" )
+                            .replaceAll( "%5C", "/" )
+        );
     }
 }
