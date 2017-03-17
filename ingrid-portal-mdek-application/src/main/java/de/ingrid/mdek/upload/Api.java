@@ -248,6 +248,11 @@ public class Api {
      * @throws Exception
      */
     private URI toAbsoluteUri(String file, UriInfo uriInfo) throws Exception {
-        return uriInfo.getAbsolutePathBuilder().path(URLEncoder.encode(file, UTF_8).replaceAll("%2F", "/")).build();
+        return uriInfo.getAbsolutePathBuilder()
+                .path(
+                        URLEncoder.encode( file, UTF_8 )
+                                .replaceAll( "%2F", "/" )
+                                .replaceAll( "%5C", "/" ) )
+                .build();
     }
 }
