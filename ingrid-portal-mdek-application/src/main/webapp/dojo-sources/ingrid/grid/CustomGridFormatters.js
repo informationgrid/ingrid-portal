@@ -118,21 +118,23 @@ define(["dojo/_base/declare",
                 return "<div class=\"TreeIcon TreeIcon" + value + "\"></div>";
             },
 
-            LinkCellFormatter: function(baseUrl, row, cell, value, columnDef, dataContext) {
+            LinkCellFormatter: function(row, cell, value, columnDef, dataContext) {
                 if (!value) {
                     return value;
                 }
-                if (baseUrl && baseUrl.length > 0 && baseUrl.charAt(baseUrl.length-1) !== "/") {
-                    baseUrl += "/";
-                }
+                var docName = value;
 
                 var link = null;
                 if (value.indexOf("http") === 0) {
                     link = value;
                 } else {
+                    // determine base url 
+                    var baseUrl = document.location.protocol + "//" + document.location.host + "/ingrid-portal-mdek-application/rest/document/";
+                    // remove uuid information from relative path
+                    docName = value.substring( value.indexOf("/") + 1 );
                     link = baseUrl + value;
                 }
-                return "<span class=\"text-truncate left\" style=\"width: 100%\">" + value +
+                return "<span class=\"text-truncate left\" style=\"width: 100%\">" + docName +
                     " <a href=\"" + link + "\" title=\"" + link + "\" target=\"_blank\"><img src=\"img/ic_fl_popup.gif\" width=\"10\" height=\"9\" alt=\"Popup\">Link</a></span>";
             },
 
