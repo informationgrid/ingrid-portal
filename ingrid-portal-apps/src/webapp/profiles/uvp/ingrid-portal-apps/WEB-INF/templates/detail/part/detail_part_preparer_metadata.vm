@@ -327,7 +327,7 @@
             #if($entryLabel && $entryLabel.length() > 0 || $entryLink && $entryLink.length() > 0)
                 <p>
                 #if($entryLink && $entryLink.length() > 0)
-                    <a class="link" href="$entryLink">
+                    <a class="link download" href="$entryLink">
                         <svg class="icon">
                             <use xlink:href="#internal-link">
                         </svg>
@@ -348,8 +348,7 @@
                         #set ($entryLinkSplitSize = $entryLinkSplit.size() - 1)
                         $entryLinkSplit.get($entryLinkSplitSize)
                     #end
-                    <span id="$tableId$entryNumber"></span>
-                    <script> getFileSize('$restUrlHttpGet?url=$entryLink', '$tableId$entryNumber')</script>
+                    <span class="downloadText"></span>
                     )
                     </span>
                 #end
@@ -377,3 +376,23 @@
         </svg>
     </h3>
 #end
+<script>
+    $( document ).ready(function() {
+        $('a.download').each(function(index) {
+            var a = $(this);
+            var aParent = a.parent(); 
+            if(a){
+                if(a.length > 0){
+                    var href = a[0].href;
+                    var spanParent = aParent.find('span.tx-light');
+                    if(spanParent){
+                        var span = spanParent.find('span.downloadText');
+                        if(href && span){
+                            getLinkFileSize('$restUrlHttpGet?url=' + href, span);
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
