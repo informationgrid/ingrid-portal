@@ -85,7 +85,7 @@
                 map.addLayer(mapMarkers10);
                 map.addLayer(mapMarkers11);
                 map.addLayer(mapMarkers1314);
-                map.fitBounds(mapMarkers.getBounds());
+                map.fitBounds(mapMarkers.getBounds().pad(0.5));
             }
         }
     }
