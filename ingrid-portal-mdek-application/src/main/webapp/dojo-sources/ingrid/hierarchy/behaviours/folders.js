@@ -142,7 +142,6 @@ define(["dojo/_base/declare",
 
         // if we selected a folder
         if (selectedNode.objectClass === 1000) {
-          registry.byId("toolbarBtnNewFolder").set("disabled", false);
 
           var enabledButtons = ["toolbarBtnNewDoc", "toolbarBtnNewFolder", "toolbarBtnCut", "toolbarBtnCopy", "toolbarBtnCopySubTree", "toolbarBtnPaste", "toolbarBtnSave", "toolbarBtnDelSubTree", "toolbarBtnHelp"];
           var toolbarButtons = query("#myToolBar .dijitButton");
@@ -151,21 +150,19 @@ define(["dojo/_base/declare",
               registry.getEnclosingWidget(btn).set("disabled", true);
             }
           });
-        } else {
-          // if we selected another node
-
-          // do not allow to create a folder under free addresses!
-          var disable = self.isFolderDisabledForNode(selectedNode);
-          registry.byId("toolbarBtnNewFolder").set("disabled", disable);
         }
+
+        // do not allow to create a folder under free addresses!
+        var disable = self.isFolderDisabledForNode(selectedNode);
+        registry.byId("toolbarBtnNewFolder").set("disabled", disable);
       });
     },
 
     isFolderDisabledForNode: function(node) {
       var excludedId = "addressFreeRoot";
 
-      // check starting node
-      if (node.id === excludedId) return true;
+      // check if we have write permission and node is not excluded
+      if (!node.userWriteTreePermission || node.id === excludedId) return true;
 
       // check all parents
       var parentId = node.parent;
@@ -202,7 +199,7 @@ define(["dojo/_base/declare",
     _createNewObjectFolder: function(parentUuid) {
       var self = this;
       
-      ObjectService.createNewNode(null, function(objNode) {
+      ObjectService.createNewNode(parentUuid, function(objNode) {
         objNode.nodeAppType = "O";
         objNode.objectClass = "1000";
         objNode.parentUuid = parentUuid;
@@ -224,7 +221,7 @@ define(["dojo/_base/declare",
     _createNewAddressFolder: function(parentUuid) {
       var self = this;
 
-      AddressService.createNewAddress(null, function(addressNode) {
+      AddressService.createNewAddress(parentUuid, function(addressNode) {
         addressNode.nodeAppType = "A";
         addressNode.addressClass = "1000";
         addressNode.nodeDocType = "Class1000_B";
