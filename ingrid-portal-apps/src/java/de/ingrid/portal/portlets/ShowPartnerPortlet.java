@@ -58,7 +58,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
 
     private final static Logger log = LoggerFactory.getLogger(ShowPartnerPortlet.class);
 
-    private static final String[] REQUESTED_FIELDS_ADDRESS = new String[] { "t02_address.id", "t02_address.adr_id", "title", "t02_address.lastname", "t02_address.firstname", "t02_address.address_key", "t02_address.address_value", "t02_address.title_key", "t02_address.title", "t021_communication.commtype_key", "t021_communication.commtype_value", "t021_communication.comm_value", "children.address_node.addr_type" };
+    private static final String[] REQUESTED_FIELDS_ADDRESS = new String[] { "t02_address.id", "t02_address.adr_id", "title", "t02_address.lastname", "t02_address.firstname", "t02_address.address_key", "t02_address.address_value", "t02_address.title_key", "t02_address.title", "t021_communication.commtype_key", "t021_communication.commtype_value", "t021_communication.comm_value", "children.address_node.addr_type", "t02_address.parents.title" };
     
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
@@ -111,8 +111,20 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                     if(detail.get("title") != null){
                         institution = (String) ((ArrayList)detail.get("title")).get(0);
                         if(institution != null){
-                            address.put( "institution", institution.trim());
+                            if(detail.get("t02_address.parents.title") != null)
+                                if(detail.get("t02_address.parents.title") instanceof String[]){
+                                    institution = ((String[])detail.get("t02_address.parents.title"))[0] + "\n" + institution.trim();
+                                } else {
+                                    ArrayList<String> parentsTitle = (ArrayList<String>) detail.get("t02_address.parents.title");
+                                    if(parentsTitle != null){
+                                        for(String title : parentsTitle){
+                                            institution = title + "\n" + institution.trim();
+                                        }
+                                    }
+                                }
+                            
                         }
+                        address.put( "institution", institution.trim());
                     }
                     
                     if(institution != null){
