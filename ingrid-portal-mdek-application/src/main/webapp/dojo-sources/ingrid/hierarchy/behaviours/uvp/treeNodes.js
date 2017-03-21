@@ -63,7 +63,6 @@ define([
                             registry.byId("toolbarBtnPaste").set("disabled", true);
                             registry.byId("toolbarBtnNewFolder").set("disabled", true);
                         } else if (message.node.parent === "objectRoot") {
-                            registry.byId("toolbarBtnNewFolder").set("disabled", false);
                             // do not allow to rename or delete the folders directly under the root node
                             registry.byId("toolbarBtnCut").set("disabled", true);
                             registry.byId("toolbarBtnCopy").set("disabled", true);
@@ -122,7 +121,7 @@ define([
                     var nodes = tree.nodesToCopy ? tree.nodesToCopy : tree.nodesToCut;
                     if (nodes) {
                         var hasValidParent = self._checkValidParent(node, nodes);
-                        if (!hasValidParent) registry.byId("menuItemPaste").set("disabled", true);
+                        registry.byId("menuItemPaste").set("disabled", !hasValidParent);
                     }
                 }, 0);
             });
@@ -151,7 +150,7 @@ define([
 
         _getTopParentNode: function(node) {
             var tree = registry.byId("dataTree");
-            while (node && node.item.parent !== "objectRoot") {
+            while (node && node.item.parent !== "objectRoot" && node.item.id !== "addressRoot") {
                 node = tree.getNodesByItem(node.item.parent)[0];
             }
             return node;
@@ -171,6 +170,11 @@ define([
 
             var rootFolderLabel = rootFolderNode.label;
             return array.every(nodesToInsert, function(nodeToInsert) {
+                // addresses and folders can be pasted anywhere below the address root node
+                if (nodeToInsert.nodeAppType === "A" && rootFolderNode.item.id === "addressRoot") {
+                    return true;
+                }
+
                 var insertClass = nodeToInsert.objectClass;
 
                 // just check if each copied node is under the same UVP top folder
