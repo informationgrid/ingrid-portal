@@ -58,7 +58,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
 
     private final static Logger log = LoggerFactory.getLogger(ShowPartnerPortlet.class);
 
-    private static final String[] REQUESTED_FIELDS_ADDRESS = new String[] { "t02_address.id", "t02_address.adr_id", "title", "t02_address.lastname", "t02_address.firstname", "t02_address.address_key", "t02_address.address_value", "t02_address.title_key", "t02_address.title", "t021_communication.commtype_key", "t021_communication.commtype_value", "t021_communication.comm_value" };
+    private static final String[] REQUESTED_FIELDS_ADDRESS = new String[] { "t02_address.id", "t02_address.adr_id", "title", "t02_address.lastname", "t02_address.firstname", "t02_address.address_key", "t02_address.address_value", "t02_address.title_key", "t02_address.title", "t021_communication.commtype_key", "t021_communication.commtype_value", "t021_communication.comm_value", "children.address_node.addr_type" };
     
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
@@ -87,11 +87,14 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
             try {
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( partnerQuery ), REQUESTED_FIELDS_ADDRESS, IBUSInterfaceImpl.getInstance()
                         .getIBus() );
+                ArrayList<String> addedInstitution = new ArrayList<String>();
                 while (it.hasNext()) {
                     IngridHit hit = it.next();
                     IngridHitDetail detail = hit.getHitDetail();
 
                     HashMap<String, String> address = new HashMap<String, String>();
+                    String institution = null;
+                    /*
                     if(detail.get("t02_address.address_value") != null){
                         address.put( "address_value", ((String[])detail.get("t02_address.address_value"))[0]);
                     }
@@ -104,40 +107,50 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                     if(detail.get("t02_address.lastname") != null){
                         address.put( "lastname", ((String[])detail.get("t02_address.lastname"))[0]);
                     }
+                    */
                     if(detail.get("title") != null){
-                        address.put( "institution", (String) ((ArrayList)detail.get("title")).get(0));
-                    }
-                    if(detail.get("t021_communication.commtype_key") != null 
-                            && detail.get("t021_communication.commtype_value") != null
-                            && detail.get("t021_communication.comm_value") != null){
-                        
-                        ArrayList<String> typeKeys = null;
-                        ArrayList<String> typeValues = null;
-                        ArrayList<String> values = null;
-                        
-                        typeKeys = getIndexValue(detail.get("t021_communication.commtype_key"));
-                        typeValues = getIndexValue(detail.get("t021_communication.commtype_value"));
-                        values = getIndexValue(detail.get("t021_communication.comm_value"));
-                        
-                        for (int i = 0; i < typeKeys.size(); i++) {
-                            String typeKey = (String) typeKeys.get(i);
-                            String typeValue = null;
-                            String value = null;
-                            if(typeValues.size() > i){
-                                typeValue = ((String)typeValues.get(i)).toLowerCase();
-                                if(typeKey.equals("4") && typeValue.indexOf( "url" ) > -1){
-                                    if(values.size() > i){
-                                        value = (String) values.get(i);
-                                    }
-                                }
-                            }
-                            if(value != null){
-                                address.put( "url", value );
-                            }
+                        institution = (String) ((ArrayList)detail.get("title")).get(0);
+                        if(institution != null){
+                            address.put( "institution", institution.trim());
                         }
                     }
-                    if(address != null && address.size() > 0){
-                        addresses.add( address );
+                    
+                    if(institution != null){
+                        if(detail.get("t021_communication.commtype_key") != null 
+                                && detail.get("t021_communication.commtype_value") != null
+                                && detail.get("t021_communication.comm_value") != null){
+                            
+                            ArrayList<String> typeKeys = null;
+                            ArrayList<String> typeValues = null;
+                            ArrayList<String> values = null;
+                            
+                            typeKeys = getIndexValue(detail.get("t021_communication.commtype_key"));
+                            typeValues = getIndexValue(detail.get("t021_communication.commtype_value"));
+                            values = getIndexValue(detail.get("t021_communication.comm_value"));
+                            
+                            for (int i = 0; i < typeKeys.size(); i++) {
+                                String typeKey = (String) typeKeys.get(i);
+                                String typeValue = null;
+                                String value = null;
+                                if(typeValues.size() > i){
+                                    typeValue = ((String)typeValues.get(i)).toLowerCase();
+                                    if(typeKey.equals("4") && typeValue.indexOf( "url" ) > -1){
+                                        if(values.size() > i){
+                                            value = (String) values.get(i);
+                                        }
+                                    }
+                                }
+                                if(value != null){
+                                    address.put( "url", value );
+                                }
+                            }
+                        }
+                        if(address != null && address.size() > 0){
+                            if(addedInstitution.indexOf( institution.toLowerCase().trim() ) == -1){
+                                addresses.add( address );
+                                addedInstitution.add( institution.toLowerCase().trim() );
+                            }
+                        }
                     }
                 }
             } catch (ParseException e) {

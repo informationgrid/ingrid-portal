@@ -10,7 +10,7 @@
                         $address.get("institution").replaceAll("\n","<br>")
                         <br>
                     #end
-                    $address.get("address_value") $address.get("title") $address.get("firstname") $address.get("lastname")
+                    ##$address.get("address_value") $address.get("title") $address.get("firstname") $address.get("lastname")
                 </a>
             #else
                 <span style="display: block; padding: 0.5625rem 0.5625rem 0.5625rem 1.5rem; position: relative;">
@@ -18,7 +18,7 @@
                         $address.get("institution").replaceAll("\n","<br>")
                         <br>
                     #end
-                    $address.get("address_value") $address.get("title") $address.get("firstname") $address.get("lastname")
+                    ##$address.get("address_value") $address.get("title") $address.get("firstname") $address.get("lastname")
                 </span>
             #end
         </li>
