@@ -187,7 +187,8 @@ define(["dojo/_base/declare",
     },
 
     _createNewFolder: function(parentUuid, type) {
-      if (parentUuid === "objectRoot") parentUuid = null;
+      console.log("new folder");
+      if (parentUuid === "objectRoot" || parentUuid === "addressRoot") parentUuid = null;
 
       if (type === "O") {
         this._createNewObjectFolder(parentUuid);
