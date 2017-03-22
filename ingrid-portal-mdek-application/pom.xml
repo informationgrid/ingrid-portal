@@ -81,6 +81,7 @@
                         <contextPath>/${project.artifactId}</contextPath>
                         <extraClasspath>${basedir}/src/test/resources</extraClasspath>
                     </webApp>
+                    <contextXml>${basedir}/src/test/resources/jetty-config.xml</contextXml>
                 </configuration>
             </plugin>
 

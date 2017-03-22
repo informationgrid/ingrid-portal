@@ -60,6 +60,7 @@ $breakpoint: (
     "960 >": "screen and (min-width:#{960px})",
     "960 - 1240": "screen and (min-width:#{960px}) and (max-width: #{1239px})",
 
+    "< 1140": "screen and (max-width:#{1140px})",
     "1140 >": "screen and (min-width:#{1140px})",
 
     "1240 >": "screen and (min-width:#{1240px})",

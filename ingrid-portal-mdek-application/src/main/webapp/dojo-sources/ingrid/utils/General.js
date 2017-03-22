@@ -54,7 +54,13 @@ define([
         },
 
         refreshSession: function() {
-            UtilityService.refreshSession();
+            var self = this;
+            UtilityService.refreshSession({
+                errorHandler: function(err) {
+                    console.error(err);
+                    self.showSessionTimoutMessage();
+                }
+            });
         },
 
         sessionValid: function() {

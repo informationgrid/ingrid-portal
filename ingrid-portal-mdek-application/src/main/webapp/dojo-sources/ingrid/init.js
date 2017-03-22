@@ -760,7 +760,7 @@ define([
                 sessionKeepaliveDef.then(function(sessionKeepaliveInterval) {
                     if (sessionKeepaliveInterval > 0) {
                         var interval = sessionKeepaliveInterval * 60 * 1000;
-                        setInterval(UtilGeneral.refreshSession, interval);
+                        setInterval(lang.hitch(UtilGeneral, UtilGeneral.refreshSession), interval);
                     } else {
                         UtilityService.getSessionTimoutInterval({
                             callback: function(res) {

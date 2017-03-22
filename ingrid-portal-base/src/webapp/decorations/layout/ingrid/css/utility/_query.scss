@@ -99,3 +99,12 @@
         )
     );
 }
+
+.mq-hide-xb {
+    @include media(
+        $query: '< 1140',
+        $css: (
+            display: none
+        )
+    );
+}
