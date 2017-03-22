@@ -36,9 +36,9 @@
     <head>
         <title>InGrid Editor</title>
         <link rel="shortcut icon" href="img/iconLogo.gif" type="image/x-icon">
-        <link rel="stylesheet" href="dojo-sources/release/lib/ingrid/css/slick.grid.css" type="text/css" media="screen" charset="utf-8" />
-        <link rel="stylesheet" href="dojo-sources/release/lib/ingrid/css/styles.css" />
-        <link rel="stylesheet" href="dojo-sources/release/lib/ingrid/css/imageReferences.css" />
+        <link rel="stylesheet" href="dojo-sources/ingrid/css/slick.grid.css" type="text/css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" href="dojo-sources/ingrid/css/styles.css" />
+        <link rel="stylesheet" href="dojo-sources/ingrid/css/imageReferences.css" />
 
         <script type="text/javascript">
             var userLocale = '<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>';
@@ -53,13 +53,13 @@
         <script type='text/javascript' src='dwr/util.js'></script>
 
         <!-- Application files -->
-        <script type="text/javascript" src="dojo-sources/release/lib/global/config.js"></script>
+        <script type="text/javascript" src="dojo-sources/global/config.js"></script>
 <c:choose>
     <c:when test="${isDebug}">
-        <script type="text/javascript" src="dojo-sources/release/lib/ingrid/ingrid.js.uncompressed.js"></script>
+        <script type="text/javascript" src="dojo-sources/ingrid/ingrid.js.uncompressed.js"></script>
     </c:when>
     <c:otherwise>
-      <script type="text/javascript" src="dojo-sources/release/lib/ingrid/ingrid.js"></script>
+      <script type="text/javascript" src="dojo-sources/ingrid/ingrid.js"></script>
    </c:otherwise>
 </c:choose>
         <script type="text/javascript" src="js/error_handler.js"></script>

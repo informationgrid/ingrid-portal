@@ -29,7 +29,7 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 
-<link rel="stylesheet" href="dojo-sources/release/lib/ingrid/css/github.css" />
+<link rel="stylesheet" href="dojo-sources/ingrid/css/github.css" />
 
 <script type="text/javascript">
 

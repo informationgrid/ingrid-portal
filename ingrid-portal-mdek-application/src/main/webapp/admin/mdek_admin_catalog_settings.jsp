@@ -326,7 +326,7 @@
                     var behaviourIds = behavioursByCategory[category];
 
                     var categoryContainer = "behaviourContent";
-                    debugger
+
                     if (category !== "undefined") {
                         renderCategory(category);
                         categoryContainer = domConstruct.toDom("<div class='checkbox-indent'></div>");
