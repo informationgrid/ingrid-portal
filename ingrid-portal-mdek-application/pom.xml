@@ -41,15 +41,7 @@
                     <downloadSources>1.5</downloadSources>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
-                <configuration>
-                  <source>1.7</source>
-                  <target>1.7</target>
-                </configuration>
-              </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -72,68 +64,23 @@
                       </webResources>
                 </configuration>
             </plugin>
-            <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-            <!-- HACK: Upload JAR file WITHOUT "-classes" in name, so MAVEN1 can handle it (no classifier "classes" possible in maven1) !!! -->
-            <!-- NOT NEEDED ANYMORE: Now MAVEN2, so we use classifier "classes" in dependencies ! So always ingrid-portal-mdek-application-XXX-classes.jar -->
-            <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>wagon-maven-plugin</artifactId>
-                <version>1.0-beta-1</version> <executions> <execution> <id>upload-jar</id>
-                <phase>deploy</phase> <goals> <goal>upload-single</goal> </goals> <configuration>
-                <fromFile>target/${project.artifactId}-classes.jar</fromFile> <url>file:///srv/www/htdocs/ingrid/maven2/de/ingrid/portal/${project.artifactId}/${project.version}</url>
-                <toFile>${project.artifactId}-${project.version}.jar</toFile> </configuration>
-                </execution> </executions> </plugin> -->
 
-            <!-- <plugin>
+            <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.4.2.v20170220</version>
                 <configuration>
-                    <classesDirectory>target/classes</classesDirectory>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
-                    
-                    <webApp>
-                       <webInfIncludeJarPattern>.*/^(asm-all-repackaged)[^/]*\.jar$</webInfIncludeJarPattern>
-                       <baseResource>
-                        ../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application
-                       </baseResource>
-                       <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                          <resourcesAsCSV>src/main/webappX,../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application</resourcesAsCSV>
-                        </baseResource>
-                       <resourceBases>
-                            <resourceBase>
-                                ../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application
-                            </resourceBase>
-                            <resourceBase>
-                                src/main/webappX
-                            </resourceBase>
-                       </resourceBases>
-                       <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                        <resourcesAsCSV>src/main/webapp,static</resourcesAsCSV>
-                      </baseResource>
-                     </webApp>
-                     <webAppConfig>
-                     
-                      <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                        <resourcesAsCSV>src/main/webapp,static</resourcesAsCSV>
-                      </baseResource>
-                    </webAppConfig>
-                </configuration>
-            </plugin> -->
-
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.26</version>
-                <configuration>
-                    <!-- <scanIntervalSeconds>10</scanIntervalSeconds> -->
-                    <reload>manual</reload>
+                    <reload>automatic</reload>
                     <useTestClasspath>true</useTestClasspath>
-            
-                    <connectors>
-                        <connector implementation="org.mortbay.jetty.bio.SocketConnector">
-                            <port>8088</port>
-                            <maxIdleTime>60000</maxIdleTime>
-                        </connector>
-                    </connectors>
+                    <httpConnector>
+                        <port>8088</port>
+                    </httpConnector>
+                    <webApp>
+                        <webInfIncludeJarPattern>.*/^(asm-all-repackaged)[^/]*\.jar$</webInfIncludeJarPattern>
+                        <contextPath>/${project.artifactId}</contextPath>
+                        <extraClasspath>${basedir}/src/test/resources</extraClasspath>
+                    </webApp>
                 </configuration>
             </plugin>
 
@@ -680,19 +627,19 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.mortbay.jetty</groupId>
-                        <artifactId>maven-jetty-plugin</artifactId>
-                        <version>6.1.26</version>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
                         <configuration>
-                            <webAppConfig>
-                                <extraClasspath>${basedir}/src/test/resources</extraClasspath>
-                                <contextPath>/${project.artifactId}</contextPath>
-                                      
+                            <scanTargets>
+                                <scanTarget>${basedir}/../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application/WEB-INF/classes</scanTarget>
+                            </scanTargets>
+                            <webApp>
+                                <extraClasspath>${basedir}/../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application/WEB-INF/classes</extraClasspath>
                                 <!-- use resources from profile first, before using the default webapp dir -->
-                                <baseResource implementation="org.mortbay.resource.ResourceCollection">
+                                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                                     <resourcesAsCSV>../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application,src/main/webapp</resourcesAsCSV>
                                 </baseResource>
-                            </webAppConfig>
+                            </webApp>
                         </configuration>
                     </plugin>
                 </plugins>
