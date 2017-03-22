@@ -20,49 +20,18 @@
  * limitations under the Licence.
  * **************************************************#
  */
-define([
-    "dojo/_base/lang",
-    "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/uvp/initialFolders",
-    "ingrid/hierarchy/behaviours/uvp/docTypes",
-    "ingrid/hierarchy/behaviours/uvp/generalModifications",
-    "ingrid/hierarchy/behaviours/uvp/treeNodes",
-    "ingrid/hierarchy/behaviours/uvp/formFields",
-    "ingrid/hierarchy/behaviours/uvp/addressMods"
-], function(lang, behaviours, initialFolders, docTypes, generalModifications, treeNodes, formFields, addressMods) {
+define(["dojo/_base/lang", 
+        "ingrid/hierarchy/behaviours"
+], function(lang, behaviours) {
 
     return lang.mixin(behaviours, {
-
-        /**
-         * Create initial folders on first startup and set a flag in the database.
-         */
-        uvpInitialFolders: initialFolders,
-
-        /**
-         * Define which documents can be created according to the parent.
-         * Load new syslists containing UVP object classes and categories.
-         */
-        uvpDocumentTypes: docTypes,
-
-        /**
-         * Hide unwanted menu items and other general changes to the IGE.
-         */
-        uvpGeneralModifications: generalModifications,
-
-        /**
-         * Define the behaviour of the root nodes and the initialized folders.
-         */
-        uvpTreeNodes: treeNodes,
-
-        /**
-         * Create fields for all the uvp classes and show only those fields according to the class.
-         */
-        uvpPhaseField: formFields,
-
-        /**
-         * Modify the display of the address form fields.
-         */
-        uvpAddressModifications: addressMods
-
-    });
+        /*
+        behaviourId: {
+            title: "Verhalten",
+            description: "Beschreibung des Verhaltens",
+            defaultActive: true,
+            run: function() {}
+        }
+        */
+    } );
 });
