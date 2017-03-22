@@ -63,28 +63,24 @@
                       </webResources>
                 </configuration>
             </plugin>
-            <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-            <!-- HACK: Upload JAR file WITHOUT "-classes" in name, so MAVEN1 can handle it (no classifier "classes" possible in maven1) !!! -->
-            <!-- NOT NEEDED ANYMORE: Now MAVEN2, so we use classifier "classes" in dependencies ! So always ingrid-portal-mdek-application-XXX-classes.jar -->
-            <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>wagon-maven-plugin</artifactId>
-                <version>1.0-beta-1</version> <executions> <execution> <id>upload-jar</id>
-                <phase>deploy</phase> <goals> <goal>upload-single</goal> </goals> <configuration>
-                <fromFile>target/${project.artifactId}-classes.jar</fromFile> <url>file:///srv/www/htdocs/ingrid/maven2/de/ingrid/portal/${project.artifactId}/${project.version}</url>
-                <toFile>${project.artifactId}-${project.version}.jar</toFile> </configuration>
-                </execution> </executions> </plugin> -->
 
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.26</version>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.2.v20170220</version>
                 <configuration>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
-                    <connectors>
-                        <connector implementation="org.mortbay.jetty.bio.SocketConnector">
-                            <port>8088</port>
-                            <maxIdleTime>60000</maxIdleTime>
-                        </connector>
-                    </connectors>
+                    <reload>automatic</reload>
+                    <useTestClasspath>true</useTestClasspath>
+                    <httpConnector>
+                        <port>8088</port>
+                    </httpConnector>
+                    <webApp>
+                        <webInfIncludeJarPattern>.*/^(asm-all-repackaged)[^/]*\.jar$</webInfIncludeJarPattern>
+                        <contextPath>/${project.artifactId}</contextPath>
+                        <extraClasspath>${basedir}/src/test/resources</extraClasspath>
+                    </webApp>
+                    <contextXml>${basedir}/src/test/resources/jetty-config.xml</contextXml>
                 </configuration>
             </plugin>
 
