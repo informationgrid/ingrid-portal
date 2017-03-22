@@ -608,11 +608,11 @@ define([
 
             this.initPrintFrame = function() {
                 var cssLink1 = document.createElement("link");
-                cssLink1.href = "/ingrid-portal-mdek-application/dojo-sources/release/lib/ingrid/css/slick.grid.css";
+                cssLink1.href = "/ingrid-portal-mdek-application/dojo-sources/ingrid/css/slick.grid.css";
                 cssLink1.rel = "stylesheet";
                 cssLink1.type = "text/css";
                 var cssLink2 = document.createElement("link");
-                cssLink2.href = "/ingrid-portal-mdek-application/dojo-sources/release/lib/ingrid/css/styles.css";
+                cssLink2.href = "/ingrid-portal-mdek-application/dojo-sources/ingrid/css/styles.css";
                 cssLink2.rel = "stylesheet";
                 cssLink2.type = "text/css";
                 // IE has problems here!

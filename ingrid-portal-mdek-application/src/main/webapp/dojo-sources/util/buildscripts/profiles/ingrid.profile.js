@@ -1,8 +1,8 @@
 var profile = (function(){
     return {
         basePath: "../../..",
-        releaseDir: "../../../../target/dojo-release/dojo-sources/release",
-        releaseName: "lib",
+        releaseDir: "../../../../target/dojo-release",
+        releaseName: "dojo-sources",
         action: "release",
         layerOptimize: "closure",
         optimize: "closure",

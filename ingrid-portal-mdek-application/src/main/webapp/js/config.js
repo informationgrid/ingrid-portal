@@ -57,10 +57,10 @@ if (!this.isRelease) {
             //{ name: "ingrid", location: ingridJsPath+"dojo" }
             // { name: "dwr", location: "../../../../dwr" },
             // { name: "global", location: "dojo-sources/app/lib/global" },
-            { name: "ingrid", location: "dojo-sources/release/lib/ingrid" },
-            { name: "dojo", location: "dojo-sources/release/lib/dojo" },
-            { name: "dijit", location: "dojo-sources/release/lib/dijit" },
-            { name: "dojox", location: "dojo-sources/release/lib/dojox" }
+            { name: "ingrid", location: "dojo-sources/ingrid" },
+            { name: "dojo", location: "dojo-sources/dojo" },
+            { name: "dijit", location: "dojo-sources/dijit" },
+            { name: "dojox", location: "dojo-sources/dojox" }
         ]
     };
 }

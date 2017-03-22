@@ -9,6 +9,12 @@
             <action type="fix" dev="wemove" issue="REDMINE-548">
                 IGE: Tree on duplicate page must not show addresses.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-570">
+                IGE: Fixed resetting of cut state in hierarchy tree.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-572">
+                PORTAL: Fixed XML Button not showing on result page
+            </action>
         </release>
 
         <release version="4.0.1" date="2017-02-01" description="Release 4.0.1">
