@@ -1604,6 +1604,16 @@ define([
                 layoutCreator.createDataGrid("spatialRefLocation", null, spatialRefLocationStructure, null);
                 aspect.after(UtilGrid.getTable("spatialRefLocation"), "onCellChange", function(res, args) {
                     var msg = args[0];
+
+                    var updateRow = function(rowPos, lon1, lat1, lon2, lat2) {
+                        var row = UtilGrid.getTableData("spatialRefLocation")[rowPos];
+                        row.longitude1 = lon1;
+                        row.latitude1 = lat1;
+                        row.longitude2 = lon2;
+                        row.latitude2 = lat2;
+                        UtilGrid.updateTableDataRow("spatialRefLocation", rowPos, row);
+                    };
+
                     if (msg.cell === 0) {
                         var data = UtilSyslist.getSyslistEntryData(1100, msg.item.name);
                         console.debug("syslist data: " + data);
@@ -1611,12 +1621,16 @@ define([
                             // replace "," with "." for correct data format
                             data = data.replace(/,/g, ".");
                             var splittedData = data.split(" ");
-                            var row = UtilGrid.getTableData("spatialRefLocation")[msg.row];
-                            row.longitude1 = parseFloat(splittedData[0]);
-                            row.latitude1 = parseFloat(splittedData[1]);
-                            row.longitude2 = parseFloat(splittedData[2]);
-                            row.latitude2 = parseFloat(splittedData[3]);
-                            UtilGrid.updateTableDataRow("spatialRefLocation", msg.row, row);
+                            updateRow(msg.row, 
+                                parseFloat(splittedData[0]), 
+                                parseFloat(splittedData[1]), 
+                                parseFloat(splittedData[2]), 
+                                parseFloat(splittedData[3])
+                            );
+                            
+                        } else if (UtilSyslist.getSyslistEntryKey(1100, msg.item.name) !== msg.item.name) {
+                            updateRow(msg.row, null, null, null, null);
+
                         }
                     }
                 });
