@@ -21,3 +21,12 @@ ALTER TABLE ingrid_rss_source ALTER COLUMN lastupdate SET DEFAULT CURRENT_TIMEST
 ALTER TABLE ingrid_rss_store ALTER COLUMN published_date SET DEFAULT CURRENT_TIMESTAMP;
 
 ALTER TABLE ingrid_tiny_url ALTER COLUMN tiny_date SET DEFAULT CURRENT_TIMESTAMP;
+
+
+-- Fix remaining uppercase columns !
+
+ALTER TABLE pa_metadata_fields RENAME "COLUMN_VALUE" TO column_value;
+
+ALTER TABLE pd_metadata_fields RENAME "COLUMN_VALUE" TO column_value;
+
+ALTER TABLE rule_criterion RENAME "COLUMN_VALUE" TO column_value;

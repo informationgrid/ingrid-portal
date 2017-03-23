@@ -39,7 +39,7 @@ Vorgehen Migration auf Windows nach PostgreSQL 9.5.5
 - im folgenden wird das Migration Toolkit Installationsverzeichnis als MTK_HOME bezeichnet
 - Quell- und Zieldatenbank werden eingestellt unter:
     MTK_HOME/etc/toolkit.properties
-  Die Zieldatenbank muss im Postgres Server bereits existieren (z.B. CREATE DATABASE ingrid_portal).
+  Die Zieldatenbank muss im Postgres Server bereits existieren (z.B. "CREATE DATABASE ingrid_portal").
 
   Eine MySQL Migration hätte beispielhaft folgenden Inhalt:
   
@@ -105,8 +105,9 @@ Die MySQL Migration der PORTAL Datenbank ist aufwendiger, da zuerst das Schema s
 4.3. MYSQL PORTAL Datenbank:
 ---------------------------- 
 Die Default-Migration von MySQL bildet die Spaltennamen exakt mit Groß-/Kleinschreibung nach Postgres ab, setzt also die Spaltennamen in "" (z.B. fragment."FRAGMENT_ID").
-Zum Referenzieren der Spalten (SQL) muss dann wieder die exakte Schreibweise in "" angegeben werden, was sehr nachteilig ist.
-Damit die Groß-/Kleinschreibung keine Rolle spielt wird mit dem Migrationstool das Schema zunächst offline migriert, verändert und eingespielt.
+Da die Portal SQL Statements generell in Kleinschreibung ausgeführt werden (z.B. fragment.fragment_id) führt dies zu einem Fehler.
+Damit die Groß-/Kleinschreibung in Postgres keine Rolle spielt wird mit dem Migrationstool das Schema zunächst offline migriert, die Großschreibung entfernt und dann eingespielt.
+Danach werden die Daten migriert.
 Dafür wie folgt vorgehen:
   
 - nach MTK_HOME/bin wechseln
@@ -126,7 +127,7 @@ Dafür wie folgt vorgehen:
 
 4.4. MYSQL MDEK Datenbank:
 -------------------------- 
-- s. 4.3., die Datenbank kann direkt mit dem Tool migriert werden, es ist kein separates Migrieren von Schema und Daten notwendig, also z.B.
+- Die MDEK Datenbank kann direkt mit dem Tool migriert werden, es ist kein separates Migrieren von Schema und Daten notwendig, also z.B.
 
     .\runMTK.bat -sourcedbtype mysql -targetdbtype postgresql -targetSchema public mdek
 
@@ -140,7 +141,7 @@ Dafür wie folgt vorgehen:
 
 5. Fix PORTAL Quelldatenbank nach Migration:
 ----------------------------------
-- nach getätigter Migration kann die Quelldatenbank wieder in den ursprünglichen Zustand zurückversetzt werden
+- nach getätigter Migration kann die PORTAL Quelldatenbank wieder in den ursprünglichen Zustand zurückversetzt werden
 - dazu folgendes Skript ausführen, abhängig von Quelldatenbank:
 	MySQL:
 		2_mysql_portal_undo_prae_migration_fixes.sql
@@ -150,8 +151,8 @@ Dafür wie folgt vorgehen:
 
 6. Fix PORTAL Zieldatenbank nach Migration:
 ------------------------------------
-- auf der migrierten Postgres Datenbank müssen noch Änderungen ausgeführt werden, um z.B. fehlende Indexes oder default Werte hinzuzufügen
-- dazu folgendes Skript auf Postgres ausführen, abhängig von Quelldatenbank:
+- auf der migrierten PORTAL Postgres Datenbank müssen noch Änderungen ausgeführt werden, um z.B. fehlende Indexes oder default Werte hinzuzufügen
+- dazu folgendes Skript auf der PORTAL Postgres Datenbank ausführen, abhängig von Quelldatenbank:
 	MySQL:
 		3_mysql2postgres_portal_post_migration_fixes.sql
 	Oracle:
