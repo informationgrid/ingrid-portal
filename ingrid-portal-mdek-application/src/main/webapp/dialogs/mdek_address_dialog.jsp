@@ -231,11 +231,14 @@
             }
 
             function addSelectedAddressFromTree() {
-                if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/AddressesFromTree")) return;
-
-                var selectedItem = registry.byId("treeAdr").selectedNode.item;
+                var selectedNode = registry.byId("treeAdr").selectedNode;
+                var selectedItem = selectedNode ? selectedNode.item : null;
 
                 if (selectedItem) {
+
+                    // only accept if an item was selected
+                    if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/AddressesFromTree")) return;
+
                     var nodeId = selectedItem.id;
                     if (nodeId != "addressRoot" && nodeId != "addressFreeRoot") {
                         addAddressToStore(nodeId);
@@ -245,11 +248,12 @@
             }
 
             function addSelectedAddress() {
-                if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/Addresses")) return;
-
                 var selectedNodes = UtilGrid.getSelectedData("addressSearchResultsTable");//dijit.byId("addressSearchResultsTable").selection.getSelected();
 
                 if (selectedNodes.length > 0) {
+                    // only accept if an item was selected
+                    if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/Addresses")) return;
+
                     var nodeId = selectedNodes[0].uuid;
                     // since it's only possible to choose one item, use the first (and only item ) of the array
                     //addAddressToStore(itemToJS(store, selectedNode[0]), nodeId);
@@ -397,7 +401,7 @@
                                 </span></span>
                         </div>
                     </div>
-                </div><!-- TAB 1 END --><!-- TAB 2 START -->
+                </div><!-- TAB 1 END -->
                 <!-- TAB 2 START -->
 				<div id="addressHierarchy" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder" style="width: 100%;" title="<fmt:message key="dialog.searchAddress.treeSearch" />">
                     <div data-dojo-type="dijit/layout/ContentPane" class="inputContainer grey" style="height: 450px; padding:0px !important;" >
@@ -405,7 +409,8 @@
                         </div>
                     </div>
                     <div class="inputContainerFooter" style="width:100%;">
-                        <span class="button" style="float:right;"><span style="float:right;">
+                        <span class="button" style="float:right;">
+                            <span style="float:right;">
                                 <button data-dojo-type="dijit/form/Button" onclick="pageAddressDlg.addSelectedAddressFromTree">
                                     <fmt:message key="dialog.searchAddress.selectAddress" />
                                 </button>
