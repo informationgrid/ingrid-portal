@@ -26,14 +26,15 @@ public interface Storage {
     boolean exists(String path, String file);
 
     /**
-     * Get size of a file in bytes.
+     * Get information about a file
      *
      * @param path The path
      * @param file The file
-     * @return long
+     * @return StorageItem
+     * @throws IOException
      */
-    long getSize(String path, String file) throws IOException;
-    
+    StorageItem getInfo(String path, String file) throws IOException;
+
     /**
      * Get the content of a file
      *
@@ -53,10 +54,10 @@ public interface Storage {
      * @param size The size of the file in bytes (used to verify)
      * @param replace Boolean indicating whether to replace an existing file or not
      * @param extract Boolean indicating whether to extract archives or not
-     * @return Item[] The list of created files
+     * @return StorageItem[] The list of created files
      * @throws IOException
      */
-    Item[] write(String path, String file, InputStream data, Integer size, boolean replace, boolean extract) throws IOException;
+    StorageItem[] write(String path, String file, InputStream data, Integer size, boolean replace, boolean extract) throws IOException;
 
     /**
      * Write a file part
@@ -79,10 +80,10 @@ public interface Storage {
      * @param size The size of the file in bytes (used to verify)
      * @param replace Boolean indicating whether to replace an existing file or not
      * @param extract Boolean indicating whether to extract archives or not
-     * @return Item[] The list of created files
+     * @return StorageItem[] The list of created files
      * @throws IOException
      */
-    Item[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract)
+    StorageItem[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract)
             throws IOException;
 
     /**

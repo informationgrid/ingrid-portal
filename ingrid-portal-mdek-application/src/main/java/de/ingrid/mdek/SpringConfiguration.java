@@ -121,9 +121,9 @@ public class SpringConfiguration {
 	public Storage storage(Config config) {
 		Storage instance = null;
 		switch (config.uploadImpl) {
-		case "de.ingrid.mdek.upload.storage.FileSystemStorage":
+		case "de.ingrid.mdek.upload.storage.impl.FileSystemStorage":
 		default:
-			instance = new de.ingrid.mdek.upload.storage.FileSystemStorage(config.docsdir, config.partsdir);
+			instance = new de.ingrid.mdek.upload.storage.impl.FileSystemStorage(config.docsdir, config.partsdir);
 
 		}
 		return instance;

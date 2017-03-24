@@ -11,6 +11,8 @@ define([
     'dojo/query',
     'dojo/dom',
     'dojo/dom-construct',
+    'dojo/dom-style',
+    'dojo/dom-class',
     'dijit/_WidgetBase',
     'dijit/ConfirmDialog',
     'dijit/form/Button',
@@ -31,6 +33,8 @@ define([
     query,
     dom,
     domConstruct,
+    domStyle,
+    domClass,
     _WidgetBase,
     Dialog,
     Button,
@@ -49,7 +53,14 @@ define([
 
         styleEl: null,
         templateEl: null,
-        uploadHandle: null,
+        btnHandles: [],
+        uploadBtns: {
+            retry: {},
+            replace: {},
+            rename: {},
+            keep: {}
+        },
+        uploadErrors: {},
 
         resultParts: {},
         uploads: [],
@@ -60,7 +71,6 @@ define([
             // dialog
             // TODO: should be created when upload link was clicked
             this.dialog = new Dialog({
-                // id: "uploadDialog",
                 title: "Dokument-Upload",
                 style: "width: 840px",
                 execute: lang.hitch(this, function(cancelEvent) {
@@ -76,7 +86,7 @@ define([
                 })
             });
             this.dialog.set("buttonOk", "Übernehmen");
-            this.setOkEnabled(false);
+            this.setOkButtonState(false);
 
             // override dialog.hide to allow to ask for confirmation, if the user
             // attempts to cancel the dialog with already finished uploads
@@ -111,8 +121,50 @@ define([
          * Set the enabled status of the OK button
          * @param isEnabled
          */
-        setOkEnabled: function(isEnabled) {
+        setOkButtonState: function(isEnabled) {
             this.dialog.okButton.set("disabled", !isEnabled);
+        },
+
+        /**
+         * Set the visibility of a button
+         * @param button
+         * @param isVisible
+         */
+        setButtonVisibility: function(button, isVisible) {
+            domStyle.set(button, "display", isVisible ? "inline" : "none");
+        },
+
+        /**
+         * Initialize a button for a file upload
+         * @param uploadId
+         * @param type
+         * @param callback A function receiving the upload id and event when the button is clicked (optional)
+         */
+        initializeButton: function(uploadId, type, callback) {
+            var fileEl = this.getFileEl(uploadId);
+            if (fileEl) {
+                var buttons = query(".qq-upload-"+type+"-selector", fileEl);
+                if (buttons.length > 0) {
+                    var button = buttons[0];
+                    this.uploadBtns[type][uploadId] = button;
+                    this.setButtonVisibility(button, false);
+                    if (callback instanceof Function) {
+                        this.btnHandles.push(on(button, "click", lang.partial(lang.hitch(this, callback), uploadId)));
+                    }
+                }
+            }
+        },
+        
+        /**
+         * Get the container dom element for a file upload
+         * @param uploadId
+         */
+        getFileEl: function(uploadId) {
+            var elements = query(".qq-file-id-"+uploadId);
+            if (elements.length > 0) {
+                return elements[0];
+            }
+            return null;
         },
 
         /**
@@ -151,6 +203,10 @@ define([
                     tooManyFilesError: "Sie können nur eine Datei einfügen",
                     unsupportedBrowser: "Fehler - Ihr Browser unterstützt keine Art von Dateiupload"
                 },
+                failedUploadTextDisplay: {
+                    mode: 'custom',
+                    responseProperty: 'error'
+                },
                 request: {
                     endpoint: this.uploadUrl,
                     filenameParam: "filename",
@@ -161,8 +217,6 @@ define([
                 },
                 retry: {
                     enableAuto: false,
-                    autoAttemptDelay: 5,
-                    maxAutoAttempts: 3,
                     autoRetryNote: "Wiederhole {retryNum}/{maxAuto}..."
                 },
                 chunking: {
@@ -183,42 +237,96 @@ define([
                     }
                 },
                 callbacks: {
-                    onUpload: lang.hitch(this, function(id, name) {
-                        this.setOkEnabled(false);
+                    onSubmitted: lang.hitch(this, function(id, name) {
+                        // set event handlers for buttons
+                        this.initializeButton(id, 'retry');
+                        this.initializeButton(id, 'replace', function(id, e) {
+                            // retry with replace parameter set to true
+                            this.uploader.setName(id, name);
+                            this.uploader.setParams(this.getUploadParams(path, true), id);
+                            this.uploader.retry(id);
+                        });
+                        this.initializeButton(id, 'rename', function(id, e) {
+                            var data = this.uploadErrors[id] || {};
+                            if (data.alt) {
+                                // retry with new name replace parameter set to false
+                                this.uploader.setName(id, data.alt);
+                                this.uploader.setParams(this.getUploadParams(path, false), id);
+                                this.uploader.retry(id);
+                            }
+                        });
+                        this.initializeButton(id, 'keep', function(id, e) {
+                            var data = this.uploadErrors[id] || {};
+                            if (data.file) {
+                                // finish the upload
+                                this.finishUpload(id, data.file);
+                            }
+                        });
                     }),
-                    onComplete: lang.hitch(this, function(id, name, responseJSON) {
-                        // collect files from response by id
-                        this.resultParts[id] = responseJSON.files;
+                    onUpload: lang.hitch(this, function(id, name) {
+                        this.setOkButtonState(false);
+                    }),
+                    onComplete: lang.hitch(this, function(id, name, responseJSON, xhrOrXdr) {
+                        if (responseJSON.success) {
+                            // hide buttons
+                            for (type in this.uploadBtns) {
+                                this.setButtonVisibility(this.uploadBtns[type][id], false);
+                            }
+                            // collect files from response by id
+                            this.resultParts[id] = responseJSON.files;
+                        }
+                        else {
+                            // set error message according to response status
+                            var status = xhrOrXdr ? xhrOrXdr.status : "default";
+                            var messages = {
+                                401: "Sie haben keine Berechtigung für den Upload. Eventuell ist die Session abgelaufen.",
+                                409: "Die Datei existiert bereits.",
+                                "default": "Beim Upload ist ein Fehler aufgetreten." 
+                            };
+                            var message = messages[status] ? messages[status] : messages["default"];
+                            var fileEl = this.getFileEl(id);
+                            if (fileEl) {
+                                query(".qq-upload-status-text-selector", fileEl).forEach(function(node) {
+                                    node.innerHTML = message;
+                                });
+                            }
+                        }
                     }),
                     onAllComplete: lang.hitch(this, function(succeeded, failed) {
                         // combine succeeded uploads into result
                         array.forEach(succeeded, function(id) {
                             this.uploads = this.uploads.concat(this.resultParts[id]);
                         }, this);
-                        this.setOkEnabled(true);
+                        this.setOkButtonState(true);
                     }),
                     onError: lang.hitch(this, function(id, name, errorReason, xhrOrXdr) {
-                        var message = null;
-                        if (xhrOrXdr && xhrOrXdr.status == 409) {
-                            this.uploader.pauseUpload(id);
-                            // TODO add file name input field?
-                            message = string.substitute("Die Datei '${0}' existiert bereits. Soll die existierende Datei überschrieben werden?", [name]);
-                            IngridDialog.show("Upload Konflikt", message, IngridDialog.INFO, [{
-                                caption: "Ja",
-                                action: lang.hitch(this, function() {
-                                    // retry with new name replace parameter set to true
-                                    this.uploader.setName(id, name);
-                                    this.uploader.setParams(this.getUploadParams(path, true), id);
-                                    this.uploader.retry(id);
-                                })
-                            }, {
-                                caption: "Nein",
-                                action: IngridDialog.CLOSE_ACTION
-                            }]);
+                        // store error data for later use
+                        var errorData = {};
+                        try {
+                            errorData = json.parse(xhrOrXdr.response).errorData;
                         }
-                        else {
-                            message = name ? string.substitute("Fehler beim Upload von '${0}': ${1}", [name, errorReason]) : errorReason;
-                            IngridDialog.show("Fehler", message, IngridDialog.WARNING);
+                        catch (err) {}
+                        this.uploadErrors[id] = errorData;
+
+                        // set button states according to response status
+                        var status = xhrOrXdr ? xhrOrXdr.status : "default";
+                        var buttonStates = {
+                            409: {
+                                "retry": false,
+                                "replace": true,
+                                "rename": true,
+                                "keep": true
+                            },
+                            "default": {
+                                "retry": true,
+                                "replace": false,
+                                "rename": false,
+                                "keep": false
+                            } 
+                        };
+                        var buttonState = buttonStates[status] ? buttonStates[status] : buttonStates["default"];
+                        for (button in buttonState) {
+                            this.setButtonVisibility(this.uploadBtns[button][id], buttonState[button]);
                         }
                     })
                 },
@@ -226,14 +334,6 @@ define([
                     IngridDialog.show("Info", message, IngridDialog.INFO);
                 }
             });
-
-            // add upload button handler
-            var uploadBtns = query(".qq-upload-button-upload", this.dialog.containerNode);
-            if (uploadBtns.length > 0) {
-                this.uploadHandle = on(uploadBtns[0], "click", lang.hitch(this, function() {
-                    this.uploader.uploadStoredFiles();
-                }));
-            }
 
             // show uploader
             this.dialog.show();
@@ -253,8 +353,8 @@ define([
                 domConstruct.destroy(this.templateEl);
             }
 
-            if (this.uploadHandle) {
-                this.uploadHandle.remove();
+            for (var i=0, count=this.btnHandles.length; i<count; i++) {
+                this.btnHandles[i].remove();
             }
 
             this.uploader.reset();
@@ -281,6 +381,24 @@ define([
                 path: path,
                 replace: replace
             };
+        },
+
+        /**
+         * Finish the given upload adding the data to the successful uploads
+         * @param id The id of the upload
+         * @param data The file data, object with properties size, type, uri
+         */
+        finishUpload: function(id, data) {
+            var fileEl = this.getFileEl(id);
+            if (fileEl) {
+                domClass.add(fileEl, "qq-upload-success");
+                domClass.remove(fileEl, "qq-upload-fail");
+                query(".qq-upload-status-text-selector,.qq-btn", fileEl).forEach(function(node) {
+                    domStyle.set(node, "display", "none");
+                });
+                
+            }
+            this.uploads.push(data);
         },
 
         /**

@@ -1,4 +1,4 @@
-package de.ingrid.mdek.upload.storage;
+package de.ingrid.mdek.upload.storage.impl;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -23,6 +23,10 @@ import org.apache.commons.compress.compressors.CompressorException;
 import org.apache.commons.compress.compressors.CompressorStreamFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+
+import de.ingrid.mdek.upload.ConflictException;
+import de.ingrid.mdek.upload.storage.Storage;
+import de.ingrid.mdek.upload.storage.StorageItem;
 
 /**
  * FileSystemStorage manages files in the server file system
@@ -66,12 +70,11 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public long getSize(String path, String file) throws IOException {
+    public StorageItem getInfo(String path, String file) throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
-        return Files.size( realPath);
+        return this.getFileInfo(realPath.toString());
     }
-    
-    
+
     @Override
     public InputStream read(String path, String file) throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
@@ -79,7 +82,7 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public Item[] write(String path, String file, InputStream data, Integer size, boolean replace, boolean extract)
+    public FileSystemItem[] write(String path, String file, InputStream data, Integer size, boolean replace, boolean extract)
             throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
         Files.createDirectories(realPath.getParent());
@@ -91,7 +94,12 @@ public class FileSystemStorage implements Storage {
         }
         CopyOption[] copyOptions = copyOptionList.toArray(new CopyOption[copyOptionList.size()]);
 
-        Files.copy(data, realPath, copyOptions);
+        try {
+            Files.copy(data, realPath, copyOptions);
+        }
+        catch (FileAlreadyExistsException faex) {
+            throw new ConflictException(faex.getMessage(), this.getFileInfo(faex.getFile()));
+        }
         if (Files.size(realPath) != size) {
             throw new IOException("The file size is different to the expected size");
         }
@@ -108,22 +116,17 @@ public class FileSystemStorage implements Storage {
                 }
             }
             catch (FileAlreadyExistsException faex) {
-                // file already exists must be returned to the client
-                throw faex;
+                throw new ConflictException(faex.getMessage(), this.getFileInfo(faex.getFile()));
             }
             catch (Exception ex) {
-                log.error("Post processing of '" + realPath + "' failed due to the following exception:\n" + ex.toString());
+                throw new IOException(ex);
             }
         }
 
         // prepare result
-        Item[] result = new Item[files.length];
+        FileSystemItem[] result = new FileSystemItem[files.length];
         for (int i = 0, count = files.length; i < count; i++) {
-            Path filePath = Paths.get(files[i]);
-            String fileType = Files.probeContentType(filePath);
-            long fileSize = Files.size(filePath);
-            Item item = new Item(this.stripPath(files[i]), fileType, fileSize);
-            result[i] = item;
+            result[i] = this.getFileInfo(files[i]);
         }
         return result;
     }
@@ -133,14 +136,19 @@ public class FileSystemStorage implements Storage {
         String file = id + "-" + index;
         Path realPath = this.getRealPath(file, this.partsDir);
         Files.createDirectories(realPath.getParent());
-        Files.copy(data, realPath, StandardCopyOption.REPLACE_EXISTING);
+        try {
+            Files.copy(data, realPath, StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (FileAlreadyExistsException faex) {
+            throw new ConflictException(faex.getMessage(), this.getFileInfo(faex.getFile()));
+        }
         if (Files.size(realPath) != size) {
             throw new IOException("The file size is different to the expected size");
         }
     }
 
     @Override
-    public Item[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract)
+    public FileSystemItem[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract)
             throws IOException {
         // combine parts into stream
         Vector<InputStream> streams = new Vector<InputStream>();
@@ -154,7 +162,7 @@ public class FileSystemStorage implements Storage {
 
         // delegate to write method
         InputStream data = new SequenceInputStream(streams.elements());
-        Item[] result = this.write(path, file, data, size, replace, extract);
+        FileSystemItem[] result = this.write(path, file, data, size, replace, extract);
 
         // delete parts
         for (Path part : parts) {
@@ -207,10 +215,6 @@ public class FileSystemStorage implements Storage {
                     }
                     entry = ais.getNextEntry();
                 }
-            }
-            catch (FileAlreadyExistsException faex) {
-                // file already exists must be returned to the client
-                throw faex;
             }
             catch (Exception ex) {
                 log.error("Failed to uncompress '" + path + "'. Cleaning up...");
@@ -272,5 +276,22 @@ public class FileSystemStorage implements Storage {
     private String stripPath(String path) {
         Path basePath = FileSystems.getDefault().getPath(this.docsDir);
         return path.replace(basePath.toString(), "").replaceAll("^[/\\\\]+", "");
+    }
+
+    /**
+     * Get informations about a file
+     *
+     * @param file
+     * @return Item
+     * @throws IOException
+     */
+    private FileSystemItem getFileInfo(String file) throws IOException {
+        Path filePath = Paths.get(file);
+        String fileType = Files.probeContentType(filePath);
+        long fileSize = Files.size(filePath);
+
+        Path strippedPath = Paths.get(this.stripPath(file));
+        return new FileSystemItem(this, strippedPath.getParent().toString(),
+                strippedPath.getFileName().toString(), fileType, fileSize);
     }
 }

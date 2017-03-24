@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.net.URI;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -32,14 +30,12 @@ import org.springframework.stereotype.Component;
 
 import de.ingrid.mdek.upload.auth.AuthService;
 import de.ingrid.mdek.upload.storage.Action;
-import de.ingrid.mdek.upload.storage.Item;
 import de.ingrid.mdek.upload.storage.Storage;
+import de.ingrid.mdek.upload.storage.StorageItem;
 
 @Component
 @Path("/document")
 public class Api {
-
-    private static final String UTF_8 = "UTF-8";
 
     @Context
     HttpServletRequest request;
@@ -76,7 +72,7 @@ public class Api {
         // build response
         ResponseBuilder response = Response.ok(MediaType.APPLICATION_OCTET_STREAM);
         response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
-        response.header("Content-Length", Api.this.storage.getSize( path, file ));
+        response.header("Content-Length", this.storage.getInfo(path, file).getSize());
         return response.build();
     }
 
@@ -120,7 +116,7 @@ public class Api {
         // build response
         ResponseBuilder response = Response.ok(fileStream, MediaType.APPLICATION_OCTET_STREAM);
         response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
-        response.header("Content-Length", Api.this.storage.getSize( path, file ));
+        response.header("Content-Length", this.storage.getInfo(path, file).getSize());
         return response.build();
     }
 
@@ -163,10 +159,11 @@ public class Api {
 
         // check if file exists already
         if (!replace && this.storage.exists(path, file)) {
-            throw new ConflictException("The file already exists.");
+            StorageItem item = this.storage.getInfo(path, file);
+            throw new ConflictException("The file already exists.", item);
         }
 
-        Item[] files = new Item[0];
+        StorageItem[] files = new StorageItem[0];
         boolean isPartialUpload = partsTotal != null;
         if (isPartialUpload) {
             // store part
@@ -209,7 +206,7 @@ public class Api {
         }
 
         // store files
-        Item[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, false);
+        StorageItem[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, false);
         return this.createUploadResponse(files);
     }
 
@@ -250,35 +247,12 @@ public class Api {
      * @return Response
      * @throws Exception
      */
-    private Response createUploadResponse(Item[] files) throws Exception {
+    private Response createUploadResponse(StorageItem[] files) throws Exception {
         // get first URI for location header
         String createdFile = files.length > 0 ? files[0].getUri() : "";
-        URI uri = this.toUri(createdFile);
 
         // build response
-        List<Item> uploads = new ArrayList<Item>();
-        for (int i = 0, count = files.length; i < count; i++) {
-            // update the item URIs
-            Item upload = files[i];
-            upload.setUri(this.toUri(upload.getUri()).toString());
-            uploads.add(upload);
-        }
-        UploadResponse uploadResponse = new UploadResponse(uploads);
-        return Response.created(uri).entity(uploadResponse).build();
-    }
-
-    /**
-     * Get the URI of a file
-     *
-     * @param file
-     * @return URI
-     * @throws Exception
-     */
-    private URI toUri(String file) throws Exception {
-        return new URI(
-                    URLEncoder.encode( file, UTF_8 )
-                            .replaceAll( "%2F", "/" )
-                            .replaceAll( "%5C", "/" )
-        );
+        UploadResponse uploadResponse = new UploadResponse(Arrays.asList(files));
+        return Response.created(new URI(createdFile)).entity(uploadResponse).build();
     }
 }
