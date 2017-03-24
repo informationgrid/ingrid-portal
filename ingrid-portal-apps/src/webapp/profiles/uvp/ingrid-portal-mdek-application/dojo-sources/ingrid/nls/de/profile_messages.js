@@ -74,7 +74,7 @@ define({
     "ui.toolbar.PreviousCaption": "Klicken, um zum vorherigen Verfahren/Adresse zu gehen. Gedrückt halten für Verlauf.",
     "ui.toolbar.NextCaption": "Klicken, um zum nächsten Verfahren/Adresse zu gehen. Gedrückt halten für Verlauf.",
 
-    "validation.error.document.table.invalid": "Die Tabelle muss unter 'Dokument', 'Link' und 'Größe' einen Eintrag haben.",
+    "validation.error.document.table.invalid": "Die Tabelle muss unter 'Dokument' und 'Link' einen Eintrag haben.",
 
     "uvp.address.form.categories.address": "Adresse"
 });
