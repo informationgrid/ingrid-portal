@@ -87,7 +87,7 @@ define([
                                 var data = phaseField.field.data;
                                 var hasInvalidRows = data.some(function(item) {
                                     // check label, link and size if they have any value
-                                    return !item.label || !item.link || !item.size ||
+                                    return !item.label || !item.link ||
                                         item.label.trim().length === 0 ||
                                         item.link.trim().length === 0;
                                 });
@@ -424,10 +424,10 @@ define([
 
             getDocTableStructure: function() {
                 return [
-                    { field: 'label', name: message.get("uvp.form.table.docs.title") + "*", width: '290px', editable: true },
-                    { field: 'link', name: message.get("uvp.form.table.docs.link") + "*", width: '200px', editable: true, formatter: Formatters.LinkCellFormatter },
+                    { field: 'label', name: message.get("uvp.form.table.docs.title") + "*", width: '350px', editable: true },
+                    { field: 'link', name: message.get("uvp.form.table.docs.link") + "*", width: '260px', editable: true, formatter: Formatters.LinkCellFormatter },
                     // { field: 'type', name: message.get("uvp.form.table.docs.type"), width: '50px', editable: true }, // do not display type (#1081)
-                    { field: 'size', name: message.get("uvp.form.table.docs.size") + "*", width: '60px', editable: true, formatter: Formatters.MegaBytesCellFormatter },
+                    // { field: 'size', name: message.get("uvp.form.table.docs.size") + "*", width: '60px', editable: true, formatter: Formatters.MegaBytesCellFormatter },
                     { field: 'expires', name: message.get("uvp.form.table.docs.expires"), width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
                 ];
             },
