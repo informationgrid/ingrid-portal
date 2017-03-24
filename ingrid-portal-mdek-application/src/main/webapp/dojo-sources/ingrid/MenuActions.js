@@ -473,11 +473,7 @@ define([
                 });
 
                 checks.resetRequiredFields();
-            }, function(err) {
-                if (err.message != "undefined") {
-                    displayErrorMessage(err);
-                }
-            });
+            }, displayErrorMessage);
 
             console.debug("Publishing event: /saveRequest");
             topic.publish("/saveRequest", {
