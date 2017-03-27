@@ -18,6 +18,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-555">
                 IGE: Fixed error in free spatial reference, when editing name. 
             </action>
+			<action type="add" dev="wemove" issue="REDMINE-380">
+                PORTAL: Add hours of service to detail view.
+            </action>
         </release>
 
         <release version="4.0.1" date="2017-02-01" description="Release 4.0.1">
