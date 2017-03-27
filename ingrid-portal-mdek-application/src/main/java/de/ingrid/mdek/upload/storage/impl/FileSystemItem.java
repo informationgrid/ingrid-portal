@@ -1,7 +1,5 @@
 package de.ingrid.mdek.upload.storage.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -14,8 +12,6 @@ import de.ingrid.mdek.upload.storage.StorageItem;
  * FileSystemItem represents an item in the server file system
  */
 public class FileSystemItem implements StorageItem {
-
-    private static final String UTF_8 = "UTF-8";
 
     private Storage storage;
     private String path;
@@ -47,11 +43,7 @@ public class FileSystemItem implements StorageItem {
     @Override
     public String getUri() {
         String uri = Paths.get(this.path, this.file).toString();
-        try {
-            uri = URLEncoder.encode(uri, UTF_8);
-        }
-        catch (UnsupportedEncodingException e) {}
-        return uri.replaceAll("%2F", "/").replaceAll("%5C", "/");
+        return uri.replaceAll("%2F", "/").replaceAll("%5C", "/").replaceAll(" ", "%20");
     }
 
     @Override
@@ -74,7 +66,10 @@ public class FileSystemItem implements StorageItem {
             int i = 0;
             while (this.storage.exists(this.path, file)) {
                 i++;
-                file = filename + "-" + i + "." + extension;
+                file = filename + "-" + i;
+                if (extension.length() > 0) {
+                    file += "." + extension;
+                }
             }
             return file;
         }

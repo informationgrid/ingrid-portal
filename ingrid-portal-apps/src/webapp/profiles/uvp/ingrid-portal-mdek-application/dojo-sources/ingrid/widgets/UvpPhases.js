@@ -629,16 +629,16 @@ define([
                         // store changes
                         UtilStore.updateWriteStore(tableId, rows);
                     });
-                    
+
                     var getRowData = function(row, data) {
                         if (!row.label || row.label.length === 0) {
                             var file = data.uri;
                             var lastDotPos = file.lastIndexOf(".");
                             var name = file.substring(file.lastIndexOf('/')+1, 
                                     lastDotPos === -1 ? file.length : lastDotPos);
-                            row.label = name.replace(/_/g, " ");
+                            row.label = name.replace(/_|%20/g, " ");
                         }
-                        row.link = data.uri;
+                        row.link = data.uri.replace(/%20/g, " ");
                         row.type = data.type;
                         row.size = data.size;
                         return row;
