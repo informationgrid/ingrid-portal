@@ -200,46 +200,60 @@ define(["dojo/_base/declare",
     _createNewObjectFolder: function(parentUuid) {
       var self = this;
       
-      ObjectService.createNewNode(parentUuid, function(objNode) {
-        objNode.nodeAppType = "O";
-        objNode.objectClass = "1000";
-        objNode.parentUuid = parentUuid;
-        objNode.objectName = message.get("tree.folder.new");
-        ObjectService.saveNodeData(objNode, "true", false, {
-          callback: function(res) {
-            // refresh tree node to show newly created folder
-            var tree = registry.byId("dataTree");
-            var node = tree.getNodesByItem(objNode.parentUuid ? objNode.parentUuid : "objectRoot" )[0];
-            self._updateTree(tree, node, res);
-          },
-          errorHandler: function(err) {
-            console.error("Error saving folder node: ", err);
-          }
-        });
+      ObjectService.createNewNode(parentUuid, {
+        callback: function(objNode) {
+          objNode.nodeAppType = "O";
+          objNode.objectClass = "1000";
+          objNode.parentUuid = parentUuid;
+          objNode.objectName = message.get("tree.folder.new");
+          ObjectService.saveNodeData(objNode, "true", false, {
+            callback: function(res) {
+              // refresh tree node to show newly created folder
+              var tree = registry.byId("dataTree");
+              var node = tree.getNodesByItem(objNode.parentUuid ? objNode.parentUuid : "objectRoot" )[0];
+              self._updateTree(tree, node, res);
+            },
+            errorHandler: function(err) {
+              console.error("Error saving folder node: ", err);
+              displayErrorMessage(err);
+            }
+          });
+        },
+        errorHandler: function(err) {
+          console.error("Error creating folder node: ", err);
+          displayErrorMessage(err);
+        }
       });
     },
 
     _createNewAddressFolder: function(parentUuid) {
       var self = this;
 
-      AddressService.createNewAddress(parentUuid, function(addressNode) {
-        addressNode.nodeAppType = "A";
-        addressNode.addressClass = "1000";
-        addressNode.nodeDocType = "Class1000_B";
-        // no folder under address free root!!!
-        addressNode.parentUuid = parentUuid === "addressRoot" ? null : parentUuid;
-        addressNode.name = message.get("tree.folder.new");
-        AddressService.saveAddressData(addressNode, "true", false, {
-          callback: function(res) {
-            // refresh tree node to show newly created folder
-            var tree = registry.byId("dataTree");
-            var node = tree.getNodesByItem(addressNode.parentUuid ? addressNode.parentUuid : "addressRoot" )[0];
-            self._updateTree(tree, node, res);
-          },
-          errorHandler: function(err) {
-            console.error("Error saving folder node: ", err);
-          }
-        });
+      AddressService.createNewAddress(parentUuid, {
+        callback: function(addressNode) {
+          addressNode.nodeAppType = "A";
+          addressNode.addressClass = "1000";
+          addressNode.nodeDocType = "Class1000_B";
+          // no folder under address free root!!!
+          addressNode.parentUuid = parentUuid === "addressRoot" ? null : parentUuid;
+          addressNode.name = message.get("tree.folder.new");
+          AddressService.saveAddressData(addressNode, "true", false, {
+            callback: function(res) {
+              // refresh tree node to show newly created folder
+              var tree = registry.byId("dataTree");
+              var node = tree.getNodesByItem(addressNode.parentUuid ? addressNode.parentUuid : "addressRoot" )[0];
+              self._updateTree(tree, node, res);
+            },
+            errorHandler: function(err) {
+              console.error("Error saving folder node: ", err);
+              displayErrorMessage(err);
+            }
+          });
+        },
+        errorHandler: function(err) {
+          console.error("Error creating folder node: ", err);
+          displayErrorMessage(err);
+        }
       });
     },
 
