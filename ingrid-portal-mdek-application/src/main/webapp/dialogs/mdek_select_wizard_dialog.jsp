@@ -68,7 +68,8 @@
 
             // check if there's only one option
             // in that case close dialog and select the only available option
-            handleSingleOption(params);
+            var singleHandled = handleSingleOption(params);
+            if (singleHandled) return;
 
             addRadioBoxes(types, "wizardObjTypes");
 
@@ -153,8 +154,11 @@
 
             } else {
                 // otherwise we just pre-set the object type 
-                registry.byId("objectClass").set("value", "Class" + type);
-                setTreeIcon(type);
+                // set class delayed since new object request also sets class before
+                setTimeout(function () {
+                    registry.byId("objectClass").set("value", "Class" + type);
+                    setTreeIcon(type);
+                }, 300);
 
             }
 
@@ -170,17 +174,25 @@
             });
         }
 
+        /**
+         * If only one option is available then execute this one.
+         * 
+         * @returns true if a single operation was found and executed, otherwise false
+         */
         function handleSingleOption(params) {
-            debugger;
             if (params.types.length === 1 && params.assistants.length === 0 && params.buttons.length === 0) {
                 createObjectByType(params.types[0][1]);
             } else if (params.types.length === 0 && params.assistants.length === 1 && params.buttons.length === 0) {
                 createObjectByType(params.assistants[0]);
             } else if (params.types.length === 0 && params.assistants.length === 0 && params.buttons.length === 1) {
+                closeThisDialog();
                 params.buttons[0].callback(closeThisDialog);;
+            } else {
+                return false;
             }
-        }
 
+            return true;
+        }
         function closeThisDialog() {
             thisDialog.hide();
             topic.publish("/selectNode", {

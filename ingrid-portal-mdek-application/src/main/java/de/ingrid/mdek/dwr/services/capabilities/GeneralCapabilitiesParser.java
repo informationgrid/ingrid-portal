@@ -393,7 +393,7 @@ public class GeneralCapabilitiesParser {
                 "inner join aNode.t02AddressWork addr " +
                 "inner join addr.t021Communications comm " +
                 "where " +
-                AddressType.getHQLExcludeIGEUsersViaNode("aNode") + // exclude hidden user addresses !
+                AddressType.getHQLExcludeIGEUsersViaNode("aNode", "addr") + // exclude hidden user addresses !
                 " AND ((addr.lastname = '" + address.getLastname() + "'" +
                     " AND addr.firstname = '" + address.getFirstname() + "' ) " +
                     " OR addr.institution = '" + address.getOrganisation() + "' ) " +

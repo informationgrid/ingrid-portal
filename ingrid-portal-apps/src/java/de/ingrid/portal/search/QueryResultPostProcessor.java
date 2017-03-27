@@ -159,6 +159,7 @@ public class QueryResultPostProcessor {
 
             Object additionalHtml = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_ADDITIONAL_HTML_1);
             hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, additionalHtml);
+            
             boolean doNotShowMaps = false;
             String firstResourceId = null;
             

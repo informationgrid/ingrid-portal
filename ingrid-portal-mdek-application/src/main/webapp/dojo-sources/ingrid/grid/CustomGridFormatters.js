@@ -116,7 +116,61 @@ define(["dojo/_base/declare",
 
             renderIconClass: function(row, cell, value, columnDef, dataContext) {
                 return "<div class=\"TreeIcon TreeIcon" + value + "\"></div>";
-            }
+            },
 
+            LinkCellFormatter: function(row, cell, value, columnDef, dataContext) {
+                if (!value) {
+                    return value;
+                }
+                var docName = value;
+
+                var link = null;
+                if (value.indexOf("http") === 0) {
+                    link = value;
+                } else {
+                    // determine base url 
+                    var baseUrl = document.location.protocol + "//" + document.location.host + "/ingrid-portal-mdek-application/rest/document/";
+                    // remove uuid information from relative path
+                    docName = value.substring( value.indexOf("/") + 1 );
+                    link = baseUrl + value;
+                }
+                return "<span class=\"text-truncate left\" style=\"width: 100%\">" + docName +
+                    " <a href=\"" + link + "\" title=\"" + link + "\" target=\"_blank\"><img src=\"img/ic_fl_popup.gif\" width=\"10\" height=\"9\" alt=\"Popup\">Link</a></span>";
+            },
+
+            BytesCellFormatter: function(row, cell, value, columnDef, dataContext) {
+                if (parseInt(value) != value) {
+                    return value;
+                }
+                if (value === 0) {
+                    return '0 B';
+                }
+                var k = 1000,
+                    dm = 1,
+                    sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                    i = Math.floor(Math.log(value) / Math.log(k));
+                return parseFloat((value / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+            },
+
+            /**
+             * Format numbers as MB unless the value is smaller than 0.1 MB, where KB is used.
+             */
+            MegaBytesCellFormatter: function(row, cell, value, columnDef, dataContext) {
+                if (parseInt(value) != value) {
+                    return value;
+                }
+                if (value === 0) {
+                    return '0 MB';
+                }
+                var k = 1000,
+                    sizes = ['B', 'KB', 'MB'],
+                    // => switch between KB an MB when file too small
+                    dm = 1,
+                    i = value < 100000 ? 1 : 2;
+                    // => only change decimal accuracy
+                        // dm = value < 100000 ? 4 : 1,
+                        // i = 2;
+                return parseFloat((value / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+             }
         })();
     });

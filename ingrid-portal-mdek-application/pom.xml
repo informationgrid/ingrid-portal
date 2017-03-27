@@ -3,7 +3,7 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>4.0.2-SNAPSHOT</version>
+        <version>4.1.0-SNAPSHOT-UVP</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.ingrid.portal</groupId>
@@ -41,6 +41,7 @@
                     <downloadSources>1.5</downloadSources>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -155,6 +156,16 @@
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
                 <version>3.2.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.8.4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.8.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -352,6 +363,53 @@
             <artifactId>dwr</artifactId>
             <!-- <version>3.0.dev-02.03.11</version> problem with converting bean SelectControl! -->
             <version>3.0.rc2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>2.25.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.25.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.25.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-spring3</artifactId>
+            <version>2.25</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.rauschig</groupId>
+            <artifactId>jarchivelib</artifactId>
+            <version>0.7.1</version>
         </dependency>
         <!-- <dependency>
             <groupId>org.springframework</groupId>
@@ -564,6 +622,35 @@
                         <artifactId>license-maven-plugin</artifactId>
                         <configuration>
                             <skipCheckLicense>true</skipCheckLicense>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>profile-uvp</id>
+            <activation>
+                <property>
+                    <name>profile</name>
+                    <value>uvp</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <configuration>
+                            <scanTargets>
+                                <scanTarget>${basedir}/../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application/WEB-INF/classes</scanTarget>
+                            </scanTargets>
+                            <webApp>
+                                <extraClasspath>${basedir}/../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application/WEB-INF/classes</extraClasspath>
+                                <!-- use resources from profile first, before using the default webapp dir -->
+                                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                                    <resourcesAsCSV>../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application,src/main/webapp</resourcesAsCSV>
+                                </baseResource>
+                            </webApp>
                         </configuration>
                     </plugin>
                 </plugins>

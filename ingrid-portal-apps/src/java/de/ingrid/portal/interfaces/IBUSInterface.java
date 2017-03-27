@@ -24,6 +24,7 @@ package de.ingrid.portal.interfaces;
 
 import org.apache.commons.configuration.Configuration;
 
+import de.ingrid.utils.IBus;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -135,5 +136,13 @@ public interface IBUSInterface {
      * @return
      */
     PlugDescription[] getAllIPlugsWithoutTimeLimitation();
+    
+    
+    /**
+     * Get the current iBus.
+     * 
+     * @return
+     */
+    IBus getIBus();
     
 }

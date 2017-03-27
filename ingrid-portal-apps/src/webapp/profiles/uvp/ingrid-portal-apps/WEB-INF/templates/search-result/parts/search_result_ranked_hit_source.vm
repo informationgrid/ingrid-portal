@@ -1,0 +1,6 @@
+<!--
+<small>
+    <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.source'):</strong></span>
+    <span class="tx-light">$!rs.source</span>
+</small>
+-->

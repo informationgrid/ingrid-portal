@@ -112,6 +112,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 modTime = UtilsDate.convertDateString(XPathUtils.getString(node, "./gco:DateTime").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
             }else if(XPathUtils.nodeExists(node, "./gco:Date")){
                 modTime = UtilsDate.convertDateString(XPathUtils.getString(node, "./gco:Date").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+            }else {
+                modTime = UtilsDate.convertDateString(XPathUtils.getString(node, ".").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
             }
             if(modTime.length() > 0){
                 value = modTime;

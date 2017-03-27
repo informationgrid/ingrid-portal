@@ -60,6 +60,7 @@
     <property name="updateMySQL362" location="${installDir}/sql/update_3.6.2_mysql.sql"/>
     <property name="updateMySQL400" location="${installDir}/sql/update_4.0.0_mysql.sql"/>
     <property name="updateMySQL401" location="${installDir}/sql/update_4.0.1_mysql.sql"/>
+    <property name="updateMySQL410" location="${installDir}/sql/update_4.1.0_mysql.sql"/>
 
     <!-- mysql ige imports -->
     <property name="mdekDB"          location="${installDir}/sql/mdek_0_mysql.sql"/>
@@ -324,7 +325,8 @@
             <transaction src="${updateMySQL361}"/>
             <transaction src="${updateMySQL362}"/>
             <transaction src="${updateMySQL400}"/>
-            <transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL410}"/>
         </sql>
     </target>
     
@@ -343,8 +345,9 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL362}"/>
-            <transaction src="${updateMySQL400}"/>
-            <transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL400}"/>
+			<transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL410}"/>
         </sql>
     </target>
 
@@ -363,9 +366,11 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL400}"/>
-            <transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL410}"/>
         </sql>
     </target>
+
     <target name="PortalDbUpdateFrom400" if="useMysql">
         <echo>MySQL-Portal Daten importieren (ab 4.0.0)
         </echo>
@@ -381,8 +386,28 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL410}"/>
         </sql>
     </target>
+
+	<target name="PortalDbUpdateFrom401" if="useMysql">
+        <echo>MySQL-Portal Daten importieren (ab 4.0.1)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateMySQL410}"/>
+        </sql>
+    </target>
+
 
     <!-- =============================================
          = IGE MDEK DATABASE                         =

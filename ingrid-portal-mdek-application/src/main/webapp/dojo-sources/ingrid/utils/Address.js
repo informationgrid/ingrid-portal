@@ -53,8 +53,10 @@ define([
                     return 2;
                 else if (addressType == message.get('address.type.custom'))
                     return 3;
+                else if (addressType == message.get('address.type.folder')) // folder
+                    return 1000;
                 else {
-                    console.debug("Error in getAddressClass! Invalid addressType: "+addressType);
+                    console.error("Error in getAddressClass! Invalid addressType: "+addressType);
                     return -1;
                 }
             },
@@ -69,6 +71,8 @@ define([
                     return message.get('address.type.person');
                 else if (addressClass == 3)
                     return message.get('address.type.custom');
+                else if (addressClass == 1000) // folder
+                    return message.get('address.type.folder');
                 else {
                     console.debug("Error in getAddressType! Invalid addressClass: "+addressClass);
                     return "";
@@ -162,6 +166,9 @@ define([
                         if (title.length == 0) {
                             title = adr.organisation;
                         }
+                        break;
+                    case 1000: // FOLDER
+                        title = adr.name;
                         break;
                     default:
                         break;

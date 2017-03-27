@@ -442,8 +442,8 @@ define([
             createDomDatebox: function(additionalField) {
                 var inputWidget = new DateTextBox({
                     id: this.additionalFieldPrefix + additionalField.id,
-                    name: additionalField.name,
-                    style: "width:100%;"
+                    name: additionalField.name
+                    // style: "width:100%;" // Datebox does not look nice when to big
                 });
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },

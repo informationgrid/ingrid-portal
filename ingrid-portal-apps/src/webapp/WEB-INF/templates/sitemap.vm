@@ -291,7 +291,8 @@
                     </a>
                     <p>$MESSAGES.getString("sitemap.area.main.provider.description")</p>
                 </li>
-                 #end
+                #end
+                #if($enableSources)
                 <li>
                     #set ($link = $renderResponse.encodeURL("/portal/main-about-data-source.psml"))
                     <a href="$link" title="$MESSAGES.getString("sitemap.area.main.datasource.tooltip")">
@@ -302,6 +303,7 @@
                     </a>
                     <p>$MESSAGES.getString("sitemap.area.main.datasource.description")</p>
                 </li>
+                #end
             </ul>
             </div>
         </li>

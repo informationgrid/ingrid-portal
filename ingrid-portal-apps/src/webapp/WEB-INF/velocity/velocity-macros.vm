@@ -528,30 +528,32 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro(renderUDKIcon $class $title)
-    <svg class="icon globe__icon" title="$title">
-        #if($class == "0")
-            ## Fachaufgabe
-            <use xlink:href="#checklist">
-        #elseif($class == "1")
-            ## Geodatensatz
-            <use xlink:href="#globe">
-        #elseif($class == "2")
-            ## Literatur
-            <use xlink:href="#book">
-        #elseif($class == "3")
-            ## Geodatendienst
-            <use xlink:href="#gears">
-        #elseif($class == "4")
-            ## Projekt
-            <use xlink:href="#folder">
-        #elseif($class == "5")
-            ## Datensammlung
-            <use xlink:href="#database">
-        #elseif($class == "6")
-            ## Informationssystem
-            <use xlink:href="#molecule">
-        #end
-    </svg>
+    #if($class && $title)
+        <svg class="icon globe__icon" title="$title">
+            #if($class == "0")
+                ## Fachaufgabe
+                <use xlink:href="#checklist">
+            #elseif($class == "1")
+                ## Geodatensatz
+                <use xlink:href="#globe">
+            #elseif($class == "2")
+                ## Literatur
+                <use xlink:href="#book">
+            #elseif($class == "3")
+                ## Geodatendienst
+                <use xlink:href="#gears">
+            #elseif($class == "4")
+                ## Projekt
+                <use xlink:href="#folder">
+            #elseif($class == "5")
+                ## Datensammlung
+                <use xlink:href="#database">
+            #elseif($class == "6")
+                ## Informationssystem
+                <use xlink:href="#molecule">
+            #end
+        </svg>
+    #end
 #end
 
 #macro(renderUDKAddressIcon $class $title)

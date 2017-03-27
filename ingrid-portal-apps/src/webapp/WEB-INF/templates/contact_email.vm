@@ -5,8 +5,6 @@ Name: $!{map.get("user.name.family")}
 Organisation, Firma: $!{map.get("user.employer")}
 Telefon: $!{map.get("user.business-info.telecom.telephone")}
 Email: $!{map.get("user.business-info.online.email")}
-Tätigkeitsbereich: $!{map.get("user.area.of.profession")}
-Mein Interesse an Umweltinformationen ist: $!{map.get("user.interest.in.enviroment.info")}
 
 Nachricht:
 

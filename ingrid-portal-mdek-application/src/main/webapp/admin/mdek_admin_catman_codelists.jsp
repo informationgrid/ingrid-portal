@@ -59,7 +59,7 @@
             
             var MAINTAINABLE_LIST_IDS = [];
             var CAN_SET_DEFAULT_LIST_IDS = [1350, 1370];
-            var IDS_WITH_DATA_COLUMNS = ["1100"];
+            //var IDS_WITH_DATA_COLUMNS = ["1100", "9000"];
 
             createDOMElements();
                         
@@ -213,16 +213,16 @@
                         });
                         
                         // hide/show data column
-                        var showColumn = IDS_WITH_DATA_COLUMNS.indexOf(value) !== -1;
-                        if (showColumn) {
-                            registry.byId("codeListTable11").showColumn("data");
-                            style.set("infoText", "display", "block");
-                        } else {
-                            registry.byId("codeListTable11").hideColumn("data");
-                            style.set("infoText", "display", "none");
-                        }
-
-                        registry.byId("codeListTable11").reinitLastColumn(true);
+                        //var showColumn = IDS_WITH_DATA_COLUMNS.indexOf(value) !== -1;
+                        //if (showColumn) {
+                        //    registry.byId("codeListTable11").showColumn("data");
+                        //   style.set("infoText", "display", "block");
+                        //} else {
+                        //    registry.byId("codeListTable11").hideColumn("data");
+                        //    style.set("infoText", "display", "none");
+                        //}
+                        //
+                        //registry.byId("codeListTable11").reinitLastColumn(true);
                     }
                 });
             }
