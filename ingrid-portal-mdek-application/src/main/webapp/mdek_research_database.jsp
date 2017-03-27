@@ -101,7 +101,7 @@
                     callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
                     errorHandler: function(errMsg, err) {
                         displayErrorMessage(err);
-            //          dialog.show("<fmt:message key='general.error' />", string.substituteParams("<fmt:message key='dialog.generalError' />", errMsg), dialog.WARNING);              
+            //          dialog.show("<fmt:message key='general.error' />", string.substitute("<fmt:message key='dialog.generalError' />", [errMsg]), dialog.WARNING);              
                     }
                 });
             }
