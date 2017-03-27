@@ -109,11 +109,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             Node node = XPathUtils.getNode(rootNode, xpathExpression);
             String modTime = "";
             if(XPathUtils.nodeExists(node, "./gco:DateTime")){
-                modTime = UtilsDate.convertDateString(XPathUtils.getString(node, "./gco:DateTime").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+                modTime = getDateFormatValue(XPathUtils.getString(node, "./gco:DateTime").trim());
             }else if(XPathUtils.nodeExists(node, "./gco:Date")){
-                modTime = UtilsDate.convertDateString(XPathUtils.getString(node, "./gco:Date").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+                modTime = getDateFormatValue(XPathUtils.getString(node, "./gco:Date").trim());
             }else {
-                modTime = UtilsDate.convertDateString(XPathUtils.getString(node, ".").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+                modTime = getDateFormatValue(XPathUtils.getString(node, ".").trim());
             }
             if(modTime.length() > 0){
                 value = modTime;
@@ -682,7 +682,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             row.add("");
                         }else {
                             String value = XPathUtils.getString(node, xpathExpression).trim();
-                            row.add(notNull(UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy")));
+                            row.add(notNull(getDateFormatValue(value)));
                         }
                     } else {
                         row.add("");

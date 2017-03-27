@@ -150,26 +150,31 @@ public class DetailPartPreparer {
         if(node != null){
             if(node.getTextContent().length() > 0){
                 value = node.getTextContent().trim();
-                try {
-                    Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(value);
-                    if(cal != null){
-                        if(cal.getTime() != null){
-                            int hours = cal.getTime().getHours();
-                            int minutes = cal.getTime().getMinutes();
-                            int seconds = cal.getTime().getSeconds();
-                            if(hours > 0 || minutes > 0 || seconds > 0){
-                                return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
-                            }
-                        }
-                    }
-                    return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
-                } catch (Exception e) {
-                } 
+                return getDateFormatValue(value);
             }
         }
         return value;
     }
 
+    public String getDateFormatValue (String value){
+        try {
+            Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(value);
+            if(cal != null){
+                if(cal.getTime() != null){
+                    int hours = cal.getTime().getHours();
+                    int minutes = cal.getTime().getMinutes();
+                    int seconds = cal.getTime().getSeconds();
+                    if(hours > 0 || minutes > 0 || seconds > 0){
+                        return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(cal.getTime());
+                    }
+                }
+            }
+            return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
+        } catch (Exception e) {
+        }
+        return value;
+    }
+    
     public ArrayList<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression) {
         return getListOfValuesFromXPath(xpathExpression, xpathSubExpression, null);
     }

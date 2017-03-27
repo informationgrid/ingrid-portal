@@ -97,7 +97,7 @@
 
 #set ($type = $TOOL.getAddressClassType())
 #set($tmp = $TOOL.getAddressClassTitle($type))
-#set($tmp2 = $TOOL.convertDateString($TOOL.getValueFromXPath("./idf:last-modified")))
+#set($tmp2 = $TOOL.getDateValueFromXPath("./idf:last-modified"))
 #renderDetailHeader ($tmp $type $tmp2)
 #set($tmp = "")
 #set($tmp2 = "")
