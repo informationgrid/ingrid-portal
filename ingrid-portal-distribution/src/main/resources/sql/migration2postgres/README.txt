@@ -2,6 +2,9 @@
 Migration PORTAL/MDEK Datenbank von MySQL/Oracle nach PostgreSQL
 ================================================================
 
+Die Quelldatenbank sollte mindestens in der Portal Version 4.0.1 vorliegen.
+D.h. Portale in einer Version kleiner 4.0.1 sollten auf Ihrer Quellplattform zunächst auf die aktuelle Version aktualisiert werden, bevor die Migration nach Postgres ausgeführt wird.
+
 Die Migration wird mit dem Tool EDB Postgres Migration Toolkit per Kommandozeile ausgeführt.
 Dieses Tool kann von einer normalen Postgres Installation via "StackBuilder" nachinstalliert werden und funktioniert auf Windows und Linux.
 https://www.enterprisedb.com/products-services-training/products-overview/postgres-plus-solution-pack/migration-toolkit
@@ -157,9 +160,6 @@ Dafür wie folgt vorgehen:
 		3_mysql2postgres_portal_post_migration_fixes.sql
 	Oracle:
 		3_oracle2postgres_portal_post_migration_fixes.sql
-
-Alle Skripte wurden auf der Portaldatenbank in der Version 3.6.2 oder 4.0.0 getestet.
-Die Skripte können aber auch für andere Portal Versionen angewandt werden, da sich das Schema bzgl. der Skript Inhalte nicht verändert hat.
 
 
 7. Postgres Datenbankeinstellungen im Portal
