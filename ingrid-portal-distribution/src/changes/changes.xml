@@ -12,11 +12,17 @@
             <action type="fix" dev="wemove" issue="REDMINE-570">
                 IGE: Fixed resetting of cut state in hierarchy tree.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-555">
+                IGE: Fixed error in free spatial reference, when editing name. 
+            </action>
 			<action type="fix" dev="wemove" issue="REDMINE-572">
                 PORTAL: Fixed XML Button not showing on result page
             </action>
-            <action type="fix" dev="wemove" issue="REDMINE-555">
-                IGE: Fixed error in free spatial reference, when editing name. 
+            <action type="fix" dev="wemove" issue="REDMINE-567">
+                PORTAL: Fixed date format on detail view.
+            </action>
+			<action type="add" dev="wemove" issue="REDMINE-380">
+                PORTAL: Add hours of service to detail view.
             </action>
         </release>
 
