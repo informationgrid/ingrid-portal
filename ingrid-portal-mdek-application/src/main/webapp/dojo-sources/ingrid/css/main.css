@@ -498,6 +498,8 @@ iframe {
 	position: absolute;
 }
 
+.checkbox-indent { padding-left: 20px; }
+
 .outer {
 	width: 100%;
 	/*width: 720px;*/

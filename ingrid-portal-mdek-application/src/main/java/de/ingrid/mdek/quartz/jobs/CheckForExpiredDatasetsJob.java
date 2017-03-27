@@ -259,7 +259,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 				"inner join modUserNode.t02AddressWork modUserAddr " +
 		"where " +
 			// exclude hidden user addresses !
-			AddressType.getHQLExcludeIGEUsersViaNode("addrNode") +
+			AddressType.getHQLExcludeIGEUsersViaNode("addrNode", "adr") +
 			" and adr.responsibleUuid = responsibleUserNode.addrUuid " +
 			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
 			" and modUserNode.addrUuid = adr.modUuid";

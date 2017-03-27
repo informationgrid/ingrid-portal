@@ -1,0 +1,26 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+#set ($action = $renderResponse.createActionURL())
+<style>
+html, body {
+    height: 100%;
+}
+
+#map {
+    height: 100%;
+}
+</style>
+
+<div id="map" style="width:100%;position:fixed;"></div>
+
+#parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+<script src="$restUrlMarker"></script>
+<script language="JavaScript" type="text/javascript">
+    var osm = getOSMLayer()
+    var map = addLeafletMap([osm], null, new L.LatLng(51.3, 10));
+</script>
+
+#parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
+
+<script>
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapMarkers.getBounds().pad(0.5), new L.LatLng(51.3, 10))
+</script>

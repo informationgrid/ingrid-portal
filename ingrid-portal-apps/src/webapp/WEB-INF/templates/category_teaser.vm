@@ -96,46 +96,68 @@
 #macro (getContent $facetList $parentFacet $facetId $parentFacetParam)
     #set ($count = 0)
     #set ($pf = $parentFacet)
+    #set ($facetListSize = $facetList.size())
+    #if($enableRss)
+        #set ($facetListSize = $facetListSize + 1)
+    #end
+    #set($list = [])
     #foreach ($facet in $facetList)
-        #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != "0") || $facet.isDisplay()))
-            #if($count % 6 == 0)
+        #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") == 0)))
+            #if(!$facet.isDisplay())
+                #set ($facetListSize = $facetListSize - 1)
+            #else
+                #set($bar = $list.add($facet))
+            #end
+        #else
+            #set($bar = $list.add($facet))
+        #end
+    #end
+    #if($facetListSize > 6 || $facetListSize < 0)
+        #set ($facetListSize = 6)
+    #end
+    
+    #foreach ($facet in $list)
+        #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != 0) || $facet.isDisplay()))
+            #if($count % $facetListSize == 0)
                 <div class="grid grid--gutter">
             #end
             #set ($count = $count + 1)
-            #if($count == 1)
-                ## Add RSS category
-                <div class="column column--1-6-m">
-                    <div class="mq-hide-l" style="padding: 0 0 20px 0;">
-                        <a class="tag" href="$renderResponse.encodeURL('/portal/rss-news.psml')" style="padding:10px 0;">
-                            <span class="mq-hide-l">
-                                <i class="icon bx-top-s icon-rss-2" style="display: block;font-size: 60px;margin: auto;"></i>
-                            </span>
-                            <span class="mq-show-l">
-                                <i class="icon bx-top-s icon-rss-2" style="display: block;font-size: 60px;margin: auto;"></i>
-                            </span>
-                            <div class="tx-center">
-                                $MESSAGES.getString('category.news.title')
-                            </div>
-                            <div class="tx-center">&nbsp;</div>
-                        </a>
-                    </div>
-                    <div class="mq-show-l">
-                        <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/rss-news.psml')">
-                            <span class="mq-hide-l">
-                                <i class="icon bx-top-s icon-rss-2" style=""></i>
-                            </span>
-                            <span class="mq-show-l">
-                                <i class="icon bx-top-s icon-rss-2" style=""></i>
-                            </span>
-                            <strong>
-                                $MESSAGES.getString('category.news.title')
-                            </strong>
-                            &nbsp;
-                        </a>
-                    </div>
-                 </div>
+            #if($enableRss)
+                #if($count == 1)
+                    ## Add RSS category
+                    <div class="column column--1-${facetListSize}-m">
+                        <div class="mq-hide-l" style="padding: 0 0 20px 0;">
+                            <a class="tag" href="$renderResponse.encodeURL('/portal/rss-news.psml')" style="padding:10px 0;">
+                                <span class="mq-hide-l">
+                                    <i class="icon bx-top-s icon-rss-2" style="display: block;font-size: 60px;margin: auto;"></i>
+                                </span>
+                                <span class="mq-show-l">
+                                    <i class="icon bx-top-s icon-rss-2" style="display: block;font-size: 60px;margin: auto;"></i>
+                                </span>
+                                <div class="tx-center">
+                                    $MESSAGES.getString('category.news.title')
+                                </div>
+                                <div class="tx-center">&nbsp;</div>
+                            </a>
+                        </div>
+                        <div class="mq-show-l">
+                            <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/rss-news.psml')">
+                                <span class="mq-hide-l">
+                                    <i class="icon bx-top-s icon-rss-2" style=""></i>
+                                </span>
+                                <span class="mq-show-l">
+                                    <i class="icon bx-top-s icon-rss-2" style=""></i>
+                                </span>
+                                <strong>
+                                    $MESSAGES.getString('category.news.title')
+                                </strong>
+                                &nbsp;
+                            </a>
+                        </div>
+                     </div>
+                #end
             #end
-            <div class="column column--1-6-m">
+            <div class="column column--1-${facetListSize}-m">
                 #set($facetParam = "$pf:$facet.getId();")
                 #if($facet.getParentId())
                     #set($facetParam = "$facet.getParentId():$facet.getId();")
@@ -145,8 +167,10 @@
                 #end
                 <div class="mq-hide-l" style="padding: 0 0 20px 0;">
                     <a class="tag" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
+                    #if($facet.getIcon() && $facet.getIcon().length() > 0)
                         #getIcon($facet)
-                        <div class="tx-center">
+                    #end
+                        <div class="tx-center category_label">
                             #if($facet.getCodelistId())
                                 $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
                             #else
@@ -154,13 +178,15 @@
                             #end
                         </div>
                         #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
-                            <div class="tx-center">($hits.get("FACETS").get("$facetId:$facet.getId()"))</div>
+                            <div class="tx-center category_count">($hits.get("FACETS").get("$facetId:$facet.getId()"))</div>
                         #end
                     </a>
                 </div>
                 <div class="mq-show-l">
                     <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
+                    #if($facet.getIcon() && $facet.getIcon().length() > 0)
                         #getIcon($facet)
+                    #end
                         <strong>
                             #if($facet.getCodelistId())
                                 $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
@@ -172,7 +198,7 @@
                     </a>
                 </div>
             </div>
-            #if($count % 6 == 0)
+            #if($count % $facetListSize == 0 || $count >= $facetList.size())
                 </div>
             #end
         #end

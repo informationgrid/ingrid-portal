@@ -33,6 +33,10 @@
     .is-active > & {
         transform: scaleY(-1);
     }
+
+    .is-active h1 > &, .is-active h2 > &, .is-active h3 > &, .is-active h4 > &, .is-active h5 > &, .is-active h6 > & {
+        transform: scaleY(-1);
+    }
 }
 
 .filter__checks {

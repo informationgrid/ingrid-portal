@@ -199,7 +199,8 @@ define("ingrid/tree/MetadataTree", [
             this.nodesToCopy = nodes;
             this.copySubTree = copySubTree;
             if (this.nodesToCut) {
-                array.forEach(this.nodesToCut, function(node) {
+                array.forEach(this.nodesToCut, function(nodeItem) {
+                    var node = UtilTree.getNodeById("dataTree", nodeItem.id);
                     domClass.remove(node.id, "nodeCut");
                 });
                 this.nodesToCut = null;
@@ -269,8 +270,8 @@ define("ingrid/tree/MetadataTree", [
                                     canBePasted = canBePasted && (srcType === 0); // Only Institutions are allowed below the root node
                                 }
                             }
-                            // The target node is no root node. Compare the src and dst types:
-                            if (dstType >= 2 || (srcType === 0 && dstType === 1)) {
+                            // The target node is no root node and no folder. Compare the src and dst types:
+                            if (dstType !== 1000 && (dstType >= 2 || (srcType === 0 && dstType === 1))) {
                                 canBePasted = false;
                             }
                             

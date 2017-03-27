@@ -94,14 +94,14 @@ define([
             },
 
             getSyslistEntryData: function(syslist, value) {
-                if (value == undefined) return null;
+                if (value === undefined) return null;
                 
-                var result = value+"";
+                var result = null;
                 
                 var list = sysLists[syslist];
-                if (list != undefined) {
+                if (list !== undefined) {
                     array.some(list, function(item) {
-                        if (item[0] == result) {
+                        if (item[0] == value+"") {
                             result = item[3];
                             return true;
                         }

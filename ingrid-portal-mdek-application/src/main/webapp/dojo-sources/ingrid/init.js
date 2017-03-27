@@ -114,6 +114,12 @@ define([
                             array.forEach(data, function(item) {
                                 if (behaviours[item.id]) {
                                     behaviours[item.id].override = item.active;
+                                    if (item.params) {
+                                        array.forEach(item.params, function(p) {
+                                            var behaviourParam = array.filter(behaviours[item.id].params, function(param) { return param.id === p.id; })[0];
+                                            lang.mixin(behaviourParam, p);
+                                        });
+                                    }
                                 }
                             });
                             for (var behave in behaviours) {
@@ -602,11 +608,11 @@ define([
 
             this.initPrintFrame = function() {
                 var cssLink1 = document.createElement("link");
-                cssLink1.href = "/ingrid-portal-mdek-application/dojo-sources/release/lib/ingrid/css/slick.grid.css";
+                cssLink1.href = "/ingrid-portal-mdek-application/dojo-sources/ingrid/css/slick.grid.css";
                 cssLink1.rel = "stylesheet";
                 cssLink1.type = "text/css";
                 var cssLink2 = document.createElement("link");
-                cssLink2.href = "/ingrid-portal-mdek-application/dojo-sources/release/lib/ingrid/css/styles.css";
+                cssLink2.href = "/ingrid-portal-mdek-application/dojo-sources/ingrid/css/styles.css";
                 cssLink2.rel = "stylesheet";
                 cssLink2.type = "text/css";
                 // IE has problems here!
@@ -754,7 +760,7 @@ define([
                 sessionKeepaliveDef.then(function(sessionKeepaliveInterval) {
                     if (sessionKeepaliveInterval > 0) {
                         var interval = sessionKeepaliveInterval * 60 * 1000;
-                        setInterval(UtilGeneral.refreshSession, interval);
+                        setInterval(lang.hitch(UtilGeneral, UtilGeneral.refreshSession), interval);
                     } else {
                         UtilityService.getSessionTimoutInterval({
                             callback: function(res) {

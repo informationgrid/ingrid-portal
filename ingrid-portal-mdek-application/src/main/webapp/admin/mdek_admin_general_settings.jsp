@@ -44,7 +44,7 @@
                 pageGeneralSettings.setGeneralValues(valueMap);
             }, function(msg){
                 console.error("error: " + msg);
-                dialog.show("<fmt:message key='general.error' />", string.substituteParams("<fmt:message key='dialog.generalError' />", msg), dialog.WARNING, null, 350, 350);
+                dialog.show("<fmt:message key='general.error' />", string.substitute("<fmt:message key='dialog.generalError' />", [msg]), dialog.WARNING, null, 350, 350);
             });
             
             pageGeneralSettings.setGeneralValues = function(valueMap){

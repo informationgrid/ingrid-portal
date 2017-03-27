@@ -261,7 +261,7 @@ define([
                     hideFocus: "",
                     style: {
                         width: "100%",
-                        overflowY: "auto",
+                        overflowY: "hidden",
                         overflowX: "auto",
                         outline: "0",
                         position: "relative"
@@ -342,13 +342,16 @@ define([
 
                 console.debug( this.id + ": resize last column (force:" + (force === true) + ")");
                 var totalColWidth = 0,
-                    lastColumn = this._getLastVisibleColumn();;
+                    lastColumn = this._getLastVisibleColumn();
                 this.columns.forEach(function(c, i) {
                     if (!c.hidden) {
                         if (i < lastColumn) totalColWidth += c.width;                        
                     }
                 });
-                var newWidth = this.viewportW - totalColWidth - scrollbarDimensions.width;
+                
+                // use scrollbar-width in last column only if the height is limited
+                var scrollbarWidth = this.options.forceGridHeight === true ? scrollbarDimensions.width : 0;
+                var newWidth = this.viewportW - totalColWidth - scrollbarWidth;
                 // if last column is very small then shrink the second to last column a bit
                 var minWidth = this.columns[lastColumn].minWidth ? this.columns[lastColumn].minWidth : 23;
                 if (lastColumn > 0 && newWidth < minWidth) {
@@ -512,8 +515,11 @@ define([
                 var m = this.columns[i] = lang.mixin(defCol, this.columns[i]);
                 this.columnsById[m.id] = i;
 
-                if (i == this.columns.length-1)
-                    m.width = this.viewportW - totalColumnsWidth - scrollbarDimensions.width -10;
+                if (i == this.columns.length-1) {
+                    // use scrollbar-width in last column only if the height is limited
+                    var scrollbarWidth = this.options.forceGridHeight === true ? scrollbarDimensions.width : 0;
+                    m.width = this.viewportW - totalColumnsWidth - scrollbarWidth -10;
+                }
                 // else
                 // var colWidth = m.width-this.headerColumnWidthDiff;
 
@@ -1392,6 +1398,8 @@ define([
                 return false;
             }
 
+            if (this.columns[cell].editable === false) return false;
+
             var rowMetadata = this.data.getItemMetadata && this.data.getItemMetadata(row);
             if (rowMetadata && typeof rowMetadata.focusable === "boolean") {
                 return rowMetadata.focusable;
@@ -2195,7 +2203,10 @@ define([
                 var lastVisibleColumn = this._getLastVisibleColumn();
                 if (i === lastVisibleColumn) {
                     var currentViewportWidth = parseFloat(style.get(this.container, "width"));
-                    newWidth = currentViewportWidth - x - scrollbarDimensions.width - this.cellWidthDiff;
+                    
+                    // use scrollbar-width in last column only if the height is limited
+                    var scrollbarWidth = this.options.forceGridHeight === true ? scrollbarDimensions.width : 0;
+                    newWidth = currentViewportWidth - x - scrollbarWidth - this.cellWidthDiff;
                     var lastHeader = this.headers.children[this.headers.children.length-1];
                     style.set(lastHeader, "width", newWidth + "px");//this.columns[i].width - this.headerColumnWidthDiff + "px");
                     // adapt rowWidth

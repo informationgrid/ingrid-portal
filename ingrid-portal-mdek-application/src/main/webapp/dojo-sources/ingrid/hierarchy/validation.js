@@ -297,6 +297,9 @@ define(["dojo/_base/declare",
         communicationValidation: function() {
             //on(registry.byId("addressCom").store, "onNew", function(item) {
             aspect.after(UtilGrid.getTable("addressCom"), "onDataChanged", function(msg) {
+                // ignore address folders
+                if (currentUdk.addressClass === 1000) return;
+
                 var email = UtilSyslist.getSyslistEntryName(4430, 3);
                 //if (msg.item.nameOfRelation == email) {
                 var anyEmail = array.some(UtilGrid.getTableData("addressCom"), function(item) {

@@ -212,6 +212,8 @@ define(["dojo/_base/declare",
                 }
             });
 
+            topic.publish("/onBeforeObjectSave", invalidInputs);
+
             //invalidExtInputs = invalidInputs.concat(invalidGrids);
             if (invalidInputs.length > 0) {
                 console.debug("invalid fields:");

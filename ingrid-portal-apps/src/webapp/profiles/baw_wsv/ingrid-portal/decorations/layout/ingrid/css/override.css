@@ -26,6 +26,13 @@
 
 .header__logo {
     height: auto;
+    margin: -18px 1.2rem -18px 58px;
+}
+
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin: -18px 1.2rem -18px 78px;
+    }
 }
 
 .mobile__title {
@@ -57,4 +64,58 @@
 
 .nav-toggle:after {
   border-width: 0 0 76px 20px;
+  border-color: transparent transparent #FFF transparent;
+}
+
+.mobile__logo{
+  height:100%
+}
+
+.header__logo:after {
+  border-style: solid;
+  border-width: 0 0 76px 20px;
+  border-color: transparent transparent transparent #FFFFFF ;
+  content: '';
+  height: 0;
+  position: absolute;
+  right: 0;
+  width: 0;
+  top: 0;
+  left: 90px;
+}
+
+.header__widget__icon {
+  fill: #FFF;
+}
+
+.header__widget__icon.is-active {
+  fill: #28225B;
+}
+
+.service_in_main {
+  padding: 15px 10px;
+}
+
+.service_in_main .header__widget__text {
+  color:#FFF;
+}
+
+.desktop__title {
+  color:#FFF;
+  padding: 15px 0 0;
+  font-size: 25px;
+  font-weight: normal;
+}
+
+.desktop__header__logo:after {
+  border-style: solid;
+  border-width: 0 0 58px 20px;
+  border-color: transparent transparent transparent #FFFFFF ;
+  content: '';
+  height: 0;
+  position: absolute;
+  right: 0;
+  width: 0;
+  top: 0;
+  left: 68px;
 }

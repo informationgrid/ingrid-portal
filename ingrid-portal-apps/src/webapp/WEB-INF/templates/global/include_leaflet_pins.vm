@@ -1,0 +1,71 @@
+<script>
+    var iconRed = L.icon({
+        iconUrl:      '/decorations/layout/ingrid/images/pins/icon_pin_red.png',
+        iconSize:     [24, 24],
+        iconAnchor:   [11, 22],
+        popupAnchor:  [0, -20]
+    });
+    
+    var iconGreen = L.icon({
+        iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_green.png',
+        iconSize:     [24, 24],
+        iconAnchor:   [11, 22],
+        popupAnchor:  [0, -20]
+    });
+    
+    var iconBlue = L.icon({
+        iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_blue.png',
+        iconSize:     [24, 24],
+        iconAnchor:   [11, 22],
+        popupAnchor:  [0, -20]
+    });
+    
+    var iconBlack = L.icon({
+        iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_black.png',
+        iconSize:     [24, 24],
+        iconAnchor:   [11, 22],
+        popupAnchor:  [0, -20]
+    });
+    
+    var iconBrown = L.icon({
+        iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_brown.png',
+        iconSize:     [24, 24],
+        iconAnchor:   [11, 22],
+        popupAnchor:  [0, -20]
+    });
+    
+    var iconGray = L.icon({
+        iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_gray.png',
+        iconSize:     [24, 24],
+        iconAnchor:   [11, 22],
+        popupAnchor:  [0, -20]
+    });
+    
+    var iconLila = L.icon({
+        iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_lila.png',
+        iconSize:     [24, 24],
+        iconAnchor:   [11, 22],
+        popupAnchor:  [0, -20]
+    });
+    
+    var iconOrange = L.icon({
+        iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_orange.png',
+        iconSize:     [24, 24],
+        iconAnchor:   [11, 22],
+        popupAnchor:  [0, -20]
+    });
+    
+    var iconLimegreen = L.icon({
+        iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_limegreen.png',
+        iconSize:     [24, 24],
+        iconAnchor:   [11, 22],
+        popupAnchor:  [0, -20]
+    });
+    
+    var iconYellow = L.icon({
+        iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_yellow.png',
+        iconSize:     [24, 24],
+        iconAnchor:   [11, 22],
+        popupAnchor:  [0, -20]
+    });
+</script>

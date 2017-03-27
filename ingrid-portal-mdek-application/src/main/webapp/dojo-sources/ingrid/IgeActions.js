@@ -523,6 +523,8 @@ define([
                             res.nodeDocType = "InstitutionPerson_B";
                         } else if (res.addressClass == 3) {
                             res.nodeDocType = "PersonAddress_B";
+                        } else if (res.addressClass == 1000) {
+                            res.nodeDocType = "Class1000_B";
                         }
 
                         msg.resultHandler.resolve(res);
@@ -1900,8 +1902,14 @@ define([
                         currentFieldWidget.attr("value", false, true);
                     } else if (currentFieldWidget instanceof DateTextBox) {
                         currentFieldWidget.attr("value", null, true);
-                    } else
-                        currentFieldWidget.attr("value", "", true);
+                    } else {
+                        if (currentFieldWidget.valueAsTableData) {
+                            currentFieldWidget.attr("value", [], true);
+                        } else {
+                            currentFieldWidget.attr("value", "", true);
+                            
+                        }
+                    }
                 });
             }
 
@@ -1912,24 +1920,16 @@ define([
                     var currentField = additionalFields[index];
                     var currentFieldWidget = registry.byId(currentField.identifier);
                     if (currentFieldWidget instanceof CustomGrid) {
-                        //console.debug("additional field cannot be set: " + currentField.identifier);
                         // it must be a slickGrid
                         var grid = gridManager[currentField.identifier];
                         if (grid === null) {
                             console.debug("additional field cannot be set: " + currentField.identifier);
-                            break;
+                            return null;
                         }
-                        var rowData = [];
-                        array.forEach(currentField.tableRows, function(row) {
-                            var columnData = {};
-                            array.forEach(row, function(col) {
-                                if (col.listId == -1)
-                                    columnData[col.identifier] = col.value;
-                                else
-                                    columnData[col.identifier] = col.listId;
-                            });
-                            rowData.push(columnData);
-                        });
+                        
+                        var rowData = this.prepareBackendDataForGrid(currentField);
+                        if (rowData === null) break;
+                        
                         grid.setData(rowData);
                         grid.render();
                     } else {
@@ -1949,8 +1949,14 @@ define([
                                 }), true);
                             } else if (currentFieldWidget instanceof CheckBox) {
                                 currentFieldWidget.attr("value", currentField.value == "true", true);
-                            } else
-                                currentFieldWidget.attr("value", currentField.value, true);
+                            } else {
+                                if (currentFieldWidget.valueAsTableData) {
+                                    currentFieldWidget.attr("value", currentField.tableRows, true);
+                                } else {                                    
+                                    currentFieldWidget.attr("value", currentField.value, true);
+                                }
+                                
+                            }
                         }
                     }
                 }
@@ -1965,6 +1971,21 @@ define([
             this._setObjectDataClass5(nodeData);
             this._setObjectDataClass6(nodeData);
 
+        },
+        
+        prepareBackendDataForGrid: function(currentField) {
+            var rowData = [];
+            array.forEach(currentField.tableRows, function(row) {
+                var columnData = {};
+                array.forEach(row, function(col) {
+                    if (col.listId == -1)
+                        columnData[col.identifier] = col.value;
+                    else
+                        columnData[col.identifier] = col.listId;
+                });
+                rowData.push(columnData);
+            });
+            return rowData;
         },
 
         _connectSharedStore: function() {
@@ -2263,6 +2284,9 @@ define([
                     // -- Extra Info --
                     nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress3").get("value");
                     break;
+                case 1000:
+                    nodeData.name = registry.byId("addressTitle").get("value");
+                    break;
                 default:
                     console.debug("Error in _getAddressData - Address Class must be 0, 1, 2 or 3!");
                     break;
@@ -2304,7 +2328,7 @@ define([
             // --- General ---
             nodeData.generalShortDescription = registry.byId("generalShortDesc").get("value");
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
-            nodeData.objectClass = registry.byId("objectClass").get("value").substr(5, 1); // Value is a string: "Classx" where x is the class
+            nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
             // Comments
             nodeData.commentTable = currentUdk.commentStore;
@@ -2423,56 +2447,16 @@ define([
 
                     // check if field is a table and handle differently
                     if (currentField instanceof CustomGrid) {
-                        // get column ids
-                        var tableData = [];
-                        var columnIds = [];
-
-                        array.forEach(currentField.getColumns(), function(column) {
-                            columnIds.push(column.field);
-                        });
-
-                        array.forEach(currentField.getData(), function(row) {
-                            var rowData = [];
-                            for (var j = 0; j < columnIds.length; j++) {
-                                var value = row[columnIds[j]];
-                                if (value === undefined || value === null) continue;
-
-                                //if (value instanceof Date)
-                                //    value = UtilString.getDateString(value, "dd.MM.yyyy");
-
-                                var listId = "-1";
-                                // get listId from structure element of grid in case it is a list
-                                if (currentField.getColumns()[j].values) {
-                                    var index = array.indexOf(currentField.getColumns()[j].values, value);
-                                    if (index == -1) index = array.indexOf(currentField.getColumns()[j].options, value);
-                                    if (index != -1) {
-                                        listId = currentField.getColumns()[j].values[index];
-                                        value = currentField.getColumns()[j].options[index];
-                                    }
-                                }
-
-                                var columnData = {
-                                    identifier: columnIds[j],
-                                    value: value,
-                                    listId: listId,
-                                    tableRows: null
-                                };
-                                rowData.push(columnData);
-                            }
-                            tableData.push(rowData);
-                        });
-
-                        // add empty rows so that table can be made empty
-                        if (tableData.length === 0) {
-                            tableData.push([]);
-                        }
-
+                        
+                        var tableData = this.prepareGridDataForBackend(currentField);
+                        
                         nodeData.additionalFields.push({
                             identifier: currentField.id,
                             value: null,
                             listId: null,
                             tableRows: tableData
                         });
+                        
                     } else {
                         // if it's a select box we need to get listId and value
                         var value = null;
@@ -2501,13 +2485,24 @@ define([
                             value = currentField.get("displayedValue");
                         }
 
-                        if (value !== null && lang.trim(value + "").length !== 0) {
+                        
+                        if (currentField.valueAsTableData) {
                             nodeData.additionalFields.push({
                                 identifier: identifier,
-                                value: value,
-                                listId: listId,
-                                tableRows: null
+                                value: null,
+                                listId: null,
+                                tableRows: value
                             });
+                        } else {
+                            if (value !== null && lang.trim(value + "").length !== 0) {
+                                nodeData.additionalFields.push({
+                                    identifier: identifier,
+                                    value: value,
+                                    listId: listId,
+                                    tableRows: null
+                                });
+                            }
+                            
                         }
                     }
                 }
@@ -2558,6 +2553,54 @@ define([
             console.debug("------ OBJECT DATA ------");
             console.debug(nodeData);
             console.debug("------ OBJECT DATA END ------");
+        },
+        
+        prepareGridDataForBackend: function(currentField) {
+         // get column ids
+            var tableData = [];
+            var columnIds = [];
+
+            array.forEach(currentField.getColumns(), function(column) {
+                columnIds.push(column.field);
+            });
+
+            array.forEach(currentField.getData(), function(row) {
+                var rowData = [];
+                for (var j = 0; j < columnIds.length; j++) {
+                    var value = row[columnIds[j]];
+                    if (value === undefined || value === null) continue;
+
+                    //if (value instanceof Date)
+                    //    value = UtilString.getDateString(value, "dd.MM.yyyy");
+
+                    var listId = "-1";
+                    // get listId from structure element of grid in case it is a list
+                    if (currentField.getColumns()[j].values) {
+                        var index = array.indexOf(currentField.getColumns()[j].values, value);
+                        if (index == -1) index = array.indexOf(currentField.getColumns()[j].options, value);
+                        if (index != -1) {
+                            listId = currentField.getColumns()[j].values[index];
+                            value = currentField.getColumns()[j].options[index];
+                        }
+                    }
+
+                    var columnData = {
+                        identifier: columnIds[j],
+                        value: value,
+                        listId: listId,
+                        tableRows: null
+                    };
+                    rowData.push(columnData);
+                }
+                tableData.push(rowData);
+            });
+
+            // add empty rows so that table can be made empty
+            if (tableData.length === 0) {
+                tableData.push([]);
+            }
+
+            return tableData;
         },
 
         _getObjectDataClass0: function() {},

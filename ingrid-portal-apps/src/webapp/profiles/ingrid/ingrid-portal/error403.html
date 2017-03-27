@@ -1,0 +1,271 @@
+<!--
+  **************************************************-
+  Ingrid Portal Apps
+  ==================================================
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Decorator  ingrid  ${decoTop} - ${decoBottom}-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+    <head>
+        <title>InGrid-Portal</title>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-style-type" content="text/css" />
+        <meta http-equiv="content-language" content="de" />
+        <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
+        <meta name="description" content="InGrid-Portal bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
+        <meta name="author" content="wemove digital solutions" />
+        <meta name="keywords" lang="de" content="InGrid-Portal, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
+        <meta name="copyright" content="wemove digital solutions GmbH" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css"></link>
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css"></link>
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
+        <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="nav-overlay">
+            <a title="Freitextsuche nach Informationen" class="nav-overlay__item nav-overlay__item--level1" href="/freitextsuche">Suche</a>
+            <a class="nav-overlay__item nav-overlay__item--level1" href="/messwertsuche" title="Suche nach Messdaten">Messwerte</a>
+            <a title="Eingebundene Datenkataloge und Metadaten" class="nav-overlay__item nav-overlay__item--level1" href="/datenkataloge">Kataloge</a>
+            <a class="nav-overlay__item nav-overlay__item--level1" href="/kartendienste" title="Interaktive thematische Karten">Karte</a>
+            <a title="Suche nach Ereignissen " class="nav-overlay__item nav-overlay__item--level1" href="/umweltchronik">Chronik</a>
+            <div class="js-accordion-multi">
+                <div title="Hintergrundinformationen zu InGrid-Portal" class="nav-overlay__item nav-overlay__item--level1 js-accordion-toggle">
+                    <svg class="nav-overlay__icon icon"><use xlink:href="#plus"/></svg>
+                    <svg class="nav-overlay__icon icon"><use xlink:href="#minus"/></svg>
+                    Über InGrid-Portal
+                </div>
+                <div class="nav-overlay__level2 js-accordion-content is-hidden">
+                    <div class="nav-overlay__level2__content">
+                        <a title="Kurzbeschreibung und Hintergrund" class="nav-overlay__item nav-overlay__item--level2" href="/hintergrundinformationen">Porträt</a>
+                        <a title="Kooperationspartner und Informationsanbieter" class="nav-overlay__item nav-overlay__item--level2" href="/informationsanbieter">Informationsanbieter</a>
+                        <a title="Angeschlossene Datenbanken" class="nav-overlay__item nav-overlay__item--level2" href="/datenquellen">Datenquellen</a>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav__mobile nav__foot">
+                <li>
+                    <a title="Erläuterungen zur Nutzung von InGrid-Portal" href="/hilfe">Hilfe</a>
+                </li>
+                <li>
+                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an InGrid-Portal" href="/kontakt">Kontakt</a>
+                </li>
+                <li>
+                    <a title="Alle Inhalte von InGrid-Portal auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
+                </li>
+                <li>
+                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
+                </li>
+            </ul>
+        </div>
+        <div class="page">
+            <header class="header">
+                <div class="ob-box-padded-more ob-box-center">
+                    <div class="header__widgets__section">
+                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                            <svg class="icon">
+                                <use xlink:href="#burger"></use>
+                            </svg>
+                            <svg class="icon ob-fade">
+                                <use xlink:href="#cross"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="header__widgets__section">
+                        <a class="header__widget header__logo" href="/startseite" title="Startseite von InGrid-Portal">
+                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
+                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg"></img>
+                        </a>
+                    </div>
+                </div> 
+                <nav class="nav-desktop mq-hide-xxl">
+                    <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/freitextsuche" title="Freitextsuche nach Informationen">Suche</a>
+                        </li>
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/messwertsuche" title="Suche nach Messdaten">Messwerte</a>
+                        </li>
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/datenkataloge" title="Eingebundene Datenkataloge und Metadaten">Kataloge</a>
+                        </li>
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/kartendienste" title="Interaktive thematische Karten">Karte</a>
+                        </li>
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/umweltchronik" title="Suche nach Ereignissen ">Chronik</a>
+                        </li>
+                        <li class="nav-desktop__item dropmenu__box">
+                            <a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="Hintergrundinformationen zu InGrid-Portal">
+                                Über InGrid
+                                <svg class="icon"><use xlink:href="#arrow-thick"/></svg>
+                            </a>
+                            <ul class="nav-desktop__dropdown nav-desktop__dropdown-left dropmenu">
+                                <li>
+                                    <a href="/hintergrundinformationen" title="Kurzbeschreibung und Hintergrund">Porträt</a>
+                                </li>
+                                <li>
+                                    <a href="/informationsanbieter" title="Kooperationspartner und Informationsanbieter">Informationsanbieter</a>
+                                </li>
+                                <li>
+                                    <a href="/datenquellen" title="Angeschlossene Datenbanken">Datenquellen</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <!-- CONTENT BLOCK -->
+            <section class="block block--padded">
+                <div class="ob-box-wide ob-box-padded ob-box-center">
+                    <article class="content ob-container">
+                        <h1 id="errorTitle">FEHLER 403: ZUGRIFF VERWEIGERT</h1>
+                        <p>
+                            Die gew&uuml;nschte Seite kann nicht aufgerufen werden. M&ouml;glicherweise fehlt Ihnen für diese Seite die Berechtigung oder Ihre Portal-Session ist abgelaufen.
+                        </p>
+                        <ul class="list list--bullets">
+                            <li>
+                                Versuchen Sie sich &uuml;ber die <a href="/startseite">Startseite</a> 
+                                wieder am Portal anzumelden und rufen Sie die gew&uuml;nschte URL 
+                                erneut auf. 
+                            </li>
+                            <li>
+                                Oder st&ouml;bern Sie in den verschiedenen Such-Kategorien von InGrid-Portal:
+                            </li>
+                        </ul>
+                        <ul class="link-list">
+                            <li>
+                                <a href="/freitextsuche">
+                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                                    Suche
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/messwertsuche">
+                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                                    Messwerte
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/datenkataloge">
+                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                                    Kataloge
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/kartendienste">
+                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                                    Karte
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/umweltchronik">
+                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                                    Chronik
+                                </a>
+                            </li>
+                        </ul>
+                        <br />
+                    </article>
+                </div>
+            </section>
+            <footer class="footer">
+                <div class="ob-box-padded ob-box-center ob-clear">
+                    <div class="footer__top">
+                        <a href="/startseite">
+                            <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg "></img>
+                        </a>
+                        <p class="copyright">© Niedersächsisches Ministerium für Umwelt, Energie und Klimaschutz</p>
+                    </div>
+                </div>
+                <hr class="bx-top-0 bx-bot-0"></hr>
+                <div class="grid">
+                    <div class="column column--3-4-xl">
+                        <div class="ob-box-padded ob-box-center ob-clear">
+                            <div class="footer__section">
+                                <nav class="footer__middle mq-hide-l">
+                                    <a href="/hilfe" title="Erläuterungen zur Nutzung von InGrid-Portal">Hilfe</a>
+                                    <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an InGrid-Portal">Kontakt</a>
+                                    <a href="/inhaltsverzeichnis" title="Alle Inhalte von InGrid-Portal auf einen Blick">Sitemap</a>
+                                    <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss">Impressum</a>
+                                   </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column column--1-4-xl">
+                        <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"></hr>
+                        <div class="ob-box-padded ob-box-center ob-clear">
+                            <div class="footer__section">
+                                <div class="footer__bottom"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- Global scripts -->
+        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
+        
+        <!-- Popup -->
+        <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
+        
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/de.js"></script>
+        <script>
+           $('.datepicker').pickadate()
+            
+        </script>
+        
+        <!-- Accordion -->
+        <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
+        <script>
+          $('.js-accordion').accordion();
+        
+          $('.js-accordion-multi').accordion({
+              multi: true
+          });
+        </script>
+        
+        <!-- Tabs -->
+        <script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
+        <script>
+          $('.js-tabs').tabs();
+        </script>
+        
+        <!-- Selection -->
+        <script src="/decorations/layout/ingrid/scripts/selection.js"></script>
+        <script>
+          $('.js-selection').selection();
+        </script>
+        
+        <!-- Table Sort -->
+        <script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
+        <script>
+          $('.js-table-sortable').sortable();
+        </script>
+    </body>
+</html>

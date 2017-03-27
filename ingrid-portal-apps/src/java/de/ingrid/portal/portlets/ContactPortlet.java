@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.Principal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -54,7 +53,6 @@ import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -269,9 +267,6 @@ public class ContactPortlet extends GenericVelocityPortlet {
                          mailData.put("user.business-info.online.email", cf.getInput(ContactForm.FIELD_EMAIL));
                          mailData.put("user.area.of.profession", messages.getString("contact.report.email.area.of.profession."
                                  + cf.getInput(ContactForm.FIELD_ACTIVITY)));
-                         mailData.put("user.interest.in.enviroment.info", messages
-                                 .getString("contact.report.email.interest.in.enviroment.info."
-                                         + cf.getInput(ContactForm.FIELD_INTEREST)));
                          mailData.put("message.body", cf.getInput(ContactForm.FIELD_MESSAGE));
 
                          Locale locale = request.getLocale();

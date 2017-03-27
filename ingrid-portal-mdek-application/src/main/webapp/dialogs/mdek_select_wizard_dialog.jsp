@@ -63,7 +63,13 @@
             var extraButtons = [];
 
             console.log("Publishing event: '/afterInitDialog/ChooseWizard'");
-            topic.publish("/afterInitDialog/ChooseWizard", { types: types, assistants: assistants, buttons: extraButtons });
+            var params = { types: types, assistants: assistants, buttons: extraButtons };
+            topic.publish("/afterInitDialog/ChooseWizard", params);
+
+            // check if there's only one option
+            // in that case close dialog and select the only available option
+            var singleHandled = handleSingleOption(params);
+            if (singleHandled) return;
 
             addRadioBoxes(types, "wizardObjTypes");
 
@@ -131,7 +137,10 @@
 
         function createObject() {
             var type = query("input[type=radio][name=assistantRadioSelect]:checked")[0].value;
+            createObjectByType(type);
+        }
 
+        function createObjectByType(type) {
             closeThisDialog();
 
             // if an assistant is called
@@ -145,8 +154,11 @@
 
             } else {
                 // otherwise we just pre-set the object type 
-                registry.byId("objectClass").set("value", "Class" + type);
-                setTreeIcon(type);
+                // set class delayed since new object request also sets class before
+                setTimeout(function () {
+                    registry.byId("objectClass").set("value", "Class" + type);
+                    setTreeIcon(type);
+                }, 300);
 
             }
 
@@ -162,6 +174,25 @@
             });
         }
 
+        /**
+         * If only one option is available then execute this one.
+         * 
+         * @returns true if a single operation was found and executed, otherwise false
+         */
+        function handleSingleOption(params) {
+            if (params.types.length === 1 && params.assistants.length === 0 && params.buttons.length === 0) {
+                createObjectByType(params.types[0][1]);
+            } else if (params.types.length === 0 && params.assistants.length === 1 && params.buttons.length === 0) {
+                createObjectByType(params.assistants[0]);
+            } else if (params.types.length === 0 && params.assistants.length === 0 && params.buttons.length === 1) {
+                closeThisDialog();
+                params.buttons[0].callback(closeThisDialog);;
+            } else {
+                return false;
+            }
+
+            return true;
+        }
         function closeThisDialog() {
             thisDialog.hide();
             topic.publish("/selectNode", {
