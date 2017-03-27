@@ -385,26 +385,26 @@ INPUT.qq-edit-filename.qq-editing {
 }
 
 .qq-header-text {
-    padding: 0 0 10px 0;
+  padding: 0 0 10px 0;
 }
 
 .qq-upload-replace, .qq-upload-rename, .qq-upload-keep {
-    margin-right: 3px;
-    display: inline;
+  margin-right: 3px;
+  display: inline;
 }
 
 .qq-upload-replace, .qq-upload-rename, .qq-upload-keep {
-    font-size: 12px;
-    font-weight: normal;
-    cursor: pointer;
-    vertical-align: middle;
+  font-size: 12px;
+  font-weight: normal;
+  cursor: pointer;
+  vertical-align: middle;
 }
 
 .qq-upload-status-text {
-    display: block;
-    padding: 10px 0 0 30px;
+  display: block;
+  padding: 10px 0 0 30px;
 }
 
 .qq-upload-status-text:empty {
-    padding: 0;
+  padding: 0;
 }
