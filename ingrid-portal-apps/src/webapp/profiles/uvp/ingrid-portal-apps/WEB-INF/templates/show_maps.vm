@@ -22,5 +22,10 @@ html, body {
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 
 <script>
+    if(markers.length > 0){
+        if(mapMarkers){
+            map.fitBounds(mapMarkers.getBounds().pad(0.5));
+        }
+    }
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapMarkers.getBounds().pad(0.5), new L.LatLng(51.3, 10))
 </script>
