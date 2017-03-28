@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -128,10 +128,11 @@ define(["dojo/_base/declare",
                 if (value.indexOf("http") === 0) {
                     link = value;
                 } else {
-                    // determine base url 
+                    // determine base url
                     var baseUrl = document.location.protocol + "//" + document.location.host + "/ingrid-portal-mdek-application/rest/document/";
                     // remove uuid information from relative path
                     docName = value.substring( value.indexOf("/") + 1 );
+                    docName = decodeURI(docName);
                     link = baseUrl + value;
                 }
                 return "<span class=\"text-truncate left\" style=\"width: 100%\">" + docName +

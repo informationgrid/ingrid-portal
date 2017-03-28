@@ -30,7 +30,7 @@ define([
 
             // phases consists of 0 or n containers, which itself contain additional fields
             // e.g.: [ { key: "öffentl. Auslegung", fields: [addField11, addField12]}, {key: "zulassungs.", fields: [addField21, addField22]}, ... ]
-            // so each item of phases is a container of type 
+            // so each item of phases is a container of type
             //   - 1) "Öffentliche Auslegung"
             //   - 2) "Erörterungstermin"
             //   - 3) "Zulassungsentscheidung"
@@ -634,11 +634,11 @@ define([
                         if (!row.label || row.label.length === 0) {
                             var file = data.uri;
                             var lastDotPos = file.lastIndexOf(".");
-                            var name = file.substring(file.lastIndexOf('/')+1, 
+                            var name = file.substring(file.lastIndexOf('/')+1,
                                     lastDotPos === -1 ? file.length : lastDotPos);
-                            row.label = name.replace(/_|%20/g, " ");
+                            row.label = decodeURI(name);
                         }
-                        row.link = data.uri.replace(/%20/g, " ");
+                        row.link = data.uri;
                         row.type = data.type;
                         row.size = data.size;
                         return row;
