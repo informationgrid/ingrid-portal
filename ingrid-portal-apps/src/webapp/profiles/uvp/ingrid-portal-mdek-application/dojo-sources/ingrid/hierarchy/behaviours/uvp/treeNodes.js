@@ -58,7 +58,7 @@ define([
                     if (message.id === "dataTree") {
                         // do not allow to add new objects directly under the root node
                         if (message.node.id === "objectRoot") {
-                            console.log("disable create/paste new object");
+                            // console.log("disable create/paste new object");
                             registry.byId("toolbarBtnNewDoc").set("disabled", true);
                             registry.byId("toolbarBtnPaste").set("disabled", true);
                             registry.byId("toolbarBtnNewFolder").set("disabled", true);
@@ -129,8 +129,6 @@ define([
 
         setTreeSortFunction: function() {
             Catalog.catalogData.treeSortFunction = function(query, children) {
-                console.log("query", query);
-                console.log("children", children);
                 if (query.parent === "objectRoot") {
                     var sortOrder = [
                         message.get("uvp.form.categories.uvp"),
@@ -161,6 +159,7 @@ define([
          * 
          * @param {object} selectedNode is the node to insert other nodes
          * @param {object[]} nodesToInsert are the nodes to be inserted
+         * @returns true if nodes can be insert otherwise false
          */
         _checkValidParent: function(selectedNode, nodesToInsert) {
             var rootFolderNode = this._getTopParentNode(selectedNode);
@@ -178,7 +177,8 @@ define([
                 var insertClass = nodeToInsert.objectClass;
 
                 // just check if each copied node is under the same UVP top folder
-                return this._getTopParentNode({item: {parent: nodeToInsert}}).label === rootFolderLabel;
+                var topParentNode = this._getTopParentNode({item: {parent: nodeToInsert}});
+                return topParentNode ? topParentNode.label === rootFolderLabel : false;
             }, this);
         }
     })();
