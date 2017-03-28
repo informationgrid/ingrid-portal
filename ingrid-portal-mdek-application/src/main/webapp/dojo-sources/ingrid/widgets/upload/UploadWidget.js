@@ -124,11 +124,11 @@ define([
                     IngridDialog.show("Ungespeicherte Dokument-Uploads", message, IngridDialog.INFO, [{
                         caption: "Ja",
                         action: lang.hitch(this, function() {
-                            // delete documents from server?
-                            //var uploads = this.removeDuplicates(this.uploads);
-                            //array.forEach(uploads, function (upload) {
-                            //    xhr.del(upload.uri);
-                            //}, this);
+                            // delete documents from server
+                            var uploads = this.removeDuplicates(this.uploads);
+                            array.forEach(uploads, function (upload) {
+                                xhr.del(this.uploadUrl+"/"+upload.uri);
+                            }, this);
                             dialog.origHide();
                         })
                     }, {
