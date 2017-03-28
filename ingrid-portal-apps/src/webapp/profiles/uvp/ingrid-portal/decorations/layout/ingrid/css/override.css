@@ -343,3 +343,61 @@ thead {
 .leaflet-control-layers-overlays label div input[type="checkbox"] {
     -webkit-appearance: checkbox;
 }
+
+.icon-UVPG-1:before {
+  content: "\e084";
+}
+.icon-UVPG-2:before {
+  content: "\e48f";
+}
+.icon-UVPG-3:before {
+  content: "\e088";
+}
+.icon-UVPG-4:before {
+  content: "\e0aa";
+}
+.icon-UVPG-5:before {
+  content: "\e472";
+}
+.icon-UVPG-6:before {
+  content: "\e3c8";
+}
+.icon-UVPG-7:before {
+  content: "\e52c";
+}
+.icon-UVPG-8:before {
+  content: "\e2ce";
+}
+.icon-UVPG-9:before {
+  content: "\e4ad";
+}
+.icon-UVPG-10:before {
+  content: "\e3b8";
+}
+.icon-UVPG-11:before {
+  content: "\e336";
+}
+.icon-UVPG-12:before {
+  content: "\e190";
+}
+.icon-UVPG-13:before {
+  content: "\e3ad";
+}
+.icon-UVPG-14:before {
+  content: "\e5b2";
+}
+.icon-UVPG-15:before {
+  content: "\e49c";
+}
+.icon-UVPG-16:before {
+  content: "\e2f8";
+}
+.icon-UVPG-17:before {
+  content: "\e5bc";
+}
+.icon-UVPG-18:before {
+  content: "\e3b1";
+}
+.icon-UVPG-19:before {
+  content: "\e42c";
+}

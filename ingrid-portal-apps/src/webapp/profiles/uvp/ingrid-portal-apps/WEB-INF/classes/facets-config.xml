@@ -356,7 +356,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-1"</query>
                 <id>energie</id>
                 <parentId>type</parentId>
-                <icon>icon-fire</icon>
+                <icon>icon-UVPG-1</icon>
             </facet>
         <!-- Steine und Erden, Glas, Keramik, Baustoffe -->
             <facet>
@@ -364,7 +364,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-2"</query>
                 <id>baustoffe</id>
                 <parentId>type</parentId>
-                <icon>icon-bricks</icon>
+                <icon>icon-UVPG-2</icon>
             </facet>
         <!-- Stahl, Eisen und sonstige Metalle einschließlich Verarbeitung -->
             <facet>
@@ -372,7 +372,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-3"</query>
                 <id>verarbeitung</id>
                 <parentId>type</parentId>
-                <icon>icon-flag-4</icon>
+                <icon>icon-UVPG-3</icon>
             </facet>
         <!-- Chemische Erzeugnisse, Arzneimittel, Mineralölraffination und Weiterverarbeitung -->
             <facet>
@@ -380,7 +380,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-4"</query>
                 <id>chemie</id>
                 <parentId>type</parentId>
-                <icon>icon-add-2</icon>
+                <icon>icon-UVPG-4</icon>
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
             <facet>
@@ -388,7 +388,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-5"</query>
                 <id>kunststoff</id>
                 <parentId>type</parentId>
-                <icon>icon-layers-1</icon>
+                <icon>icon-UVPG-5</icon>
             </facet>
         <!-- Holz, Zellstoff -->
             <facet>
@@ -396,7 +396,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-6"</query>
                 <id>holzzellstoff</id>
                 <parentId>type</parentId>
-                <icon>icon-tree-pine</icon>
+                <icon>icon-UVPG-6</icon>
             </facet>
         <!-- Nahrungs-, Genuss- und Futtermittel, landwirtschaftliche Erzeugnisse -->
             <facet>
@@ -404,7 +404,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-7"</query>
                 <id>erzeugnisse</id>
                 <parentId>type</parentId>
-                <icon>icon-apple</icon>
+                <icon>icon-UVPG-7</icon>
             </facet>
         <!-- Verwertung und Beseitigung von Abfällen und sonstigen Stoffen -->
             <facet>
@@ -412,7 +412,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-8"</query>
                 <id>verwertungbeseitigungabfaellen</id>
                 <parentId>type</parentId>
-                <icon>icon-loop-3</icon>
+                <icon>icon-UVPG-8</icon>
             </facet>
         <!-- Lagerung von Stoffen und Gemischen -->
             <facet>
@@ -420,7 +420,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-9"</query>
                 <id>lagerungstoffengemischen</id>
                 <parentId>type</parentId>
-                <icon>icon-mine-cart</icon>
+                <icon>icon-UVPG-9</icon>
             </facet>
         <!-- Sonstige Industrieanlagen -->
             <facet>
@@ -428,7 +428,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-10"</query>
                 <id>industrieanlagen</id>
                 <parentId>type</parentId>
-                <icon>icon-factory</icon>
+                <icon>icon-UVPG-10</icon>
             </facet>
         <!-- Kernenergie -->
             <facet>
@@ -436,7 +436,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-11"</query>
                 <id>kernenergie</id>
                 <parentId>type</parentId>
-                <icon>icon-nuclear-1</icon>
+                <icon>icon-UVPG-11</icon>
             </facet>
         <!-- Abfalldeponien -->
             <facet>
@@ -444,15 +444,15 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-12"</query>
                 <id>abfalldeponien</id>
                 <parentId>type</parentId>
-                <icon>icon-basket-3</icon>
+                <icon>icon-UVPG-12</icon>
             </facet>
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
             <facet>
                 <name>Wasserwirtschaftliche Vorhaben </name>
-                <query>uvp_category:"UVPG-3"</query>
+                <query>uvp_category:"UVPG-13"</query>
                 <id>wasservorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-boat</icon>
+                <icon>icon-UVPG-13</icon>
             </facet>
         <!-- Verkehrsvorhaben -->
             <facet>
@@ -460,7 +460,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-14"</query>
                 <id>verkehrsvorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-road</icon>
+                <icon>icon-UVPG-14</icon>
             </facet>
         <!-- Bergbau und dauerhafte Speicherung von Kohlendioxid -->
             <facet>
@@ -468,7 +468,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-15"</query>
                 <id>bergbaukohlendioxid</id>
                 <parentId>type</parentId>
-                <icon>icon-diamond</icon>
+                <icon>icon-UVPG-15</icon>
             </facet>
         <!-- Flurbereinigung -->
             <facet>
@@ -476,7 +476,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-16"</query>
                 <id>flurbereinigung</id>
                 <parentId>type</parentId>
-                <icon>icon-sync-1</icon>
+                <icon>icon-UVPG-16</icon>
             </facet>
         <!-- Forstliche und landwirtschaftliche Vorhaben -->
             <facet>
@@ -484,7 +484,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-17"</query>
                 <id>forstlandvorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-hand-eco</icon>
+                <icon>icon-UVPG-17</icon>
             </facet>
         <!-- Bauvorhaben -->
             <facet>
@@ -492,7 +492,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-18"</query>
                 <id>bauvorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-buildings-1</icon>
+                <icon>icon-UVPG-18</icon>
             </facet>
         <!-- Leitungsanlagen und andere Anlagen -->
             <facet>
@@ -500,7 +500,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-19"</query>
                 <id>anlagen</id>
                 <parentId>type</parentId>
-                <icon>icon-plug-2</icon>
+                <icon>icon-UVPG-19</icon>
             </facet>
         </facets>
     </facet>

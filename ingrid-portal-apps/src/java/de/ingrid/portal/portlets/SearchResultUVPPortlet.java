@@ -92,17 +92,40 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                             .append( detail.get( "title" ).toString() ).append( "','" )
                             .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
                             .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
-                            .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'" );
-
+                            .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'");
+                        
                         if(detail.get( "uvp_category" ) != null){
                             ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
                             s.append( "," ).append( "[" );
                             if(categories != null && categories.size() > 0){
                                 int index = 0;
-                                s.append( "'" );
                                 for (String category : categories) {
-                                    s.append( messages.getString( "searchResult.categories.uvp." + category.trim() ) );
+                                    s.append( "{" );
+                                    s.append( "'id':'" + category.trim() + "'" );
+                                    s.append( ",");
+                                    s.append( "'name':'" + messages.getString( "searchResult.categories.uvp." + category.trim() ) + "'" );
+                                    s.append( "}" );
                                     if(index < categories.size() - 1){
+                                        s.append( "," );
+                                    }
+                                    index ++;
+                                }
+                            }
+                            s.append( "]" );
+                        }else{
+                            s.append( "," ).append( "[" );
+                            s.append( "]" );
+                        }
+                        
+                        if(detail.get( "uvp_steps" ) != null){
+                            ArrayList<String> steps = getIndexValue(detail.get( "uvp_steps" ));
+                            s.append( "," ).append( "[" );
+                            if(steps != null && steps.size() > 0){
+                                int index = 0;
+                                s.append( "'" );
+                                for (String step : steps) {
+                                    s.append( messages.getString( "common.steps.uvp." + step.trim() ) );
+                                    if(index < steps.size() - 1){
                                         s.append( "','" );
                                     }else{
                                         s.append( "'" );
@@ -111,7 +134,11 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                                 }
                             }
                             s.append( "]" );
+                        }else{
+                            s.append( "," ).append( "[" );
+                            s.append( "]" );
                         }
+                        
                         s.append( "]" );
                         if (it.hasNext()) {
                             s.append( "," );
