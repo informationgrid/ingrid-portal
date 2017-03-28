@@ -630,6 +630,37 @@ define([
                         UtilStore.updateWriteStore(tableId, rows);
                     });
 
+                    var getFiles = function(phases, flat) {
+                        var files = flat ? [] : {};
+                        for (phase in phases) {
+                            if (!flat) {
+                                files[phase] = {};
+                            }
+                            var fields = phases[phase].fields;
+                            for (field in fields) {
+                                var key = fields[field].key;
+                                var data = fields[field].field.data;
+                                if (data) {
+                                    if (!flat) {
+                                        files[phase][key] = [];
+                                    }
+                                    for (row in data) {
+                                        var file = decodeURI(data[row].link);
+                                        if (flat) {
+                                            if (array.indexOf(files, file) === -1) {
+                                                files.push(file)
+                                            }
+                                        }
+                                        else {
+                                            files[phase][key].push(file);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        return files;
+                    };
+
                     var getRowData = function(row, data) {
                         if (!row.label || row.label.length === 0) {
                             var file = data.uri;
@@ -671,7 +702,8 @@ define([
                         },
                         onclick: lang.hitch(this, function() {
                             var path = currentUdk.uuid;
-                            uploader.open(path).then(lang.hitch(this, function(uploads) {
+                            var files = getFiles(this.phases, true);
+                            uploader.open(path, files).then(lang.hitch(this, function(uploads) {
                                 handleUploads(uploads);
                             }));
                         })

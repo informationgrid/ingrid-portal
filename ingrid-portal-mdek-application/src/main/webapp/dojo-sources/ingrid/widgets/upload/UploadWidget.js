@@ -68,13 +68,14 @@ define([
         /**
          * Show the upload dialog
          * @param path The upload path
+         * @param existingFiles Array of file names
          * @return Deferred that resolves to an array of upload items with properties uri, type, size
          */
-        open: function(path) {
+        open: function(path, existingFiles) {
             this.deferred = new Deferred();
 
             // build ui
-            this.dialog = this.createDialog();
+            this.dialog = this.createDialog(existingFiles);
             this.uploader = this.createUploader(this.dialog.containerNode, path);
 
             // show uploader
@@ -93,9 +94,10 @@ define([
 
         /**
          * Create the dialog for the uploader
+         * @param existingFiles Array of file names
          * @return Dialog
          */
-        createDialog: function() {
+        createDialog: function(existingFiles) {
             var dialog = new Dialog({
                 title: "Dokument-Upload",
                 style: "width: 840px",
@@ -127,7 +129,9 @@ define([
                             // delete documents from server
                             var uploads = this.removeDuplicates(this.uploads);
                             array.forEach(uploads, function (upload) {
-                                xhr.del(this.uploadUrl+"/"+upload.uri);
+                                if (array.indexOf(existingFiles, decodeURI(upload.uri)) === -1) {
+                                    xhr.del(this.uploadUrl+"/"+upload.uri);
+                                }
                             }, this);
                             dialog.origHide();
                         })
