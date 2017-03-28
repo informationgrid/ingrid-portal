@@ -36,9 +36,9 @@
             <meta name="robots" content="index,follow" />
         #end
         <link rel="stylesheet" href="#GetPageResource('./../ingrid/css/google/robotocondensed/v13/css/fonts.css')" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css" />
-        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
+        <link rel="stylesheet" href="#GetPageResource('./../ingrid/css/datepicker/classic.css')" />
+        <link rel="stylesheet" href="#GetPageResource('./../ingrid/css/datepicker/classic.date.css')" />
+        <link rel="shortcut icon" href="#GetPageResource('./../ingrid/images/favicon.ico')" />
         #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
         #end
@@ -53,9 +53,9 @@
         #* our decorator macros, see ./decorator-macros.vm *#
         #decoratorIncludeJavaScriptForHead()
         <!-- Global scripts -->
-        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+        <script src="#GetPageResource('./../ingrid/scripts/modernizr.custom.min.js')"></script>
+        <script src="#GetPageResource('./../ingrid/scripts/jquery-2.1.4.min.js')"></script>
+        <script src="#GetPageResource('./../ingrid/scripts/fastclick.min.js')"></script>
     </head>
     <body>
     
@@ -67,9 +67,9 @@
     #end
     <div class="page" >
         <header class="header">
-            <div class="ob-box-padded-more ob-box-center">
+            <div class="ob-box-padded-more ob-box-center mq-show-xxl">
                 <div class="header__widgets__section">
-                    <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                    <div class="header__widget nav-toggle js-nav-mobile-toggle">
                         <svg class="icon">
                         <use xlink:href="#burger">
                         </svg>
@@ -77,22 +77,17 @@
                         <use xlink:href="#cross">
                         </svg>
                     </div>
-                </div>
-                <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/logo.gif">
-                        <img class="mq-show-xxl mobile__logo" >
+                        <img class="mobile__logo" src="#GetPageResource('./../ingrid/images/logo-mobile.png')">
                     </a>
-                </div>
-                <div class="header__widgets__section" style="">
-                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">$MESSAGES.getString('ingrid.header.title.main')</a>
+                    <a class="mobile__title mq-hide-s" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">$MESSAGES.getString('ingrid.header.title.main')</a>
                 </div>
                 #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)
                 #end
             </div>
         #if(!$mainMenu.empty)
-          #includeMainNavigation($mainMenu)
+          #includeMainNavigation($mainMenu $serviceMenu)
         #end
         </header>
         #if($currentPage != "/main-maps.psml")
