@@ -57,7 +57,7 @@
     <property name="updateOracle362" location="${installDir}/sql/update_3.6.2_oracle.sql"/>
     <property name="updateOracle400" location="${installDir}/sql/update_4.0.0_oracle.sql"/>
     <property name="updateOracle401" location="${installDir}/sql/update_4.0.1_oracle.sql"/>
-    <property name="updateOracle410" location="${installDir}/sql/update_4.1.0_oracle.sql"/>
+    <property name="updateOracle402" location="${installDir}/sql/update_4.0.2_oracle.sql"/>
     
 
     <!-- oracle ige imports -->
@@ -316,7 +316,7 @@
             <transaction src="${updateOracle362}"/>
             <transaction src="${updateOracle400}"/>
 			<transaction src="${updateOracle401}"/>
-			<transaction src="${updateOracle410}"/>
+			<transaction src="${updateOracle402}"/>
         </sql>
     </target>
 	
@@ -337,7 +337,7 @@
             <transaction src="${updateOracle362}"/>
 			<transaction src="${updateOracle400}"/>
 			<transaction src="${updateOracle401}"/>
-			<transaction src="${updateOracle410}"/>
+			<transaction src="${updateOracle402}"/>
         </sql>
     </target>
 
@@ -357,7 +357,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle400}"/>
 			<transaction src="${updateOracle401}"/>
-			<transaction src="${updateOracle410}"/>
+			<transaction src="${updateOracle402}"/>
         </sql>
     </target>
 
@@ -376,7 +376,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle401}"/>
-			<transaction src="${updateOracle410}"/>
+			<transaction src="${updateOracle402}"/>
         </sql>
     </target>
 	
@@ -394,7 +394,7 @@
                 >
 
             <!-- use default-character-set=utf8 -->
-            <transaction src="${updateOracle410}"/>
+            <transaction src="${updateOracle402}"/>
         </sql>
     </target>
 

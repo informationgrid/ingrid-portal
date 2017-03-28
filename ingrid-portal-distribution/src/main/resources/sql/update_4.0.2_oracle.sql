@@ -1,5 +1,5 @@
 -- DB Version
-UPDATE ingrid_lookup SET item_value = '4.1.0', item_date = SYSDATE WHERE ingrid_lookup.item_key ='ingrid_db_version';
+UPDATE ingrid_lookup SET item_value = '4.0.2', item_date = SYSDATE WHERE ingrid_lookup.item_key ='ingrid_db_version';
 
 -- Temp Table um values aus folder_menu zwischen zu speichern (subselect in insert auf gleiche Tabelle nicht moeglich, s.u.)
 -- oracle way of: DROP TABLE IF EXISTS

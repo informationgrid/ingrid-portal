@@ -60,7 +60,7 @@
     <property name="updateMySQL362" location="${installDir}/sql/update_3.6.2_mysql.sql"/>
     <property name="updateMySQL400" location="${installDir}/sql/update_4.0.0_mysql.sql"/>
     <property name="updateMySQL401" location="${installDir}/sql/update_4.0.1_mysql.sql"/>
-    <property name="updateMySQL410" location="${installDir}/sql/update_4.1.0_mysql.sql"/>
+    <property name="updateMySQL402" location="${installDir}/sql/update_4.0.2_mysql.sql"/>
 
     <!-- mysql ige imports -->
     <property name="mdekDB"          location="${installDir}/sql/mdek_0_mysql.sql"/>
@@ -326,7 +326,7 @@
             <transaction src="${updateMySQL362}"/>
             <transaction src="${updateMySQL400}"/>
 			<transaction src="${updateMySQL401}"/>
-			<transaction src="${updateMySQL410}"/>
+			<transaction src="${updateMySQL402}"/>
         </sql>
     </target>
     
@@ -347,7 +347,7 @@
             <transaction src="${updateMySQL362}"/>
 			<transaction src="${updateMySQL400}"/>
 			<transaction src="${updateMySQL401}"/>
-			<transaction src="${updateMySQL410}"/>
+			<transaction src="${updateMySQL402}"/>
         </sql>
     </target>
 
@@ -367,7 +367,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL400}"/>
 			<transaction src="${updateMySQL401}"/>
-			<transaction src="${updateMySQL410}"/>
+			<transaction src="${updateMySQL402}"/>
         </sql>
     </target>
 
@@ -386,7 +386,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL401}"/>
-			<transaction src="${updateMySQL410}"/>
+			<transaction src="${updateMySQL402}"/>
         </sql>
     </target>
 
@@ -404,7 +404,7 @@
                 >
 
             <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL410}"/>
+            <transaction src="${updateMySQL402}"/>
         </sql>
     </target>
 
