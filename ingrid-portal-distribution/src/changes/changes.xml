@@ -24,6 +24,21 @@
 			<action type="add" dev="wemove" issue="REDMINE-380">
                 PORTAL: Add hours of service to detail view.
             </action>
+			<action type="add" dev="wemove" issue="REDMINE-588">
+                PORTAL: Add portal header to detail view.
+            </action>
+			<action type="add" dev="wemove" issue="REDMINE-486">
+                PORTAL: Add UVP profile to portal.
+            </action>
+			<action type="add" dev="wemove" issue="REDMINE-586">
+                MAPCLIENT: Add function graticule on accordion print.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-585">
+                MAPCLIENT: Fix of embed version by used unallowed JS functions.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-586">
+                MAPCLIENT: Fix function embed on accordion share.
+            </action>
         </release>
 
         <release version="4.0.1" date="2017-02-01" description="Release 4.0.1">
