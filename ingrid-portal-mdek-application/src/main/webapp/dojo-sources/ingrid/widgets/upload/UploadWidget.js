@@ -65,12 +65,40 @@ define([
         resultParts: {},
         uploads: [],
 
-        postCreate: function() {
-            this.inherited(arguments);
+        /**
+         * Show the upload dialog
+         * @param path The upload path
+         * @param existingFiles Array of file names
+         * @return Deferred that resolves to an array of upload items with properties uri, type, size
+         */
+        open: function(path, existingFiles) {
+            this.deferred = new Deferred();
 
-            // dialog
-            // TODO: should be created when upload link was clicked
-            this.dialog = new Dialog({
+            // build ui
+            this.dialog = this.createDialog(existingFiles);
+            this.uploader = this.createUploader(this.dialog.containerNode, path);
+
+            // show uploader
+            this.dialog.show();
+
+            return this.deferred;
+        },
+
+        /**
+         * Called, when the uploader window is closed
+         */
+        close: function() {
+            this.destroyDialog();
+            this.destroyUploader();
+        },
+
+        /**
+         * Create the dialog for the uploader
+         * @param existingFiles Array of file names
+         * @return Dialog
+         */
+        createDialog: function(existingFiles) {
+            var dialog = new Dialog({
                 title: "Dokument-Upload",
                 style: "width: 840px",
                 execute: lang.hitch(this, function(cancelEvent) {
@@ -85,25 +113,27 @@ define([
                     this.close();
                 })
             });
-            this.dialog.set("buttonOk", "Übernehmen");
-            this.setOkButtonState(false);
+            dialog.set("buttonOk", "Übernehmen");
+            dialog.okButton.set("disabled", true);
 
             // override dialog.hide to allow to ask for confirmation, if the user
             // attempts to cancel the dialog with already finished uploads
-            this.dialog.origHide = this.dialog.hide;
-            this.dialog.hide = lang.hitch(this, function(cancelEvent) {
+            dialog.origHide = dialog.hide;
+            dialog.hide = lang.hitch(this, function(cancelEvent) {
                 // cancel event only exists, if the cancel button was clicked
                 if (cancelEvent && this.uploads.length > 0) {
                     var message = string.substitute("Abgeschlossene Dokument-Uploads werden nicht übernommen und vom Server gelöscht!<br><br>Wollen Sie das Fenster wirklich schließen ohne die Dokument-Uploads zu übernehmen?");
                     IngridDialog.show("Ungespeicherte Dokument-Uploads", message, IngridDialog.INFO, [{
                         caption: "Ja",
                         action: lang.hitch(this, function() {
-                            // delete documents from server?
+                            // delete documents from server
                             var uploads = this.removeDuplicates(this.uploads);
                             array.forEach(uploads, function (upload) {
-                                xhr.del(upload.uri);
+                                if (array.indexOf(existingFiles, decodeURI(upload.uri)) === -1) {
+                                    xhr.del(this.uploadUrl+"/"+upload.uri);
+                                }
                             }, this);
-                            this.dialog.origHide();
+                            dialog.origHide();
                         })
                     }, {
                         caption: "Nein",
@@ -111,70 +141,28 @@ define([
                     }]);
                 }
                 else {
-                    this.dialog.origHide();
+                    dialog.origHide();
                 }
             });
-            this.dialog.startup();
+            dialog.startup();
+            return dialog;
         },
 
         /**
-         * Set the enabled status of the OK button
-         * @param isEnabled
+         * Destroy the dialog
          */
-        setOkButtonState: function(isEnabled) {
-            this.dialog.okButton.set("disabled", !isEnabled);
+        destroyDialog: function() {
+            this.dialog.destroy();
+            delete this.dialog;
         },
 
         /**
-         * Set the visibility of a button
-         * @param button
-         * @param isVisible
-         */
-        setButtonVisibility: function(button, isVisible) {
-            domStyle.set(button, "display", isVisible ? "inline" : "none");
-        },
-
-        /**
-         * Initialize a button for a file upload
-         * @param uploadId
-         * @param type
-         * @param callback A function receiving the upload id and event when the button is clicked (optional)
-         */
-        initializeButton: function(uploadId, type, callback) {
-            var fileEl = this.getFileEl(uploadId);
-            if (fileEl) {
-                var buttons = query(".qq-upload-"+type+"-selector", fileEl);
-                if (buttons.length > 0) {
-                    var button = buttons[0];
-                    this.uploadBtns[type][uploadId] = button;
-                    this.setButtonVisibility(button, false);
-                    if (callback instanceof Function) {
-                        this.btnHandles.push(on(button, "click", lang.partial(lang.hitch(this, callback), uploadId)));
-                    }
-                }
-            }
-        },
-        
-        /**
-         * Get the container dom element for a file upload
-         * @param uploadId
-         */
-        getFileEl: function(uploadId) {
-            var elements = query(".qq-file-id-"+uploadId);
-            if (elements.length > 0) {
-                return elements[0];
-            }
-            return null;
-        },
-
-        /**
-         * Show the upload dialog
+         * Create the uploader
+         * @param el The DOM element to attach the uploader ui to
          * @param path The upload path
-         * @return Deferred that resolves to an array of upload items with properties uri, type, size
+         * @return FineUploader instance
          */
-        open: function(path) {
-            this.deferred = new Deferred();
-
+        createUploader: function(el, path) {
             // uploader styles
             this.styleEl = domConstruct.create("style", {
                 innerHTML: styles.replace(/url\("/g, 'url("../fine-uploader/')
@@ -187,9 +175,9 @@ define([
             this.templateEl = domConstruct.create("div", { innerHTML: template });
 
             // uploader
-            this.uploader = new qq.FineUploader({
+            var uploader = new qq.FineUploader({
                 debug: false,
-                element: this.dialog.containerNode,
+                element: el,
                 template: this.templateEl,
                 autoUpload: true,
                 text: {
@@ -242,17 +230,17 @@ define([
                         this.initializeButton(id, 'retry');
                         this.initializeButton(id, 'replace', function(id, e) {
                             // retry with replace parameter set to true
-                            this.uploader.setName(id, name);
-                            this.uploader.setParams(this.getUploadParams(path, true), id);
-                            this.uploader.retry(id);
+                            uploader.setName(id, name);
+                            uploader.setParams(this.getUploadParams(path, true), id);
+                            uploader.retry(id);
                         });
                         this.initializeButton(id, 'rename', function(id, e) {
                             var data = this.uploadErrors[id] || {};
                             if (data.alt) {
                                 // retry with new name replace parameter set to false
-                                this.uploader.setName(id, data.alt);
-                                this.uploader.setParams(this.getUploadParams(path, false), id);
-                                this.uploader.retry(id);
+                                uploader.setName(id, data.alt);
+                                uploader.setParams(this.getUploadParams(path, false), id);
+                                uploader.retry(id);
                             }
                         });
                         this.initializeButton(id, 'keep', function(id, e) {
@@ -297,7 +285,9 @@ define([
                         array.forEach(succeeded, function(id) {
                             this.uploads = this.uploads.concat(this.resultParts[id]);
                         }, this);
-                        this.setOkButtonState(true);
+                        if (this.uploads.length > 0) {
+                            this.setOkButtonState(true);
+                        }
                     }),
                     onError: lang.hitch(this, function(id, name, errorReason, xhrOrXdr) {
                         // store error data for later use
@@ -334,17 +324,13 @@ define([
                     IngridDialog.show("Info", message, IngridDialog.INFO);
                 }
             });
-
-            // show uploader
-            this.dialog.show();
-
-            return this.deferred;
+            return uploader;
         },
 
         /**
-         * Called, when the uploader window is closed
+         * Destroy the uploader
          */
-        close: function() {
+        destroyUploader: function() {
             // cleanup all resources that were created in the open method
             if (this.styleEl) {
                 domConstruct.destroy(this.styleEl);
@@ -352,22 +338,61 @@ define([
             if (this.templateEl) {
                 domConstruct.destroy(this.templateEl);
             }
-
             for (var i=0, count=this.btnHandles.length; i<count; i++) {
                 this.btnHandles[i].remove();
             }
-
             this.uploader.reset();
             delete this.uploader;
         },
 
         /**
-         * Called, when the widget is destroyed
+         * Set the enabled status of the OK button
+         * @param isEnabled
          */
-        destroy: function() {
-            // cleanup all resources that were created in the post create method
-            this.dialog.destroy();
-            this.inherited(arguments);
+        setOkButtonState: function(isEnabled) {
+            this.dialog.okButton.set("disabled", !isEnabled);
+        },
+
+        /**
+         * Set the visibility of a button
+         * @param button
+         * @param isVisible
+         */
+        setButtonVisibility: function(button, isVisible) {
+            domStyle.set(button, "display", isVisible ? "inline" : "none");
+        },
+
+        /**
+         * Initialize a button for a file upload
+         * @param uploadId
+         * @param type
+         * @param callback A function receiving the upload id and event when the button is clicked (optional)
+         */
+        initializeButton: function(uploadId, type, callback) {
+            var fileEl = this.getFileEl(uploadId);
+            if (fileEl) {
+                var buttons = query(".qq-upload-"+type+"-selector", fileEl);
+                if (buttons.length > 0) {
+                    var button = buttons[0];
+                    this.uploadBtns[type][uploadId] = button;
+                    this.setButtonVisibility(button, false);
+                    if (callback instanceof Function) {
+                        this.btnHandles.push(on(button, "click", lang.partial(lang.hitch(this, callback), uploadId)));
+                    }
+                }
+            }
+        },
+
+        /**
+         * Get the container DOM element for a file upload
+         * @param uploadId
+         */
+        getFileEl: function(uploadId) {
+            var elements = query(".qq-file-id-"+uploadId);
+            if (elements.length > 0) {
+                return elements[0];
+            }
+            return null;
         },
 
         /**
@@ -391,14 +416,22 @@ define([
         finishUpload: function(id, data) {
             var fileEl = this.getFileEl(id);
             if (fileEl) {
+                // change color
                 domClass.add(fileEl, "qq-upload-success");
                 domClass.remove(fileEl, "qq-upload-fail");
+
+                // hide buttons
                 query(".qq-upload-status-text-selector,.qq-btn", fileEl).forEach(function(node) {
                     domStyle.set(node, "display", "none");
                 });
-                
+
+                // update status (only show size)
+                query(".qq-upload-size-selector", fileEl).forEach(function(node) {
+                    node.innerHTML = node.innerHTML.replace(/.* ([^ ]+)/, "$1");
+                });
             }
             this.uploads.push(data);
+            this.setOkButtonState(true);
         },
 
         /**

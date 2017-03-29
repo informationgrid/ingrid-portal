@@ -1,4 +1,3 @@
-#parse("/WEB-INF/templates/global/include_leaflet_pins.vm")
 <script>
     function showMarker(m) {
         jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
@@ -34,7 +33,6 @@
             var procedure = a[5];
             var steps = a[7];
             var popUpHtml = '';
-            var icon = iconGreen;
             popUpHtml += '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
             
             if(procedure && procedure.length > 0){
@@ -44,9 +42,13 @@
             if(categories && categories.length > 0){
                 popUpHtml += '<div class="map_popup_cat">';
                 popUpHtml += '<b>Kategorie:</b><br>';
+                var categoryList = [];
                 for (category in categories){
-                    var value = categories[category];
-                    popUpHtml += value + '<br>';
+                    var value = categories[category].name;
+                    if(categoryList.indexOf(value) == -1){
+                        popUpHtml += value + '<br>';
+                        categoryList.push(value);
+                    }
                 }
                 popUpHtml += '</div>';
             }
@@ -56,13 +58,21 @@
                 popUpHtml += steps[steps.length - 1] + '<br>';
                 popUpHtml += '</div>';
             }
+            
+            var iconColor;
             if(procedureId == '10'){
-                icon = iconBlue;
+                iconColor = 'blue';
             } else if(procedureId == '11'){
-                icon = iconBlack;
+                iconColor = 'black';
             } else {
-                icon = iconRed;
+                iconColor = 'red';
             }
+            
+            var icon = L.AwesomeMarkers.icon({
+                markerColor: iconColor,
+                prefix: 'icon',
+                icon: categories && categories.length > 0 ? categories[0].id : ''
+            });
             
             var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
             marker.bindPopup(popUpHtml);
@@ -85,21 +95,20 @@
                 map.addLayer(mapMarkers10);
                 map.addLayer(mapMarkers11);
                 map.addLayer(mapMarkers1314);
-                map.fitBounds(mapMarkers.getBounds().pad(0.5));
             }
         }
     }
     
     var overlayers = {};
     if(mapMarkers10.getLayers().length > 0){
-        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 13px; padding:0 8px; \"></span>UVP Vorhaben"]  = mapMarkers10;
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>UVP Vorhaben"]  = mapMarkers10;
     }
     if(mapMarkers11.getLayers().length > 0){
-        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 13px; padding:0 8px; \"></span>Ausl&#228;ndische Verfahren"]  = mapMarkers11;
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Ausl&#228;ndische Verfahren"]  = mapMarkers11;
     }
     
     if(mapMarkers1314.getLayers().length > 0){
-        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_red.png'); background-size: 13px 13px; padding:0 8px; \"></span>Vorgelagerte Verfahren"]  = mapMarkers1314;
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_red.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Vorgelagerte Verfahren"]  = mapMarkers1314;
     }
     L.control.layers({}, overlayers, {position: 'topright'}).addTo(map);
     

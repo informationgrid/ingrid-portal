@@ -15,8 +15,6 @@ import de.ingrid.mdek.upload.storage.StorageItem;
  */
 public class FileSystemItem implements StorageItem {
 
-    private static final String UTF_8 = "UTF-8";
-
     private Storage storage;
     private String path;
     private String file;
@@ -48,10 +46,18 @@ public class FileSystemItem implements StorageItem {
     public String getUri() {
         String uri = Paths.get(this.path, this.file).toString();
         try {
-            uri = URLEncoder.encode(uri, UTF_8);
+            uri = URLEncoder.encode(uri, "UTF-8")
+                    .replaceAll("\\+", "%20")
+                    .replaceAll("\\%21", "!")
+                    .replaceAll("\\%27", "'")
+                    .replaceAll("\\%28", "(")
+                    .replaceAll("\\%29", ")")
+                    .replaceAll("\\%7E", "~")
+                    .replaceAll("\\%2F", "/")
+                    .replaceAll("\\%5C", "/");
         }
         catch (UnsupportedEncodingException e) {}
-        return uri.replaceAll("%2F", "/").replaceAll("%5C", "/");
+        return uri;
     }
 
     @Override
@@ -74,7 +80,10 @@ public class FileSystemItem implements StorageItem {
             int i = 0;
             while (this.storage.exists(this.path, file)) {
                 i++;
-                file = filename + "-" + i + "." + extension;
+                file = filename + "-" + i;
+                if (extension.length() > 0) {
+                    file += "." + extension;
+                }
             }
             return file;
         }

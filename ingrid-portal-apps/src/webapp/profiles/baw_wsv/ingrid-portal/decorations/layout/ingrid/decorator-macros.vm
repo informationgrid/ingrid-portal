@@ -38,7 +38,7 @@
   <ul class="nav-desktop__list ob-box-center">
     <li class="nav-desktop__item " style="max-width: 100px; display: inline-block;">
       <a class="desktop__header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-        <img class="desktop__logo" style="height: 57px;" src="#GetPageResource('images/logo-desktop.png')">
+        <img class="desktop__logo" style="height: 57px;" src="/decorations/layout/ingrid/images/logo-desktop.png">
       </a>
     </li>
     <li class="nav-desktop__item mq-hide-xb" style="max-width: 200px; ">

@@ -121,9 +121,9 @@
             #if($count % $facetListSize == 0)
                 <div class="grid grid--gutter">
             #end
-            #set ($count = $count + 1)
             #if($enableRss)
-                #if($count == 1)
+                #if($count == 0)
+                    #set ($count = 1)
                     ## Add RSS category
                     <div class="column column--1-${facetListSize}-m">
                         <div class="mq-hide-l" style="padding: 0 0 20px 0;">
@@ -198,6 +198,7 @@
                     </a>
                 </div>
             </div>
+            #set ($count = $count + 1)
             #if($count % $facetListSize == 0 || $count >= $facetList.size())
                 </div>
             #end

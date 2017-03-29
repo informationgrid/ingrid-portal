@@ -86,13 +86,14 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             s.append( "," ).append( "[" );
                             if(categories != null && categories.size() > 0){
                                 int index = 0;
-                                s.append( "'" );
                                 for (String category : categories) {
-                                    s.append( messages.getString( "searchResult.categories.uvp." + category.trim() ) );
+                                    s.append( "{" );
+                                    s.append( "'id':'" + category.trim() + "'" );
+                                    s.append( ",");
+                                    s.append( "'name':'" + messages.getString( "searchResult.categories.uvp." + category.trim() ) + "'" );
+                                    s.append( "}" );
                                     if(index < categories.size() - 1){
-                                        s.append( "','" );
-                                    }else{
-                                        s.append( "'" );
+                                        s.append( "," );
                                     }
                                     index ++;
                                 }
