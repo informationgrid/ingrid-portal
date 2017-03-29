@@ -26,4 +26,4 @@ settingSearchServiceUrl = 'http://numis.niedersachsen.de/opensearch/query?q={que
 settingDefaultMousePositionIndex = 6;
 settingKMLName = 'NUMIS';
 settingDefaultWMSList = [];
-settingShortURLService = 'http://numis.niedersachsen.de/s/yourls-api.php?signature=c5972f1b79&action=shorturl&format=json';
+settingShortURLService = 'https://numis.niedersachsen.de/s/yourls-api.php?signature=c5972f1b79&action=shorturl&format=json';
