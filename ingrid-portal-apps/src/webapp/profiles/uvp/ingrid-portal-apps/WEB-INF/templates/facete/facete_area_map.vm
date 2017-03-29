@@ -76,15 +76,15 @@
 </script>
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 <script>
-    if(!bounds){
-        if(markers.length > 0){
-            if(mapMarkers){
-                bounds = mapMarkers.getBounds().pad(0.5);
-            }
+    var homeCtlBounds;
+    if(markers.length > 0 && mapMarkers && mapMarkers.getBounds()){
+        if(!bounds){
+            bounds = mapMarkers.getBounds().pad(0.5);
         }
+        if(map){
+            map.fitBounds(bounds);
+        }
+        homeCtlBounds = mapMarkers.getBounds().pad(0.5);
     }
-    if(map){
-        map.fitBounds(bounds);
-    }
-    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapMarkers.getBounds().pad(0.5), new L.LatLng(51.3, 10))
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', homeCtlBounds, new L.LatLng(51.3, 10))
 </script>
