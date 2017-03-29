@@ -42,9 +42,13 @@
             if(categories && categories.length > 0){
                 popUpHtml += '<div class="map_popup_cat">';
                 popUpHtml += '<b>Kategorie:</b><br>';
+                var categoryList = [];
                 for (category in categories){
                     var value = categories[category].name;
-                    popUpHtml += value + '<br>';
+                    if(categoryList.indexOf(value) == -1){
+                        popUpHtml += value + '<br>';
+                        categoryList.push(value);
+                    }
                 }
                 popUpHtml += '</div>';
             }
