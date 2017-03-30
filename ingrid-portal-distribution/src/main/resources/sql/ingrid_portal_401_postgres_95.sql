@@ -2716,7 +2716,7 @@ INSERT INTO folder_menu VALUES (64, 'org.apache.jetspeed.om.folder.impl.FolderMe
 --
 
 INSERT INTO folder_metadata VALUES (1, 1, 'title', 'es,,', 'Carpeta raiz');
-INSERT INTO folder_metadata VALUES (2, 1, 'title', 'fr,,', 'Répertoire racine');
+INSERT INTO folder_metadata VALUES (2, 1, 'title', 'fr,,', 'RÃ©pertoire racine');
 
 
 --
@@ -2908,13 +2908,13 @@ INSERT INTO fragment_pref_value VALUES (7307, 7307, 0, 'h1');
 INSERT INTO ingrid_anniversary VALUES (18114, 'calendarEvent_180', 'Greenpeace action against French atomic tests', '1992-01-21', 1992, 1, 21, '1992-01-21', 1992, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
 INSERT INTO ingrid_anniversary VALUES (18113, 't9c22ff_11f605c4a69_-f51', 'Cabinet decides on implementation of EU Batteries Directive', '2009-01-21', 2009, 1, 21, '2009-01-21', 2009, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
 INSERT INTO ingrid_anniversary VALUES (18112, 't2cd728_12057cca378_1295', 'The 1968 Thule air crash', '1968-01-21', 1968, 1, 21, '1968-01-21', 1968, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
-INSERT INTO ingrid_anniversary VALUES (18111, 't53da2896_13d1685ed61_3901', 'Permanent Secretariat of Arctic Council established in Tromsø', '2013-01-21', 2013, 1, 21, '2013-01-21', 2013, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
+INSERT INTO ingrid_anniversary VALUES (18111, 't53da2896_13d1685ed61_3901', 'Permanent Secretariat of Arctic Council established in TromsÃ¸', '2013-01-21', 2013, 1, 21, '2013-01-21', 2013, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
 INSERT INTO ingrid_anniversary VALUES (18110, 't-6dadf813_143c097fe2a_-8ae', 'Long term exposure to air pollution linked to coronary events', '2014-01-21', 2014, 1, 21, '2014-01-21', 2014, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
-INSERT INTO ingrid_anniversary VALUES (18105, 't-6dadf813_143c097fe2a_-8ae', 'Feinstaubbelastung führt zu erhöhtem Herzinfarkt-Risiko', '2014-01-21', 2014, 1, 21, '2014-01-21', 2014, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
+INSERT INTO ingrid_anniversary VALUES (18105, 't-6dadf813_143c097fe2a_-8ae', 'Feinstaubbelastung fÃ¼hrt zu erhÃ¶htem Herzinfarkt-Risiko', '2014-01-21', 2014, 1, 21, '2014-01-21', 2014, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
 INSERT INTO ingrid_anniversary VALUES (18106, 't2cd728_12057cca378_1295', 'Der Flugzeugabsturz  bei Thule 1968', '1968-01-21', 1968, 1, 21, '1968-01-21', 1968, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
-INSERT INTO ingrid_anniversary VALUES (18107, 't9c22ff_11f605c4a69_-f51', 'Kabinett beschließt Umsetzung der EU-Batterierichtlinie', '2009-01-21', 2009, 1, 21, '2009-01-21', 2009, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
-INSERT INTO ingrid_anniversary VALUES (18108, 't53da2896_13d1685ed61_3901', 'Ständiges Sekretariat für den Arktischen Rat in Tromsø gegründet', '2013-01-21', 2013, 1, 21, '2013-01-21', 2013, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
-INSERT INTO ingrid_anniversary VALUES (18109, 'calendarEvent_180', 'Greenpeace Aktion gegen französische Atomtests', '1992-01-21', 1992, 1, 21, '1992-01-21', 1992, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
+INSERT INTO ingrid_anniversary VALUES (18107, 't9c22ff_11f605c4a69_-f51', 'Kabinett beschlieÃŸt Umsetzung der EU-Batterierichtlinie', '2009-01-21', 2009, 1, 21, '2009-01-21', 2009, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
+INSERT INTO ingrid_anniversary VALUES (18108, 't53da2896_13d1685ed61_3901', 'StÃ¤ndiges Sekretariat fÃ¼r den Arktischen Rat in TromsÃ¸ gegrÃ¼ndet', '2013-01-21', 2013, 1, 21, '2013-01-21', 2013, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
+INSERT INTO ingrid_anniversary VALUES (18109, 'calendarEvent_180', 'Greenpeace Aktion gegen franzÃ¶sische Atomtests', '1992-01-21', 1992, 1, 21, '1992-01-21', 1992, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
 
 
 --
@@ -2953,13 +2953,13 @@ SELECT pg_catalog.setval('ingrid_chron_eventtypes_id_seq', 1, false);
 
 INSERT INTO ingrid_cms VALUES (1, 'ingrid.teaser.inform', 'PortalU informiert Text', '2017-03-27 14:16:22', 'kst_su');
 INSERT INTO ingrid_cms VALUES (15, 'ingrid.disclaimer', 'Impressum', '2017-03-27 14:16:22', 'admin');
-INSERT INTO ingrid_cms VALUES (16, 'ingrid.about', 'Über PortalU', '2017-03-27 14:16:22', 'admin');
+INSERT INTO ingrid_cms VALUES (16, 'ingrid.about', 'Ãœber PortalU', '2017-03-27 14:16:22', 'admin');
 INSERT INTO ingrid_cms VALUES (17, 'ingrid.privacy', 'Haftungsausschluss', '2017-03-27 14:16:22', 'admin');
 INSERT INTO ingrid_cms VALUES (18, 'ingrid.contact.intro.postEmail', 'Adresse auf der Kontaktseite', '2017-03-27 14:16:22', 'kst_cg');
 INSERT INTO ingrid_cms VALUES (19, 'ingrid.home.welcome', 'Ingrid Willkommens Portlet', '2008-07-09 00:00:00', 'kst_cg');
 INSERT INTO ingrid_cms VALUES (20, 'portal.teaser.shortcut', 'Anwendungen', '2012-07-19 15:36:12', 'admin');
 INSERT INTO ingrid_cms VALUES (21, 'portal.teaser.shortcut.query', 'Schnellsuche', '2012-07-19 15:36:12', 'admin');
-INSERT INTO ingrid_cms VALUES (25, 'portal.cms.portlet.3', 'Anwendungen Übersicht', '2017-03-27 14:16:22', 'admin');
+INSERT INTO ingrid_cms VALUES (25, 'portal.cms.portlet.3', 'Anwendungen Ãœbersicht', '2017-03-27 14:16:22', 'admin');
 INSERT INTO ingrid_cms VALUES (23, 'portal.cms.portlet.1', 'Anleitungen', '2017-03-27 14:16:22', 'admin');
 INSERT INTO ingrid_cms VALUES (24, 'portal.cms.portlet.2', 'Veranstaltungen', '2017-03-27 14:16:22', 'admin');
 
@@ -2976,7 +2976,7 @@ SELECT pg_catalog.setval('ingrid_cms_id_seq', 1, false);
 --
 
 INSERT INTO ingrid_cms_item VALUES (1, 1, 'de', '<span style="text-transform: none;">PORTALU INFORMIERT</span>', '<p style="background:url(/webstats/portalu_macht_zu.png); background-repeat: no-repeat;">
-<span style="color:#008000;">Die VwV UDK/GEIN wurde gekündigt.</span><br>Demzufolge wird PortalU Ende 2014 den Betrieb einstellen:<br>
+<span style="color:#008000;">Die VwV UDK/GEIN wurde gekÃ¼ndigt.</span><br>Demzufolge wird PortalU Ende 2014 den Betrieb einstellen:<br>
 <img src="http://portalu.de/cgi-bin/count_days.pl" alt="das Ende von portalu.de naht."></p>', '2014-08-27 00:00:00', 'kst_su');
 INSERT INTO ingrid_cms_item VALUES (37, 20, 'de', 'Anwendungen', '', '2012-07-19 15:36:12', 'admin');
 INSERT INTO ingrid_cms_item VALUES (38, 20, 'en', 'Application', '', '2012-07-19 15:36:12', 'admin');
@@ -2991,9 +2991,9 @@ INSERT INTO ingrid_cms_item VALUES (47, 25, 'de', 'CMSPortlet3', '', '2017-03-27
 INSERT INTO ingrid_cms_item VALUES (43, 23, 'de', 'CMSPortlet1', '', '2012-07-19 15:36:24', 'admin');
 INSERT INTO ingrid_cms_item VALUES (27, 15, 'en', 'Disclaimer', '<a name="herausgeber"></a>
 <h2>Publisher</h2>
-<p>PortalU is managed by the Coordination Center PortalU at the Environmental, Energy and Climate Protection Ministry of Lower Saxony, Hannover, Germany. Development and maintenance of the portal is financed by a administrative agreement between the German Federal States (Länder) and the Federal Government. </p>
-<h3><a href="http://www.kst.portalu.de/" target="_new" title="Link öffnet in neuem Fenster">Coordination Center PortalU</a></h3>
-<p>c/o Nieders. Ministerium für Umwelt, Energie und Klimaschutz<br>Archivstrasse 2<br>D-30169 Hannover<br>
+<p>PortalU is managed by the Coordination Center PortalU at the Environmental, Energy and Climate Protection Ministry of Lower Saxony, Hannover, Germany. Development and maintenance of the portal is financed by a administrative agreement between the German Federal States (LÃ¤nder) and the Federal Government. </p>
+<h3><a href="http://www.kst.portalu.de/" target="_new" title="Link Ã¶ffnet in neuem Fenster">Coordination Center PortalU</a></h3>
+<p>c/o Nieders. Ministerium fÃ¼r Umwelt, Energie und Klimaschutz<br>Archivstrasse 2<br>D-30169 Hannover<br>
 	<a href="/ingrid-portal/portal/service-contact.psml">Contact</a>
 </p>
 <br>
@@ -3004,7 +3004,7 @@ INSERT INTO ingrid_cms_item VALUES (27, 15, 'en', 'Disclaimer', '<a name="heraus
 <a name="realisierung"></a>
 <h2>Implementation</h2>
 <h3><a href="http://www.wemove.com/" target="_new" title="Link opens new window">wemove digital solutions GmbH</a></h3>
-<h3><a href="http://www.chives.de/" target="_new" title="Link opens new window">chives - Büro für Webdesign Plus</a></h3>
+<h3><a href="http://www.chives.de/" target="_new" title="Link opens new window">chives - BÃ¼ro fÃ¼r Webdesign Plus</a></h3>
 <br>
 <a name="betrieb"></a>
 <h2>Operation</h2>     
@@ -3012,115 +3012,115 @@ INSERT INTO ingrid_cms_item VALUES (27, 15, 'en', 'Disclaimer', '<a name="heraus
 <br>
 <a name="haftung"></a>
 <h2>Liability Disclaimer</h2>     
-<p>The Environment Ministry of Lower Saxony (Niedersächsisches Umweltministerium) does not take any responisbility for the content of web-sites that can be reached through PortalU. Web-sites that are included in the portal are evaluated only technically. A continuous evaluation of the content of the included web-pages in neither possible nor intended. The Environment Ministry of Lower Saxony explicitly rejects all content that potentially infringes upon German legislation or general morality.</p>
-<p> </p>
+<p>The Environment Ministry of Lower Saxony (NiedersÃ¤chsisches Umweltministerium) does not take any responisbility for the content of web-sites that can be reached through PortalU. Web-sites that are included in the portal are evaluated only technically. A continuous evaluation of the content of the included web-pages in neither possible nor intended. The Environment Ministry of Lower Saxony explicitly rejects all content that potentially infringes upon German legislation or general morality.</p>
+<p>Â </p>
 
 <h2>Nutzungsbedingungen</h2>
 
 <p class=MsoNormal>Die im PortalU-Kartenviewer eingebundenen Karten
-(Geodatendienste) stammen von behördlichen Anbietern auf Bundes- und
+(Geodatendienste) stammen von behÃ¶rdlichen Anbietern auf Bundes- und
 Landesebene. Die Nutzung der kostenfrei angebotenen Geodatendienste ist hierbei
-an entsprechende Bedingungen geknüpft, die zu beachten sind.</p>
+an entsprechende Bedingungen geknÃ¼pft, die zu beachten sind.</p>
 
-<p class=MsoNormal> </p>
+<p class=MsoNormal>Â </p>
 
-<p class=MsoNormal>Für Dienste aus Bayern sind die Nutzugsbedingungen der
+<p class=MsoNormal>FÃ¼r Dienste aus Bayern sind die Nutzugsbedingungen der
 GDI-BY zu beachten:</p>
 
 <p class=MsoNormal><a
 href="http://www.gdi.bayern.de/Dokumente/Nutzungsbedingungen_allgemein.html">http://www.gdi.bayern.de/Dokumente/Nutzungsbedingungen_allgemein.html</a></p>
 
-<p class=MsoNormal> </p>
+<p class=MsoNormal>Â </p>
 ', '2013-07-09 00:00:00', 'admin');
 INSERT INTO ingrid_cms_item VALUES (28, 15, 'de', 'Impressum', '<h2><a name=herausgeber></a>Herausgeber</h2>
 
-<p>PortalU wird von der Koordinierungsstelle PortalU im Niedersächsischen
-Ministerium für Umwelt, Energie und Klimaschutz auf der Grundlage der <a
+<p>PortalU wird von der Koordinierungsstelle PortalU im NiedersÃ¤chsischen
+Ministerium fÃ¼r Umwelt, Energie und Klimaschutz auf der Grundlage der <a
 href="http://www.kst.portalu.de/verwaltungskooperation/VVGEIN_endg.pdf"
-target="_new" title="Link öffnet in neuem Fenster">Bund-Länder-Verwaltungsvereinbarung
+target="_new" title="Link Ã¶ffnet in neuem Fenster">Bund-LÃ¤nder-Verwaltungsvereinbarung
 UDK/GEIN</a> betrieben und weiterentwickelt.</p>
 
 <h3><a href="http://www.kst.portalu.de/" target="_new"
 title="Link 
-öffnet in neuem Fenster">Koordinierungsstelle PortalU</a></h3>
+Ã¶ffnet in neuem Fenster">Koordinierungsstelle PortalU</a></h3>
 
-<p>Niedersächsisches Ministerium für Umwelt, Energie und Klimaschutz<br>
+<p>NiedersÃ¤chsisches Ministerium fÃ¼r Umwelt, Energie und Klimaschutz<br>
 Archivstrasse 2<br>
 D-30169 Hannover<br>
 <a href="http://www.portalu.de/ingrid-portal/portal/service-contact.psml">Kontakt</a>
 </p>
 
-<p class=MsoNormal><a name=verantwortlich></a> </p>
+<p class=MsoNormal><a name=verantwortlich></a>Â </p>
 
 <h2>Verantwortliche Gesamtredaktion</h2>
 
 <p>Dr. Fred Kruse</p>
 
-<p class=MsoNormal><a name=realisierung></a> </p>
+<p class=MsoNormal><a name=realisierung></a>Â </p>
 
 <h2>Realisierung</h2>
 
 
 
 <h3><a href="http://www.wemove.com/" target="_new"
-title="Link öffnet in neuem Fenster">wemove digital solutions GmbH</a></h3>
+title="Link Ã¶ffnet in neuem Fenster">wemove digital solutions GmbH</a></h3>
 
 <h3><a href="http://www.chives.de/" target="_new"
-title="Link öffnet in 
-neuem Fenster">chives - Büro für Webdesign Plus
+title="Link Ã¶ffnet in 
+neuem Fenster">chives - BÃ¼ro fÃ¼r Webdesign Plus
 Darmstadt</a></h3>
 
-<p class=MsoNormal><a name=betrieb></a> </p>
+<p class=MsoNormal><a name=betrieb></a>Â </p>
 
 <h2>Technischer Betrieb</h2>
 
 <h3><a href="http://www.its-technidata.de/" target="_new"
 title="Link 
-öffnet in neuem Fenster">TechniData IT Service GmbH</a></h3>
+Ã¶ffnet in neuem Fenster">TechniData IT Service GmbH</a></h3>
 
-<p class=MsoNormal><a name=haftung></a> </p>
+<p class=MsoNormal><a name=haftung></a>Â </p>
 
 <h2>Haftungsausschluss</h2>
 
-<p>Das Niedersächsische Ministerium für Umwelt, Energie und Klimaschutz übernimmt keine
-Verantwortung für die Inhalte von Websites, die über Links erreicht werden. Die
+<p>Das NiedersÃ¤chsische Ministerium fÃ¼r Umwelt, Energie und Klimaschutz Ã¼bernimmt keine
+Verantwortung fÃ¼r die Inhalte von Websites, die Ã¼ber Links erreicht werden. Die
 Links werden bei der Aufnahme nur kursorisch angesehen und bewertet. Eine
-kontinuierliche Prüfung der Inhalte ist weder beabsichtigt noch möglich. Das
-Niedersächsische Ministerium für Umwelt und Klimaschutz distanziert sich
-ausdrücklich von allen Inhalten, die möglicherweise straf- oder
-haftungsrechtlich relevant sind oder gegen die guten Sitten verstoßen.</p>
+kontinuierliche PrÃ¼fung der Inhalte ist weder beabsichtigt noch mÃ¶glich. Das
+NiedersÃ¤chsische Ministerium fÃ¼r Umwelt und Klimaschutz distanziert sich
+ausdrÃ¼cklich von allen Inhalten, die mÃ¶glicherweise straf- oder
+haftungsrechtlich relevant sind oder gegen die guten Sitten verstoÃŸen.</p>
 
-<p> </p>
+<p>Â </p>
 
 <h2>Nutzungsbedingungen</h2>
 
 <p class=MsoNormal>Die im PortalU-Kartenviewer eingebundenen Karten
-(Geodatendienste) stammen von behördlichen Anbietern auf Bundes- und
+(Geodatendienste) stammen von behÃ¶rdlichen Anbietern auf Bundes- und
 Landesebene. Die Nutzung der kostenfrei angebotenen Geodatendienste ist hierbei
-an entsprechende Bedingungen geknüpft, die zu beachten sind.</p>
+an entsprechende Bedingungen geknÃ¼pft, die zu beachten sind.</p>
 
-<p class=MsoNormal> </p>
+<p class=MsoNormal>Â </p>
 
-<p class=MsoNormal>Für Dienste aus Bayern sind die Nutzugsbedingungen der
+<p class=MsoNormal>FÃ¼r Dienste aus Bayern sind die Nutzugsbedingungen der
 GDI-BY zu beachten:</p>
 
 <p class=MsoNormal><a
 href="http://www.gdi.bayern.de/Dokumente/Nutzungsbedingungen_allgemein.html">http://www.gdi.bayern.de/Dokumente/Nutzungsbedingungen_allgemein.html</a></p>
 
-<p class=MsoNormal> </p>
+<p class=MsoNormal>Â </p>
 
 ', '2013-07-09 00:00:00', 'admin');
-INSERT INTO ingrid_cms_item VALUES (29, 16, 'de', 'Porträt', '<p>Zur richtigen Einschätzung und Bewertung von Umweltsituationen werden umfassende Informationen über die Umwelt benötigt. In der öffentlichen Verwaltung wird eine Vielzahl von Umweltinformationen auf unterschiedlichster Ebene generiert. Diese Informationen sind aber zum Teil nur schwer auffindbar. Zur Verbesserung der Auffindbarkeit wurde deshalb das Umweltportal PortalU ins Leben gerufen. 
+INSERT INTO ingrid_cms_item VALUES (29, 16, 'de', 'PortrÃ¤t', '<p>Zur richtigen EinschÃ¤tzung und Bewertung von Umweltsituationen werden umfassende Informationen Ã¼ber die Umwelt benÃ¶tigt. In der Ã¶ffentlichen Verwaltung wird eine Vielzahl von Umweltinformationen auf unterschiedlichster Ebene generiert. Diese Informationen sind aber zum Teil nur schwer auffindbar. Zur Verbesserung der Auffindbarkeit wurde deshalb das Umweltportal PortalU ins Leben gerufen. 
 </p>
-<p>PortalU bietet einen zentralen Zugriff auf umweltrelevante Webseiten, Umweltdatenkataloge und Datenbanken von über 450 
-<a href="http://www.portalu.de/informationsanbieter" target="_new" title="PortalU - Informationsanbieter - Link öffnet in neuem Fenster">öffentlichen Institutionen</a> in Deutschland. Sie können im gesamten Informationsangebot oder gezielt nach einzelnen Umweltthemen, digitalen Karten, Umweltmesswerten, Presseinformationen oder historischen Ereignissen recherchieren. 
+<p>PortalU bietet einen zentralen Zugriff auf umweltrelevante Webseiten, Umweltdatenkataloge und Datenbanken von Ã¼ber 450 
+<a href="http://www.portalu.de/informationsanbieter" target="_new" title="PortalU - Informationsanbieter - Link Ã¶ffnet in neuem Fenster">Ã¶ffentlichen Institutionen</a> in Deutschland. Sie kÃ¶nnen im gesamten Informationsangebot oder gezielt nach einzelnen Umweltthemen, digitalen Karten, Umweltmesswerten, Presseinformationen oder historischen Ereignissen recherchieren. 
 </p> 
-<p>Die modular aufgebaute PortalU-Software InGrid kann man sich als Informationsnetz vorstellen, das Webseiten, Daten und Metadaten unter einem Dach bündelt. Die Software besteht aus einer flexibel konfigurierbaren Portaloberfläche, einem Web-Katalog-Service, einem Karten-Viewer sowie diversen An- und Abfrageschnittstellen zur Recherche in angeschlossenen Systemen bzw. für den Transfer von Informationen. Die PortalU-Software basiert auf Open-Source-Komponenten und Eigenentwicklungen und kann somit innerhalb der öffentlichen Verwaltung lizenzkostenfrei genutzt werden.
+<p>Die modular aufgebaute PortalU-Software InGrid kann man sich als Informationsnetz vorstellen, das Webseiten, Daten und Metadaten unter einem Dach bÃ¼ndelt. Die Software besteht aus einer flexibel konfigurierbaren PortaloberflÃ¤che, einem Web-Katalog-Service, einem Karten-Viewer sowie diversen An- und Abfrageschnittstellen zur Recherche in angeschlossenen Systemen bzw. fÃ¼r den Transfer von Informationen. Die PortalU-Software basiert auf Open-Source-Komponenten und Eigenentwicklungen und kann somit innerhalb der Ã¶ffentlichen Verwaltung lizenzkostenfrei genutzt werden.
 </p>
-<p>PortalU basiert auf einer <a href="http://www.kst.portalu.de/verwaltungskooperation/VVGEIN_endg.pdf" target="_new" title="Zur Verwaltungsvereinbarung UDK/GEIN - Link öffnet in neuem Fenster">Verwaltungsvereinbarung</a> zwischen Bund und Ländern. Darin verständigen sich die Partner, dass ein gemeinsames Umweltportal zum Nachweis und zur aktiven Verbreitung von Umweltinformationen zum Einsatz kommen soll. Die Erfüllung der Anforderungen der Aarhus-Konvention und der EU-Richtlinie über den Zugang der Öffentlichkeit zu Umweltinformationen bzw. der entsprechenden Umweltinformationsgesetze von Bund und Ländern stehen hierbei im Mittelpunkt. Seit 2007 sind für die Datenkataloge zudem die Maßgaben der europäischen INSPIRE-Richtlinie ausschlaggebend. 
+<p>PortalU basiert auf einer <a href="http://www.kst.portalu.de/verwaltungskooperation/VVGEIN_endg.pdf" target="_new" title="Zur Verwaltungsvereinbarung UDK/GEIN - Link Ã¶ffnet in neuem Fenster">Verwaltungsvereinbarung</a> zwischen Bund und LÃ¤ndern. Darin verstÃ¤ndigen sich die Partner, dass ein gemeinsames Umweltportal zum Nachweis und zur aktiven Verbreitung von Umweltinformationen zum Einsatz kommen soll. Die ErfÃ¼llung der Anforderungen der Aarhus-Konvention und der EU-Richtlinie Ã¼ber den Zugang der Ã–ffentlichkeit zu Umweltinformationen bzw. der entsprechenden Umweltinformationsgesetze von Bund und LÃ¤ndern stehen hierbei im Mittelpunkt. Seit 2007 sind fÃ¼r die Datenkataloge zudem die MaÃŸgaben der europÃ¤ischen INSPIRE-Richtlinie ausschlaggebend. 
 </p>
-<p>Technisch und inhaltlich wird das Portal von der Koordinierungsstelle PortalU im Niedersächsischen Umweltministerium betreut. Für Fragen und Anregungen wenden Sie sich bitte an die <a href="mailto:kst@portalu.de" title="Schreiben Sie uns - Email Programm startet automatisch">Koordinierungsstelle PortalU</a>. Weitere Hintergrundinformationen finden Sie außerdem auf der <a href="http://www.kst.portalu.de/" target="_new" title="Zur Homepage der Bund-Länder-Kooperation PortalU - Link öffnet in neuem Fenster">Homepage der Bund-Länder-Kooperation PortalU</a>. </p>', '2013-05-28 00:00:00', 'admin');
-INSERT INTO ingrid_cms_item VALUES (36, 19, 'en', 'Welcome to PortalU', '<p>Welcome to PortalU, the German Environmental Information Portal! We offer a comfortable and central access to over 1.000.000 web-pages and database entries from public agencies in Germany. We also guide you directly to up-to-date environmental news, upcoming and past environmental events, environmental monitoring data, and interesting background information on many environmental topics.</p><p>Core-component of PortalU is a powerful search-engine that you can use to look up your terms of interest in web-pages and databases. In the "Extended Search" mode, you can use an environmental thesaurus and a digital mapping tool to compose complex spatio-thematic queries.</p><p>PortalU is the result of a cooperation between the German "Länder" and the German Federal Government. The project is managed by the <a href="http://www.kst.portalu.de/" target="_new" title="Link opens new window">Coordination Center PortalU</a>, a group of environmental and IT experts attached to the Environment Ministry of Lower Saxony in Hannover, Germany. We strive to continuously improve and extend the portal. Please help us in this effort and mail your suggestions or questions to <a href="mailto:kst@portalu.de">Coordination Center PortalU</a>.</p>', '2008-07-09 00:00:00', 'kst_cg');
+<p>Technisch und inhaltlich wird das Portal von der Koordinierungsstelle PortalU im NiedersÃ¤chsischen Umweltministerium betreut. FÃ¼r Fragen und Anregungen wenden Sie sich bitte an die <a href="mailto:kst@portalu.de" title="Schreiben Sie uns - Email Programm startet automatisch">Koordinierungsstelle PortalU</a>. Weitere Hintergrundinformationen finden Sie auÃŸerdem auf der <a href="http://www.kst.portalu.de/" target="_new" title="Zur Homepage der Bund-LÃ¤nder-Kooperation PortalU - Link Ã¶ffnet in neuem Fenster">Homepage der Bund-LÃ¤nder-Kooperation PortalU</a>. </p>', '2013-05-28 00:00:00', 'admin');
+INSERT INTO ingrid_cms_item VALUES (36, 19, 'en', 'Welcome to PortalU', '<p>Welcome to PortalU, the German Environmental Information Portal! We offer a comfortable and central access to over 1.000.000 web-pages and database entries from public agencies in Germany. We also guide you directly to up-to-date environmental news, upcoming and past environmental events, environmental monitoring data, and interesting background information on many environmental topics.</p><p>Core-component of PortalU is a powerful search-engine that you can use to look up your terms of interest in web-pages and databases. In the "Extended Search" mode, you can use an environmental thesaurus and a digital mapping tool to compose complex spatio-thematic queries.</p><p>PortalU is the result of a cooperation between the German "LÃ¤nder" and the German Federal Government. The project is managed by the <a href="http://www.kst.portalu.de/" target="_new" title="Link opens new window">Coordination Center PortalU</a>, a group of environmental and IT experts attached to the Environment Ministry of Lower Saxony in Hannover, Germany. We strive to continuously improve and extend the portal. Please help us in this effort and mail your suggestions or questions to <a href="mailto:kst@portalu.de">Coordination Center PortalU</a>.</p>', '2008-07-09 00:00:00', 'kst_cg');
 INSERT INTO ingrid_cms_item VALUES (44, 23, 'en', 'CMSPortlet1', '', '2012-07-19 15:36:24', 'admin');
 INSERT INTO ingrid_cms_item VALUES (45, 24, 'de', 'CMSPortlet2', '', '2012-07-19 15:36:24', 'admin');
 INSERT INTO ingrid_cms_item VALUES (46, 24, 'en', 'CMSPortlet2', '', '2012-07-19 15:36:24', 'admin');
@@ -3134,19 +3134,19 @@ INSERT INTO ingrid_cms_item VALUES (30, 16, 'en', 'Portrait', '<p>Commonly, a br
 </p>
 <p> The project is managed by the Coordination Center PortalU at the Ministry of Environment of Lower Saxony in Hanover, Germany. For questions and suggestions please contact the <a href="mailto:kst@portalu.de" title="Write us - Email program starts automatically">Coordination Center PortalU</a>. For further background information please visit the <a href="http://www.kst.portalu.de/" target="_new" title="homepage of the Federal-State-Cooperation PortalU - Link opens in new window ">Homepage of the Federal-State-Cooperation PortalU </a>. 
 </p>', '2013-05-28 00:00:00', 'admin');
-INSERT INTO ingrid_cms_item VALUES (31, 17, 'de', 'Datenschutz', '<p>PortalU enthält sowohl Inhalte, die als Teledienst nach § 2 Teledienstgesetz (TDG) als auch Inhalte, die als Mediendienst nach § 2 Mediendienste-Staatsvertrag (MDStV) zu bewerten sind. Hierbei werden folgende Verfahrensgrundsätze gewährleistet:<br></p>
+INSERT INTO ingrid_cms_item VALUES (31, 17, 'de', 'Datenschutz', '<p>PortalU enthÃ¤lt sowohl Inhalte, die als Teledienst nach Â§ 2 Teledienstgesetz (TDG) als auch Inhalte, die als Mediendienst nach Â§ 2 Mediendienste-Staatsvertrag (MDStV) zu bewerten sind. Hierbei werden folgende VerfahrensgrundsÃ¤tze gewÃ¤hrleistet:<br></p>
 <ul>
-<li>Bei jedem Zugriff eines Nutzers auf eine Seite aus dem Angebot von PortalU und bei jedem Abruf einer Datei werden Daten über diesen Vorgang in einer Protokolldatei gespeichert. Diese Daten sind nicht personenbezogen. Wir können also nicht nachvollziehen, welcher Nutzer welche Daten abgerufen hat. Die Protokolldaten werden lediglich in anonymisierter Form statistisch ausgewertet und dienen damit der inhaltlichen Verbesserung unseres Angebotes.<br><br>
+<li>Bei jedem Zugriff eines Nutzers auf eine Seite aus dem Angebot von PortalU und bei jedem Abruf einer Datei werden Daten Ã¼ber diesen Vorgang in einer Protokolldatei gespeichert. Diese Daten sind nicht personenbezogen. Wir kÃ¶nnen also nicht nachvollziehen, welcher Nutzer welche Daten abgerufen hat. Die Protokolldaten werden lediglich in anonymisierter Form statistisch ausgewertet und dienen damit der inhaltlichen Verbesserung unseres Angebotes.<br><br>
 <br>
 <a href="http://portalu.de/piwik-config/">Deaktivierung/Aktivierung der statistischen Erfassung</a>
 <br><br>
 </li>
-<li>Eine Ausnahme besteht innerhalb des Internetangebotes mit der Eingabe persönlicher oder geschäftlicher Daten (eMail-Adresse, Name, Anschrift) zur Anmeldung bei "Mein PortalU" oder der Bestellung des PortalU-Newsletters. Dabei erfolgt die Angabe dieser Daten durch Nutzerinnen und Nutzer ausdrücklich freiwillig. Ihre persönlichen Daten werden von uns selbstverständlich nicht an Dritte weitergegeben. Die Inanspruchnahme aller angebotenen Dienste ist, soweit dies technisch möglich und zumutbar ist, auch ohne Angabe solcher Daten beziehungsweise unter Angabe anonymisierter Daten oder eines Pseudonyms möglich.<br><br>
+<li>Eine Ausnahme besteht innerhalb des Internetangebotes mit der Eingabe persÃ¶nlicher oder geschÃ¤ftlicher Daten (eMail-Adresse, Name, Anschrift) zur Anmeldung bei "Mein PortalU" oder der Bestellung des PortalU-Newsletters. Dabei erfolgt die Angabe dieser Daten durch Nutzerinnen und Nutzer ausdrÃ¼cklich freiwillig. Ihre persÃ¶nlichen Daten werden von uns selbstverstÃ¤ndlich nicht an Dritte weitergegeben. Die Inanspruchnahme aller angebotenen Dienste ist, soweit dies technisch mÃ¶glich und zumutbar ist, auch ohne Angabe solcher Daten beziehungsweise unter Angabe anonymisierter Daten oder eines Pseudonyms mÃ¶glich.<br><br>
 </li>
-<li>Sie können alle allgemein zugänglichen PortalU-Seiten ohne den Einsatz von Cookies benutzen. Wenn Ihre Browser-Einstellungen das Setzen von Cookies zulassen, werden von PortalU sowohl Session-Cookies als auch permanente Cookies gesetzt. Diese dienen ausschließlich der Erhöhung des Bedienungskomforts.
+<li>Sie kÃ¶nnen alle allgemein zugÃ¤nglichen PortalU-Seiten ohne den Einsatz von Cookies benutzen. Wenn Ihre Browser-Einstellungen das Setzen von Cookies zulassen, werden von PortalU sowohl Session-Cookies als auch permanente Cookies gesetzt. Diese dienen ausschlieÃŸlich der ErhÃ¶hung des Bedienungskomforts.
 </li>
 </ul>', '2012-02-24 00:00:00', 'admin');
-INSERT INTO ingrid_cms_item VALUES (32, 17, 'en', 'Privacy Policy', '<p>PortalU contains content that is categorized as "Teledienst" (after § 2 Teledienstgesetz (TDG)), as well as content that is categorized as "Mediendienst" (after § 2 Mediendienste-Staatsvertrag (MDStV)). The following policies do apply:<br></p>
+INSERT INTO ingrid_cms_item VALUES (32, 17, 'en', 'Privacy Policy', '<p>PortalU contains content that is categorized as "Teledienst" (after Â§ 2 Teledienstgesetz (TDG)), as well as content that is categorized as "Mediendienst" (after Â§ 2 Mediendienste-Staatsvertrag (MDStV)). The following policies do apply:<br></p>
 <ul>
 <li>With each user-access to a content-page in PortalU, the relevant access-data are saved in a log file. This information is not personalized. Therefore it is not possible to reason which user has had access to which content page. The purpose of the log file is purely statistical. The evaluation of the log file helps to improve PortalU.<br><br>
 <a href="http://portalu.de/piwik-config/">Deactivation/activation of the statistic collection</a>
@@ -3160,14 +3160,14 @@ INSERT INTO ingrid_cms_item VALUES (32, 17, 'en', 'Privacy Policy', '<p>PortalU 
 INSERT INTO ingrid_cms_item VALUES (33, 18, 'de', '', '.</p><p>Unsere Postadresse:</p>
 
 <p> Koordinierungsstelle PortalU<br />
-Niedersächs. Ministerium für Umwelt, Energie und Klimaschutz<br />
+NiedersÃ¤chs. Ministerium fÃ¼r Umwelt, Energie und Klimaschutz<br />
 Archivstrasse 2<br />
 D-30169 Hannover<br /></p>
 
-<p>Nehmen Sie online Kontakt mit uns auf! Wir werden Ihnen schnellstmöglichst per E-Mail antworten. Die eingegebenen Informationen und Daten werden nur zur Bearbeitung Ihrer Anfrage gespeichert und genutzt. Beachten Sie bitte, dass die Datenübermittlung über das Kontaktformular unverschlüsselt erfolgt. Für vertrauliche Nachrichten nutzen Sie bitte den herkömmlichen Postweg.</p>
+<p>Nehmen Sie online Kontakt mit uns auf! Wir werden Ihnen schnellstmÃ¶glichst per E-Mail antworten. Die eingegebenen Informationen und Daten werden nur zur Bearbeitung Ihrer Anfrage gespeichert und genutzt. Beachten Sie bitte, dass die DatenÃ¼bermittlung Ã¼ber das Kontaktformular unverschlÃ¼sselt erfolgt. FÃ¼r vertrauliche Nachrichten nutzen Sie bitte den herkÃ¶mmlichen Postweg.</p>
 ', '2012-02-02 00:00:00', 'kst_cg');
-INSERT INTO ingrid_cms_item VALUES (34, 18, 'en', '', '.</p><p>Our address:</p><p>Niedersächsisches Ministerium für Umwelt und Klimaschutz<br />Koordinierungsstelle PortalU<br />Archivstrasse 2<br />D-30169 Hannover<br /></p> <p>Please contact us! We will answer your request as soon as possible. All data you entered will be saved only to process your request.</p>', '2012-02-02 00:00:00', 'kst_cg');
-INSERT INTO ingrid_cms_item VALUES (35, 19, 'de', 'Willkommen bei PortalU', '<p>Willkommen bei PortalU, dem Umweltportal Deutschland! Wir bieten Ihnen einen zentralen Zugriff auf mehrere hunderttausend Internetseiten und Datenbankeinträge von öffentlichen Institutionen und Organisationen. Zusätzlich können Sie aktuelle Nachrichten und Veranstaltungshinweise, Umweltmesswerte, Hintergrundinformationen und historische Umweltereignisse über PortalU abrufen.</p><p>Die integrierte Suchmaschine ist eine zentrale Komponente von PortalU. Mit ihrer Hilfe können Sie Webseiten und Datenbankeinträge nach Stichworten durchsuchen. Über die Option "Erweiterte Suche" können Sie zusätzlich ein differenziertes Fachvokabular und deutschlandweite Hintergrundkarten zur Zusammenstellung Ihrer Suchanfrage nutzen.</p><p>PortalU ist eine Kooperation der Umweltverwaltungen im Bund und in den Ländern. Inhaltlich und technisch wird PortalU von der <a href="http://www.kst.portalu.de/" target="_new" title="Link öffnet in neuem Fenster">Koordinierungsstelle PortalU</a> im Niedersächsischen Ministerium für Umwelt und Klimaschutz verwaltet. Wir sind darum bemüht, das System kontinuierlich zu erweitern und zu optimieren. Bei Fragen und Verbesserungsvorschlägen wenden Sie sich bitte an die <a href="mailto:kst@portalu.de">Koordinierungsstelle PortalU</a>.</p>', '2008-07-09 00:00:00', 'kst_cg');
+INSERT INTO ingrid_cms_item VALUES (34, 18, 'en', '', '.</p><p>Our address:</p><p>NiedersÃ¤chsisches Ministerium fÃ¼r Umwelt und Klimaschutz<br />Koordinierungsstelle PortalU<br />Archivstrasse 2<br />D-30169 Hannover<br /></p> <p>Please contact us! We will answer your request as soon as possible. All data you entered will be saved only to process your request.</p>', '2012-02-02 00:00:00', 'kst_cg');
+INSERT INTO ingrid_cms_item VALUES (35, 19, 'de', 'Willkommen bei PortalU', '<p>Willkommen bei PortalU, dem Umweltportal Deutschland! Wir bieten Ihnen einen zentralen Zugriff auf mehrere hunderttausend Internetseiten und DatenbankeintrÃ¤ge von Ã¶ffentlichen Institutionen und Organisationen. ZusÃ¤tzlich kÃ¶nnen Sie aktuelle Nachrichten und Veranstaltungshinweise, Umweltmesswerte, Hintergrundinformationen und historische Umweltereignisse Ã¼ber PortalU abrufen.</p><p>Die integrierte Suchmaschine ist eine zentrale Komponente von PortalU. Mit ihrer Hilfe kÃ¶nnen Sie Webseiten und DatenbankeintrÃ¤ge nach Stichworten durchsuchen. Ãœber die Option "Erweiterte Suche" kÃ¶nnen Sie zusÃ¤tzlich ein differenziertes Fachvokabular und deutschlandweite Hintergrundkarten zur Zusammenstellung Ihrer Suchanfrage nutzen.</p><p>PortalU ist eine Kooperation der Umweltverwaltungen im Bund und in den LÃ¤ndern. Inhaltlich und technisch wird PortalU von der <a href="http://www.kst.portalu.de/" target="_new" title="Link Ã¶ffnet in neuem Fenster">Koordinierungsstelle PortalU</a> im NiedersÃ¤chsischen Ministerium fÃ¼r Umwelt und Klimaschutz verwaltet. Wir sind darum bemÃ¼ht, das System kontinuierlich zu erweitern und zu optimieren. Bei Fragen und VerbesserungsvorschlÃ¤gen wenden Sie sich bitte an die <a href="mailto:kst@portalu.de">Koordinierungsstelle PortalU</a>.</p>', '2008-07-09 00:00:00', 'kst_cg');
 
 
 --
@@ -3253,7 +3253,7 @@ SELECT pg_catalog.setval('ingrid_newsletter_data_id_seq', 1, false);
 --
 
 INSERT INTO ingrid_partner VALUES (1, 'bund', 'Bund', 1);
-INSERT INTO ingrid_partner VALUES (2, 'bw', 'Baden-Württemberg', 2);
+INSERT INTO ingrid_partner VALUES (2, 'bw', 'Baden-WÃ¼rttemberg', 2);
 INSERT INTO ingrid_partner VALUES (3, 'by', 'Bayern', 3);
 INSERT INTO ingrid_partner VALUES (4, 'be', 'Berlin', 4);
 INSERT INTO ingrid_partner VALUES (5, 'bb', 'Brandenburg', 5);
@@ -3268,7 +3268,7 @@ INSERT INTO ingrid_partner VALUES (13, 'sl', 'Saarland', 13);
 INSERT INTO ingrid_partner VALUES (14, 'sn', 'Sachsen', 14);
 INSERT INTO ingrid_partner VALUES (15, 'st', 'Sachsen-Anhalt', 15);
 INSERT INTO ingrid_partner VALUES (16, 'sh', 'Schleswig-Holstein', 16);
-INSERT INTO ingrid_partner VALUES (17, 'th', 'Thüringen', 17);
+INSERT INTO ingrid_partner VALUES (17, 'th', 'ThÃ¼ringen', 17);
 
 
 --
@@ -3295,214 +3295,214 @@ SELECT pg_catalog.setval('ingrid_principal_pref_id_seq', 1, false);
 -- Data for Name: ingrid_provider; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO ingrid_provider VALUES (1, 'bu_bmu', 'Bundesministerium für Umwelt, Naturschutz und Reaktorsicherheit', 'http://www.bmu.de/', 1, 1);
+INSERT INTO ingrid_provider VALUES (1, 'bu_bmu', 'Bundesministerium fÃ¼r Umwelt, Naturschutz und Reaktorsicherheit', 'http://www.bmu.de/', 1, 1);
 INSERT INTO ingrid_provider VALUES (2, 'bu_uba', 'Umweltbundesamt', 'http://www.umweltbundesamt.de/', 2, 1);
-INSERT INTO ingrid_provider VALUES (3, 'bu_bfn', 'Bundesamt für Naturschutz', 'http://www.bfn.de/', 3, 1);
-INSERT INTO ingrid_provider VALUES (4, 'bu_bfs', 'Bundesamt für Strahlenschutz', 'http://www.bfs.de/', 4, 1);
+INSERT INTO ingrid_provider VALUES (3, 'bu_bfn', 'Bundesamt fÃ¼r Naturschutz', 'http://www.bfn.de/', 3, 1);
+INSERT INTO ingrid_provider VALUES (4, 'bu_bfs', 'Bundesamt fÃ¼r Strahlenschutz', 'http://www.bfs.de/', 4, 1);
 INSERT INTO ingrid_provider VALUES (5, 'bu_bmf', 'Bundesministerium der Finanzen', 'http://www.bundesfinanzministerium.de/', 5, 1);
-INSERT INTO ingrid_provider VALUES (6, 'bu_bmbf', 'Bundesministerium für Bildung und Forschung', 'http://www.bmbf.de/', 6, 1);
-INSERT INTO ingrid_provider VALUES (7, 'bu_bmelv', 'Bundesministerium für Ernährung, Landwirtschaft und Verbraucherschutz', 'http://www.bmelv.de/cln_044/DE/00-Home/__Homepage__node.html__nnn=true', 7, 1);
-INSERT INTO ingrid_provider VALUES (8, 'bu_bmz', 'Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung', 'http://www.bmz.de/', 8, 1);
-INSERT INTO ingrid_provider VALUES (9, 'bu_aa', 'Auswärtiges Amt', 'http://www.auswaertiges-amt.de/', 10, 1);
-INSERT INTO ingrid_provider VALUES (10, 'bu_bsh', 'Bundesamt für Seeschifffahrt und Hydrographie', 'http://www.bsh.de/', 11, 1);
-INSERT INTO ingrid_provider VALUES (11, 'bu_bvl', 'Bundesamt für Verbraucherschutz und Lebensmittelsicherheit', 'http://www.bvl.bund.de/', 12, 1);
-INSERT INTO ingrid_provider VALUES (12, 'bu_bgr', 'Bundesanstalt für Geowissenschaften und Rohstoffe', 'http://www.bgr.bund.de/', 13, 1);
-INSERT INTO ingrid_provider VALUES (13, 'bu_bfg', 'Bundesanstalt für Gewässerkunde', 'http://www.bafg.de/', 14, 1);
-INSERT INTO ingrid_provider VALUES (14, 'bu_nokis', 'Bundesanstalt für Wasserbau - Dienststelle Hamburg', 'http://www.hamburg.baw.de/', 15, 1);
-INSERT INTO ingrid_provider VALUES (15, 'bu_bfr', 'Bundesinstitut für Risikobewertung', 'http://www.bfr.bund.de/', 16, 1);
+INSERT INTO ingrid_provider VALUES (6, 'bu_bmbf', 'Bundesministerium fÃ¼r Bildung und Forschung', 'http://www.bmbf.de/', 6, 1);
+INSERT INTO ingrid_provider VALUES (7, 'bu_bmelv', 'Bundesministerium fÃ¼r ErnÃ¤hrung, Landwirtschaft und Verbraucherschutz', 'http://www.bmelv.de/cln_044/DE/00-Home/__Homepage__node.html__nnn=true', 7, 1);
+INSERT INTO ingrid_provider VALUES (8, 'bu_bmz', 'Bundesministerium fÃ¼r wirtschaftliche Zusammenarbeit und Entwicklung', 'http://www.bmz.de/', 8, 1);
+INSERT INTO ingrid_provider VALUES (9, 'bu_aa', 'AuswÃ¤rtiges Amt', 'http://www.auswaertiges-amt.de/', 10, 1);
+INSERT INTO ingrid_provider VALUES (10, 'bu_bsh', 'Bundesamt fÃ¼r Seeschifffahrt und Hydrographie', 'http://www.bsh.de/', 11, 1);
+INSERT INTO ingrid_provider VALUES (11, 'bu_bvl', 'Bundesamt fÃ¼r Verbraucherschutz und Lebensmittelsicherheit', 'http://www.bvl.bund.de/', 12, 1);
+INSERT INTO ingrid_provider VALUES (12, 'bu_bgr', 'Bundesanstalt fÃ¼r Geowissenschaften und Rohstoffe', 'http://www.bgr.bund.de/', 13, 1);
+INSERT INTO ingrid_provider VALUES (13, 'bu_bfg', 'Bundesanstalt fÃ¼r GewÃ¤sserkunde', 'http://www.bafg.de/', 14, 1);
+INSERT INTO ingrid_provider VALUES (14, 'bu_nokis', 'Bundesanstalt fÃ¼r Wasserbau - Dienststelle Hamburg', 'http://www.hamburg.baw.de/', 15, 1);
+INSERT INTO ingrid_provider VALUES (15, 'bu_bfr', 'Bundesinstitut fÃ¼r Risikobewertung', 'http://www.bfr.bund.de/', 16, 1);
 INSERT INTO ingrid_provider VALUES (16, 'bu_bka', 'Bundeskriminalamt', 'http://www.bka.de/', 17, 1);
 INSERT INTO ingrid_provider VALUES (18, 'bu_stba', 'Statistisches Bundesamt', 'http://www.destatis.de/', 19, 1);
-INSERT INTO ingrid_provider VALUES (19, 'bu_ble', 'Bundesanstalt für Landwirtschaft und Ernährung', 'http://www.ble.de', 20, 1);
-INSERT INTO ingrid_provider VALUES (20, 'bu_bpb', 'Bundeszentrale für politische Bildung', 'http://www.bpb.de/', 21, 1);
-INSERT INTO ingrid_provider VALUES (21, 'bu_gtz', 'Deutsche Gesellschaft für Technische Zusammenarbeit (GTZ) GmbH', 'http://www.gtz.de/', 22, 1);
+INSERT INTO ingrid_provider VALUES (19, 'bu_ble', 'Bundesanstalt fÃ¼r Landwirtschaft und ErnÃ¤hrung', 'http://www.ble.de', 20, 1);
+INSERT INTO ingrid_provider VALUES (20, 'bu_bpb', 'Bundeszentrale fÃ¼r politische Bildung', 'http://www.bpb.de/', 21, 1);
+INSERT INTO ingrid_provider VALUES (21, 'bu_gtz', 'Deutsche Gesellschaft fÃ¼r Technische Zusammenarbeit (GTZ) GmbH', 'http://www.gtz.de/', 22, 1);
 INSERT INTO ingrid_provider VALUES (22, 'bu_dwd', 'Deutscher Wetterdienst', 'http://www.dwd.de/', 23, 1);
-INSERT INTO ingrid_provider VALUES (23, 'bu_dlr', 'Deutsches Zentrum für Luft- und Raumfahrt DLR e.V.', 'http://www.dlr.de/', 24, 1);
+INSERT INTO ingrid_provider VALUES (23, 'bu_dlr', 'Deutsches Zentrum fÃ¼r Luft- und Raumfahrt DLR e.V.', 'http://www.dlr.de/', 24, 1);
 INSERT INTO ingrid_provider VALUES (24, 'bu_kug', 'Koordinierungsstelle PortalU', 'http://www.kst.portalu.de/', 25, 1);
-INSERT INTO ingrid_provider VALUES (25, 'bu_labo', 'Länderarbeitsgemeinschaft Boden LABO', 'http://www.labo-deutschland.de/', 26, 1);
-INSERT INTO ingrid_provider VALUES (26, 'bu_lawa', 'Länderarbeitsgemeinschaft Wasser', 'http://www.lawa.de/', 27, 1);
-INSERT INTO ingrid_provider VALUES (27, 'bu_laofdh', 'Leitstelle des Bundes für Abwassertechnik, Boden- und Grundwasserschutz, Liegenschaftsinformationssystem Außenanlagen LISA', 'http://www.ofd-hannover.de/la/', 28, 1);
+INSERT INTO ingrid_provider VALUES (25, 'bu_labo', 'LÃ¤nderarbeitsgemeinschaft Boden LABO', 'http://www.labo-deutschland.de/', 26, 1);
+INSERT INTO ingrid_provider VALUES (26, 'bu_lawa', 'LÃ¤nderarbeitsgemeinschaft Wasser', 'http://www.lawa.de/', 27, 1);
+INSERT INTO ingrid_provider VALUES (27, 'bu_laofdh', 'Leitstelle des Bundes fÃ¼r Abwassertechnik, Boden- und Grundwasserschutz, Liegenschaftsinformationssystem AuÃŸenanlagen LISA', 'http://www.ofd-hannover.de/la/', 28, 1);
 INSERT INTO ingrid_provider VALUES (537, 'he_lbhef', 'Landesbetrieb Hessen-Forst', 'http://www.hessen-forst.de/', 0, 8);
 INSERT INTO ingrid_provider VALUES (28, 'bu_bpa', 'Presse- und Informationsamt der Bundesregierung', 'http://www.bundesregierung.de/', 29, 1);
 INSERT INTO ingrid_provider VALUES (29, 'bu_blauerengel', 'RAL/Umweltbundesamt Umweltzeichen "Blauer Engel"', 'http://www.blauer-engel.de/', 30, 1);
-INSERT INTO ingrid_provider VALUES (30, 'bu_sru', 'Rat von Sachverständigen für Umweltfragen (SRU)', 'http://www.umweltrat.de/', 31, 1);
+INSERT INTO ingrid_provider VALUES (30, 'bu_sru', 'Rat von SachverstÃ¤ndigen fÃ¼r Umweltfragen (SRU)', 'http://www.umweltrat.de/', 31, 1);
 INSERT INTO ingrid_provider VALUES (31, 'bu_ssk', 'Strahlenschutzkommission', 'http://www.ssk.de/', 32, 1);
 INSERT INTO ingrid_provider VALUES (32, 'bu_umk', 'Umweltministerkonferenz', 'http://www.umweltministerkonferenz.de/', 33, 1);
-INSERT INTO ingrid_provider VALUES (33, 'bu_wbgu', 'Wissenschaftlicher Beirat der Bundesregierung Globale Umweltveränderungen - WBGU', 'http://www.wbgu.de/', 34, 1);
+INSERT INTO ingrid_provider VALUES (33, 'bu_wbgu', 'Wissenschaftlicher Beirat der Bundesregierung Globale UmweltverÃ¤nderungen - WBGU', 'http://www.wbgu.de/', 34, 1);
 INSERT INTO ingrid_provider VALUES (35, 'bu_uga', 'Umweltgutachterausschuss (UGA)', 'http://www.uga.de/', 36, 1);
 INSERT INTO ingrid_provider VALUES (36, 'bu_co2', 'co2online gGmbH Klimaschutzkampagne', 'http://www.co2online.de/', 37, 1);
-INSERT INTO ingrid_provider VALUES (38, 'bw_um', 'Ministerium für Umwelt, Klima und Energiewirtschaft Baden-Württemberg', 'http://www.um.baden-wuerttemberg.de/', 1, 2);
-INSERT INTO ingrid_provider VALUES (39, 'bw_mi', 'Innenministerium Baden-Württemberg', 'http://www.innenministerium.baden-wuerttemberg.de/', 2, 2);
-INSERT INTO ingrid_provider VALUES (40, 'bw_mlr', 'Ministerium für Ländlichen Raum und Verbraucherschutz Baden-Württemberg', 'http://www.mlr.baden-wuerttemberg.de/', 3, 2);
-INSERT INTO ingrid_provider VALUES (41, 'bw_mw', 'Ministerium für Finanzen und Wirtschaft Baden-Württemberg', 'http://www.mfw.baden-wuerttemberg.de/', 4, 2);
-INSERT INTO ingrid_provider VALUES (42, 'bw_lu', 'Landesanstalt für Umwelt, Messungen und Naturschutz Baden-Württemberg', 'http://www.lubw.baden-wuerttemberg.de/', 5, 2);
-INSERT INTO ingrid_provider VALUES (43, 'bw_lgrb', 'Regierungspräsidium Freiburg - Landesamt für Geologie, Rohstoffe und Bergbau', 'http://www.lgrb.uni-freiburg.de', 6, 2);
-INSERT INTO ingrid_provider VALUES (44, 'bw_lvm', 'Landesamt für Geoinformation und Landentwicklung Baden-Württemberg', 'http://www.lv-bw.de', 7, 2);
-INSERT INTO ingrid_provider VALUES (514, 'bw_vm', 'Ministerium für Verkehr und Infrastruktur Baden-Württemberg', 'http://www.mvi.baden-wuerttemberg.de/', 139, 2);
-INSERT INTO ingrid_provider VALUES (47, 'bw_stla', 'Statistisches Landesamt Baden-Württemberg', 'http://www.statistik-bw.de/', 10, 2);
+INSERT INTO ingrid_provider VALUES (38, 'bw_um', 'Ministerium fÃ¼r Umwelt, Klima und Energiewirtschaft Baden-WÃ¼rttemberg', 'http://www.um.baden-wuerttemberg.de/', 1, 2);
+INSERT INTO ingrid_provider VALUES (39, 'bw_mi', 'Innenministerium Baden-WÃ¼rttemberg', 'http://www.innenministerium.baden-wuerttemberg.de/', 2, 2);
+INSERT INTO ingrid_provider VALUES (40, 'bw_mlr', 'Ministerium fÃ¼r LÃ¤ndlichen Raum und Verbraucherschutz Baden-WÃ¼rttemberg', 'http://www.mlr.baden-wuerttemberg.de/', 3, 2);
+INSERT INTO ingrid_provider VALUES (41, 'bw_mw', 'Ministerium fÃ¼r Finanzen und Wirtschaft Baden-WÃ¼rttemberg', 'http://www.mfw.baden-wuerttemberg.de/', 4, 2);
+INSERT INTO ingrid_provider VALUES (42, 'bw_lu', 'Landesanstalt fÃ¼r Umwelt, Messungen und Naturschutz Baden-WÃ¼rttemberg', 'http://www.lubw.baden-wuerttemberg.de/', 5, 2);
+INSERT INTO ingrid_provider VALUES (43, 'bw_lgrb', 'RegierungsprÃ¤sidium Freiburg - Landesamt fÃ¼r Geologie, Rohstoffe und Bergbau', 'http://www.lgrb.uni-freiburg.de', 6, 2);
+INSERT INTO ingrid_provider VALUES (44, 'bw_lvm', 'Landesamt fÃ¼r Geoinformation und Landentwicklung Baden-WÃ¼rttemberg', 'http://www.lv-bw.de', 7, 2);
+INSERT INTO ingrid_provider VALUES (514, 'bw_vm', 'Ministerium fÃ¼r Verkehr und Infrastruktur Baden-WÃ¼rttemberg', 'http://www.mvi.baden-wuerttemberg.de/', 139, 2);
+INSERT INTO ingrid_provider VALUES (47, 'bw_stla', 'Statistisches Landesamt Baden-WÃ¼rttemberg', 'http://www.statistik-bw.de/', 10, 2);
 INSERT INTO ingrid_provider VALUES (560, 'bu_fnb', 'Fachnetzwerk Boden', '', 0, 1);
-INSERT INTO ingrid_provider VALUES (49, 'by_sugv', 'Bayerisches Staatsministerium für Umwelt und Gesundheit', 'http://www.stmug.bayern.de/', 1, 3);
-INSERT INTO ingrid_provider VALUES (200, 'sn_sms', 'Sächsisches Staatsministerium für Soziales', 'http://www.sms.sachsen.de/', 25, 14);
-INSERT INTO ingrid_provider VALUES (51, 'by_lfstad', 'Bayerisches Landesamt für Statistik und Datenverarbeitung', 'http://www.statistik.bayern.de/', 3, 3);
-INSERT INTO ingrid_provider VALUES (371, 'bu_bbsr', 'Bundesinstitut für Bau-, Stadt- und Raumforschung', 'http://www.bbsr.bund.de', 0, 1);
-INSERT INTO ingrid_provider VALUES (54, 'by_brrhoen', 'Biosphärenreservat Rhön', 'http://www.biosphaerenreservat-rhoen.de/', 6, 3);
+INSERT INTO ingrid_provider VALUES (49, 'by_sugv', 'Bayerisches Staatsministerium fÃ¼r Umwelt und Gesundheit', 'http://www.stmug.bayern.de/', 1, 3);
+INSERT INTO ingrid_provider VALUES (200, 'sn_sms', 'SÃ¤chsisches Staatsministerium fÃ¼r Soziales', 'http://www.sms.sachsen.de/', 25, 14);
+INSERT INTO ingrid_provider VALUES (51, 'by_lfstad', 'Bayerisches Landesamt fÃ¼r Statistik und Datenverarbeitung', 'http://www.statistik.bayern.de/', 3, 3);
+INSERT INTO ingrid_provider VALUES (371, 'bu_bbsr', 'Bundesinstitut fÃ¼r Bau-, Stadt- und Raumforschung', 'http://www.bbsr.bund.de', 0, 1);
+INSERT INTO ingrid_provider VALUES (54, 'by_brrhoen', 'BiosphÃ¤renreservat RhÃ¶n', 'http://www.biosphaerenreservat-rhoen.de/', 6, 3);
 INSERT INTO ingrid_provider VALUES (55, 'by_npbayw', 'Nationalpark Bayerischer Wald', 'http://www.nationalpark-bayerischer-wald.de/', 7, 3);
 INSERT INTO ingrid_provider VALUES (56, 'by_npbg', 'Nationalpark Berchtesgaden', 'http://www.nationalpark-berchtesgaden.de/', 8, 3);
-INSERT INTO ingrid_provider VALUES (57, 'be_senst', 'Senatsverwaltung für Stadtentwicklung und Umwelt', 'http://www.stadtentwicklung.berlin.de/', 1, 4);
+INSERT INTO ingrid_provider VALUES (57, 'be_senst', 'Senatsverwaltung fÃ¼r Stadtentwicklung und Umwelt', 'http://www.stadtentwicklung.berlin.de/', 1, 4);
 INSERT INTO ingrid_provider VALUES (58, 'be_snb', 'Stiftung Naturschutz Berlin', 'http://www.stiftung-naturschutz.de/', 2, 4);
 INSERT INTO ingrid_provider VALUES (146, 'bu_portalu', 'PortalU - Das Umweltportal Deutschland', 'http://www.portalu.de', 41, 1);
-INSERT INTO ingrid_provider VALUES (147, 'st_lagb', 'Landesamt für Geologie und Bergwesen Sachsen-Anhalt (LAGB)', 'http://www.sachsen-anhalt.de/LPSA/index.php?id=15849', 8, 15);
-INSERT INTO ingrid_provider VALUES (60, 'bb_mluv', 'Ministerium für Umwelt, Gesundheit und Verbraucherschutz des Landes Brandenburg', 'http://www.mugv.brandenburg.de', 1, 5);
-INSERT INTO ingrid_provider VALUES (61, 'hb_sbu', 'Bremer Senator für Umwelt, Bau, Verkehr und Europa', 'http://www.umwelt.bremen.de', 1, 6);
-INSERT INTO ingrid_provider VALUES (62, 'hh_su', 'Behörde für Stadtentwicklung und Umwelt Hamburg', 'http://www.hamburg.de/bsu/', 1, 7);
-INSERT INTO ingrid_provider VALUES (63, 'hh_wa', 'Behörde für Wirtschaft, Verkehr und Innovation', 'http://www.hamburg.de/bwvi/', 2, 7);
-INSERT INTO ingrid_provider VALUES (64, 'hh_bsg', 'Behörde für Gesundheit und Verbraucherschutz', 'http://www.hamburg.de/bgv/', 3, 7);
+INSERT INTO ingrid_provider VALUES (147, 'st_lagb', 'Landesamt fÃ¼r Geologie und Bergwesen Sachsen-Anhalt (LAGB)', 'http://www.sachsen-anhalt.de/LPSA/index.php?id=15849', 8, 15);
+INSERT INTO ingrid_provider VALUES (60, 'bb_mluv', 'Ministerium fÃ¼r Umwelt, Gesundheit und Verbraucherschutz des Landes Brandenburg', 'http://www.mugv.brandenburg.de', 1, 5);
+INSERT INTO ingrid_provider VALUES (61, 'hb_sbu', 'Bremer Senator fÃ¼r Umwelt, Bau, Verkehr und Europa', 'http://www.umwelt.bremen.de', 1, 6);
+INSERT INTO ingrid_provider VALUES (62, 'hh_su', 'BehÃ¶rde fÃ¼r Stadtentwicklung und Umwelt Hamburg', 'http://www.hamburg.de/bsu/', 1, 7);
+INSERT INTO ingrid_provider VALUES (63, 'hh_wa', 'BehÃ¶rde fÃ¼r Wirtschaft, Verkehr und Innovation', 'http://www.hamburg.de/bwvi/', 2, 7);
+INSERT INTO ingrid_provider VALUES (64, 'hh_bsg', 'BehÃ¶rde fÃ¼r Gesundheit und Verbraucherschutz', 'http://www.hamburg.de/bgv/', 3, 7);
 INSERT INTO ingrid_provider VALUES (65, 'hh_lgv', 'Landesbetrieb Geoinformation und Vermessung Hamburg', 'http://www.hamburg.de/startseite-landesbetrieb-geoinformation-und-vermessung/', 4, 7);
 INSERT INTO ingrid_provider VALUES (66, 'hh_npwatt', 'Nationalparkverwaltung Hamburgisches Wattenmeer', 'http://www.nationalpark-wattenmeer.de/hh', 5, 7);
 INSERT INTO ingrid_provider VALUES (67, 'hh_argeelbe', 'Flussgebietsgemeinschaft Elbe', 'http://www.fgg-elbe.de/', 6, 7);
-INSERT INTO ingrid_provider VALUES (68, 'hh_sth', 'Statistisches Amt für Hamburg und Schleswig-Holstein', 'http://www.statistik-nord.de/', 7, 7);
-INSERT INTO ingrid_provider VALUES (69, 'he_hmulv', 'Hessisches Ministerium für Umwelt, Klimaschutz, Landwirtschaft und Verbraucherschutz', 'http://www.umwelt.hessen.de/', 1, 8);
-INSERT INTO ingrid_provider VALUES (70, 'he_hlug', 'Hessisches Landesamt für Umwelt und Geologie', 'http://www.hlug.de/', 2, 8);
+INSERT INTO ingrid_provider VALUES (68, 'hh_sth', 'Statistisches Amt fÃ¼r Hamburg und Schleswig-Holstein', 'http://www.statistik-nord.de/', 7, 7);
+INSERT INTO ingrid_provider VALUES (69, 'he_hmulv', 'Hessisches Ministerium fÃ¼r Umwelt, Klimaschutz, Landwirtschaft und Verbraucherschutz', 'http://www.umwelt.hessen.de/', 1, 8);
+INSERT INTO ingrid_provider VALUES (70, 'he_hlug', 'Hessisches Landesamt fÃ¼r Umwelt und Geologie', 'http://www.hlug.de/', 2, 8);
 INSERT INTO ingrid_provider VALUES (71, 'he_umwelt', 'Umweltatlas Hessen', 'http://atlas.umwelt.hessen.de/', 3, 8);
-INSERT INTO ingrid_provider VALUES (72, 'mv_um', 'Ministerium für Landwirtschaft, Umwelt und Verbraucherschutz (LU)', 'http://www.lu.mv-regierung.de/', 1, 9);
-INSERT INTO ingrid_provider VALUES (73, 'mv_sm', 'Ministerium für Arbeit, Gleichstellung und Soziales', 'http://www.sozial-mv.de/', 2, 9);
-INSERT INTO ingrid_provider VALUES (74, 'mv_lung', 'Landesamt für Umwelt, Naturschutz und Geologie Mecklenburg-Vorpommern (LUNG)', 'http://www.lung.mv-regierung.de/', 3, 9);
-INSERT INTO ingrid_provider VALUES (75, 'mv_lfmv', 'Landesforst Mecklenburg-Vorpommern AöR', 'http://www.wald-mv.de/', 4, 9);
-INSERT INTO ingrid_provider VALUES (76, 'mv_schaalsee', 'Biosphärenreservat Schaalsee', 'http://www.schaalsee.de/', 5, 9);
-INSERT INTO ingrid_provider VALUES (77, 'mv_npmueritz', 'Müritz-Nationalpark', 'http://www.nationalpark-mueritz.de/', 6, 9);
+INSERT INTO ingrid_provider VALUES (72, 'mv_um', 'Ministerium fÃ¼r Landwirtschaft, Umwelt und Verbraucherschutz (LU)', 'http://www.lu.mv-regierung.de/', 1, 9);
+INSERT INTO ingrid_provider VALUES (73, 'mv_sm', 'Ministerium fÃ¼r Arbeit, Gleichstellung und Soziales', 'http://www.sozial-mv.de/', 2, 9);
+INSERT INTO ingrid_provider VALUES (74, 'mv_lung', 'Landesamt fÃ¼r Umwelt, Naturschutz und Geologie Mecklenburg-Vorpommern (LUNG)', 'http://www.lung.mv-regierung.de/', 3, 9);
+INSERT INTO ingrid_provider VALUES (75, 'mv_lfmv', 'Landesforst Mecklenburg-Vorpommern AÃ¶R', 'http://www.wald-mv.de/', 4, 9);
+INSERT INTO ingrid_provider VALUES (76, 'mv_schaalsee', 'BiosphÃ¤renreservat Schaalsee', 'http://www.schaalsee.de/', 5, 9);
+INSERT INTO ingrid_provider VALUES (77, 'mv_npmueritz', 'MÃ¼ritz-Nationalpark', 'http://www.nationalpark-mueritz.de/', 6, 9);
 INSERT INTO ingrid_provider VALUES (78, 'mv_nvblmv', 'Nationalpark Vorpommersche Boddenlandschaft', 'http://www.nationalpark-vorpommersche-boddenlandschaft.de/', 7, 9);
 INSERT INTO ingrid_provider VALUES (79, 'mv_fhstr', 'Fachhochschule Stralsund', 'http://www.fh-stralsund.de/', 8, 9);
 INSERT INTO ingrid_provider VALUES (80, 'mv_fhnb', 'Hochschule Neubrandenburg', 'http://www.fh-nb.de/', 9, 9);
 INSERT INTO ingrid_provider VALUES (81, 'mv_hswi', 'Hochschule Wismar', 'http://www.hs-wismar.de/', 10, 9);
-INSERT INTO ingrid_provider VALUES (82, 'mv_iow', 'Institut für Ostseeforschung Warnemünde', 'http://www.io-warnemuende.de/', 11, 9);
-INSERT INTO ingrid_provider VALUES (83, 'mv_unigr', 'Universität Greifswald', 'http://www.uni-greifswald.de/', 12, 9);
-INSERT INTO ingrid_provider VALUES (84, 'mv_uniro', 'Universität Rostock', 'http://www.uni-rostock.de/', 13, 9);
-INSERT INTO ingrid_provider VALUES (85, 'ni_mu', 'Niedersächsisches Ministerium für Umwelt und Klimaschutz', 'http://www.mu.niedersachsen.de/', 1, 10);
-INSERT INTO ingrid_provider VALUES (86, 'ni_mw', 'Niedersächsisches Ministerium für Wirtschaft, Arbeit und Verkehr', 'http://www.mw.niedersachsen.de/', 2, 10);
-INSERT INTO ingrid_provider VALUES (87, 'ni_ms', 'Niedersächsisches Ministerium für Soziales, Frauen, Familie, Gesundheit und Integration', 'http://www.ms.niedersachsen.de/', 3, 10);
-INSERT INTO ingrid_provider VALUES (88, 'ni_mi', 'Niedersächsisches Ministerium für Inneres und Sport', 'http://www.mi.niedersachsen.de/', 4, 10);
-INSERT INTO ingrid_provider VALUES (89, 'ni_ml', 'Niedersächsisches Ministerium für Ernährung, Landwirtschaft, Verbraucherschutz und Landesentwicklung', 'http://www.ml.niedersachsen.de/', 5, 10);
-INSERT INTO ingrid_provider VALUES (90, 'ni_nlwkn', 'Niedersächsischer Landesbetrieb für Wasserwirtschaft, Küsten- und Naturschutz', 'http://www.nlwkn.niedersachsen.de/', 6, 10);
-INSERT INTO ingrid_provider VALUES (91, 'ni_lbeg', 'Niedersächsisches Landesamt für Bergbau, Energie und Geologie', 'http://www.lbeg.niedersachsen.de', 7, 10);
-INSERT INTO ingrid_provider VALUES (93, 'ni_laves', 'Niedersächsisches Landesamt für Verbraucherschutz und Lebensmittelsicherheit', 'http://www.laves.niedersachsen.de/', 9, 10);
-INSERT INTO ingrid_provider VALUES (94, 'ni_lga', 'Niedersächsisches Landesgesundheitsamt', 'http://www.nlga.niedersachsen.de/', 10, 10);
-INSERT INTO ingrid_provider VALUES (95, 'ni_sbv', 'Niedersächsische Landesbehörde für Straßenbau und Verkehr', 'http://www.strassenbau.niedersachsen.de/', 11, 10);
-INSERT INTO ingrid_provider VALUES (96, 'ni_nna', 'Alfred Toepfer Akademie für Naturschutz', 'http://www.nna.niedersachsen.de/', 12, 10);
-INSERT INTO ingrid_provider VALUES (97, 'ni_gll', 'Behörden für Geoinformation, Landentwicklung und Liegenschaften Niedersachsen', 'http://www.gll.niedersachsen.de', 13, 10);
+INSERT INTO ingrid_provider VALUES (82, 'mv_iow', 'Institut fÃ¼r Ostseeforschung WarnemÃ¼nde', 'http://www.io-warnemuende.de/', 11, 9);
+INSERT INTO ingrid_provider VALUES (83, 'mv_unigr', 'UniversitÃ¤t Greifswald', 'http://www.uni-greifswald.de/', 12, 9);
+INSERT INTO ingrid_provider VALUES (84, 'mv_uniro', 'UniversitÃ¤t Rostock', 'http://www.uni-rostock.de/', 13, 9);
+INSERT INTO ingrid_provider VALUES (85, 'ni_mu', 'NiedersÃ¤chsisches Ministerium fÃ¼r Umwelt und Klimaschutz', 'http://www.mu.niedersachsen.de/', 1, 10);
+INSERT INTO ingrid_provider VALUES (86, 'ni_mw', 'NiedersÃ¤chsisches Ministerium fÃ¼r Wirtschaft, Arbeit und Verkehr', 'http://www.mw.niedersachsen.de/', 2, 10);
+INSERT INTO ingrid_provider VALUES (87, 'ni_ms', 'NiedersÃ¤chsisches Ministerium fÃ¼r Soziales, Frauen, Familie, Gesundheit und Integration', 'http://www.ms.niedersachsen.de/', 3, 10);
+INSERT INTO ingrid_provider VALUES (88, 'ni_mi', 'NiedersÃ¤chsisches Ministerium fÃ¼r Inneres und Sport', 'http://www.mi.niedersachsen.de/', 4, 10);
+INSERT INTO ingrid_provider VALUES (89, 'ni_ml', 'NiedersÃ¤chsisches Ministerium fÃ¼r ErnÃ¤hrung, Landwirtschaft, Verbraucherschutz und Landesentwicklung', 'http://www.ml.niedersachsen.de/', 5, 10);
+INSERT INTO ingrid_provider VALUES (90, 'ni_nlwkn', 'NiedersÃ¤chsischer Landesbetrieb fÃ¼r Wasserwirtschaft, KÃ¼sten- und Naturschutz', 'http://www.nlwkn.niedersachsen.de/', 6, 10);
+INSERT INTO ingrid_provider VALUES (91, 'ni_lbeg', 'NiedersÃ¤chsisches Landesamt fÃ¼r Bergbau, Energie und Geologie', 'http://www.lbeg.niedersachsen.de', 7, 10);
+INSERT INTO ingrid_provider VALUES (93, 'ni_laves', 'NiedersÃ¤chsisches Landesamt fÃ¼r Verbraucherschutz und Lebensmittelsicherheit', 'http://www.laves.niedersachsen.de/', 9, 10);
+INSERT INTO ingrid_provider VALUES (94, 'ni_lga', 'NiedersÃ¤chsisches Landesgesundheitsamt', 'http://www.nlga.niedersachsen.de/', 10, 10);
+INSERT INTO ingrid_provider VALUES (95, 'ni_sbv', 'NiedersÃ¤chsische LandesbehÃ¶rde fÃ¼r StraÃŸenbau und Verkehr', 'http://www.strassenbau.niedersachsen.de/', 11, 10);
+INSERT INTO ingrid_provider VALUES (96, 'ni_nna', 'Alfred Toepfer Akademie fÃ¼r Naturschutz', 'http://www.nna.niedersachsen.de/', 12, 10);
+INSERT INTO ingrid_provider VALUES (97, 'ni_gll', 'BehÃ¶rden fÃ¼r Geoinformation, Landentwicklung und Liegenschaften Niedersachsen', 'http://www.gll.niedersachsen.de', 13, 10);
 INSERT INTO ingrid_provider VALUES (99, 'ni_lgn', 'Landesvermessung und Geobasisinformation Niedersachsen', 'http://www.lgn.niedersachsen.de/', 15, 10);
 INSERT INTO ingrid_provider VALUES (100, 'ni_lwkh', 'Landwirtschaftskammer Niedersachsen', 'http://www.lwk-niedersachsen.de/', 16, 10);
-INSERT INTO ingrid_provider VALUES (103, 'ni_gaa', 'Niedersächsische Gewerbeaufsicht', 'http://www.gewerbeaufsicht.niedersachsen.de', 19, 10);
-INSERT INTO ingrid_provider VALUES (105, 'nw_munlv', 'Ministerium für Umwelt und Naturschutz, Landwirtschaft und Verbraucherschutz des Landes Nordrhein-Westfalen', 'http://www.umwelt.nrw.de/', 1, 11);
-INSERT INTO ingrid_provider VALUES (176, 'mv_im', 'Ministerium für Inneres und Sport', 'http://www.mv-regierung.de/im/', 14, 9);
-INSERT INTO ingrid_provider VALUES (177, 'mv_am', 'Ministerium für Wirtschaft, Bau und Tourismus', 'http://www.wm.mv-regierung.de/index.htm', 15, 9);
+INSERT INTO ingrid_provider VALUES (103, 'ni_gaa', 'NiedersÃ¤chsische Gewerbeaufsicht', 'http://www.gewerbeaufsicht.niedersachsen.de', 19, 10);
+INSERT INTO ingrid_provider VALUES (105, 'nw_munlv', 'Ministerium fÃ¼r Umwelt und Naturschutz, Landwirtschaft und Verbraucherschutz des Landes Nordrhein-Westfalen', 'http://www.umwelt.nrw.de/', 1, 11);
+INSERT INTO ingrid_provider VALUES (176, 'mv_im', 'Ministerium fÃ¼r Inneres und Sport', 'http://www.mv-regierung.de/im/', 14, 9);
+INSERT INTO ingrid_provider VALUES (177, 'mv_am', 'Ministerium fÃ¼r Wirtschaft, Bau und Tourismus', 'http://www.wm.mv-regierung.de/index.htm', 15, 9);
 INSERT INTO ingrid_provider VALUES (108, 'nw_gd', 'Geologischer Dienst Nordrhein-Westfalen', 'http://www.gd.nrw.de/', 4, 11);
-INSERT INTO ingrid_provider VALUES (111, 'nw_ldvst', 'Landesamt für Datenverarbeitung und Statistik Nordrhein-Westfalen', 'http://www.ugrdl.de/index.html', 7, 11);
-INSERT INTO ingrid_provider VALUES (112, 'rp_mufv', 'Ministerium für Umwelt, Landwirtschaft, Ernährung, Weinbau und Forsten Rheinland-Pfalz (MULEWF) ', 'http://www.mulewf.rlp.de/', 1, 12);
+INSERT INTO ingrid_provider VALUES (111, 'nw_ldvst', 'Landesamt fÃ¼r Datenverarbeitung und Statistik Nordrhein-Westfalen', 'http://www.ugrdl.de/index.html', 7, 11);
+INSERT INTO ingrid_provider VALUES (112, 'rp_mufv', 'Ministerium fÃ¼r Umwelt, Landwirtschaft, ErnÃ¤hrung, Weinbau und Forsten Rheinland-Pfalz (MULEWF) ', 'http://www.mulewf.rlp.de/', 1, 12);
 INSERT INTO ingrid_provider VALUES (115, 'rp_forst', 'Landesforsten Rheinland-Pfalz', 'http://www.wald-rlp.de/', 2, 12);
-INSERT INTO ingrid_provider VALUES (116, 'rp_lzu', 'Landeszentrale für Umweltaufklärung Rheinland-Pfalz', 'http://www.umdenken.de/', 3, 12);
-INSERT INTO ingrid_provider VALUES (117, 'sl_mfu', 'Ministerium für Umwelt und Verbraucherschutz des Saarland', 'http://www.saarland.de/ministerium_umwelt_verbraucherschutz.htm', 1, 13);
-INSERT INTO ingrid_provider VALUES (118, 'sl_lua', 'Landesamt für Umwelt- und Arbeitsschutz des Saarlandes', 'http://www.lua.saarland.de/', 2, 13);
-INSERT INTO ingrid_provider VALUES (119, 'sn_smul', 'Sächsisches Staatsministerium für Umwelt und Landwirtschaft', 'http://www.smul.sachsen.de/smul/index.html', 0, 14);
+INSERT INTO ingrid_provider VALUES (116, 'rp_lzu', 'Landeszentrale fÃ¼r UmweltaufklÃ¤rung Rheinland-Pfalz', 'http://www.umdenken.de/', 3, 12);
+INSERT INTO ingrid_provider VALUES (117, 'sl_mfu', 'Ministerium fÃ¼r Umwelt und Verbraucherschutz des Saarland', 'http://www.saarland.de/ministerium_umwelt_verbraucherschutz.htm', 1, 13);
+INSERT INTO ingrid_provider VALUES (118, 'sl_lua', 'Landesamt fÃ¼r Umwelt- und Arbeitsschutz des Saarlandes', 'http://www.lua.saarland.de/', 2, 13);
+INSERT INTO ingrid_provider VALUES (119, 'sn_smul', 'SÃ¤chsisches Staatsministerium fÃ¼r Umwelt und Landwirtschaft', 'http://www.smul.sachsen.de/smul/index.html', 0, 14);
 INSERT INTO ingrid_provider VALUES (263, 'bu_sgd', 'Staatliche Geologische Dienste Deutschlands', 'http://www.infogeo.de', 0, 1);
-INSERT INTO ingrid_provider VALUES (121, 'sn_lanu', 'Sächsische Landesstiftung Natur und Umwelt', 'http://www.lanu.de/templates/intro.php', 1, 14);
-INSERT INTO ingrid_provider VALUES (122, 'st_mlu', 'Ministerium für Landwirtschaft und Umwelt Sachsen-Anhalt (MLU)', 'http://www.mlu.sachsen-anhalt.de', 1, 15);
-INSERT INTO ingrid_provider VALUES (496, 'rp_luwg', 'Landesamt für Umwelt, Wasserwirtschaft und Gewerbeaufsicht Rheinland-Pfalz', 'http://www.luwg.rlp.de/', 0, 12);
-INSERT INTO ingrid_provider VALUES (123, 'st_lau', 'Landesamt für Umweltschutz Sachsen-Anhalt (LAU)', 'http://www.sachsen-anhalt.de/LPSA/index.php?id=lau', 7, 15);
-INSERT INTO ingrid_provider VALUES (124, 'st_lue', 'Luftüberwachungssystem Sachsen-Anhalt (LÜSA)', 'http://www.mu.sachsen-anhalt.de/lau/luesa/', 22, 15);
-INSERT INTO ingrid_provider VALUES (125, 'st_unimd', 'Otto-von-Guericke Universität Magdeburg', 'http://www.uni-magdeburg.de/', 23, 15);
-INSERT INTO ingrid_provider VALUES (126, 'sh_munl', 'Ministerium für Landwirtschaft, Umwelt und ländliche Räume des Landes Schleswig-Holstein', 'http://www.schleswig-holstein.de/MLUR/DE/MLUR__node.html', 1, 16);
-INSERT INTO ingrid_provider VALUES (127, 'sh_lanu', 'Landesamt für Landwirtschaft, Umwelt und ländliche Räume Schleswig-Holstein', 'http://www.schleswig-holstein.de/LLUR/DE/LLUR__node.html', 2, 16);
-INSERT INTO ingrid_provider VALUES (128, 'sh_luesh', 'Lufthygienische Überwachung Schleswig-Holstein', 'http://www.umwelt.schleswig-holstein.de/?196', 3, 16);
-INSERT INTO ingrid_provider VALUES (129, 'sh_kfue', 'Kernreaktorfernüberwachung Schleswig-Holstein', 'http://www.kfue-sh.de/', 4, 16);
-INSERT INTO ingrid_provider VALUES (130, 'sh_umweltaka', 'Bildungszentrum für Natur, Umwelt und ländliche Räume der Landes Schleswig-Holstein', 'http://www.umweltakademie-sh.de/', 5, 16);
+INSERT INTO ingrid_provider VALUES (121, 'sn_lanu', 'SÃ¤chsische Landesstiftung Natur und Umwelt', 'http://www.lanu.de/templates/intro.php', 1, 14);
+INSERT INTO ingrid_provider VALUES (122, 'st_mlu', 'Ministerium fÃ¼r Landwirtschaft und Umwelt Sachsen-Anhalt (MLU)', 'http://www.mlu.sachsen-anhalt.de', 1, 15);
+INSERT INTO ingrid_provider VALUES (496, 'rp_luwg', 'Landesamt fÃ¼r Umwelt, Wasserwirtschaft und Gewerbeaufsicht Rheinland-Pfalz', 'http://www.luwg.rlp.de/', 0, 12);
+INSERT INTO ingrid_provider VALUES (123, 'st_lau', 'Landesamt fÃ¼r Umweltschutz Sachsen-Anhalt (LAU)', 'http://www.sachsen-anhalt.de/LPSA/index.php?id=lau', 7, 15);
+INSERT INTO ingrid_provider VALUES (124, 'st_lue', 'LuftÃ¼berwachungssystem Sachsen-Anhalt (LÃœSA)', 'http://www.mu.sachsen-anhalt.de/lau/luesa/', 22, 15);
+INSERT INTO ingrid_provider VALUES (125, 'st_unimd', 'Otto-von-Guericke UniversitÃ¤t Magdeburg', 'http://www.uni-magdeburg.de/', 23, 15);
+INSERT INTO ingrid_provider VALUES (126, 'sh_munl', 'Ministerium fÃ¼r Landwirtschaft, Umwelt und lÃ¤ndliche RÃ¤ume des Landes Schleswig-Holstein', 'http://www.schleswig-holstein.de/MLUR/DE/MLUR__node.html', 1, 16);
+INSERT INTO ingrid_provider VALUES (127, 'sh_lanu', 'Landesamt fÃ¼r Landwirtschaft, Umwelt und lÃ¤ndliche RÃ¤ume Schleswig-Holstein', 'http://www.schleswig-holstein.de/LLUR/DE/LLUR__node.html', 2, 16);
+INSERT INTO ingrid_provider VALUES (128, 'sh_luesh', 'Lufthygienische Ãœberwachung Schleswig-Holstein', 'http://www.umwelt.schleswig-holstein.de/?196', 3, 16);
+INSERT INTO ingrid_provider VALUES (129, 'sh_kfue', 'KernreaktorfernÃ¼berwachung Schleswig-Holstein', 'http://www.kfue-sh.de/', 4, 16);
+INSERT INTO ingrid_provider VALUES (130, 'sh_umweltaka', 'Bildungszentrum fÃ¼r Natur, Umwelt und lÃ¤ndliche RÃ¤ume der Landes Schleswig-Holstein', 'http://www.umweltakademie-sh.de/', 5, 16);
 INSERT INTO ingrid_provider VALUES (131, 'sh_npa', 'Nationalpark Schleswig-Holsteinisches Wattenmeer', 'http://www.nationalpark-wattenmeer.de/sh', 6, 16);
-INSERT INTO ingrid_provider VALUES (132, 'th_tmlnu', 'Thüringer Ministerium für Landwirtschaft, Forsten, Umwelt und Naturschutz', 'http://www.thueringen.de/th8/tmlfun/', 1, 17);
-INSERT INTO ingrid_provider VALUES (133, 'th_tlug', 'Thüringer Landesanstalt für Umwelt und Geologie', 'http://www.tlug-jena.de/de/tlug/', 2, 17);
+INSERT INTO ingrid_provider VALUES (132, 'th_tmlnu', 'ThÃ¼ringer Ministerium fÃ¼r Landwirtschaft, Forsten, Umwelt und Naturschutz', 'http://www.thueringen.de/th8/tmlfun/', 1, 17);
+INSERT INTO ingrid_provider VALUES (133, 'th_tlug', 'ThÃ¼ringer Landesanstalt fÃ¼r Umwelt und Geologie', 'http://www.tlug-jena.de/de/tlug/', 2, 17);
 INSERT INTO ingrid_provider VALUES (138, 'rp_lua', 'Landesuntersuchungsamt Rheinland-Pfalz', 'http://www.lua.rlp.de/', 5, 12);
-INSERT INTO ingrid_provider VALUES (139, 'bw_saa', 'SAA Sonderabfallagentur Baden-Württemberg', 'http://www.saa.de/', 13, 2);
-INSERT INTO ingrid_provider VALUES (140, 'bw_rp', 'Regierungspräsidien Baden-Württemberg', 'http://www.rp.baden-wuerttemberg.de/', 14, 2);
-INSERT INTO ingrid_provider VALUES (141, 'bw_rps', 'Regierungspräsidium Stuttgart', 'http://www.rp.baden-wuerttemberg.de/servlet/PB/menu/1007480/index.html', 15, 2);
-INSERT INTO ingrid_provider VALUES (142, 'bu_lai', 'Bund/Länder Arbeitsgemeinschaft für Immissionsschutz - LAI', 'http://www.lai-immissionsschutz.de', 39, 1);
+INSERT INTO ingrid_provider VALUES (139, 'bw_saa', 'SAA Sonderabfallagentur Baden-WÃ¼rttemberg', 'http://www.saa.de/', 13, 2);
+INSERT INTO ingrid_provider VALUES (140, 'bw_rp', 'RegierungsprÃ¤sidien Baden-WÃ¼rttemberg', 'http://www.rp.baden-wuerttemberg.de/', 14, 2);
+INSERT INTO ingrid_provider VALUES (141, 'bw_rps', 'RegierungsprÃ¤sidium Stuttgart', 'http://www.rp.baden-wuerttemberg.de/servlet/PB/menu/1007480/index.html', 15, 2);
+INSERT INTO ingrid_provider VALUES (142, 'bu_lai', 'Bund/LÃ¤nder Arbeitsgemeinschaft fÃ¼r Immissionsschutz - LAI', 'http://www.lai-immissionsschutz.de', 39, 1);
 INSERT INTO ingrid_provider VALUES (369, 'hb_gi', 'GeoInformation Bremen', 'http://www.geo.bremen.de', 0, 6);
-INSERT INTO ingrid_provider VALUES (145, 'he_hvbg', 'Hessische Verwaltung für Bodenmanagement und Geoinformation', 'http://www.hvbg.hessen.de/', 5, 8);
+INSERT INTO ingrid_provider VALUES (145, 'he_hvbg', 'Hessische Verwaltung fÃ¼r Bodenmanagement und Geoinformation', 'http://www.hvbg.hessen.de/', 5, 8);
 INSERT INTO ingrid_provider VALUES (150, 'sn_lfp', 'Staatsbetrieb Sachsenforst', 'http://www.sachsenforst.de', 5, 14);
-INSERT INTO ingrid_provider VALUES (151, 'sn_np-saechsische-schweiz', 'Nationalpark Sächsische Schweiz', 'http://www.nationalpark-saechsische-schweiz.de/startseite/index.php', 6, 14);
+INSERT INTO ingrid_provider VALUES (151, 'sn_np-saechsische-schweiz', 'Nationalpark SÃ¤chsische Schweiz', 'http://www.nationalpark-saechsische-schweiz.de/startseite/index.php', 6, 14);
 INSERT INTO ingrid_provider VALUES (152, 'sn_ltv', 'Landestalsperrenverwaltung Sachsen', 'http://www.smul.sachsen.de/de/wu/organisation/staatsbetriebe/ltv/index_start.html', 7, 14);
-INSERT INTO ingrid_provider VALUES (153, 'sn_brv', 'Biosphärenreservatsverwaltung Oberlausitzer Heide- und Teichlandschaft', 'http://www.biosphaerenreservat-oberlausitz.de/index.html', 8, 14);
+INSERT INTO ingrid_provider VALUES (153, 'sn_brv', 'BiosphÃ¤renreservatsverwaltung Oberlausitzer Heide- und Teichlandschaft', 'http://www.biosphaerenreservat-oberlausitz.de/index.html', 8, 14);
 INSERT INTO ingrid_provider VALUES (154, 'sn_statistik', 'Statistisches Landesamt Sachsen', 'http://www.statistik.sachsen.de/', 26, 14);
-INSERT INTO ingrid_provider VALUES (155, 'st_ms', 'Ministerium für Arbeit und Soziales Sachsen-Anhalt (MS) ', 'http://www.ms.sachsen-anhalt.de', 2, 15);
-INSERT INTO ingrid_provider VALUES (156, 'st_mw', 'Ministerium für Wissenschaft und Wirtschaft  Sachsen-Anhalt (MW)', 'http://www.mw.sachsen-anhalt.de', 3, 15);
-INSERT INTO ingrid_provider VALUES (157, 'st_mlv', 'Ministerium für Landesentwicklung und Verkehr (MLV)', 'http://www.mlv.sachsen-anhalt.de', 4, 15);
+INSERT INTO ingrid_provider VALUES (155, 'st_ms', 'Ministerium fÃ¼r Arbeit und Soziales Sachsen-Anhalt (MS) ', 'http://www.ms.sachsen-anhalt.de', 2, 15);
+INSERT INTO ingrid_provider VALUES (156, 'st_mw', 'Ministerium fÃ¼r Wissenschaft und Wirtschaft  Sachsen-Anhalt (MW)', 'http://www.mw.sachsen-anhalt.de', 3, 15);
+INSERT INTO ingrid_provider VALUES (157, 'st_mlv', 'Ministerium fÃ¼r Landesentwicklung und Verkehr (MLV)', 'http://www.mlv.sachsen-anhalt.de', 4, 15);
 INSERT INTO ingrid_provider VALUES (158, 'st_mi', 'Ministerium des Innern Sachsen-Anhalt (MI)', 'http://www.mi.sachsen-anhalt.de', 5, 15);
 INSERT INTO ingrid_provider VALUES (159, 'st_mj', 'Ministerium der Justiz und Gleichstellung Sachsen-Anhalt (MJ)', 'http://www.mj.sachsen-anhalt.de', 6, 15);
-INSERT INTO ingrid_provider VALUES (160, 'st_lvermgeo', 'Landesamt für Vermessung und Geoinformationen (LVermGeo)', 'http://www.lvermgeo.sachsen-anhalt.de', 9, 15);
+INSERT INTO ingrid_provider VALUES (160, 'st_lvermgeo', 'Landesamt fÃ¼r Vermessung und Geoinformationen (LVermGeo)', 'http://www.lvermgeo.sachsen-anhalt.de', 9, 15);
 INSERT INTO ingrid_provider VALUES (161, 'st_stala', 'Statistisches Landesamt Sachsen-Anhalt (StaLa)', 'http://www.stala.sachsen-anhalt.de', 10, 15);
-INSERT INTO ingrid_provider VALUES (162, 'st_lav', 'Landesamt für Verbraucherschutz Sachsen-Anhalt (LAV)', 'http://www.verbraucherschutz.sachsen-anhalt.de', 11, 15);
-INSERT INTO ingrid_provider VALUES (163, 'st_lfa', 'Landesamt für Denkmalpflege und Archäologie (LDA)', 'http://www.archlsa.de', 12, 15);
-INSERT INTO ingrid_provider VALUES (164, 'st_laf', 'Landesanstalt für Altlastenfreistellung Sachsen-Anhalt (LAF)', 'http://www.laf-lsa.de', 13, 15);
-INSERT INTO ingrid_provider VALUES (165, 'st_llfg', 'Landesanstalt für Landwirtschaft, Forsten und Gartenbau Sachsen-Anhalt (LLFG)', 'http://www.llg-lsa.de', 14, 15);
-INSERT INTO ingrid_provider VALUES (166, 'st_lhw', 'Landesbetrieb für Hochwasserschutz und Wasserwirtschaft Sachsen-Anhalt (LHW)', 'http://www.sachsen-anhalt.de/LPSA/index.php?id=13427', 15, 15);
+INSERT INTO ingrid_provider VALUES (162, 'st_lav', 'Landesamt fÃ¼r Verbraucherschutz Sachsen-Anhalt (LAV)', 'http://www.verbraucherschutz.sachsen-anhalt.de', 11, 15);
+INSERT INTO ingrid_provider VALUES (163, 'st_lfa', 'Landesamt fÃ¼r Denkmalpflege und ArchÃ¤ologie (LDA)', 'http://www.archlsa.de', 12, 15);
+INSERT INTO ingrid_provider VALUES (164, 'st_laf', 'Landesanstalt fÃ¼r Altlastenfreistellung Sachsen-Anhalt (LAF)', 'http://www.laf-lsa.de', 13, 15);
+INSERT INTO ingrid_provider VALUES (165, 'st_llfg', 'Landesanstalt fÃ¼r Landwirtschaft, Forsten und Gartenbau Sachsen-Anhalt (LLFG)', 'http://www.llg-lsa.de', 14, 15);
+INSERT INTO ingrid_provider VALUES (166, 'st_lhw', 'Landesbetrieb fÃ¼r Hochwasserschutz und Wasserwirtschaft Sachsen-Anhalt (LHW)', 'http://www.sachsen-anhalt.de/LPSA/index.php?id=13427', 15, 15);
 INSERT INTO ingrid_provider VALUES (167, 'st_talsperren', 'Talsperrenbetrieb Sachsen-Anhalt (TSB-LSA)', 'http://www.talsperren-lsa.de', 16, 15);
 INSERT INTO ingrid_provider VALUES (168, 'st_landesforstbetrieb', 'Landesforstbetrieb Sachsen-Anhalt (LFB)', 'http://www.landesforstbetrieb.sachsen-anhalt.de', 17, 15);
 INSERT INTO ingrid_provider VALUES (169, 'st_lvwa', 'Landesverwaltungsamt Sachsen-Anhalt (LVwA)', 'http://www.landesverwaltungsamt.sachsen-anhalt.de', 18, 15);
-INSERT INTO ingrid_provider VALUES (170, 'st_bioreskarstsuedharz', 'Biosphärenreservat Karstlandschaft Südharz', 'http://www.bioreskarstsuedharz.de', 19, 15);
-INSERT INTO ingrid_provider VALUES (171, 'st_biosphaerenreservatmittlereelbe', 'Biosphärenreservat Mittelelbe/Flusslandschaft Elbe', 'http://www.biosphaerenreservatmittlereelbe.de', 20, 15);
+INSERT INTO ingrid_provider VALUES (170, 'st_bioreskarstsuedharz', 'BiosphÃ¤renreservat Karstlandschaft SÃ¼dharz', 'http://www.bioreskarstsuedharz.de', 19, 15);
+INSERT INTO ingrid_provider VALUES (171, 'st_biosphaerenreservatmittlereelbe', 'BiosphÃ¤renreservat Mittelelbe/Flusslandschaft Elbe', 'http://www.biosphaerenreservatmittlereelbe.de', 20, 15);
 INSERT INTO ingrid_provider VALUES (172, 'st_nationalpark-harz', 'Nationalparkverwaltung Harz', 'http://www.nationalpark-harz.de', 21, 15);
-INSERT INTO ingrid_provider VALUES (173, 'be_senges', 'Senatsverwaltung für Gesundheit, Umwelt und Verbraucherschutz Berlin', 'http://www.berlin.de/sen/umwelt/index.shtml', 3, 4);
-INSERT INTO ingrid_provider VALUES (174, 'nw_lanuv', 'Landesamt für Natur, Umwelt und Verbraucherschutz NRW  (LANUV)', 'http://www.lanuv.nrw.de/', 8, 11);
+INSERT INTO ingrid_provider VALUES (173, 'be_senges', 'Senatsverwaltung fÃ¼r Gesundheit, Umwelt und Verbraucherschutz Berlin', 'http://www.berlin.de/sen/umwelt/index.shtml', 3, 4);
+INSERT INTO ingrid_provider VALUES (174, 'nw_lanuv', 'Landesamt fÃ¼r Natur, Umwelt und Verbraucherschutz NRW  (LANUV)', 'http://www.lanuv.nrw.de/', 8, 11);
 INSERT INTO ingrid_provider VALUES (202, 'bu_bdj', 'Bundesministerium der Justiz', 'http://www.bmj.bund.de', 0, 1);
 INSERT INTO ingrid_provider VALUES (178, 'mv_jm', 'Justizministerium Mecklenburg-Vorpommern', 'http://www.jm.mv-regierung.de/', 16, 9);
-INSERT INTO ingrid_provider VALUES (179, 'mv_bm', 'Ministerium für Bildung, Wissenschaft und Kultur', 'http://www.bm.regierung-mv.de', 17, 9);
-INSERT INTO ingrid_provider VALUES (180, 'mv_vm', 'Ministerium für Energie, Infrastruktur und Landesentwicklung', 'http://www.mv-regierung.de/vm/', 18, 9);
+INSERT INTO ingrid_provider VALUES (179, 'mv_bm', 'Ministerium fÃ¼r Bildung, Wissenschaft und Kultur', 'http://www.bm.regierung-mv.de', 17, 9);
+INSERT INTO ingrid_provider VALUES (180, 'mv_vm', 'Ministerium fÃ¼r Energie, Infrastruktur und Landesentwicklung', 'http://www.mv-regierung.de/vm/', 18, 9);
 INSERT INTO ingrid_provider VALUES (181, 'mv_sta', 'Statistisches Amt Mecklenburg-Vorpommern', 'http://www.statistik-mv.de/', 19, 9);
-INSERT INTO ingrid_provider VALUES (511, 'sh_masg', 'Ministerium für Arbeit, Soziales und Gesundheit', 'http://www.schleswig-holstein.de/MASG/DE/MASG_node.html', 0, 16);
-INSERT INTO ingrid_provider VALUES (184, 'mv_stnb', 'Staatliches Amt für Landwirtschaft und Umwelt Mecklenburgische Seenplatte (StALU MS)', 'http://www.mv-regierung.de/staeun/neubrandenburg/', 21, 9);
-INSERT INTO ingrid_provider VALUES (185, 'mv_sthst', 'Staatliches Amt für Landwirtschaft und Umwelt Vorpommern (StALU VP)', 'http://www.mv-regierung.de/staeun/stralsund_n/', 22, 9);
-INSERT INTO ingrid_provider VALUES (186, 'mv_sthro', 'Staatliches Amt für Landwirtschaft und Umwelt Mittleres Mecklenburg (StALU MM)', 'http://www.mv-regierung.de/staeun/rostock/', 23, 9);
-INSERT INTO ingrid_provider VALUES (187, 'mv_stsn', 'Staatliches Amt für Landwirtschaft und Umwelt Westmecklenburg (StALU WM)', 'http://www.mv-regierung.de/staeun/schwerin/', 24, 9);
-INSERT INTO ingrid_provider VALUES (188, 'mv_lallf', 'Landesamt für Landwirtschaft, Lebensmittelsicherheit und Fischerei', 'http://www.lallf.de/', 25, 9);
-INSERT INTO ingrid_provider VALUES (189, 'mv_afrl', 'Ämter für Raumordnung und Landesplanung Mecklenburg-Vorpommern', 'http://cms.mvnet.de/cms2/AFRL_prod/AFRL/index.jsp', 26, 9);
-INSERT INTO ingrid_provider VALUES (196, 'bu_fli', 'Friedrich-Löffler-Institut', 'http://www.fli.bund.de', 42, 1);
-INSERT INTO ingrid_provider VALUES (197, 'bu_nrat', 'Rat für Nachhaltige Entwicklung', 'http://www.nachhaltigkeitsrat.de', 43, 1);
-INSERT INTO ingrid_provider VALUES (195, 'ni_fho', 'Fachhochschule Osnabrück', 'http://www.hs-osnabrueck.de/', 22, 10);
+INSERT INTO ingrid_provider VALUES (511, 'sh_masg', 'Ministerium fÃ¼r Arbeit, Soziales und Gesundheit', 'http://www.schleswig-holstein.de/MASG/DE/MASG_node.html', 0, 16);
+INSERT INTO ingrid_provider VALUES (184, 'mv_stnb', 'Staatliches Amt fÃ¼r Landwirtschaft und Umwelt Mecklenburgische Seenplatte (StALU MS)', 'http://www.mv-regierung.de/staeun/neubrandenburg/', 21, 9);
+INSERT INTO ingrid_provider VALUES (185, 'mv_sthst', 'Staatliches Amt fÃ¼r Landwirtschaft und Umwelt Vorpommern (StALU VP)', 'http://www.mv-regierung.de/staeun/stralsund_n/', 22, 9);
+INSERT INTO ingrid_provider VALUES (186, 'mv_sthro', 'Staatliches Amt fÃ¼r Landwirtschaft und Umwelt Mittleres Mecklenburg (StALU MM)', 'http://www.mv-regierung.de/staeun/rostock/', 23, 9);
+INSERT INTO ingrid_provider VALUES (187, 'mv_stsn', 'Staatliches Amt fÃ¼r Landwirtschaft und Umwelt Westmecklenburg (StALU WM)', 'http://www.mv-regierung.de/staeun/schwerin/', 24, 9);
+INSERT INTO ingrid_provider VALUES (188, 'mv_lallf', 'Landesamt fÃ¼r Landwirtschaft, Lebensmittelsicherheit und Fischerei', 'http://www.lallf.de/', 25, 9);
+INSERT INTO ingrid_provider VALUES (189, 'mv_afrl', 'Ã„mter fÃ¼r Raumordnung und Landesplanung Mecklenburg-Vorpommern', 'http://cms.mvnet.de/cms2/AFRL_prod/AFRL/index.jsp', 26, 9);
+INSERT INTO ingrid_provider VALUES (196, 'bu_fli', 'Friedrich-LÃ¶ffler-Institut', 'http://www.fli.bund.de', 42, 1);
+INSERT INTO ingrid_provider VALUES (197, 'bu_nrat', 'Rat fÃ¼r Nachhaltige Entwicklung', 'http://www.nachhaltigkeitsrat.de', 43, 1);
+INSERT INTO ingrid_provider VALUES (195, 'ni_fho', 'Fachhochschule OsnabrÃ¼ck', 'http://www.hs-osnabrueck.de/', 22, 10);
 INSERT INTO ingrid_provider VALUES (194, 'be_npb', 'Naturpark Barnim', 'http://www.np-barnim.de/', 4, 4);
-INSERT INTO ingrid_provider VALUES (198, 'bu_baw', 'Bundesanstalt für Wasserbau', 'http://www.baw.de/', 0, 1);
-INSERT INTO ingrid_provider VALUES (199, 'by_lumsch', 'Bayerisches Landesamt für Umwelt', 'http://www.lfu.bayern.de', 9, 3);
+INSERT INTO ingrid_provider VALUES (198, 'bu_baw', 'Bundesanstalt fÃ¼r Wasserbau', 'http://www.baw.de/', 0, 1);
+INSERT INTO ingrid_provider VALUES (199, 'by_lumsch', 'Bayerisches Landesamt fÃ¼r Umwelt', 'http://www.lfu.bayern.de', 9, 3);
 INSERT INTO ingrid_provider VALUES (201, 'sn_lus', 'Landesuntersuchungsanstalt Sachsen', 'http://www.lua.sachsen.de/', 16, 14);
 INSERT INTO ingrid_provider VALUES (204, 'by_sdj', 'Bayerisches Staatsministerium der Justiz', 'http://www.justiz.bayern.de/', 0, 3);
 INSERT INTO ingrid_provider VALUES (494, 'bu_dena', 'Deutsche Energie-Agentur GmbH (dena)', 'http://www.dena.de/', 0, 1);
 INSERT INTO ingrid_provider VALUES (206, 'hh_bserv', 'Hamburger Gerichte', 'http://justiz.hamburg.de/gerichte/', 0, 7);
-INSERT INTO ingrid_provider VALUES (207, 'hh_justiz', 'Behörde für Justiz und Gleichstellung', 'http://www.hamburg.de/justizbehoerde/', 0, 7);
+INSERT INTO ingrid_provider VALUES (207, 'hh_justiz', 'BehÃ¶rde fÃ¼r Justiz und Gleichstellung', 'http://www.hamburg.de/justizbehoerde/', 0, 7);
 INSERT INTO ingrid_provider VALUES (208, 'he_stk', 'Hessische Staatskanzlei', 'http://www.stk.hessen.de/', 0, 8);
-INSERT INTO ingrid_provider VALUES (209, 'ni_stk', 'Niedersächsische Staatskanzlei', 'http://www.stk.niedersachsen.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (209, 'ni_stk', 'NiedersÃ¤chsische Staatskanzlei', 'http://www.stk.niedersachsen.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (210, 'nw_im', 'Innenministerium des Landes Nordrhein-Westfalen', 'http://www.im.nrw.de/', 0, 11);
 INSERT INTO ingrid_provider VALUES (212, 'sl_justiz', 'Ministerium der Justiz des Saarlandes', 'http://www.saarland.de/ministerium_justiz.htm', 0, 13);
 INSERT INTO ingrid_provider VALUES (370, 'bu_dbu', 'Deutsche Bundesstiftung Umwelt', 'http://www.dbu.de/', 0, 1);
 INSERT INTO ingrid_provider VALUES (214, 'sh_lreg', 'Landesregierung Schleswig-Holstein', 'http://www.schleswig-holstein.de', 0, 16);
-INSERT INTO ingrid_provider VALUES (215, 'th_geo', 'Thüringer Landesamt für Vermessung und Geoinformation', 'http://www.thueringen.de/th9/tlvermgeo/index.aspx', 0, 17);
-INSERT INTO ingrid_provider VALUES (216, 'th_justiz', 'Justizministerium des Freistaats Thüringen', 'http://www.thueringen.de/de/justiz/', 0, 17);
+INSERT INTO ingrid_provider VALUES (215, 'th_geo', 'ThÃ¼ringer Landesamt fÃ¼r Vermessung und Geoinformation', 'http://www.thueringen.de/th9/tlvermgeo/index.aspx', 0, 17);
+INSERT INTO ingrid_provider VALUES (216, 'th_justiz', 'Justizministerium des Freistaats ThÃ¼ringen', 'http://www.thueringen.de/de/justiz/', 0, 17);
 INSERT INTO ingrid_provider VALUES (217, 'mv_bergamt', 'Bergamt Mecklenburg-Vorpommern', 'http://www.bergamt-mv.de/', 0, 9);
 INSERT INTO ingrid_provider VALUES (218, 'mv_npjasm', 'Nationalpark Jasmund', 'http://www.nationalpark-vorpommersche-boddenlandschaft.de/jasmund/', 0, 9);
 INSERT INTO ingrid_provider VALUES (219, 'mv_natnat', 'Nationale Naturlandschaften', 'http://www.natur-mv.de/', 0, 9);
-INSERT INTO ingrid_provider VALUES (221, 'bu_bmwi', 'Bundesministerium für Wirtschaft und Technologie', 'http://www.bmwi.de/', 0, 1);
+INSERT INTO ingrid_provider VALUES (221, 'bu_bmwi', 'Bundesministerium fÃ¼r Wirtschaft und Technologie', 'http://www.bmwi.de/', 0, 1);
 INSERT INTO ingrid_provider VALUES (222, 'nw_brarn', 'Bezirksregierung Arnsberg', 'http://www.bezreg-arnsberg.nrw.de/', 0, 11);
 INSERT INTO ingrid_provider VALUES (223, 'nw_brdet', 'Bezirksregierung Detmold', 'http://www.bezreg-detmold.nrw.de', 0, 11);
-INSERT INTO ingrid_provider VALUES (224, 'nw_brdue', 'Bezirksregierung Düsseldorf', 'http://www.bezreg-duesseldorf.nrw.de', 0, 11);
-INSERT INTO ingrid_provider VALUES (225, 'nw_brkoe', 'Bezirksregierung Köln', 'http://www.bezreg-koeln.nrw.de', 0, 11);
-INSERT INTO ingrid_provider VALUES (226, 'nw_brmue', 'Bezirksregierung Münster', 'http://www.bezreg-muenster.nrw.de', 0, 11);
+INSERT INTO ingrid_provider VALUES (224, 'nw_brdue', 'Bezirksregierung DÃ¼sseldorf', 'http://www.bezreg-duesseldorf.nrw.de', 0, 11);
+INSERT INTO ingrid_provider VALUES (225, 'nw_brkoe', 'Bezirksregierung KÃ¶ln', 'http://www.bezreg-koeln.nrw.de', 0, 11);
+INSERT INTO ingrid_provider VALUES (226, 'nw_brmue', 'Bezirksregierung MÃ¼nster', 'http://www.bezreg-muenster.nrw.de', 0, 11);
 INSERT INTO ingrid_provider VALUES (227, 'nw_lbwuh', 'Landesbetrieb Wald und Holz NRW', 'http://www.wald-und-holz.nrw.de', 0, 11);
 INSERT INTO ingrid_provider VALUES (228, 'nw_lwk', 'Landwirtschaftskammer Nordrhein-Westfalen', 'http://www.landwirtschaftskammer.de', 0, 11);
-INSERT INTO ingrid_provider VALUES (229, 'rp_sgds', 'Struktur- und Genehmigungsdirektion Süd Rheinland-Pfalz', 'http://www.sgdsued.rlp.de', 6, 12);
+INSERT INTO ingrid_provider VALUES (229, 'rp_sgds', 'Struktur- und Genehmigungsdirektion SÃ¼d Rheinland-Pfalz', 'http://www.sgdsued.rlp.de', 6, 12);
 INSERT INTO ingrid_provider VALUES (230, 'rp_sgdn', 'Struktur- und Genehmigungsdirektion Nord Rheinland-Pfalz', 'http://www.sgdnord.rlp.de', 7, 12);
-INSERT INTO ingrid_provider VALUES (231, 'rp_mwvlw', 'Ministerium für Wirtschaft, Klimaschutz, Energie und Landesplanung Rheinland-Pfalz', 'http://www.mwkel.rlp.de/Startseite/', 8, 12);
-INSERT INTO ingrid_provider VALUES (232, 'rp_lgb', 'Landesamt für Geologie und Bergbau Rheinland-Pfalz', 'http://www.lgb-rlp.de', 9, 12);
-INSERT INTO ingrid_provider VALUES (233, 'rp_lbm', 'Landesbetrieb Mobilität Rheinland-Pfalz', 'http://www.lbm.rlp.de', 10, 12);
-INSERT INTO ingrid_provider VALUES (234, 'rp_ism', 'Ministerium des Innern, für Sport und Infrastruktur Rheinland-Pfalz', 'http://www.isim.rlp.de/', 11, 12);
-INSERT INTO ingrid_provider VALUES (235, 'rp_lvermgeo', 'Landesamt für Vermessung und Geobasisinformationen Rheinland-Pfalz', 'http://www.lvermgeo.rlp.de', 12, 12);
+INSERT INTO ingrid_provider VALUES (231, 'rp_mwvlw', 'Ministerium fÃ¼r Wirtschaft, Klimaschutz, Energie und Landesplanung Rheinland-Pfalz', 'http://www.mwkel.rlp.de/Startseite/', 8, 12);
+INSERT INTO ingrid_provider VALUES (232, 'rp_lgb', 'Landesamt fÃ¼r Geologie und Bergbau Rheinland-Pfalz', 'http://www.lgb-rlp.de', 9, 12);
+INSERT INTO ingrid_provider VALUES (233, 'rp_lbm', 'Landesbetrieb MobilitÃ¤t Rheinland-Pfalz', 'http://www.lbm.rlp.de', 10, 12);
+INSERT INTO ingrid_provider VALUES (234, 'rp_ism', 'Ministerium des Innern, fÃ¼r Sport und Infrastruktur Rheinland-Pfalz', 'http://www.isim.rlp.de/', 11, 12);
+INSERT INTO ingrid_provider VALUES (235, 'rp_lvermgeo', 'Landesamt fÃ¼r Vermessung und Geobasisinformationen Rheinland-Pfalz', 'http://www.lvermgeo.rlp.de', 12, 12);
 INSERT INTO ingrid_provider VALUES (236, 'rp_sla', 'Statistisches Landesamt Rheinland-Pfalz', 'http://www.statistik.rlp.de', 13, 12);
 INSERT INTO ingrid_provider VALUES (237, 'rp_lfks', 'Feuerwehr- und Katastrophenschutzschule Rheinland-Pfalz', 'http://www.lfks-rlp.de', 14, 12);
-INSERT INTO ingrid_provider VALUES (238, 'rp_masgff', 'Ministerium für Soziales, Arbeit, Gesundheit und Demografie Rheinland-Pfalz', 'http://msagd.rlp.de/', 15, 12);
-INSERT INTO ingrid_provider VALUES (240, 'bu_baua', 'Bundesanstalt für Arbeitsschutz und Arbeitsmedizin', 'http://www.baua.bund.de', 0, 1);
-INSERT INTO ingrid_provider VALUES (241, 'ni_lk_row', 'Landkreis Rotenburg-Wümme', 'http://www.lk-row.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (238, 'rp_masgff', 'Ministerium fÃ¼r Soziales, Arbeit, Gesundheit und Demografie Rheinland-Pfalz', 'http://msagd.rlp.de/', 15, 12);
+INSERT INTO ingrid_provider VALUES (240, 'bu_baua', 'Bundesanstalt fÃ¼r Arbeitsschutz und Arbeitsmedizin', 'http://www.baua.bund.de', 0, 1);
+INSERT INTO ingrid_provider VALUES (241, 'ni_lk_row', 'Landkreis Rotenburg-WÃ¼mme', 'http://www.lk-row.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (242, 'ni_lk_nh', 'Landkreis Northeim', 'http://www.landkreis-northeim.de/', 0, 10);
 INSERT INTO ingrid_provider VALUES (243, 'ni_reg-hann', 'Region Hannover', 'http://www.hannover.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (244, 'ni_lhst-hann', 'Landeshauptstadt Hannover', 'http://www.hannover.de', 0, 10);
@@ -3511,45 +3511,45 @@ INSERT INTO ingrid_provider VALUES (246, 'ni_li', 'Stadt Lingen', 'http://www.li
 INSERT INTO ingrid_provider VALUES (247, 'ni_lk_row_gb', 'Gemeinde Gnarrenburg', 'http://www.gnarrenburg.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (248, 'ni_lk_row_se', 'Samtgemeinde Selsingen', 'http://www.selsingen.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (249, 'ni_lk_row_si', 'Samtgemeinde Sittensen', 'http://www.sittensen.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (250, 'ni_lk_row_rw', 'Stadt Rotenburg (Wümme)', 'http://www.rotenburg-wuemme.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (251, 'ni_lk_row_vi', 'Stadt Visselhövede', 'http://www.visselhoevede.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (250, 'ni_lk_row_rw', 'Stadt Rotenburg (WÃ¼mme)', 'http://www.rotenburg-wuemme.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (251, 'ni_lk_row_vi', 'Stadt VisselhÃ¶vede', 'http://www.visselhoevede.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (252, 'ni_lk_row_so', 'Samtgemeinde Sottrum', 'http://www.sottrum.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (253, 'ni_lk_row_ze', 'Samtgemeinde Zeven', 'http://www.zeven.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (254, 'ni_lk_row_fi', 'Samtgemeinde Fintel', 'http://www.fintel.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (255, 'ni_lk_row_bo', 'Samtgemeinde Bothel', 'http://www.bothel.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (256, 'ni_lk_row_ta', 'Samtgemeinde Tarmstedt', 'http://www.tarmstedt.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (257, 'ni_lk_row_bv', 'Stadt Bremervörde', 'http://www.bremervoerde.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (258, 'ni_lk_row_sc', 'Gemeinde Scheeßel', 'http://www.scheessel.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (259, 'bw_fva', 'Forstliche Versuchs- und Forschungsanstalt Baden-Württemberg', 'http://www.fva-bw.de', 16, 2);
-INSERT INTO ingrid_provider VALUES (260, 'rp_kgstgdi', 'Kompetenz- und Geschäftsstelle GDI Rheinland-Pfalz', 'http://www.geoportal.rlp.de/portal/ueber-uns/kompetenz-und-geschaeftsstelle.html', 0, 12);
+INSERT INTO ingrid_provider VALUES (257, 'ni_lk_row_bv', 'Stadt BremervÃ¶rde', 'http://www.bremervoerde.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (258, 'ni_lk_row_sc', 'Gemeinde ScheeÃŸel', 'http://www.scheessel.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (259, 'bw_fva', 'Forstliche Versuchs- und Forschungsanstalt Baden-WÃ¼rttemberg', 'http://www.fva-bw.de', 16, 2);
+INSERT INTO ingrid_provider VALUES (260, 'rp_kgstgdi', 'Kompetenz- und GeschÃ¤ftsstelle GDI Rheinland-Pfalz', 'http://www.geoportal.rlp.de/portal/ueber-uns/kompetenz-und-geschaeftsstelle.html', 0, 12);
 INSERT INTO ingrid_provider VALUES (562, 'ni_st_rinteln', 'Stadt Rinteln', 'http://www.rinteln.de/', 0, 10);
-INSERT INTO ingrid_provider VALUES (262, 'sn_lfulg', 'Sächsisches Landesamt für Umwelt, Landwirtschaft und Geologie', 'http://www.umwelt.sachsen.de/lfulg/', 3, 14);
+INSERT INTO ingrid_provider VALUES (262, 'sn_lfulg', 'SÃ¤chsisches Landesamt fÃ¼r Umwelt, Landwirtschaft und Geologie', 'http://www.umwelt.sachsen.de/lfulg/', 3, 14);
 INSERT INTO ingrid_provider VALUES (264, 'ni_st_bu', 'Stadt Buchholz i. d. N.', 'http://www.buchholz.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (265, 'ni_lk_ue', 'Landkreis Uelzen', 'http://www.uelzen.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (266, 'ni_st_lg', 'Hansestadt Lüneburg', 'http://www.lueneburg.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (266, 'ni_st_lg', 'Hansestadt LÃ¼neburg', 'http://www.lueneburg.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (267, 'ni_sg_ldf', 'Samtgemeinde Lachendorf', 'http://www.lachendorf.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (268, 'ni_st_ce', 'Stadt Celle', 'http://www.celle.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (269, 'ni_lk_ce', 'Landkreis Celle', 'http://www.landkreis-celle.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (270, 'ni_lk_ld', 'Landkreis Lüchow-Dannenberg', 'http://www.luechow-dannenberg.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (270, 'ni_lk_ld', 'Landkreis LÃ¼chow-Dannenberg', 'http://www.luechow-dannenberg.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (271, 'ni_sg_oh', 'Samtgemeinde Oberharz', 'http://www.samtgemeinde-oberharz.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (272, 'ni_st_cux', 'Stadt Cuxhaven', 'http://www.cuxhaven.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (273, 'ni_st_ach', 'Stadt Achim', 'http://www.achim.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (274, 'ni_lk_ost', 'Landkreis Osterholz', 'http://www.landkreis-osterholz.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (275, 'ni_lk_ver', 'Landkreis Verden', 'http://www.landkreis-verden.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (276, 'ni_st_ver', 'Stadt Verden', 'http://www.verden.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (277, 'ni_lk_wolf', 'Landkreis Wolfenbüttel', 'http://www.lk-wf.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (277, 'ni_lk_wolf', 'Landkreis WolfenbÃ¼ttel', 'http://www.lk-wf.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (278, 'ni_st_salz', 'Stadt Salzgitter', 'http://www.salzgitter.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (279, 'ni_st_koe', 'Stadt Königslutter', 'http://www.koenigslutter.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (279, 'ni_st_koe', 'Stadt KÃ¶nigslutter', 'http://www.koenigslutter.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (280, 'ni_lk_pe', 'Landkreis Peine', 'http://www.landkreis-peine.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (281, 'ni_lk_helm', 'Landkreis Helmstedt', 'http://www.landkreis-helmstedt.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (282, 'ni_st_goe', 'Stadt Göttingen', 'http://www.goettingen.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (282, 'ni_st_goe', 'Stadt GÃ¶ttingen', 'http://www.goettingen.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (283, 'ni_st_oster', 'Stadt Osterode', 'http://www.osterode.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (284, 'ni_lk_gos', 'Landkreis Goslar', 'http://www.landkreis-goslar.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (285, 'ni_lk_goe', 'Landkreis Göttingen', 'http://www.landkreisgoettingen.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (285, 'ni_lk_goe', 'Landkreis GÃ¶ttingen', 'http://www.landkreisgoettingen.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (286, 'ni_st_see', 'Stadt Seelze', 'http://www.stadt-seelze.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (287, 'ni_lk_oster', 'Landkreis Osterode', 'http://www.landkreis-osterode.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (288, 'ni_st_lang', 'Stadt Langelsheim', 'http://www.langelsheim.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (289, 'bu_bbr', 'Bundesamt für Bauwesen und Raumordnung', 'http://www.bbr.bund.de', 0, 1);
+INSERT INTO ingrid_provider VALUES (289, 'bu_bbr', 'Bundesamt fÃ¼r Bauwesen und Raumordnung', 'http://www.bbr.bund.de', 0, 1);
 INSERT INTO ingrid_provider VALUES (290, 'ni_lk_hi', 'Landkreis Hildesheim', 'http://www.landkreishildesheim.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (291, 'ni_st_wu', 'Stadt Wunstorf', 'http://www.wunstorf.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (292, 'ni_st_neust', 'Stadt Neustadt a. Rbge.', 'http://www.neustadt-a-rbge.de', 0, 10);
@@ -3570,90 +3570,90 @@ INSERT INTO ingrid_provider VALUES (306, 'ni_lk_leer', 'Landkreis Leer', 'http:/
 INSERT INTO ingrid_provider VALUES (307, 'ni_st_wil', 'Stadt Wilhelmshaven', 'http://www.wilhelmshaven.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (308, 'ni_lk_ems', 'Landkreis Emsland', 'http://www.emsland.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (309, 'ni_st_pap', 'Stadt Papenburg', 'http://www.papenburg.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (310, 'ni_lk_osn', 'Landkreis Osnabrück', 'http://www.lkos.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (310, 'ni_lk_osn', 'Landkreis OsnabrÃ¼ck', 'http://www.lkos.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (311, 'ni_st_bram', 'Stadt Bramsche', 'http://www.stadt-bramsche.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (312, 'ni_ge_belm', 'Gemeinde Belm', 'http://www.belm.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (313, 'ni_st_bers', 'Stadt Bersenbrück', 'http://www.bersenbrueck.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (313, 'ni_st_bers', 'Stadt BersenbrÃ¼ck', 'http://www.bersenbrueck.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (314, 'ni_lk_vech', 'Landkreis Vechta', 'http://www.landkreis-vechta.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (316, 'sn_av', 'Anglerverband Sachsen e.V.', 'http://www.av-sachsen.de/data/home.htm', 49, 14);
-INSERT INTO ingrid_provider VALUES (317, 'sn_bund', 'Bund für Umwelt und Naturschutz Deutschland (BUND) - Landeverband Sachsen e.V.', 'http://www.bund-sachsen.de', 44, 14);
-INSERT INTO ingrid_provider VALUES (318, 'sn_gls', 'Grüne Liga Sachsen e.V.', 'http://www.grueneliga.de/sachsen', 45, 14);
-INSERT INTO ingrid_provider VALUES (319, 'bu_dekade', 'UN-Dekade - Bildung für nachhaltige Entwicklung', 'http://www.bne-portal.de', 0, 1);
-INSERT INTO ingrid_provider VALUES (320, 'bu_ki', 'Gemeinnützigen Kinderumwelt GmbH', 'http://www.allum.de/', 0, 1);
+INSERT INTO ingrid_provider VALUES (317, 'sn_bund', 'Bund fÃ¼r Umwelt und Naturschutz Deutschland (BUND) - Landeverband Sachsen e.V.', 'http://www.bund-sachsen.de', 44, 14);
+INSERT INTO ingrid_provider VALUES (318, 'sn_gls', 'GrÃ¼ne Liga Sachsen e.V.', 'http://www.grueneliga.de/sachsen', 45, 14);
+INSERT INTO ingrid_provider VALUES (319, 'bu_dekade', 'UN-Dekade - Bildung fÃ¼r nachhaltige Entwicklung', 'http://www.bne-portal.de', 0, 1);
+INSERT INTO ingrid_provider VALUES (320, 'bu_ki', 'GemeinnÃ¼tzigen Kinderumwelt GmbH', 'http://www.allum.de/', 0, 1);
 INSERT INTO ingrid_provider VALUES (322, 'sn_dd', 'Stadt Dresden', 'http://www.dresden.de/', 2, 14);
-INSERT INTO ingrid_provider VALUES (324, 'sn_sgv', 'Sächsische Gestütsverwaltung', 'http://www.smul.sachsen.de/sgv/index.html', 11, 14);
-INSERT INTO ingrid_provider VALUES (325, 'sn_burgstaedt', 'Stadt Burgstädt', 'http://www.burgstaedt.de/', 12, 14);
+INSERT INTO ingrid_provider VALUES (324, 'sn_sgv', 'SÃ¤chsische GestÃ¼tsverwaltung', 'http://www.smul.sachsen.de/sgv/index.html', 11, 14);
+INSERT INTO ingrid_provider VALUES (325, 'sn_burgstaedt', 'Stadt BurgstÃ¤dt', 'http://www.burgstaedt.de/', 12, 14);
 INSERT INTO ingrid_provider VALUES (326, 'sn_chemnitz', 'Stadt Chemnitz', 'http://www.chemnitz.de/', 13, 14);
-INSERT INTO ingrid_provider VALUES (497, 'rp_jm', 'Ministerium der Justiz und für Verbraucherschutz Rheinland Pfalz', 'http://www.mjv.rlp.de/Startseite/', 0, 12);
+INSERT INTO ingrid_provider VALUES (497, 'rp_jm', 'Ministerium der Justiz und fÃ¼r Verbraucherschutz Rheinland Pfalz', 'http://www.mjv.rlp.de/Startseite/', 0, 12);
 INSERT INTO ingrid_provider VALUES (328, 'sn_lk_mittelsachsen', 'Landkreis Mittelsachsen', 'http://www.landkreis-mittelsachsen.de/', 65, 14);
 INSERT INTO ingrid_provider VALUES (330, 'sn_lk_zwickau', 'Landkreis Zwickau', 'http://www.landkreis-zwickau.de/', 18, 14);
 INSERT INTO ingrid_provider VALUES (544, 'ni_bubmj', 'Bundesministerium der Justiz', '', 0, 10);
-INSERT INTO ingrid_provider VALUES (333, 'sn_smwa', 'Sächsisches Staatsministerium für Wirtschaft und Arbeit', 'http://www.smwa.sachsen.de/', 21, 14);
+INSERT INTO ingrid_provider VALUES (333, 'sn_smwa', 'SÃ¤chsisches Staatsministerium fÃ¼r Wirtschaft und Arbeit', 'http://www.smwa.sachsen.de/', 21, 14);
 INSERT INTO ingrid_provider VALUES (335, 'sn_ldc', 'Landesdirektion Chemnitz', 'http://www.ldc.sachsen.de/', 23, 14);
 INSERT INTO ingrid_provider VALUES (336, 'sn_ldl', 'Landesdirektion Leipzig', 'http://www.ldl.sachsen.de/', 24, 14);
-INSERT INTO ingrid_provider VALUES (337, 'sn_tu_dd', 'Technische Universität Dresden', 'http://www.tu-dresden.de/', 27, 14);
-INSERT INTO ingrid_provider VALUES (338, 'sn_tu_fg', 'Technische Universität Bergakademie Freiberg', 'http://www.tu-freiberg.de/', 28, 14);
-INSERT INTO ingrid_provider VALUES (339, 'sn_uni_l', 'Universität Leipzig', 'http://www.uni-leipzig.de/', 29, 14);
-INSERT INTO ingrid_provider VALUES (340, 'sn_tu_c', 'Technische Universität Chemnitz', 'http://www.tu-chemnitz.de/', 30, 14);
+INSERT INTO ingrid_provider VALUES (337, 'sn_tu_dd', 'Technische UniversitÃ¤t Dresden', 'http://www.tu-dresden.de/', 27, 14);
+INSERT INTO ingrid_provider VALUES (338, 'sn_tu_fg', 'Technische UniversitÃ¤t Bergakademie Freiberg', 'http://www.tu-freiberg.de/', 28, 14);
+INSERT INTO ingrid_provider VALUES (339, 'sn_uni_l', 'UniversitÃ¤t Leipzig', 'http://www.uni-leipzig.de/', 29, 14);
+INSERT INTO ingrid_provider VALUES (340, 'sn_tu_c', 'Technische UniversitÃ¤t Chemnitz', 'http://www.tu-chemnitz.de/', 30, 14);
 INSERT INTO ingrid_provider VALUES (341, 'sn_l', 'Stadt Leipzig', 'http://www.leipzig.de/', 32, 14);
-INSERT INTO ingrid_provider VALUES (342, 'sn_smi', 'Sächsisches Staatsministerium des Innern', 'http://www.smi.sachsen.de/', 33, 14);
+INSERT INTO ingrid_provider VALUES (342, 'sn_smi', 'SÃ¤chsisches Staatsministerium des Innern', 'http://www.smi.sachsen.de/', 33, 14);
 INSERT INTO ingrid_provider VALUES (345, 'sn_aue', 'Stadt Aue', 'http://www.aue.de/', 34, 14);
 INSERT INTO ingrid_provider VALUES (346, 'sn_coswig', 'Stadt Coswig', 'http://www.coswig.de/', 35, 14);
 INSERT INTO ingrid_provider VALUES (347, 'sn_freital', 'Stadt Freital', 'http://www.freital.de/', 36, 14);
 INSERT INTO ingrid_provider VALUES (348, 'sn_glauchau', 'Stadt Glauchau', 'http://www.glauchau.de/', 37, 14);
-INSERT INTO ingrid_provider VALUES (349, 'sn_goerlitz', 'Stadt Görlitz', 'http://www.goerlitz.de/', 38, 14);
+INSERT INTO ingrid_provider VALUES (349, 'sn_goerlitz', 'Stadt GÃ¶rlitz', 'http://www.goerlitz.de/', 38, 14);
 INSERT INTO ingrid_provider VALUES (350, 'sn_limbach-oberfrohna', 'Stadt Limbach-Oberfrohna', 'http://www.limbach-oberfrohna.de/', 39, 14);
 INSERT INTO ingrid_provider VALUES (351, 'sn_limbach-oberfrohna', 'Stadt Limbach-Oberfrohna', 'http://www.limbach-oberfrohna.de/', 39, 14);
 INSERT INTO ingrid_provider VALUES (352, 'sn_markkleeberg', 'Stadt Markkleeberg', 'http://www.markkleeberg.de', 40, 14);
-INSERT INTO ingrid_provider VALUES (353, 'sn_lk_meissen', 'Landkreis Meißen', 'http://www.kreis-meissen.org/', 41, 14);
+INSERT INTO ingrid_provider VALUES (353, 'sn_lk_meissen', 'Landkreis MeiÃŸen', 'http://www.kreis-meissen.org/', 41, 14);
 INSERT INTO ingrid_provider VALUES (354, 'sn_lk_vogtland', 'Landkreis Vogtland', 'http://www.vogtlandkreis.de/', 42, 14);
 INSERT INTO ingrid_provider VALUES (355, 'sn_nabu', 'Naturschutzbund Deutschlands (NABU) - Landesverband Sachsen', 'http://www.nabu-sachsen.de/', 43, 14);
-INSERT INTO ingrid_provider VALUES (356, 'sn_lsh', 'Landesverein Sächsischer Heimatschutz e.V.', 'http://www.saechsischer-heimatschutz.de/', 46, 14);
+INSERT INTO ingrid_provider VALUES (356, 'sn_lsh', 'Landesverein SÃ¤chsischer Heimatschutz e.V.', 'http://www.saechsischer-heimatschutz.de/', 46, 14);
 INSERT INTO ingrid_provider VALUES (357, 'sn_sdw', 'Schutzgemeinschaft Deutscher Wald - Landesverband Sachsen', 'http://www.sdw-sachsen.de', 47, 14);
-INSERT INTO ingrid_provider VALUES (375, 'bw_cvua', 'Chemische und Veterinäruntersuchungsämter (CVUA)', 'http://www.untersuchungsaemter-bw.de', 17, 2);
+INSERT INTO ingrid_provider VALUES (375, 'bw_cvua', 'Chemische und VeterinÃ¤runtersuchungsÃ¤mter (CVUA)', 'http://www.untersuchungsaemter-bw.de', 17, 2);
 INSERT INTO ingrid_provider VALUES (360, 'sn_grimma', 'Stadt Grimma', 'http://www.grimma.de/', 52, 14);
 INSERT INTO ingrid_provider VALUES (361, 'sn_naturparke', 'Naturparke in Sachsen', 'http://www.naturparke.de', 53, 14);
-INSERT INTO ingrid_provider VALUES (362, 'sn_smk', 'Sächsisches Staatsministerium für Kultus', 'http://www.sachsen-macht-schule.de/smk/', 54, 14);
-INSERT INTO ingrid_provider VALUES (363, 'sn_saena', 'Sächsische Energieagentur - SAENA GmbH', 'http://www.saena.de/', 55, 14);
+INSERT INTO ingrid_provider VALUES (362, 'sn_smk', 'SÃ¤chsisches Staatsministerium fÃ¼r Kultus', 'http://www.sachsen-macht-schule.de/smk/', 54, 14);
+INSERT INTO ingrid_provider VALUES (363, 'sn_saena', 'SÃ¤chsische Energieagentur - SAENA GmbH', 'http://www.saena.de/', 55, 14);
 INSERT INTO ingrid_provider VALUES (364, 'sn_lk_bautzen', 'Landkreis Bautzen', 'http://www.landkreis-bautzen.de/', 59, 14);
 INSERT INTO ingrid_provider VALUES (365, 'sn_lk_nordsachsen', 'Landkreis Nordsachsen', 'http://www.landkreis-nordsachsen.de/', 63, 14);
 INSERT INTO ingrid_provider VALUES (366, 'sn_lk_leipzig', 'Landkreis Leipzig', 'http://www.landkreisleipzig.de/', 69, 14);
 INSERT INTO ingrid_provider VALUES (367, 'sn_freiberg', 'Stadt Freiberg', 'http://www.freiberg.de', 62, 14);
-INSERT INTO ingrid_provider VALUES (368, 'sn_lk_goerlitz', 'Landkreis Görlitz', 'http://www.kreis-goerlitz.de/', 67, 14);
-INSERT INTO ingrid_provider VALUES (372, 'ni_nbue', 'Niedersächsische Bingostiftung für Umwelt und Entwicklungszusammenarbeit', 'http://www.umweltstiftung.niedersachsen.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (373, 'ni_mf', 'Niedersächsisches Finanzministerium', 'http://www.mf.niedersachsen.de/', 5, 10);
+INSERT INTO ingrid_provider VALUES (368, 'sn_lk_goerlitz', 'Landkreis GÃ¶rlitz', 'http://www.kreis-goerlitz.de/', 67, 14);
+INSERT INTO ingrid_provider VALUES (372, 'ni_nbue', 'NiedersÃ¤chsische Bingostiftung fÃ¼r Umwelt und Entwicklungszusammenarbeit', 'http://www.umweltstiftung.niedersachsen.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (373, 'ni_mf', 'NiedersÃ¤chsisches Finanzministerium', 'http://www.mf.niedersachsen.de/', 5, 10);
 INSERT INTO ingrid_provider VALUES (374, 'rp_geoportal', 'Geoportal Rheinland-Pfalz', 'http://www.geoportal.rlp.de/', 0, 12);
-INSERT INTO ingrid_provider VALUES (492, 'bw_nvbw', 'Nahverkehrsgesellschaft Baden-Württemberg', 'http://www.nvbw.de/', 138, 2);
-INSERT INTO ingrid_provider VALUES (376, 'bw_nsz', 'Naturschutzzentren Baden-Württemberg', 'http://www.naturschutzzentren-bw.de', 18, 2);
-INSERT INTO ingrid_provider VALUES (378, 'bw_rpk', 'Regierungspräsidium Karlsruhe', 'http://www.rp-karlsruhe.de', 19, 2);
-INSERT INTO ingrid_provider VALUES (379, 'bw_rpt', 'Regierungspräsidium Tübingen', 'http://www.rp-tuebingen.de ', 20, 2);
+INSERT INTO ingrid_provider VALUES (492, 'bw_nvbw', 'Nahverkehrsgesellschaft Baden-WÃ¼rttemberg', 'http://www.nvbw.de/', 138, 2);
+INSERT INTO ingrid_provider VALUES (376, 'bw_nsz', 'Naturschutzzentren Baden-WÃ¼rttemberg', 'http://www.naturschutzzentren-bw.de', 18, 2);
+INSERT INTO ingrid_provider VALUES (378, 'bw_rpk', 'RegierungsprÃ¤sidium Karlsruhe', 'http://www.rp-karlsruhe.de', 19, 2);
+INSERT INTO ingrid_provider VALUES (379, 'bw_rpt', 'RegierungsprÃ¤sidium TÃ¼bingen', 'http://www.rp-tuebingen.de ', 20, 2);
 INSERT INTO ingrid_provider VALUES (513, 'hb_mbhv', 'Magistrat Bremerhaven', 'http://www.bremerhaven.de/stadt-und-politik/politik/magistrat/', 0, 6);
-INSERT INTO ingrid_provider VALUES (381, 'bw_mj', 'Justizministerium Baden-Württemberg', 'http://www.jum.baden-wuerttemberg.de', 22, 2);
-INSERT INTO ingrid_provider VALUES (382, 'bw_lga', 'Landesgesundheitsamt (LGA) im Regierungspräsidium Stuttgart', 'http://www.rp.baden-wuerttemberg.de', 23, 2);
-INSERT INTO ingrid_provider VALUES (383, 'bw_mas', 'Ministerium für Arbeit und Sozialordnung, Familie, Frauen und Senioren Baden-Württemberg', 'http://www.sm.baden-wuerttemberg.de/', 24, 2);
-INSERT INTO ingrid_provider VALUES (384, 'bw_unifreifor', 'Fakultät für Forst- und Umweltwissenschaften der UNI-Freiburg', 'http://www.ffu.uni-freiburg.de', 25, 2);
-INSERT INTO ingrid_provider VALUES (385, 'bw_unifreilan', 'Institut für Landespflege der Universität Freiburg', 'http://www.landespflege-freiburg.de/', 26, 2);
-INSERT INTO ingrid_provider VALUES (386, 'bw_unikarlmet', 'Institut für Meteorologie und Klimaforschung am Karlsruher Institut für Technologie (KIT)', 'http://www.imk.kit.edu/', 27, 2);
+INSERT INTO ingrid_provider VALUES (381, 'bw_mj', 'Justizministerium Baden-WÃ¼rttemberg', 'http://www.jum.baden-wuerttemberg.de', 22, 2);
+INSERT INTO ingrid_provider VALUES (382, 'bw_lga', 'Landesgesundheitsamt (LGA) im RegierungsprÃ¤sidium Stuttgart', 'http://www.rp.baden-wuerttemberg.de', 23, 2);
+INSERT INTO ingrid_provider VALUES (383, 'bw_mas', 'Ministerium fÃ¼r Arbeit und Sozialordnung, Familie, Frauen und Senioren Baden-WÃ¼rttemberg', 'http://www.sm.baden-wuerttemberg.de/', 24, 2);
+INSERT INTO ingrid_provider VALUES (384, 'bw_unifreifor', 'FakultÃ¤t fÃ¼r Forst- und Umweltwissenschaften der UNI-Freiburg', 'http://www.ffu.uni-freiburg.de', 25, 2);
+INSERT INTO ingrid_provider VALUES (385, 'bw_unifreilan', 'Institut fÃ¼r Landespflege der UniversitÃ¤t Freiburg', 'http://www.landespflege-freiburg.de/', 26, 2);
+INSERT INTO ingrid_provider VALUES (386, 'bw_unikarlmet', 'Institut fÃ¼r Meteorologie und Klimaforschung am Karlsruher Institut fÃ¼r Technologie (KIT)', 'http://www.imk.kit.edu/', 27, 2);
 INSERT INTO ingrid_provider VALUES (388, 'bw_stadtwald', 'Stadt Waldshut-Tiengen', 'http://www.waldshut-tiengen.de/', 113, 2);
-INSERT INTO ingrid_provider VALUES (495, 'bu_afee', 'Agentur für Erneuerbare Energien e. V.', 'http://www.unendlich-viel-energie.de', 0, 1);
-INSERT INTO ingrid_provider VALUES (389, 'bw_unistutt', 'Universität Stuttgart', 'http://www.uni-stuttgart.de', 29, 2);
+INSERT INTO ingrid_provider VALUES (495, 'bu_afee', 'Agentur fÃ¼r Erneuerbare Energien e. V.', 'http://www.unendlich-viel-energie.de', 0, 1);
+INSERT INTO ingrid_provider VALUES (389, 'bw_unistutt', 'UniversitÃ¤t Stuttgart', 'http://www.uni-stuttgart.de', 29, 2);
 INSERT INTO ingrid_provider VALUES (390, 'bw_laal', 'Landratsamt Alb-Donau-Kreis', 'http://www.alb-donau-kreis.de', 30, 2);
 INSERT INTO ingrid_provider VALUES (391, 'bw_labi', 'Landratsamt Biberach', 'http://www.biberach.de', 31, 2);
 INSERT INTO ingrid_provider VALUES (392, 'bw_labo', 'Landratsamt Bodenseekreis', 'http://www.bodenseekreis.de', 32, 2);
-INSERT INTO ingrid_provider VALUES (393, 'bw_laboe', 'Landratsamt Böblingen', 'http://www.landkreis-boeblingen.de', 33, 2);
+INSERT INTO ingrid_provider VALUES (393, 'bw_laboe', 'Landratsamt BÃ¶blingen', 'http://www.landkreis-boeblingen.de', 33, 2);
 INSERT INTO ingrid_provider VALUES (394, 'bw_labr', 'Landratsamt Breisgau-Hochschwarzwald', 'http://www.breisgau-hochschwarzwald.de', 34, 2);
 INSERT INTO ingrid_provider VALUES (395, 'bw_laca', 'Landratsamt Calw', 'http://www.kreis-calw.de', 35, 2);
 INSERT INTO ingrid_provider VALUES (396, 'bw_laem', 'Landratsamt Emmendingen', 'http://www.landkreis-emmendingen.de', 36, 2);
 INSERT INTO ingrid_provider VALUES (397, 'bw_laen', 'Landratsamt Enzkreis', 'http://www.enzkreis.de', 37, 2);
 INSERT INTO ingrid_provider VALUES (398, 'bw_laes', 'Landratsamt Esslingen', 'http://www.landkreis-esslingen.de', 38, 2);
 INSERT INTO ingrid_provider VALUES (399, 'bw_lafr', 'Landratsamt Freudenstadt', 'http://www.landkreis-freudenstadt.de', 39, 2);
-INSERT INTO ingrid_provider VALUES (400, 'bw_lago', 'Landratsamt Göppingen', 'http://www.landkreis-goeppingen.de', 40, 2);
+INSERT INTO ingrid_provider VALUES (400, 'bw_lago', 'Landratsamt GÃ¶ppingen', 'http://www.landkreis-goeppingen.de', 40, 2);
 INSERT INTO ingrid_provider VALUES (401, 'bw_laheid', 'Landratsamt Heidenheim', 'http://www.landkreis-heidenheim.de', 41, 2);
 INSERT INTO ingrid_provider VALUES (402, 'bw_laheil', 'Landratsamt Heilbronn', 'http://www.landkreis-heilbronn.de', 42, 2);
 INSERT INTO ingrid_provider VALUES (403, 'bw_laho', 'Landratsamt Hohenlohekreis', 'http://www.hohenlohekreis.de/', 43, 2);
 INSERT INTO ingrid_provider VALUES (404, 'bw_laka', 'Landratsamt Karlsruhe', 'http://www.landkreis-karlsruhe.de', 44, 2);
 INSERT INTO ingrid_provider VALUES (405, 'bw_lako', 'Landratsamt Konstanz', 'http://www.landkreis-konstanz.de/', 45, 2);
-INSERT INTO ingrid_provider VALUES (406, 'bw_laloe', 'Landratsamt Lörrach', 'http://www.loerrach-landkreis.de', 46, 2);
+INSERT INTO ingrid_provider VALUES (406, 'bw_laloe', 'Landratsamt LÃ¶rrach', 'http://www.loerrach-landkreis.de', 46, 2);
 INSERT INTO ingrid_provider VALUES (407, 'bw_lalu', 'Landratsamt Ludwigsburg', 'http://www.landkreis-ludwigsburg.de', 47, 2);
 INSERT INTO ingrid_provider VALUES (408, 'bw_lama', 'Landratsamt Main-Tauber-Kreis', 'http://www.main-tauber-kreis.de', 48, 2);
 INSERT INTO ingrid_provider VALUES (409, 'bw_lane', 'Landratsamt Neckar-Odenwald-Kreis', 'http://www.neckar-odenwald-kreis.de', 49, 2);
@@ -3665,40 +3665,40 @@ INSERT INTO ingrid_provider VALUES (414, 'bw_larem', 'Landratsamt Rems-Murr-Krei
 INSERT INTO ingrid_provider VALUES (415, 'bw_lareu', 'Landratsamt Reutlingen', 'http://www.kreis-reutlingen.de', 55, 2);
 INSERT INTO ingrid_provider VALUES (416, 'bw_larhe', 'Landratsamt Rhein-Neckar-Kreis', 'http://www.rhein-neckar-kreis.de', 56, 2);
 INSERT INTO ingrid_provider VALUES (417, 'bw_laro', 'Landratsamt Rottweil', 'http://www.landkreis-rottweil.de', 57, 2);
-INSERT INTO ingrid_provider VALUES (418, 'bw_laschwae', 'Landratsamt Schwäbisch Hall', 'http://www.landkreis-schwaebisch-hall.de', 58, 2);
+INSERT INTO ingrid_provider VALUES (418, 'bw_laschwae', 'Landratsamt SchwÃ¤bisch Hall', 'http://www.landkreis-schwaebisch-hall.de', 58, 2);
 INSERT INTO ingrid_provider VALUES (419, 'bw_laschwa', 'Landratsamt Schwarzwald-Baar-Kreis', 'http://www.schwarzwald-baar-kreis.de', 59, 2);
 INSERT INTO ingrid_provider VALUES (420, 'bw_lasi', 'Landratsamt Sigmaringen', 'http://www.landkreis-sigmaringen.de', 60, 2);
-INSERT INTO ingrid_provider VALUES (421, 'bw_latue', 'Landratsamt Tübingen', 'http://www.kreis-tuebingen.de', 61, 2);
+INSERT INTO ingrid_provider VALUES (421, 'bw_latue', 'Landratsamt TÃ¼bingen', 'http://www.kreis-tuebingen.de', 61, 2);
 INSERT INTO ingrid_provider VALUES (422, 'bw_latu', 'Landratsamt Tuttlingen', 'http://www.landkreis-tuttlingen.de', 62, 2);
 INSERT INTO ingrid_provider VALUES (423, 'bw_lawa', 'Landratsamt Waldshut', 'http://www.landkreis-waldshut.de', 63, 2);
 INSERT INTO ingrid_provider VALUES (424, 'bw_lazo', 'Landratsamt Zollernalbkreis', 'http://www.zollernalbkreis.de', 64, 2);
-INSERT INTO ingrid_provider VALUES (425, 'bw_muell', 'Müllabfuhr-Zweckverband von Gemeinden des Landkreises Konstanz', 'http://www.mzv-hegau.de', 65, 2);
+INSERT INTO ingrid_provider VALUES (425, 'bw_muell', 'MÃ¼llabfuhr-Zweckverband von Gemeinden des Landkreises Konstanz', 'http://www.mzv-hegau.de', 65, 2);
 INSERT INTO ingrid_provider VALUES (426, 'bw_pro', 'Proregio Oberschwaben Gesellschaft zur Landschaftsentwicklung mbH', 'http://www.proregio-oberschwaben.de/', 66, 2);
-INSERT INTO ingrid_provider VALUES (427, 'bw_zweckab', 'Zweckverband Abfallverwertung Reutlingen/Tübingen', 'http://www.zav-rt-tue.de', 67, 2);
+INSERT INTO ingrid_provider VALUES (427, 'bw_zweckab', 'Zweckverband Abfallverwertung Reutlingen/TÃ¼bingen', 'http://www.zav-rt-tue.de', 67, 2);
 INSERT INTO ingrid_provider VALUES (428, 'bw_azvb', 'Abwasserzweckverband Breisgauer Bucht', 'http://www.azv-breisgau.de/', 68, 2);
 INSERT INTO ingrid_provider VALUES (429, 'bw_azvh', 'Abwasserzweckverband Heidelberg', 'http://www.azv-heidelberg.de', 69, 2);
 INSERT INTO ingrid_provider VALUES (430, 'bw_azvo', 'Abwasserzweckverband Raum Offenburg', 'http://www.azv-offenburg.de/', 70, 2);
-INSERT INTO ingrid_provider VALUES (432, 'bw_gruen', 'Geschäftsstelle Grüne Nachbarschaft', 'http://www.gruene-nachbarschaft.de/', 72, 2);
+INSERT INTO ingrid_provider VALUES (432, 'bw_gruen', 'GeschÃ¤ftsstelle GrÃ¼ne Nachbarschaft', 'http://www.gruene-nachbarschaft.de/', 72, 2);
 INSERT INTO ingrid_provider VALUES (433, 'bw_landess', 'Landeshauptstadt Stuttgart', 'http://www.stuttgart.de', 73, 2);
-INSERT INTO ingrid_provider VALUES (434, 'bw_now', 'NOW Zweckverband Wasserversorgung Nordostwürttemberg', 'http://www.now-wasser.de/', 74, 2);
+INSERT INTO ingrid_provider VALUES (434, 'bw_now', 'NOW Zweckverband Wasserversorgung NordostwÃ¼rttemberg', 'http://www.now-wasser.de/', 74, 2);
 INSERT INTO ingrid_provider VALUES (435, 'bw_stadta', 'Stadt Aalen', 'http://www.sw-aalen.de/', 75, 2);
 INSERT INTO ingrid_provider VALUES (436, 'bw_stadtbb', 'Stadt Baden-Baden', 'http://www.baden-baden.de', 76, 2);
 INSERT INTO ingrid_provider VALUES (437, 'bw_stadtba', 'Stadt Balingen', 'http://www.balingen.de', 77, 2);
 INSERT INTO ingrid_provider VALUES (438, 'bw_stadtbi', 'Stadt Biberach', 'http://www.biberach-riss.de//index.phtml?object=tx|1.300.1&org_obj=nav|383.10.1', 78, 2);
-INSERT INTO ingrid_provider VALUES (439, 'bw_stadtboe', 'Stadt Böblingen', 'http://www.boeblingen.kdrs.de', 79, 2);
+INSERT INTO ingrid_provider VALUES (439, 'bw_stadtboe', 'Stadt BÃ¶blingen', 'http://www.boeblingen.kdrs.de', 79, 2);
 INSERT INTO ingrid_provider VALUES (441, 'bw_stadtem', 'Stadt Emmendingen', 'http://www.emmendingen.de', 81, 2);
 INSERT INTO ingrid_provider VALUES (442, 'bw_stadtes', 'Stadt Esslingen am Neckar', 'http://www.esslingen.de', 82, 2);
 INSERT INTO ingrid_provider VALUES (443, 'bw_stadtfrei', 'Stadt Freiburg', 'http://www.freiburg.de', 83, 2);
 INSERT INTO ingrid_provider VALUES (444, 'bw_stadtfreu', 'Stadt Freudenstadt', 'http://www.freudenstadt.info/index.phtml?La=1&NavID=611.110', 84, 2);
 INSERT INTO ingrid_provider VALUES (445, 'bw_stadtfrie', 'Stadt Friedrichshafen', 'http://www.friedrichshafen.de', 85, 2);
-INSERT INTO ingrid_provider VALUES (446, 'bw_stadtgoe', 'Stadt Göppingen', 'http://www.goeppingen.de', 86, 2);
+INSERT INTO ingrid_provider VALUES (446, 'bw_stadtgoe', 'Stadt GÃ¶ppingen', 'http://www.goeppingen.de', 86, 2);
 INSERT INTO ingrid_provider VALUES (447, 'bw_stadtheidel', 'Stadt Heidelberg', 'http://www.heidelberg.de', 87, 2);
 INSERT INTO ingrid_provider VALUES (448, 'bw_stadtheiden', 'Stadt Heidenheim', 'http://www.heidenheim.de', 88, 2);
 INSERT INTO ingrid_provider VALUES (449, 'bw_stadtheil', 'Stadt Heilbronn', 'http://www.heilbronn.de', 89, 2);
 INSERT INTO ingrid_provider VALUES (450, 'bw_stadtka', 'Stadt Karlsruhe', 'http://www.karlsruhe.de', 90, 2);
 INSERT INTO ingrid_provider VALUES (451, 'bw_stadtko', 'Stadt Konstanz', 'http://www.konstanz.de', 91, 2);
-INSERT INTO ingrid_provider VALUES (550, 'bw_techno', 'Technologie- und Innovationszentrum Umwelttechnik und Ressourceneffizienz Baden-Württemberg GmbH', 'http://www.umwelttechnik-bw.de/', 0, 2);
-INSERT INTO ingrid_provider VALUES (453, 'bw_stadtloe', 'Stadt Lörrach', 'http://www.loerrach.de', 93, 2);
+INSERT INTO ingrid_provider VALUES (550, 'bw_techno', 'Technologie- und Innovationszentrum Umwelttechnik und Ressourceneffizienz Baden-WÃ¼rttemberg GmbH', 'http://www.umwelttechnik-bw.de/', 0, 2);
+INSERT INTO ingrid_provider VALUES (453, 'bw_stadtloe', 'Stadt LÃ¶rrach', 'http://www.loerrach.de', 93, 2);
 INSERT INTO ingrid_provider VALUES (454, 'bw_stadtlu', 'Stadt Ludwigsburg', 'http://www.ludwigsburg.de', 94, 2);
 INSERT INTO ingrid_provider VALUES (455, 'bw_stadtma', 'Stadt Mannheim', 'http://www.mannheim.de', 95, 2);
 INSERT INTO ingrid_provider VALUES (456, 'bw_stadtmo', 'Stadt Mosbach', 'http://www.mosbach.de', 96, 2);
@@ -3708,57 +3708,57 @@ INSERT INTO ingrid_provider VALUES (459, 'bw_stadtras', 'Stadt Rastatt', 'http:/
 INSERT INTO ingrid_provider VALUES (460, 'bw_stadtrav', 'Stadt Ravensburg', 'http://www.ravensburg.de', 100, 2);
 INSERT INTO ingrid_provider VALUES (461, 'bw_stadtreu', 'Stadt Reutlingen', 'http://www.reutlingen.de', 101, 2);
 INSERT INTO ingrid_provider VALUES (462, 'bw_stadtrot', 'Stadt Rottweil', 'http://www.rottweil.de', 102, 2);
-INSERT INTO ingrid_provider VALUES (463, 'bw_stadtsg', 'Stadt Schwäbisch Gmünd', 'http://www.schwaebisch-gmuend.de', 103, 2);
-INSERT INTO ingrid_provider VALUES (464, 'bw_stadtsh', 'Stadt Schwäbisch Hall', 'http://www.schwaebischhall.de', 104, 2);
+INSERT INTO ingrid_provider VALUES (463, 'bw_stadtsg', 'Stadt SchwÃ¤bisch GmÃ¼nd', 'http://www.schwaebisch-gmuend.de', 103, 2);
+INSERT INTO ingrid_provider VALUES (464, 'bw_stadtsh', 'Stadt SchwÃ¤bisch Hall', 'http://www.schwaebischhall.de', 104, 2);
 INSERT INTO ingrid_provider VALUES (465, 'bw_stadtsig', 'Stadt Sigmaringen', 'http://www.sigmaringen.de/', 105, 2);
 INSERT INTO ingrid_provider VALUES (466, 'bw_stadtsin', 'Stadt Sindelfingen', 'http://www.sindelfingen.de', 106, 2);
 INSERT INTO ingrid_provider VALUES (467, 'bw_stadttau', 'Stadt Tauberbischofsheim', 'http://www.tauberbischofsheim.de', 107, 2);
-INSERT INTO ingrid_provider VALUES (468, 'bw_stadttue', 'Stadt Tübingen', 'http://www.tuebingen.de', 108, 2);
+INSERT INTO ingrid_provider VALUES (468, 'bw_stadttue', 'Stadt TÃ¼bingen', 'http://www.tuebingen.de', 108, 2);
 INSERT INTO ingrid_provider VALUES (469, 'bw_stadttut', 'Stadt Tuttlingen', 'http://www.tuttlingen.de', 109, 2);
 INSERT INTO ingrid_provider VALUES (470, 'bw_stadtulm', 'Stadt Ulm', 'http://www.ulm.de', 110, 2);
 INSERT INTO ingrid_provider VALUES (471, 'bw_stadtvill', 'Stadt Villingen-Schwenningen', 'http://www.svs-energie.de', 111, 2);
 INSERT INTO ingrid_provider VALUES (472, 'bw_stadtwaib', 'Stadt Waiblingen', 'http://www.waiblingen.de', 112, 2);
-INSERT INTO ingrid_provider VALUES (473, 'bw_geopark', 'Verein Geopark Schwäbische Alb e. V.', 'http://www.geopark-alb.de', 114, 2);
+INSERT INTO ingrid_provider VALUES (473, 'bw_geopark', 'Verein Geopark SchwÃ¤bische Alb e. V.', 'http://www.geopark-alb.de', 114, 2);
 INSERT INTO ingrid_provider VALUES (474, 'bw_zweckba', 'Zweckverband Abwasserreinigung Balingen', 'http://www.klaeranlage-balingen.de', 115, 2);
 INSERT INTO ingrid_provider VALUES (475, 'bw_zweckbo', 'Zweckverband Bodensee-Wasserversorgung (BWV)', 'http://www.zvbwv.de/', 116, 2);
 INSERT INTO ingrid_provider VALUES (476, 'bw_zweckla', 'Zweckverband Landeswasserversorgung', 'http://www.lw-online.de/', 117, 2);
 INSERT INTO ingrid_provider VALUES (552, 'ni_gd_ostercap', 'Ostercappeln, Gemeinde', 'http://www.ostercappeln.de/', 0, 10);
 INSERT INTO ingrid_provider VALUES (553, 'ni_lk_dieph', 'Diepholz, Landkreis', 'http://www.diepholz.de/', 0, 10);
-INSERT INTO ingrid_provider VALUES (479, 'bw_igkb', 'IGKB Internationale Gewässerschutzkommission Bodensee', 'http://www.igkb.org/', 120, 2);
+INSERT INTO ingrid_provider VALUES (479, 'bw_igkb', 'IGKB Internationale GewÃ¤sserschutzkommission Bodensee', 'http://www.igkb.org/', 120, 2);
 INSERT INTO ingrid_provider VALUES (551, 'ni_buwsv', 'Wasser- und Schifffahrtsverwaltung des Bundes', '', 0, 10);
 INSERT INTO ingrid_provider VALUES (481, 'bw_see', 'Internationale Bodenseekonferenz', 'http://www.bodenseekonferenz.org', 122, 2);
-INSERT INTO ingrid_provider VALUES (482, 'bw_kea', 'KEA Klimaschutz- und Energieagentur Baden-Württemberg GmbH', 'http://www.keabw.de/', 123, 2);
-INSERT INTO ingrid_provider VALUES (485, 'bw_museum', 'Staatliches Museum für Naturkunde in Stuttgart', 'http://www.wildbienen-kataster.de/', 126, 2);
-INSERT INTO ingrid_provider VALUES (486, 'bw_rpf', 'Regierungspräsidium Freiburg', 'http://www.rp.baden-wuerttemberg.de/servlet/PB/menu/1007481/index.html', 137, 2);
-INSERT INTO ingrid_provider VALUES (493, 'bu_bzga', 'Bundeszentrale für gesundheitliche Aufklärung', 'http://www.bzga.de', 44, 1);
+INSERT INTO ingrid_provider VALUES (482, 'bw_kea', 'KEA Klimaschutz- und Energieagentur Baden-WÃ¼rttemberg GmbH', 'http://www.keabw.de/', 123, 2);
+INSERT INTO ingrid_provider VALUES (485, 'bw_museum', 'Staatliches Museum fÃ¼r Naturkunde in Stuttgart', 'http://www.wildbienen-kataster.de/', 126, 2);
+INSERT INTO ingrid_provider VALUES (486, 'bw_rpf', 'RegierungsprÃ¤sidium Freiburg', 'http://www.rp.baden-wuerttemberg.de/servlet/PB/menu/1007481/index.html', 137, 2);
+INSERT INTO ingrid_provider VALUES (493, 'bu_bzga', 'Bundeszentrale fÃ¼r gesundheitliche AufklÃ¤rung', 'http://www.bzga.de', 44, 1);
 INSERT INTO ingrid_provider VALUES (487, 'sn_geosn', 'Staatsbetrieb Geobasisinformation und Vermessung Sachsen (GeoSN)', 'http://www.landesvermessung.sachsen.de', 70, 14);
-INSERT INTO ingrid_provider VALUES (498, 'bu_iksr', 'Internationale Kommission für den Schutz des Rheins', 'http://www.iksr.org/', 0, 1);
-INSERT INTO ingrid_provider VALUES (499, 'bu_icpdr', 'Internationale Kommission für den Schutz der Donau', 'http://www.icpdr.org/', 0, 1);
+INSERT INTO ingrid_provider VALUES (498, 'bu_iksr', 'Internationale Kommission fÃ¼r den Schutz des Rheins', 'http://www.iksr.org/', 0, 1);
+INSERT INTO ingrid_provider VALUES (499, 'bu_icpdr', 'Internationale Kommission fÃ¼r den Schutz der Donau', 'http://www.icpdr.org/', 0, 1);
 INSERT INTO ingrid_provider VALUES (500, 'bu_moko', 'Moselkommission', 'http://www.moselkommission.org/', 0, 1);
-INSERT INTO ingrid_provider VALUES (501, 'bu_ikso', 'Internationale Kommission für den Schutz der Oder gegen Verunreinigung', 'http://www.mkoo.pl/index.php?lang=DE', 0, 1);
-INSERT INTO ingrid_provider VALUES (502, 'sh_lbknm', 'Landesbetrieb für Küstenschutz, Nationalpark und Meeresschutz Schleswig-Holstein', 'http://www.schleswig-holstein.de/LKN/DE/LKN_node.html', 0, 16);
+INSERT INTO ingrid_provider VALUES (501, 'bu_ikso', 'Internationale Kommission fÃ¼r den Schutz der Oder gegen Verunreinigung', 'http://www.mkoo.pl/index.php?lang=DE', 0, 1);
+INSERT INTO ingrid_provider VALUES (502, 'sh_lbknm', 'Landesbetrieb fÃ¼r KÃ¼stenschutz, Nationalpark und Meeresschutz Schleswig-Holstein', 'http://www.schleswig-holstein.de/LKN/DE/LKN_node.html', 0, 16);
 INSERT INTO ingrid_provider VALUES (503, 'sh_lva', 'Landesvermessungsamt Schleswig-Holstein ', 'http://www.schleswig-holstein.de/LVERMA/DE/LVERMA_node.html', 0, 16);
-INSERT INTO ingrid_provider VALUES (504, 'bu_jki', 'Julius Kühn-Institut, Bundesforschungsinstitut für Kulturpflanzen (JKI)', 'http://oekologischerlandbau.jki.bund.de/index.php?menuid=1', 0, 1);
+INSERT INTO ingrid_provider VALUES (504, 'bu_jki', 'Julius KÃ¼hn-Institut, Bundesforschungsinstitut fÃ¼r Kulturpflanzen (JKI)', 'http://oekologischerlandbau.jki.bund.de/index.php?menuid=1', 0, 1);
 INSERT INTO ingrid_provider VALUES (505, 'ni_geo', 'Geodatenportal Niedersachsen', 'http://www.geodaten.niedersachsen.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (506, 'ni_liag', 'Leibniz-Institut für Angewandte Geophysik', 'http://www.liag-hannover.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (506, 'ni_liag', 'Leibniz-Institut fÃ¼r Angewandte Geophysik', 'http://www.liag-hannover.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (507, 'ni_nph', 'Nationalparkverwaltung Harz', 'http://www.nationalpark-harz.de/', 0, 10);
-INSERT INTO ingrid_provider VALUES (508, 'ni_lskn', 'Landesbetrieb für Statistik und Kommunikationstechnologie Niedersachsen', 'http://www.lskn.niedersachsen.de/', 0, 10);
-INSERT INTO ingrid_provider VALUES (509, 'ni_bre', 'Biosphärenreservat Elbtalaue', 'http://www.elbtalaue.niedersachsen.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (510, 'ni_npw', 'Nationalparkverwaltung Niedersächisches Wattenmeer', 'http://www.nationalpark-wattenmeer.de/nds', 0, 10);
-INSERT INTO ingrid_provider VALUES (512, 'sl_lkvk', 'Landesamt für Kataster-, Vermessungs- und Kartenwesen des Saarlandes', 'http://www.saarland.de/kataster_vermessung_karten.htm', 0, 13);
-INSERT INTO ingrid_provider VALUES (515, 'hh_bsb', 'Behörde für Schule und Berufsbildung Hamburg', ' http://www.hamburg.de/bsb/ ', 0, 7);
-INSERT INTO ingrid_provider VALUES (516, 'hh_hu', 'Institut für Hygiene und Umwelt', 'http://www.hamburg.de/hu/ ', 0, 7);
-INSERT INTO ingrid_provider VALUES (519, 'sn_landratsamt-pirna.de ', 'Landkreis Sächsische Schweiz-Osterzgebirge', 'http://www.saechsische-schweiz-osterzgebirge.de/', 0, 14);
+INSERT INTO ingrid_provider VALUES (508, 'ni_lskn', 'Landesbetrieb fÃ¼r Statistik und Kommunikationstechnologie Niedersachsen', 'http://www.lskn.niedersachsen.de/', 0, 10);
+INSERT INTO ingrid_provider VALUES (509, 'ni_bre', 'BiosphÃ¤renreservat Elbtalaue', 'http://www.elbtalaue.niedersachsen.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (510, 'ni_npw', 'Nationalparkverwaltung NiedersÃ¤chisches Wattenmeer', 'http://www.nationalpark-wattenmeer.de/nds', 0, 10);
+INSERT INTO ingrid_provider VALUES (512, 'sl_lkvk', 'Landesamt fÃ¼r Kataster-, Vermessungs- und Kartenwesen des Saarlandes', 'http://www.saarland.de/kataster_vermessung_karten.htm', 0, 13);
+INSERT INTO ingrid_provider VALUES (515, 'hh_bsb', 'BehÃ¶rde fÃ¼r Schule und Berufsbildung Hamburg', ' http://www.hamburg.de/bsb/ ', 0, 7);
+INSERT INTO ingrid_provider VALUES (516, 'hh_hu', 'Institut fÃ¼r Hygiene und Umwelt', 'http://www.hamburg.de/hu/ ', 0, 7);
+INSERT INTO ingrid_provider VALUES (519, 'sn_landratsamt-pirna.de ', 'Landkreis SÃ¤chsische Schweiz-Osterzgebirge', 'http://www.saechsische-schweiz-osterzgebirge.de/', 0, 14);
 INSERT INTO ingrid_provider VALUES (520, 'sn_hoyerswerda.de', 'Stadt Hoyerswerda', 'http://www.hoyerswerda.de/', 0, 14);
 INSERT INTO ingrid_provider VALUES (521, 'sn_werdau.de', 'Stadt Werdau', 'http://www.werdau.de/werdau/willkommen.asp', 0, 14);
 INSERT INTO ingrid_provider VALUES (522, 'sn_riesa.de', 'Stadt Riesa', 'http://www.riesa.de/deu/', 0, 14);
 INSERT INTO ingrid_provider VALUES (523, 'sn_crimmitschau.de', 'Stadt Crimmitschau', 'http://www.crimmitschau.de', 0, 14);
-INSERT INTO ingrid_provider VALUES (524, 'sn_doebeln.de', 'Stadt Döbeln', 'http://www.doebeln.de/', 0, 14);
+INSERT INTO ingrid_provider VALUES (524, 'sn_doebeln.de', 'Stadt DÃ¶beln', 'http://www.doebeln.de/', 0, 14);
 INSERT INTO ingrid_provider VALUES (525, 'sn_zittau.de', 'Stadt Zittau', 'http://www.zittau.eu', 0, 14);
 INSERT INTO ingrid_provider VALUES (526, 'sn_auerbach', 'Stadt Auerbach', 'http://www.stadt-auerbach.de', 0, 14);
 INSERT INTO ingrid_provider VALUES (527, 'sn_radebeul.de', 'Stadt Radebeul', 'http://www.radebeul.de', 0, 14);
 INSERT INTO ingrid_provider VALUES (528, 'sn_plauen.de', 'Stadt Plauen', 'http://www.plauen.de/', 0, 14);
-INSERT INTO ingrid_provider VALUES (529, 'sn_stadt-meissen.de', 'Stadt Meißen', 'http://www.stadt-meissen.de', 0, 14);
+INSERT INTO ingrid_provider VALUES (529, 'sn_stadt-meissen.de', 'Stadt MeiÃŸen', 'http://www.stadt-meissen.de', 0, 14);
 INSERT INTO ingrid_provider VALUES (530, 'sn_bautzen', 'Stadt Bautzen', 'http://www.bautzen.de', 0, 14);
 INSERT INTO ingrid_provider VALUES (531, 'sn_pirna.de', 'Stadt Pirna', 'http://www.pirna.de', 0, 14);
 INSERT INTO ingrid_provider VALUES (532, 'sn_zwickau.de', 'Stadt Zwickau', 'http://www.zwickau.de/', 0, 14);
@@ -3767,17 +3767,17 @@ INSERT INTO ingrid_provider VALUES (534, 'sn_annaberg-buchholz', 'Stadt Annaberg
 INSERT INTO ingrid_provider VALUES (535, 'sn_reichenbach-vogtland.de', 'Stadt Reichenbach i. Vogtland', 'http://www.reichenbach-vogtland.de', 0, 14);
 INSERT INTO ingrid_provider VALUES (536, 'sn_erzgebirgskreis.de', 'Erzgebirgskreis', 'http://www.erzgebirgskreis.de/', 0, 14);
 INSERT INTO ingrid_provider VALUES (538, 'he_lbla', 'Landesbetrieb Landwirtschaft Hessen', 'http://www.llh.hessen.de/', 0, 8);
-INSERT INTO ingrid_provider VALUES (540, 'ni_uol', 'Carl von Ossietzky Universität Oldenburg', 'http://www.uni-oldenburg.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (545, 'mv_flusselbe', 'Biosphärenreservat Flusslandschaft Elbe-MV ', 'http://www.elbetal-mv.de/', 0, 9);
-INSERT INTO ingrid_provider VALUES (546, 'mv_soruegen', 'Biosphärenreservat Südost-Rügen', 'http://www.biosphaerenreservat-suedostruegen.de/', 0, 1);
-INSERT INTO ingrid_provider VALUES (547, 'ni_euafv', 'Amt für Veröffentlichungen der Europäischen Union', 'http://publications.europa.eu/index_de.htm', 0, 10);
-INSERT INTO ingrid_provider VALUES (548, 'he_uni_kassel', 'Universität Kassel', 'http://www.uni-kassel.de/uni/', 0, 8);
+INSERT INTO ingrid_provider VALUES (540, 'ni_uol', 'Carl von Ossietzky UniversitÃ¤t Oldenburg', 'http://www.uni-oldenburg.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (545, 'mv_flusselbe', 'BiosphÃ¤renreservat Flusslandschaft Elbe-MV ', 'http://www.elbetal-mv.de/', 0, 9);
+INSERT INTO ingrid_provider VALUES (546, 'mv_soruegen', 'BiosphÃ¤renreservat SÃ¼dost-RÃ¼gen', 'http://www.biosphaerenreservat-suedostruegen.de/', 0, 1);
+INSERT INTO ingrid_provider VALUES (547, 'ni_euafv', 'Amt fÃ¼r VerÃ¶ffentlichungen der EuropÃ¤ischen Union', 'http://publications.europa.eu/index_de.htm', 0, 10);
+INSERT INTO ingrid_provider VALUES (548, 'he_uni_kassel', 'UniversitÃ¤t Kassel', 'http://www.uni-kassel.de/uni/', 0, 8);
 INSERT INTO ingrid_provider VALUES (549, 'sn_landesdirektion.de', 'Landesdirektion Sachsen', 'http://www.lds.sachsen.de/', 0, 14);
-INSERT INTO ingrid_provider VALUES (555, 'be_sejv', 'Senatsverwaltung für Justiz und Verbraucherschutz', 'www.berlin.de/sen/justiz/', 5, 4);
-INSERT INTO ingrid_provider VALUES (556, 'be_segessoz', 'Senatsverwaltung für Gesundheit und Soziales ', 'www.berlin.de/sen/gessoz', 6, 1);
+INSERT INTO ingrid_provider VALUES (555, 'be_sejv', 'Senatsverwaltung fÃ¼r Justiz und Verbraucherschutz', 'www.berlin.de/sen/justiz/', 5, 4);
+INSERT INTO ingrid_provider VALUES (556, 'be_segessoz', 'Senatsverwaltung fÃ¼r Gesundheit und Soziales ', 'www.berlin.de/sen/gessoz', 6, 1);
 INSERT INTO ingrid_provider VALUES (557, 'bu_wsv', 'Wasser- und Schifffahrtsverwaltung des Bundes', 'http://www.wsv.de/', 0, 1);
-INSERT INTO ingrid_provider VALUES (558, 'bw_kit', 'Karlsruher Institut für Technologie', 'http://www.kit.edu/', 0, 2);
-INSERT INTO ingrid_provider VALUES (559, 'bu_vti', 'Johann Heinrich von Thünen-Institut (vTI)', 'http://www.ti.bund.de/', 0, 1);
+INSERT INTO ingrid_provider VALUES (558, 'bw_kit', 'Karlsruher Institut fÃ¼r Technologie', 'http://www.kit.edu/', 0, 2);
+INSERT INTO ingrid_provider VALUES (559, 'bu_vti', 'Johann Heinrich von ThÃ¼nen-Institut (vTI)', 'http://www.ti.bund.de/', 0, 1);
 
 
 --
@@ -3902,7 +3902,7 @@ INSERT INTO language VALUES (123, 103, 'en,,', 0, 'mdek', 'mdek', 'mdek');
 INSERT INTO language VALUES (141, 121, 'en,,', 0, 'Info Portlet', 'Info Portlet', 'Information');
 INSERT INTO language VALUES (142, 122, 'en,,', 0, 'javascript detection portlet', 'javascript detection portlet', NULL);
 INSERT INTO language VALUES (143, 123, 'en,,', 0, 'Help Portlet', 'Help Portlet', 'Help Portlet');
-INSERT INTO language VALUES (144, 124, 'en,,', 0, 'Jobübersicht', 'Jobübersicht', NULL);
+INSERT INTO language VALUES (144, 124, 'en,,', 0, 'JobÃ¼bersicht', 'JobÃ¼bersicht', NULL);
 INSERT INTO language VALUES (145, 125, 'en,,', 0, 'RSS Feeds administrieren', 'RSS Feeds administrieren', NULL);
 INSERT INTO language VALUES (146, 126, 'en,,', 0, 'Partner administrieren', 'Partner administrieren', NULL);
 INSERT INTO language VALUES (147, 127, 'en,,', 0, 'Anbieter administrieren', 'Anbieter administrieren', NULL);
@@ -4000,7 +4000,7 @@ INSERT INTO language VALUES (238, 199, 'en,,', 0, 'Advanced Search', 'Advanced',
 INSERT INTO language VALUES (239, 200, 'en,,', 0, 'Advanced Search', 'Advanced', 'Advanced');
 INSERT INTO language VALUES (240, 201, 'en,,', 0, 'Advanced Search', 'Advanced', 'Advanced');
 INSERT INTO language VALUES (241, 202, 'en,,', 1, 'Feature Overview', 'Feature', 'feature');
-INSERT INTO language VALUES (242, 202, 'de,,', 1, 'Funktionen in der Übersicht', 'Feature', 'feature');
+INSERT INTO language VALUES (242, 202, 'de,,', 1, 'Funktionen in der Ãœbersicht', 'Feature', 'feature');
 
 
 --
