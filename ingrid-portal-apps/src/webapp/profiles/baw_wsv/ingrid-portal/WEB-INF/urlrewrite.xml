@@ -320,16 +320,6 @@
         <to>/kontakt</to>
     </outbound-rule>
     
-    <!--  Newsletter  -->
-    <rule>
-        <from>/newsletter</from>
-        <to type="forward">/portal/service-contact-newsletter.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/service-contact-newsletter.psml</from>
-        <to>/newsletter</to>
-    </outbound-rule>
-    
     <!-- Impressum   -->
     <rule>
         <from>/impressum</from>
