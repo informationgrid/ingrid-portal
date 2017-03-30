@@ -22,7 +22,7 @@
   **************************************************#
   -->
 
-<portlet-app id="ingrid-portal-apps" version="1.0">
+<portlet-app id="ingrid-portal-apps" version="2.0">
 
 
     <!-- ************************** -->
