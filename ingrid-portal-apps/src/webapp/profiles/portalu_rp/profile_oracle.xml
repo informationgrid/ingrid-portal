@@ -4,14 +4,6 @@
     <description>Portal-Profile für PortalU Rheinland-Pfalz</description>
     <pages>
         <page>
-            <name>main-environment.psml</name>
-            <hidden>true</hidden>
-        </page>
-        <page>
-            <name>main-service.psml</name>
-            <hidden>true</hidden>
-        </page>
-        <page>
             <name>main-measures.psml</name>
             <hidden>true</hidden>
         </page>
@@ -34,9 +26,6 @@
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="3">
                     <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
             </portlets>
@@ -52,9 +41,6 @@
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="3">
                     <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
             </portlets>
@@ -70,9 +56,6 @@
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="3">
                     <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
                 </portlet>
             </portlets>
