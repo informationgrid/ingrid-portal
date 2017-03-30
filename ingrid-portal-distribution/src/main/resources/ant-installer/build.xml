@@ -29,6 +29,7 @@
     
     <import file="build_mysql.xml"  as="mysql" />
     <import file="build_oracle.xml" as="oracle" />
+    <import file="build_postgres.xml" as="postgres" />
     <!--<import file="debug.xml"        as="debug" />-->
 
     <!-- =============================================
@@ -39,6 +40,7 @@
     
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"/>
     <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc14.jar"/>
+    <property name="postgresDbDriverInApache"      location="./distribution/${tomcat-artifact}/shared/lib/postgresql-9.4.1212.jar"/>
 
     <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties"/>
     <property name="xml-hibernate-portal-apps"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/hibernate.cfg.xml"/>
@@ -107,9 +109,15 @@
             <then>
                 <runtarget target="setMySqlProperty"/>
             </then>
-            <else>
-                <runtarget target="setOracleProperty"/>
-            </else>
+        <elseif>
+            <equals arg1="${cipaXML.Context.Resource(driverClassName)}" arg2="org.postgresql.Driver" />
+            <then>
+                <runtarget target="setPostgresProperty"/>
+            </then>
+        </elseif>
+        <else>
+            <runtarget target="setOracleProperty"/>
+        </else>
         </if>
         
         <property name="_mdekUser" value="${cipmXML.Context.Resource(username)}" />
@@ -149,6 +157,16 @@
         <runtarget target="oracle.CheckDbs"/>-->
     </target>
 
+    <target name="setPostgresProperty">
+    	<property name="usePostgres" value="true" />
+        <property name="usedDriver" value="${postgresDriverClass}" />
+        <property name="usedDialect" value="${postgresDialect}" />
+        <property name="usedDialectPortal" value="${postgresDialectPortal}" />
+        <property name="usedValidationQuery" value="${postgresValidationQuery}" />
+        <!-- check current database status 
+        <runtarget target="postgres.CheckDbs"/>-->
+    </target>
+
     <target name="UnzipInstaller">
     	 <unzip src="${antinstaller.jar}" dest="${basedir}">
             <patternset>
@@ -158,6 +176,7 @@
 
         <copy file="${mysqlDbDriverInApache}"  todir="${basedir}"/>
         <copy file="${oracleDbDriverInApache}" todir="."/>
+        <copy file="${postgresDbDriverInApache}" todir="."/>
     </target>
     
     <target name="UnzipInstallerForUpdate">
@@ -171,6 +190,7 @@
 
         <copy file="${mysqlDbDriverInApache}"  todir="."/>
         <copy file="${oracleDbDriverInApache}" todir="."/>
+        <copy file="${postgresDbDriverInApache}" todir="."/>
     </target>
 
 
@@ -217,12 +237,23 @@
             <then>
                 <runtarget target="oracle.CheckDbs" />
             </then>
-            <else>
+        <elseif>
+            <equals arg1="${usePostgres}" arg2="true" />
+            <then>
+                <runtarget target="postgres.CheckDbs" />
+            </then>
+        </elseif>
+        <elseif>
+            <equals arg1="${useMysql}" arg2="true" />
+            <then>
                 <runtarget target="mysql.CheckDbs" />
-            </else>
+            </then>
+        </elseif>
+        <else>
+            <echo>Probleme bei der Ermittlung der Datenbank.</echo>
+        </else>
         </if>
         
-        <!--<runtarget target="oracle.CheckDbs" />-->
         <if>
             <equals arg1="${installType}" arg2="portalComplete" />
             <then>
@@ -236,6 +267,7 @@
                 <!-- make sure that the metadata menu is visible -->
                 <runtarget target="mysql.showMetadataMenu"/>
                 <runtarget target="oracle.showMetadataMenu"/>
+                <runtarget target="postgres.showMetadataMenu"/>
             </then>
             <elseif>
                 <equals arg1="${installType}" arg2="portalOnly" />
@@ -409,6 +441,7 @@
     <target name="configurePortalOnly">
     	<runtarget target="mysql.hideMetadataMenu"/>
     	<runtarget target="oracle.hideMetadataMenu"/>
+    	<runtarget target="postgres.hideMetadataMenu"/>
         
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application.war" />
     </target>
@@ -500,12 +533,13 @@
         <echo>Konfiguration des Portals
         </echo>
     	
-    	<!-- First create database if needed ! NOTICE: Only on MySQL ! Oracle has to be created manually. -->
-    	<!-- MySQL/Oracle targets set ${portal.version} correctly so database update below works. -->
+    	<!-- First create database if needed ! NOTICE: Only on MySQL and PostgreSQL ! Oracle has to be created manually. -->
+    	<!-- MySQL/Oracle/PostgreSQL targets set ${portal.version} correctly so database update below works. -->
         <if>
             <equals arg1="${portal.db.not.exists}" arg2="true" />
             <then>
                 <runtarget target="mysql.PortalDbUpdateFromInitial"/> 
+                <runtarget target="postgres.PortalDbUpdateFromInitial"/> 
                 <runtarget target="oracle.UpdateDbManually"/>
             </then>
         </if>
@@ -517,6 +551,7 @@
                 <!-- import was executed but no patches installed yet -->
                 <runtarget target="mysql.PortalDbUpdateFromInitial"/>
                 <runtarget target="oracle.PortalDbUpdateFromInitial"/>
+                <runtarget target="postgres.PortalDbUpdateFromInitial"/> 
                 <runtarget target="copyMigrationTools35ManualMigration"/>
             </then>
         <elseif>
@@ -608,6 +643,7 @@
             <then>
                 <runtarget target="mysql.PortalDbUpdateFrom401"/>
                 <runtarget target="oracle.PortalDbUpdateFrom401"/>
+                <runtarget target="postgres.PortalDbUpdateFrom401"/>
             </then>
         </elseif>
         <elseif>
@@ -627,12 +663,26 @@
         <if>
             <equals arg1="${useOracle}" arg2="true" />
             <then>
+                <runtarget target="oracle.mdekDbNotExists"/>
                 <runtarget target="oracle.mdekDbExists"/>
             </then>
-            <else>
+        <elseif>
+            <equals arg1="${usePostgres}" arg2="true" />
+            <then>
+                <runtarget target="postgres.mdekDbNotExists"/>
+                <runtarget target="postgres.mdekDbExists"/>
+            </then>
+        </elseif>
+        <elseif>
+            <equals arg1="${useMysql}" arg2="true" />
+            <then>
                 <runtarget target="mysql.mdekDbNotExists"/>
                 <runtarget target="mysql.mdekDbExists"/>
-            </else>
+            </then>
+        </elseif>
+        <else>
+            <echo>Probleme bei der Ermittlung der Datenbank.</echo>
+        </else>
         </if>
     </target>
 
@@ -657,6 +707,7 @@
     <target name="cleanuptarget">
         <delete file="${mysqlDbDriverInApache}"/>
         <delete file="${oracleDbDriverInApache}"/>
+        <delete file="${postgresDbDriverInApache}"/>
         
         <echo>
         =================
