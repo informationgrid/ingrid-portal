@@ -21,8 +21,13 @@
  * **************************************************#
  */
 a {
-  color: #871D33;
+  color: #666666;
 }
+
+a:hover {
+  text-decoration: underline;
+}
+
 
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -71,11 +76,12 @@ thead {
 }
 
 #btn_search {
-  background: #E0003C;
-  border-color: #E0003C;
+  background: #871D33;
+  border-color: #871D33;
 }
 #btn_search:not([disabled]):hover, #btn_search:not([disabled]):focus, #btn_search:not([disabled]):active {
   color: #fff !important;
+  text-decoration: underline;
 }
 
 .btn--secondary:not([disabled]):hover, .btn--secondary:not([disabled]):focus, .btn--secondary:not([disabled]):active {
@@ -111,7 +117,7 @@ thead {
 }
 
 .nav__foot a:hover {
-  background: #E2E2E2;
+  background: #666666;
 }
 
 .nav-desktop {
@@ -151,11 +157,11 @@ thead {
 }
 
 .nav-overlay__item--level1 {
-  border-bottom: 1px solid #E2E2E2;
+  border-bottom: 1px solid #666666;
 }
 
 .no-touchevents .nav-overlay__item--level1:hover, .nav-overlay__item--level1.is-active {
-  background: #E2E2E2;
+  background: #666666;
 }
 
 .no-touchevents .nav-overlay__item--level2:hover, .nav-overlay__item--level2.is-active, .no-touchevents
@@ -218,15 +224,15 @@ thead {
 }
 
 .no-touchevents .filter__title:hover {
-  color: #871D33;
+  color: #666666;
 }
 
 .no-touchevents .sidebar-filter-subheader:hover {
-  color: #871D33;
+  color: #666666;
 }
 
 .no-touchevents .sidebar-filter-content ul a:hover {
-  color: #871D33;
+  color: #666666;
 }
 
 .no-touchevents .tree__toggle:hover {
@@ -253,7 +259,7 @@ thead {
 }
 
 .header__widget__icon.is-active {
-  fill: #E0003C;
+  fill: #871D33;
 }
 
 @media screen and (min-width: 640px) {
@@ -281,7 +287,7 @@ thead {
   }
 
   .header__widget__icon.is-active {
-    fill: #E0003C;
+    fill: #871D33;
   }
 }
 
@@ -353,12 +359,21 @@ thead {
 }
 
 .search-result .icon {
-    fill: #871D33;
     font-size: 1.2rem;
-    margin: -2px 0;
-    
 }
 
 .search-result h4 a {
     margin: 0 0 0 5px;
+}
+
+.sidebar__widget__title, .sidebar-filter-subheader, .field-toggle__label {
+    color: #666666;
+}
+
+.sidebar__widget__title:hover, .sidebar-filter-subheader:hover, .field-toggle__label:hover {
+    text-decoration: underline;
+}
+
+.btn--secondary[disabled] {
+    color: #DDD !important;
 }
