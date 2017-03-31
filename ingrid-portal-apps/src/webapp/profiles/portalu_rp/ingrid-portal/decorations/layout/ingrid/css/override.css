@@ -299,15 +299,6 @@ thead {
     width: inherit;
 }
 
-.desktop__title p.main__title {
-    font-size: 27px;
-}
-
-.mobile__title {
-    padding: 0 5px;
-    color: #FFFFFF;
-}
-
 .desktop-logo {
     width: 56px;
     padding:5px 0 0 0;
@@ -326,16 +317,23 @@ thead {
     font-weight: bold;
 }
 
+.desktop__title:hover {
+    text-decoration: none;
+}
+
 .desktop__title p.sub__title {
     font-size: 16px;
 }
 
 .mobile__title {
-     font-size: 27px;
+    font-size: 27px;
+    padding: 0 5px;
+    color: #FFFFFF;
 }
 
 .mobile__title:hover {
     color: #FFFFFF;
+    text-decoration: none;
 }
 
 .footer__logo {

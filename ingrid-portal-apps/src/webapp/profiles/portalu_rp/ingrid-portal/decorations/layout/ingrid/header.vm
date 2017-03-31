@@ -90,7 +90,7 @@
                         <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
                         <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
                     </a>
-                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">PortalU <span class="mq-hide-l">- Umweltportal Rheinland-Pfalz</span></a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">PortalU <span class="mq-hide-xl">- Umweltportal Rheinland-Pfalz</span></a>
                 </div>
                 #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)
