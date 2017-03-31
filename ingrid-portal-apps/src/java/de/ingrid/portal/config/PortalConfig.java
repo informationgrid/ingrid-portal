@@ -103,18 +103,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_PROFILE = "portal.profile";
 
-    public static final String PORTAL_ENABLE_SEARCH_MEASURES_SEARCHTERM = "portal.enable.search.measures.searchterm";
-    
-    public static final String PORTAL_ENABLE_SEARCH_MEASURES_GROUPING = "portal.enable.search.measures.grouping";
-    
-    public static final String PORTAL_ENABLE_SEARCH_MEASURES_DOSEARCH = "portal.enable.search.measures.dosearch";
-    
-    public static final String PORTAL_ENABLE_SEARCH_MEASURES_PROVIDER = "portal.enable.search.measures.provider";
-    
     public static final String PORTAL_ENABLE_SEARCH_CATALOG = "portal.enable.search.catalog";
 
-    public static final String PORTAL_ENABLE_SEARCH_CATALOG_HIERARCHY_TREE = "portal.enable.search.catalog.hierarchy.tree";
-    
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER = "portal.search.restrict.partner";
     
     public static final String PORTAL_SEARCH_DEFAULT_DATASOURCE = "portal.search.default.datasource";
@@ -201,9 +191,6 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_SEARCH_HIDDEN_DATATYPES = "portal.search.hidden.datatype";
     
     public static final String PORTAL_SEARCH_HIT_PARTNER_LOGO = "portal.search.hit.partner.logo";
-    
-    // Enable debug mode of webmap-client
-    public static final String PORTAL_WEBMAPCLIENT_DEBUG = "portal.webmapclient.debug";
     
     public static final String PORTAL_ADMIN_NUMBER_ROW_PROVIDER = "portal.admin.number.row.provider";
     

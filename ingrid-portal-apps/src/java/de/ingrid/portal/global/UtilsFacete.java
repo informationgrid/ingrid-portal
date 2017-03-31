@@ -606,7 +606,6 @@ public class UtilsFacete {
         }else{
             setFacetSelectionState(context, request, "isMapSelect", false);
         }
-        context.put("webmapDebugMode", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_WEBMAPCLIENT_DEBUG, false));
     }
     
     @SuppressWarnings("rawtypes")

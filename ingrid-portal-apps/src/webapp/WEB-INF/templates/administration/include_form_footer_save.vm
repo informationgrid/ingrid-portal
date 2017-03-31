@@ -1,4 +1,4 @@
 $action.setParameter('action','doOriginalSettings')
 <div class="media__obj media__obj--right">
-    #renderInputButtonClass("$MESSAGES.getString('common.form.button.save')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--medium")
+    #renderInputButtonClass("$MESSAGES.getString('common.form.button.save')" "width:100%" "submitReload" "" "btn btn--secondary btn--medium")
 </div>

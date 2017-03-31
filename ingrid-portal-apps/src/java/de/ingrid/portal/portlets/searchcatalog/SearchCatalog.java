@@ -24,13 +24,11 @@ package de.ingrid.portal.portlets.searchcatalog;
 
 import java.io.IOException;
 
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 
 /**
@@ -46,16 +44,10 @@ abstract class SearchCatalog extends GenericVelocityPortlet {
     /** tab param value if tab hierarchy is clicked */
     protected final static String PARAMV_TAB_HIERARCHY = "1";
 
-    /** tab param value if tab thesaurus is clicked */
-    protected final static String PARAMV_TAB_THESAURUS = "2";
-
     // START PAGES FOR TABS
 
     /** page for tab "hierarchy" */
     protected final static String PAGE_HIERARCHY = "/portal/search-catalog/search-catalog-hierarchy.psml";
-
-    /** page for tab "thesaurus" */
-    protected final static String PAGE_THESAURUS = "/portal/search-catalog/search-catalog-thesaurus.psml";
 
     // VARIABLE NAMES FOR VELOCITY
 
@@ -69,17 +61,6 @@ abstract class SearchCatalog extends GenericVelocityPortlet {
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
-        context.put("enable_hierarchy_tree", PortalConfig.getInstance().getBoolean(
-                PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG_HIERARCHY_TREE, Boolean.FALSE));
-		
         super.doView(request, response);
-    }
-
-    protected void processTab(ActionResponse actionResponse, String tab) throws PortletException, IOException {
-        if (tab.equals(PARAMV_TAB_HIERARCHY)) {
-            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_HIERARCHY));
-        } else if (tab.equals(PARAMV_TAB_THESAURUS)) {
-            actionResponse.sendRedirect(actionResponse.encodeURL(PAGE_THESAURUS));
-        }
     }
 }
