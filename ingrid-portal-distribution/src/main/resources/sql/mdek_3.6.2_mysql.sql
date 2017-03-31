@@ -4,7 +4,7 @@
 
 UPDATE `info` SET `value_name` = '3.6.2' WHERE  `info`.`key_name` = 'version';
 
--- Updated stuff for InGrid 3.6.1
+-- Updated stuff for InGrid 3.6.2
 -- ==============================
 
 DELETE FROM help_messages WHERE gui_id = 3225;

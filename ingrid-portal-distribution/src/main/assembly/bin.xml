@@ -91,6 +91,7 @@ dom4j: otherwise problems in portal-base and portal-app webapp, when writing PSM
                 <include>org.apache.portals.jetspeed-2:jetspeed-api</include>
                 <include>org.apache.portals.jetspeed-2:jetspeed-commons</include>
                 <include>mysql:mysql-connector-java</include>
+                <include>org.postgresql:postgresql</include>
                 <include>ojdbc:ojdbc</include>
                 <include>org.apache.portals.pluto:pluto-taglib</include>
                 <include>org.apache.portals.pluto:pluto-container-api</include>

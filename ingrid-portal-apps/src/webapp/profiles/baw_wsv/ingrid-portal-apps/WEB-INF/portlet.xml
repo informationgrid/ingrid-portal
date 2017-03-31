@@ -1248,86 +1248,6 @@
         <supported-locale>en</supported-locale>
     </portlet>
 
-    <portlet id="MyPortalPersonalizeOverviewPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/myportal/myportal_personalize_overview.vm</value>
-        </init-param>
-        
-        <portlet-name>MyPortalPersonalizeOverviewPortlet</portlet-name>
-        <display-name>MyPortalPersonalizeOverviewPortlet</display-name>
-        <description>This portlet displays the myportal personalization dialog: OverView.</description>
-        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizeOverviewPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
-<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
-        <supported-locale>de</supported-locale>
-        <supported-locale>en</supported-locale>
-    </portlet>
-
-    <portlet id="MyPortalPersonalizeHomePortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/myportal/myportal_personalize_home.vm</value>
-        </init-param>
-        
-        <portlet-name>MyPortalPersonalizeHomePortlet</portlet-name>
-        <display-name>MyPortalPersonalizeHomePortlet</display-name>
-        <description>This portlet displays the myportal personalization dialog: home.</description>
-        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizeHomePortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-preferences>
-            <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
-            </preference>
-        </portlet-preferences>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
-<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
-        <supported-locale>de</supported-locale>
-        <supported-locale>en</supported-locale>
-    </portlet>
-    
-    <portlet id="MyPortalPersonalizePartnerPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/myportal/myportal_personalize_partner.vm</value>
-        </init-param>
-        
-        <portlet-name>MyPortalPersonalizePartnerPortlet</portlet-name>
-        <display-name>MyPortalPersonalizePartnerPortlet</display-name>
-        <description>This portlet displays the myportal personalization dialog: Partner.</description>
-        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalPersonalizePartnerPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
-<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
-        <supported-locale>de</supported-locale>
-        <supported-locale>en</supported-locale>
-    </portlet>
-
     <!-- *********************** -->
     <!-- Main Menue              -->
     <!-- *********************** -->
@@ -1756,7 +1676,7 @@
             <title>SprachUmsteller</title>
             <short-title>LangSwitch</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
     
     <portlet id="LanguageSwitchMobile">
@@ -1778,7 +1698,7 @@
             <title>SprachUmsteller</title>
             <short-title>LangSwitch</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
 
     <portlet id="IFramePortalPortlet">

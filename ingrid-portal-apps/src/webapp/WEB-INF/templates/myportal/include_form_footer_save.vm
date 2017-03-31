@@ -1,7 +1,0 @@
-      <div class="formfooter formfooter_border_style">
-        <div align="right">
-$action.setParameter('action','doOriginalSettings')
-          <span class="iconLink"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /><a href="$action">$MESSAGES.getString('personalize.action.reset')</a></span>
-          #renderInputButtonClass("$MESSAGES.getString('common.form.button.save')" "width:100%" "" "" "btn btn--primary btn--medium")
-        </div>
-      </div>

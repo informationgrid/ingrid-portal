@@ -86,8 +86,10 @@
     </target>
 
     <target name="checkPortalDbOracle" unless="only.ige.installation">
+<!--
         <echo>Admin user: ${_adminUser} ... ${_adminPassword}
         </echo>
+-->
         <sql    driver   ="${oracleDriverClass}"
                 classpath ="${oracleDbDriver}"
                 url       ="${_dbUrl}"

@@ -117,9 +117,6 @@
         #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
             #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
-        #elseif($element.url.startsWith('/search-catalog/search-catalog-thesaurus.psml'))
-            #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
         #end
         <li>
             <a href="$linkUrl" title="$linkTitle">$linkName</a>
@@ -238,9 +235,6 @@
                 #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
                     #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
                     #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
-                #elseif($element.url.startsWith('/search-catalog/search-catalog-thesaurus.psml'))
-                    #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
-                    #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
                 #end
                 <a class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
               #end
@@ -362,9 +356,6 @@
                 #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
                     #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
                     #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
-                #elseif($element.url.startsWith('/search-catalog/search-catalog-thesaurus.psml'))
-                    #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
-                    #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
                 #end
                 <a href="$linkUrl" class="nav-overlay__item nav-overlay__item--level2" title="$linkTitle">
                     $linkName
