@@ -165,6 +165,10 @@ define([
                     self.deferredCreation.resolve();
 
                     domClass.remove("loadBlockDiv", "blockerFull");
+                })
+                .then(null, function(err) {
+                    console.error("Error", err);
+                    displayErrorMessage(err);
                 });
 
             },
