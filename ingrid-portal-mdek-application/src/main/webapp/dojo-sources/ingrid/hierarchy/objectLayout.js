@@ -159,7 +159,7 @@ define([
                     console.debug("toggle");
                     // show only required fields initially
                     igeEvents.toggleFields(undefined, "showRequired");
-                    UtilUI.updateBlockerDivInfo("createObjects");
+                    UtilUI.removeBlockerDivInfo("createObjects");
 
                     // tell the calling function that we are finished and can proceed
                     self.deferredCreation.resolve();
