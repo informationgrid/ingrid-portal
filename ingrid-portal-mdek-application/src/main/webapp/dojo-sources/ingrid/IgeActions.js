@@ -391,6 +391,11 @@ define([
                                         self.onAfterLoad();
                                         console.debug("exit loading state");
                                         UtilUI.exitLoadingState();
+                                    })
+                                    .then(null, function(error) {
+                                        // catch any error that happened during init form and setting of data
+                                        console.error("Error loading object or creation of form:", error);
+                                        displayErrorMessage(error);
                                     });
                             } else {
                                 //							console.debug(resultHandler);
