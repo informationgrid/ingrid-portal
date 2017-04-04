@@ -191,7 +191,7 @@ define([
             // if maximum is reached, remove html div and data element
             if (waitInfo.data[id].current == waitInfo.data[id].max) {
                 construct.destroy( "waitInfo_" + id );
-                delete waitInfo.data[id];
+                if (waitInfo.data) delete waitInfo.data[id];
             }
 
             // if no elements are present, hide info
@@ -211,7 +211,7 @@ define([
         	var waitInfo = dom.byId( "waitInfo" );
         	if (waitInfo) {
 	        	construct.destroy( "waitInfo_" + id );
-	            delete waitInfo.data[id];
+	            if (waitInfo.data) delete waitInfo.data[id];
         	}
         },
 
