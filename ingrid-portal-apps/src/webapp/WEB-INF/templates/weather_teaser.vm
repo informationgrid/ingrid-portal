@@ -4,7 +4,7 @@
             #renderPortletTitle($MESSAGES.getString('teaser.weather.title') "h4")
         </div>
         #if($DWD_PATH != "" && $DWD_PATH.length() > 0)
-            <object class="weatherObject" data="$DWD_PATH" type="application/x-shockwave-flash" width="320" height="360">
+            <object class="weatherObject" data="$DWD_PATH" type="application/x-shockwave-flash" width="100%" height="360">
                 #if($DWD_MOVIE != "" && $DWD_MOVIE.length() > 0)
                 <param name="movie" value="$DWD_MOVIE"/>
                 #end
