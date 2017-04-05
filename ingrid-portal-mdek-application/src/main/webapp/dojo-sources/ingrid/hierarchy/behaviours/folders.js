@@ -32,7 +32,8 @@ define(["dojo/_base/declare",
   "dijit/registry",
   "ingrid/message",
   "ingrid/utils/Syslist",
-  "ingrid/utils/Tree"
+  "ingrid/utils/Tree",
+  "dojo/NodeList-traverse"
 ], function(declare, array, lang, domClass, on, query, topic, MenuItem, Button, registry, message, Syslist, TreeUtils) {
 
   return declare(null, {
@@ -78,21 +79,6 @@ define(["dojo/_base/declare",
           registry.byId("dataFormContainer").resize();
         }
       });
-
-      // add button to create document wizard dialog
-      /*topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
-        var pos = data.types.indexOf(message.get("tree.folder"));
-        if (pos !== -1) data.types.splice(pos, 1);
-
-        data.buttons.push({
-          label: message.get("tree.folder.create"),
-          callback: function(closeDialog) {
-            registry.byId("objectClass").set("value", "Class1000");
-            registry.byId("objectName").set("value", message.get("tree.folder.new"));
-            closeDialog();
-          }
-        });
-      });*/
 
       // handle toolbar when folder is selected
       // -> only disable toolbar buttons that are not needed (be careful with IgeToolbar-Class-behaviour)

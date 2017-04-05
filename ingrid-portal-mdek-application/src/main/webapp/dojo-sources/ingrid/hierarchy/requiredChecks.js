@@ -51,26 +51,32 @@ define(["dojo/_base/declare",
         errorInfoField: domConstruct.toDom("<div class='errorInfoBlock'><div>CONTENT</div></div>"),
 
         setErrorLabel: function(id, message){
-            if (array.indexOf(["objectName", "objectClass", "objectOwner"], id) != -1) {
-                domClass.add(id + "Label", "important");
-                return;
-            }
-
-            var domWidget = dom.byId(id);
-            while (domWidget) {
-                if (domClass.contains(domWidget, "outer")) {
-                    // mark the field label red
-                    domClass.add(domWidget, "important");
-
-                    // show error information below the field
-                    if (message) {
-                        var box = lang.clone(this.errorInfoField);
-                        box.firstChild.innerHTML = message;
-                        domWidget.appendChild( box );
-                    }
+            try {
+                if (array.indexOf(["objectName", "objectClass", "objectOwner"], id) != -1) {
+                    domClass.add(id + "Label", "important");
                     return;
                 }
-                domWidget = domWidget.parentNode;
+
+                var domWidget = dom.byId(id);
+                while (domWidget) {
+                    if (domClass.contains(domWidget, "outer")) {
+                        // mark the field label red
+                        domClass.add(domWidget, "important");
+
+                        // show error information below the field
+                        if (message) {
+                            var box = lang.clone(this.errorInfoField);
+                            box.firstChild.innerHTML = message;
+                            domWidget.appendChild( box );
+                        }
+                        return;
+                    }
+                    domWidget = domWidget.parentNode;
+                }
+            } catch (ex) {
+                var errorMessage = "Could not set error label for ID: " + id;
+                console.error(errorMessage, ex);
+                displayErrorMessage(errorMessage);
             }
         },
 
