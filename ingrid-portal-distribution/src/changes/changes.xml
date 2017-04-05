@@ -42,8 +42,14 @@
 			<action type="fix" dev="wemove" issue="REDMINE-585">
                 MAPCLIENT: Fix of embed version by used unallowed JS functions.
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-586">
+            <action type="fix" dev="wemove" issue="REDMINE-586">
                 MAPCLIENT: Fix function embed on accordion share.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-612">
+                MAPCLIENT: Fix mapclient search.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-613">
+                MAPCLIENT: Fix default projection change.
             </action>
         </release>
 
