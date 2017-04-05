@@ -181,7 +181,7 @@ define([
         updateBlockerDivInfo: function(id) {
             var waitInfo = dom.byId( "waitInfo" );
 
-            if (!id || !waitInfo.data[id])
+            if (!id || !waitInfo || !waitInfo.data || !waitInfo.data[id])
                 return;
             waitInfo.data[id].current++;
             dom.byId( "waitInfo_" + id ).innerHTML = string.substitute( waitInfo.data[id].text,
