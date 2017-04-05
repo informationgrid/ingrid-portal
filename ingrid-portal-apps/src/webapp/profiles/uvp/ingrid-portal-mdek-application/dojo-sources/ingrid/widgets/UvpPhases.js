@@ -425,7 +425,7 @@ define([
             getDocTableStructure: function() {
                 return [
                     { field: 'label', name: message.get("uvp.form.table.docs.title") + "*", width: '350px', editable: true },
-                    { field: 'link', name: message.get("uvp.form.table.docs.link") + "*", width: '260px', editable: true, formatter: Formatters.LinkCellFormatter },
+                    { field: 'link', name: message.get("uvp.form.table.docs.link") + "*", width: '260px', editable: false, formatter: Formatters.LinkCellFormatter },
                     // { field: 'type', name: message.get("uvp.form.table.docs.type"), width: '50px', editable: true }, // do not display type (#1081)
                     // { field: 'size', name: message.get("uvp.form.table.docs.size") + "*", width: '60px', editable: true, formatter: Formatters.MegaBytesCellFormatter },
                     { field: 'expires', name: message.get("uvp.form.table.docs.expires"), width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
@@ -632,19 +632,19 @@ define([
 
                     var getFiles = function(phases, flat) {
                         var files = flat ? [] : {};
-                        for (phase in phases) {
+                        for (var phase in phases) {
                             if (!flat) {
                                 files[phase] = {};
                             }
                             var fields = phases[phase].fields;
-                            for (field in fields) {
+                            for (var field in fields) {
                                 var key = fields[field].key;
                                 var data = fields[field].field.data;
                                 if (data) {
                                     if (!flat) {
                                         files[phase][key] = [];
                                     }
-                                    for (row in data) {
+                                    for (var row in data) {
                                         var file = decodeURI(data[row].link);
                                         if (flat) {
                                             if (array.indexOf(files, file) === -1) {
