@@ -115,7 +115,7 @@
     #if($facetListSize > 6 || $facetListSize < 0)
         #set ($facetListSize = 6)
     #end
-    
+    $facetListSize
     #foreach ($facet in $list)
         #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != 0) || $facet.isDisplay()))
             #if($count % $facetListSize == 0)
@@ -178,7 +178,7 @@
                             #end
                         </div>
                         #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
-                            <div class="tx-center category_count">($hits.get("FACETS").get("$facetId:$facet.getId()"))</div>
+                            <div class="tx-center category_count">($hits.get("FACETS").get("$facetId:$facet.getId()")) $count $facetList.size()</div>
                         #end
                     </a>
                 </div>
@@ -198,10 +198,10 @@
                     </a>
                 </div>
             </div>
-            #set ($count = $count + 1)
             #if($count % $facetListSize == 0 || $count >= $facetList.size())
                 </div>
             #end
+            #set ($count = $count + 1)
         #end
     #end
 #end
