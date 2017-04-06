@@ -147,6 +147,9 @@ define(["dojo/_base/declare",
     isFolderDisabledForNode: function(node) {
       var excludedId = "addressFreeRoot";
 
+      // root nodes should be enabled to create folders
+      if (node.id === "objectRoot" || node.id === "addressRoot") return false;
+
       // check if we have write permission and node is not excluded
       if (!node.userWriteTreePermission || node.id === excludedId) return true;
 
