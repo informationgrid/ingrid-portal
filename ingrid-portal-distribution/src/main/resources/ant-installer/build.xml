@@ -385,6 +385,9 @@
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/lib"/>
+    	<!-- also profiles directory to have plain profiles from update! -->
+        <echo>Alte Portal Profile löschen</echo>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/profiles"/>
         <!-- remove tomcat working dir to force compilation of JSPs -->
         <delete dir="${installDir}/${tomcat-artifact}/work"/>
     </target>

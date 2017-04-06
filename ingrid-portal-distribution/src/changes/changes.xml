@@ -6,6 +6,9 @@
     </properties>
     <body>
         <release version="4.0.2-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.2">
+            <action type="fix" dev="wemove" issue="REDMINE-589">
+                PORTAL: Cleanup old installation before updating with new one to remove old files.
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-548">
                 IGE: Tree on duplicate page must not show addresses.
             </action>
