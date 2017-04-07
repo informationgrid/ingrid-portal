@@ -36,6 +36,9 @@
 			<action type="add" dev="wemove" issue="REDMINE-486">
                 PORTAL: Add UVP profile to portal.
             </action>
+            <action type="add" dev="wemove" issue="REDMINE-623">
+                PORTAL: Set collapsed of layer control to false for UVP map.
+            </action>
             <action type="add" dev="wemove" issue="REDMINE-599">
                 MAPCLIENT: Add setting to hide catalog accordion on menu.
             </action>
