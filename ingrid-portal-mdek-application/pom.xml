@@ -6,7 +6,6 @@
         <version>4.0.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-mdek-application</artifactId>
     <packaging>war</packaging>
     <name>InGrid Portal MDEK Application</name>
@@ -216,7 +215,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-external-service-sns</artifactId>
-            <version>3.6.2.1</version>
+            <version>4.0.2</version>
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
