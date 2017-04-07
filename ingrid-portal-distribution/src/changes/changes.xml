@@ -54,6 +54,9 @@
             <action type="fix" dev="wemove" issue="REDMINE-613">
                 MAPCLIENT: Fix default projection change.
             </action>
+            <action type="fix" dev="wemove" issue="REDMINE-619">
+                MAPCLIENT: Fix remove script-tag on getFeatureInfo response.
+            </action>
         </release>
 
         <release version="4.0.1" date="2017-02-01" description="Release 4.0.1">
