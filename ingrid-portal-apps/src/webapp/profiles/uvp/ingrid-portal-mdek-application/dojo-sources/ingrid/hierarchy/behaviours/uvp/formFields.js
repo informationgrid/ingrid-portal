@@ -181,18 +181,22 @@ define(["dojo/_base/declare",
             spatialInput.set("disabled", true);
 
             var self = this;
+            var zoomToBoundingBox = function() {
+                var val = spatialInput.get("value");
+                if (val !== "") {
+                    var fixedValue = val.indexOf(": ") === -1 ? val : val.substr(val.indexOf(": ") + 2);
+                    var arrayValue = fixedValue.split(',');
+
+                    self.nominatimSearch._zoomToBoundingBox([arrayValue[1], arrayValue[3], arrayValue[0], arrayValue[2]], true);
+                }
+            };
+
             new Button({
                 id: this.prefix + "btnSpatialValueShow",
                 label: message.get("uvp.form.showSpatial"),
                 "class": "optional show right",
                 onClick: function() {
-                    var val = spatialInput.get("value");
-                    if (val !== "") {
-                        var fixedValue = val.indexOf(": ") === -1 ? val : val.substr(val.indexOf(": ") + 2);
-                        var arrayValue = fixedValue.split(',');
-
-                        self.nominatimSearch._zoomToBoundingBox([arrayValue[1], arrayValue[3], arrayValue[0], arrayValue[2]], true);
-                    }
+                    zoomToBoundingBox();
                     domClass.remove("uvpNominatimSearch", "hide");
                     self.nominatimSearch.map.invalidateSize();
                     dom.byId("uvp_spatial").focus();
@@ -221,7 +225,13 @@ define(["dojo/_base/declare",
                 domClass.add("uvpNominatimSearch", "hide");
             });
 
-            require("ingrid/IgeActions").additionalFieldWidgets.push(spatialInput);
+            var igeActions = require("ingrid/IgeActions");
+            igeActions.additionalFieldWidgets.push(spatialInput);
+
+            // reposition map on object load
+            aspect.after(igeActions, "onAfterLoad", function() {
+                zoomToBoundingBox();
+            });
         }
     })();
 });
