@@ -15,8 +15,8 @@
     <options>/service-contact.psml</options>
     <options>/service-sitemap.psml</options>
     <options>/disclaimer.psml</options>
+    <options>/privacy.psml</options>
   </menu>
-
 
   <menu name="main-menu">
     <options>/main-search.psml</options>

@@ -816,10 +816,6 @@
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
                 <name>cmsKey</name>
                 <value>ingrid.privacy</value>
             </preference>
