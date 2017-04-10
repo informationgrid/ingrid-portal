@@ -24,7 +24,10 @@
             <action type="fix" dev="wemove" issue="REDMINE-567">
                 PORTAL: Fixed date format on detail view.
             </action>
-			<action type="add" dev="wemove" issue="REDMINE-438">
+            <action type="fix" dev="wemove" issue="REDMINE-628">
+                PORTAL: Split disclaimer and privacy to two different pages.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-438">
                 PORTAL: Added support for PostgreSQL. Full support in installer (create initial portal/mdek database) or migration via tool (see docs in sql directory).
             </action>
 			<action type="add" dev="wemove" issue="REDMINE-380">
