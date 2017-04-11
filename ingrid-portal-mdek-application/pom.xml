@@ -111,6 +111,8 @@
                         <exclude>**/templates/**</exclude>
                         <exclude>**/nls/**</exclude>
                         <exclude>**/ingrid.profile.js</exclude>
+                        <exclude>**/js/leaflet/**</exclude>
+                        <exclude>**/upload/fine-uploader/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
