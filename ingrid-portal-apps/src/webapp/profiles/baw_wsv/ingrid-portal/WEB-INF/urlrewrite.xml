@@ -280,16 +280,6 @@
         <to>/personalisierungsoptionen</to>
     </outbound-rule>
     
-    <!-- Datenschutzbestimmung   -->
-    <rule>
-        <from>/datenschutzbestimmung</from>
-        <to type="forward">/portal/privacy.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/privacy.psml</from>
-        <to>/datenschutzbestimmung</to>
-    </outbound-rule>
-    
     <!-- Weitere Meldungen  -->
     <rule>
         <from>/neuigkeiten</from>
@@ -318,16 +308,6 @@
     <outbound-rule>
         <from>/portal/service-contact.psml</from>
         <to>/kontakt</to>
-    </outbound-rule>
-    
-    <!--  Newsletter  -->
-    <rule>
-        <from>/newsletter</from>
-        <to type="forward">/portal/service-contact-newsletter.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/service-contact-newsletter.psml</from>
-        <to>/newsletter</to>
     </outbound-rule>
     
     <!-- Impressum   -->

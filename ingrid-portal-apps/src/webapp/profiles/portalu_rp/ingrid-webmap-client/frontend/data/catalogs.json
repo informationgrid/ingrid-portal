@@ -1,0 +1,18 @@
+{
+    "topics": [{
+        "defaultBackground": "rp_uekrlp-rlp",
+        "langs": "de,en",
+        "selectedLayers": [],
+        "activatedLayers": [],
+        "backgroundLayers": ["rp_uekrlp-rlp","webatlasde_light-rlp","webatlasde_grau-rlp"],
+        "id": "themen"
+    },
+    {
+        "defaultBackground": "rp_uekrlp-rlp",
+        "langs": "de,en",
+        "selectedLayers": [],
+        "activatedLayers": [],
+        "backgroundLayers": ["rp_uekrlp-rlp","webatlasde_light-rlp","webatlasde_grau-rlp"],
+        "id": "anbieter"
+    }]
+}

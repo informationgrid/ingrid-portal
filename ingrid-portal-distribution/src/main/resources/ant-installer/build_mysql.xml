@@ -60,6 +60,7 @@
     <property name="updateMySQL362" location="${installDir}/sql/update_3.6.2_mysql.sql"/>
     <property name="updateMySQL400" location="${installDir}/sql/update_4.0.0_mysql.sql"/>
     <property name="updateMySQL401" location="${installDir}/sql/update_4.0.1_mysql.sql"/>
+    <property name="updateMySQL402" location="${installDir}/sql/update_4.0.2_mysql.sql"/>
 
     <!-- mysql ige imports -->
     <property name="mdekDB"          location="${installDir}/sql/mdek_0_mysql.sql"/>
@@ -77,7 +78,7 @@
     <property name="mdekDB_401"      location="${installDir}/sql/mdek_4.0.1_mysql.sql"/>
 
 
-    <target name="CheckDbs" depends="checkPortalDb, checkMdekDb" if="useMysql">
+    <target name="CheckDbs" depends="checkPortalDbMysql, checkMdekDbMysql" if="useMysql">
         <echo>DBs checked for existence and version
         </echo>
         <echo>Portal DB not existed      : ${portal.db.not.exists}</echo>
@@ -86,7 +87,7 @@
         <echo>MDEK DB not exists         : ${mdek.db.not.exists}</echo>
     </target>
 
-    <target name="checkPortalDb" depends="tryCreatePortalDb" if="portal.installed" unless="only.ige.installation">
+    <target name="checkPortalDbMysql" depends="tryCreatePortalDbMysql" if="portal.installed" unless="only.ige.installation">
         <sql    driver   ="${mySqlDriverClass}"
                 classpath ="${mySqlDbDriver}"
                 url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
@@ -122,7 +123,7 @@
         <property file="version.properties" />
     </target>
 
-    <target name="checkMdekDb" if="ige.installed" unless="withoutIge" depends="tryCreateMdekDb">
+    <target name="checkMdekDbMysql" if="ige.installed" unless="withoutIge" depends="tryCreateMdekDbMysql">
         <sql    driver    ="${mySqlDriverClass}"
                 classpath ="${mySqlDbDriver}"
                 url       ="${_mdekDBUrl}"
@@ -142,7 +143,7 @@
          = PORTAL DATABASE                           =
          ============================================= -->
          
-    <target name="tryCreatePortalDb" if="portal.installed" description="Create a mySQL database.">
+    <target name="tryCreatePortalDbMysql" if="portal.installed" description="Create a mySQL database.">
         <echo>MySQL-Portal-Datenbank erstellen (${_dbUrl})
         </echo>
 
@@ -324,7 +325,8 @@
             <transaction src="${updateMySQL361}"/>
             <transaction src="${updateMySQL362}"/>
             <transaction src="${updateMySQL400}"/>
-            <transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL402}"/>
         </sql>
     </target>
     
@@ -343,8 +345,9 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL362}"/>
-            <transaction src="${updateMySQL400}"/>
-            <transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL400}"/>
+			<transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL402}"/>
         </sql>
     </target>
 
@@ -363,9 +366,11 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL400}"/>
-            <transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL402}"/>
         </sql>
     </target>
+
     <target name="PortalDbUpdateFrom400" if="useMysql">
         <echo>MySQL-Portal Daten importieren (ab 4.0.0)
         </echo>
@@ -381,14 +386,34 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateMySQL401}"/>
+			<transaction src="${updateMySQL402}"/>
         </sql>
     </target>
+
+	<target name="PortalDbUpdateFrom401" if="useMysql">
+        <echo>MySQL-Portal Daten importieren (ab 4.0.1)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${mySqlDriverClass}"
+                classpath ="${mySqlDbDriver}"
+                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateMySQL402}"/>
+        </sql>
+    </target>
+
 
     <!-- =============================================
          = IGE MDEK DATABASE                         =
          ============================================= -->
     
-    <target name="tryCreateMdekDb" if="ige.installed" unless="withoutIge" description="Create a mySQL database.">
+    <target name="tryCreateMdekDbMysql" if="ige.installed" unless="withoutIge" description="Create a mySQL database.">
         <echo>MySQL-Mdek-Datenbank erstellen (${_mdekDBUrl})
         </echo>
 

@@ -136,9 +136,14 @@ public class AddressServiceImpl implements AddressService {
 		MdekAddressBean data = null;
 		try {
 			data = addressRequestHandler.getInitialAddress(parentUuid);
-		} catch (Exception e) {
-			log.error("Error while getting address data.", e);
-		}
+		} catch (MdekException e) {
+            // Wrap the MdekException in a RuntimeException so dwr can convert it
+            log.error("Error creating address.", e);
+            throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (RuntimeException e) {
+            log.error("Error creating address", e);
+            throw e;
+        }
 
 		if (data != null) {
     		MdekAddressUtils.setInitialValues(data);

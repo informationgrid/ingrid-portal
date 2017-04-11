@@ -236,8 +236,8 @@
                             #renderSectionTitle($MESSAGES.getString("time_reference"))
                             <div class="search-result--nested">
                                 ## Durch die Ressource abgedeckte Zeitspanne
-                                #set($beginTime = $TOOL.convertDateString($TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition")))
-                                #set($endTime = $TOOL.convertDateString($TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition")))
+                                #set($beginTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition"))
+                                #set($endTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition"))
                                 #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
                                     #if($beginTime == $endTime)
                                         #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime")
@@ -269,21 +269,21 @@
                                 ## Erstellung 
                                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
                                 #if($title.length() > 0)
-                                    #set($tmp = $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
+                                    #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
                                     #renderTextLabelAbove($title $tmp)
                                     #set($tmp = "")
                                 #end
                                 ## Publikation
                                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
                                 #if($title.length() > 0)
-                                    #set($tmp = $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
+                                    #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
                                     #renderTextLabelAbove($title $tmp)
                                     #set($tmp = "")
                                 #end
                                 ## letzte Änderung 
                                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
                                 #if($title.length() > 0)
-                                    #set($tmp = $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
+                                    #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
                                     #renderTextLabelAbove($title $tmp)
                                     #set($tmp = "")
                                 #end

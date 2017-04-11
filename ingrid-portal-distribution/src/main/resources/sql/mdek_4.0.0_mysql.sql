@@ -4,7 +4,7 @@
 
 UPDATE `info` SET `value_name` = '4.0.0' WHERE  `info`.`key_name` = 'version';
 
--- Updated stuff for InGrid 3.6.1
+-- Updated stuff for InGrid 4.0.0
 -- ==============================
 
 INSERT INTO `help_messages` (`id`, `version`, `gui_id`, `entity_class`, `language`, `name`, `help_text`, `sample`) VALUES

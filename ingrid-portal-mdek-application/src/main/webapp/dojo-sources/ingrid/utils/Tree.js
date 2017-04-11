@@ -153,11 +153,17 @@ define([
                 
                 this._recursiveDelete(tree.model, node.getChildren());
 
+                var parentNode = node.getParent();
+
                 // finally delete the node itself
                 // delete tree.model.childrenCache[node.item.id];
                 // tree.model.onDelete(node.item);
                 tree.model.store.remove(node.item.id);
 
+                // remove isFolder property from parent if there's no child under the parent
+                if (!parentNode.hasChildren()) {
+                    parentNode.item.isFolder = false;
+                }
             }
         },
 
@@ -188,6 +194,8 @@ define([
                     def.resolve(this.getNodesByItem(item.id)[0]);
                 });
                 item.parent = parentNode.item.id;
+                // make sure parent is now a folder with at least one child
+                parentNode.item.isFolder = true;
                 tree.model.store.add(item);
             });
 

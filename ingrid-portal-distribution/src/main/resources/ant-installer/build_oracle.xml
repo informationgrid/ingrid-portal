@@ -57,6 +57,7 @@
     <property name="updateOracle362" location="${installDir}/sql/update_3.6.2_oracle.sql"/>
     <property name="updateOracle400" location="${installDir}/sql/update_4.0.0_oracle.sql"/>
     <property name="updateOracle401" location="${installDir}/sql/update_4.0.1_oracle.sql"/>
+    <property name="updateOracle402" location="${installDir}/sql/update_4.0.2_oracle.sql"/>
     
 
     <!-- oracle ige imports -->
@@ -85,8 +86,10 @@
     </target>
 
     <target name="checkPortalDbOracle" unless="only.ige.installation">
+<!--
         <echo>Admin user: ${_adminUser} ... ${_adminPassword}
         </echo>
+-->
         <sql    driver   ="${oracleDriverClass}"
                 classpath ="${oracleDbDriver}"
                 url       ="${_dbUrl}"
@@ -315,6 +318,7 @@
             <transaction src="${updateOracle362}"/>
             <transaction src="${updateOracle400}"/>
 			<transaction src="${updateOracle401}"/>
+			<transaction src="${updateOracle402}"/>
         </sql>
     </target>
 	
@@ -335,6 +339,7 @@
             <transaction src="${updateOracle362}"/>
 			<transaction src="${updateOracle400}"/>
 			<transaction src="${updateOracle401}"/>
+			<transaction src="${updateOracle402}"/>
         </sql>
     </target>
 
@@ -354,6 +359,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle400}"/>
 			<transaction src="${updateOracle401}"/>
+			<transaction src="${updateOracle402}"/>
         </sql>
     </target>
 
@@ -372,8 +378,28 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle401}"/>
+			<transaction src="${updateOracle402}"/>
         </sql>
     </target>
+	
+	<target name="PortalDbUpdateFrom401" if="useOracle">
+        <echo>Oracle-Portal Daten importieren (ab 4.0.1)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updateOracle402}"/>
+        </sql>
+    </target>
+
 
     <!-- =============================================
          = IGE MDEK DATABASE                         =

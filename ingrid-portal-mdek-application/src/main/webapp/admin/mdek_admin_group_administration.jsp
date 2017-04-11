@@ -59,20 +59,12 @@
 
             on(_container_, "Load", function() {
 
-                var def = pageGroupAdmin.createLayout();
-                if (UtilSecurity.currentUser.role == 1) {
-                    //def.resolve(null);
-                } else {
-                    def = def.then(function() {
-                        return pageGroupAdmin.getGroupDetailsById(currentUser.groupIds);
+                pageGroupAdmin.createLayout()
+                    .then(function(groupDetails) {
+                        pageGroupAdmin.currentUserGroupDetails = groupDetails;
+                        pageGroupAdmin.hidePermissionLists();
+                        LoadingZone.hide();
                     });
-                }
-
-                def.then(function(groupDetails) {
-                    pageGroupAdmin.currentUserGroupDetails = groupDetails;
-                    pageGroupAdmin.hidePermissionLists();
-                    LoadingZone.hide();
-                });
 
                 registry.byId("groupAdministrationTab").watch("selectedChildWidget", function() {
                     registry.byId("groupDataRightsAddressesList").reinitLastColumn();
@@ -641,7 +633,6 @@
             pageGroupAdmin.getGroupDetails = function(groupName) {
 
                 var deferred = new Deferred();
-
                 SecurityService.getGroupDetails(groupName, {
                     preHook: LoadingZone.show,
                     postHook: LoadingZone.hide,
@@ -704,13 +695,14 @@
 
             // -- Error handling --
             pageGroupAdmin.displayCreateGroupErrorMessage = function(err) {
+                
                 if (err && err.message) {
                     if (err.message.indexOf("ENTITY_ALREADY_EXISTS") != -1) {
                         //          dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.noPermissionError' />", dialog.WARNING);
                         dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.groups.groupAlreadyExistsError' />", dialog.WARNING);
 
                     } else {
-                        dialog.show("<fmt:message key='general.error' />", string.substituteParams("<fmt:message key='dialog.generalError' />", err.message), dialog.WARNING, null, 350, 350);
+                        dialog.show("<fmt:message key='general.error' />", string.substitute("<fmt:message key='dialog.generalError' />", [err.message]), dialog.WARNING, null, 350, 350);
                     }
 
                 } else {

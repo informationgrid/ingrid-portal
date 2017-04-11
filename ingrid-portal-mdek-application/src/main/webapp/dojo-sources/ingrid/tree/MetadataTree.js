@@ -73,7 +73,11 @@ define("ingrid/tree/MetadataTree", [
         // register a function to decide which nodes not to make selectable
         excludeFunction: null,
         
+        // sort nodes in tree by their object class
         sortByClass: false,
+
+        // use special sort function to determine the order of the nodes
+        sortFunction: null,
 
         getPreIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
             var myClass = "TreePreIcon";
@@ -119,7 +123,7 @@ define("ingrid/tree/MetadataTree", [
                 getChildren: function(object){
                     // Add a getChildren() method to store for the data model where
                     // children objects point to their parent (aka relational model)
-                    return this.query({parent: object.id, nodeAppType: object.nodeAppType}, { sortByClass: self.sortByClass });
+                    return this.query({parent: object.id, nodeAppType: object.nodeAppType}, { sortByClass: self.sortByClass, sortFunction: self.sortFunction });
                 }
             } );
 
@@ -195,7 +199,8 @@ define("ingrid/tree/MetadataTree", [
             this.nodesToCopy = nodes;
             this.copySubTree = copySubTree;
             if (this.nodesToCut) {
-                array.forEach(this.nodesToCut, function(node) {
+                array.forEach(this.nodesToCut, function(nodeItem) {
+                    var node = UtilTree.getNodeById("dataTree", nodeItem.id);
                     domClass.remove(node.id, "nodeCut");
                 });
                 this.nodesToCut = null;
@@ -265,8 +270,8 @@ define("ingrid/tree/MetadataTree", [
                                     canBePasted = canBePasted && (srcType === 0); // Only Institutions are allowed below the root node
                                 }
                             }
-                            // The target node is no root node. Compare the src and dst types:
-                            if (dstType >= 2 || (srcType === 0 && dstType === 1)) {
+                            // The target node is no root node and no folder. Compare the src and dst types:
+                            if (dstType !== 1000 && (dstType >= 2 || (srcType === 0 && dstType === 1))) {
                                 canBePasted = false;
                             }
                             

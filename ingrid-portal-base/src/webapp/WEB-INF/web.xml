@@ -601,6 +601,11 @@ limitations under the License.
   </security-role>
 
   <error-page>
+    <error-code>403</error-code>
+    <location>/error403.html</location>
+  </error-page>
+
+  <error-page>
     <error-code>404</error-code>
     <location>/error404.html</location>
   </error-page>

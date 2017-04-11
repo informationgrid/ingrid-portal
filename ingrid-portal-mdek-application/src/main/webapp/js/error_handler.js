@@ -30,6 +30,23 @@ function displayErrorMessage(err) {
         "ingrid/utils/Exceptions"
     ], function(array, string, dialog, message, Exceptions) {
         
+        var printStackTrace = function(error) {
+            var stack = "";
+            
+            if (error.stackTrace.length > 0) {
+                stack = "<br /><br />STACKTRACE<br />";
+            }
+            
+            array.forEach(error.stackTrace, function(stackPart) {
+                stack += "\tclassName: " + stackPart.className +"<br />";
+                stack += "\tfileName: " + stackPart.fileName +"<br />";
+                stack += "\tlineNumber: " + stackPart.lineNumber +"<br />";
+                stack += "\tmethodName: " + stackPart.methodName +"<br />";
+                stack += "---";
+            });
+            
+            return stack;
+        };
         
         if (!(err instanceof Object)) {
             err = {message:err};
@@ -137,26 +154,10 @@ function displayErrorMessage(err) {
             }
             dialog.show(message.get("general.error"), message.get("dialog.undefinedError") + ": " + text, dialog.WARNING);
         }
+
     });
 }
 
-function printStackTrace(error) {
-    var stack = "";
-    
-    if (error.stackTrace.length > 0) {
-        stack = "<br /><br />STACKTRACE<br />";
-    }
-    
-    array.forEach(error.stackTrace, function(stackPart) {
-        stack += "\tclassName: " + stackPart.className +"<br />";
-        stack += "\tfileName: " + stackPart.fileName +"<br />";
-        stack += "\tlineNumber: " + stackPart.lineNumber +"<br />";
-        stack += "\tmethodName: " + stackPart.methodName +"<br />";
-        stack += "---";
-    });
-    
-    return stack;
-}
 
 function formatObjectsFromList(objects) {
     var result = "<ul>";

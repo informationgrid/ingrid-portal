@@ -227,6 +227,7 @@ define([
                     self._handleMultiSelection();
                 }
                 
+                // TODO: the selectNode-event is not called when clicking the root nodes!
                 if (History.hasPrevious()) {
                     self.buttons.Previous.set("disabled", false);
                 }

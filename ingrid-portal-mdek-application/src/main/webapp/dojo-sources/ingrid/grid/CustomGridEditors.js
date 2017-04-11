@@ -38,9 +38,8 @@ define([
     return declare("ingrid.grid.Editors", null, {
 
         TextCellEditor: function(args) {
-            var input;
-            var defaultValue;
-            var scope = this;
+            this.input = null;
+            this.defaultValue = null;
 
             this.init = function() {
                 this.input = new dijit.form.ValidationTextBox({
@@ -104,9 +103,8 @@ define([
         },
 
         DecimalCellEditor: function(args) {
-            var input;
-            var defaultValue;
-            var scope = this;
+            this.input = null;
+            this.defaultValue = null;
 
             this.init = function() {
                 this.input = new dijit.form.NumberTextBox({
@@ -223,6 +221,8 @@ define([
                 box = new dijit.form.FilteringSelect({
                     id: "activeCell_" + args.grid.id,
                     store: store,
+                    autoComplete: args.column.partialSearch ? false : true,
+                    queryExpr: args.column.partialSearch ? "*${0}*" : "${0}*",
                     searchAttr: "0",
                     maxHeight: "150",
                     style: "width:100%; padding:0; color: black; font-family: 10px Verdana, Helvetica, Arial, sans-serif;"
@@ -603,9 +603,8 @@ define([
         },
 
         YesNoCheckboxCellEditor: function(args) {
-            var select;
-            var defaultValue;
-            var scope = this;
+            var select = null;
+            var defaultValue = null;
 
             this.init = function() {};
 

@@ -108,7 +108,7 @@ define([
                         	// Is this still needed? Leads to an error when creating a person!
                             // dlg.destroyRecursive();
                             self._createNewAddress(addressClass, selectedNode);
-                        });
+                        }, function() { /* CANCELED */});
 
                         var params = {
                             parentId: uuid,
@@ -122,17 +122,11 @@ define([
         },
 
         _createNewAddress: function(addressClass, parentNode) {
-            //  console.debug("_createNewAddress("+addressClass+", "+parentNode.id+")");
             var parentId = parentNode.item.id;
 
             var self = this;
             if (addressClass == 3 && parentId == "addressRoot") {
                 alert("This was not expected!");
-                // var treeController = registry.byId("treeController");
-                // treeController.expand(UtilTree.getNodeById("dataTree", "addressRoot"))
-                // .then(function() {
-                //     self._createNewAddress(addressClass, UtilTree.getNodeById("dataTree", "addressFreeRoot"));
-                // });
                 return;
             }
 
@@ -142,12 +136,7 @@ define([
             deferred.then(function(res) {
                 self.attachNewNode(UtilTree.getNodeById("dataTree", parentId), res);
                 parentNode.setSelected(false);
-                // topic.publish("/selectNode", {
-                //     id: "dataTree",
-                //     node: res
-                // });
             }, function(err) {
-                //      dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
                 displayErrorMessage(err);
             });
             console.debug("Publishing event: /createAddressRequest(" + parentId + ")");
@@ -484,11 +473,7 @@ define([
                 });
 
                 checks.resetRequiredFields();
-            }, function(err) {
-                if (err.message != "undefined") {
-                    displayErrorMessage(err);
-                }
-            });
+            }, displayErrorMessage);
 
             console.debug("Publishing event: /saveRequest");
             topic.publish("/saveRequest", {
@@ -1230,7 +1215,7 @@ define([
                             if (tree.selectedNode == nodeToDelete) {
                                 // If the current node was marked as deleted, reload the
                                 // current node (updates permissions, etc.)
-                                UtilTree.reloadNode("dataTree", nodeToDelete);
+                                // FIXME: UtilTree.reloadNode("dataTree", nodeToDelete);
                                 tree.model.store.setValue(nodeToDelete.item, "userWritePermission", false);
                             } else {
                                 // Otherwise update the node that was marked as deleted
@@ -1359,7 +1344,7 @@ define([
         },
 
         openCreateObjectWizardDialog: function() {
-            dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp?c=" + userLocale, 350, 170, true);
+            dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp?c=" + userLocale, 500, null, true);
         },
 
         inheritAddressToChildren: function(msg) {

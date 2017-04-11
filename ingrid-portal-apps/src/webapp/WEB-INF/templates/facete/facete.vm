@@ -6,7 +6,7 @@
             #if(!$node.getQuery())
                 #if($node.getDependency())
                     #if($node.isDependencySelect())
-                        #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                        #if($node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
                             #renderFacetContent($node)
                         #else
                             #if($node.getFacets())
@@ -25,7 +25,7 @@
                 #else
                     #if($node.getHidden())
                         #if($node.isHiddenSelect() == false)
-                            #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                            #if($node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
                                 #renderFacetContent($node)
                             #else
                                 #if($node.getFacets())
@@ -42,7 +42,7 @@
                             #end
                         #end
                     #else
-                        #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                        #if($node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
                             #renderFacetContent($node)
                         #else
                             #if($node.getFacets())
@@ -124,10 +124,13 @@
                 #renderCheckboxTreeDialog ($facet "")
             #end
         #else
-            #if($facet.getId() == 'area' || $facet.getId() == 'attribute' || $facet.getId() == 'area.address')
+            #if($facet.getId() == 'area' || $facet.getId() == 'area.map' || $facet.getId() == 'attribute' || $facet.getId() == 'area.address')
                 ## RAUMBEZUG ##
                 #if($facet.getId() == 'area')
                     #parse ('/WEB-INF/templates/facete/facete_area.vm')
+                #end
+                
+                #if($facet.getId() == 'area.map')
                     #parse ('/WEB-INF/templates/facete/facete_area_map.vm')
                 #end
                 

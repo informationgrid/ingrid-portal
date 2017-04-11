@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+    <name>uvp</name>
+    <description>Portal-Profile für UVP</description>
+    <pages>
+        <page>
+            <name>main-measures.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-chronicle.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-about-data-source.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>search-catalog/search-catalog-hierarchy.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_user/template/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+      </pages>
+    <files>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek-application/</src>
+        </file>
+    </files>
+    <sql>
+        <!-- Disable language switcher -->
+        <execute>
+            <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link']]>
+        </execute>
+    </sql>
+</profile>

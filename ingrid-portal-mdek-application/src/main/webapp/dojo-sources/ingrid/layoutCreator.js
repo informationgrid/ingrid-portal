@@ -129,7 +129,7 @@ define([
                         options.enableAddRow = gridProperties.interactive == "true";
                         options.editable = true;
                     }
-                    if (gridProperties.forceGridHeight) {
+                    if (gridProperties.forceGridHeight !== undefined) {
                         options.forceGridHeight = gridProperties.forceGridHeight == "true";
                     }
                     if (gridProperties.defaultHideScrollbar) {
@@ -442,8 +442,8 @@ define([
             createDomDatebox: function(additionalField) {
                 var inputWidget = new DateTextBox({
                     id: this.additionalFieldPrefix + additionalField.id,
-                    name: additionalField.name,
-                    style: "width:100%;"
+                    name: additionalField.name
+                    // style: "width:100%;" // Datebox does not look nice when to big
                 });
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },
@@ -527,7 +527,8 @@ define([
                 
                 var gridWidget = this.createDataGrid(additionalField.id, null, structure, null, {
                     interactive: "true",
-                    autoHeight: additionalField.rows
+                    autoHeight: additionalField.rows,
+                    forceGridHeight: additionalField.forceGridHeight
                 });
             },
 

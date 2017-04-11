@@ -15,6 +15,7 @@ var profile = (function(){
             },
 
             amd: function(filename, mid) {
+                if (/fine-uploader.js$/.test(filename)) return false;
                 return /\.js$/.test(filename) && !copyOnly(filename, mid);
             }
         }

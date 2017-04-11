@@ -1,0 +1,257 @@
+{
+    "results": {
+        "root": {
+            "category": "root",
+            "staging": "prod",
+            "id": 1,
+            "children": [{
+                "category": "cat70",
+                "staging": "prod",
+                "selectedOpen": false,
+                "label": "Geobasisdaten",
+                "id": 2,
+                "children": [{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "UEK250",
+                    "id": 3,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "UEK250",
+                        "id": 4,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "UEK250",
+                            "layerBodId": "844854934",
+                            "id": 5,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "UEK250 RP",
+                                "layerBodId": "544367771",
+                                "id": 6
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "UEK250 RP Metadaten",
+                                "layerBodId": "-1644133129",
+                                "id": 7
+                            }]
+                        }]
+                    }]
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "DTK100",
+                    "id": 8,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "DTK100",
+                        "id": 9,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "DTK100",
+                            "layerBodId": "844854934",
+                            "id": 10,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "DTK100 RP",
+                                "layerBodId": "71523903",
+                                "id": 11
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "DTK100 RP Metadaten",
+                                "layerBodId": "-768556645",
+                                "id": 12
+                            }]
+                        }]
+                    }]
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "DTK50",
+                    "id": 13,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "DTK50",
+                        "id": 14,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "DTK50",
+                            "layerBodId": "844854934",
+                            "id": 15,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "DTK50 RP",
+                                "layerBodId": "-136239987",
+                                "id": 16
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "DTK50 RP Metadaten",
+                                "layerBodId": "-444760471",
+                                "id": 17
+                            }]
+                        }]
+                    }]
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "DTK25",
+                    "id": 18,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "DTK25",
+                        "id": 19,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "DTK25",
+                            "layerBodId": "844854934",
+                            "id": 20,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "DTK25 RP",
+                                "layerBodId": "-136240075",
+                                "id": 21
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "DTK25 RP Metadaten",
+                                "layerBodId": "-1226830831",
+                                "id": 22
+                            }]
+                        }]
+                    }]
+                },
+                {
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "Luftbild RP Basisdienst",
+                    "id": 23,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "Luftbild RP Basisdienst",
+                        "id": 24,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Luftbild RP Basisdienst",
+                            "layerBodId": "844854934",
+                            "id": 25,
+                            "children": [{
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Luftbild RP",
+                                "layerBodId": "-317460004",
+                                "id": 26
+                            },
+                            {
+                                "category": "layer",
+                                "staging": "prod",
+                                "label": "Luftbild RP Metadaten",
+                                "layerBodId": "-1712900872",
+                                "id": 27
+                            }]
+                        }]
+                    }]
+                }]
+            },
+            {
+                "category": "cat70",
+                "staging": "prod",
+                "selectedOpen": false,
+                "label": "Natur",
+                "id": 29,
+                "children": [{
+                    "category": "cat71",
+                    "staging": "prod",
+                    "selectedOpen": false,
+                    "label": "Schutzgebiete - Naturschutzverwaltung",
+                    "id": 30,
+                    "children": [{
+                        "category": "layer",
+                        "staging": "prod",
+                        "label": "WMS Lanis GDI-DE",
+                        "layerBodId": "340815041",
+                        "id": 31,
+                        "children": [{
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Naturschutzgebiete",
+                            "layerBodId": "-6440823",
+                            "id": 32
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Fauna-Flora-Habitat-Gebiete",
+                            "layerBodId": "-826985668",
+                            "id": 33
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Biosphaerenreservat",
+                            "layerBodId": "-299783548",
+                            "id": 34
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Landschaftsschutzgebiete",
+                            "layerBodId": "-1443813700",
+                            "id": 35
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Naturparke",
+                            "layerBodId": "1516441852",
+                            "id": 36
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Vogelschutzgebiete",
+                            "layerBodId": "-1781291904",
+                            "id": 37
+                        },
+                        {
+                            "category": "layer",
+                            "staging": "prod",
+                            "label": "Nationalparke Grenzen",
+                            "layerBodId": "-2043893354",
+                            "id": 38
+                        }]
+                    }]
+                }]
+            }]
+        }
+    },
+    "last_id": 40
+}

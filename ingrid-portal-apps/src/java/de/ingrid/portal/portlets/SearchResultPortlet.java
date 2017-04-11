@@ -73,8 +73,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
     private final static String TEMPLATE_RESULT_ADDRESS = "/WEB-INF/templates/search_result_address.vm";
 
-    //    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/search_no_result.vm";
-
     private static final String TEMPLATE_RESULT_FILTERED_ONECOLUMN = "/WEB-INF/templates/search_result_iplug.vm";
     
     private HttpClient client;
@@ -413,6 +411,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         }
         context.put("rankedResultList", rankedHits);
         context.put("rankedSearchFinished", rankedSearchFinished);
+        context.put( "UTIL_SEARCH", UtilsSearch.class );
         //context.put("providerMap", getProviderMap());
 
         super.doView(request, response);

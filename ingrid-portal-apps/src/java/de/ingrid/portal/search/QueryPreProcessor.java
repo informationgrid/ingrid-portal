@@ -53,59 +53,16 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 public class QueryPreProcessor {
 
     private final static Logger log = LoggerFactory.getLogger(QueryPreProcessor.class);
-
+    
     /**
-     * Prepares an ranked query for submitting to the ibus. If no query should be submitted,
-     * return null.
+     * <p>Get the list of fields to be requested from the portal configuration. This enabled the
+     * portal profiling to add new fields or remove not used fields to optimize query 
+     * performance.</p>
      * 
-     * @param myQuery The query to submit.
-     * @param ds The datasource type of the query.
-     * @param startHit The hit count to start with.
-     * @return The QueryDescriptor describing the query or null if no query should be submitted.
-     */
-    public static QueryDescriptor createRankedQueryDescriptor(PortletRequest request) {
-        // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
-        // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll()), but
-        // we won't complete copy
-        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
-        IngridQuery query = null;
-        try {
-            log.debug("The QueryString: " + queryString);
-            query = QueryStringParser.parse(queryString);
-            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-                UtilsFacete.facetePrepareInGridQuery(request, query);
-            }
-        } catch (ParseException ex) {
-            if (log.isErrorEnabled()) {
-                log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
-                        + queryString, ex);
-            }
-        }
-
-        // get the datasource
-        String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
-
-        // set search sources according to the persistence preferences
-        // only for ds = PARAMV_DATASOURCE_ENVINFO AND if quer has no custom datatype AND query has no custom metaclass
-        processQuerySources(request, ds, query);
-
-        // add basic data type dependent from query and GUI ! may manipulate the query.
-        // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
-        UtilsSearch.processBasicDataType(request, query, ds);
-
-        // change datasource dependent from query input
-        //ds = UtilsSearch.determineFinalPortalDatasource(ds, query);
-
-        // start hit
-        int startHit = 0;
-        String stateStartHit = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
-        if (stateStartHit.length() != 0) {
-            startHit = (new Integer(stateStartHit)).intValue();
-        }
-
-        int currentPage = (int) (startHit / Settings.SEARCH_RANKED_HITS_PER_PAGE) + 1;
-
-        // always request ALL DATA !!! all kind of hits can be rendered in one page when datatypes are entered in query !
+     * <p>The initial List was:</p>
+     * 
+     * <pre>
+     *    // always request ALL DATA !!! all kind of hits can be rendered in one page when datatypes are entered in query !
         String[] requestedMetadata = new String[] {
             // udk object metadata
             Settings.HIT_KEY_UDK_CLASS,
@@ -144,7 +101,67 @@ public class QueryPreProcessor {
             // so let's skip URL for now ... (26. Sep. 2011)
             // Settings.RESULT_KEY_URL
         };
-        
+        </pre>
+     * 
+     */
+    private final static String[] REQUESTED_FIELDS = PortalConfig.getInstance().getStringArray( PortalConfig.QUERY_REQUESTED_FIELDS ); 
+
+    /**
+     * Prepares an ranked query for submitting to the ibus. If no query should be submitted,
+     * return null.
+     * 
+     * @param myQuery The query to submit.
+     * @param ds The datasource type of the query.
+     * @param startHit The hit count to start with.
+     * @return The QueryDescriptor describing the query or null if no query should be submitted.
+     */
+    public static QueryDescriptor createRankedQueryDescriptor(PortletRequest request) {
+        // create new IngridQuery, so we can manipulate it in ranked search without affecting unranked search
+        // NOTICE: we don't copy it from IngridQuery in state, would be only shallow copy (putAll()), but
+        // we won't complete copy
+        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+        IngridQuery query = null;
+        try {
+            log.debug("The QueryString: " + queryString);
+            
+            if(queryString != null && queryString.trim().length() > 0){
+                query = QueryStringParser.parse(queryString);
+            }else{
+                query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
+            }
+            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
+                UtilsFacete.facetePrepareInGridQuery(request, query);
+            }
+        } catch (ParseException ex) {
+            if (log.isErrorEnabled()) {
+                log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
+                        + queryString, ex);
+            }
+        }
+
+        // get the datasource
+        String ds = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
+
+        // set search sources according to the persistence preferences
+        // only for ds = PARAMV_DATASOURCE_ENVINFO AND if quer has no custom datatype AND query has no custom metaclass
+        processQuerySources(request, ds, query);
+
+        // add basic data type dependent from query and GUI ! may manipulate the query.
+        // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
+        UtilsSearch.processBasicDataType(request, query, ds);
+
+        // change datasource dependent from query input
+        //ds = UtilsSearch.determineFinalPortalDatasource(ds, query);
+
+        // start hit
+        int startHit = 0;
+        String stateStartHit = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
+        if (stateStartHit.length() != 0) {
+            startHit = (new Integer(stateStartHit)).intValue();
+        }
+
+        int currentPage = (int) (startHit / Settings.SEARCH_RANKED_HITS_PER_PAGE) + 1;
+
         // set properties according to the session preferences
         IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
                 IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
@@ -255,7 +272,7 @@ public class QueryPreProcessor {
         //      TODO If no query should be submitted, return null
         // now with PlugDescription for determining type of Hit (Address, Object)
         return new QueryDescriptor(query, Settings.SEARCH_RANKED_HITS_PER_PAGE, currentPage, startHit, PortalConfig
-                .getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, true, requestedMetadata);
+                .getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 30000), true, true, REQUESTED_FIELDS);
     }
 
     private static void processQuerySources(PortletRequest request, String ds, IngridQuery query) {

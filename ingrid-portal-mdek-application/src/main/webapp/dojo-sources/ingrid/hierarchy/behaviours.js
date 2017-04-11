@@ -39,8 +39,11 @@ define(["dojo/_base/declare",
         "ingrid/utils/Grid", 
         "ingrid/utils/UI", 
         "ingrid/utils/List", 
-        "ingrid/utils/Syslist"
-], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist) {
+        "ingrid/utils/Syslist",
+        "ingrid/hierarchy/behaviours/opendata",
+        "ingrid/hierarchy/behaviours/folders"
+], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
+    openData, foldersInHierarchy) {
 
     return declare(null, {
         
@@ -239,7 +242,7 @@ define(["dojo/_base/declare",
                     }
                 });
             }
-        } ,
+        },
         
         dqGriddedDataPositionalAccuracy: {
             title: "Verhalten für die Rasterpositionsgenauigkeit",
@@ -261,7 +264,11 @@ define(["dojo/_base/declare",
                     }
                 });
             }
-        }
+        },
+        
+        foldersInHierarchy: foldersInHierarchy,
+
+        openData: openData
         
         /*
          * ABORTED: The ATOM URL has to be maintained when automatically inserted into document. It's better to adapt the context help

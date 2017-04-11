@@ -24,7 +24,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>" scope="session" />
+<fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
 <fmt:setBundle basename="messages" scope="session"/>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
