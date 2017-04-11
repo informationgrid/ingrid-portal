@@ -15,7 +15,8 @@ UPDATE page SET default_layout_decorator = 'ingrid-untitled', default_portlet_de
 DELETE FROM fragment WHERE name = 'ingrid-portal-apps::PrivacyPortlet';
 
 -- Update layout of disclaimer CMSPortlet
-UPDATE fragment_pref_value SET value = 'block--padded' WHERE pref_id = (SELECT pref_id FROM fragment_pref WHERE name = 'sectionStyle' AND fragment_id = (SELECT fragment_id FROM fragment WHERE name = 'ingrid-portal-apps::CMSPortlet' AND parent_id = (SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE PATH = '/disclaimer.psml'))));
+-- ATTENTION: '--' has to be escaped here otherwise a syntax error appears for the next line (seems to be interpreted as a comment!?)
+UPDATE fragment_pref_value SET value='block\-\-padded' WHERE pref_id=(SELECT pref_id FROM fragment_pref WHERE name='sectionStyle' AND fragment_id=(SELECT fragment_id FROM fragment WHERE name='ingrid-portal-apps::CMSPortlet' AND parent_id=(SELECT fragment_id FROM fragment WHERE page_id=(SELECT page_id FROM page WHERE PATH='/disclaimer.psml'))));
 
 -- Insert page privacy.psml
 INSERT INTO page (PAGE_ID, CLASS_NAME, PARENT_ID, PATH, NAME, VERSION, TITLE, SHORT_TITLE, IS_HIDDEN, SKIN, DEFAULT_LAYOUT_DECORATOR, DEFAULT_PORTLET_DECORATOR, SUBSITE, USER_PRINCIPAL, ROLE_PRINCIPAL, GROUP_PRINCIPAL, MEDIATYPE, LOCALE, EXT_ATTR_NAME, EXT_ATTR_VALUE, OWNER_PRINCIPAL) VALUES 
