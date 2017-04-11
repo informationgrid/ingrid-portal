@@ -75,6 +75,21 @@ define([
                     } else {
                         domClass.add(self.addButton.domNode, "hide");
                     }
+
+                    // set disabled state according to permission
+                    if (data.userWritePermission) {
+                        // button for phases
+                        self.addButton.set("disabled", false);
+
+                        // all upload links
+                        query(".functionalLink", "contentFrameBodyObject").removeClass("hide");
+                    } else {
+                        // button for phases
+                        self.addButton.set("disabled", true);
+
+                        // all upload links
+                        query(".functionalLink", "contentFrameBodyObject").addClass("hide");
+                    }
                 });
 
                 var handler = topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {

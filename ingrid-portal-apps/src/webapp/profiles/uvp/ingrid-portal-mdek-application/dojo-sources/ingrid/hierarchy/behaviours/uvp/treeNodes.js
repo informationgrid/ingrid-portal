@@ -73,7 +73,7 @@ define([
                             registry.byId("toolbarBtnDelSubTree").set("disabled", true);
                             // also disable editing of object name
                             registry.byId("objectName").set("disabled", true);
-                        } else if (message.node.nodeAppType === "O") {
+                        } else if (message.node.nodeAppType === "O" && message.node.userWritePermission) {
                             registry.byId("objectName").set("disabled", false);
                         }
 
