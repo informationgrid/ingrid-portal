@@ -5,9 +5,12 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="4.0.2-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.2">
+        <release version="4.0.2" date="2017-04-11" description="Release 4.0.2">
             <action type="fix" dev="wemove" issue="REDMINE-589">
                 PORTAL: Cleanup old installation before updating with new one to remove old files.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-365,348">
+                IGE: Added structural nodes (folder) to the tree.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-548">
                 IGE: Tree on duplicate page must not show addresses.
@@ -18,8 +21,14 @@
             <action type="fix" dev="wemove" issue="REDMINE-555">
                 IGE: Fixed error in free spatial reference, when editing name. 
             </action>
+			<action type="fix" dev="wemove" issue="REDMINE-568">
+                PORTAL: Updated profile for RLP
+            </action>
 			<action type="fix" dev="wemove" issue="REDMINE-572">
                 PORTAL: Fixed XML Button not showing on result page
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-561">
+                PORTAL: Update shorturl service for NUMIS.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-567">
                 PORTAL: Fixed date format on detail view.
