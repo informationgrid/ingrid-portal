@@ -306,6 +306,14 @@ div.rubricBottom span.rubricButtons .dijitButtonNode:hover { background-color:#A
     height: 300px;
 }
 
+.mapWrapper.no-search .map {
+    width: 700px;
+}
+
+.mapWrapper.no-search .info {
+    display: none;
+}
+
 .mapWrapper .info .item {
     border-bottom: 1px solid #999;
     padding: 3px 5px;

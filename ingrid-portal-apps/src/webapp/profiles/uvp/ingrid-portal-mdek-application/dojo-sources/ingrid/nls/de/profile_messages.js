@@ -44,6 +44,7 @@ define({
     "uvp.form.categoryIds": "UVP-Nummer",
     "uvp.form.spatial": "Raumbezug",
     "uvp.form.showSpatial": "Anzeigen / Ändern",
+    "uvp.form.spatial.placeholder": "Für die Erstellung eines Raumbezuges bitte einen Ausschnitt festlegen.",
 
     "uvp.form.addPhase": "Verfahrensschritt hinzufügen",
     "uvp.form.dialog.addPhase.title": "Verfahrensschritt erstellen",

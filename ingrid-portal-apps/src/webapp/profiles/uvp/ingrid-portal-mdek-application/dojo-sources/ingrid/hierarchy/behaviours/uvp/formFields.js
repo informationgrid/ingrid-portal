@@ -175,11 +175,6 @@ define(["dojo/_base/declare",
         },
 
         createSpatial: function(rubric) {
-            // spatial reference
-            creator.addToSection(rubric, creator.createDomTextbox({ id: this.prefix + "spatialValue", name: message.get("uvp.form.spatial"), help: "...", isMandatory: true, visible: "optional", style: "width:100%" }));
-            var spatialInput = registry.byId(this.prefix + "spatialValue");
-            spatialInput.set("disabled", true);
-
             var self = this;
             var zoomToBoundingBox = function() {
                 var val = spatialInput.get("value");
@@ -188,10 +183,13 @@ define(["dojo/_base/declare",
                     var arrayValue = fixedValue.split(',');
 
                     self.nominatimSearch._zoomToBoundingBox([arrayValue[1], arrayValue[3], arrayValue[0], arrayValue[2]], true);
+                } else {
+                    // if no bounding box was set
+                    self.nominatimSearch._removeBoundingBox();
                 }
             };
 
-            new Button({
+            /*new Button({
                 id: this.prefix + "btnSpatialValueShow",
                 label: message.get("uvp.form.showSpatial"),
                 "class": "optional show right",
@@ -203,15 +201,16 @@ define(["dojo/_base/declare",
                 }
             }).placeAt(rubric);
             // layout fix!
-            construct.place(construct.toDom("<div class='clear'></div>"), rubric);
+            construct.place(construct.toDom("<div class='clear'></div>"), rubric);*/
 
             /**
              * Map
              */
             this.nominatimSearch = new NominatimSearch({
                 id: "uvpNominatimSearch",
-                collapseOnEmptyInput: false,
-                hideOnStartup: true
+                collapseOnEmptyInput: true,
+                scrollWheelZoom: false
+                // hideOnStartup: true
             }).placeAt(rubric);
             aspect.after(this.nominatimSearch, "onData", function(meta, args) {
                 var bbox = args[0];
@@ -219,11 +218,24 @@ define(["dojo/_base/declare",
                 console.log("Received bbox:", bbox);
                 if (title) bbox = title + ": " + bbox;
                 spatialInput.set("value", bbox);
-                domClass.add("uvpNominatimSearch", "hide");
+                // domClass.add("uvpNominatimSearch", "hide");
             });
-            aspect.after(this.nominatimSearch, "onClose", function() {
+            /*aspect.after(this.nominatimSearch, "onClose", function() {
                 domClass.add("uvpNominatimSearch", "hide");
-            });
+            });*/
+
+            // spatial reference
+            creator.addToSection(rubric, creator.createDomTextbox({
+                id: this.prefix + "spatialValue", 
+                name: message.get("uvp.form.spatial"), 
+                help: "...", 
+                isMandatory: true, 
+                visible: "optional", 
+                style: "width:100%"
+            }));
+            var spatialInput = registry.byId(this.prefix + "spatialValue");
+            spatialInput.set("disabled", true);
+            spatialInput.set("placeHolder", message.get("uvp.form.spatial.placeholder"));
 
             var igeActions = require("ingrid/IgeActions");
             igeActions.additionalFieldWidgets.push(spatialInput);
