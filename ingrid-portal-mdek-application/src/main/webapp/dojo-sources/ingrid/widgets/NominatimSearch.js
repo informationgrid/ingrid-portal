@@ -103,10 +103,13 @@ define([
             if (self.collapseOnEmptyInput) {
                 if (q.trim() === "") {
                     // query(".mapWrapper", self.domNode).addClass("hide");
+                    // TODO: refactor into a function "expandMap"
                     query(".mapWrapper", self.domNode).addClass("no-search");
+                    self.map._onResize();
                     return;
                 } else {
                     // query(".mapWrapper", self.domNode).removeClass("hide");
+                    // TODO: refactor into a function "shrinkMap"
                     query(".mapWrapper", self.domNode).removeClass("no-search");
                     self.map._onResize();
                 }
