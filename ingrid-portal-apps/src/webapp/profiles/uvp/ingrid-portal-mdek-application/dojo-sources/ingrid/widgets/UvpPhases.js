@@ -99,7 +99,7 @@ define([
                     }
 
                     // set disabled state according to permission
-                    if (data.userWritePermission) {
+                    if (data.userWritePermission || data.id === "newNode") {
                         // button for phases
                         self.addButton.set("disabled", false);
 

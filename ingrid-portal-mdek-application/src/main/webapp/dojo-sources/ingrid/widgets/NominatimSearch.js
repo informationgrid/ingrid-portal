@@ -194,7 +194,7 @@ define([
         
         _determineLocationInfo: function(box) {
             var center = box.getCenter();
-            return request("http://nominatim.openstreetmap.org/reverse?format=json&lat=" + center.lat + "&lon=" + center.lng + "&zoom=18&addressdetails=1").then(
+            return request("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + center.lat + "&lon=" + center.lng + "&zoom=18&addressdetails=1").then(
                 function(data){
                     var results = json.parse(data);
                     console.log("received nominatim reverse data: ", results);
