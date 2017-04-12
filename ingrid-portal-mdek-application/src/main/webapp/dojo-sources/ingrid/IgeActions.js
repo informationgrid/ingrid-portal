@@ -477,15 +477,15 @@ define([
                     preHook: UtilUI.enterLoadingState,
                     postHook: UtilUI.exitLoadingState,
                     callback: function(res) {
-                        msg.resultHandler.resolve(res);
                         console.debug("set data");
                         self._setData(res)
-                        .then(lang.hitch(dirty, dirty.resetDirtyFlag)); // we must set dirty flag here!
+                            .then(lang.partial(msg.resultHandler.resolve, res))
+                            .then(lang.hitch(dirty, dirty.resetDirtyFlag)); // we must set dirty flag here!
                     },
-                    //				timeout:10000,
+                    // timeout:10000,
                     errorHandler: function(message) {
                         UtilUI.exitLoadingState();
-                        //					msg.resultHandler.reject("Error in js/js: Error while creating a new node.");
+                        // msg.resultHandler.reject("Error in js/js: Error while creating a new node.");
                         console.error("Error in js/js: Error while creating a new node.");
                         msg.resultHandler.reject(message);
                     }
@@ -532,8 +532,8 @@ define([
                             res.nodeDocType = "Class1000_B";
                         }
 
-                        msg.resultHandler.resolve(res);
                         self._setData(res)
+                            .then(lang.partial(msg.resultHandler.resolve, res))
                             .then(lang.hitch(dirty, dirty.resetDirtyFlag));
                     },
                     //				timeout:10000,
