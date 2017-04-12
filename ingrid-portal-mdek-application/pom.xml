@@ -113,6 +113,7 @@
                         <exclude>**/ingrid.profile.js</exclude>
                         <exclude>**/js/leaflet/**</exclude>
                         <exclude>**/upload/fine-uploader/**</exclude>
+                        <exclude>**/upload/template/UploadWidget.html</exclude>
                     </excludes>
                 </configuration>
             </plugin>
