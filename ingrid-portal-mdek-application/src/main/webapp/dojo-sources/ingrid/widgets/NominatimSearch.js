@@ -106,7 +106,7 @@ define([
                 }
             }
             
-            request("http://nominatim.openstreetmap.org/search/" + q + "?format=json&countrycodes=" + self.searchInCountries).then(
+            request("https://nominatim.openstreetmap.org/search/" + q + "?format=json&countrycodes=" + self.searchInCountries).then(
                 function(data){
                     var results = json.parse(data);
                     console.log("received data: ", results);
