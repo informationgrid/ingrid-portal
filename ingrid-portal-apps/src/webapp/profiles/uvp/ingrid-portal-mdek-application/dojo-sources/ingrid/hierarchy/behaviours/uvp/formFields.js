@@ -88,12 +88,14 @@ define(["dojo/_base/declare",
             var objClass = classInfo.objClass;
             if (objClass === "Class10") { // UVP Vorhaben
                 domClass.remove("uiElementAdduvpgCategory", "hide");
+                domClass.remove("uiElementAdduvpNeedsExamination", "hide");
                 query("#generalDescLabel label").addContent(message.get("uvp.form.generalDescription"), "only");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 2, 3];
 
             } else if (objClass === "Class11") { // ausländische
                 domClass.add("uiElementAdduvpgCategory", "hide");
+                domClass.add("uiElementAdduvpNeedsExamination", "hide");
                 query("#generalDescLabel label").addContent(message.get("uvp.form.foreign.generalDescription"), "only");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.foreign.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 3];
@@ -102,6 +104,7 @@ define(["dojo/_base/declare",
 
             } else if (objClass === "Class13" || objClass === "Class14") { // Raumordnungsverfahren or Linienbestimmungen
                 domClass.remove("uiElementAdduvpgCategory", "hide");
+                domClass.add("uiElementAdduvpNeedsExamination", "hide");
                 query("#generalDescLabel label").addContent(message.get("uvp.form.spatial.generalDescription"), "only");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.spatial.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 2, 3];
@@ -136,6 +139,7 @@ define(["dojo/_base/declare",
 
         createFields: function() {
             var rubric = "general";
+            var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
             this.uvpPhaseField = new UvpPhases({ id: "UVPPhases" });
@@ -168,8 +172,18 @@ define(["dojo/_base/declare",
             );
             var categoryWidget = registry.byId(id);
             domClass.add(categoryWidget.domNode, "hideTableHeader");
+            additionalFields.push(categoryWidget);
 
-            require("ingrid/IgeActions").additionalFieldWidgets.push(categoryWidget);
+            /**
+             * Checkbox für Vorprüfung
+             */
+            id = "uvpNeedsExamination";
+            var checkbox = creator.createDomCheckbox(
+                { id: id, name: message.get("uvp.form.checkExamination"), help: "...", isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" }
+            );
+            newFieldsToDirtyCheck.push(id);
+            construct.place(checkbox, rubric);
+            additionalFields.push(registry.byId(id));
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
         },

@@ -42,6 +42,7 @@ define({
     "uvp.form.categories.uvpForeign": "Ausländische Verfahren",
 
     "uvp.form.categoryIds": "UVP-Nummer",
+    "uvp.form.checkExamination": "Eine Änderung/Erweiterung oder ein kumulierendes Vorhaben, für das eine Vorprüfung durchgeführt wurde",
     "uvp.form.spatial": "Raumbezug",
     "uvp.form.showSpatial": "Anzeigen / Ändern",
     "uvp.form.spatial.placeholder": "Für die Erstellung eines Raumbezuges bitte einen Ausschnitt festlegen.",
@@ -88,6 +89,8 @@ define({
 
     "uvp.form.spatial.address": "Kontaktdaten der verfahrensführenden Behörde",
     "uvp.form.spatial.generalDescription": "Beschreibung der Planung oder Maßnahme nach § 1 ROV oder dem Landesrecht",
+
+    "uvp.form.negative.checkExamination": "Eine Änderung/Erweiterung oder ein kumulierendes Vorhaben",
 
     "ui.toolbar.CutCaption": "Verfahren/Adressen/Teilbaum ausschneiden",
     "ui.toolbar.CopyCaption": "Verfahren/Adressen kopieren",
