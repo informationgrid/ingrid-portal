@@ -5,6 +5,12 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
+        <release version="4.0.2.1-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.2.1">
+          <action type="fix" dev="wemove" issue="REDMINE-634">
+            IGE: Only allow folders to be created under root nodes or other folders.
+          </action>
+        </release>
+        
         <release version="4.0.2" date="2017-04-11" description="Release 4.0.2">
             <action type="fix" dev="wemove" issue="REDMINE-589">
                 PORTAL: Cleanup old installation before updating with new one to remove old files.
