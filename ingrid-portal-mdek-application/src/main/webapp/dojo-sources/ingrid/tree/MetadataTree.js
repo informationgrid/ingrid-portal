@@ -267,7 +267,7 @@ define("ingrid/tree/MetadataTree", [
                                 if (node.id == "addressFreeRoot") {
                                     canBePasted = canBePasted && (srcType >= 2);  // Only Addresses can be converted to free addresses
                                 } else if (node.id == "addressRoot") {
-                                    canBePasted = canBePasted && (srcType === 0); // Only Institutions are allowed below the root node
+                                    canBePasted = canBePasted && (srcType === 0 || srcType === 1000); // Only Institutions and folders are allowed below the root node
                                 }
                             }
                             // The target node is no root node and no folder. Compare the src and dst types:

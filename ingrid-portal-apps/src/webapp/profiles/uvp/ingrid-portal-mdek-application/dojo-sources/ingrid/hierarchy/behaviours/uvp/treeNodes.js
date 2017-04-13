@@ -121,7 +121,9 @@ define([
                     var nodes = tree.nodesToCopy ? tree.nodesToCopy : tree.nodesToCut;
                     if (nodes) {
                         var hasValidParent = self._checkValidParent(node, nodes);
-                        registry.byId("menuItemPaste").set("disabled", !hasValidParent);
+                        if (!hasValidParent) {
+                            registry.byId("menuItemPaste").set("disabled", true);
+                        }
                     }
                 }, 0);
             });
