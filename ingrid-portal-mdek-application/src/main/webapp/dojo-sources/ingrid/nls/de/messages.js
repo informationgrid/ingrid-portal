@@ -126,6 +126,7 @@ define({
     "tree.nodePaste": "Einfügen",
     "tree.saveNewNodeHint": "Bitte speichern Sie 'Neues Objekt' vor dem Kopiervorgang!",
     "tree.nodePasteInvalidHint": "Ein Knoten kann nicht unter sich selbst ausgeschnitten und hinzugefügt werden!",
+    "tree.nodePasteInvalidHint.folderUnderObject": "Ein Ordner kann nicht unter einem Dokument angelegt werden.",
     "tree.nodeMarkDeleted": "Als gelöscht markieren",
     "tree.nodeDelete": "Löschen",
     "tree.confirmMarkDeleted": "Wollen Sie den Knoten '${0}' wirklich als gelöscht markieren?",
