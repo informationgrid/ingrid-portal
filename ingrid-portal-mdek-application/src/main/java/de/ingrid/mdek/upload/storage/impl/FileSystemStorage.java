@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -60,29 +60,56 @@ public class FileSystemStorage implements Storage {
     private String docsDir = null;
     private String partsDir = null;
 
+   /**
+    * Set the document directory
+    *
+    * @param docsDir
+    */
+    public void setDocsDir(String docsDir) {
+        this.docsDir = docsDir;
+    }
+
     /**
-     * Constructor
+     * Set the partial upload directory
      *
-     * @param docsDir
      * @param partsDir
      */
-    public FileSystemStorage(String docsDir, String partsDir) {
-        this.docsDir = docsDir;
+    public void setPartsDir(String partsDir) {
         this.partsDir = partsDir;
     }
 
     @Override
-    public String[] list(String path) throws IOException {
-        Path realPath = this.getRealPath(path, this.docsDir);
-        List<String> files = new ArrayList<String>();
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(realPath)) {
+    public StorageItem[] list() throws IOException {
+        List<StorageItem> files = new ArrayList<StorageItem>();
+        this.list(this.getRealPath("", this.docsDir), files);
+        return files.toArray(new StorageItem[files.size()]);
+    }
+
+    @Override
+    public StorageItem[] list(String path) throws IOException {
+        List<StorageItem> files = new ArrayList<StorageItem>();
+        this.list(this.getRealPath(path, this.docsDir), files);
+        return files.toArray(new StorageItem[files.size()]);
+    }
+
+    /**
+     * List the files in the given path recursively
+     *
+     * @param path
+     * @param files
+     * @throws IOException
+     */
+    protected void list(Path path, List<StorageItem> files) throws IOException {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
             for (Path entry : stream) {
-                if (Files.isRegularFile(entry)) {
-                    files.add(this.stripPath(entry.toString()));
+                if (Files.isDirectory(entry)) {
+                    this.list(entry, files);
+                }
+                else if (Files.isRegularFile(entry)) {
+                    files.add(this.getFileInfo(entry.toString()));
                 }
             }
         }
-        return files.toArray(new String[files.size()]);
     }
 
     @Override

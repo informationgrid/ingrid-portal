@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -44,6 +44,7 @@ import de.ingrid.mdek.security.TomcatAuthenticationProvider;
 import de.ingrid.mdek.upload.auth.AuthService;
 import de.ingrid.mdek.upload.auth.PortalAuthService;
 import de.ingrid.mdek.upload.storage.Storage;
+import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
 import de.ingrid.mdek.userrepo.DbUserRepoManager;
 
 @Configuration
@@ -110,7 +111,7 @@ public class SpringConfiguration {
 	/**
 	 * Upload service
 	 */
-	
+
 	@Bean
 	public AuthService authService(Config config) {
 		AuthService instance = new PortalAuthService();
@@ -119,13 +120,13 @@ public class SpringConfiguration {
 
 	@Bean
 	public Storage storage(Config config) {
-		Storage instance = null;
 		switch (config.uploadImpl) {
 		case "de.ingrid.mdek.upload.storage.impl.FileSystemStorage":
 		default:
-			instance = new de.ingrid.mdek.upload.storage.impl.FileSystemStorage(config.docsdir, config.partsdir);
-
+			FileSystemStorage instance = new FileSystemStorage();
+			instance.setDocsDir(config.docsdir);
+			instance.setPartsDir(config.partsdir);
+			return instance;
 		}
-		return instance;
 	}
 }
