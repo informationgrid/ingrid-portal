@@ -47,6 +47,7 @@
                                                 #renderTextList("UVP-Kategorie" $uvpCats)
                                                     
                                                 ## UVP-Nummer
+                                                <!-- 
                                                 #set($nodeList = $TOOL.getNodeListFromXPath("./uvpgs/uvpg"))
                                                 #if($nodeList.length > 0)
                                                     <h4 class="title-font">
@@ -70,6 +71,7 @@
                                                     #end
                                                     </ul>
                                                 #end
+                                                -->
                                                 ## Raumbezug
                                                 #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
                                                 #if($spatialValue)
