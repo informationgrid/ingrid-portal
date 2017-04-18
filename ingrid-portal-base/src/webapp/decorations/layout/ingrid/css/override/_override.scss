@@ -10,10 +10,20 @@
 }
 
 .flex-row {
-  display: flex;
-  flex-direction: row;
+  @include media(
+    $query: '768 >',
+    $css: (
+      display: flex,
+      flex-direction: row
+    )
+  );
 }
 
 .flex-vfill {
-  height: 100%;
+  @include media(
+    $query: '768 >',
+    $css: (
+      height: 100%
+    )
+  );
 }
