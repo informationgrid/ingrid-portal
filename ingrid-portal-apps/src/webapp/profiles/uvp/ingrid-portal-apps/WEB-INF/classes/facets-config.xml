@@ -135,7 +135,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
  
 <facets>
     <!-- Kategorien -->
-    <facet>
+    <facet sort="SORT_BY_NAME">
         <name>searchResult.facete.title.types</name>
         <id>type</id>
         <facets>
@@ -144,114 +144,133 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Wärmeerzeugung\, Bergbau und Energie</name>
                 <query>uvp_category:"UVPG-1"</query>
                 <id>energie</id>
+                <display>true</display>
             </facet>
         <!-- Steine und Erden, Glas, Keramik, Baustoffe -->
             <facet>
                 <name>Steine und Erden\, Glas\, Keramik\, Baustoffe</name>
                 <query>uvp_category:"UVPG-2"</query>
                 <id>baustoffe</id>
+                <display>true</display>
             </facet>
         <!-- Stahl, Eisen und sonstige Metalle einschließlich Verarbeitung -->
             <facet>
                 <name>Stahl\, Eisen und sonstige Metalle einschließlich Verarbeitung</name>
                 <query>uvp_category:"UVPG-3"</query>
                 <id>verarbeitung</id>
+                <display>true</display>
             </facet>
         <!-- Chemische Erzeugnisse, Arzneimittel, Mineralölraffination und Weiterverarbeitung -->
             <facet>
                 <name>Chemische Erzeugnisse\, Arzneimittel\, Mineralölraffination und Weiterverarbeitung</name>
                 <query>uvp_category:"UVPG-4"</query>
                 <id>chemie</id>
+                <display>true</display>
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
             <facet>
                 <name>Oberflächenbehandlung von Kunststoffen</name>
                 <query>uvp_category:"UVPG-5"</query>
                 <id>kunststoff</id>
+                <display>true</display>
             </facet>
         <!-- Holz, Zellstoff -->
             <facet>
                 <name>Holz\, Zellstoff</name>
                 <query>uvp_category:"UVPG-6"</query>
                 <id>holzzellstoff</id>
+                <display>true</display>
             </facet>
         <!-- Nahrungs-, Genuss- und Futtermittel, landwirtschaftliche Erzeugnisse -->
             <facet>
                 <name>Nahrungs-\, Genuss- und Futtermittel\, landwirtschaftliche Erzeugnisse</name>
                 <query>uvp_category:"UVPG-7"</query>
                 <id>erzeugnisse</id>
+                <display>true</display>
             </facet>
         <!-- Verwertung und Beseitigung von Abfällen und sonstigen Stoffen -->
             <facet>
                 <name>Verwertung und Beseitigung von Abfällen und sonstigen Stoffen</name>
                 <query>uvp_category:"UVPG-8"</query>
                 <id>verwertungbeseitigungabfaellen</id>
+                <display>true</display>
             </facet>
         <!-- Lagerung von Stoffen und Gemischen -->
             <facet>
                 <name>Lagerung von Stoffen und Gemischen</name>
                 <query>uvp_category:"UVPG-9"</query>
                 <id>lagerungstoffengemischen</id>
+                <display>true</display>
             </facet>
         <!-- Sonstige Industrieanlagen -->
             <facet>
                 <name>Sonstige Industrieanlagen</name>
                 <query>uvp_category:"UVPG-10"</query>
                 <id>industrieanlagen</id>
+                <display>true</display>
             </facet>
         <!-- Kernenergie -->
             <facet>
                 <name>Kernenergie</name>
                 <query>uvp_category:"UVPG-11"</query>
                 <id>kernenergie</id>
+                <display>true</display>
             </facet>
         <!-- Abfalldeponien -->
             <facet>
                 <name>Abfalldeponien</name>
                 <query>uvp_category:"UVPG-12"</query>
                 <id>abfalldeponien</id>
+                <display>true</display>
             </facet>
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
             <facet>
                 <name>Wasserwirtschaftliche Vorhaben </name>
                 <query>uvp_category:"UVPG-3"</query>
                 <id>wasservorhaben</id>
+                <display>true</display>
             </facet>
         <!-- Verkehrsvorhaben -->
             <facet>
                 <name>Verkehrsvorhaben</name>
                 <query>uvp_category:"UVPG-14"</query>
                 <id>verkehrsvorhaben</id>
+                <display>true</display>
             </facet>
         <!-- Bergbau und dauerhafte Speicherung von Kohlendioxid -->
             <facet>
                 <name>Bergbau- und Abbauvorhaben, dauerhafte Speicherung von Kohlendioxid</name>
                 <query>uvp_category:"UVPG-15"</query>
                 <id>bergbaukohlendioxid</id>
+                <display>true</display>
             </facet>
         <!-- Flurbereinigung -->
             <facet>
                 <name>Flurbereinigung</name>
                 <query>uvp_category:"UVPG-16"</query>
                 <id>flurbereinigung</id>
+                <display>true</display>
             </facet>
         <!-- Forstliche und landwirtschaftliche Vorhaben -->
             <facet>
                 <name>Forstliche und landwirtschaftliche Vorhaben</name>
                 <query>uvp_category:"UVPG-17"</query>
                 <id>forstlandvorhaben</id>
+                <display>true</display>
             </facet>
         <!-- Bauvorhaben -->
             <facet>
                 <name>Bauvorhaben, Fremdenverkehr, Freizeit, ohne Bebauungsplan</name>
                 <query>uvp_category:"UVPG-18"</query>
                 <id>bauvorhaben</id>
+                <display>true</display>
             </facet>
         <!-- Leitungsanlagen und andere Anlagen -->
             <facet>
                 <name>Leitungsanlagen und vergleichbare Anlagen</name>
                 <query>uvp_category:"UVPG-19"</query>
                 <id>anlagen</id>
+                <display>true</display>
             </facet>
         </facets>
     </facet>

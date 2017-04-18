@@ -101,8 +101,8 @@ public class FacetsConfig {
                     }
                 }
 
-                if (facetNode.getChildren( "[@sort]" ).size() > 0) {
-                    Node subNode = (Node) facetNode.getChildren( "[@sort]" ).get( 0 );
+                if (facetNode.getAttributes( "sort" ).size() > 0) {
+                    Node subNode = (Node) facetNode.getAttributes( "sort" ).get( 0 );
                     ingridFacet.setSort( subNode.getValue().toString() );
                 }
 
@@ -240,8 +240,8 @@ public class FacetsConfig {
                 if (facetNode.getChildren( "facets" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {
-                        if (node.getChildren( "[@queryType]" ).size() > 0) {
-                            Node subNode = (Node) node.getChildren( "[@queryType]" ).get( 0 );
+                        if (node.getAttributes( "@queryType" ).size() > 0) {
+                            Node subNode = (Node) node.getAttributes( "@queryType" ).get( 0 );
                             ingridFacet.setQueryType( subNode.getValue().toString() );
                         }
 
