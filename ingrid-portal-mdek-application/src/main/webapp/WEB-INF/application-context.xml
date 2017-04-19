@@ -101,10 +101,9 @@
 		<property name="repeatInterval" value="${workflow.expiryJob.repeatInterval}" />
 	</bean>
 
-    <bean id="simpleTriggerUploadCleanup" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+    <bean id="simpleTriggerUploadCleanup" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="uploadCleanupJob" />
-        <property name="startDelay" value="10000" />
-        <property name="repeatInterval" value="${upload.cleanup.repeatInterval}" />
+        <property name="cronExpression" value="${upload.cleanup.schedule}" />
     </bean>
 	<!-- Scheduler Factory -->
 

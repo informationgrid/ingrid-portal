@@ -47,7 +47,9 @@ public class UploadCleanupJob extends QuartzJobBean {
             items = this.storage.list();
         }
         catch (IOException e) {
-            throw new JobExecutionException(e);
+            this.logError(e.toString());
+            log.debug("Skipped UploadCleanupJob");
+            return;
         }
         log.debug("Number of files found in the storage: "+items.length);
 
@@ -93,7 +95,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                 }
                 catch (IOException e) {
                     // log error, but keep the job running
-                    log.error("File "+file+" could not be deleted: "+e);
+                    this.logError("File "+file+" could not be deleted: "+e);
                 }
             }
             log.debug("Number of deleted files: "+deleteCount);
@@ -158,5 +160,13 @@ public class UploadCleanupJob extends QuartzJobBean {
         }
 
         return resultList;
+    }
+
+    /**
+     * Log an error
+     * @param error
+     */
+    private void logError(String error) {
+        log.error("Error while running UploadCleanupJob: "+error);
     }
 }
