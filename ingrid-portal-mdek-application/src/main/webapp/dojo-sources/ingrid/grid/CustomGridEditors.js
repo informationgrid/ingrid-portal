@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -30,15 +30,16 @@ define([
     "dijit/form/DateTextBox",
     "dijit/Tooltip",
     "ingrid/utils/String",
+    "ingrid/utils/Syslist",
+    "ingrid/utils/Store",
     "ingrid/utils/General"
-], function(declare, construct, array, lang, on, aspect, DateTextBox, Tooltip, UtilString, UtilGeneral) {
+], function(declare, construct, array, lang, on, aspect, DateTextBox, Tooltip, UtilString, UtilSyslist, UtilStore, UtilGeneral) {
 
     return declare("ingrid.grid.Editors", null, {
 
         TextCellEditor: function(args) {
-            var input;
-            var defaultValue;
-            var scope = this;
+            this.input = null;
+            this.defaultValue = null;
 
             this.init = function() {
                 this.input = new dijit.form.ValidationTextBox({
@@ -102,9 +103,8 @@ define([
         },
 
         DecimalCellEditor: function(args) {
-            var input;
-            var defaultValue;
-            var scope = this;
+            this.input = null;
+            this.defaultValue = null;
 
             this.init = function() {
                 this.input = new dijit.form.NumberTextBox({
@@ -193,9 +193,20 @@ define([
             // initialize the UI
             this.init = function() {
                 var data;
-                if (args.column.listId)
+                if (args.column.listId) {
                     data = lang.clone(sysLists[args.column.listId]);
-                else {
+
+                    // if no codelist was found try to get it from the backend
+                    if (!data) {
+                        data = [];
+                        UtilSyslist.readSysListData(args.column.listId).then(function(entry) {
+                            UtilStore.updateWriteStore("activeCell_" + args.grid.id, entry, {
+                                identifier: '1',
+                                label: '0'
+                            } );
+                        });
+                    }
+                } else {
                     data = [];
                     for (var i = 0; i < args.column.options.length; i++) {
                         data[i] = [args.column.options[i], args.column.values[i]];
@@ -210,6 +221,8 @@ define([
                 box = new dijit.form.FilteringSelect({
                     id: "activeCell_" + args.grid.id,
                     store: store,
+                    autoComplete: args.column.partialSearch ? false : true,
+                    queryExpr: args.column.partialSearch ? "*${0}*" : "${0}*",
                     searchAttr: "0",
                     maxHeight: "150",
                     style: "width:100%; padding:0; color: black; font-family: 10px Verdana, Helvetica, Arial, sans-serif;"
@@ -590,9 +603,8 @@ define([
         },
 
         YesNoCheckboxCellEditor: function(args) {
-            var select;
-            var defaultValue;
-            var scope = this;
+            var select = null;
+            var defaultValue = null;
 
             this.init = function() {};
 

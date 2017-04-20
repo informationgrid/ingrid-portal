@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -130,6 +130,7 @@ define([
     "dojo/topic",
     "dojo/string",
     "dojo/dom",
+    "dojo/dom-class",
     "dojo/dom-style",
     "dijit/registry",
     "dijit/form/FilteringSelect",
@@ -156,7 +157,7 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/requiredChecks"
-], function(declare, lang, array, Deferred, DeferredList, ready, query, topic, string, dom, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
+], function(declare, lang, array, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
     ingridObjectLayout, ingridAddressLayout, message, dialog, UtilUI, UtilAddress, UtilList, UtilTree, UtilStore, UtilString, UtilSyslist, UtilGrid, UtilGeneral, UtilDOM, UtilSecurity, dirty,
     CustomGrid, rules, checks) {
     return declare(null, {
@@ -257,7 +258,7 @@ define([
             // If the current user does not have write permission on the current obj/adr, don't display a dialog,
             // clear the dirty flag and return as normal
             if (this.global.currentUdk.writePermission === false && this.global.currentUdk.uuid != "newNode") {
-                lang.hitch(dirty, dirty.resetDirtyFlag);
+                lang.hitch(dirty, dirty.resetDirtyFlag)();
                 return false;
             }
 
@@ -286,7 +287,7 @@ define([
             }, {
                 caption: message.get("general.no"),
                 action: function() {
-                    lang.hitch(dirty, dirty.resetDirtyFlag);
+                    lang.hitch(dirty, dirty.resetDirtyFlag)();
                     deferred.resolve("DISCARD");
                 }
             }, {
@@ -390,6 +391,11 @@ define([
                                         self.onAfterLoad();
                                         console.debug("exit loading state");
                                         UtilUI.exitLoadingState();
+                                    })
+                                    .then(null, function(error) {
+                                        // catch any error that happened during init form and setting of data
+                                        console.error("Error loading object or creation of form:", error);
+                                        displayErrorMessage(error);
                                     });
                             } else {
                                 //							console.debug(resultHandler);
@@ -471,16 +477,16 @@ define([
                     preHook: UtilUI.enterLoadingState,
                     postHook: UtilUI.exitLoadingState,
                     callback: function(res) {
-                        msg.resultHandler.resolve(res);
                         console.debug("set data");
                         self._setData(res)
-                        .then(lang.hitch(dirty, dirty.resetDirtyFlag)); // we must set dirty flag here!
+                            .then(lang.partial(msg.resultHandler.resolve, res))
+                            .then(lang.hitch(dirty, dirty.resetDirtyFlag)); // we must set dirty flag here!
                     },
-                    //				timeout:10000,
+                    // timeout:10000,
                     errorHandler: function(message) {
                         UtilUI.exitLoadingState();
-                        //					msg.resultHandler.reject("Error in js/js: Error while creating a new node.");
-                        console.debug("Error in js/js: Error while creating a new node.");
+                        // msg.resultHandler.reject("Error in js/js: Error while creating a new node.");
+                        console.error("Error in js/js: Error while creating a new node.");
                         msg.resultHandler.reject(message);
                     }
                 });
@@ -522,17 +528,19 @@ define([
                             res.nodeDocType = "InstitutionPerson_B";
                         } else if (res.addressClass == 3) {
                             res.nodeDocType = "PersonAddress_B";
+                        } else if (res.addressClass == 1000) {
+                            res.nodeDocType = "Class1000_B";
                         }
 
-                        msg.resultHandler.resolve(res);
                         self._setData(res)
+                            .then(lang.partial(msg.resultHandler.resolve, res))
                             .then(lang.hitch(dirty, dirty.resetDirtyFlag));
                     },
                     //				timeout:10000,
                     errorHandler: function(message) {
                         UtilUI.exitLoadingState();
                         //					msg.resultHandler.reject("Error in js/js: Error while creating a new address.");
-                        console.debug("Error in js/js: Error while creating a new address.");
+                        console.error("Error in js/js: Error while creating a new address.");
                         msg.resultHandler.reject(new Error(message));
                     }
                 });
@@ -585,7 +593,7 @@ define([
                 //			timeout:10000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while saving addressData:");
+                    console.error("Error in js/js: Error while saving addressData:");
                     onSaveDef.reject(err);
                 }
             });
@@ -660,7 +668,7 @@ define([
                         }]);
 
                     } else {
-                        console.debug("Error in js/js: Error while saving nodeData:");
+                        console.error("Error in js/js: Error while saving nodeData:");
                         onSaveDef.reject(err);
                     }
                 }
@@ -731,7 +739,7 @@ define([
                         }], 382, 220);
 
                     } else {
-                        console.debug("Error in js/js: Error while publishing nodeData:");
+                        console.error("Error in js/js: Error while publishing nodeData:");
                         onPublishDef.reject(ex);
                     }
                 }
@@ -796,7 +804,7 @@ define([
                         ], 382, 220);
 
                     } else {
-                        console.debug("Error in js/js: Error while publishing address:");
+                        console.error("Error in js/js: Error while publishing address:");
                         onPublishDef.reject(msg);
                     }
                 }
@@ -841,7 +849,7 @@ define([
                 //			timeout:10000,
                 errorHandler: function(errMsg, err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while deleting address working copy: " + errMsg);
+                    console.error("Error in js/js: Error while deleting address working copy: " + errMsg);
                     // Wrap the dwr error in a javscript Error object
                     //var e = new Error(errMsg);
                     //e.message = err;
@@ -902,7 +910,7 @@ define([
                             }
                         }]);
                     } else {
-                        console.debug("Error in js/js: Error while deleting object: " + err);
+                        console.error("Error in js/js: Error while deleting object: " + err);
                         msg.resultHandler.reject(err);
                     }
                 }
@@ -962,7 +970,7 @@ define([
                             }]);
 
                         } else {
-                            console.debug("Error in js/js: Error while deleting object: " + err);
+                            console.error("Error in js/js: Error while deleting object: " + err);
                             msg.resultHandler.reject(err);
                         }
                     }
@@ -1034,7 +1042,7 @@ define([
                         }]);
 
                     } else {
-                        console.debug("Error in js/eventSubscriber.js: handleChangePublicationCondition:");
+                        console.error("Error in js/eventSubscriber.js: handleChangePublicationCondition:");
                         msg.resultHandler.reject(errObj);
                     }
                 }
@@ -1092,7 +1100,7 @@ define([
                 //			timeout:10000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while marking a node for a cut operation: " + err);
+                    console.error("Error in js/js: Error while marking a node for a cut operation: " + err);
                     displayErrorMessage(err);
                     msg.resultHandler.reject(err);
                 }
@@ -1111,7 +1119,7 @@ define([
                 //			timeout:10000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while marking an address for a cut operation: " + err);
+                    console.error("Error in js/js: Error while marking an address for a cut operation: " + err);
                     msg.resultHandler.reject(err);
                 }
             });
@@ -1130,7 +1138,7 @@ define([
                 //			timeout:30000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while marking a node for a copy operation: " + err);
+                    console.error("Error in js/js: Error while marking a node for a copy operation: " + err);
                     msg.resultHandler.reject(err);
                 }
             });
@@ -1148,7 +1156,7 @@ define([
                 //			timeout:30000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while marking an address for a copy operation: " + err);
+                    console.error("Error in js/js: Error while marking an address for a copy operation: " + err);
                     msg.resultHandler.reject(err);
                 }
             });
@@ -1201,7 +1209,7 @@ define([
                         }], 382, 220);
 
                     } else {
-                        console.debug("Error in js/js: Error while moving nodeData:");
+                        console.error("Error in js/js: Error while moving nodeData:");
                         msg.resultHandler.reject(err);
                     }
                 }
@@ -1231,7 +1239,7 @@ define([
                 //			timeout:30000,
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while moving address:");
+                    console.error("Error in js/js: Error while moving address:");
                     msg.resultHandler.reject(err);
                 }
             });
@@ -1276,7 +1284,7 @@ define([
                             resultHandler: onCopyOpFinishedDef
                         });
                     } else {
-                        console.debug("Error in js/js: Error while copying nodes: " + err);
+                        console.error("Error in js/js: Error while copying nodes: " + err);
                         onCopyDef.reject(err);
                     }
                 }
@@ -1326,7 +1334,7 @@ define([
                             resultHandler: onCopyOpFinishedDef
                         });
                     } else {
-                        console.debug("Error in js/js: Error while copying addresses: " + err);
+                        console.error("Error in js/js: Error while copying addresses: " + err);
                         onCopyDef.reject(err);
                     }
                 }
@@ -1357,7 +1365,7 @@ define([
                 },
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while assigning node to QA: " + err);
+                    console.error("Error in js/js: Error while assigning node to QA: " + err);
                     onForwardDef.reject(err);
                 }
             });
@@ -1388,7 +1396,7 @@ define([
                 },
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while assigning address to QA: " + err);
+                    console.error("Error in js/js: Error while assigning address to QA: " + err);
                     onPublishDef.reject(err);
                 }
             });
@@ -1420,7 +1428,7 @@ define([
                 },
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while reassigning node to Author: " + err);
+                    console.error("Error in js/js: Error while reassigning node to Author: " + err);
                     onForwardDef.reject(err);
                 }
             });
@@ -1458,7 +1466,7 @@ define([
                 },
                 errorHandler: function(err) {
                     UtilUI.exitLoadingState();
-                    console.debug("Error in js/js: Error while reassigning address to Author: " + err);
+                    console.error("Error in js/js: Error while reassigning address to Author: " + err);
                     onPublishDef.reject(err);
                 }
             });
@@ -1728,6 +1736,13 @@ define([
             dom.byId("creationTime").innerHTML = nodeData.creationTime;
             dom.byId("modificationTime").innerHTML = nodeData.modificationTime;
             dom.byId("uuid").innerHTML = nodeData.uuid;
+            if (nodeData.orgObjId) {
+            	dom.byId("orgObjId").innerHTML = nodeData.orgObjId;
+            	domClass.remove("origIdSpan", "hide");
+            } else {
+            	dom.byId("orgObjId").innerHTML = "";
+            	domClass.add("origIdSpan", "hide");
+            }
 
             if (nodeData.lastEditor !== null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
                 dom.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
@@ -1894,8 +1909,14 @@ define([
                         currentFieldWidget.attr("value", false, true);
                     } else if (currentFieldWidget instanceof DateTextBox) {
                         currentFieldWidget.attr("value", null, true);
-                    } else
-                        currentFieldWidget.attr("value", "", true);
+                    } else {
+                        if (currentFieldWidget.valueAsTableData) {
+                            currentFieldWidget.attr("value", [], true);
+                        } else {
+                            currentFieldWidget.attr("value", "", true);
+                            
+                        }
+                    }
                 });
             }
 
@@ -1906,24 +1927,16 @@ define([
                     var currentField = additionalFields[index];
                     var currentFieldWidget = registry.byId(currentField.identifier);
                     if (currentFieldWidget instanceof CustomGrid) {
-                        //console.debug("additional field cannot be set: " + currentField.identifier);
                         // it must be a slickGrid
                         var grid = gridManager[currentField.identifier];
                         if (grid === null) {
                             console.debug("additional field cannot be set: " + currentField.identifier);
-                            break;
+                            return null;
                         }
-                        var rowData = [];
-                        array.forEach(currentField.tableRows, function(row) {
-                            var columnData = {};
-                            array.forEach(row, function(col) {
-                                if (col.listId == -1)
-                                    columnData[col.identifier] = col.value;
-                                else
-                                    columnData[col.identifier] = col.listId;
-                            });
-                            rowData.push(columnData);
-                        });
+                        
+                        var rowData = this.prepareBackendDataForGrid(currentField);
+                        if (rowData === null) break;
+                        
                         grid.setData(rowData);
                         grid.render();
                     } else {
@@ -1943,8 +1956,14 @@ define([
                                 }), true);
                             } else if (currentFieldWidget instanceof CheckBox) {
                                 currentFieldWidget.attr("value", currentField.value == "true", true);
-                            } else
-                                currentFieldWidget.attr("value", currentField.value, true);
+                            } else {
+                                if (currentFieldWidget.valueAsTableData) {
+                                    currentFieldWidget.attr("value", currentField.tableRows, true);
+                                } else {                                    
+                                    currentFieldWidget.attr("value", currentField.value, true);
+                                }
+                                
+                            }
                         }
                     }
                 }
@@ -1959,6 +1978,21 @@ define([
             this._setObjectDataClass5(nodeData);
             this._setObjectDataClass6(nodeData);
 
+        },
+        
+        prepareBackendDataForGrid: function(currentField) {
+            var rowData = [];
+            array.forEach(currentField.tableRows, function(row) {
+                var columnData = {};
+                array.forEach(row, function(col) {
+                    if (col.listId == -1)
+                        columnData[col.identifier] = col.value;
+                    else
+                        columnData[col.identifier] = col.listId;
+                });
+                rowData.push(columnData);
+            });
+            return rowData;
         },
 
         _connectSharedStore: function() {
@@ -2035,6 +2069,7 @@ define([
             UtilStore.updateWriteStore("ref1SpatialSystem", UtilList.listToTableData(nodeData.ref1SpatialSystemTable));
 
             registry.byId("ref1AltAccuracy").attr("value", nodeData.ref1AltAccuracy, true);
+            registry.byId("ref1GridPosAccuracy").attr("value", nodeData.ref1GridPosAccuracy, true);
             registry.byId("ref1PosAccuracy").attr("value", nodeData.ref1PosAccuracy, true);
             registry.byId("ref1BasisText").attr("value", nodeData.ref1BasisText, true);
             registry.byId("ref1DataBasisText").attr("value", nodeData.ref1DataBasisText, true);
@@ -2260,6 +2295,9 @@ define([
                     // -- Extra Info --
                     nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress3").get("value");
                     break;
+                case 1000:
+                    nodeData.name = registry.byId("addressTitle").get("value");
+                    break;
                 default:
                     console.debug("Error in _getAddressData - Address Class must be 0, 1, 2 or 3!");
                     break;
@@ -2301,7 +2339,7 @@ define([
             // --- General ---
             nodeData.generalShortDescription = registry.byId("generalShortDesc").get("value");
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
-            nodeData.objectClass = registry.byId("objectClass").get("value").substr(5, 1); // Value is a string: "Classx" where x is the class
+            nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
             nodeData.advCompatible = registry.byId("isAdvCompatible").checked ? true : false; // in case value is NULL!
             
@@ -2405,7 +2443,8 @@ define([
 
             // add url to preview image to url table
             var previewUrl = registry.byId("generalPreviewImage").get("value");
-            if (previewUrl) urlLinks.push(UtilList.urlToListEntry(previewUrl));
+            var previewUrlDescription = registry.byId("previewImageDescription").get("value");
+            if (previewUrl) urlLinks.push(UtilList.urlToListEntry(previewUrl, previewUrlDescription));
 
             nodeData.linksToObjectTable = objLinks;
             nodeData.linksToUrlTable = urlLinks;
@@ -2421,56 +2460,16 @@ define([
 
                     // check if field is a table and handle differently
                     if (currentField instanceof CustomGrid) {
-                        // get column ids
-                        var tableData = [];
-                        var columnIds = [];
-
-                        array.forEach(currentField.getColumns(), function(column) {
-                            columnIds.push(column.field);
-                        });
-
-                        array.forEach(currentField.getData(), function(row) {
-                            var rowData = [];
-                            for (var j = 0; j < columnIds.length; j++) {
-                                var value = row[columnIds[j]];
-                                if (value === undefined || value === null) continue;
-
-                                //if (value instanceof Date)
-                                //    value = UtilString.getDateString(value, "dd.MM.yyyy");
-
-                                var listId = "-1";
-                                // get listId from structure element of grid in case it is a list
-                                if (currentField.getColumns()[j].values) {
-                                    var index = array.indexOf(currentField.getColumns()[j].values, value);
-                                    if (index == -1) index = array.indexOf(currentField.getColumns()[j].options, value);
-                                    if (index != -1) {
-                                        listId = currentField.getColumns()[j].values[index];
-                                        value = currentField.getColumns()[j].options[index];
-                                    }
-                                }
-
-                                var columnData = {
-                                    identifier: columnIds[j],
-                                    value: value,
-                                    listId: listId,
-                                    tableRows: null
-                                };
-                                rowData.push(columnData);
-                            }
-                            tableData.push(rowData);
-                        });
-
-                        // add empty rows so that table can be made empty
-                        if (tableData.length === 0) {
-                            tableData.push([]);
-                        }
-
+                        
+                        var tableData = this.prepareGridDataForBackend(currentField);
+                        
                         nodeData.additionalFields.push({
                             identifier: currentField.id,
                             value: null,
                             listId: null,
                             tableRows: tableData
                         });
+                        
                     } else {
                         // if it's a select box we need to get listId and value
                         var value = null;
@@ -2499,13 +2498,24 @@ define([
                             value = currentField.get("displayedValue");
                         }
 
-                        if (value !== null && lang.trim(value + "").length !== 0) {
+                        
+                        if (currentField.valueAsTableData) {
                             nodeData.additionalFields.push({
                                 identifier: identifier,
-                                value: value,
-                                listId: listId,
-                                tableRows: null
+                                value: null,
+                                listId: null,
+                                tableRows: value
                             });
+                        } else {
+                            if (value !== null && lang.trim(value + "").length !== 0) {
+                                nodeData.additionalFields.push({
+                                    identifier: identifier,
+                                    value: value,
+                                    listId: listId,
+                                    tableRows: null
+                                });
+                            }
+                            
                         }
                     }
                 }
@@ -2557,6 +2567,54 @@ define([
             console.debug(nodeData);
             console.debug("------ OBJECT DATA END ------");
         },
+        
+        prepareGridDataForBackend: function(currentField) {
+         // get column ids
+            var tableData = [];
+            var columnIds = [];
+
+            array.forEach(currentField.getColumns(), function(column) {
+                columnIds.push(column.field);
+            });
+
+            array.forEach(currentField.getData(), function(row) {
+                var rowData = [];
+                for (var j = 0; j < columnIds.length; j++) {
+                    var value = row[columnIds[j]];
+                    if (value === undefined || value === null) continue;
+
+                    //if (value instanceof Date)
+                    //    value = UtilString.getDateString(value, "dd.MM.yyyy");
+
+                    var listId = "-1";
+                    // get listId from structure element of grid in case it is a list
+                    if (currentField.getColumns()[j].values) {
+                        var index = array.indexOf(currentField.getColumns()[j].values, value);
+                        if (index == -1) index = array.indexOf(currentField.getColumns()[j].options, value);
+                        if (index != -1) {
+                            listId = currentField.getColumns()[j].values[index];
+                            value = currentField.getColumns()[j].options[index];
+                        }
+                    }
+
+                    var columnData = {
+                        identifier: columnIds[j],
+                        value: value,
+                        listId: listId,
+                        tableRows: null
+                    };
+                    rowData.push(columnData);
+                }
+                tableData.push(rowData);
+            });
+
+            // add empty rows so that table can be made empty
+            if (tableData.length === 0) {
+                tableData.push([]);
+            }
+
+            return tableData;
+        },
 
         _getObjectDataClass0: function() {},
 
@@ -2571,6 +2629,7 @@ define([
             nodeData.ref1VFormatTopology = registry.byId("ref1VFormatTopology").get("value");
 
             nodeData.ref1AltAccuracy = UtilGeneral.getNumberFromDijit("ref1AltAccuracy");
+            nodeData.ref1GridPosAccuracy = UtilGeneral.getNumberFromDijit("ref1GridPosAccuracy");
             nodeData.ref1PosAccuracy = UtilGeneral.getNumberFromDijit("ref1PosAccuracy");
             nodeData.ref1BasisText = registry.byId("ref1BasisText").get("value");
             nodeData.ref1DataBasisText = registry.byId("ref1DataBasisText").get("value");

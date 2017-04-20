@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -153,6 +153,7 @@ public class MdekDataBean {
 	private List<VectorFormatDetailsBean> ref1VFormatDetails;
 	private List<ScaleBean> ref1Scale;
 	private Double ref1AltAccuracy;
+	private Double ref1GridPosAccuracy;
 	private Double ref1PosAccuracy;
 	private List<LinkDataBean> ref1SymbolsText;
 	private List<LinkDataBean> ref1KeysText;
@@ -2032,15 +2033,30 @@ public class MdekDataBean {
     }
 
 
+    public Double getRef1GridPosAccuracy() {
+        return ref1GridPosAccuracy;
+    }
+
+    public void setRef1GridPosAccuracy(Double ref1GridPosAccuracy) {
+        this.ref1GridPosAccuracy = ref1GridPosAccuracy;
+    }
+
     public Boolean getAdvCompatible() {
         return advCompatible  == null ? false : advCompatible;
     }
-
-
+    
     public void setAdvCompatible(Boolean advCompatible) {
         this.advCompatible = advCompatible;
     }
 
+
+    public Boolean getInspireConform() {
+        return inspireConform;
+    }
+
+    public void setInspireConform(Boolean inspireConform) {
+        this.inspireConform = inspireConform;
+    }
 
     public Boolean getInspireConform() {
         return inspireConform;

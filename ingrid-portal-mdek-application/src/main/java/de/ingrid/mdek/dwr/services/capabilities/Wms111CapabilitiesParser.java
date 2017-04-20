@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -26,8 +26,10 @@
 package de.ingrid.mdek.dwr.services.capabilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.xpath.XPathExpressionException;
@@ -39,6 +41,8 @@ import org.w3c.dom.NodeList;
 import de.ingrid.geo.utils.transformation.CoordTransformUtil;
 import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
 import de.ingrid.mdek.SysListCache;
+import de.ingrid.mdek.MdekUtils.MdekSysList;
+import de.ingrid.mdek.MdekUtils.SpatialReferenceType;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.LocationBean;
@@ -78,8 +82,14 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private static final String XPATH_EXP_WMS_LAYER_CRS = "/WMT_MS_Capabilities/Capability/Layer/Layer/SRS";
     private static final String XPATH_EXP_WMS_KEYWORDS = "/WMT_MS_Capabilities/Service/KeywordList/Keyword";
     
+    private Map<String, Integer> versionSyslistMap;
+    
     public Wms111CapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new Wms130NamespaceContext()), syslistCache);
+        
+        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap.put( "1.1.1", 1 );
+        versionSyslistMap.put( "1.3.0", 2 );
     }
     
     /* (non-Javadoc)
@@ -94,8 +104,12 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         result.setDataServiceType(2); // view
         result.setTitle(xPathUtils.getString(doc, XPATH_EXP_WMS_1_1_1_TITLE));
         result.setDescription(xPathUtils.getString(doc, XPATH_EXP_WMS_1_1_1_ABSTRACT));
-        result.setVersions(getNodesContentAsList(doc, XPATH_EXP_WMS_1_1_1_VERSION));
-        String version = result.getVersions().get(0);
+        
+        List<String> versionList = getNodesContentAsList(doc, XPATH_EXP_WMS_1_1_1_VERSION);
+        List<String> mappedVersionList = mapVersionsFromCodelist(MdekSysList.OBJ_SERV_VERSION_WMS.getDbValue(), versionList, versionSyslistMap);
+        result.setVersions(mappedVersionList);
+        
+        String version = versionList.get(0);
         
         // Fees
         result.setFees(xPathUtils.getString(doc, XPATH_EXP_WMS_FEES));
@@ -375,7 +389,9 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
                     if (name == null) name ="UNKNOWN";
                     
                     box.setName(name);
+                    // shall be a free spatial reference, but needs an ID to check for duplications!
                     box.setTopicId(box.getName());
+                    box.setType( SpatialReferenceType.FREI.getDbValue() );
                     
                     bboxes.add(box);
                     // go to next layer!

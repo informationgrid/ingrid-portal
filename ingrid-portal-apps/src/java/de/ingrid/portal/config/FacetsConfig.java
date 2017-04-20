@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -101,8 +101,8 @@ public class FacetsConfig {
                     }
                 }
 
-                if (facetNode.getChildren( "[@sort]" ).size() > 0) {
-                    Node subNode = (Node) facetNode.getChildren( "[@sort]" ).get( 0 );
+                if (facetNode.getAttributes( "sort" ).size() > 0) {
+                    Node subNode = (Node) facetNode.getAttributes( "sort" ).get( 0 );
                     ingridFacet.setSort( subNode.getValue().toString() );
                 }
 
@@ -224,6 +224,13 @@ public class FacetsConfig {
                     }
                 }
                 
+                if (facetNode.getChildren( "parentId" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "parentId" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setParentId( node.getValue().toString() );
+                    }
+                }
+                
                 if (facetNode.getChildren( "icon" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "icon" ).get( 0 );
                     if (node != null) {
@@ -233,8 +240,8 @@ public class FacetsConfig {
                 if (facetNode.getChildren( "facets" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {
-                        if (node.getChildren( "[@queryType]" ).size() > 0) {
-                            Node subNode = (Node) node.getChildren( "[@queryType]" ).get( 0 );
+                        if (node.getAttributes( "@queryType" ).size() > 0) {
+                            Node subNode = (Node) node.getAttributes( "@queryType" ).get( 0 );
                             ingridFacet.setQueryType( subNode.getValue().toString() );
                         }
 

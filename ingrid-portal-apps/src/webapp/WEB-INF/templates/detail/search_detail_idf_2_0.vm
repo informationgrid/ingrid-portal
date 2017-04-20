@@ -243,8 +243,12 @@
                                     #end
                                 #elseif($t == "3")
                                     ## Free Address -> Name or Organisation
-                                    #if($TOOL.nodeExist("./idf:addressType", $hierarchyPartyNode))
-                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressType", null, $hierarchyPartyNode))</a>
+                                    #if($TOOL.nodeExist("./idf:addressIndividualName", $hierarchyPartyNode))
+                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressIndividualName", null, $hierarchyPartyNode))</a>
+                                        #if($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
+                                            <br>
+                                            $TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode)
+                                        #end
                                     #elseif($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
                                         <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode)</a>
                                     #end
@@ -378,6 +382,14 @@
                                     <td><a href="$url">$url</a></td>
                                 </tr>
                             #end
+                            ## Servicezeiten
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:hoursOfService")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                <tr>
+                                    <th>$MESSAGES.getString('t02_address.hours_of_service')</th>
+                                    <td>$TOOL.getValueFromXPath($xPath, null, $node)</td>
+                                </tr>
+                            #end
                         </table>
                     </div>
                 </div>
@@ -492,8 +504,20 @@
             #end
             #foreach($tr in $entry.body)
                 <tr>
+                #set($num = 0)
                 #foreach($td in $tr)
-                    <td>$td</td>
+                    #if($entry.types)
+                        #set($bodyType = $entry.types.get($num))
+                        #if($bodyType == "link")
+                            <td><a href="$td">$td</a></td>
+                        #else
+                            <td>$td</td>
+                        #end
+                    #else
+                        <td>$td</td>
+                    #end
+                    
+                    #set($num = $num + 1)
                 #end
                 </tr>
             #end
@@ -636,7 +660,7 @@
         #if($tool.hasContent($title))
             <h4 class="title-font">$title</h4>
         #end
-        #if($body)
+        #if($tool.hasContent($body))
             <p>$body</p>
         #else
             <p>$space</p>
@@ -763,7 +787,6 @@
     #set($pageDescription = $pageDescription.replace('"',"'"))
     #set($pageDescription = $stringTool.cutString($pageDescription,300))
 #end
-#parse('WEB-INF/templates/detail/search_detail_header.vm')
 
 #set ($action = $renderResponse.createActionURL())
 ## Remove comment for new detail view
@@ -778,8 +801,3 @@
         </div>
     </section>
 #end
-
-## ***************************
-## include the footer here
-## ***************************
-#parse('WEB-INF/templates/detail/search_detail_footer.vm')

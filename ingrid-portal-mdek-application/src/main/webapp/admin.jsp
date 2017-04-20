@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -25,7 +25,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<fmt:setLocale value="<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>" scope="session" />
+<fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
 <fmt:setBundle basename="messages" scope="session"/>
 
 <%
@@ -41,15 +41,15 @@
     
 <head>
 
-    <link rel="stylesheet" href="dojo-sources/release/lib/dojo/resources/dojo.css">
-    <link rel="stylesheet" href="dojo-sources/release/lib/dojox/grid/resources/Grid.css">
-    <link rel="stylesheet" href="dojo-sources/release/lib/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="dojo-sources/dojo/resources/dojo.css">
+    <link rel="stylesheet" href="dojo-sources/dojox/grid/resources/Grid.css">
+    <link rel="stylesheet" href="dojo-sources/dijit/themes/claro/claro.css">
     <!--<link rel="stylesheet" href="dojo-src/release/dojo/dojox/grid/resources/claroGrid.css">-->
 
-    <link rel="stylesheet" type="text/css" href="dojo-sources/release/lib/ingrid/css/admin.css"></link>
+    <link rel="stylesheet" type="text/css" href="dojo-sources/ingrid/css/admin.css"></link>
 
     <!-- <script type="text/javascript" src="dojo-sources/dojo/dojo.js" djConfig="parseOnLoad:true, locale:'de'"></script> -->
-    <script type="text/javascript" src="dojo-sources/release/lib/dojo/dojo.js" djConfig="parseOnLoad:true, locale:'de'"></script>
+    <script type="text/javascript" src="dojo-sources/dojo/dojo.js" djConfig="parseOnLoad:true, locale:'de'"></script>
     <!-- <script type="text/javascript" src="dojo-src/release/dojo/custom/layer.js"></script> -->
     
     <script type='text/javascript' src='dwr/engine.js'></script>

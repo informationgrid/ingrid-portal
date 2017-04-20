@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,7 +22,9 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -105,6 +107,11 @@ public class DetailPartPreparer {
         return iPlugId;
     }
 
+    public void setValueToContext(String key, String value) {
+        this.context.put( key, value );
+    }
+
+    
     public String getValueFromXPath(String xpathExpression) {
         return getValueFromXPath(xpathExpression, null);
     }
@@ -136,7 +143,38 @@ public class DetailPartPreparer {
         }
         return value;
     }
+    
+    public String getDateValueFromXPath(String xpathExpression) {
+        String value = null;
+        Node node = XPathUtils.getNode(this.rootNode, xpathExpression);
+        if(node != null){
+            if(node.getTextContent().length() > 0){
+                value = node.getTextContent().trim();
+                return getDateFormatValue(value);
+            }
+        }
+        return value;
+    }
 
+    public String getDateFormatValue (String value){
+        try {
+            Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(value);
+            if(cal != null){
+                if(cal.getTime() != null){
+                    int hours = cal.getTime().getHours();
+                    int minutes = cal.getTime().getMinutes();
+                    int seconds = cal.getTime().getSeconds();
+                    if(hours > 0 || minutes > 0 || seconds > 0){
+                        return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(cal.getTime());
+                    }
+                }
+            }
+            return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
+        } catch (Exception e) {
+        }
+        return value;
+    }
+    
     public ArrayList<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression) {
         return getListOfValuesFromXPath(xpathExpression, xpathSubExpression, null);
     }
@@ -299,6 +337,10 @@ public class DetailPartPreparer {
     }
     
     public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, ArrayList<String> headTitles, ArrayList<String> headXpathExpressions, ArrayList<String> headCodeList) {
+        return getNodeListTable(title, xpathExpression, headTitles, headXpathExpressions, headCodeList, null);
+    }
+    
+    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, ArrayList<String> headTitles, ArrayList<String> headXpathExpressions, ArrayList<String> headCodeList, ArrayList<String> headTypes) {
         HashMap<String, Object> element = new HashMap<String, Object>();
         if(XPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
@@ -309,6 +351,11 @@ public class DetailPartPreparer {
             ArrayList<String> head = new ArrayList<String>();
             head.addAll(headTitles);
             element.put("head", head);
+            if(headTypes != null){
+                ArrayList<String> types = new ArrayList<String>();
+                types.addAll(headTypes);
+                element.put("types", types);
+            }
             ArrayList<ArrayList<String>> body = new ArrayList<ArrayList<String>>();
             element.put("body", body);
             

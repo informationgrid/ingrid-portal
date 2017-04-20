@@ -5,7 +5,136 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="4.0.1-SNAPSHOT" date="??" description="Release 4.0.1">
+        <release version="4.0.3-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.3">
+          <action type="fix" dev="wemove" issue="REDMINE-634">
+            IGE: Only allow folders to be created under root nodes or other folders.
+          </action>
+          <action type="fix" dev="wemove" issue="REDMINE-547">
+            IGE: Fixed session timeout when logged out from portal.
+          </action>
+        </release>
+        
+        <release version="4.0.2" date="2017-04-11" description="Release 4.0.2">
+            <action type="fix" dev="wemove" issue="REDMINE-589">
+                PORTAL: Cleanup old installation before updating with new one to remove old files.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-365,348">
+                IGE: Added structural nodes (folder) to the tree.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-548">
+                IGE: Tree on duplicate page must not show addresses.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-570">
+                IGE: Fixed resetting of cut state in hierarchy tree.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-555">
+                IGE: Fixed error in free spatial reference, when editing name. 
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-568">
+                PORTAL: Updated profile for RLP
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-572">
+                PORTAL: Fixed XML Button not showing on result page
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-561">
+                PORTAL: Update shorturl service for NUMIS.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-567">
+                PORTAL: Fixed date format on detail view.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-628">
+                PORTAL: Split disclaimer and privacy to two different pages.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-438">
+                PORTAL: Added support for PostgreSQL. Full support in installer (create initial portal/mdek database) or migration via tool (see docs in sql directory).
+            </action>
+			<action type="add" dev="wemove" issue="REDMINE-380">
+                PORTAL: Add hours of service to detail view.
+            </action>
+			<action type="add" dev="wemove" issue="REDMINE-588">
+                PORTAL: Add portal header to detail view.
+            </action>
+			<action type="add" dev="wemove" issue="REDMINE-486">
+                PORTAL: Add UVP profile to portal.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-623">
+                PORTAL: Set collapsed of layer control to false for UVP map.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-599">
+                MAPCLIENT: Add setting to hide catalog accordion on menu.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-586">
+                MAPCLIENT: Add function graticule on accordion print.
+            </action>
+			<action type="fix" dev="wemove" issue="REDMINE-585">
+                MAPCLIENT: Fix of embed version by used unallowed JS functions.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-586">
+                MAPCLIENT: Fix function embed on accordion share.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-612">
+                MAPCLIENT: Fix mapclient search.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-613">
+                MAPCLIENT: Fix default projection change.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-619">
+                MAPCLIENT: Fix remove script-tag on getFeatureInfo response.
+            </action>
+        </release>
+
+        <release version="4.0.1" date="2017-02-01" description="Release 4.0.1">
+            <action type="add" dev="wemove" issue="REDMINE-452">
+                PORTAL: Add profile portalu_sl.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-519">
+                PORTAL: Also allow browsing catalog only containing addresses.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-517">
+                PORTAL: Fix copyright in footer.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-505">
+                PORTAL: Fix close main menu by empty portal search and on mobile view.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-504">
+                PORTAL: Fix duplicate URL parameter 'elementSetName' by display XML document of metadata on detail view.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-496">
+                PORTAL: Fix enable (delete) button on checkbox selection.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-479">
+                PORTAL: Fix detail view with free addresses.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-446">
+                PORTAL: Optimize detail view.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-447">
+                PORTAL: Fix displaying of additional fields on portal detail view.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-377">
+                IGE: Add new field "File description" to objects.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-157">
+                IGE: Add ORIG_UUID to hierarchy page, object preview and compare view.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-476">
+                IGE: Possibility to add a list with a connected syslist as an additional field.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-456">
+                IGE: Add field for mapping code to import additional fields.
+            </action>
+            <action type="add" dev="wemove" issue="REDMINE-378">
+                Add new field "gridPosAccuracy" with behaviour.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-509">
+                IGE: Make EMail Settings configurable via mdek.override.properties.
+            </action>
+            <action type="update" dev="wemove" issue="REDMINE-107">
+                IGE: Send emails in intervals if objects/addresses are expired (optional).
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-459">
+                IGE: Add new fields "Vorschaugrafik" / "Dateibeschreibung" to "additional fields".
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-417">
                 IGE: Fixed massive problems when parallel IGE logins via Portal-Admin, was not session specific.
             </action>
@@ -14,6 +143,57 @@
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-422">
                 IGE: Fixed validation of spatial reference height.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-457">
+                IGE: Fixed geo thesaurus not shown when also search on research page.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-466">
+                IGE: Fixed pasting an address node to the address root node.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-273">
+                IGE: Support useConstraints in getCapabilities-assistant.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-507">
+                IGE: Fix IE 11 bug where right click was not recognized, after expanding a tree node.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-335">
+                IGE: Map service type version according to GDI-DE.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-370">
+                IGE: Fixed getCapabilities-assistant to extract spatial reference systems from WFS-Service. 
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-371">
+                IGE: Fixed getCapabilities-assistant to extract bounding box from WFS-Service. 
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-521">
+                IGE: Added dirty check for additional fields.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-530">
+                IGE: Fixed moving a subtree to the root node.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-532">
+                IGE: Added error message when Thesaurus could not be reached.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-448">
+                MapClient: GetMap-URL on print.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-449">
+                MapClient: Fix tooltip function depend on layer settings.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-450">
+                MapClient: Remove check of WMS layer URL with host 'wms.geo'.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-471">
+                MapClient: Fix zoom to layer on search result list.
+            </action>
+            <action type="fix" dev="wemove" issue="REDMINE-472">
+                MapClient: Fix add service on search result list.
+            </action>
+        </release>
+
+        <release version="3.6.2.9-SNAPSHOT" date="2017-xx-xx" description="Release 3.6.2.9">
+            <action type="fix" dev="wemove" issue="REDMINE-530">
+                IGE: Fixed moving a subtree to the root node.
             </action>
         </release>
 

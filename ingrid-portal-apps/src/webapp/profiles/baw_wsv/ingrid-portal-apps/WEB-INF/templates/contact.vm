@@ -11,6 +11,15 @@
                 #displayFormError()
                 <div class="media">
                     <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="bemerkungen">$MESSAGES.getString('contact.form.message')*</label>
+                    </div>
+                    <div class="media__body">
+                        <textarea name="message" id="bemerkungen" #addErrorFormClass('message')>#getFieldValue('message')</textarea>
+                        #addErrorFormMessage('message')
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                         <label for="activity">$MESSAGES.getString('contact.form.activity')</label>
                     </div>
                     <div class="media__body">
@@ -24,32 +33,36 @@
                             <option value="univ" #getSelectedFlag('activity' 'univ')>$MESSAGES.getString('contact.report.email.area.of.profession.univ')</option>
                             <option value="medi" #getSelectedFlag('activity' 'medi')>$MESSAGES.getString('contact.report.email.area.of.profession.medi')</option>
                             <option value="map" #getSelectedFlag('activity' 'map')>$MESSAGES.getString('contact.report.email.area.of.profession.map')</option>
+                <option value="buhnen" #getSelectedFlag('activity' 'buhnen')>$MESSAGES.getString('contact.report.email.area.of.profession.buhnen')</option>
                             <option value="ande" #getSelectedFlag('activity' 'ande')>$MESSAGES.getString('contact.report.email.area.of.profession.ande')</option>
                         </select>  
                     </div>
                 </div>
                 <div class="media">
                     <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="xx2">#displayFieldLabel('firstname' "$MESSAGES.getString('contact.form.firstname')")</label>
+                        <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')"/>
+                        <input type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname') />
+                        #addErrorFormMessage('firstname')
                     </div>
                 </div>
                 <div class="media">
                     <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="xx3">#displayFieldLabel('lastname' "$MESSAGES.getString('contact.form.lastname')")</label>
+                        <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')"/>
+                        <input type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
+                        #addErrorFormMessage('lastname')
                     </div>
                 </div>
                 <div class="media">
                     <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                        <label for="xx6">#displayFieldLabel('email' "$MESSAGES.getString('contact.form.email')")</label>
+                        <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx6" name="email" value="#getFieldValue('email')"/>
+                        <input type="text" id="xx6" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
+                        #addErrorFormMessage('email')
                     </div>
                 </div>
                 <div class="media">

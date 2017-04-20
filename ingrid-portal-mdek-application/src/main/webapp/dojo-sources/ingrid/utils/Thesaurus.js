@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -97,7 +97,7 @@ define([
                         def.resolve(res);
                     },
                     errorHandler: function(errMsg, err) {
-                        console.debug("Error while calling findTopics: " + errMsg);
+                        console.error("Error while calling findTopics: " + errMsg);
                         def.reject(err);
                     }
                 });
@@ -319,7 +319,7 @@ define([
                         def.resolve(res);
                     },
                     errorHandler: function(errMsg, err) {
-                        dojo.debug("Error while calling getTopicsForTopic: " + errMsg);
+                        dojo.error("Error while calling getTopicsForTopic: " + errMsg);
                         def.reject(err);
                     }
                 });

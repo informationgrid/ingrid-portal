@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -46,8 +46,9 @@ require([
     "ingrid/utils/Thesaurus",
     "ingrid/utils/Events",
     "ingrid/dialog",
+    "ingrid/message",
     "ingrid/layoutCreator"
-], function(array, on, dom, topic, style, registry, UtilGrid, UtilList, UtilStore, UtilThesaurus, UtilEvents, dialog, layoutCreator) {
+], function(array, on, dom, topic, style, registry, UtilGrid, UtilList, UtilStore, UtilThesaurus, UtilEvents, dialog, message, layoutCreator) {
 
         on(_container_, "Load", function() {
             init();
@@ -90,7 +91,6 @@ require([
                         res = res.concat(inspireTopics);
                         UtilList.addSNSTopicLabels(res);
                         UtilStore.updateWriteStore("keywordsList", res);
-                        showStatus("");
                         dom.byId("numberOfTerms").innerHTML = "<fmt:message key='sns.numberOfTerms' />" + " " + resultsNum;
                     } else {
                         // Show status that no results were found?
@@ -135,10 +135,7 @@ require([
 
 
         function showStatus(msg) {
-            var status = dom.byId("statusText");
-            if (status) {
-                status.innerHTML = msg;
-            }
+            dialog.show(message.get("dialog.general.warning"), msg, dialog.WARNING);
         }
 
         function createTables() {

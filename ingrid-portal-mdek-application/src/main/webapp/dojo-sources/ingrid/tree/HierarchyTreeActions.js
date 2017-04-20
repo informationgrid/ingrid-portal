@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -227,6 +227,7 @@ define(["dojo/_base/declare",
                 if(evt.button==2){ // right-click
                     var node = registry.getEnclosingWidget(evt.target);
                     self._contextMenuPreparer(node);
+                    topic.publish("/onTreeContextMenu", node);
                 }
                 this.lastFocusedNode = this.selectedNode;
             },

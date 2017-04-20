@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -133,9 +133,9 @@ define([
 
                 this.createReferences();
                 console.debug("initAdditionalFields");
-                var defAddFields = this.initAdditionalFields();
-                console.debug("connect dirty flags");
-                this.connectDirtyFlagsEvents();
+                var defAddFields = this.initAdditionalFields()
+                    .then(this.connectDirtyFlagsEvents);
+                
                 console.debug("init CTS");
                 // apply atomatic transformation of bounding box if selected in table
                 this.initCTS();
@@ -166,6 +166,10 @@ define([
                     self.deferredCreation.resolve();
 
                     domClass.remove("loadBlockDiv", "blockerFull");
+                })
+                .then(null, function(err) {
+                    console.error("Error", err);
+                    displayErrorMessage(err);
                 });
 
             },
@@ -183,7 +187,7 @@ define([
                 };
                 layoutCreator.createSelectBox("objectClass", null, storeProps, function() {
                     // add a prefix for each value to stay compatible!
-                    return UtilSyslist.getSyslistEntry(8000, "Class");
+                    return UtilSyslist.getSyslistEntry(UtilSyslist.listIdObjectClass, "Class");
                 });
                 registry.byId("objectClass").onChange = lang.hitch(igeEvents, igeEvents.selectUDKClass);
 
@@ -267,6 +271,10 @@ define([
                 var previewImage = new ValidationTextBox({
                     style: "width:100%;"
                 }, "generalPreviewImage");
+                
+                new ValidationTextBox({
+                    style: "width:100%;"
+                }, "previewImageDescription");
 
                 // show a tooltip when hovering over image
                 previewImage.tooltip = new Tooltip({
@@ -312,8 +320,6 @@ define([
                 
                 new CheckBox({}, "isOpenData");
                 new CheckBox({}, "isAdvCompatible");
-                // show open data checkbox only for specific classes
-                rules.applyRuleOpenData();
 
                 var categoriesStructure = [{
                     field: 'title',
@@ -469,6 +475,9 @@ define([
                 new NumberTextBox({
                     style: "width:100%;"
                 }, "ref1PosAccuracy");
+                new NumberTextBox({
+                    style: "width:100%;"
+                }, "ref1GridPosAccuracy");
 
                 var tabSymbols = new TabContainer({
                     style: "width: 100%;",
@@ -1612,6 +1621,16 @@ define([
                 layoutCreator.createDataGrid("spatialRefLocation", null, spatialRefLocationStructure, null);
                 aspect.after(UtilGrid.getTable("spatialRefLocation"), "onCellChange", function(res, args) {
                     var msg = args[0];
+
+                    var updateRow = function(rowPos, lon1, lat1, lon2, lat2) {
+                        var row = UtilGrid.getTableData("spatialRefLocation")[rowPos];
+                        row.longitude1 = lon1;
+                        row.latitude1 = lat1;
+                        row.longitude2 = lon2;
+                        row.latitude2 = lat2;
+                        UtilGrid.updateTableDataRow("spatialRefLocation", rowPos, row);
+                    };
+
                     if (msg.cell === 0) {
                         var data = UtilSyslist.getSyslistEntryData(1100, msg.item.name);
                         console.debug("syslist data: " + data);
@@ -1619,12 +1638,16 @@ define([
                             // replace "," with "." for correct data format
                             data = data.replace(/,/g, ".");
                             var splittedData = data.split(" ");
-                            var row = UtilGrid.getTableData("spatialRefLocation")[msg.row];
-                            row.longitude1 = parseFloat(splittedData[0]);
-                            row.latitude1 = parseFloat(splittedData[1]);
-                            row.longitude2 = parseFloat(splittedData[2]);
-                            row.latitude2 = parseFloat(splittedData[3]);
-                            UtilGrid.updateTableDataRow("spatialRefLocation", msg.row, row);
+                            updateRow(msg.row, 
+                                parseFloat(splittedData[0]), 
+                                parseFloat(splittedData[1]), 
+                                parseFloat(splittedData[2]), 
+                                parseFloat(splittedData[3])
+                            );
+                            
+                        } else if (UtilSyslist.getSyslistEntryKey(1100, msg.item.name) !== msg.item.name) {
+                            updateRow(msg.row, null, null, null, null);
+
                         }
                     }
                 });
@@ -2284,33 +2307,31 @@ define([
                 UtilCatalog.getOverrideBehavioursDef().then(function(data) {
                     // mark behaviours with override values
                     array.forEach(data, function(item) {
-                        if (item.parent) {
-                            behaviour[item.parent].children[item.id].override = item.active;
-                        } else {
+                        if (behaviour[item.id]) {
                             behaviour[item.id].override = item.active;
+                            if (item.params) {
+                                array.forEach(item.params, function(p) {
+                                    var behaviourParam = array.filter(behaviour[item.id].params, function(param) { return param.id === p.id; })[0];
+                                    lang.mixin(behaviourParam, p);
+                                });
+                            }
                         }
                     });
                     for (var behave in behaviour) {
-                        var entry = behaviour[behave];
-                        if (!entry.title) continue;
+                        // ignore invalid or address behaviours
+                        if (!behaviour[behave].title || behaviour[behave].forAddress) continue; 
+                        
                         // run behaviour if 
-                        // 1) activated by default and not overriden
-                        // 2) activate if explicitly overriden
-                        if ((entry.defaultActive && entry.override === undefined)
-                                || (entry.override === true)) {
+                        // 1) activated by default and not overridden
+                        // 2) activate if explicitly overridden
+                        // 3) ignore system behaviours, which were already executed
+                        if (behaviour[behave].type !== "SYSTEM" &&
+                                (
+                                    (behaviour[behave].defaultActive && behaviour[behave].override === undefined)
+                                    || behaviour[behave].override === true
+                                )) {
                             console.debug("execute behaviour: " + behave);
-                            entry.run();
-                        }
-                        // check for child behaviours
-                        if (entry.children) {
-                            for (var child in entry.children) {
-                                var childEntry = entry.children[child];
-                                if ((childEntry.defaultActive && childEntry.override === undefined)
-                                        || (childEntry.override === true)) {
-                                    console.debug("execute behaviour: " + child);
-                                    childEntry.run();
-                                }
-                            }
+                            behaviour[behave].run();
                         }
                     }
                 }, function(error) {

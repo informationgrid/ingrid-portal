@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -51,8 +51,10 @@ define([
     "ingrid/utils/String",
     "ingrid/utils/General",
     "ingrid/hierarchy/dirty",
+    "ingrid/hierarchy/behaviours.user",
     "dojo/_base/sniff"
-], function(declare, unload, dom, has, array, lang, Deferred, on, keys, topic, DomConstruct, wnd, dialog, message, StackContainer, BorderContainer, ContentPane, XContentPane, registry, igeMenuBar, layoutCreator, menuEventHandler, IgeActions, PageNavigation, UtilSecurity, UtilAddress, UtilCatalog, UtilString, UtilGeneral, dirty) {
+], function(declare, unload, dom, has, array, lang, Deferred, on, keys, topic, DomConstruct, wnd, dialog, message, StackContainer, BorderContainer, ContentPane, XContentPane, registry, 
+        igeMenuBar, layoutCreator, menuEventHandler, IgeActions, PageNavigation, UtilSecurity, UtilAddress, UtilCatalog, UtilString, UtilGeneral, dirty, behaviours) {
     return declare(null, {
 
         global: this,
@@ -79,12 +81,11 @@ define([
                 .then(function() {
                 
                 var deferred2 = self.initCatalogData()
-                    .then(self.fetchSysLists);
+                    .then(lang.hitch(self, self.fetchSysLists));
     
     
     
                 // get guiIds that are going to be configured for visibility
-                //fetchGuiIdList();
                 self.initGeneralEventListener(); // for release activate!
     
                 // wait for page rendered before 
@@ -95,12 +96,7 @@ define([
                     // create the containers where external pages shall be loaded into
                     self.createMenuPages();
     
-                    // create the menu bar
-                    igeMenuBar.create(registry.byId("menubarPane"));
                     self.initSessionKeepalive();
-//                        .then(null, function(err) {
-//                            dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING, null, null, null, err.stack);
-//                        });
     
                     // select a page initially
                     deferred2.then(function() {
@@ -110,6 +106,54 @@ define([
                                 label: 'label'
                             }
                         }, null, "js/data/languageCode.json");
+                        
+                        // execute additional system behaviours
+                        UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                            
+                            // mark behaviours with override values
+                            array.forEach(data, function(item) {
+                                if (behaviours[item.id]) {
+                                    behaviours[item.id].override = item.active;
+                                    if (item.params) {
+                                        array.forEach(item.params, function(p) {
+                                            var behaviourParam = array.filter(behaviours[item.id].params, function(param) { return param.id === p.id; })[0];
+                                            lang.mixin(behaviourParam, p);
+                                        });
+                                    }
+                                }
+                            });
+                            for (var behave in behaviours) {
+                                if (!behaviours[behave].title) continue;
+                                // run behaviour if 
+                                // 1) it's a system behaviour
+                                // 2) activated by default and not overridden
+                                // 3) activate if explicitly overridden
+                                if (behaviours[behave].type === "SYSTEM" &&
+                                        (
+                                            (behaviours[behave].defaultActive && behaviours[behave].override === undefined)
+                                            || behaviours[behave].override === true
+                                        )) {
+                                    console.debug("execute system behaviour: " + behave);
+                                    behaviours[behave].run();
+                                }
+                            }
+
+                            // create the menu bar after system behaviours are run, so that they can have an influence
+                            // on the menu structure
+                            igeMenuBar.create(registry.byId("menubarPane"));
+
+                            var ids = [];
+                            topic.publish("/collectAdditionalSyslistsToLoad", ids);
+                            self.fetchSysListsByIds(ids)
+                                .then(function() {
+                                    topic.publish("/additionalSyslistsLoaded");
+                                });
+
+                        }, function(error) {
+                            console.error("Error executing behvaiour:", error);
+                        });
+                        
+                        
                         // the connect has to be called delayed, otherwise onChange will be 
                         // triggered immediately and the page would be switching always
                         // -> not when set initially?! (see declaration of selectbox!)
@@ -180,19 +224,13 @@ define([
                 },
                 errorHandler: function(mes) {
                     dialog.show(message.get("general.error"), message.get("init.error.userNotFound"), dialog.WARNING);
-                    console.debug("Error: " + mes);
+                    console.error("Error: " + mes);
                     def.reject(mes);
                 }
             });
 
             return def.promise;
         },
-
-        // initPageHeader: function() {
-        //     // Display the current user and role
-        //     UtilSecurity.getRoleName(UtilSecurity.currentUser.role);
-        //     UtilAddress.createAddressTitle(UtilSecurity.currentUser.address);
-        // },
 
         create: function() {
 
@@ -319,15 +357,6 @@ define([
                     executeScripts: true
                 });
 
-                /*var fieldSettings = new dojox.layout.ContentPane({
-                        id: "fieldSettings",
-                        title: "fieldSettings",
-                        layoutAlign: "client",
-                        style: "padding: 0px; width: 864px !important; height: 100%;",
-                        href: "admin/mdek_admin_catalog_field_settings.jsp",
-                        executeScripts: true
-                    });*/
-
                 var generalSettings = new XContentPane({
                     id: "generalSettings",
                     title: "generalSettings",
@@ -431,15 +460,6 @@ define([
                     executeScripts: true
                 });
 
-                /*var adminAdditionalFields = new dojox.layout.ContentPane({
-                        id: "adminAdditionalFields",
-                        title: "adminAdditionalFields",
-                        layoutAlign: "client",
-                        style: "padding: 0px; width: 1000px;",
-                        href: "admin/mdek_admin_catman_additional_fields.jsp",
-                        executeScripts: true
-                    });*/
-
                 var adminFormFields = new XContentPane({
                     id: "adminFormFields",
                     title: "adminFormFields",
@@ -491,11 +511,6 @@ define([
                     parseOnLoad: false
                 });
 
-
-                /*var controller = new dijit.layout.StackController({
-                        containerId: "stackContainer"
-                    }).placeAt("menubarPane");*/
-
                 // the first child also will be selected and shown!!!
                 sc.addChild(dashboard);
 
@@ -526,7 +541,6 @@ define([
                 sc.addChild(adminSearchTerms);
                 sc.addChild(adminLocations);
                 sc.addChild(adminDeleteAddress);
-
 
                 sc.startup();
             };
@@ -594,11 +608,11 @@ define([
 
             this.initPrintFrame = function() {
                 var cssLink1 = document.createElement("link");
-                cssLink1.href = "/ingrid-portal-mdek-application/dojo-sources/release/lib/ingrid/css/slick.grid.css";
+                cssLink1.href = "/ingrid-portal-mdek-application/dojo-sources/ingrid/css/slick.grid.css";
                 cssLink1.rel = "stylesheet";
                 cssLink1.type = "text/css";
                 var cssLink2 = document.createElement("link");
-                cssLink2.href = "/ingrid-portal-mdek-application/dojo-sources/release/lib/ingrid/css/styles.css";
+                cssLink2.href = "/ingrid-portal-mdek-application/dojo-sources/ingrid/css/styles.css";
                 cssLink2.rel = "stylesheet";
                 cssLink2.type = "text/css";
                 // IE has problems here!
@@ -612,23 +626,17 @@ define([
 
             };
 
-            this.fetchSysLists = function() {
+            this.fetchSysListsByIds = function(lstIds) {
                 var def = new Deferred();
 
                 // Setting the language code to "de". Uncomment the previous block to enable language specific settings depending on the browser language
                 var languageCode = UtilCatalog.getCatalogLanguage();
-                console.debug("LanguageShort is: " + languageCode);
-
-                var lstIds = [100, 101, 102, 502, 505, 510, 515, 518, 520, 523, 525, 526, 527, 528, 1100, 1230, 1320, 1350, 1370, 1400, 1410, 2000,
-                    3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5151, 5152, 5153, 5154, 5180, 5200, 5300, 6000, 6005, 6010, 6020, 6100, 6200, 6250, 6300,
-                    6400, 6500, 7109, 7112, 7113, 7114, 7115, 7120, 7125, 7126, 7127, 8000, 99999999
-                ];
-
+                // console.debug("LanguageShort is: " + languageCode);
+                
                 CatalogService.getSysListsRemoveMetadata(lstIds, languageCode, {
-                    //preHook: UtilDWR.enterLoadingState,
-                    //postHook: UtilDWR.exitLoadingState,
                     callback: function(res) {
-                        sysLists = res;
+                        if (!window.sysLists) sysLists = {};
+                        lang.mixin(sysLists, res);
 
                         // only if not sorted in backend, e.g. INSPIRE Themes (6100) !
                         array.forEach(lstIds, function(id) {
@@ -642,11 +650,8 @@ define([
                         def.resolve();
                     },
                     errorHandler: function(mes) {
-                        //UtilDWR.exitLoadingState();
-                        //displayErrorMessage(err);
-                        console.debug("Error: " + mes);
+                        console.error("Error: " + mes);
                         dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-                        console.debug("Error: " + mes);
                         def.reject(mes);
                     }
                 });
@@ -654,7 +659,15 @@ define([
                 return def.promise;
             };
 
+            this.fetchSysLists = function() {
 
+                var lstIds = [100, 101, 102, 502, 505, 510, 515, 518, 520, 523, 525, 526, 527, 528, 1100, 1230, 1320, 1350, 1370, 1400, 1410, 2000,
+                    3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5151, 5152, 5153, 5154, 5180, 5200, 5300, 6000, 6005, 6010, 6020, 6100, 6200, 6300,
+                    6400, 6500, 7109, 7112, 7113, 7114, 7115, 7120, 7125, 7126, 7127, 8000, 99999999
+                ];
+
+                return this.fetchSysListsByIds(lstIds);
+            };
 
             this.initCurrentUserPermissions = function() {
                 var def = new Deferred();
@@ -669,7 +682,7 @@ define([
                     errorHandler: function(mes) {
                         //UtilDWR.exitLoadingState();
                         dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-                        console.debug("Error: " + mes);
+                        console.error("Error: " + mes);
                         def.reject(mes);
                     }
                 });
@@ -704,7 +717,7 @@ define([
                         errorHandler: function(mes) {
                             //UtilDWR.exitLoadingState();
                             dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-                            console.debug("Error: " + mes);
+                            console.error("Error: " + mes);
                             def.reject(mes);
                         }
                     });
@@ -727,7 +740,7 @@ define([
                             errorHandler: function(mes) {
                                 //UtilDWR.exitLoadingState();
                                 dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING);
-                                console.debug("Error: " + mes);
+                                console.error("Error: " + mes);
                                 def.reject(mes);
                             }
                         });
@@ -747,7 +760,7 @@ define([
                 sessionKeepaliveDef.then(function(sessionKeepaliveInterval) {
                     if (sessionKeepaliveInterval > 0) {
                         var interval = sessionKeepaliveInterval * 60 * 1000;
-                        setInterval(UtilGeneral.refreshSession, interval);
+                        setInterval(lang.hitch(UtilGeneral, UtilGeneral.refreshSession), interval);
                     } else {
                         UtilityService.getSessionTimoutInterval({
                             callback: function(res) {
@@ -842,7 +855,7 @@ define([
                         sysGuis = sysGuiList;
                     },
                     errorHandler: function(errMsg, err) {
-                        console.debug(errMsg);
+                        console.error(errMsg);
                         deferred.reject(err);
                     }
                 });

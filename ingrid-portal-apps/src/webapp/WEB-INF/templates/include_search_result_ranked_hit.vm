@@ -78,28 +78,18 @@
         #else
             <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end<strong>renderTitle($rs.title)<strong></h4>
         #end
-            
+        #if($!rs.additional_html_1)
         <div class="media__obj media__obj--right">
             $!rs.additional_html_1
         </div>
+        #end
         <p>
             $!rs.abstract 
         </p>
         <p>
-            #set ($showProvider = true)
-            #if($grouping && $grouping == 'provider')
-                #set ($showProvider = false)
-            #end
-            #if($showProvider)
-                <small>
-                    <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.provider'):</strong></span>
-                    <span class="tx-light">$!rs.provider</span>
-                </small>
-            #end
-            <small>
-                <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.source'):</strong></span>
-                <span class="tx-light">$!rs.source</span>
-            </small>
+            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
+            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
+            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_source.vm")
             #if($adminContent)
                 <small>
                     <span class="tx-darkest"><strong>Score:</strong></span>
@@ -108,14 +98,10 @@
             #end
          </p>
         ## do not show wms urls when they already have been displayed (above)
-        #if($rs.wms_url)
-            <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
-        #end
+        #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_wms_url.vm")
         
         ## render "Get XML"-link displayed next to the title
-        #if ($rs.csw_link)
-            <a class="tag tag--small" href='$rs.csw_link' title='$MESSAGES.getString('common.result.show.xml')'>XML</a>
-        #end
+        #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
         
         #if($rs.wms_coord)
             <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>

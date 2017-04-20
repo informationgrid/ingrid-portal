@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -65,7 +65,8 @@ public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvide
     			if (fieldList.contains(FIELD_OBJECT_ID) && fieldList.contains(FIELD_PARENT_OBJ_UUID)) {
                 	isCorrupt = false;
     			}
-            } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+    		}
+            if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
     			if (fieldList.contains(FIELDS_ADDRESS_ID) && fieldList.contains(FIELD_PARENT_ADDR_UUID)) {
                 	isCorrupt = false;
     			}
@@ -73,8 +74,8 @@ public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvide
     	}
     	
     	if (isCorrupt) {
-    		if (log.isDebugEnabled()) {
-    			log.debug("CORRUPT PlugDescription ! We skip this plug: " + plug);    			
+    		if (log.isWarnEnabled()) {
+    			log.warn("CORRUPT PlugDescription ! We skip this plug: " + plug);    			
     		}
     	}
 

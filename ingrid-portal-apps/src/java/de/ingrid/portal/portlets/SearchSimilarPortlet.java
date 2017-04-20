@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -91,7 +91,8 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         // if no query display "nothing"
         IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
         if (query == null || query.getTerms().length == 0) {
-            setDefaultViewPage(TEMPLATE_NO_QUERY);
+            setDefaultViewPage(TEMPLATE_RESULT);
+            context.put("closeSimilarSection", true);
             super.doView(request, response);
             return;
         }
@@ -148,9 +149,13 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                     IngridQuery query = (IngridQuery) SearchState.getSearchStateObject(request, Settings.MSG_QUERY);
                     similarRoot = DisplayTreeFactory.getTreeFromQueryTerms(query);
                     session.setAttribute("similarRoot", similarRoot);
-                    if (similarRoot.getChildren().size() > 0) {
-                        openNode(similarRoot, ((DisplayTreeNode) similarRoot.getChildren().get(0)).getId(), request
-                                .getLocale());
+                    for (int i = 0; i < similarRoot.getChildren().size(); i++) {
+                        DisplayTreeNode node = (DisplayTreeNode) similarRoot.getChildren().get(i);
+                        openNode(similarRoot, node.getId(), request
+                                .getLocale(), true);
+                        if(i > 0){
+                            node.setOpen(false);
+                        }
                     }
                 }
                 ps.put("similarRoot", similarRoot);
@@ -160,7 +165,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
             } else if (action.equalsIgnoreCase("doOpenNode")) {
                 similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
                 if (similarRoot != null) {
-                    openNode(similarRoot, request.getParameter("nodeId"), request.getLocale());
+                    openNode(similarRoot, request.getParameter("nodeId"), request.getLocale(), false);
                     ps.put("similarRoot", similarRoot);
                 }
             } else if (action.equalsIgnoreCase("doCloseNode")) {
@@ -233,30 +238,32 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         return ps;
     }
 
-    private void openNode(DisplayTreeNode rootNode, String nodeId, Locale language) {
+    private void openNode(DisplayTreeNode rootNode, String nodeId, Locale language, boolean loadData) {
         DisplayTreeNode node = rootNode.getChild(nodeId);
         node.setOpen(true);
-        if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0
-                && !node.isLoading()) {
-            node.setLoading(true);
-            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName(), language);
-            if (hits == null || hits.length == 0) {
-                DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + 0, "similar.terms.not.available", false);
-                snsNode.setType(DisplayTreeNode.MESSAGE_NODE);
-                snsNode.setParent(node);
-                node.addChild(snsNode);
-            } else {
-                for (int i = 0; i < hits.length; i++) {
-                    Topic hit = (Topic) hits[i];
-                    if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
-                        DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
-                        snsNode.setType(DisplayTreeNode.SNS_TERM);
-                        snsNode.setParent(node);
-                        node.addChild(snsNode);
+        if(loadData){
+            if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0
+                    && !node.isLoading()) {
+                node.setLoading(true);
+                IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName(), language);
+                if (hits == null || hits.length == 0) {
+                    DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + 0, "similar.terms.not.available", false);
+                    snsNode.setType(DisplayTreeNode.MESSAGE_NODE);
+                    snsNode.setParent(node);
+                    node.addChild(snsNode);
+                } else {
+                    for (int i = 0; i < hits.length; i++) {
+                        Topic hit = (Topic) hits[i];
+                        if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
+                            DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
+                            snsNode.setType(DisplayTreeNode.SNS_TERM);
+                            snsNode.setParent(node);
+                            node.addChild(snsNode);
+                        }
                     }
                 }
+                node.setLoading(false);
             }
-            node.setLoading(false);
         }
     }
 

@@ -329,6 +329,11 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>area</id>
         <hidden>address</hidden>
     </facet>
+    <facet>
+        <name>searchResult.facete.title.area</name>
+        <id>area.map</id>
+        <hidden>address</hidden>
+    </facet>
     <!-- Raumbezug Adressen-->
     <!-- Standard - Kann nicht erweitert werden -->
     <facet>
@@ -353,35 +358,40 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>searchResult.facete.datatype.www</name>
                 <query>datatype:www</query>
-                <id>category_www</id>
+                <id>www</id>
+                <parentId>type</parentId>
                 <icon>icon-log-out-1</icon>
             </facet>
             <!-- Metadaten -->
             <facet>
                 <name>searchResult.facete.title.metaclass</name>
                 <query>datatype:metadata</query>
-                <id>category_metadata</id>
+                <id>metadata</id>
+                <parentId>type</parentId>
                 <icon>icon-folder-search</icon>
             </facet>
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
                 <query>inspireidentifiziert</query>
-                <id>category_inspire</id>
+                <id>inspire</id>
+                <parentId>type</parentId>
                 <icon>icon-globe-2</icon>
             </facet>
         <!-- Opendata -->
            <facet>
                 <name>Opendata</name>
                 <query>(opendata OR opendataident) datatype:metadata</query>
-                <id>category_opendata</id>
+                <id>opendata</id>
+                <parentId>type</parentId>
                 <icon>icon-hotspot-2</icon>
             </facet>
         <!-- Karten -->
             <facet>
                 <name>searchResult.facete.datatype.map</name>
                 <query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
-                <id>category_map</id>
+                <id>map</id>
+                <parentId>type</parentId>
                 <icon>icon-globe-1</icon>
             </facet>
         </facets>

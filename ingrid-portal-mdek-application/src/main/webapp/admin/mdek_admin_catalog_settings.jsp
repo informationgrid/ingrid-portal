@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -104,8 +104,14 @@
                         check.set( "checked", item.active );
                         // add a marker for display difference to default state
                         var tag = domConstruct.toDom("<span title='<fmt:message key='dialog.admin.catalog.general.modifiedBehaviour' />'> (Info)</span>");
-                        check.domNode.parentNode.appendChild(tag);
                         domClass.add(check.domNode.parentNode, "modified");
+                        check.domNode.parentNode.appendChild(tag);
+
+                        if (item.params) {
+                            array.forEach(item.params, function(param) {
+                                query("input[data-field='" + param.id + "']")[0].value = param.value;
+                            });
+                        }
                     });
                 });
             }
@@ -243,10 +249,32 @@
                         var entry = behaviour[behave];
                         var currentState = box.checked;
                         if (entry.defaultActive !== currentState) {
-                            modifiedBehaviours.push({
+                            var beh = {
                                 id: behave,
                                 active: currentState
-                            })
+                            };
+                            var params = behaviour[behave].params;
+                            if (params) {
+                                beh.params = [];
+                                array.forEach(params, function(p) {
+                                    var value = query("input[data-field='" + p.id + "']")[0].value;
+                                    // only add params that differ from default value
+                                    if (p.default != value) {
+                                        p.value = value;
+                                        beh.params.push( {
+                                            id: p.id,
+                                            value: value
+                                        });
+                                    }
+                                });
+
+                                // if no parameter changed and default state is set (so nothing changed) 
+                                // then skip this behaviour, since it has already the default state
+                                if (beh.params.length === 0 && behaviour[behave].defaultActive === currentState) {
+                                    continue;
+                                }
+                            }
+                            modifiedBehaviours.push(beh);
                         }
                     } else {
                         var children = behaviour[behave].children;
@@ -311,21 +339,36 @@
             }
             
             function renderSystemBehaviours() {
+                var behavioursByCategory = {};
                 for (var behave in behaviour) {
                     var entry = behaviour[behave];
-                    if (!entry.title) continue;
-                    console.log(entry.title);
-                    domConstruct.place( renderRow(entry, behave), "behaviourContent" );
                     
-                    if (entry.children) {
-                        for (var child in entry.children) {
-                            var childEntry = entry.children[child];
-                            domConstruct.place( renderRow(childEntry, child, true), "behaviourContent" );
-                        }
+                    // TODO: group by categories
+                    var cat = behaviour[behave].category;
+                    if (!behavioursByCategory[cat]) behavioursByCategory[cat] = [];
+                    behavioursByCategory[cat].push(behave);
+                }
+                for (var category in behavioursByCategory) {
+                    var behaviourIds = behavioursByCategory[category];
+
+                    var categoryContainer = "behaviourContent";
+
+                    if (category !== "undefined") {
+                        renderCategory(category);
+                        categoryContainer = domConstruct.toDom("<div class='checkbox-indent'></div>");
+                        domConstruct.place( categoryContainer, "behaviourContent" );
                     }
+
+                    array.forEach(behaviourIds, function(id) {
+                        domConstruct.place( renderRow(behaviour[id], id), categoryContainer );
+                    });
                 }
             }
             
+            function renderCategory(category) {
+                domConstruct.place( domConstruct.toDom("<div>" + category + "</div>"), "behaviourContent" );
+            }
+
             function renderRow(data, id, padding) {
                 var pad = padding ? " intend" : "";
                 var row = domConstruct.toDom("<span class='input" + pad + "'></span>");
@@ -338,6 +381,13 @@
                 label.appendChild(domConstruct.toDom(data.title));
                 
                 row.appendChild(label);
+                if (data.params) {
+                    array.forEach(data.params, function(param) {
+                        //var value = param.value ? param.value : param.default;
+                        var paramInput = domConstruct.toDom("<div class='checkbox-indent'>" + param.label + " <input type='text' data-field='" + param.id + "' value='" + param.default + "'></div>");
+                        row.appendChild(paramInput);
+                    });
+                }
                 return row;
             }
 

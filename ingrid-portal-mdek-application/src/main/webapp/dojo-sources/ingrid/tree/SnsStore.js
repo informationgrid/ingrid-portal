@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -27,11 +27,8 @@ define([
     "dojo/dom-style",
     "dojo/store/util/QueryResults",
     "dojo/store/Memory",
-    "dijit/registry",
-    "ingrid/utils/List",
-    "ingrid/utils/Address",
-    "ingrid/utils/String"
-], function(Deferred, declare, array, style, QueryResults /*=====, Store =====*/ , Memory) {
+    "ingrid/message"
+], function(Deferred, declare, array, style, QueryResults /*=====, Store =====*/ , Memory, message) {
 
     return declare("ingrid.store.SnsStore", Memory, {
         // summary:
@@ -100,17 +97,14 @@ define([
                         callback: function(res) {
                             _this._handleRootTopics(res);
                             deferred.resolve(res);
-                            // if (!_this.treeWidget) return;
-                            // _this.showStatus("");
-                            // callback_function();
                         },
                         errorHandler: function(msg) {
                             deferred.reject(msg);
-                            _this.showStatus("<fmt:message key='sns.connectionError' />");
+                            _this.showStatus(message.get("sns.connectionError"));
                         },
                         exceptionHandler: function(msg) {
                             deferred.reject(msg);
-                            _this.showStatus("<fmt:message key='sns.connectionError' />");
+                            _this.showStatus(message.get("sns.connectionError"));
                         }
                     };
                     if (this.rootUrl)
@@ -122,13 +116,12 @@ define([
                         preHook: _this.showLoadingZone,
                         postHook: _this.hideLoadingZone,
                         callback: function(res) {
-                            //_this.showStatus("");
                             _this._handleSubTopics(res);
                             deferred.resolve(res);                            
                         },
                         errorHandler: function(msg) {
                             console.debug(msg);
-                            _this.showStatus("<fmt:message key='sns.connectionError' />");
+                            _this.showStatus(message.get("sns.connectionError"));
                             deferred.reject(msg);
                         }
                     });
@@ -184,17 +177,16 @@ define([
                         _this.hideLoadingZone();
                     },
                     callback: function(res) {
-                        _this.showStatus("");
                         var topTerm = _this._getTopTermNode(res[0]);
                         console.debug("expandPath");
                         _this._expandPath(treePane.rootNode, topTerm, res[0], def);
                     },
                     timeout: 0,
                     errorHandler: function(msg) {
-                        _this.showStatus("<fmt:message key='sns.connectionError' />");
+                        _this.showStatus(message.get("sns.connectionError"));
                     },
                     exceptionHandler: function(msg) {
-                        _this.showStatus("<fmt:message key='sns.connectionError' />");
+                        _this.showStatus(message.get("sns.connectionError"));
                     }
                 });
 
@@ -222,7 +214,9 @@ define([
 
             hideLoadingZone: function() {
                 if (this.loadingDivId) style.set(this.loadingDivId, "visibility", "hidden");
-            }
+            },
+            
+            showStatus: function(msg) {}
 
     });
 

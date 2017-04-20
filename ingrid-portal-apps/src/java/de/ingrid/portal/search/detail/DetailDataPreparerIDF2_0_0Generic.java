@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -178,7 +178,7 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 					}
 				}else if(addressType.equals("3")){
 					if(XPathUtils.nodeExists(tmpNode, "./idf:addressIndividualName")){
-						tmpTitle = getIndividualName(XPathUtils.getString(node, "./idf:addressIndividualName").trim());
+						tmpTitle = getIndividualName(XPathUtils.getString(tmpNode, "./idf:addressIndividualName").trim());
 					}else if(XPathUtils.nodeExists(tmpNode, "./idf:addressOrganisationName")){
 						tmpTitle = XPathUtils.getString(tmpNode, "./idf:addressOrganisationName").trim();
 					}

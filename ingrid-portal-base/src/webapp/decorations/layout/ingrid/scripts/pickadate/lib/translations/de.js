@@ -12,7 +12,9 @@ jQuery.extend( jQuery.fn.pickadate.defaults, {
     format: 'ddd, dd. mmm yyyy',
     formatSubmit: 'dd.mm.yyyy',
     selectMonths: true,
-    selectYears: true
+    selectYears: 3000,
+    min: new Date(1200,0,1),
+    max: true
 });
 
 /*

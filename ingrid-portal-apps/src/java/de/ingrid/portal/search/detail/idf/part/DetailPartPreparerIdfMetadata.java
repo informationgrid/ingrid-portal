@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -109,9 +109,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             Node node = XPathUtils.getNode(rootNode, xpathExpression);
             String modTime = "";
             if(XPathUtils.nodeExists(node, "./gco:DateTime")){
-                modTime = UtilsDate.convertDateString(XPathUtils.getString(node, "./gco:DateTime").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+                modTime = getDateFormatValue(XPathUtils.getString(node, "./gco:DateTime").trim());
             }else if(XPathUtils.nodeExists(node, "./gco:Date")){
-                modTime = UtilsDate.convertDateString(XPathUtils.getString(node, "./gco:Date").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+                modTime = getDateFormatValue(XPathUtils.getString(node, "./gco:Date").trim());
+            }else {
+                modTime = getDateFormatValue(XPathUtils.getString(node, ".").trim());
             }
             if(modTime.length() > 0){
                 value = modTime;
@@ -199,6 +201,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         
         int limitReferences = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_VIEW_LIMIT_REFERENCES, 100);
         
+        String serviceType = null;
+        
+        serviceType = XPathUtils.getString(rootNode, "./gmd:identificationInfo/*/srv:serviceType");
+        if(serviceType != null){
+            serviceType = serviceType.trim();
+        }
+        
         if(XPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i<nodeList.getLength();i++){
@@ -216,42 +225,43 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String type = "";
                 String attachedToField = "";
                 String entryId = "";
-                String serviceType = "";
                 String description = "";
+                String tmp = null;
                 
                 xpathExpression = "./@uuid";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    uuid = XPathUtils.getString(node, xpathExpression).trim();
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    uuid = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:objectName";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    title = XPathUtils.getString(node, xpathExpression).trim();
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    title = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:objectType";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    type = XPathUtils.getString(node, xpathExpression).trim();
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    type = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:attachedToField";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    attachedToField = XPathUtils.getString(node, xpathExpression).trim();
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    attachedToField = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:attachedToField/@entry-id";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    entryId = XPathUtils.getString(node, xpathExpression);
-                }
-                
-                xpathExpression = "./gmd:identificationInfo/*/srv:serviceType";
-                if(XPathUtils.nodeExists(this.rootNode, xpathExpression)){
-                    serviceType = XPathUtils.getString(rootNode, xpathExpression);
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    entryId = tmp.trim();
                 }
                 
                 xpathExpression = "./idf:description";
-                if(XPathUtils.nodeExists(node, xpathExpression)){
-                    description = XPathUtils.getString(node, xpathExpression).trim();
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    description = tmp.trim();
                 }
                 
                 HashMap<String, Object> link = new HashMap<String, Object>();
@@ -672,7 +682,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             row.add("");
                         }else {
                             String value = XPathUtils.getString(node, xpathExpression).trim();
-                            row.add(notNull(UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy")));
+                            row.add(notNull(getDateFormatValue(value)));
                         }
                     } else {
                         row.add("");
@@ -1157,7 +1167,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         String htmlLink = null;
         String cswUrl = (String) PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
         if (!cswUrl.isEmpty()) {
-            htmlLink = "<a href="+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+this.uuid+"&iplug="+this.iPlugId+"&elementSetName=full&elementSetName=full' target='_blank'>"+messages.getString("xml_link")+"</a>";
+            htmlLink = "<a href='"+cswUrl+"?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+this.uuid+"&iplug="+this.iPlugId+"&elementSetName=full' target='_blank'>"+messages.getString("xml_link")+"</a>";
         }
         return htmlLink;
     }

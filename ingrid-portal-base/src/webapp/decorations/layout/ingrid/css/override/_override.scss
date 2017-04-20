@@ -6,9 +6,24 @@
 
 
 .picker__select--month, .picker__select--year {
-    height: 2.25em;
+  height: 2.25em;
 }
 
-.leaflet-left, .leaflet-right {
-    z-index: 0 !important;
+.flex-row {
+  @include media(
+    $query: '768 >',
+    $css: (
+      display: flex,
+      flex-direction: row
+    )
+  );
+}
+
+.flex-vfill {
+  @include media(
+    $query: '768 >',
+    $css: (
+      height: 100%
+    )
+  );
 }

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -136,9 +136,14 @@ public class AddressServiceImpl implements AddressService {
 		MdekAddressBean data = null;
 		try {
 			data = addressRequestHandler.getInitialAddress(parentUuid);
-		} catch (Exception e) {
-			log.error("Error while getting address data.", e);
-		}
+		} catch (MdekException e) {
+            // Wrap the MdekException in a RuntimeException so dwr can convert it
+            log.error("Error creating address.", e);
+            throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
+		} catch (RuntimeException e) {
+            log.error("Error creating address", e);
+            throw e;
+        }
 
 		if (data != null) {
     		MdekAddressUtils.setInitialValues(data);

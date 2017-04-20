@@ -8,7 +8,7 @@ define([
 	"dojo/_base/lang", // lang.hitch
 	"dojo/on",
 	"dojo/query", // query
-	"dojo/sniff", // has("ie"), has("webkit"), has("quirks")
+	"dojo/sniff", // has("ie"), has("trident"), has("edge"), has("webkit"), has("quirks")
 	"../registry", // registry.byId()
 	"dojo/text!./templates/ScrollingTabController.html",
 	"dojo/text!./templates/_ScrollingTabControllerButton.html",
@@ -214,9 +214,10 @@ define([
 			//		Returns the current scroll of the tabs where 0 means
 			//		"scrolled all the way to the left" and some positive number, based on #
 			//		of pixels of possible scroll (ex: 1000) means "scrolled all the way to the right"
-			return (this.isLeftToRight() || has("ie") < 8 || (has("ie") && has("quirks")) || has("webkit")) ? this.scrollNode.scrollLeft :
+			return (this.isLeftToRight() || has("ie") < 8 || (has("trident") && has("quirks")) || has("webkit")) ?
+				this.scrollNode.scrollLeft :
 				domStyle.get(this.containerNode, "width") - domStyle.get(this.scrollNode, "width")
-					+ (has("ie") >= 8 ? -1 : 1) * this.scrollNode.scrollLeft;
+					+ (has("trident") || has("edge") ? -1 : 1) * this.scrollNode.scrollLeft;
 		},
 
 		_convertToScrollLeft: function(val){
@@ -227,15 +228,15 @@ define([
 			//		to achieve that scroll.
 			//
 			//		This method is to adjust for RTL funniness in various browsers and versions.
-			if(this.isLeftToRight() || has("ie") < 8 || (has("ie") && has("quirks")) || has("webkit")){
+			if(this.isLeftToRight() || has("ie") < 8 || (has("trident") && has("quirks")) || has("webkit")){
 				return val;
 			}else{
 				var maxScroll = domStyle.get(this.containerNode, "width") - domStyle.get(this.scrollNode, "width");
-				return (has("ie") >= 8 ? -1 : 1) * (val - maxScroll);
+				return (has("trident") || has("edge") ? -1 : 1) * (val - maxScroll);
 			}
 		},
 
-		onSelectChild: function(/*dijit/_WidgetBase*/ page){
+		onSelectChild: function(/*dijit/_WidgetBase*/ page, /*Boolean*/ tabContainerFocused){
 			// summary:
 			//		Smoothly scrolls to a tab when it is selected.
 
@@ -257,7 +258,17 @@ define([
 					if(sl > node.offsetLeft ||
 						sl + domStyle.get(this.scrollNode, "width") <
 							node.offsetLeft + domStyle.get(node, "width")){
-						this.createSmoothScroll().play();
+						var anim = this.createSmoothScroll();
+						if(tabContainerFocused){
+							anim.onEnd = function(){
+								// Focus is on hidden tab or previously selected tab label.  Move to current tab label.
+								tab.focus();
+							};
+						}
+						anim.play();
+					}else if(tabContainerFocused){
+						// Focus is on hidden tab or previously selected tab label.  Move to current tab label.
+						tab.focus();
 					}
 				}
 			}

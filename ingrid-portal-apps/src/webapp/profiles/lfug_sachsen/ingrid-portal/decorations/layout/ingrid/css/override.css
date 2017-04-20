@@ -1,0 +1,258 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+.header {
+    background: #aaaaaa;
+}
+
+.nav-desktop {
+    background: #e0eed9;
+    border-top: 4px solid #a1d19d;
+}
+
+.nav-desktop__title:hover, .nav-desktop__title.is-selected, .nav-desktop__title.is-active {
+    background: #539755;
+}
+
+.nav-desktop__title:hover .icon, .nav-desktop__title.is-selected, .nav-desktop__title.is-active .icon{
+    fill: #fff;
+}
+
+.nav-desktop__title {
+    color: #487143;
+}
+
+.nav-desktop__title .icon {
+    fill: #487143;
+}
+
+.is-selected .icon {
+    fill: #fff;
+}
+
+.header__widget > a {
+    color: #000;
+}
+
+.header__widget > a:hover{
+    color: #fff !important;
+}
+
+.nav-desktop__dropdown {
+    border-top: 4px solid #539755;
+}
+
+a {
+    color: #487143;
+}
+
+.dropmenu a {
+    color: #487143;
+}
+
+a:hover {
+    color: #111111;
+}
+
+.btn--primary {
+    background: #487143;
+}
+
+.btn--primary:hover:not([disabled]), .btn--primary:focus:not([disabled]), .btn--primary:active:not([disabled]) {
+    background: #539755;
+    border-color: #539755;
+}
+
+.btn--secondary {
+    color: #539755 !important;
+    border: 1px solid #539755;
+}
+
+.btn--secondary:hover:not([disabled]), .btn--secondary:focus:not([disabled]), .btn--secondary:active:not([disabled]) {
+    background: #539755 none repeat scroll 0 0;
+}
+
+.search-form input {
+    border-color: #487143;
+}
+
+.teaser__box {
+    border-top: 4px solid #487143;
+}
+
+.no-touchevents .filter__title:hover {
+    color: #487143;
+}
+
+.no-touchevents .sidebar-filter-subheader:hover {
+    color: #487143;
+}
+
+.pagination__number:hover, .pagination__number.is-active {
+    box-shadow: 0 -4px 0 0 #487143 inset;
+    color: #487143;
+}
+
+.pagination__list a[href] .icon {
+    fill: #487143;
+}
+
+.pagination__list a[href]:hover .icon {
+    fill: #487143;
+}
+
+.tab__toggle.is-active a {
+    color: #111111;
+    background: #e0eed9;
+}
+
+.tab__toggles a:hover, .tab__toggles a.is-active {
+    color: #111111;
+    background: #e0eed9;
+}
+
+thead {
+    border-bottom: 2px solid #487143;
+}
+
+.nav-overlay {
+    background: #e0eed9;
+}
+
+.nav-toggle {
+    color: #487143 !important;
+}
+
+.nav-toggle::after {
+    border-color: transparent transparent #aaaaaa;
+}
+
+.nav-overlay__item--level1 {
+    color: #487143;
+}
+
+.no-touchevents .nav-overlay__item--level1:hover, .nav-overlay__item--level1.is-active {
+    background: #487143;
+    color: #ffffff;
+}
+
+.nav-overlay__item--level2, .nav-overlay__item--level3 {
+    background: #e0eed9;
+    color: #487143;
+    border-bottom: 1px solid #0e8637;
+}
+
+.nav__foot a {
+    color: #487143;
+    border-bottom: 1px solid #0e8637;
+}
+
+.nav__foot a:hover {
+    background: #e0eed9;
+    color: #111111;
+}
+
+.header__logo {
+    width: 0;
+}
+
+.desktop-logo {
+    margin: 0 0 -1.25rem;
+}
+
+.desktop-logo-2 {
+    margin: 0 0 -0.75rem 1rem
+}
+
+.desktop-logo-3 {
+}
+
+.tab__select {
+    background: #487143;
+}
+
+.tab__select:hover, .tab__select.is-active {
+    background: #487143;
+}
+
+.tab__toggle {
+    background: #e0eed9;
+}
+
+.tab__toggles a {
+    color: #487143;
+    border-bottom: 1px solid #0e8637;
+}
+
+.tab__toggles a:hover, .tab__toggles .is-active a {
+    box-shadow: 0 -2px 0 0 #487143 inset, 0 4px 0 0 #487143;
+}
+
+.header__widget__icon.is-active {
+    fill: #487143;
+}
+.footer {
+    color: #111111;
+}
+
+.footer__top-link {
+    background: #487143;
+}
+
+.footer__middle a {
+    color: #487143;
+}
+
+@media screen and (max-width: 768px) {
+  .header__widgets__section {
+    padding: 0.525rem 0;
+  }
+  
+  .sub-header{
+    padding: 1.125rem 0;
+  }
+  
+  .header__widgets__section  .header__widget {
+    vertical-align: text-bottom;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 939px) {
+  .header__widgets__section {
+      padding: 1.025rem 0;
+  }
+  
+  .header__widgets__section  .header__widget {
+    vertical-align: text-bottom;
+  }
+}
+
+.mobile__title {
+    font-size: 27px;
+}
+.mobile__title {
+    color: #ffffff;
+}
+
+.mobile__title:hover {
+    color: #FFFFFF;
+}

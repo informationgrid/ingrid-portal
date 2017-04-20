@@ -2,17 +2,17 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,21 +26,15 @@ define(["dojo/_base/declare",
     "ingrid/utils/General",
     "ingrid/utils/String",
     "ingrid/utils/Grid",
+    "ingrid/utils/Syslist",
     "ingrid/message"
-], function(declare, array, domClass, UtilGeneral, UtilString, UtilGrid, message) {
+], function(declare, array, domClass, UtilGeneral, UtilString, UtilGrid, Syslist, message) {
 
         return declare(null, {
 
             SyslistCellFormatter: function(syslist, row, cell, value, columnDef, dataContext) {
-                var result = value == undefined ? "" : value + "";
-                var list = sysLists[syslist];
-                array.some(list, function(item) {
-                    if (item[1] == result) {
-                        result = item[0];
-                        return true;
-                    }
-                });
-                return result;
+                var result = Syslist.getSyslistEntryName(syslist, value);
+                return result ? result : value;
             },
 
             ListCellFormatter: function(row, cell, value, columnDef, dataContext) {
@@ -122,7 +116,62 @@ define(["dojo/_base/declare",
 
             renderIconClass: function(row, cell, value, columnDef, dataContext) {
                 return "<div class=\"TreeIcon TreeIcon" + value + "\"></div>";
-            }
+            },
 
+            LinkCellFormatter: function(row, cell, value, columnDef, dataContext) {
+                if (!value) {
+                    return value;
+                }
+                var docName = value;
+
+                var link = null;
+                if (value.indexOf("http") === 0) {
+                    link = value;
+                } else {
+                    // determine base url
+                    var baseUrl = document.location.protocol + "//" + document.location.host + "/ingrid-portal-mdek-application/rest/document/";
+                    // remove uuid information from relative path
+                    docName = value.substring( value.indexOf("/") + 1 );
+                    docName = decodeURI(docName);
+                    link = baseUrl + value;
+                }
+                return "<div style=\"float: right;\"> <a href=\"" + link + "\" title=\"" + link + "\" target=\"_blank\"><img src=\"img/ic_fl_popup.gif\" width=\"10\" height=\"9\" alt=\"Popup\">Link</a></div>"+
+                "<span>"+docName+"</span>";
+            },
+
+            BytesCellFormatter: function(row, cell, value, columnDef, dataContext) {
+                if (parseInt(value) != value) {
+                    return value;
+                }
+                if (value === 0) {
+                    return '0 B';
+                }
+                var k = 1000,
+                    dm = 1,
+                    sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                    i = Math.floor(Math.log(value) / Math.log(k));
+                return parseFloat((value / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+            },
+
+            /**
+             * Format numbers as MB unless the value is smaller than 0.1 MB, where KB is used.
+             */
+            MegaBytesCellFormatter: function(row, cell, value, columnDef, dataContext) {
+                if (parseInt(value) != value) {
+                    return value;
+                }
+                if (value === 0) {
+                    return '0 MB';
+                }
+                var k = 1000,
+                    sizes = ['B', 'KB', 'MB'],
+                    // => switch between KB an MB when file too small
+                    dm = 1,
+                    i = value < 100000 ? 1 : 2;
+                    // => only change decimal accuracy
+                        // dm = value < 100000 ? 4 : 1,
+                        // i = 2;
+                return parseFloat((value / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+             }
         })();
     });

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -46,10 +46,12 @@ define([
     "dojo/data/ItemFileWriteStore",
     "dojo/data/ItemFileReadStore",
     "ingrid/utils/Dom",
+    "ingrid/utils/Syslist",
+    "ingrid/utils/Store",
     "dojo/store/Memory"
 ], function(declare, dom, domClass, construct, request, has, array, lang, Deferred, when, on, query, Grid, menu, registry,
         ValidationTextBox, ComboBox, Selectbox, DateTextBox, NumberSpinner, SimpleTextarea, FilteringSelect,
-        ItemFileWriteStore, ItemFileReadStore, UtilDOM, Memory){
+        ItemFileWriteStore, ItemFileReadStore, UtilDOM, UtilSyslist, UtilStore, Memory){
 
     gridManager = {};
         
@@ -127,7 +129,7 @@ define([
                         options.enableAddRow = gridProperties.interactive == "true";
                         options.editable = true;
                     }
-                    if (gridProperties.forceGridHeight) {
+                    if (gridProperties.forceGridHeight !== undefined) {
                         options.forceGridHeight = gridProperties.forceGridHeight == "true";
                     }
                     if (gridProperties.defaultHideScrollbar) {
@@ -440,8 +442,8 @@ define([
             createDomDatebox: function(additionalField) {
                 var inputWidget = new DateTextBox({
                     id: this.additionalFieldPrefix + additionalField.id,
-                    name: additionalField.name,
-                    style: "width:100%;"
+                    name: additionalField.name
+                    // style: "width:100%;" // Datebox does not look nice when to big
                 });
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },
@@ -461,14 +463,6 @@ define([
             },
 
             createDomSelectBox: function(additionalField) {
-                // Set the correct select values via the contained data provider
-                /*var data = [];
-            if (additionalField.listEntries) {
-                for (var entryIndex = 0; entryIndex < additionalField.listEntries.length; ++entryIndex) {
-                    var currentEntry = additionalField.listEntries[entryIndex];
-                    data.push([currentEntry.id, currentEntry.value]);
-                }
-            }*/
 
                 var storeProps = {
                     data: {
@@ -476,27 +470,44 @@ define([
                         label: 'value'
                     }
                 };
-                storeProps.data.items = additionalField.listEntries; //data;
+                
+                if (additionalField.useSyslist) {
+                    UtilSyslist.readSysListData(additionalField.useSyslist).then(function(entry) {
+                        var entries = [];
+                        array.forEach(entry, function(item) {
+                            entries.push({
+                                id: item[1],
+                                value: item[0]
+                            });
+                        });
+                        UtilStore.updateWriteStore(additionalField.id, entries, storeProps.data);
+                    });
+                    storeProps.data.items = [];
+                    
+                } else {
+                    storeProps.data.items = additionalField.listEntries; //data;
+                }
+                
                 var store = new ItemFileReadStore(storeProps);
-
+                
                 var elementProperties = {
-                    id: this.additionalFieldPrefix + additionalField.id,
-                    name: additionalField.name,
-                    searchAttr: 'value',
-                    store: store,
-                    style: "width:100%;",
-                    autoComplete: "false",
-                    required: false
-                    //sortByLabel: false
+                        id: this.additionalFieldPrefix + additionalField.id,
+                        name: additionalField.name,
+                        searchAttr: 'value',
+                        store: store,
+                        style: "width:100%;",
+                        autoComplete: "false",
+                        required: false
+                        //sortByLabel: false
                 };
-
+                
                 if (additionalField.isExtendable == true)
                     var inputWidget = new ComboBox(elementProperties);
                 else
                     var inputWidget = new FilteringSelect(elementProperties);
-
+                
                 inputWidget.startup();
-
+                
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },
 
@@ -506,13 +517,22 @@ define([
                 div.setAttribute("id", additionalField.id);
                 var surrDiv = this.addSurroundingContainer(div, additionalField, true);
                 this.addToSection(section, surrDiv);
+                
+//                var syslistFunc = null;
+//                if (additionalField.useSyslist) {
+//                    syslistFunc = function() {
+//                        return UtilSyslist.readSysListData(additionalField.useSyslist);
+//                    };
+//                }
+                
                 var gridWidget = this.createDataGrid(additionalField.id, null, structure, null, {
                     interactive: "true",
-                    autoHeight: additionalField.rows
+                    autoHeight: additionalField.rows,
+                    forceGridHeight: additionalField.forceGridHeight
                 });
             },
 
-            createDomCheckbox: function(additionalField, section) {
+            createDomCheckbox: function(additionalField) {
                 var inputWidget = new dijit.form.CheckBox({
                     id: this.additionalFieldPrefix + additionalField.id,
                     name: additionalField.name

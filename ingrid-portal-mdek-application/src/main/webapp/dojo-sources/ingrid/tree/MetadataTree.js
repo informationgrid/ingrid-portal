@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -73,7 +73,11 @@ define("ingrid/tree/MetadataTree", [
         // register a function to decide which nodes not to make selectable
         excludeFunction: null,
         
+        // sort nodes in tree by their object class
         sortByClass: false,
+
+        // use special sort function to determine the order of the nodes
+        sortFunction: null,
 
         getPreIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened) {
             var myClass = "TreePreIcon";
@@ -119,7 +123,7 @@ define("ingrid/tree/MetadataTree", [
                 getChildren: function(object){
                     // Add a getChildren() method to store for the data model where
                     // children objects point to their parent (aka relational model)
-                    return this.query({parent: object.id, nodeAppType: object.nodeAppType}, { sortByClass: self.sortByClass });
+                    return this.query({parent: object.id, nodeAppType: object.nodeAppType}, { sortByClass: self.sortByClass, sortFunction: self.sortFunction });
                 }
             } );
 
@@ -195,7 +199,8 @@ define("ingrid/tree/MetadataTree", [
             this.nodesToCopy = nodes;
             this.copySubTree = copySubTree;
             if (this.nodesToCut) {
-                array.forEach(this.nodesToCut, function(node) {
+                array.forEach(this.nodesToCut, function(nodeItem) {
+                    var node = UtilTree.getNodeById("dataTree", nodeItem.id);
                     domClass.remove(node.id, "nodeCut");
                 });
                 this.nodesToCut = null;
@@ -251,22 +256,22 @@ define("ingrid/tree/MetadataTree", [
                     if (dstIsRootNode && !UtilSecurity.canCreateRootNodes())
                         canBePasted = false;
         
-                    if (node.nodeAppType[0] == srcNode.nodeAppType[0]) {
+                    if (node.nodeAppType == srcNode.nodeAppType) {
                         if (node.nodeAppType == "O") {
                             //return true; // Objects can be pasted anywhere below objects
                         } else if (node.nodeAppType == "A") {
                             var srcType = srcNode.objectClass;
                             var dstType = node.objectClass;
-                            if (typeof(dstType) == "undefined" || dstType[0] === null) {
+                            if (typeof(dstType) == "undefined" || dstType === null) {
                                 // Target is either addressRoot or addressFreeRoot
                                 if (node.id == "addressFreeRoot") {
                                     canBePasted = canBePasted && (srcType >= 2);  // Only Addresses can be converted to free addresses
                                 } else if (node.id == "addressRoot") {
-                                    canBePasted = canBePasted && (srcType === 0); // Only Institutions are allowed below the root node
+                                    canBePasted = canBePasted && (srcType === 0 || srcType === 1000); // Only Institutions and folders are allowed below the root node
                                 }
                             }
-                            // The target node is no root node. Compare the src and dst types:
-                            if (dstType >= 2 || (srcType === 0 && dstType === 1)) {
+                            // The target node is no root node and no folder. Compare the src and dst types:
+                            if (dstType !== 1000 && (dstType >= 2 || (srcType === 0 && dstType === 1))) {
                                 canBePasted = false;
                             }
                             

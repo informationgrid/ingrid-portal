@@ -1,0 +1,91 @@
+#if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
+        <footer class="footer">
+            <div class="ob-box-padded ob-box-center ob-clear">
+                <div class="footer__top">
+                    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
+                        <!--<img class="footer__logo" src="#GetPageResource("images/template/mobile-logo.png")"></img>-->
+                    </a>
+                    <p class="copyright">$MESSAGES.getString('ingrid.page.copyright')</p>
+                </div>
+            </div>
+            <hr class="bx-top-0 bx-bot-0">
+            <div class="grid">
+                <div class="column column--3-4-xl">
+                    <div class="ob-box-padded ob-box-center ob-clear">
+                        <div class="footer__section">
+                        #set($footerMenu = $site.getMenu("footer-menu"))
+                        #if(!$footerMenu.empty)
+                          #includeFooterNavigation($footerMenu)
+                        #end
+                        </div>
+                    </div>
+                </div>
+                <div class="column column--1-4-xl">
+                    <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0">
+                    <div class="ob-box-padded ob-box-center ob-clear">
+                        <div class="footer__section">
+                            <div class="footer__bottom"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__top-link mq-show-l js-top">$MESSAGES.getString("ingrid.page.top")</div>
+        </footer>
+#end
+        <!-- Popup -->
+        <div class="popup">
+            <header class="popup__header">
+                <div class="popup__close link--alt ob-flt-r js-popup-close">
+                    <svg class="icon"><use xlink:href="#cross" /></svg>
+                    <span class="mq-hide-m"></span>
+                </div>
+                <h4 class="popup__title bx-top-0 bx-bot-0">$MESSAGES.getString("ingrid.page.help")</h4>
+            </header>
+            <section class="popup__content ob-container">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p><a href="#">Read more</a></p>
+            </section>
+        </div>
+        
+        <!-- Global scripts -->
+        <script src="#GetPageResource("scripts/all.js")"></script>
+        
+        <!-- Popup -->
+        <script src="#GetPageResource("scripts/popup.js")"></script>
+        <script src="#GetPageResource("scripts/expander.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.date.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/legacy.js")"></script>
+        #set($lang = $renderRequest.Locale.getLanguage())
+        #if($lang && $lang != "en")
+        <script src='#GetPageResource("scripts/pickadate/lib/translations/${lang}.js")'></script>
+        #end
+        <script>
+            $('.datepicker').pickadate()
+        </script>
+        <!-- Accordion -->
+        <script src="#GetPageResource("scripts/accordion.js")"></script>
+        <script>
+        $('.js-accordion').accordion();
+        $('.js-accordion-multi').accordion({
+            multi: true
+        });
+        </script>
+        <!-- Tabs -->
+        <script src="#GetPageResource("scripts/tabs.js")"></script>
+        <script>
+            $('.js-tabs').tabs();
+        </script>
+        <!-- Selection -->
+        <script src="#GetPageResource("scripts/selection.js")"></script>
+        <script>
+            $('.js-selection').selection();
+        </script>
+        <!-- Table Sort -->
+        <script src="#GetPageResource("scripts/table.sortable.js")"></script>
+        <script>
+            $('.js-table-sortable').sortable();
+        </script>
+    </body>
+</html>

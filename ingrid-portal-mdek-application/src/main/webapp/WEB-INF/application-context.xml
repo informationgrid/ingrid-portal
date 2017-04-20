@@ -64,6 +64,11 @@
         </property>
     </bean>
     
+    <bean id="uploadStorage" class="de.ingrid.mdek.upload.storage.impl.FileSystemStorage">
+        <property name="docsDir" value="${upload.docsdir}" />
+        <property name="partsDir" value="${upload.partsdir}" />
+    </bean>
+    
     <!-- Quartz Beans -->
 	<!-- Jobs -->
 	<bean name="checkForExpiredDatasetsJob" class="org.springframework.scheduling.quartz.JobDetailBean">
@@ -72,18 +77,34 @@
 			<map>
 				<entry key="connectionFacade"><ref bean="connectionFacade"/></entry>
 				<entry key="notifyDaysBeforeExpiry"><value>${workflow.notifyDaysBeforeExpiry}</value></entry>
+				<entry key="repeatExpiryCheck"><value>${workflow.repeatExpiryCheck}</value></entry>
 				<entry key="numAddressesMax"><value>${workflow.mail.numAddressesMax}</value></entry>
 				<entry key="numObjectsMax"><value>${workflow.mail.numObjectsMax}</value></entry>
 			</map>
 	  </property>
 	</bean>
 
+    <bean name="uploadCleanupJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UploadCleanupJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="connectionFacade"><ref bean="connectionFacade"/></entry>
+                <entry key="storage"><ref bean="uploadStorage"/></entry>
+            </map>
+      </property>
+    </bean>
+
 	<!-- Trigger -->
 	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		<property name="jobDetail" ref="checkForExpiredDatasetsJob" />
 		<property name="startDelay" value="10000" />
-		<property name="repeatInterval" value="600000" />
+		<property name="repeatInterval" value="${workflow.expiryJob.repeatInterval}" />
 	</bean>
+
+    <bean id="simpleTriggerUploadCleanup" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="uploadCleanupJob" />
+        <property name="cronExpression" value="${upload.cleanup.schedule}" />
+    </bean>
 	<!-- Scheduler Factory -->
 
 	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -91,6 +112,7 @@
 			<list>
 				<ref bean="simpleTrigger" />
                 <ref bean="simpleTriggerCodeLists" />
+                <ref bean="simpleTriggerUploadCleanup" />
 			</list>
 		</property>
         <property name="applicationContextSchedulerContextKey">  

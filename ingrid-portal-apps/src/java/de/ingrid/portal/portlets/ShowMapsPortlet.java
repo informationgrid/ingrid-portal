@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -61,7 +61,7 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
         context.put("lang", request.getLocale().getLanguage());
-        context.put("mapUrl", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_URL, "/ingrid-webmap-client/frontend/prd/index.ingrid.html" ));
+        context.put("mapUrl", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_URL, "/ingrid-webmap-client/frontend/prd/" ));
         // read preferences
         PortletPreferences prefs = request.getPreferences();
         String hKey = prefs.getValue("helpKey", null);

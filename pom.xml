@@ -2,14 +2,15 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>3.6.2</version>
+    <version>4.0.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>4.0.1-SNAPSHOT</version>
+  <version>4.0.3-SNAPSHOT</version>
   <name>InGrid Portal</name>
+  <description>This is the portal where documents can be searched through the iBus and new documents can be managed by the InGrid Editor.</description>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git</connection>
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git</developerConnection>
@@ -26,8 +27,8 @@
 
   <properties>
     <org.apache.portals.jetspeed.version>2.3.0</org.apache.portals.jetspeed.version>
-    <mdek.version>4.0.1-SNAPSHOT</mdek.version>
-    <webmap-client.version>4.0.1-SNAPSHOT</webmap-client.version>
+    <mdek.version>4.0.2</mdek.version>
+    <webmap-client.version>4.0.2</webmap-client.version>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -51,17 +52,17 @@
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-utils</artifactId>
-        <version>3.6.2</version>
+        <version>4.0.2</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-codelist-service</artifactId>
-        <version>4.0.0</version>
+        <version>4.0.2-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-portal-utils</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.1</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid.mdek</groupId>

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -45,7 +45,7 @@ define([
                             msg.resultHandler.resolve(res);
                         },
                         errorHandler: function(errorMessage) {
-                            console.debug("Error in js/js: Error while getting path to node: " + errorMessage);
+                            console.error("Error in js/js: Error while getting path to node: " + errorMessage);
                             dialog.show(message.get("general.warning"), string.substitute(message.get("general.warning.unknownId"), [msg.id]), dialog.WARNING);
                             msg.resultHandler.reject();
                         }
@@ -75,7 +75,7 @@ define([
                             msg.resultHandler.resolve(res);
                         },
                         errorHandler: function(message) {
-                            console.debug("Error in js/js: Error while getting path to address: " + message);
+                            console.error("Error in js/js: Error while getting path to address: " + message);
                             msg.resultHandler.reject();
                         }
                     });

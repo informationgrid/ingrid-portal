@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -38,6 +38,14 @@ body,html {
 
 .dojoxGrid table {
     margin: 0;
+}
+
+.dijitHidden {
+  display: none;
+}
+
+.dijitTreeNode, .dijitTreeContent {
+  cursor: pointer !important;
 }
 
 html,body {
@@ -80,6 +88,16 @@ html {
 .contentSection {
     width: 100%;
     height: 100%;
+}
+
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-truncate.left {
+    direction: rtl;
 }
 
 /* LOGO */
@@ -271,4 +289,59 @@ div.rubricBottom span.rubricButtons .dijitButtonNode:hover { background-color:#A
 }
 .v_line {
     border-left: 1px #ccc dashed;
+}
+
+/* Nominatim Search */
+.mapWrapper .map {
+	height: 300px;
+	width: 500px;
+	margin-left: 5px;
+    display: inline-block;
+}
+.mapWrapper .info {
+	display: inline-block;
+    vertical-align: top;
+    width: 184px;
+    border: 1px solid #999;
+    background-color: #eee;
+    overflow: auto;
+    height: 300px;
+}
+
+.mapWrapper.no-search .map {
+    width: 700px;
+}
+
+.mapWrapper.no-search .info {
+    display: none;
+}
+
+.mapWrapper .info .item {
+    border-bottom: 1px solid #999;
+    padding: 3px 5px;
+    cursor: pointer;
+}
+
+.mapWrapper .info .item:last-child {
+	border-bottom: none;
+}
+
+.mapWrapper .info .item.active, .mapWrapper .info .item:hover {
+    background-color: #fff;
+}
+
+.leaflet-areaselect-shade {
+    position: absolute;
+    background: rgba(0,0,0, 0.4);
+}
+.leaflet-areaselect-handle {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #666;
+    -moz-box-shadow: 1px 1px rgba(0,0,0, 0.2);
+    -webkit-box-shadow: 1px 1px rgba(0,0,0, 0.2);
+    box-shadow: 1px 1px rgba(0,0,0, 0.2);
+    width: 14px;
+    height: 14px;
+    cursor: move;
 }

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -91,6 +91,7 @@ public class InfoPortlet extends GenericVelocityPortlet {
             context.put("enableMeasure", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MEASURE, Boolean.FALSE));
             context.put("enableAbout", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ABOUT, Boolean.FALSE));
             context.put("enablePartner", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_PARTNER, Boolean.FALSE));
+            context.put("enableSources", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SOURCES, Boolean.FALSE));
             context.put("enableMaps", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, Boolean.FALSE));
             context.put("enableChronicle", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_CHRONICLE, Boolean.FALSE));
             context.put("enableSearchCatalog", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG, Boolean.FALSE));

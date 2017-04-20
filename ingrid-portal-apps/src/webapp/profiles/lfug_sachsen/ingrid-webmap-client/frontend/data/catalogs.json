@@ -1,0 +1,18 @@
+{
+    "topics": [{
+        "defaultBackground": "bgSachsen",
+        "langs": "de,en",
+        "selectedLayers": [],
+        "activatedLayers": [],
+        "backgroundLayers": ["bgSachsen","osmLayer","webatlasde_light","webatlasde_grau"],
+        "id": "themen"
+    },
+    {
+        "defaultBackground": "bgSachsen",
+        "langs": "de,en",
+        "selectedLayers": [],
+        "activatedLayers": [],
+        "backgroundLayers": ["bgSachsen","osmLayer","webatlasde_light","webatlasde_grau"],
+        "id": "anbieter"
+    }]
+}

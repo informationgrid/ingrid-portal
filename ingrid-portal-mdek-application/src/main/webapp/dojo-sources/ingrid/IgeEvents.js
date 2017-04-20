@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -106,12 +106,17 @@ define([
         selectUDKAddressType: function(addressType) {
             console.debug("change addressType" + addressType);
             var val = UtilAddress.getAddressClass(addressType);
-            if (val != -1) {
+            if (val !== -1) {
                 this.setSelectedClass("AddressType" + val);
+                topic.publish("/onAddressClassChange", {
+                    addressClass: val,
+                    previousClass: this.previousClass
+                });
                 var self = this;
                 setTimeout(function() {
                     self.refreshTabContainers("contentFrameBodyAddress");
                 }, 100);
+                this.previousClass = val;
             }
         },
 
@@ -119,38 +124,47 @@ define([
             console.debug("selected class: " + clazz);
             var div;
             var isObjectClass = true;
+            var classId = null;
             // hide all classes first
             // and show new one
-            if (clazz.indexOf("AddressType") == -1) {
+            if (clazz.indexOf("AddressType") === -1) {
                 array.forEach(this.toggleContainer, function(container) {
                     domClass.add(container, "hide");
                 });
                 div = dom.byId(this.toggleContainerPrefix + clazz);
+                classId = clazz.substring(5);
             } else {
                 array.forEach(this.toggleContainerAddress, function(container) {
                     domClass.add(container, "hide");
                 });
                 div = dom.byId(this.toggleContainerAddressPrefix + clazz);
                 isObjectClass = false;
+                classId = clazz.substring(11);
+            }
+
+            // new defined types start at class 10 and don't need a behaviour here
+            if (+classId >= 10) {
+                return;
             }
 
             //var div = dom.byId(toggleContainerPrefix + clazz);
             // Class0 not exists as widget (means no Fachbezug) so we have to check here
-            if (div)
+            if (div) {
                 domClass.remove(div, "hide");
+            }
 
             // hide section 'Verfuegbarkeit' if 'Organisationseinheit/Fachaufgabe' (Class0) is selected
             // fields do not need to be emptied, since it's not mapped in MDEK-Mapper for class 0! 
             var availabilityContainer = dom.byId('availability');
             if (availabilityContainer) {
-                if (clazz == "Class0")
+                if (clazz === "Class0")
                     domClass.add(availabilityContainer, "hide");
                 else if (isObjectClass)
                     domClass.remove(availabilityContainer, "hide");
             }
 
             // show conformity-table only for class 1 and 3 
-            if (clazz == "Class1" || clazz == "Class3") {
+            if (clazz === "Class1" || clazz === "Class3") {
                 domClass.remove("uiElementN024", "hide");
                 domClass.add("uiElementN024", "required");
             } else if (isObjectClass) {
@@ -162,23 +176,14 @@ define([
 
             // class specials !
 
-            // Fields only mandatory for Geoinformation/Karte(1)
             // NOTICE: div excluded from normal show/hide mechanism (displaytype="exclude")
-            if (clazz == "Class1") {
-                // "Kodierungsschema der geographischen Daten" 
-                UtilUI.setMandatory(dom.byId("uiElement1315"));
-
+            if (clazz === "Class1") {
                 // show / hide DQ input dependent from INSPIRE Thema !
                 rules.applyRule7();
-
-            } else if (isObjectClass) {
-                // "Kodierungsschema der geographischen Daten" only in class 1
-                UtilUI.setHide(dom.byId("uiElement1315"));
-                registry.byId("availabilityDataFormatInspire").set("value", "");
             }
 
             // Fields only mandatory for Geoinformation/Karte(1) and Geodatendienst(3)
-            if (clazz == "Class1" || clazz == "Class3") {
+            if (clazz === "Class1" || clazz === "Class3") {
                 // "Raumbezugssystem"
                 UtilUI.setMandatory(dom.byId("uiElement3500"));
                 //style("uiElement3500", "display", "block");
@@ -847,7 +852,8 @@ define([
             var urlLinkTable = nodeData.linksToUrlTable;
 
             var url = this._filterPreviewImage(urlLinkTable);
-            registry.byId("generalPreviewImage").set("value", url);
+            registry.byId("generalPreviewImage").set("value", url.url);
+            registry.byId("previewImageDescription").set("value", url.description);
 
             var linkTable = objLinkTable.concat(urlLinkTable);
             // Replace relationTypeName with name from according syslist entry. Leave it if it's a free entry.
@@ -876,11 +882,11 @@ define([
             });
 
             if (foundObjectIndex !== null) {
-                var url = urlList[foundObjectIndex].url;
+                var url = urlList[foundObjectIndex];
                 urlList.splice(foundObjectIndex, 1);
                 return url;
             } else {
-                return "";
+                return { url: "", description: "" };
             }
         },
 
