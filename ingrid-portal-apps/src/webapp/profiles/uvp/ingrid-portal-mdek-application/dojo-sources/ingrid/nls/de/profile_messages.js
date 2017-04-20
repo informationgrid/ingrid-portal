@@ -88,7 +88,7 @@ define({
     "uvp.form.foreign.generalDescription": "Vorhabenbeschreibung",
 
     "uvp.form.spatial.address": "Kontaktdaten der verfahrensführenden Behörde",
-    "uvp.form.spatial.generalDescription": "Beschreibung der Planung oder Maßnahme nach § 1 ROV oder dem Landesrecht",
+    "uvp.form.spatial.generalDescription": "Allgemeine Vorhabenbeschreibung",
 
     "uvp.form.negative.checkExamination": "Eine Änderung/Erweiterung oder ein kumulierendes Vorhaben",
 
