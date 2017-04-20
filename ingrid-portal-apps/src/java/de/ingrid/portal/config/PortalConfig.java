@@ -72,6 +72,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public final static String EMAIL_REGISTRATION_CONFIRMATION_SENDER = "email.registration.confirmation.sender";
 
+    public final static String EMAIL_REGISTRATION_CONFIRMATION_URL = "email.registration.confirmation.url";
+
     public static final String EMAIL_SMTP_SERVER = "email.smtp.server";
     public static final String EMAIL_SMTP_USER = "email.smtp.user";
     public static final String EMAIL_SMTP_PASSWORD = "email.smtp.password";
