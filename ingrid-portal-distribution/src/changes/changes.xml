@@ -9,6 +9,9 @@
           <action type="fix" dev="wemove" issue="REDMINE-634">
             IGE: Only allow folders to be created under root nodes or other folders.
           </action>
+          <action type="fix" dev="wemove" issue="REDMINE-547">
+            IGE: Fixed session timeout when logged out from portal.
+          </action>
         </release>
         
         <release version="4.0.2" date="2017-04-11" description="Release 4.0.2">
