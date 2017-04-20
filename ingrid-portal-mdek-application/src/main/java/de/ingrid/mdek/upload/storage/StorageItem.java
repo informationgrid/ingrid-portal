@@ -59,6 +59,12 @@ public interface StorageItem {
     long getSize();
 
     /**
+     * Indicates if the file is archived
+     * @return boolean
+     */
+    boolean isArchived();
+
+    /**
      * Get an incremented name to be used in case of conflict
      * @return String
      */

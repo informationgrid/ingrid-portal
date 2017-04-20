@@ -102,6 +102,10 @@ define([
         open: function(path, existingFiles) {
             this.deferred = new Deferred();
 
+            // initialize data
+            this.resultParts = {};
+            this.uploads = [];
+
             // build ui
             this.dialog = this.createDialog(existingFiles);
             this.uploader = this.createUploader(this.dialog.containerNode, path);

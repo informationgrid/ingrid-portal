@@ -55,7 +55,9 @@ import de.ingrid.mdek.upload.storage.StorageItem;
  */
 public class FileSystemStorage implements Storage {
 
-    private final static Logger log = Logger.getLogger(FileSystemStorage.class);
+    private static final String ARCHIVE_PATH = "_archive_";
+
+	private final static Logger log = Logger.getLogger(FileSystemStorage.class);
 
     private String docsDir = null;
     private String partsDir = null;
@@ -115,7 +117,12 @@ public class FileSystemStorage implements Storage {
     @Override
     public boolean exists(String path, String file) {
         Path realPath = this.getRealPath(path, file, this.docsDir);
-        return Files.exists(realPath);
+        try {
+            FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
+            return Files.exists(fileInfo.getRealPath());
+        }
+        catch (Exception ex) {}
+        return false;
     }
 
     @Override
@@ -127,7 +134,8 @@ public class FileSystemStorage implements Storage {
     @Override
     public InputStream read(String path, String file) throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
-        return Files.newInputStream(realPath);
+        FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
+        return Files.newInputStream(fileInfo.getRealPath());
     }
 
     @Override
@@ -223,7 +231,24 @@ public class FileSystemStorage implements Storage {
     @Override
     public void delete(String path, String file) throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
-        Files.delete(realPath);
+        FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
+        Files.delete(fileInfo.getRealPath());
+    }
+
+    @Override
+    public void archive(String path, String file) throws IOException {
+        Path realPath = this.getRealPath(path, file, this.docsDir);
+        Path archivePath = this.getArchivePath(path, file, this.docsDir);
+        // ensure directory
+        this.getArchivePath(path, "", this.docsDir).toFile().mkdirs();
+        Files.move(realPath, archivePath, StandardCopyOption.ATOMIC_MOVE);
+    }
+
+    @Override
+    public void restore(String path, String file) throws IOException {
+        Path realPath = this.getRealPath(path, file, this.docsDir);
+        Path archivePath = this.getArchivePath(path, file, this.docsDir);
+        Files.move(archivePath, realPath, StandardCopyOption.ATOMIC_MOVE);
     }
 
     /**
@@ -317,6 +342,36 @@ public class FileSystemStorage implements Storage {
     }
 
     /**
+     * Get the archive path of a requested path
+     *
+     * @param path
+     * @param file
+     * @param basePath
+     * @return Path
+     */
+    private Path getArchivePath(String path, String file, String basePath) {
+        return FileSystems.getDefault().getPath(basePath, this.sanitize(path), ARCHIVE_PATH, this.sanitize(file));
+    }
+
+    /**
+     * Get the archive path of a requested path
+     *
+     * @param file
+     * @param basePath
+     * @return Path
+     */
+    private Path getArchivePath(String file, String basePath) {
+        Path strippedPath = Paths.get(this.stripPath(this.sanitize(file)));
+        if (strippedPath.getNameCount() < 2) {
+            throw new IllegalArgumentException("Illegal path: "+file);
+        }
+        boolean isArchivePath = ARCHIVE_PATH.equals(strippedPath.getName(1).toString());
+        return FileSystems.getDefault().getPath(basePath, strippedPath.getName(0).toString(),
+                !isArchivePath ? ARCHIVE_PATH : "",
+                strippedPath.subpath(1, strippedPath.getNameCount()).toString());
+    }
+
+    /**
      * Remove the upload base directory from a path
      *
      * @param path
@@ -328,7 +383,7 @@ public class FileSystemStorage implements Storage {
     }
 
     /**
-     * Get informations about a file
+     * Get information about a file
      *
      * @param file
      * @return Item
@@ -336,11 +391,22 @@ public class FileSystemStorage implements Storage {
      */
     private FileSystemItem getFileInfo(String file) throws IOException {
         Path filePath = Paths.get(file);
+        Path archivePath = this.getArchivePath(file, this.docsDir);
+        if (!Files.exists(filePath) && Files.exists(archivePath)) {
+            // fall back to archive, if file does not exist
+            file = archivePath.toString();
+            filePath = archivePath;
+        }
+
+        Path strippedPath = Paths.get(this.stripPath(file));
+        boolean isArchived = filePath.equals(archivePath);
+
+        String itemPath = strippedPath.getName(0).toString();
+        String itemFile = strippedPath.subpath(isArchived ? 2 : 1, strippedPath.getNameCount()).toString();
+
         String fileType = Files.probeContentType(filePath);
         long fileSize = Files.size(filePath);
 
-        Path strippedPath = Paths.get(this.stripPath(file));
-        return new FileSystemItem(this, strippedPath.getParent().toString(),
-                strippedPath.getFileName().toString(), fileType, fileSize);
+        return new FileSystemItem(this, itemPath, itemFile, fileType, fileSize, isArchived, filePath);
     }
 }

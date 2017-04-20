@@ -124,4 +124,22 @@ public interface Storage {
      * @throws IOException
      */
     void delete(String path, String file) throws IOException;
+
+    /**
+     * Archive a file
+     *
+     * @param path
+     * @param file
+     * @throws IOException
+     */
+    void archive(String path, String file) throws IOException;
+
+    /**
+     * Restore a file
+     *
+     * @param path
+     * @param file
+     * @throws IOException
+     */
+    void restore(String path, String file) throws IOException;
 }
