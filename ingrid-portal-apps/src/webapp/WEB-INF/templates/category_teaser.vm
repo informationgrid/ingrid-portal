@@ -206,7 +206,7 @@
                 </div>
             </div>
             #set ($count = $count + 1)
-            #if($count % $facetListSize == 0 || $count >= $facetList.size())
+            #if($count % $facetListSize == 0 || $count > $facetList.size())
                 </div>
             #end
         #end
