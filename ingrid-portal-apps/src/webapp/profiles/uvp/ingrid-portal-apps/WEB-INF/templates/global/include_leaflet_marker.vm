@@ -19,11 +19,50 @@
     // All markers
     var mapMarkers = L.markerClusterGroup();
     // "UVP Vorhaben" markers
-    var mapMarkers10 = L.markerClusterGroup();
+    var mapMarkers10 = L.markerClusterGroup({
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-10' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
     // "Ausländische Verfahren" markers
-    var mapMarkers11 = L.markerClusterGroup();
+    var mapMarkers11 = L.markerClusterGroup({
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-11' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
     // "Vorgelagerte Verfahren" markers
-    var mapMarkers1314 = L.markerClusterGroup();
+    var mapMarkers1314 = L.markerClusterGroup({
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
     if(markers){
         for (var i = 0; i < markers.length; i++) {
             var a = markers[i];

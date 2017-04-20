@@ -423,3 +423,31 @@ thead {
 .icon-UVPG-19:before {
   content: "\e42c";
 }
+
+.marker-cluster-10 {
+  background-color: rgba(56, 170, 220, 0.6) !important;
+}
+
+.marker-cluster-10 div{
+  background-color: rgba(56, 170, 220) !important;
+}
+
+.marker-cluster-11 {
+  background-color: rgba(48, 48, 48, 0.6) !important;
+}
+
+.marker-cluster-11 div{
+  background-color: rgba(48, 48, 48) !important;
+}
+
+.marker-cluster-1314 {
+  background-color: rgba(200, 60, 40, 0.6) !important;
+}
+
+.marker-cluster-1314 div {
+  background-color: rgba(200, 60, 40) !important;
+}
+
+.marker-cluster span {
+  color: #FFFFFF;
+}
