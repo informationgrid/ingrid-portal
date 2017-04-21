@@ -6,6 +6,9 @@
     </properties>
     <body>
         <release version="4.0.3-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.3">
+          <action type="fix" dev="wemove" issue="REDMINE-648">
+            PORTAL: Fixed registration confirmation URL by adding setting to influence hostname.
+          </action>
           <action type="fix" dev="wemove" issue="REDMINE-634">
             IGE: Only allow folders to be created under root nodes or other folders.
           </action>
