@@ -41,6 +41,7 @@ define([
     "dijit/form/ValidationTextBox",
     "dijit/form/SimpleTextarea",
     "dijit/form/CheckBox",
+    "dijit/form/RadioButton",
     "dijit/form/NumberTextBox",
     "dijit/form/DateTextBox",
     "dijit/layout/TabContainer",
@@ -62,7 +63,7 @@ define([
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/validation"
 ], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, validate, Standby,
-            registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, NumberTextBox, DateTextBox,
+            registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, RadioButton, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
             UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog,
             message, dialog, layoutCreator, rules, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
@@ -306,7 +307,19 @@ define([
                 layoutCreator.createDataGrid("thesaurusInspire", null, thesaurusInspireStructure, null);
 
                 new CheckBox({}, "isInspireRelevant");
+                new RadioButton({
+                    checked: true,
+                    value: "true",
+                    name: "isInspireConform",
+                }, "isInspireConform").startup();
+                new RadioButton({
+                    checked: false,
+                    value: "false",
+                    name: "isInspireConform",
+                }, "notInspireConform").startup();
+                
                 new CheckBox({}, "isOpenData");
+                new CheckBox({}, "isAdvCompatible");
 
                 var categoriesStructure = [{
                     field: 'title',

@@ -1619,6 +1619,7 @@ define([
 
             // ------------------ Address and Function ------------------
             registry.byId("addressStreet").attr("value", nodeData.street, true);
+            registry.byId("addressAdministrativeArea").attr("value", nodeData.administrativeArea, true);
             registry.byId("addressCountry").attr("value", nodeData.countryCode == -1 ? null : nodeData.countryCode, true);
             registry.byId("addressZipCode").attr("value", nodeData.postalCode, true);
             registry.byId("addressCity").attr("value", nodeData.city, true);
@@ -1782,6 +1783,7 @@ define([
             UtilAddress.addAddressTitles(addressTable);
             UtilList.addAddressLinkLabels(addressTable);
             UtilStore.updateWriteStore("generalAddress", addressTable);
+            registry.byId("isAdvCompatible").attr("value", nodeData.advCompatible, true);
 
             // Comments
             var commentData = UtilList.addDisplayDates(nodeData.commentTable);
@@ -2054,6 +2056,7 @@ define([
 
         _setObjectDataClass1: function(nodeData) {
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+            if (nodeData.inspireRelevant) registry.byId(nodeData.inspireConform ? "isInspireConform" : "notInspireConform").attr("value", true, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, false);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
             registry.byId("ref1ObjectIdentifier").attr("value", nodeData.ref1ObjectIdentifier, true);
@@ -2112,6 +2115,7 @@ define([
 
         _setObjectDataClass3: function(nodeData) {
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+            if (nodeData.inspireRelevant) registry.byId(nodeData.inspireConform ? "isInspireConform" : "notInspireConform").attr("value", true, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, true);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
             //registry.byId("ref3ServiceType")._lastValueReported = nodeData.ref3ServiceType + "";
@@ -2170,6 +2174,7 @@ define([
 
         _setObjectDataClass6: function(nodeData) {
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+            if (nodeData.inspireRelevant) registry.byId(nodeData.inspireConform ? "isInspireConform" : "notInspireConform").attr("value", true, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, true);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
             registry.byId("ref6ServiceType").attr("value", nodeData.ref6ServiceType, true);
@@ -2229,6 +2234,7 @@ define([
 
             // ------------------ Address and Function ------------------
             nodeData.street = registry.byId("addressStreet").get("value");
+            nodeData.administrativeArea = registry.byId("addressAdministrativeArea").get("value");
             nodeData.countryCode = registry.byId("addressCountry").get("value");
             nodeData.countryName = registry.byId("addressCountry").get("displayedValue");
             //UtilList.getSelectDisplayValue(registry.byId("addressCountry"), registry.byId("addressCountry").get('value'));//registry.byId("addressCountry").getDisplayValue();
@@ -2335,6 +2341,8 @@ define([
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
             nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
+            nodeData.advCompatible = registry.byId("isAdvCompatible").checked ? true : false; // in case value is NULL!
+            
             // Comments
             nodeData.commentTable = currentUdk.commentStore;
 
@@ -2612,6 +2620,7 @@ define([
 
         _getObjectDataClass1: function(nodeData) {
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
+            if (nodeData.inspireRelevant) nodeData.inspireConform = registry.byId("isInspireConform").checked ? true : false;
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
             nodeData.ref1ObjectIdentifier = registry.byId("ref1ObjectIdentifier").get("value");
@@ -2673,6 +2682,7 @@ define([
 
         _getObjectDataClass3: function(nodeData) {
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
+            if (nodeData.inspireRelevant) nodeData.inspireConform = registry.byId("isInspireConform").checked ? true : false;
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
             nodeData.ref3ServiceType = registry.byId("ref3ServiceType").get("value");
@@ -2729,6 +2739,7 @@ define([
 
         _getObjectDataClass6: function(nodeData) {
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false;
+            if (nodeData.inspireRelevant) nodeData.inspireConform = registry.byId("isInspireConform").checked ? true : false;
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
             nodeData.ref6ServiceType = registry.byId("ref6ServiceType").get("value");
