@@ -553,7 +553,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <facets>
         <!-- UVP-Vorhaben -->
             <facet>
-                <name>UVP-Vorhabenen</name>
+                <name>UVP-Vorhaben</name>
                 <query>t01_object.obj_class:10</query>
                 <parentId>procedure</parentId>
                 <id>procedure_10</id>
