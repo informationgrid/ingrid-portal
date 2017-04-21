@@ -2057,13 +2057,4 @@ public class MdekDataBean {
     public void setInspireConform(Boolean inspireConform) {
         this.inspireConform = inspireConform;
     }
-
-    public Boolean getInspireConform() {
-        return inspireConform;
-    }
-
-
-    public void setInspireConform(Boolean inspireConform) {
-        this.inspireConform = inspireConform;
-    }
 }

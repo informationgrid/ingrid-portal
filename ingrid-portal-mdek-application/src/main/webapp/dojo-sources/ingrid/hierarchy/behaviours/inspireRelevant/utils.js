@@ -22,23 +22,21 @@
  */
 define([
     "dojo/_base/declare",
-    // "dojo/_base/lang",
-    "dojo/on",
-    "dojo/dom-class",
-    "dojo/topic",
-    "dijit/registry",
     "ingrid/utils/Grid"
-], function(declare, on, domClass, topic, registry, UtilGrid) {
+], function(declare, UtilGrid) {
+    
     return declare(null, {
-        
-        title : "Checkbox anzeigen",
-        description : "Wenn aktiviert, wird die Checkbox 'AdV kompatibel' angezeigt.",
-        defaultActive : true,
-        category: "AdV Kompatibel",
-        description: "",
-        run : function() {
-            // show checkbox AdV compatible
-            domClass.remove("uiElement6005", "hidden");
+        addConformity: function() {
+            console.log("Add conformity");
+            var conformityData = UtilGrid.getTableData("extraInfoConformityTable");
+            var conformityData = conformityData.filter(function(item) {
+                return item.specification !== "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten";
+            });
+            conformityData.push({
+                specification: "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten",
+                level: 1
+            });
+            UtilGrid.setTableData("extraInfoConformityTable", conformityData);
         }
     })();
 });

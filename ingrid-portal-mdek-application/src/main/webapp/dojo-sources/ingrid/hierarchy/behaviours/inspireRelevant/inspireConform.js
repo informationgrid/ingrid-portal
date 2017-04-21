@@ -22,23 +22,39 @@
  */
 define([
     "dojo/_base/declare",
-    // "dojo/_base/lang",
     "dojo/on",
-    "dojo/dom-class",
-    "dojo/topic",
     "dijit/registry",
-    "ingrid/utils/Grid"
-], function(declare, on, domClass, topic, registry, UtilGrid) {
+    "ingrid/hierarchy/behaviours/inspireRelevant/utils"
+], function(declare, on, registry, utils) {
+    
     return declare(null, {
-        
-        title : "Checkbox anzeigen",
-        description : "Wenn aktiviert, wird die Checkbox 'AdV kompatibel' angezeigt.",
+        title : "INSPIRE konform (Regeln)",
+        description : "Wenn aktiviert, ...",
         defaultActive : true,
-        category: "AdV Kompatibel",
-        description: "",
+        category: "INSPIRE relevant",
         run : function() {
-            // show checkbox AdV compatible
-            domClass.remove("uiElement6005", "hidden");
+            
+            on(registry.byId("isInspireConform"), "Click", function(isChecked) {
+                
+                // automatic selection of ISO-category on INSPIRE topic
+                // -> is a separate behaviour (see above: inspireIsoConnection)
+                
+                // add conformity VO 1089/2010
+                utils.addConformity();
+                
+                // only one of a few CRS are required???
+                
+                // Kodierungsschema
+                
+                // neues Metadatenelement "Räumliche Darstellungsart"
+                
+                // beim Geodatenthema "Bodennutzung"
+                
+                // beim Geodatenthema "Bewirtschaftungsgebiete, Schutzgebiete, geregelte Gebiete und Berichterstattungseinheiten"
+                
+            
+                    
+            });
         }
     })();
 });

@@ -42,16 +42,25 @@ define(["dojo/_base/declare",
         "ingrid/utils/Syslist",
         "ingrid/hierarchy/behaviours/opendata",
         "ingrid/hierarchy/behaviours/folders",
-        "ingrid/hierarchy/behaviours/isInspireRelevant",
-        "ingrid/hierarchy/behaviours/advCompatible"
-], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist, openData, foldersInHierarchy, isInspireRelevant, advCompatible) {
-    openData, foldersInHierarchy) {
+        "ingrid/hierarchy/behaviours/inspireRelevant/conformFields",
+        "ingrid/hierarchy/behaviours/inspireRelevant/inspireIsoConnection",
+        "ingrid/hierarchy/behaviours/inspireRelevant/inspireConform",
+        "ingrid/hierarchy/behaviours/advCompatible",
+        "ingrid/hierarchy/behaviours/administrativeArea"
+], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
+            openData, foldersInHierarchy, conformityFields, inspireIsoConnection, isInspireConform, advCompatible, adminitrativeArea) {
 
     return declare(null, {
         
         advCompatible : advCompatible,
         
-        inspireRelevant: isInspireRelevant,
+        administrativeArea: adminitrativeArea,
+        
+        conformityFields: conformityFields,
+        
+        inspireIsoConnection: inspireIsoConnection,
+        
+        isInspireConform: isInspireConform,
         
         coupledResourceDownloadDataCheck: {
             title: "Gekoppelte Daten - Überprüfung auf Download-Daten",

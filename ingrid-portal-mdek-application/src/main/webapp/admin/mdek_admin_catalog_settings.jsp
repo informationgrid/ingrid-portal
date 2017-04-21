@@ -342,6 +342,7 @@
                 var behavioursByCategory = {};
                 for (var behave in behaviour) {
                     var entry = behaviour[behave];
+                    if (!entry.title) continue;
                     
                     // TODO: group by categories
                     var cat = behaviour[behave].category;
