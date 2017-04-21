@@ -136,8 +136,8 @@ define([
          * Called, when the uploader window is closed
          */
         close: function() {
-            this.destroyDialog();
             this.destroyUploader();
+            this.destroyDialog();
         },
 
         /**
@@ -387,11 +387,11 @@ define([
          */
         destroyUploader: function() {
             // cleanup all resources that were created in the open method
-            if (this.styleEl) {
-                domConstruct.destroy(this.styleEl);
-            }
             if (this.tabContainer) {
                 this.tabContainer.destroyRecursive();
+            }
+            if (this.styleEl) {
+                domConstruct.destroy(this.styleEl);
             }
             if (this.templateEl) {
                 domConstruct.destroy(this.templateEl);
