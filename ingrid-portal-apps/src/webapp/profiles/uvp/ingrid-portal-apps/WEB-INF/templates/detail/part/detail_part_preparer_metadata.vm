@@ -235,7 +235,7 @@
                                                         #if($step == "phase1")
                                                             #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
                                                             #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
-                                                            #renderDate ("Zeitraum der Auslegung" $from $to)
+                                                            #renderDate ("Zeitraum der Auslegung" $from $to "N&auml;here Informationen entnehmen Sie bitte den Auslegungsinformationen.")
                                                         #end
                                                     ## Auslegungsinformationen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
@@ -266,7 +266,7 @@
                                                         #if($step == "phase2")
                                                             #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
                                                             #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
-                                                            #renderDate ("Zeitraum der Er&ouml;rterung" $from $to)
+                                                            #renderDate ("Zeitraum der Er&ouml;rterung " $from $to "N&auml;here Informationen entnehmen Sie bitte den Informationen zum Er&ouml;rterungstermin.")
                                                         #end
                                                     ## Informationen zum Erörterungstermin
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
@@ -304,9 +304,16 @@
     </section>
 #end
 
-#macro (renderDate $dateTitle $dateFrom $dateTo)
+#macro (renderDate $dateTitle $dateFrom $dateTo $info)
     #if($dateFrom || $dateTo)
-        #renderGroupTitle($dateTitle)
+        <h4 class="title-font">
+            $dateTitle
+            #if($info)
+            <div class="tooltip ob-circle js-popup" data-title="Hinweis" data-content="$info" style="">
+                <svg class="tooltip__icon icon"><use xlink:href="#attention"></use></svg>
+            </div>
+            #end
+        </h4>
         <p>
         #if($dateFrom)
             $dateFrom
