@@ -6,6 +6,9 @@
     </properties>
     <body>
         <release version="4.0.3-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.3">
+          <action type="add" dev="wemove" issue="REDMINE-369,-375,-367">
+            Added new fields adv_compatible, administrative_area and inspire_conform.
+          </action>
           <action type="fix" dev="wemove" issue="REDMINE-648">
             PORTAL: Fixed registration confirmation URL by adding setting to influence hostname.
           </action>
@@ -33,13 +36,13 @@
             <action type="fix" dev="wemove" issue="REDMINE-555">
                 IGE: Fixed error in free spatial reference, when editing name. 
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-568">
+            <action type="fix" dev="wemove" issue="REDMINE-568">
                 PORTAL: Updated profile for RLP
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-572">
+            <action type="fix" dev="wemove" issue="REDMINE-572">
                 PORTAL: Fixed XML Button not showing on result page
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-561">
+            <action type="fix" dev="wemove" issue="REDMINE-561">
                 PORTAL: Update shorturl service for NUMIS.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-567">
@@ -51,13 +54,13 @@
             <action type="add" dev="wemove" issue="REDMINE-438">
                 PORTAL: Added support for PostgreSQL. Full support in installer (create initial portal/mdek database) or migration via tool (see docs in sql directory).
             </action>
-			<action type="add" dev="wemove" issue="REDMINE-380">
+            <action type="add" dev="wemove" issue="REDMINE-380">
                 PORTAL: Add hours of service to detail view.
             </action>
-			<action type="add" dev="wemove" issue="REDMINE-588">
+            <action type="add" dev="wemove" issue="REDMINE-588">
                 PORTAL: Add portal header to detail view.
             </action>
-			<action type="add" dev="wemove" issue="REDMINE-486">
+            <action type="add" dev="wemove" issue="REDMINE-486">
                 PORTAL: Add UVP profile to portal.
             </action>
             <action type="add" dev="wemove" issue="REDMINE-623">
@@ -69,7 +72,7 @@
             <action type="add" dev="wemove" issue="REDMINE-586">
                 MAPCLIENT: Add function graticule on accordion print.
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-585">
+            <action type="fix" dev="wemove" issue="REDMINE-585">
                 MAPCLIENT: Fix of embed version by used unallowed JS functions.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-586">
@@ -363,7 +366,7 @@
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-214">
                 MapClient: Fix loading deleted services from session.
-			</action>
+            </action>
             <action type="fix" dev="wemove" issue="REDMINE-224">
                 IGE: After canceling URL analysis, the process never stops.
             </action>
@@ -457,7 +460,7 @@
             <action type="update" dev="wemove" issue="REDMINE-13">
                 Portal/IGE: Added table for useConstraints in IGE and adapt detail view in Portal to new IDF structure concerning constraints.
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-71">
+            <action type="fix" dev="wemove" issue="REDMINE-71">
                 Portal/MapClient: Update localisation messages for transparency.
             </action>
             <action type="add" dev="wemove" issue="REDMINE-25">
@@ -536,10 +539,10 @@
             </action>
             <action type="fix" dev="wemove">
                 IGE: Arbitrary fixes:
-				- Hiding of tooltip when clicked anywhere
-				- Handling of errors from backend (better error messages, alerts)
-				- Fixed waiting dialog
-				- Fixed a bug where only URLs with http where presented as links (now also https works)
+                - Hiding of tooltip when clicked anywhere
+                - Handling of errors from backend (better error messages, alerts)
+                - Fixed waiting dialog
+                - Fixed a bug where only URLs with http where presented as links (now also https works)
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-37">
                 IGE: Scroll content in detail view not completely visible on lower resolutions.
@@ -556,10 +559,10 @@
             <action type="fix" dev="wemove" issue="REDMINE-576">
                 WebMapClient: Fix KML export/import styles and labels by redlining tool.
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-632">
+            <action type="fix" dev="wemove" issue="REDMINE-632">
                 WebMapClient: Fix using map extent of base layer instead of configured initial map extent on Admin-GUI.
             </action>
-			<action type="fix" dev="wemove" issue="REDMINE-643">
+            <action type="fix" dev="wemove" issue="REDMINE-643">
                 WebMapClient: Fix separator handling of coordinate picker tool and coordinate handling for projection WGS-84.
             </action>
             <action type="add" dev="wemove" issue="REDMINE-655">
