@@ -310,12 +310,12 @@ define([
                 new RadioButton({
                     checked: true,
                     value: "true",
-                    name: "isInspireConform",
+                    name: "isInspireConform"
                 }, "isInspireConform").startup();
                 new RadioButton({
                     checked: false,
                     value: "false",
-                    name: "isInspireConform",
+                    name: "isInspireConform"
                 }, "notInspireConform").startup();
                 
                 new CheckBox({}, "isOpenData");

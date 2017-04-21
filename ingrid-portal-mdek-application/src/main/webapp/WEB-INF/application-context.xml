@@ -142,5 +142,7 @@
     
     <context:component-scan base-package="de.ingrid">
         <context:exclude-filter type="regex" expression="de.ingrid.mdek.services.security.DefaultPermissionService*" />
+        <context:exclude-filter type="regex" expression="de.ingrid.mdek.services.log.LogService" />
+        <context:exclude-filter type="regex" expression="de.ingrid.mdek.services.date.SimpleDateJob" />
     </context:component-scan>
  </beans>
