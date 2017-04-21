@@ -112,7 +112,7 @@
             #set($bar = $list.add($facet))
         #end
     #end
-    #if($facetListSize > 6 || $facetListSize < 0)
+    #if($facetListSize > $maxColumn || $facetListSize < 0)
         #if($facetListSize % 5 == 0)
             #set ($facetListSize = 5)
         #elseif($facetListSize % 4 == 0)
@@ -120,7 +120,7 @@
         #elseif($facetListSize % 3 == 0)
             #set ($facetListSize = 3)
         #else
-            #set ($facetListSize = 6)
+            #set ($facetListSize = $maxColumn)
         #end
     #end
     #foreach ($facet in $list)
@@ -184,9 +184,13 @@
                                 $MESSAGES.getString($facet.getName())
                             #end
                         </div>
+                        <div class="tx-center category_count">
                         #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
-                            <div class="tx-center category_count">($hits.get("FACETS").get("$facetId:$facet.getId()"))</div>
+                            ($hits.get("FACETS").get("$facetId:$facet.getId()"))
+                        #else
+                            (0)
                         #end
+                        </div>
                     </a>
                 </div>
                 <div class="mq-show-l">
@@ -238,18 +242,21 @@
 #end
 
 <script>
-var height = 0;
-
-// Get highest height of flex-row
-$( ".flex-row" ).each(function( index ) {
-  var elemHeight = $( this ).height();
-  if(elemHeight > height){
-    height = elemHeight;
-  }
-});
-
-// Set highest height to all flex-rows
-$( ".flex-row" ).each(function( index ) {
-  $( this ).height(height);
+$( ".tab__content" ).each(function( i ) {
+    var tabContent = $( this );
+    var height = 0;
+    // Get highest height of flex-row
+    tabContent.find( ".flex-row" ).each(function( index ) {
+      var elemHeight = $( this ).height();
+      if(elemHeight > height){
+        height = elemHeight;
+      }
+    });
+    
+    // Set highest height to all flex-rows
+    tabContent.find( ".flex-row" ).each(function( index ) {
+      var elem = $( this );
+      elemHeight.height(height);
+    });
 });
 </script>

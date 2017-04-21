@@ -18,7 +18,7 @@
 
     // All markers
     var mapMarkers = L.markerClusterGroup();
-    // "UVP Vorhaben" markers
+    // "UVP-Vorhaben" markers
     var mapMarkers10 = L.markerClusterGroup({
         iconCreateFunction: function (cluster) {
             var childCount = cluster.getChildCount();
@@ -109,8 +109,8 @@
             
             var icon = L.AwesomeMarkers.icon({
                 markerColor: iconColor,
-                prefix: 'icon',
-                icon: categories && categories.length > 0 ? categories[0].id : ''
+                prefix: 'icon'//,
+                //icon: categories && categories.length > 0 ? categories[0].id : ''
             });
             
             var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
@@ -140,10 +140,10 @@
     
     var overlayers = {};
     if(mapMarkers10.getLayers().length > 0){
-        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>UVP Vorhaben"]  = mapMarkers10;
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>UVP-Vorhaben"]  = mapMarkers10;
     }
     if(mapMarkers11.getLayers().length > 0){
-        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Ausl&#228;ndische Verfahren"]  = mapMarkers11;
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Ausl&#228;ndische Vorhaben"]  = mapMarkers11;
     }
     
     if(mapMarkers1314.getLayers().length > 0){

@@ -355,6 +355,8 @@
                 $title
                 #if($number)
                     <strong>($number)</strong>
+                #else
+                    <strong>(0)</strong>
                 #end
             </div>
         

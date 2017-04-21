@@ -214,6 +214,8 @@ public class PortalConfig extends PropertiesConfiguration {
    
     public static final String CATEGORY_TEASER_SEARCH_FACETS_TYP = "category.teaser.search.facets.typ";
     
+    public static final String CATEGORY_TEASER_SEARCH_COLUMN_MAX = "category.teaser.search.column.max";
+    
     public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
     
     public static final String PORTAL_MAPCLIENT_QUERY = "portal.mapclient.query";

@@ -237,16 +237,16 @@
                                                             #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
                                                             #renderDate ("Zeitraum der Auslegung" $from $to)
                                                         #end
-                                                    ## Antrag auf Entscheidung über die Zulässigkeit des Vorhabens
+                                                    ## Auslegungsinformationen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
                                                         #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
                                                         #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Antrag auf Entscheidung &uuml;ber die Zul&auml;ssigkeit des Vorhabens" $entryLength $xpathExpression $entryNumber "technicalDocs")
-                                                    ## UVP-Bericht nach § 6 UVPG
+                                                        #renderTableToList("Auslegungsinformationen" $entryLength $xpathExpression $entryNumber "technicalDocs")
+                                                    ## UVP-Bericht, ggf. Antragsunterlagen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='applicationDocs']/doc")
                                                         #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
                                                         #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("UVP-Bericht nach &sect; 6 UVPG" $entryLength $xpathExpression $entryNumber "applicationDocs")
+                                                        #renderTableToList("UVP-Bericht, ggf. Antragsunterlagen" $entryLength $xpathExpression $entryNumber "applicationDocs")
                                                     ## Berichte und Empfehlungen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='reportsRecommendationsDocs']/doc")
                                                         #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
@@ -277,7 +277,7 @@
                                                     ## Datum der Entscheidung
                                                         #if($step == "phase3")
                                                             #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
-                                                            #renderDate ("Zeitraum der Er&ouml;rterung" $from)
+                                                            #renderDate ("Datum der Entscheidung" $from)
                                                         #end
                                                     ## Auslegungsinformationen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='approvalDocs']/doc")
