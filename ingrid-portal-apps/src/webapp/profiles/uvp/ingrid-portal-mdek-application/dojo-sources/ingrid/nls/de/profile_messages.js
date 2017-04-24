@@ -55,7 +55,7 @@ define({
     "uvp.form.dialog.addPhase.phase3": "Zulassungsentscheidung",
 
     "uvp.form.phase1.rubric": "Öffentliche Auslegung",
-    "uvp.form.phase1.dateFrom": "Zeitraum der Auslegung von",
+    "uvp.form.phase1.dateFrom": "Zeitraum der Auslegung am/vom",
     "uvp.form.phase1.dateTo": "bis",
     "uvp.form.phase1.technicalDocs": "Auslegungsinformationen",
     "uvp.form.phase1.applicationDocs": "UVP Bericht/Antragsunterlagen",
@@ -64,13 +64,13 @@ define({
     "uvp.form.phase1.publicationDocs": "Bekanntmachung",
 
     "uvp.form.phase2.rubric": "Erörterungstermin",
-    "uvp.form.phase2.dateFrom": "Zeitraum der Erörterung von",
+    "uvp.form.phase2.dateFrom": "Zeitraum der Erörterung am/vom",
     "uvp.form.phase2.dateTo": "bis",
     "uvp.form.phase2.considerationDocs": "Informationen zum Erörterungstermin",
 
     "uvp.form.phase3.rubric": "Entscheidung über die Zulassung",
     "uvp.form.phase3.approvalDate": "Datum der Entscheidung",
-    "uvp.form.phase3.dateFrom": "Zeitraum der Auslegung von",
+    "uvp.form.phase3.dateFrom": "Zeitraum der Auslegung am/vom",
     "uvp.form.phase3.dateTo": "bis",
     "uvp.form.phase3.approvalDocs": "Auslegungsinformationen ",
     "uvp.form.phase3.designDocs": "Entscheidung",

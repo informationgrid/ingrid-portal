@@ -257,7 +257,7 @@ define([
                 var idDateTo = "publicDateTo_" + counter;
                 newFieldsToDirtyCheck.push(idDateFrom, idDateTo);
                 creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase1.dateFrom"), help: "...", visible: "required showOnlyExpanded", style: "width:33%" }));
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase1.dateTo"), help: "...", visible: "required showOnlyExpanded", style: "width:33%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase1.dateTo"), help: "...", visible: "showOnlyExpanded", style: "width:33%" }));
                 phaseFields.push({ key: "publicDateFrom", field: registry.byId(idDateFrom) });
                 phaseFields.push({ key: "publicDateTo", field: registry.byId(idDateTo) });
 
@@ -362,7 +362,7 @@ define([
                 var idDateTo = "considerDateTo_" + counter;
                 newFieldsToDirtyCheck.push(idDateFrom, idDateTo);
                 creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase2.dateFrom"), help: "...", visible: "required showOnlyExpanded", style: "width:33%" }));
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase2.dateTo"), help: "...", visible: "required showOnlyExpanded", style: "width:33%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase2.dateTo"), help: "...", visible: "showOnlyExpanded", style: "width:33%" }));
                 phaseFields.push({ key: "considerDateFrom", field: registry.byId(idDateFrom) });
                 phaseFields.push({ key: "considerDateTo", field: registry.byId(idDateTo) });
 
