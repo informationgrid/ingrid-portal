@@ -286,13 +286,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>procedure_10</id>
                 <display>true</display>
             </facet>
-        <!-- Negative Vorprüfungen -->
-            <facet>
-                <name>Negative Vorprüfungen</name>
-                <query>t01_object.obj_class:12</query>
-                <id>procedure_12</id>
-                <display>true</display>
-            </facet>
         <!-- Ausländische Vorhaben -->
             <facet>
                 <name>Ausländische Vorhaben</name>
@@ -565,14 +558,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:11</query>
                 <parentId>procedure</parentId>
                 <id>procedure_11</id>
-                <display>true</display>
-            </facet>
-        <!-- Negative Vorprüfungen -->
-            <facet>
-                <name>Negative Vorprüfungen</name>
-                <query>t01_object.obj_class:12</query>
-                <parentId>procedure</parentId>
-                <id>procedure_12</id>
                 <display>true</display>
             </facet>
         <!-- Raumordnungsverfahren -->
