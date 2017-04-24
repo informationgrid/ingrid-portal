@@ -79,7 +79,7 @@ require([
             // preview/print search results
             if (pageDetailViewObjects.customParams.searchResult) {
                 pageDetailViewObjects.resultView = true;
-                registry.byId("showSubTree").set("checked", true);
+                // registry.byId("showSubTree").set("checked", true);
                 registry.byId("showDetailedView").set("checked", false);
                 refreshView();
 
@@ -107,7 +107,7 @@ require([
                 });
             }
 
-            on(registry.byId("showSubTree"), "click", refreshView);
+            // on(registry.byId("showSubTree"), "click", refreshView);
             on(registry.byId("showDetailedView"), "click", refreshView);
             on(registry.byId("showSubordinateObjects"), "click", refreshView);
 
@@ -121,7 +121,7 @@ require([
             updateCheckboxesFunctionality();
             setLoadingZone(true);
 
-            var showSubTree = registry.byId("showSubTree").checked;
+            var showSubTree = null; // registry.byId("showSubTree").checked;
             var showDetails = registry.byId("showDetailedView").checked;
 
             // empty preview div
@@ -161,11 +161,11 @@ require([
         }
 
         function updateCheckboxesFunctionality() {
-            if (pageDetailViewObjects.resultView) {
+            /*if (pageDetailViewObjects.resultView) {
                 UtilUI.disableElement("showSubTree");
             } else {
                 UtilUI.enableElement("showSubTree");
-            }
+            }*/
 
             /*if (registry.byId("showSubTree").checked) {
                 UtilUI.enableElement("showDetailedView");
@@ -251,12 +251,12 @@ require([
         function setLoadingZone(activate) {
             if (activate) {
                 style.set("detailLoadingZone", "visibility", "visible");
-                UtilUI.disableElement("showSubTree");
+                // UtilUI.disableElement("showSubTree");
                 UtilUI.disableElement("showDetailedView");
                 UtilUI.disableElement("printDetailObject");
             } else {
                 style.set("detailLoadingZone", "visibility", "hidden");
-                UtilUI.enableElement("showSubTree");
+                // UtilUI.enableElement("showSubTree");
                 UtilUI.enableElement("showDetailedView");
                 UtilUI.enableElement("printDetailObject");
                 updateCheckboxesFunctionality();
@@ -265,7 +265,7 @@ require([
 
         function renderSubTreeNodeData() {
             console.debug("renderTreeNodeData");
-            var showSubTree = registry.byId("showSubTree").checked;
+            var showSubTree = null; // registry.byId("showSubTree").checked;
             var renderDetailView = registry.byId("showDetailedView").checked;
             // show a warning dialog if it would take a long time to prepare the print preview
             var def = showTooManyNodesDialogIfNecessary();
@@ -393,7 +393,7 @@ require([
                 .then(lang.hitch(pageDetailViewObjects, renderNodeData))
                 // show a horizontal line between objects if a detail subtree is listed
                 .then(function() {
-                    if (registry.byId("showSubTree").checked) pageDetailViewObjects.detailDivContent += "<hr />";
+                    // if (registry.byId("showSubTree").checked) pageDetailViewObjects.detailDivContent += "<hr />";
                 });
                 return def;
             }
@@ -966,13 +966,16 @@ require([
         function renderAdditionalRubrics(additionalFields) {
             var addDomRubrics = query(".rubric.additional", "contentFrameBodyObject");
             var phaseIndex = 0;
+
+            // FIXME: for dynamically added fields, those might not be rendered yet and cannot be used
+            //        for label extraction, so this function should be disabled for UVP
+
             array.forEach(addDomRubrics, function(domRubric) {
                 var rubricText = has("firefox") ? domRubric.children[0].textContent : domRubric.children[0].innerText;
                 renderSectionTitel(rubricText);
 
                 // if this rubric was dynamically created by a repeatable field
                 if (domRubric.classList.contains("phase")) {
-                    debugger;
                     var dynField = array.filter(additionalFields, function(a) { return a.identifier === "UVPPhases"; })[0];
                     var phase = dynField.tableRows[phaseIndex][0];
                     var fields = [];
@@ -1268,10 +1271,10 @@ require([
             <label for="showDetailedView" class="inActive" style="margin-right: 15px;">
                 <fmt:message key="dialog.detail.print.showDetailedView" />
             </label>
-            <input type="checkbox" id="showSubTree" data-dojo-type="dijit/form/CheckBox" />
+            <!--<input type="checkbox" id="showSubTree" data-dojo-type="dijit/form/CheckBox" />
             <label for="showSubTree" class="inActive">
                 <fmt:message key="dialog.detail.print.showSubTree" />
-            </label>
+            </label>-->
             <input type="checkbox" id="showSubordinateObjects" data-dojo-type="dijit/form/CheckBox" style="display:none;" checked=true />
             <label for="showSubordinateObjects" style="display:none;" class="inActive" title="<fmt:message key="dialog.detail.print.showSubordinate.tooltip" />">
                 <fmt:message key="dialog.detail.print.showSubordinate" />

@@ -122,6 +122,7 @@ define(["dojo/_base/declare",
             domClass.add("uiElement5000", "hide");
             domClass.add("uiElement5100", "hide");
             domClass.add("uiElement5105", "hide");
+            domClass.add("uiElement6005", "hide");
             domClass.add("uiElement6010", "hide");
 
             // hide all rubrics
