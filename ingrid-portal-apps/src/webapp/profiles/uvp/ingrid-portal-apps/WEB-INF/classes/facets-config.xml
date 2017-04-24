@@ -274,9 +274,9 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         </facets>
     </facet>
-    <!-- Verfahrens-Typen -->
-    <facet sort="SORT_BY_NAME">
-        <name>Verfahrens-Typen</name>
+    <!-- Verfahrenstypen -->
+    <facet>
+        <name>Verfahrenstypen</name>
         <id>procedure</id>
         <facets>
         <!-- UVP-Vorhaben -->
@@ -284,13 +284,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>UVP-Vorhaben</name>
                 <query>t01_object.obj_class:10</query>
                 <id>procedure_10</id>
-                <display>true</display>
-            </facet>
-        <!-- Ausländische Vorhaben -->
-            <facet>
-                <name>Ausländische Vorhaben</name>
-                <query>t01_object.obj_class:11</query>
-                <id>procedure_11</id>
                 <display>true</display>
             </facet>
         <!-- Raumordnungsverfahren -->
@@ -307,6 +300,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>procedure_14</id>
             </facet>
         </facets>
+        <!-- Ausländische Vorhaben -->
+            <facet>
+                <name>Ausländische Vorhaben</name>
+                <query>t01_object.obj_class:11</query>
+                <id>procedure_11</id>
+                <display>true</display>
+            </facet>
     </facet>
     <facet>
         <name>searchResult.facete.title.time</name>
@@ -540,7 +540,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         </facets>
     </facet>
     <facet>
-        <name>Verfahrens-Typen</name>
+        <name>Verfahrenstypen</name>
         <id>category_procedure</id>
         <categoryOnly>true</categoryOnly>
         <facets>
@@ -550,14 +550,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:10</query>
                 <parentId>procedure</parentId>
                 <id>procedure_10</id>
-                <display>true</display>
-            </facet>
-        <!-- Ausländische Vorhaben -->
-            <facet>
-                <name>Ausländische Vorhaben</name>
-                <query>t01_object.obj_class:11</query>
-                <parentId>procedure</parentId>
-                <id>procedure_11</id>
                 <display>true</display>
             </facet>
         <!-- Raumordnungsverfahren -->
@@ -574,6 +566,14 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:14</query>
                 <parentId>procedure</parentId>
                 <id>procedure_14</id>
+                <display>true</display>
+            </facet>
+        <!-- Ausländische Vorhaben -->
+            <facet>
+                <name>Ausländische Vorhaben</name>
+                <query>t01_object.obj_class:11</query>
+                <parentId>procedure</parentId>
+                <id>procedure_11</id>
                 <display>true</display>
             </facet>
         </facets>
