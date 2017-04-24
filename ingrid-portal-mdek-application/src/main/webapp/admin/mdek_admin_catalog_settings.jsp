@@ -248,7 +248,7 @@
                     if (box) {
                         var entry = behaviour[behave];
                         var currentState = box.checked;
-                        if (entry.defaultActive !== currentState) {
+                        if (entry.defaultActive !== currentState || entry.params) {
                             var beh = {
                                 id: behave,
                                 active: currentState
