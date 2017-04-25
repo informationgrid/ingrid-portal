@@ -101,16 +101,18 @@
                     // set all checkboxes active that are activated
                     array.forEach(data, function(item) {
                         var check = registry.byId("behaviour_" + item.id);
-                        check.set( "checked", item.active );
-                        // add a marker for display difference to default state
-                        var tag = domConstruct.toDom("<span title='<fmt:message key='dialog.admin.catalog.general.modifiedBehaviour' />'> (Info)</span>");
-                        domClass.add(check.domNode.parentNode, "modified");
-                        check.domNode.parentNode.appendChild(tag);
+                        if (check) {
+                            check.set( "checked", item.active );
+                            // add a marker for display difference to default state
+                            var tag = domConstruct.toDom("<span title='<fmt:message key='dialog.admin.catalog.general.modifiedBehaviour' />'> (Info)</span>");
+                            domClass.add(check.domNode.parentNode, "modified");
+                            check.domNode.parentNode.appendChild(tag);
 
-                        if (item.params) {
-                            array.forEach(item.params, function(param) {
-                                query("input[data-field='" + param.id + "']")[0].value = param.value;
-                            });
+                            if (item.params) {
+                                array.forEach(item.params, function(param) {
+                                    query("input[data-field='" + param.id + "']")[0].value = param.value;
+                                });
+                            }
                         }
                     });
                 });

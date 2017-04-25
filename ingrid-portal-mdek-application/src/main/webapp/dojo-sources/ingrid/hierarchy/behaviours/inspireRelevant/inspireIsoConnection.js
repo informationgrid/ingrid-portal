@@ -28,8 +28,9 @@ define([
     "dijit/registry",
     "ingrid/message",
     "ingrid/utils/Grid",
-    "ingrid/utils/Syslist"
-], function(declare, array, aspect, string, registry, message, UtilGrid, UtilSyslist) {
+    "ingrid/utils/Syslist",
+    "ingrid/utils/UI"
+], function(declare, array, aspect, string, registry, message, UtilGrid, UtilSyslist, UtilUI) {
     
     return declare(null, {
         title: "Inspire / ISO - Connection",
@@ -80,7 +81,9 @@ define([
             // react when inspire topics has been added
             var inspireGridChanges = function(result, args) {
                 // only execute if INSPIRE-conform
-                if (!registry.byId("isInspireRelevant").checked || !registry.byId("isInspireConform").checked) return;
+                // => did this come from the wiki?
+                //      https://dev.informationgrid.eu/redmine/projects/vkoopuis/wiki/Ueberarbeitung_der_Checkbox_%22INSPIRE-relevanter_Datensatz%22_im_IGE
+                // if (!registry.byId("isInspireRelevant").checked || !registry.byId("isInspireConform").checked) return;
                 
                 console.log("Inspire data behaviour");
                 var msg = args[0];
