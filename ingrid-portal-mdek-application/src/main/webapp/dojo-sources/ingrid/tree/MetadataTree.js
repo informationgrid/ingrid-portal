@@ -181,8 +181,10 @@ define("ingrid/tree/MetadataTree", [
                     });
                     node.setChildItems(updatedChildren);
                 } catch(ex) {
+                    // FIXME: sometime the element this.expandoNode is null when publishing a new address
                     console.error( "Error during updating tree nodes", ex);
-                    displayErrorMessage(ex);
+                    // ignore error message since user does not need to be informed about this
+                    // displayErrorMessage(ex);
                 }
             });
         },
