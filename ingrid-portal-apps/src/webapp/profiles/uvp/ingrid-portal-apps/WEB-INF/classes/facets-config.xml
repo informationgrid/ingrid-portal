@@ -299,7 +299,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:14</query>
                 <id>procedure_14</id>
             </facet>
-        </facets>
         <!-- Ausländische Vorhaben -->
             <facet>
                 <name>Ausländische Vorhaben</name>
@@ -307,6 +306,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>procedure_11</id>
                 <display>true</display>
             </facet>
+        </facets>
     </facet>
     <facet>
         <name>searchResult.facete.title.time</name>
