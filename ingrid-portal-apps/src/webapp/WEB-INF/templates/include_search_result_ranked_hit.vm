@@ -32,8 +32,8 @@
         #elseif($rs.type == "detail-style")
             #if($rs.udk_class)
                 #if($rs.is_address)
-                    #set($udkObjClassNameKey = "udk_adr_class_name_$rs.udk_class")
-                    #set($udkObjClassName = $MESSAGES.getString($udkObjClassNameKey))
+                    #set($udkAdrClassNameKey = "udk_adr_class_name_$rs.udk_class")
+                    #set($udkAdrClassName = $MESSAGES.getString($udkAdrClassNameKey))
                     #if($rs.udk_class == "2")
                         #if($rs.title)#set($title = "$rs.title")#end
                         #if($rs.address_salutation)#set($title = "$title$rs.address_salutation ")#end
@@ -48,7 +48,7 @@
                         #set($title = "$rs.title")
                     #end
                     <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end
-                    #renderUDKAddressIcon($rs.udk_class $udkObjClassName)
+                    #renderUDKAddressIcon($rs.udk_class $udkAdrClassName)
                     #if($rs.docuuid && $rs.docuuid.length() > 0)
                         <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end">#renderTitle($title.trim())</a>
                     #else
