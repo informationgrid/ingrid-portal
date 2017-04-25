@@ -429,7 +429,7 @@ thead {
 }
 
 .marker-cluster-10 div{
-  background-color: rgba(56, 170, 220) !important;
+  background-color: rgba(56, 170, 220, 1.0) !important;
 }
 
 .marker-cluster-11 {
@@ -437,7 +437,7 @@ thead {
 }
 
 .marker-cluster-11 div{
-  background-color: rgba(48, 48, 48) !important;
+  background-color: rgba(48, 48, 48, 1.0) !important;
 }
 
 .marker-cluster-1314 {
@@ -445,7 +445,7 @@ thead {
 }
 
 .marker-cluster-1314 div {
-  background-color: rgba(200, 60, 40) !important;
+  background-color: rgba(200, 60, 40, 1.0) !important;
 }
 
 .marker-cluster span {
