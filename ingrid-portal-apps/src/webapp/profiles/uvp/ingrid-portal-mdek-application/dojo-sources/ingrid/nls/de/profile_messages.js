@@ -36,7 +36,7 @@ define({
     "uvp.form.consideration.tooltip": "Für die allgemeine Vorhabenbeschreibung sollte der Einfachheit halber der Text der Bekanntmachung verwendet werden.",
     "uvp.form.address": "Kontaktdaten der verfahrensführenden Dienststelle",
 
-    "uvp.form.categories.uvp": "UVP-Vorhaben",
+    "uvp.form.categories.uvp": "Zulassungsverfahren",
     "uvp.form.categories.uvpInFront": "Vorgelagerte Verfahren",
     "uvp.form.categories.uvpNegative": "Negative Vorprüfungen",
     "uvp.form.categories.uvpForeign": "Ausländische Vorhaben",
