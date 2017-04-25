@@ -18,7 +18,7 @@
 
     // All markers
     var mapMarkers = L.markerClusterGroup();
-    // "UVP-Vorhaben" markers
+    // "Zulassungsverfahren" markers
     var mapMarkers10 = L.markerClusterGroup({
         iconCreateFunction: function (cluster) {
             var childCount = cluster.getChildCount();
@@ -140,7 +140,7 @@
     
     var overlayers = {};
     if(mapMarkers10.getLayers().length > 0){
-        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>UVP-Vorhaben"]  = mapMarkers10;
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Zulassungsverfahren"]  = mapMarkers10;
     }
     if(mapMarkers11.getLayers().length > 0){
         overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Ausl&#228;ndische Vorhaben"]  = mapMarkers11;

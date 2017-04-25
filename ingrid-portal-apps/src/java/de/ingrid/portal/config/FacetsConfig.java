@@ -237,6 +237,21 @@ public class FacetsConfig {
                         ingridFacet.setIcon( node.getValue().toString() );
                     }
                 }
+                
+                if (facetNode.getChildren( "shortcut" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "shortcut" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setShortcut( node.getValue().toString() );
+                    }
+                }
+                
+                if (facetNode.getChildren( "url" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "url" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setUrl( node.getValue().toString() );
+                    }
+                }
+                
                 if (facetNode.getChildren( "facets" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {

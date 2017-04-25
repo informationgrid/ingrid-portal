@@ -2032,20 +2032,22 @@ public class UtilsFacete {
                 if(ingridFacet.getParent() != null){
                     if((!ingridFacet.getParent().getId().equals("topic") || isAll) && !ingridFacet.getParent().getId().equals("partner") && !ingridFacet.getParent().getId().equals("provider")){
                         if(facetId != null){
-                            if(ingridFacet.getParent() != null){
-                                if(ingridFacet.getParent().getDependency() == null){
-                                    // Set sub facets by no define dependency
-                                    HashMap<String, String> facetEntry = new HashMap<String, String>();
-                                    facetEntry.put("id", facetId);
-                                    facetEntry.put("query", facetQuery);
-                                    facetList.add(facetEntry);
-                                }else{
-                                    // Set sub facets only by selected dependency
-                                    if(ingridFacet.getParent().isDependencySelect()){
+                            if(facetQuery != null){
+                                if(ingridFacet.getParent() != null){
+                                    if(ingridFacet.getParent().getDependency() == null){
+                                        // Set sub facets by no define dependency
                                         HashMap<String, String> facetEntry = new HashMap<String, String>();
                                         facetEntry.put("id", facetId);
                                         facetEntry.put("query", facetQuery);
                                         facetList.add(facetEntry);
+                                    }else{
+                                        // Set sub facets only by selected dependency
+                                        if(ingridFacet.getParent().isDependencySelect()){
+                                            HashMap<String, String> facetEntry = new HashMap<String, String>();
+                                            facetEntry.put("id", facetId);
+                                            facetEntry.put("query", facetQuery);
+                                            facetList.add(facetEntry);
+                                        }
                                     }
                                 }
                             }
@@ -2059,11 +2061,13 @@ public class UtilsFacete {
                     }
                 }else{
                     if(facetId != null){
-                        if(ingridFacet.getParent() != null){
-                            HashMap<String, String> facetEntry = new HashMap<String, String>();
-                            facetEntry.put("id", facetId);
-                            facetEntry.put("query", facetQuery);
-                            facetList.add(facetEntry);
+                        if(facetQuery != null){
+                            if(ingridFacet.getParent() != null){
+                                HashMap<String, String> facetEntry = new HashMap<String, String>();
+                                facetEntry.put("id", facetId);
+                                facetEntry.put("query", facetQuery);
+                                facetList.add(facetEntry);
+                            }
                         }
                         if(ingridFacet.getFacets() != null){
                               getConfigFacetQuery(ingridFacet.getFacets(), facetQueries, false, facetId, isAll);

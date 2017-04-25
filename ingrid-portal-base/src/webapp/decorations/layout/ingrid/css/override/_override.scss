@@ -27,3 +27,15 @@
     )
   );
 }
+
+.circle {
+  height: 75px;
+  width: 75px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  text-align: center;
+  border: 3px solid #CCC;
+  margin: 0 auto;
+  font-size: 40px;
+}

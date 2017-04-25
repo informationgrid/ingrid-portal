@@ -279,9 +279,9 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>Verfahrenstypen</name>
         <id>procedure</id>
         <facets>
-        <!-- UVP-Vorhaben -->
+        <!-- Zulassungsverfahren -->
             <facet>
-                <name>UVP-Vorhaben</name>
+                <name>Zulassungsverfahren</name>
                 <query>t01_object.obj_class:10</query>
                 <id>procedure_10</id>
                 <display>true</display>
@@ -544,12 +544,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>category_procedure</id>
         <categoryOnly>true</categoryOnly>
         <facets>
-        <!-- UVP-Vorhaben -->
+        <!-- Zulassungsverfahren -->
             <facet>
-                <name>UVP-Vorhaben</name>
+                <name>Zulassungsverfahren</name>
                 <query>t01_object.obj_class:10</query>
                 <parentId>procedure</parentId>
                 <id>procedure_10</id>
+                <shortcut>Z</shortcut>
                 <display>true</display>
             </facet>
         <!-- Raumordnungsverfahren -->
@@ -558,6 +559,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:13</query>
                 <parentId>procedure</parentId>
                 <id>procedure_13</id>
+                <shortcut>R</shortcut>
                 <display>true</display>
             </facet>
         <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
@@ -566,6 +568,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:14</query>
                 <parentId>procedure</parentId>
                 <id>procedure_14</id>
+                <shortcut>L</shortcut>
                 <display>true</display>
             </facet>
         <!-- Ausländische Vorhaben -->
@@ -574,6 +577,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:11</query>
                 <parentId>procedure</parentId>
                 <id>procedure_11</id>
+                <shortcut>A</shortcut>
                 <display>true</display>
             </facet>
         </facets>
