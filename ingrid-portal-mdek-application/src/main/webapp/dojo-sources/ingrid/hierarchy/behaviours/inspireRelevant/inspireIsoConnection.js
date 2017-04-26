@@ -111,7 +111,9 @@ define([
             // -> instead we have to remove the topic first
             var isoCategoriesChanges = function(result, args) {
                 // only execute if INSPIRE-conform
-                if (!registry.byId("isInspireRelevant").checked || !registry.byId("isInspireConform").checked) return;
+                // => did this come from the wiki?
+                //      https://dev.informationgrid.eu/redmine/projects/vkoopuis/wiki/Ueberarbeitung_der_Checkbox_%22INSPIRE-relevanter_Datensatz%22_im_IGE
+                // if (!registry.byId("isInspireRelevant").checked || !registry.byId("isInspireConform").checked) return;
                 
                 var msg = args[0];
                 // if cell is changed, then we must not allow to remove the old item
