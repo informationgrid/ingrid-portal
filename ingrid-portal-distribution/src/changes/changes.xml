@@ -9,6 +9,9 @@
           <action type="fix" dev="wemove" issue="REDMINE-662">
             PORTAL: PostgreSQL: Fix quartz jobs and initial database contents.
           </action>
+          <action type="Fix" dev="wemove" issue="REDMINE-655">
+            PORTAL: Fixed chronicle teaser on default-page.psml. 
+          </action>
           <action type="fix" dev="wemove" issue="REDMINE-634">
             IGE: Only allow folders to be created under root nodes or other folders.
           </action>
