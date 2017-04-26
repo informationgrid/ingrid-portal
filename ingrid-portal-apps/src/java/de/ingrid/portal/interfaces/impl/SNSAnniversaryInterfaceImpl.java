@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.iplug.sns.utils.Topic;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.AnniversaryInterface;
 import de.ingrid.portal.interfaces.IBUSInterface;
@@ -86,7 +87,7 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
             query.putInt(Topic.REQUEST_TYPE, Topic.ANNIVERSARY_FROM_TOPIC);
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
-            hits = iBus.searchAndDetail(query, 10, 1, 0, 10000, new String[0]);
+            hits = iBus.searchAndDetail(query, PortalConfig.getInstance().getInt( PortalConfig.SNS_CHRONICLE_HITS_LENGTH, 10 ), 1, 0, 10000, new String[0]);
             
             // prepare the detail array
             IngridHit[] hitArray = hits.getHits();
