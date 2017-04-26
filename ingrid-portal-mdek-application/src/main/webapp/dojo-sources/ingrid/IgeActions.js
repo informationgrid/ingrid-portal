@@ -1867,6 +1867,7 @@ define([
 
             UtilStore.updateWriteStore("thesaurusTerms", nodeData.thesaurusTermsTable);
             UtilStore.updateWriteStore("thesaurusTopics", UtilList.listToTableData(nodeData.thesaurusTopicsList));
+            UtilStore.updateWriteStore("advProductGroup", UtilList.listToTableData(nodeData.advProductGroupList));
             UtilStore.updateWriteStore("thesaurusInspire", UtilList.listToTableData(nodeData.thesaurusInspireTermsList));
             UtilStore.updateWriteStore("thesaurusEnvTopics", UtilList.listToTableData(nodeData.thesaurusEnvTopicsList));
             registry.byId("thesaurusEnvExtRes").attr("value", nodeData.thesaurusEnvExtRes, true);
@@ -2419,6 +2420,7 @@ define([
             // -- Thesaurus --
             nodeData.thesaurusTermsTable = this._getTableData("thesaurusTerms");
             nodeData.thesaurusTopicsList = UtilList.tableDataToList(this._getTableData("thesaurusTopics"));
+            nodeData.advProductGroupList = UtilList.tableDataToList(this._getTableData("advProductGroup"));
             nodeData.thesaurusInspireTermsList = UtilList.tableDataToList(this._getTableData("thesaurusInspire"));
             nodeData.thesaurusEnvTopicsList = UtilList.tableDataToList(this._getTableData("thesaurusEnvTopics"));
             nodeData.thesaurusEnvExtRes = registry.byId("thesaurusEnvExtRes").checked;

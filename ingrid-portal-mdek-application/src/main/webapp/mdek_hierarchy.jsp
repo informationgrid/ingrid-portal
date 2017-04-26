@@ -384,6 +384,21 @@
                         </div>
                         <div id="thesaurusContent" class="content">
                             <div class="inputContainer">
+                                <span id="uiElement5170" class="outer hidden">
+                                    <div>
+                                        <span id="advProductGroupLabel" class="label">
+                                            <label for="advProductGroup" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5170);" >
+                                                <fmt:message key="ui.obj.thesaurus.advProductGroup" />
+                                            </label>
+                                        </span>
+                                        <div class="input tableContainer">
+                                            <div id="advProductGroup" autoHeight="4" interactive="true" class="hideTableHeader">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
                                 <span id="uiElement5064" class="outer">
                                     <div>
                                         <span id="ref1ThesaurusInspireLabel" class="label">
