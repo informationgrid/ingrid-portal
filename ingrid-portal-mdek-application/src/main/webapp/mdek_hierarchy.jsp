@@ -336,10 +336,10 @@
                                 </div>
                                 <span id="uiElement6001" class="hidden">
                                     <div class="input checkboxContainer input-inline">
-                                        <input type="radio" id="isInspireConform"/><label for="isInspireConform" class="inActive"><fmt:message key="ui.obj.general.inspireConform" /></label>
+                                        <input type="radio" id="isInspireConform"/><label for="isInspireConform" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6001)"><fmt:message key="ui.obj.general.inspireConform" /></label>
                                     </div>
                                     <div class="input checkboxContainer input-inline">
-                                        <input type="radio" id="notInspireConform" /><label for="notInspireConform" class="inActive"><fmt:message key="ui.obj.general.notInspireConform" /></label>
+                                        <input type="radio" id="notInspireConform" /><label for="notInspireConform" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6002)"><fmt:message key="ui.obj.general.notInspireConform" /></label>
                                     </div>
                                 </span>
                             </span>

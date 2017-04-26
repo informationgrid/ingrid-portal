@@ -43,6 +43,10 @@ define([
                 utils.addConformity();
                 
                 // only one of a few CRS are required???
+                // mindestens ein INSPIRE-CRS (ToDo: Markierung der INSPIRE-CRS für Anwender in Auswahlliste: 3044, 3045, 3034, 3035 und 4258)
+                // Grad der Konformität = “true” für die Spezifikation = "COMMISSION REGULATION (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services"
+                // Encoding des Geodatensatzes / Kodierungsschema (ToDo: komplexe Veränderung des Feldes, weil INSPIRE-Forderung reduziert; nur Angabe von name = GML und version = [3.2.1] erforderlich; specification entfernen)
+                // Digitale Präsentation (ToDo: aus der Werteliste sind nur vector, grid, tin und textTable zugelassen)
                 
                 // Kodierungsschema
                 
