@@ -63,7 +63,10 @@ public class PortalConfig extends PropertiesConfiguration {
 
     /** default timeout for sns queries in ms */
     public final static String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
-
+    
+    /** default length of chronicle hits  */
+    public final static String SNS_CHRONICLE_HITS_LENGTH = "sns.chronicle.hits.length";
+    
     /**
      * always read values from database or only once and then from cache, true
      * or false
