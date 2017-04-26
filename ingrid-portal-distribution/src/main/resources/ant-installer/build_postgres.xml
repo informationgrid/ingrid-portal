@@ -36,13 +36,16 @@
     <property name="postgresDialectPortal"            value="org.hibernate.dialect.PostgreSQLDialect"/>
     <property name="postgresValidationQuery"          value="SELECT 1"/>
     <property name="postgresDbDriver"                 location="${basedir}/postgresql-9.4.1212.jar"/>
+    <property name="postgresQuartzDriverDelegate"     value="org.quartz.impl.jdbcjobstore.PostgreSQLDelegate"/>
 
     
     <!-- postgres portal imports -->
     <property name="importPostgres"     location="${installDir}/sql/ingrid_portal_401_postgres_95.sql"/>
+    <property name="updatePostgresPortaluToIngrid"     location="${installDir}/sql/update_4.0.1_portalu-to-ingrid_postgres.sql"/>
     <property name="importPostgresPortalVersion" value=",4.0.1"/>
 
     <property name="updatePostgres402" location="${installDir}/sql/update_4.0.2_postgres.sql"/>
+    <property name="updatePostgres4021" location="${installDir}/sql/update_4.0.2.1_postgres.sql"/>
 
     <!-- postgres ige imports -->
     <property name="mdekDBPostgres"          location="${installDir}/sql/mdek_4.0.1_postgres.sql"/>
@@ -187,6 +190,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${importPostgres}"/>
+            <transaction src="${updatePostgresPortaluToIngrid}"/>
         </sql>
         <property name="portal.version" value="${importPostgresPortalVersion}"/>
     </target>
@@ -206,6 +210,25 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updatePostgres402}"/>
+            <transaction src="${updatePostgres4021}"/>
+        </sql>
+    </target>
+
+	<target name="PortalDbUpdateFrom402" if="usePostgres">
+        <echo>PostgreSQL-Portal Daten importieren (ab 4.0.2)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${postgresDriverClass}"
+                classpath ="${postgresDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+            <transaction src="${updatePostgres4021}"/>
         </sql>
     </target>
 

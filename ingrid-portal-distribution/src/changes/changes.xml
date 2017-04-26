@@ -9,6 +9,9 @@
           <action type="add" dev="wemove" issue="REDMINE-369,-375,-367">
             Added new fields adv_compatible, administrative_area and inspire_conform.
           </action>
+          <action type="fix" dev="wemove" issue="REDMINE-662">
+            PORTAL: PostgreSQL: Fix quartz jobs and initial database contents.
+          </action>
           <action type="fix" dev="wemove" issue="REDMINE-648">
             PORTAL: Fixed registration confirmation URL by adding setting to influence hostname.
           </action>
