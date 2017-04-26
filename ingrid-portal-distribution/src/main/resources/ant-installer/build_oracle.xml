@@ -34,6 +34,7 @@
     <property name="oracleDialectPortal"           value="org.hibernate.dialect.OracleDialect"/>
     <property name="oracleValidationQuery"         value="SELECT 1 FROM DUAL"/>
     <property name="oracleDbDriver"                location="./ojdbc14.jar"/>
+    <property name="oracleQuartzDriverDelegate"    value="org.quartz.impl.jdbcjobstore.StdJDBCDelegate"/>
     
     <!-- mysql portal imports -->
     <property name="importOracle"  location="${basedir}/distribution/sql/ingrid_portal_35_oracle_10_2.dmp"/>
@@ -58,7 +59,7 @@
     <property name="updateOracle400" location="${installDir}/sql/update_4.0.0_oracle.sql"/>
     <property name="updateOracle401" location="${installDir}/sql/update_4.0.1_oracle.sql"/>
     <property name="updateOracle402" location="${installDir}/sql/update_4.0.2_oracle.sql"/>
-    
+    <property name="updateOracle4021" location="${installDir}/sql/update_4.0.2.1_oracle.sql"/>    
 
     <!-- oracle ige imports -->
     <property name="mdekDBOracle"          location="${installDir}/sql/mdek_0_oracle.sql"/>
@@ -319,6 +320,7 @@
             <transaction src="${updateOracle400}"/>
 			<transaction src="${updateOracle401}"/>
 			<transaction src="${updateOracle402}"/>
+			<transaction src="${updateOracle4021}"/>
         </sql>
     </target>
 	
@@ -340,6 +342,7 @@
 			<transaction src="${updateOracle400}"/>
 			<transaction src="${updateOracle401}"/>
 			<transaction src="${updateOracle402}"/>
+			<transaction src="${updateOracle4021}"/>
         </sql>
     </target>
 
@@ -360,6 +363,7 @@
             <transaction src="${updateOracle400}"/>
 			<transaction src="${updateOracle401}"/>
 			<transaction src="${updateOracle402}"/>
+			<transaction src="${updateOracle4021}"/>
         </sql>
     </target>
 
@@ -379,6 +383,7 @@
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle401}"/>
 			<transaction src="${updateOracle402}"/>
+			<transaction src="${updateOracle4021}"/>
         </sql>
     </target>
 	
@@ -397,9 +402,27 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${updateOracle402}"/>
+			<transaction src="${updateOracle4021}"/>
         </sql>
     </target>
 
+	<target name="PortalDbUpdateFrom402" if="useOracle">
+        <echo>Oracle-Portal Daten importieren (ab 4.0.2)
+        </echo>
+
+        <!-- Import data to database -->
+        <sql    driver    ="${oracleDriverClass}"
+                classpath ="${oracleDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                >
+
+            <!-- use default-character-set=utf8 -->
+			<transaction src="${updateOracle4021}"/>
+        </sql>
+    </target>
 
     <!-- =============================================
          = IGE MDEK DATABASE                         =

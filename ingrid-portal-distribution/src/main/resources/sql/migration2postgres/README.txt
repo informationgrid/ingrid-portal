@@ -164,34 +164,37 @@ Dafür wie folgt vorgehen:
 
 7. Postgres Datenbankeinstellungen im Portal
 --------------------------------------------
-Die Einstellungen für die Postgres Datenbank erfolgen im Portal in folgenden Dateien:
+Zur Information: Die Einstellungen für die Postgres Datenbank erfolgen im Portal in folgenden Dateien:
 
 - PORTAL/apache-tomcat/conf/Catalina/localhost
 
 	ingrid-portal-apps.xml,
 	ROOT.xml:
-
 		url="jdbc:postgresql://localhost:5432/ingrid_portal"
 		driverClassName="org.postgresql.Driver"
 		username="postgres" password="..."
 		validationQuery="SELECT 1"
 		
 	ingrid-portal-mdek.xml:
-
 		url="jdbc:postgresql://localhost:5432/mdek"
 		... (s.o.)
 
 - PORTAL/apache-tomcat/webapps/ingrid-portal-apps/WEB-INF/classes/
+
+	hibernate.cfg.xml:
+		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        
+	quartz.properties:
+        org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+
 - PORTAL/apache-tomcat/webapps/ingrid-portal-mdek/WEB-INF/classes/
 
 	hibernate.cfg.xml:
-
 		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 		
 - PORTAL/apache-tomcat/webapps/ingrid-portal-mdek-application/WEB-INF/classes/
 
 	default-datasource.properties:
-
 		hibernate.driverClass=org.postgresql.Driver
 		hibernate.user=postgres
 		hibernate.password=...

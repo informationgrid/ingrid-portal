@@ -43,6 +43,7 @@
     <property name="postgresDbDriverInApache"      location="./distribution/${tomcat-artifact}/shared/lib/postgresql-9.4.1212.jar"/>
 
     <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties"/>
+    <property name="prop-quartz-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/quartz.properties"/>
     <property name="xml-hibernate-portal-apps"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/hibernate.cfg.xml"/>
     <property name="xml-hibernate-portal-mdek"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/classes/hibernate.cfg.xml"/>
     
@@ -143,6 +144,7 @@
         <property name="usedDialect" value="${mySqlDialect}" />
         <property name="usedDialectPortal" value="${mySqlDialectPortal}" />
         <property name="usedValidationQuery" value="${mySqlValidationQuery}" />
+        <property name="usedQuartzDriverDelegate" value="${mySqlQuartzDriverDelegate}" />
         <!-- check current database status 
         <runtarget target="mysql.CheckDbs"/>-->
     </target>
@@ -153,6 +155,7 @@
         <property name="usedDialect" value="${oracleDialect}" />
         <property name="usedDialectPortal" value="${oracleDialectPortal}" />
         <property name="usedValidationQuery" value="${oracleValidationQuery}" />
+        <property name="usedQuartzDriverDelegate" value="${oracleQuartzDriverDelegate}" />
         <!-- check current database status
         <runtarget target="oracle.CheckDbs"/>-->
     </target>
@@ -163,6 +166,7 @@
         <property name="usedDialect" value="${postgresDialect}" />
         <property name="usedDialectPortal" value="${postgresDialectPortal}" />
         <property name="usedValidationQuery" value="${postgresValidationQuery}" />
+        <property name="usedQuartzDriverDelegate" value="${postgresQuartzDriverDelegate}" />
         <!-- check current database status 
         <runtarget target="postgres.CheckDbs"/>-->
     </target>
@@ -343,6 +347,7 @@
             <patternset>
                 <exclude name="WEB-INF/classes/communication.xml" />
                 <exclude name="WEB-INF/classes/hibernate.cfg.xml" />
+                <exclude name="WEB-INF/classes/quartz.properties" />
             </patternset>
         </unwar>
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek">
@@ -438,7 +443,7 @@
         <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='validationQuery="${cipXML.Context.Resource(validationQuery)}"'                 value='validationQuery="${usedValidationQuery}"'/>
 
         <replaceregexp file="${xml-hibernate-portal-apps}" match='"dialect">org.hibernate.*&lt;/property>' replace='"dialect">${usedDialectPortal}&lt;/property>' byline="true"/>
-        
+        <replaceregexp file="${prop-quartz-portal-apps}" match='driverDelegateClass = org.quartz.impl.jdbcjobstore.*' replace='driverDelegateClass = ${usedQuartzDriverDelegate}' byline="true"/>
     </target>
 
     <target name="configurePortalOnly">
@@ -651,6 +656,14 @@
         </elseif>
         <elseif>
             <equals arg1="${portal.version}" arg2=",4.0.2" />
+            <then>
+                <runtarget target="mysql.PortalDbUpdateFrom402"/>
+                <runtarget target="oracle.PortalDbUpdateFrom402"/>
+                <runtarget target="postgres.PortalDbUpdateFrom402"/>
+            </then>
+        </elseif>
+        <elseif>
+            <equals arg1="${portal.version}" arg2=",4.0.2.1" />
             <then>
                 <echo>Ihre Datenbank ist aktuell!</echo>
             </then>

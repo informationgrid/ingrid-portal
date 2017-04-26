@@ -6,6 +6,9 @@
     </properties>
     <body>
         <release version="4.0.2.1-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.2.1">
+          <action type="fix" dev="wemove" issue="REDMINE-662">
+            PORTAL: PostgreSQL: Fix quartz jobs and initial database contents.
+          </action>
           <action type="fix" dev="wemove" issue="REDMINE-634">
             IGE: Only allow folders to be created under root nodes or other folders.
           </action>
