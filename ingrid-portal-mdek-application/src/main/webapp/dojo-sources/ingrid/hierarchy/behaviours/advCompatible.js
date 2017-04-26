@@ -35,7 +35,6 @@ define([
         description : "Wenn aktiviert, wird die Checkbox 'AdV kompatibel' angezeigt.",
         defaultActive : true,
         category: "AdV Kompatibel",
-        description: "",
         run : function() {
             // show checkbox AdV compatible
             domClass.remove("uiElement6005", "hidden");

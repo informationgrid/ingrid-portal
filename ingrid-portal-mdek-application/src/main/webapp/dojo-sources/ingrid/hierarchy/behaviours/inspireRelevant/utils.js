@@ -29,7 +29,7 @@ define([
         addConformity: function() {
             console.log("Add conformity");
             var conformityData = UtilGrid.getTableData("extraInfoConformityTable");
-            var conformityData = conformityData.filter(function(item) {
+            conformityData = conformityData.filter(function(item) {
                 return item.specification !== "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten";
             });
             conformityData.push({

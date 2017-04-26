@@ -34,7 +34,6 @@ define([
         description : "Wenn aktiviert, dann muss jeder Ansprechpartner in einem Datensatz ein Verwaltungsgebiet eingetragen haben, bevor dieser veröffentlicht werden kann. Wenn kein Ansprechpartner eingetragen ist, so wird ebenfalls ein Fehler angezeigt.",
         defaultActive : true,
         category: "AdV Kompatibel",
-        description: "",
         run : function() {
             // check if administrative area is set, when checkbox is activated
             var subscription = null;

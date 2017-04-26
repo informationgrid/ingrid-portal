@@ -40,7 +40,6 @@ define([
         description : "Wenn aktiviert, dann wird für den Typ Geodatensatz beim Aktivieren der Checkbox \"INSPIRE-relevant\", eine zusätzliche Auswahl angeboten, ob dieser Datensatz konform oder nicht ist.",
         defaultActive : true,
         category: "INSPIRE relevant",
-        description: "",
         run : function() {
             
             var changeEvent = null,
