@@ -18,6 +18,7 @@ import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekClientCaller;
 import de.ingrid.mdek.handler.ConnectionFacade;
+import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.upload.storage.StorageItem;
 import de.ingrid.mdek.util.MdekUtils;
@@ -28,31 +29,54 @@ public class UploadCleanupJob extends QuartzJobBean {
     private final static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     private final static Logger log = Logger.getLogger(UploadCleanupJob.class);
 
-    private class FileReference {
+    public class FileReference {
+    	public String file;
         public String path;
         public LocalDate expiryDate;
+
+        public FileReference(String file, String path, LocalDate expiryDate) {
+            this.file = file;
+            this.path = path;
+            this.expiryDate = expiryDate;
+        }
         @Override
-		public String toString() {
+        public String toString() {
             return this.path+" (date: "+(this.expiryDate != null ? dateFormatter.format(this.expiryDate) : null)+")";
         }
     }
 
     private ConnectionFacade connectionFacade;
     private Storage storage;
+    private LocalDate referenceDate = LocalDate.now();
 
+    /**
+     * Set the connection facade used for communication.
+     * @param connectionFacade
+     */
     public void setConnectionFacade(ConnectionFacade connectionFacade) {
         this.connectionFacade = connectionFacade;
     }
 
+    /**
+     * Set the storage to cleanup.
+     * @param storage
+     */
     public void setStorage(Storage storage) {
         this.storage = storage;
+    }
+
+    /**
+     * Set the reference date for calculating expiry of files.
+     * Defaults to today if not set explicitly.
+     * @param referenceDate
+     */
+    public void setReferenceDate(LocalDate referenceDate) {
+        this.referenceDate = referenceDate;
     }
 
     @Override
     protected void executeInternal(JobExecutionContext ctx) throws JobExecutionException {
         log.debug("Executing UploadCleanupJob...");
-
-        LocalDate today = LocalDate.now();
 
         // initialize file maps
         Map<String, StorageItem> allFiles = new HashMap<String, StorageItem>();
@@ -118,14 +142,15 @@ public class UploadCleanupJob extends QuartzJobBean {
                         // NOTE: a file might be expired in one catalog, but not in another,
                         // so if a file is added/removed by one catalog, it might be removed/added by another
                         // but at the end all expired files (and only those) must be contained in the expired files list
-                        if (!item.isArchived() && expiryDate != null && expiryDate.isBefore(today)) {
+                        if (!item.isArchived() && expiryDate != null && expiryDate.isBefore(this.referenceDate)) {
                             expiredFiles.put(uploadUri, item);
                         }
                         else if (expiredFiles.containsKey(uploadUri)) {
                             expiredFiles.remove(uploadUri);
                         }
                         // handle files to be restored
-                        if (item.isArchived() && (expiryDate == null || expiryDate.isEqual(today) || expiryDate.isAfter(today))) {
+                        if (item.isArchived() &&
+                                (expiryDate == null || expiryDate.isEqual(this.referenceDate) || expiryDate.isAfter(this.referenceDate))) {
                             unexpiredFiles.put(uploadUri, item);
                         }
                     }
@@ -221,14 +246,14 @@ public class UploadCleanupJob extends QuartzJobBean {
                     " AdditionalFieldData fdDocs, " +
                     " AdditionalFieldData fdLink " +
                 "where " +
-                    " oNode." + fk + " = obj.id " +
+                    " oNode."+fk+" = obj.id " +
                     " and obj.id = fdRoot.objId" +
                     " and fdRoot.id = fdPhase.parentFieldId" +
                     " and fdPhase.id = fdDocs.parentFieldId" +
                     " and fdDocs.id = fdLink.parentFieldId" +
                     " and fdLink.fieldKey = 'link'";
             IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
-            if (response.getBoolean("job_invoke_success")) {
+            if (response.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
                 IngridDocument result = MdekUtils.getResultFromResponse(response);
                 if (result != null) {
                     @SuppressWarnings("unchecked")
@@ -254,7 +279,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                                     " AdditionalFieldData fdDocs, " +
                                     " AdditionalFieldData fdExpires " +
                                 "where " +
-                                    " oNode." + fk + " = obj.id " +
+                                    " oNode."+fk+" = obj.id " +
                                     " and obj.id = fdRoot.objId" +
                                     " and fdRoot.id = fdPhase.parentFieldId" +
                                     " and fdPhase.id = fdDocs.parentFieldId" +
@@ -263,7 +288,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                                     " and fdExpires.sort = "+sort+
                                     " and fdExpires.fieldKey = 'expires'";
                             IngridDocument responseSub = mdekCallerQuery.queryHQLToMap(plugId, qStringSub, null, "");
-                            if (responseSub.getBoolean("job_invoke_success")) {
+                            if (responseSub.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
                                 IngridDocument resultSub = MdekUtils.getResultFromResponse(responseSub);
                                 if (resultSub != null) {
                                     @SuppressWarnings("unchecked")
@@ -275,9 +300,9 @@ public class UploadCleanupJob extends QuartzJobBean {
                             }
 
                             // create file reference
-                            FileReference reference = new FileReference();
-                            reference.path = path;
-                            reference.expiryDate = date != null ? LocalDate.parse(date, dateFormatter) : null;
+                            FileReference reference = new FileReference(
+                                    file, path, date != null ? LocalDate.parse(date, dateFormatter) : null
+                            );
                             if (!resultList.containsKey(file)) {
                                 List<FileReference> references = new ArrayList<FileReference>();
                                 references.add(reference);
