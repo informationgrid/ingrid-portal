@@ -15,6 +15,9 @@
           <action type="fix" dev="wemove" issue="REDMINE-648">
             PORTAL: Fixed registration confirmation URL by adding setting to influence hostname.
           </action>
+          <action type="Fix" dev="wemove" issue="REDMINE-655">
+            PORTAL: Fixed chronicle teaser on default-page.psml. 
+          </action>
           <action type="fix" dev="wemove" issue="REDMINE-634">
             IGE: Only allow folders to be created under root nodes or other folders.
           </action>
