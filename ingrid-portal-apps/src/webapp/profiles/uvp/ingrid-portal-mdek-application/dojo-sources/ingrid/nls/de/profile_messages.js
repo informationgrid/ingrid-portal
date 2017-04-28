@@ -32,7 +32,7 @@ define({
 
     "uvp.form.generalDescription": "Allgemeine Vorhabenbeschreibung",
     "uvp.form.planDescription": "Vorhabenbezeichnung",
-    "uvp.form.consideration": "Bekanntmachung",
+    "uvp.form.consideration": "Allgemein",
     "uvp.form.consideration.tooltip": "Für die allgemeine Vorhabenbeschreibung sollte der Einfachheit halber der Text der Bekanntmachung verwendet werden.",
     "uvp.form.address": "Kontaktdaten der verfahrensführenden Dienststelle",
 

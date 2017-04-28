@@ -54,7 +54,6 @@ define(["dojo/_base/declare",
         run: function() {
 
             // rename default fields
-            // query("#objectNameLabel label").addContent(message.get("uvp.form.planDescription"), "only");
             query("#general .titleBar .titleCaption").addContent(message.get("uvp.form.consideration"), "only");
             query("#general .titleBar").attr("title", message.get("uvp.form.consideration.tooltip"));
 
