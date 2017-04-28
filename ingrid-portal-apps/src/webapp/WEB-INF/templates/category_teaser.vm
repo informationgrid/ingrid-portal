@@ -236,7 +236,9 @@ $( ".tab__content" ).each(function( i ) {
     // Set highest height to all flex-rows
     tabContent.find( ".flex-row" ).each(function( index ) {
       var elem = $( this );
-      elemHeight.height(height);
+      if(height != 0){
+        elem.height(height);
+      }
     });
 });
 </script>

@@ -169,7 +169,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
             <facet>
-                <name>Oberflächenbehandlung von Kunststoffen</name>
+                <name>Oberflächenbehand&amp;shy;lung von Kunststoffen</name>
                 <query>uvp_category:"UVPG-5"</query>
                 <id>kunststoff</id>
                 <display>true</display>
@@ -404,7 +404,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
             <facet>
-                <name>Oberflächenbehandlung von Kunststoffen</name>
+                <name>Oberflächenbehand&amp;shy;lung von Kunststoffen</name>
                 <query>uvp_category:"UVPG-5"</query>
                 <id>kunststoff</id>
                 <parentId>type</parentId>
