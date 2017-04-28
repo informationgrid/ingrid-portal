@@ -546,7 +546,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <facets>
         <!-- Zulassungsverfahren -->
             <facet>
-                <name>Zulassungsverfahren</name>
+                <name>Zulassungs&amp;shy;verfahren</name>
                 <query>t01_object.obj_class:10</query>
                 <parentId>procedure</parentId>
                 <id>procedure_10</id>
@@ -555,7 +555,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         <!-- Raumordnungsverfahren -->
             <facet>
-                <name>Raumordnungsverfahren</name>
+                <name>Raumordnungs&amp;shy;verfahren</name>
                 <query>t01_object.obj_class:13</query>
                 <parentId>procedure</parentId>
                 <id>procedure_13</id>
@@ -564,7 +564,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
             <facet>
-                <name>Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht</name>
+                <name>Linienbestimmung nach Bundesfernstraßen&amp;shy;gesetz oder Landesstraßenrecht</name>
                 <query>t01_object.obj_class:14</query>
                 <parentId>procedure</parentId>
                 <id>procedure_14</id>
