@@ -302,7 +302,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     // add map links to data objects from services
                     if (entryId.equals("3600") && type.equals("3")) {
                         // get link from operation (unique one)
-                        if (serviceType.trim().equals("view")) {
+                        if (serviceType != null && serviceType.trim().equals("view")) {
                             String capabilityUrl = serviceUrl;
                             if(serviceUrl == null){
                                 capabilityUrl = getCapabilityUrl();
