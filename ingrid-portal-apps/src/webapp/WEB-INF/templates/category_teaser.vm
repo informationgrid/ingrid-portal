@@ -113,11 +113,11 @@
         #end
     #end
     #if($facetListSize > $maxColumn || $facetListSize < 0)
-        #if($facetListSize % 5 == 0)
+        #if($facetListSize % 5 == 0 && $maxColumn >= 5)
             #set ($facetListSize = 5)
-        #elseif($facetListSize % 4 == 0)
+        #elseif($facetListSize % 4 == 0 && $maxColumn >= 4)
             #set ($facetListSize = 4)
-        #elseif($facetListSize % 3 == 0)
+        #elseif($facetListSize % 3 == 0 && $maxColumn >= 3)
             #set ($facetListSize = 3)
         #else
             #set ($facetListSize = $maxColumn)
