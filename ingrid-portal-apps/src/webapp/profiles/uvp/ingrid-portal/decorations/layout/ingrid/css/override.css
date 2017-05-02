@@ -242,7 +242,7 @@ thead {
   border-width: 0 0 70px 20px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .nav-toggle:after {
     border-width: 0 0 58px 20px;
   }
