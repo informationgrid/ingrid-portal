@@ -40,6 +40,7 @@ public class IngridFacet {
     private String icon;
     private String shortcut;
     private String url;
+    private int showOnMoreThan;
     private boolean isDependencySelect = false;
     private boolean isHiddenSelect = false;
     private boolean isSelect = false;
@@ -201,5 +202,11 @@ public class IngridFacet {
     }
     public void setUrl(String url) {
         this.url = url;
+    }
+    public int getShowOnMoreThan() {
+        return showOnMoreThan;
+    }
+    public void setShowOnMoreThan(int showOnMoreThan) {
+        this.showOnMoreThan = showOnMoreThan;
     }
 }

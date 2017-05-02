@@ -105,7 +105,12 @@ public class FacetsConfig {
                     Node subNode = (Node) facetNode.getAttributes( "sort" ).get( 0 );
                     ingridFacet.setSort( subNode.getValue().toString() );
                 }
-
+                
+                if (facetNode.getAttributes( "show-on-more-than" ).size() > 0) {
+                    Node subNode = (Node) facetNode.getAttributes( "show-on-more-than" ).get( 0 );
+                    ingridFacet.setShowOnMoreThan( new Integer(subNode.getValue().toString()) );
+                }
+                
                 if (facetNode.getChildren( "query" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "query" ).get( 0 );
                     if (node != null) {
