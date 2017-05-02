@@ -215,6 +215,7 @@ public class MdekMapper implements DataMapperInterface {
         mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<IngridDocument>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
         
         // Thesaurus
+        mdekObj.setAdvProductGroupList(mapToAdvProductGroupTable((List<IngridDocument>) obj.get(MdekKeys.ADV_PRODUCT_LIST)));
         mdekObj.setThesaurusInspireTermsList(mapToInspireTermTable((List<IngridDocument>) obj.get(MdekKeys.SUBJECT_TERMS_INSPIRE)));
         mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<IngridDocument>) obj.get(MdekKeys.SUBJECT_TERMS)));
 
@@ -824,6 +825,7 @@ public class MdekMapper implements DataMapperInterface {
         }
 
         //Thesaurus
+        udkObj.put(MdekKeys.ADV_PRODUCT_LIST, mapFromAdvProductGroupTable(data.getAdvProductGroupList()));
         udkObj.put(MdekKeys.SUBJECT_TERMS_INSPIRE, mapFromInspireTermTable(data.getThesaurusInspireTermsList()));
         udkObj.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTable(data.getThesaurusTermsTable()));
         udkObj.put(MdekKeys.TOPIC_CATEGORIES, data.getThesaurusTopicsList());
@@ -1466,6 +1468,20 @@ public class MdekMapper implements DataMapperInterface {
             result.put(MdekKeys.MEDIUM_NOTE, ref.getLocation());
             result.put(MdekKeys.MEDIUM_TRANSFER_SIZE, ref.getTransferSize());
             resultList.add(result);
+        }
+        return resultList;
+    }
+
+    private List<IngridDocument> mapFromAdvProductGroupTable(List<Integer> advProductGroupList) {
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        if (advProductGroupList != null) {
+            for (Integer identifier : advProductGroupList) {
+                IngridDocument res = new IngridDocument();
+                res.put(MdekKeys.ADV_PRODUCT_KEY, identifier);
+                // res.put(MdekKeys.ADV_PRODUCT_VALUE, );
+                
+                resultList.add(res);
+            }
         }
         return resultList;
     }
@@ -2114,7 +2130,18 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
 
-
+    private List<Integer> mapToAdvProductGroupTable(List<IngridDocument> productList) {
+        List<Integer> resultList = new ArrayList<Integer>();
+        
+        if (productList != null) {
+            for (IngridDocument topic : productList) {
+                resultList.add((Integer) topic.get(MdekKeys.ADV_PRODUCT_KEY));
+            }
+        }
+        
+        return resultList;
+    }
+    
     private List<Integer> mapToInspireTermTable(List<IngridDocument> topicList) {
         List<Integer> resultList = new ArrayList<Integer>();
 

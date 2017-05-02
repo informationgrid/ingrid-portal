@@ -46,13 +46,16 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireIsoConnection",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireConform",
         "ingrid/hierarchy/behaviours/advCompatible",
-        "ingrid/hierarchy/behaviours/administrativeArea"
+        "ingrid/hierarchy/behaviours/administrativeArea",
+        "ingrid/hierarchy/behaviours/advProductGroup"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
-            openData, foldersInHierarchy, conformityFields, inspireIsoConnection, isInspireConform, advCompatible, adminitrativeArea) {
+            openData, foldersInHierarchy, conformityFields, inspireIsoConnection, isInspireConform, advCompatible, adminitrativeArea, advProductGroup) {
 
     return declare(null, {
         
         advCompatible : advCompatible,
+
+        advProductGroup : advProductGroup,
         
         administrativeArea: adminitrativeArea,
         

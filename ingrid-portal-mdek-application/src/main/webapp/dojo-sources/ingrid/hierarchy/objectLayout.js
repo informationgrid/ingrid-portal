@@ -1974,6 +1974,19 @@ define([
 
 
             createThesaurus: function() {
+                var advProductGroupStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '708px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 8010,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 8010)
+                }];
+                layoutCreator.createDataGrid("advProductGroup", null, advProductGroupStructure, null);
+
                 var thesaurusTopicsStructure = [{
                     field: 'title',
                     name: 'title',

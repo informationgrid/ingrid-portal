@@ -124,6 +124,7 @@ public class MdekDataBean {
 	// Thesaurus
 	private Boolean inspireRelevant;
 	private Boolean inspireConform;
+	private List<Integer> advProductGroupList;
 	private List<Integer> thesaurusInspireTermsList;
 	private List<SNSTopic> thesaurusTermsTable;
 	private List<Integer> thesaurusTopicsList;
@@ -2056,5 +2057,15 @@ public class MdekDataBean {
 
     public void setInspireConform(Boolean inspireConform) {
         this.inspireConform = inspireConform;
+    }
+
+
+    public List<Integer> getAdvProductGroupList() {
+        return advProductGroupList;
+    }
+
+
+    public void setAdvProductGroupList(List<Integer> advProductGroupList) {
+        this.advProductGroupList = advProductGroupList;
     }
 }
