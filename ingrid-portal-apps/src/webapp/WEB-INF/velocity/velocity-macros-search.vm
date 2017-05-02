@@ -349,8 +349,8 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #if ($title && $title != "")$title#else $MESSAGES.getString('common.result.noTitle')#end
 #end
 
-#macro(renderSearchResultFacetFilter)
-    <aside class="sidebar js-accordion-multi">
+#macro(renderSearchResultFacetFilter $classes)
+    <aside class="sidebar js-accordion-multi #if($classes)$classes#end">
         <div class="sidebar__title js-accordion-toggle mq-show-l" onclick="onClickFilterEvent()">
             Filter
             #if($enableFacetSelection > 0 || $isSelection)

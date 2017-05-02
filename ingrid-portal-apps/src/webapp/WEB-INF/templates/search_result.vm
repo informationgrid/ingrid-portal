@@ -1,7 +1,7 @@
 <div id="searchResult">
     #parse ('/WEB-INF/templates/include_search_result_filter.vm')
     #if($enableFacete)
-        #renderSearchResultFacetFilter()
+        #renderSearchResultFacetFilter( "is-active" )
     #end
     <article class="content ob-container">
         #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
