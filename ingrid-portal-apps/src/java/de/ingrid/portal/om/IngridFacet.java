@@ -38,6 +38,10 @@ public class IngridFacet {
     private String facetValue;
     private String sort;
     private String icon;
+    private String shortcut;
+    private String url;
+    private String wildcard;
+    private int showOnMoreThan;
     private boolean isDependencySelect = false;
     private boolean isHiddenSelect = false;
     private boolean isSelect = false;
@@ -187,5 +191,29 @@ public class IngridFacet {
     }
     public void setParentId(String parentId) {
         this.parentId = parentId;
+    }
+    public String getShortcut() {
+        return shortcut;
+    }
+    public void setShortcut(String shortcut) {
+        this.shortcut = shortcut;
+    }
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    public int getShowOnMoreThan() {
+        return showOnMoreThan;
+    }
+    public void setShowOnMoreThan(int showOnMoreThan) {
+        this.showOnMoreThan = showOnMoreThan;
+    }
+    public String getWildcard() {
+        return wildcard;
+    }
+    public void setWildcard(String wildcard) {
+        this.wildcard = wildcard;
     }
 }
