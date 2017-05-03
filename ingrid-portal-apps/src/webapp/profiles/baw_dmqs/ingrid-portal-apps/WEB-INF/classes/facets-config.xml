@@ -133,41 +133,15 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
  -->
 
 <facets>
-    <facet sort="SORT_BY_VALUE_DESC">
-        <name>Räumliche Dimensionalität</name>
-        <id>simspatialdimension</id>
-        <facets>
-            <facet>
-                <name>1D</name>
-                <query>simspatialdimension:1D</query>
-                <id>1D</id>
-            </facet>
-            <facet>
-                <name>2D</name>
-                <query>simspatialdimension:2D</query>
-                <id>2D</id>
-            </facet>
-            <facet>
-                <name>2D-hor</name>
-                <query>simspatialdimension:2D-hor</query>
-                <id>2D-hor</id>
-            </facet>
-            <facet>
-                <name>2D-vert</name>
-                <query>simspatialdimension:2D-vert</query>
-                <id>2D-vert</id>
-            </facet>
-            <facet>
-                <name>3D</name>
-                <query>simspatialdimension:3D</query>
-                <id>3D</id>
-            </facet>
-            <facet>
-                <name>none</name>
-                <query>simspatialdimension:none</query>
-                <id>none</id>
-            </facet>
-        </facets>
+    <facet>
+        <name>Auftrag/Auftragname</name>
+        <id>wildcard_number</id>
+        <wildcard>number</wildcard>
+    </facet>
+    <facet>
+        <name>Bundeswasserstraße</name>
+        <id>wildcard_location</id>
+        <wildcard>location</wildcard>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Verfahren</name>
@@ -308,6 +282,42 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Fachliche Abbildungen/Grafiken</name>
                 <query>simparamtype:Grafik</query>
                 <id>FachlicheAbbildungenGrafiken</id>
+            </facet>
+        </facets>
+    </facet>
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>Räumliche Dimensionalität</name>
+        <id>simspatialdimension</id>
+        <facets>
+            <facet>
+                <name>1D</name>
+                <query>simspatialdimension:1D</query>
+                <id>1D</id>
+            </facet>
+            <facet>
+                <name>2D</name>
+                <query>simspatialdimension:2D</query>
+                <id>2D</id>
+            </facet>
+            <facet>
+                <name>2D-hor</name>
+                <query>simspatialdimension:2D-hor</query>
+                <id>2D-hor</id>
+            </facet>
+            <facet>
+                <name>2D-vert</name>
+                <query>simspatialdimension:2D-vert</query>
+                <id>2D-vert</id>
+            </facet>
+            <facet>
+                <name>3D</name>
+                <query>simspatialdimension:3D</query>
+                <id>3D</id>
+            </facet>
+            <facet>
+                <name>none</name>
+                <query>simspatialdimension:none</query>
+                <id>none</id>
             </facet>
         </facets>
     </facet>
