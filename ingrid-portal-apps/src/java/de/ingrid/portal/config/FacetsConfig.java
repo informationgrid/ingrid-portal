@@ -257,6 +257,13 @@ public class FacetsConfig {
                     }
                 }
                 
+                if (facetNode.getChildren( "wildcard" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "wildcard" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setWildcard( node.getValue().toString() );
+                    }
+                }
+                
                 if (facetNode.getChildren( "facets" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {
