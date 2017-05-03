@@ -12,6 +12,9 @@
           <action type="add" dev="wemove" issue="REDMINE-388">
             IGE: Added table "AdV-Product Group".
           </action>
+          <action type="add" dev="wemove" issue="REDMINE-545">
+            PORTAL: Add wildcard facet.
+          </action>
           <action type="fix" dev="wemove" issue="REDMINE-662">
             PORTAL: PostgreSQL: Fix quartz jobs and initial database contents.
           </action>
