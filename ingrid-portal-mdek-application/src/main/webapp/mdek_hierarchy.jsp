@@ -384,7 +384,7 @@
                         </div>
                         <div id="thesaurusContent" class="content">
                             <div class="inputContainer">
-                                <span id="uiElement5170" class="outer hidden">
+                                <span id="uiElement5170" class="outer optional hidden">
                                     <div>
                                         <span id="advProductGroupLabel" class="label">
                                             <label for="advProductGroup" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5170);" >

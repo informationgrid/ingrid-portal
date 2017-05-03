@@ -22,7 +22,6 @@
  */
 define([
     "dojo/_base/declare",
-    // "dojo/_base/lang",
     "dojo/on",
     "dojo/dom-class",
     "dojo/topic",
@@ -43,6 +42,7 @@ define([
             on(registry.byId("isAdvCompatible"), "change", function(checked) {
                 if (checked) {
                     domClass.add("uiElement5170", "required");
+                    registry.byId("advProductGroup").reinitLastColumn();
                 } else {
                     domClass.remove("uiElement5170", "required");
                 }

@@ -7,6 +7,10 @@ UPDATE info SET value_name = '4.0.3' WHERE  info.key_name = 'version';
 -- Updated stuff for InGrid 4.0.3
 -- ==============================
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1620, 0, 5170, -1, 'de', 'AdV-Produktgruppe', 'Zuordnung zu einer Produktgruppe bzw. Fachthema der AdV.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1621, 0, 5170, -1, 'en', 'AdV-Product Group', 'Assignment to a product group or subject of the AdV.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1630, 0, 6001, -1, 'de', 'INSPIRE-relevant konform', 'Geodatensatz wird an INSPIRE gemeldet und liegt im INSPIRE-DatenSchema vor. Der Grad der Konformität zur Spezifikation (VO 1089/2010) wird auf "true" gesetzt.', '');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1631, 0, 6001, -1, 'en', 'INSPIRE-relevant conform', 'Geo-Dataset is reported to INSPIRE and uses the INSPIRE-Data-Scheme. The degree of conformity to the specification (VO 1089/2010) will be set to "true".', '');

@@ -49,6 +49,7 @@
 
     <!-- postgres ige imports -->
     <property name="mdekDBPostgres"          location="${installDir}/sql/mdek_4.0.1_postgres.sql"/>
+    <property name="mdekDBPostgres_403"          location="${installDir}/sql/mdek_4.0.3_postgres.sql"/>
 
 
     <target name="CheckDbs" depends="checkPortalDbPostgres, checkMdekDbPostgres" if="usePostgres">
@@ -313,6 +314,7 @@
 
             <!-- use default-character-set=utf8 -->
             <transaction src="${mdekDBPostgres}"/>
+            <transaction src="${mdekDBPostgres_403}"/>
 
         </sql>
     </target>

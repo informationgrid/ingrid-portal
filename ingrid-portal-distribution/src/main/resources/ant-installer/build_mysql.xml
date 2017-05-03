@@ -78,6 +78,7 @@
     <property name="mdekDB_3621"      location="${installDir}/sql/mdek_3.6.2.1_mysql.sql"/>
     <property name="mdekDB_400"      location="${installDir}/sql/mdek_4.0.0_mysql.sql"/>
     <property name="mdekDB_401"      location="${installDir}/sql/mdek_4.0.1_mysql.sql"/>
+    <property name="mdekDB_403"      location="${installDir}/sql/mdek_4.0.3_mysql.sql"/>
 
 
     <target name="CheckDbs" depends="checkPortalDbMysql, checkMdekDbMysql" if="useMysql">
@@ -496,6 +497,7 @@
             <transaction src="${mdekDB_3621}"/>
             <transaction src="${mdekDB_400}"/>
             <transaction src="${mdekDB_401}"/>
+            <transaction src="${mdekDB_403}"/>
 
         </sql>
     </target>
@@ -528,6 +530,7 @@
             <transaction src="${mdekDB_3621}"/>
             <transaction src="${mdekDB_400}"/>
             <transaction src="${mdekDB_401}"/>
+            <transaction src="${mdekDB_403}"/>
 
         </sql>
     </target>
