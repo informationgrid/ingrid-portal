@@ -44,17 +44,17 @@
                     #else
                         #if($node.getId() == 'area' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
                             #renderFacetContent($node)
-                        #else
-                            #if($node.getFacets())
-                                #set($nodeHasValue = false)
-                                #foreach($facet in $node.getFacets())
-                                    #if($facet.getFacetValue() || $facet.isOldIPlug() || $facet.isDisplay())
-                                        #set($nodeHasValue = true)
-                                    #end
+                        #elseif($node.getWildcard())
+                            #parse ('/WEB-INF/templates/facete/facete_wildcard.vm')
+                        #elseif($node.getFacets())
+                            #set($nodeHasValue = false)
+                            #foreach($facet in $node.getFacets())
+                                #if($facet.getFacetValue() || $facet.isOldIPlug() || $facet.isDisplay())
+                                    #set($nodeHasValue = true)
                                 #end
-                                #if($nodeHasValue)
-                                    #renderFacetContent($node)
-                                #end
+                            #end
+                            #if($nodeHasValue)
+                                #renderFacetContent($node)
                             #end
                         #end
                     #end
