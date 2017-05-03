@@ -107,7 +107,7 @@ public class UtilsFacete {
     private static final String SELECTED_GEOTHESAURUS = "selectedGeothesaurus";
     private static final String SELECTED_MAP = "selectedMap";
     
-    private static final String WILDCARD_MAP = "wildcardMap";
+    private static final String WILDCARD_IDS = "wildcard_ids";
     
     private static final String PARAMS_GEOTHESAURUS = "geothesaurus";
     private static final String PARAMS_MAP_X1 = "x1";
@@ -125,6 +125,7 @@ public class UtilsFacete {
     private static final String PARAMS_ATTRIBUTE_ORG = "db_org";
     private static final String PARAMS_ATTRIBUTE_TERM_FROM = "term_from";
     private static final String PARAMS_ATTRIBUTE_TERM_TO = "term_to";
+    private static final String PARAMS_WILDCARD = "wildcard";
     
     private static final String FACET_CONFIG = "config";
     
@@ -507,13 +508,23 @@ public class UtilsFacete {
     /***************************** WILDCARD ***********************************************/
 
     private static void setParamsToContextWildcard(RenderRequest request, Context context) {
-        Enumeration<String> paramNames = request.getPortletSession().getAttributeNames( PortletSession.APPLICATION_SCOPE );
-        while (paramNames.hasMoreElements()) {
-            String paramName = (String) paramNames.nextElement();
-            if(paramName.equals( WILDCARD_MAP )){
-                context.put( paramName, getAttributeFromSession(request, paramName) );
-                break;
+        ArrayList<String> wildcardIds = (ArrayList<String>) getAttributeFromSession( request, WILDCARD_IDS );
+        if(wildcardIds != null && wildcardIds.size() > 0){
+            HashMap<String, HashMap<String, String>> wildcardMap = new HashMap<String, HashMap<String, String>>();
+            for (String wildcardId : wildcardIds) {
+                HashMap<String, String> wildcard = (HashMap<String, String>) getAttributeFromSession( request, wildcardId );
+                if(wildcard != null){
+                    wildcardMap.put( wildcardId, wildcard );
+                }
             }
+            if(wildcardMap.size() > 0){
+                setFacetSelectionState(context, request, "isWildcardSelect", true);
+                context.put( "wildcardMap", wildcardMap );
+            }else{
+                setFacetSelectionState(context, request, "isWildcardSelect", false);
+            }
+        }else{
+            setFacetSelectionState(context, request, "isWildcardSelect", false);
         }
     }
 
@@ -523,61 +534,72 @@ public class UtilsFacete {
         String term = null;
         String action = null;
         String actionClear = null;
-        HashMap<String, HashMap<String, String>> wildcardMap = (HashMap<String, HashMap<String, String>>) getAttributeFromSession( request, WILDCARD_MAP );
-        Enumeration<String> paramNames = request.getParameterNames();
-        while (paramNames.hasMoreElements()) {
-            String paramName = (String) paramNames.nextElement();
-            String paramValue = (String) request.getParameter( paramName );
-            if(paramName.indexOf( "termWildcard" ) > -1){
-                term = paramValue;
-            }else if(paramName.indexOf( "doSearchWildcard" ) > -1){
-                action = paramValue;
-            }else if(paramName.indexOf( "doClearSearchWildcard" ) > -1){
-                actionClear = paramName;
-            }
-        }
-        if(id != null && term != null && action != null){
-            if(term.trim().length() > 0){
-                if(wildcardMap == null){
-                    wildcardMap = new HashMap<String, HashMap<String, String>>();
+        
+        if(id != null){
+            HashMap<String, String> wildcard = (HashMap<String, String>) getAttributeFromSession( request, id );
+            ArrayList<String> wildcardIds = (ArrayList<String>) getAttributeFromSession( request, WILDCARD_IDS );
+            
+            Enumeration<String> paramNames = request.getParameterNames();
+            while (paramNames.hasMoreElements()) {
+                String paramName = (String) paramNames.nextElement();
+                String paramValue = (String) request.getParameter( paramName );
+                if(paramName.indexOf( "termWildcard" ) > -1){
+                    term = paramValue;
+                }else if(paramName.indexOf( "doSearchWildcard" ) > -1){
+                    action = paramValue;
+                }else if(paramName.indexOf( "doClearSearchWildcard" ) > -1){
+                    actionClear = paramName;
                 }
-                HashMap<String, String> wildcard  = new HashMap<String,String>();
-                wildcard.put( "wildcard", wildcardKey );
-                wildcard.put( "term", term );
-                wildcardMap.put( id, wildcard );
-                setAttributeToSession(request, WILDCARD_MAP, wildcardMap);
             }
-        }else if(id != null && actionClear != null){
-            wildcardMap = (HashMap<String, HashMap<String, String>>) getAttributeFromSession( request, WILDCARD_MAP );
-            if(wildcardMap != null){
-                wildcardMap.remove( id );
-                if(wildcardMap.size() > 0){
-                    setAttributeToSession(request, WILDCARD_MAP, wildcardMap);
-                }else{
-                    removeAttributeFromSession( request, WILDCARD_MAP);
+            if(id != null && term != null && action != null){
+                if(term.trim().length() > 0){
+                    if(wildcard == null){
+                        wildcard  = new HashMap<String,String>();
+                    }
+                    wildcard.put( "wildcard", wildcardKey );
+                    wildcard.put( "term", term );
+                    setAttributeToSession(request, id, wildcard, true);
+                    
+                    if(wildcardIds == null){
+                        wildcardIds = new ArrayList<String>();
+                    }
+                    wildcardIds.add( id );
+                    setAttributeToSession(request, WILDCARD_IDS, wildcardIds );
                 }
+            }else if(actionClear != null){
+                if(wildcardIds != null){
+                    wildcardIds.remove( id );
+                    if(wildcardIds.size() == 0 ){
+                        removeAttributeFromSession( request, id);
+                    }else{
+                        setAttributeToSession(request, WILDCARD_IDS, wildcardIds );
+                    }
+                }
+                removeAttributeFromSession( request, id);
             }
         }
     }
 
     private static void addToQueryWildcard(PortletRequest request, IngridQuery query) {
-        HashMap<String, HashMap<String, String>> wildcardMap = (HashMap<String, HashMap<String, String>>) getAttributeFromSession(request, WILDCARD_MAP);
-        if(wildcardMap != null && wildcardMap.size() > 0){
-            boolean required = true;
-            boolean prohibited = false;
-            String fieldName = null;
-            String wildCardValue = null;
-            
-            Iterator it = wildcardMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                HashMap<String, String> map = (HashMap<String, String>) pair.getValue();
-                fieldName = map.get( "wildcard" );
-                wildCardValue = map.get( "term" );
-                if(wildCardValue != null && wildCardValue.length() > 0 && wildCardValue.indexOf("*") == -1){
-                    wildCardValue = wildCardValue + "*";
+        ArrayList<String> wildcardIds = (ArrayList<String>) getAttributeFromSession( request, WILDCARD_IDS );
+        if(wildcardIds != null){
+            for (String wildcardId : wildcardIds) {
+                if(wildcardId != null){
+                    boolean required = true;
+                    boolean prohibited = false;
+                    String fieldName = null;
+                    String wildCardValue = null;
+                    
+                    HashMap<String, String> wildcard = (HashMap<String, String>) getAttributeFromSession(request, wildcardId);
+                    if(wildcard != null){
+                        fieldName = wildcard.get( "wildcard" );
+                        wildCardValue = wildcard.get( "term" );
+                        if(wildCardValue != null && wildCardValue.length() > 0 && wildCardValue.indexOf("*") == -1){
+                            wildCardValue = wildCardValue + "*";
+                        }
+                        query.addWildCardFieldQuery( new WildCardFieldQuery( required, prohibited, fieldName, wildCardValue ) );
+                    }
                 }
-                query.addWildCardFieldQuery( new WildCardFieldQuery( required, prohibited, fieldName, wildCardValue ) );
             }
         }
     }
@@ -1640,6 +1662,29 @@ public class UtilsFacete {
                 setAttributeToSession(request, SELECTED_MAP, mapHashMap);
             }
             
+            // Wildcard
+            ArrayList<String> paramsWildcard = getFacetParamsList(paramsFacet, PARAMS_WILDCARD);
+            if(paramsWildcard != null && paramsWildcard.size() > 0){
+                ArrayList<String> wildcardIds = new ArrayList<String>();
+                for (String paramWildcard : paramsWildcard) {
+                    String[] splitParam = paramWildcard.split( "," );
+                    if(splitParam.length == 3){
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        String id = splitParam[0];
+                        String wildcard = splitParam[1];
+                        String term = splitParam[2];
+                        
+                        map.put( "wildcard", wildcard );
+                        map.put( "term", term );
+                        setAttributeToSession(request, id, map);
+                        wildcardIds.add( id );
+                    }
+                }
+                if(wildcardIds.size() > 0){
+                    setAttributeToSession(request, WILDCARD_IDS, wildcardIds);
+                }
+            }
+            
             // Config
             ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
             if(config == null){
@@ -1814,6 +1859,34 @@ public class UtilsFacete {
             if (attribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_TO) != null) {
                 appendURLParameterFacet(facetUrl, toURLParamFacet(PARAMS_ATTRIBUTE_TERM_TO, attribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_TO)));
             }
+        }
+        
+        // Wildcard
+        if(getAttributeFromSession(request, WILDCARD_IDS) != null){
+            ArrayList<String> wildcardIds = (ArrayList<String>) getAttributeFromSession(request, WILDCARD_IDS);
+            if(wildcardIds != null && wildcardIds.size() > 0){
+                for (String wildcardId : wildcardIds) {
+                    HashMap<String, String> map = (HashMap<String, String>) getAttributeFromSession( request, wildcardId );
+                    if(map != null){
+                        String wildcard = map.get( "wildcard" );
+                        String term = map.get( "term" );
+                        String param = "";
+                        if(wildcardId != null){
+                            param = param.concat( wildcardId );
+                        }
+                        if(wildcard != null){
+                            param = param.concat( "," );
+                            param = param.concat( wildcard );
+                        }
+                        if(term != null){
+                            param = param.concat( "," );
+                            param = param.concat( term );
+                        }
+                        appendURLParameterFacet(facetUrl, toURLParamFacet("wildcard", param));
+                    }
+                }
+            }
+            
         }
         ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
         if(config != null){
