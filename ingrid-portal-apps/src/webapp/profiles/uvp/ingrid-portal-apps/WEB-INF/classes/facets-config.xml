@@ -276,7 +276,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <!-- Verfahrenstypen -->
     <facet>
-        <name>Verfahrenstypen</name>
+        <name>searchResult.facete.title.procedures</name>
         <id>procedure</id>
         <facets>
         <!-- Zulassungsverfahren -->
@@ -310,7 +310,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <!-- Bundesländer -->
     <facet sort="SORT_BY_NAME" show-on-more-than="1">
-        <name>Bundesländer</name>
+        <name>searchResult.facete.title.states</name>
         <id>state</id>
         <facets>
             <facet>
@@ -633,7 +633,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         </facets>
     </facet>
     <facet>
-        <name>Verfahrenstypen</name>
+        <name>searchResult.facete.title.procedures</name>
         <id>category_procedure</id>
         <categoryOnly>true</categoryOnly>
         <facets>
