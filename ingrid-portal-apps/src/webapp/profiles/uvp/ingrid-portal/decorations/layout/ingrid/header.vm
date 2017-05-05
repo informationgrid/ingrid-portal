@@ -92,7 +92,7 @@
                         <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
                         <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
                     </a>
-                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">Umweltvertr&auml;glichkeitspr&uuml;fungen</a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><span class="mq-show-s">UVP</span><span class="mq-hide-s">Umweltvertr&auml;glichkeitspr&uuml;fungen</span></a>
                 </div>
                 #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)
