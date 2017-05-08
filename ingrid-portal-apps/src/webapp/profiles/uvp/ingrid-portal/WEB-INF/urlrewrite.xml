@@ -388,7 +388,7 @@
     
     <!-- th -->
     <rule>
-        <from>/th</from>
+        <from>/th$</from>
         <to type="forward">/html/th/index.html</to>
     </rule>
     
