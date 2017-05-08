@@ -1,0 +1,80 @@
+.header {
+    background: #bfd3ff;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#c7d9ff), to(#b2caff));
+    background: -moz-linear-gradient(top, #c7d9ff, #b2caff);
+    background: -ms-linear-gradient(top, #c7d9ff, #b2caff);
+    background: -o-linear-gradient(top, #c7d9ff, #b2caff);
+    background: linear-gradient(to bottom, #c7d9ff, #b2caff);
+}
+
+.nav-desktop {
+    background: #253276;
+}
+
+a {
+    color: #003684;
+}
+
+.desktop__title p, h2 {
+    color: #253276;
+}
+
+.mobile__title, .mobile__title:hover {
+    color: #253276;
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    background: #bfd3ff;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#c7d9ff), to(#b2caff));
+    background: -moz-linear-gradient(top, #c7d9ff, #b2caff);
+    background: -ms-linear-gradient(top, #c7d9ff, #b2caff);
+    background: -o-linear-gradient(top, #c7d9ff, #b2caff);
+    background: linear-gradient(to bottom, #c7d9ff, #b2caff);
+    border-bottom: solid 1px #253276;
+  }
+}
+
+.nav-toggle {
+    background: #253276;
+}
+
+.nav-toggle:after {
+    border-color: transparent transparent #bfd3ff transparent;
+}
+
+.nav-toggle .icon {
+    fill: #FFF;
+}
+
+.nav-overlay {
+    background: #bfd3ff;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#c7d9ff), to(#b2caff));
+    background: -moz-linear-gradient(top, #c7d9ff, #b2caff);
+    background: -ms-linear-gradient(top, #c7d9ff, #b2caff);
+    background: -o-linear-gradient(top, #c7d9ff, #b2caff);
+    background: linear-gradient(to bottom, #c7d9ff, #b2caff);
+}
+
+.nav__foot a {
+    color: #003684;
+}
+
+.footer {
+    color: #777;
+}
+
+.footer a {
+    color: #003684;
+}
+
+.desktop-logo {
+    height: 60px;
+    max-width: 100%;
+    padding: 0 10px 0 0;
+}
+
+.mobile__logo {
+    height: 40px !important;
+    padding: 0 10px 0 0;
+}

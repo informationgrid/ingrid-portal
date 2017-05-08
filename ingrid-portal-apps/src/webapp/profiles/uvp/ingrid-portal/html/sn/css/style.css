@@ -1,0 +1,65 @@
+.nav-desktop {
+    background: #e0eed9;
+    border-top: 4px solid #a1d19d;
+}
+
+.header {
+    background: #AAA;
+}
+
+a {
+    color: #487143;
+}
+
+.nav-toggle {
+    color: #487143 !important;
+}
+
+.nav-toggle::after {
+    border-color: transparent transparent #AAA transparent;
+}
+
+.nav-toggle .icon {
+    fill: #FFF;
+}
+
+.footer__middle a {
+    color: #487143;
+}
+
+.desktop__title p.main__title {
+    color: #FFF;
+}
+
+.nav-overlay {
+    background: #2C5C91;
+}
+
+.nav-overlay {
+    background: #e0eed9;
+}
+
+.nav__foot a {
+    color: #487143;
+    border-bottom: 1px solid #0e8637;
+}
+
+.footer {
+    color: #666;
+}
+
+.nav__foot a:hover {
+    background: #e0eed9;
+    color: #111111;
+}
+
+.desktop-logo {
+    height: 60px;
+    max-width: 100%;
+    padding: 0 10px 0 0;
+}
+
+.mobile__logo {
+    height: 40px !important;
+    padding: 0 10px 0 0;
+}

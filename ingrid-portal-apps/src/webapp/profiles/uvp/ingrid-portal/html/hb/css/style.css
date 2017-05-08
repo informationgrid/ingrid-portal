@@ -1,0 +1,62 @@
+.nav-desktop {
+    background: #e40613;
+    border-top: 4px solid #002c4b ;
+}
+
+a {
+    color: #002c4c;
+}
+
+.desktop__title p, h2{
+    color: #002c4c;
+}
+
+.mobile__title, .mobile__title:hover {
+    color: #002c4c;
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    background: #FFF;
+    border-bottom: solid 1px #e40613;
+  }
+}
+
+.nav-toggle {
+    background: #e40613;
+}
+
+.nav-toggle:after {
+    border-color: transparent transparent #FFF transparent;
+}
+
+.nav-toggle .icon {
+    fill: #FFF;
+}
+
+.nav-overlay {
+    background: #FFF;
+}
+
+.nav__foot a {
+    color: #555;
+}
+
+.footer {
+    color: #555;
+}
+
+.footer a {
+    color: #002c4c;
+}
+
+.desktop-logo {
+    height: 60px;
+    max-width: 100%;
+    padding: 0 10px 0 0;
+}
+
+.mobile__logo {
+    height: 40px !important;
+    padding: 0 10px 0 0;
+}

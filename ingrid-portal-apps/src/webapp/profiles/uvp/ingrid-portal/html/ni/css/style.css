@@ -1,0 +1,10 @@
+.desktop-logo {
+    height: 60px;
+    max-width: 100%;
+    padding: 0 10px 0 0;
+}
+
+.mobile__logo {
+    height: 40px !important;
+    padding: 0 10px 0 0;
+}

@@ -1,0 +1,57 @@
+.nav-desktop {
+    background: #3c506e;
+}
+
+a {
+    color: #3c506e;
+}
+
+.desktop__title p, h2 {
+    color: #3c506e;
+}
+
+.mobile__title, .mobile__title:hover {
+    color: #3c506e;
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    background: #FFF;
+    border-bottom: solid 1px #3c506e;
+  }
+}
+
+.nav-toggle {
+    background: #3c506e;
+}
+
+.nav-toggle:after {
+    border-color: transparent transparent #FFF transparent;
+}
+
+.nav-toggle .icon {
+    fill: #FFF;
+}
+
+.nav-overlay {
+    background: #FFF;
+}
+
+.nav__foot a {
+    color: #3c506e;
+}
+
+.footer {
+    color: #3c506e;
+}
+
+.desktop-logo {
+    height: 60px;
+    max-width: 100%;
+    padding: 0 10px 0 0;
+}
+
+.mobile__logo {
+    height: 40px !important;
+    padding: 0 10px 0 0;
+}
