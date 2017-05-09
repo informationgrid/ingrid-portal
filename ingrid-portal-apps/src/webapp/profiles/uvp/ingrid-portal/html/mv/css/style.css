@@ -62,7 +62,10 @@ a {
 
 @media screen and (max-width: 375px) {
     .mobile__title {
-        font-size: 14px;
+        font-size: 13px;
+    }
+    .mobile__title_big {
+        font-size: 19px;
     }
 }
 
