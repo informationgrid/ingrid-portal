@@ -473,3 +473,7 @@ thead {
   color:#FFF;
   background: #2C5C91;
 }
+
+.circle {
+  border: 3px solid #2C5C91;
+}
