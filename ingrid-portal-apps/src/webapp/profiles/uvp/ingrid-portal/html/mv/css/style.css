@@ -59,3 +59,22 @@ a {
     height: 40px !important;
     padding: 0 10px 0 0;
 }
+
+@media screen and (max-width: 320px) {
+    .mobile__title {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 321px) and (max-width: 479px) {
+    .mobile__title {
+        font-size: 15px;
+    }
+    
+}
+
+@media screen and (min-width: 480px) and (max-width: 639px){
+    .mobile__title {
+        font-size: 24px;
+    }
+}

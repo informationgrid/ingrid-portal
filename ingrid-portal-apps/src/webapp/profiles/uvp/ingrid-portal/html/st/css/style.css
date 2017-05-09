@@ -51,3 +51,9 @@ a {
     height: 40px !important;
     padding: 0 10px 0 0;
 }
+
+@media screen and (max-width: 375px) {
+    .mobile__title {
+        font-size: 21px;
+    }
+}

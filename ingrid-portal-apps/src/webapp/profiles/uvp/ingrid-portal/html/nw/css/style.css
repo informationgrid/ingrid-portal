@@ -55,3 +55,15 @@ a {
     height: 40px !important;
     padding: 0 10px 0 0;
 }
+
+@media screen and (max-width: 375px) {
+    .mobile__title {
+        font-size: 18px;
+    }
+}
+
+@media screen and (min-width: 376px) and (max-width: 479px) {
+    .mobile__title {
+        font-size: 19px;
+    }
+}

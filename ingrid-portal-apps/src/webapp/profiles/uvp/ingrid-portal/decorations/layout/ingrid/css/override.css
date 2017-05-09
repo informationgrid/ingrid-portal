@@ -243,10 +243,8 @@ thead {
   border-color: transparent transparent #2C5C91 transparent;
 }
 
-@media screen and (max-width: 767px) {
-  .nav-toggle:after {
-    border-width: 0 0 60px 20px;
-  }
+.ob-box-padded-more {
+  min-height: 60px;
 }
 
 .nav-toggle .icon {
@@ -472,6 +470,6 @@ thead {
 }
 
 .nav-overlay__item--level2:hover {
-    color:#FFF;
-    background: #2C5C91;
-  }
+  color:#FFF;
+  background: #2C5C91;
+}
