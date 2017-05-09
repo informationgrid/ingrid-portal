@@ -60,15 +60,15 @@ a {
     padding: 0 10px 0 0;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 375px) {
     .mobile__title {
         font-size: 14px;
     }
 }
 
-@media screen and (min-width: 321px) and (max-width: 479px) {
+@media screen and (min-width: 376px) and (max-width: 479px) {
     .mobile__title {
-        font-size: 15px;
+        font-size: 19px;
     }
     
 }
