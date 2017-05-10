@@ -42,7 +42,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #macro (renderRankedResultCounterGrouping $pageSelector)
     #set($term = "")
     #if($searchTerm)
-        #if($searchTerm.length() > 0)
+        #if($searchTerm.trim().length() > 0)
             #set($term = $searchTerm)
         #end
     #end
