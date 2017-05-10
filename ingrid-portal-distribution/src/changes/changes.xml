@@ -15,6 +15,9 @@
           <action type="add" dev="wemove" issue="REDMINE-545">
             PORTAL: Add wildcard facet.
           </action>
+          <action type="add" dev="wemove" issue="REDMINE-677">
+            PORTAL: Add property to extend search term by default.
+          </action>
           <action type="fix" dev="wemove" issue="REDMINE-662">
             PORTAL: PostgreSQL: Fix quartz jobs and initial database contents.
           </action>
