@@ -68,3 +68,9 @@ a {
         font-size: 23px;
     }
 }
+
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin-left: 0;
+    }
+}
