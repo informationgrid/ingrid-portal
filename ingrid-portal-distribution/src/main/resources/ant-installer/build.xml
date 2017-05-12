@@ -355,6 +355,12 @@
                 <exclude name="WEB-INF/classes/hibernate.cfg.xml" />
             </patternset>
         </unwar>
+        <if>
+            <equals arg1="${executeMapClientUpdate}" arg2="true" />
+            <then>
+                <runtarget target="writeMapClientProps"/>
+            </then>
+        </if>
     </target>
     
     <target name="ExtractIge">
@@ -390,15 +396,24 @@
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/lib"/>
-    	<!-- also profiles directory to have plain profiles from update! -->
+        <!-- also profiles directory to have plain profiles from update! -->
         <echo>Alte Portal Profile löschen</echo>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/profiles"/>
+        <!-- Delete old WebmapClient data folders -->
+        <if>
+            <equals arg1="${executeMapClientUpdate}" arg2="true" />
+            <then>
+                <runtarget target="cleanMapClientProps"/>
+            </then>
+        </if>
+        <!-- Delete old WebmapClient installation ! -->
+        <runtarget target="cleanMapClientInstallation"/>
         <!-- remove tomcat working dir to force compilation of JSPs -->
         <delete dir="${installDir}/${tomcat-artifact}/work"/>
     </target>
     
     <target name="MoveFiles" depends="RemoveOldLibs">
-    	<move toDir="${installDir}/${tomcat-artifact}">
+        <move toDir="${installDir}/${tomcat-artifact}">
             <fileset dir="${basedir}/distribution/${tomcat-artifact}"/>
         </move>
         <copy toDir="${installDir}/sql">
@@ -706,18 +721,140 @@
     <!-- =============================================
          = MAPCLIENT                                 =
          ============================================= -->
-		 
+
     <target name="writeMapClientProps" description="">
-        <echo>Schreibe Webmap-Client Konfigration
-            </echo>
+        <echo>Schreibe Webmap-Client Konfigration</echo>
         <!-- write the application.properties file-->
         <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
-        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.opensearch.searchurl}"  value="${openSearchUrl}?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+cache:off+datatype:metadata+ranking:score&amp;ingrid=1&amp;h=100"/>
-    	<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.host}"  value="${feedbackHost}"/>
-    	<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.from}"  value="${feedbackEmail}"/>
-    	<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.to}"  value="${feedbackEmail}"/>
-    	<!-- replace occurences of backslash since tomcat doesnt understand it and escapes the tokens -->
-		<replace file="${i-prop-ingrid-webmap-client}" token="\" value="/"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.config.dir}"  value="${WebmapDataDir}/WebmapClientData/"/>
+        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.kml.directory}"  value="${WebmapDataDir}/WebmapClientData/kml"/>
+        <if>
+            <equals arg1="${feedbackHost}" arg2=""/>
+            <then>
+                <echo>Keine Einstellung für 'SMTP-Server (Host)' gesetzt.</echo>
+            </then>
+            <else>
+                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.host}"  value="${feedbackHost}"/>
+            </else>
+        </if>
+        <if>
+            <equals arg1="${feedbackPort}" arg2=""/>
+            <then>
+                <echo>Keine Einstellung für 'SMTP-Port' gesetzt.</echo>
+            </then>
+            <else>
+                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.port}"  value="${feedbackPort}"/>
+            </else>
+        </if>
+        <if>
+            <equals arg1="${feedbackUser}" arg2=""/>
+            <then>
+                <echo>Keine Einstellung für 'SMTP-Benutzer' gesetzt.</echo>
+            </then>
+            <else>
+                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.user}"  value="${feedbackUser}"/>
+            </else>
+        </if>
+        <if>
+            <equals arg1="${feedbackPassword}" arg2=""/>
+            <then>
+                <echo>Keine Einstellung für 'SMTP-Passwort' gesetzt.</echo>
+            </then>
+            <else>
+                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.password}"  value="${feedbackPassword}"/>
+            </else>
+        </if>
+        <if>
+            <equals arg1="${feedbackEmail}" arg2=""/>
+            <then>
+                <echo>Keine Einstellung für 'Sender E-Mail-Adresse' gesetzt.</echo>
+            </then>
+            <else>
+                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.from}"  value="${feedbackEmail}"/>
+                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.to}"  value="${feedbackEmail}"/>
+            </else>
+        </if>
+        <!-- replace occurences of backslash since tomcat doesnt understand it and escapes the tokens -->
+        <replace file="${i-prop-ingrid-webmap-client}" token="\" value="/"/>
+        <!-- Delete old WebmapClient data folders -->
+        <runtarget target="cleanMapClientProps"/>
+        <!-- Add new WebmapClient data folders -->
+        <runtarget target="createMapClientProps"/>
+    </target>
+
+    <target name="createMapClientProps" description="">
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/data"/>
+            <then>
+                <echo>Mapclient 'data' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>Mapclient 'data' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/data"/>
+                <copy todir="${WebmapDataDir}/WebmapClientData/data" >
+                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/data">
+                        <include name="**/*.json"/>
+                    </fileset>
+                </copy>
+            </else>
+        </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/config"/>
+            <then>
+                <echo>Mapclient 'config' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>Mapclient 'config' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/config"/>
+                <copy todir="${WebmapDataDir}/WebmapClientData/config" >
+                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/config">
+                        <include name="**/*.profile.js"/>
+                    </fileset>
+                </copy>
+            </else>
+        </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/kml"/>
+            <then>
+                <echo>Mapclient 'kml' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>Mapclient 'kml' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/kml"/>
+            </else>
+        </if>
+    </target>
+
+    <target name="cleanMapClientProps" description="">
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/data/ingrid_webmap_client_config.xml"/>
+            <then>
+                <echo>Alte WebmapClient-Konfiguration löschen</echo>
+                <delete dir="${WebmapDataDir}/WebmapClientData/data"/>
+            </then>
+        </if>
+    </target>
+
+    <target name="cleanMapClientInstallation" description="">
+        <if>
+            <equals arg1="${executeMapClientUpdate}" arg2="true" />
+            <then>
+                <if>
+                    <available file="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/config"/>
+                    <then>
+                        <echo>Kopieren von vorhandenen WebmapClient-Konfigurationen.</echo>
+                        <runtarget target="createMapClientProps"/>
+                    </then>
+                </if>
+            </then>
+        </if>
+        <if>
+            <available file="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/admin"/>
+            <then>
+                <echo>Alte WebmapClient-Installation löschen</echo>
+                <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/"/>
+            </then>
+        </if>
     </target>
 
     <target name="cleanuptarget">
