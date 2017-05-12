@@ -789,12 +789,22 @@
 
     <target name="createMapClientProps" description="">
         <if>
-            <available file="${WebmapDataDir}/WebmapClientData/data"/>
+            <available file="${WebmapDataDir}/WebmapClientData"/>
             <then>
-                <echo>Mapclient 'data' Verzeichnis beibehalten.</echo>
+                <echo>WebmapClient Daten-Verzeichnis beibehalten.</echo>
             </then>
             <else>
-                <echo>Mapclient 'data' Verzeichnis neu erstellen.</echo>
+                <echo>WebmapClient Daten-Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData"/>
+            </else>
+        </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/data"/>
+            <then>
+                <echo>WebmapClient 'data' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'data' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/data"/>
                 <copy todir="${WebmapDataDir}/WebmapClientData/data" >
                     <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/data">
@@ -806,10 +816,10 @@
         <if>
             <available file="${WebmapDataDir}/WebmapClientData/config"/>
             <then>
-                <echo>Mapclient 'config' Verzeichnis beibehalten.</echo>
+                <echo>WebmapClient 'config' Verzeichnis beibehalten.</echo>
             </then>
             <else>
-                <echo>Mapclient 'config' Verzeichnis neu erstellen.</echo>
+                <echo>WebmapClient 'config' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/config"/>
                 <copy todir="${WebmapDataDir}/WebmapClientData/config" >
                     <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/config">
@@ -821,10 +831,10 @@
         <if>
             <available file="${WebmapDataDir}/WebmapClientData/kml"/>
             <then>
-                <echo>Mapclient 'kml' Verzeichnis beibehalten.</echo>
+                <echo>WebmapClient 'kml' Verzeichnis beibehalten.</echo>
             </then>
             <else>
-                <echo>Mapclient 'kml' Verzeichnis neu erstellen.</echo>
+                <echo>WebmapClient 'kml' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/kml"/>
             </else>
         </if>
@@ -835,7 +845,7 @@
             <available file="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
             <then>
                 <echo>Alte WebmapClient-Konfiguration löschen</echo>
-                <delete dir="${WebmapDataDir}/WebmapClientData/data"/>
+                <delete dir="${WebmapDataDir}/WebmapClientData"/>
             </then>
         </if>
     </target>
