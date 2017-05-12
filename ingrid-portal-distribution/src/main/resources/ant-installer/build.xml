@@ -827,7 +827,7 @@
 
     <target name="cleanMapClientProps" description="">
         <if>
-            <available file="${WebmapDataDir}/WebmapClientData/data/ingrid_webmap_client_config.xml"/>
+            <available file="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
             <then>
                 <echo>Alte WebmapClient-Konfiguration löschen</echo>
                 <delete dir="${WebmapDataDir}/WebmapClientData/data"/>
