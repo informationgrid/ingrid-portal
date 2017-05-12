@@ -734,6 +734,7 @@
                 <echo>Keine Einstellung für 'SMTP-Server (Host)' gesetzt.</echo>
             </then>
             <else>
+                <echo>Einstellung 'SMTP-Server (Host)' geändert.</echo>
                 <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.host}"  value="${feedbackHost}"/>
             </else>
         </if>
@@ -743,6 +744,7 @@
                 <echo>Keine Einstellung für 'SMTP-Port' gesetzt.</echo>
             </then>
             <else>
+                <echo>Einstellung 'SMTP-Port' geändert.</echo>
                 <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.port}"  value="${feedbackPort}"/>
             </else>
         </if>
@@ -752,6 +754,7 @@
                 <echo>Keine Einstellung für 'SMTP-Benutzer' gesetzt.</echo>
             </then>
             <else>
+                <echo>Einstellung 'SMTP-Benutzer' geändert.</echo>
                 <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.user}"  value="${feedbackUser}"/>
             </else>
         </if>
@@ -761,6 +764,7 @@
                 <echo>Keine Einstellung für 'SMTP-Passwort' gesetzt.</echo>
             </then>
             <else>
+                <echo>Einstellung 'SMTP-Passwort' geändert.</echo>
                 <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.password}"  value="${feedbackPassword}"/>
             </else>
         </if>
@@ -770,6 +774,7 @@
                 <echo>Keine Einstellung für 'Sender E-Mail-Adresse' gesetzt.</echo>
             </then>
             <else>
+                <echo>Einstellung 'Sender E-Mail-Adresse' geändert.</echo>
                 <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.from}"  value="${feedbackEmail}"/>
                 <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.to}"  value="${feedbackEmail}"/>
             </else>
