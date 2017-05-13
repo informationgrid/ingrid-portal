@@ -397,7 +397,7 @@
                     if(spanParent){
                         var span = spanParent.find('span.downloadText');
                         if(href && span){
-                            getLinkFileSize('$restUrlHttpGet?url=' + href, span);
+                            getLinkFileSize('$restUrlHttpGet?url=' + encodeURIComponent(href), span);
                         }
                     }
                 }
