@@ -301,7 +301,7 @@ public class UploadCleanupJob extends QuartzJobBean {
 
                             // create file reference
                             FileReference reference = new FileReference(
-                                    file, path, date != null ? LocalDate.parse(date, dateFormatter) : null
+                                    file, path, (date != null && date.length() > 0) ? LocalDate.parse(date, dateFormatter) : null
                             );
                             if (!resultList.containsKey(file)) {
                                 List<FileReference> references = new ArrayList<FileReference>();
