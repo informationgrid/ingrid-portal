@@ -170,7 +170,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         int deleteCount = 0;
         for (String file : unreferencedFiles.keySet()) {
             StorageItem item = unreferencedFiles.get(file);
-            log.debug("Deleting file: "+file);
+            log.info("Deleting file: "+file);
             try {
                 this.storage.delete(item.getPath(), item.getFile());
                 deleteCount++;
@@ -187,7 +187,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         int archiveCount = 0;
         for (String file : expiredFiles.keySet()) {
             StorageItem item = expiredFiles.get(file);
-            log.debug("Archiving file: "+file);
+            log.info("Archiving file: "+file);
             try {
                 this.storage.archive(item.getPath(), item.getFile());
                 archiveCount++;
@@ -204,7 +204,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         int restoreCount = 0;
         for (String file : unexpiredFiles.keySet()) {
             StorageItem item = unexpiredFiles.get(file);
-            log.debug("Restoring file: "+file);
+            log.info("Restoring file: "+file);
             try {
                 this.storage.restore(item.getPath(), item.getFile());
                 restoreCount++;
