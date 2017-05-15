@@ -244,7 +244,7 @@ define([
                 var rubric = "phase1_" + counter;
                 var rubricDiv = creator.createRubric({
                     id: rubric,
-                    help: "Hilfetext ...",
+                    help: message.get("uvp.form.phase1.rubric.helpMessage"),
                     label: message.get("uvp.form.phase1.rubric")
                 });
                 domClass.add(rubricDiv, "phase");
@@ -256,8 +256,8 @@ define([
                 var idDateFrom = "publicDateFrom_" + counter;
                 var idDateTo = "publicDateTo_" + counter;
                 newFieldsToDirtyCheck.push(idDateFrom, idDateTo);
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase1.dateFrom"), help: "...", visible: "required showOnlyExpanded", style: "width:33%" }));
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase1.dateTo"), help: "...", visible: "showOnlyExpanded", style: "width:33%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase1.dateFrom"), help: message.get("uvp.form.phase1.dateFrom.helpMessage"), visible: "required showOnlyExpanded", style: "width:33%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase1.dateTo"), help: message.get("uvp.form.phase1.dateTo.helpMessage"), visible: "showOnlyExpanded", style: "width:33%" }));
                 phaseFields.push({ key: "publicDateFrom", field: registry.byId(idDateFrom) });
                 phaseFields.push({ key: "publicDateTo", field: registry.byId(idDateTo) });
 
@@ -272,7 +272,7 @@ define([
 
                 var id = "technicalDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.technicalDocs"), help: "...", visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.technicalDocs"), help: message.get("uvp.form.phase1.technicalDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "technicalDocs", field: registry.byId(id), isDocTable: true });
@@ -284,7 +284,7 @@ define([
                  */
                 id = "applicationDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.applicationDocs"), help: "...", visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.applicationDocs"), help: message.get("uvp.form.phase1.applicationDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "applicationDocs", field: registry.byId(id), isDocTable: true });
@@ -296,7 +296,7 @@ define([
                  */
                 id = "reportsRecommendationsDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: "...", isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: message.get("uvp.form.phase1.reportsRecommendationsDocs.helpMessage"), isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id), isDocTable: true });
@@ -306,7 +306,7 @@ define([
                  */
                 id = "moreDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: "...", isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: message.get("uvp.form.phase1.moreDocs.helpMessage"), isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "moreDocs", field: registry.byId(id), isDocTable: true });
@@ -349,7 +349,7 @@ define([
                 var rubric = "phase2_" + counter;
                 var rubricDiv = creator.createRubric({
                     id: rubric,
-                    help: "Hilfetext ...",
+                    help: message.get("uvp.form.phase2.rubric.helpMessage"),
                     label: message.get("uvp.form.phase2.rubric")
                 });
                 domClass.add(rubricDiv, "phase");
@@ -361,8 +361,8 @@ define([
                 var idDateFrom = "considerDateFrom_" + counter;
                 var idDateTo = "considerDateTo_" + counter;
                 newFieldsToDirtyCheck.push(idDateFrom, idDateTo);
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase2.dateFrom"), help: "...", visible: "required showOnlyExpanded", style: "width:33%" }));
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase2.dateTo"), help: "...", visible: "showOnlyExpanded", style: "width:33%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase2.dateFrom"), help: message.get("uvp.form.phase2.dateFrom.helpMessage"), visible: "required showOnlyExpanded", style: "width:33%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase2.dateTo"), help: message.get("uvp.form.phase2.dateTo.helpMessage"), visible: "showOnlyExpanded", style: "width:33%" }));
                 phaseFields.push({ key: "considerDateFrom", field: registry.byId(idDateFrom) });
                 phaseFields.push({ key: "considerDateTo", field: registry.byId(idDateTo) });
 
@@ -371,7 +371,7 @@ define([
                  */
                 var id = "considerationDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: "...", visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: message.get("uvp.form.phase2.considerationDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "considerationDocs", field: registry.byId(id), isDocTable: true });
@@ -404,7 +404,7 @@ define([
                 var rubric = "phase3_" + counter;
                 var rubricDiv = creator.createRubric({
                     id: rubric,
-                    help: "Hilfetext ...",
+                    help: message.get("uvp.form.phase3.rubric.helpMessage"),
                     label: message.get("uvp.form.phase3.rubric")
                 });
                 domClass.add(rubricDiv, "phase");
@@ -415,7 +415,7 @@ define([
                  */
                 var id = "approvalDate_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: message.get("uvp.form.phase3.approvalDate"), help: "...", visible: "required showOnlyExpanded", style: "width:50%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: id, name: message.get("uvp.form.phase3.approvalDate"), help: message.get("uvp.form.phase3.approvalDate.helpMessage"), visible: "required showOnlyExpanded", style: "width:50%" }));
                 phaseFields.push({ key: "approvalDate", field: registry.byId(id) });
 
                 construct.place(construct.toDom("<div class='clear'></div>"), rubric);
@@ -425,7 +425,7 @@ define([
                  */
                 id = "approvalDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: "...", visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: message.get("uvp.form.phase3.approvalDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "approvalDocs", field: registry.byId(id), isDocTable: true });
@@ -435,7 +435,7 @@ define([
                  */
                 id = "designDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: "...", visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: message.get("uvp.form.phase3.designDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "designDocs", field: registry.byId(id), isDocTable: true });

@@ -167,7 +167,7 @@ define(["dojo/_base/declare",
             var id = "uvpgCategory";
             newFieldsToDirtyCheck.push(id);
             creator.createDomDataGrid(
-                { id: id, name: message.get("uvp.form.categoryIds"), help: "...", isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
+                { id: id, name: message.get("uvp.form.categoryIds"), help: message.get("uvp.form.categoryIds.helpMessage"), isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
                 structure, rubric
             );
             var categoryWidget = registry.byId(id);
@@ -178,9 +178,16 @@ define(["dojo/_base/declare",
              * Checkbox für Vorprüfung
              */
             id = "uvpNeedsExamination";
-            var checkbox = creator.createDomCheckbox(
-                { id: id, name: message.get("uvp.form.checkExamination"), help: "...", isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" }
-            );
+            var checkbox = creator.createDomCheckbox({
+				id : id,
+				name : message.get("uvp.form.checkExamination"),
+				help : message.get("uvp.form.checkExamination.helpMessage"),
+				isMandatory : true,
+				visible : "optional",
+				rows : "4",
+				forceGridHeight : false,
+				style : "width:100%"
+			});
             newFieldsToDirtyCheck.push(id);
             construct.place(checkbox, rubric);
             additionalFields.push(registry.byId(id));
@@ -241,15 +248,15 @@ define(["dojo/_base/declare",
             // spatial reference
             creator.addToSection(rubric, creator.createDomTextbox({
                 id: this.prefix + "spatialValue", 
-                name: message.get("uvp.form.spatial"), 
-                help: "...", 
+                name: message.get("widget.spatial"), 
+                help: message.get("widget.spatial.helpMessage"), 
                 isMandatory: true, 
                 visible: "optional", 
                 style: "width:100%"
             }));
             var spatialInput = registry.byId(this.prefix + "spatialValue");
             spatialInput.set("disabled", true);
-            spatialInput.set("placeHolder", message.get("uvp.form.spatial.placeholder"));
+            spatialInput.set("placeHolder", message.get("widget.spatial.placeholder"));
 
             var igeActions = require("ingrid/IgeActions");
             igeActions.additionalFieldWidgets.push(spatialInput);

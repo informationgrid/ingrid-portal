@@ -34,10 +34,11 @@ define([
     "dijit/registry",
     "dijit/_WidgetBase",
     "dijit/_Templated",
-    "ingrid/layoutCreator"
+    "ingrid/layoutCreator",
+    "ingrid/message"
     // "ingrid/widgets/leaflet",
     // "ingrid/widgets/leaflet-areaselect"
-], function(declare, array, lang, construct, domClass, query, on, request, json, registry, _WidgetBase, _Templated, creator){
+], function(declare, array, lang, construct, domClass, query, on, request, json, registry, _WidgetBase, _Templated, creator, message){
 
     return declare("NominatimSearch", [_WidgetBase, dijit._Templated], {
         
@@ -72,7 +73,7 @@ define([
         _setMapIdAttr: { node: "mapIdNode", type: "attribute", attribute: "id" },
             
         postCreate: function(){
-            construct.place( creator.createDomTextbox({id: this.prefix + "spatial", name: "Suche nach einer Adresse/Raumbezug", help: "...", isMandatory: false, visible: "show", style: "width:100%"}), this.domNode, "first" );
+            construct.place( creator.createDomTextbox({id: this.prefix + "spatial", name: message.get("widget.spatialSearch"), help: message.get("widget.spatialSearch.helpMessage"), isMandatory: false, visible: "show", style: "width:100%"}), this.domNode, "first" );
             on(registry.byId(this.prefix + "spatial"), "keyup", lang.partial(this._handleSpatialSearch, this));
             
             if (!this.collapseOnEmptyInput) {

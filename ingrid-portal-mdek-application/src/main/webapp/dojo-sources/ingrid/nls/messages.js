@@ -1070,6 +1070,13 @@ define({
         "warning.address.inherit.to.children": "Shall the address data from '${0}' be copied to all sub-addresses?",
         "warning.update.capabilities": "Attention: updating the metadata will overwrite the content of the following metadata elements with the values from the capabilities document: <ul><li>Short Description</li><li>Description</li><li>Type of Service</li><li>Classification of Service</li><li>Relevance-Description</li><li>Service Version</li><li>Operations</li><li>Optional Topics</li></ul>Continue?",
 
+        "widget.spatialSearch": "Suche nach einer Adresse/Raumbezug",
+        "widget.spatialSearch.helpMessage": "Durch Eingabe einer Adresse, einer bekannten Ortsbezeichnung oder auch von Koordinaten springen die Markierungen der Raumbezugskarte in den Umkreis dieses Bereiches. Mit dem Mauszeiger können die Eckpunkte des Ausschnitts sowie die Positionierung auf der Karte durch Verschieben verändert werden. Mit der Schaltfläche „Übernehme Ausschnitt“ wird der Raumbezug übernommen.",
+        "widget.spatial": "Raumbezug",
+        "widget.spatial.helpMessage": "Nach dem Übernehmen des Ausschnitts (Button 'Übernehme Ausschnitt') erscheinen im Feld Raumbezug die entsprechenden Koordinaten und der ausgewählte Ausschnitt ist hellrot hinterlegt. Der gewählte Raumbezug kann nachträglich geändert werden.",
+        "widget.showSpatial": "Anzeigen / Ändern",
+        "widget.spatial.placeholder": "Für die Erstellung eines Raumbezuges bitte einen Ausschnitt festlegen.",
+        
         "info.address.inherit.to.children": "${0} addresses have been modified!",
         "ui.listentry.noFilter": "No Filter"
     },
