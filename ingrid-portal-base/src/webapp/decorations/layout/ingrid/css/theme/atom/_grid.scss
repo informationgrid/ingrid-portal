@@ -21,13 +21,6 @@
         padding-right: $global-gutter / 2;
         padding-left: $global-gutter / 2;
     }
-    
-    @include media(
-        $query: '< 768',
-        $css: (
-            height: 0px
-        )
-    );
 }
 
 .grid--equal {
