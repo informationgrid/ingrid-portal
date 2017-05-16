@@ -22,12 +22,14 @@
  */
 define(["dojo/_base/declare",
     "dojo/cookie",
+    "dojo/Deferred",
     "dojo/dom-construct",
     "dojo/query",
     "dojo/topic",
     "dijit/registry",
-    "ingrid/message"
-], function(declare, cookie, construct, query, topic, registry, message) {
+    "ingrid/message",
+    "ingrid/utils/UDK"
+], function(declare, cookie, Deferred, construct, query, topic, registry, message, udk) {
 
     return declare(null, {
         title: "UVP: Generelle Änderungen",
@@ -45,6 +47,8 @@ define(["dojo/_base/declare",
             this.adaptImportPage();
 
             this.addCssClasses();
+
+            this.interceptHelpMessages();
 
             query("head title").addContent("UVP Editor", "only");
 
@@ -100,6 +104,22 @@ define(["dojo/_base/declare",
                     '#objSearch .expandContent, #adrSearch .expandContent {display: none;}' +
                     '</style>')
             );
+        },
+
+        interceptHelpMessages: function() {
+            var interceptedGuiIds = {
+                1000: { helpText: message.get("help.uvp.form.addresses.text"), name: message.get("help.uvp.form.addresses.title") },
+                1010: { helpText: message.get("help.uvp.form.description.text"), name: message.get("help.uvp.form.description.title") },
+                3000: { helpText: message.get("help.uvp.form.title.text"), name: message.get("help.uvp.form.title.title"), sample: message.get("help.uvp.form.title.example") }
+            }
+            udk.loadHelpMessageOrig = udk.loadHelpMessage;
+            udk.loadHelpMessage = function(guiId) {
+                if (interceptedGuiIds[guiId]) {
+                    return (new Deferred()).resolve(interceptedGuiIds[guiId]);
+                } else {
+                    return this.loadHelpMessageOrig(guiId);
+                }
+            };
         }
 
     })();
