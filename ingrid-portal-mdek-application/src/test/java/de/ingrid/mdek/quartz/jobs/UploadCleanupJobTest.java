@@ -101,6 +101,73 @@ public class UploadCleanupJobTest {
     public void tearDown() throws Exception {
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
     }
+    
+    /**
+     * Test:
+     * - Simulate no iPLugs available, all files must remain
+     * @throws Exception
+     */
+    @Test
+    public void testNoIPlugsAvailable() throws Exception {
+        
+        // simulate no iplugs
+        when(this.mdekClientCaller.getRegisteredIPlugs()).thenReturn(null);
+        
+        // set up files
+        String unreferencedFile1 = "UnreferencedFile1";
+        this.createFile(OBJ_UUID, unreferencedFile1);
+        String unreferencedFile2 = "UnreferencedFile2";
+        this.createFile(OBJ_UUID, unreferencedFile2);
+
+        // setup file references
+        List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        this.setupFileReferences(publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertTrue(this.fileExists(OBJ_UUID, unreferencedFile1));
+        assertTrue(this.fileExists(OBJ_UUID, unreferencedFile2));
+    }
+
+    /**
+     * Test:
+     * - Simulate query returns no result, all files must remain
+     * @throws Exception
+     */
+    @Test
+    public void testQueryReturnsNoResults() throws Exception {
+        
+        // set up stub for file query
+        when(this.mdekCallerQuery.queryHQLToMap(
+                Matchers.eq(PLUG_ID),
+                Matchers.matches("select fdLink.data, fdLink.parentFieldId, fdLink.sort.*"),
+                Matchers.eq(null),
+                Matchers.eq("")
+        )).thenReturn(this.createResponse(null));
+        
+        // set up files
+        String unreferencedFile1 = "UnreferencedFile1";
+        this.createFile(OBJ_UUID, unreferencedFile1);
+        String unreferencedFile2 = "UnreferencedFile2";
+        this.createFile(OBJ_UUID, unreferencedFile2);
+
+        // setup file references
+        List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        this.setupFileReferences(publishedRefs, unpublishedRefs, true);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertTrue(this.fileExists(OBJ_UUID, unreferencedFile1));
+        assertTrue(this.fileExists(OBJ_UUID, unreferencedFile2));
+    }
+    
+    
 
     /**
      * Test:
@@ -404,12 +471,18 @@ public class UploadCleanupJobTest {
      * Helper methods
      */
 
+
+    private void setupFileReferences(List<FileReference> publishedRefs, List<FileReference> unpublishedRefs) {
+        setupFileReferences(publishedRefs, unpublishedRefs, false);
+    }
+    
+    
     /**
      * Set up the catalog data for the given file references
      * @param publishedRefs
      * @param unpublishedRefs
      */
-    private void setupFileReferences(List<FileReference> publishedRefs, List<FileReference> unpublishedRefs) {
+    private void setupFileReferences(List<FileReference> publishedRefs, List<FileReference> unpublishedRefs, boolean nullResults) {
         List<List<FileReference>> allReferences = new ArrayList<List<FileReference>>();
         allReferences.add(publishedRefs);
         allReferences.add(unpublishedRefs);
@@ -435,10 +508,10 @@ public class UploadCleanupJobTest {
             // set up stub for file query
             when(this.mdekCallerQuery.queryHQLToMap(
                     Matchers.eq(PLUG_ID),
-                    Matchers.matches("select fdLink.data.*"+publishedPattern+".*"),
+                    Matchers.matches("select fdLink.data.*"+publishedPattern+".*fdLink.fieldKey = 'link'.*"),
                     Matchers.eq(null),
                     Matchers.eq("")
-            )).thenReturn(this.createResponse(results));
+            )).thenReturn(this.createResponse(nullResults ? null :  results));
 
             // set up stub for expiry sub queries
             for (int i=0, count=references.size(); i<count; i++) {
@@ -448,7 +521,7 @@ public class UploadCleanupJobTest {
                         Matchers.matches("select fdExpires.data.*"+publishedPattern+".*fdExpires.sort = "+i+".*"),
                         Matchers.eq(null),
                         Matchers.eq("")
-                )).thenReturn(this.createResponse(subResults));
+                )).thenReturn(this.createResponse(nullResults ? null :  subResults));
             }
             index++;
         }

@@ -76,7 +76,7 @@ public class UploadCleanupJob extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext ctx) throws JobExecutionException {
-        log.debug("Executing UploadCleanupJob...");
+        log.info("Executing UploadCleanupJob...");
 
         // initialize file maps
         Map<String, StorageItem> allFiles = new HashMap<String, StorageItem>();
@@ -105,9 +105,14 @@ public class UploadCleanupJob extends QuartzJobBean {
                 IMdekClientCaller caller = this.connectionFacade.getMdekClientCaller();
                 List<String> iplugList = caller.getRegisteredIPlugs();
                 log.debug("Number of iplugs found: "+iplugList.size());
+                if (iplugList == null || iplugList.size() == 0) {
+                    throw new Exception("No iPlugs found.");
+                }
+                
                 for (String plugId : iplugList) {
                     log.debug("Getting documents from iplug: "+plugId);
                     Map<String, List<FileReference>> uploads = this.getUploads(plugId);
+                    
                     Set<String> uploadUris = uploads.keySet();
 
                     log.debug("Number of documents: "+uploadUris.size());
@@ -161,7 +166,7 @@ public class UploadCleanupJob extends QuartzJobBean {
             // any exception in this stage must abort the job
             // to prevent falsely deletion of files
             this.logError(e.toString(), e);
-            log.debug("Aborted UploadCleanupJob");
+            log.info("Aborted UploadCleanupJob");
             return;
         }
 
@@ -296,7 +301,11 @@ public class UploadCleanupJob extends QuartzJobBean {
                                     if (objsSub != null && objsSub.size() == 1) {
                                         date = objsSub.get(0).getString("fdExpires.data");
                                     }
+                                } else {
+                                    throw new JobExecutionException("Job execution returned null response from plugId: " + plugId);
                                 }
+                            } else {
+                                throw new JobExecutionException(responseSub.getString("job_invoke_error_message"));
                             }
 
                             // create file reference
@@ -312,7 +321,11 @@ public class UploadCleanupJob extends QuartzJobBean {
                                 resultList.get(file).add(reference);
                             }
                         }
+                    } else {
+                        throw new JobExecutionException("Job returned null as OBJ_ENTITIES from plugId: " + plugId);
                     }
+                } else {
+                    throw new JobExecutionException("Job execution returned null response from plugId: " + plugId);
                 }
             }
             else {
