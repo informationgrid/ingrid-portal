@@ -22,12 +22,13 @@
  */
 define([
     "dojo/_base/declare",
+    "dojo/dom",
     "dojo/dom-class",
     "dojo/query",
     "dojo/topic",
     "dijit/registry",
     "ingrid/message"
-], function(declare, domClass, query, topic, registry, message) {
+], function(declare, dom, domClass, query, topic, registry, message) {
 
     return declare(null, {
         title: "UVP: Adressenänderungen",
@@ -41,6 +42,15 @@ define([
             domClass.add("uiElement4440", "hide"); // Aufgaben
             domClass.add("uiElement4450", "hide"); // Servicezeiten
             domClass.add("uiElement4571_at0", "hide"); // Veröffentlichung (#683)
+
+            // since folder behaviour also toggles address owner field we have to listen
+            // for the same event. Since we register to a later time, this handler is also called later.
+            topic.subscribe("/onAddressClassChange", function(data) {
+                // if it's not a folder
+                if (data.addressClass !== 1000) {
+                    domClass.add(dom.byId("addressOwnerLabel").parentNode, "hide"); // Veröffentlichung (#682)
+                }
+            });
 
             query("#address .titleCaption").addContent(message.get("uvp.address.form.categories.address"), "only");
 
