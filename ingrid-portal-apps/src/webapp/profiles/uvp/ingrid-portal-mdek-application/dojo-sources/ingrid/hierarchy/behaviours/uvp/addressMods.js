@@ -42,6 +42,7 @@ define([
             domClass.add("uiElement4440", "hide"); // Aufgaben
             domClass.add("uiElement4450", "hide"); // Servicezeiten
             domClass.add("uiElement4571_at0", "hide"); // Veröffentlichung (#683)
+            domClass.add("uiElement4435", "hide"); // Administrative Area (#670)
 
             // since folder behaviour also toggles address owner field we have to listen
             // for the same event. Since we register to a later time, this handler is also called later.
