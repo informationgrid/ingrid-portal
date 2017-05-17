@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p [%d{yyyy-MM-dd HH:mm:ss}] (%F:%L) - %m%n" />
+        </Console>
+        <RollingFile name="MdekFile" fileName="${sys:catalina.base}/logs/mdek.log" filePattern="${sys:catalina.base}/logs/mdek.log.%i">
+            <PatternLayout pattern="%-5p [%d{yyyy-MM-dd HH:mm:ss}] (%F:%L) - %m%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="9" />
+        </RollingFile>
+        <RollingFile name="IngridFile" fileName="${sys:catalina.base}/logs/ingrid.log" filePattern="${sys:catalina.base}/logs/ingrid.log.%i">
+            <PatternLayout pattern="%-5p [%d{yyyy-MM-dd HH:mm:ss}] (%F:%L) - %m%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="9" />
+        </RollingFile>
+        <RollingFile name="RootLogFile" fileName="${sys:catalina.base}/logs/root.log" filePattern="${sys:catalina.base}/logs/root.log.%i">
+            <PatternLayout pattern="%-5p [%d{yyyy-MM-dd HH:mm:ss}] (%F:%L) - %m%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="9" />
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="de.ingrid.mdek" level="info" additivity="false">
+            <AppenderRef ref="MdekFile" />
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Logger name="de.ingrid" level="info" additivity="false">
+            <AppenderRef ref="IngridFile" />
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Logger name="org.apache.jetspeed" level="info" additivity="false">
+            <AppenderRef ref="IngridFile" />
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Logger name="org.apache.catalina" level="info" additivity="false">
+            <AppenderRef ref="RootLogFile" />
+            <AppenderRef ref="Console" />
+        </Logger>
+        <Root level="warn">
+            <AppenderRef ref="RootLogFile" />
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>

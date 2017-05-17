@@ -63,7 +63,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
 	protected void executeInternal(JobExecutionContext ctx)
 			throws JobExecutionException {
-		log.debug("Executing CheckForExpiredDatasetsJob...");
+		log.info("Executing CheckForExpiredDatasetsJob...");
 		// 1. Get all objects/addresses that: will expire soon & first notification has not been sent
 		// 2. Get all objects/addresses that: are expired & final notification has not been sent
         // 3. Get all objects/addresses that: are expired & final notification has already been sent
@@ -98,10 +98,15 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 	            datasetsAgainExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);			    
 			}
 
-            log.info("" + plugId + ":");
-			log.info("  Number of entities to notify found: "+datasetsWillExpireList.size());
-			log.info("  Number of entities expired found: "+datasetsExpiredList.size());
-            log.info("  Number of entities again expired found: "+datasetsAgainExpiredList.size());
+            if (datasetsWillExpireList.size() > 0 || datasetsExpiredList.size() > 0 || datasetsAgainExpiredList.size() > 0) {
+                log.info("" + plugId + ":");
+                log.info("  Number of entities to notify found: "+datasetsWillExpireList.size());
+                log.info("  Number of entities expired found: "+datasetsExpiredList.size());
+                log.info("  Number of entities again expired found: "+datasetsAgainExpiredList.size());
+            } else {
+                log.debug( "Nothing has expired." );
+            }
+            
 			MdekEmailUtils.sendExpiryNotificationMails(datasetsWillExpireList);
 			// NOTICE: Entities expired for the first time and entities again expired are handled
 			// the same way (same email and update of expiry states/time) so we merge lists !
