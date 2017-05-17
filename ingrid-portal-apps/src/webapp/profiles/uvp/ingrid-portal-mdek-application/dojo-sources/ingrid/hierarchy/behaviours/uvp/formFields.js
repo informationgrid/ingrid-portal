@@ -54,7 +54,10 @@ define(["dojo/_base/declare",
         run: function() {
 
             // rename default fields
-            query("#general .titleBar .titleCaption").addContent(message.get("uvp.form.consideration"), "only");
+            query("#general .titleBar .titleCaption")
+                .addContent(message.get("uvp.form.consideration"), "only")
+                .style("cursor", "default")
+                .attr('onclick', undefined);
             query("#general .titleBar").attr("title", message.get("uvp.form.consideration.tooltip"));
 
             // do not override my address title
