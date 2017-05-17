@@ -40,6 +40,7 @@ define([
             domClass.add("adrThesaurus", "hide");  // Verschlagwortung
             domClass.add("uiElement4440", "hide"); // Aufgaben
             domClass.add("uiElement4450", "hide"); // Servicezeiten
+            domClass.add("uiElement4571_at0", "hide"); // Veröffentlichung (#683)
 
             query("#address .titleCaption").addContent(message.get("uvp.address.form.categories.address"), "only");
 
