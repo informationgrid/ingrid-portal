@@ -257,7 +257,7 @@ define([
                 var idDateTo = "publicDateTo_" + counter;
                 newFieldsToDirtyCheck.push(idDateFrom, idDateTo);
                 creator.addToSection(rubric, creator.createDomDatebox({ id: idDateFrom, name: message.get("uvp.form.phase1.dateFrom"), help: message.get("uvp.form.phase1.dateFrom.helpMessage"), visible: "required showOnlyExpanded", style: "width:33%" }));
-                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase1.dateTo"), help: message.get("uvp.form.phase1.dateTo.helpMessage"), visible: "showOnlyExpanded", style: "width:33%" }));
+                creator.addToSection(rubric, creator.createDomDatebox({ id: idDateTo, name: message.get("uvp.form.phase1.dateTo"), help: message.get("uvp.form.phase1.dateTo.helpMessage"), visible: "required showOnlyExpanded", style: "width:33%" }));
                 phaseFields.push({ key: "publicDateFrom", field: registry.byId(idDateFrom) });
                 phaseFields.push({ key: "publicDateTo", field: registry.byId(idDateTo) });
 
