@@ -34,6 +34,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -237,7 +239,7 @@ public class FileSystemStorage implements Storage {
         this.getTrashPath(path, "", this.docsDir).toFile().mkdirs();
         // get the real location of the file
         FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
-        Files.move(fileInfo.getRealPath(), trashPath, StandardCopyOption.ATOMIC_MOVE);
+        Files.move(fileInfo.getRealPath(), trashPath, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
     }
 
     @Override
@@ -246,14 +248,14 @@ public class FileSystemStorage implements Storage {
         Path archivePath = this.getArchivePath(path, file, this.docsDir);
         // ensure directory
         this.getArchivePath(path, "", this.docsDir).toFile().mkdirs();
-        Files.move(realPath, archivePath, StandardCopyOption.ATOMIC_MOVE);
+        Files.move(realPath, archivePath, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
     }
 
     @Override
     public void restore(String path, String file) throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
         Path archivePath = this.getArchivePath(path, file, this.docsDir);
-        Files.move(archivePath, realPath, StandardCopyOption.ATOMIC_MOVE);
+        Files.move(archivePath, realPath, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
     }
 
     /**
@@ -424,6 +426,9 @@ public class FileSystemStorage implements Storage {
         String fileType = Files.probeContentType(filePath);
         long fileSize = Files.size(filePath);
 
-        return new FileSystemItem(this, itemPath, itemFile, fileType, fileSize, isArchived, filePath);
+        LocalDateTime lastModifiedTime = LocalDateTime.ofInstant(Files.getLastModifiedTime(filePath).toInstant(), ZoneOffset.UTC);
+
+        return new FileSystemItem(this, itemPath, itemFile, fileType, fileSize, lastModifiedTime,
+                isArchived, filePath);
     }
 }

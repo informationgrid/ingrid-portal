@@ -2,7 +2,9 @@ package de.ingrid.mdek.quartz.jobs;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +49,8 @@ public class UploadCleanupJob extends QuartzJobBean {
 
     private ConnectionFacade connectionFacade;
     private Storage storage;
-    private LocalDate referenceDate = LocalDate.now();
+    private Integer deleteFileMinAge;
+    private LocalDateTime referenceDateTime = LocalDateTime.now();
 
     /**
      * Set the connection facade used for communication.
@@ -66,17 +69,30 @@ public class UploadCleanupJob extends QuartzJobBean {
     }
 
     /**
-     * Set the reference date for calculating expiry of files.
-     * Defaults to today if not set explicitly.
-     * @param referenceDate
+     * Set the minimum age that unreferenced files must have before deletion
+     * @param deleteFileMinAge
      */
-    public void setReferenceDate(LocalDate referenceDate) {
-        this.referenceDate = referenceDate;
+    public void setDeleteFileMinAge(Integer deleteFileMinAge) {
+        this.deleteFileMinAge = deleteFileMinAge;
+    }
+
+    /**
+     * Set the reference time for calculating expiry of files.
+     * Defaults to now if not set explicitly.
+     * @param referenceDateTime
+     */
+    public void setReferenceDate(LocalDateTime referenceDateTime) {
+        this.referenceDateTime = referenceDateTime;
     }
 
     @Override
     protected void executeInternal(JobExecutionContext ctx) throws JobExecutionException {
         log.info("Executing UploadCleanupJob...");
+
+        LocalDate referenceDate = this.referenceDateTime.toLocalDate();
+        log.info("Reference time: "+this.referenceDateTime);
+        log.info("Reference date: "+referenceDate);
+        log.info("Minimum file age: "+this.deleteFileMinAge+" seconds");
 
         // initialize file maps
         Map<String, StorageItem> allFiles = new HashMap<String, StorageItem>();
@@ -108,11 +124,11 @@ public class UploadCleanupJob extends QuartzJobBean {
                 if (iplugList == null || iplugList.size() == 0) {
                     throw new Exception("No iPlugs found.");
                 }
-                
+
                 for (String plugId : iplugList) {
                     log.debug("Getting documents from iplug: "+plugId);
                     Map<String, List<FileReference>> uploads = this.getUploads(plugId);
-                    
+
                     Set<String> uploadUris = uploads.keySet();
 
                     log.debug("Number of documents: "+uploadUris.size());
@@ -147,7 +163,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                         // NOTE: a file might be expired in one catalog, but not in another,
                         // so if a file is added/removed by one catalog, it might be removed/added by another
                         // but at the end all expired files (and only those) must be contained in the expired files list
-                        if (!item.isArchived() && expiryDate != null && expiryDate.isBefore(this.referenceDate)) {
+                        if (!item.isArchived() && expiryDate != null && expiryDate.isBefore(referenceDate)) {
                             expiredFiles.put(uploadUri, item);
                         }
                         else if (expiredFiles.containsKey(uploadUri)) {
@@ -155,7 +171,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                         }
                         // handle files to be restored
                         if (item.isArchived() &&
-                                (expiryDate == null || expiryDate.isEqual(this.referenceDate) || expiryDate.isAfter(this.referenceDate))) {
+                                (expiryDate == null || expiryDate.isEqual(referenceDate) || expiryDate.isAfter(referenceDate))) {
                             unexpiredFiles.put(uploadUri, item);
                         }
                     }
@@ -170,19 +186,27 @@ public class UploadCleanupJob extends QuartzJobBean {
             return;
         }
 
-        // delete unreferenced files
+        // delete unreferenced files, if they are
         log.debug("Deleting unreferenced files");
         int deleteCount = 0;
         for (String file : unreferencedFiles.keySet()) {
             StorageItem item = unreferencedFiles.get(file);
-            log.info("Deleting file: "+file);
-            try {
-                this.storage.delete(item.getPath(), item.getFile());
-                deleteCount++;
+            // get file age
+            long age = LocalDateTime.from(item.getLastModifiedDate()).
+                    until(this.referenceDateTime, ChronoUnit.SECONDS);
+            if (this.deleteFileMinAge == null || age >= this.deleteFileMinAge) {
+                log.info("Deleting file: "+file+" (age: "+age+" seconds)");
+                try {
+                    this.storage.delete(item.getPath(), item.getFile());
+                    deleteCount++;
+                }
+                catch (IOException e) {
+                    // log error, but keep the job running
+                    this.logError("File "+file+" could not be deleted", e);
+                }
             }
-            catch (IOException e) {
-                // log error, but keep the job running
-                this.logError("File "+file+" could not be deleted", e);
+            else {
+                 log.debug("Keeping file: "+file+" (age: "+age+" seconds)");
             }
         }
         log.debug("Number of deleted files: "+deleteCount);

@@ -26,6 +26,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class FileSystemItem implements StorageItem {
     private String file;
     private String type;
     private long size;
+    private LocalDateTime lastModifiedTime;
     private boolean isArchived;
     private Path realPath;
 
@@ -58,16 +60,18 @@ public class FileSystemItem implements StorageItem {
      * @param file
      * @param type
      * @param size
+     * @param lastModifiedTime
      * @param isArchived
      * @param realPath
      */
     public FileSystemItem(Storage storage, String path, String file, String type, long size,
-            boolean isArchived, Path realPath) {
+            LocalDateTime lastModifiedTime, boolean isArchived, Path realPath) {
         this.storage = storage;
         this.path = path;
         this.file = file;
         this.type = type;
         this.size = size;
+        this.lastModifiedTime = lastModifiedTime;
         this.isArchived = isArchived;
         this.realPath = realPath;
     }
@@ -108,6 +112,11 @@ public class FileSystemItem implements StorageItem {
     @Override
     public long getSize() {
         return this.size;
+    }
+
+    @Override
+    public LocalDateTime getLastModifiedDate() {
+        return this.lastModifiedTime;
     }
 
     @Override

@@ -90,6 +90,7 @@
             <map>
                 <entry key="connectionFacade"><ref bean="connectionFacade"/></entry>
                 <entry key="storage"><ref bean="uploadStorage"/></entry>
+                <entry key="deleteFileMinAge"><value>${upload.cleanup.file.minAge}</value></entry>
             </map>
       </property>
     </bean>

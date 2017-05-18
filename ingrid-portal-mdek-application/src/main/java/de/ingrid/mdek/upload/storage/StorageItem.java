@@ -22,6 +22,8 @@
  */
 package de.ingrid.mdek.upload.storage;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -57,6 +59,12 @@ public interface StorageItem {
      * @return long
      */
     long getSize();
+
+    /**
+     * Get the last modification date
+     * @return LocalDateTime
+     */
+    LocalDateTime getLastModifiedDate();
 
     /**
      * Indicates if the file is archived

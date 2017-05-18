@@ -30,7 +30,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
+import java.nio.file.attribute.FileTime;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +60,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class UploadCleanupJobTest {
 
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
     private static final DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     private static final Path DOCS_PATH = Paths.get("target", "ingrid-upload-test");
@@ -65,7 +68,10 @@ public class UploadCleanupJobTest {
     private static final String ARCHIVE_PATH = "_archive_";
     private static final String TRASH_PATH = "_trash_";
     private static final String PLUG_ID = "test-plug-id";
-    private static final LocalDate TEST_DATE = LocalDate.parse("25.04.2017", df);
+    private static final Integer DEFAULT_FILE_AGE = 7201;
+
+    private static final LocalDateTime JOB_REFERENCE_TIME = LocalDateTime.parse("25.04.2017 12:00:00", dtf);
+    private static final Integer JOB_MIN_FILE_AGE = 7200;
 
 	@Mock private ConnectionFacade connectionFacade;
     @Mock private MdekClientCaller mdekClientCaller;
@@ -95,7 +101,8 @@ public class UploadCleanupJobTest {
         this.job = new UploadCleanupJob();
         this.job.setConnectionFacade(this.connectionFacade);
         this.job.setStorage(this.storage);
-        this.job.setReferenceDate(TEST_DATE);
+        this.job.setReferenceDate(JOB_REFERENCE_TIME);
+        this.job.setDeleteFileMinAge(JOB_MIN_FILE_AGE);
     }
 
     @After
@@ -116,9 +123,9 @@ public class UploadCleanupJobTest {
 
         // set up files
         String unreferencedFile1 = "UnreferencedFile1";
-        this.createFile(OBJ_UUID, unreferencedFile1);
+        this.createFile(OBJ_UUID, unreferencedFile1, DEFAULT_FILE_AGE);
         String unreferencedFile2 = "UnreferencedFile2";
-        this.createFile(OBJ_UUID, unreferencedFile2);
+        this.createFile(OBJ_UUID, unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
@@ -151,9 +158,9 @@ public class UploadCleanupJobTest {
 
         // set up files
         String unreferencedFile1 = "UnreferencedFile1";
-        this.createFile(OBJ_UUID, unreferencedFile1);
+        this.createFile(OBJ_UUID, unreferencedFile1, DEFAULT_FILE_AGE);
         String unreferencedFile2 = "UnreferencedFile2";
-        this.createFile(OBJ_UUID, unreferencedFile2);
+        this.createFile(OBJ_UUID, unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
@@ -177,9 +184,9 @@ public class UploadCleanupJobTest {
     public void testDelete() throws Exception {
         // set up files
         String unreferencedFile1 = "UnreferencedFile1";
-        this.createFile(OBJ_UUID, unreferencedFile1);
+        this.createFile(OBJ_UUID, unreferencedFile1, DEFAULT_FILE_AGE);
         String unreferencedFile2 = "UnreferencedFile2";
-        this.createFile(OBJ_UUID, unreferencedFile2);
+        this.createFile(OBJ_UUID, unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
@@ -205,9 +212,9 @@ public class UploadCleanupJobTest {
     public void testDeleteArchived() throws Exception {
         // set up files
         String unreferencedFile1 = "UnreferencedFile1";
-        this.createArchivedFile(OBJ_UUID, unreferencedFile1);
+        this.createArchivedFile(OBJ_UUID, unreferencedFile1, DEFAULT_FILE_AGE);
         String unreferencedFile2 = "UnreferencedFile2";
-        this.createArchivedFile(OBJ_UUID, unreferencedFile2);
+        this.createArchivedFile(OBJ_UUID, unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
@@ -226,6 +233,34 @@ public class UploadCleanupJobTest {
 
     /**
      * Test:
+     * - Keep unreferenced files, if their age is smaller than the minimum age
+     * @throws Exception
+     */
+    @Test
+    public void testKeepRecent() throws Exception {
+        // set up files
+        String unreferencedFile1 = "UnreferencedFile1";
+        this.createFile(OBJ_UUID, unreferencedFile1, JOB_MIN_FILE_AGE);
+        String unreferencedFile2 = "UnreferencedFile2";
+        this.createFile(OBJ_UUID, unreferencedFile2, JOB_MIN_FILE_AGE-1);
+
+        // setup file references
+        List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        this.setupFileReferences(publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertFalse(this.fileExists(OBJ_UUID, unreferencedFile1));
+        assertTrue(this.fileExists(OBJ_UUID, unreferencedFile2));
+        assertTrue(this.deletedFileExists(OBJ_UUID, unreferencedFile1));
+        assertFalse(this.deletedFileExists(OBJ_UUID, unreferencedFile2));
+    }
+
+    /**
+     * Test:
      * - Archive a published file with expiry date in the past
      * @throws Exception
      */
@@ -233,12 +268,12 @@ public class UploadCleanupJobTest {
     public void testArchivePublishedExpired() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createFile(OBJ_UUID, referencedFile);
+        this.createFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                OBJ_UUID+"/"+referencedFile, "", TEST_DATE.minusDays(1)
+                OBJ_UUID+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(publishedRefs, unpublishedRefs);
@@ -260,12 +295,12 @@ public class UploadCleanupJobTest {
     public void testKeepPublishedSameDate() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createFile(OBJ_UUID, referencedFile);
+        this.createFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                OBJ_UUID+"/"+referencedFile, "", TEST_DATE
+                OBJ_UUID+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(publishedRefs, unpublishedRefs);
@@ -287,12 +322,12 @@ public class UploadCleanupJobTest {
     public void testKeepPublishedFuture() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createFile(OBJ_UUID, referencedFile);
+        this.createFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                OBJ_UUID+"/"+referencedFile, "", TEST_DATE.plusDays(1)
+                OBJ_UUID+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(publishedRefs, unpublishedRefs);
@@ -314,7 +349,7 @@ public class UploadCleanupJobTest {
     public void testKeepPublishedNoDate() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createFile(OBJ_UUID, referencedFile);
+        this.createFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
@@ -341,15 +376,15 @@ public class UploadCleanupJobTest {
     public void testKeepPublishedFutureMultipleReferences() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createFile(OBJ_UUID, referencedFile);
+        this.createFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                OBJ_UUID+"/"+referencedFile, "", TEST_DATE.minusDays(1)
+                OBJ_UUID+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
-                OBJ_UUID+"/"+referencedFile, "", TEST_DATE.plusDays(1)
+                OBJ_UUID+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(publishedRefs, unpublishedRefs);
@@ -371,13 +406,13 @@ public class UploadCleanupJobTest {
     public void testKeepUnpublishedFuture() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createFile(OBJ_UUID, referencedFile);
+        this.createFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
         List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         unpublishedRefs.add(this.job.new FileReference(
-                OBJ_UUID+"/"+referencedFile, "", TEST_DATE.plusDays(1)
+                OBJ_UUID+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         this.setupFileReferences(publishedRefs, unpublishedRefs);
 
@@ -398,12 +433,12 @@ public class UploadCleanupJobTest {
     public void testRestorePublishedArchivedSameDate() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createArchivedFile(OBJ_UUID, referencedFile);
+        this.createArchivedFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                OBJ_UUID+"/"+referencedFile, "", TEST_DATE
+                OBJ_UUID+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(publishedRefs, unpublishedRefs);
@@ -425,12 +460,12 @@ public class UploadCleanupJobTest {
     public void testRestorePublishedArchivedFuture() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createArchivedFile(OBJ_UUID, referencedFile);
+        this.createArchivedFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                OBJ_UUID+"/"+referencedFile, "", TEST_DATE.plusDays(1)
+                OBJ_UUID+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(publishedRefs, unpublishedRefs);
@@ -452,7 +487,7 @@ public class UploadCleanupJobTest {
     public void testRestorePublishedArchivedNoDate() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createArchivedFile(OBJ_UUID, referencedFile);
+        this.createArchivedFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
@@ -479,7 +514,7 @@ public class UploadCleanupJobTest {
     public void testRestoreUnpublishedArchivedNoDate() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createArchivedFile(OBJ_UUID, referencedFile);
+        this.createArchivedFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
@@ -506,12 +541,12 @@ public class UploadCleanupJobTest {
     public void testKeepPublishedArchivedExpired() throws Exception {
         // set up files
         String referencedFile = "ReferencedFile";
-        this.createArchivedFile(OBJ_UUID, referencedFile);
+        this.createArchivedFile(OBJ_UUID, referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                OBJ_UUID+"/"+referencedFile, "", TEST_DATE.minusDays(1)
+                OBJ_UUID+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(publishedRefs, unpublishedRefs);
@@ -602,11 +637,13 @@ public class UploadCleanupJobTest {
      * Create a test file
      * @param path
      * @param name
+     * @param ageInSeconds
      * @throws IOException
      */
-    private void createFile(String path, String name) throws IOException {
+    private void createFile(String path, String name, long ageInSeconds) throws IOException {
         Files.createDirectories(Paths.get(DOCS_PATH.toString(), path));
-        Files.createFile(Paths.get(DOCS_PATH.toString(), path, name));
+        Path createdPath = Files.createFile(Paths.get(DOCS_PATH.toString(), path, name));
+        this.setFileAge(createdPath, ageInSeconds);
         assertTrue(this.fileExists(path, name));
     }
 
@@ -614,12 +651,25 @@ public class UploadCleanupJobTest {
      * Create an archived test file
      * @param path
      * @param name
+     * @param ageInSeconds
      * @throws IOException
      */
-    private void createArchivedFile(String path, String name) throws IOException {
+    private void createArchivedFile(String path, String name, long ageInSeconds) throws IOException {
         Files.createDirectories(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH));
-        Files.createFile(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH, name));
+        Path createdPath = Files.createFile(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH, name));
+        this.setFileAge(createdPath, ageInSeconds);
         assertTrue(this.archivedFileExists(path, name));
+    }
+
+    /**
+     * Set the age of a file
+     * @param path
+     * @param ageInSeconds
+     * @throws IOException
+     */
+    private void setFileAge(Path path, long ageInSeconds) throws IOException {
+        LocalDateTime fileTime = LocalDateTime.from(JOB_REFERENCE_TIME).minusSeconds(ageInSeconds);
+        Files.setLastModifiedTime(path, FileTime.from(fileTime.toInstant(ZoneOffset.UTC)));
     }
 
     /**
