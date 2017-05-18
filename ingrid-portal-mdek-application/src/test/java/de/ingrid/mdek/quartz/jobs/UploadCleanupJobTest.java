@@ -63,6 +63,7 @@ public class UploadCleanupJobTest {
     private static final Path DOCS_PATH = Paths.get("target", "ingrid-upload-test");
     private static final String OBJ_UUID = "5F1AF722-D767-4980-8403-A432173D5684";
     private static final String ARCHIVE_PATH = "_archive_";
+    private static final String TRASH_PATH = "_trash_";
     private static final String PLUG_ID = "test-plug-id";
     private static final LocalDate TEST_DATE = LocalDate.parse("25.04.2017", df);
 
@@ -191,6 +192,8 @@ public class UploadCleanupJobTest {
         // test
         assertFalse(this.fileExists(OBJ_UUID, unreferencedFile1));
         assertFalse(this.fileExists(OBJ_UUID, unreferencedFile2));
+        assertTrue(this.deletedFileExists(OBJ_UUID, unreferencedFile1));
+        assertTrue(this.deletedFileExists(OBJ_UUID, unreferencedFile2));
     }
 
     /**
@@ -217,6 +220,8 @@ public class UploadCleanupJobTest {
         // test
         assertFalse(this.archivedFileExists(OBJ_UUID, unreferencedFile1));
         assertFalse(this.archivedFileExists(OBJ_UUID, unreferencedFile2));
+        assertTrue(this.deletedFileExists(OBJ_UUID, unreferencedFile1));
+        assertTrue(this.deletedFileExists(OBJ_UUID, unreferencedFile2));
     }
 
     /**
@@ -635,5 +640,15 @@ public class UploadCleanupJobTest {
      */
     private boolean archivedFileExists(String path, String name) throws IOException {
         return Files.exists(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH, name));
+    }
+
+    /**
+     * Check existence of an deleted test file
+     * @param path
+     * @param name
+     * @throws IOException
+     */
+    private boolean deletedFileExists(String path, String name) throws IOException {
+        return Files.exists(Paths.get(DOCS_PATH.toString(), path, TRASH_PATH, name));
     }
 }
