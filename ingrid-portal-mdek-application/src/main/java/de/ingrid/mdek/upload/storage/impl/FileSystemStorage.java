@@ -56,6 +56,7 @@ import de.ingrid.mdek.upload.storage.StorageItem;
 public class FileSystemStorage implements Storage {
 
     private static final String ARCHIVE_PATH = "_archive_";
+    private static final String TRASH_PATH = "_trash_";
 
 	private final static Logger log = Logger.getLogger(FileSystemStorage.class);
 
@@ -231,8 +232,12 @@ public class FileSystemStorage implements Storage {
     @Override
     public void delete(String path, String file) throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
+        Path trashPath = this.getTrashPath(path, file, this.docsDir);
+        // ensure directory
+        this.getTrashPath(path, "", this.docsDir).toFile().mkdirs();
+        // get the real location of the file
         FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
-        Files.delete(fileInfo.getRealPath());
+        Files.move(fileInfo.getRealPath(), trashPath, StandardCopyOption.ATOMIC_MOVE);
     }
 
     @Override
@@ -339,6 +344,18 @@ public class FileSystemStorage implements Storage {
      */
     private Path getRealPath(String file, String basePath) {
         return FileSystems.getDefault().getPath(basePath, this.sanitize(file));
+    }
+
+    /**
+     * Get the trash path of a requested path
+     *
+     * @param path
+     * @param file
+     * @param basePath
+     * @return Path
+     */
+    private Path getTrashPath(String path, String file, String basePath) {
+        return FileSystems.getDefault().getPath(basePath, this.sanitize(path), TRASH_PATH, this.sanitize(file));
     }
 
     /**

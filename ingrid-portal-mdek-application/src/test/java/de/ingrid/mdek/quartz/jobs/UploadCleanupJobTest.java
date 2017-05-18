@@ -101,7 +101,7 @@ public class UploadCleanupJobTest {
     public void tearDown() throws Exception {
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
     }
-    
+
     /**
      * Test:
      * - Simulate no iPLugs available, all files must remain
@@ -109,10 +109,10 @@ public class UploadCleanupJobTest {
      */
     @Test
     public void testNoIPlugsAvailable() throws Exception {
-        
+
         // simulate no iplugs
         when(this.mdekClientCaller.getRegisteredIPlugs()).thenReturn(null);
-        
+
         // set up files
         String unreferencedFile1 = "UnreferencedFile1";
         this.createFile(OBJ_UUID, unreferencedFile1);
@@ -139,7 +139,7 @@ public class UploadCleanupJobTest {
      */
     @Test
     public void testQueryReturnsNoResults() throws Exception {
-        
+
         // set up stub for file query
         when(this.mdekCallerQuery.queryHQLToMap(
                 Matchers.eq(PLUG_ID),
@@ -147,7 +147,7 @@ public class UploadCleanupJobTest {
                 Matchers.eq(null),
                 Matchers.eq("")
         )).thenReturn(this.createResponse(null));
-        
+
         // set up files
         String unreferencedFile1 = "UnreferencedFile1";
         this.createFile(OBJ_UUID, unreferencedFile1);
@@ -166,8 +166,6 @@ public class UploadCleanupJobTest {
         assertTrue(this.fileExists(OBJ_UUID, unreferencedFile1));
         assertTrue(this.fileExists(OBJ_UUID, unreferencedFile2));
     }
-    
-    
 
     /**
      * Test:
@@ -442,6 +440,60 @@ public class UploadCleanupJobTest {
 
     /**
      * Test:
+     * - Keep a published, archived file with no date
+     * @throws Exception
+     */
+    @Test
+    public void testRestorePublishedArchivedNoDate() throws Exception {
+        // set up files
+        String referencedFile = "ReferencedFile";
+        this.createArchivedFile(OBJ_UUID, referencedFile);
+
+        // setup file references
+        List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        publishedRefs.add(this.job.new FileReference(
+                OBJ_UUID+"/"+referencedFile, "", null
+        ));
+        List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        this.setupFileReferences(publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertTrue(this.fileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+    }
+
+    /**
+     * Test:
+     * - Keep an unpublished, archived file with no date
+     * @throws Exception
+     */
+    @Test
+    public void testRestoreUnpublishedArchivedNoDate() throws Exception {
+        // set up files
+        String referencedFile = "ReferencedFile";
+        this.createArchivedFile(OBJ_UUID, referencedFile);
+
+        // setup file references
+        List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        unpublishedRefs.add(this.job.new FileReference(
+                OBJ_UUID+"/"+referencedFile, "", null
+        ));
+        this.setupFileReferences(publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertTrue(this.fileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+    }
+
+    /**
+     * Test:
      * - Keep a published, archived file with expiry date in the past in the archive
      * @throws Exception
      */
@@ -471,12 +523,10 @@ public class UploadCleanupJobTest {
      * Helper methods
      */
 
-
     private void setupFileReferences(List<FileReference> publishedRefs, List<FileReference> unpublishedRefs) {
-        setupFileReferences(publishedRefs, unpublishedRefs, false);
+        this.setupFileReferences(publishedRefs, unpublishedRefs, false);
     }
-    
-    
+
     /**
      * Set up the catalog data for the given file references
      * @param publishedRefs
