@@ -1058,6 +1058,13 @@ define({
         "validation.error.spatial.no.expired": "A spatial reference must not be expired.",
         "validation.error.missing.download.link": "When 'Open Data' is selected then there must be a link of the type 'Download' created.",
 
+        "validation.levelOfSpecification.notConform":"For non conform INSPIRE-relevant datasets this specification must be 'not evaluated' or 'not conform'.",
+        "validation.specification.missing": "The specification <ul><li>${0}</li></ul> needs to be added with 'not evaluated' or 'not conform'.",
+        "validation.specification.deleted": "The specification <ul><li>${0}</li></ul> may not be deleted for INSPIRE-relevant datasets.",
+        "validation.specification.delete.depend": "The depending  specification(s) <ul>${0}</ul> was/were deleted as well.",
+        "validation.specification.added": "The specification '${0}' was added as well.",
+        "validation.encoding.added": "The encoding scheme '${0}' was changed as well.",
+
         "init.error.userNotFound": "The user could not be found in the catalog. Please check the mdek-database and the used catalog.",
 
         "hint.noCapabilityUrlFound": "No GetCapabilities-Url could be found to update this dataset.",
