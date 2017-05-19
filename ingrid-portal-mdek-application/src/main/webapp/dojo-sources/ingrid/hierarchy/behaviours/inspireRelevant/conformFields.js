@@ -90,7 +90,8 @@ define([
                         if (isConform) {
                             self.handleInspireConform();
                         } else {
-                            self.handleNotInspireConform();
+                            // do not call this handler here since it's called because of the change event
+                            // self.handleNotInspireConform();
                         }
                     } else {
                         domClass.add("uiElement6001", "hidden");
@@ -124,7 +125,7 @@ define([
                     if (inspireRelevantWidget.checked && isChecked) {
                         // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
                         // with not evaluated level
-                        self.addConformity(self.specificationName, 3);
+                        self.addConformity(self.specificationName, "3");
 
                         // remove INSPIRE Richtlinie
                         self.removeConformity(self.specificationNameInspireRichtlinie);
@@ -150,10 +151,10 @@ define([
         handleClickConform: function() {
             // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
             // with conform level
-            this.addConformity(this.specificationName, 1);
+            this.addConformity(this.specificationName, "1");
 
             // remove INSPIRE Richtlinie
-            self.removeConformity(self.specificationNameInspireRichtlinie);
+            this.removeConformity(this.specificationNameInspireRichtlinie);
         },
 
         handleInspireConform: function() {
@@ -169,18 +170,17 @@ define([
 
             this.eventsConform.push(
                 // added conformity must not be modified or deleted
-                on(registry.byId("extraInfoConformityTable"), "DeleteItems", function(msg) {
-                    array.forEach(msg.items, function(item) {
-                        if (item.specification === self.specificationName) {
-                            UtilGrid.addTableDataRow( "extraInfoConformityTable", item );
-                            UtilUI.showToolTip( "extraInfoConformityTable", string.substitute(message.get("validation.specification.deleted"), [self.specificationName]) );
-                        }
-                    });
-                }),
-
+                self.addEventSpecificationDelete(),
+                
                 on(registry.byId("extraInfoConformityTable"), "CellChange", function(msg) {
-                    if (msg.oldItem.specification === self.specificationName) {
-                        UtilGrid.updateTableDataRow( "extraInfoConformityTable", msg.row, msg.oldItem );
+                    // if our spec changed AND was valid before
+                    var rule1 = msg.oldItem && msg.oldItem.specification === self.specificationName && msg.item.specification !== self.specificationName;
+                    var rule2 = msg.item.specification === self.specificationName && msg.item.level !== "1";
+                    if (rule1 || rule2) {
+                        UtilGrid.updateTableDataRow( "extraInfoConformityTable", msg.row, {
+                            specification: self.specificationName,
+                            level: "1"
+                        });
                         UtilUI.showToolTip( "extraInfoConformityTable", message.get("validation.levelOfSpecification.conform") );
                     }
                 }),
@@ -196,8 +196,6 @@ define([
                         UtilUI.showToolTip( "ref1Representation", message.get("validation.digitalRepresentation.conform") );
                     }
                 }),
-
-
 
                 // onPublish: Validierung entsprechend den Voreinstellungen:
                 //      Spezifikation - inhalt. Prüfung
@@ -220,8 +218,6 @@ define([
                     });
                 })
             );
-
-            // TODO: how to handle multiple entries of the same specification?
         },
         
         handleNotInspireConform: function() {
@@ -238,24 +234,20 @@ define([
             this.eventsNotConform.push(
                 // conformity level must be "not conform" or "not evaluated"
                 on(registry.byId("extraInfoConformityTable"), "CellChange", function(msg) {
-                    if (msg.item.specification === self.specificationName && msg.item.level == "1") {
-                        if (msg.oldItem) {
-                            UtilGrid.updateTableDataRow( "extraInfoConformityTable", msg.row, msg.oldItem );
-                        } else {
-
-                        }
+                    // if our spec changed AND was valid before
+                    var rule1 = msg.oldItem && msg.oldItem.specification === self.specificationName && msg.item.specification !== self.specificationName;
+                    var rule2 = msg.item.specification === self.specificationName && msg.item.level === "1";
+                    if (rule1 || rule2) {
+                        UtilGrid.updateTableDataRow( "extraInfoConformityTable", msg.row, {
+                            specification: self.specificationName,
+                            level: "3"
+                        });
                         UtilUI.showToolTip( "extraInfoConformityTable", message.get("validation.levelOfSpecification.notConform") );
                     }
                 }),
+
                 // the specification must not be deleted
-                on(registry.byId("extraInfoConformityTable"), "DeleteItems", function(msg) {
-                    array.forEach(msg.items, function(item) {
-                        if (item.specification === self.specificationName) {
-                            UtilGrid.addTableDataRow( "extraInfoConformityTable", item );
-                            UtilUI.showToolTip( "extraInfoConformityTable", string.substitute(message.get("validation.specification.deleted"), [self.specificationName]) );
-                        }
-                    });
-                }),
+                self.addEventSpecificationDelete(),
 
                 // INSPIRE-Thema-abhängige Voreinstellung des Kodierungsschemas entfernen
                 // => via behaviour!
@@ -274,13 +266,33 @@ define([
                     }
 
                     array.some(requiredSpecification, function(spec) {
-                        if (spec.level == "1") {
+                        if (spec.level === "1") {
                             notPublishableIDs.push( ["extraInfoConformityTable", missingMessage] );
                             return true;
                         }
                     });
                 })
             );
+        },
+
+        addEventSpecificationDelete: function() {
+            var self = this;
+            return on(registry.byId("extraInfoConformityTable"), "DeleteItems", function(msg) {
+                var numConformSpecs = UtilGrid.getTableData("extraInfoConformityTable")
+                    .filter(function(item) { return item.specification === self.specificationName; })
+                    .length;
+
+                // if our specification is not there anymore, try to recover it if it was one of the deleted ones
+                if (numConformSpecs === 0) {
+                    // at least one of our specification must be there
+                    array.forEach(msg.items, function(item) {
+                        if (item.specification === self.specificationName) {
+                            UtilGrid.addTableDataRow( "extraInfoConformityTable", item );
+                            UtilUI.showToolTip( "extraInfoConformityTable", string.substitute(message.get("validation.specification.deleted"), [self.specificationName]) );
+                        }
+                    });
+                }
+            });
         },
         
         addConformity: function(name, level) {
