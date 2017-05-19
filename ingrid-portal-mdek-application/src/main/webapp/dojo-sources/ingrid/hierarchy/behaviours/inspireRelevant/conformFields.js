@@ -108,18 +108,14 @@ define([
                 on(inspireRelevantWidget, "Click", function(isChecked) {
                     if (this.checked) {
                         registry.byId("isInspireConform").set("checked", true);
+                        self.handleClickConform();
                     }
                 }),
 
                 // if conform was explicitly clicked
                 registry.byId("isInspireConform").on("click", function(isChecked) {
                     if (inspireRelevantWidget.checked && isChecked) {
-                        // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
-                        // with conform level
-                        this.addConformity(this.specificationName, 1);
-
-                        // remove INSPIRE Richtlinie
-                        self.removeConformity(self.specificationNameInspireRichtlinie);
+                        self.handleClickConform();
                     }
                 }),
 
@@ -149,6 +145,15 @@ define([
                     }
                 })
             );
+        },
+
+        handleClickConform: function() {
+            // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
+            // with conform level
+            this.addConformity(this.specificationName, 1);
+
+            // remove INSPIRE Richtlinie
+            self.removeConformity(self.specificationNameInspireRichtlinie);
         },
 
         handleInspireConform: function() {
