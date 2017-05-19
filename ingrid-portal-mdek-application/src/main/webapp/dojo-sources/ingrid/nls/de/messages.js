@@ -1061,6 +1061,16 @@ define({
     "validation.error.spatial.no.expired": "Der Raumbezug darf nicht abgelaufen sein.",
     "validation.error.missing.download.link": "Bei der Auswahl von 'Open Data' muss ein Verweis vom Typ 'Datendownload' angelegt werden.",
 
+    "validation.levelOfSpecification.notConform":"Bei nicht konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'nicht evaluiert' oder 'nicht konform' sein.",
+    "validation.levelOfSpecification.conform":"Bei konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'konform' sein.",
+    "validation.digitalRepresentation.conform":"Für konforme INSPIRE-Datensätze sind nur die Werte <ul><li>Grid</li><li>Vector</li><li>Text, Table</li><li>TIN</li></ul> erlaubt.",
+    "validation.specification.missing": "Die Spezifikation <ul><li>${0}</li></ul> muss mit 'nicht evaluiert' oder 'nicht konform' gesetzt sein.",
+    "validation.specification.conform.missing": "Die Spezifikation <ul><li>${0}</li></ul> muss mit 'konform' gesetzt sein.",
+    "validation.specification.deleted": "Die Spezifikation <ul><li>${0}</li></ul> darf bei INSPIRE-relevanten Datensätzen nicht gelöscht werden.",
+    "validation.specification.delete.depend": "Die dazugehörige Spezifikation(en) <ul>${0}</ul> wurde(n) ebenfalls gelöscht.",
+    "validation.specification.added": "Die Spezifikation '${0}' wurde ebenfalls hinzugefügt.",
+    "validation.encoding.added": "Das Encoding Schema '${0}' wurde ebenfalls geändert.",
+
     "init.error.userNotFound": "Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",
 
     "hint.noCapabilityUrlFound": "Es konnte keine GetCapabilities-Url gefunden werden, um den Datensatz zu aktualisieren.",
