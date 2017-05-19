@@ -1,25 +1,3 @@
-/*-
- * **************************************************-
- * InGrid Portal MDEK Application
- * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
- * ==================================================
- * Licensed under the EUPL, Version 1.1 or – as soon they will be
- * approved by the European Commission - subsequent versions of the
- * EUPL (the "Licence");
- * 
- * You may not use this work except in compliance with the Licence.
- * You may obtain a copy of the Licence at:
- * 
- * http://ec.europa.eu/idabc/eupl5
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the Licence is distributed on an "AS IS" basis,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the Licence for the specific language governing permissions and
- * limitations under the Licence.
- * **************************************************#
- */
 /**
  * Zusätzliches Feld -> Checkbox: "Veröffentlichung gemäß HmbTG"
  */
@@ -36,13 +14,10 @@ for (var i=0; i<keywords.getLength(); i++ ) {
     XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-data"), true);
     
     // remove as normal keyword
-    log.info("SEARCH FOR KEYWORD hmbtg");
-    subject-terms->uncontrolled-term->hmbtg
     var terms = XPATH.getNodeList(target, "/igc/data-sources/data-source/data-source-instance/subject-terms/uncontrolled-term");
     for (var j=0; j<terms.getLength(); j++ ) {
       var termNode = terms.item(j);
       if (termNode.getTextContent() === "hmbtg") {
-        log.info("DELETE NODE");
         XPATH.removeElementAtXPath(termNode, ".");
       }
     }
