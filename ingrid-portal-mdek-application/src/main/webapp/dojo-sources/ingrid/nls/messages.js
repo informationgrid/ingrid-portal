@@ -1059,7 +1059,10 @@ define({
         "validation.error.missing.download.link": "When 'Open Data' is selected then there must be a link of the type 'Download' created.",
 
         "validation.levelOfSpecification.notConform":"For non conform INSPIRE-relevant datasets this specification must be 'not evaluated' or 'not conform'.",
+        "validation.levelOfSpecification.conform":"For conform INSPIRE-relevant datasets this specification must be 'conform'.",
+        "validation.digitalRepresentation.conform":"For conform INSPIRE-relevant datasets only the following values are allowed <ul><li>Raster, Gitter</li><li>Vektor</li><li>Text, Tabelle</li><li>TIN</li></ul> erlaubt.",
         "validation.specification.missing": "The specification <ul><li>${0}</li></ul> needs to be added with 'not evaluated' or 'not conform'.",
+        "validation.specification.conform.missing": "The specification <ul><li>${0}</li></ul> needs to be added with 'conform'.",
         "validation.specification.deleted": "The specification <ul><li>${0}</li></ul> may not be deleted for INSPIRE-relevant datasets.",
         "validation.specification.delete.depend": "The depending  specification(s) <ul>${0}</ul> was/were deleted as well.",
         "validation.specification.added": "The specification '${0}' was added as well.",

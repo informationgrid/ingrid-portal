@@ -42,6 +42,8 @@ define([
         category: "INSPIRE relevant",
         specificationName: null,
         specificationNameInspireRichtlinie: null,
+        // allow digital representations: Vector, Grid, Text-Table, TIN
+        allowedDigitalRepresentations: ["1", "2", "3", "4"],
         events: [],
         eventsConform: [],
         eventsNotConform: [],
@@ -82,25 +84,42 @@ define([
                 on(inspireRelevantWidget, "Change", function(isChecked) {
                     if (isChecked) {
                         domClass.remove("uiElement6001", "hidden");
+
+                        // add events implicitly
+                        var isConform = registry.byId("isInspireConform").checked;
+                        if (isConform) {
+                            self.handleInspireConform();
+                        } else {
+                            self.handleNotInspireConform();
+                        }
                     } else {
                         domClass.add("uiElement6001", "hidden");
+
+                        // make digital representation optional
+                        domClass.remove( "uiElement5062", "required" );
+
+                        // remove all conform/not conform events
+                        self.removeEvents(self.eventsConform);
+                        self.removeEvents(self.eventsNotConform);
                     }
                 }),
 
                 // set conform option and handle modifications when conform was checked implicitly
                 on(inspireRelevantWidget, "Click", function(isChecked) {
-                    if (isChecked) {
+                    if (this.checked) {
                         registry.byId("isInspireConform").set("checked", true);
-                        
-                        // do everything that would happen on click! (see below)
-                        self.onClickInspireConform();
                     }
                 }),
 
                 // if conform was explicitly clicked
                 registry.byId("isInspireConform").on("click", function(isChecked) {
                     if (inspireRelevantWidget.checked && isChecked) {
-                        self.onClickInspireConform();
+                        // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
+                        // with conform level
+                        this.addConformity(this.specificationName, 1);
+
+                        // remove INSPIRE Richtlinie
+                        self.removeConformity(self.specificationNameInspireRichtlinie);
                     }
                 }),
 
@@ -132,22 +151,81 @@ define([
             );
         },
 
-        onClickInspireConform: function() {
-            // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
-            // with conform level
-            this.addConformity(this.specificationName, 1);
-        },
-        
         handleInspireConform: function() {
             console.log("konform");
-            this.removeEvents(this.eventsNotConform);
-            
+            var self = this;
+            var missingMessage = string.substitute(message.get("validation.specification.conform.missing"), [self.specificationName]);
 
+            // remove events set from non conform radio box
+            this.removeEvents(this.eventsNotConform);
+
+            // make digital representation required
+            domClass.add( "uiElement5062", "required" );
+
+            this.eventsConform.push(
+                // added conformity must not be modified or deleted
+                on(registry.byId("extraInfoConformityTable"), "DeleteItems", function(msg) {
+                    array.forEach(msg.items, function(item) {
+                        if (item.specification === self.specificationName) {
+                            UtilGrid.addTableDataRow( "extraInfoConformityTable", item );
+                            UtilUI.showToolTip( "extraInfoConformityTable", string.substitute(message.get("validation.specification.deleted"), [self.specificationName]) );
+                        }
+                    });
+                }),
+
+                on(registry.byId("extraInfoConformityTable"), "CellChange", function(msg) {
+                    if (msg.oldItem.specification === self.specificationName) {
+                        UtilGrid.updateTableDataRow( "extraInfoConformityTable", msg.row, msg.oldItem );
+                        UtilUI.showToolTip( "extraInfoConformityTable", message.get("validation.levelOfSpecification.conform") );
+                    }
+                }),
+
+                // Digitale Präsentation - Prüfung, ob Eintrag erfolgt
+                on(registry.byId("ref1Representation"), "CellChange", function(msg) {
+                    if (self.allowedDigitalRepresentations.indexOf(msg.item.title) === -1) {
+                        if (msg.oldItem) {
+                            UtilGrid.updateTableDataRow( "ref1Representation", msg.row, msg.oldItem );
+                        } else {
+                            UtilGrid.removeTableDataRow( "ref1Representation", [msg.row] );
+                        }
+                        UtilUI.showToolTip( "ref1Representation", message.get("validation.digitalRepresentation.conform") );
+                    }
+                }),
+
+
+
+                // onPublish: Validierung entsprechend den Voreinstellungen:
+                //      Spezifikation - inhalt. Prüfung
+                //      Grad der Spezifikation - inhalt. Prüfung
+                //      Kodierungsschema - Prüfung, ob Eintrag erfolgt
+                topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
+                    var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
+                        .filter(function(item) { return item.specification === self.specificationName; });
+
+                    if (requiredSpecification.length === 0) {
+                        notPublishableIDs.push( ["extraInfoConformityTable", missingMessage] );
+                        return true;
+                    }
+
+                    array.some(requiredSpecification, function(spec) {
+                        if (spec.level != "1") {
+                            notPublishableIDs.push( ["extraInfoConformityTable", missingMessage] );
+                            return true;
+                        }
+                    });
+                })
+            );
+
+            // TODO: how to handle multiple entries of the same specification?
         },
         
         handleNotInspireConform: function() {
             console.log("nicht konform");
+            // remove events set from conform radio box
             this.removeEvents(this.eventsConform);
+
+            // make digital representation optional
+            domClass.remove( "uiElement5062", "required" );
 
             var self = this;
             var missingMessage = string.substitute(message.get("validation.specification.missing"), [self.specificationName]);
@@ -175,6 +253,9 @@ define([
                 }),
 
                 // INSPIRE-Thema-abhängige Voreinstellung des Kodierungsschemas entfernen
+                // => via behaviour!
+
+
                 // onPublish: Validierung entsprechend den Voreinstellungen:
                 //      Spezifikation - inhalt. Prüfung
                 //      Grad der Spezifikation - inhalt. Prüfung
@@ -221,7 +302,7 @@ define([
         },
 
         removeEvents: function(events) {
-            array.forEach(this.eventsNotConform, function(event) {
+            array.forEach(events, function(event) {
                 event.remove();
             });
             // empty array
@@ -233,6 +314,8 @@ define([
          */
         unregister: function() {
             this.removeEvents(this.events);
+            this.removeEvents(this.eventsConform);
+            this.removeEvents(this.eventsNotConform);
         }
     })();
 });

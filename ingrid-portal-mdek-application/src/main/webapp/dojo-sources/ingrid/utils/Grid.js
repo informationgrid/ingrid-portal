@@ -199,6 +199,11 @@ define([
             this.getTable(grid).setSelectedRows(selection);
         },
 
+        /**
+         * Remove a row from a table.
+         * @param {string} grid 
+         * @param {number[]} itemIndexes 
+         */
         removeTableDataRow: function(grid, itemIndexes) {
             var refresh = false;
 
