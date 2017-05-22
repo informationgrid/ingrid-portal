@@ -121,12 +121,15 @@ define([
             this.tabContainer.resize();
 
             var self = this;
-            on(this.uploadLink, "keyup", function() {
-                if (this.get("value").trim().length > 0) {
-                    self.setOkButtonState( true );
-                } else {
-                    self.setOkButtonState( false );
-                }
+            on(this.uploadLink, "keyup, paste", function() {
+                // delay check a bit, since after a paste the input is still empty
+                setTimeout(function() {
+                    if (self.uploadLink.get("value").trim().length > 0) {
+                        self.setOkButtonState( true );
+                    } else {
+                        self.setOkButtonState( false );
+                    }
+                });
             });
 
             return this.deferred;
