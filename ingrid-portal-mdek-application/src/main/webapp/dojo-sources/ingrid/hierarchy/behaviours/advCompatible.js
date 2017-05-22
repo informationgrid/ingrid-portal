@@ -25,10 +25,11 @@ define([
     // "dojo/_base/lang",
     "dojo/on",
     "dojo/dom-class",
+    "dojo/query",
     "dojo/topic",
     "dijit/registry",
     "ingrid/utils/Grid"
-], function(declare, on, domClass, topic, registry, UtilGrid) {
+], function(declare, on, domClass, query, topic, registry, UtilGrid) {
     return declare(null, {
         
         title : "Checkbox anzeigen",
@@ -38,6 +39,20 @@ define([
         run : function() {
             // show checkbox AdV compatible
             domClass.remove("uiElement6005", "hidden");
+
+            // show different help text for conformity table
+            var conformityLabel = query("#extraInfoConformityTableLabel label")[0];
+            on(registry.byId("isAdvCompatible"), "Change", function(isChecked) {
+                if (isChecked) {
+                    conformityLabel.onclick = function() {
+                        require('ingrid/dialog').showContextHelp(arguments[0], 10034);
+                    };
+                } else {
+                    conformityLabel.onclick = function() {
+                        require('ingrid/dialog').showContextHelp(arguments[0], 10024);
+                    };
+                }
+            });
         }
     })();
 });
