@@ -32,7 +32,8 @@
 
 <!-- Session Factory -->
    <bean id="sessionFactory"
-         class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+         class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+         depends-on="flyway">
       <property name="dataSource">
          <ref bean="dataSource"/>
       </property>

@@ -64,23 +64,6 @@
     <property name="updateMySQL402" location="${installDir}/sql/update_4.0.2_mysql.sql"/>
     <property name="updateMySQL4021" location="${installDir}/sql/update_4.0.2.1_mysql.sql"/>
 
-    <!-- mysql ige imports -->
-    <property name="mdekDB"          location="${installDir}/sql/mdek_0_mysql.sql"/>
-    <property name="mdekDB_301"      location="${installDir}/sql/mdek_3.0.1_mysql.sql"/>
-    <property name="mdekDB_311"      location="${installDir}/sql/mdek_3.1.1_mysql.sql"/>
-    <property name="mdekDB_320"      location="${installDir}/sql/mdek_3.2.0_mysql.sql"/>
-    <property name="mdekDB_330"      location="${installDir}/sql/mdek_3.3.0_mysql.sql"/>
-    <property name="mdekDB_331"      location="${installDir}/sql/mdek_3.3.1_mysql.sql"/>
-    <property name="mdekDB_332"      location="${installDir}/sql/mdek_3.3.2_mysql.sql"/>
-    <property name="mdekDB_340"      location="${installDir}/sql/mdek_3.4.0_mysql.sql"/>
-    <property name="mdekDB_361"      location="${installDir}/sql/mdek_3.6.1_mysql.sql"/>
-    <property name="mdekDB_362"      location="${installDir}/sql/mdek_3.6.2_mysql.sql"/>
-    <property name="mdekDB_3621"      location="${installDir}/sql/mdek_3.6.2.1_mysql.sql"/>
-    <property name="mdekDB_400"      location="${installDir}/sql/mdek_4.0.0_mysql.sql"/>
-    <property name="mdekDB_401"      location="${installDir}/sql/mdek_4.0.1_mysql.sql"/>
-    <property name="mdekDB_403"      location="${installDir}/sql/mdek_4.0.3_mysql.sql"/>
-
-
     <target name="CheckDbs" depends="checkPortalDbMysql, checkMdekDbMysql" if="useMysql">
         <echo>DBs checked for existence and version
         </echo>
@@ -465,73 +448,6 @@
                 <!-- Give rights to user to access the new database -->
                 GRANT ALL PRIVILEGES ON `${dbMdekName}`.* TO '${dbUser}'@'localhost' WITH GRANT OPTION
             </transaction>
-        </sql>
-    </target>
-    
-    <target name="mdekDbNotExists" if="mdek.db.not.exists">
-        <echo>Neue Mdek-DB!</echo>
-        <echo>Mdek MySQL-Daten importieren
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_mdekDBUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                failOnConnectionError="false"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${mdekDB}"/>
-            <transaction src="${mdekDB_301}"/>
-            <transaction src="${mdekDB_311}"/>
-            <transaction src="${mdekDB_320}"/>
-            <transaction src="${mdekDB_330}"/>
-            <transaction src="${mdekDB_331}"/>
-            <transaction src="${mdekDB_332}"/>
-            <transaction src="${mdekDB_340}"/>
-            <transaction src="${mdekDB_361}"/>
-            <transaction src="${mdekDB_362}"/>
-            <transaction src="${mdekDB_3621}"/>
-            <transaction src="${mdekDB_400}"/>
-            <transaction src="${mdekDB_401}"/>
-            <transaction src="${mdekDB_403}"/>
-
-        </sql>
-    </target>
-
-    <target name="mdekDbExists" unless="mdek.db.not.exists">
-        <echo>Update vorhandene Mdek-DB!</echo>
-        <echo>Mdek MySQL-Daten importieren
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_mdekDBUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                failOnConnectionError="false"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${mdekDB_301}"/>
-            <transaction src="${mdekDB_311}"/>
-            <transaction src="${mdekDB_320}"/>
-            <transaction src="${mdekDB_330}"/>
-            <transaction src="${mdekDB_331}"/>
-            <transaction src="${mdekDB_332}"/>
-            <transaction src="${mdekDB_340}"/>
-            <transaction src="${mdekDB_361}"/>
-            <transaction src="${mdekDB_362}"/>
-            <transaction src="${mdekDB_3621}"/>
-            <transaction src="${mdekDB_400}"/>
-            <transaction src="${mdekDB_401}"/>
-            <transaction src="${mdekDB_403}"/>
-
         </sql>
     </target>
     
