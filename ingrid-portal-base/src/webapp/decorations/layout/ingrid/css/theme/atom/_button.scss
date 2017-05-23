@@ -16,6 +16,12 @@
     color: color(fruit-salad) !important;
 }
 
+%button--delete {
+    background: transparent;
+    color: color(red) !important;
+    border: 1px solid color(red) !important;
+}
+
 .btn {
     border: 1px solid color(fruit-salad);
     display: inline-table;
@@ -58,6 +64,26 @@
             &:focus,
             &:active {
             background: color(fruit-salad);
+            color: color(white) !important;
+        }
+    }
+
+    &[disabled] {
+        color: color(gainsboro);
+        border: 1px solid color(gainsboro);
+        opacity: .9;
+    }
+}
+
+.btn--delete {
+    @extend %button--delete;
+
+    &:not([disabled]) {
+            &:hover,
+            &:focus,
+            &:active {
+            border: 1px solid color(red);
+            background: color(red);
             color: color(white) !important;
         }
     }

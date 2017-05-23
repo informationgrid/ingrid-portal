@@ -376,8 +376,8 @@
 
 #macro (renderFaceteSelectedAttributeHashMapNumber $doAction $title $numbers $key $isDelete)
     <p>
-        <a class="btn btn--secondary btn--small btn--block" href="$doAction">
-        <svg class="icon link__icon"><use xlink:href="#check"/></svg>
+        <a class="btn btn--delete btn--small btn--block" href="$doAction">
+        <svg class="icon link__icon"><use xlink:href="#cross"/></svg>
         $title
         #if($numbers && $key)
             #renderLinkEntryNumberInArrayHashMap($numbers $key)
