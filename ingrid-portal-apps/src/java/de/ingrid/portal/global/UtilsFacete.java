@@ -646,16 +646,16 @@ public class UtilsFacete {
                     for(int i=0; i < coordOptions.size(); i++){
                         String searchTerm = "";
                         if(request.getParameter("x1") != null){
-                            searchTerm = webmapclientCoords.get("x1").concat("'O ");
+                            searchTerm = webmapclientCoords.get("x1").concat(", ");
                         }
                         if(request.getParameter("y1") != null){
-                            searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat("'N ");
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat(", ");
                         }
                         if(request.getParameter("x2") != null){
-                            searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat("'O ");
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat(", ");
                         }
                         if(request.getParameter("y2") != null){
-                            searchTerm = searchTerm.concat(webmapclientCoords.get("y2")).concat("'N");
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("y2"));
                         }
                         doMapCoords.put(coordOptions.get(i), searchTerm);
                     }
@@ -1631,16 +1631,16 @@ public class UtilsFacete {
                 for(int i=0; i < paramsOptions.size(); i++){
                     String value = "";
                     if(getFacetParam(paramsFacet, "x1") != null){
-                        value = coords.get("x1").concat("'O ");
+                        value = coords.get("x1").concat(", ");
                     }
                     if(getFacetParam(paramsFacet, "y1") != null){
-                        value = value.concat(coords.get("y1")).concat("'N ");
+                        value = value.concat(coords.get("y1")).concat(", ");
                     }
                     if(getFacetParam(paramsFacet, "x2") != null){
-                        value = value.concat(coords.get("x2")).concat("'O ");
+                        value = value.concat(coords.get("x2")).concat(", ");
                     }
                     if(getFacetParam(paramsFacet, "y2") != null){
-                        value = value.concat(coords.get("y2")).concat("'N");
+                        value = value.concat(coords.get("y2"));
                     }
                     selectedMap.put(paramsOptions.get(i), value);
                 }

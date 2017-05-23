@@ -54,10 +54,10 @@
     };
 
     function getMapBounds(){
-        $('#x1').prop("value", Math.round(map.getBounds().getWest() * 1000)/1000);
-        $('#x2').prop("value", Math.round(map.getBounds().getEast() * 1000)/1000);
-        $('#y1').prop("value", Math.round(map.getBounds().getSouth() * 1000)/1000);
-        $('#y2').prop("value", Math.round(map.getBounds().getNorth() * 1000)/1000);
+        $('#x1').prop("value", Math.round(map.getBounds().getWest() * 10000)/10000);
+        $('#x2').prop("value", Math.round(map.getBounds().getEast() * 10000)/10000);
+        $('#y1').prop("value", Math.round(map.getBounds().getSouth() * 10000)/10000);
+        $('#y2').prop("value", Math.round(map.getBounds().getNorth() * 10000)/10000);
     }
 
     function resizeMap(){
