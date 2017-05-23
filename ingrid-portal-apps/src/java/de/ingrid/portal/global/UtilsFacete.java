@@ -645,26 +645,18 @@ public class UtilsFacete {
                     doMapCoords = new HashMap<String, String>();
                     for(int i=0; i < coordOptions.size(); i++){
                         String searchTerm = "";
-                        //TODO implement areaid search
-    //                        if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
-                            if(request.getParameter("x1") != null){
-                                searchTerm = webmapclientCoords.get("x1").concat("' O / ");
-                            }
-                            if(request.getParameter("y1") != null){
-                                searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat("' N");
-                            }                
-                            searchTerm = searchTerm.concat("<br>");
-                            if(request.getParameter("x2") != null){
-                                searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat("' O / ");
-                            }
-                            if(request.getParameter("y2") != null){
-                                searchTerm = searchTerm.concat(webmapclientCoords.get("y2")).concat("' N");
-                            } 
-                            
-                            searchTerm = searchTerm.concat("<br>" +  coordOptions.get(i));
-    //                        } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
-    //                            searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
-    //                        }
+                        if(request.getParameter("x1") != null){
+                            searchTerm = webmapclientCoords.get("x1").concat("'O ");
+                        }
+                        if(request.getParameter("y1") != null){
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat("'N ");
+                        }
+                        if(request.getParameter("x2") != null){
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat("'O ");
+                        }
+                        if(request.getParameter("y2") != null){
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("y2")).concat("'N");
+                        }
                         doMapCoords.put(coordOptions.get(i), searchTerm);
                     }
                 }
@@ -1639,20 +1631,17 @@ public class UtilsFacete {
                 for(int i=0; i < paramsOptions.size(); i++){
                     String value = "";
                     if(getFacetParam(paramsFacet, "x1") != null){
-                        value = coords.get("x1").concat("' O / ");
+                        value = coords.get("x1").concat("'O ");
                     }
                     if(getFacetParam(paramsFacet, "y1") != null){
-                        value = value.concat(coords.get("y1")).concat("' N");
-                    }                
-                    value = value.concat("<br>");
+                        value = value.concat(coords.get("y1")).concat("'N ");
+                    }
                     if(getFacetParam(paramsFacet, "x2") != null){
-                        value = value.concat(coords.get("x2")).concat("' O / ");
+                        value = value.concat(coords.get("x2")).concat("'O ");
                     }
                     if(getFacetParam(paramsFacet, "y2") != null){
-                        value = value.concat(coords.get("y2")).concat("' N");
-                    } 
-                    
-                    value = value.concat("<br>" +  paramsOptions.get(i));
+                        value = value.concat(coords.get("y2")).concat("'N");
+                    }
                     selectedMap.put(paramsOptions.get(i), value);
                 }
                 HashMap mapHashMap = new HashMap();
