@@ -952,7 +952,7 @@ public class UtilsFacete {
                 }
             }
             
-            if(doClearSearchGeothesaurus != null){
+            if(doClearSearchGeothesaurus != null || doAddGeothesaurus != null){
                 removeAttributeFromSession(request, GEOTHESAURUS_TERM);
                 removeAttributeFromSession(request, GEOTHESAURUS_TOPICS);
                 removeAttributeFromSession(request, GEOTHESAURUS_SIMILAR_TOPICS);
@@ -1000,7 +1000,7 @@ public class UtilsFacete {
         }
         if(geothesaurusSelectTopicsSorted != null && geothesaurusSelectTopicsSorted.size() > 0){
             
-            context.put("geothesaurusSelectTopics", geothesaurusSelectTopicsSorted);
+            context.put(GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopicsSorted);
             setFacetSelectionState(context, request, "isGeothesaurusSelect", true);
         }else{
             setFacetSelectionState(context, request, "isGeothesaurusSelect", false);
