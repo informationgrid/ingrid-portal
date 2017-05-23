@@ -972,7 +972,7 @@ define({
     "ui.sysList.5130": "Objektklasse 3 - Name der Operation - WCTS",
     "ui.sysList.5151": "Objektklasse 3 - Version des Dienstes - CSW",
     "ui.sysList.5152": "Objektklasse 3 - Version des Dienstes - WMS",
-    "ui.sysList.5153": "Objektklasse 3 - Version des Dienstes - WFS",
+    "ui.sysList.5153": "Objektklasse 3 - Version des Dienstes - Downloaddienst",
     "ui.sysList.5154": "Objektklasse 3 - Version des Dienstes - WCTS",
     "ui.sysList.5180": "Objektklasse 3 - Operation - Unterstützte Platformen",
     "ui.sysList.5200": "Objektklasse 3 - Klassifikation des Dienstes",

@@ -1871,6 +1871,8 @@ define([
             UtilStore.updateWriteStore("thesaurusInspire", UtilList.listToTableData(nodeData.thesaurusInspireTermsList));
             UtilStore.updateWriteStore("thesaurusEnvTopics", UtilList.listToTableData(nodeData.thesaurusEnvTopicsList));
             registry.byId("thesaurusEnvExtRes").attr("value", nodeData.thesaurusEnvExtRes, true);
+            // reset field for entering free keywords
+            registry.byId("thesaurusFreeTerms").set("value", "");
 
 
             // -- Links --
