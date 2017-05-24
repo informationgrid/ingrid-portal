@@ -659,6 +659,35 @@
             </build>
         </profile>
         <profile>
+            <id>profile-bkg</id>
+            <activation>
+                <property>
+                    <name>profile</name>
+                    <value>bkg</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <configuration>
+                            <!--<scanTargets>
+                                <scanTarget>${basedir}/../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application/WEB-INF/classes</scanTarget>
+                            </scanTargets>-->
+                            <webApp>
+                                <!--<extraClasspath>${basedir}/../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application/WEB-INF/classes</extraClasspath>-->
+                                <!-- use resources from profile first, before using the default webapp dir -->
+                                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                                    <resourcesAsCSV>../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application,src/main/webapp</resourcesAsCSV>
+                                </baseResource>
+                            </webApp>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>linux-optimization</id>
             <activation>
                 <os>
