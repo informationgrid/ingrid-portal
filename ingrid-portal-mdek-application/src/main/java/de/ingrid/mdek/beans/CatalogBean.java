@@ -44,6 +44,7 @@ public class CatalogBean {
 	private Date dateOfCreation;
 	private Date dateOfLastModification;
 	private String modUuid;
+	private String plugId;
 
 	public String getUuid() {
 		return uuid;
@@ -171,5 +172,13 @@ public class CatalogBean {
 
     public void setSortByClass(String sortByClass) {
         this.sortByClass = sortByClass;
+    }
+
+    public String getPlugId() {
+        return plugId;
+    }
+
+    public void setPlugId(String plugId) {
+        this.plugId = plugId;
     }
 }

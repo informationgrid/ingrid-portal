@@ -205,8 +205,11 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
     }
 
     public CatalogBean getCatalogData() {
-        IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
-        return MdekCatalogUtils.extractCatalogFromResponse(response);
+        String plugId = connectionFacade.getCurrentPlugId();
+        IngridDocument response = mdekCallerCatalog.fetchCatalog(plugId, MdekSecurityUtils.getCurrentUserUuid());
+        CatalogBean extractCatalogFromResponse = MdekCatalogUtils.extractCatalogFromResponse(response);
+        extractCatalogFromResponse.setPlugId( plugId );
+        return extractCatalogFromResponse;
     }
 
     public CatalogBean storeCatalogData(CatalogBean cat) {
