@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -179,6 +179,11 @@ public class Api {
             throw new NotAuthorizedException("You are not authorized to upload the document.");
         }
 
+        // check filename
+        if (!this.storage.isValidName(path, file)) {
+            throw new IllegalFileException("The file is invalid.", path+"/"+file);
+        }
+
         // check if file exists already
         if (!replace && this.storage.exists(path, file)) {
             StorageItem item = this.storage.getInfo(path, file);
@@ -225,6 +230,11 @@ public class Api {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.CREATE.name())) {
             throw new NotAuthorizedException("You are not authorized to upload the document.");
+        }
+
+        // check filename
+        if (!this.storage.isValidName(path, file)) {
+            throw new IllegalFileException("The file is invalid.", path+"/"+file);
         }
 
         // store files

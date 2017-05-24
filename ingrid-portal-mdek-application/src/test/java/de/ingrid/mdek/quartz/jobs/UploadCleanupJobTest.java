@@ -22,6 +22,7 @@
  */
 package de.ingrid.mdek.quartz.jobs;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
@@ -40,6 +41,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggingEvent;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,6 +86,36 @@ public class UploadCleanupJobTest {
     private UploadCleanupJob job;
     private FileSystemStorage storage;
 
+    private Logger jobLogger = Logger.getLogger(UploadCleanupJob.class);
+    private TestAppender testAppender = new TestAppender();
+
+    public class TestAppender extends AppenderSkeleton {
+        public List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();
+
+        @Override
+        protected void append(LoggingEvent event) {
+            this.eventList.add(event);
+        }
+
+        @Override
+        public void close() {
+        }
+
+        @Override
+        public boolean requiresLayout() {
+            return false;
+        }
+
+        public List<LoggingEvent> getEvents(Level level) {
+            return this.eventList.stream().filter(e -> e.getLevel().equals(level)).collect(Collectors.toList());
+        }
+
+        public boolean hasIssues() {
+            return this.getEvents(Level.FATAL).size() > 0 || this.getEvents(Level.ERROR).size() > 0 ||
+                this.getEvents(Level.WARN).size() > 0;
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -103,10 +138,14 @@ public class UploadCleanupJobTest {
         this.job.setStorage(this.storage);
         this.job.setReferenceDate(JOB_REFERENCE_TIME);
         this.job.setDeleteFileMinAge(JOB_MIN_FILE_AGE);
+
+        // setup logging
+        this.jobLogger.addAppender(this.testAppender);
     }
 
     @After
     public void tearDown() throws Exception {
+    	this.jobLogger.removeAppender(this.testAppender);
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
     }
 
@@ -138,6 +177,8 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, unreferencedFile1));
         assertTrue(this.fileExists(OBJ_UUID, unreferencedFile2));
+        // exception is logged
+        assertEquals(1, this.testAppender.getEvents(Level.ERROR).size());
     }
 
     /**
@@ -173,6 +214,8 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, unreferencedFile1));
         assertTrue(this.fileExists(OBJ_UUID, unreferencedFile2));
+        // exception is logged
+        assertEquals(1, this.testAppender.getEvents(Level.ERROR).size());
     }
 
     /**
@@ -201,6 +244,70 @@ public class UploadCleanupJobTest {
         assertFalse(this.fileExists(OBJ_UUID, unreferencedFile2));
         assertTrue(this.deletedFileExists(OBJ_UUID, unreferencedFile1));
         assertTrue(this.deletedFileExists(OBJ_UUID, unreferencedFile2));
+        assertFalse(this.testAppender.hasIssues());
+    }
+
+    /**
+     * Test:
+     * - Ignore deleted files
+     * @throws Exception
+     */
+    @Test
+    public void testIgnoreDeleted() throws Exception {
+        // set up files
+        String deletedFile = "DeletedFile1";
+        this.createDeletedFile(OBJ_UUID, deletedFile, DEFAULT_FILE_AGE);
+
+        // setup file references
+        List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        this.setupFileReferences(publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertTrue(this.deletedFileExists(OBJ_UUID, deletedFile));
+        assertFalse(this.testAppender.hasIssues());
+    }
+
+    /**
+     * Test:
+     * - Ignore references containing a link instead of a file
+     * @throws Exception
+     */
+    @Test
+    public void testIgnoreLinks() throws Exception {
+        // NOTE: The test needs at least one file to make the job iterate the references
+
+        // set up files
+        String unreferencedFile1 = "UnreferencedFile1";
+        this.createFile(OBJ_UUID, unreferencedFile1, DEFAULT_FILE_AGE);
+
+        // set up links
+        String link1 = "//test.com/document.pdf";
+        String link2 = "http://test.com/document.pdf";
+        String link3 = "https://test.com/document.pdf";
+
+        // setup file references
+        List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        publishedRefs.add(this.job.new FileReference(
+                OBJ_UUID+"/"+link1, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+        ));
+        publishedRefs.add(this.job.new FileReference(
+                OBJ_UUID+"/"+link2, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+        ));
+        publishedRefs.add(this.job.new FileReference(
+                OBJ_UUID+"/"+link3, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+        ));
+        List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        this.setupFileReferences(publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -229,6 +336,7 @@ public class UploadCleanupJobTest {
         assertFalse(this.archivedFileExists(OBJ_UUID, unreferencedFile2));
         assertTrue(this.deletedFileExists(OBJ_UUID, unreferencedFile1));
         assertTrue(this.deletedFileExists(OBJ_UUID, unreferencedFile2));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -257,6 +365,7 @@ public class UploadCleanupJobTest {
         assertTrue(this.fileExists(OBJ_UUID, unreferencedFile2));
         assertTrue(this.deletedFileExists(OBJ_UUID, unreferencedFile1));
         assertFalse(this.deletedFileExists(OBJ_UUID, unreferencedFile2));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -284,6 +393,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.archivedFileExists(OBJ_UUID, referencedFile));
         assertFalse(this.fileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -311,6 +421,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, referencedFile));
         assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -338,6 +449,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, referencedFile));
         assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -365,6 +477,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, referencedFile));
         assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -395,6 +508,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, referencedFile));
         assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -422,6 +536,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, referencedFile));
         assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -449,6 +564,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, referencedFile));
         assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -476,6 +592,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, referencedFile));
         assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -503,6 +620,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, referencedFile));
         assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -530,6 +648,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(OBJ_UUID, referencedFile));
         assertFalse(this.archivedFileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -557,6 +676,7 @@ public class UploadCleanupJobTest {
         // test
         assertFalse(this.fileExists(OBJ_UUID, referencedFile));
         assertTrue(this.archivedFileExists(OBJ_UUID, referencedFile));
+        assertFalse(this.testAppender.hasIssues());
     }
 
     /**
@@ -659,6 +779,20 @@ public class UploadCleanupJobTest {
         Path createdPath = Files.createFile(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH, name));
         this.setFileAge(createdPath, ageInSeconds);
         assertTrue(this.archivedFileExists(path, name));
+    }
+
+    /**
+     * Create an deleted test file
+     * @param path
+     * @param name
+     * @param ageInSeconds
+     * @throws IOException
+     */
+    private void createDeletedFile(String path, String name, long ageInSeconds) throws IOException {
+        Files.createDirectories(Paths.get(DOCS_PATH.toString(), path, TRASH_PATH));
+        Path createdPath = Files.createFile(Paths.get(DOCS_PATH.toString(), path, TRASH_PATH, name));
+        this.setFileAge(createdPath, ageInSeconds);
+        assertTrue(this.deletedFileExists(path, name));
     }
 
     /**

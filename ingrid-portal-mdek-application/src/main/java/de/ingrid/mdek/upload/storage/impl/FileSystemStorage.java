@@ -26,8 +26,8 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
+import java.io.UncheckedIOException;
 import java.nio.file.CopyOption;
-import java.nio.file.DirectoryStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -39,6 +39,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
@@ -49,6 +50,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.upload.ConflictException;
+import de.ingrid.mdek.upload.IllegalFileException;
 import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.upload.storage.StorageItem;
 
@@ -60,7 +62,10 @@ public class FileSystemStorage implements Storage {
     private static final String ARCHIVE_PATH = "_archive_";
     private static final String TRASH_PATH = "_trash_";
 
-	private final static Logger log = Logger.getLogger(FileSystemStorage.class);
+    private static final int MAX_FILE_LENGTH = 255;
+    private static final Pattern ILLEGAL_CHARS = Pattern.compile(".*[/<>?\":|\\*].*");
+
+    private static final Logger log = Logger.getLogger(FileSystemStorage.class);
 
     private String docsDir = null;
     private String partsDir = null;
@@ -85,15 +90,13 @@ public class FileSystemStorage implements Storage {
 
     @Override
     public StorageItem[] list() throws IOException {
-        List<StorageItem> files = new ArrayList<StorageItem>();
-        this.list(this.getRealPath("", this.docsDir), files);
+        List<StorageItem> files = this.list(this.getRealPath("", this.docsDir));
         return files.toArray(new StorageItem[files.size()]);
     }
 
     @Override
     public StorageItem[] list(String path) throws IOException {
-        List<StorageItem> files = new ArrayList<StorageItem>();
-        this.list(this.getRealPath(path, this.docsDir), files);
+        List<StorageItem> files = this.list(this.getRealPath(path, this.docsDir));
         return files.toArray(new StorageItem[files.size()]);
     }
 
@@ -101,20 +104,22 @@ public class FileSystemStorage implements Storage {
      * List the files in the given path recursively
      *
      * @param path
-     * @param files
+     * @return List<StorageItem>
      * @throws IOException
      */
-    protected void list(Path path, List<StorageItem> files) throws IOException {
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
-            for (Path entry : stream) {
-                if (Files.isDirectory(entry)) {
-                    this.list(entry, files);
+    protected List<StorageItem> list(Path path) throws IOException {
+        List<StorageItem> files = new ArrayList<StorageItem>();
+        Files.walk(path)
+            .filter(p -> !p.getParent().toString().endsWith(TRASH_PATH) && Files.isRegularFile(p))
+            .forEach(p -> {
+                try {
+                    files.add(this.getFileInfo(p.toString()));
                 }
-                else if (Files.isRegularFile(entry)) {
-                    files.add(this.getFileInfo(entry.toString()));
+                catch (IOException e) {
+                    throw new UncheckedIOException(e);
                 }
-            }
-        }
+            });
+        return files;
     }
 
     @Override
@@ -126,6 +131,11 @@ public class FileSystemStorage implements Storage {
         }
         catch (Exception ex) {}
         return false;
+    }
+
+    @Override
+    public boolean isValidName(String path, String file) {
+        return this.isValid(path) && this.isValid(file);
     }
 
     @Override
@@ -144,6 +154,9 @@ public class FileSystemStorage implements Storage {
     @Override
     public FileSystemItem[] write(String path, String file, InputStream data, Integer size, boolean replace, boolean extract)
             throws IOException {
+        if (!this.isValidName(path, file)) {
+            throw new IllegalFileException("The file is invalid.", path+"/"+file);
+        }
         Path realPath = this.getRealPath(path, file, this.docsDir);
         Files.createDirectories(realPath.getParent());
 
@@ -210,6 +223,9 @@ public class FileSystemStorage implements Storage {
     @Override
     public FileSystemItem[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract)
             throws IOException {
+        if (!this.isValidName(path, file)) {
+            throw new IllegalFileException("The file is invalid.", path+"/"+file);
+        }
         // combine parts into stream
         Vector<InputStream> streams = new Vector<InputStream>();
         Path[] parts = new Path[totalParts];
@@ -312,6 +328,23 @@ public class FileSystemStorage implements Storage {
             }
         }
         return result.stream().map(p -> p.toString()).toArray(size -> new String[size]);
+    }
+
+    /**
+     * Check if a path is valid
+     *
+     * @param path
+     * @return String
+     */
+    private boolean isValid(String path) {
+        // check against rules provided in https://en.m.wikipedia.org/wiki/Filename
+        if (path == null || path.length() == 0 || path.length() > MAX_FILE_LENGTH) {
+            return false;
+        }
+        if (ILLEGAL_CHARS.matcher(path).matches()) {
+            return false;
+        }
+        return true;
     }
 
     /**

@@ -56,6 +56,15 @@ public interface Storage {
     boolean exists(String path, String file);
 
     /**
+     * Check if a file has a valid name
+     *
+     * @param path The path
+     * @param file The file
+     * @return boolean
+     */
+    boolean isValidName(String path, String file);
+
+    /**
      * Get information about a file
      *
      * @param path The path
