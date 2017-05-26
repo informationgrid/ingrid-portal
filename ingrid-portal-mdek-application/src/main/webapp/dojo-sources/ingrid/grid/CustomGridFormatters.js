@@ -131,7 +131,7 @@ define(["dojo/_base/declare",
                     // determine base url
                     var baseUrl = document.location.protocol + "//" + document.location.host + "/ingrid-portal-mdek-application/rest/document/";
                     // remove uuid information from relative path
-                    docName = value.substring( value.indexOf("/") + 1 );
+                    docName = value.substring( value.lastIndexOf("/") + 1 );
                     docName = decodeURI(docName);
                     link = baseUrl + value;
                 }

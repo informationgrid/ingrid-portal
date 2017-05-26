@@ -43,10 +43,11 @@ define([
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
     "ingrid/utils/Store",
+    "ingrid/utils/Catalog",
     "./upload/UploadWidget",
     "dojo/NodeList-traverse"
 ], function(declare, array, lang, aspect, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
-    creator, dialog, message, IgeEvents, CustomGrid, Editors, Formatters, dirty, UtilStore, UploadWidget) {
+    creator, dialog, message, IgeEvents, CustomGrid, Editors, Formatters, dirty, UtilStore, Catalog, UploadWidget) {
 
         return declare("UVPPhases", [_WidgetBase], {
 
@@ -738,7 +739,7 @@ define([
                             cursor: "pointer"
                         },
                         onclick: lang.hitch(this, function() {
-                            var path = currentUdk.uuid;
+                            var path = Catalog.catalogData.plugId+"/"+currentUdk.uuid;
                             var files = getFiles(this.phases, true);
                             uploader.open(path, files).then(lang.hitch(this, function(uploads) {
                                 handleUploads(uploads);

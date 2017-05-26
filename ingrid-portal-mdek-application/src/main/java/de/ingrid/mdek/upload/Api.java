@@ -71,12 +71,13 @@ public class Api {
     /**
      * Get HEAD request and return the Content-Length Header.
      *
-     * @param path The path and filename of the document
+     * @param path The path to the document
+     * @param file The filename of the document
      * @return Response
      * @throws Exception
      */
     @HEAD
-    @Path("{path : [^/]+}/{file : .+}")
+    @Path("{path : .+}/{file : [^/]+}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response head(
             @PathParam("path") String path,
@@ -101,16 +102,17 @@ public class Api {
     /**
      * Download a document
      *
-     * @param path The path and filename of the document
+     * @param path The path to the document
+     * @param file The filename of the document
      * @return Response
      * @throws Exception
      */
     @GET
-    @Path("{path : [^/]+}/{file : .+}")
+    @Path("{path : .+}/{file : [^/]+}")
     @Produces({MediaType.APPLICATION_OCTET_STREAM, MediaType.APPLICATION_JSON})
     public Response download(
-            @PathParam("path") String path,
-            @PathParam("file") String file) throws Exception {
+          @PathParam("path") String path,
+          @PathParam("file") String file) throws Exception {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.READ.name())) {
             throw new NotAuthorizedException("You are not authorized to read the document.");
@@ -245,12 +247,13 @@ public class Api {
     /**
      * Delete a document
      *
-     * @param path The path and filename of the document
+     * @param path The path to the document
+     * @param file The filename of the document
      * @return Response
      * @throws Exception
      */
     @DELETE
-    @Path("{path : [^/]+}/{file : .+}")
+    @Path("{path : .+}/{file : [^/]+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(
             @PathParam("path") String path,

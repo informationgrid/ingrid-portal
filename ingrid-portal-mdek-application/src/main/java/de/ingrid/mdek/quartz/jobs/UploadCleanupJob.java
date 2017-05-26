@@ -43,7 +43,7 @@ public class UploadCleanupJob extends QuartzJobBean {
     private static final Logger log = Logger.getLogger(UploadCleanupJob.class);
 
     public class FileReference {
-    	public String file;
+        public String file;
         public String path;
         public LocalDate expiryDate;
 
@@ -105,158 +105,110 @@ public class UploadCleanupJob extends QuartzJobBean {
         log.info("Reference date: "+referenceDate);
         log.info("Minimum file age: "+this.deleteFileMinAge+" seconds");
 
-        // initialize file maps
-        Map<String, StorageItem> allFiles = new HashMap<String, StorageItem>();
-        Map<String, StorageItem> unreferencedFiles = new HashMap<String, StorageItem>();
-        Map<String, StorageItem> expiredFiles = new HashMap<String, StorageItem>();
-        Map<String, StorageItem> unexpiredFiles = new HashMap<String, StorageItem>();
         try {
-            // collect all files from the file storage
-            log.debug("Collecting files from the storage");
-            StorageItem[] fileItems = this.storage.list();
-            log.debug("Number of files found in the storage: "+fileItems.length);
+            IMdekClientCaller caller = this.connectionFacade.getMdekClientCaller();
+            List<String> iplugList = caller.getRegisteredIPlugs();
+            if (iplugList == null || iplugList.size() == 0) {
+                throw new JobExecutionException("No iPlugs found.");
+            }
 
-            if (fileItems.length > 0) {
-                 // initialize file maps
-                for (StorageItem item : fileItems) {
-                    String uri = item.getUri();
-                    allFiles.put(uri, item);
+            log.debug("Number of iplugs found: "+iplugList.size());
+            for (String plugId : iplugList) {
+                log.debug("Processing iplug: "+plugId);
+                try {
+                    // initialize file maps
+                    Map<String, StorageItem> allFiles = new HashMap<String, StorageItem>();
+                    Map<String, StorageItem> unreferencedFiles = new HashMap<String, StorageItem>();
+                    Map<String, StorageItem> expiredFiles = new HashMap<String, StorageItem>();
+                    Map<String, StorageItem> unexpiredFiles = new HashMap<String, StorageItem>();
 
-                    // put all files in the unreferenced map first
-                    // files that are referenced in a document will be removed from the map
-                    unreferencedFiles.put(uri, item);
-                }
+                    // collect files from the file storage
+                    log.debug("Collecting files from the storage");
+                    StorageItem[] fileItems = this.storage.list(plugId);
+                    log.debug("Number of files found in the storage: "+fileItems.length);
 
-                // collect file references from documents for each catalog
-                log.debug("Collecting file references from iplugs");
-                IMdekClientCaller caller = this.connectionFacade.getMdekClientCaller();
-                List<String> iplugList = caller.getRegisteredIPlugs();
-                if (iplugList == null || iplugList.size() == 0) {
-                    throw new JobExecutionException("No iPlugs found.");
-                }
+                    if (fileItems.length > 0) {
+                         // initialize file maps
+                        for (StorageItem item : fileItems) {
+                            String uri = item.getUri();
+                            allFiles.put(uri, item);
 
-                log.debug("Number of iplugs found: "+iplugList.size());
-                for (String plugId : iplugList) {
-                    log.debug("Getting documents from iplug: "+plugId);
-                    Map<String, List<FileReference>> uploads = this.getUploads(plugId);
-
-                    Set<String> uploadUris = uploads.keySet();
-
-                    log.debug("Number of documents: "+uploadUris.size());
-                    log.debug("Collecting file references from documents");
-                    for (String uploadUri : uploadUris) {
-                        // get the references
-                        List<FileReference> references = uploads.get(uploadUri);
-                        log.debug("Found reference: "+uploadUri+" in "+references.size()+" document(s): "+references+")");
-
-                        // remove referenced file from unreferenced list
-                        if (unreferencedFiles.containsKey(uploadUri)) {
-                            unreferencedFiles.remove(uploadUri);
+                            // put all files in the unreferenced map first
+                            // files that are referenced in a document will be removed from the map
+                            unreferencedFiles.put(uri, item);
                         }
 
-                        // get the storage item for the reference
-                        StorageItem item = allFiles.get(uploadUri);
-                        if (item == null) {
-                            log.warn("File "+uploadUri+" does not exist in the storage");
-                            continue;
-                        }
+                        // get uploads from the iplug
+                        log.debug("Getting documents from iplug: "+plugId);
+                        Map<String, List<FileReference>> uploads = this.getUploads(plugId);
+                        Set<String> uploadUris = uploads.keySet();
 
-                        // get latest expire date from references
-                        // null values count as infinite
-                        LocalDate expiryDate = null;
-                        for (FileReference reference : references) {
-                            if (expiryDate == null ||
-                                    (reference.expiryDate == null || reference.expiryDate.isAfter(expiryDate))) {
-                                expiryDate = reference.expiryDate;
+                        // process uploads
+                        log.debug("Number of documents: "+uploadUris.size());
+                        log.debug("Collecting file references from documents");
+                        for (String uploadUri : uploadUris) {
+                            // get the references
+                            List<FileReference> references = uploads.get(uploadUri);
+                            log.debug("Found reference: "+uploadUri+" in "+references.size()+" document(s): "+references+")");
+
+                            // remove referenced file from unreferenced list
+                            if (unreferencedFiles.containsKey(uploadUri)) {
+                                unreferencedFiles.remove(uploadUri);
+                            }
+
+                            // get the storage item for the reference
+                            StorageItem item = allFiles.get(uploadUri);
+                            if (item == null) {
+                                log.warn("File "+uploadUri+" does not exist in the storage");
+                                continue;
+                            }
+
+                            // get latest expire date from references
+                            // null values count as infinite
+                            LocalDate expiryDate = null;
+                            for (FileReference reference : references) {
+                                if (expiryDate == null ||
+                                        (reference.expiryDate == null || reference.expiryDate.isAfter(expiryDate))) {
+                                    expiryDate = reference.expiryDate;
+                                }
+                            }
+                            // handle expired files
+                            // NOTE: a file might be expired in one catalog, but not in another,
+                            // so if a file is added/removed by one catalog, it might be removed/added by another
+                            // but at the end all expired files (and only those) must be contained in the expired files list
+                            if (!item.isArchived() && expiryDate != null && expiryDate.isBefore(referenceDate)) {
+                                expiredFiles.put(uploadUri, item);
+                            }
+                            else if (expiredFiles.containsKey(uploadUri)) {
+                                expiredFiles.remove(uploadUri);
+                            }
+                            // handle files to be restored
+                            if (item.isArchived() &&
+                                    (expiryDate == null || expiryDate.isEqual(referenceDate) || expiryDate.isAfter(referenceDate))) {
+                                unexpiredFiles.put(uploadUri, item);
                             }
                         }
-                        // handle expired files
-                        // NOTE: a file might be expired in one catalog, but not in another,
-                        // so if a file is added/removed by one catalog, it might be removed/added by another
-                        // but at the end all expired files (and only those) must be contained in the expired files list
-                        if (!item.isArchived() && expiryDate != null && expiryDate.isBefore(referenceDate)) {
-                            expiredFiles.put(uploadUri, item);
-                        }
-                        else if (expiredFiles.containsKey(uploadUri)) {
-                            expiredFiles.remove(uploadUri);
-                        }
-                        // handle files to be restored
-                        if (item.isArchived() &&
-                                (expiryDate == null || expiryDate.isEqual(referenceDate) || expiryDate.isAfter(referenceDate))) {
-                            unexpiredFiles.put(uploadUri, item);
-                        }
+
+                        // cleanup
+                        this.doCleanup(unreferencedFiles, expiredFiles, unexpiredFiles);
                     }
+                    else {
+                        log.debug("Nothing to clean up");
+                    }
+                }
+                catch (Exception e) {
+                    // current iplug failed
+                    this.logError("Processing "+plugId+" failed", e);
                 }
             }
         }
-        catch (Exception e) {
-            // any exception in this stage must abort the job
-            // to prevent falsely deletion of files
-            this.logError(e.toString(), e);
+        catch (Exception ex) {
+            this.logError(ex.toString(), ex);
             log.info("Aborted UploadCleanupJob");
             return;
         }
 
-        // delete unreferenced files, if they are
-        log.debug("Deleting unreferenced files");
-        int deleteCount = 0;
-        for (String file : unreferencedFiles.keySet()) {
-            StorageItem item = unreferencedFiles.get(file);
-            // get file age
-            long age = LocalDateTime.from(item.getLastModifiedDate()).
-                    until(this.referenceDateTime, ChronoUnit.SECONDS);
-            if (this.deleteFileMinAge == null || age >= this.deleteFileMinAge) {
-                log.info("Deleting file: "+file+" (age: "+age+" seconds)");
-                try {
-                    this.storage.delete(item.getPath(), item.getFile());
-                    deleteCount++;
-                }
-                catch (IOException e) {
-                    // log error, but keep the job running
-                    this.logError("File "+file+" could not be deleted", e);
-                }
-            }
-            else {
-                 log.debug("Keeping file: "+file+" (age: "+age+" seconds)");
-            }
-        }
-        log.debug("Number of deleted files: "+deleteCount);
-
-        // archive not archived expired files
-        log.debug("Archiving expired files");
-        int archiveCount = 0;
-        for (String file : expiredFiles.keySet()) {
-            StorageItem item = expiredFiles.get(file);
-            log.info("Archiving file: "+file);
-            try {
-                this.storage.archive(item.getPath(), item.getFile());
-                archiveCount++;
-            }
-            catch (IOException e) {
-                // log error, but keep the job running
-                this.logError("File "+file+" could not be archived", e);
-            }
-        }
-        log.debug("Number of archived files: "+archiveCount);
-
-        // restore not expired archived files
-        log.debug("Restoring archived files");
-        int restoreCount = 0;
-        for (String file : unexpiredFiles.keySet()) {
-            StorageItem item = unexpiredFiles.get(file);
-            log.info("Restoring file: "+file);
-            try {
-                this.storage.restore(item.getPath(), item.getFile());
-                restoreCount++;
-            }
-            catch (IOException e) {
-                // log error, but keep the job running
-                this.logError("File "+file+" could not be restored", e);
-            }
-        }
-        log.debug("Number of restored files: "+restoreCount);
-
-        log.debug("Finished UploadCleanupJob");
+        log.info("Finished UploadCleanupJob");
     }
 
     /**
@@ -339,10 +291,12 @@ public class UploadCleanupJob extends QuartzJobBean {
                                         if (objsSub != null && objsSub.size() == 1) {
                                             date = objsSub.get(0).getString("fdExpires.data");
                                         }
-                                    } else {
+                                    }
+                                    else {
                                         throw new JobExecutionException("Job execution returned null response from plugId: " + plugId);
                                     }
-                                } else {
+                                }
+                                else {
                                     throw new JobExecutionException(responseSub.getString("job_invoke_error_message"));
                                 }
 
@@ -360,10 +314,12 @@ public class UploadCleanupJob extends QuartzJobBean {
                                 }
                             }
                         }
-                    } else {
+                    }
+                    else {
                         throw new JobExecutionException("Job returned null as OBJ_ENTITIES from plugId: " + plugId);
                     }
-                } else {
+                }
+                else {
                     throw new JobExecutionException("Job execution returned null response from plugId: " + plugId);
                 }
             }
@@ -373,6 +329,77 @@ public class UploadCleanupJob extends QuartzJobBean {
         }
 
         return resultList;
+    }
+
+    /**
+     * Cleanup
+     * @param unreferencedFiles
+     * @param expiredFiles
+     * @param unexpiredFiles
+     */
+    private void doCleanup(
+            Map<String, StorageItem> unreferencedFiles,
+            Map<String, StorageItem> expiredFiles,
+            Map<String, StorageItem> unexpiredFiles
+    ) {
+        // delete unreferenced files
+        log.debug("Deleting unreferenced files");
+        int deleteCount = 0;
+        for (String file : unreferencedFiles.keySet()) {
+            StorageItem item = unreferencedFiles.get(file);
+            // get file age
+            long age = LocalDateTime.from(item.getLastModifiedDate()).
+                    until(this.referenceDateTime, ChronoUnit.SECONDS);
+            if (this.deleteFileMinAge == null || age >= this.deleteFileMinAge) {
+                log.info("Deleting file: "+file+" (age: "+age+" seconds)");
+                try {
+                    this.storage.delete(item.getPath(), item.getFile());
+                    deleteCount++;
+                }
+                catch (IOException e) {
+                    // log error, but keep the job running
+                    this.logError("File "+file+" could not be deleted", e);
+                }
+            }
+            else {
+                 log.debug("Keeping file: "+file+" (age: "+age+" seconds)");
+            }
+        }
+        log.debug("Number of deleted files: "+deleteCount);
+
+        // archive not archived expired files
+        log.debug("Archiving expired files");
+        int archiveCount = 0;
+        for (String file : expiredFiles.keySet()) {
+            StorageItem item = expiredFiles.get(file);
+            log.info("Archiving file: "+file);
+            try {
+                this.storage.archive(item.getPath(), item.getFile());
+                archiveCount++;
+            }
+            catch (IOException e) {
+                // log error, but keep the job running
+                this.logError("File "+file+" could not be archived", e);
+            }
+        }
+        log.debug("Number of archived files: "+archiveCount);
+
+        // restore not expired archived files
+        log.debug("Restoring archived files");
+        int restoreCount = 0;
+        for (String file : unexpiredFiles.keySet()) {
+            StorageItem item = unexpiredFiles.get(file);
+            log.info("Restoring file: "+file);
+            try {
+                this.storage.restore(item.getPath(), item.getFile());
+                restoreCount++;
+            }
+            catch (IOException e) {
+                // log error, but keep the job running
+                this.logError("File "+file+" could not be restored", e);
+            }
+        }
+        log.debug("Number of restored files: "+restoreCount);
     }
 
     /**
