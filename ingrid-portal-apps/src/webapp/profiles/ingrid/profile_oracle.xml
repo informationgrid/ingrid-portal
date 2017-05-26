@@ -139,6 +139,21 @@
             <name>disclaimer.psml</name>
             <hidden>false</hidden>
         </page>
+        <page>
+            <name>main-search.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimpleResult</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::SearchSimilar</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::SearchResult</name>
+                </portlet>
+            </portlets>
+        </page>
       </pages>
     <files>
         <file>
@@ -208,6 +223,14 @@
         <!-- DONE with tmp_table -->
         <execute>
             <![CDATA[DROP TABLE tmp_table]]>
+        </execute>
+        <!-- Change 'ingrid-portal-apps::SearchSimilar' decorator -->
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-clear' WHERE name='ingrid-portal-apps::SearchSimilar']]>
+        </execute>
+        <!-- Change 'ingrid-portal-apps::SearchSimpleResult' decorator -->
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-clear' WHERE name='ingrid-portal-apps::SearchSimpleResult']]>
         </execute>
         <!-- Enable language switcher -->
         <execute>

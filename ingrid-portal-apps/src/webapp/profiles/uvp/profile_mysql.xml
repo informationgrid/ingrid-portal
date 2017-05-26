@@ -64,6 +64,18 @@
                 </portlet>
             </portlets>
         </page>
+        <page>
+            <name>main-search.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimpleResult</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::SearchResult</name>
+                </portlet>
+            </portlets>
+        </page>
       </pages>
     <files>
         <file>
@@ -80,6 +92,10 @@
         </file>
     </files>
     <sql>
+        <!-- Change 'ingrid-portal-apps::SearchSimpleResult' decorator -->
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-clear' WHERE name='ingrid-portal-apps::SearchSimpleResult';]]>
+        </execute>
         <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link';]]>
