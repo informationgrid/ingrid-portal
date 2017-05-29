@@ -1,3 +1,5 @@
+UPDATE info SET value_name = '4.0.3' WHERE  info.key_name = 'version';
+
 INSERT INTO `help_messages` (`id`, `version`, `gui_id`, `entity_class`, `language`, `name`, `help_text`, `sample`) VALUES
 (1560, 0, 4435, -1, 'de', 'Verwaltungsgebiet', 'Angabe eines administrativen Gebietes. Das Feld wird für die gezielte Recherche nach Ressourcen eines bestimmten Bundeslandes benutzt.', ''),
 (1561, 0, 4435, -1, 'en', 'Administrative Area', 'Enter an administrative area. This field is used for a specific search for a dataset of a certain county.', ''),
