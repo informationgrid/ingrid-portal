@@ -12,10 +12,6 @@
             <hidden>true</hidden>
         </page>
         <page>
-            <name>main-about.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
