@@ -7,16 +7,16 @@ CREATE TABLE  ingrid_temp (
 );
 
 -- Hide 'main-measures.psml'
-UPDATE page SET is_hidden = '1' WHERE path = '/main-measures.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/main-measures.psml';
 
 -- Hide 'main-chronicle.psml'
-UPDATE page SET is_hidden = '1' WHERE path = '/main-chronicle.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/main-chronicle.psml';
 
 -- Hide 'main-about-data-source.psml'
-UPDATE page SET is_hidden = '1' WHERE path = '/main-about-data-source.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/main-about-data-source.psml';
 
 -- Hide 'search-catalog/search-catalog-hierarchy.psml'
-UPDATE page SET is_hidden = '1' WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
 
 -- Change '/default-page.psml'
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('default_page_fragment_id',(SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/default-page.psml')));
@@ -46,7 +46,7 @@ INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, decorator,
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height)            VALUES ((SELECT max_key+10  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_search_fragment_id'), 'ingrid-portal-apps::SearchResult',        'portlet', 1, 0, -1, -1, -1, -1, -1);
 
 -- Hide '/language.link'
-UPDATE link SET is_hidden = '1' WHERE PATH='/language.link';
+UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
 
 -- Delete temporary table
 DROP TABLE ingrid_temp;
