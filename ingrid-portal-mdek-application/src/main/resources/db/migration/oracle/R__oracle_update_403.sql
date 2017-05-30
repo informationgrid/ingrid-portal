@@ -4,6 +4,13 @@
 
 UPDATE info SET value_name = '4.0.3' WHERE  info.key_name = 'version';
 
+DELETE FROM help_messages WHERE gui_id = 5170;
+DELETE FROM help_messages WHERE gui_id = 6001;
+DELETE FROM help_messages WHERE gui_id = 6002;
+DELETE FROM help_messages WHERE gui_id = 6005;
+DELETE FROM help_messages WHERE gui_id = 6006;
+DELETE FROM help_messages WHERE gui_id = 10034;
+
 -- Updated stuff for InGrid 4.0.3
 -- ==============================
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
@@ -22,6 +29,10 @@ INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, he
 (1634, 0, 6005, -1, 'de', 'AdV kompatibel', 'Beim Anhaken der Checkbox "AdV kompatibel" werden die Anforderungen des AdV-Metadatenprofils umgesetzt (z.B. Automatisiertes Setzen des Schlüsselwortes "AdVMIS" in der Datenbank).', '');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1635, 0, 6005, -1, 'en', 'AdV compatible', 'When checkbox "AdV compatible" is checked, then the requirements of the AdV-Metadata profiles are used (e.g. automatically set the keyword "AdVMIS" in the database).', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1560, 0, 6006, -1, 'de', 'Verwaltungsgebiet', 'Angabe eines administrativen Gebietes. Das Feld wird für die gezielte Recherche nach Ressourcen eines bestimmten Bundeslandes benutzt.', '');
+INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
+(1561, 0, 6006, -1, 'en', 'Administrative Area', 'Enter an administrative area. This field is used for a specific search for a dataset of a certain county.', '');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
 (1636, 0, 10034, -1, 'de', 'Konformität', 'Hier muss angegeben werden, zu welcher Durchführungsbestimmung der INSPIRE-Richtlinie bzw. zu welcher anderweitigen Spezifikation die beschriebenen Daten konform sind. (INSPIRE-Pflichtfeld)<br/><br/>Dieses Feld wird bei Eintragungen in "INSPIRE-Themen" oder "Art des Dienstes" automatisch befüllt. Es muss dann nur der Grad der Konformität manuell eingetragen werden.<br/><br/>Bitte entsprechend den Empfehlungen des AdV-Metadatenprofils nur die Werte "konform" und "nicht konform" beim Feld "Grad der Konformität" verwenden.', '');
 INSERT INTO help_messages (id, version, gui_id, entity_class, language, name, help_text, sample) VALUES
