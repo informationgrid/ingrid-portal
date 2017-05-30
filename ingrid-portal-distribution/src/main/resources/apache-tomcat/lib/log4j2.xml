@@ -43,6 +43,10 @@
             <AppenderRef ref="RootLogFile" />
             <AppenderRef ref="Console" />
         </Logger>
+        <Logger name="org.flywaydb" level="info" additivity="false">
+            <AppenderRef ref="RootLogFile" />
+            <AppenderRef ref="Console" />
+        </Logger>
         <Root level="warn">
             <AppenderRef ref="RootLogFile" />
             <AppenderRef ref="Console" />
