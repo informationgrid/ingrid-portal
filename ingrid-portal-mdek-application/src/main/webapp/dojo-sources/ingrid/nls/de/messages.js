@@ -1079,7 +1079,7 @@ define({
     "hint.addressFromParentAdded": "Adressdaten von übergeordneter Adresse übernommen!",
     "hint.selectOpenData": "Wird diese Auswahl gewählt, so werden alle Zugriffsbeschränkungen entfernt und durch 'keine' ersetzt. Möchten Sie fortfahren?",
 
-    "warning.address.inherit": "Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Land</li></ul>",
+    "warning.address.inherit": "Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Verwaltungsgebiet</li><li>Land</li></ul>",
     "warning.address.inherit.to.children": "Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?",
     "warning.update.capabilities": "Achtung: mit dem Aktualisieren werden folgende Felder mit den Werten aus dem aktuellen Capabilities-Dokument überschrieben: <ul><li>Kurzbezeichnung</li><li>Beschreibung</li><li>Art des Dienstes</li><li>Klassifikation des Dienstes</li><li>Erläuterungen</li><li>Version des Dienstes</li><li>Operationen</li><li>Optionale Schlagworte</li></ul>Fortfahren?",
 

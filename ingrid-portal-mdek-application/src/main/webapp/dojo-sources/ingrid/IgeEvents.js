@@ -840,6 +840,7 @@ define([
                         registry.byId("addressCity").attr("value", addrNodeData.city, true);
                         registry.byId("addressPOBox").attr("value", addrNodeData.pobox, true);
                         registry.byId("addressZipPOBox").attr("value", addrNodeData.poboxPostalCode, true);
+                        registry.byId("addressAdministrativeArea").attr("value", addrNodeData.administrativeArea, true);
 
                         UtilUI.showToolTip("spatialRefLocation", message.get('hint.addressFromParentAdded'));
                     }
