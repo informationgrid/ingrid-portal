@@ -7,52 +7,52 @@ CREATE TABLE  ingrid_temp (
 );
 
 -- Show '/main-measures.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/main-measures.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/main-measures.psml';
 
 -- Show '/main-chronicle.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/main-chronicle.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/main-chronicle.psml';
 
 -- Show '/main-maps.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/main-maps.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/main-maps.psml';
 
 -- Show '/service-sitemap.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/service-sitemap.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/service-sitemap.psml';
 
 -- Show '/administration/admin-content-rss.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/administration/admin-content-rss.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/administration/admin-content-rss.psml';
 
 -- Show '/administration/admin-homepage.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/administration/admin-homepage.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/administration/admin-homepage.psml';
 
 -- Show '/mdek/mdek_portal_admin.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/mdek/mdek_portal_admin.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/mdek/mdek_portal_admin.psml';
 
 -- Show '/main-about-partner.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/main-about-partner.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/main-about-partner.psml';
 
 -- Show '/main-about-data-source.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/main-about-data-source.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/main-about-data-source.psml';
 
 -- Show '/main-about.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/main-about.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/main-about.psml';
 
 -- Show '/search-catalog/search-catalog-hierarchy.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
 
 -- Show '/service-contact.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/service-contact.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/service-contact.psml';
 
 -- Show '/disclaimer.psml'
-UPDATE page SET is_hidden = '0' WHERE path = '/disclaimer.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/disclaimer.psml';
 
 -- Hide '/cms/cms-1.psml'
-UPDATE page SET is_hidden = '1' WHERE path = '/cms/cms-1.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-1.psml';
 
 -- Hide '/cms/cms-2.psml'
-UPDATE page SET is_hidden = '1' WHERE path = '/cms/cms-2.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-2.psml';
 
 -- Hide '/application/main-application.psml'
-UPDATE page SET is_hidden = '1' WHERE path = '/application/main-application.psml';
+UPDATE page SET is_hidden = 1 WHERE path = '/application/main-application.psml';
 
 -- Change '/default-page.psml'
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('default_page_fragment_id',(SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/default-page.psml')));
@@ -118,7 +118,7 @@ UPDATE folder SET is_hidden = 1 WHERE path = '/cms';
 UPDATE folder SET is_hidden = 1 WHERE path = '/application';
 
 -- Show '/language.link'
-UPDATE link SET is_hidden = '0' WHERE PATH='/language.link';
+UPDATE link SET is_hidden = 0 WHERE path = '/language.link';
 
 -- Delete temporary table
 DROP TABLE ingrid_temp;
