@@ -6,6 +6,9 @@
     </properties>
     <body>
         <release version="4.0.3-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.3">
+	      <action type="add" dev="wemove" issue="REDMINE-18">
+	        IGE: Add GEMET Thesaurus Service to be activated in external-services.xml
+	      </action>
           <action type="add" dev="wemove" issue="REDMINE-369,-375,-367">
             IGE: Added new fields adv_compatible, administrative_area and inspire_conform.
           </action>
