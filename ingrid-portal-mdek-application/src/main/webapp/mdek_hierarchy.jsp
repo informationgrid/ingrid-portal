@@ -2514,10 +2514,10 @@
                                             </span>
                                         </div>
                                     </span>
-                                    <span id="uiElement4435" class="outer halfWidth">
+                                    <span id="uiElement6006" class="outer halfWidth">
                                         <div>
                                             <span id="addressAdministrativeAreaLabel" class="label">
-                                                <label for="addressAdministrativeArea" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4435)">
+                                                <label for="addressAdministrativeArea" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6006)">
                                                     <fmt:message key="ui.adr.details.administrativeArea" />
                                                 </label>
                                             </span>
