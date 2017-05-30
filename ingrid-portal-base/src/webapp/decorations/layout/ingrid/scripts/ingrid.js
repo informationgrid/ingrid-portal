@@ -310,7 +310,7 @@ function openURL(url){
 }
 
 function getOSMLayer(){
-    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osmAttrib='';
     var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
     

@@ -36,9 +36,10 @@
 <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
 <script language="JavaScript" type="text/javascript">
     var map = new L.Map('map');
-    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var osmAttrib='';
-    var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 20, attribution: osmAttrib});
+    var osm = getOSMLayer();
+    osm.options.minZoom = 5;
+    osm.options.maxZoom = 20;
+    
     var selectedMap = '$selectedMap.webmapclientCoords';
     
     // start the map in South-East England
