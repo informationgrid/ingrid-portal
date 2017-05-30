@@ -20,6 +20,6 @@
  * limitations under the Licence.
  * **************************************************#
  */
-{
+define({
     "menu.main.hierarchyAcquisition":"Metadaten erfassen"
-}
+});
