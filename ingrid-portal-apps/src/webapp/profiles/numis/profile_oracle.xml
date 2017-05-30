@@ -64,13 +64,6 @@
         </file>
     </files>
     <sql>
-        <!-- MainMenu position-->
-        <execute>
-            <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='3' WHERE OPTIONS='/main-service.psml']]>
-        </execute>
-        <execute>
-            <![CDATA[UPDATE folder_menu SET ELEMENT_ORDER='1' WHERE OPTIONS='/main-environment.psml']]>
-        </execute>
         <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link']]>
