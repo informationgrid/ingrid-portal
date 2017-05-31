@@ -37,12 +37,14 @@ define([
         category: "UVP",
         forAddress: true, // execute only on address form initialization
         run: function() {
-            // domClass.add("uiElement4571_at0", "hide"); // Veröffentlichung
             domClass.add("adrThesaurus", "hide");  // Verschlagwortung
             domClass.add("uiElement4440", "hide"); // Aufgaben
             domClass.add("uiElement4450", "hide"); // Servicezeiten
             domClass.add("uiElement4571_at0", "hide"); // Veröffentlichung (#683)
-            domClass.add("uiElement4435", "hide"); // Administrative Area (#670)
+            domClass.add("uiElement4571_at1", "hide"); // Veröffentlichung (#683)
+            domClass.add("uiElement4571_at2", "hide"); // Veröffentlichung (#683)
+            domClass.add("uiElement4571_at3", "hide"); // Veröffentlichung (#683)
+            domClass.add("uiElement6006", "hide"); // Administrative Area (#670)
 
             // since folder behaviour also toggles address owner field we have to listen
             // for the same event. Since we register to a later time, this handler is also called later.
