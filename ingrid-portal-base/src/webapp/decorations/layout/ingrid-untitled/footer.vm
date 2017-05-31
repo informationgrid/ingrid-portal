@@ -55,16 +55,7 @@
         <!-- Popup -->
         <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
         <script src="/decorations/layout/ingrid/scripts/expander.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
-        #set($lang = $renderRequest.Locale.getLanguage())
-        #if($lang && $lang != "en")
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
-        #end
-        <script>
-            $('.datepicker').pickadate()
-        </script>
+        
         <!-- Accordion -->
         <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
         <script>
