@@ -175,7 +175,7 @@
             </svg>
             <span class="header__widget__text mq-hide-l">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
         </a>
-        <div class="metamenu metamenu--wide">
+        <div id="menu_login" class="metamenu metamenu--wide">
         #if($jetspeed.getLoggedOn())
             <!-- State logged in -->
             #set($userAttributes = $jetspeed.getUserProperties())
