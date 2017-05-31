@@ -124,4 +124,4 @@ UPDATE link SET is_hidden = 0 WHERE path = '/language.link';
 DROP TABLE ingrid_temp;
 
 -- update max keys
-UPDATE ojb_hl_seq SET max_key=max_key+grab_size, version=version+1 WHERE tablename='SEQ_FRAGMENT';
+UPDATE ojb_hl_seq SET max_key=max_key+grab_size+grab_size, version=version+1 WHERE tablename='SEQ_FRAGMENT';
