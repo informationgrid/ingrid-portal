@@ -193,10 +193,8 @@ public class SNSService {
      */
     public SNSTopic findTopic(String queryTerm, Locale locale) {
     	//Locale sessionLocale = MdekUtils.getLocaleFromSession();
-    	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from "
-    		+ queryTerm + ", EXACT, true, " + locale.getLanguage());
     	
-    	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm,
+    	Term[] terms = serviceFindTermsFromQueryTerm(queryTerm,
     			de.ingrid.external.ThesaurusService.MatchingType.EXACT, true, locale);
 
     	SNSTopic result = null;
@@ -233,8 +231,6 @@ public class SNSService {
     
     public List<SNSTopic> findTopics(String url, String queryTerm, Locale locale, MatchingType searchType) {
     	// Locale sessionLocale = MdekUtils.getLocaleFromSession();
-    	log.debug("     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from "
-    		+ queryTerm + ", " + searchType + ", true, " + locale.getLanguage());
 
     	if (url != null) {
     		// if the rootUrl actually is a sub term then split the root url
@@ -243,7 +239,7 @@ public class SNSService {
     	}
     	
     	// TODO: use "contains" here since exact only delivers one term! CHECK!!!
-    	Term[] terms = thesaurusService.findTermsFromQueryTerm(queryTerm,
+    	Term[] terms = serviceFindTermsFromQueryTerm(queryTerm,
     			searchType, true, locale);
 
     	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
@@ -255,14 +251,19 @@ public class SNSService {
 	    return resultList;
     }
 
+    private Term[] serviceFindTermsFromQueryTerm(String queryTerm, MatchingType searchType, boolean addDescriptors, Locale locale) {
+        log.debug( "     !!!!!!!!!! thesaurusService.findTermsFromQueryTerm() from " + queryTerm + ", " + searchType + ", " + addDescriptors + ", " + locale.getLanguage() );
+
+        return thesaurusService.findTermsFromQueryTerm( queryTerm, searchType, addDescriptors, locale );
+    }
+
     /**
      * getPSI for 'topicId'. Returns the SNSTopic of given id !
      * @param topicId topic id to search for
      * @param locale 
      * @return the SNSTopic if it exists, null otherwise
-     * @throws Exception if there was a connection/communication error with the SNS
      */
-    public SNSTopic getPSI(String topicId, Locale locale) throws Exception {
+    public SNSTopic getPSI(String topicId, Locale locale) {
     	// Locale sessionLocale = MdekUtils.getLocaleFromSession();
     	log.debug("     !!!!!!!!!! thesaurusService.getTerm() from " + topicId + ", " + locale.getLanguage());
     	
@@ -427,8 +428,8 @@ public class SNSService {
             	}
         	}
         	
-        	// create topic containing lists ! use default type UMTHES ...
-			result = new SNSTopic(Type.DESCRIPTOR, Source.UMTHES, topicId, null, null, null);
+            // fetch topic from backend, we do not create it manually to get correct data from service !
+            result = getPSI( topicId, locale );
 		    result.setChildren(children);
 		    result.setParents(parents);
 		    result.setSynonyms(synonyms);        		
