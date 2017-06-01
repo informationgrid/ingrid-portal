@@ -88,28 +88,32 @@
         </div>
     </form>
 </article>
-        <script>
-            var input_from_yy = $('#from_yy.datepicker').pickadate();
-            var from_yy = input_from_yy.pickadate('picker');
-            
-            var input_till_yy = $('#till_yy.datepicker').pickadate();
-            var till_yy = input_till_yy.pickadate('picker');
-            
-            var input_time_at = $('#time_at.datepicker').pickadate();
-            
-            from_yy.on('set', function(){
-                var from_yy_val = from_yy.get('select');
-                var till_yy_val = till_yy.get('select');
-                if(!till_yy_val || (from_yy_val && till_yy_val && from_yy_val.pick > till_yy_val.pick)){
-                    till_yy.set('select', from_yy.get('select'));
-                }
-            });
-            
-            till_yy.on('set', function(){
-                var from_yy_val = from_yy.get('select');
-                var till_yy_val = till_yy.get('select');
-                if(!from_yy_val || (from_yy_val && till_yy_val && from_yy_val.pick > till_yy_val.pick)){
-                    from_yy.set('select', till_yy.get('select'));
-                }
-            });
-        </script>
+<script>
+    var input_from_yy = $('#from_yy.datepicker').pickadate();
+    var from_yy = input_from_yy.pickadate('picker');
+    
+    var input_till_yy = $('#till_yy.datepicker').pickadate();
+    var till_yy = input_till_yy.pickadate('picker');
+    
+    var input_time_at = $('#time_at.datepicker').pickadate();
+    
+    from_yy.on('set', function(e){
+        if(e.select){
+            var from_yy_val = from_yy.get('select');
+            var till_yy_val = till_yy.get('select');
+            if(!till_yy_val || (from_yy_val && till_yy_val && from_yy_val.pick > till_yy_val.pick)){
+                till_yy.set('select', from_yy.get('select'));
+            }
+        }
+    });
+    
+    till_yy.on('set', function(e){
+        if(e.select){
+            var from_yy_val = from_yy.get('select');
+            var till_yy_val = till_yy.get('select');
+            if(!from_yy_val || (from_yy_val && till_yy_val && from_yy_val.pick > till_yy_val.pick)){
+                from_yy.set('select', till_yy.get('select'));
+            }
+        }
+    });
+</script>
