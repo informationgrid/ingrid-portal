@@ -72,12 +72,6 @@ public class Configuration {
         }
     }
 
-    public static final int DEFAULT_TIMEOUT = 10;
-
-    public static final int DEFAULT_MAXIMUM_SIZE = 1048576;
-
-    public static final int DEFAULT_THREAD_COUNT = 100;
-
     /**
      * COMMUNICATION - SETTINGS
      */
@@ -94,6 +88,18 @@ public class Configuration {
     @PropertyValue("communications.ibus")
     @DefaultValue("")
     public List<Communication> ibusses;
+    
+    @PropertyValue("communication.server.timeout")
+    @DefaultValue("10")
+    public int ibusTimeout;
+    
+    @PropertyValue("communication.server.maxMsgSize")
+    @DefaultValue("10485760")
+    public int ibusMaxMsgSize;
+    
+    @PropertyValue("communication.server.threadCount")
+    @DefaultValue("100")
+    public int ibusThreadCount;
 
  
 
@@ -124,10 +130,10 @@ public class Configuration {
 
                 communication.addNode( "/communication/client/connections", "server" );
                 communication.addNode( "/communication/client/connections/server", "socket", id );
-                communication.addAttribute( "/communication/client/connections/server/socket", "timeout", "" + DEFAULT_TIMEOUT, id );
+                communication.addAttribute( "/communication/client/connections/server/socket", "timeout", "" + ibusTimeout, id );
                 communication.addNode( "/communication/client/connections/server", "messages", id );
-                communication.addAttribute( "/communication/client/connections/server/messages", "maximumSize", "" + DEFAULT_MAXIMUM_SIZE, id );
-                communication.addAttribute( "/communication/client/connections/server/messages", "threadCount", "" + DEFAULT_THREAD_COUNT, id );
+                communication.addAttribute( "/communication/client/connections/server/messages", "maximumSize", "" + ibusMaxMsgSize, id );
+                communication.addAttribute( "/communication/client/connections/server/messages", "threadCount", "" + ibusThreadCount, id );
 
                 communication.addAttribute( "/communication/client/connections/server", "name", ibus.url, id );
                 communication.addAttribute( "/communication/client/connections/server/socket", "port", "" + ibus.port, id );
