@@ -5,7 +5,7 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="4.0.2.1-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.2.1">
+        <release version="4.0.2.1" date="2017-06-01" description="Release 4.0.2.1">
           <action type="fix" dev="wemove" issue="REDMINE-662">
             PORTAL: PostgreSQL: Fix quartz jobs and initial database contents.
           </action>
