@@ -167,7 +167,18 @@
           </execution>
         </executions>
       </plugin>
-            
+      
+      <!-- Activate docker image build and push integration (see parent-pom) -->
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <configuration>
+          <!-- since we call the command from the parent we also have to set the path to the child module
+               where the docker configuration is -->
+          <dockerDirectory>ingrid-portal-distribution/src/docker</dockerDirectory>
+        </configuration>
+      </plugin>
+      
     </plugins>
   </build>
   <repositories>
