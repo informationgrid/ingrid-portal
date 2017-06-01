@@ -38,20 +38,6 @@
     <property name="postgresDbDriver"                 location="${basedir}/postgresql-9.4.1212.jar"/>
     <property name="postgresQuartzDriverDelegate"     value="org.quartz.impl.jdbcjobstore.PostgreSQLDelegate"/>
 
-    
-    <!-- postgres portal imports -->
-    <property name="importPostgres"     location="${installDir}/sql/ingrid_portal_401_postgres_95.sql"/>
-    <property name="updatePostgresPortaluToIngrid"     location="${installDir}/sql/update_4.0.1_portalu-to-ingrid_postgres.sql"/>
-    <property name="importPostgresPortalVersion" value=",4.0.1"/>
-
-    <property name="updatePostgres402" location="${installDir}/sql/update_4.0.2_postgres.sql"/>
-    <property name="updatePostgres4021" location="${installDir}/sql/update_4.0.2.1_postgres.sql"/>
-
-    <!-- postgres ige imports -->
-    <property name="mdekDBPostgres"          location="${installDir}/sql/mdek_4.0.1_postgres.sql"/>
-    <property name="mdekDBPostgres_403"          location="${installDir}/sql/mdek_4.0.3_postgres.sql"/>
-
-
     <target name="CheckDbs" depends="checkPortalDbPostgres, checkMdekDbPostgres" if="usePostgres">
         <echo>DBs checked for existence and version
         </echo>
@@ -176,64 +162,6 @@
         </if>
     </target>
 
-    <target name="PortalDbUpdateFromInitial" if="usePostgres" description="Import the PostgreSQL database.">
-        <echo>PostgreSQL-Portal Daten importieren (initial)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${postgresDriverClass}"
-                classpath ="${postgresDbDriver}"
-                url       ="${_dbUrl}"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${importPostgres}"/>
-            <transaction src="${updatePostgresPortaluToIngrid}"/>
-        </sql>
-        <property name="portal.version" value="${importPostgresPortalVersion}"/>
-    </target>
-    
-	<target name="PortalDbUpdateFrom401" if="usePostgres">
-        <echo>PostgreSQL-Portal Daten importieren (ab 4.0.1)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${postgresDriverClass}"
-                classpath ="${postgresDbDriver}"
-                url       ="${_dbUrl}"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updatePostgres402}"/>
-            <transaction src="${updatePostgres4021}"/>
-        </sql>
-    </target>
-
-	<target name="PortalDbUpdateFrom402" if="usePostgres">
-        <echo>PostgreSQL-Portal Daten importieren (ab 4.0.2)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${postgresDriverClass}"
-                classpath ="${postgresDbDriver}"
-                url       ="${_dbUrl}"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updatePostgres4021}"/>
-        </sql>
-    </target>
-
-
     <!-- =============================================
          = IGE MDEK DATABASE                         =
          ============================================= -->
@@ -295,49 +223,6 @@
                 </sql>
             </else>
         </if>
-    </target>
-    
-    <target name="mdekDbNotExists" if="mdek.db.not.exists">
-        <echo>Neue Mdek-DB!</echo>
-        <echo>Mdek PostgreSQL-Daten importieren
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${postgresDriverClass}"
-                classpath ="${postgresDbDriver}"
-                url       ="${_mdekDBUrl}"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                failOnConnectionError="false"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${mdekDBPostgres}"/>
-            <transaction src="${mdekDBPostgres_403}"/>
-
-        </sql>
-    </target>
-
-    <target name="mdekDbExists" unless="mdek.db.not.exists">
-        <echo>Update vorhandene Mdek-DB!</echo>
-        <echo>Mdek PostgreSQL-Daten importieren
-        </echo>
-
-        <!-- Import data to database -->
-
-    	<!-- IS UP TO DATE ! Enable and add transaction if something to update --> 
-<!--
-        <sql    driver    ="${postgresDriverClass}"
-                classpath ="${postgresDbDriver}"
-                url       ="${_mdekDBUrl}"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                failOnConnectionError="false"
-                >
-        </sql>
--->
     </target>
     
     <target name="hideMetadataMenu" if="usePostgres">
