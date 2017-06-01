@@ -1,0 +1,69 @@
+.nav-desktop {
+    background: -webkit-linear-gradient(top, #1985b9 0%,#114660 100%);
+    background: -moz-linear-gradient(top, #1985b9 0%,#114660 100%);
+    background: -ms-linear-gradient(top, #1985b9 0%,#114660 100%);
+    background: -o-linear-gradient(top, #1985b9 0%,#114660 100%);
+}
+
+a {
+    color: #036;
+}
+
+.desktop__title p, h2 {
+    color: #036;
+}
+
+.mobile__title, .mobile__title:hover {
+    color: #036;
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    background: #FFF;
+    border-bottom: solid 1px #114660;
+  }
+}
+
+.nav-toggle {
+    background: -webkit-linear-gradient(top, #1985b9 0%,#114660 100%) !important;
+    background: -moz-linear-gradient(top, #1985b9 0%,#114660 100%) !important;
+    background: -ms-linear-gradient(top, #1985b9 0%,#114660 100%) !important;
+    background: -o-linear-gradient(top, #1985b9 0%,#114660 100%) !important;
+}
+
+.nav-toggle:after {
+    border-color: transparent transparent #FFF transparent;
+}
+
+.nav-toggle .icon {
+    fill: #FFF;
+}
+
+.nav-overlay {
+    background: #FFF;
+}
+
+.nav__foot a {
+    color: #036;
+}
+
+.footer {
+    color: #036;
+}
+
+.desktop-logo {
+    height: 60px;
+    max-width: 100%;
+    padding: 0 10px 0 0;
+}
+
+.mobile__logo {
+    height: 40px !important;
+    padding: 0 10px 0 0;
+}
+
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin-left: 0;
+    }
+}

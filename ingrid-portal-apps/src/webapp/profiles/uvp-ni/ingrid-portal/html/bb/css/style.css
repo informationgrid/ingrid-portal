@@ -1,0 +1,73 @@
+.nav-desktop {
+    background: #c73c35;
+}
+
+a {
+    color: #c73c35;
+}
+
+.desktop__title p, h2 {
+    color: #333333;
+}
+
+.mobile__title, .mobile__title:hover {
+    color: #333333;
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    background: #FFF;
+    border-bottom: solid 1px #c73c35;
+  }
+}
+
+.nav-toggle {
+    background: #c73c35;
+}
+
+.nav-toggle:after {
+    border-color: transparent transparent #FFF transparent;
+}
+
+.nav-toggle .icon {
+    fill: #FFF;
+}
+
+.nav-overlay {
+    background: #FFF;
+}
+
+.nav__foot a {
+    color: #c73c35;
+}
+
+.footer {
+    color: #333333;
+}
+
+.footer a {
+    color: #c73c35;
+}
+
+.desktop-logo {
+    height: 60px;
+    max-width: 100%;
+    padding: 0 10px 0 0;
+}
+
+.mobile__logo {
+    height: 40px !important;
+    padding: 0 10px 0 0;
+}
+
+@media screen and (max-width: 375px) {
+    .mobile__title {
+        font-size: 24px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,89 @@
+.nav-desktop {
+    background: rgb(32, 63, 90);
+}
+
+a {
+    color: rgb(40, 123, 168);
+}
+
+.desktop__title p, h2 {
+    color: rgb(40, 123, 168);
+}
+
+.mobile__title, .mobile__title:hover {
+    color: rgb(40, 123, 168);
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    background: #FFF;
+    border-bottom: solid 1px rgb(32, 63, 90);
+  }
+}
+
+.nav-toggle {
+    background: rgb(32, 63, 90);
+}
+
+.nav-toggle:after {
+    border-color: transparent transparent #FFF transparent;
+}
+
+.nav-toggle .icon {
+    fill: #FFF;
+}
+
+.nav-overlay {
+    background: #FFF;
+}
+
+.nav__foot a {
+    color: rgb(40, 123, 168);
+}
+
+.footer {
+    color: #666;
+}
+
+.footer a {
+    color: rgb(40, 123, 168);
+}
+
+.desktop-logo {
+    height: 60px;
+    max-width: 100%;
+    padding: 0 10px 0 0;
+}
+
+.mobile__logo {
+    height: 40px !important;
+    padding: 0 10px 0 0;
+}
+
+@media screen and (max-width: 375px) {
+    .mobile__title {
+        font-size: 13px;
+    }
+    .mobile__title_big {
+        font-size: 19px;
+    }
+}
+
+@media screen and (min-width: 376px) and (max-width: 479px) {
+    .mobile__title {
+        font-size: 19px;
+    }
+    
+}
+
+@media screen and (min-width: 480px) and (max-width: 639px){
+    .mobile__title {
+        font-size: 24px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin-left: 0;
+    }
+}

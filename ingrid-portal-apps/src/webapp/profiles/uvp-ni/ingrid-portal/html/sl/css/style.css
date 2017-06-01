@@ -1,0 +1,63 @@
+.nav-desktop {
+    background: rgb(0, 47, 92);
+}
+
+a {
+    color: rgb(0, 47, 92);
+}
+
+.desktop__title p, h2 {
+    color: rgb(0, 47, 92);
+}
+
+.mobile__title, .mobile__title:hover {
+    color: rgb(0, 47, 92);
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    background: #FFF;
+    border-bottom: solid 1px rgb(0, 47, 92);
+  }
+}
+
+.nav-toggle {
+    background: rgb(0, 47, 92);
+}
+
+.nav-toggle:after {
+    border-color: transparent transparent #FFF transparent;
+}
+
+.nav-toggle .icon {
+    fill: #FFF;
+}
+
+.nav-overlay {
+    background: #FFF;
+}
+
+.nav__foot a {
+    color: rgb(0, 47, 92);
+}
+
+.footer {
+    color: rgb(0, 47, 92);
+}
+
+.desktop-logo {
+    height: 60px;
+    max-width: 100%;
+    padding: 0 10px 0 0;
+}
+
+.mobile__logo {
+    height: 40px !important;
+    padding: 0 10px 0 0;
+}
+
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin-left: 0;
+    }
+}
