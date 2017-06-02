@@ -15,6 +15,9 @@ UPDATE page SET is_hidden = 1 WHERE path = '/main-chronicle.psml';
 -- Hide 'main-about-data-source.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/main-about-data-source.psml';
 
+-- Hide 'help.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/help.psml';
+
 -- Hide 'search-catalog/search-catalog-hierarchy.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
 

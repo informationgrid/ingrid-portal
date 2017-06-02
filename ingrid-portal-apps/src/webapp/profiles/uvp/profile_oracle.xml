@@ -16,6 +16,10 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>help.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
             <hidden>true</hidden>
         </page>
