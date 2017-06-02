@@ -21,20 +21,30 @@
  * **************************************************#
  */
 define([
-    "dojo/_base/lang",
-    "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/bkg/opendata",
-    "ingrid/hierarchy/behaviours/bkg/accessConstraintsField"
-], function(lang, behaviours, opendata, accessConstraintsField) {
+    "dojo/_base/declare",
+    "dojo/on",
+    "dojo/dom-class",
+    "dijit/registry",
+    "ingrid/widgets/MultiInputInfoField"
+], function(declare, on, domClass, registry, MultiInputInfoField) {
 
-    return lang.mixin(behaviours, {
+    // issue: 556
+    return declare(null, {
+        title: "Zugriffsbeschränkungen",
+        description: "Fügt ein neues Feld zur Eingabe von BKG spezifischen Zugriffsbeschränkungen hinzu.",
+        defaultActive: true,
+        category: "BKG",
+        run: function() {
+            var rubric = "generalContent";
 
-        /**
-         * BKG specific open data behaviour.overrides default behaviour completely
-         */
-        openData: opendata,
+            var multiInputInfoFieldWidget = new MultiInputInfoField({
+                id: "bkg_accessConstraints",
+                label: "Zugriffsbeschränkungen",
+                codelist: 6300
+            }).placeAt(rubric);
 
-        newAccessConstraintsField: accessConstraintsField
-
-    });
+            var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
+            additionalFields.push(multiInputInfoFieldWidget);
+        }
+    })();
 });
