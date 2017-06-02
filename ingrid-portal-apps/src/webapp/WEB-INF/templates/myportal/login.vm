@@ -17,7 +17,7 @@
 <div class="metamenu__box ob-container">
     #renderInputButtonOnClick($MESSAGES.getString('login.form.newUser') "" "" "" "btn btn--secondary btn--small btn--block" "location.href='$renderResponse.encodeURL('/portal/myportal-create-account.psml')'")
 </div>
-
+#if($renderRequest.getWindowID() == "MyPortalLoginPortlet")
 <script>
 if($actionForm.hasErrorInField('org.apache.jetspeed.login.username') || $actionForm.hasErrorInField('org.apache.jetspeed.login.password')){
     $('#logged_on_link').addClass('is-active');
@@ -30,3 +30,4 @@ $("#logged_on_link").on("click", function(){
     });
 });
 </script>
+#end
