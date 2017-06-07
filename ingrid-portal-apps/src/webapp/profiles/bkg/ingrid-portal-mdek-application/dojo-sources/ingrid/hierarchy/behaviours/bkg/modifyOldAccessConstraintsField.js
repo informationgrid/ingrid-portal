@@ -24,28 +24,23 @@ define([
     "dojo/_base/declare",
     "dojo/on",
     "dojo/dom-class",
+    "dojo/query",
     "dijit/registry",
+    "ingrid/grid/CustomGridEditors",
     "ingrid/widgets/MultiInputInfoField"
-], function(declare, on, domClass, registry, MultiInputInfoField) {
+], function(declare, on, domClass, query, registry, GridEditors, MultiInputInfoField) {
 
     // issue: 556
     return declare(null, {
-        title: "Zugriffsbeschränkungen",
-        description: "Fügt ein neues Feld zur Eingabe von BKG spezifischen Zugriffsbeschränkungen hinzu.",
+        title: "Zugriffsbeschränkungen (INSPIRE-Liste)",
+        description: "Modifiziert die bestehende Tabelle 'Zugriffsbeschränkungen' und erlaubt keine freien Einträge mehr.",
         defaultActive: true,
         category: "BKG",
         run: function() {
-            var rubric = "availabilityContent";
-
-            var multiInputInfoFieldWidget = new MultiInputInfoField({
-                id: "bkg_accessConstraints",
-                label: "Zugriffsbeschränkungen",
-                codelist: 10001,
-                codelistForText: 10002
-            }).placeAt(rubric, "first");
-
-            var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
-            additionalFields.push(multiInputInfoFieldWidget);
+            domClass.remove( "uiElementN025", "required" );
+            domClass.add( "uiElementN025", "show" );
+            query("label[for=availabilityAccessConstraints]").addContent("Zugriffsbeschränkungen (INSPIRE-Liste)", "only");
+            registry.byId("availabilityAccessConstraints").columns[0].editor = GridEditors.SelectboxEditor;
         }
     })();
 });
