@@ -52,6 +52,8 @@ define([
 
         codelist: null,
 
+        codelistForText: null,
+
         selectRequired: false,
 
         freeTextRequired: false,
@@ -64,15 +66,15 @@ define([
         "        <label>${label}</label>" +
         "      </span>" +
         "      <div class='outlined'>" +
-        "        <span class='functionalLink'>" +
+        "        <!--<span class='functionalLink'>" +
         "          <img src='img/ic_fl_popup.gif' width='10' height='9' alt='Popup' />" +
         "          <a id='spatialRefAdminUnitLink' href='javascript:void(0);'>Freitext Vorlagen</a>" +
-        "        </span>" +
+        "        </span>-->" +
         "        <div class='clear'>" +
         "          <span class='outer halfWidth'>" +
         "            <div>" +
         "              <select data-dojo-type='dijit/form/FilteringSelect' data-dojo-attach-point='selectInput' style='width:100%;'></select>" +
-        "              <div class='comment' style='width:100%;'>Info-Text ...</div>" +
+        "              <div class='comment' style='width:100%; height:30px; overflow:hidden;'>Info-Text ...</div>" +
         "            </div>" +
         "          </span>" +
         "          <span class='outer halfWidth'>" +
@@ -109,9 +111,14 @@ define([
             this.selectInput.set("required", this.selectRequired);
 
             on(this.selectInput, "change", function(value) {
-                var text = UtilSyslist.getSyslistEntryData(self.codelist, this.get("displayedValue"));
-                if (text !== null) {
+                var text = UtilSyslist.getSyslistEntryName(self.codelistForText, this.get("value"));
+                if (text !== this.get("value")) {
                     self.infoText.addContent(text, "only");
+                    // also set tooltip on mouse over to show full content
+                    self.infoText.attr("title", text);
+                } else {
+                    self.infoText.addContent("", "only");
+                    self.infoText.attr("title", "");
                 }
             });
 

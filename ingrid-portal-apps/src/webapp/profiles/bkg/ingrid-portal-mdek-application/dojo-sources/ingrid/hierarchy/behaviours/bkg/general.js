@@ -22,30 +22,22 @@
  */
 define([
     "dojo/_base/declare",
-    "dojo/on",
-    "dojo/dom-class",
-    "dijit/registry",
-    "ingrid/widgets/MultiInputInfoField"
-], function(declare, on, domClass, registry, MultiInputInfoField) {
+    "dojo/topic"
+], function(declare, topic) {
 
     // issue: 556
     return declare(null, {
-        title: "Zugriffsbeschränkungen",
-        description: "Fügt ein neues Feld zur Eingabe von BKG spezifischen Zugriffsbeschränkungen hinzu.",
+        title: "Allgemein",
+        description: "Lädt benötigte Codelisten beim Start",
         defaultActive: true,
+        type: "SYSTEM",
         category: "BKG",
         run: function() {
-            var rubric = "generalContent";
 
-            var multiInputInfoFieldWidget = new MultiInputInfoField({
-                id: "bkg_accessConstraints",
-                label: "Zugriffsbeschränkungen",
-                codelist: 10001,
-                codelistForText: 10002
-            }).placeAt(rubric);
-
-            var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
-            additionalFields.push(multiInputInfoFieldWidget);
+            // load custom syslists
+            topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
+                ids.push(10001, 10002);
+            });
         }
     })();
 });

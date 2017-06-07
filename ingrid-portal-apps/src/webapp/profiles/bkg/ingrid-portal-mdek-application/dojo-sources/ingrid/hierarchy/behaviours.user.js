@@ -23,12 +23,15 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
+    "ingrid/hierarchy/behaviours/bkg/general",
     "ingrid/hierarchy/behaviours/bkg/opendata",
     "ingrid/hierarchy/behaviours/bkg/accessConstraintsField"
-], function(lang, behaviours, opendata, accessConstraintsField) {
+], function(lang, behaviours, general, opendata, accessConstraintsField) {
 
     return lang.mixin(behaviours, {
 
+        bkgGeneral: general,
+        
         /**
          * BKG specific open data behaviour.overrides default behaviour completely
          */
