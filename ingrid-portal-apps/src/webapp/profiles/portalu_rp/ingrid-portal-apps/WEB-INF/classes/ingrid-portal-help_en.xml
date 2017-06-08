@@ -53,10 +53,10 @@
                     <li>
                         <a href="?hkey=maps-1">Maps</a>
                     </li>
+                    <!-- 
                     <li>
                         <a href="?hkey=rss-news-1">News</a>
                     </li>
-                    <!-- 
                     <li>
                         <a href="?hkey=ingrid-inform-1">PortalU informs</a>
                     </li>
@@ -1461,20 +1461,19 @@
         </section>
     </chapter>
 
-    
+    <!-- 
     <chapter>
         <header>News</header>
         <section help-key="rss-news-1">
             <header>News</header>
             <content>
                 <p>Under <i>News</i>
-				are listed current releases on the subject of the environment from the federal and regional authorities. Here the latest report is always on top. Each time only the title and a short description of the report are displayed. By clicking on the report you will be taken to the original report.</p>
+                are listed current releases on the subject of the environment from the federal and regional authorities. Here the latest report is always on top. Each time only the title and a short description of the report are displayed. By clicking on the report you will be taken to the original report.</p>
                 <p>Older reports, which are no longer displayed on the start page, are stored in the report archive. You can look at these reports by clicking on the <i>Other News</i> link.</p>
                 <p>Note: If necessary, you can still find reports, which are so old that they can no longer be found in the report archive, on the original servers of the respective federal or regional authorities. To do this click on <a href="?hkey=search-service-1">Service / News-Bulletins</a>.</p>
             </content>
         </section>
     </chapter>
-    <!-- 
     <chapter>
         <header>PortalU informs</header>
         <section help-key="ingrid-inform-1">
