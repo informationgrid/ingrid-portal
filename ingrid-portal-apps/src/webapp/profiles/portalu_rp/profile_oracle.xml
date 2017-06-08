@@ -77,9 +77,9 @@
         </file>
     </files>
     <sql>
-        <!-- Hidden webmaster -->
+        <!-- Disable language switcher -->
         <execute>
-            <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/webmaster.link']]>
+            <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link']]>
         </execute>
     </sql>
 </profile>
