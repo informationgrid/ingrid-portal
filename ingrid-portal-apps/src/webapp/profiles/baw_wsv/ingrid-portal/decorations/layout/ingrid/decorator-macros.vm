@@ -208,7 +208,6 @@
             </svg>
             <span class="header__widget__text #if($inMain) mq-hide-xb #else mq-hide-xl #end">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
         </a>
-        <div class="metamenu metamenu--wide">
         #if($jetspeed.getLoggedOn())
             <!-- State logged in -->
             #set($userAttributes = $jetspeed.getUserProperties())
@@ -231,7 +230,6 @@
         #else
             $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
         #end
-        </div>
     </div>
   #elseif($el == "/administration")
     <div class="header__widget #if($inMain)service_in_main#end">
