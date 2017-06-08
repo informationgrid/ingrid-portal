@@ -15,7 +15,7 @@
           <action type="add" dev="wemove" issue="REDMINE-388">
             IGE: Added table "AdV-Product Group".
           </action>
-          <action type="fix" dev="wemove" issue="REDMINE-709">
+          <action type="fix" dev="wemove" issue="REDMINE-711">
             PORTAL: Fix login layout.
           </action>
           <action type="add" dev="wemove" issue="REDMINE-545">
