@@ -182,24 +182,9 @@ define([
         },
 
         setCodelist: function(codelist) {
-
             var self = this;
-
-            var storeProps = {
-                data: {
-                    identifier: '1',
-                    label: '0'
-                }
-            };
-
+            
             UtilSyslist.getSyslistEntry(codelist).then(function(entries) {
-                // var entries = [];
-                // array.forEach(entry, function(item) {
-                //     entries.push({
-                //         id: item[1],
-                //         value: item[0]
-                //     });
-                // });
                 UtilStore.updateWriteStore(self.selectInput.id, entries, {
                     identifier: "1",
                     label: "0",

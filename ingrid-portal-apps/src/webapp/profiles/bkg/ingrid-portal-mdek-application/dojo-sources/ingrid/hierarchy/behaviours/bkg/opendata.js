@@ -45,6 +45,7 @@ define([
 
             // delay registration so that this behaviour is called at the end
             on(registry.byId("isOpenData"), "click", function() {
+                var bkgUseConstraintsWidget = registry.byId("bkg_useConstraints");
                 var isChecked = this.checked;
 
                 if (isChecked) {
@@ -53,7 +54,21 @@ define([
                     var data = [{ title: UtilSyslist.getSyslistEntryName(6010, 1) }];
                     UtilGrid.setTableData('availabilityAccessConstraints', data);
 
+                }
 
+                // reset use constraints since codelist has changed explicitly
+                bkgUseConstraintsWidget.selectInput.set("value", "");
+            });
+
+
+            on(registry.byId("isOpenData"), "change", function(isChecked) {
+                var bkgUseConstraintsWidget = registry.byId("bkg_useConstraints");
+                if (isChecked) {
+                    bkgUseConstraintsWidget.setCodelist(10005);
+                    bkgUseConstraintsWidget.codelistForText = 10006;
+                } else {
+                    bkgUseConstraintsWidget.setCodelist(10003);
+                    bkgUseConstraintsWidget.codelistForText = 10004;
                 }
             });
         }

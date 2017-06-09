@@ -22,22 +22,30 @@
  */
 define([
     "dojo/_base/declare",
-    "dojo/topic"
-], function(declare, topic) {
+    "dojo/on",
+    "dojo/dom-class",
+    "dijit/registry",
+    "ingrid/widgets/MultiInputInfoField"
+], function(declare, on, domClass, registry, MultiInputInfoField) {
 
     // issue: 556
     return declare(null, {
-        title: "Allgemein",
-        description: "Lädt benötigte Codelisten beim Start",
+        title: "Nutzungsbedingungen",
+        description: "Fügt ein neues Feld zur Eingabe von BKG spezifischen Nutzungsbedingungen hinzu.",
         defaultActive: true,
-        type: "SYSTEM",
         category: "BKG",
         run: function() {
+            var rubric = "availabilityContent";
 
-            // load custom syslists
-            topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
-                ids.push(10001, 10002, 10003, 10004, 10005, 10006);
-            });
+            var multiInputInfoFieldWidget = new MultiInputInfoField({
+                id: "bkg_useConstraints",
+                label: "Nutzungsbedingungen",
+                codelist: 10003,
+                codelistForText: 10004
+            }).placeAt(rubric, "first");
+
+            var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
+            additionalFields.push(multiInputInfoFieldWidget);
         }
     })();
 });

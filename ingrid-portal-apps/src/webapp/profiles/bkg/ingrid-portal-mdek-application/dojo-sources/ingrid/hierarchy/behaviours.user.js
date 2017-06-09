@@ -26,11 +26,15 @@ define([
     "ingrid/hierarchy/behaviours/bkg/general",
     "ingrid/hierarchy/behaviours/bkg/opendata",
     "ingrid/hierarchy/behaviours/bkg/accessConstraintsField",
+    "ingrid/hierarchy/behaviours/bkg/useConstraintsField",
     "ingrid/hierarchy/behaviours/bkg/modifyOldAccessConstraintsField"
-], function(lang, behaviours, general, opendata, accessConstraintsField, oldAccessField) {
+], function(lang, behaviours, general, opendata, useConstraintsField, accessConstraintsField, oldAccessField) {
 
     return lang.mixin(behaviours, {
 
+        /**
+         * 
+         */
         bkgGeneral: general,
 
         /**
@@ -38,8 +42,19 @@ define([
          */
         bkgOpenData: opendata,
 
+        /**
+         * 
+         */
         bkgNewAccessConstraintsField: accessConstraintsField,
 
+        /**
+         * 
+         */
+        bkgNewUseConstraintsField: useConstraintsField,
+
+        /**
+         * 
+         */
         bkgOldAccessConstraintsField: oldAccessField
 
     });
