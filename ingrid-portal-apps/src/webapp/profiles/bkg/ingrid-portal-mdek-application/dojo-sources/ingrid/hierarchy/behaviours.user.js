@@ -23,15 +23,39 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/bkg/opendata"
-], function(lang, behaviours, opendata) {
+    "ingrid/hierarchy/behaviours/bkg/general",
+    "ingrid/hierarchy/behaviours/bkg/opendata",
+    "ingrid/hierarchy/behaviours/bkg/accessConstraintsField",
+    "ingrid/hierarchy/behaviours/bkg/useConstraintsField",
+    "ingrid/hierarchy/behaviours/bkg/modifyOldAccessConstraintsField"
+], function(lang, behaviours, general, opendata, useConstraintsField, accessConstraintsField, oldAccessField) {
 
     return lang.mixin(behaviours, {
 
         /**
+         * 
+         */
+        bkgGeneral: general,
+
+        /**
          * BKG specific open data behaviour.overrides default behaviour completely
          */
-        openData: opendata
+        bkgOpenData: opendata,
+
+        /**
+         * 
+         */
+        bkgNewAccessConstraintsField: accessConstraintsField,
+
+        /**
+         * 
+         */
+        bkgNewUseConstraintsField: useConstraintsField,
+
+        /**
+         * 
+         */
+        bkgOldAccessConstraintsField: oldAccessField
 
     });
 });
