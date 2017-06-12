@@ -279,8 +279,7 @@ a.resultText.selected { color:#C21100; }
 
                 registry.byId("researchThesaurusTabContainer").selectChild("thesaurusResultPane");
 
-                // TODO: CALL findTopicsContains NOT EXACT !
-                SNSService.findTopics(queryTerm, userLocale, {
+                SNSService.findTopicsContains(queryTerm, userLocale, {
                     preHook: showLoadingZone,
                     postHook: hideLoadingZone,
                     callback:function(result) {
