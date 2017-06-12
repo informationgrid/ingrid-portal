@@ -62,6 +62,7 @@
                 pageGroupAdmin.createLayout()
                     .then(function(groupDetails) {
                         pageGroupAdmin.currentUserGroupDetails = groupDetails;
+                        UtilGrid.getTable("groups").reinitLastColumn(true);
                         pageGroupAdmin.hidePermissionLists();
                         LoadingZone.hide();
                     });
@@ -448,6 +449,7 @@
                         UtilGrid.addTableDataRow("groups", data);
                         deferred.resolve(data);
                         UtilGrid.setSelection("groups", [UtilGrid.getTableData("groups").length - 1]);
+                        UtilGrid.getTable("groups").reinitLastColumn(true);
                     },
                     errorHandler: function(errMsg, err) {
                         pageGroupAdmin.displayCreateGroupErrorMessage(err);
@@ -466,7 +468,9 @@
                 	console.debug("delete group:");
                     console.debug(msg.item);
                     var groupToDelete = msg.items[0];
-                    var def = pageGroupAdmin.deleteGroup(groupToDelete).then(null, function() {
+                    var def = pageGroupAdmin.deleteGroup(groupToDelete).then(function() {
+                        UtilGrid.getTable("groups").reinitLastColumn(true);
+                    }, function() {
                         UtilGrid.addTableDataRow("groups", groupToDelete);
                     });
                     return def;
