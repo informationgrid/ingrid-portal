@@ -21,9 +21,9 @@
  * **************************************************#
  */
 define({
-    "tree.nodeCut": "Vorhaben/Adressen/Teilb&auml;ume ausschneiden",
-    "tree.nodeCopySingle": "Vorhaben/Adressen kopieren",
-    "tree.newNodeName": "Neues Vorhaben",
+    "tree.nodeCut": "Verfahren/Adressen/Teilb&auml;ume ausschneiden",
+    "tree.nodeCopySingle": "Verfahren/Adressen kopieren",
+    "tree.newNodeName": "Neues Verfahren",
 
     "dialog.wizard.selectTitle": "Verfahrensschritte auswählen",
 
