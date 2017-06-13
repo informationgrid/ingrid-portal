@@ -96,6 +96,7 @@ define([
 
         postCreate: function() {
             console.log("MultiInputInfoField: postCreate");
+            domClass.add(this.domNode, 'additionalField');
         },
 
         startup: function() {
@@ -133,15 +134,19 @@ define([
             this.clearInputs();
 
             var self = this;
-            if (type === "value" && values && values.length > 0) {
-                array.forEach(values[0], function(entry, index) {
-                    if (entry.identifier === self.id + "_select") {
-                        self.selectInput.set("value", entry.listId);
-                    } else if (entry.identifier === self.id + "_freeText") {
-                        self.freeTextInput.set("value", entry.value);
-                    }
-                });
-            }
+            // set value a bit delayed, since codelist can be changed depending on opendata field
+            // if we set the value on the wrong codelist, it might not be accepted!
+            setTimeout(function() {
+                if (type === "value" && values && values.length > 0) {
+                    array.forEach(values[0], function(entry, index) {
+                        if (entry.identifier === self.id + "_select") {
+                            self.selectInput.set("value", entry.listId);
+                        } else if (entry.identifier === self.id + "_freeText") {
+                            self.freeTextInput.set("value", entry.value);
+                        }
+                    });
+                }
+            }, 100);
         },
 
         get: function(attr) {
@@ -164,6 +169,10 @@ define([
             };
 
             return [[entrySelect, entryFreeText]];
+        },
+
+        getDisplayedValue: function() {
+            return this.selectInput.get("displayedValue") + ", " + this.freeTextInput.get("value");
         },
 
         addTextareaValidator: function() {

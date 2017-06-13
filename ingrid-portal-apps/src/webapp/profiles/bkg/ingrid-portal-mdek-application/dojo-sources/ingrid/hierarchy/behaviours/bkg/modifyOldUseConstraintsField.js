@@ -32,23 +32,15 @@ define([
 
     // issue: 556
     return declare(null, {
-        title: "Zugriffsbeschränkungen (INSPIRE-Liste)",
-        description: "Modifiziert die bestehende Tabelle 'Zugriffsbeschränkungen' und erlaubt keine freien Einträge mehr.",
+        title: "Nutzungsbedingungen (INSPIRE-Liste)",
+        description: "Modifiziert die bestehende Tabelle 'Nutzungsbedingungen' und erlaubt keine freien Einträge mehr.",
         defaultActive: true,
         category: "BKG",
         run: function() {
-            domClass.remove( "uiElementN025", "required" );
-            domClass.add( "uiElementN025", "show" );
-            query("label[for=availabilityAccessConstraints]").addContent("Zugriffsbeschränkungen (INSPIRE-Liste)<span class='requiredSign'>*</span>", "only");
-            registry.byId("availabilityAccessConstraints").columns[0].editor = GridEditors.SelectboxEditor;
-
-            on(registry.byId("isInspireRelevant") , "change", function(isChecked) {
-                if (isChecked) {
-                    domClass.add( "uiElementN025", "required" );
-                } else {
-                    domClass.remove( "uiElementN025", "required" );
-                }
-            });
+            // domClass.remove( "uiElementN025", "required" );
+            // domClass.add( "uiElementN025", "show" );
+            query("label[for=availabilityUseAccessConstraints]").addContent("Nutzungsbedingungen (INSPIRE-Liste)", "only");
+            registry.byId("availabilityUseAccessConstraints").columns[0].editor = GridEditors.SelectboxEditor;
         }
     })();
 });

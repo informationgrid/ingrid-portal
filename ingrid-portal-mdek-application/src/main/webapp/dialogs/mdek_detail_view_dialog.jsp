@@ -858,8 +858,20 @@ require([
             array.forEach(addDomWidgets, function(domWidget) {
                 var widgetId = domWidget.getAttribute("widgetId");
                 if (!widgetId) widgetId = domWidget.id;
-                var label = searchLabelFrom(domWidget);
-                var data = getValueFromAdditional(widgetId, nodeData);
+                var widget = registry.byId(widgetId);
+                var label = "";
+                if (widget && widget.label !==undefined) {
+                    label = widget.label;
+                } else {
+                    label = searchLabelFrom(domWidget);
+                }
+
+                var data = null;
+                if (widget && widget.getDisplayedValue() !==undefined) {
+                    data = widget.getDisplayedValue();
+                } else {
+                    data = getValueFromAdditional(widgetId, nodeData);
+                }
                 if (data) {
                     // if it is a table
                     if (typeof(data) == "object") {
@@ -928,7 +940,11 @@ require([
                 if (row.length === 0) return; // empty table
                 var item = {};
                 array.forEach(row, function(rowItem) {
-                    item[rowItem.identifier] = rowItem.value ? rowItem.value : ""; // TODO: listIds? mapping?
+                    if (!rowItem.value && rowItem.listId && rowItem.listId.length > 0) {
+                        item[rowItem.identifier] = rowItem.listId;
+                    } else {
+                        item[rowItem.identifier] = rowItem.value ? rowItem.value : ""; // TODO: listIds? mapping?
+                    }
                 });
                 tableList.push(item);
             });
