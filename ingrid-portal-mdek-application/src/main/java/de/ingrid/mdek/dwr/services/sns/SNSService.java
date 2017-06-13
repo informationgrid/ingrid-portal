@@ -69,6 +69,9 @@ public class SNSService {
     // Init Method is called by the Spring Framework on initialization
     public void init() throws Exception {}
 
+    public ThesaurusService getThesaurusService() {
+        return thesaurusService;
+    }
 	public void setThesaurusService(ThesaurusService thesaurusService) {
 		this.thesaurusService = thesaurusService;
 	}

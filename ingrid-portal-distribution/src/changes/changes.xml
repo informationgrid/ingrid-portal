@@ -6,6 +6,9 @@
     </properties>
     <body>
         <release version="4.0.3-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.3">
+          <action type="add" dev="wemove" issue="REDMINE-363">
+            IGE: Add GEMET keywords in multiple localizations to ISO. 
+          </action>
           <action type="add" dev="wemove" issue="REDMINE-18">
             IGE: Add GEMET Thesaurus Service to be activated in external-services.xml
           </action>
