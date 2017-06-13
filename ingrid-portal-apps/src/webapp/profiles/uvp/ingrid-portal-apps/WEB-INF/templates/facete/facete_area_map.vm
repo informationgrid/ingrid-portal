@@ -41,7 +41,7 @@
         bounds = [[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]];
     }
     
-    var osm = getOSMLayer();
+    var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
     var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
     
     if(!bounds){

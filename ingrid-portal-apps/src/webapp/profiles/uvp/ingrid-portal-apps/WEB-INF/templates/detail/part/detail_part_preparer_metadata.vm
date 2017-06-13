@@ -81,6 +81,7 @@
                                                         #set($spatialEntries = $spatial.split(","))
                                                         #if($spatialEntries.size() == 4)
                                                             #renderSectionTitle("Raumbezug")
+                                                            <p>$MESSAGES.getString('search.detail.spatial.map.info')</p>
                                                             #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                                                             <div id="map" style="height: 400px; width:100%;"></div>
                                                             <script language="JavaScript" type="text/javascript">

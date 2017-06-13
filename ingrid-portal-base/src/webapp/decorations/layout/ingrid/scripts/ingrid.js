@@ -309,9 +309,12 @@ function openURL(url){
     window.location = url;
 }
 
-function getOSMLayer(){
+function getOSMLayer(attribution){
     var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var osmAttrib='';
+    var osmAttrib='&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    if(attribution){
+        osmAttrib = osmAttrib + "" + attribution;
+    }
     var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
     
     return osm;
