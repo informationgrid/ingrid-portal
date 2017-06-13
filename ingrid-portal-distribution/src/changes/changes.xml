@@ -15,6 +15,9 @@
           <action type="add" dev="wemove" issue="REDMINE-388">
             IGE: Added table "AdV-Product Group".
           </action>
+          <action type="fix" dev="wemove" issue="REDMINE-727">
+            PORTAL: Fix remove CSW-XML on address hit by using facets.
+          </action>
           <action type="fix" dev="wemove" issue="REDMINE-711">
             PORTAL: Fix login layout.
           </action>
