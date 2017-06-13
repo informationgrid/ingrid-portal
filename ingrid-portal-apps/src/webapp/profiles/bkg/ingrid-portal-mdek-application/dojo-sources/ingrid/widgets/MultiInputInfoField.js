@@ -171,6 +171,10 @@ define([
             return [[entrySelect, entryFreeText]];
         },
 
+        getDisplayedLabel: function() {
+            return this.label;
+        },
+
         getDisplayedValue: function() {
             return this.selectInput.get("displayedValue") + ", " + this.freeTextInput.get("value");
         },

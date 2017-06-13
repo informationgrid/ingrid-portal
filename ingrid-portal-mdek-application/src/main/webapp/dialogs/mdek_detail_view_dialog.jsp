@@ -860,14 +860,14 @@ require([
                 if (!widgetId) widgetId = domWidget.id;
                 var widget = registry.byId(widgetId);
                 var label = "";
-                if (widget && widget.label !==undefined) {
-                    label = widget.label;
+                if (widget && widget.getDisplayedLabel !==undefined) {
+                    label = widget.getDisplayedLabel();
                 } else {
                     label = searchLabelFrom(domWidget);
                 }
 
                 var data = null;
-                if (widget && widget.getDisplayedValue() !==undefined) {
+                if (widget && widget.getDisplayedValue !== undefined) {
                     data = widget.getDisplayedValue();
                 } else {
                     data = getValueFromAdditional(widgetId, nodeData);
