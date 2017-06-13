@@ -42,6 +42,9 @@
           <action type="fix" dev="wemove" issue="REDMINE-687">
             MAPCLIENT: Fix add service to map.
           </action>
+          <action type="fix" dev="wemove" issue="REDMINE-723">
+            MAPCLIENT: Remove share copy button on chrome.
+          </action>
         </release>
         
         <release version="4.0.2" date="2017-04-11" description="Release 4.0.2">
