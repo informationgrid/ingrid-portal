@@ -405,7 +405,10 @@ public class QueryResultPostProcessor {
             	if (typesPlug.contains(Settings.QVALUE_DATATYPE_SOURCE_METADATA)) {
             		isMetadata = true;
             	}
-                
+                if(hit.get( "is_address" ) != null){
+                    isMetadata = !Boolean.parseBoolean( hit.get( "is_address" ).toString() );
+                }
+            	
             	if(isMetadata){
             		if (!cswUrl.isEmpty()) {
                         String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id+"&iplug="+hit.getPlugId()+"&elementSetName=full";
