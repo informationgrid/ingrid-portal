@@ -202,7 +202,7 @@
                 #set ($salutation = "$!{salutation} $userNameFamily")
             #end
         #end
-        <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
+        <a id="logged_on_link#if($inMain)_main#end" class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
             <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
                 <use xlink:href="#user">
             </svg>
@@ -230,7 +230,11 @@
                 </div>
             </div>
         #else
-            $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
+            #if($inMain)
+                $jetspeed.renderPortletWindow("MyPortalLoginPortletMain", "ingrid-portal-apps::MyPortalLoginPortletMain")
+            #else
+                $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
+            #end
         #end
     </div>
   #elseif($el == "/administration")
