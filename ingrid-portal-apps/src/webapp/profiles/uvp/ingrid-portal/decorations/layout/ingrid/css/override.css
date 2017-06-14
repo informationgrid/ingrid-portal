@@ -365,6 +365,7 @@ thead {
 
 .leaflet-control-layers-overlays label div input[type="checkbox"] {
     -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
 }
 
 .icon-UVPG-1:before {
