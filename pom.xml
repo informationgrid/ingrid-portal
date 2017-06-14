@@ -125,6 +125,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
+        <version>1.13</version>
         <configuration>
           <excludes>
             <exclude>**/*.properties</exclude>
