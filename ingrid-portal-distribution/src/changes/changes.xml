@@ -5,9 +5,12 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
     <body>
-        <release version="4.0.3" date="2017-06-13" description="Release 4.0.3">
+        <release version="4.0.3" date="2017-06-14" description="Release 4.0.3">
+          <action type="add" dev="wemove" issue="REDMINE-393,-556">
+            BKG IGE: Added special version for input of access- and useConstraints to BKG profile.
+          </action>
           <action type="add" dev="wemove" issue="REDMINE-363">
-            IGE: Add GEMET keywords in multiple localizations to ISO. 
+            IGE: Add GEMET keywords in multiple localizations to ISO (if configured).
           </action>
           <action type="add" dev="wemove" issue="REDMINE-18">
             IGE: Add GEMET Thesaurus Service to be activated in external-services.xml
@@ -18,17 +21,32 @@
           <action type="add" dev="wemove" issue="REDMINE-388">
             IGE: Added table "AdV-Product Group".
           </action>
-          <action type="fix" dev="wemove" issue="REDMINE-727">
-            PORTAL: Fix remove CSW-XML on address hit by using facets.
-          </action>
-          <action type="fix" dev="wemove" issue="REDMINE-711">
-            PORTAL: Fix login layout.
-          </action>
           <action type="add" dev="wemove" issue="REDMINE-545">
             PORTAL: Add wildcard facet.
           </action>
           <action type="add" dev="wemove" issue="REDMINE-677">
             PORTAL: Add property to extend search term by default.
+          </action>
+          <action type="add" dev="wemove" issue="REDMINE-634,-559,-641,-631,-636,-649,-598,-652,-650,-657,-658,-664,-666, ...">
+            UVP: Added/updated/fixed UVP functionality.
+          </action>
+          <action type="update" dev="wemove" issue="REDMINE-368">
+            IGE: Rework behavior of checkbox INSPIRE-relevant.
+          </action>
+          <action type="update" dev="wemove" issue="REDMINE-605">
+            IGE: Improved layout and selection of spatial reference.
+          </action>
+          <action type="update" dev="wemove" issue="REDMINE-392">
+            PORTAL: Clean up of old mapclient remains.
+          </action>
+          <action type="fix" dev="wemove" issue="REDMINE-542">
+            PORTAL: Remove "opendata" keyword from detail view. 
+          </action>
+          <action type="fix" dev="wemove" issue="REDMINE-727">
+            PORTAL: Fix remove CSW-XML on address hit by using facets.
+          </action>
+          <action type="fix" dev="wemove" issue="REDMINE-711">
+            PORTAL: Fix login layout.
           </action>
           <action type="fix" dev="wemove" issue="REDMINE-662">
             PORTAL: PostgreSQL: Fix quartz jobs and initial database contents.
@@ -39,11 +57,17 @@
           <action type="Fix" dev="wemove" issue="REDMINE-655">
             PORTAL: Fixed chronicle teaser on default-page.psml. 
           </action>
-          <action type="fix" dev="wemove" issue="REDMINE-634">
-            IGE: Only allow folders to be created under root nodes or other folders.
+          <action type="fix" dev="wemove" issue="REDMINE-721">
+            IGE: Fix display of user management/groups.
+          </action>
+          <action type="fix" dev="wemove" issue="REDMINE-698">
+            IGE: Fixed IGE after profile switch.
           </action>
           <action type="fix" dev="wemove" issue="REDMINE-547">
             IGE: Fixed session timeout when logged out from portal.
+          </action>
+          <action type="fix" dev="wemove" issue="REDMINE-663">
+            MAPCLIENT: Fix placeholder content of search box in profiles.
           </action>
           <action type="fix" dev="wemove" issue="REDMINE-687">
             MAPCLIENT: Fix add service to map.
