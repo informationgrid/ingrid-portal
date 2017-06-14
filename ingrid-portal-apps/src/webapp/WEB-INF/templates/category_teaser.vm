@@ -184,7 +184,11 @@
                             #end
                         </strong>
                         #if($facet.getQuery())
-                            ($hits.get("FACETS").get("$pf:$facet.getId()"))
+                            #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
+                                ($hits.get("FACETS").get("$facetId:$facet.getId()"))
+                            #else
+                                (0)
+                            #end
                         #end
                     </a>
                 </div>
