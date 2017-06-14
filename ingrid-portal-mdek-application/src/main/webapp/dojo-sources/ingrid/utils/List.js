@@ -237,11 +237,16 @@ define([
                 array.forEach(list, function(entry) {
                     entry.label = entry.title;
                     entry.sourceString = entry.source;
+                    // NO, this is SNS specific and not valid anymore !
+                    // We use alternateTitle in GEMET for different localization of term !
+                    // see https://dev.informationgrid.eu/redmine/issues/363
+/*
                     if (entry.alternateTitle && entry.alternateTitle != entry.title) {
                         // if UMTHES and GEMET is different then show "UMTHES/GEMET"
                         entry.label = entry.alternateTitle + " / " + entry.title;
                         entry.sourceString = "UMTHES/GEMET";
                     }
+*/
                 });
                 return list;
 

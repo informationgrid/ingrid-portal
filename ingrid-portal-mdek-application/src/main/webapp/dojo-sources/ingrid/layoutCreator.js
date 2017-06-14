@@ -532,7 +532,7 @@ define([
                 });
             },
 
-            createDomCheckbox: function(additionalField, section) {
+            createDomCheckbox: function(additionalField) {
                 var inputWidget = new dijit.form.CheckBox({
                     id: this.additionalFieldPrefix + additionalField.id,
                     name: additionalField.name

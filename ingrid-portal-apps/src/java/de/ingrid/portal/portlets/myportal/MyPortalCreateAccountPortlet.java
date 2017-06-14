@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -51,9 +50,6 @@ import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +57,6 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.CreateAccountForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.hibernate.HibernateUtil;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -367,9 +362,14 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
     protected String generateReturnURL(PortletRequest request, PortletResponse response, String userName, String urlGUID) {
         String fullPath = this.returnUrlPath + "?userName=" + userName + "&newUserGUID=" + urlGUID;
+        
+        String hostname = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_URL);
         // NOTE: getPortalURL will encode the fullPath for us
-        String url = admin.getPortalURL(request, response, fullPath);
-        return url;
+        if(hostname != null && hostname.length() > 0){
+            return hostname.concat(fullPath);
+        }else{
+            return admin.getPortalURL(request, response, fullPath);
+        }
     }
 
 }

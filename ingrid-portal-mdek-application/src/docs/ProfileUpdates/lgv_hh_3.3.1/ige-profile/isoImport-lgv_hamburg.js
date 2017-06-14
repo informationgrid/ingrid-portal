@@ -33,7 +33,16 @@ for (var i=0; i<keywords.getLength(); i++ ) {
     var additionalValues = XPATH.createElementFromXPath(targetEl, "/igc/data-sources/data-source/data-source-instance/general/general-additional-values");
     var additionalValue = additionalValues.appendChild(targetEl.getOwnerDocument().createElement("general-additional-value"));
     XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-key"), "publicationHmbTG"); 
-    XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-data"), true); 
+    XMLUtils.createOrReplaceTextNode(XPATH.createElementFromXPath(additionalValue, "field-data"), true);
+    
+    // remove as normal keyword
+    var terms = XPATH.getNodeList(target, "/igc/data-sources/data-source/data-source-instance/subject-terms/uncontrolled-term");
+    for (var j=0; j<terms.getLength(); j++ ) {
+      var termNode = terms.item(j);
+      if (termNode.getTextContent() === "hmbtg") {
+        XPATH.removeElementAtXPath(termNode, ".");
+      }
+    }
   }
 }
 

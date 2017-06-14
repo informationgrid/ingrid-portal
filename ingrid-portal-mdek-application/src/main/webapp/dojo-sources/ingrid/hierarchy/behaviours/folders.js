@@ -107,7 +107,8 @@ define(["dojo/_base/declare",
               registry.byId("menuItemPreview").set("disabled", true);
 
             } else {
-              registry.byId("menuItemNewFolder").set("disabled", false);
+              // disallow folder creation underneath non folders
+              registry.byId("menuItemNewFolder").set("disabled", true);
             }
           });
 
@@ -151,9 +152,10 @@ define(["dojo/_base/declare",
       if (node.id === "objectRoot" || node.id === "addressRoot") return false;
 
       // check if we have write permission and node is not excluded
-      if (!node.userWriteTreePermission || node.id === excludedId) return true;
+      if (!node.userWriteTreePermission || node.id === excludedId || node.objectClass !== 1000) return true;
 
       // check all parents
+      // if we find an excluded node then disallow folder creation
       var parentId = node.parent;
       while (parentId && parentId !== excludedId) {
             var parentNode = TreeUtils.getNodeById("dataTree", parentId);

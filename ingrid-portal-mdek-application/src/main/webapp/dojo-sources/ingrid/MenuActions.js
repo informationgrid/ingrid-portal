@@ -301,11 +301,17 @@ define([
                 dialog.show(message.get("general.hint"), message.get("tree.selectNodePasteHint"), dialog.WARNING);
             } else {
                 var tree = registry.byId("dataTree");
+                var invalidFolderUnderObject = false;
 
                 if (tree.nodesToCut !== null) {
-                    var invalidPaste = array.some(tree.nodesToCut, function(nodeItem) {
+                    var invalidSubNode = false;
+                    array.some(tree.nodesToCut, function(nodeItem) {
                         // the target node must not be under the node which is going to be cut
-                        return (targetNode.item == nodeItem || this._isChildOf(targetNode, nodeItem));
+                        invalidSubNode = (targetNode.item == nodeItem || this._isChildOf(targetNode, nodeItem));
+                        invalidFolderUnderObject = 
+                            (targetNode.item.objectClass !== null && targetNode.item.objectClass !== 1000 && nodeItem.objectClass === 1000) ||
+                            (targetNode.item.id === "addressFreeRoot" && nodeItem.objectClass === 1000);
+                        return invalidSubNode || invalidFolderUnderObject;
                     }, this);
 
                     // check if new node is going to be pasted
@@ -320,9 +326,13 @@ define([
                         }
                     }
                     
-                    if (invalidPaste) {
+                    if (invalidSubNode) {
                         // If an invalid target is selected (same node or child of node to cut)
                         dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
+                        return;
+                    } else if (invalidFolderUnderObject) {
+                        // If an invalid target is selected (copied folder under object/address)
+                        dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint.folderUnderObject"), dialog.WARNING);
                         return;
                     } else {
                         //              var cutNodeWidget = registry.byId(tree.nodeToCut.id);
@@ -413,6 +423,20 @@ define([
                             dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
                             return;
                         }
+                    }
+
+                    array.some(tree.nodesToCopy, function(nodeItem) {
+                        // the target node must not be under the node which is going to be cut
+                        invalidFolderUnderObject = 
+                            (targetNode.item.objectClass !== null && targetNode.item.objectClass !== 1000 && nodeItem.objectClass === 1000) ||
+                            (targetNode.item.id === "addressFreeRoot" && nodeItem.objectClass === 1000);
+                        return invalidFolderUnderObject;
+                    }, this);
+
+                    if (invalidFolderUnderObject) {
+                        // If an invalid target is selected (copied folder under object/address)
+                        dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint.folderUnderObject"), dialog.WARNING);
+                        return;
                     }
 
                     // A node can be inserted everywhere. Start the paste request.

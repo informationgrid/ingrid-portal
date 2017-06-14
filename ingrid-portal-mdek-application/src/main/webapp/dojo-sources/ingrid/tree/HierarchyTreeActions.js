@@ -175,8 +175,9 @@ define(["dojo/_base/declare",
                 //if (this.selectedNode.id == node.id)
                 //    return;
                 
-                // ignore click if a node is already loading
-                if (IgeActions.isLoading) return;
+                // ignore click if a node is already loading or if we click on a newly created
+                // node, which has not been saved yet
+                if (IgeActions.isLoading || item.id === "newNode") return;
 
                 var doLoad = function() {
                     var deferred = new Deferred();

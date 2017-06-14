@@ -12,10 +12,6 @@
             <hidden>true</hidden>
         </page>
         <page>
-            <name>main-about.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -81,9 +77,9 @@
         </file>
     </files>
     <sql>
-        <!-- Hidden webmaster -->
+        <!-- Disable language switcher -->
         <execute>
-            <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/webmaster.link';]]>
+            <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link';]]>
         </execute>
     </sql>
 </profile>

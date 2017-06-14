@@ -127,24 +127,6 @@
     
     <bean id="protocolFactory" class="de.ingrid.mdek.mapping.HashMapProtocolFactory"/>
     
-    <bean id="scriptImportDataMapper" class="de.ingrid.mdek.mapping.ScriptImportDataMapper">
-        <property name="mapperScript" value="classpath:import/mapper/ArcGIS_to_ingrid_igc.js" />
-        <property name="template" value="classpath:import/templates/igc_template.xml" />
-        <property name="dataProvider"><ref bean="importDataProviderImpl" /></property>
-        <property name="codeListService"><ref bean="codeListService" /></property>
-    </bean>
-
-    <bean id="csw202ScriptImportDataMapper" class="de.ingrid.mdek.mapping.ScriptImportDataMapper">
-        <property name="mapperScript" value="classpath:import/mapper/csw202_to_ingrid_igc.js" />
-        <property name="template" value="classpath:import/templates/igc_template_csw202.xml" />
-        <property name="dataProvider"><ref bean="importDataProviderImpl" /></property>
-        <property name="codeListService"><ref bean="codeListService" /></property>
-    </bean>
-
-    
-    <bean id="dummyImportDataMapper" class="de.ingrid.mdek.mapping.DummyImportDataMapper"></bean>
-    
-    
     <bean name="updateCodeListsJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
         <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UpdateCodeListsFromIGEJob" />
     </bean>

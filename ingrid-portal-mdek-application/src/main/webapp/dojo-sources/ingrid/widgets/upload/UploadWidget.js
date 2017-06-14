@@ -102,6 +102,10 @@ define([
         open: function(path, existingFiles) {
             this.deferred = new Deferred();
 
+            // initialize data
+            this.resultParts = {};
+            this.uploads = [];
+
             // build ui
             this.dialog = this.createDialog(existingFiles);
             this.uploader = this.createUploader(this.dialog.containerNode, path);
@@ -117,12 +121,15 @@ define([
             this.tabContainer.resize();
 
             var self = this;
-            on(this.uploadLink, "keyup", function() {
-                if (this.get("value").trim().length > 0) {
-                    self.setOkButtonState( true );
-                } else {
-                    self.setOkButtonState( false );
-                }
+            on(this.uploadLink, "keyup, paste", function() {
+                // delay check a bit, since after a paste the input is still empty
+                setTimeout(function() {
+                    if (self.uploadLink.get("value").trim().length > 0) {
+                        self.setOkButtonState( true );
+                    } else {
+                        self.setOkButtonState( false );
+                    }
+                });
             });
 
             return this.deferred;
@@ -132,8 +139,8 @@ define([
          * Called, when the uploader window is closed
          */
         close: function() {
-            this.destroyDialog();
             this.destroyUploader();
+            this.destroyDialog();
         },
 
         /**
@@ -318,6 +325,7 @@ define([
                             // set error message according to response status
                             var status = xhrOrXdr ? xhrOrXdr.status : "default";
                             var messages = {
+                                400: "Der Dateiname ist ungültig. Siehe auch <a href='https://de.wikipedia.org/wiki/Dateiname#Problematische_und_unzul.C3.A4ssige_Zeichen_oder_Namen' target='_blank'>unzulässige Zeichen in Dateinamen [Wikipedia]</a>.",
                                 401: "Sie haben keine Berechtigung für den Upload. Eventuell ist die Session abgelaufen.",
                                 409: "Die Datei existiert bereits.",
                                 "default": "Beim Upload ist ein Fehler aufgetreten." 
@@ -383,11 +391,11 @@ define([
          */
         destroyUploader: function() {
             // cleanup all resources that were created in the open method
-            if (this.styleEl) {
-                domConstruct.destroy(this.styleEl);
-            }
             if (this.tabContainer) {
                 this.tabContainer.destroyRecursive();
+            }
+            if (this.styleEl) {
+                domConstruct.destroy(this.styleEl);
             }
             if (this.templateEl) {
                 domConstruct.destroy(this.templateEl);

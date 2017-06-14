@@ -28,7 +28,7 @@
     #if($node.isOpen())
         #set ($renderSubNodes = true)
         $action.setParameter('action','doCloseNode')
-            <li class="tree__item tree__toggle #if($nodeUrl == '')js-accordion-toggle#end is-active">
+            <li class="tree__item tree__toggle is-active">
                 <a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
                     <svg class="tree__toggle__icon icon">
                         <use xlink:href="#plus">
@@ -50,9 +50,7 @@
                 ## render sub nodes
                 #if ($renderSubNodes)
                     #foreach($childNode in $node.getChildren())
-                        #if($childNode.getChildren().size() > 0 || $childNode.docId)
-                            #renderNode($childNode)
-                        #end
+                        #renderNode($childNode)
                     #end
                 #end
             </li>
@@ -61,7 +59,7 @@
         #if ($node.expandable)
             ## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
                $action.setParameter('action','doOpenNode')
-            <li class="tree__item tree__toggle #if($nodeUrl == '')js-accordion-toggle#end">
+            <li class="tree__item tree__toggle">
                 <a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
                     <svg class="tree__toggle__icon icon">
                         <use xlink:href="#plus">

@@ -56,6 +56,14 @@
         <script src="#GetPageResource("scripts/modernizr.custom.min.js")"></script>
         <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
         <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
+        <!-- Pickadate -->
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
+        #set($lang = $renderRequest.Locale.getLanguage())
+        #if($lang && $lang != "en")
+            <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
+        #end
     </head>
     <body>
     

@@ -15,7 +15,8 @@ limitations under the License.
 -->
 <Context path="/ingrid-portal" 
          docBase="ingrid-portal" 
-         crossContext="true">
+         crossContext="true"
+         sessionCookiePath="/">
 
   <Realm className="org.apache.catalina.realm.JAASRealm"
          appName="Jetspeed"

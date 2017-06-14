@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,13 +30,21 @@ import java.io.InputStream;
  */
 public interface Storage {
     /**
-     * List all files in a path
+     * List all files recursively
      *
-     * @param path The path
-     * @return String[]
+     * @return StorageItem[]
      * @throws IOException
      */
-    String[] list(String path) throws IOException;
+	StorageItem[] list() throws IOException;
+
+    /**
+     * List all files in a path recursively
+     *
+     * @param path The path
+     * @return StorageItem[]
+     * @throws IOException
+     */
+	StorageItem[] list(String path) throws IOException;
 
     /**
      * Check if a file exists
@@ -46,6 +54,15 @@ public interface Storage {
      * @return boolean
      */
     boolean exists(String path, String file);
+
+    /**
+     * Check if a file has a valid name
+     *
+     * @param path The path
+     * @param file The file
+     * @return boolean
+     */
+    boolean isValidName(String path, String file);
 
     /**
      * Get information about a file
@@ -116,4 +133,22 @@ public interface Storage {
      * @throws IOException
      */
     void delete(String path, String file) throws IOException;
+
+    /**
+     * Archive a file
+     *
+     * @param path
+     * @param file
+     * @throws IOException
+     */
+    void archive(String path, String file) throws IOException;
+
+    /**
+     * Restore a file
+     *
+     * @param path
+     * @param file
+     * @throws IOException
+     */
+    void restore(String path, String file) throws IOException;
 }

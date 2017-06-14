@@ -56,7 +56,14 @@ define(["dojo/_base/declare", "ingrid/message"],
                     if (this.isValid(address.postalCode)) {
                         entry += address.postalCode + " ";
                     }
-                    entry += address.city + "\n";
+                    if (this.isValid(address.administrativeArea)) {
+                        entry += address.city + " (" + address.administrativeArea + ")\n";
+                    } else {
+                        entry += address.city + "\n";
+                    }
+                }
+                if (!this.isValid(address.city) && this.isValid(address.administrativeArea)) {
+                    entry += address.administrativeArea + "\n";
                 }
                 if (this.isValid(address.countryName)) {
                     entry += address.countryName + "\n";

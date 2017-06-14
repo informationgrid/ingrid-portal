@@ -2,13 +2,13 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>4.0.1</version>
+    <version>4.0.3</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
   <name>InGrid Portal</name>
   <description>This is the portal where documents can be searched through the iBus and new documents can be managed by the InGrid Editor.</description>
   <scm>
@@ -27,8 +27,8 @@
 
   <properties>
     <org.apache.portals.jetspeed.version>2.3.0</org.apache.portals.jetspeed.version>
-    <mdek.version>4.0.2</mdek.version>
-    <webmap-client.version>4.0.2</webmap-client.version>
+    <mdek.version>4.0.3</mdek.version>
+    <webmap-client.version>4.0.3</webmap-client.version>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -57,7 +57,7 @@
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-codelist-service</artifactId>
-        <version>4.0.1</version>
+        <version>4.0.3</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>
@@ -125,6 +125,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
+        <version>1.13</version>
         <configuration>
           <excludes>
             <exclude>**/*.properties</exclude>

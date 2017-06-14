@@ -1,0 +1,18 @@
+#if($rs.get("detail"))
+    #set($uvp_category = "$UTIL_SEARCH.getDetailValue($rs.get('detail'), 'uvp_category')")
+    
+    #if($uvp_category && $uvp_category.length() > 0)
+        #set($uvp_categories = $uvp_category.split(","))
+        <ul class="tag-group">
+        #set($categories = [])
+        #foreach($category in $uvp_categories)
+            #if($categories.indexOf($category) < 0)
+                #set($tmp = $categories.add($category.trim()))
+            #end
+        #end
+        #foreach($category in $categories)
+            <li class="tag tag--small">$MESSAGES.getString("searchResult.categories.uvp.$category")</li>
+        #end
+        </ul>
+    #end
+#end

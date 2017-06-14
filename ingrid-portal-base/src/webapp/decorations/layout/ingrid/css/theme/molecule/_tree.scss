@@ -7,7 +7,9 @@
 
 .tree{
     border-top: 1px solid color(gainsboro);
+    /*
     overflow: auto;
+    */
 
     .icon{
         fill: color(dim-grey);
@@ -30,7 +32,8 @@
     font: 700 rem(16px) $font-brand;
     padding: rem(10px 16px 10px 32px);
     position: relative;
-    white-space: nowrap;
+    /*
+    white-space: nowrap; 
     
     a {
         text-overflow: ellipsis;
@@ -39,6 +42,7 @@
         display: inline-block;
         max-width: 95%;
     }
+    */
 }
 
 .tree__item--large {

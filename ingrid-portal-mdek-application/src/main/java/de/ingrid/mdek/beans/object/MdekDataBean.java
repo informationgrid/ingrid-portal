@@ -75,6 +75,7 @@ public class MdekDataBean {
 	private List<MdekAddressBean> generalAddressTable;
 	private List<CommentBean> commentTable;
 	private Boolean openData;
+	private Boolean advCompatible;
 	private List<String> openDataCategories;
 
 	// Spatial
@@ -122,6 +123,8 @@ public class MdekDataBean {
 	
 	// Thesaurus
 	private Boolean inspireRelevant;
+	private Boolean inspireConform;
+	private List<Integer> advProductGroupList;
 	private List<Integer> thesaurusInspireTermsList;
 	private List<SNSTopic> thesaurusTermsTable;
 	private List<Integer> thesaurusTopicsList;
@@ -2035,8 +2038,34 @@ public class MdekDataBean {
         return ref1GridPosAccuracy;
     }
 
-
     public void setRef1GridPosAccuracy(Double ref1GridPosAccuracy) {
         this.ref1GridPosAccuracy = ref1GridPosAccuracy;
+    }
+
+    public Boolean getAdvCompatible() {
+        return advCompatible  == null ? false : advCompatible;
+    }
+    
+    public void setAdvCompatible(Boolean advCompatible) {
+        this.advCompatible = advCompatible;
+    }
+
+
+    public Boolean getInspireConform() {
+        return inspireConform;
+    }
+
+    public void setInspireConform(Boolean inspireConform) {
+        this.inspireConform = inspireConform;
+    }
+
+
+    public List<Integer> getAdvProductGroupList() {
+        return advProductGroupList;
+    }
+
+
+    public void setAdvProductGroupList(List<Integer> advProductGroupList) {
+        this.advProductGroupList = advProductGroupList;
     }
 }

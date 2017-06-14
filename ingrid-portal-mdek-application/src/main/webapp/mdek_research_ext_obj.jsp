@@ -370,7 +370,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
                 errorHandler:function(err) {
                     LoadingZone.hide();
                     showErrorResults();
-                    console.debug("Error while executing SNSService.findTopics");
+                    console.debug("Error while executing SNSService.getSimilarTerms");
                 }
             });
         }

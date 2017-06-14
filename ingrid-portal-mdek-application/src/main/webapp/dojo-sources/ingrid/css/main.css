@@ -460,6 +460,14 @@ table.filteringTable tbody tr.alt td { background:#efefef; }
     padding: 10px;
 }
 
+.outlined .outer:nth-child(1) > div {
+	padding-left: 0 !important;
+}
+
+.outlined .outer:nth-child(2) > div {
+	padding-right: 0 !important;
+}
+
 .fixedLeftDistance150 {
 	float:left;
 	left:150px;

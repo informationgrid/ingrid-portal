@@ -63,7 +63,10 @@ public class PortalConfig extends PropertiesConfiguration {
 
     /** default timeout for sns queries in ms */
     public final static String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
-
+    
+    /** default length of chronicle hits  */
+    public final static String SNS_CHRONICLE_HITS_LENGTH = "sns.chronicle.hits.length";
+    
     /**
      * always read values from database or only once and then from cache, true
      * or false
@@ -71,6 +74,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public final static String ALWAYS_REREAD_DB_VALUES = "db.reread";
 
     public final static String EMAIL_REGISTRATION_CONFIRMATION_SENDER = "email.registration.confirmation.sender";
+
+    public final static String EMAIL_REGISTRATION_CONFIRMATION_URL = "email.registration.confirmation.url";
 
     public static final String EMAIL_SMTP_SERVER = "email.smtp.server";
     public static final String EMAIL_SMTP_USER = "email.smtp.user";
@@ -208,9 +213,13 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_SEARCH_EMPTY_QUERY = "portal.search.empty.query";
 
+    public static final String PORTAL_SEARCH_EXTEND_QUERY = "portal.search.extend.query";
+
     public static final String CATEGORY_TEASER_SEARCH_QUERY = "category.teaser.search.query";
    
     public static final String CATEGORY_TEASER_SEARCH_FACETS_TYP = "category.teaser.search.facets.typ";
+    
+    public static final String CATEGORY_TEASER_SEARCH_COLUMN_MAX = "category.teaser.search.column.max";
     
     public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
     

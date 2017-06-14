@@ -53,10 +53,10 @@
                     <li>
                         <a href="?hkey=maps-1">Karten</a>
                     </li>
+                    <!-- 
                     <li>
                         <a href="?hkey=rss-news-1">Aktuelles</a>
                     </li>
-                    <!-- 
                     <li>
                         <a href="?hkey=ingrid-inform-1">PortalU informiert</a>
                     </li>
@@ -2068,7 +2068,8 @@
           </content>
         </section>
     </chapter>
-	<chapter>
+    <!-- 
+    <chapter>
         <header>Aktuelles</header>
         <section help-key="rss-news-1">
             <header>Aktuelles</header>
@@ -2083,17 +2084,14 @@
                     werden, werden in dem Meldungsarchiv abgelegt. Sie können
                     diese Meldungen einsehen, indem Sie auf den Link
                     <b>Weitere Meldungen</b> klicken.</p>
-                <!-- 
                 <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
                     sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
                     auf den Original-Servern der jeweiligen Behörde oder Institution
                     finden. Klicken Sie hierzu auf <a href="?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
-                 -->
             </content>
         </section>
     </chapter>
-    <!-- 
-	<chapter>
+    <chapter>
         <header>PortalU informiert</header>
         <section help-key="ingrid-inform-1">
             <header>PortalU informiert</header>
@@ -2104,7 +2102,7 @@
             </content>
         </section>
     </chapter>
-   	 -->
+    -->
     <chapter>
         <header>Mein PortalU</header>
         <section help-key="myingrid-1">

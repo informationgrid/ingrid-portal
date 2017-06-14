@@ -1,0 +1,93 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+.nav-desktop {
+    background: #e0eed9;
+    border-top: 4px solid #a1d19d;
+}
+
+.header {
+    background: #AAA;
+}
+
+a {
+    color: #487143;
+}
+
+.nav-toggle {
+    color: #487143 !important;
+}
+
+.nav-toggle::after {
+    border-color: transparent transparent #AAA transparent;
+}
+
+.nav-toggle .icon {
+    fill: #FFF;
+}
+
+.footer__middle a {
+    color: #487143;
+}
+
+.desktop__title p.main__title {
+    color: #FFF;
+}
+
+.nav-overlay {
+    background: #2C5C91;
+}
+
+.nav-overlay {
+    background: #e0eed9;
+}
+
+.nav__foot a {
+    color: #487143;
+    border-bottom: 1px solid #0e8637;
+}
+
+.footer {
+    color: #666;
+}
+
+.nav__foot a:hover {
+    background: #e0eed9;
+    color: #111111;
+}
+
+.desktop-logo {
+    height: 60px;
+    max-width: 100%;
+    padding: 0 10px 0 0;
+}
+
+.mobile__logo {
+    height: 40px !important;
+    padding: 0 10px 0 0;
+}
+
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin-left: 0;
+    }
+}

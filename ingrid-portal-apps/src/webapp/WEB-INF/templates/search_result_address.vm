@@ -7,7 +7,7 @@
 #end
 <div id="searchResult">
     #if($enableFacete)
-        #renderSearchResultFacetFilter()
+        #renderSearchResultFacetFilter( "is-active" )
     #end
     <article class="content ob-container">
         <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
