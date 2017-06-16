@@ -158,6 +158,11 @@ define([
         },
 
         handleInspireConform: function() {
+            // prevent multiple executions which can occur during click/change event (especially implicit ones)
+            if (this.eventsConform.length > 0) {
+                return;
+            }
+
             console.log("konform");
             var self = this;
             var missingMessage = string.substitute(message.get("validation.specification.conform.missing"), [self.specificationName]);
