@@ -1070,6 +1070,7 @@ define({
     "validation.specification.delete.depend": "Die dazugehörige Spezifikation(en) <ul>${0}</ul> wurde(n) ebenfalls gelöscht.",
     "validation.specification.added": "Die Spezifikation '${0}' wurde ebenfalls hinzugefügt.",
     "validation.encoding.added": "Das Encoding Schema '${0}' wurde ebenfalls geändert.",
+    "validation.spatial.system.inspire.missing": "Es muss mindestens ein INSPIRE-Raumbezug ausgewählt sein.",
 
     "init.error.userNotFound": "Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",
 
