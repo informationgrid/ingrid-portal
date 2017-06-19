@@ -9,6 +9,9 @@
       <action type="update" dev="wemove" issue="367">
         Updated codelist entries to show which CRS is INSPIRE.
       </action>
+      <action type="update" dev="wemove" issue="730">
+        UVP: Updated portal partner/provider list of addresses by query.
+      </action>
     </release>
     
     <body>
