@@ -5,16 +5,16 @@
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
 
-    <release version="4.0.4" date="2017-xx-xx" description="Release 4.0.4">
-      <action type="update" dev="wemove" issue="367">
-        Updated codelist entries to show which CRS is INSPIRE.
-      </action>
-      <action type="update" dev="wemove" issue="730">
-        UVP: Updated portal partner/provider list of addresses by query.
-      </action>
-    </release>
-    
     <body>
+        <release version="4.0.4" date="2017-xx-xx" description="Release 4.0.4">
+          <action type="update" dev="wemove" issue="367">
+            Updated codelist entries to show which CRS is INSPIRE.
+          </action>
+          <action type="update" dev="wemove" issue="730">
+            UVP: Updated portal partner/provider list of addresses by query.
+          </action>
+        </release>
+        
         <release version="4.0.3" date="2017-06-14" description="Release 4.0.3">
           <action type="add" dev="wemove" issue="REDMINE-393,-556">
             BKG IGE: Added special version for input of access- and useConstraints to BKG profile.
