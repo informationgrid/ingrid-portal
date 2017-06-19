@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -86,7 +90,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
             try {
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( partnerQuery ), REQUESTED_FIELDS_ADDRESS, IBUSInterfaceImpl.getInstance().getIBus() );
                 ArrayList<String> addedInstitution = new ArrayList<String>();
-                HashMap<String, HashMap<String, Object>> partnersMap = new HashMap<String, HashMap<String, Object>>();
+                TreeMap<String, HashMap<String, Object>> partnersMap = new TreeMap<String, HashMap<String, Object>>();
                 
                 while (it.hasNext()) {
                     IngridHit hit = it.next();
@@ -172,17 +176,24 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                         }
                     }
                 }
-                for (String key : partnersMap.keySet()) {
-                    HashMap<String, Object>  partner = partnersMap.get( key );
-                    ArrayList<HashMap<String, HashMap<String, String>>> providers = (ArrayList<HashMap<String, HashMap<String, String>>>) partner.get( "providers" );
-                    if(providers.size() > 0){
-                        Collections.sort(providers, new Comparator<HashMap>(){
-                            public int compare(HashMap left, HashMap right){
-                                String leftKey = (String) ((HashMap<String, String>) left.get("provider")).get("name");
-                                String rightKey = (String) ((HashMap<String, String>) right.get("provider")).get("name");
-                                return leftKey.toLowerCase().compareTo(rightKey.toLowerCase());
+                Iterator<Map.Entry<String, HashMap<String, Object>>> itPartnerMap = partnersMap.entrySet().iterator();
+                if(itPartnerMap != null){
+                    while (itPartnerMap.hasNext()) {
+                        Map.Entry<String, HashMap<String, Object>>  partner = itPartnerMap.next();
+                        if(partner.getValue() != null){
+                            ArrayList<HashMap<String, HashMap<String, String>>> providers = (ArrayList<HashMap<String, HashMap<String, String>>>) partner.getValue().get( "providers" );
+                            if(providers.size() > 0){
+                                Collections.sort(providers, new Comparator<HashMap>(){
+                                    public int compare(HashMap left, HashMap right){
+                                        String leftKey = (String) ((HashMap<String, String>) left.get("provider")).get("name");
+                                        String rightKey = (String) ((HashMap<String, String>) right.get("provider")).get("name");
+                                        return leftKey.toLowerCase().compareTo(rightKey.toLowerCase());
+                                    }
+                                });
+                            }else{
+                                itPartnerMap.remove();
                             }
-                        });
+                        }
                     }
                 }
                 context.put( "partners", partnersMap );
