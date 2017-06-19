@@ -13,6 +13,9 @@
           <action type="update" dev="wemove" issue="730">
             UVP: Updated portal partner/provider list of addresses by query.
           </action>
+          <action type="fix" dev="wemove" issue="731">
+            UVP-NI: Fix copyright.
+          </action>
         </release>
         
         <release version="4.0.3" date="2017-06-14" description="Release 4.0.3">
