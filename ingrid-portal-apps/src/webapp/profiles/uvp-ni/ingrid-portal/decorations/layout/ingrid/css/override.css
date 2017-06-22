@@ -328,6 +328,11 @@ thead {
 *, *::before, *::after {
     box-sizing: border-box;
 }
+
+.mobile__logo {
+    height: 2.5rem;
+}
+
 .footer__logo {
     display: inline-block;
     margin-right: 1.5rem;
