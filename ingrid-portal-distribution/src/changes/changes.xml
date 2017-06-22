@@ -19,6 +19,9 @@
           <action type="fix" dev="wemove" issue="740">
             UVP-NI: Fix mobile footer navigation style.
           </action>
+          <action type="fix" dev="wemove" issue="741">
+            MAPCLIENT: Fix generate QR code with too long URL. Use short URL to generate QR code.
+          </action>
         </release>
         
         <release version="4.0.3" date="2017-06-14" description="Release 4.0.3">
