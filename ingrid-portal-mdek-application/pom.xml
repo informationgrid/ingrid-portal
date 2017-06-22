@@ -737,52 +737,54 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
-            <id>gssoil</id>
+            <id>release</id>
             <build>
                 <plugins>
-                    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-                    <!-- unzip all GSSoil Thesaurus Gazetteer resources and libs to target -->
-                    <!-- USE THIS IF YOU SUPPLY IGE FOR GS SOIL -->
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
                         <executions>
                             <execution>
-                                <id>unpack-gssoil</id>
-                                <phase>prepare-package</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
+                                <id>compile</id>
+                                <phase>compile</phase>
                                 <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>gssoil</groupId>
-                                            <artifactId>thesaurus-gazetteer-resources</artifactId>
-                                            <version>2.0.1</version>
-                                            <type>zip</type>
-                                            <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/classes</outputDirectory>
-                                        </artifactItem>
-                                        <artifactItem>
-                                            <groupId>gssoil</groupId>
-                                            <artifactId>thesaurus-gazetteer-libs</artifactId>
-                                            <version>2.0.1</version>
-                                            <type>zip</type>
-                                            <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
-                                        </artifactItem>
-                                    </artifactItems>
+                                    <target>
+                                        <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties"/>
+                                        <condition property="foundRepeatable">
+                                            <resourcecount count="0" when="greater">
+                                                <fileset dir="src/main/resources/db/migration">
+                                                    <include name="**/R*.sql"/>
+                                                </fileset>
+                                            </resourcecount>
+                                        </condition>
+                                        <if>
+                                            <equals arg1="${foundRepeatable}" arg2="true"/>
+                                            <then>
+                                                <fail message="Flyway: You must not have repeatable SQL files!"/>
+                                            </then>
+                                            <else>
+                                                <echo message="Flyway: No repeatable SQL found. OK!"/>
+                                            </else>
+                                        </if>
+                                    </target>
                                 </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
                             </execution>
                         </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>ant-contrib</groupId>
+                                <artifactId>ant-contrib</artifactId>
+                                <version>20020829</version>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                 </plugins>
             </build>
-            <!-- NO SEPARATE REPO LIBS FOR GSSOIL ! WE EXTRACT EVERYTHING FROM ZIP
-                FILE (see above, "thesaurus-gazetteer-libs") ! SO WE CAN JUST UPDATE LIBS
-                FROM EDISOFT DELIVERIES ! <dependencies> <dependency> <groupId>net.htmlparser.jericho</groupId>
-                <artifactId>jericho-html</artifactId> <version>3.1</version> </dependency>
-                </dependencies> <repositories> <repository> <id>ibiblio</id> <name>iBiblio.or.</name>
-                <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url> </repository> </repositories> -->
         </profile>
     </profiles>
 </project>
