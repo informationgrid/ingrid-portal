@@ -16,6 +16,9 @@
           <action type="fix" dev="wemove" issue="731">
             UVP-NI: Fix copyright.
           </action>
+          <action type="fix" dev="wemove" issue="740">
+            UVP-NI: Fix mobile footer navigation style.
+          </action>
         </release>
         
         <release version="4.0.3" date="2017-06-14" description="Release 4.0.3">
