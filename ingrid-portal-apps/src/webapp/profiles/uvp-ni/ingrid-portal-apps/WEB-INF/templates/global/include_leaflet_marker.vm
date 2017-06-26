@@ -1,21 +1,43 @@
 <script>
     function showMarker(m) {
-        jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
-            var d = JSON.parse(data);
-            // create an orange rectangle
-            m.target.bbox=L.rectangle(d, {color: "blue", weight: 3, fill: false});
-            if(map){
-                map.addLayer(m.target.bbox);
-            }
-        });
+        if(m.target.uuid){
+            jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
+                var d = JSON.parse(data);
+                // create an orange rectangle
+                m.target.bbox=L.rectangle(d, {color: "blue", weight: 3, fill: false});
+                if(map){
+                    map.addLayer(m.target.bbox);
+                }
+            });
+        }
     }
     
     function hideMarker(m) {
-        if(map){
-            map.removeLayer(m.target.bbox);
+        if(m.target.bbox){
+            if(map){
+                map.removeLayer(m.target.bbox);
+            }
         }
     }
 
+    var mapSizeX;
+    var popupMarkerSize;
+    var popupMarkerOptions = {};
+    
+    if(map){
+        if(map._size){
+            mapSizeX = map._size.x;
+        }
+    }
+    
+    if(mapSizeX){
+        if(mapSizeX < 310){
+            popupMarkerOptions = {
+                maxWidth: 180
+            };
+        }
+    }
+    
     // All markers
     var mapMarkers = L.markerClusterGroup();
     // "Zulassungsverfahren" markers
@@ -61,6 +83,21 @@
                 c += 'large';
             }
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    // "Bebauungsplänen" markers
+    var mapMarkersDevPlan = L.markerClusterGroup({
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-dev-plan' + c, iconSize: new L.Point(40, 40) });
         }
     });
     if(markers){
@@ -114,7 +151,7 @@
             });
             
             var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
-            marker.bindPopup(popUpHtml);
+            marker.bindPopup(popUpHtml, popupMarkerOptions);
             marker.uuid = a[3];
             marker.bbox = null;
             marker.on('popupopen', showMarker);
@@ -138,6 +175,81 @@
         }
     }
     
+    if(markersDevPlan){
+        for (var i = 0; i < markersDevPlan.length; i++) {
+            var a = markersDevPlan[i];
+            var id = a.id;
+            var name = a.name;
+            var descr = a.descr;
+            var latlon = a.latlon;
+            var polygon = a.polygon;
+            var bpinfos = a.bpinfos;
+            
+            var popUpHtml = '';
+            popUpHtml += '<h4>' + name + '</h4>';
+            
+            if(descr && descr .length > 0){
+                popUpHtml += '<b>Beschreibung:</b><br>';
+                popUpHtml += '<span>' + descr + '</span>';
+                popUpHtml += '<br><br>';
+            }
+            
+            if(bpinfos && bpinfos.length > 0){
+                popUpHtml += '<span>Nutzen Sie die folgenden Links um zu den Seiten der Gemeinden zur Bauleitplanung zu gelangen:</span>';
+                popUpHtml += '<ul>';
+                for (var j = 0; j < bpinfos.length; j++) {
+                    var bpinfo = bpinfos[j];
+                    if(bpinfo.url){
+                        var url = bpinfo.url;
+                        if(url.indexOf("http") == -1){
+                            url = "http://" + url;
+                        }
+                        if(bpinfo.tags){
+                            var tags = bpinfo.tags;
+                            for (var k = 0; k < tags.length; k++) {
+                                var tag = tags[k];
+                                if(tag){
+                                    var title;
+                                    if(tag === "v"){
+                                        title = 'Bauleitpl&auml;ne im Beteiligungsverfahren';
+                                    }else if(tag === "p"){
+                                        title = 'Wirksame/rechtskr&auml;ftige Bauleitpl&auml;ne';
+                                    }
+                                    if(title){
+                                        popUpHtml += '<li><a href="' + url + '" target="_blank">' + title + '</a></li>';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                popUpHtml += '</ul>';
+                popUpHtml += '<br>';
+            }
+            
+            var iconColor = 'green';
+            
+            var icon = L.AwesomeMarkers.icon({
+                markerColor: iconColor,
+                prefix: 'icon'
+            });
+            
+            var marker = L.marker(new L.LatLng(latlon[0],latlon[1]), { title: name, icon: icon });
+            marker.bindPopup(popUpHtml, popupMarkerOptions);
+            marker.bbox = null;
+            marker.on('popupopen', showMarker);
+            marker.on('popupclose', hideMarker);
+            mapMarkers.addLayer(marker);
+            mapMarkersDevPlan.addLayer(marker);
+        }
+    
+        if(markersDevPlan.length > 0){
+            if(map){
+                map.addLayer(mapMarkersDevPlan);
+            }
+        }
+    }
+    
     var overlayers = {};
     if(mapMarkers10.getLayers().length > 0){
         overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Zulassungsverfahren"]  = mapMarkers10;
@@ -148,6 +260,9 @@
     
     if(mapMarkers1314.getLayers().length > 0){
         overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_red.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Vorgelagerte Verfahren"]  = mapMarkers1314;
+    }
+    if(mapMarkersDevPlan.getLayers().length > 0){
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_green.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Bauleitplanung"]  = mapMarkersDevPlan;
     }
     L.control.layers({}, overlayers, {position: 'topright', collapsed:false }).addTo(map);
     

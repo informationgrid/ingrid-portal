@@ -14,6 +14,9 @@ html, body {
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script src="$restUrlMarker"></script>
+#if($restUrlUVPDevPlan)
+<script src="$restUrlUVPDevPlan"></script>
+#end
 <script language="JavaScript" type="text/javascript">
     var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
     var map = addLeafletMap([osm], null, new L.LatLng(51.3, 10));

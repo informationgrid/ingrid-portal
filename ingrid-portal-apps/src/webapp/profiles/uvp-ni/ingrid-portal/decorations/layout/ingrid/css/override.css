@@ -455,6 +455,14 @@ thead {
   background-color: rgba(200, 60, 40, 1.0) !important;
 }
 
+.marker-cluster-dev-plan {
+  background-color: rgba(110, 170, 40, 0.6) !important;
+}
+
+.marker-cluster-dev-plan div {
+  background-color: rgba(110, 170, 40, 1.0) !important;
+}
+
 .marker-cluster span {
   color: #FFFFFF;
 }

@@ -225,6 +225,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_MAPCLIENT_QUERY = "portal.mapclient.query";
     
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_URL = "portal.mapclient.uvp.category.dev-plan.url";
+    
     public static final String PORTAL_PARTNER_LIST_QUERY = "portal.partner.list.query";
 
     // private stuff
