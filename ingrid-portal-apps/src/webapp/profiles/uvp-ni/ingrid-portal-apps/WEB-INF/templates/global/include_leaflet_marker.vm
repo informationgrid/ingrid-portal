@@ -151,11 +151,13 @@
             });
             
             var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
-            marker.bindPopup(popUpHtml, popupMarkerOptions);
             marker.uuid = a[3];
             marker.bbox = null;
-            marker.on('popupopen', showMarker);
-            marker.on('popupclose', hideMarker);
+            if(enablePopUp){
+                marker.bindPopup(popUpHtml, popupMarkerOptions);
+                marker.on('popupopen', showMarker);
+                marker.on('popupclose', hideMarker);
+            }
             mapMarkers.addLayer(marker);
             if(procedureId == '10'){
                 mapMarkers10.addLayer(marker);
@@ -211,12 +213,12 @@
                                 if(tag){
                                     var title;
                                     if(tag === "v"){
-                                        title = 'Bauleitpl&auml;ne im Beteiligungsverfahren';
-                                    }else if(tag === "p"){
                                         title = 'Wirksame/rechtskr&auml;ftige Bauleitpl&auml;ne';
+                                    }else if(tag === "p"){
+                                        title = 'Bauleitpl&auml;ne im Beteiligungsverfahren';
                                     }
                                     if(title){
-                                        popUpHtml += '<li><a href="' + url + '" target="_blank">' + title + '</a></li>';
+                                        popUpHtml += '<li style="padding: 5px 0 0 0;"><a href="' + url + '" target="_blank"><svg class="icon globe__icon" style="font-size: 11px;"><use xlink:href="#external-link"></use></svg><span style="padding: 0 0 0 5px;">' + title + '</span></a></li>';
                                     }
                                 }
                             }
@@ -235,10 +237,12 @@
             });
             
             var marker = L.marker(new L.LatLng(latlon[0],latlon[1]), { title: name, icon: icon });
-            marker.bindPopup(popUpHtml, popupMarkerOptions);
             marker.bbox = null;
-            marker.on('popupopen', showMarker);
-            marker.on('popupclose', hideMarker);
+            if(enablePopUp){
+                marker.bindPopup(popUpHtml, popupMarkerOptions);
+                marker.on('popupopen', showMarker);
+                marker.on('popupclose', hideMarker);
+            }
             mapMarkers.addLayer(marker);
             mapMarkersDevPlan.addLayer(marker);
         }
