@@ -73,7 +73,7 @@ define([
         "          <span class='outer halfWidth'>" +
         "            <div>" +
         "              <select data-dojo-type='dijit/form/FilteringSelect' data-dojo-attach-point='selectInput' style='width:100%;'></select>" +
-        "              <div class='comment' style='width:100%; height:52px; overflow:auto; padding-left: 0;'>Info-Text ...</div>" +
+        "              <div class='comment' style='width:100%; height:52px; overflow:auto; padding-left: 0;'></div>" +
         "            </div>" +
         "          </span>" +
         "          <span class='outer halfWidth'>" +
