@@ -192,7 +192,6 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                                 IOUtils.copy(is, writer, "UTF-8");
                                 jsonString = writer.toString();
                                 response.setContentType( "application/javascript" );
-                                response.getWriter().write( "var markersDevPlan = "+ jsonString + ";");
                             }else if(conContentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")){
                                 Workbook workbook = WorkbookFactory.create( is );
                                 if(workbook != null){
