@@ -845,12 +845,10 @@
         <section help-key="maintanance-of-objects-5">
             <header>Der Verschlagwortungsassistent</header>
             <content>
-                 <p>Zur fachlichen Verschlagwortung nutzt der InGridCatalog sowohl den deutschen 
-				 Umweltthesaurus UMTHES als auch den europäischen Umweltthesaurus GEMET 
+                 <p>Zur fachlichen Verschlagwortung kann der InGridCatalog sowohl den deutschen 
+				 Umweltthesaurus UMTHES als auch den europäischen Umweltthesaurus GEMET nutzen 
 				 (siehe auch <a href="?hkey=maintanance-of-objects-6">Der Thesaurus-Navigator</a>).</p> 
-                 <p>Über den 
- 				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
-				 des Umweltbundesamtes in Dessau-Rosslau wird aus den bereits ausgefüllten Textfeldern 
+                 <p>Aus den bereits ausgefüllten Textfeldern wird 
 				 eine Vorschlagsliste für Thesaurusbegriffe zur Verschlagwortung erstellt. </p>
                  <p>Sie können durch Anklicken einen oder mehrere (Strg-Mausklick) Begriffe auswählen und 
 				 sie über die Schaltfläche „&gt;“ zu der Liste <i>Übernehmen</i> hinzufügen. Über die 
@@ -869,15 +867,15 @@
 				 Vorgänge, Gegenstände) der umweltrelevanten Fachgebiete mit einheitlich benutzten 
 				 Bezeichnungen wiederzugeben bzw. zu umschreiben. Eine einheitliche Beschreibung ermöglicht 
 				 wiederum eine gezielte Suche mit weitgehend vollständigem Suchergebnis. </p>
-                 <p>Der InGridCatalog (IGC) verwendet den Umweltthesaurus (UMTHES) des Umweltbundesamtes 
-				 in Dessau-Rosslau. Er enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt". 
-				 Das Wortgut des europäischen Umweltthesaurus 
-				 <a href="http://www.eionet.europa.eu/gemet" target="SNS">
-				 GEMET (GEneral Multilingual Environmental Thesaurus)</a> 
-				 ist als Untermenge in den UMTHES integriert. </p>
-                 <p>Der UMTHES wird über den 
-				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
-				 vom Umweltbundesamt zur Verfügung gestellt.</p>
+                 <p>Der InGridCatalog (IGC) kann folgende Thesauri verwenden:</p>
+				 <ul>
+				 <li>den Umweltthesaurus (UMTHES) des Umweltbundesamtes in Dessau-Rosslau. Er enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt".<br></br>
+				 Der UMTHES wird über den <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
+				 vom Umweltbundesamt zur Verfügung gestellt.
+				 </li>
+				 <li>den europäischen Umweltthesaurus <a href="http://www.eionet.europa.eu/gemet" target="SNS">
+				 GEMET (GEneral Multilingual Environmental Thesaurus)</a>.</li>
+				 </ul>
                  <p><b>Hierarchiebaum </b></p>
                  <p>Um den optimalen Suchbegriff im Thesaurus zu finden, können Sie sich über den 
 				 Hierarchiebaum von den Oberbegriffen zu den spezifischeren Ebenen leiten lassen. 
@@ -1075,15 +1073,15 @@
 				 Vorgänge, Gegenstände) der umweltrelevanten Fachgebiete mit einheitlich benutzten 
 				 Bezeichnungen wiederzugeben bzw. zu umschreiben. Eine einheitliche Beschreibung ermöglicht 
 				 wiederum eine gezielte Suche mit weitgehend vollständigem Suchergebnis. </p>
-                 <p>Der InGridCatalog (IGC) verwendet den Umweltthesaurus (UMTHES) des Umweltbundesamtes 
-				 in Dessau-Rosslau. Er enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt". 
-				 Das Wortgut des europäischen Umweltthesaurus 
-				 <a href="http://www.eionet.europa.eu/gemet" target="SNS">
-				 GEMET (GEneral Multilingual Environmental Thesaurus)</a> 
-				 ist als Untermenge in den UMTHES integriert. </p>
-                 <p>Der UMTHES wird über den 
-				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
-				 vom Umweltbundesamt zur Verfügung gestellt.</p>
+                 <p>Der InGridCatalog (IGC) kann folgende Thesauri verwenden:</p>
+				 <ul>
+				 <li>den Umweltthesaurus (UMTHES) des Umweltbundesamtes in Dessau-Rosslau. Er enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt".<br></br>
+				 Der UMTHES wird über den <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
+				 vom Umweltbundesamt zur Verfügung gestellt.
+				 </li>
+				 <li>den europäischen Umweltthesaurus <a href="http://www.eionet.europa.eu/gemet" target="SNS">
+				 GEMET (GEneral Multilingual Environmental Thesaurus)</a>.</li>
+				 </ul>
                  <p><b>Hierarchiebaum </b></p>
                  <p>Um den optimalen Suchbegriff im Thesaurus zu finden, können Sie sich über den 
 				 Hierarchiebaum von den Oberbegriffen zu den spezifischeren Ebenen leiten lassen. 
@@ -1157,14 +1155,14 @@
 				 <i>Alle auswählen</i> setzt ein Häkchen vor alle Objektklassen.</p>
 				 <p><b>Thema: Fachwörterbuch</b></p>
 				 <p>Sie können auch gezielt nach Begriffen aus dem Fachwörterbuch, also dem UMTHES, dem 
-				 Umweltthesaurus des Umweltbundesamtes, suchen.</p>
+				 Umweltthesaurus des Umweltbundesamtes, oder dem GEMET suchen.</p>
 				 <p>Hierzu geben sie unter <i>Thema / Fachwörterbuch</i> einen Begriff ein. Über die 
-				 Schaltfläche <i>In Thesaurus suchen</i> erhalten Sie die zu diesem Begriff im UMTHES 
+				 Schaltfläche <i>In Thesaurus suchen</i> erhalten Sie die zu diesem Begriff im Thesaurus  
 				 bereitgestellten Thesaurus-Begriffe. Sie werden unter <i>Ähnliche Begriffe</i> angezeigt. </p>
 				 <p>Sie können einen oder mehrere Begriffe über die Kontrollkästchen anwählen und über 
 				 die Schaltfläche <i>Übernehmen</i> der Liste der <i>Suchbegriffe</i> hinzufügen.</p>
 				 <p>Möchten Sie einen der Begriffe weiter eingrenzen oder aber allgemeiner fassen, so können Sie 
-				 ihn anklicken und erhalten die im UMTHES vorhanden spezielleren <i>Unterbegriffe</i> als 
+				 ihn anklicken und erhalten die im Thesaurus vorhandenen spezielleren <i>Unterbegriffe</i> als 
 				 auch die allgemeineren <i>Oberbegriffe</i>. Die zu dem Begriff vorhandenen <i>Synonyme</i>
 				 werden Ihnen ebenfalls angeboten. Auch diese Begriffe können wiederum ausgewählt und in 
 				 die Liste der <i>Suchbegriffe</i> übernommen werden.</p>
@@ -1247,15 +1245,15 @@
 				 Vorgänge, Gegenstände) der umweltrelevanten Fachgebiete mit einheitlich benutzten 
 				 Bezeichnungen wiederzugeben bzw. zu umschreiben. Eine einheitliche Beschreibung ermöglicht 
 				 wiederum eine gezielte Suche mit weitgehend vollständigem Suchergebnis. </p>
-                 <p>Der InGridCatalog (IGC) verwendet den Umweltthesaurus (UMTHES) des Umweltbundesamtes 
-				 in Dessau-Rosslau. Er enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt". 
-				 Das Wortgut des europäischen Umweltthesaurus 
-				 <a href="http://www.eionet.europa.eu/gemet" target="SNS">
-				 GEMET (GEneral Multilingual Environmental Thesaurus)</a> 
-				 ist als Untermenge in den UMTHES integriert. </p>
-                 <p>Der UMTHES wird über den 
-				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
-				 vom Umweltbundesamt zur Verfügung gestellt.</p>
+                 <p>Der InGridCatalog (IGC) kann folgende Thesauri verwenden:</p>
+				 <ul>
+				 <li>den Umweltthesaurus (UMTHES) des Umweltbundesamtes in Dessau-Rosslau. Er enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt".<br></br>
+				 Der UMTHES wird über den <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
+				 vom Umweltbundesamt zur Verfügung gestellt.
+				 </li>
+				 <li>den europäischen Umweltthesaurus <a href="http://www.eionet.europa.eu/gemet" target="SNS">
+				 GEMET (GEneral Multilingual Environmental Thesaurus)</a>.</li>
+				 </ul>
                  <p><b>Hierarchiebaum </b></p>
                  <p>Um den optimalen Suchbegriff im Thesaurus zu finden, können Sie sich über den 
 				 Hierarchiebaum von den Oberbegriffen zu den spezifischeren Ebenen leiten lassen. 
@@ -2294,24 +2292,24 @@
         <section help-key="overall-catalog-management-7">
             <header>Suchbegriffe</header>
             <content>
-                 <p>Der InGridCatalog (IGC) verwendet den Umweltthesaurus (UMTHES) des Umweltbundesamtes 
-				 in Dessau-Rosslau. Er enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt". 
-				 Das Wortgut des europäischen Umweltthesaurus 
-				 <a href="http://www.eionet.europa.eu/gemet" target="SNS">
-				 GEMET (GEneral Multilingual Environmental Thesaurus)</a> 
-				 ist als Untermenge in den UMTHES integriert. </p>
-                 <p>Der UMTHES wird über den 
-				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
-				 vom Umweltbundesamt zur Verfügung gestellt.</p>
-                 <p>Die Thesaurus-Deskriptoren werden im IGC sowohl als SNS-IDs als auch als Begriff 
+                 <p>Der InGridCatalog (IGC) verwendet, je nach Konfiguration, folgende Thesauri:</p>
+				 <ul>
+				 <li>den Umweltthesaurus (UMTHES) des Umweltbundesamtes in Dessau-Rosslau. Er enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt".<br></br>
+				 Der UMTHES wird über den <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a> 
+				 vom Umweltbundesamt zur Verfügung gestellt.
+				 </li>
+				 <li>den europäischen Umweltthesaurus <a href="http://www.eionet.europa.eu/gemet" target="SNS">
+				 GEMET (GEneral Multilingual Environmental Thesaurus)</a>.</li>
+				 </ul>
+                 <p>Die Thesaurus-Deskriptoren werden im IGC sowohl als IDs als auch als Begriff 
 				 gespeichert. Sowohl der UMTHES als auch der GEMET werden gepflegt und entwickeln sich 
-				 weiter. Daher erfährt auch der SNS eine regelmäßige Aktualisierung. </p>
-				 <p>Nach jeder Aktualisierung des SNS muss der Datenbestand des IGC auf seine Konsistenz 
-				 mit der neusten Version des SNS überprüft und ggf. angepasst werden. Dies kann der 
+				 weiter. Daher erfährt der Thesaurus eine regelmäßige Aktualisierung. </p>
+				 <p>Nach jeder Aktualisierung des Thesaurus muss der Datenbestand des IGC auf seine Konsistenz 
+				 mit der neusten Version des Thesaurus überprüft und ggf. angepasst werden. Dies kann der 
 				 Katalogadministrator automatisch über die Funktion <i>Suchbegriffe</i> im Menüpunkt 
 				 <i>Gesamtkatalogmanagement</i> durchführen.</p>
 				 <p>Der Aktualisierungsvorgang wird <b>online</b> durchgeführt, indem 
-				 Sie den Button <i>Aktualisierung starten</i> anklicken. In diesem Fall wird SNS 
+				 Sie den Button <i>Aktualisierung starten</i> anklicken. In diesem Fall wird der Thesaurus 
                  online über das Netz abgefragt.</p>
 				 <p>Nach der Aktualisierung werden einige Informationen zum letzten Prozess in dem 
 				 Informationskasten angezeigt.</p>
@@ -2321,40 +2319,28 @@
 				 handeln:</p>
 				 <ul>
 				 <li><u><i>UMTHES Term</i></u>: <br/>Begriff aus dem UMTHES-Thesaurus</li>
-				 <li><u><i>GEMET Term</i></u>: <br/>Begriff aus dem GEMET-Thesaurus</li>
+				 <li><u><i>GEMET Term</i></u>: <br/>Begriff aus dem GEMET-Thesaurus. Der Begriff wird auch noch in englisch mit dem Zusatz "(alternativ)" angezeigt, wenn der Thesaurus so konfiguriert ist.</li>
 				 <li><u><i>Freier Term</i></u>: <br/>Freier Suchbegriff (kein Thesaurus Deskriptor)</li>
 				 </ul>
 				 <p>Zu jedem geänderten Begriff wird die <i>Ergriffene Maßnahme</i> angezeigt. Es gibt 
 				 folgende Möglichkeiten:</p>
 				 <ol>
 				 <li><u><i>Deskriptor in freien Suchbegriff überführt</i></u>:
-				 <br/>Ein Thesaurusbegriff ist nicht mehr im SNS als Deskriptor enthalten. Er wird von 
+				 <br/>Ein Thesaurusbegriff ist nicht mehr im Thesaurus als Deskriptor enthalten. Er wird von 
 				 einem Thesaurus-Suchbegriff in einen freien Suchbegriff überführt.</li>
-				 <li><u><i>Freien Suchbegriff ersetzt durch Deskriptor "</i>Suchbegriff<i>" (UMTHES Term)
+				 <li><u><i>Freien Suchbegriff ersetzt durch Deskriptor "</i>Suchbegriff<i>" (UMTHES/GEMET Term)
 				 </i></u>:
 				 <br/>Ein freier Suchbegriff wird als Thesaurus-Deskriptor identifiziert und von einem 
-				 freien Suchbegriff in einen Thesaurus(UMTHES)-Suchbegriff überführt.</li>
+				 freien Suchbegriff in einen Thesaurus-Suchbegriff überführt.</li>
 				 <li><u><i>Freien Suchbegriff ergänzt mit Deskriptor "</i>Suchbegriff<i>" 
-				 (UMTHES Term)</i></u>:
+				 (UMTHES/GEMET Term)</i></u>:
 				 <br/>Ein freier Suchbegriff wird als Synonym zu einem Thesaurus-Deskriptor identifiziert. 
 				 Es wird der zugehörige Thesaurus-Deskriptor als Thesaurus-Suchbegriff ergänzt. Der 
 				 freie Suchbegriff bleibt erhalten.</li>
-				 <li><u><i>Deskriptor aktualisiert, ist jetzt "</i>GEMET-Suchbegriff<i>" (GEMET Term), 
-				 "</i>UMTHES-Suchbegriff<i>" (UMTHES)</i></u>:
-				 <br/>Ein UMTHES-Suchbegriff wird als GEMET-Deskriptor mit gleicher SNS-ID aber anderem 
-				 Namen identifiziert. Der GEMET-Name wird hinzugefügt.</li>
-				 <li><u><i>Deskriptor ERSETZT durch Deskriptor "</i>GEMET-Suchbegriff<i>" (GEMET Term), 
-				 "</i>UMTHES-Suchbegriff<i>" (UMTHES)</i></u>:
-				 <br/>Der Name eines Thesaurus-Suchbegriffs wird als GEMET-Deskriptor mit einer anderen 
-				 SNS-ID identifiziert. Die SNS-ID wird ersetzt. Der Name des GEMET-Deskriptors als 
-				 auch der des zugehörigen UMTHES-Deskriptors werden hinzugefügt. </li>
-				 <li><u><i>Deskriptor in freien Suchbegriff überführt
-				 <br/>Deskriptor ERSETZT durch Deskriptor "</i>GEMET-Suchbegriff<i>" (GEMET Term), 
-				 "</i>UMTHES-Suchbegriff<i>" (UMTHES)</i></u>:
-				 <br/>Ein Thesaurus-Term wurde im UMTHES von einem Deskriptor in den Status eines Synonyms 
-				 überführt. Das UMTHES-Synonym ist aber ein GEMET-Deskriptor. Der Thesaurusbegriff wird 
-				 in die freien Suchbegriffe überführt. Die zugehörige GEMET- und UMTHES-Deskriptoren 
-				 werden als Thesaurus-Suchbegriffe ergänzt.</li>
+				 <li><u><i>Deskriptor aktualisiert, ist jetzt "</i>Suchbegriff<i>" (UMTHES/GEMET Term)</i></u>:
+				 <br/>Ein Thesaurus-Deskriptor hat seinen Namen geändert, der Name wird aktualisiert.</li>
+				 <li><u><i>Deskriptor ERSETZT durch Deskriptor "</i>Suchbegriff<i>" (UMTHES/GEMET Term)</i></u>:
+				 <br/>Ein Thesaurus-Deskriptor hat seine ID geändert, die ID wird aktualisiert.</li>
 				 </ol>
 				 <p>Abschließend wird die Anzahl der Objekte und Adressen angezeigt, in denen der 
 				 veränderte Suchbegriff verwendet wurde.</p>
