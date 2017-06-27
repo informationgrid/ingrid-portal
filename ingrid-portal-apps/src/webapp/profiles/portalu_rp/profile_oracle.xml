@@ -5,7 +5,7 @@
     <pages>
         <page>
             <name>main-measures.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>main-about-data-source.psml</name>
