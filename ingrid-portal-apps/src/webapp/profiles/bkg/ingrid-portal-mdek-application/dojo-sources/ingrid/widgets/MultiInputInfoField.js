@@ -25,7 +25,6 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/_base/lang",
-    "dojo/dom-construct",
     "dojo/dom-class",
     "dojo/query",
     "dojo/on",
@@ -40,7 +39,7 @@ define([
     "ingrid/message",
     "ingrid/utils/Syslist",
     "ingrid/utils/Store"
-], function(declare, array, lang, construct, domClass, query, on, request, json, registry, _WidgetBase, _Templated, FilteringSelect, SimpleTextarea, creator, message, UtilSyslist, UtilStore) {
+], function(declare, array, lang, domClass, query, on, request, json, registry, _WidgetBase, _Templated, FilteringSelect, SimpleTextarea, creator, message, UtilSyslist, UtilStore) {
 
     return declare("MultiInputInfoField", [_WidgetBase, dijit._Templated], {
 
@@ -74,12 +73,12 @@ define([
         "          <span class='outer halfWidth'>" +
         "            <div>" +
         "              <select data-dojo-type='dijit/form/FilteringSelect' data-dojo-attach-point='selectInput' style='width:100%;'></select>" +
-        "              <div class='comment' style='width:100%; height:30px; overflow:hidden;'>Info-Text ...</div>" +
+        "              <div class='comment' style='width:100%; height:52px; overflow:auto; padding-left: 0;'>Info-Text ...</div>" +
         "            </div>" +
         "          </span>" +
         "          <span class='outer halfWidth'>" +
         "            <div>" +
-        "              <textarea data-dojo-type='dijit/form/SimpleTextarea' data-dojo-attach-point='freeTextInput' rows=3 style='width:100%;'></textarea>" +
+        "              <textarea data-dojo-type='dijit/form/SimpleTextarea' data-dojo-attach-point='freeTextInput' rows='5' style='width:100%;'></textarea>" +
         "            </div>" +
         "          </span>" +
         "          <div class='clear'></div>" +
@@ -116,10 +115,10 @@ define([
                 if (text !== this.get("value")) {
                     self.infoText.addContent(text, "only");
                     // also set tooltip on mouse over to show full content
-                    self.infoText.attr("title", text);
+                    // self.infoText.attr("title", text);
                 } else {
                     self.infoText.addContent("", "only");
-                    self.infoText.attr("title", "");
+                    // self.infoText.attr("title", "");
                 }
             });
 
