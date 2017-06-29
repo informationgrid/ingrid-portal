@@ -188,7 +188,7 @@ public class MdekMapper implements DataMapperInterface {
 
         // ExtraInfo
         mdekObj.setExtraInfoLangMetaDataCode((Integer)obj.get(MdekKeys.METADATA_LANGUAGE_CODE));
-        mdekObj.setExtraInfoLangDataCode((Integer)obj.get(MdekKeys.DATA_LANGUAGE_CODE));
+        mdekObj.setExtraInfoLangDataTable(mapToExtraInfoLangDataTable((List<IngridDocument>) obj.get(MdekKeys.DATA_LANGUAGE_LIST)));
 
         mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
         mdekObj.setExtraInfoCharSetDataCode((Integer)obj.get(MdekKeys.DATASET_CHARACTER_SET));
@@ -804,7 +804,7 @@ public class MdekMapper implements DataMapperInterface {
 
         // ExtraInfo
         udkObj.put(MdekKeys.METADATA_LANGUAGE_CODE, data.getExtraInfoLangMetaDataCode());
-        udkObj.put(MdekKeys.DATA_LANGUAGE_CODE, data.getExtraInfoLangDataCode());
+        udkObj.put(MdekKeys.DATA_LANGUAGE_LIST, mapFromExtraInfoLangDataTable(data.getExtraInfoLangDataTable()));
         udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
         udkObj.put(MdekKeys.DATASET_CHARACTER_SET, data.getExtraInfoCharSetDataCode());
         udkObj.put(MdekKeys.CONFORMITY_LIST, mapFromExtraInfoConformityTable(data.getExtraInfoConformityTable()));
@@ -1069,8 +1069,8 @@ public class MdekMapper implements DataMapperInterface {
         }
 
         if (null != sysListMapper.getInitialKeyFromListId(99999999)) {
-            if (null == obj.getExtraInfoLangDataCode()) {
-                obj.setExtraInfoLangDataCode(sysListMapper.getInitialKeyFromListId(99999999));
+            if ((null == obj.getExtraInfoLangDataTable() || obj.getExtraInfoLangDataTable().size() == 0)) {
+                obj.setExtraInfoLangDataTable(Arrays.asList(new String[] { sysListMapper.getInitialValueFromListId(99999999) }));
             }
             if (null == obj.getExtraInfoLangMetaDataCode()) {
                 obj.setExtraInfoLangMetaDataCode(sysListMapper.getInitialKeyFromListId(99999999));
@@ -1293,6 +1293,24 @@ public class MdekMapper implements DataMapperInterface {
             result.put(MdekKeys.DATASET_REFERENCE_TYPE, ref.getType());
             resultList.add(result);
         }
+        return resultList;
+    }
+
+    private List<IngridDocument> mapFromExtraInfoLangDataTable(List<String> valueList) {
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        
+        if (valueList != null) {
+            for (String value : valueList) {
+                KeyValuePair kvp = mapFromKeyValue(MdekKeys.DATA_LANGUAGE_CODE, value);
+                if (kvp.getValue() != null || kvp.getKey() != -1) {
+                    IngridDocument result = new IngridDocument();
+                    result.put(MdekKeys.DATA_LANGUAGE_CODE, kvp.getKey());
+                    result.put(MdekKeys.DATA_LANGUAGE_NAME, kvp.getValue());
+                    resultList.add(result);
+                }
+            }           
+        }
+
         return resultList;
     }
 
@@ -1969,6 +1987,19 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     
+    private List<String> mapToExtraInfoLangDataTable(List<IngridDocument> docList) {
+        List<String> resultList = new ArrayList<String>();
+
+        if (docList != null) {
+            for (IngridDocument doc : docList) {
+                KeyValuePair kvp = mapToKeyValuePair(doc, MdekKeys.DATA_LANGUAGE_CODE, MdekKeys.DATA_LANGUAGE_NAME);
+                resultList.add(kvp.getValue());
+            }
+        }
+
+        return resultList;
+    }
+
     private List<ConformityBean> mapToExtraInfoConformityTable(List<IngridDocument> conList) {
         List<ConformityBean> resultList = new ArrayList<ConformityBean>();
         if (conList == null)

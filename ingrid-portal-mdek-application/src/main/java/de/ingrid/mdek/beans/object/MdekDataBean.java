@@ -102,7 +102,7 @@ public class MdekDataBean {
 
 	// ExtraInfo
 	private Integer extraInfoLangMetaDataCode;
-	private Integer extraInfoLangDataCode;
+    private List<String> extraInfoLangDataTable;
 	private Integer extraInfoPublishArea;
 	private Integer extraInfoCharSetDataCode;
 	private List<ConformityBean> extraInfoConformityTable;
@@ -932,15 +932,13 @@ public class MdekDataBean {
 
 
 
-	public Integer getExtraInfoLangDataCode() {
-		return extraInfoLangDataCode;
-	}
-
-
-
-	public void setExtraInfoLangDataCode(Integer extraInfoLangData) {
-		this.extraInfoLangDataCode = extraInfoLangData;
-	}
+    public List<String> getExtraInfoLangDataTable() {
+        return extraInfoLangDataTable;
+    }
+    public void setExtraInfoLangDataTable(
+            List<String> extraInfoLangDataTable) {
+        this.extraInfoLangDataTable = extraInfoLangDataTable;
+    }
 
 
 	public Integer getExtraInfoPublishArea() {
