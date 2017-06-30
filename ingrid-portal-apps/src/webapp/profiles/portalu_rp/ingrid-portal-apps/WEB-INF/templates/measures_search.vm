@@ -21,10 +21,10 @@
   var elasticSearchUrl = 'http://numis.niedersachsen.de/elastic-measure/';
 
   // exclude networks which shall not be shown
-  var excludeNetworks = ['luen_new', 'odl'];
+  var excludeNetworks = ['luen_new'];
   
   // define initial network on init
-  var initialNetworks = ['pegel_new'];
+  var initialNetworks = ['odl'];
 
   // Add iFrame 'src'
   iframe.src = '/ingrid-portal-apps/measures/index.html' + urlParams;
