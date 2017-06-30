@@ -42,7 +42,7 @@ else
 fi
 
 if [ "$DEBUG" = 'true' ]; then
-    ./bin/catalina.sh jpda start
+    ./bin/catalina.sh jpda run
 else
     ./bin/catalina.sh run
 fi
