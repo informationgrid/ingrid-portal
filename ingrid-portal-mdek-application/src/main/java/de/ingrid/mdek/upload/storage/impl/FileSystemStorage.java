@@ -470,6 +470,7 @@ public class FileSystemStorage implements Storage {
         String fileType = Files.probeContentType(filePath);
         long fileSize = Files.size(filePath);
 
+        // get last modified date of file and take care of timezone correctly, since LocalDateTime does not store time zone information (#745)
         LocalDateTime lastModifiedTime = LocalDateTime.ofInstant(Files.getLastModifiedTime(filePath).toInstant(), TimeZone.getDefault().toZoneId());
 
         return new FileSystemItem(this, itemPath, itemFile, fileType, fileSize, lastModifiedTime,
