@@ -52,6 +52,7 @@ define([
             var multiInputInfoFieldWidget = new MultiInputInfoField({
                 id: "bkg_useConstraints",
                 label: "Nutzungsbedingungen",
+                selectRequired: true,
                 codelist: 10003,
                 codelistForText: 10004
             }).placeAt(insertNode);
