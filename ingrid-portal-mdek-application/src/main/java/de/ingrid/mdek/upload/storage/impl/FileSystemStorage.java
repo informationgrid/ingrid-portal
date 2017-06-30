@@ -35,9 +35,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
@@ -470,7 +470,7 @@ public class FileSystemStorage implements Storage {
         String fileType = Files.probeContentType(filePath);
         long fileSize = Files.size(filePath);
 
-        LocalDateTime lastModifiedTime = LocalDateTime.ofInstant(Files.getLastModifiedTime(filePath).toInstant(), ZoneOffset.UTC);
+        LocalDateTime lastModifiedTime = LocalDateTime.ofInstant(Files.getLastModifiedTime(filePath).toInstant(), TimeZone.getDefault().toZoneId());
 
         return new FileSystemItem(this, itemPath, itemFile, fileType, fileSize, lastModifiedTime,
                 isArchived, filePath);
