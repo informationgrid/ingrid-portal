@@ -639,6 +639,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.procedures</name>
         <id>category_procedure</id>
         <categoryOnly>true</categoryOnly>
+        <colNum>5</colNum>
         <facets>
         <!-- Zulassungsverfahren -->
             <facet>

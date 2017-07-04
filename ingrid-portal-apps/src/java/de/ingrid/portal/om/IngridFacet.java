@@ -42,6 +42,7 @@ public class IngridFacet {
     private String url;
     private String wildcard;
     private int showOnMoreThan;
+    private int colNum;
     private boolean isDependencySelect = false;
     private boolean isHiddenSelect = false;
     private boolean isSelect = false;
@@ -215,5 +216,11 @@ public class IngridFacet {
     }
     public void setWildcard(String wildcard) {
         this.wildcard = wildcard;
+    }
+    public int getColNum() {
+        return colNum;
+    }
+    public void setColNum(int colNum) {
+        this.colNum = colNum;
     }
 }

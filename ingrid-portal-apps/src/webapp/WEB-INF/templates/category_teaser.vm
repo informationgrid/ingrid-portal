@@ -38,7 +38,7 @@
                     #set($isActive = false)
                 #end
                 #if($cf.getFacets())
-                    #getTabsContent($facetParentName $cf.getFacets() $facetParent $isActive)
+                    #getTabsContent($facetParentName $cf.getFacets() $facetParent $cf.getColNum() $isActive)
                 #end
             #end
         #end
@@ -60,7 +60,7 @@
     #end
 #end
 
-#macro (getTabsContent $facetName $facetList $parentFacet $isActive)
+#macro (getTabsContent $facetName $facetList $parentFacet $colNum $isActive)
     <div class="tab__content box #if(!$isActive)is-hidden#end" data-tabid="$parentFacet">
         <section class="block">
             <article class="content ob-container">
@@ -70,7 +70,7 @@
                     #else
                         #set($facetId = $parentFacet)
                     #end
-                    #getContent($facetList $parentFacet $facetId)
+                    #getContent($facetList $facetId $parentFacet $colNum)
                 </div>
             </article>
         </section>
@@ -83,7 +83,7 @@
                     <article class="content ob-container">
                         <div class="tag-group">
                             #set($facetId = $facet.getId())
-                            #getContent($facet.getFacets() $facet.getId() $facetId $parentFacet)
+                            #getContent($facet.getFacets() $facetId $facetId $colNum $parentFacet)
                         </div>
                     </article>
                 </section>
@@ -93,7 +93,7 @@
     #end
 #end
 
-#macro (getContent $facetList $parentFacet $facetId $parentFacetParam)
+#macro (getContent $facetList $facetId $parentFacet $colNum $parentFacetParam)
     #set ($count = 0)
     #set ($pf = $parentFacet)
     #set ($facetListSize = $facetList.size())
@@ -112,6 +112,10 @@
             #set($bar = $list.add($facet))
         #end
     #end
+    #if($colNum > 0)
+        #set($maxColumn = $colNum)
+    #end
+    
     #if($facetListSize > $maxColumn || $facetListSize < 0)
         #if($facetListSize % 5 == 0 && $maxColumn >= 5)
             #set ($facetListSize = 5)
