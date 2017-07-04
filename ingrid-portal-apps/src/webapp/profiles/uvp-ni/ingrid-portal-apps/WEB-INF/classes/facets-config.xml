@@ -393,6 +393,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>procedure_11</id>
                 <display>true</display>
             </facet>
+        <!-- Bauleitplanung -->
+            <facet>
+                <name>Bauleitplanung</name>
+                <query>procedure:dev_plan</query>
+                <id>procedure_dev_plan</id>
+                <display>true</display>
+            </facet>
         </facets>
     </facet>
 
@@ -667,6 +674,14 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <parentId>procedure</parentId>
                 <id>procedure_11</id>
                 <shortcut>A</shortcut>
+                <display>true</display>
+            </facet>
+        <!-- Bauleitplanung -->
+            <facet>
+                <name>Bauleitplanung</name>
+                <query>procedure:dev_plan</query>
+                <id>procedure_dev_plan</id>
+                <shortcut>B</shortcut>
                 <display>true</display>
             </facet>
         </facets>
