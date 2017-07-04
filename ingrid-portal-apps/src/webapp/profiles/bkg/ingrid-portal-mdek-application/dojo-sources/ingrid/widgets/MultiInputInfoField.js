@@ -109,6 +109,11 @@ define([
             // set correct search attribute
             this.selectInput.set("searchAttr", "0");
 
+            // fix firefox behaviour to show content in box from beginning instead the end
+            on(this.selectInput.textbox, "blur", function() {
+                this.scrollLeft = 0;
+            });
+
             // handle required state differently
             this.selectInput.set("required", false);
 
