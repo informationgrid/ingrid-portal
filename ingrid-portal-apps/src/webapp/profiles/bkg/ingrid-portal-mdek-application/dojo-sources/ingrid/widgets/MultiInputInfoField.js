@@ -187,7 +187,12 @@ define([
         },
 
         getDisplayedValue: function() {
-            return this.selectInput.get("displayedValue") + ", " + this.freeTextInput.get("value");
+            var comment = this.infoText[0].textContent;
+            if (comment === "") {
+                return this.selectInput.get("displayedValue") + ", " + this.freeTextInput.get("value");
+            } else {
+                return comment + ", " + this.freeTextInput.get("value");
+            }
         },
 
         addTextareaValidator: function() {
