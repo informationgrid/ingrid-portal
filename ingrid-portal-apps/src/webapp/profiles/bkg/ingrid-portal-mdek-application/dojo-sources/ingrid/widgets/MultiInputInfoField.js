@@ -59,10 +59,10 @@ define([
 
         templateString:
         "<span>" +
-        "  <span class='outer'>" +
+        "  <span class='multi-input outer'>" +
         "    <div>" +
         "      <span class='label'>" +
-        "        <label>${label}</label>" +
+        "        <label>${label}<span class='requiredSign'>*</span></label>" +
         "      </span>" +
         "      <div class='outlined'>" +
         "        <!--<span class='functionalLink'>" +
@@ -72,13 +72,13 @@ define([
         "        <div class='clear'>" +
         "          <span class='outer halfWidth'>" +
         "            <div>" +
-        "              <select data-dojo-type='dijit/form/FilteringSelect' data-dojo-attach-point='selectInput' style='width:100%;'></select>" +
+        "              <select data-dojo-type='dijit/form/FilteringSelect' data-dojo-attach-point='selectInput' class='noValidate' style='width:100%;'></select>" +
         "              <div class='comment' style='width:100%; height:52px; overflow:auto; padding-left: 0;'></div>" +
         "            </div>" +
         "          </span>" +
-        "          <span class='outer halfWidth'>" +
+        "          <span class='outer halfWidth '>" +
         "            <div>" +
-        "              <textarea data-dojo-type='dijit/form/SimpleTextarea' data-dojo-attach-point='freeTextInput' rows='5' style='width:100%;'></textarea>" +
+        "              <textarea data-dojo-type='dijit/form/SimpleTextarea' data-dojo-attach-point='freeTextInput' rows='5' class='noValidate' style='width:100%;'></textarea>" +
         "            </div>" +
         "          </span>" +
         "          <div class='clear'></div>" +
@@ -108,7 +108,19 @@ define([
 
             // set correct search attribute
             this.selectInput.set("searchAttr", "0");
-            this.selectInput.set("required", this.selectRequired);
+
+            // fix firefox behaviour to show content in box from beginning instead the end
+            on(this.selectInput.textbox, "blur", function() {
+                this.scrollLeft = 0;
+            });
+
+            // handle required state differently
+            this.selectInput.set("required", false);
+
+            if (this.selectRequired === true) {
+                query(".multi-input", this.domNode).addClass( "required" );
+                domClass.remove( this.selectInput.domNode, "noValidate" );
+            }
 
             on(this.selectInput, "change", function(value) {
                 var text = UtilSyslist.getSyslistEntryName(self.codelistForText, this.get("value"));
@@ -207,6 +219,7 @@ define([
 
         clearInputs: function() {
             this.selectInput.set("value", null);
+            this.selectInput.reset();
             this.freeTextInput.set("value", "");
         }
 

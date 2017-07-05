@@ -1,8 +1,8 @@
 <style>
   #iframe_measure { height: 100%; }
-  .embed-container { width: 100%; position: absolute; bottom: 0; top: 200px;}
+  .embed-container { width: 100%; position: absolute; bottom: 0; top: 159px;}
   @media screen and (max-width: 939px) {
-    .embed-container { top: 117px; }
+    .embed-container { top: 76px; }
   }
   @media screen and (max-width: 767px) {
     .embed-container { top: 60px; }
@@ -18,13 +18,13 @@
   var iframe = document.getElementById('iframe_measure');
   var urlParams = location.hash;
   // define the URL for the elastic search requests
-  // var elasticSearchUrl = "https://dev.informationgrid.eu/elastic-admin-se/";
+  var elasticSearchUrl = 'http://numis.niedersachsen.de/elastic-measure/';
 
   // exclude networks which shall not be shown
-  // var excludeNetworks = ['luen_new'];
+  var excludeNetworks = ['luen_new'];
   
   // define initial network on init
-  // var initialNetworks = ['odl'];
+  var initialNetworks = ['odl'];
 
   // Add iFrame 'src'
   iframe.src = '/ingrid-portal-apps/measures/index.html' + urlParams;

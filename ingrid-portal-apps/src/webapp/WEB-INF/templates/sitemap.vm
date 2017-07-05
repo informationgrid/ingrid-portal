@@ -10,6 +10,18 @@
         $MESSAGES.getString("sitemap.area.main.search")</a>
         <p>$MESSAGES.getString("sitemap.area.main.search.description")</p>
     </li>
+    #if($enableMeasure)
+        <li>
+            #set ($link = $renderResponse.encodeURL("/portal/main-measures.psml"))
+            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.measures.tooltip")">
+                <svg class="icon">
+                    <use xlink:href="#internal-link">
+                </svg>
+                $MESSAGES.getString("sitemap.area.main.measures")
+            </a>
+            <p>$MESSAGES.getString("sitemap.area.main.measures.description")</p>
+        </li>
+    #end
     #if ($enableSearchCatalog)
     <li>
         #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
@@ -35,18 +47,6 @@
             </ul>
         </div>
     </li>
-    #end
-    #if($enableMeasure)
-        <li>
-            #set ($link = $renderResponse.encodeURL("/portal/main-measures.psml"))
-            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.measures.tooltip")">
-                <svg class="icon">
-                    <use xlink:href="#internal-link">
-                </svg>
-                $MESSAGES.getString("sitemap.area.main.measures")
-            </a>
-            <p>$MESSAGES.getString("sitemap.area.main.measures.description")</p>
-        </li>
     #end
     #if($enableMaps)
         <li>
