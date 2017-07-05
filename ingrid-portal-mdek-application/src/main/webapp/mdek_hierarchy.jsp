@@ -1909,7 +1909,11 @@
                                             <label for="extraInfoLangData" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5042)">
                                                 <fmt:message key="ui.obj.additionalInfo.language.data" />
                                             </label>
-                                        </span><span class="input"><input autoComplete="false" style="width:100%;" listId="99999999" id="extraInfoLangData" /></span>
+                                        </span>
+		                                <div class="input tableContainer">
+		                                    <div id="extraInfoLangData" autoHeight="2" interactive="true" class="hideTableHeader">
+		                                    </div>
+		                                </div>
 										</div>
 									</span>
                             </div>

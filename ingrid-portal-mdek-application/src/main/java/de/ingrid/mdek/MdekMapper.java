@@ -1070,7 +1070,7 @@ public class MdekMapper implements DataMapperInterface {
 
         if (null != sysListMapper.getInitialKeyFromListId(99999999)) {
             if ((null == obj.getExtraInfoLangDataTable() || obj.getExtraInfoLangDataTable().size() == 0)) {
-                obj.setExtraInfoLangDataTable(Arrays.asList(new String[] { sysListMapper.getInitialValueFromListId(99999999) }));
+                obj.setExtraInfoLangDataTable(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(99999999) }));
             }
             if (null == obj.getExtraInfoLangMetaDataCode()) {
                 obj.setExtraInfoLangMetaDataCode(sysListMapper.getInitialKeyFromListId(99999999));
@@ -1296,18 +1296,14 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
 
-    private List<IngridDocument> mapFromExtraInfoLangDataTable(List<String> valueList) {
+    private List<IngridDocument> mapFromExtraInfoLangDataTable(List<Integer> keyList) {
         List<IngridDocument> resultList = new ArrayList<IngridDocument>();
         
-        if (valueList != null) {
-            for (String value : valueList) {
-                KeyValuePair kvp = mapFromKeyValue(MdekKeys.DATA_LANGUAGE_CODE, value);
-                if (kvp.getValue() != null || kvp.getKey() != -1) {
-                    IngridDocument result = new IngridDocument();
-                    result.put(MdekKeys.DATA_LANGUAGE_CODE, kvp.getKey());
-                    result.put(MdekKeys.DATA_LANGUAGE_NAME, kvp.getValue());
-                    resultList.add(result);
-                }
+        if (keyList != null) {
+            for (Integer key : keyList) {
+                IngridDocument result = new IngridDocument();
+                result.put( MdekKeys.DATA_LANGUAGE_CODE, key );
+                resultList.add( result );
             }           
         }
 
@@ -1987,13 +1983,12 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     
-    private List<String> mapToExtraInfoLangDataTable(List<IngridDocument> docList) {
-        List<String> resultList = new ArrayList<String>();
+    private List<Integer> mapToExtraInfoLangDataTable(List<IngridDocument> docList) {
+        List<Integer> resultList = new ArrayList<Integer>();
 
         if (docList != null) {
             for (IngridDocument doc : docList) {
-                KeyValuePair kvp = mapToKeyValuePair(doc, MdekKeys.DATA_LANGUAGE_CODE, MdekKeys.DATA_LANGUAGE_NAME);
-                resultList.add(kvp.getValue());
+                resultList.add( (Integer) doc.get( MdekKeys.DATA_LANGUAGE_CODE ) );
             }
         }
 

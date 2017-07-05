@@ -735,7 +735,9 @@ require([
                 // additional information
                 renderSectionTitel("<fmt:message key='ui.obj.additionalInfo.title' />");
                 renderTextWithTitle(UtilSyslist.getSyslistEntryName(99999999, nodeData.extraInfoLangMetaDataCode), "<fmt:message key='ui.obj.additionalInfo.language.metadata' />");
-                renderTextWithTitle(UtilSyslist.getSyslistEntryName(99999999, nodeData.extraInfoLangDataCode), "<fmt:message key='ui.obj.additionalInfo.language.data' />");
+                renderList(nodeData.extraInfoLangDataTable, "<fmt:message key='ui.obj.additionalInfo.language.data' />", null, function(val) {
+                    return UtilSyslist.getSyslistEntryName(99999999, val);
+                });
                 renderTextWithTitle(UtilSyslist.getSyslistEntryName(3571, nodeData.extraInfoPublishArea), "<fmt:message key='ui.obj.additionalInfo.publicationCondition' />");
                 //!!!renderTextWithTitle(registry.byId("extraInfoCharSetData").get("displayedValue"), "<fmt:message key='ui.obj.additionalInfo.charSet.data' />");
                 // Table is only displayed for object classes 1 and 3

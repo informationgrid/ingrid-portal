@@ -1844,7 +1844,8 @@ define([
 
             // -- Extra Info --
             registry.byId("extraInfoLangMetaData").attr("value", nodeData.extraInfoLangMetaDataCode, true);
-            registry.byId("extraInfoLangData").attr("value", nodeData.extraInfoLangDataCode, true);
+            UtilStore.updateWriteStore("extraInfoLangData", UtilList.listToTableData(nodeData.extraInfoLangDataTable));
+            
             registry.byId("extraInfoPublishArea").attr("value", nodeData.extraInfoPublishArea, true);
             registry.byId("extraInfoCharSetData").attr("value", nodeData.extraInfoCharSetDataCode, false);
             UtilStore.updateWriteStore("extraInfoConformityTable", nodeData.extraInfoConformityTable);
@@ -2399,7 +2400,7 @@ define([
 
             // -- Extra Info --
             nodeData.extraInfoLangMetaDataCode = registry.byId("extraInfoLangMetaData").get("value");
-            nodeData.extraInfoLangDataCode = registry.byId("extraInfoLangData").get("value");
+            nodeData.extraInfoLangDataTable = UtilList.tableDataToList(this._getTableData("extraInfoLangData"));
             nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishArea").get("value");
             nodeData.extraInfoCharSetDataCode = registry.byId("extraInfoCharSetData").get("value");
             nodeData.extraInfoConformityTable = this._getTableData("extraInfoConformityTable");
