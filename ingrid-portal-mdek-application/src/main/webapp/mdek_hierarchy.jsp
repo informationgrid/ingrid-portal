@@ -1896,7 +1896,8 @@
                         </div>
                         <div id="extraInfoContent" class="content">
                             <div class="inputContainer">
-                                    <span id="uiElement5041" class="outer halfWidth">
+                                <span class="outer halfWidth">
+                                    <span id="uiElement5041" class="outer fullWidth">
                                     	<div><span id="extraInfoLangMetaDataLabel" class="label">
                                             <label for="extraInfoLangMetaData" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5041)">
                                                 <fmt:message key="ui.obj.additionalInfo.language.metadata" />
@@ -1904,21 +1905,7 @@
                                         </span><span class="input"><input autoComplete="false" style="width:100%;" listId="99999999" id="extraInfoLangMetaData" /></span>
 										</div>
 									</span>
-                                    <span id="uiElement5042" class="outer halfWidth">
-                                    	<div><span id="extraInfoLangDataLabel" class="label">
-                                            <label for="extraInfoLangData" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5042)">
-                                                <fmt:message key="ui.obj.additionalInfo.language.data" />
-                                            </label>
-                                        </span>
-		                                <div class="input tableContainer">
-		                                    <div id="extraInfoLangData" autoHeight="2" interactive="true" class="hideTableHeader">
-		                                    </div>
-		                                </div>
-										</div>
-									</span>
-                            </div>
-                            <div class="inputContainer">
-                                    <span id="uiElement3571" class="outer halfWidth">
+                                    <span id="uiElement3571" class="outer fullWidth">
                                     	<div><span class="label">
                                             <label id="extraInfoPublishAreaLabel" for="extraInfoPublishArea" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3571)">
                                                 <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
@@ -1926,6 +1913,21 @@
                                         </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishArea" /></span>
 										</div>
 									</span>
+                               </span>
+                                    <span id="uiElement5042" class="outer halfWidth">
+                                    	<div><span id="extraInfoLangDataLabel" class="label">
+                                            <label for="extraInfoLangData" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5042)">
+                                                <fmt:message key="ui.obj.additionalInfo.language.data" />
+                                            </label>
+                                        </span>
+		                                <div class="input tableContainer">
+		                                    <div id="extraInfoLangData" autoHeight="3" interactive="true" class="hideTableHeader">
+		                                    </div>
+		                                </div>
+										</div>
+									</span>
+                            </div>
+                            <div class="inputContainer">
                                     <span id="uiElement5043" class="outer halfWidth">
                                         <div>
                                         <span id="extraInfoCharSetDataLabel" class="label">
