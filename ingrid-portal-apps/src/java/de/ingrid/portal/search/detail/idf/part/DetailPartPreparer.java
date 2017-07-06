@@ -426,6 +426,17 @@ public class DetailPartPreparer {
         return UtilsLanguageCodelist.getNameFromIso639_2(value, this.request.getLocale().getLanguage().toString());
     }
 
+    public List<String> getLanguageValues(List<String> keys){
+        ArrayList<String> myList = new ArrayList<String>();
+        for(String key : keys) {
+            String langValue = getLanguageValue( key );
+            if (langValue != null) {
+                myList.add( langValue );
+            }
+        }
+        return myList;
+    }
+
     public String getCountryValue(String value){
         if(UtilsCountryCodelist.getCodeFromShortcut3(value) == null){
             return value;
