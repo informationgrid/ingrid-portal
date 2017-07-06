@@ -2867,11 +2867,11 @@ define([
             // if it's a slickgrid
             if (!widget) {
                 // request UNFILTERED data ! Get full data store !
-                return gridManager[tableName].getData(true);
+                return gridManager[tableName].getUnfilteredData();
             } else {
                 //var store = widget.store;
                 //return UtilStore.convertItemsToJS(store, store._arrayOfTopLevelItems);
-                return widget.getData(true);
+                return widget.getUnfilteredData();
             }
             //return registry.byId(tableName).store._arrayOfTopLevelItems;
         }

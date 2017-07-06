@@ -48,7 +48,7 @@ define([
             // that is used by a Combobox
             // Combobox => displayed value
             // Selectbox => id
-            require("dojo/aspect").after(registry.byId("availabilityAccessConstraints"), "getData", function(items) {
+            require("dojo/aspect").after(registry.byId("availabilityAccessConstraints"), "getUnfilteredData", function(items) {
                 var mapped = [];
                 array.forEach(items, function(item) {
                     mapped.push( { 
@@ -57,6 +57,16 @@ define([
                 });
                 return mapped;
             });
+            require("dojo/aspect").before(registry.byId("availabilityAccessConstraints"), "setData", function(newData, scrollToTop, noRender) {
+                var mapped = [];
+                array.forEach(newData, function(item) {
+                    mapped.push( { 
+                        title: UtilSyslist.getSyslistEntryKey(6010, item.title) 
+                    });
+                });
+                return [mapped, scrollToTop, noRender];
+            });
+
 
             on(registry.byId("isInspireRelevant") , "change", function(isChecked) {
                 if (isChecked) {

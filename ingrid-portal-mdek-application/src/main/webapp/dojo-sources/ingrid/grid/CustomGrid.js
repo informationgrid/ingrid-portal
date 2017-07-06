@@ -2802,7 +2802,11 @@ define([
         onCellChange: function() {},
         onColumnsResized: function() {},
         onValidationError: function() {},
-        onViewportChanged: function() {}
+        onViewportChanged: function() {},
+
+        getUnfilteredData: function() {
+            return this.data;
+        }
 
     });
 
