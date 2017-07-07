@@ -99,6 +99,9 @@ define([
                         // make digital representation optional
                         domClass.remove( "uiElement5062", "required" );
 
+                        // make encoding schema optional
+                        domClass.remove( "uiElement1315", "required" );
+
                         // remove all conform/not conform events
                         self.removeEvents(self.eventsConform);
                         self.removeEvents(self.eventsNotConform);
@@ -173,6 +176,9 @@ define([
             // make digital representation required
             domClass.add( "uiElement5062", "required" );
 
+            // make encoding schema required
+            domClass.add( "uiElement1315", "required" );
+
             this.eventsConform.push(
                 // added conformity must not be modified or deleted
                 self.addEventSpecificationDelete(),
@@ -240,6 +246,9 @@ define([
 
             // make digital representation optional
             domClass.remove( "uiElement5062", "required" );
+
+            // make encoding schema optional
+            domClass.remove( "uiElement1315", "required" );
 
             var self = this;
             var missingMessage = string.substitute(message.get("validation.specification.missing"), [self.specificationName]);

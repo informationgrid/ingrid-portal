@@ -47,8 +47,11 @@ define([
             // react when inspire topics has been added
             on(UtilGrid.getTable("thesaurusInspire"), "CellChange", function(msg) {
                 var objClass = registry.byId("objectClass").get("value");
+                var isInspireRelevant = registry.byId("isInspireRelevant").get("checked");
+                var isConform = registry.byId("isInspireConform").get("checked");
+
                 // only react if class == 1
-                if (objClass === "Class1") {
+                if (objClass === "Class1" && isInspireRelevant && isConform) {
                     UtilUI.setComboBySyslistValue("availabilityDataFormatInspire", mapping[msg.item.title]);
                     var name = UtilSyslist.getSyslistEntryName(6300, mapping[msg.item.title]);
                     UtilUI.showToolTip( "thesaurusInspire", string.substitute(message.get("validation.encoding.added"), [name]) );
