@@ -31,6 +31,9 @@
           <action type="fix" dev="wemove" issue="745">
             IGE (UVP): UploalCleanupJob deletes files too early. 
           </action>
+          <action type="fix" dev="wemove" issue="768">
+            IGE: Fixed hidden fields checked during publication.
+          </action>
         </release>
         
         <release version="4.0.3" date="2017-06-14" description="Release 4.0.3">

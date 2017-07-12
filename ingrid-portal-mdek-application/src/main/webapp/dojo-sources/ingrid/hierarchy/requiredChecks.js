@@ -92,9 +92,9 @@ define(["dojo/_base/declare",
             // check first general validity
             this.checkValidityOfInputElements(notSaveableIDs);
 
-            var widgets = query(".rubric:not(.hide) .required:not(.hide) .dijitTextBox:not(.noValidate), .rubric:not(.hide) .required:not(.hide) .dijitSelect:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.getAttribute("widgetid");});
+            var widgets = query(".rubric:not(.hide) .required:not(.hide):not(.alwaysHidden) .dijitTextBox:not(.noValidate), .rubric:not(.hide) .required:not(.hide) .dijitSelect:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.getAttribute("widgetid");});
             widgets = widgets.concat(query(".dijitTextBox, .dijitSelect", "sectionTopObject").map(function(item) {return item.getAttribute("widgetid");}));
-            var grids = query(".rubric:not(.hide) .required:not(.hide) .ui-widget:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.id;});
+            var grids = query(".rubric:not(.hide) .required:not(.hide):not(.alwaysHidden) .ui-widget:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.id;});
 
             array.forEach(widgets, function(w) {
                 if (lang.trim(registry.byId(w).get("displayedValue")).length === 0) {
