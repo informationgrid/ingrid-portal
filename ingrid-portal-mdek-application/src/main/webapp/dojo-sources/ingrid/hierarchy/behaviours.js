@@ -43,6 +43,7 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/opendata",
         "ingrid/hierarchy/behaviours/folders",
         "ingrid/hierarchy/behaviours/inspireRelevant/conformFields",
+        "ingrid/hierarchy/behaviours/inspireRelevant/geoservice",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireIsoConnection",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireEncodingConnection",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireConformityConnection",
@@ -50,7 +51,7 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/administrativeArea",
         "ingrid/hierarchy/behaviours/advProductGroup"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
-            openData, foldersInHierarchy, conformityFields, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup) {
+            openData, foldersInHierarchy, conformityFields, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup) {
 
     return declare(null, {
         
@@ -61,6 +62,8 @@ define(["dojo/_base/declare",
         administrativeArea: adminitrativeArea,
         
         conformityFields: conformityFields,
+
+        inspireGeoservice: inspireGeoservice,
         
         inspireIsoConnection: inspireIsoConnection,
 

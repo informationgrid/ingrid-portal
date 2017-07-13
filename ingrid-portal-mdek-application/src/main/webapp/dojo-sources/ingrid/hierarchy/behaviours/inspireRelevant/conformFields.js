@@ -32,8 +32,9 @@ define([
     "ingrid/message",
     "ingrid/utils/Grid",
     "ingrid/utils/UI",
-    "ingrid/utils/Syslist"
-], function(declare, array, aspect, string, on, topic, domClass, registry, message, UtilGrid, UtilUI, UtilSyslist) {
+    "ingrid/utils/Syslist",
+    "ingrid/hierarchy/behaviours/utils"
+], function(declare, array, aspect, string, on, topic, domClass, registry, message, UtilGrid, UtilUI, UtilSyslist, utils) {
     
     return declare(null, {
         title : "Konform-Auswahl",
@@ -128,10 +129,10 @@ define([
                     if (inspireRelevantWidget.checked && isChecked) {
                         // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
                         // with not evaluated level
-                        self.addConformity(self.specificationName, "3");
+                        utils.addConformity(self.specificationName, "3");
 
                         // remove INSPIRE Richtlinie
-                        self.removeConformity(self.specificationNameInspireRichtlinie);
+                        utils.removeConformity(self.specificationNameInspireRichtlinie);
                     }
                 }),
 
@@ -154,10 +155,10 @@ define([
         handleClickConform: function() {
             // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
             // with conform level
-            this.addConformity(this.specificationName, "1");
+            utils.addConformity(this.specificationName, "1");
 
             // remove INSPIRE Richtlinie
-            this.removeConformity(this.specificationNameInspireRichtlinie);
+            utils.removeConformity(this.specificationNameInspireRichtlinie);
         },
 
         handleInspireConform: function() {
@@ -317,28 +318,7 @@ define([
             });
         },
         
-        addConformity: function(name, level) {
-            console.log("Add conformity");
-            var conformityData = UtilGrid.getTableData("extraInfoConformityTable");
-
-            conformityData = conformityData.filter(function(item) {
-                return item.specification !== name;
-            });
-            conformityData.push({
-                specification: name,
-                level: level
-            });
-            UtilGrid.setTableData("extraInfoConformityTable", conformityData);
-        },
-
-        removeConformity: function(name) {
-            var conformityData = UtilGrid.getTableData("extraInfoConformityTable");
-
-            conformityData = conformityData.filter(function(item) {
-                return item.specification !== name;
-            });
-            UtilGrid.setTableData("extraInfoConformityTable", conformityData);
-        },
+        
 
         removeEvents: function(events) {
             array.forEach(events, function(event) {
