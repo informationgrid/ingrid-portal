@@ -402,13 +402,18 @@ require([
                 var label = searchLabelFrom(domWidget);
                 var dataOld = getValueFromAdditional(widgetId, nodeDataOld);
                 var dataNew = getValueFromAdditional(widgetId, nodeDataNew);
-                // if it is a table
+                // if it is a table (or special widget)
                 if ((dataOld && typeof(dataOld) == "object") || (dataNew && typeof(dataNew) == "object")) {
                     console.debug("widget id: " + widgetId);
-                    var columnFields = getColumnFields(widgetId);
-                    var columnNames = getColumnNames(widgetId);
-                    var formatters = getColumnFormatters(widgetId);
-                    renderTable(dataOld, dataNew, columnFields, columnNames, label, formatters, true, UtilGrid.getTable(widgetId).getColumns());
+                    // if it's not a table but a special widget
+                    if (registry.byId(widgetId).reinitLastColumn) {
+                        var columnFields = getColumnFields(widgetId);
+                        var columnNames = getColumnNames(widgetId);
+                        var formatters = getColumnFormatters(widgetId);
+                        renderTable(dataOld, dataNew, columnFields, columnNames, label, formatters, true, UtilGrid.getTable(widgetId).getColumns());
+                    } else {
+                        renderTextWithTitle(JSON.stringify(dataOld), JSON.stringify(dataNew), label);
+                    }
                 } else {
                     renderTextWithTitle(dataOld, dataNew, label);
                 }
@@ -481,6 +486,10 @@ require([
         }
 
         function searchLabelFrom(element) {
+            var widget = registry.byId(element.id);
+            if (widget && widget.label) {
+                return widget.label;
+            }
             while (!domClass.contains(element, "input") && !domClass.contains(element, "dijitCheckBox")) {
                 element = element.parentNode;
             }

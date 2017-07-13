@@ -34,7 +34,7 @@ define([
     
     return declare(null, {
         title: "Inspire / Conformity - Connection",
-        description: "Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Konformität hinzugefügt.",
+        description: "Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Konformität hinzugefügt, sofern es sich um ein Geodatensatz handelt, welches INSPIRE relevant (konform) ist.",
         defaultActive: true,
         category: "INSPIRE relevant",
         run: function() {
