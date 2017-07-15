@@ -1,3 +1,9 @@
+<style>
+.leaflet-interactive-disable {
+    cursor: grab !important;
+}
+</style>
+
 <script>
     function showMarker(m) {
         jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
@@ -109,16 +115,19 @@
             
             var icon = L.AwesomeMarkers.icon({
                 markerColor: iconColor,
+                className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
                 prefix: 'icon'//,
                 //icon: categories && categories.length > 0 ? categories[0].id : ''
             });
             
             var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
-            marker.bindPopup(popUpHtml);
             marker.uuid = a[3];
             marker.bbox = null;
-            marker.on('popupopen', showMarker);
-            marker.on('popupclose', hideMarker);
+            if(enablePopUp){
+                marker.bindPopup(popUpHtml, popupMarkerOptions);
+                marker.on('popupopen', showMarker);
+                marker.on('popupclose', hideMarker);
+            }
             mapMarkers.addLayer(marker);
             if(procedureId == '10'){
                 mapMarkers10.addLayer(marker);
