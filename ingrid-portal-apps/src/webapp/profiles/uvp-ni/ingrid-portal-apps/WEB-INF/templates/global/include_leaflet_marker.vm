@@ -1,3 +1,9 @@
+<style>
+.leaflet-interactive-disable {
+    cursor: grab !important;
+}
+</style>
+
 <script>
     function showMarker(m) {
         if(m.target.uuid){
@@ -37,7 +43,7 @@
             };
         }
     }
-    
+
     // All markers
     var mapMarkers = L.markerClusterGroup();
     // "Zulassungsverfahren" markers
@@ -146,6 +152,7 @@
             
             var icon = L.AwesomeMarkers.icon({
                 markerColor: iconColor,
+                className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
                 prefix: 'icon'//,
                 //icon: categories && categories.length > 0 ? categories[0].id : ''
             });
@@ -197,7 +204,7 @@
             }
             
             if(bpinfos && bpinfos.length > 0){
-                popUpHtml += '<span>Nutzen Sie die folgenden Links um zu den Seiten der Gemeinden zur Bauleitplanung zu gelangen:</span>';
+                popUpHtml += '<span>Nutzen Sie die folgenden Links um zu unseren Bauleitplanungs-Seiten zu gelangen:</span>';
                 popUpHtml += '<ul>';
                 for (var j = 0; j < bpinfos.length; j++) {
                     var bpinfo = bpinfos[j];
@@ -215,7 +222,7 @@
                                     if(tag === "v"){
                                         title = 'Wirksame/rechtskr&auml;ftige Bauleitpl&auml;ne';
                                     }else if(tag === "p"){
-                                        title = 'Bauleitpl&auml;ne im Beteiligungsverfahren';
+                                        title = 'Bauleitpl&auml;ne im Aufstellungsverfahren';
                                     }
                                     if(title){
                                         popUpHtml += '<li style="padding: 5px 0 0 0;"><a href="' + url + '" target="_blank"><svg class="icon globe__icon" style="font-size: 11px;"><use xlink:href="#external-link"></use></svg><span style="padding: 0 0 0 5px;">' + title + '</span></a></li>';
@@ -233,6 +240,7 @@
             
             var icon = L.AwesomeMarkers.icon({
                 markerColor: iconColor,
+                className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
                 prefix: 'icon'
             });
             
