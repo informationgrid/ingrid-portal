@@ -10,6 +10,9 @@
           <action type="add" dev="wemove" issue="199">
             IGE/PORTAL: Added multiple languages for data source in IGE and detail view in portal.
           </action>
+          <action type="update" dev="wemove" issue="563">
+            Updated context help of field accessConstraints (Zugriffsbeschränkungen) due to changed syslist 6010.
+          </action>
           <action type="update" dev="wemove" issue="600">
             UVP: Better sorting of UVP-numbers.
           </action>
