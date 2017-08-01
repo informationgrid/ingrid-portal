@@ -22,6 +22,8 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -140,6 +142,15 @@ public class DetailPartPreparer {
                     }
                 }
             }
+        }
+        return value;
+    }
+    
+    public String getDecodeValue(String value) {
+        if (value != null){
+           try {
+                value = URLDecoder.decode(value, "UTF-8");
+            } catch (UnsupportedEncodingException e) {}
         }
         return value;
     }

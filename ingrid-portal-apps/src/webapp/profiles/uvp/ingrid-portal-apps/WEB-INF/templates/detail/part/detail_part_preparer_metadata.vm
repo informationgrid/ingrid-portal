@@ -354,7 +354,7 @@
                     <span class="tx-light">
                     (
                     #if($entryLink)
-                        #set ($entryLinkSplit = $entryLink.split("/"))
+                        #set ($entryLinkSplit = $TOOL.getDecodeValue($entryLink).split("/"))
                         #set ($entryLinkSplitSize = $entryLinkSplit.size() - 1)
                         $entryLinkSplit.get($entryLinkSplitSize)
                     #end
