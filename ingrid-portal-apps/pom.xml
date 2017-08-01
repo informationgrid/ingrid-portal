@@ -204,11 +204,6 @@
       <artifactId>saxpath</artifactId>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-        <groupId>org.apache.poi</groupId>
-        <artifactId>poi-ooxml</artifactId>
-        <version>3.16</version>
-    </dependency>
 
 <!-- InGrid -->
     <dependency>

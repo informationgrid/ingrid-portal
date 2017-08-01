@@ -28,7 +28,6 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -38,13 +37,6 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -192,33 +184,6 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                                 IOUtils.copy(is, writer, "UTF-8");
                                 jsonString = writer.toString();
                                 response.setContentType( "application/javascript" );
-                            }else if(conContentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")){
-                                Workbook workbook = WorkbookFactory.create( is );
-                                if(workbook != null){
-                                    Sheet sheet = workbook.getSheetAt( 0 );
-                                    if(sheet != null){
-                                        JSONArray json = new JSONArray();
-                                        
-                                        // TODO: Iterate through the rows.
-                                        /*
-                                        for ( Iterator<Row> itRows = sheet.rowIterator(); itRows.hasNext(); )
-                                        {
-                                            Row row = itRows.next();
-                                            JSONObject jRow = new JSONObject();
-    
-                                            // Iterate through the cells.
-                                            JSONArray cells = new JSONArray();
-                                            for ( Iterator<Cell> itCells = row.cellIterator(); itCells.hasNext(); )
-                                            {
-                                            }
-                                            rows.put( jRow );
-                                        }
-                                        // Create the JSON.
-                                        json.put( "rows", rows );
-                                        */
-                                        jsonString = json.toString();
-                                    }
-                                }
                             }
                         }
                     }
