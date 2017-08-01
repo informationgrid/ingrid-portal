@@ -2,6 +2,14 @@
 .leaflet-interactive-disable {
     cursor: grab !important;
 }
+
+.leaflet-hyphens {
+    hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}
+
 </style>
 
 <script>
@@ -199,7 +207,7 @@
             
             if(descr && descr .length > 0){
                 popUpHtml += '<b>Beschreibung:</b><br>';
-                popUpHtml += '<span>' + descr + '</span>';
+                popUpHtml += '<span class="leaflet-hyphens">' + descr + '</span>';
                 popUpHtml += '<br><br>';
             }
             

@@ -2,6 +2,14 @@
 .leaflet-interactive-disable {
     cursor: grab !important;
 }
+
+.leaflet-hyphens {
+    hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}
+
 </style>
 
 <script>
