@@ -27,11 +27,11 @@ html, body {
 
 <script>
     var homeCtlBounds;
-    if(markers.length > 0 && mapMarkers && mapMarkers.getBounds()){
+    if(mapMarkers && mapMarkers.getBounds()){
         if(map){
-            map.fitBounds(mapMarkers.getBounds().pad(0.5));
+            map.fitBounds(mapMarkers.getBounds());
         }
-        homeCtlBounds = mapMarkers.getBounds().pad(0.5);
+        homeCtlBounds = mapMarkers.getBounds();
     }
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', homeCtlBounds, new L.LatLng(51.3, 10))
     window.onresize = resizeIframe;
