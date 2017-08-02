@@ -48,7 +48,7 @@ define([
                 return item.specification !== name;
             });
             UtilGrid.setTableData("extraInfoConformityTable", conformityData);
-        },
+        }
 
     })();
 });
