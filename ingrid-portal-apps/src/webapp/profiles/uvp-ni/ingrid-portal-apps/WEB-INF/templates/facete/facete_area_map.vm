@@ -81,7 +81,7 @@
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 <script>
     var homeCtlBounds;
-    if(markers.length > 0 && mapMarkers && mapMarkers.getBounds()){
+    if(mapMarkers && mapMarkers.getBounds()){
         if(!bounds){
             bounds = mapMarkers.getBounds().pad(0.5);
         }
