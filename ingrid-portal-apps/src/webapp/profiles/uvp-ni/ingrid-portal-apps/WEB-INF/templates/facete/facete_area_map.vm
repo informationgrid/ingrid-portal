@@ -83,12 +83,12 @@
     var homeCtlBounds;
     if(mapMarkers && mapMarkers.getBounds()){
         if(!bounds){
-            bounds = mapMarkers.getBounds().pad(0.5);
+            bounds = mapMarkers.getBounds();
         }
         if(map){
             map.fitBounds(bounds);
         }
-        homeCtlBounds = mapMarkers.getBounds().pad(0.5);
+        homeCtlBounds = mapMarkers.getBounds();
     }
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', homeCtlBounds, new L.LatLng(51.3, 10))
 </script>
