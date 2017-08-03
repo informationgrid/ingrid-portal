@@ -206,7 +206,7 @@
             popUpHtml += '<h4>' + name + '</h4>';
             
             if(descr && descr .length > 0){
-                popUpHtml += '<b>Beschreibung:</b><br>';
+                popUpHtml += '<b>Mitgliedsgemeinden:</b><br>';
                 popUpHtml += '<span class="leaflet-hyphens">' + descr + '</span>';
                 popUpHtml += '<br><br>';
             }
