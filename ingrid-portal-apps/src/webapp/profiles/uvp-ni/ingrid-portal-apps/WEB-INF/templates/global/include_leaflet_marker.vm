@@ -233,7 +233,7 @@
                                         title = 'Bauleitpl&auml;ne im Aufstellungsverfahren';
                                     }
                                     if(title){
-                                        popUpHtml += '<li style="padding: 5px 0 0 0;"><a href="' + url + '" target="_blank"><svg class="icon globe__icon" style="font-size: 11px;"><use xlink:href="#external-link"></use></svg><span style="padding: 0 0 0 5px;">' + title + '</span></a></li>';
+                                        popUpHtml += '<li style="padding: 5px 0 0 0;"><a href="' + url + '" target="_blank"><svg class="icon globe__icon" viewBox="0 0 32 32" style="font-size: 11px;"><polygon points="26,28.063 2,28.063 2,4 14,4 14,2 0,2 0,30.063 28,30.063 28,16 26,16"></polygon><polygon points="21,0 21,2 28.604,2 13.8,16.961 15.223,18.367 30,3.432 30,11 32,11 32,0" ></polygon></svg><span style="padding: 0 0 0 5px;">' + title + '</span></a></li>';
                                     }
                                 }
                             }
