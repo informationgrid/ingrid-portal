@@ -267,9 +267,10 @@
                 <runtarget target="configurePortal"/>
                 <runtarget target="configureIge"/>
                 <!-- make sure that the metadata menu is visible -->
-                <runtarget target="mysql.showMetadataMenu"/>
-                <runtarget target="oracle.showMetadataMenu"/>
-                <runtarget target="postgres.showMetadataMenu"/>
+                <echo>Schreibe Konfiguration zur Anzeige des Metadatenmenüs</echo>
+                <propertyfile file="${prop-ingrid-portal-apps}">
+                    <entry key="portal.showMetadataMenu" value="true" />
+                </propertyfile>
             </then>
             <elseif>
                 <equals arg1="${installType}" arg2="portalOnly" />
@@ -456,9 +457,10 @@
     </target>
 
     <target name="configurePortalOnly">
-    	<runtarget target="mysql.hideMetadataMenu"/>
-    	<runtarget target="oracle.hideMetadataMenu"/>
-    	<runtarget target="postgres.hideMetadataMenu"/>
+        <echo>Schreibe Konfiguration zur Anzeige des Metadatenmenüs</echo>
+        <propertyfile file="${prop-ingrid-portal-apps}">
+            <entry key="portal.showMetadataMenu" value="false" />
+        </propertyfile>
         
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application.war" />
     </target>
