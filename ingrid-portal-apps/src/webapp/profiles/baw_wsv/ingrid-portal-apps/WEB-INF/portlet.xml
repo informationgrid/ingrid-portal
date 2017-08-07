@@ -589,7 +589,7 @@
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>2</value>
+                <value>3</value>
             </preference>
             <preference>
                 <name>titleKey</name>
@@ -625,7 +625,7 @@
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>1</value>
+                <value>2</value>
             </preference>
              <preference>
                 <name>titleKey</name>
@@ -669,7 +669,7 @@
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>3</value>
+                <value>4</value>
             </preference>
             <preference>
                 <name>titleKey</name>
@@ -898,6 +898,7 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-preferences>
+            <!--
             <preference>
                 <name>portlet-type</name>
                 <value>ingrid-home</value>
@@ -906,6 +907,7 @@
                 <name>default-vertical-position</name>
                 <value>5</value>
             </preference>
+             -->
             <preference>
                 <name>infoTemplate</name>
                 <value>/WEB-INF/templates/info_teaser.vm</value>
@@ -985,14 +987,6 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
-            <preference>
-                <name>portlet-type</name>
-                <value>ingrid-home-marginal</value>
-            </preference>
-            <preference>
-                <name>default-vertical-position</name>
-                <value>1</value>
-            </preference>
             <preference>
                 <name>titleKey</name>
                 <value>teaser.shortcut.title</value>
