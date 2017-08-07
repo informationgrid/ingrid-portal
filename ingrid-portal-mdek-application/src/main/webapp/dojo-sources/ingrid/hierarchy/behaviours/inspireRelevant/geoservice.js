@@ -80,7 +80,7 @@ define([
 
                         });
                     } else {
-                        utils.removeEvents([this.publishEvent]);
+                        utils.removeEvents([self.publishEvent]);
                     }
                 })
             );

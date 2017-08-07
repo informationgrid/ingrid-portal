@@ -283,7 +283,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 else registry.byId("ref3ServiceVersion").columns[0].listId = null;
             }
 
-            // react when inspire topics has been added
+            // react when service type has been changed
             on(registry.byId("ref3ServiceType"), "Change", function(value) {
                 var objClass = registry.byId("objectClass").get("value");
                 if (objClass == "Class3") {
