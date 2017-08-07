@@ -21,9 +21,10 @@
  * **************************************************#
  */
 define([
+    "dojo/_base/array",
     "dojo/_base/declare",
     "ingrid/utils/Grid"
-], function(declare, UtilGrid) {
+], function(array, declare, UtilGrid) {
 
     return declare(null, {
 
@@ -48,6 +49,16 @@ define([
                 return item.specification !== name;
             });
             UtilGrid.setTableData("extraInfoConformityTable", conformityData);
+        },
+
+        removeEvents: function(events) {
+            array.forEach(events, function(event) {
+                if (event !== null) {
+                    event.remove();
+                }
+            });
+            // empty array
+            events.splice(null);
         }
 
     })();

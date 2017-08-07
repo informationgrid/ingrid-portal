@@ -104,8 +104,8 @@ define([
                         domClass.remove( "uiElement1315", "required" );
 
                         // remove all conform/not conform events
-                        self.removeEvents(self.eventsConform);
-                        self.removeEvents(self.eventsNotConform);
+                        utils.removeEvents(self.eventsConform);
+                        utils.removeEvents(self.eventsNotConform);
                     }
                 }),
 
@@ -172,7 +172,7 @@ define([
             var missingMessage = string.substitute(message.get("validation.specification.conform.missing"), [self.specificationName]);
 
             // remove events set from non conform radio box
-            this.removeEvents(this.eventsNotConform);
+            utils.removeEvents(this.eventsNotConform);
 
             // make digital representation required
             domClass.add( "uiElement5062", "required" );
@@ -243,7 +243,7 @@ define([
         handleNotInspireConform: function() {
             console.log("nicht konform");
             // remove events set from conform radio box
-            this.removeEvents(this.eventsConform);
+            utils.removeEvents(this.eventsConform);
 
             // make digital representation optional
             domClass.remove( "uiElement5062", "required" );
@@ -318,23 +318,13 @@ define([
             });
         },
         
-        
-
-        removeEvents: function(events) {
-            array.forEach(events, function(event) {
-                event.remove();
-            });
-            // empty array
-            events.splice(null);
-        },
-
         /**
          * remove all registered events
          */
         unregister: function() {
-            this.removeEvents(this.events);
-            this.removeEvents(this.eventsConform);
-            this.removeEvents(this.eventsNotConform);
+            utils.removeEvents(this.events);
+            utils.removeEvents(this.eventsConform);
+            utils.removeEvents(this.eventsNotConform);
         }
     })();
 });

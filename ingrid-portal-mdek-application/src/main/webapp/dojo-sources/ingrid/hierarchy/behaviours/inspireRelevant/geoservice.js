@@ -24,11 +24,14 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/on",
+    "dojo/string",
     "dojo/topic",
     "dijit/registry",
+    "ingrid/message",
     "ingrid/utils/Syslist",
+    "ingrid/utils/Grid",
     "ingrid/hierarchy/behaviours/utils"
-], function(declare, array, on, topic, registry, UtilSyslist, utils) {
+], function(declare, array, on, string, topic, registry, message, UtilSyslist, UtilGrid, utils) {
 
     return declare(null, {
         title: "Geodatenservice",
@@ -36,6 +39,7 @@ define([
         defaultActive: true,
         category: "INSPIRE relevant",
         events: [],
+        publishEvent: null,
         specificationName: null,
         run: function() {
             var self = this;
@@ -61,16 +65,30 @@ define([
                     if (this.checked) {
                         utils.addConformity(self.specificationName, "3");
                     }
+                }),
+
+                on(inspireRelevantWidget, "Change", function(isChecked) {
+                    if (isChecked) {
+                        var missingMessage = string.substitute(message.get("validation.specification.missing.service"), [self.specificationName]);
+                        self.publishEvent = topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
+                            var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
+                                .filter(function(item) { return item.specification === self.specificationName; });
+
+                            if (requiredSpecification.length === 0) {
+                                notPublishableIDs.push( ["extraInfoConformityTable", missingMessage] );
+                            }
+
+                        });
+                    } else {
+                        utils.removeEvents([this.publishEvent]);
+                    }
                 })
             );
         },
 
         unregister: function() {
-            array.forEach(this.events, function(event) {
-                event.remove();
-            });
-            // empty array
-            this.events.splice(null);
+           utils.removeEvents(this.events);
+           utils.removeEvents([this.publishEvent]);
         }
     })();
 });

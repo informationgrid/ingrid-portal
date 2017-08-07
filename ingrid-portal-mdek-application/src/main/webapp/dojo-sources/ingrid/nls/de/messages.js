@@ -1065,6 +1065,7 @@ define({
     "validation.levelOfSpecification.conform":"Bei konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'konform' sein.",
     "validation.digitalRepresentation.conform":"Für konforme INSPIRE-Datensätze sind nur die Werte <ul><li>Grid</li><li>Vector</li><li>Text, Table</li><li>TIN</li></ul> erlaubt.",
     "validation.specification.missing": "Die Spezifikation <ul><li>${0}</li></ul> muss mit 'nicht evaluiert' oder 'nicht konform' gesetzt sein.",
+    "validation.specification.missing.service": "Die Spezifikation <ul><li>${0}</li></ul> muss für Geodatendienste vorhanden sein.",
     "validation.specification.conform.missing": "Die Spezifikation <ul><li>${0}</li></ul> muss mit 'konform' gesetzt sein.",
     "validation.specification.deleted": "Die Spezifikation <ul><li>${0}</li></ul> darf bei INSPIRE-relevanten Datensätzen nicht gelöscht werden.",
     "validation.specification.delete.depend": "Die dazugehörige Spezifikation(en) <ul>${0}</ul> wurde(n) ebenfalls gelöscht.",
