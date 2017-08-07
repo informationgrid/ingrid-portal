@@ -41,6 +41,8 @@
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"/>
     <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc14.jar"/>
     <property name="postgresDbDriverInApache"      location="./distribution/${tomcat-artifact}/shared/lib/postgresql-9.4.1212.jar"/>
+    
+    <property name="prop-root"                     value="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/classes/bootstrap.override.properties"/>
 
     <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties"/>
     <property name="prop-quartz-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/quartz.properties"/>
@@ -268,7 +270,8 @@
                 <runtarget target="configureIge"/>
                 <!-- make sure that the metadata menu is visible -->
                 <echo>Schreibe Konfiguration zur Anzeige des Metadatenmenüs</echo>
-                <propertyfile file="${prop-ingrid-portal-apps}">
+                <touch file="${prop-root}"/>
+                <propertyfile file="${prop-root}">
                     <entry key="portal.showMetadataMenu" value="true" />
                 </propertyfile>
             </then>
@@ -458,7 +461,8 @@
 
     <target name="configurePortalOnly">
         <echo>Schreibe Konfiguration zur Anzeige des Metadatenmenüs</echo>
-        <propertyfile file="${prop-ingrid-portal-apps}">
+        <touch file="${prop-root}"/>
+        <propertyfile file="${prop-root}">
             <entry key="portal.showMetadataMenu" value="false" />
         </propertyfile>
         

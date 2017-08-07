@@ -25,6 +25,8 @@ package de.ingrid.portal.global;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -39,6 +41,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.FlywayException;
+
+import de.ingrid.portal.config.PortalConfig;
 
 @WebListener
 public class WebappListener implements ServletContextListener {
@@ -57,8 +61,11 @@ public class WebappListener implements ServletContextListener {
             ds = (DataSource) envContext.lookup( "jdbc/jetspeed" );
 
             String dbType = getDbType( ds );
-            flyway.setLocations( "db/migration/" + dbType );
+            Map<String, String> placeholders = getPlaceHolderValues();
 
+            flyway.setLocations( "db/migration/" + dbType, "db/optional/" + dbType );
+            flyway.setPlaceholders( placeholders );
+            
             flyway.setDataSource( ds );
             flyway.migrate();
         } catch (FlywayException e) {
@@ -80,6 +87,15 @@ public class WebappListener implements ServletContextListener {
         }
     }
 
+    private Map<String, String> getPlaceHolderValues() {
+        boolean showMetadataMenu = PortalConfig.getInstance().getBoolean( "portal.showMetadataMenu" );
+
+        Map<String, String> map = new HashMap<String, String>();
+        map.put( "hideMetadataMenu", showMetadataMenu ? "0" : "1" );
+        
+        return map;
+    }
+
     private String getDbType(DataSource ds) {
         String url = ((BasicDataSource) ds).getUrl();
         String type = null;
@@ -90,7 +106,7 @@ public class WebappListener implements ServletContextListener {
         } else if (url.contains( "jdbc:oracle" )) {
             type = "oracle";
         }
-        
+
         return type;
     }
 
