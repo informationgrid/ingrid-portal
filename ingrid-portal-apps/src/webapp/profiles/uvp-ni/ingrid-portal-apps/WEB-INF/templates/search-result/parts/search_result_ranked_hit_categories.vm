@@ -1,26 +1,23 @@
 #if($rs.get("detail"))
-    #set($uvp_category = "$UTIL_SEARCH.getDetailValue($rs.get('detail'), 'uvp_category')")
-    
-    #if($uvp_category && $uvp_category.length() > 0)
-        #set($uvp_categories = $uvp_category.split(","))
-        <ul class="tag-group">
-        #set($categories = [])
-        #foreach($category in $uvp_categories)
-            #if($categories.indexOf($category) < 0)
-                #set($tmp = $categories.add($category.trim()))
-            #end
-        #end
-        #foreach($category in $categories)
-            <li class="tag tag--small">$MESSAGES.getString("searchResult.categories.uvp.$category")</li>
-        #end
-        </ul>
-    #end
-    
-    #set($procedure = "$UTIL_SEARCH.getDetailValue($rs.get('detail'), 'procedure')")
-    #if($procedure)
-        #if($procedure == "dev_plan")
+    #set($uvp_categories = $UTIL_SEARCH.getFilteredDuplicateDetailValue($rs.get('detail'), 'uvp_category'))
+    #if($uvp_categories )
+        #set($categories = $uvp_categories.split(","))
+        #if($categories && $categories.size() > 0)
             <ul class="tag-group">
-                <li class="tag tag--small">$MESSAGES.getString("searchResult.procedure.uvp.$procedure")</li>
+            #foreach($category in $categories)
+                <li class="tag tag--small">$MESSAGES.getString("searchResult.categories.uvp.$category.trim()")</li>
+            #end
+            </ul>
+        #end
+    #end
+    #set($uvp_procedures = $UTIL_SEARCH.getFilteredDuplicateDetailValue($rs.get('detail'), 'procedure'))
+    #if($uvp_procedures)
+        #set($procedures = $uvp_procedures.split(","))
+        #if($procedures && $procedures.size() > 0)
+            <ul class="tag-group">
+            #foreach($procedure in $procedures)
+                <li class="tag tag--small">$MESSAGES.getString("searchResult.procedure.uvp.$procedure.trim()")</li>
+            #end
             </ul>
         #end
     #end
