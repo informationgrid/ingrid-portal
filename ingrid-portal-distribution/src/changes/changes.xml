@@ -10,8 +10,11 @@
           <action type="add" dev="wemove" issue="199">
             IGE/PORTAL: Added multiple languages for data source in IGE and detail view in portal.
           </action>
-          <action type="fix" dev="wemove" issue="788">
-            PORTAL: Fix installer by edit mapclient settings.
+          <action type="add" dev="wemove" issue="701">
+            UVP-NI: Integration of "Bauleitplanung".
+          </action>
+          <action type="add" dev="wemove" issue="787">
+            UVP-NI: Add search result hit tag "Bauleitplanung".
           </action>
           <action type="update" dev="wemove" issue="563">
             Updated context help of field accessConstraints (Zugriffsbeschränkungen) due to changed syslist 6010.
@@ -25,14 +28,17 @@
           <action type="update" dev="wemove" issue="730">
             UVP: Updated portal partner/provider list of addresses by query.
           </action>
+          <action type="fix" dev="wemove" issue="788">
+            PORTAL: Fix installer by edit mapclient settings.
+          </action>
+          <action type="fix" dev="wemove" issue="786">
+            UVP-NI: Remove breadcrumb.
+          </action>
           <action type="fix" dev="wemove" issue="731">
             UVP-NI: Fix copyright.
           </action>
           <action type="fix" dev="wemove" issue="740">
             UVP-NI: Fix mobile footer navigation style.
-          </action>
-          <action type="fix" dev="wemove" issue="701">
-            UVP-NI: Integration of "Bauleitplanung".
           </action>
           <action type="fix" dev="wemove" issue="775">
             UVP: Fix URL decode on detail view.
