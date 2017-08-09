@@ -86,6 +86,10 @@
         <p>
             $!rs.abstract 
         </p>
+        #if($rs.url)
+            <a href="$rs.url">$!rs.url_str</a>
+        #end
+        
         <p>
             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
@@ -96,7 +100,7 @@
                     <span class="tx-light">$rs.getScore()</span>
                 </small>
             #end
-         </p>
+        </p>
         ## do not show wms urls when they already have been displayed (above)
         #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_wms_url.vm")
         
@@ -107,9 +111,6 @@
             <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
         #end
             
-        #if($rs.url)
-            <a href="$rs.url">$!rs.url_str</a>
-        #end
         #if(!$rs.is_address)
             #if($showHitPartnerLogo)
                 <div class="media__obj media__obj--right">

@@ -15,4 +15,13 @@
         #end
         </ul>
     #end
+    
+    #set($procedure = "$UTIL_SEARCH.getDetailValue($rs.get('detail'), 'procedure')")
+    #if($procedure)
+        #if($procedure == "dev_plan")
+            <ul class="tag-group">
+                <li class="tag tag--small">$MESSAGES.getString("searchResult.procedure.uvp.$procedure")</li>
+            </ul>
+        #end
+    #end
 #end
