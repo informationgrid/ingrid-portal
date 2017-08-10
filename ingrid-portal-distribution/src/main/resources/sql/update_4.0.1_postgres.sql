@@ -1,3 +1,7 @@
+-- NOTICE:
+-- This Update is included in initial database ingrid_portal_401_postgres_95.sql
+-- and should not be needed (but was migrated to postgres and added here).
+
 -- DB Version
 UPDATE ingrid_lookup SET item_value = '4.0.1', item_date = NOW() WHERE ingrid_lookup.item_key ='ingrid_db_version';
 
