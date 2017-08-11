@@ -206,7 +206,6 @@
             <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
                 <use xlink:href="#user">
             </svg>
-            <span class="header__widget__text #if($inMain) mq-hide-xb #else mq-hide-xl #end">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
         </a>
         #if($jetspeed.getLoggedOn())
             <div class="metamenu metamenu--wide">
@@ -243,7 +242,6 @@
             <svg class="header__widget__icon icon">
                 <use xlink:href="#gear">
             </svg>
-            <span class="header__widget__text #if($inMain) mq-hide-xb #else mq-hide-xl #end">${linkName}</span>
         </a>
         <div class="metamenu">
             <div class="metamenu__box ob-container">
@@ -287,7 +285,6 @@
             <svg class="header__widget__icon icon">
                 <use xlink:href="#overview">
             </svg>
-            <span class="header__widget__text #if($inMain) mq-hide-xb #else mq-hide-xl #end">${linkName}</span>
         </a>
     </div>
   #end
