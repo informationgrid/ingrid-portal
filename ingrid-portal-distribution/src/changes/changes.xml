@@ -49,6 +49,9 @@
           <action type="fix" dev="wemove" issue="745">
             IGE (UVP): UploalCleanupJob deletes files too early. 
           </action>
+          <action type="fix" dev="wemove" issue="792">
+            IGE (UVP): Changed link style for uploaded documents and prevent overlapping in firefox.
+          </action>
           <action type="fix" dev="wemove" issue="768">
             IGE: Fixed hidden fields checked during publication.
           </action>

@@ -135,8 +135,7 @@ define(["dojo/_base/declare",
                     docName = decodeURI(docName);
                     link = baseUrl + value;
                 }
-                return "<div style=\"float: right;\"> <a href=\"" + link + "\" title=\"" + link + "\" target=\"_blank\"><img src=\"img/ic_fl_popup.gif\" width=\"10\" height=\"9\" alt=\"Popup\">Link</a></div>"+
-                "<span>"+docName+"</span>";
+                return "<span><a href=\"" + link + "\" title=\"" + link + "\" target=\"_blank\"><img src=\"img/ic_fl_popup.gif\" width=\"10\" height=\"9\" alt=\"Popup\"></a> </span><span>"+docName+"</span>";
             },
 
             BytesCellFormatter: function(row, cell, value, columnDef, dataContext) {
