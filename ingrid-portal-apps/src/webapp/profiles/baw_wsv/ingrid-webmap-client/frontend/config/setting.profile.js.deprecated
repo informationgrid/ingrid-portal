@@ -22,8 +22,8 @@
  */
 settingDefaultTopicId = 'favoriten';
 settingEpsg = 'EPSG:25832';
-settingExtent = '[0.105946948013, 45.2375415477, 20.4488910633, 56.8478734415]';
-settingEpsgExtent = '[0.105946948013, 45.2375415477, 20.4488910633, 56.8478734415]';
+settingExtent = '[5.42587260523, 46.9672880527, 15.7908768234, 55.1764096793]';
+settingEpsgExtent = '[-35.9999905552, 18.4126606832, 53.9999939426, 79.3219627558]';
 settingSearchServiceUrl = 'https://geoportal.wsv.res.bund.de/opensearch/query?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+t011_obj_serv.type:view+cache:off+datatype:metadata+ranking:score%26ingrid=1%26h=100';
 settingKMLName = 'ITZBund';
 settingDefaultWMSList = [];
