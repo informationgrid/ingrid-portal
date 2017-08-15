@@ -142,13 +142,6 @@
         <execute>
             <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id';]]>
         </execute>
-        <execute>
-           <![CDATA[INSERT INTO tmp_table (item_key\, item_value) values ('main-menu_id'\,  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')); ]]>
-        </execute>
-        <!-- Replace main-menu option "main-search" with "default-page" -->
-        <execute>
-           <![CDATA[UPDATE folder_menu SET options = '/default-page.psml' WHERE options = '/main-search.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id');]]>
-        </execute>
         <!-- Set folder from hidden to display -->
         <execute>
             <![CDATA[UPDATE folder SET is_hidden = 0 WHERE path = '/cms';]]>

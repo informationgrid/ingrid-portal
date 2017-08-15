@@ -68,9 +68,6 @@ UPDATE fragment SET decorator = 'ingrid-marginal-teaser' WHERE parent_id = (SELE
 UPDATE fragment SET name = 'ingrid-portal-apps::SearchNominatim' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id') AND name = 'ingrid-portal-apps::InfoPortlet';
 -- Remove temporary values from ingrid_lookup table -->
 DELETE FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id';
--- Replace main-menu option "main-search" with "default-page"
-INSERT INTO tmp_table (item_key, item_value) values ('main-menu_id',  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu'));
-UPDATE folder_menu SET options = '/default-page.psml' WHERE options = '/main-search.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id');
 -- DONE with tmp_table
 DROP TABLE tmp_table;
 
