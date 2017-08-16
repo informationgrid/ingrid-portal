@@ -16,6 +16,9 @@
           <action type="add" dev="wemove" issue="787">
             UVP-NI: Add search result hit tag "Bauleitplanung".
           </action>
+          <action type="add" dev="wemove" issue="798">
+            MAPCLIENT: Add override mechanism for mapclient.
+          </action>
           <action type="update" dev="wemove" issue="563">
             Updated context help of field accessConstraints (Zugriffsbeschränkungen) due to changed syslist 6010.
           </action>
@@ -27,6 +30,9 @@
           </action>
           <action type="update" dev="wemove" issue="730">
             UVP: Updated portal partner/provider list of addresses by query.
+          </action>
+          <action type="update" dev="wemove" issue="565">
+            MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
           </action>
           <action type="fix" dev="wemove" issue="788">
             PORTAL: Fix installer by edit mapclient settings.
