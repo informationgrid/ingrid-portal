@@ -193,6 +193,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_SEARCH_FACETE_SUB_COUNT = "portal.search.facete.sub.count";
     
+    public static final String PORTAL_SEARCH_FACETE_MAP_CENTER = "portal.search.facete.map.center";
+    
     public static final String PORTAL_SEARCH_HIDDEN_DATATYPES = "portal.search.hidden.datatype";
     
     public static final String PORTAL_SEARCH_HIT_PARTNER_LOGO = "portal.search.hit.partner.logo";

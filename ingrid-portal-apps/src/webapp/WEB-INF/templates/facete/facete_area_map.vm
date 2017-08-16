@@ -37,13 +37,17 @@
 <script language="JavaScript" type="text/javascript">
     var map = new L.Map('map');
     var osm = getOSMLayer();
+    var lat = $facetMapCenter.get(0);
+    var lng = $facetMapCenter.get(1);
+    var zoom = $facetMapCenter.get(2);
+    
     osm.options.minZoom = 5;
     osm.options.maxZoom = 20;
     
     var selectedMap = '$selectedMap.webmapclientCoords';
     
     // start the map in South-East England
-    map.setView(new L.LatLng(51.3, 10),5);
+    map.setView(new L.LatLng(lat, lng),zoom);
     
     if(selectedMap.indexOf("y1") > -1){
         map.fitBounds([[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]]);
