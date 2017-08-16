@@ -53,7 +53,7 @@
     <property name="prop-mdek-apps"                value="${mdek-app-class-path}/mdek.override.properties"/>
     <property name="prop-datasource-mdek-apps"     value="${mdek-app-class-path}/default-datasource.properties"/>
     
-    <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties"/>
+    <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.override.properties"/>
 
     <!-- THESE PROPERTIES ARE NECESSARY FOR UPDATES -->
     <property name="libraryDir"         value="${tomcat-artifact}/webapps/ROOT/META-INF,apache-tomcat-6.0.35/webapps/ROOT/META-INF" />
@@ -557,7 +557,8 @@
          ============================================= -->
 
     <target name="writeMapClientProps" description="">
-        <echo>Schreibe Webmap-Client Konfigration</echo>
+        <echo>Schreibe Webmap-Client Konfiguration</echo>
+        <touch file="${i-prop-ingrid-webmap-client}"/>
         <!-- write the application.properties file-->
         <propertyfile file="${i-prop-ingrid-webmap-client}">
             <entry key="config.dir"  value="${WebmapDataDir}/WebmapClientData/"/>
