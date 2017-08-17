@@ -181,12 +181,10 @@ public class UtilsFacete {
             addDefaultIngridFacets(request, config);
             setAttributeToSession(request, FACET_CONFIG, config);
         }else{
-            if(portalTerm != null && facetTerm != null){
-                if(!portalTerm.equals(facetTerm)){
-                    //Reset config facet values
-                    resetFacetConfigValues(config, null);
-                    setAttributeToSession(request, FACET_CONFIG, config);
-                }
+            if(facetTerm != portalTerm){
+                //Reset config facet values
+                resetFacetConfigValues(config, null);
+                setAttributeToSession(request, FACET_CONFIG, config);
             }
         }
         
@@ -494,7 +492,7 @@ public class UtilsFacete {
                         setAttributeToSession(request, FACET_CONFIG, config);
                     }
                 }
-            }        
+            }
             
             if (elementsMap != null){
                 setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
