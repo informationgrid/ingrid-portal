@@ -227,7 +227,8 @@ public class AdminUserPortlet extends ContentPortlet {
             // get entities
             List rows = getEntities(request);
 
-            String sortColumn = getSortColumn(request, "id");
+            String defaultSortColumn = PortalConfig.getInstance().getString( PortalConfig.USER_ADMIN_SORT_COLUMN, "id" );
+            String sortColumn = getSortColumn(request, defaultSortColumn);
             boolean ascendingOrder = isAscendingOrder(request);
             orderEntities(rows, sortColumn, ascendingOrder);
 

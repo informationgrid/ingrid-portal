@@ -180,7 +180,10 @@ public class PortalConfig extends PropertiesConfiguration {
     
     // User admin: show max row of users in a table
     public static final String USER_ADMIN_MAX_ROW = "admin.user.max.row";
-
+    
+    // User admin: sort column by default
+    public static final String USER_ADMIN_SORT_COLUMN = "admin.user.sort.column";
+    
     public static final String PORTAL_SEARCH_LANGUAGE_INDEPENDENT = "portal.search.language.independent";
 
     public static final String PORTAL_ENABLE_APPLICATION= "portal.enable.application";
