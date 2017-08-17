@@ -32,20 +32,6 @@
             $MESSAGES.getString("sitemap.area.main.search.catalogs")
         </a>
         <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.description")</p>
-        <div class="search-result--nested">
-            <ul>
-                <li>
-                    #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
-                    <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.tooltip")">
-                        <svg class="icon">
-                            <use xlink:href="#internal-link">
-                        </svg>
-                        $MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy")
-                    </a>
-                    <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.description")</p>
-                </li>
-            </ul>
-        </div>
     </li>
     #end
     #if($enableMaps)
