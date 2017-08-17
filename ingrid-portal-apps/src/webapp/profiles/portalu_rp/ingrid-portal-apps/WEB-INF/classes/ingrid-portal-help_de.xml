@@ -67,7 +67,8 @@
             <header>Funktionsüberblick</header>
             <content>
                 <p><b>Suche:</b> Zentrale Funktion des Portals mit (<a href="?hkey=search-1">einfachen</a>) und (<a href="?hkey=ext-search-1">erweiterten</a>) Suchfunktionen.</p>
-                <p><b>Kataloge</b>: Recherchieren Sie in den Umwelt- und Geodatenkatalogen von Informationsanbietern aus Rheinland-Pfalz.</p>
+                <p><b>Messwerte</b>: Abruf verschiedener Messwerte anhand einer Karte.</p>
+                <p><b>Kataloge</b>: Recherchieren Sie im Umweltdatenkatalog der Informationsanbieter aus Rheinland-Pfalz.</p>
                 <p><b>Karten:</b> Aufruf von digitalen Umweltkarten und Angabe und Raumbezüge bei der Suche.</p>
                 <p><b>Chronik</b>: Wann trat das Kyoto-Protokoll in Kraft? Eine Antwort auf diese und viele andere Fragen zu historischen Umweltereignissen finden Sie in der Umweltchronik.</p>
             </content>
@@ -84,7 +85,7 @@
             <header>Wie werde ich Informationsanbieter in PortalU?</header>
             <content>
                 <p>In PortalU können alle behördlichen Umweltinformationen aufgenommen werden. </p>
-                <p>Bietet ihre Behörde oder Institution umweltrelevante behördliche Informationen im Internet an, die noch nicht in PortalU zu finden sind? Dann sprechen Sie uns an: Verantwortliche PortalU <a href="mailto:portalu@mueef.rlp.de" title="Schreiben Sie uns - Email Programm startet automatisch">portalu@mulewf.rlp.de</a></p>
+                <p>Bietet ihre Behörde oder Institution umweltrelevante behördliche Informationen im Internet an, die noch nicht in PortalU zu finden sind? Dann sprechen Sie uns an: Verantwortliche PortalU <a href="mailto:portalu@mueef.rlp.de" title="Schreiben Sie uns - Email Programm startet automatisch">portalu@mueef.rlp.de</a></p>
             </content>
         </section>
         <section help-key="about-6">
@@ -716,8 +717,8 @@
         <section help-key="maps-1">
             <header display="false">Karten</header>
              <content>
-                <p>Die Kartenanwendung des PortalU-Portals ist eine intuitive Anwendung für die Suche, Anzeige und Nutzung von Informationen geografischer Art. Sie ermöglicht die interaktive Darstellung von Karten und eingeblendeten Fachdaten mit Hilfe eines standardmässigen Web-Browsers.</p>
-                <p>Als Benutzer können Sie zahlreiche Parameter dieser Karte festlegen, zum Beispiel den dargestellten räumlichen Bereich und die Bildgrösse sowie den Typus der angezeigten Informationen oder den Kartenhintergrund.</p>
+                <p>Die Kartenanwendung des PortalU ist eine intuitive Anwendung für die Suche, Anzeige und Nutzung von Informationen geografischer Art. Sie ermöglicht die interaktive Darstellung von Karten und eingeblendeten Fachdaten mit Hilfe eines standardmäßigen Web-Browsers.</p>
+                <p>Als Benutzer können Sie zahlreiche Parameter dieser Karte festlegen, zum Beispiel den dargestellten räumlichen Bereich und die Bildgröße sowie den Typus der angezeigten Informationen oder den Kartenhintergrund.</p>
                 <p>Die Anwendung gestattet nicht nur die Bildschirmanzeige, sondern auch einen qualitativ guten Papierausdruck. Sie ermöglicht je nach Einstellung den Zugriff auf Zusatzinformationen, die mit den geografischen Objekten verknüpft sind.</p>
                 <p>Seine Funktionalität umfasst u.a.:</p>
                 <ul>
@@ -725,10 +726,10 @@
                         - layerzentrierte Darstellung von Karten mit direkter Vorschau
                     </li>
                     <li>
-                        - strukturiertes Angebot an Karten + Hinzufügen externer Karten 
+                        - strukturiertes Angebot an Karten und Hinzufügen externer Karten 
                     </li>
                     <li>
-                        - Suche nach Karten direkt auf eingebundenen Karten oder im Suchraum von InGrid (Kataloge)
+                        - Suche nach Karten. Gefunden werden die unter Themen aufgelisteten sowie die unter Kataloge aufgeführten Karten
                     </li>
                     <li>
                         - Zeichnen und Messen auf der Karte
@@ -757,9 +758,9 @@
             <content>
             </content>
             <section help-key="maps-3-1">
-                <header>Ändern des Kartenmassstabs</header>
+                <header>Ändern des Kartenmaßstabs</header>
                 <content>
-                    <p>Mit jedem Klick auf das "+" oder "-" wird der angezeigte Massstab vergrössert oder verkleinert.</p>
+                    <p>Mit jedem Klick auf das "+" oder "-" wird der angezeigte Maßstab vergrößert oder verkleinert.</p>
                 </content>
             </section>
             <section help-key="maps-3-2">
@@ -771,14 +772,14 @@
             <section help-key="maps-3-3">
                 <header>Verschiebewerkzeug (Panning)</header>
                 <content>
-                    <p>Das Verschiebewerkzeug (Panning) kann wie folgt benutzt werden: klicken und gedrückt halten, um die Karte zu verschieben.</p>
+                    <p>Das Verschiebewerkzeug (Panning) kann wie folgt benutzt werden: Linke Maustaste drücken und gedrückt halten, um die Karte zu verschieben.</p>
                 </content>
             </section>
             <section help-key="maps-3-4">
                 <header>Zentrieren auf Koordinaten</header>
                 <content>
                     <p>Um die Karte auf einen Punkt zu zentrieren, müssen lediglich die Koordinaten des Punktes in das Suchfeld im oberen Teil der Karte eingegeben und Return gedrückt werden.</p>
-                    <p>Im Defaultkoordinatensystem z.B. ""6468101.33 963106.56"</p>
+                    <p>Im Defaultkoordinatensystem z.B. "6445781.72, 919002.39"</p>
                 </content>
             </section>
             <section help-key="maps-3-5">
@@ -792,14 +793,14 @@
             <section help-key="maps-3-6">
                 <header>Zurück in die Startansicht</header>
                 <content>
-                    <p>Um wieder die initiale Kartenansicht herzustellen klicken Sie bitte auf die Schaltfläche mit dem Pfeilkreuz rechts oben in der Karte.
-                       Die Ansicht wechselt zu ganz Deutschland.</p>
+                    <p>Um wieder die initiale Kartenansicht herzustellen klicken Sie bitte auf die Schaltfläche mit dem Pfeilkreuz auf der rechten Seite.
+                       Die Ansicht wechselt zu ganz Rheinland-Pfalz.</p>
                 </content>
             </section>
             <section help-key="maps-3-7">
                 <header>Geolokalisierung</header>
                 <content>
-                    <p>Die Schaltfläche mit dem Punkt rechts oben in der Karte erlaubt es, Ihre Position mittels GPS zu bestimmen.
+                    <p>Die Schaltfläche mit dem Punkt auf der rechten Seite erlaubt es, Ihre Position mittels GPS zu bestimmen.
                         Mit einem ersten Klick, wird diese rot angezeigt und Ihre Position erscheint als roter Punkt auf der Karte.</p>
                     <p>Der Pfeil oberhalb des roten Punktes zeigt die Richtung an, in welche Sie schauen.
                         Wenn Sie Ihr Gerät bewegen, dreht sich der Pfeil.</p>
@@ -816,7 +817,7 @@
             <section help-key="maps-4-1">
                 <header>Suche nach Karten (Volltextsuche)</header>
                 <content>
-                    <p>Mit der "Suche" im oberen Teil der Karte können Sie Suchbegriffe eingeben (z.B. "Moor", "Strasse", "Erdbeben" usw.) und nach Beschreibungen aller eingebundenen elektronischen Geodaten suchen.
+                    <p>Mit der "Suche" im oberen Teil der Karte können Sie Suchbegriffe eingeben (z.B. "Moor", "Straße", "Erdbeben" usw.) und nach Beschreibungen aller eingebundenen elektronischen Geodaten suchen.
                         Wenn Sie ein Resultat auswählen, wird es direkt im Kartenviewer dargestellt.</p>
                 </content>
             </section>
@@ -831,14 +832,14 @@
             <section help-key="maps-4-3">
                 <header>Ändern des Kartenhintergrundes</header>
                 <content>
-                    <p>Mit Klick auf "Hintergrund" rechts unten in der Karte können Sie zwischen verschiedenen Optionen wählen, z.B. gibt es die Hintergrundkarte in Farbe, Grau, OSM oder ganz ohne Hintergrund.</p>
+                    <p>Mit Klick auf "Hintergrund" rechts unten in der Karte können Sie zwischen verschiedenen Optionen wählen, z.B. gibt es die Hintergrundkarte in Farbe, Grau oder ganz ohne Hintergrund.</p>
                 </content>
             </section>
             <section help-key="maps-4-4">
                 <header>Ändern der Transparenz einer Karte</header>
                 <content>
                     <p>Klicken Sie auf das Zahnrad Symbol der Karte im Bereich "Dargestellte Karten".
-                        Die Transparenz der ausgewählten Karte kann durch das verschieben des horizontalen Reglers individuell angepasst werden.</p>
+                        Die Transparenz der ausgewählten Karte kann durch das Verschieben des horizontalen Reglers individuell angepasst werden.</p>
                 </content>
             </section>
             <section help-key="maps-4-5">
@@ -851,7 +852,7 @@
             <section help-key="maps-4-6">
                 <header>Entfernen einer Karte</header>
                 <content>
-                    <p>Eine Karte im Bereich "Dargestellte Karten" kann durck Klick auf die "Schließen" Schaltfläche ganz links aus der Liste und Kartenansicht entfernt werden.</p>
+                    <p>Eine Karte im Bereich "Dargestellte Karten" kann durch Klick auf die "x" Schaltfläche ganz links aus der Liste und Kartenansicht entfernt werden.</p>
                 </content>
             </section>
             <section help-key="maps-4-7">
@@ -864,7 +865,7 @@
             <section help-key="maps-4-8">
                 <header>Detailinformationen von Kartenelement</header>
                 <content>
-                    <p>Sofern vorhanden, können bei Vektordatensätze (Punkt, Linien, Polygon) die Attribute der einzelnen Kartenelemente durch einen einfachen Mausklick abgerufen werden.
+                    <p>Sofern vorhanden, können Attribute der einzelnen Kartenelemente durch einen einfachen Mausklick abgerufen werden.
                         Die Informationen werden in  einem eigenen Fenster "Objekt-Information" angezeigt.
                         Bei mehreren übereinanderligenden Karten werden alle unter der Maus liegenden Kartenelemente im Fenster angezeigt.</p>
                 </content>
@@ -879,10 +880,10 @@
             <section help-key="maps-4-10">
                 <header>Drucken</header>
                 <content>
-                    <p>Die Kartenansicht und die für deren Verständnis nötigen Elemente (Massstab etc.) kann als pdf-Datei ausgegeben werden.
+                    <p>Die Kartenansicht und die für deren Verständnis nötigen Elemente (Maßstab etc.) kann als pdf-Datei ausgegeben werden.
                         Diese Datei kann dann gespeichert oder ausgedruckt werden.</p>
                     <p>Die Funktion "Drucken" lässt ein Dialogfenster erscheinen, wo die Parameter für die Erzeugung der pdf-Datei gewählt werden können.
-                        Diese Parameter sind der Kartenmasstab und A4/A3 Orientierung.
+                        Diese Parameter sind der Kartenmaßstab und A4/A3 Orientierung.
                         Der Druckbereich der Karte wird hervorgehoben und kann mit der Maus verschoben werden.
                         Die Legende kann über Aktivierung der Checkbox mit ausgegeben werden.</p>
                 </content>
@@ -895,9 +896,9 @@
             <section help-key="maps-5-1">
                 <header>Kartendarstellung abspeichern/versenden/iFrame</header>
                 <content>
-                    <p>Über die Funktion "Link teilen" im Bereich "Teilen" kann die aktuelle Darstellung (Karten, Ort, Zoomstufe) als Link (URL) kopiert, abgespeichert und als e-mail oder andere Soziale Medien weiterversendet werden.</p>
+                    <p>Über die Funktion "Link teilen" im Bereich "Teilen" kann die aktuelle Darstellung (Karten, Ort, Zoomstufe) als Link (URL) kopiert, abgespeichert und als E-Mail oder andere Soziale Medien weiterversendet werden.</p>
                     <p>Unter "Einbetten" wird der HTML code für die Integration in ihre Website als iFrame automatisch generiert.
-                        Die "Vorschau" zeigt Ihnen die Darstellung, hier kann auch die Grösse des Kartenfensters angepasst werden.
+                        Die "Vorschau" zeigt Ihnen die Darstellung, hier kann auch die Größe des Kartenfensters angepasst werden.
                         Es genügt, den generierten Code in den Source Code ihrer Website zu kopieren.</p>
                 </content>
             </section>
@@ -981,12 +982,12 @@
             <section help-key="maps-7-1">
                 <header>WMS Import</header>
                 <content>
-                    <p>Es können nur WMS Dienste dargestellt werden, die das Projektionsystem unterstützen und dem WMS OGC Standard entsprechen.</p>
-                    <p>Die WMS Datensätze sind meistens erst ab einem bestimmtem Massstab sichtbar, deswegen muss in den entsprechenden Kartenausschnitt zentriert und ein entsprechender Massstab ausgewählt werden.</p>
+                    <p>Es können nur WMS Dienste dargestellt werden, die das Projektionssystem unterstützen und dem WMS OGC Standard entsprechen.</p>
+                    <p>Die WMS Datensätze sind meistens erst ab einem bestimmtem Maßstab sichtbar, deswegen muss in den entsprechenden Kartenausschnitt zentriert und ein entsprechender Maßstab ausgewählt werden.</p>
                     <p>Die Geschwindigkeit der Darstellung des WMS Datensatzes, ebenso wie dessen Verfügbarkeit ist von der Infrastruktur des zuständigen Betreibers abhängig.
-                        Bitte beachten sie auch Datennutzungsbedingungen der einzelnen WMS Anbieter.</p>
+                        Bitte beachten sie auch die Datennutzungsbedingungen der einzelnen WMS Anbieter.</p>
                     <p>Die WMS Datensätze können über die Druckfunktionen als PDF gespeichert werden.</p>
-                    <p>Aktivierung des Dialogs duch Klick auf "WMS Import".</p>
+                    <p>Aktivierung des Dialogs durch Klick auf "WMS Import".</p>
                 </content>
             </section>
             <section help-key="maps-7-2">
@@ -995,7 +996,7 @@
                     <p>Es können online oder lokal (Ausnahme: bei der Nutzung von InternetExplorer) gespeicherte KML files dargestellt werden.
                         Es können nur KML Dateien fehlerfrei dargestellt werden, die dem KML OGC Standard entsprechen.</p>
                     <p>Die geladene KML Datei wird unter "Dargestellte Karten" angezeigt und kann dort normal bearbeitet werden.</p>
-                    <p>Aktivierung des Dialogs duch Klick auf "KML Import".</p>
+                    <p>Aktivierung des Dialogs durch Klick auf "KML Import".</p>
                 </content>
             </section>
             <section help-key="maps-7-3">
@@ -1046,7 +1047,7 @@
             <header>Anmeldung</header>
             <content>
                 <p>Über die Anmeldung erhalten Sie die Möglichkeit, verschiedene Einstellungen des Portals auf Ihre Bedürfnisse hin zu personalisieren. Je nach Berechtigung erhalten Katalogbetreiber und -autoren Zugang zu den jeweiligen Administrationskomponenten des Portals bzw. der angeschlossenen Datenkataloge.</p>
-                <p>Haben Sie be reits einen Benutzernamen und ein Passwort, so geben Sie beides hier ein und klicken auf <b>Anmelden</b>.</p>
+                <p>Haben Sie bereits einen Benutzernamen und ein Passwort, so geben Sie beides hier ein und klicken auf <b>Anmelden</b>.</p>
             </content>
             <section help-key="myingrid-2">
                 <header>Neuer Benutzer</header>
