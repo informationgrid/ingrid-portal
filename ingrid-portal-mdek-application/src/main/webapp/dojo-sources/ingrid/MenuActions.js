@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -108,7 +108,7 @@ define([
                         	// Is this still needed? Leads to an error when creating a person!
                             // dlg.destroyRecursive();
                             self._createNewAddress(addressClass, selectedNode);
-                        });
+                        }, function() { /* CANCELED */});
 
                         var params = {
                             parentId: uuid,
@@ -122,17 +122,11 @@ define([
         },
 
         _createNewAddress: function(addressClass, parentNode) {
-            //  console.debug("_createNewAddress("+addressClass+", "+parentNode.id+")");
             var parentId = parentNode.item.id;
 
             var self = this;
             if (addressClass == 3 && parentId == "addressRoot") {
                 alert("This was not expected!");
-                // var treeController = registry.byId("treeController");
-                // treeController.expand(UtilTree.getNodeById("dataTree", "addressRoot"))
-                // .then(function() {
-                //     self._createNewAddress(addressClass, UtilTree.getNodeById("dataTree", "addressFreeRoot"));
-                // });
                 return;
             }
 
@@ -142,12 +136,7 @@ define([
             deferred.then(function(res) {
                 self.attachNewNode(UtilTree.getNodeById("dataTree", parentId), res);
                 parentNode.setSelected(false);
-                // topic.publish("/selectNode", {
-                //     id: "dataTree",
-                //     node: res
-                // });
             }, function(err) {
-                //      dialog.show(message.get('general.error'), message.get('tree.nodeCreateError'), dialog.WARNING);
                 displayErrorMessage(err);
             });
             console.debug("Publishing event: /createAddressRequest(" + parentId + ")");
@@ -312,10 +301,17 @@ define([
                 dialog.show(message.get("general.hint"), message.get("tree.selectNodePasteHint"), dialog.WARNING);
             } else {
                 var tree = registry.byId("dataTree");
+                var invalidFolderUnderObject = false;
 
                 if (tree.nodesToCut !== null) {
-                    var invalidPaste = array.some(tree.nodesToCut, function(nodeItem) {
-                        return (targetNode.item == nodeItem || this._isChildOf(targetNode, nodeItem));
+                    var invalidSubNode = false;
+                    array.some(tree.nodesToCut, function(nodeItem) {
+                        // the target node must not be under the node which is going to be cut
+                        invalidSubNode = (targetNode.item == nodeItem || this._isChildOf(targetNode, nodeItem));
+                        invalidFolderUnderObject = 
+                            (targetNode.item.objectClass !== null && targetNode.item.objectClass !== 1000 && nodeItem.objectClass === 1000) ||
+                            (targetNode.item.id === "addressFreeRoot" && nodeItem.objectClass === 1000);
+                        return invalidSubNode || invalidFolderUnderObject;
                     }, this);
 
                     // check if new node is going to be pasted
@@ -330,9 +326,13 @@ define([
                         }
                     }
                     
-                    if (invalidPaste) {
+                    if (invalidSubNode) {
                         // If an invalid target is selected (same node or child of node to cut)
                         dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
+                        return;
+                    } else if (invalidFolderUnderObject) {
+                        // If an invalid target is selected (copied folder under object/address)
+                        dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint.folderUnderObject"), dialog.WARNING);
                         return;
                     } else {
                         //              var cutNodeWidget = registry.byId(tree.nodeToCut.id);
@@ -409,7 +409,7 @@ define([
                         if (tree.copySubTree) {
                             var parentOfNewNode = array.some(tree.nodesToCopy, function(nodeItem) {
                                 return this._isChildOf(newNode, nodeItem);
-                            });
+                            }, this);
                             if (parentOfNewNode) {
                                 dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
                                 return;
@@ -423,6 +423,20 @@ define([
                             dialog.show(message.get("general.hint"), message.get("tree.saveNewNodeHint"), dialog.WARNING);
                             return;
                         }
+                    }
+
+                    array.some(tree.nodesToCopy, function(nodeItem) {
+                        // the target node must not be under the node which is going to be cut
+                        invalidFolderUnderObject = 
+                            (targetNode.item.objectClass !== null && targetNode.item.objectClass !== 1000 && nodeItem.objectClass === 1000) ||
+                            (targetNode.item.id === "addressFreeRoot" && nodeItem.objectClass === 1000);
+                        return invalidFolderUnderObject;
+                    }, this);
+
+                    if (invalidFolderUnderObject) {
+                        // If an invalid target is selected (copied folder under object/address)
+                        dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint.folderUnderObject"), dialog.WARNING);
+                        return;
                     }
 
                     // A node can be inserted everywhere. Start the paste request.
@@ -483,11 +497,7 @@ define([
                 });
 
                 checks.resetRequiredFields();
-            }, function(err) {
-                if (err.message != "undefined") {
-                    displayErrorMessage(err);
-                }
-            });
+            }, displayErrorMessage);
 
             console.debug("Publishing event: /saveRequest");
             topic.publish("/saveRequest", {
@@ -1229,7 +1239,7 @@ define([
                             if (tree.selectedNode == nodeToDelete) {
                                 // If the current node was marked as deleted, reload the
                                 // current node (updates permissions, etc.)
-                                UtilTree.reloadNode("dataTree", nodeToDelete);
+                                // FIXME: UtilTree.reloadNode("dataTree", nodeToDelete);
                                 tree.model.store.setValue(nodeToDelete.item, "userWritePermission", false);
                             } else {
                                 // Otherwise update the node that was marked as deleted
@@ -1358,7 +1368,7 @@ define([
         },
 
         openCreateObjectWizardDialog: function() {
-            dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp?c=" + userLocale, 350, 170, true);
+            dialog.showPage(message.get("dialog.wizard.selectTitle"), "dialogs/mdek_select_wizard_dialog.jsp?c=" + userLocale, 500, null, true);
         },
 
         inheritAddressToChildren: function(msg) {
@@ -1472,7 +1482,7 @@ define([
         },
 
         _isChildOf: function(childNode, targetNode) {
-            if (!childNode.getParent()) {
+            if (!childNode.getParent() || !childNode.getParent().item) {
                 return false;
             } else if (childNode.getParent().item.id == targetNode.id) {
                 return true;

@@ -1,8 +1,9 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+
 <p>$MESSAGES.getString("showpartner.intro")</p>
 #if($partners.size() > 1)
 <ul class="link-list">
-    #foreach( $key in $partners.keySet() ) 
+    #foreach( $key in $partners.keySet() )
         #set($partnerHash = $partners.get($key))
         #set($partner = $partnerHash.partner)
         #if($partnerHash.providers)
@@ -25,26 +26,26 @@
     #set($partner = $partnerHash.partner)
     #if($partnerHash.providers)
         #if($partners.size() > 1)
-        <a name="$partner.ident"></a>
-        <hr />
-        <h4>$partner.name</h4>
+            <a name="$partner.ident"></a>
+            <hr />
+            <h4>$partner.name</h4>
         #end
         <ul class="link-list">
-                #set($providers = $partnerHash.providers)
-                #foreach($provider in $providers)
-                    #if($provider.provider)
-                        <li>
-                        #if($provider.provider.url && $provider.provider.url != "")
-                            <a href="$provider.provider.url">
-                                <svg class="icon"><use xlink:href="#external-link"></svg>
-                                $provider.provider.name
-                            </a>
-                        #else
-                            <span style="display: block; padding: 0.5625rem 0.5625rem 0.5625rem 1.5rem; position: relative;">$provider.provider.name</span>
-                        #end
-                        </li>
+            #set($providers = $partnerHash.providers)
+            #foreach($provider in $providers)
+                #if($provider.provider)
+                    <li>
+                    #if($provider.provider.url && $provider.provider.url != "")
+                        <a href="$provider.provider.url">
+                            <svg class="icon"><use xlink:href="#external-link"></svg>
+                            $provider.provider.name
+                        </a>
+                    #else
+                        <span style="display: block; padding: 0.5625rem 0.5625rem 0.5625rem 1.5rem; position: relative;">$provider.provider.name</span>
                     #end
+                    </li>
                 #end
+            #end
         </ul>
     #end
 #end

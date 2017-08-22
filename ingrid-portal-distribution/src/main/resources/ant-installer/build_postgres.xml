@@ -1,0 +1,227 @@
+<!--
+  **************************************************-
+  Ingrid Portal Distribution
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+<project name="PostgreSQL Configuration">
+    <description>
+        PostgreSQL Configuration Build Script
+    </description>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+    <!-- =============================================
+         = PROPERTIES                                =
+         ============================================= -->
+         
+    <property name="postgresDriverClass"              value="org.postgresql.Driver"/>
+    <property name="postgresDialect"                  value="org.hibernate.dialect.PostgreSQLDialect"/>
+    <property name="postgresDialectPortal"            value="org.hibernate.dialect.PostgreSQLDialect"/>
+    <property name="postgresValidationQuery"          value="SELECT 1"/>
+    <property name="postgresDbDriver"                 location="${basedir}/postgresql-9.4.1212.jar"/>
+    <property name="postgresQuartzDriverDelegate"     value="org.quartz.impl.jdbcjobstore.PostgreSQLDelegate"/>
+
+    <target name="CheckDbs" depends="checkPortalDbPostgres, checkMdekDbPostgres" if="usePostgres">
+        <echo>DBs checked for existence and version
+        </echo>
+        <echo>Portal DB not existed      : ${portal.db.not.exists}</echo>
+        <echo>Portal DB version not found: ${portal.db.version.not.supported}</echo>
+        <echo>Portal Version             : ${portal.version}</echo>
+        <echo>MDEK DB not exists         : ${mdek.db.not.exists}</echo>
+    </target>
+
+    <target name="checkPortalDbPostgres" depends="tryCreatePortalDbPostgres" if="portal.installed" unless="only.ige.installation">
+        <sql    driver   ="${postgresDriverClass}"
+                classpath ="${postgresDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                onerror   ="continue" 
+                errorproperty="portal.db.not.exists"
+                failOnConnectionError="true"
+                >
+            <![CDATA[
+            SELECT * FROM page;
+            ]]>
+        </sql>
+        <sql driver   ="${postgresDriverClass}"
+                classpath ="${postgresDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                print     ="yes"
+                output    ="version.properties"
+                expandProperties="true" showheaders="false" showtrailers="false"
+                onerror   ="continue" 
+                errorproperty="portal.db.version.not.supported"
+                failOnConnectionError="false"
+                >
+            <![CDATA[
+            SELECT 'portal.version=', item_value FROM ingrid_lookup WHERE item_key='ingrid_db_version';
+            ]]>
+        </sql>
+        
+        <property file="version.properties" />
+    </target>
+
+    <target name="checkMdekDbPostgres" if="ige.installed" unless="withoutIge" depends="tryCreateMdekDbPostgres">
+        <sql    driver    ="${postgresDriverClass}"
+                classpath ="${postgresDbDriver}"
+                url       ="${_mdekDBUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}" 
+                onerror   ="continue" 
+                errorproperty="mdek.db.not.exists"
+                failOnConnectionError="false">
+            <![CDATA[
+            SELECT * FROM help_messages;
+            ]]>
+        </sql> 
+    </target>
+
+    
+    <!-- =============================================
+         = PORTAL DATABASE                           =
+         ============================================= -->
+         
+    <target name="tryCreatePortalDbPostgres" if="portal.installed" description="Create a PostgreSQL database.">
+        <echo>PostgreSQL-Portal-Datenbank erstellen (${_dbUrl})
+        </echo>
+
+    	<!-- No "IF NOT EXISTS" sql syntax with Postgres, so we do select to check whether database exists ! -->
+    	<!-- Do file output, cause errorproperty not set if connection fails ! -->
+    	<!-- see http://stackoverflow.com/questions/3352799/ant-task-to-check-if-a-database-connection-exists -->
+        <sql    driver   ="${postgresDriverClass}"
+                classpath ="${postgresDbDriver}"
+                url       ="${_dbUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                onerror   ="continue"
+            	failOnConnectionError="false"
+        		print = "true"
+        		output = "db.present"        		
+                >
+            <![CDATA[
+        	SELECT * FROM page;
+            ]]>
+        </sql>
+
+    	<!-- Create database if connection file not created.  -->
+        <if>
+        	<available file="db.present"/>
+            <then>
+                <echo>Database ${_dbUrl} already exists, we use existing one.
+                </echo>
+            </then>
+            <else>
+                <basename property="dbName" file="${_dbUrl}"/>
+                <propertyregex property="postgresUrlName"
+                      input="${_dbUrl}"
+                      regexp="(.*)/.*"
+                      select="\1"
+                      casesensitive="false" />
+<!--
+                <echo>postgresUrlName: ${postgresUrlName}
+                </echo>
+                <echo>SQL: CREATE DATABASE ${dbName} WITH OWNER = ${dbUser} ENCODING='UTF8' CONNECTION LIMIT=-1
+                </echo>
+-->
+                <sql    driver    ="${postgresDriverClass}"
+                        classpath ="${postgresDbDriver}"
+                        url       ="${postgresUrlName}/template1"
+                        userid    ="${_adminUser}"
+                        password  ="${_adminPassword}"
+                		autocommit="true"
+                        >
+                    <transaction>
+                        <!-- Create new one if not already exists-->
+                    	CREATE DATABASE ${dbName} WITH OWNER = ${dbUser} ENCODING='UTF8' CONNECTION LIMIT=-1;
+                    </transaction>
+                </sql>
+            </else>
+        </if>
+    </target>
+
+    <!-- =============================================
+         = IGE MDEK DATABASE                         =
+         ============================================= -->
+    
+    <target name="tryCreateMdekDbPostgres" if="ige.installed" unless="withoutIge" description="Create a PostgreSQL database.">
+        <echo>PostgreSQL-Mdek-Datenbank erstellen (${_mdekDBUrl})
+        </echo>
+
+    	<!-- No "IF NOT EXISTS" sql syntax with Postgres, so we do select to check whether database exists ! -->
+    	<!-- Do file output, cause errorproperty not set if connection fails ! -->
+    	<!-- see http://stackoverflow.com/questions/3352799/ant-task-to-check-if-a-database-connection-exists -->
+        <sql    driver   ="${postgresDriverClass}"
+                classpath ="${postgresDbDriver}"
+                url       ="${_mdekDBUrl}"
+                userid    ="${_adminUser}"
+                password  ="${_adminPassword}"
+                encoding  ="UTF-8"
+                onerror   ="continue"
+            	failOnConnectionError="false"
+        		print = "true"
+        		output = "mdek.db.present"        		
+                >
+            <![CDATA[
+        	SELECT * FROM help_messages;
+            ]]>
+        </sql>
+
+    	<!-- Create database if connection file not created.  -->
+        <if>
+        	<available file="mdek.db.present"/>
+            <then>
+                <echo>Database ${_dbUrl} already exists, we use existing one.
+                </echo>
+            </then>
+            <else>
+                <basename property="dbMdekName" file="${_mdekDBUrl}"/>
+                <propertyregex property="postgresMdekUrlName"
+                      input="${_mdekDBUrl}"
+                      regexp="(.*)/.*"
+                      select="\1"
+                      casesensitive="false" />
+<!--
+                <echo>postgresMdekUrlName: ${postgresMdekUrlName}
+                </echo>
+                <echo>SQL: CREATE DATABASE ${dbMdekName} WITH OWNER = ${dbUser} ENCODING='UTF8' CONNECTION LIMIT=-1
+                </echo>
+-->
+                <sql    driver    ="${postgresDriverClass}"
+                        classpath ="${postgresDbDriver}"
+                        url       ="${postgresMdekUrlName}/template1"
+                        userid    ="${_adminUser}"
+                        password  ="${_adminPassword}"
+                		autocommit="true"
+                        >
+                    <transaction>
+                        <!-- Create new one if not already exists-->
+                    	CREATE DATABASE ${dbMdekName} WITH OWNER = ${dbUser} ENCODING='UTF8' CONNECTION LIMIT=-1;
+                    </transaction>
+                </sql>
+            </else>
+        </if>
+    </target>
+</project>

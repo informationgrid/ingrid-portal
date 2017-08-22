@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -24,11 +24,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%        
+    response.setHeader("Pragma", "No-cache");
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setDateHeader("Expires", -1);
+%>
 <% request.getSession(true).setAttribute("isDebug", request.getParameter("debug") == null ? false : true);%>
 <% request.getSession(true).setAttribute("currLang", request.getParameter("lang") == null ? "de" : request.getParameter("lang")); %>
 
 
-<fmt:setLocale value="<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>" scope="session" />
+<fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
 <fmt:setBundle basename="messages" scope="session"/>
 
 <html dir="ltr">
@@ -36,9 +41,9 @@
     <head>
         <title>InGrid Editor</title>
         <link rel="shortcut icon" href="img/iconLogo.gif" type="image/x-icon">
-        <link rel="stylesheet" href="dojo-sources/release/lib/ingrid/css/slick.grid.css" type="text/css" media="screen" charset="utf-8" />
-        <link rel="stylesheet" href="dojo-sources/release/lib/ingrid/css/styles.css" />
-        <link rel="stylesheet" href="dojo-sources/release/lib/ingrid/css/imageReferences.css" />
+        <link rel="stylesheet" href="dojo-sources/ingrid/css/slick.grid.css" type="text/css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" href="dojo-sources/ingrid/css/styles.css" />
+        <link rel="stylesheet" href="dojo-sources/ingrid/css/imageReferences.css" />
 
         <script type="text/javascript">
             var userLocale = '<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>';
@@ -53,17 +58,22 @@
         <script type='text/javascript' src='dwr/util.js'></script>
 
         <!-- Application files -->
-        <script type="text/javascript" src="dojo-sources/release/lib/global/config.js"></script>
+        <script type="text/javascript" src="dojo-sources/global/config.js"></script>
 <c:choose>
     <c:when test="${isDebug}">
-        <script type="text/javascript" src="dojo-sources/release/lib/ingrid/ingrid.js.uncompressed.js"></script>
+        <script type="text/javascript" src="dojo-sources/ingrid/ingrid.js.uncompressed.js"></script>
     </c:when>
     <c:otherwise>
-      <script type="text/javascript" src="dojo-sources/release/lib/ingrid/ingrid.js"></script>
+      <script type="text/javascript" src="dojo-sources/ingrid/ingrid.js"></script>
    </c:otherwise>
 </c:choose>
         <script type="text/javascript" src="js/error_handler.js"></script>
         <script type="text/javascript" src="js/highlight.js"></script>
+
+        <!-- UVP nominatim search -->
+        <script type="text/javascript" src="js/leaflet/leaflet.js"></script>
+        <script type="text/javascript" src="js/leaflet/leaflet-areaselect.js"></script>
+        <link rel="stylesheet" href="js/leaflet/leaflet.css" />
 
         <!-- DWR Services -->
         <script type='text/javascript' src='dwr/interface/UtilityService.js'></script>

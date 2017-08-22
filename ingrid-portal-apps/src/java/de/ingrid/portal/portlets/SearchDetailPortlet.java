@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,6 +24,7 @@ package de.ingrid.portal.portlets;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,6 +39,9 @@ import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
@@ -80,6 +84,33 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     
     private HashMap replacementFields = new HashMap();
 
+    public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
+        String resourceID = request.getResourceID();
+        
+        try {
+            if (resourceID.equals( "httpURL" )) {
+                String paramURL = request.getParameter( "url" );
+                if(paramURL != null){
+                    URL url = new URL(paramURL);
+                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("HEAD");
+                    response.setContentType( "application/javascript" );
+                    StringBuilder s = new StringBuilder();
+                    response.getWriter().write( "{" );
+                    if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
+                        s.append( "\"contentLength\":");
+                        s.append( "\"" + con.getContentLength() + "\"" );
+                    }
+                    response.getWriter().write( s.toString() );
+                    response.getWriter().write( "}" );
+                }
+            }
+
+        } catch (Exception e) {
+            log.error( "Error creating resource for resource ID: " + resourceID, e );
+        }
+    }
+    
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -133,6 +164,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("stringTool", new UtilsString());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
         context.put("piwik", PortalConfig.getInstance().getString(PortalConfig.ENABLE_PIWIK));
+        
+        ResourceURL restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURL" );
+        request.setAttribute( "restUrlHttpGet", restUrl.toString() );
         
         try {
         	// check whether we come from google (no IngridSessionPreferences)

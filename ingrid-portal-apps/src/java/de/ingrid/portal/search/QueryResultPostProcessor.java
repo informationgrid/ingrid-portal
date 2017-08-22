@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,6 +24,7 @@ package de.ingrid.portal.search;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -158,6 +159,7 @@ public class QueryResultPostProcessor {
 
             Object additionalHtml = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_ADDITIONAL_HTML_1);
             hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, additionalHtml);
+            
             boolean doNotShowMaps = false;
             String firstResourceId = null;
             
@@ -403,7 +405,10 @@ public class QueryResultPostProcessor {
             	if (typesPlug.contains(Settings.QVALUE_DATATYPE_SOURCE_METADATA)) {
             		isMetadata = true;
             	}
-                
+                if(hit.get( "is_address" ) != null){
+                    isMetadata = !Boolean.parseBoolean( hit.get( "is_address" ).toString() );
+                }
+            	
             	if(isMetadata){
             		if (!cswUrl.isEmpty()) {
                         String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id+"&iplug="+hit.getPlugId()+"&elementSetName=full";
@@ -432,13 +437,24 @@ public class QueryResultPostProcessor {
         return url;
     }
     
+    private static String[] getStringArrayFromKey(IngridHitDetail detail, String key) {
+        Object potentialList = detail.get( key );
+        String[] servicesArray = null;
+        if (potentialList instanceof ArrayList<?>) {
+            servicesArray = ((ArrayList<?>) potentialList).toArray( new String[0] );
+        } else {
+            servicesArray = (String[]) potentialList;
+        }
+        return servicesArray;
+    }
+    
     private static void addLegacyWMS(IngridHitWrapper hit, IngridHitDetail detail) {
         // WMS, only process if Viewer is specified !
-        String[] servicesArray = (String[]) detail.get(Settings.HIT_KEY_WMS_URL);
+        String[] servicesArray = getStringArrayFromKey(detail, Settings.HIT_KEY_WMS_URL);
 
         if (servicesArray == null || servicesArray.length < 1) {
             // there has been a change in the case of this key
-            servicesArray = (String[]) detail.get(Settings.HIT_KEY_WMS_URL.toLowerCase());
+            servicesArray = getStringArrayFromKey(detail, Settings.HIT_KEY_WMS_URL.toLowerCase());
         }
 
         if (servicesArray != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
@@ -459,10 +475,7 @@ public class QueryResultPostProcessor {
                 }
                 String tmpString = "";
                 if (servicesArray instanceof String[]) {
-                    // PATCH for wrong data in database -> service string was
-                    // passed multiple times !
-                    // only show FIRST (!!!! This is an assumption that has been
-                    // made to reduce the effort!!! ) WMS getCapabilities URL
+                    // only show FIRST URL which matches the conditions of a WMS getCapabilities URL
 
                     for (int j = 0; j < servicesArray.length; j++) {
                         if (serviceTypeKey.toLowerCase().equals("2")
@@ -475,7 +488,9 @@ public class QueryResultPostProcessor {
                         }
                     }
                 } else {
+                    // TODO: check if this part is ever reached!!!
                     tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
+                    
                     // only show WMS getCapabilities URL
                     if (serviceType.indexOf("wms") != -1
                             || serviceType.indexOf("view") != -1

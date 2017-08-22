@@ -1,0 +1,4 @@
+## do not show wms urls when they already have been displayed (above)
+#if($rs.wms_url)
+    <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
+#end

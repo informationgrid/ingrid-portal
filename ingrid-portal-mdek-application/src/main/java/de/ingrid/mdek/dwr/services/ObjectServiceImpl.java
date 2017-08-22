@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,9 +24,14 @@ package de.ingrid.mdek.dwr.services;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 
+import de.ingrid.external.gemet.GEMETService;
 import de.ingrid.mdek.MdekUtils.IdcEntityOrderBy;
 import de.ingrid.mdek.MdekUtils.IdcQAEntitiesSelectionType;
 import de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType;
@@ -38,22 +43,34 @@ import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultSimpleBean;
 import de.ingrid.mdek.beans.query.ObjectStatisticsResultBean;
 import de.ingrid.mdek.beans.query.ThesaurusStatisticsResultBean;
+import de.ingrid.mdek.dwr.services.sns.SNSService;
+import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
 import de.ingrid.mdek.job.MdekException;
 import de.ingrid.mdek.util.MdekErrorUtils;
 import de.ingrid.mdek.util.MdekObjectUtils;
 
-public class ObjectServiceImpl implements ObjectService {
+public class ObjectServiceImpl implements ObjectService, BeanFactoryAware {
 
-	private final static Logger log = Logger.getLogger(ObjectServiceImpl.class);	
+    private final static Logger log = Logger.getLogger(ObjectServiceImpl.class);	
 
 	// Injected by Spring
 	private ObjectRequestHandler objectRequestHandler;
 
+    // Spring Bean Factory for lookup of needed services
+    private BeanFactory beanFactory;
+    private SNSService snsService;
+    private CatalogService catalogService;
+
 	private final static String OBJECT_APPTYPE = "O";
 	private final static String OBJECT_INITIAL_DOCTYPE = "Class0_B";
 
-	
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+        this.snsService = (SNSService) this.beanFactory.getBean("snsService");
+        this.catalogService = (CatalogService) this.beanFactory.getBean("catalogService");
+    }
+
 	public boolean canCopyObject(String uuid) {
 		log.debug("Query if node can be copied: "+uuid);
 
@@ -250,6 +267,10 @@ public class ObjectServiceImpl implements ObjectService {
 
 	public MdekDataBean saveNodeData(MdekDataBean data, Boolean useWorkingCopy, Boolean forcePublicationCondition) {
 		log.debug("saveNodeData()");
+
+        // TODO: REMOVE THIS UGLY FIX WHEN BETTER GEMET SERVICE ??????? ADDITIONAL LOCALIZATION OF GEMET TERMS WHEN SAVING !
+		fixGEMETTerms(data);
+
 		if (useWorkingCopy) {
 			log.debug("Saving node with ID: "+data.getUuid());
 
@@ -277,6 +298,36 @@ public class ObjectServiceImpl implements ObjectService {
 				throw e;
 			}
 		}
+	}
+	
+	/**
+	 * Process GEMET terms to add additional localized name if wanted and not yet present !
+	 * This is an ugly fix cause backend cannot add additional localized term when requesting
+	 * findTermsFromQueryTerm (search in navigator) for every found term, cause it is too slow !!!
+	 * see https://dev.informationgrid.eu/redmine/issues/363
+	 * @param data DataBean where SNSTopics (of source GEMET) will be fixed !
+	 */
+	private void fixGEMETTerms(MdekDataBean data) {
+        if (snsService.getThesaurusService() instanceof GEMETService) {
+            if (((GEMETService) snsService.getThesaurusService()).getAlternateLanguage() != null) {
+
+                // fetch catalog language
+                Locale catalogLocale = new Locale( catalogService.getCatalogData().getLanguageShort() );
+
+                // check GEMET terms for additional localization and fetch again if not set yet !
+                List<SNSTopic> topics = data.getThesaurusTermsTable();
+                for (int i=0; i<topics.size(); i++) {
+                    SNSTopic topic = topics.get( i );
+                    if (SNSTopic.Source.GEMET.equals( topic.getSource() )) {
+                        if (topic.getAlternateTitle() == null) {
+                            // fetch again from backend WITH alternate title (additional localization)
+                            // alternateTitle is always set when fetching single term via ID (in GEMET service !)
+                            topics.set( i, snsService.getPSI( topic.getTopicId(), catalogLocale ));
+                        }
+                    }
+                }               
+            }
+        }	    
 	}
 
 	public MdekDataBean saveObjectPublicationCondition(String uuid, Boolean useWorkingCopy, Integer newPublicationCondition, boolean forcePublicationCondition) {

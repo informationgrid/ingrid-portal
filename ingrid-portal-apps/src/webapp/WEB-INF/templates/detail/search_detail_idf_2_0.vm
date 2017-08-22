@@ -382,6 +382,14 @@
                                     <td><a href="$url">$url</a></td>
                                 </tr>
                             #end
+                            ## Servicezeiten
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:hoursOfService")
+                            #if($TOOL.nodeExist($xPath, $node))
+                                <tr>
+                                    <th>$MESSAGES.getString('t02_address.hours_of_service')</th>
+                                    <td>$TOOL.getValueFromXPath($xPath, null, $node)</td>
+                                </tr>
+                            #end
                         </table>
                     </div>
                 </div>

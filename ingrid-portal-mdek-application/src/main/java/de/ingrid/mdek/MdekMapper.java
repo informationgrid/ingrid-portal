@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -112,6 +112,8 @@ public class MdekMapper implements DataMapperInterface {
         if (responsibleUser != null) {
             mdekObj.setObjectOwner(responsibleUser.getUuid());
         }
+        
+        mdekObj.setAdvCompatible( "Y".equals(obj.get(MdekKeys.IS_ADV_COMPATIBLE)) ? true : false );
 
         // QA Fields
         MdekAddressBean assignerUser = getDetailedAddressRepresentation((IngridDocument) obj.get(MdekKeys.ASSIGNER_USER));
@@ -186,7 +188,7 @@ public class MdekMapper implements DataMapperInterface {
 
         // ExtraInfo
         mdekObj.setExtraInfoLangMetaDataCode((Integer)obj.get(MdekKeys.METADATA_LANGUAGE_CODE));
-        mdekObj.setExtraInfoLangDataCode((Integer)obj.get(MdekKeys.DATA_LANGUAGE_CODE));
+        mdekObj.setExtraInfoLangDataTable(mapToExtraInfoLangDataTable((List<IngridDocument>) obj.get(MdekKeys.DATA_LANGUAGE_LIST)));
 
         mdekObj.setExtraInfoPublishArea((Integer) obj.get(MdekKeys.PUBLICATION_CONDITION));
         mdekObj.setExtraInfoCharSetDataCode((Integer)obj.get(MdekKeys.DATASET_CHARACTER_SET));
@@ -213,6 +215,7 @@ public class MdekMapper implements DataMapperInterface {
         mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<IngridDocument>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
         
         // Thesaurus
+        mdekObj.setAdvProductGroupList(mapToAdvProductGroupTable((List<IngridDocument>) obj.get(MdekKeys.ADV_PRODUCT_LIST)));
         mdekObj.setThesaurusInspireTermsList(mapToInspireTermTable((List<IngridDocument>) obj.get(MdekKeys.SUBJECT_TERMS_INSPIRE)));
         mdekObj.setThesaurusTermsTable(mapToThesTermsTable((List<IngridDocument>) obj.get(MdekKeys.SUBJECT_TERMS)));
 
@@ -262,6 +265,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setDq127Table(mapToDqTable(127, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
 
             mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)) ? true : false);
             mdekObj.setOpenData(isOpenData);
             mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             
@@ -317,6 +321,7 @@ public class MdekMapper implements DataMapperInterface {
             break;
         case 3:
             mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)) ? true : false);
             mdekObj.setOpenData(isOpenData);
             mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             IngridDocument td3Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
@@ -366,6 +371,7 @@ public class MdekMapper implements DataMapperInterface {
             break;
         case 6:
             mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
+            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)) ? true : false);
             mdekObj.setOpenData(isOpenData);
             mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             IngridDocument td6Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
@@ -470,6 +476,7 @@ public class MdekMapper implements DataMapperInterface {
 
         mdekAddress.setNameForm(mapToKeyValuePair(adr, MdekKeys.NAME_FORM_KEY, MdekKeys.NAME_FORM).getValue());
         mdekAddress.setTitleOrFunction(mapToKeyValuePair(adr, MdekKeys.TITLE_OR_FUNCTION_KEY, MdekKeys.TITLE_OR_FUNCTION).getValue());
+        mdekAddress.setAdministrativeArea(mapToKeyValuePair(adr, MdekKeys.ADMINISTRATIVE_AREA_CODE, MdekKeys.ADMINISTRATIVE_AREA_NAME).getValue());
         mdekAddress.setCountryName(mapToKeyValuePair(adr, MdekKeys.COUNTRY_CODE, MdekKeys.COUNTRY_NAME).getValue());
         mdekAddress.setHideAddress("Y".equals(adr.get(MdekKeys.HIDE_ADDRESS)) ? true : false);
 
@@ -562,6 +569,9 @@ public class MdekMapper implements DataMapperInterface {
             break;
         case 3:
             nodeDocType = "PersonAddress";
+            break;
+        case 1000:
+            nodeDocType = "Class1000";
             break;
         default:
             nodeDocType = "Institution";
@@ -666,6 +676,9 @@ public class MdekMapper implements DataMapperInterface {
 
             title = title.trim();
             break;
+        case 1000:
+            title = adr.getString( MdekKeys.NAME );
+            break;
         }
 
         return title;
@@ -699,6 +712,13 @@ public class MdekMapper implements DataMapperInterface {
             udkAdr.put(MdekKeys.TITLE_OR_FUNCTION, kvp.getValue());
             udkAdr.put(MdekKeys.TITLE_OR_FUNCTION_KEY, kvp.getKey());
         }
+        
+        kvp = mapFromKeyValue(MdekKeys.ADMINISTRATIVE_AREA_CODE, data.getAdministrativeArea());
+        if (kvp.getValue() != null || kvp.getKey() != -1) {
+            udkAdr.put(MdekKeys.ADMINISTRATIVE_AREA_NAME, kvp.getValue());
+            udkAdr.put(MdekKeys.ADMINISTRATIVE_AREA_CODE, kvp.getKey());
+        }
+        
         kvp = mapFromKeyValue(MdekKeys.COUNTRY_CODE, data.getCountryName());
         if (kvp.getValue() != null || kvp.getKey() != -1) {
             udkAdr.put(MdekKeys.COUNTRY_NAME, kvp.getValue());
@@ -749,6 +769,7 @@ public class MdekMapper implements DataMapperInterface {
         IngridDocument responsibleUser = new IngridDocument();
         responsibleUser.put(MdekKeys.UUID, data.getObjectOwner());
         udkObj.put(MdekKeys.RESPONSIBLE_USER, responsibleUser);
+        udkObj.put(MdekKeys.IS_ADV_COMPATIBLE, data.getAdvCompatible() ? "Y" : "N");
         
         // extrahieren des int Wertes für die Objekt-Klasse
         udkObj.put(MdekKeys.CLASS, data.getObjectClass());
@@ -783,7 +804,7 @@ public class MdekMapper implements DataMapperInterface {
 
         // ExtraInfo
         udkObj.put(MdekKeys.METADATA_LANGUAGE_CODE, data.getExtraInfoLangMetaDataCode());
-        udkObj.put(MdekKeys.DATA_LANGUAGE_CODE, data.getExtraInfoLangDataCode());
+        udkObj.put(MdekKeys.DATA_LANGUAGE_LIST, mapFromExtraInfoLangDataTable(data.getExtraInfoLangDataTable()));
         udkObj.put(MdekKeys.PUBLICATION_CONDITION, data.getExtraInfoPublishArea());
         udkObj.put(MdekKeys.DATASET_CHARACTER_SET, data.getExtraInfoCharSetDataCode());
         udkObj.put(MdekKeys.CONFORMITY_LIST, mapFromExtraInfoConformityTable(data.getExtraInfoConformityTable()));
@@ -804,6 +825,7 @@ public class MdekMapper implements DataMapperInterface {
         }
 
         //Thesaurus
+        udkObj.put(MdekKeys.ADV_PRODUCT_LIST, mapFromAdvProductGroupTable(data.getAdvProductGroupList()));
         udkObj.put(MdekKeys.SUBJECT_TERMS_INSPIRE, mapFromInspireTermTable(data.getThesaurusInspireTermsList()));
         udkObj.put(MdekKeys.SUBJECT_TERMS, mapFromThesTermTable(data.getThesaurusTermsTable()));
         udkObj.put(MdekKeys.TOPIC_CATEGORIES, data.getThesaurusTopicsList());
@@ -837,9 +859,9 @@ public class MdekMapper implements DataMapperInterface {
 
         // determine inspire relevant value
         Boolean isInspireRelevant = data.getInspireRelevant();
-        String isInspireRelevantValue = "N";
-        if (isInspireRelevant != null && isInspireRelevant == true)
-            isInspireRelevantValue = "Y";
+        String isInspireRelevantValue = (isInspireRelevant != null && isInspireRelevant == true) ? "Y" : "N";
+        Boolean isInspireConform = data.getInspireConform();
+        String isInspireConformValue = (isInspireConform != null && isInspireConform == true) ? "Y" : "N";
         
         // determine open data value
         Boolean isOpenData = data.getOpenData();
@@ -865,6 +887,7 @@ public class MdekMapper implements DataMapperInterface {
             udkObj.put(MdekKeys.DATA_QUALITY_LIST, dqList);
             
             udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);
+            udkObj.put(MdekKeys.IS_INSPIRE_CONFORM, isInspireConformValue);
             udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
             udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
 
@@ -927,6 +950,7 @@ public class MdekMapper implements DataMapperInterface {
             td3Map.put(MdekKeys.COUPLING_TYPE, data.getRef3CouplingType());
             
             udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);
+            udkObj.put(MdekKeys.IS_INSPIRE_CONFORM, isInspireConformValue);
             udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
             udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
             
@@ -969,6 +993,7 @@ public class MdekMapper implements DataMapperInterface {
             td6Map.put(MdekKeys.SERVICE_TYPE_KEY, data.getRef6ServiceType());
 
             udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);
+            udkObj.put(MdekKeys.IS_INSPIRE_CONFORM, isInspireConformValue);
             udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
             udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
             
@@ -997,6 +1022,9 @@ public class MdekMapper implements DataMapperInterface {
         }
         if (null == addr.getCountryCode()) {
             addr.setCountryCode(sysListMapper.getInitialKeyFromListId(6200));
+        }
+        if (null == addr.getAdministrativeArea()) {
+            addr.setAdministrativeArea(sysListMapper.getInitialValueFromListId(6250));
         }
     }
 
@@ -1041,8 +1069,8 @@ public class MdekMapper implements DataMapperInterface {
         }
 
         if (null != sysListMapper.getInitialKeyFromListId(99999999)) {
-            if (null == obj.getExtraInfoLangDataCode()) {
-                obj.setExtraInfoLangDataCode(sysListMapper.getInitialKeyFromListId(99999999));
+            if ((null == obj.getExtraInfoLangDataTable() || obj.getExtraInfoLangDataTable().size() == 0)) {
+                obj.setExtraInfoLangDataTable(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(99999999) }));
             }
             if (null == obj.getExtraInfoLangMetaDataCode()) {
                 obj.setExtraInfoLangMetaDataCode(sysListMapper.getInitialKeyFromListId(99999999));
@@ -1182,14 +1210,7 @@ public class MdekMapper implements DataMapperInterface {
                 tableRows = null;
             else {
                 for (List<AdditionalFieldBean> row : additionalField.getTableRows()) {
-                    List<IngridDocument> rowDoc = new ArrayList<IngridDocument>();
-                    for (AdditionalFieldBean column : row) {
-                        IngridDocument columnDoc = new IngridDocument();
-                        columnDoc.put(MdekKeys.ADDITIONAL_FIELD_KEY, column.getIdentifier());
-                        columnDoc.put(MdekKeys.ADDITIONAL_FIELD_DATA,         column.getValue());
-                        columnDoc.put(MdekKeys.ADDITIONAL_FIELD_LIST_ITEM_ID, column.getListId());
-                        rowDoc.add(columnDoc);
-                    }
+                    List<IngridDocument> rowDoc = mapFromAdditionalFields( row );
                     tableRows.add(rowDoc);
                 }
             }
@@ -1272,6 +1293,20 @@ public class MdekMapper implements DataMapperInterface {
             result.put(MdekKeys.DATASET_REFERENCE_TYPE, ref.getType());
             resultList.add(result);
         }
+        return resultList;
+    }
+
+    private List<IngridDocument> mapFromExtraInfoLangDataTable(List<Integer> keyList) {
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        
+        if (keyList != null) {
+            for (Integer key : keyList) {
+                IngridDocument result = new IngridDocument();
+                result.put( MdekKeys.DATA_LANGUAGE_CODE, key );
+                resultList.add( result );
+            }           
+        }
+
         return resultList;
     }
 
@@ -1447,6 +1482,20 @@ public class MdekMapper implements DataMapperInterface {
             result.put(MdekKeys.MEDIUM_NOTE, ref.getLocation());
             result.put(MdekKeys.MEDIUM_TRANSFER_SIZE, ref.getTransferSize());
             resultList.add(result);
+        }
+        return resultList;
+    }
+
+    private List<IngridDocument> mapFromAdvProductGroupTable(List<Integer> advProductGroupList) {
+        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        if (advProductGroupList != null) {
+            for (Integer identifier : advProductGroupList) {
+                IngridDocument res = new IngridDocument();
+                res.put(MdekKeys.ADV_PRODUCT_KEY, identifier);
+                // res.put(MdekKeys.ADV_PRODUCT_VALUE, );
+                
+                resultList.add(res);
+            }
         }
         return resultList;
     }
@@ -1839,14 +1888,7 @@ public class MdekMapper implements DataMapperInterface {
             if (tableRows != null) {
                 List<List<AdditionalFieldBean>> tableData = new ArrayList<List<AdditionalFieldBean>>();
                 for (List<IngridDocument> row : tableRows) {
-                    List<AdditionalFieldBean> rowsData = new ArrayList<AdditionalFieldBean>();
-                    for (IngridDocument column : row) {
-                        AdditionalFieldBean columnData = new AdditionalFieldBean();
-                        columnData.setIdentifier(column.getString(MdekKeys.ADDITIONAL_FIELD_KEY));
-                        columnData.setValue(column.getString(MdekKeys.ADDITIONAL_FIELD_DATA));
-                        columnData.setListId(column.getString(MdekKeys.ADDITIONAL_FIELD_LIST_ITEM_ID));
-                        rowsData.add(columnData);
-                    }
+                    List<AdditionalFieldBean> rowsData = mapToAdditionalFields(row);
                     tableData.add(rowsData);
                 }
                 additionalField.setTableRows(tableData);
@@ -1941,6 +1983,18 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     
+    private List<Integer> mapToExtraInfoLangDataTable(List<IngridDocument> docList) {
+        List<Integer> resultList = new ArrayList<Integer>();
+
+        if (docList != null) {
+            for (IngridDocument doc : docList) {
+                resultList.add( (Integer) doc.get( MdekKeys.DATA_LANGUAGE_CODE ) );
+            }
+        }
+
+        return resultList;
+    }
+
     private List<ConformityBean> mapToExtraInfoConformityTable(List<IngridDocument> conList) {
         List<ConformityBean> resultList = new ArrayList<ConformityBean>();
         if (conList == null)
@@ -2102,7 +2156,18 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
 
-
+    private List<Integer> mapToAdvProductGroupTable(List<IngridDocument> productList) {
+        List<Integer> resultList = new ArrayList<Integer>();
+        
+        if (productList != null) {
+            for (IngridDocument topic : productList) {
+                resultList.add((Integer) topic.get(MdekKeys.ADV_PRODUCT_KEY));
+            }
+        }
+        
+        return resultList;
+    }
+    
     private List<Integer> mapToInspireTermTable(List<IngridDocument> topicList) {
         List<Integer> resultList = new ArrayList<Integer>();
 

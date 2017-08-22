@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -85,7 +85,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 put(5200,"Objektklasse 3 - Klassifikation des Dienstes");    put(5300,"Objektklasse 6 - Art des Dienstes");
                 put(6000,"Konformität - Grad der Konformität"); put(6005,"Konformität - Spezifikation der Konformität");
                 put(6010,"Verfügbarkeit - Zugriffsbeschränkungen");  put(6020,"Verfügbarkeit - Anwendungseinschränkungen");
-                put(6100,"INSPIRE-Themen"); put(6200,"ISO Liste der Länder");    put(6300,"INSPIRE-Datenformat");
+                put(6100,"INSPIRE-Themen"); put(6200,"ISO Liste der Länder"); put(6250,"Verwaltungsgebiete");   put(6300,"INSPIRE-Datenformat");
                 put(7109,"Datenqualität - Datenüberschuss - Art der Messung");
                 put(7112,"Datenqualität - Konzeptionelle Konsistenz - Art der Messung");
                 put(7113,"Datenqualität - Konsistenz des Wertebereichs - Art der Messung");

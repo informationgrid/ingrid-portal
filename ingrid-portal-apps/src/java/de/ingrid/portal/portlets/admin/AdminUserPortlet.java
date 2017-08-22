@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -227,7 +227,8 @@ public class AdminUserPortlet extends ContentPortlet {
             // get entities
             List rows = getEntities(request);
 
-            String sortColumn = getSortColumn(request, "id");
+            String defaultSortColumn = PortalConfig.getInstance().getString( PortalConfig.USER_ADMIN_SORT_COLUMN, "id" );
+            String sortColumn = getSortColumn(request, defaultSortColumn);
             boolean ascendingOrder = isAscendingOrder(request);
             orderEntities(rows, sortColumn, ascendingOrder);
 

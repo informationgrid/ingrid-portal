@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -449,6 +449,33 @@ public class UtilsSearch {
         return values.toString();
     }
 
+    /**
+     * Returns all values stored with the passed key by filter duplicate values and returns them as one
+     * String (concatenated with ", ").
+     * 
+     * @param detail
+     * @param key
+     * @return
+     */
+    public static String getFilteredDuplicateDetailValue(IngridHit detail, String key){
+        String filteredValues = "";
+        String [] values = getDetailValue( detail, key ).split(DETAIL_VALUES_SEPARATOR); 
+        for (int i = 0; i < values.length; i++) {
+            String v = values[i].trim();
+            if(filteredValues.indexOf(v) == -1){
+                if(i != 0){
+                    filteredValues += DETAIL_VALUES_SEPARATOR;
+                }
+                filteredValues += v;
+            }
+        }
+        if(filteredValues.length() > 0){
+            return filteredValues.toString();
+        }
+        return null;
+    }
+    
+    
     /**
      * Map the given value to a "real" value, e.g. map partner id to partner
      * name. The passed key determines what kind of id the passed value is (this

@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -59,20 +59,13 @@
 
             on(_container_, "Load", function() {
 
-                var def = pageGroupAdmin.createLayout();
-                if (UtilSecurity.currentUser.role == 1) {
-                    //def.resolve(null);
-                } else {
-                    def = def.then(function() {
-                        return pageGroupAdmin.getGroupDetailsById(currentUser.groupIds);
+                pageGroupAdmin.createLayout()
+                    .then(function(groupDetails) {
+                        pageGroupAdmin.currentUserGroupDetails = groupDetails;
+                        UtilGrid.getTable("groups").reinitLastColumn(true);
+                        pageGroupAdmin.hidePermissionLists();
+                        LoadingZone.hide();
                     });
-                }
-
-                def.then(function(groupDetails) {
-                    pageGroupAdmin.currentUserGroupDetails = groupDetails;
-                    pageGroupAdmin.hidePermissionLists();
-                    LoadingZone.hide();
-                });
 
                 registry.byId("groupAdministrationTab").watch("selectedChildWidget", function() {
                     registry.byId("groupDataRightsAddressesList").reinitLastColumn();
@@ -456,6 +449,7 @@
                         UtilGrid.addTableDataRow("groups", data);
                         deferred.resolve(data);
                         UtilGrid.setSelection("groups", [UtilGrid.getTableData("groups").length - 1]);
+                        UtilGrid.getTable("groups").reinitLastColumn(true);
                     },
                     errorHandler: function(errMsg, err) {
                         pageGroupAdmin.displayCreateGroupErrorMessage(err);
@@ -474,7 +468,9 @@
                 	console.debug("delete group:");
                     console.debug(msg.item);
                     var groupToDelete = msg.items[0];
-                    var def = pageGroupAdmin.deleteGroup(groupToDelete).then(null, function() {
+                    var def = pageGroupAdmin.deleteGroup(groupToDelete).then(function() {
+                        UtilGrid.getTable("groups").reinitLastColumn(true);
+                    }, function() {
                         UtilGrid.addTableDataRow("groups", groupToDelete);
                     });
                     return def;
@@ -641,7 +637,6 @@
             pageGroupAdmin.getGroupDetails = function(groupName) {
 
                 var deferred = new Deferred();
-
                 SecurityService.getGroupDetails(groupName, {
                     preHook: LoadingZone.show,
                     postHook: LoadingZone.hide,
@@ -704,13 +699,14 @@
 
             // -- Error handling --
             pageGroupAdmin.displayCreateGroupErrorMessage = function(err) {
+                
                 if (err && err.message) {
                     if (err.message.indexOf("ENTITY_ALREADY_EXISTS") != -1) {
                         //          dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.noPermissionError' />", dialog.WARNING);
                         dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.admin.groups.groupAlreadyExistsError' />", dialog.WARNING);
 
                     } else {
-                        dialog.show("<fmt:message key='general.error' />", string.substituteParams("<fmt:message key='dialog.generalError' />", err.message), dialog.WARNING, null, 350, 350);
+                        dialog.show("<fmt:message key='general.error' />", string.substitute("<fmt:message key='dialog.generalError' />", [err.message]), dialog.WARNING, null, 350, 350);
                     }
 
                 } else {

@@ -1,0 +1,26 @@
+{
+  "topics": [{
+    "defaultBackground": "wmts_topplus_web",
+    "langs": "de,en",
+    "selectedLayers": [],
+    "activatedLayers": [],
+    "backgroundLayers": ["wmts_topplus_web","wmts_dop_rgb","wmts_osm","wmts_topplus_web_grau"],
+    "id": "favoriten"
+  },
+  {
+    "defaultBackground": "wmts_topplus_web",
+    "langs": "de,en",
+    "selectedLayers": [],
+    "activatedLayers": [],
+    "backgroundLayers": ["wmts_topplus_web","wmts_dop_rgb","wmts_osm","wmts_topplus_web_grau"],
+    "id": "themen"
+  },
+  {
+    "defaultBackground": "wmts_topplus_web",
+    "langs": "de,en",
+    "selectedLayers": [],
+    "activatedLayers": [],
+    "backgroundLayers": ["wmts_topplus_web","wmts_dop_rgb","wmts_osm","wmts_topplus_web_grau"],
+    "id": "anbieter"
+  }]
+}

@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -370,7 +370,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
                 errorHandler:function(err) {
                     LoadingZone.hide();
                     showErrorResults();
-                    console.debug("Error while executing SNSService.findTopics");
+                    console.debug("Error while executing SNSService.getSimilarTerms");
                 }
             });
         }

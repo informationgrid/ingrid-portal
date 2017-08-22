@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -63,7 +63,10 @@ public class PortalConfig extends PropertiesConfiguration {
 
     /** default timeout for sns queries in ms */
     public final static String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
-
+    
+    /** default length of chronicle hits  */
+    public final static String SNS_CHRONICLE_HITS_LENGTH = "sns.chronicle.hits.length";
+    
     /**
      * always read values from database or only once and then from cache, true
      * or false
@@ -71,6 +74,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public final static String ALWAYS_REREAD_DB_VALUES = "db.reread";
 
     public final static String EMAIL_REGISTRATION_CONFIRMATION_SENDER = "email.registration.confirmation.sender";
+
+    public final static String EMAIL_REGISTRATION_CONFIRMATION_URL = "email.registration.confirmation.url";
 
     public static final String EMAIL_SMTP_SERVER = "email.smtp.server";
     public static final String EMAIL_SMTP_USER = "email.smtp.user";
@@ -103,18 +108,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_PROFILE = "portal.profile";
 
-    public static final String PORTAL_ENABLE_SEARCH_MEASURES_SEARCHTERM = "portal.enable.search.measures.searchterm";
-    
-    public static final String PORTAL_ENABLE_SEARCH_MEASURES_GROUPING = "portal.enable.search.measures.grouping";
-    
-    public static final String PORTAL_ENABLE_SEARCH_MEASURES_DOSEARCH = "portal.enable.search.measures.dosearch";
-    
-    public static final String PORTAL_ENABLE_SEARCH_MEASURES_PROVIDER = "portal.enable.search.measures.provider";
-    
     public static final String PORTAL_ENABLE_SEARCH_CATALOG = "portal.enable.search.catalog";
 
-    public static final String PORTAL_ENABLE_SEARCH_CATALOG_HIERARCHY_TREE = "portal.enable.search.catalog.hierarchy.tree";
-    
     public static final String PORTAL_SEARCH_RESTRICT_PARTNER = "portal.search.restrict.partner";
     
     public static final String PORTAL_SEARCH_DEFAULT_DATASOURCE = "portal.search.default.datasource";
@@ -131,41 +126,43 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_PARTNER = "portal.enable.partner";
     
+    public static final String PORTAL_ENABLE_SOURCES = "portal.enable.sources";
+    
     public static final String PORTAL_ENABLE_RSS = "portal.enable.rss";
     
-public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
-
-public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
-
-public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
-
-public static final String PORTAL_ENABLE_ACCOUNT_QUESTION = "enable.account.registration.question";
-
-public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
-
-public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
+    public static final String PORTAL_ENABLE_CHRONICLE = "portal.enable.chronicle";
     
-public static final String COMPONENT_MONITOR_ALERT_EMAIL_SENDER = "component.monitor.alert.email.sender";
-
-public static final String COMPONENT_MONITOR_DEFAULT_EMAIL = "component.monitor.default.email";
-
-public static final String COMPONENT_MONITOR_SNS_LOGIN = "component.monitor.sns.login";
-
-public static final String COMPONENT_MONITOR_SNS_PASSWORD = "component.monitor.sns.password";
-
-public static final String COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT = "component.monitor.update.alert.email.subject";
-
-public static final String TEASER_WEATHER_DWD_PATH = "teaser.weather.dwd.path";
-
-public static final String TEASER_WEATHER_DWD_MOVIE = "teaser.weather.dwd.movie";
-
-// contains the short version of all supported languages
-public static final String LANGUAGES_SHORT = "languages.short";
-
-// the specific language is added after this variable (e.g. languages.names.de) 
-public static final String LANGUAGES_NAMES = "languages.names.";
-
-// the url to the upgrade server
+    public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
+    
+    public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
+    
+    public static final String PORTAL_ENABLE_ACCOUNT_QUESTION = "enable.account.registration.question";
+    
+    public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
+    
+    public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
+        
+    public static final String COMPONENT_MONITOR_ALERT_EMAIL_SENDER = "component.monitor.alert.email.sender";
+    
+    public static final String COMPONENT_MONITOR_DEFAULT_EMAIL = "component.monitor.default.email";
+    
+    public static final String COMPONENT_MONITOR_SNS_LOGIN = "component.monitor.sns.login";
+    
+    public static final String COMPONENT_MONITOR_SNS_PASSWORD = "component.monitor.sns.password";
+    
+    public static final String COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT = "component.monitor.update.alert.email.subject";
+    
+    public static final String TEASER_WEATHER_DWD_PATH = "teaser.weather.dwd.path";
+    
+    public static final String TEASER_WEATHER_DWD_MOVIE = "teaser.weather.dwd.movie";
+    
+    // contains the short version of all supported languages
+    public static final String LANGUAGES_SHORT = "languages.short";
+    
+    // the specific language is added after this variable (e.g. languages.names.de) 
+    public static final String LANGUAGES_NAMES = "languages.names.";
+    
+    // the url to the upgrade server
     public static final String UPGRADE_SERVER_URL = "upgrade.server.url";
     
     public static final String UPGRADE_SERVER_USERNAME = "upgrade.server.username";
@@ -183,7 +180,10 @@ public static final String LANGUAGES_NAMES = "languages.names.";
     
     // User admin: show max row of users in a table
     public static final String USER_ADMIN_MAX_ROW = "admin.user.max.row";
-
+    
+    // User admin: sort column by default
+    public static final String USER_ADMIN_SORT_COLUMN = "admin.user.sort.column";
+    
     public static final String PORTAL_SEARCH_LANGUAGE_INDEPENDENT = "portal.search.language.independent";
 
     public static final String PORTAL_ENABLE_APPLICATION= "portal.enable.application";
@@ -196,12 +196,11 @@ public static final String LANGUAGES_NAMES = "languages.names.";
     
     public static final String PORTAL_SEARCH_FACETE_SUB_COUNT = "portal.search.facete.sub.count";
     
+    public static final String PORTAL_SEARCH_FACETE_MAP_CENTER = "portal.search.facete.map.center";
+    
     public static final String PORTAL_SEARCH_HIDDEN_DATATYPES = "portal.search.hidden.datatype";
     
     public static final String PORTAL_SEARCH_HIT_PARTNER_LOGO = "portal.search.hit.partner.logo";
-    
-    // Enable debug mode of webmap-client
-    public static final String PORTAL_WEBMAPCLIENT_DEBUG = "portal.webmapclient.debug";
     
     public static final String PORTAL_ADMIN_NUMBER_ROW_PROVIDER = "portal.admin.number.row.provider";
     
@@ -219,12 +218,22 @@ public static final String LANGUAGES_NAMES = "languages.names.";
     
     public static final String PORTAL_SEARCH_EMPTY_QUERY = "portal.search.empty.query";
 
+    public static final String PORTAL_SEARCH_EXTEND_QUERY = "portal.search.extend.query";
+
     public static final String CATEGORY_TEASER_SEARCH_QUERY = "category.teaser.search.query";
    
     public static final String CATEGORY_TEASER_SEARCH_FACETS_TYP = "category.teaser.search.facets.typ";
     
+    public static final String CATEGORY_TEASER_SEARCH_COLUMN_MAX = "category.teaser.search.column.max";
+    
     public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
     
+    public static final String PORTAL_MAPCLIENT_QUERY = "portal.mapclient.query";
+    
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_URL = "portal.mapclient.uvp.category.dev-plan.url";
+    
+    public static final String PORTAL_PARTNER_LIST_QUERY = "portal.partner.list.query";
+
     // private stuff
     private static PortalConfig instance = null;
 

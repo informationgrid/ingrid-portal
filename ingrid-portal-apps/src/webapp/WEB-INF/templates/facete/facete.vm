@@ -144,32 +144,42 @@
                     #parse ('/WEB-INF/templates/facete/facete_area_address.vm')
                 #end
             #else
-                <div class="sidebar__widget js-accordion-multi">
-                    <div id="facet_$facet.getId()_header"class="sidebar__widget__title filter__title js-accordion-toggle #if($facet.isSelect() || $facet.isOpen())is-active#end">
-                        $MESSAGES.getString("$facet.getName()")
-                        <svg class="filter__title__icon icon">
-                            <use xlink:href="#arrow-thick">
-                        </svg>
-                    </div>
-                    <div id="facet_$facet.getId()_content" class="sidebar__widget__content js-accordion-content #if(!$facet.isSelect() && !$facet.isOpen())is-hidden#end">
-                        #set($isSelected = false)
-                        #foreach($subFacet in $facet.getFacets())
-                            #if($subFacet.isSelect())
-                                #set($isSelected = true)
-                            #end
+                #set($count = 0)
+                #if($facet.getShowOnMoreThan() != 0)
+                    #foreach($tmpFacet in $facet.getFacets())
+                        #if($tmpFacet.getFacetValue() || $facet.isDisplay())
+                            #set($count = $count + 1)
                         #end
-                        
-                        #foreach($subFacet in $facet.getFacets())
-                            #if($isSelected)
+                    #end
+                #end
+                #if($facet.getShowOnMoreThan() == 0 || $count > $facet.getShowOnMoreThan())
+                    <div class="sidebar__widget js-accordion-multi">
+                        <div id="facet_$facet.getId()_header"class="sidebar__widget__title filter__title js-accordion-toggle #if($facet.isSelect() || $facet.isOpen())is-active#end">
+                            $MESSAGES.getString("$facet.getName()")
+                            <svg class="filter__title__icon icon">
+                                <use xlink:href="#arrow-thick">
+                            </svg>
+                        </div>
+                        <div id="facet_$facet.getId()_content" class="sidebar__widget__content js-accordion-content #if(!$facet.isSelect() && !$facet.isOpen())is-hidden#end">
+                            #set($isSelected = false)
+                            #foreach($subFacet in $facet.getFacets())
                                 #if($subFacet.isSelect())
+                                    #set($isSelected = true)
+                                #end
+                            #end
+                            
+                            #foreach($subFacet in $facet.getFacets())
+                                #if($isSelected)
+                                    #if($subFacet.isSelect())
+                                        #renderFacetCategoryEntry($subFacet $facet.getId())
+                                    #end
+                                #else
                                     #renderFacetCategoryEntry($subFacet $facet.getId())
                                 #end
-                            #else
-                                #renderFacetCategoryEntry($subFacet $facet.getId())
                             #end
-                        #end
+                        </div>
                     </div>
-                </div>
+                #end
             #end
         #end
     #end
@@ -355,6 +365,8 @@
                 $title
                 #if($number)
                     <strong>($number)</strong>
+                #else
+                    <strong>(0)</strong>
                 #end
             </div>
         
@@ -364,8 +376,8 @@
 
 #macro (renderFaceteSelectedAttributeHashMapNumber $doAction $title $numbers $key $isDelete)
     <p>
-        <a class="btn btn--secondary btn--small btn--block" href="$doAction">
-        <svg class="icon link__icon"><use xlink:href="#check"/></svg>
+        <a class="btn btn--delete btn--small btn--block" href="$doAction">
+        <svg class="icon link__icon"><use xlink:href="#cross"/></svg>
         $title
         #if($numbers && $key)
             #renderLinkEntryNumberInArrayHashMap($numbers $key)
@@ -468,10 +480,12 @@
             $MESSAGES.getString("searchResult.facete.category.no.hits") 
         #end
     </p>
-        #if($enableFacetSelection > 0 || $isSelection)
+        #if($enableFacetSelection > 0 && $isSelection)
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter("doRemoveLast", "true")
             #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
+        #end
+        #if($enableFacetSelection > 0 || $isSelection)
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter("doRemoveAll", "true")
             #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))

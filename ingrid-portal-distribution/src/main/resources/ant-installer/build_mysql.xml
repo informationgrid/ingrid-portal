@@ -25,6 +25,8 @@
         MySql Configuration Build Script
     </description>
 
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
     <!-- =============================================
          = PROPERTIES                                =
          ============================================= -->
@@ -34,49 +36,11 @@
     <property name="mySqlDialectPortal"            value="org.hibernate.dialect.MySQLDialect"/>
     <property name="mySqlValidationQuery"          value="SELECT 1"/>
     <property name="mySqlDbDriver"                 location="${basedir}/mysql-connector-java-5.1.34.jar"/>
+    <property name="mySqlQuartzDriverDelegate"     value="org.quartz.impl.jdbcjobstore.StdJDBCDelegate"/>
     
     <!-- mysql portal imports -->
-    <property name="importMySQL"     location="${installDir}/sql/ingrid_portal_35_mysql_558.sql"/>
-    <property name="importMySQLPortalVersion" value=",3.5"/>
 
-    <property name="updateMySQL114"  location="${installDir}/sql/update_1.1.4_mysql.sql"/>
-    <property name="updateMySQL116"  location="${installDir}/sql/update_1.1.6_mysql.sql"/>
-    <property name="updateMySQL117"  location="${installDir}/sql/update_1.1.7_mysql.sql"/>
-    <property name="updateMySQL118"  location="${installDir}/sql/update_1.1.8_mysql.sql"/>
-    <property name="updateMySQL120"  location="${installDir}/sql/update_1.2.0_mysql.sql"/>
-    <property name="updateMySQL130"  location="${installDir}/sql/update_1.3.0_mysql.sql"/>
-    <property name="updateMySQL300"  location="${installDir}/sql/update_3.0.0_mysql.sql"/>
-    <property name="updateMySQL301"  location="${installDir}/sql/update_3.0.1_mysql.sql"/>
-    <property name="updateMySQL310"  location="${installDir}/sql/update_3.1.0_mysql.sql"/>
-    <property name="updateMySQL320a" location="${installDir}/sql/update_3.2.0a_mysql.sql"/>
-    <property name="updateMySQL320b" location="${installDir}/sql/update_3.2.0b_mysql.sql"/>
-    <property name="updateMySQL320c" location="${installDir}/sql/update_3.2.0c_mysql.sql"/>
-    <property name="updateMySQL320d" location="${installDir}/sql/update_3.2.0d_mysql.sql"/>
-    <property name="updateMySQL331" location="${installDir}/sql/update_3.3.1_mysql.sql"/>
-    <property name="updateMySQL341" location="${installDir}/sql/update_3.4.1_mysql.sql"/>
-    <property name="updateMySQL361" location="${installDir}/sql/update_3.6.1_mysql.sql"/>
-    <property name="updateMySQL362" location="${installDir}/sql/update_3.6.2_mysql.sql"/>
-    <property name="updateMySQL400" location="${installDir}/sql/update_4.0.0_mysql.sql"/>
-    <property name="updateMySQL401" location="${installDir}/sql/update_4.0.1_mysql.sql"/>
-    <property name="updateMySQL410" location="${installDir}/sql/update_4.1.0_mysql.sql"/>
-
-    <!-- mysql ige imports -->
-    <property name="mdekDB"          location="${installDir}/sql/mdek_0_mysql.sql"/>
-    <property name="mdekDB_301"      location="${installDir}/sql/mdek_3.0.1_mysql.sql"/>
-    <property name="mdekDB_311"      location="${installDir}/sql/mdek_3.1.1_mysql.sql"/>
-    <property name="mdekDB_320"      location="${installDir}/sql/mdek_3.2.0_mysql.sql"/>
-    <property name="mdekDB_330"      location="${installDir}/sql/mdek_3.3.0_mysql.sql"/>
-    <property name="mdekDB_331"      location="${installDir}/sql/mdek_3.3.1_mysql.sql"/>
-    <property name="mdekDB_332"      location="${installDir}/sql/mdek_3.3.2_mysql.sql"/>
-    <property name="mdekDB_340"      location="${installDir}/sql/mdek_3.4.0_mysql.sql"/>
-    <property name="mdekDB_361"      location="${installDir}/sql/mdek_3.6.1_mysql.sql"/>
-    <property name="mdekDB_362"      location="${installDir}/sql/mdek_3.6.2_mysql.sql"/>
-    <property name="mdekDB_3621"      location="${installDir}/sql/mdek_3.6.2.1_mysql.sql"/>
-    <property name="mdekDB_400"      location="${installDir}/sql/mdek_4.0.0_mysql.sql"/>
-    <property name="mdekDB_401"      location="${installDir}/sql/mdek_4.0.1_mysql.sql"/>
-
-
-    <target name="CheckDbs" depends="checkPortalDb, checkMdekDb" if="useMysql">
+    <target name="CheckDbs" depends="checkPortalDbMysql, checkMdekDbMysql" if="useMysql">
         <echo>DBs checked for existence and version
         </echo>
         <echo>Portal DB not existed      : ${portal.db.not.exists}</echo>
@@ -85,7 +49,7 @@
         <echo>MDEK DB not exists         : ${mdek.db.not.exists}</echo>
     </target>
 
-    <target name="checkPortalDb" depends="tryCreatePortalDb" if="portal.installed" unless="only.ige.installation">
+    <target name="checkPortalDbMysql" depends="tryCreatePortalDbMysql" if="portal.installed" unless="only.ige.installation">
         <sql    driver   ="${mySqlDriverClass}"
                 classpath ="${mySqlDbDriver}"
                 url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
@@ -121,7 +85,7 @@
         <property file="version.properties" />
     </target>
 
-    <target name="checkMdekDb" if="ige.installed" unless="withoutIge" depends="tryCreateMdekDb">
+    <target name="checkMdekDbMysql" if="ige.installed" unless="withoutIge" depends="tryCreateMdekDbMysql">
         <sql    driver    ="${mySqlDriverClass}"
                 classpath ="${mySqlDbDriver}"
                 url       ="${_mdekDBUrl}"
@@ -141,15 +105,20 @@
          = PORTAL DATABASE                           =
          ============================================= -->
          
-    <target name="tryCreatePortalDb" if="portal.installed" description="Create a mySQL database.">
+    <target name="tryCreatePortalDbMysql" if="portal.installed" description="Create a mySQL database.">
         <echo>MySQL-Portal-Datenbank erstellen (${_dbUrl})
         </echo>
 
         <basename property="dbName" file="${_dbUrl}"/>
+        <propertyregex property="mysqlUrlName"
+              input="${_dbUrl}"
+              regexp="(.*)/.*"
+              select="\1"
+              casesensitive="false" />
 
         <sql    driver    ="${mySqlDriverClass}"
                 classpath ="${mySqlDbDriver}"
-                url       ="jdbc:mysql://localhost/mysql"
+                url       ="${mysqlUrlName}"
                 userid    ="${_adminUser}"
                 password  ="${_adminPassword}"
                 onerror   ="continue"
@@ -166,255 +135,24 @@
         </sql>
     </target>
 
-    <target name="PortalDbUpdateFromInitial" if="useMysql" description="Import the mySQL database.">
-        <echo>MySQL-Portal Daten importieren (initial)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${importMySQL}"/>
-        </sql>
-        <property name="portal.version" value="${importMySQLPortalVersion}"/>
-    </target>
-    
-    <target name="PortalDbUpdateFrom300" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 3.0.0)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL301}"/>
-            <transaction src="${updateMySQL310}"/>
-            <transaction src="${updateMySQL320a}"/>
-            <transaction src="${updateMySQL320b}"/>
-            <transaction src="${updateMySQL320c}"/>
-            <transaction src="${updateMySQL320d}"/>
-            <transaction src="${updateMySQL331}"/>
-            <transaction src="${updateMySQL341}"/>
-        </sql>
-    </target>
-    
-    <target name="PortalDbUpdateFrom301" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 3.0.1)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL310}"/>
-            <transaction src="${updateMySQL320a}"/>
-            <transaction src="${updateMySQL320b}"/>
-            <transaction src="${updateMySQL320c}"/>
-            <transaction src="${updateMySQL320d}"/>
-            <transaction src="${updateMySQL331}"/>
-            <transaction src="${updateMySQL341}"/>
-        </sql>
-    </target>
-    
-    <target name="PortalDbUpdateFrom310" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 3.1.0)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL320a}"/>
-            <transaction src="${updateMySQL320b}"/>
-            <transaction src="${updateMySQL320c}"/>
-            <transaction src="${updateMySQL320d}"/>
-            <transaction src="${updateMySQL331}"/>
-            <transaction src="${updateMySQL341}"/>
-        </sql>
-    </target>
-    
-    <target name="PortalDbUpdateFrom320d" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 3.2.0d)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL331}"/>
-            <transaction src="${updateMySQL341}"/>
-        </sql>
-    </target>
-    
-    <target name="PortalDbUpdateFrom331" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 3.3.1)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL341}"/>
-        </sql>
-    </target>
-    
-    <target name="PortalDbUpdateFrom341" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 3.4.1)
-            
-            Bitte manuell tätigen!
-        </echo>
-    </target>
-    
-	<target name="PortalDbUpdateFrom350" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 3.5.0)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL361}"/>
-            <transaction src="${updateMySQL362}"/>
-            <transaction src="${updateMySQL400}"/>
-			<transaction src="${updateMySQL401}"/>
-			<transaction src="${updateMySQL410}"/>
-        </sql>
-    </target>
-	
-	<target name="PortalDbUpdateFrom361" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 3.6.1)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL362}"/>
-			<transaction src="${updateMySQL400}"/>
-			<transaction src="${updateMySQL401}"/>
-			<transaction src="${updateMySQL410}"/>
-        </sql>
-    </target>
-
-    <target name="PortalDbUpdateFrom362" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 3.6.2)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL400}"/>
-			<transaction src="${updateMySQL401}"/>
-			<transaction src="${updateMySQL410}"/>
-        </sql>
-    </target>
-
-    <target name="PortalDbUpdateFrom400" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 4.0.0)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL401}"/>
-			<transaction src="${updateMySQL410}"/>
-        </sql>
-    </target>
-
-	<target name="PortalDbUpdateFrom401" if="useMysql">
-        <echo>MySQL-Portal Daten importieren (ab 4.0.1)
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_dbUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${updateMySQL410}"/>
-        </sql>
-    </target>
-
-
     <!-- =============================================
          = IGE MDEK DATABASE                         =
          ============================================= -->
     
-    <target name="tryCreateMdekDb" if="ige.installed" unless="withoutIge" description="Create a mySQL database.">
+    <target name="tryCreateMdekDbMysql" if="ige.installed" unless="withoutIge" description="Create a mySQL database.">
         <echo>MySQL-Mdek-Datenbank erstellen (${_mdekDBUrl})
         </echo>
 
         <basename property="dbMdekName" file="${_mdekDBUrl}"/>
+        <propertyregex property="mysqlMdekUrlName"
+              input="${_mdekDBUrl}"
+              regexp="(.*)/.*"
+              select="\1"
+              casesensitive="false" />
 
         <sql    driver    ="${mySqlDriverClass}"
                 classpath ="${mySqlDbDriver}"
-                url       ="jdbc:mysql://localhost/mysql"
+                url       ="${mysqlMdekUrlName}"
                 userid    ="${_adminUser}"
                 password  ="${_adminPassword}"
                 onerror   ="continue" 
@@ -427,103 +165,6 @@
             <transaction>
                 <!-- Give rights to user to access the new database -->
                 GRANT ALL PRIVILEGES ON `${dbMdekName}`.* TO '${dbUser}'@'localhost' WITH GRANT OPTION
-            </transaction>
-        </sql>
-    </target>
-    
-    <target name="mdekDbNotExists" if="mdek.db.not.exists">
-        <echo>Neue Mdek-DB!</echo>
-        <echo>Mdek MySQL-Daten importieren
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_mdekDBUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                failOnConnectionError="false"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${mdekDB}"/>
-            <transaction src="${mdekDB_301}"/>
-            <transaction src="${mdekDB_311}"/>
-            <transaction src="${mdekDB_320}"/>
-            <transaction src="${mdekDB_330}"/>
-            <transaction src="${mdekDB_331}"/>
-            <transaction src="${mdekDB_332}"/>
-            <transaction src="${mdekDB_340}"/>
-            <transaction src="${mdekDB_361}"/>
-            <transaction src="${mdekDB_362}"/>
-            <transaction src="${mdekDB_3621}"/>
-            <transaction src="${mdekDB_400}"/>
-            <transaction src="${mdekDB_401}"/>
-
-        </sql>
-    </target>
-
-    <target name="mdekDbExists" unless="mdek.db.not.exists">
-        <echo>Update vorhandene Mdek-DB!</echo>
-        <echo>Mdek MySQL-Daten importieren
-        </echo>
-
-        <!-- Import data to database -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${_mdekDBUrl}?useUnicode=true&amp;characterEncoding=UTF-8"
-                userid    ="${_adminUser}"
-                password  ="${_adminPassword}"
-                encoding  ="UTF-8"
-                failOnConnectionError="false"
-                >
-
-            <!-- use default-character-set=utf8 -->
-            <transaction src="${mdekDB_301}"/>
-            <transaction src="${mdekDB_311}"/>
-            <transaction src="${mdekDB_320}"/>
-            <transaction src="${mdekDB_330}"/>
-            <transaction src="${mdekDB_331}"/>
-            <transaction src="${mdekDB_332}"/>
-            <transaction src="${mdekDB_340}"/>
-            <transaction src="${mdekDB_361}"/>
-            <transaction src="${mdekDB_362}"/>
-            <transaction src="${mdekDB_3621}"/>
-            <transaction src="${mdekDB_400}"/>
-            <transaction src="${mdekDB_401}"/>
-
-        </sql>
-    </target>
-    
-    <target name="hideMetadataMenu" if="useMysql">
-        <echo>Schreibe Ingrid-Editor Konfiguration - Disabling Metadata Menu
-        </echo>
-        <!-- hide the "Metadata"-tab in menu -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${dbUrl}"
-                userid    ="${dbUser}"
-                password  ="${dbPassword}"
-                >
-            <transaction>
-                UPDATE page SET IS_HIDDEN = '1' WHERE PATH ='/mdek/mdek_portal_admin.psml' OR PATH ='/mdek/mdek_entry.psml'
-            </transaction>
-        </sql>
-    </target>
-    
-    <target name="showMetadataMenu" if="useMysql">
-        <echo>Schreibe Ingrid-Editor Konfiguration - Enabling Metadata Menu
-        </echo>
-        <!-- hide the "Metadata"-tab in menu -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${dbUrl}"
-                userid    ="${dbUser}"
-                password  ="${dbPassword}"
-                >
-            <transaction>
-                UPDATE page SET IS_HIDDEN = '0' WHERE PATH ='/mdek/mdek_portal_admin.psml' OR PATH ='/mdek/mdek_entry.psml'
             </transaction>
         </sql>
     </target>

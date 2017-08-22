@@ -1,25 +1,42 @@
-#set ($action = $renderResponse.createActionURL())
-<form class="metamenu__box ob-container" action="$action" method="post" id="frm_login">
-    #set($name = "#getFieldValue($loginConstants.USERNAME)")
-    #set($pw = "#getFieldValue($loginConstants.PASSWORD)")
-    
-    <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
-    <input type="hidden" name="cmd" value="doLogin" />
-    <label for="login">$MESSAGES.getString('login.form.username')</label>
-    <input type="text" id="login" #addErrorFormClass('org.apache.jetspeed.login.username') name="${loginConstants.USERNAME}" placeholder="$MESSAGES.getString('login.form.username.initialValue')" value="#if($name != $MESSAGES.getString('login.form.username.initialValue'))#getFieldValue($loginConstants.USERNAME)#end" onFocus="clearUser()" class="field bx-bot-s">
-    #addErrorFormMessage('org.apache.jetspeed.login.username')
-    <label for="passwd">$MESSAGES.getString('login.form.passwd')</label>
-    <input type="password" id="passwd" #addErrorFormClass('org.apache.jetspeed.login.password') name="${loginConstants.PASSWORD}" placeholder="$MESSAGES.getString('login.form.passwd.initialValue')" value="#if($pw != $MESSAGES.getString('login.form.passwd.initialValue'))#getFieldValue($loginConstants.PASSWORD)#end" onFocus="clearPasswd()" class="field bx-bot-0">
-    #addErrorFormMessage('org.apache.jetspeed.login.password')
-    <p><a href="$renderResponse.encodeURL('/portal/myportal-password-forgotten.psml')" class="link">$MESSAGES.getString('login.form.passwdForgotten')</a></p>
-    #renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "" "doLogin" "" "btn btn--primary btn--small btn--block")
-</form>
-<div class="metamenu__box ob-container">
-    #renderInputButtonOnClick($MESSAGES.getString('login.form.newUser') "" "" "" "btn btn--secondary btn--small btn--block" "location.href='$renderResponse.encodeURL('/portal/myportal-create-account.psml')'")
+#if($renderRequest.getWindowID() == "MyPortalLoginPortlet")
+<div id="menu_login" class="metamenu metamenu--wide">
+#else
+<div>
+#end
+    #set ($action = $renderResponse.createActionURL())
+    <form class="metamenu__box ob-container" action="$action" method="post" id="frm_login">
+        #set($name = "#getFieldValue($loginConstants.USERNAME)")
+        #set($pw = "#getFieldValue($loginConstants.PASSWORD)")
+        
+        <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
+        <input type="hidden" name="cmd" value="doLogin" />
+        <label for="login">$MESSAGES.getString('login.form.username')</label>
+        <input type="text" id="login" #addErrorFormClass('org.apache.jetspeed.login.username') name="${loginConstants.USERNAME}" placeholder="$MESSAGES.getString('login.form.username.initialValue')" value="#if($name != $MESSAGES.getString('login.form.username.initialValue'))#getFieldValue($loginConstants.USERNAME)#end" class="field bx-bot-s">
+        #addErrorFormMessage('org.apache.jetspeed.login.username')
+        <label for="passwd">$MESSAGES.getString('login.form.passwd')</label>
+        <input type="password" id="passwd" #addErrorFormClass('org.apache.jetspeed.login.password') name="${loginConstants.PASSWORD}" placeholder="$MESSAGES.getString('login.form.passwd.initialValue')" value="#if($pw != $MESSAGES.getString('login.form.passwd.initialValue'))#getFieldValue($loginConstants.PASSWORD)#end" class="field bx-bot-0">
+        #addErrorFormMessage('org.apache.jetspeed.login.password')
+        <p><a href="$renderResponse.encodeURL('/portal/myportal-password-forgotten.psml')" class="link">$MESSAGES.getString('login.form.passwdForgotten')</a></p>
+        #renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "" "doLogin" "" "btn btn--primary btn--small btn--block")
+    </form>
+    #if($renderRequest.getWindowID() != "MyPortalLoginPortlet")
+    <br>
+    #end
+    <div class="metamenu__box ob-container">
+        #renderInputButtonOnClick($MESSAGES.getString('login.form.newUser') "" "" "" "btn btn--secondary btn--small btn--block" "location.href='$renderResponse.encodeURL('/portal/myportal-create-account.psml')'")
+    </div>
 </div>
-
+#if($renderRequest.getWindowID() == "MyPortalLoginPortlet")
 <script>
 if($actionForm.hasErrorInField('org.apache.jetspeed.login.username') || $actionForm.hasErrorInField('org.apache.jetspeed.login.password')){
     $('#logged_on_link').addClass('is-active');
 }
+
+// Focus login input
+$("#logged_on_link").on("click", function(){
+    $("#menu_login").fadeToggle("fast", function(){
+        $('#login').focus();
+    });
+});
 </script>
+#end

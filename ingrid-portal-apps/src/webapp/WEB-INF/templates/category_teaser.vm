@@ -38,7 +38,7 @@
                     #set($isActive = false)
                 #end
                 #if($cf.getFacets())
-                    #getTabsContent($facetParentName $cf.getFacets() $facetParent $isActive)
+                    #getTabsContent($facetParentName $cf.getFacets() $facetParent $cf.getColNum() $isActive)
                 #end
             #end
         #end
@@ -60,7 +60,7 @@
     #end
 #end
 
-#macro (getTabsContent $facetName $facetList $parentFacet $isActive)
+#macro (getTabsContent $facetName $facetList $parentFacet $colNum $isActive)
     <div class="tab__content box #if(!$isActive)is-hidden#end" data-tabid="$parentFacet">
         <section class="block">
             <article class="content ob-container">
@@ -70,7 +70,7 @@
                     #else
                         #set($facetId = $parentFacet)
                     #end
-                    #getContent($facetList $parentFacet $facetId)
+                    #getContent($facetList $facetId $parentFacet $colNum)
                 </div>
             </article>
         </section>
@@ -83,7 +83,7 @@
                     <article class="content ob-container">
                         <div class="tag-group">
                             #set($facetId = $facet.getId())
-                            #getContent($facet.getFacets() $facet.getId() $facetId $parentFacet)
+                            #getContent($facet.getFacets() $facetId $facetId $colNum $parentFacet)
                         </div>
                     </article>
                 </section>
@@ -93,7 +93,7 @@
     #end
 #end
 
-#macro (getContent $facetList $parentFacet $facetId $parentFacetParam)
+#macro (getContent $facetList $facetId $parentFacet $colNum $parentFacetParam)
     #set ($count = 0)
     #set ($pf = $parentFacet)
     #set ($facetListSize = $facetList.size())
@@ -112,50 +112,25 @@
             #set($bar = $list.add($facet))
         #end
     #end
-    #if($facetListSize > 6 || $facetListSize < 0)
-        #set ($facetListSize = 6)
+    #if($colNum > 0)
+        #set($maxColumn = $colNum)
     #end
     
+    #if($facetListSize > $maxColumn || $facetListSize < 0)
+        #if($facetListSize % 5 == 0 && $maxColumn >= 5)
+            #set ($facetListSize = 5)
+        #elseif($facetListSize % 4 == 0 && $maxColumn >= 4)
+            #set ($facetListSize = 4)
+        #elseif($facetListSize % 3 == 0 && $maxColumn >= 3)
+            #set ($facetListSize = 3)
+        #else
+            #set ($facetListSize = $maxColumn)
+        #end
+    #end
     #foreach ($facet in $list)
         #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != 0) || $facet.isDisplay()))
             #if($count % $facetListSize == 0)
-                <div class="grid grid--gutter">
-            #end
-            #set ($count = $count + 1)
-            #if($enableRss)
-                #if($count == 1)
-                    ## Add RSS category
-                    <div class="column column--1-${facetListSize}-m">
-                        <div class="mq-hide-l" style="padding: 0 0 20px 0;">
-                            <a class="tag" href="$renderResponse.encodeURL('/portal/rss-news.psml')" style="padding:10px 0;">
-                                <span class="mq-hide-l">
-                                    <i class="icon bx-top-s icon-rss-2" style="display: block;font-size: 60px;margin: auto;"></i>
-                                </span>
-                                <span class="mq-show-l">
-                                    <i class="icon bx-top-s icon-rss-2" style="display: block;font-size: 60px;margin: auto;"></i>
-                                </span>
-                                <div class="tx-center">
-                                    $MESSAGES.getString('category.news.title')
-                                </div>
-                                <div class="tx-center">&nbsp;</div>
-                            </a>
-                        </div>
-                        <div class="mq-show-l">
-                            <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/rss-news.psml')">
-                                <span class="mq-hide-l">
-                                    <i class="icon bx-top-s icon-rss-2" style=""></i>
-                                </span>
-                                <span class="mq-show-l">
-                                    <i class="icon bx-top-s icon-rss-2" style=""></i>
-                                </span>
-                                <strong>
-                                    $MESSAGES.getString('category.news.title')
-                                </strong>
-                                &nbsp;
-                            </a>
-                        </div>
-                     </div>
-                #end
+                <div class="grid grid--gutter flex-row">
             #end
             <div class="column column--1-${facetListSize}-m">
                 #set($facetParam = "$pf:$facet.getId();")
@@ -165,10 +140,18 @@
                 #if($parentFacetParam)
                     #set($facetParam = "$parentFacetParam:$pf;$pf:$facet.getId();")
                 #end
-                <div class="mq-hide-l" style="padding: 0 0 20px 0;">
-                    <a class="tag" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
+                <div class="mq-hide-l flex-vfill" style="padding: 0 0 20px 0">
+                    #if($facet.getUrl())
+                        <a class="tag flex-vfill" href="$facet.getUrl()" style="padding:10px 0;">
+                    #else
+                        <a class="tag flex-vfill" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam" style="padding:10px 0;">
+                    #end
                     #if($facet.getIcon() && $facet.getIcon().length() > 0)
                         #getIcon($facet)
+                    #elseif($facet.getShortcut())
+                        <div class="mq-hide-l">
+                            <div class="circle">$facet.getShortcut()</div>
+                        </div>
                     #end
                         <div class="tx-center category_label">
                             #if($facet.getCodelistId())
@@ -177,13 +160,23 @@
                                 $MESSAGES.getString($facet.getName())
                             #end
                         </div>
-                        #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
-                            <div class="tx-center category_count">($hits.get("FACETS").get("$facetId:$facet.getId()"))</div>
+                        <div class="tx-center category_count">
+                        #if($facet.getQuery())
+                            #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
+                                ($hits.get("FACETS").get("$facetId:$facet.getId()"))
+                            #else
+                                (0)
+                            #end
                         #end
+                        </div>
                     </a>
                 </div>
                 <div class="mq-show-l">
-                    <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
+                    #if($facet.getUrl())
+                        <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$facet.getUrl()">
+                    #else
+                        <a class="tree__item sidebar__widget__title filter__title js-accordion-toggle" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
+                    #end
                     #if($facet.getIcon() && $facet.getIcon().length() > 0)
                         #getIcon($facet)
                     #end
@@ -194,11 +187,18 @@
                                 $MESSAGES.getString($facet.getName())
                             #end
                         </strong>
-                        ($hits.get("FACETS").get("$pf:$facet.getId()"))
+                        #if($facet.getQuery())
+                            #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
+                                ($hits.get("FACETS").get("$facetId:$facet.getId()"))
+                            #else
+                                (0)
+                            #end
+                        #end
                     </a>
                 </div>
             </div>
-            #if($count % $facetListSize == 0 || $count >= $facetList.size())
+            #set ($count = $count + 1)
+            #if($count % $facetListSize == 0 || $count > $facetList.size())
                 </div>
             #end
         #end
@@ -207,24 +207,46 @@
 
 #macro (getIcon $facet)
 <span class="mq-hide-l">
-    #getIconImage($facet "display: block;font-size: 60px;margin: auto;")
+    #getIconImage($facet "flex-icon")
 </span>
 <span class="mq-show-l">
     #getIconImage($facet)
 </span>
 #end
 
-#macro (getIconImage $facet $facetStyle)
+#macro (getIconImage $facet $facetClass $facetStyle)
     #if($facet.getIcon())
         #set($icon = $facet.getIcon())
         #if($icon.startsWith("#"))
-            <svg class="icon bx-top-s" style="#if($facetStyle)$facetStyle#end"><use xlink:href="$icon" /></svg>
+            <svg class="icon bx-top-s #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"><use xlink:href="$icon" /></svg>
         #elseif($icon.startsWith("/"))
             <img style="margin: auto;" class="bx-top-s" src="$icon"></img>
         #else
-            <i class="icon bx-top-s $icon" style="#if($facetStyle)$facetStyle#end"></i>
+            <i class="icon bx-top-s #if($facetClass)$facetClass#end $icon" style="#if($facetStyle)$facetStyle#end"></i>
         #end
     #else
-       <i class="icon bx-top-s icon-question-mark" style="#if($facetStyle)$facetStyle#end"></i>
+       <i class="icon bx-top-s icon-question-mark #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"></i>
     #end
 #end
+
+<script>
+$( ".tab__content" ).each(function( i ) {
+    var tabContent = $( this );
+    var height = 0;
+    // Get highest height of flex-row
+    tabContent.find( ".flex-row" ).each(function( index ) {
+      var elemHeight = $( this ).height();
+      if(elemHeight > height){
+        height = elemHeight;
+      }
+    });
+    
+    // Set highest height to all flex-rows
+    tabContent.find( ".flex-row" ).each(function( index ) {
+      var elem = $( this );
+      if(height != 0){
+        elem.height(height);
+      }
+    });
+});
+</script>

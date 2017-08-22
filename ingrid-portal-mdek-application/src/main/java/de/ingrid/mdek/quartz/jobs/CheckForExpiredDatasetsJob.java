@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -63,7 +63,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
 	protected void executeInternal(JobExecutionContext ctx)
 			throws JobExecutionException {
-		log.debug("Executing CheckForExpiredDatasetsJob...");
+		log.info("Executing CheckForExpiredDatasetsJob...");
 		// 1. Get all objects/addresses that: will expire soon & first notification has not been sent
 		// 2. Get all objects/addresses that: are expired & final notification has not been sent
         // 3. Get all objects/addresses that: are expired & final notification has already been sent
@@ -98,10 +98,15 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 	            datasetsAgainExpiredList = getExpiredDatasets(null, expireCal.getTime(), de.ingrid.mdek.MdekUtils.ExpiryState.EXPIRED, plugId);			    
 			}
 
-            log.info("" + plugId + ":");
-			log.info("  Number of entities to notify found: "+datasetsWillExpireList.size());
-			log.info("  Number of entities expired found: "+datasetsExpiredList.size());
-            log.info("  Number of entities again expired found: "+datasetsAgainExpiredList.size());
+            if (datasetsWillExpireList.size() > 0 || datasetsExpiredList.size() > 0 || datasetsAgainExpiredList.size() > 0) {
+                log.info("" + plugId + ":");
+                log.info("  Number of entities to notify found: "+datasetsWillExpireList.size());
+                log.info("  Number of entities expired found: "+datasetsExpiredList.size());
+                log.info("  Number of entities again expired found: "+datasetsAgainExpiredList.size());
+            } else {
+                log.debug( "Nothing has expired." );
+            }
+            
 			MdekEmailUtils.sendExpiryNotificationMails(datasetsWillExpireList);
 			// NOTICE: Entities expired for the first time and entities again expired are handled
 			// the same way (same email and update of expiry states/time) so we merge lists !
@@ -259,7 +264,7 @@ public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 				"inner join modUserNode.t02AddressWork modUserAddr " +
 		"where " +
 			// exclude hidden user addresses !
-			AddressType.getHQLExcludeIGEUsersViaNode("addrNode") +
+			AddressType.getHQLExcludeIGEUsersViaNode("addrNode", "adr") +
 			" and adr.responsibleUuid = responsibleUserNode.addrUuid " +
 			" and comm.commtypeKey = " + de.ingrid.mdek.MdekUtils.COMM_TYPE_EMAIL +
 			" and modUserNode.addrUuid = adr.modUuid";

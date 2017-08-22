@@ -3,10 +3,9 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>4.0.1-SNAPSHOT</version>
+        <version>4.0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-mdek-application</artifactId>
     <packaging>war</packaging>
     <name>InGrid Portal MDEK Application</name>
@@ -41,6 +40,7 @@
                     <downloadSources>1.5</downloadSources>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -63,15 +63,26 @@
                       </webResources>
                 </configuration>
             </plugin>
-            <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-            <!-- HACK: Upload JAR file WITHOUT "-classes" in name, so MAVEN1 can handle it (no classifier "classes" possible in maven1) !!! -->
-            <!-- NOT NEEDED ANYMORE: Now MAVEN2, so we use classifier "classes" in dependencies ! So always ingrid-portal-mdek-application-XXX-classes.jar -->
-            <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>wagon-maven-plugin</artifactId>
-                <version>1.0-beta-1</version> <executions> <execution> <id>upload-jar</id>
-                <phase>deploy</phase> <goals> <goal>upload-single</goal> </goals> <configuration>
-                <fromFile>target/${project.artifactId}-classes.jar</fromFile> <url>file:///srv/www/htdocs/ingrid/maven2/de/ingrid/portal/${project.artifactId}/${project.version}</url>
-                <toFile>${project.artifactId}-${project.version}.jar</toFile> </configuration>
-                </execution> </executions> </plugin> -->
+
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.2.v20170220</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <reload>automatic</reload>
+                    <useTestClasspath>true</useTestClasspath>
+                    <httpConnector>
+                        <port>8088</port>
+                    </httpConnector>
+                    <webApp>
+                        <webInfIncludeJarPattern>.*/^(asm-all-repackaged)[^/]*\.jar$</webInfIncludeJarPattern>
+                        <contextPath>/${project.artifactId}</contextPath>
+                        <extraClasspath>${basedir}/src/test/resources</extraClasspath>
+                    </webApp>
+                    <contextXml>${basedir}/src/test/resources/jetty-config.xml</contextXml>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -100,6 +111,9 @@
                         <exclude>**/templates/**</exclude>
                         <exclude>**/nls/**</exclude>
                         <exclude>**/ingrid.profile.js</exclude>
+                        <exclude>**/js/leaflet/**</exclude>
+                        <exclude>**/upload/fine-uploader/**</exclude>
+                        <exclude>**/upload/template/UploadWidget.html</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -145,6 +159,16 @@
                 <artifactId>commons-collections</artifactId>
                 <version>3.2.1</version>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.8.4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.8.4</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -154,6 +178,11 @@
             <groupId>com.tngtech.java</groupId>
             <artifactId>config-builder</artifactId>
             <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>4.2.0</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
@@ -178,7 +207,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils-ige</artifactId>
-            <version>4.0.1-SNAPSHOT</version>
+            <version>4.0.1</version>
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
@@ -193,8 +222,18 @@
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
+            <artifactId>ingrid-external-services-api</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>de.ingrid</groupId>
+            <artifactId>ingrid-external-service-gemet</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>de.ingrid</groupId>
             <artifactId>ingrid-external-service-sns</artifactId>
-            <version>3.6.2.1</version>
+            <version>4.0.2</version>
         </dependency>
         <dependency>
             <groupId>de.ingrid</groupId>
@@ -342,6 +381,53 @@
             <!-- <version>3.0.dev-02.03.11</version> problem with converting bean SelectControl! -->
             <version>3.0.rc2</version>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>2.25.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.25.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.25.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-spring3</artifactId>
+            <version>2.25</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.rauschig</groupId>
+            <artifactId>jarchivelib</artifactId>
+            <version>0.7.1</version>
+        </dependency>
         <!-- <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring</artifactId>
@@ -424,12 +510,6 @@
             <version>2.5.6</version>
             <scope>test</scope>
         </dependency>
-        <!-- JENA libs for RDF support -->
-        <dependency>
-			<groupId>org.apache.jena</groupId>
-			<artifactId>jena-arq</artifactId>
-			<version>2.9.3</version>
-		</dependency>
 		<dependency>
             <groupId>xml-apis</groupId>
             <artifactId>xml-apis</artifactId>
@@ -439,7 +519,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-utils-geo</artifactId>
-            <version>3.5.0</version>
+            <version>4.0.1</version>
         </dependency>
         <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
         <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>
@@ -499,6 +579,124 @@
             </build>
         </profile>
         <profile>
+            <id>env-dev</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>dev</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>de.ingrid.mdek</groupId>
+                    <artifactId>ingrid-mdek-api</artifactId>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>ojdbc</groupId>
+                            <artifactId>ojdbc</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>de.ingrid</groupId>
+                            <artifactId>ingrid-base-webapp</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <!-- <dependency>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                    <version>1.2.14</version>
+                </dependency> -->
+                <dependency>
+                    <groupId>net.sf.ehcache</groupId>
+                    <artifactId>ehcache</artifactId>
+                    <version>1.4.1</version>
+                </dependency>
+                <dependency>
+                    <groupId>de.ingrid</groupId>
+                    <artifactId>ingrid-utils</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.portals.jetspeed-2</groupId>
+                    <artifactId>jetspeed-api</artifactId>
+                    <version>2.3.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.portals.jetspeed-2</groupId>
+                    <artifactId>jetspeed-commons</artifactId>
+                    <version>2.3.0</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <configuration>
+                            <skipCheckLicense>true</skipCheckLicense>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>profile-uvp</id>
+            <activation>
+                <property>
+                    <name>profile</name>
+                    <value>uvp</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <configuration>
+                            <scanTargets>
+                                <scanTarget>${basedir}/../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application/WEB-INF/classes</scanTarget>
+                            </scanTargets>
+                            <webApp>
+                                <extraClasspath>${basedir}/../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application/WEB-INF/classes</extraClasspath>
+                                <!-- use resources from profile first, before using the default webapp dir -->
+                                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                                    <resourcesAsCSV>../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application,src/main/webapp</resourcesAsCSV>
+                                </baseResource>
+                            </webApp>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>profile-bkg</id>
+            <activation>
+                <property>
+                    <name>profile</name>
+                    <value>bkg</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <configuration>
+                            <!--<scanTargets>
+                                <scanTarget>${basedir}/../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application/WEB-INF/classes</scanTarget>
+                            </scanTargets>-->
+                            <webApp>
+                                <!--<extraClasspath>${basedir}/../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application/WEB-INF/classes</extraClasspath>-->
+                                <!-- use resources from profile first, before using the default webapp dir -->
+                                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                                    <resourcesAsCSV>../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application,src/main/webapp</resourcesAsCSV>
+                                </baseResource>
+                            </webApp>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>linux-optimization</id>
             <activation>
                 <os>
@@ -539,52 +737,54 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
-            <id>gssoil</id>
+            <id>release</id>
             <build>
                 <plugins>
-                    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-                    <!-- unzip all GSSoil Thesaurus Gazetteer resources and libs to target -->
-                    <!-- USE THIS IF YOU SUPPLY IGE FOR GS SOIL -->
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
                         <executions>
                             <execution>
-                                <id>unpack-gssoil</id>
-                                <phase>prepare-package</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
+                                <id>compile</id>
+                                <phase>compile</phase>
                                 <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>gssoil</groupId>
-                                            <artifactId>thesaurus-gazetteer-resources</artifactId>
-                                            <version>2.0.1</version>
-                                            <type>zip</type>
-                                            <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/classes</outputDirectory>
-                                        </artifactItem>
-                                        <artifactItem>
-                                            <groupId>gssoil</groupId>
-                                            <artifactId>thesaurus-gazetteer-libs</artifactId>
-                                            <version>2.0.1</version>
-                                            <type>zip</type>
-                                            <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
-                                        </artifactItem>
-                                    </artifactItems>
+                                    <target>
+                                        <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties"/>
+                                        <condition property="foundRepeatable">
+                                            <resourcecount count="0" when="greater">
+                                                <fileset dir="src/main/resources/db/migration">
+                                                    <include name="**/R*.sql"/>
+                                                </fileset>
+                                            </resourcecount>
+                                        </condition>
+                                        <if>
+                                            <equals arg1="${foundRepeatable}" arg2="true"/>
+                                            <then>
+                                                <fail message="Flyway: You must not have repeatable SQL files!"/>
+                                            </then>
+                                            <else>
+                                                <echo message="Flyway: No repeatable SQL found. OK!"/>
+                                            </else>
+                                        </if>
+                                    </target>
                                 </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
                             </execution>
                         </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>ant-contrib</groupId>
+                                <artifactId>ant-contrib</artifactId>
+                                <version>20020829</version>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                 </plugins>
             </build>
-            <!-- NO SEPARATE REPO LIBS FOR GSSOIL ! WE EXTRACT EVERYTHING FROM ZIP
-                FILE (see above, "thesaurus-gazetteer-libs") ! SO WE CAN JUST UPDATE LIBS
-                FROM EDISOFT DELIVERIES ! <dependencies> <dependency> <groupId>net.htmlparser.jericho</groupId>
-                <artifactId>jericho-html</artifactId> <version>3.1</version> </dependency>
-                </dependencies> <repositories> <repository> <id>ibiblio</id> <name>iBiblio.or.</name>
-                <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url> </repository> </repositories> -->
         </profile>
     </profiles>
 </project>

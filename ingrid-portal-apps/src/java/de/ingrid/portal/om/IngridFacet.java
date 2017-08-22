@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -42,6 +42,7 @@ public class IngridFacet {
     private String url;
     private String wildcard;
     private int showOnMoreThan;
+    private int colNum;
     private boolean isDependencySelect = false;
     private boolean isHiddenSelect = false;
     private boolean isSelect = false;
@@ -215,5 +216,11 @@ public class IngridFacet {
     }
     public void setWildcard(String wildcard) {
         this.wildcard = wildcard;
+    }
+    public int getColNum() {
+        return colNum;
+    }
+    public void setColNum(int colNum) {
+        this.colNum = colNum;
     }
 }

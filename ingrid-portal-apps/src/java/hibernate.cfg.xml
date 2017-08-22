@@ -38,11 +38,16 @@
         <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
         <property name="cache.use_query_cache">false</property>
 
-        <!-- SQL dialect -->
+        <!-- SQL dialect dependent from database type -->
         <!-- Do NOT use Oracle10gDialect, not supported in Portal -->
-<!--    <property name="dialect">org.hibernate.dialect.OracleDialect</property> -->
-        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-<!--	<property name="dialect">org.hibernate.dialect.DerbyDialect</property> -->
+        <!-- Choose from:
+        		org.hibernate.dialect.OracleDialect
+        		org.hibernate.dialect.MySQLDialect
+        		org.hibernate.dialect.PostgreSQLDialect
+        		org.hibernate.dialect.DerbyDialect
+        -->
+	    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>
 

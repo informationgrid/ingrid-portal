@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -67,6 +67,7 @@ public class MdekAddressBean {
 	private String nameForm;
 	private String titleOrFunction;
 	private String street;
+	private String administrativeArea;
 	private Integer countryCode;
 	private String countryName;
 	private String postalCode;
@@ -505,5 +506,13 @@ public class MdekAddressBean {
 
     public void setHoursOfService(String hoursOfService) {
         this.hoursOfService = hoursOfService;
+    }
+
+    public String getAdministrativeArea() {
+        return administrativeArea;
+    }
+
+    public void setAdministrativeArea(String administrativeArea) {
+        this.administrativeArea = administrativeArea;
     }
 }

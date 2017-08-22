@@ -68,6 +68,17 @@ tbody {
     }
 }
 
+.table--unlined {
+    th{
+        &:first-child {
+            width: rem(80px);
+            font-weight:bold;
+            color: color(black);
+            border-right: none;
+        }
+    }
+}
+
 .table--lined {
     th{
         &:first-child {

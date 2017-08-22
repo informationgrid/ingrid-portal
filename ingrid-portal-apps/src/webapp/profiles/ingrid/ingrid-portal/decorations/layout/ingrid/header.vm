@@ -36,7 +36,7 @@
         #else
             <meta name="robots" content="index,follow" />
         #end
-        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' />
+        <link rel="stylesheet" href="#GetPageResource('css/google/robotocondensed/v13/css/fonts.css')" />
         <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css')" />
         <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')" />
         <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
@@ -56,6 +56,14 @@
         <script src="#GetPageResource("scripts/modernizr.custom.min.js")"></script>
         <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
         <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
+        <!-- Pickadate -->
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
+        #set($lang = $renderRequest.Locale.getLanguage())
+        #if($lang && $lang != "en")
+            <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
+        #end
     </head>
     <body>
     

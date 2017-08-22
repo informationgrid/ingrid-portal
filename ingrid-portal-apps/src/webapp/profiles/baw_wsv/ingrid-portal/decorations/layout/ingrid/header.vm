@@ -36,7 +36,7 @@
         #else
             <meta name="robots" content="index,follow" />
         #end
-        <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' />
+        <link rel="stylesheet" href="#GetPageResource('css/google/robotocondensed/v13/css/fonts.css')" />
         <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css')" />
         <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')" />
         <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
@@ -57,6 +57,14 @@
         <script src="#GetPageResource("scripts/modernizr.custom.min.js")"></script>
         <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
         <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
+        <!-- Pickadate -->
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
+        #set($lang = $renderRequest.Locale.getLanguage())
+        #if($lang && $lang != "en")
+            <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
+        #end
     </head>
     <body>
     
@@ -68,9 +76,9 @@
     #end
     <div class="page" >
         <header class="header">
-            <div class="ob-box-padded-more ob-box-center">
+            <div class="ob-box-padded-more ob-box-center mq-show-xxl">
                 <div class="header__widgets__section">
-                    <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                    <div class="header__widget nav-toggle js-nav-mobile-toggle">
                         <svg class="icon">
                         <use xlink:href="#burger">
                         </svg>
@@ -78,22 +86,17 @@
                         <use xlink:href="#cross">
                         </svg>
                     </div>
-                </div>
-                <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                        <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/logo.gif')">
-                        <img class="mq-show-xxl mobile__logo" >
+                        <img class="mobile__logo" src="#GetPageResource('images/logo-mobile.png')">
                     </a>
-                </div>
-                <div class="header__widgets__section" style="">
-                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">$MESSAGES.getString('ingrid.header.title.main')</a>
+                    <a class="mobile__title mq-hide-s" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">$MESSAGES.getString('ingrid.header.title.main')</a>
                 </div>
                 #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)
                 #end
             </div>
         #if(!$mainMenu.empty)
-          #includeMainNavigation($mainMenu)
+          #includeMainNavigation($mainMenu $serviceMenu)
         #end
         </header>
         #if($currentPage != "/main-maps.psml")

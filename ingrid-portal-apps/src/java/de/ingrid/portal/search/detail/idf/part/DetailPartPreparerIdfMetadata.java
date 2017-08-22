@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -109,9 +109,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             Node node = XPathUtils.getNode(rootNode, xpathExpression);
             String modTime = "";
             if(XPathUtils.nodeExists(node, "./gco:DateTime")){
-                modTime = UtilsDate.convertDateString(XPathUtils.getString(node, "./gco:DateTime").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+                modTime = getDateFormatValue(XPathUtils.getString(node, "./gco:DateTime").trim());
             }else if(XPathUtils.nodeExists(node, "./gco:Date")){
-                modTime = UtilsDate.convertDateString(XPathUtils.getString(node, "./gco:Date").trim(), "yyyy-MM-dd", "dd.MM.yyyy");
+                modTime = getDateFormatValue(XPathUtils.getString(node, "./gco:Date").trim());
+            }else {
+                modTime = getDateFormatValue(XPathUtils.getString(node, ".").trim());
             }
             if(modTime.length() > 0){
                 value = modTime;
@@ -220,10 +222,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 Node node = nodeList.item(i);
                 String uuid = "";
                 String title = "";
-                String type = "";
+                String type = getUdkObjectClassType();
                 String attachedToField = "";
                 String entryId = "";
                 String description = "";
+                String serviceUrl = null;
                 String tmp = null;
                 
                 xpathExpression = "./@uuid";
@@ -261,6 +264,18 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 if(tmp != null){
                     description = tmp.trim();
                 }
+
+                xpathExpression = "./idf:serviceType";
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    serviceType = tmp.trim();
+                }
+                
+                xpathExpression = "./idf:serviceUrl";
+                tmp = XPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    serviceUrl = tmp.trim();
+                }
                 
                 HashMap<String, Object> link = new HashMap<String, Object>();
                 link.put("hasLinkIcon", new Boolean(true));
@@ -285,10 +300,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 
                 if(isCoupled){
                     // add map links to data objects from services
-                    if (entryId.equals("3600") && getUdkObjectClassType().equals("3")) {
+                    if (entryId.equals("3600") && type.equals("3")) {
                         // get link from operation (unique one)
-                        if (serviceType.trim().equals("view")) {
-                            String capabilityUrl = getCapabilityUrl();
+                        if (serviceType != null && serviceType.trim().equals("view")) {
+                            String capabilityUrl = serviceUrl;
+                            if(serviceUrl == null){
+                                capabilityUrl = getCapabilityUrl();
+                            }
                             if ( capabilityUrl != null ) {
                                 capabilityUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl, ServiceType.WMS );
                                 link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
@@ -297,8 +315,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
                         linkList.add(link);
-                    } else if (entryId.equals("3600") && getUdkObjectClassType().equals("1")) {
-                        String capUrl = getCapabilityUrlFromCrossReference( uuid );
+                    } else if (entryId.equals("3600") && type.equals("1")) {
+                        String capUrl = serviceUrl;
+                        if(serviceUrl == null){
+                            capUrl = getCapabilityUrlFromCrossReference( uuid );
+                        }
                         if ( capUrl != null ) {
                             // add possible missing parameters
                             capUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capUrl );
@@ -680,7 +701,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             row.add("");
                         }else {
                             String value = XPathUtils.getString(node, xpathExpression).trim();
-                            row.add(notNull(UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy")));
+                            row.add(notNull(getDateFormatValue(value)));
                         }
                     } else {
                         row.add("");

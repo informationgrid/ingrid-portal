@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -39,6 +39,7 @@ define([
     "ingrid/utils/Thesaurus",
     "ingrid/message",
     "ingrid/layoutCreator",
+    "ingrid/hierarchy/behaviours.user",
     "ingrid/IgeEvents",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
@@ -46,7 +47,7 @@ define([
     "ingrid/hierarchy/dirty"
 ], function(declare, lang, array, query, domClass, Deferred, on, Standby, registry, Button, ValidationTextBox, SimpleTextarea,
             UtilCatalog, UtilUI, UtilSyslist, UtilThesaurus,
-            message, layoutCreator, igeEvents, gridEditors, gridFormatters, validator, dirty) {
+            message, layoutCreator, behaviour, igeEvents, gridEditors, gridFormatters, validator, dirty) {
         
     return declare( null, {
         
@@ -105,6 +106,8 @@ define([
             //this.assignContextMenu();
             console.debug("validation");
             this.applyValidations();
+
+            this.applyBehaviours();
             
             //this.initSysLists();
             console.debug("dirty");
@@ -242,6 +245,10 @@ define([
                 return UtilSyslist.getSyslistEntry(6200);
             });
             
+            layoutCreator.createComboBox("addressAdministrativeArea", null, lang.clone(storeProps), function(){
+                return UtilSyslist.getSyslistEntry(6250);
+            });
+            
             var button = new Button({}, "buttonGetAddressFromParent");
             on(button, "Click", lang.hitch(igeEvents, igeEvents.getAddressDataFromParent));
             
@@ -315,6 +322,35 @@ define([
             });
             
             validator.applyBeforeAddressPublishValidation();
+        },
+
+        applyBehaviours: function() {
+            // activate default behaviour
+            UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                // mark behaviours with override values
+                array.forEach(data, function(item) {
+                    behaviour[item.id].override = item.active;
+                });
+                for (var behave in behaviour) {
+                    // ignore invalid and non-address behaviours
+                    if (!behaviour[behave].title || !behaviour[behave].forAddress) continue;
+                    
+                    // run behaviour if 
+                    // 1) activated by default and not overridden
+                    // 2) activate if explicitly overridden
+                    // 3) ignore system behaviours, which were already executed
+                    if (behaviour[behave].type !== "SYSTEM" &&
+                            (
+                                (behaviour[behave].defaultActive && behaviour[behave].override === undefined)
+                                || behaviour[behave].override === true
+                            )) {
+                        console.debug("execute behaviour: " + behave);
+                        behaviour[behave].run();
+                    }
+                }
+            }, function(error) {
+                console.error("Error executing behvaiour:", error);
+            });
         },
         
         connectDirtyFlagsEvents: function() {

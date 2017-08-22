@@ -30,10 +30,18 @@
                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
     default-init-method="init" default-destroy-method="destroy">
 
-    <bean id="thesaurusRDFService" class="de.ingrid.rdf.SNSServiceRDF"></bean>
 
     <!-- InGrid-Portal -->
+
+    <!-- UMTHES Thesaurus from SNS -->
+    <bean id="thesaurusRDFService" class="de.ingrid.rdf.SNSServiceRDF"></bean>
     <bean id="thesaurusService" class="de.ingrid.external.sns.SNSService" />
+
+	<!-- GEMET Thesaurus -->
+<!--
+    <bean id="thesaurusRDFService" class="de.ingrid.external.gemet.GEMETService"></bean>
+    <bean id="thesaurusService" class="de.ingrid.external.gemet.GEMETService" />
+-->    
     <bean id="gazetteerService" class="de.ingrid.external.wfs.WFSService" />
     <bean id="fullClassifyService" class="de.ingrid.external.sns.SNSService" />
 

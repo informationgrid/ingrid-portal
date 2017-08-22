@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -62,12 +62,14 @@
                 "dojo/dom-style",
                 "dijit/registry",
                 "ingrid/layoutCreator",
+                "ingrid/message",
+                "ingrid/dialog",
                 "ingrid/utils/Grid",
                 "ingrid/utils/List",
                 "ingrid/utils/Tree",
                 "ingrid/utils/Events",
                 "ingrid/tree/ThesaurusTree"
-            ], function(array, lang, on, topic, keys, query, dom, domClass, wnd, style, registry, layoutCreator, UtilGrid, UtilList, UtilTree, UtilEvents, ThesaurusTree) {
+            ], function(array, lang, on, topic, keys, query, dom, domClass, wnd, style, registry, layoutCreator, message, dialog, UtilGrid, UtilList, UtilTree, UtilEvents, ThesaurusTree) {
 
 
                     var selectedTextNode = null;
@@ -111,10 +113,7 @@
                     }
 
                     function showStatus(msg) {
-                        var status = dom.byId("statusText");
-                        if (status) {
-                            status.innerHTML = msg;
-                        }
+                        dialog.show(message.get("dialog.general.warning"), msg, dialog.WARNING)
                     }
 
                     function createDOMElements() {
@@ -233,7 +232,6 @@
                         queryTerm = lang.trim(queryTerm);
 
                         if (queryTerm == "") {
-                            showStatus("");
                             return;
                         }
 

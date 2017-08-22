@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -44,6 +44,7 @@ public class CatalogBean {
 	private Date dateOfCreation;
 	private Date dateOfLastModification;
 	private String modUuid;
+	private String plugId;
 
 	public String getUuid() {
 		return uuid;
@@ -171,5 +172,13 @@ public class CatalogBean {
 
     public void setSortByClass(String sortByClass) {
         this.sortByClass = sortByClass;
+    }
+
+    public String getPlugId() {
+        return plugId;
+    }
+
+    public void setPlugId(String plugId) {
+        this.plugId = plugId;
     }
 }

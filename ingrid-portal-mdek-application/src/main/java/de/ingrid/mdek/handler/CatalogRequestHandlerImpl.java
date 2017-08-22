@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -205,8 +205,11 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
     }
 
     public CatalogBean getCatalogData() {
-        IngridDocument response = mdekCallerCatalog.fetchCatalog(connectionFacade.getCurrentPlugId(), MdekSecurityUtils.getCurrentUserUuid());
-        return MdekCatalogUtils.extractCatalogFromResponse(response);
+        String plugId = connectionFacade.getCurrentPlugId();
+        IngridDocument response = mdekCallerCatalog.fetchCatalog(plugId, MdekSecurityUtils.getCurrentUserUuid());
+        CatalogBean extractCatalogFromResponse = MdekCatalogUtils.extractCatalogFromResponse(response);
+        extractCatalogFromResponse.setPlugId( plugId );
+        return extractCatalogFromResponse;
     }
 
     public CatalogBean storeCatalogData(CatalogBean cat) {

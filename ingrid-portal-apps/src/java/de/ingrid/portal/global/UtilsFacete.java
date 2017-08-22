@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -181,12 +181,10 @@ public class UtilsFacete {
             addDefaultIngridFacets(request, config);
             setAttributeToSession(request, FACET_CONFIG, config);
         }else{
-            if(portalTerm != null && facetTerm != null){
-                if(!portalTerm.equals(facetTerm)){
-                    //Reset config facet values
-                    resetFacetConfigValues(config, null);
-                    setAttributeToSession(request, FACET_CONFIG, config);
-                }
+            if(facetTerm != portalTerm){
+                //Reset config facet values
+                resetFacetConfigValues(config, null);
+                setAttributeToSession(request, FACET_CONFIG, config);
             }
         }
         
@@ -253,6 +251,7 @@ public class UtilsFacete {
             context.put("isSelection", isAnyFacetConfigSelect(config, (Boolean) getAttributeFromSession(request, "isSelection")));
         }
         context.put( "subFacetsCount", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_FACETE_SUB_COUNT, 5));
+        context.put( "facetMapCenter", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_CENTER));
         // Remove flag
         removeAttributeFromSession(request, "isSelection");
     }
@@ -493,7 +492,7 @@ public class UtilsFacete {
                         setAttributeToSession(request, FACET_CONFIG, config);
                     }
                 }
-            }        
+            }
             
             if (elementsMap != null){
                 setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
@@ -645,26 +644,18 @@ public class UtilsFacete {
                     doMapCoords = new HashMap<String, String>();
                     for(int i=0; i < coordOptions.size(); i++){
                         String searchTerm = "";
-                        //TODO implement areaid search
-    //                        if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
-                            if(request.getParameter("x1") != null){
-                                searchTerm = webmapclientCoords.get("x1").concat("' O / ");
-                            }
-                            if(request.getParameter("y1") != null){
-                                searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat("' N");
-                            }                
-                            searchTerm = searchTerm.concat("<br>");
-                            if(request.getParameter("x2") != null){
-                                searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat("' O / ");
-                            }
-                            if(request.getParameter("y2") != null){
-                                searchTerm = searchTerm.concat(webmapclientCoords.get("y2")).concat("' N");
-                            } 
-                            
-                            searchTerm = searchTerm.concat("<br>" +  coordOptions.get(i));
-    //                        } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
-    //                            searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
-    //                        }
+                        if(request.getParameter("x1") != null){
+                            searchTerm = webmapclientCoords.get("x1").concat(", ");
+                        }
+                        if(request.getParameter("y1") != null){
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat(", ");
+                        }
+                        if(request.getParameter("x2") != null){
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat(", ");
+                        }
+                        if(request.getParameter("y2") != null){
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("y2"));
+                        }
                         doMapCoords.put(coordOptions.get(i), searchTerm);
                     }
                 }
@@ -712,7 +703,6 @@ public class UtilsFacete {
         }else{
             setFacetSelectionState(context, request, "isMapSelect", false);
         }
-        context.put("webmapDebugMode", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_WEBMAPCLIENT_DEBUG, false));
     }
     
     @SuppressWarnings("rawtypes")
@@ -953,7 +943,7 @@ public class UtilsFacete {
                 }
             }
             
-            if(doClearSearchGeothesaurus != null){
+            if(doClearSearchGeothesaurus != null || doAddGeothesaurus != null){
                 removeAttributeFromSession(request, GEOTHESAURUS_TERM);
                 removeAttributeFromSession(request, GEOTHESAURUS_TOPICS);
                 removeAttributeFromSession(request, GEOTHESAURUS_SIMILAR_TOPICS);
@@ -1001,7 +991,7 @@ public class UtilsFacete {
         }
         if(geothesaurusSelectTopicsSorted != null && geothesaurusSelectTopicsSorted.size() > 0){
             
-            context.put("geothesaurusSelectTopics", geothesaurusSelectTopicsSorted);
+            context.put(GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopicsSorted);
             setFacetSelectionState(context, request, "isGeothesaurusSelect", true);
         }else{
             setFacetSelectionState(context, request, "isGeothesaurusSelect", false);
@@ -1640,20 +1630,17 @@ public class UtilsFacete {
                 for(int i=0; i < paramsOptions.size(); i++){
                     String value = "";
                     if(getFacetParam(paramsFacet, "x1") != null){
-                        value = coords.get("x1").concat("' O / ");
+                        value = coords.get("x1").concat(", ");
                     }
                     if(getFacetParam(paramsFacet, "y1") != null){
-                        value = value.concat(coords.get("y1")).concat("' N");
-                    }                
-                    value = value.concat("<br>");
+                        value = value.concat(coords.get("y1")).concat(", ");
+                    }
                     if(getFacetParam(paramsFacet, "x2") != null){
-                        value = value.concat(coords.get("x2")).concat("' O / ");
+                        value = value.concat(coords.get("x2")).concat(", ");
                     }
                     if(getFacetParam(paramsFacet, "y2") != null){
-                        value = value.concat(coords.get("y2")).concat("' N");
-                    } 
-                    
-                    value = value.concat("<br>" +  paramsOptions.get(i));
+                        value = value.concat(coords.get("y2"));
+                    }
                     selectedMap.put(paramsOptions.get(i), value);
                 }
                 HashMap mapHashMap = new HashMap();
@@ -2190,20 +2177,22 @@ public class UtilsFacete {
                 if(ingridFacet.getParent() != null){
                     if((!ingridFacet.getParent().getId().equals("topic") || isAll) && !ingridFacet.getParent().getId().equals("partner") && !ingridFacet.getParent().getId().equals("provider")){
                         if(facetId != null){
-                            if(ingridFacet.getParent() != null){
-                                if(ingridFacet.getParent().getDependency() == null){
-                                    // Set sub facets by no define dependency
-                                    HashMap<String, String> facetEntry = new HashMap<String, String>();
-                                    facetEntry.put("id", facetId);
-                                    facetEntry.put("query", facetQuery);
-                                    facetList.add(facetEntry);
-                                }else{
-                                    // Set sub facets only by selected dependency
-                                    if(ingridFacet.getParent().isDependencySelect()){
+                            if(facetQuery != null){
+                                if(ingridFacet.getParent() != null){
+                                    if(ingridFacet.getParent().getDependency() == null){
+                                        // Set sub facets by no define dependency
                                         HashMap<String, String> facetEntry = new HashMap<String, String>();
                                         facetEntry.put("id", facetId);
                                         facetEntry.put("query", facetQuery);
                                         facetList.add(facetEntry);
+                                    }else{
+                                        // Set sub facets only by selected dependency
+                                        if(ingridFacet.getParent().isDependencySelect()){
+                                            HashMap<String, String> facetEntry = new HashMap<String, String>();
+                                            facetEntry.put("id", facetId);
+                                            facetEntry.put("query", facetQuery);
+                                            facetList.add(facetEntry);
+                                        }
                                     }
                                 }
                             }
@@ -2217,11 +2206,13 @@ public class UtilsFacete {
                     }
                 }else{
                     if(facetId != null){
-                        if(ingridFacet.getParent() != null){
-                            HashMap<String, String> facetEntry = new HashMap<String, String>();
-                            facetEntry.put("id", facetId);
-                            facetEntry.put("query", facetQuery);
-                            facetList.add(facetEntry);
+                        if(facetQuery != null){
+                            if(ingridFacet.getParent() != null){
+                                HashMap<String, String> facetEntry = new HashMap<String, String>();
+                                facetEntry.put("id", facetId);
+                                facetEntry.put("query", facetQuery);
+                                facetList.add(facetEntry);
+                            }
                         }
                         if(ingridFacet.getFacets() != null){
                               getConfigFacetQuery(ingridFacet.getFacets(), facetQueries, false, facetId, isAll);

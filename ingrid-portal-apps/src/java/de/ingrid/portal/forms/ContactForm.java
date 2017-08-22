@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -58,8 +58,6 @@ public class ContactForm extends ActionForm {
 
     public static final String FIELD_ACTIVITY = "activity";
 
-    public static final String FIELD_INTEREST = "interest";
-
     public static final String FIELD_JCAPTCHA = "jcaptcha";
 
     public static final String FIELD_UPLOAD = "upload";
@@ -84,7 +82,6 @@ public class ContactForm extends ActionForm {
         setInput(FIELD_PHONE, request.getParameter(FIELD_PHONE));
         setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL));
         setInput(FIELD_ACTIVITY, request.getParameter(FIELD_ACTIVITY));
-        setInput(FIELD_INTEREST, request.getParameter(FIELD_INTEREST));
         setInput(FIELD_JCAPTCHA, request.getParameter(FIELD_JCAPTCHA));
        }
 
@@ -157,8 +154,6 @@ public class ContactForm extends ActionForm {
 	        		setInput(FIELD_EMAIL, item.getString("UTF-8"));
 	        	} else if(item.getFieldName().equals(FIELD_ACTIVITY)){
 	        		setInput(FIELD_ACTIVITY, item.getString());
-	        	} else if(item.getFieldName().equals(FIELD_INTEREST)){
-	        		setInput(FIELD_INTEREST, item.getString());
 	        	} else if(item.getFieldName().equals(FIELD_JCAPTCHA)){
 	        		setInput(FIELD_JCAPTCHA, item.getString());
 	        	}
