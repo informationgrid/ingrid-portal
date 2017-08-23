@@ -218,11 +218,11 @@
     #if($facet.getIcon())
         #set($icon = $facet.getIcon())
         #if($icon.startsWith("#"))
-            <svg class="icon bx-top-s #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"><use xlink:href="$icon" /></svg>
+            <svg class="icon bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"><use xlink:href="$icon" /></svg>
         #elseif($icon.startsWith("/"))
-            <img style="margin: auto;" class="bx-top-s" src="$icon"></img>
+            <img style="margin: auto;" class="bx-top-s icon-$facet.getId()" src="$icon"></img>
         #else
-            <i class="icon bx-top-s #if($facetClass)$facetClass#end $icon" style="#if($facetStyle)$facetStyle#end"></i>
+            <i class="icon bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end $icon" style="#if($facetStyle)$facetStyle#end"></i>
         #end
     #else
        <i class="icon bx-top-s icon-question-mark #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"></i>
