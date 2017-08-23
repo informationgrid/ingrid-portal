@@ -314,3 +314,15 @@ thead {
 .tag {
     background: rgb(243, 243, 243);
 }
+
+.icon-cat_donau, .icon-cat_elbe, .icon-cat_rhein {
+    width: 7em;
+}
+
+@media screen and (max-width: 767px) {
+    .icon-cat_donau, .icon-cat_elbe, .icon-cat_rhein {
+      width: 1.5em;
+      margin: -5px 10px !important;
+      float: left;
+    }
+}
