@@ -8,8 +8,8 @@
         </div>
         <hr class="bx-top-0 bx-bot-0">
         <div class="teaser__content ob-container">
+            <strong>$MESSAGES.getString('measures.teaser.new.title')</strong>
             <p>
-                <strong>$MESSAGES.getString('measures.teaser.new.title')</strong>
                 $MESSAGES.getString('measures.teaser.new.body')
             </p>
             <p>
