@@ -46,6 +46,8 @@ define([
             multiselect: "multiSelect",
             forcegridheight: "forceGridHeight",
             allowemptyrows: "allowEmptyRows",
+            queryexpr: "queryExpr",
+            autocomplete: "autoComplete",
             defaulthidescrollbar: "defaultHideScrollbar" //,
             //class: "\"class\""
         },

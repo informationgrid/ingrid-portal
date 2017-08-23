@@ -1,0 +1,101 @@
+<style>
+.leaflet-interactive-disable {
+    cursor: grab !important;
+}
+
+.leaflet-hyphens {
+    hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}
+
+</style>
+
+<script>
+    function showMarker(m) {
+        if(m.target.uuid){
+            jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
+                var d = JSON.parse(data);
+                // create an orange rectangle
+                m.target.bbox=L.rectangle(d, {color: "blue", weight: 3, fill: false});
+                if(map){
+                    map.addLayer(m.target.bbox);
+                }
+            });
+        }
+    }
+    
+    function hideMarker(m) {
+        if(m.target.bbox){
+            if(map){
+                map.removeLayer(m.target.bbox);
+            }
+        }
+    }
+
+    var mapSizeX;
+    var popupMarkerSize;
+    var popupMarkerOptions = {};
+    
+    if(map){
+        if(map._size){
+            mapSizeX = map._size.x;
+        }
+    }
+    
+    if(mapSizeX){
+        if(mapSizeX < 310){
+            popupMarkerOptions = {
+                maxWidth: 180
+            };
+        }
+    }
+
+    // All markers
+    var mapMarkers = L.markerClusterGroup({
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    
+    if(markers){
+        for (var i = 0; i < markers.length; i++) {
+            var a = markers[i];
+            var title = a[2];
+            var popUpHtml = '';
+            popUpHtml += '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
+            
+            var icon = L.AwesomeMarkers.icon({
+                markerColor: 'blue',
+                className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
+                prefix: 'icon'
+            });
+            
+            var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
+            marker.uuid = a[3];
+            marker.bbox = null;
+            if(enablePopUp){
+                marker.bindPopup(popUpHtml, popupMarkerOptions);
+                marker.on('popupopen', showMarker);
+                marker.on('popupclose', hideMarker);
+            }
+            mapMarkers.addLayer(marker);
+        }
+    
+        if(markers.length > 0){
+            if(map){
+                map.addLayer(mapMarkers);
+            }
+        }
+    }
+</script>

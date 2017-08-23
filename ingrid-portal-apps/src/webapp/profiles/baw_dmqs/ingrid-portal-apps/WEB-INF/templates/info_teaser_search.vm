@@ -1,0 +1,23 @@
+<article class="teaser ob-container">
+    <div class="teaser__graphic">
+        <svg class="icon" style="fill:rgb(44, 99, 177);"><use xlink:href="#magnifier"></use></svg>
+    </div>
+    <div class="teaser__box">
+        <div class="teaser__content ob-container">
+            #renderPortletTitle($MESSAGES.getString('teaser.search.title') "h4")
+        </div>
+        <hr class="bx-top-0 bx-bot-0">
+        <div class="teaser__content ob-container">
+            <strong>$MESSAGES.getString('search.teaser.title')</strong>
+            <p>
+                $MESSAGES.getString('search.teaser.body')
+            </p>
+            <p>
+                <a class="link link--big" href="$renderResponse.encodeURL('/portal/main-search.psml')">
+                    <strong>$MESSAGES.getString('search.teaser.link')</strong>
+                    <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
+                </a>
+            </p>
+        </div>
+    </div>
+</article>
