@@ -326,3 +326,15 @@ thead {
       float: left;
     }
 }
+
+.no-touchevents .nav-overlay__item--level2:hover, .nav-overlay__item--level2.is-active, .no-touchevents .nav-overlay__item--level3:hover, .nav-overlay__item--level3.is-active {
+    color: rgb(44, 99, 177);
+}
+.nav-overlay__item--level2:hover, .nav-overlay__item--level3:hover {
+    background: #FFFFFF;
+}
+
+.no-touchevents .tree__toggle:hover {
+    border-color: rgb(44, 99, 177);
+    box-shadow: 0 1px 0 rgb(44, 99, 177);
+}
