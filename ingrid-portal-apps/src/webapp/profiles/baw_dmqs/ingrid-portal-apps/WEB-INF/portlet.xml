@@ -619,6 +619,7 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
         <portlet-preferences>
+            <!-- 
             <preference>
                 <name>portlet-type</name>
                 <value>ingrid-home</value>
@@ -627,6 +628,7 @@
                 <name>default-vertical-position</name>
                 <value>4</value>
             </preference>
+            -->
             <preference>
                 <name>titleKey</name>
                 <value>teaser.environment.title</value>
@@ -663,6 +665,7 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>
         <portlet-preferences>
+            <!-- 
             <preference>
                 <name>portlet-type</name>
                 <value>ingrid-home</value>
@@ -671,6 +674,7 @@
                 <name>default-vertical-position</name>
                 <value>3</value>
             </preference>
+            -->
             <preference>
                 <name>titleKey</name>
                 <value>news.teaser.title</value>
@@ -904,7 +908,7 @@
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>5</value>
+                <value>3</value>
             </preference>
             <preference>
                 <name>infoTemplate</name>
