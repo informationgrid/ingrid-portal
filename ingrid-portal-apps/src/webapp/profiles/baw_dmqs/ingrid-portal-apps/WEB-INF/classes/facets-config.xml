@@ -373,8 +373,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <!-- Standard - Kann nicht erweitert werden -->
     <facet>
         <name>searchResult.facete.title.area</name>
-        <id>area</id>
-        <hidden>address</hidden>
+        <id>area.map</id>
     </facet>
     <!-- Kategorie -->
     <facet>

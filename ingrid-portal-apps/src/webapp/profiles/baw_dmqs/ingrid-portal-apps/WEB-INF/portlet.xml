@@ -1395,7 +1395,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/show_maps_baw_dmqs.vm</value>
+            <value>/WEB-INF/templates/show_maps.vm</value>
         </init-param>
         <portlet-name>ShowMapsPortlet</portlet-name>
         <display-name>Karten</display-name>
@@ -1505,7 +1505,7 @@
         <portlet-name>SearchResult</portlet-name>
         <display-name>Suchergebnis</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.SearchResultBawDmqsPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>

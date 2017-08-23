@@ -1,8 +1,8 @@
 /*
  * **************************************************-
- * InGrid Portal Apps
+ * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,42 +24,36 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
-import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
-import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.IBusQueryResultIterator;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
-public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
+/**
+ * This portlet handles the "Result Display" fragment of the result page
+ * 
+ * @author martin@wemove.com
+ */
+public class SearchResultBawDmqsPortlet extends SearchResultPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger( ShowMapsBawDmqsPortlet.class );
+    private final static Logger log = LoggerFactory.getLogger(SearchResultBawDmqsPortlet.class);
 
     private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "bwstr-center-lon", "bwstr-center-lat", "t01_object.obj_id" };
     private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
-
-    public void init(PortletConfig config) throws PortletException {
-        super.init( config );
-    }
-
+    
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
@@ -67,7 +61,15 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
             if (resourceID.equals( "marker" )) {
                 response.setContentType( "application/javascript" );
                 response.getWriter().write( "var markers = [" );
-                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "datatype:metadata ranking:score") ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
+                
+                String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+                if(queryString == null || queryString.length() == 0){
+                    queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "datatype:metadata ranking:score") ;
+                }else{
+                    queryString += " ranking:score";
+                }
+                
+                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
                         .getIBus() );
                 while (it.hasNext()) {
                     StringBuilder s = new StringBuilder();
@@ -108,30 +110,17 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
         }
 
     }
-
-    public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
-        Context context = getContext( request );
-        IngridResourceBundle messages = new IngridResourceBundle( getPortletConfig().getResourceBundle( request.getLocale() ), request.getLocale() );
-        context.put( "MESSAGES", messages );
-        context.put( "lang", request.getLocale().getLanguage() );
-        // read preferences
-        PortletPreferences prefs = request.getPreferences();
-        String hKey = prefs.getValue( "helpKey", null );
-        if (hKey != null && hKey.length() > 0) {
-            context.put( "hKey", hKey );
-        }
-
+    
+    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
+            throws PortletException, IOException {
         // define an REST URL to get the map data dynamically
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "marker" );
         request.setAttribute( "restUrlMarker", restUrl.toString() );
         restUrl.setResourceID( "bbox" );
         request.setAttribute( "restUrlBBOX", restUrl.toString() );
-
-        super.doView( request, response );
+        
+        super.doView(request, response);
     }
 
-    public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
-
-    }
 }
