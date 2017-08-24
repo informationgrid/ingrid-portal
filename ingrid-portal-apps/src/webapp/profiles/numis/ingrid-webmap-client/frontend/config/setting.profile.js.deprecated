@@ -23,7 +23,7 @@
 settingExtent = '[6.8, 51.1, 11.2, 54]';
 settingEpsgExtent = '[6.8, 51.1, 11.2, 54]';
 settingSearchServiceUrl = 'http://numis.niedersachsen.de/opensearch/query?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+t011_obj_serv.type:view+cache:off+datatype:metadata+ranking:score%26ingrid=1%26h=100';
-settingDefaultMousePositionIndex = 6;
+settingDefaultMouseProjections = ['EPSG:25832', 'EPSG:25833', 'EPSG:3857', 'EPSG:4326', 'EPSG:31466', 'EPSG:31467', 'EPSG:31468', 'EPSG:31469'];
 settingKMLName = 'NUMIS';
 settingDefaultWMSList = [];
 settingShortURLService = 'https://numis.niedersachsen.de/s/yourls-api.php?signature=c5972f1b79&action=shorturl&format=json';

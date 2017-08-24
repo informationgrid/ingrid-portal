@@ -27,3 +27,4 @@ settingEpsgExtent = '[-35.9999905552, 18.4126606832, 53.9999939426, 79.321962755
 settingSearchServiceUrl = 'https://geoportal.wsv.res.bund.de/opensearch/query?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+t011_obj_serv.type:view+cache:off+datatype:metadata+ranking:score%26ingrid=1%26h=100';
 settingKMLName = 'ITZBund';
 settingDefaultWMSList = [];
+settingDefaultMouseProjections = ['EPSG:25832', 'EPSG:25833', 'EPSG:4326', 'EPSG:31466', 'EPSG:31467', 'EPSG:31468', 'EPSG:2166', 'EPSG:2167', 'EPSG:3857'];
