@@ -72,9 +72,33 @@
         for (var i = 0; i < markers.length; i++) {
             var a = markers[i];
             var title = a[2];
+            var bawAuftragsnummer = a[4];
+            var simProcess = a[5];
+            var simModelType = a[6];
             var popUpHtml = '';
             popUpHtml += '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
             
+            if(bawAuftragsnummer && bawAuftragsnummer.length > 0){
+                popUpHtml += '<div class="map_popup_cat">';
+                popUpHtml += '<b>Auftragsnummer:</b><br>';
+                popUpHtml += bawAuftragsnummer + '<br>';
+                popUpHtml += '</div>';
+            }
+
+            if(simProcess && simProcess.length > 0){
+                popUpHtml += '<div class="map_popup_cat">';
+                popUpHtml += '<b>Verfahren:</b><br>';
+                popUpHtml += simProcess + '<br>';
+                popUpHtml += '</div>';
+            }
+
+            if(simModelType && simModelType.length > 0){
+                popUpHtml += '<div class="map_popup_cat">';
+                popUpHtml += '<b>Modellart:</b><br>';
+                popUpHtml += simModelType + '<br>';
+                popUpHtml += '</div>';
+            }
+
             var icon = L.AwesomeMarkers.icon({
                 markerColor: 'blue',
                 className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',

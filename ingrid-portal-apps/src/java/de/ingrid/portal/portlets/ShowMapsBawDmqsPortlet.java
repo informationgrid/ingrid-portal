@@ -53,7 +53,7 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
 
     private final static Logger log = LoggerFactory.getLogger( ShowMapsBawDmqsPortlet.class );
 
-    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "bwstr-center-lon", "bwstr-center-lat", "t01_object.obj_id" };
+    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "bwstr-center-lon", "bwstr-center-lat", "t01_object.obj_id", "bawAuftragsnummer", "simProcess", "simModelType" };
     private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
 
     public void init(PortletConfig config) throws PortletException {
@@ -74,8 +74,37 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
                     IngridHit hit = it.next();
                     IngridHitDetail detail = hit.getHitDetail();
                     if (detail.containsKey( "bwstr-center-lat" ) && detail.containsKey( "bwstr-center-lon" )) {
-                        s.append( "[" ).append( detail.get( "bwstr-center-lat" ).toString() ).append( "," ).append( detail.get( "bwstr-center-lon" ).toString() ).append( ",'" )
-                                .append( detail.get( "title" ).toString() ).append( "','" ).append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "']" );
+                        s.append( "[" )
+                            .append( detail.get( "bwstr-center-lat" ).toString() )
+                            .append( "," )
+                            .append( detail.get( "bwstr-center-lon" ).toString() )
+                            .append( ",'" )
+                            .append( detail.get( "title" ).toString() )
+                            .append( "','" )
+                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) );
+                        
+                        String bawAuftragsnummer = UtilsSearch.getDetailValue( detail, "bawAuftragsnummer" );
+                        s.append( "','" );
+                        if(bawAuftragsnummer != null){
+                            s.append( bawAuftragsnummer );
+                        }else{
+                            s.append( "" );
+                        }
+                        String simProcess = UtilsSearch.getDetailValue( detail, "simProcess" );
+                        s.append( "','" );
+                        if(simProcess != null){
+                            s.append( simProcess );
+                        }else{
+                            s.append( "" );
+                        }
+                        String simModelType = UtilsSearch.getDetailValue( detail, "simModelType" );
+                        s.append( "','" );
+                        if(simModelType != null){
+                            s.append( simModelType );
+                        }else{
+                            s.append( "" );
+                        }
+                        s.append( "']" );
                         if (it.hasNext()) {
                             s.append( "," );
                         }

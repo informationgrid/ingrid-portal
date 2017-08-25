@@ -338,3 +338,15 @@ thead {
     border-color: rgb(44, 99, 177);
     box-shadow: 0 1px 0 rgb(44, 99, 177);
 }
+
+.map_popup_cat {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 0.5em;
+}
+
+.map_popup_proc {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 0.5em;
+}
