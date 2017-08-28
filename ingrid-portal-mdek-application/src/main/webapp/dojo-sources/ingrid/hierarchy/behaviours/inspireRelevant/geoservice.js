@@ -35,7 +35,7 @@ define([
 
     return declare(null, {
         title: "Geodatenservice",
-        description: "Wenn aktiviert und der Datensatz ist ein Geodatenservice, dann wird die Spezfikation auf 'VO 976/2009' und 'nicht evaluiert' gesetzt.",
+        description: "Wenn aktiviert und der Datensatz ist ein Geodatenservice (INSPIRE-relevant), dann wird die Spezfikation auf \"VO 976/2009\" und \"nicht evaluiert\" gesetzt.",
         defaultActive: true,
         category: "INSPIRE relevant",
         events: [],
