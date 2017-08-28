@@ -350,3 +350,7 @@ thead {
     color: grey;
     margin-top: 0.5em;
 }
+
+.no-touchevents .sidebar-filter-subheader:hover {
+    color: rgb(79, 79, 78);
+}
