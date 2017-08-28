@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -307,4 +307,108 @@ function goToByScroll(id, time){
 
 function openURL(url){
     window.location = url;
+}
+
+function getOSMLayer(attribution){
+    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib='&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    if(attribution){
+        osmAttrib = osmAttrib + "" + attribution;
+    }
+    var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+    
+    return osm;
+}
+
+function addLeafletMap(baselayers, bounds, latlng){
+    var map = new L.Map('map', {
+       layers: baselayers
+    });
+    if(bounds){
+        map.fitBounds(bounds);
+    }else{
+        map.setView(latlng,6);
+    }
+
+    return map; 
+}
+
+function addLeafletHomeControl(map, title, position, icon, bounds, latlng){
+ // Controls
+    var HomeControl = L.Control.extend({
+        options: {
+            position: position ? position : 'topleft'
+        },
+        onAdd: function (map) {
+            // create the control container with a particular class name
+            var container = L.DomUtil.create('div', 'leaflet-control-home leaflet-bar');
+            var link = L.DomUtil.create('a', 'icon small ' + icon, container);
+            link.href = '#';
+            link.style.padding = '5px 0 0 0';
+            link.title = title;
+            
+            // ... initialize other DOM elements, add listeners, etc.
+            L.DomEvent.addListener(link, 'click', this._homeClick, this);
+    
+            return container;
+        },
+        _homeClick: function(e) {
+            L.DomEvent.stop(e);
+            if(bounds){
+                map.fitBounds(bounds);
+            }else{
+                map.setView(latlng,6);
+            }
+        }
+    });
+    
+    map.addControl(new HomeControl({}));
+}
+
+function getLinkFileSize(url, element)
+{
+    var respJson;
+    var http = new XMLHttpRequest();
+    http.open('GET', url, true);
+    http.onreadystatechange = function() {
+        if (this.readyState == this.DONE) {
+            if (this.status === 200) {
+                if(this.response){
+                    respJson = JSON.parse(this.response);
+                    if(respJson){
+                        if(respJson.contentLength){
+                            if(element){
+                                element.text(convertFileSize(respJson.contentLength, true));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    };
+    http.send(); 
+    return ('');
+}
+
+function convertFileSize(bytes, si) {
+    var thresh = si ? 1000 : 1024;
+    if(Math.abs(bytes) < thresh) {
+        return bytes + ' B';
+    }
+    var units = si
+        ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+        : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+    var u = -1;
+    do {
+        bytes /= thresh;
+        ++u;
+    } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+    
+    var unit = units[u];
+    var val = bytes.toFixed(1);
+    
+    if((units[u] == units[0]) && (val / 1000 >= 0.1)){
+        return (val / 1009).toFixed(1) + ' ' + units[1];
+    }
+    return bytes.toFixed(1) + ' ' + units[u];
 }

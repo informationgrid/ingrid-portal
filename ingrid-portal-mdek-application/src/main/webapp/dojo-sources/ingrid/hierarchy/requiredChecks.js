@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -51,26 +51,32 @@ define(["dojo/_base/declare",
         errorInfoField: domConstruct.toDom("<div class='errorInfoBlock'><div>CONTENT</div></div>"),
 
         setErrorLabel: function(id, message){
-            if (array.indexOf(["objectName", "objectClass", "objectOwner"], id) != -1) {
-                domClass.add(id + "Label", "important");
-                return;
-            }
-
-            var domWidget = dom.byId(id);
-            while (domWidget) {
-                if (domClass.contains(domWidget, "outer")) {
-                    // mark the field label red
-                    domClass.add(domWidget, "important");
-
-                    // show error information below the field
-                    if (message) {
-                        var box = lang.clone(this.errorInfoField);
-                        box.firstChild.innerHTML = message;
-                        domWidget.appendChild( box );
-                    }
+            try {
+                if (array.indexOf(["objectName", "objectClass", "objectOwner"], id) != -1) {
+                    domClass.add(id + "Label", "important");
                     return;
                 }
-                domWidget = domWidget.parentNode;
+
+                var domWidget = dom.byId(id);
+                while (domWidget) {
+                    if (domClass.contains(domWidget, "outer")) {
+                        // mark the field label red
+                        domClass.add(domWidget, "important");
+
+                        // show error information below the field
+                        if (message) {
+                            var box = lang.clone(this.errorInfoField);
+                            box.firstChild.innerHTML = message;
+                            domWidget.appendChild( box );
+                        }
+                        return;
+                    }
+                    domWidget = domWidget.parentNode;
+                }
+            } catch (ex) {
+                var errorMessage = "Could not set error label for ID: " + id;
+                console.error(errorMessage, ex);
+                displayErrorMessage(errorMessage);
             }
         },
 
@@ -80,15 +86,15 @@ define(["dojo/_base/declare",
             // reset must be done when saved normally also or object is reloaded!
             // array.forEach(query(".required .input .dijit"), function(e) { console.debug(e.widgetId); registry.byId(e.getAttribute("widgetid")).set("required", false); })
             var publishable       = true;
-            var notPublishableIDs = []
-                , notSaveableIDs = [];
+            var notPublishableIDs = [], 
+                notSaveableIDs = [];
 
             // check first general validity
             this.checkValidityOfInputElements(notSaveableIDs);
 
-            var widgets = query(".rubric:not(.hide) .required:not(.hide) .dijitTextBox:not(.noValidate), .rubric:not(.hide) .required:not(.hide) .dijitSelect:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.getAttribute("widgetid");});
+            var widgets = query(".rubric:not(.hide) .required:not(.hide):not(.alwaysHidden) .dijitTextBox:not(.noValidate), .rubric:not(.hide) .required:not(.hide) .dijitSelect:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.getAttribute("widgetid");});
             widgets = widgets.concat(query(".dijitTextBox, .dijitSelect", "sectionTopObject").map(function(item) {return item.getAttribute("widgetid");}));
-            var grids = query(".rubric:not(.hide) .required:not(.hide) .ui-widget:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.id;});
+            var grids = query(".rubric:not(.hide) .required:not(.hide):not(.alwaysHidden) .ui-widget:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.id;});
 
             array.forEach(widgets, function(w) {
                 if (lang.trim(registry.byId(w).get("displayedValue")).length === 0) {
@@ -96,7 +102,6 @@ define(["dojo/_base/declare",
                 }
             });
             array.forEach(grids, function(id) {
-                var grid = UtilGrid.getTable(id);
                 if (UtilGrid.getTableData(id).length === 0) {
                     notPublishableIDs.push( [id, message.get( "validation.error.empty.table" )] );
                 }
@@ -212,6 +217,8 @@ define(["dojo/_base/declare",
                     if (!res) invalidInputs.push( [g.id, grid.message] );
                 }
             });
+
+            topic.publish("/onBeforeObjectSave", invalidInputs);
 
             //invalidExtInputs = invalidInputs.concat(invalidGrids);
             if (invalidInputs.length > 0) {

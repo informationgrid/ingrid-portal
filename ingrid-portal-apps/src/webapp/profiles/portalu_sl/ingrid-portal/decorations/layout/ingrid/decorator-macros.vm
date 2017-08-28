@@ -62,6 +62,11 @@
                 #set($elemSelected = true)
             #end
         #end
+        
+        #if($currentPage == "/search-detail.psml" && $element.url=="/main-search.psml")
+            #set($elemSelected = true)
+        #end
+        
         #if ($element.url.startsWith('/main-about'))
             #set($subMenu = $site.getMenu("sub-menu-about"))
             <li class="nav-desktop__item dropmenu__box">
@@ -112,9 +117,6 @@
         #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
             #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
             #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
-        #elseif($element.url.startsWith('/search-catalog/search-catalog-thesaurus.psml'))
-            #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
-            #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
         #end
         <li>
             <a href="$linkUrl" title="$linkTitle">$linkName</a>
@@ -173,30 +175,30 @@
             </svg>
             <span class="header__widget__text mq-hide-xxl">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
         </a>
-        <div class="metamenu metamenu--wide">
         #if($jetspeed.getLoggedOn())
-            <!-- State logged in -->
-            #set($userAttributes = $jetspeed.getUserProperties())
-            #set($userNameGiven = $userAttributes.get("user.name.given"))
-            #set($userNameFamily = $userAttributes.get("user.name.family"))
-            
-            #if($userNameGiven)
-                #set ($salutation = " $userNameGiven")
-            #end
-            #if($userNameFamily)
-                #set ($salutation = "$!{salutation} $userNameFamily")
-            #end        
-            <div class="metamenu__box ob-container">
-                <p>$MESSAGES.getString('ingrid.page.login.as'):<br><strong>$salutation</strong></p>
-                <p><a class="btn btn--secondary btn--small btn--block" href="/login/logout">$MESSAGES.getString('ingrid.page.login.logout')</a></p>
-            </div>
-            <div class="metamenu__box ob-container">
-                <p><a class="btn btn--primary btn--small btn--block" href="$linkUrl">$MESSAGES.getString('ingrid.page.login.to.myportal')</a></p>
+            <div class="metamenu metamenu--wide">
+                <!-- State logged in -->
+                #set($userAttributes = $jetspeed.getUserProperties())
+                #set($userNameGiven = $userAttributes.get("user.name.given"))
+                #set($userNameFamily = $userAttributes.get("user.name.family"))
+                
+                #if($userNameGiven)
+                    #set ($salutation = " $userNameGiven")
+                #end
+                #if($userNameFamily)
+                    #set ($salutation = "$!{salutation} $userNameFamily")
+                #end        
+                <div class="metamenu__box ob-container">
+                    <p>$MESSAGES.getString('ingrid.page.login.as'):<br><strong>$salutation</strong></p>
+                    <p><a class="btn btn--secondary btn--small btn--block" href="/login/logout">$MESSAGES.getString('ingrid.page.login.logout')</a></p>
+                </div>
+                <div class="metamenu__box ob-container">
+                    <p><a class="btn btn--primary btn--small btn--block" href="$linkUrl">$MESSAGES.getString('ingrid.page.login.to.myportal')</a></p>
+                </div>
             </div>
         #else
             $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
         #end
-        </div>
     </div>
   #elseif($el == "/administration")
     <div class="header__widget">
@@ -233,9 +235,6 @@
                 #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
                     #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
                     #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
-                #elseif($element.url.startsWith('/search-catalog/search-catalog-thesaurus.psml'))
-                    #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
-                    #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
                 #end
                 <a class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
               #end
@@ -357,9 +356,6 @@
                 #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
                     #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
                     #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
-                #elseif($element.url.startsWith('/search-catalog/search-catalog-thesaurus.psml'))
-                    #set($linkTitle = $MESSAGES.getString('ingrid.page.thesaurus.tooltip'))
-                    #set($linkName = $MESSAGES.getString('ingrid.page.thesaurus'))
                 #end
                 <a href="$linkUrl" class="nav-overlay__item nav-overlay__item--level2" title="$linkTitle">
                     $linkName

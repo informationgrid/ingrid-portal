@@ -4,10 +4,6 @@
     <description>Portal-Profile Geoportal.WSV</description>
     <pages>
         <page>
-            <name>main-maps.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>main-chronicle.psml</name>
             <hidden>true</hidden>
         </page>
@@ -18,10 +14,6 @@
         <page>
             <name>main-about.psml</name>
             <hidden>true</hidden>
-        </page>
-        <page>
-            <name>_role/user/myportal-edit-account.psml</name>
-            <hidden>false</hidden>
         </page>
         <page>
             <name>cms/cms-1.psml</name>
@@ -106,10 +98,6 @@
                 </portlet>
             </portlets>
         </page>
-        <page>
-            <name>disclaimer.psml</name>
-            <hidden>false</hidden>
-        </page>
     </pages>
     <files>
         <file>
@@ -150,7 +138,6 @@
         <execute>
             <![CDATA[UPDATE fragment SET name = 'ingrid-portal-apps::SearchNominatim' WHERE parent_id = (SELECT item_value FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id') AND name = 'ingrid-portal-apps::InfoPortlet']]>
         </execute>
-
         <!-- Remove temporary values from ingrid_lookup table -->
         <execute>
             <![CDATA[DELETE FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id']]>

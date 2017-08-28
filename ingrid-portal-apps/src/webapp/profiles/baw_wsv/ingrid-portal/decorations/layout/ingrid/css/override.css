@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -26,6 +26,13 @@
 
 .header__logo {
     height: auto;
+    margin: -18px 1.2rem -18px 58px;
+}
+
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin: -18px 1.2rem -18px 78px;
+    }
 }
 
 .mobile__title {
@@ -57,4 +64,72 @@
 
 .nav-toggle:after {
   border-width: 0 0 76px 20px;
+  border-color: transparent transparent #FFF transparent;
+}
+
+.mobile__logo{
+  height:100%
+}
+
+.header__logo:after {
+  border-style: solid;
+  border-width: 0 0 76px 20px;
+  border-color: transparent transparent transparent #FFFFFF ;
+  content: '';
+  height: 0;
+  position: absolute;
+  right: 0;
+  width: 0;
+  top: 0;
+  left: 90px;
+}
+
+@media screen and (max-width: 479px) {
+  .nav-toggle:after {
+    border-width: 0 0 75px 20px;
+  }
+
+  .header__logo:after {
+    border-width: 0 0 75px 20px;
+  }
+}
+
+.header__widget__icon {
+  fill: #FFF;
+}
+
+.header__widget__icon.is-active {
+  fill: #28225B;
+}
+
+.service_in_main {
+  padding: 18px 10px 0; 
+}
+
+.service_in_main .header__widget__text {
+  color:#FFF;
+}
+
+.desktop__title {
+  color:#FFF;
+  padding: 15px 0 0;
+  font-size: 25px;
+  font-weight: normal;
+}
+
+.desktop__header__logo:after {
+  border-style: solid;
+  border-width: 0 0 58px 20px;
+  border-color: transparent transparent transparent #FFFFFF ;
+  content: '';
+  height: 0;
+  position: absolute;
+  right: 0;
+  width: 0;
+  top: 0;
+  left: 67px;
+}
+
+.metamenu {
+  right: 0px;
 }

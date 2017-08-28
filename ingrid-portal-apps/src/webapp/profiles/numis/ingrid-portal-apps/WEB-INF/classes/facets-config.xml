@@ -329,6 +329,11 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>area</id>
         <hidden>address</hidden>
     </facet>
+    <facet>
+        <name>searchResult.facete.title.area</name>
+        <id>area.map</id>
+        <hidden>address</hidden>
+    </facet>
     <!-- Raumbezug Adressen-->
     <!-- Standard - Kann nicht erweitert werden -->
     <facet>
@@ -349,6 +354,14 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>category</id>
         <categoryOnly>true</categoryOnly>
         <facets>
+            <!-- RSS -->
+            <facet>
+                <name>category.news.title</name>
+                <id>rss</id>
+                <icon>icon-rss-2</icon>
+                <url>/neuigkeiten</url>
+                <display>true</display>
+            </facet>
             <!-- Webseiten -->
             <facet>
                 <name>searchResult.facete.datatype.www</name>

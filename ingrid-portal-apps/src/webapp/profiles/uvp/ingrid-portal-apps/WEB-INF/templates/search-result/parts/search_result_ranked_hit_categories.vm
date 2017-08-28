@@ -1,0 +1,13 @@
+#if($rs.get("detail"))
+    #set($uvp_categories = $UTIL_SEARCH.getFilteredDuplicateDetailValue($rs.get('detail'), 'uvp_category'))
+    #if($uvp_categories )
+        #set($categories = $uvp_categories.split(","))
+        #if($categories && $categories.size() > 0)
+            <ul class="tag-group">
+            #foreach($category in $categories)
+                <li class="tag tag--small">$MESSAGES.getString("searchResult.categories.uvp.$category.trim()")</li>
+            #end
+            </ul>
+        #end
+    #end
+#end

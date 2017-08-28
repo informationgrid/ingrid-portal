@@ -32,4 +32,8 @@
 	<bean class="de.ingrid.mdek.persistence.db.DaoFactory" id="daoFactory">
 		<constructor-arg ref="sessionFactory"/>
 	</bean>
+  
+    <bean class="de.ingrid.mdek.util.MdekDbMigrator" id="mdekDbMigrator">
+        <constructor-arg ref="dataSource"/>
+    </bean>
 </beans>

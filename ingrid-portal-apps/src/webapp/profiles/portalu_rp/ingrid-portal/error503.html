@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal Base
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -21,143 +21,58 @@
   **************************************************#
   -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Decorator  ingrid  ${decoTop} - ${decoBottom}-->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
-        <title>PortalU</title>
+        <title>PortalU - Umweltportal Rheinland-Pfalz</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-style-type" content="text/css" />
         <meta http-equiv="content-language" content="de" />
-        <!--<meta name="description" content="" />-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta name="description" content="PortalU bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="wemove digital solutions" />
         <meta name="keywords" lang="de" content="PortalU, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <meta name="robots" content="index,follow" />
-        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
-        <!--<link rel="search" type="application/opensearchdescription+xml" href="" title="Suche"/>-->
-        <!--<link rel="stylesheet" media="screen, projection" type="text/css" href="styles/portal_u.css" />-->
-        <style>
-            html, body {
-                width: auto;
-                height: auto;
-            }
-            
-            #errorImage { float: left; }
-            #errorContent { padding-left: 170px; color: #5E5E5F; font-size: 13px; font-weight: bold;}
-            
-            #errorText { padding-right: 20px; }
-            #errorTitle { font-size: 20px; }
-            #horizontalMenu { margin:0; }
-            #horizontalMenu li { float:left; margin-right: 15px; list-style: none; color: #666666;}
-            #errorFooter { padding-top: 20px; }
-            #errorFooter p { font-size:14px; color: #666666; }
-            #errorBody a, #errorBody a:link { color: #666666 !important; }
-            
-            div#identity {
-                padding: 0px;
-                margin: 0px;
-                height: 97px;
-                width: 59.5em;
-                background-color: #eeeeee;
-                overflow: visible;
-            }
-            
-        </style>
-        <script type="text/javascript">
-            <!--
-            function openWindow(pipeline){
-                var vWinUsers = window.open(pipeline, 'PortletSelector', 'status=no,resizable=yes,width=500,height=600,scrollbars=yes');
-                vWinUsers.opener = self;
-                vWinUsers.focus();
-            }
-            
-            //-->
-        </script>
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/error/decorations/layout/ingrid/css/styles.css" />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/error/decorations/portlet/ingrid-teaser/css/styles.css" />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/error/decorations/portlet/ingrid-marginal-teaser/css/styles.css" />
-
+        <link rel="shortcut icon" href="/error/decorations/layout/ingrid/images/favicon.ico " />
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="/error/decorations/layout/ingrid/css/style.css" />
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="/error/decorations/layout/ingrid/css/override.css" />
     </head>
-    <body class="layout-tigris">
-        <!--  BEGIN: layout/html/ingrid/decorator.vm -->
-        <div class="layout-tigris">
-            <!-- Identity Area inkl. service menu -->
-            <div id="identity" class="motiv_start">
-                <!-- LOGO -->
-                <div id="logo">
-                <a href="/startseite" title="Startseite von PortalU aufrufen ">
-                	<img src="/error/decorations/layout/ingrid/images/RP_Wappen_4c.jpg" alt="Logo PortalU" />
-   				 	<p><span>Portal<b>U</b></span></p>
-                </a>
-            </div>
-            <div class="identity_text">
-				<div><span class="identity_title"><b>Umweltportal</b> Rheinland-Pfalz</span></div>
-				<div><span class="identity_subtitle"></span></div>
-		  	</div>
-            <!-- SERVICE-NAVIGATION -->
-            
-            <!-- logged on message -->
-        </div>
-        <!-- MAIN-NAVIGATION -->
-        
-        <!-- sub navigation -->
-        <div id="subnavBack">
-            <a name="subnav"></a>
-            <div class="subnav_corner">
-                <div class="subnav_corner_img">
+    <body>
+        <div class="page">
+            <section class="block block--padded">
+                <div class="ob-box-wide ob-box-padded ob-box-center">
+                    <article class="content ob-container">
+                        <div id="errorImage">
+                            <img src="/error/decorations/layout/ingrid/images/template/logo.svg" />
+                        </div>
+                        <div id="errorContent">
+                            <h1 id="errorTitle">FEHLER 503: Wartung</h1>
+                            <div id="errorText">
+                                <p>
+                                    Leider k&ouml;nnen Sie PortalU vor&uuml;bergehend nicht aufrufen, da wir gerade die Inhalte aktualisieren und optimieren. PortalU wird in K&uuml;rze wieder verf&uuml;gbar sein. Bitte schauen Sie im Laufe des Tages noch einmal in unser beh&ouml;rdliches Umweltportal hinein! 
+                                </p>
+                                <p>
+                                    Bei Fragen sind wir gerne f&uuml;r Sie da: <a href="mailto:Andrea.Rothenburger@mueef.rlp.de">Andrea.Rothenburger@mueef.rlp.de</a>
+                                </p>
+                            </div>
+                            <p>
+                                    Danke f&uuml;r Ihr Verst&auml;ndnis.
+                            </p>
+                        </div>
+                    </article>
                 </div>
-            </div>
-        </div>
-        <!-- CONTENT BLOCK -->
-        <div id="errorBody">
-            <div id="container">
-                <div id="errorImage">
-                    <img src="/error/decorations/layout/ingrid/images/fail.png" />
-                </div>
-                <div id="errorContent">
-                    <h1 id="errorTitle">FEHLER 503: Wartung</h1>
-                    <div id="errorText">
-                        <p>
-                            Leider k&ouml;nnen Sie PortalU vorr&uuml;bergehend nicht aufrufen, da wir gerade die Inhalte aktualisieren und optimieren. PortalU wird in K&uuml;rze wieder verf&uuml;gbar sein. Bitte schauen Sie im Laufe des Tages noch einmal in unser beh&ouml;rdliches Umweltportal hinein! 
-                        </p>
-                        <p>
-                            Bei Fragen sind wir gerne f&uuml;r Sie da: <a href="mailto:portalu@mulewf.rlp.de">portalu@mulewf.rlp.de</a>
-                        </p>
-                    </div>
-                    <div style="clear:both; padding-bottom:100px;">
-                    </div>
-                    <div id="errorFooter">
-                        <p>
-                            Danke f&uuml;r Ihr Verst&auml;ndnis.
-                        </p>
+            </section>
+            <footer class="footer">
+                <div class="ob-box-padded ob-box-center ob-clear">
+                    <div class="footer__top">
+                        <a href="/startseite">
+                            <img class="footer__logo" src="/error/decorations/layout/ingrid/images/template/footer-logo.png"></img>
+                        </a>
+                        <p class="copyright">© Ministerium für Umwelt, Energie, Ernährung und Forsten</p>
                     </div>
                 </div>
-            </div>
-            </div>
-            <div class="clearer">
-            </div>
-            <div id="footermarginalcontainer">
-                <div id="footermarginal">
-                    <!-- portlets go here -->
-                    <div id="footerSeparator">
-                    </div>
-                    &nbsp;
-                </div>
-            </div>
-            <div class="clearer">
-            </div>
-            <!-- footer block -->
-            <div id="footercontainer">
-                <div id="footercontent">
-                    <br/>
-                    Copyright &copy; 2014 - 2015 wemove digital solutions GmbH
-                    <br/>
-                    <i>Alle Rechte vorbehalten</i>
-                    <br/>
-                    <br/>
-                </div>
-            </div>
+             </footer>
         </div>
     </body>
 </html>

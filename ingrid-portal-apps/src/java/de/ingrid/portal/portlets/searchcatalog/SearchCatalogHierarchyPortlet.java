@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -181,11 +181,6 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                 }
             }
 
-        } else if (action.equalsIgnoreCase(Settings.PARAMV_ACTION_CHANGE_TAB)) {
-            // TODO: comment this block???
-            // changed main or sub tab
-            String newTab = request.getParameter(Settings.PARAM_TAB);
-            processTab(actionResponse, newTab);
         }
     }
 

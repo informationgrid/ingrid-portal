@@ -395,6 +395,11 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
 		<id>area</id>
 		<hidden>address</hidden>
 	</facet>
+    <facet>
+        <name>searchResult.facete.title.area</name>
+        <id>area.map</id>
+        <hidden>address</hidden>
+    </facet>
 	<!-- Raumbezug Adressen-->
 	<!-- Standard - Kann nicht erweitert werden -->
 	<facet>

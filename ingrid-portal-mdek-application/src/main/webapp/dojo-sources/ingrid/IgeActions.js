@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -258,7 +258,7 @@ define([
             // If the current user does not have write permission on the current obj/adr, don't display a dialog,
             // clear the dirty flag and return as normal
             if (this.global.currentUdk.writePermission === false && this.global.currentUdk.uuid != "newNode") {
-                lang.hitch(dirty, dirty.resetDirtyFlag);
+                lang.hitch(dirty, dirty.resetDirtyFlag)();
                 return false;
             }
 
@@ -287,7 +287,7 @@ define([
             }, {
                 caption: message.get("general.no"),
                 action: function() {
-                    lang.hitch(dirty, dirty.resetDirtyFlag);
+                    lang.hitch(dirty, dirty.resetDirtyFlag)();
                     deferred.resolve("DISCARD");
                 }
             }, {
@@ -391,6 +391,11 @@ define([
                                         self.onAfterLoad();
                                         console.debug("exit loading state");
                                         UtilUI.exitLoadingState();
+                                    })
+                                    .then(null, function(error) {
+                                        // catch any error that happened during init form and setting of data
+                                        console.error("Error loading object or creation of form:", error);
+                                        displayErrorMessage(error);
                                     });
                             } else {
                                 //							console.debug(resultHandler);
@@ -472,15 +477,15 @@ define([
                     preHook: UtilUI.enterLoadingState,
                     postHook: UtilUI.exitLoadingState,
                     callback: function(res) {
-                        msg.resultHandler.resolve(res);
                         console.debug("set data");
                         self._setData(res)
-                        .then(lang.hitch(dirty, dirty.resetDirtyFlag)); // we must set dirty flag here!
+                            .then(lang.partial(msg.resultHandler.resolve, res))
+                            .then(lang.hitch(dirty, dirty.resetDirtyFlag)); // we must set dirty flag here!
                     },
-                    //				timeout:10000,
+                    // timeout:10000,
                     errorHandler: function(message) {
                         UtilUI.exitLoadingState();
-                        //					msg.resultHandler.reject("Error in js/js: Error while creating a new node.");
+                        // msg.resultHandler.reject("Error in js/js: Error while creating a new node.");
                         console.error("Error in js/js: Error while creating a new node.");
                         msg.resultHandler.reject(message);
                     }
@@ -523,10 +528,12 @@ define([
                             res.nodeDocType = "InstitutionPerson_B";
                         } else if (res.addressClass == 3) {
                             res.nodeDocType = "PersonAddress_B";
+                        } else if (res.addressClass == 1000) {
+                            res.nodeDocType = "Class1000_B";
                         }
 
-                        msg.resultHandler.resolve(res);
                         self._setData(res)
+                            .then(lang.partial(msg.resultHandler.resolve, res))
                             .then(lang.hitch(dirty, dirty.resetDirtyFlag));
                     },
                     //				timeout:10000,
@@ -1612,6 +1619,7 @@ define([
 
             // ------------------ Address and Function ------------------
             registry.byId("addressStreet").attr("value", nodeData.street, true);
+            registry.byId("addressAdministrativeArea").attr("value", nodeData.administrativeArea, true);
             registry.byId("addressCountry").attr("value", nodeData.countryCode == -1 ? null : nodeData.countryCode, true);
             registry.byId("addressZipCode").attr("value", nodeData.postalCode, true);
             registry.byId("addressCity").attr("value", nodeData.city, true);
@@ -1775,6 +1783,7 @@ define([
             UtilAddress.addAddressTitles(addressTable);
             UtilList.addAddressLinkLabels(addressTable);
             UtilStore.updateWriteStore("generalAddress", addressTable);
+            registry.byId("isAdvCompatible").attr("value", nodeData.advCompatible, true);
 
             // Comments
             var commentData = UtilList.addDisplayDates(nodeData.commentTable);
@@ -1835,7 +1844,8 @@ define([
 
             // -- Extra Info --
             registry.byId("extraInfoLangMetaData").attr("value", nodeData.extraInfoLangMetaDataCode, true);
-            registry.byId("extraInfoLangData").attr("value", nodeData.extraInfoLangDataCode, true);
+            UtilStore.updateWriteStore("extraInfoLangData", UtilList.listToTableData(nodeData.extraInfoLangDataTable));
+            
             registry.byId("extraInfoPublishArea").attr("value", nodeData.extraInfoPublishArea, true);
             registry.byId("extraInfoCharSetData").attr("value", nodeData.extraInfoCharSetDataCode, false);
             UtilStore.updateWriteStore("extraInfoConformityTable", nodeData.extraInfoConformityTable);
@@ -1858,9 +1868,12 @@ define([
 
             UtilStore.updateWriteStore("thesaurusTerms", nodeData.thesaurusTermsTable);
             UtilStore.updateWriteStore("thesaurusTopics", UtilList.listToTableData(nodeData.thesaurusTopicsList));
+            UtilStore.updateWriteStore("advProductGroup", UtilList.listToTableData(nodeData.advProductGroupList));
             UtilStore.updateWriteStore("thesaurusInspire", UtilList.listToTableData(nodeData.thesaurusInspireTermsList));
             UtilStore.updateWriteStore("thesaurusEnvTopics", UtilList.listToTableData(nodeData.thesaurusEnvTopicsList));
             registry.byId("thesaurusEnvExtRes").attr("value", nodeData.thesaurusEnvExtRes, true);
+            // reset field for entering free keywords
+            registry.byId("thesaurusFreeTerms").set("value", "");
 
 
             // -- Links --
@@ -1900,8 +1913,14 @@ define([
                         currentFieldWidget.attr("value", false, true);
                     } else if (currentFieldWidget instanceof DateTextBox) {
                         currentFieldWidget.attr("value", null, true);
-                    } else
-                        currentFieldWidget.attr("value", "", true);
+                    } else {
+                        if (currentFieldWidget.valueAsTableData) {
+                            currentFieldWidget.attr("value", [], true);
+                        } else {
+                            currentFieldWidget.attr("value", "", true);
+                            
+                        }
+                    }
                 });
             }
 
@@ -1912,24 +1931,16 @@ define([
                     var currentField = additionalFields[index];
                     var currentFieldWidget = registry.byId(currentField.identifier);
                     if (currentFieldWidget instanceof CustomGrid) {
-                        //console.debug("additional field cannot be set: " + currentField.identifier);
                         // it must be a slickGrid
                         var grid = gridManager[currentField.identifier];
                         if (grid === null) {
                             console.debug("additional field cannot be set: " + currentField.identifier);
-                            break;
+                            return null;
                         }
-                        var rowData = [];
-                        array.forEach(currentField.tableRows, function(row) {
-                            var columnData = {};
-                            array.forEach(row, function(col) {
-                                if (col.listId == -1)
-                                    columnData[col.identifier] = col.value;
-                                else
-                                    columnData[col.identifier] = col.listId;
-                            });
-                            rowData.push(columnData);
-                        });
+                        
+                        var rowData = this.prepareBackendDataForGrid(currentField);
+                        if (rowData === null) break;
+                        
                         grid.setData(rowData);
                         grid.render();
                     } else {
@@ -1949,8 +1960,14 @@ define([
                                 }), true);
                             } else if (currentFieldWidget instanceof CheckBox) {
                                 currentFieldWidget.attr("value", currentField.value == "true", true);
-                            } else
-                                currentFieldWidget.attr("value", currentField.value, true);
+                            } else {
+                                if (currentFieldWidget.valueAsTableData) {
+                                    currentFieldWidget.attr("value", currentField.tableRows, true);
+                                } else {                                    
+                                    currentFieldWidget.attr("value", currentField.value, true);
+                                }
+                                
+                            }
                         }
                     }
                 }
@@ -1965,6 +1982,21 @@ define([
             this._setObjectDataClass5(nodeData);
             this._setObjectDataClass6(nodeData);
 
+        },
+        
+        prepareBackendDataForGrid: function(currentField) {
+            var rowData = [];
+            array.forEach(currentField.tableRows, function(row) {
+                var columnData = {};
+                array.forEach(row, function(col) {
+                    if (col.listId == -1)
+                        columnData[col.identifier] = col.value;
+                    else
+                        columnData[col.identifier] = col.listId;
+                });
+                rowData.push(columnData);
+            });
+            return rowData;
         },
 
         _connectSharedStore: function() {
@@ -2028,6 +2060,7 @@ define([
 
         _setObjectDataClass1: function(nodeData) {
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+            if (nodeData.inspireRelevant) registry.byId(nodeData.inspireConform ? "isInspireConform" : "notInspireConform").attr("value", true, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, false);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
             registry.byId("ref1ObjectIdentifier").attr("value", nodeData.ref1ObjectIdentifier, true);
@@ -2040,6 +2073,7 @@ define([
             UtilStore.updateWriteStore("ref1SpatialSystem", UtilList.listToTableData(nodeData.ref1SpatialSystemTable));
 
             registry.byId("ref1AltAccuracy").attr("value", nodeData.ref1AltAccuracy, true);
+            registry.byId("ref1GridPosAccuracy").attr("value", nodeData.ref1GridPosAccuracy, true);
             registry.byId("ref1PosAccuracy").attr("value", nodeData.ref1PosAccuracy, true);
             registry.byId("ref1BasisText").attr("value", nodeData.ref1BasisText, true);
             registry.byId("ref1DataBasisText").attr("value", nodeData.ref1DataBasisText, true);
@@ -2085,6 +2119,7 @@ define([
 
         _setObjectDataClass3: function(nodeData) {
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+            if (nodeData.inspireRelevant) registry.byId(nodeData.inspireConform ? "isInspireConform" : "notInspireConform").attr("value", true, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, true);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
             //registry.byId("ref3ServiceType")._lastValueReported = nodeData.ref3ServiceType + "";
@@ -2143,6 +2178,7 @@ define([
 
         _setObjectDataClass6: function(nodeData) {
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+            if (nodeData.inspireRelevant) registry.byId(nodeData.inspireConform ? "isInspireConform" : "notInspireConform").attr("value", true, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, true);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
             registry.byId("ref6ServiceType").attr("value", nodeData.ref6ServiceType, true);
@@ -2202,6 +2238,7 @@ define([
 
             // ------------------ Address and Function ------------------
             nodeData.street = registry.byId("addressStreet").get("value");
+            nodeData.administrativeArea = registry.byId("addressAdministrativeArea").get("value");
             nodeData.countryCode = registry.byId("addressCountry").get("value");
             nodeData.countryName = registry.byId("addressCountry").get("displayedValue");
             //UtilList.getSelectDisplayValue(registry.byId("addressCountry"), registry.byId("addressCountry").get('value'));//registry.byId("addressCountry").getDisplayValue();
@@ -2262,6 +2299,9 @@ define([
                     // -- Extra Info --
                     nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishAreaAddress3").get("value");
                     break;
+                case 1000:
+                    nodeData.name = registry.byId("addressTitle").get("value");
+                    break;
                 default:
                     console.debug("Error in _getAddressData - Address Class must be 0, 1, 2 or 3!");
                     break;
@@ -2303,8 +2343,10 @@ define([
             // --- General ---
             nodeData.generalShortDescription = registry.byId("generalShortDesc").get("value");
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
-            nodeData.objectClass = registry.byId("objectClass").get("value").substr(5, 1); // Value is a string: "Classx" where x is the class
+            nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
+            nodeData.advCompatible = registry.byId("isAdvCompatible").checked ? true : false; // in case value is NULL!
+            
             // Comments
             nodeData.commentTable = currentUdk.commentStore;
 
@@ -2358,7 +2400,7 @@ define([
 
             // -- Extra Info --
             nodeData.extraInfoLangMetaDataCode = registry.byId("extraInfoLangMetaData").get("value");
-            nodeData.extraInfoLangDataCode = registry.byId("extraInfoLangData").get("value");
+            nodeData.extraInfoLangDataTable = UtilList.tableDataToList(this._getTableData("extraInfoLangData"));
             nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishArea").get("value");
             nodeData.extraInfoCharSetDataCode = registry.byId("extraInfoCharSetData").get("value");
             nodeData.extraInfoConformityTable = this._getTableData("extraInfoConformityTable");
@@ -2381,6 +2423,7 @@ define([
             // -- Thesaurus --
             nodeData.thesaurusTermsTable = this._getTableData("thesaurusTerms");
             nodeData.thesaurusTopicsList = UtilList.tableDataToList(this._getTableData("thesaurusTopics"));
+            nodeData.advProductGroupList = UtilList.tableDataToList(this._getTableData("advProductGroup"));
             nodeData.thesaurusInspireTermsList = UtilList.tableDataToList(this._getTableData("thesaurusInspire"));
             nodeData.thesaurusEnvTopicsList = UtilList.tableDataToList(this._getTableData("thesaurusEnvTopics"));
             nodeData.thesaurusEnvExtRes = registry.byId("thesaurusEnvExtRes").checked;
@@ -2422,56 +2465,16 @@ define([
 
                     // check if field is a table and handle differently
                     if (currentField instanceof CustomGrid) {
-                        // get column ids
-                        var tableData = [];
-                        var columnIds = [];
-
-                        array.forEach(currentField.getColumns(), function(column) {
-                            columnIds.push(column.field);
-                        });
-
-                        array.forEach(currentField.getData(), function(row) {
-                            var rowData = [];
-                            for (var j = 0; j < columnIds.length; j++) {
-                                var value = row[columnIds[j]];
-                                if (value === undefined || value === null) continue;
-
-                                //if (value instanceof Date)
-                                //    value = UtilString.getDateString(value, "dd.MM.yyyy");
-
-                                var listId = "-1";
-                                // get listId from structure element of grid in case it is a list
-                                if (currentField.getColumns()[j].values) {
-                                    var index = array.indexOf(currentField.getColumns()[j].values, value);
-                                    if (index == -1) index = array.indexOf(currentField.getColumns()[j].options, value);
-                                    if (index != -1) {
-                                        listId = currentField.getColumns()[j].values[index];
-                                        value = currentField.getColumns()[j].options[index];
-                                    }
-                                }
-
-                                var columnData = {
-                                    identifier: columnIds[j],
-                                    value: value,
-                                    listId: listId,
-                                    tableRows: null
-                                };
-                                rowData.push(columnData);
-                            }
-                            tableData.push(rowData);
-                        });
-
-                        // add empty rows so that table can be made empty
-                        if (tableData.length === 0) {
-                            tableData.push([]);
-                        }
-
+                        
+                        var tableData = this.prepareGridDataForBackend(currentField);
+                        
                         nodeData.additionalFields.push({
                             identifier: currentField.id,
                             value: null,
                             listId: null,
                             tableRows: tableData
                         });
+                        
                     } else {
                         // if it's a select box we need to get listId and value
                         var value = null;
@@ -2500,13 +2503,24 @@ define([
                             value = currentField.get("displayedValue");
                         }
 
-                        if (value !== null && lang.trim(value + "").length !== 0) {
+                        
+                        if (currentField.valueAsTableData) {
                             nodeData.additionalFields.push({
                                 identifier: identifier,
-                                value: value,
-                                listId: listId,
-                                tableRows: null
+                                value: null,
+                                listId: null,
+                                tableRows: value
                             });
+                        } else {
+                            if (value !== null && lang.trim(value + "").length !== 0) {
+                                nodeData.additionalFields.push({
+                                    identifier: identifier,
+                                    value: value,
+                                    listId: listId,
+                                    tableRows: null
+                                });
+                            }
+                            
                         }
                     }
                 }
@@ -2558,11 +2572,60 @@ define([
             console.debug(nodeData);
             console.debug("------ OBJECT DATA END ------");
         },
+        
+        prepareGridDataForBackend: function(currentField) {
+         // get column ids
+            var tableData = [];
+            var columnIds = [];
+
+            array.forEach(currentField.getColumns(), function(column) {
+                columnIds.push(column.field);
+            });
+
+            array.forEach(currentField.getData(), function(row) {
+                var rowData = [];
+                for (var j = 0; j < columnIds.length; j++) {
+                    var value = row[columnIds[j]];
+                    if (value === undefined || value === null) continue;
+
+                    //if (value instanceof Date)
+                    //    value = UtilString.getDateString(value, "dd.MM.yyyy");
+
+                    var listId = "-1";
+                    // get listId from structure element of grid in case it is a list
+                    if (currentField.getColumns()[j].values) {
+                        var index = array.indexOf(currentField.getColumns()[j].values, value);
+                        if (index == -1) index = array.indexOf(currentField.getColumns()[j].options, value);
+                        if (index != -1) {
+                            listId = currentField.getColumns()[j].values[index];
+                            value = currentField.getColumns()[j].options[index];
+                        }
+                    }
+
+                    var columnData = {
+                        identifier: columnIds[j],
+                        value: value,
+                        listId: listId,
+                        tableRows: null
+                    };
+                    rowData.push(columnData);
+                }
+                tableData.push(rowData);
+            });
+
+            // add empty rows so that table can be made empty
+            if (tableData.length === 0) {
+                tableData.push([]);
+            }
+
+            return tableData;
+        },
 
         _getObjectDataClass0: function() {},
 
         _getObjectDataClass1: function(nodeData) {
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
+            if (nodeData.inspireRelevant) nodeData.inspireConform = registry.byId("isInspireConform").checked ? true : false;
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
             nodeData.ref1ObjectIdentifier = registry.byId("ref1ObjectIdentifier").get("value");
@@ -2571,6 +2634,7 @@ define([
             nodeData.ref1VFormatTopology = registry.byId("ref1VFormatTopology").get("value");
 
             nodeData.ref1AltAccuracy = UtilGeneral.getNumberFromDijit("ref1AltAccuracy");
+            nodeData.ref1GridPosAccuracy = UtilGeneral.getNumberFromDijit("ref1GridPosAccuracy");
             nodeData.ref1PosAccuracy = UtilGeneral.getNumberFromDijit("ref1PosAccuracy");
             nodeData.ref1BasisText = registry.byId("ref1BasisText").get("value");
             nodeData.ref1DataBasisText = registry.byId("ref1DataBasisText").get("value");
@@ -2623,6 +2687,7 @@ define([
 
         _getObjectDataClass3: function(nodeData) {
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
+            if (nodeData.inspireRelevant) nodeData.inspireConform = registry.byId("isInspireConform").checked ? true : false;
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
             nodeData.ref3ServiceType = registry.byId("ref3ServiceType").get("value");
@@ -2679,6 +2744,7 @@ define([
 
         _getObjectDataClass6: function(nodeData) {
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false;
+            if (nodeData.inspireRelevant) nodeData.inspireConform = registry.byId("isInspireConform").checked ? true : false;
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
             nodeData.ref6ServiceType = registry.byId("ref6ServiceType").get("value");
@@ -2802,11 +2868,11 @@ define([
             // if it's a slickgrid
             if (!widget) {
                 // request UNFILTERED data ! Get full data store !
-                return gridManager[tableName].getData(true);
+                return gridManager[tableName].getUnfilteredData();
             } else {
                 //var store = widget.store;
                 //return UtilStore.convertItemsToJS(store, store._arrayOfTopLevelItems);
-                return widget.getData(true);
+                return widget.getUnfilteredData();
             }
             //return registry.byId(tableName).store._arrayOfTopLevelItems;
         }

@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -101,7 +101,7 @@
                     callback: function(res) { updateResultTable(res); updatePageNavigation(res); },
                     errorHandler: function(errMsg, err) {
                         displayErrorMessage(err);
-            //          dialog.show("<fmt:message key='general.error' />", string.substituteParams("<fmt:message key='dialog.generalError' />", errMsg), dialog.WARNING);              
+            //          dialog.show("<fmt:message key='general.error' />", string.substitute("<fmt:message key='dialog.generalError' />", [errMsg]), dialog.WARNING);              
                     }
                 });
             }

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -26,6 +26,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -106,6 +107,8 @@ public class UtilsFacete {
     private static final String SELECTED_GEOTHESAURUS = "selectedGeothesaurus";
     private static final String SELECTED_MAP = "selectedMap";
     
+    private static final String WILDCARD_IDS = "wildcard_ids";
+    
     private static final String PARAMS_GEOTHESAURUS = "geothesaurus";
     private static final String PARAMS_MAP_X1 = "x1";
     private static final String PARAMS_MAP_X2 = "x2";
@@ -122,6 +125,7 @@ public class UtilsFacete {
     private static final String PARAMS_ATTRIBUTE_ORG = "db_org";
     private static final String PARAMS_ATTRIBUTE_TERM_FROM = "term_from";
     private static final String PARAMS_ATTRIBUTE_TERM_TO = "term_to";
+    private static final String PARAMS_WILDCARD = "wildcard";
     
     private static final String FACET_CONFIG = "config";
     
@@ -177,27 +181,26 @@ public class UtilsFacete {
             addDefaultIngridFacets(request, config);
             setAttributeToSession(request, FACET_CONFIG, config);
         }else{
-            if(portalTerm != null && facetTerm != null){
-                if(!portalTerm.equals(facetTerm)){
-                    //Reset config facet values
-                    resetFacetConfigValues(config, null);
-                    setAttributeToSession(request, FACET_CONFIG, config);
-                }
+            if(facetTerm != portalTerm){
+                //Reset config facet values
+                resetFacetConfigValues(config, null);
+                setAttributeToSession(request, FACET_CONFIG, config);
             }
         }
         
         // Get all existing selection keys
-          if(keys == null){
-              keys = getExistingSelectionKeys(request);
-          }
+        if(keys == null){
+            keys = getExistingSelectionKeys(request);
+        }
               
         // Set selection to query
-         setFacetQuery(portalTerm, config, request, query);
+        setFacetQuery(portalTerm, config, request, query);
          
-         addToQueryMap(request, query);
+        addToQueryMap(request, query);
         addToQueryGeothesaurus(request, query);
         addToQueryAttribute(request, query);
         addToQueryAreaAddress(request, query);
+        addToQueryWildcard(request, query);
         
         // Get facet query from config file.
         if(query.get("FACETS") == null){
@@ -230,6 +233,7 @@ public class UtilsFacete {
         setParamsToContextGeothesaurus(request, context);
         setParamsToContextAttribute(request, context);
         setParamsToContextAreaAddress(request, context);
+        setParamsToContextWildcard(request, context);
         
         ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
         sortingFacet(config);
@@ -247,6 +251,7 @@ public class UtilsFacete {
             context.put("isSelection", isAnyFacetConfigSelect(config, (Boolean) getAttributeFromSession(request, "isSelection")));
         }
         context.put( "subFacetsCount", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_FACETE_SUB_COUNT, 5));
+        context.put( "facetMapCenter", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_CENTER));
         // Remove flag
         removeAttributeFromSession(request, "isSelection");
     }
@@ -353,7 +358,7 @@ public class UtilsFacete {
                                         lastSelection.put(tmpFacetKey.getId() + ":" + tmpFacetValue.getId(), tmpFacetValue.getId());
                                     }
                                     if(isFacetConfigSelect(tmpFacetKey.getFacets())){
-                                        tmpFacetKey.setSelect(facetIsSelect);    
+                                        tmpFacetKey.setSelect(facetIsSelect);
                                     }
                                     resetFacetConfigValues(config, null);
                                 }
@@ -408,13 +413,14 @@ public class UtilsFacete {
         setFaceteParamsToSessionGeothesaurus(request);
         setFaceteParamsToSessionAttribute(request);
         setFaceteParamsToSessionAreaAddress(request);
+        setFaceteParamsToSessionWildcard(request);
         
         // Create facet params URL
         setFacetUrlParamsToUrl(request, facetUrl);
         
         String sFacetUrl = facetUrl.toString();
         if(sFacetUrl.equals("&f=") == false){
-            return facetUrl.toString();    
+            return facetUrl.toString();
         }
         return "";
     }
@@ -486,7 +492,7 @@ public class UtilsFacete {
                         setAttributeToSession(request, FACET_CONFIG, config);
                     }
                 }
-            }        
+            }
             
             if (elementsMap != null){
                 setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
@@ -498,6 +504,105 @@ public class UtilsFacete {
         checkNonFacetsIplugs(hits.getHits(), request);
     }
 
+    /***************************** WILDCARD ***********************************************/
+
+    private static void setParamsToContextWildcard(RenderRequest request, Context context) {
+        ArrayList<String> wildcardIds = (ArrayList<String>) getAttributeFromSession( request, WILDCARD_IDS );
+        if(wildcardIds != null && wildcardIds.size() > 0){
+            HashMap<String, HashMap<String, String>> wildcardMap = new HashMap<String, HashMap<String, String>>();
+            for (String wildcardId : wildcardIds) {
+                HashMap<String, String> wildcard = (HashMap<String, String>) getAttributeFromSession( request, wildcardId );
+                if(wildcard != null){
+                    wildcardMap.put( wildcardId, wildcard );
+                }
+            }
+            if(wildcardMap.size() > 0){
+                setFacetSelectionState(context, request, "isWildcardSelect", true);
+                context.put( "wildcardMap", wildcardMap );
+            }else{
+                setFacetSelectionState(context, request, "isWildcardSelect", false);
+            }
+        }else{
+            setFacetSelectionState(context, request, "isWildcardSelect", false);
+        }
+    }
+
+    private static void setFaceteParamsToSessionWildcard(ActionRequest request) {
+        String id = (String) request.getParameter( "wildcard_id" );
+        String wildcardKey = (String) request.getParameter( "wildcard" );
+        String term = null;
+        String action = null;
+        String actionClear = null;
+        
+        if(id != null){
+            HashMap<String, String> wildcard = (HashMap<String, String>) getAttributeFromSession( request, id );
+            ArrayList<String> wildcardIds = (ArrayList<String>) getAttributeFromSession( request, WILDCARD_IDS );
+            
+            Enumeration<String> paramNames = request.getParameterNames();
+            while (paramNames.hasMoreElements()) {
+                String paramName = (String) paramNames.nextElement();
+                String paramValue = (String) request.getParameter( paramName );
+                if(paramName.indexOf( "termWildcard" ) > -1){
+                    term = paramValue;
+                }else if(paramName.indexOf( "doSearchWildcard" ) > -1){
+                    action = paramValue;
+                }else if(paramName.indexOf( "doClearSearchWildcard" ) > -1){
+                    actionClear = paramName;
+                }
+            }
+            if(id != null && term != null && action != null){
+                if(term.trim().length() > 0){
+                    if(wildcard == null){
+                        wildcard  = new HashMap<String,String>();
+                    }
+                    wildcard.put( "wildcard", wildcardKey );
+                    wildcard.put( "term", term );
+                    setAttributeToSession(request, id, wildcard, true);
+                    
+                    if(wildcardIds == null){
+                        wildcardIds = new ArrayList<String>();
+                    }
+                    wildcardIds.add( id );
+                    setAttributeToSession(request, WILDCARD_IDS, wildcardIds );
+                }
+            }else if(actionClear != null){
+                if(wildcardIds != null){
+                    wildcardIds.remove( id );
+                    if(wildcardIds.size() == 0 ){
+                        removeAttributeFromSession( request, id);
+                    }else{
+                        setAttributeToSession(request, WILDCARD_IDS, wildcardIds );
+                    }
+                }
+                removeAttributeFromSession( request, id);
+            }
+        }
+    }
+
+    private static void addToQueryWildcard(PortletRequest request, IngridQuery query) {
+        ArrayList<String> wildcardIds = (ArrayList<String>) getAttributeFromSession( request, WILDCARD_IDS );
+        if(wildcardIds != null){
+            for (String wildcardId : wildcardIds) {
+                if(wildcardId != null){
+                    boolean required = true;
+                    boolean prohibited = false;
+                    String fieldName = null;
+                    String wildCardValue = null;
+                    
+                    HashMap<String, String> wildcard = (HashMap<String, String>) getAttributeFromSession(request, wildcardId);
+                    if(wildcard != null){
+                        fieldName = wildcard.get( "wildcard" );
+                        wildCardValue = wildcard.get( "term" );
+                        if(wildCardValue != null && wildCardValue.length() > 0 && wildCardValue.indexOf("*") == -1){
+                            wildCardValue = wildCardValue + "*";
+                        }
+                        query.addWildCardFieldQuery( new WildCardFieldQuery( required, prohibited, fieldName, wildCardValue ) );
+                    }
+                }
+            }
+        }
+    }
+    
     /***************************** KARTE ***********************************************/
     
     @SuppressWarnings("rawtypes")
@@ -527,10 +632,10 @@ public class UtilsFacete {
                     webmapclientCoords.put("x1", request.getParameter("x1"));
                 }
                 if(request.getParameter("x2") != null){
-                    webmapclientCoords.put("x2", request.getParameter("x2"));    
+                    webmapclientCoords.put("x2", request.getParameter("x2"));
                 }                
                 if(request.getParameter("y1") != null){
-                    webmapclientCoords.put("y1", request.getParameter("y1"));                            
+                    webmapclientCoords.put("y1", request.getParameter("y1"));
                 }
                 if(request.getParameter("y2") != null){
                     webmapclientCoords.put("y2", request.getParameter("y2"));
@@ -539,26 +644,18 @@ public class UtilsFacete {
                     doMapCoords = new HashMap<String, String>();
                     for(int i=0; i < coordOptions.size(); i++){
                         String searchTerm = "";
-                        //TODO implement areaid search
-    //                        if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_BBOX) {
-                            if(request.getParameter("x1") != null){
-                                searchTerm = webmapclientCoords.get("x1").concat("' O / ");
-                            }
-                            if(request.getParameter("y1") != null){
-                                searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat("' N");    
-                            }                
-                            searchTerm = searchTerm.concat("<br>");
-                            if(request.getParameter("x2") != null){
-                                searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat("' O / ");                            
-                            }
-                            if(request.getParameter("y2") != null){
-                                searchTerm = searchTerm.concat(webmapclientCoords.get("y2")).concat("' N");
-                            } 
-                            
-                            searchTerm = searchTerm.concat("<br>" +  coordOptions.get(i));
-    //                        } else if (wmsDescriptor.getType() == WMSSearchDescriptor.WMS_SEARCH_COMMUNITY_CODE) {
-    //                            searchTerm = searchTerm.concat("areaid:").concat(wmsDescriptor.getCommunityCode());
-    //                        }
+                        if(request.getParameter("x1") != null){
+                            searchTerm = webmapclientCoords.get("x1").concat(", ");
+                        }
+                        if(request.getParameter("y1") != null){
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("y1")).concat(", ");
+                        }
+                        if(request.getParameter("x2") != null){
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("x2")).concat(", ");
+                        }
+                        if(request.getParameter("y2") != null){
+                            searchTerm = searchTerm.concat(webmapclientCoords.get("y2"));
+                        }
                         doMapCoords.put(coordOptions.get(i), searchTerm);
                     }
                 }
@@ -606,7 +703,6 @@ public class UtilsFacete {
         }else{
             setFacetSelectionState(context, request, "isMapSelect", false);
         }
-        context.put("webmapDebugMode", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_WEBMAPCLIENT_DEBUG, false));
     }
     
     @SuppressWarnings("rawtypes")
@@ -747,7 +843,7 @@ public class UtilsFacete {
                             }
                             selectedGeothesaurus.put(GEOTHESAURUS_SELECTED_TOPICS_IDS, selectedIds);
                             if(selectedIds.size() > 0){
-                                setAttributeToSession(request, SELECTED_GEOTHESAURUS, selectedGeothesaurus, true);                                
+                                setAttributeToSession(request, SELECTED_GEOTHESAURUS, selectedGeothesaurus, true);
                             }else{
                                 removeAttributeFromSession(request, SELECTED_GEOTHESAURUS);
                             }
@@ -764,7 +860,7 @@ public class UtilsFacete {
                 removeAttributeFromSession(request, GEOTHESAURUS_CURRENT_TOPIC);
                 
                 String geothesaurusTerm = null;
-                SearchExtEnvPlaceGeothesaurusForm f = (SearchExtEnvPlaceGeothesaurusForm) Utils.getActionForm(request, SearchExtEnvPlaceGeothesaurusForm.SESSION_KEY, SearchExtEnvPlaceGeothesaurusForm.class);        
+                SearchExtEnvPlaceGeothesaurusForm f = (SearchExtEnvPlaceGeothesaurusForm) Utils.getActionForm(request, SearchExtEnvPlaceGeothesaurusForm.SESSION_KEY, SearchExtEnvPlaceGeothesaurusForm.class);
                 f.clearErrors();
                 f.populate(request);
                 if (f.validate()) {
@@ -847,7 +943,7 @@ public class UtilsFacete {
                 }
             }
             
-            if(doClearSearchGeothesaurus != null){
+            if(doClearSearchGeothesaurus != null || doAddGeothesaurus != null){
                 removeAttributeFromSession(request, GEOTHESAURUS_TERM);
                 removeAttributeFromSession(request, GEOTHESAURUS_TOPICS);
                 removeAttributeFromSession(request, GEOTHESAURUS_SIMILAR_TOPICS);
@@ -895,7 +991,7 @@ public class UtilsFacete {
         }
         if(geothesaurusSelectTopicsSorted != null && geothesaurusSelectTopicsSorted.size() > 0){
             
-            context.put("geothesaurusSelectTopics", geothesaurusSelectTopicsSorted);
+            context.put(GEOTHESAURUS_SELECTED_TOPICS, geothesaurusSelectTopicsSorted);
             setFacetSelectionState(context, request, "isGeothesaurusSelect", true);
         }else{
             setFacetSelectionState(context, request, "isGeothesaurusSelect", false);
@@ -993,7 +1089,7 @@ public class UtilsFacete {
             }
         }
         if(!isFound){
-            allGeoThesaurusTopics.add(ingridHit);    
+            allGeoThesaurusTopics.add(ingridHit);
         }
         setAttributeToSession(request, GEOTHESAURUS_ALL_TOPICS, allGeoThesaurusTopics, false);
     }
@@ -1081,7 +1177,7 @@ public class UtilsFacete {
         HashMap<String, String>  attribute = (HashMap<String, String>) getAttributeFromSession(request, "doAddAttribute");
         if(attribute != null && attribute.size() > 0 ){
             setFacetSelectionState(context, request, "isAttributeSelect", true);
-            context.put("doAddAttribute", getAttributeFromSession(request, "doAddAttribute"));    
+            context.put("doAddAttribute", getAttributeFromSession(request, "doAddAttribute"));
         }else{
             setFacetSelectionState(context, request, "isAttributeSelect", false);
         }
@@ -1118,7 +1214,7 @@ public class UtilsFacete {
         HashMap<String, String> areaAddress = null;
         
         if(doAddAreaAddress != null){
-            SearchExtAdrPlaceReferenceForm f = (SearchExtAdrPlaceReferenceForm) Utils.getActionForm(request, SearchExtAdrPlaceReferenceForm.SESSION_KEY, SearchExtAdrPlaceReferenceForm.class);        
+            SearchExtAdrPlaceReferenceForm f = (SearchExtAdrPlaceReferenceForm) Utils.getActionForm(request, SearchExtAdrPlaceReferenceForm.SESSION_KEY, SearchExtAdrPlaceReferenceForm.class);
             f.clearErrors();
 
             f.populate(request);
@@ -1168,7 +1264,7 @@ public class UtilsFacete {
         HashMap<String, String> areaAddress = (HashMap<String, String>) getAttributeFromSession(request, "doAddAreaAddress");
         if(areaAddress != null && areaAddress.size() > 0 ){
             setFacetSelectionState(context, request, "isAreaAddressSelect", true);
-            context.put("doAddAreaAddress", getAttributeFromSession(request, "doAddAreaAddress"));    
+            context.put("doAddAreaAddress", getAttributeFromSession(request, "doAddAreaAddress"));
         }else{
             setFacetSelectionState(context, request, "isAreaAddressSelect", false);
         }
@@ -1326,7 +1422,7 @@ public class UtilsFacete {
                     if(key != null && value != null){
                         HashMap<String, Long> map = new HashMap<String, Long>();
                         map.put(key, input.get(key));
-                        sortedInput.add(map);    
+                        sortedInput.add(map);
                     }
                        
                 }
@@ -1534,20 +1630,17 @@ public class UtilsFacete {
                 for(int i=0; i < paramsOptions.size(); i++){
                     String value = "";
                     if(getFacetParam(paramsFacet, "x1") != null){
-                        value = coords.get("x1").concat("' O / ");
+                        value = coords.get("x1").concat(", ");
                     }
                     if(getFacetParam(paramsFacet, "y1") != null){
-                        value = value.concat(coords.get("y1")).concat("' N");    
-                    }                
-                    value = value.concat("<br>");
+                        value = value.concat(coords.get("y1")).concat(", ");
+                    }
                     if(getFacetParam(paramsFacet, "x2") != null){
-                        value = value.concat(coords.get("x2")).concat("' O / ");                            
+                        value = value.concat(coords.get("x2")).concat(", ");
                     }
                     if(getFacetParam(paramsFacet, "y2") != null){
-                        value = value.concat(coords.get("y2")).concat("' N");
-                    } 
-                    
-                    value = value.concat("<br>" +  paramsOptions.get(i));
+                        value = value.concat(coords.get("y2"));
+                    }
                     selectedMap.put(paramsOptions.get(i), value);
                 }
                 HashMap mapHashMap = new HashMap();
@@ -1555,6 +1648,29 @@ public class UtilsFacete {
                 mapHashMap.put("coordOptions", paramsOptions);
                 mapHashMap.put("doMapCoords", selectedMap);
                 setAttributeToSession(request, SELECTED_MAP, mapHashMap);
+            }
+            
+            // Wildcard
+            ArrayList<String> paramsWildcard = getFacetParamsList(paramsFacet, PARAMS_WILDCARD);
+            if(paramsWildcard != null && paramsWildcard.size() > 0){
+                ArrayList<String> wildcardIds = new ArrayList<String>();
+                for (String paramWildcard : paramsWildcard) {
+                    String[] splitParam = paramWildcard.split( "," );
+                    if(splitParam.length == 3){
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        String id = splitParam[0];
+                        String wildcard = splitParam[1];
+                        String term = splitParam[2];
+                        
+                        map.put( "wildcard", wildcard );
+                        map.put( "term", term );
+                        setAttributeToSession(request, id, map);
+                        wildcardIds.add( id );
+                    }
+                }
+                if(wildcardIds.size() > 0){
+                    setAttributeToSession(request, WILDCARD_IDS, wildcardIds);
+                }
             }
             
             // Config
@@ -1732,6 +1848,34 @@ public class UtilsFacete {
                 appendURLParameterFacet(facetUrl, toURLParamFacet(PARAMS_ATTRIBUTE_TERM_TO, attribute.get(SearchExtResTopicAttributesForm.FIELD_TERM_TO)));
             }
         }
+        
+        // Wildcard
+        if(getAttributeFromSession(request, WILDCARD_IDS) != null){
+            ArrayList<String> wildcardIds = (ArrayList<String>) getAttributeFromSession(request, WILDCARD_IDS);
+            if(wildcardIds != null && wildcardIds.size() > 0){
+                for (String wildcardId : wildcardIds) {
+                    HashMap<String, String> map = (HashMap<String, String>) getAttributeFromSession( request, wildcardId );
+                    if(map != null){
+                        String wildcard = map.get( "wildcard" );
+                        String term = map.get( "term" );
+                        String param = "";
+                        if(wildcardId != null){
+                            param = param.concat( wildcardId );
+                        }
+                        if(wildcard != null){
+                            param = param.concat( "," );
+                            param = param.concat( wildcard );
+                        }
+                        if(term != null){
+                            param = param.concat( "," );
+                            param = param.concat( term );
+                        }
+                        appendURLParameterFacet(facetUrl, toURLParamFacet("wildcard", param));
+                    }
+                }
+            }
+            
+        }
         ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
         if(config != null){
             addConfigParamsToURL(config, facetUrl, null);
@@ -1869,7 +2013,7 @@ public class UtilsFacete {
                             rightValue = Long.parseLong(((IngridFacet) right).getFacetValue());
                         }
                     }
-                    return leftValue.compareTo(rightValue);    
+                    return leftValue.compareTo(rightValue);
                 }
             });
         }else if(sorting.equals("SORT_BY_VALUE_DESC")){
@@ -1887,7 +2031,7 @@ public class UtilsFacete {
                             rightValue = Long.parseLong(((IngridFacet) right).getFacetValue());
                         }
                     }
-                    return leftValue.compareTo(rightValue) * (-1);    
+                    return leftValue.compareTo(rightValue) * (-1);
                 }
             });
         }else if(sorting.equals("SORT_BY_NAME")){
@@ -1905,7 +2049,7 @@ public class UtilsFacete {
                             rightValue = ((IngridFacet) right).getName(); 
                         }
                     }
-                    return leftValue.compareTo(rightValue);    
+                    return leftValue.compareTo(rightValue);
                 }
             });
         }
@@ -2033,20 +2177,22 @@ public class UtilsFacete {
                 if(ingridFacet.getParent() != null){
                     if((!ingridFacet.getParent().getId().equals("topic") || isAll) && !ingridFacet.getParent().getId().equals("partner") && !ingridFacet.getParent().getId().equals("provider")){
                         if(facetId != null){
-                            if(ingridFacet.getParent() != null){
-                                if(ingridFacet.getParent().getDependency() == null){
-                                    // Set sub facets by no define dependency
-                                    HashMap<String, String> facetEntry = new HashMap<String, String>();
-                                    facetEntry.put("id", facetId);
-                                    facetEntry.put("query", facetQuery);
-                                    facetList.add(facetEntry);
-                                }else{
-                                    // Set sub facets only by selected dependency
-                                    if(ingridFacet.getParent().isDependencySelect()){
+                            if(facetQuery != null){
+                                if(ingridFacet.getParent() != null){
+                                    if(ingridFacet.getParent().getDependency() == null){
+                                        // Set sub facets by no define dependency
                                         HashMap<String, String> facetEntry = new HashMap<String, String>();
                                         facetEntry.put("id", facetId);
                                         facetEntry.put("query", facetQuery);
                                         facetList.add(facetEntry);
+                                    }else{
+                                        // Set sub facets only by selected dependency
+                                        if(ingridFacet.getParent().isDependencySelect()){
+                                            HashMap<String, String> facetEntry = new HashMap<String, String>();
+                                            facetEntry.put("id", facetId);
+                                            facetEntry.put("query", facetQuery);
+                                            facetList.add(facetEntry);
+                                        }
                                     }
                                 }
                             }
@@ -2060,11 +2206,13 @@ public class UtilsFacete {
                     }
                 }else{
                     if(facetId != null){
-                        if(ingridFacet.getParent() != null){
-                            HashMap<String, String> facetEntry = new HashMap<String, String>();
-                            facetEntry.put("id", facetId);
-                            facetEntry.put("query", facetQuery);
-                            facetList.add(facetEntry);
+                        if(facetQuery != null){
+                            if(ingridFacet.getParent() != null){
+                                HashMap<String, String> facetEntry = new HashMap<String, String>();
+                                facetEntry.put("id", facetId);
+                                facetEntry.put("query", facetQuery);
+                                facetList.add(facetEntry);
+                            }
                         }
                         if(ingridFacet.getFacets() != null){
                               getConfigFacetQuery(ingridFacet.getFacets(), facetQueries, false, facetId, isAll);
@@ -2152,19 +2300,19 @@ public class UtilsFacete {
                 query.addTerm(tmp);
             }
             for(ClauseQuery tmp : tmpQuery.getClauses()){
-                query.addClause(tmp);    
+                query.addClause(tmp);
             }
             for(FieldQuery tmp : tmpQuery.getDataTypes()){
-                query.addField(tmp);    
+                query.addField(tmp);
             }
             for(FieldQuery tmp : tmpQuery.getFields()){
-                query.addField(tmp);    
+                query.addField(tmp);
             }
             for(WildCardFieldQuery tmp : tmpQuery.getWildCardFieldQueries()){
-                query.addWildCardFieldQuery(tmp);    
+                query.addWildCardFieldQuery(tmp);
             }
             for(WildCardTermQuery tmp : tmpQuery.getWildCardTermQueries()){
-                query.addWildCardTermQuery(tmp);    
+                query.addWildCardTermQuery(tmp);
             }
             for(FuzzyFieldQuery tmp : tmpQuery.getFuzzyFieldQueries()){
                 query.addFuzzyFieldQuery(tmp);
@@ -2173,17 +2321,17 @@ public class UtilsFacete {
                 query.addFuzzyTermQuery(tmp);
             }
             for(RangeQuery tmp : tmpQuery.getRangeQueries()){
-                query.addRangeQuery(tmp);    
+                query.addRangeQuery(tmp);
             }
             if(tmpQuery.get("partner") != null){
                 for(FieldQuery tmp : (ArrayList<FieldQuery>)tmpQuery.get("partner")){
-                    query.addField(tmp);    
+                    query.addField(tmp);
                 }
                     
             }
             if(tmpQuery.get("provider") != null){
                 for(FieldQuery tmp : (ArrayList<FieldQuery>)tmpQuery.get("provider")){
-                    query.addField(tmp);    
+                    query.addField(tmp);
                 }
             }
         }

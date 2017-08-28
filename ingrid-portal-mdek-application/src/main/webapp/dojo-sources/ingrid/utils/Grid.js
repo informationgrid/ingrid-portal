@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,8 +24,9 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/aspect",
+    "dijit/registry",
     "ingrid/message"
-], function(declare, array, aspect, message) {
+], function(declare, array, aspect, registry, message) {
 
     // make var global for backward compatibility
     UtilGrid = declare(null, {
@@ -44,7 +45,7 @@ define([
         // ALWAYS filters if not true argument passed (and if rowFilter is set on table) !
         // So visible data is returned and frontend works the usual way with row indexes !
         getTableData: function(grid, doNOTFilter) {
-            return gridManager[grid].getData(doNOTFilter);
+            return registry.byId(grid).getData(doNOTFilter);
         },
 
         setTableData: function(gridId, data) {
@@ -199,6 +200,11 @@ define([
             this.getTable(grid).setSelectedRows(selection);
         },
 
+        /**
+         * Remove a row from a table.
+         * @param {string} grid 
+         * @param {number[]} itemIndexes 
+         */
         removeTableDataRow: function(grid, itemIndexes) {
             var refresh = false;
 
@@ -235,6 +241,8 @@ define([
                 array.forEach(sortedIndexes, function(rowNr) {
                     deletedData.push(data.splice(rowNr - (decr++), 1)[0]);
                 });
+                // data might not be referenced if it was altered by aspect.after
+                this.setTableData(grid, data);
                 if (refresh) this.getTableData(grid).refresh();
             }
 

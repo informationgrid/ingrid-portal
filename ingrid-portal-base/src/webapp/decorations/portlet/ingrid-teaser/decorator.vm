@@ -6,6 +6,7 @@
 #set($sectionStyle = "")
 #set($divStyle = "ob-box-wide ob-box-padded ob-box-center")
 #set($articleStyle = "content ob-container")
+#set($extendSpace = "")
 
 ## Jetspeed style values
 #set($titleTagJetspeed = $jetspeed.getPreferenceFirstValue($f, 'titleTag'))
@@ -31,6 +32,11 @@
 #set($articleStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'articleStyle'))
 #if($articleStyleJetspeed && $articleStyleJetspeed.length() > 0)
     #set($articleStyle = $articleStyleJetspeed)
+#end
+
+#set($extendSpaceJetspeed = $jetspeed.getPreferenceFirstValue($f, 'extendSpace'))
+#if($extendSpaceJetspeed && $extendSpaceJetspeed.length() > 0)
+    #set($extendSpace = $extendSpaceJetspeed)
 #end
 
 <section id="${f.id}" class="block $sectionStyle">
@@ -59,4 +65,12 @@
         </article>
     </div>
 </section>
+#if($extendSpace == 1)
+    <section class="block block--padded">
+        <div class="ob-box-wide ob-box-padded ob-box-center">
+            <article class="content ob-container">
+            </article>
+        </div>
+    </section>
+#end
 ## END: Fragment: ${f.id} Decoration: ${decoratorId}

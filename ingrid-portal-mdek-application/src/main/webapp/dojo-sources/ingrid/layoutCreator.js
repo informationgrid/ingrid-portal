@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -129,7 +129,7 @@ define([
                         options.enableAddRow = gridProperties.interactive == "true";
                         options.editable = true;
                     }
-                    if (gridProperties.forceGridHeight) {
+                    if (gridProperties.forceGridHeight !== undefined) {
                         options.forceGridHeight = gridProperties.forceGridHeight == "true";
                     }
                     if (gridProperties.defaultHideScrollbar) {
@@ -234,6 +234,15 @@ define([
              */
             createFilteringSelect: function(id, node, storeProps, initDataCallback, url) {
                 var selectProperties = UtilDOM.getHTMLAttributes(id);
+                if (selectProperties.autoComplete === "false") {
+                	selectProperties.autoComplete = false;
+                }
+                
+                if (!selectProperties.queryExpr) {
+                	// search 'contains' by default
+                	selectProperties.queryExpr = "*${0}*";
+                }
+
                 var def2 = new Deferred();
                 this.getFileStoreInit("combo", storeProps, initDataCallback, url)
                 .then(function(store) {
@@ -442,8 +451,8 @@ define([
             createDomDatebox: function(additionalField) {
                 var inputWidget = new DateTextBox({
                     id: this.additionalFieldPrefix + additionalField.id,
-                    name: additionalField.name,
-                    style: "width:100%;"
+                    name: additionalField.name
+                    // style: "width:100%;" // Datebox does not look nice when to big
                 });
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },
@@ -527,11 +536,12 @@ define([
                 
                 var gridWidget = this.createDataGrid(additionalField.id, null, structure, null, {
                     interactive: "true",
-                    autoHeight: additionalField.rows
+                    autoHeight: additionalField.rows,
+                    forceGridHeight: additionalField.forceGridHeight
                 });
             },
 
-            createDomCheckbox: function(additionalField, section) {
+            createDomCheckbox: function(additionalField) {
                 var inputWidget = new dijit.form.CheckBox({
                     id: this.additionalFieldPrefix + additionalField.id,
                     name: additionalField.name

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -27,6 +27,11 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.ingrid.portal.portlets.MeasuresSearchPortlet;
+
 /**
  * Resource bundle extending default functionality, e.g. also
  * taking other resources into account when requesting localized resource.
@@ -35,6 +40,8 @@ import java.util.ResourceBundle;
  * in constructor !
  */
 public class IngridResourceBundle {
+
+    private final static Logger log = LoggerFactory.getLogger(IngridResourceBundle.class);
 
     /** ResourceBundle may be from Jetspeed: e.g. InlinePortletResourceBundle.
      * Then getLocale returns null :(  */
@@ -123,6 +130,7 @@ public class IngridResourceBundle {
             ResourceBundle commonRes = ResourceBundle.getBundle("de.ingrid.portal.resources.CommonResources", this.bundleLocale);
             return commonRes.getString(key);
         } catch (Exception e) {
+            log.debug("Error getting resource value for key: '" + key + "'.");
             return key;
         }
     }

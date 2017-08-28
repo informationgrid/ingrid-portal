@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -237,11 +237,16 @@ define([
                 array.forEach(list, function(entry) {
                     entry.label = entry.title;
                     entry.sourceString = entry.source;
+                    // NO, this is SNS specific and not valid anymore !
+                    // We use alternateTitle in GEMET for different localization of term !
+                    // see https://dev.informationgrid.eu/redmine/issues/363
+/*
                     if (entry.alternateTitle && entry.alternateTitle != entry.title) {
                         // if UMTHES and GEMET is different then show "UMTHES/GEMET"
                         entry.label = entry.alternateTitle + " / " + entry.title;
                         entry.sourceString = "UMTHES/GEMET";
                     }
+*/
                 });
                 return list;
 
@@ -288,12 +293,6 @@ define([
                 });
             } else {
                 return "???";
-                array.some(selectbox.store._arrayOfTopLevelItems, function(item) {
-                    if (item[1] == strValue) {
-                        dispValue = item[0];
-                        return true;
-                    }
-                });
             }
             return dispValue;
         },

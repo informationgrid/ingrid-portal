@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -279,7 +279,7 @@ a.resultText.selected { color:#C21100; }
 
                 registry.byId("researchThesaurusTabContainer").selectChild("thesaurusResultPane");
 
-                SNSService.findTopics(queryTerm, userLocale, {
+                SNSService.findTopicsContains(queryTerm, userLocale, {
                     preHook: showLoadingZone,
                     postHook: hideLoadingZone,
                     callback:function(result) {

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -258,7 +258,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 if(initalQuery.length() > 0){
                     setUpQuery(request, initalQuery, true);
                 }
-            } else if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && request.getParameter("q") == null){
+            } else if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && (request.getParameter("q") == null || request.getParameter("q").trim().length() == 0)){
                 String initalQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_SEARCH_EMPTY_QUERY, "" ).trim();
                 if(initalQuery.length() > 0){
                     setUpQuery(request, initalQuery, true);

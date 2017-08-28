@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -27,11 +27,12 @@ define("ingrid/tree/ThesaurusTree", [
     "dojo/window",
     "dojo/Deferred",
     "dijit/Tree",
+    "ingrid/message",
     "ingrid/tree/SnsStore",
     "ingrid/utils/Tree",
     "dojo/store/Observable",
     "dijit/tree/ObjectStoreModel"
-], function(declare, array, lang, wnd, Deferred, Tree, SnsStore, UtilTree, Observable, ObjectStoreModel) {
+], function(declare, array, lang, wnd, Deferred, Tree, message, SnsStore, UtilTree, Observable, ObjectStoreModel) {
 
     var ThesaurusTree = declare( "ingrid.tree.ThesaurusTree", [ Tree ], {
 
@@ -40,6 +41,7 @@ define("ingrid/tree/ThesaurusTree", [
                 data: [],
                 serviceType: this.service,
                 rootUrl: this.rootUrl,
+                showStatus: this.showStatus,
                 getChildren: function(object){
                     // Add a getChildren() method to store for the data model where
                     // children objects point to their parent (aka relational model)
@@ -101,8 +103,6 @@ define("ingrid/tree/ThesaurusTree", [
                 // preHook: this.showLoadingZone,
                 // postHook: this.hideLoadingZone,
                 callback: function(res) {
-                    _this.showStatus("");
-                    //var topTerm = _this._getTopTermNode(res[0]);
                     console.debug("expandPath");
                     var path = _this.preparePath(res[0]);
                     _this.set("paths", [path])
@@ -113,11 +113,11 @@ define("ingrid/tree/ThesaurusTree", [
                     });
                 },
                 errorHandler: function(msg) {
-                    _this.showStatus("<fmt:message key='sns.connectionError' />");
+                    _this.showStatus(message.get("sns.connectionError"));
                     def.reject();
                 },
                 exceptionHandler: function(msg) {
-                    _this.showStatus("<fmt:message key='sns.connectionError' />");
+                    _this.showStatus(message.get("sns.connectionError"));
                     def.reject();
                 }
             });

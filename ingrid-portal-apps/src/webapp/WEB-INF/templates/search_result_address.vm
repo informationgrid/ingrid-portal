@@ -7,13 +7,17 @@
 #end
 <div id="searchResult">
     #if($enableFacete)
-        #renderSearchResultFacetFilter()
+        #renderSearchResultFacetFilter( "is-active" )
     #end
     <article class="content ob-container">
         <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
-        #parse ('/WEB-INF/templates/include_search_result_navigation.vm')
+        <hr class="hr-small-full">
+        #if($enableFacetSelection > 0 || $isSelection)
+            #renderSearchResultFacetSelection($facetConfig $MESSAGES)
+        <hr class="hr-small-full" style="margin-top:0.175rem;">
+        #end
+        ##parse ('/WEB-INF/templates/include_search_result_navigation.vm')
         #parse ('/WEB-INF/templates/include_search_result_filter.vm')
-        <br />
         #if($rankedResultList && "$rankedResultList.length()" != "0")
             #foreach($rs in $rankedResultList.getWrapperHits())
                 #if($grouping)

@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -39,117 +39,37 @@ define(["dojo/_base/declare",
         "ingrid/utils/Grid", 
         "ingrid/utils/UI", 
         "ingrid/utils/List", 
-        "ingrid/utils/Syslist"
-], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist) {
+        "ingrid/utils/Syslist",
+        "ingrid/hierarchy/behaviours/opendata",
+        "ingrid/hierarchy/behaviours/folders",
+        "ingrid/hierarchy/behaviours/inspireRelevant/conformFields",
+        "ingrid/hierarchy/behaviours/inspireRelevant/geoservice",
+        "ingrid/hierarchy/behaviours/inspireRelevant/inspireIsoConnection",
+        "ingrid/hierarchy/behaviours/inspireRelevant/inspireEncodingConnection",
+        "ingrid/hierarchy/behaviours/inspireRelevant/inspireConformityConnection",
+        "ingrid/hierarchy/behaviours/advCompatible",
+        "ingrid/hierarchy/behaviours/administrativeArea",
+        "ingrid/hierarchy/behaviours/advProductGroup"
+], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
+            openData, foldersInHierarchy, conformityFields, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup) {
 
     return declare(null, {
         
-        inspireIsoConnection: {
-            title: "Inspire / ISO - Connection",
-            description: "Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Thema hinzugefügt. " +
-            		"Diese Kategorie bleibt so lange bestehen, wie auch das INSPIRE-Thema vorhanden ist. Erst wenn das INSPIRE-Thema entfernt " +
-            		"wurde, kann auch die Kategorie entfernt werden.",
-            description_en: "According to the GDI_DE Conventions, an ISO categorie is added automatically to a corresponding INSPIRE-topic. " +
-            		"The category cannot be removed until the INSPIRE topic is present. If an INSPIRE topic is removed, then the ISO " +
-            		"category also will be removed.",
-            defaultActive: true,
-            run: function() {
-                
-                // mapped INSPIRE-topic IDs to ISO-category IDs
-                var mapping = {101: 13, 103: 13, 104: 3, 105: 13, 106: 15, 107: 18, 108: 12, 109: 7, 201: 6, 202: 10,
-                        203: 10, 204: 8, 301: 3, 302: 17, 303: 8, 304: 15, 305: 9, 306: 19, 307: 17, 308: 17, 309: 1, 310: 16,
-                        311: 15, 312: 8, 313: 4, 315: 14, 316: 14, 317: 2, 318: 2, 319: 2, 320: 5, 321: 5};
-                
-                var updateIsoCategories = function(id, deleteEntry) {
-                    var mappedEntry = mapping[id];
-                    if (!mappedEntry) return;
-                    
-                    var entry = UtilSyslist.getSyslistEntryName( 527, mappedEntry );
-                    if (deleteEntry) {
-                        // remove all automatically added entries
-                        var itemIndexes = [];
-                        array.forEach( UtilGrid.getTableData( "thesaurusTopics" ), function(row, index) {
-                            if (row.title === mappedEntry)
-                                itemIndexes.push( index );
-                        } );
-                        UtilGrid.removeTableDataRow( "thesaurusTopics", itemIndexes );
+        advCompatible : advCompatible,
 
-                    } else {
-                        // check if entry already exists in table
-                        var exists = dojo.some( UtilGrid.getTableData( "thesaurusTopics" ), function(row) {
-                            return row.title == mappedEntry; // String-Number comparison
-                        } );
+        advProductGroup : advProductGroup,
+        
+        administrativeArea: adminitrativeArea,
+        
+        conformityFields: conformityFields,
 
-                        // add entry to table if it doesn't already exist
-                        if (!exists) {
-                            UtilGrid.addTableDataRow( "thesaurusTopics", { title: mappedEntry } );
-                            return entry;
-                        }
-                    }
-                    return false;
-                };
-                
-                // react when inspire topics has been added
-                var inspireGridChanges = function(result, args) {
-                    console.log("Inspire data behaviour");
-                    var msg = args[0];
-                    var objClass = registry.byId("objectClass").get("value");
-                    // only react if class == 1
-                    if (objClass == "Class1") {
-                        // remove old dependent values
-                        if (msg.oldItem) {
-                            updateIsoCategories(msg.oldItem.title, true);
-                        }
-                        // add new dependent value
-                        if (msg.type !== "deleted") {
-                            var added = updateIsoCategories(msg.item.title, false);
-                            if (added) {
-                                UtilUI.showToolTip( "thesaurusInspire", string.substitute(message.get("validation.isocategory.added"), [added]) );
-                            }
-                        }
-                    }
-                };
-                
-                aspect.after(UtilGrid.getTable("thesaurusInspire"), "onCellChange", inspireGridChanges);
-                aspect.after(UtilGrid.getTable("thesaurusInspire"), "notifyChangedData", inspireGridChanges);
-                
-                // if a category is removed that belongs to a set INSPIRE topic, then we won't allow it
-                // -> instead we have to remove the topic first
-                var isoCategoriesChanges = function(result, args) {
-                    var msg = args[0];
-                    // if cell is changed, then we must not allow to remove the old item
-                    if (msg.oldItem) msg.items = [msg.oldItem];
-                    var objClass = registry.byId("objectClass").get("value");
-                    // only react if class == 1
-                    if (objClass == "Class1") {
-                        var topics = UtilGrid.getTableData("thesaurusInspire");
-                        array.forEach(msg.items, function(item) {
-                            // check if the deleted item is a connected category from an INSPIRE-topic
-                            array.some(topics, function(topic) {
-                                var mappedId = mapping[topic.title];
-                                var id = UtilSyslist.getSyslistEntryKey( 527, item.title );
-                                if (mappedId == id) { // Integer and String comparison!!!
-                                    // re-insert removed category again
-                                    if (msg.oldItem) {
-                                        UtilGrid.updateTableDataRow( "thesaurusTopics", msg.row, msg.oldItem );
-                                    } else {
-                                        UtilGrid.addTableDataRow( "thesaurusTopics", { title: item.title } );
-                                    }
-                                    
-                                    // show tooltip for explanation
-                                    var inspireName = UtilSyslist.getSyslistEntryName( 6100, topic.title );
-                                    UtilUI.showToolTip( "thesaurusTopics",  string.substitute(message.get("validation.isocategory.delete.dependent"), [inspireName]) );
-                                    return true;
-                                }
-                            });
-                        });
-                    }
-                };
-                
-                aspect.after(UtilGrid.getTable("thesaurusTopics"), "onCellChange", isoCategoriesChanges );
-                aspect.after(UtilGrid.getTable("thesaurusTopics"), "onDeleteItems", isoCategoriesChanges );
-            }
-        },
+        inspireGeoservice: inspireGeoservice,
+        
+        inspireIsoConnection: inspireIsoConnection,
+
+        inspireEncodingConnection: inspireEncodingConnection,
+
+        inspireConformityConnection: inspireConformityConnection,
         
         coupledResourceDownloadDataCheck: {
             title: "Gekoppelte Daten - Überprüfung auf Download-Daten",
@@ -239,7 +159,33 @@ define(["dojo/_base/declare",
                     }
                 });
             }
-        }        
+        },
+        
+        dqGriddedDataPositionalAccuracy: {
+            title: "Verhalten für die Rasterpositionsgenauigkeit",
+            description: "Das Element ist optional und wird nicht per default eingeblendet. Es wird nur aktiviert, wenn 'Digitale Repräsentation' den Wert 'Raster' hat.",
+            defaultActive: true,
+            run: function() {
+                aspect.after(registry.byId("ref1Representation"), "onDataChanged", function() {
+                    console.log("data: ", this.getData());
+                    var hasGridType = array.some(this.getData(), function(row) {
+                        // 2 === Raster, Gitter
+                        return row.title === 2 || row.title === "2"; 
+                    });
+                    
+                    // show field if grid type was found in table, otherwise hide it
+                    if (hasGridType) {
+                        domClass.remove("uiElement5071", "hide");
+                    } else {
+                        domClass.add("uiElement5071", "hide");
+                    }
+                });
+            }
+        },
+        
+        foldersInHierarchy: foldersInHierarchy,
+
+        openData: openData
         
         /*
          * ABORTED: The ATOM URL has to be maintained when automatically inserted into document. It's better to adapt the context help

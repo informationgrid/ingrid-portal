@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -35,8 +35,9 @@ require([
     "dijit/registry",
     "dojo/topic",
     "ingrid/utils/Store",
-    "ingrid/utils/Events"
-], function(on, dom, registry, topic, UtilStore, UtilEvents) {
+    "ingrid/utils/Events",
+    "ingrid/utils/Tree"
+], function(on, dom, registry, topic, UtilStore, UtilEvents, TreeUtil) {
 
     var customParams = _container_.customParams;
     var self = _container_;
@@ -45,20 +46,47 @@ require([
 
         var msgDiv = dom.byId("messageDiv");
         msgDiv.innerHTML = "<fmt:message key='dialog.createAddressMessage' />";
-        var parentClass;
-        if (typeof(customParams.parentClass) != "undefined") {
-            parentClass = customParams.parentClass;
 
-        } else if (customParams.parentId == "addressRoot") {
+        var parent = getNonFolderParentItem(customParams.parentId);
+
+        var parentClass;
+        if (parent.objectClass !== null && parent.objectClass !== undefined) {
+            parentClass = parent.objectClass;
+
+        } else if (parent.id === "addressRoot") {
             parentClass = -1;
 
-        } else if (customParams.parentId == "addressFreeRoot") {
+        } else if (parent.id === "addressFreeRoot") {
             // This should never be the case...
             parentClass = -2;
         }
 
         // Init the select box dp
         var addressClassWidget = registry.byId("addressClassSelect");
+        var valueList = getOptionsForParentClass(parentClass);
+
+        //addressClassWidget.dataProvider.setData(valueList);
+        UtilStore.updateWriteStore("addressClassSelect", valueList, {label:'0', identifier:'1'});
+        addressClassWidget.setValue(valueList[0][1]);
+
+        console.log("Publishing event: '/afterInitDialog/AddressSelectClass'");
+        topic.publish("/afterInitDialog/AddressSelectClass");
+    });
+
+    function getNonFolderParentItem(parentId) {
+        var parent = null;
+        do {
+            var parentNode = TreeUtil.getNodeById("dataTree", parentId);
+            if (parentNode.item.objectClass !== 1000) {
+                parent = parentNode.item;
+            }
+            parentId = parentNode.item.parent;
+
+        } while (!parent);
+        return parent;
+    }
+
+    function getOptionsForParentClass(parentClass) {
         var valueList = [];
         switch (parentClass) {
             case -2:    // Free Address Root
@@ -93,13 +121,8 @@ require([
                 console.error("Error in select address class dialog - Unknown parent address type: "+parentClass);
                 break;
         }
-        //addressClassWidget.dataProvider.setData(valueList);
-        UtilStore.updateWriteStore("addressClassSelect", valueList, {label:'0', identifier:'1'});
-        addressClassWidget.setValue(valueList[0][1]);
-
-        console.log("Publishing event: '/afterInitDialog/AddressSelectClass'");
-        topic.publish("/afterInitDialog/AddressSelectClass");
-    });
+        return valueList;
+    }
 
     // 'Yes Button' onClick function
     function yesButtonFunc() {

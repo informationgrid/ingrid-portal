@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -104,17 +104,6 @@ require([
                 });
             }
 
-
-            // Get a child from a node in the tree for the given uuid 
-            /*function getChildFromNode(childUuid, node) {
-                for (var i = 0; i < node.children.length; ++i) {
-                    if (node.children[i].uuid == childUuid) {
-                        return node.children[i];
-                    }
-                }
-                return null;
-            }
-*/
             function selectNode() {
                 var node = registry.byId("duplicatesTree").get("selectedNode");
                 wnd.scrollIntoView(node.domNode);
@@ -136,6 +125,7 @@ require([
 
             function createDOMElements() {
                 new MetadataTree({
+                    treeType: "Objects",
                     showRoot: false,
                     onClick: loadObject
                 }, "duplicatesTree");
@@ -243,15 +233,6 @@ require([
                 return def;
             }
 
-            /*         function showLoadingZone() {
-            //dojo.html.setVisibility(dom.byId("duplicatesLoadingZone"), "visible");
-            dom.byId("duplicatesLoadingZone").style.visibility = "visible";
-        }
-        
-        function hideLoadingZone() {
-            //dojo.html.setVisibility(dom.byId("duplicatesLoadingZone"), "hidden");
-            dom.byId("duplicatesLoadingZone").style.visibility = "hidden";
-        } */
         });
 </script>
 </head>

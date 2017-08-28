@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -297,6 +297,9 @@ define(["dojo/_base/declare",
         communicationValidation: function() {
             //on(registry.byId("addressCom").store, "onNew", function(item) {
             aspect.after(UtilGrid.getTable("addressCom"), "onDataChanged", function(msg) {
+                // ignore address folders
+                if (currentUdk.addressClass === 1000) return;
+
                 var email = UtilSyslist.getSyslistEntryName(4430, 3);
                 //if (msg.item.nameOfRelation == email) {
                 var anyEmail = array.some(UtilGrid.getTableData("addressCom"), function(item) {

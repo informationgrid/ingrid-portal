@@ -128,111 +128,12 @@
     
     <!-- Hauptsuche   -->
     <rule>
-        <from>/freitextsuche/rechtsvorschriften(.?)</from>
-        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=4</to>
-    </rule>
-    <rule>
-        <from>/freitextsuche/rechtsvorschriften(.*)</from>
-        <to type="forward">/portal/main-search.psml$1</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-search.psml?(.*ds=4.*)</from>
-        <to>/freitextsuche/rechtsvorschriften$1</to>
-    </outbound-rule>
-       
-    <rule>
-        <from>/freitextsuche/addressen(.?)</from>
-        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=2</to>
-    </rule>
-    <rule>
-        <from>/freitextsuche/addressen(.*)</from>
-        <to type="forward">/portal/main-search.psml$1</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-search.psml?(.*ds=2.*)</from>
-        <to>/freitextsuche/addressen$1</to>
-    </outbound-rule>
-    
-    <rule>
-        <from>/freitextsuche/umweltinformationen(.?)</from>
-        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=1</to>
-    </rule>
-	<rule>
-        <from>/freitextsuche/umweltinformationen(.*)</from>
-        <to type="forward">/portal/main-search.psml$1</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-search.psml?(.*ds=1.*)</from>
-        <to>/freitextsuche/umweltinformationen$1</to>
-    </outbound-rule>
-    
-    <rule>
-        <from>/freitextsuche/forschungsprojekte(.?)</from>
-        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=3</to>
-    </rule>
-    <rule>
-        <from>/freitextsuche/forschungsprojekte(.*)</from>
-        <to type="forward">/portal/main-search.psml$1</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-search.psml?(.*ds=3.*)</from>
-        <to>/freitextsuche/forschungsprojekte$1</to>
-    </outbound-rule>
-    
-    <rule>
-        <from>/freitextsuche/kataloge(.?)</from>
-        <to type="forward">/portal/main-search.psml?action=doChangeDS&amp;ds=5</to>
-    </rule>
-    <rule>
-        <from>/freitextsuche/kataloge(.*)</from>
-        <to type="forward">/portal/main-search.psml$1</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-search.psml?(.*ds=5.*)</from>
-        <to>/freitextsuche/kataloge$1</to>
-    </outbound-rule>
-    
-    <rule>
         <from>/freitextsuche</from>
         <to type="forward">/portal/main-search.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-search.psml</from>
         <to>/freitextsuche</to>
-    </outbound-rule>
-    
-    <!-- Erweiterte Suche  -->
-    <!-- <rule>
-        <from>/detailsuche$</from>
-        <to type="forward">portal/search-extended/search-ext-env-topic-terms.psml</to>
-    </rule>-->
-    <rule>
-        <from>/detailsuche</from>
-        <to type="forward">/portal/search-extended</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-extended</from>
-        <to>/detailsuche</to>
-    </outbound-rule>
-    
-    <!-- Suchhistorie   -->
-    <rule>
-        <from>/suchhistorie</from>
-        <to type="forward">/portal/search-history.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-history.psml</from>
-        <to>/suchhistorie</to>
-    </outbound-rule>
-    
-    <!-- Einstellungen   -->
-    <rule>
-        <from>/darstellungsoptionen</from>
-        <to type="forward">/portal/search-settings.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-settings.psml</from>
-        <to>/darstellungsoptionen</to>
     </outbound-rule>
     
     <!--  Suche - Datenkataloge - Hierarchiebaum -->
@@ -243,26 +144,6 @@
     <outbound-rule>
         <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
         <to>/datenkataloge</to>
-    </outbound-rule>
-    
-    <!-- Suche - Datenkataloge -Thesaurus-Navigator  -->
-    <rule>
-        <from>/umweltthesaurus</from>
-        <to type="forward">/portal/search-catalog/search-catalog-thesaurus.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/search-catalog/search-catalog-thesaurus.psml</from>
-        <to>/umweltthesaurus</to>
-    </outbound-rule>
-    
-    <!--  Service  -->
-    <rule>
-        <from>/servicesuche</from>
-        <to type="forward">/portal/main-service.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-service.psml</from>
-        <to>/servicesuche</to>
     </outbound-rule>
     
     <!--  Messwerte  -->
@@ -305,7 +186,7 @@
         <to>/umweltchronik</to>
     </outbound-rule>
     
-    <!-- Über InGrid  -->
+    <!-- Über InGrid-Portal  -->
     <rule>
         <from>/hintergrundinformationen</from>
         <to type="forward">/portal/main-about.psml</to>
@@ -335,7 +216,7 @@
         <to>/datenquellen</to>
     </outbound-rule>
     
-    <!-- Mein InGrid  -->
+    <!-- Mein Portal  -->
     <rule>
         <from>/personalisierungsoptionen</from>
         <to type="forward">/portal/service-myportal.psml</to>
@@ -385,16 +266,6 @@
         <to>/kontakt</to>
     </outbound-rule>
     
-    <!--  Newsletter  -->
-    <rule>
-        <from>/newsletter</from>
-        <to type="forward">/portal/service-contact-newsletter.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/service-contact-newsletter.psml</from>
-        <to>/newsletter</to>
-    </outbound-rule>
-    
     <!-- Impressum   -->
     <rule>
         <from>/impressum</from>
@@ -425,15 +296,4 @@
         <to>/hilfe</to>
     </outbound-rule>
     
-    <!-- Features -->
-    <rule>
-        <from>/funktionen</from>
-        <to type="forward">/portal/main-features.psml</to>
-    </rule>
-    <outbound-rule>
-        <from>/portal/main-features.psml</from>
-        <to>/funktionen</to>
-    </outbound-rule>
-    
 </urlrewrite>
-

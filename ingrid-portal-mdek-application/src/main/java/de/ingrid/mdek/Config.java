@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-base-webapp
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -142,7 +142,21 @@ public class Config {
     @DefaultValue("smtp")
     public String workflowMailSmtpProtocol;
     
-
+    /**
+     * UPLOAD
+     */
+    @PropertyValue("upload.impl")
+    @DefaultValue("FileSystemStorage")
+    public String uploadImpl;
+    
+    @PropertyValue("upload.docsdir")
+    @DefaultValue("")
+    public String docsdir;
+    
+    @PropertyValue("upload.partsdir")
+    @DefaultValue("")
+    public String partsdir;
+    
     /**
      * VARIOUS 
      */

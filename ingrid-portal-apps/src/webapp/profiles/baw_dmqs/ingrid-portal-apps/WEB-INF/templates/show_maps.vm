@@ -1,0 +1,54 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+#set ($action = $renderResponse.createActionURL())
+<style>
+html, body {
+    height: 100%;
+}
+
+#map {
+    height: 100%;
+}
+</style>
+
+<div id="map" style="width:100%;position:fixed;z-index:0;"></div>
+
+#parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+<script src="$restUrlMarker"></script>
+<script language="JavaScript" type="text/javascript">
+    var osm = getOSMLayer('');
+    var map = addLeafletMap([osm], null, new L.LatLng(51.3, 10));
+    var enablePopUp = true;
+    
+    // Add wms layer
+    L.tileLayer.wms("http://atlas.wsv.bund.de/bwastr/wms?", {
+       layers: 'Gewaessernetz,Kilometermarken',
+        format: 'image/png'
+    }).addTo(map);
+    
+</script>
+
+#parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
+
+<script>
+    var homeCtlBounds;
+    if(markers.length > 0 && mapMarkers && mapMarkers.getBounds()){
+        if(map){
+            map.fitBounds(mapMarkers.getBounds());
+        }
+        homeCtlBounds = mapMarkers.getBounds();
+    }
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', homeCtlBounds, new L.LatLng(51.3, 10))
+    window.onresize = resizeIframe;
+    resizeIframe();
+    
+    function pageY(elem) {
+        return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
+    }
+    function resizeIframe(){
+        var buffer = 0;
+        var height = document.documentElement.clientHeight;
+        height -= pageY(document.getElementById('map'))+ buffer ;
+        height = (height < 0) ? 0 : height;
+        document.getElementById('map').style.height = height + 'px';
+    }
+</script>

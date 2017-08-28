@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -166,6 +166,10 @@ define([
                     self.deferredCreation.resolve();
 
                     domClass.remove("loadBlockDiv", "blockerFull");
+                })
+                .then(null, function(err) {
+                    console.error("Error", err);
+                    displayErrorMessage(err);
                 });
 
             },
@@ -183,7 +187,7 @@ define([
                 };
                 layoutCreator.createSelectBox("objectClass", null, storeProps, function() {
                     // add a prefix for each value to stay compatible!
-                    return UtilSyslist.getSyslistEntry(8000, "Class");
+                    return UtilSyslist.getSyslistEntry(UtilSyslist.listIdObjectClass, "Class");
                 });
                 registry.byId("objectClass").onChange = lang.hitch(igeEvents, igeEvents.selectUDKClass);
 
@@ -303,9 +307,19 @@ define([
                 layoutCreator.createDataGrid("thesaurusInspire", null, thesaurusInspireStructure, null);
 
                 new CheckBox({}, "isInspireRelevant");
+                new RadioButton({
+                    checked: true,
+                    value: "true",
+                    name: "isInspireConform"
+                }, "isInspireConform").startup();
+                new RadioButton({
+                    checked: false,
+                    value: "false",
+                    name: "isInspireConform"
+                }, "notInspireConform").startup();
+                
                 new CheckBox({}, "isOpenData");
-                // show open data checkbox only for specific classes
-                rules.applyRuleOpenData();
+                new CheckBox({}, "isAdvCompatible");
 
                 var categoriesStructure = [{
                     field: 'title',
@@ -501,6 +515,9 @@ define([
                 new NumberTextBox({
                     style: "width:100%;"
                 }, "ref1PosAccuracy");
+                new NumberTextBox({
+                    style: "width:100%;"
+                }, "ref1GridPosAccuracy");
 
                 var tabSymbols = new TabContainer({
                     style: "width: 100%;",
@@ -1644,6 +1661,16 @@ define([
                 layoutCreator.createDataGrid("spatialRefLocation", null, spatialRefLocationStructure, null);
                 aspect.after(UtilGrid.getTable("spatialRefLocation"), "onCellChange", function(res, args) {
                     var msg = args[0];
+
+                    var updateRow = function(rowPos, lon1, lat1, lon2, lat2) {
+                        var row = UtilGrid.getTableData("spatialRefLocation")[rowPos];
+                        row.longitude1 = lon1;
+                        row.latitude1 = lat1;
+                        row.longitude2 = lon2;
+                        row.latitude2 = lat2;
+                        UtilGrid.updateTableDataRow("spatialRefLocation", rowPos, row);
+                    };
+
                     if (msg.cell === 0) {
                         var data = UtilSyslist.getSyslistEntryData(1100, msg.item.name);
                         console.debug("syslist data: " + data);
@@ -1651,12 +1678,16 @@ define([
                             // replace "," with "." for correct data format
                             data = data.replace(/,/g, ".");
                             var splittedData = data.split(" ");
-                            var row = UtilGrid.getTableData("spatialRefLocation")[msg.row];
-                            row.longitude1 = parseFloat(splittedData[0]);
-                            row.latitude1 = parseFloat(splittedData[1]);
-                            row.longitude2 = parseFloat(splittedData[2]);
-                            row.latitude2 = parseFloat(splittedData[3]);
-                            UtilGrid.updateTableDataRow("spatialRefLocation", msg.row, row);
+                            updateRow(msg.row, 
+                                parseFloat(splittedData[0]), 
+                                parseFloat(splittedData[1]), 
+                                parseFloat(splittedData[2]), 
+                                parseFloat(splittedData[3])
+                            );
+                            
+                        } else if (UtilSyslist.getSyslistEntryKey(1100, msg.item.name) !== msg.item.name) {
+                            updateRow(msg.row, null, null, null, null);
+
                         }
                     }
                 });
@@ -1812,9 +1843,18 @@ define([
                     return UtilSyslist.getSyslistEntry(99999999);
                 });
 
-                layoutCreator.createSelectBox("extraInfoLangData", null, storeProps, function() {
-                    return UtilSyslist.getSyslistEntry(99999999);
-                });
+                var extraInfoLangDataStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '348px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 99999999,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 99999999)
+                }];
+                layoutCreator.createDataGrid("extraInfoLangData", null, extraInfoLangDataStructure, null);
 
                 layoutCreator.createSelectBox("extraInfoPublishArea", null, storeProps, function() {
                     return UtilSyslist.getSyslistEntry(3571);
@@ -1983,6 +2023,19 @@ define([
 
 
             createThesaurus: function() {
+                var advProductGroupStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '708px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 8010,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 8010)
+                }];
+                layoutCreator.createDataGrid("advProductGroup", null, advProductGroupStructure, null);
+
                 var thesaurusTopicsStructure = [{
                     field: 'title',
                     name: 'title',
@@ -2318,15 +2371,27 @@ define([
                     array.forEach(data, function(item) {
                         if (behaviour[item.id]) {
                             behaviour[item.id].override = item.active;
+                            if (item.params) {
+                                array.forEach(item.params, function(p) {
+                                    var behaviourParam = array.filter(behaviour[item.id].params, function(param) { return param.id === p.id; })[0];
+                                    lang.mixin(behaviourParam, p);
+                                });
+                            }
                         }
                     });
                     for (var behave in behaviour) {
-                        if (!behaviour[behave].title) continue;
+                        // ignore invalid or address behaviours
+                        if (!behaviour[behave].title || behaviour[behave].forAddress) continue; 
+                        
                         // run behaviour if 
-                        // 1) activated by default and not overriden
-                        // 2) activate if explicitly overriden
-                        if ((behaviour[behave].defaultActive && behaviour[behave].override === undefined)
-                                || (behaviour[behave].override === true)) {
+                        // 1) activated by default and not overridden
+                        // 2) activate if explicitly overridden
+                        // 3) ignore system behaviours, which were already executed
+                        if (behaviour[behave].type !== "SYSTEM" &&
+                                (
+                                    (behaviour[behave].defaultActive && behaviour[behave].override === undefined)
+                                    || behaviour[behave].override === true
+                                )) {
                             console.debug("execute behaviour: " + behave);
                             behaviour[behave].run();
                         }

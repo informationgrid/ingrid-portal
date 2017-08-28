@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  **************************************************-
+  Ingrid Portal Apps
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+        "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+
+<!--
+
+    Configuration file for UrlRewriteFilter
+    http://tuckey.org/urlrewrite/
+
+-->
+<urlrewrite>
+
+    <rule>
+        <note>
+            The rule means that requests to /test/status/ will be redirected to /rewrite-status
+            the url will be rewritten.
+        </note>
+        <from>/test/status/</from>
+        <to type="redirect">%{context-path}/rewrite-status</to>
+    </rule>
+
+
+    <outbound-rule>
+        <note>
+            The outbound-rule specifies that when response.encodeURL is called (if you are using JSTL c:url)
+            the url /rewrite-status will be rewritten to /test/status/.
+
+            The above rule and this outbound-rule means that end users should never see the
+            url /rewrite-status only /test/status/ both in thier location bar and in hyperlinks
+            in your pages.
+        </note>
+        <from>/rewrite-status</from>
+        <to>/test/status/</to>
+    </outbound-rule>
+
+
+    <!--
+
+    INSTALLATION
+
+        in your web.xml add...
+
+        <filter>
+            <filter-name>UrlRewriteFilter</filter-name>
+            <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+            <init-param>
+                <param-name>logLevel</param-name>
+                <param-value>WARN</param-value>
+            </init-param>
+        </filter>
+        <filter-mapping>
+            <filter-name>UrlRewriteFilter</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+     EXAMPLES
+
+     Redirect one url
+        <rule>
+            <from>/some/old/page.html</from>
+            <to type="redirect">/very/new/page.html</to>
+        </rule>
+
+    Redirect a directory
+        <rule>
+            <from>/some/olddir/(.*)</from>
+            <to type="redirect">/very/newdir/$1</to>
+        </rule>
+
+    Clean a url
+        <rule>
+            <from>/products/([0-9]+)</from>
+            <to>/products/index.jsp?product_id=$1</to>
+        </rule>
+    eg, /products/1234 will be passed on to /products/index.jsp?product_id=1234 without the user noticing.
+
+    Browser detection
+        <rule>
+            <condition name="user-agent">Mozilla/[1-4]</condition>
+            <from>/some/page.html</from>
+            <to>/some/page-for-old-browsers.html</to>
+        </rule>
+    eg, will pass the request for /some/page.html on to /some/page-for-old-browsers.html only for older
+    browsers whose user agent srtings match Mozilla/1, Mozilla/2, Mozilla/3 or Mozilla/4.
+
+    Centralised browser detection
+        <rule>
+            <condition name="user-agent">Mozilla/[1-4]</condition>
+            <set type="request" name="browser">moz</set>
+        </rule>
+    eg, all requests will be checked against the condition and if matched
+    request.setAttribute("browser", "moz") will be called.
+
+    -->
+    
+    <!-- Startseite  -->
+    <rule>
+        <from>/startseite</from>
+        <to type="forward">/portal/default-page.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/default-page.psml</from>
+        <to>/startseite</to>
+    </outbound-rule>
+    
+    <!-- Hauptsuche   -->
+    <rule>
+        <from>/freitextsuche</from>
+        <to type="forward">/portal/main-search.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-search.psml</from>
+        <to>/freitextsuche</to>
+    </outbound-rule>
+    
+    <!--  Suche - Datenkataloge - Hierarchiebaum -->
+    <rule>
+        <from>/datenkataloge</from>
+        <to type="forward">/portal/search-catalog/search-catalog-hierarchy.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
+        <to>/datenkataloge</to>
+    </outbound-rule>
+    
+    <!--  Messwerte  -->
+    <rule>
+        <from>/messwertsuche</from>
+        <to type="passthrough">/portal/main-measures.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-measures.psml</from>
+        <to>/messwertsuche</to>
+    </outbound-rule>
+    
+    <!--  Umweltthemen  -->
+    <rule>
+        <from>/themensuche</from>
+        <to type="forward">/portal/main-environment.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-environment.psml</from>
+        <to>/themensuche</to>
+    </outbound-rule>
+    
+    <!--  Karten   -->
+    <rule>
+        <from>/kartendienste</from>
+        <to type="forward">/portal/main-maps.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-maps.psml</from>
+        <to>/kartendienste</to>
+    </outbound-rule>
+    
+    <!--  Umweltchronik  -->
+    <rule>
+        <from>/umweltchronik</from>
+        <to type="forward">/portal/main-chronicle.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-chronicle.psml</from>
+        <to>/umweltchronik</to>
+    </outbound-rule>
+    
+    <!-- Über InGrid-Portal  -->
+    <rule>
+        <from>/hintergrundinformationen</from>
+        <to type="forward">/portal/main-about.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-about.psml</from>
+        <to>/hintergrundinformationen</to>
+    </outbound-rule>
+    
+    <!-- Informationsanbieter   -->
+    <rule>
+        <from>/informationsanbieter</from>
+        <to type="forward">/portal/main-about-partner.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-about-partner.psml</from>
+        <to>/informationsanbieter</to>
+    </outbound-rule>
+    
+    <!-- Datenquellen  -->
+    <rule>
+        <from>/datenquellen</from>
+        <to type="forward">/portal/main-about-data-source.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/main-about-data-source.psml</from>
+        <to>/datenquellen</to>
+    </outbound-rule>
+    
+    <!-- Mein Portal  -->
+    <rule>
+        <from>/personalisierungsoptionen</from>
+        <to type="forward">/portal/service-myportal.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/service-myportal.psml</from>
+        <to>/personalisierungsoptionen</to>
+    </outbound-rule>
+    
+    <!-- Datenschutzbestimmung   -->
+    <rule>
+        <from>/datenschutzbestimmung</from>
+        <to type="forward">/portal/privacy.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/privacy.psml</from>
+        <to>/datenschutzbestimmung</to>
+    </outbound-rule>
+    
+    <!-- Weitere Meldungen  -->
+    <rule>
+        <from>/neuigkeiten</from>
+        <to type="forward">/portal/rss-news.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/rss-news.psml</from>
+        <to>/neuigkeiten</to>
+    </outbound-rule>
+    
+    <!--  Inhaltsübersicht  -->
+    <rule>
+        <from>/inhaltsverzeichnis</from>
+        <to type="forward">/portal/service-sitemap.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/service-sitemap.psml</from>
+        <to>/inhaltsverzeichnis</to>
+    </outbound-rule>
+    
+    <!-- Kontakt   -->
+    <rule>
+        <from>/kontakt</from>
+        <to type="forward">/portal/service-contact.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/service-contact.psml</from>
+        <to>/kontakt</to>
+    </outbound-rule>
+    
+    <!-- Impressum   -->
+    <rule>
+        <from>/impressum</from>
+        <to type="forward">/portal/disclaimer.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/disclaimer.psml</from>
+        <to>/impressum</to>
+    </outbound-rule>
+    
+    <!-- SearchDetail -->
+    <rule>
+        <from>/trefferanzeige</from>
+        <to type="forward">/portal/search-detail.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/search-detail.psml</from>
+        <to>/trefferanzeige</to>
+    </outbound-rule>
+    
+    <!-- Help -->
+    <rule>
+        <from>/hilfe</from>
+        <to type="forward">/portal/help.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/help.psml</from>
+        <to>/hilfe</to>
+    </outbound-rule>
+
+    <!-- bw -->
+    <rule>
+        <from>/bw$</from>
+        <to type="forward">/html/bw/index.html</to>
+    </rule>
+
+    <!-- by -->
+    <rule>
+        <from>/by$</from>
+        <to type="forward">/html/by/index.html</to>
+    </rule>
+    
+    <!-- be -->
+    <rule>
+        <from>/be$</from>
+        <to type="forward">/html/be/index.html</to>
+    </rule>
+    
+    <!-- bb -->
+    <rule>
+        <from>/bb$</from>
+        <to type="forward">/html/bb/index.html</to>
+    </rule>
+    
+    <!-- hb -->
+    <rule>
+        <from>/hb$</from>
+        <to type="forward">/html/hb/index.html</to>
+    </rule>
+    
+    <!-- hh -->
+    <rule>
+        <from>/hh$</from>
+        <to type="forward">/html/hh/index.html</to>
+    </rule>
+    
+    <!-- he -->
+    <rule>
+        <from>/he$</from>
+        <to type="forward">/html/he/index.html</to>
+    </rule>
+    
+    <!-- mv -->
+    <rule>
+        <from>/mv$</from>
+        <to type="forward">/html/mv/index.html</to>
+    </rule>
+    
+    <!-- ni -->
+    <rule>
+        <from>/ni$</from>
+        <to type="forward">/html/ni/index.html</to>
+    </rule>
+    
+    <!-- nw -->
+    <rule>
+        <from>/nw$</from>
+        <to type="forward">/html/nw/index.html</to>
+    </rule>
+    
+    <!-- rp -->
+    <rule>
+        <from>/rp$</from>
+        <to type="forward">/html/rp/index.html</to>
+    </rule>
+    
+    <!-- sl -->
+    <rule>
+        <from>/sl$</from>
+        <to type="forward">/html/sl/index.html</to>
+    </rule>
+    
+    <!-- sn -->
+    <rule>
+        <from>/sn$</from>
+        <to type="forward">/html/sn/index.html</to>
+    </rule>
+    
+    <!-- st -->
+    <rule>
+        <from>/st$</from>
+        <to type="forward">/html/st/index.html</to>
+    </rule>
+    
+    <!-- sh -->
+    <rule>
+        <from>/sh$</from>
+        <to type="forward">/html/sh/index.html</to>
+    </rule>
+    
+    <!-- th -->
+    <rule>
+        <from>/th$</from>
+        <to type="forward">/html/th/index.html</to>
+    </rule>
+    
+</urlrewrite>

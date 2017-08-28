@@ -1,0 +1,7 @@
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/markercluster/MarkerCluster.css" />
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/markercluster/MarkerCluster.Default.css" />
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.css" />
+<script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
+<script src="/decorations/layout/ingrid/scripts/markercluster/leaflet.markercluster.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>

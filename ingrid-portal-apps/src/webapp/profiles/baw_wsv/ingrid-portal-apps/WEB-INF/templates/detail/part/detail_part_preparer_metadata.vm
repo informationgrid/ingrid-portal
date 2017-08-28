@@ -88,20 +88,20 @@
                         ## Datum
                         #set($nodelist = $TOOL.getNodeListFromXPath("./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date"))
                         ## Erzeugung 
-                        #set($tmp = $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
+                        #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
                         #renderTextLabelAbove("Erzeugung" $tmp)
                         #set($tmp = "")
                         ## Publikation
-                        #set($tmp = $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
+                        #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
                         #renderTextLabelAbove("Publikation" $tmp)
                         #set($tmp = "")
                         ## Revision 
-                        #set($tmp = $TOOL.convertDateString($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
+                        #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
                         #renderTextLabelAbove("Revision" $tmp)
                         #set($tmp = "")
                         ## Zeitliche Beschränkung
-                        #set($beginTime = $TOOL.convertDateString($TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition")))
-                        #set($endTime = $TOOL.convertDateString($TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition")))
+                        #set($beginTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition"))
+                        #set($endTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition"))
                         #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
                             #if($beginTime == $endTime)
                                 #renderTextLabelAbove("Zeitliche Beschr&auml;nkung" "$MESSAGES.getString('search.detail.time.at'): $beginTime")
@@ -158,8 +158,8 @@
                         #renderTextList("R&auml;umliche Darstellungsart" $tmp)
                         #set($tmp = "")
                         ## Sprache des Datensatzes
-                        #set($tmp = $TOOL.getLanguageValue($TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue")))
-                        #renderTextLabelAbove($MESSAGES.getString("t01_object.data_language") $tmp)
+                        #set($tmp = $TOOL.getLanguageValues($TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue",".")))
+                        #renderTextList($MESSAGES.getString("t01_object.data_language") $tmp)
                         #set($tmp = "")
                         ## Zeichensatz
                         #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue", "510"))

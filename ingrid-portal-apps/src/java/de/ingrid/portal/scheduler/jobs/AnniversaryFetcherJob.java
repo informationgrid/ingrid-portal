@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -131,40 +131,40 @@ public class AnniversaryFetcherJob extends IngridMonitorAbstractJob {
                             anni.setDateFrom(from);
                             if (from != null) {
                                 // !!! trim, sns date may have white spaces !!! :-(
-                            	from = from.trim();
+                                from = from.trim();
                                 anni.setDateFrom(from);
                                 Date fromDate = UtilsDate.parseDateString(from);
                                 cal.setTime(fromDate);
-                                if (thisYear == cal.get(Calendar.YEAR)) {
-                                	if (log.isDebugEnabled()) {
-                                		log.debug("Skip Anniversary for (topic:'" + detail.getTopicID() + "', lang:" + lang + ") because the year of the event equals the current year.");
-                                	}
-                                	break;
-                                }
                                 anni.setDateFromYear(new Integer(cal.get(Calendar.YEAR)));
                                 anni.setDateFromMonth(new Integer(cal.get(Calendar.MONTH) + 1));
                                 anni.setDateFromDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
                             }
-                            String to = detail.getTo();
-                            anni.setDateTo(to);
-                            if (to != null) {
-                                // !!! trim, sns date may have white spaces !!! :-(
-                            	to = to.trim();
+                            if (thisYear == cal.get(Calendar.YEAR)) {
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Skip Anniversary for (topic:'" + detail.getTopicID() + "', lang:" + lang + ") because the year of the event equals the current year.");
+                                }
+                            }else{
+                                String to = detail.getTo();
                                 anni.setDateTo(to);
-                                Date toDate = UtilsDate.parseDateString(to);
-                                cal.setTime(toDate);
-                                anni.setDateToYear(new Integer(cal.get(Calendar.YEAR)));
-                                anni.setDateToMonth(new Integer(cal.get(Calendar.MONTH) + 1));
-                                anni.setDateToDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
+                                if (to != null) {
+                                    // !!! trim, sns date may have white spaces !!! :-(
+                                    to = to.trim();
+                                    anni.setDateTo(to);
+                                    Date toDate = UtilsDate.parseDateString(to);
+                                    cal.setTime(toDate);
+                                    anni.setDateToYear(new Integer(cal.get(Calendar.YEAR)));
+                                    anni.setDateToMonth(new Integer(cal.get(Calendar.MONTH) + 1));
+                                    anni.setDateToDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
+                                }
+                                anni.setAdministrativeId(detail.getAdministrativeID());
+                                anni.setFetched(new Date());
+                                anni.setFetchedFor(queryDate);
+                                anni.setLanguage(lang);
+                                
+                                tx = session.beginTransaction();
+                                session.save(anni);
+                                tx.commit();
                             }
-                            anni.setAdministrativeId(detail.getAdministrativeID());
-                            anni.setFetched(new Date());
-                            anni.setFetchedFor(queryDate);
-                            anni.setLanguage(lang);
-
-                            tx = session.beginTransaction();
-                            session.save(anni);
-                            tx.commit();
                         }
                     }
                 }

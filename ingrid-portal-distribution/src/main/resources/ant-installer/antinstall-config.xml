@@ -73,7 +73,7 @@
             name        ="menu"
             overflow    = "true"
             displayText ="Auswahl der Konfigurationen">
-        <comment displayText="" bold="true" explanatoryText="Wenn Oracle als Datenbanksystem verwendet wird, so muss unterschieden werden, ob die InGrid-Datenbanken schon vorhanden sind oder erst noch erzeugt werden müssen. Das Erzeugen der Datenbanken muss bei Oracle manuell erfolgen! Wählt man die Option 'ohne DBs' so wird der einzuspielende Dump im Installationsordner bereitgestellt. Nachdem die Datenbanken erstellt wurden, kann mit der anderen Oracle Option 'vorhandene DBs' fortgesetzt werden." />
+        <comment displayText="" bold="true" explanatoryText="Bei Oracle muss das Erzeugen der Datenbanken manuell erfolgen! Wählt man die Option 'ohne DBs' so wird der einzuspielende Portal Dump im Installationsverzeichnis bereitgestellt. Die Mdek Datenbank (für IGE) muss einfach nur angelegt werden, ohne Schema. Nachdem die Datenbanken erstellt wurden, kann der Installer erneut, mit der Option 'vorhandene DBs', ausgeführt werden." />
         <target-select
             property     ="dbChoice"
             displayText  ="Datenbankkonfiguration"
@@ -81,6 +81,7 @@
             <option text ="MySQL"  value="setMySqlProperty"/>
             <option text ="Oracle (vorhandene DBs)" value="setOracleProperty"/>
             <option text ="Oracle (ohne DBs)" value="copyOracleDump"/>
+            <option text ="PostgreSQL"  value="setPostgresProperty"/>
         </target-select>
 
         <checkbox
@@ -96,14 +97,14 @@
             name        ="menu"
             overflow    = "true"
             displayText ="Auswahl der Konfigurationen">
-        <comment displayText="" bold="true" explanatoryText="Wenn Oracle als Datenbanksystem verwendet wird, so muss unterschieden werden, ob die InGrid-Datenbanken schon vorhanden sind oder erst noch erzeugt werden müssen. Das Erzeugen der Datenbanken muss bei Oracle manuell erfolgen! Wählt man die Option 'ohne DBs' so wird der einzuspielende Dump im Installationsordner bereitgestellt. Nachdem die Datenbanken erstellt wurden, kann mit der anderen Oracle Option 'vorhandene DBs' fortgesetzt werden." />
+        <comment displayText="" bold="true" explanatoryText="Bei Oracle muss das Erzeugen der Mdek Datenbank manuell erfolgen (z.B. User mdek)! Schema und Daten werden vom Installer eingespielt." />
         <target-select
             property     ="dbChoice"
             displayText  ="Datenbankkonfiguration"
             defaultValue ="true">
             <option text ="MySQL"  value="setMySqlProperty"/>
-            <option text ="Oracle (vorhandene DBs)" value="setOracleProperty"/>
-            <option text ="Oracle (ohne DBs)" value="copyOracleDump"/>
+            <option text ="Oracle (vorhandene DB)" value="setOracleProperty"/>
+            <option text ="PostgreSQL"  value="setPostgresProperty"/>
         </target-select>
     </page>
     
@@ -128,12 +129,14 @@
             overflow    = "true"
             name        ="igeDbOptionsMysql"
             displayText ="Einstellungen für die Mdek MySQL-Datenbank">
-        <comment bold="true" displayText="" explanatoryText="Eine vorhandene Datenbank mit gleichem Namen wird beim Erstellen entfernt. Dem angebenen Benutzer werden die Rechte an der Datenbank erteilt! Dafür wird ein Datenbankadministrator benötigt (siehe folgende Seite)."/>            
+        <comment bold="true" displayText="" explanatoryText="Eine vorhandene Mdek Datenbank wird auf die neueste Version aktualisiert. Dem angegebenen Benutzer werden die Rechte an der Datenbank erteilt!"/>            
         <text property="dbUser"     displayText="MySQL Benutzername:"      defaultValue="ingrid"/>
         <text property="dbPassword" displayText="MySQL Benutzer-Passwort:" defaultValue=""/>
-        <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt! Bitte geben Sie diesen hier an."/>
+        <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt!"/>
         <text property="adminUser"         displayText="MySQL Administrator:"           defaultValue="root"/>
         <text property="adminPassword"     displayText="MySQL Administrator-Passwort:"  defaultValue=""/>
+
+        <hidden property="mdekDBURLDefault" value="jdbc:mysql://localhost/mdek" />
     </page>
     
     <page
@@ -143,12 +146,28 @@
             type        ="input"
             name        ="igeDbOptionsOracle"
             displayText ="Einstellungen für die Mdek Oracle-Datenbank">
-        <!--<comment bold="true" displayText="" explanatoryText="Wenn die Datenbank während der Installation erstellt werden soll, so wird eine eventuell vorhandene Datenbank mit gleichem Namen entfernt. Dem angebenen Benutzer werden automatisch die Rechte an der neuen Datenbank erteilt! Für diese Operationen wird ein Datenbankadministrator vorausgesetzt, der auf der folgenden Seite eingegeben werden kann."/>            
-        <text property="dbUser"     displayText="MySQL Benutzername:"      defaultValue="ingrid"/>
-        <text property="dbPassword" displayText="MySQL Benutzer-Passwort:" defaultValue=""/>-->
-        <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt! Bitte geben Sie diesen hier an."/>
+        <comment displayText="" bold="true" explanatoryText="Bitte geben Sie den Benutzer für die Mdek Datenbank an (Schema)."/>
         <text property="mdekUser"         displayText="Mdek User:"          defaultValue="mdek"/>
         <text property="mdekPassword"     displayText="Mdek Passwort:"      defaultValue=""/>
+
+        <hidden property="mdekDBURLDefault" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+    </page>
+    
+    <page
+            ifTarget    ="setPostgresProperty"
+            ifProperty  ="(${portalChoice}==InstallOnlyIge)"
+            type        ="input"
+            overflow    = "true"
+            name        ="igeDbOptionsPostgres"
+            displayText ="Einstellungen für die Mdek PostgreSQL-Datenbank">
+        <comment bold="true" displayText="" explanatoryText="Eine vorhandene Mdek Datenbank wird auf die neueste Version aktualisiert. Dem angegebenen Benutzer werden die Rechte an der Datenbank erteilt!"/>            
+        <text property="dbUser"     displayText="PostgreSQL Benutzername:"      defaultValue="postgres"/>
+        <text property="dbPassword" displayText="PostgreSQL Benutzer-Passwort:" defaultValue=""/>
+        <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt!"/>
+        <text property="adminUser"         displayText="PostgreSQL Administrator:"           defaultValue="postgres"/>
+        <text property="adminPassword"     displayText="PostgreSQL Administrator-Passwort:"  defaultValue=""/>
+
+        <hidden property="mdekDBURLDefault" value="jdbc:postgresql://localhost:5432/mdek" />
     </page>
     
     <page
@@ -168,15 +187,17 @@
             overflow    = "true"
             type        ="input"
             name        ="mysqlOptions"
-            displayText ="Einstellungen für die MySQL-Datenbank">
-        <comment bold="true" displayText="" explanatoryText="Dem angebenen Benutzer werden automatisch die Rechte an der neuen Datenbank erteilt! Für diese Operationen wird ein Datenbankadministrator vorausgesetzt, der weiter unten eingegeben werden muss."/>            
+            displayText ="Einstellungen für die Portal MySQL-Datenbank">
+        <comment bold="true" displayText="" explanatoryText="Dem angegebenen Benutzer werden automatisch die Rechte an der neuen Datenbank erteilt!"/>            
         <text property="dbUser"     displayText="MySQL Benutzername:"      defaultValue="ingrid"/>
         <text property="dbPassword" displayText="MySQL Benutzer-Passwort:" defaultValue=""/>
         <text property="dbUrl"      displayText="MySQL Datenbank-URL:"     defaultValue="jdbc:mysql://localhost/ingrid_portal"/>
 
-        <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt! Bitte geben Sie diesen hier an."/>
+        <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt!"/>
         <text property="adminUser"         displayText="MySQL Administrator:"           defaultValue="root"/>
         <text property="adminPassword"     displayText="MySQL Administrator-Passwort:"  defaultValue=""/>
+
+        <hidden property="mdekDBURLDefault" value="jdbc:mysql://localhost/mdek" />
     </page>
 
     <!-- here is a problem when choosing update or new installation -->
@@ -191,6 +212,27 @@
         <text property="adminUser"  displayText="Oracle Benutzername:"      defaultValue="ingrid_portal"/>
         <text property="adminPassword"  displayText="Oracle Benutzer-Passwort:" defaultValue=""/>
         <text property="dbUrl"      displayText="Oracle Datenbank-URL:"     defaultValue="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
+
+        <hidden property="mdekDBURLDefault" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+    </page>
+
+    <page
+            ifTarget    ="setPostgresProperty"
+            ifProperty  ="(${portalChoice}==InstallPortal)"
+            overflow    = "true"
+            type        ="input"
+            name        ="postgresOptions"
+            displayText ="Einstellungen für die Portal PostgreSQL-Datenbank">
+        <comment bold="true" displayText="" explanatoryText="Dem angegebenen Benutzer werden automatisch die Rechte an der neuen Datenbank erteilt!"/>            
+        <text property="dbUser"     displayText="PostgreSQL Benutzername:"      defaultValue="postgres"/>
+        <text property="dbPassword" displayText="PostgreSQL Benutzer-Passwort:" defaultValue=""/>
+        <text property="dbUrl"      displayText="PostgreSQL Datenbank-URL:"     defaultValue="jdbc:postgresql://localhost:5432/ingrid_portal"/>
+
+        <comment displayText="" bold="true" explanatoryText="Für das Erstellen der Datenbank wird ein Administrator benötigt!"/>
+        <text property="adminUser"         displayText="PostgreSQL Administrator:"           defaultValue="postgres"/>
+        <text property="adminPassword"     displayText="PostgreSQL Administrator-Passwort:"  defaultValue=""/>
+
+        <hidden property="mdekDBURLDefault" value="jdbc:postgresql://localhost:5432/mdek" />
     </page>
 
     <page
@@ -202,7 +244,7 @@
 
         <comment displayText="" bold="true" explanatoryText="Hinweis: Die Domäne wird für die Versendung von Emails verwendet, in denen Links zum IGE generiert werden. Dafür wird die Domäne gebraucht, auf welcher der IGE erreicht werden kann."/>
         <text property="mdekServerPort" displayText="InGridEditor Port:"    defaultValue="11000"/>
-        <text property="mdekDBUrl"      displayText="InGridEditor DB-URL:"  defaultValue="jdbc:mysql://localhost/mdek"/>
+        <text property="mdekDBUrl"      displayText="InGridEditor DB-URL:"  defaultValue="${mdekDBURLDefault}"/>
         <text property="mdekMailSmtp"   displayText="SMTP-Server:"          defaultValue="localhost"/>
         <text property="mdekMailSender" displayText="Sender Email Adresse:" defaultValue="info@informationgrid.eu"/>
         <text property="mdekDirectLink" displayText="Domäne:"               defaultValue="www.'meine-Adresse.de'"/>
@@ -236,19 +278,28 @@
     </page>
     
     <page
-            ifTarget    ="InstallPortal"
-            ifProperty  ="(${dbChoice}!=copyOracleDump)"
-            overflow    ="true"
-            type        ="input"
-            name        ="webmapOptions"
-            displayText ="Einstellungen für den Kartenclient">
+        ifTarget    ="InstallPortal"
+        ifProperty  ="(${dbChoice}!=copyOracleDump)"
+        overflow    ="true"
+        type        ="input"
+        name        ="webmapOptions"
+        displayText ="Einstellungen für den Kartenclient">
 
-        <comment displayText="" explanatoryText="Geben Sie die Url der Opensearchschnittstelle an. Es reicht die Basis-Url wie im default angegeben, der Rest der Anfrage wird dynamisch hinzugefügt."/>
-        <text property="openSearchUrl" displayText="Opensearch Url:" defaultValue="https://dev.informationgrid.eu/opensearch/query"/>
-        <comment displayText="" explanatoryText="Geben Sie folgende Eigenschaften für den SMTP-Server an."/>
+        <comment displayText="" explanatoryText="Geben Sie ein Verzeichnis zum Speichern der WebmapClient-Daten an."/>
+        <directory
+            property        ="WebmapDataDir"
+            defaultValue    ="/opt/ingrid"
+            defaultValueWin ="${env.ProgramFiles}"
+            displayText     ="WebmapClient-Datenverzeichnis"
+            create          ="true"
+            checkExists     ="true"/>
+        <comment displayText="" explanatoryText="Hinweis: In Ihrem ausgewählten Verzeichnis wird das WebmapClient-Datenverzeichnis 'WebmapClientData' angelegt bzw. aktualisiert (falls vorhanden)."/>
+        <comment displayText="" explanatoryText="Geben Sie folgende Eigenschaften für den SMTP-Server an:"/>
         <text property="feedbackHost" displayText="SMTP-Server (Host):" defaultValue="localhost"/>
+        <text property="feedbackPort" displayText="SMTP-Port:" defaultValue=""/>
+        <text property="feedbackUser" displayText="SMTP-Benutzer:" defaultValue=""/>
+        <text property="feedbackPassword" displayText="SMTP-Passwort:" defaultValue=""/>
         <text property="feedbackEmail" displayText="Sender E-Mail-Adresse:" defaultValue="info@informationgrid.eu"/>
-        
     </page>
     
     <page
@@ -289,7 +340,45 @@
                 displayText     ="Installationsverzeichnis"
                 create          ="true"/>
     </page>
-    
+
+    <page
+        ifTarget    ="setUpdateProperty"
+        type        ="input"
+        overflow    = "true"
+        name        ="mapClientUpdate"
+        displayText ="Aktualisierung WebmapClient">
+        <comment displayText="" explanatoryText="Aktivieren Sie bitte die WebmapClient-Aktualisierung, falls Ihre aktuelle Portal-Version kleiner oder gleich 4.0.2 ist."/>
+        <checkbox
+            property     ="executeMapClientUpdate"
+            displayText  ="Aktualisierung durchführen"
+            defaultValue ="false">
+        </checkbox>
+        <comment displayText="" explanatoryText="Hinweis: Falls Sie sich unsicher sind, ob Sie diese Aktualisierung schon durchgeführt haben, dann führen Sie dieses Update einfach aus. Ihre WebmapClient-Daten bleiben erhalten."/>
+    </page>
+
+    <page
+        ifTarget    ="setUpdateProperty"
+        ifProperty  ="(${executeMapClientUpdate}==true)"
+        type        ="input"
+        overflow    = "true"
+        name        ="mapClientUpdateProperties"
+        displayText ="Aktualisierung WebmapClient-Konfiguration">
+        <comment displayText="" explanatoryText="Hinweis: Wählen Sie das Datenverzeichnis aus, in dem Ihr 'WebmapClientData'-Verzeichnis liegt."/>
+        <directory
+            property        ="WebmapDataDir"
+            defaultValue    ="/opt/ingrid"
+            defaultValueWin ="${env.ProgramFiles}"
+            displayText     ="WebmapClient-Datenverzeichnis"
+            create          ="true"
+            checkExists     ="true"/>
+        <comment displayText="" explanatoryText="Geben Sie folgende Eigenschaften für den SMTP-Server an:"/>
+        <text property="feedbackHost" displayText="SMTP-Server (Host):" defaultValue="localhost"/>
+        <text property="feedbackPort" displayText="SMTP-Port:" defaultValue=""/>
+        <text property="feedbackUser" displayText="SMTP-Benutzer:" defaultValue=""/>
+        <text property="feedbackPassword" displayText="SMTP-Passwort:" defaultValue=""/>
+        <text property="feedbackEmail" displayText="Sender E-Mail-Adresse:" defaultValue="info@informationgrid.eu"/>
+    </page>
+
     <page
         ifTarget          ="setUpdateProperty"
         type              ="input"

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -38,9 +38,8 @@ define([
     return declare("ingrid.grid.Editors", null, {
 
         TextCellEditor: function(args) {
-            var input;
-            var defaultValue;
-            var scope = this;
+            this.input = null;
+            this.defaultValue = null;
 
             this.init = function() {
                 this.input = new dijit.form.ValidationTextBox({
@@ -104,9 +103,8 @@ define([
         },
 
         DecimalCellEditor: function(args) {
-            var input;
-            var defaultValue;
-            var scope = this;
+            this.input = null;
+            this.defaultValue = null;
 
             this.init = function() {
                 this.input = new dijit.form.NumberTextBox({
@@ -198,6 +196,10 @@ define([
                 if (args.column.listId) {
                     data = lang.clone(sysLists[args.column.listId]);
 
+                    if (args.column.sortFunc) {
+                        args.column.sortFunc(data);
+                    }
+
                     // if no codelist was found try to get it from the backend
                     if (!data) {
                         data = [];
@@ -223,6 +225,8 @@ define([
                 box = new dijit.form.FilteringSelect({
                     id: "activeCell_" + args.grid.id,
                     store: store,
+                    autoComplete: args.column.partialSearch ? false : true,
+                    queryExpr: args.column.partialSearch ? "*${0}*" : "${0}*",
                     searchAttr: "0",
                     maxHeight: "150",
                     style: "width:100%; padding:0; color: black; font-family: 10px Verdana, Helvetica, Arial, sans-serif;"
@@ -603,9 +607,8 @@ define([
         },
 
         YesNoCheckboxCellEditor: function(args) {
-            var select;
-            var defaultValue;
-            var scope = this;
+            var select = null;
+            var defaultValue = null;
 
             this.init = function() {};
 

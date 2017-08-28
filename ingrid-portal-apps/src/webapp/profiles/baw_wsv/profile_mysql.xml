@@ -4,10 +4,6 @@
     <description>Portal-Profile Geoportal.WSV</description>
     <pages>
         <page>
-            <name>main-maps.psml</name>
-            <hidden>false</hidden>
-        </page>
-        <page>
             <name>main-chronicle.psml</name>
             <hidden>true</hidden>
         </page>
@@ -18,10 +14,6 @@
         <page>
             <name>main-about.psml</name>
             <hidden>true</hidden>
-        </page>
-        <page>
-            <name>_role/user/myportal-edit-account.psml</name>
-            <hidden>false</hidden>
         </page>
         <page>
             <name>cms/cms-1.psml</name>
@@ -105,10 +97,6 @@
                     <name>ingrid-portal-apps::RssNewsTeaser</name>
                 </portlet>
             </portlets>
-        </page>
-        <page>
-            <name>disclaimer.psml</name>
-            <hidden>false</hidden>
         </page>
     </pages>
     <files>
