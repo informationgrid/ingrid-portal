@@ -466,7 +466,10 @@ define([
                 new CheckBox({}, "ref1GridFormatRectCheckpoint");
                 new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectDescription");
                 new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectCornerPoint");
-                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectPointInPixel");
+
+                layoutCreator.createSelectBox("ref1GridFormatRectPointInPixel", null, storeProps, function() {
+                    return UtilSyslist.getSyslistEntry(2100);
+                });
                 
                 new CheckBox({}, "ref1GridFormatRefControlpoint");
                 new CheckBox({}, "ref1GridFormatRefOrientationParam");

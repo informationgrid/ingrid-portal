@@ -2669,7 +2669,7 @@ define([
             var axisDimSize = registry.byId("ref1AxisDimSize").get("value");
             nodeData.ref1GridFormatNumDimensions = isNaN(numDimensions) ? null : numDimensions;
             nodeData.ref1GridFormatAxisDimName = registry.byId("ref1AxisDimName").get("value");
-            nodeData.ref1GridFormatAxisDimSize = isNaN(axisDimSize) ? null : numDimensions;
+            nodeData.ref1GridFormatAxisDimSize = isNaN(axisDimSize) ? null : axisDimSize;
             nodeData.ref1GridFormatCellGeometry = registry.byId("ref1CellGeometry").get("value");
             nodeData.ref1GridFormatGeoRectified = registry.byId("isGeoRectified").checked ? true : false;
             nodeData.ref1GridFormatRectCheckpoint = registry.byId("ref1GridFormatRectCheckpoint").checked ? true : false;
