@@ -457,16 +457,16 @@ table.filteringTable tbody tr.alt td { background:#efefef; }
 
 .outlined {
 	border: 1px solid black;
-    padding: 10px;
+    padding: 10px 5px 0;
 }
 
-.outlined .outer:nth-child(1) > div {
+/* .outlined .outer:nth-child(1) > div {
 	padding-left: 0 !important;
 }
 
 .outlined .outer:nth-child(2) > div {
 	padding-right: 0 !important;
-}
+} */
 
 .fixedLeftDistance150 {
 	float:left;

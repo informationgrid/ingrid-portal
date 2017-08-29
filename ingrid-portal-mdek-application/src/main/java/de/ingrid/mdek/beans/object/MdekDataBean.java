@@ -152,6 +152,21 @@ public class MdekDataBean {
 	private List<Integer> ref1Representation;	
 	private Integer ref1VFormatTopology;
 	private List<VectorFormatDetailsBean> ref1VFormatDetails;
+	
+	private Boolean ref1GridFormatTransfParam;
+	private Integer ref1GridFormatNumDimensions;
+	private String ref1GridFormatAxisDimName;
+	private Integer ref1GridFormatAxisDimSize;
+	private String ref1GridFormatCellGeometry;
+	private Boolean ref1GridFormatGeoRectified;
+	private Boolean ref1GridFormatRectCheckpoint;
+	private String ref1GridFormatRectDescription;
+	private String ref1GridFormatRectCornerPoint;
+	private String ref1GridFormatRectPointInPixel;
+	private Boolean ref1GridFormatRefControlPoint;
+	private Boolean ref1GridFormatRefOrientationParam;
+	private String ref1GridFormatRefGeoreferencedParam;
+	
 	private List<ScaleBean> ref1Scale;
 	private Double ref1AltAccuracy;
 	private Double ref1GridPosAccuracy;
@@ -2066,5 +2081,135 @@ public class MdekDataBean {
 
     public void setAdvProductGroupList(List<Integer> advProductGroupList) {
         this.advProductGroupList = advProductGroupList;
+    }
+
+
+    public Boolean getRef1GridFormatTransfParam() {
+        return ref1GridFormatTransfParam;
+    }
+
+
+    public void setRef1GridFormatTransfParam(Boolean ref1GridFormatTransfParam) {
+        this.ref1GridFormatTransfParam = ref1GridFormatTransfParam;
+    }
+
+
+    public Integer getRef1GridFormatNumDimensions() {
+        return ref1GridFormatNumDimensions;
+    }
+
+
+    public void setRef1GridFormatNumDimensions(Integer ref1GridFormatNumDimensions) {
+        this.ref1GridFormatNumDimensions = ref1GridFormatNumDimensions;
+    }
+
+
+    public String getRef1GridFormatAxisDimName() {
+        return ref1GridFormatAxisDimName;
+    }
+
+
+    public void setRef1GridFormatAxisDimName(String ref1GridFormatAxisDimName) {
+        this.ref1GridFormatAxisDimName = ref1GridFormatAxisDimName;
+    }
+
+
+    public Integer getRef1GridFormatAxisDimSize() {
+        return ref1GridFormatAxisDimSize;
+    }
+
+
+    public void setRef1GridFormatAxisDimSize(Integer ref1GridFormatAxisDimSize) {
+        this.ref1GridFormatAxisDimSize = ref1GridFormatAxisDimSize;
+    }
+
+
+    public String getRef1GridFormatCellGeometry() {
+        return ref1GridFormatCellGeometry;
+    }
+
+
+    public void setRef1GridFormatCellGeometry(String ref1GridFormatCellGeometry) {
+        this.ref1GridFormatCellGeometry = ref1GridFormatCellGeometry;
+    }
+
+
+    public Boolean getRef1GridFormatGeoRectified() {
+        return ref1GridFormatGeoRectified;
+    }
+
+
+    public void setRef1GridFormatGeoRectified(Boolean ref1GridFormatGeoRectified) {
+        this.ref1GridFormatGeoRectified = ref1GridFormatGeoRectified;
+    }
+
+
+    public Boolean getRef1GridFormatRectCheckpoint() {
+        return ref1GridFormatRectCheckpoint;
+    }
+
+
+    public void setRef1GridFormatRectCheckpoint(Boolean ref1GridFormatRectCheckpoint) {
+        this.ref1GridFormatRectCheckpoint = ref1GridFormatRectCheckpoint;
+    }
+
+
+    public String getRef1GridFormatRectDescription() {
+        return ref1GridFormatRectDescription;
+    }
+
+
+    public void setRef1GridFormatRectDescription(String ref1GridFormatRectDescription) {
+        this.ref1GridFormatRectDescription = ref1GridFormatRectDescription;
+    }
+
+
+    public String getRef1GridFormatRectCornerPoint() {
+        return ref1GridFormatRectCornerPoint;
+    }
+
+
+    public void setRef1GridFormatRectCornerPoint(String ref1GridFormatRectCornerPoint) {
+        this.ref1GridFormatRectCornerPoint = ref1GridFormatRectCornerPoint;
+    }
+
+
+    public String getRef1GridFormatRectPointInPixel() {
+        return ref1GridFormatRectPointInPixel;
+    }
+
+
+    public void setRef1GridFormatRectPointInPixel(String ref1GridFormatRectPointInPixel) {
+        this.ref1GridFormatRectPointInPixel = ref1GridFormatRectPointInPixel;
+    }
+
+
+    public Boolean getRef1GridFormatRefControlPoint() {
+        return ref1GridFormatRefControlPoint;
+    }
+
+
+    public void setRef1GridFormatRefControlPoint(Boolean ref1GridFormatRefControlPoint) {
+        this.ref1GridFormatRefControlPoint = ref1GridFormatRefControlPoint;
+    }
+
+
+    public Boolean getRef1GridFormatRefOrientationParam() {
+        return ref1GridFormatRefOrientationParam;
+    }
+
+
+    public void setRef1GridFormatRefOrientationParam(Boolean ref1GridFormatRefOrientationParam) {
+        this.ref1GridFormatRefOrientationParam = ref1GridFormatRefOrientationParam;
+    }
+
+
+    public String getRef1GridFormatRefGeoreferencedParam() {
+        return ref1GridFormatRefGeoreferencedParam;
+    }
+
+
+    public void setRef1GridFormatRefGeoreferencedParam(String ref1GridFormatRefGeoreferencedParam) {
+        this.ref1GridFormatRefGeoreferencedParam = ref1GridFormatRefGeoreferencedParam;
     }
 }

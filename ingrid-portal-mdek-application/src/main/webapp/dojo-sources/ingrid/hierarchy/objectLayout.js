@@ -444,10 +444,10 @@ define([
 
                 
                 /* Add spatialRepresentationInfo (REDMINE-381) */
-                new CheckBox({}, "ref1TranfParamAvail");
+                new CheckBox({}, "ref1TransfParamAvail");
                 new NumberTextBox({style: "width:100%;"}, "ref1NumDimensions");
-                new ValidationTextBox({style: "width:100%;"}, "ref1TAxisDimName");
-                new NumberTextBox({style: "width:100%;"}, "ref1TAxisDimSize");
+                new ValidationTextBox({style: "width:100%;"}, "ref1AxisDimName");
+                new NumberTextBox({style: "width:100%;"}, "ref1AxisDimSize");
                 new ValidationTextBox({style: "width:100%;"}, "ref1CellGeometry");
                 
                 var geoRectified = new RadioButton({
@@ -463,14 +463,14 @@ define([
                 }, "isGeoReferenced");
                 geoReferenced.startup();
                 
-                new CheckBox({}, "ref1GridFormatCheckpoint");
-                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatDescription");
-                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatCornerPoint");
-                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatPointInPixel");
+                new CheckBox({}, "ref1GridFormatRectCheckpoint");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectDescription");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectCornerPoint");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectPointInPixel");
                 
-                new CheckBox({}, "ref1GridFormatControlpoint");
-                new CheckBox({}, "ref1GridFormatOrientationParam");
-                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatGeoreferencedParam");
+                new CheckBox({}, "ref1GridFormatRefControlpoint");
+                new CheckBox({}, "ref1GridFormatRefOrientationParam");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRefGeoreferencedParam");
 
                 on(geoRectified, "change", function(checked) {
                     if (checked) {
