@@ -158,7 +158,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                                     }
                                     if(value != null){
                                         value = value.trim();
-                                        if(!value.startsWith( "http://" )){
+                                        if(!value.startsWith( "http" )){
                                             value = "http://" + value;
                                         }
                                         provider.put( "url", value );
