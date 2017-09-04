@@ -313,7 +313,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
             <facet>
                 <name>Wasserwirtschaftliche Vorhaben </name>
-                <query>uvp_category:"UVPG-3"</query>
+                <query>uvp_category:"UVPG-13"</query>
                 <id>wasservorhaben</id>
                 <display>true</display>
             </facet>
