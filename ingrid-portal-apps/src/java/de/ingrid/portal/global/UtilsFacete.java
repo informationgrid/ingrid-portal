@@ -478,7 +478,7 @@ public class UtilsFacete {
                                             if(facet != null){
                                                 if(queryType == null){
                                                     facet.setFacetValue(value.toString());
-                                                }else if(queryType.equals("OR") || queryType.equals("OR_DIALOG")){
+                                                }else if(queryType.equals("OR")){
                                                     if(facet.getFacetValue() == null){
                                                         facet.setFacetValue(value.toString());
                                                     }
@@ -2060,7 +2060,7 @@ public class UtilsFacete {
             for(IngridFacet facet : config){
                 if(facet.getId().equals("topic")){
                     ArrayList<IngridFacet> list = facet.getFacets();
-                    facet.setQueryType("OR_DIALOG");
+                    facet.setQueryType("OR");
                     facet.setSort("SORT_BY_VALUE_DESC");
                     CodeListService codelistService = CodeListServiceFactory.instance();
                     ResourceBundle bundle = ResourceBundle.getBundle("de.ingrid.portal.resources.EnvironmentSearchResources", Locale.GERMAN);
@@ -2090,15 +2090,8 @@ public class UtilsFacete {
                             // Partner restriction (set tmpFacet.setParentHidden(true)) 
                             for(IngridPartner partner : partners){
                                 if(partner.getIdent().equals(restrictPartner)){
-                                    IngridFacet tmpFacet = new IngridFacet();
-                                    tmpFacet.setId(partner.getIdent());
-                                    tmpFacet.setQueryType("OR_DIALOG");
-                                    tmpFacet.setQuery("partner:"+ partner.getIdent());
-                                    tmpFacet.setName(partner.getName());
-                                    tmpFacet.setSort("SORT_BY_VALUE_DESC");
-                                    tmpFacet.setParent(facet);
-                                    // Partner restriction is define.
-                                    tmpFacet.setParentHidden(true);
+                                    facet.setQueryType("OR");
+                                    facet.setSort("SORT_BY_VALUE_DESC");
                                     List<IngridProvider> providers = UtilsDB.getProvidersFromPartnerKey(partner.getIdent());
                                     ArrayList<IngridFacet> listProviders = null;
                                     for(IngridProvider provider : providers){
@@ -2106,19 +2099,13 @@ public class UtilsFacete {
                                         tmpProvidersFacet.setId(provider.getIdent());
                                         tmpProvidersFacet.setQuery("provider:"+ provider.getIdent());
                                         tmpProvidersFacet.setName(provider.getName());
-                                        tmpProvidersFacet.setParent(tmpFacet);
+                                        tmpProvidersFacet.setParent(facet);
                                         if(listProviders == null){
                                             listProviders = new ArrayList<IngridFacet>();
                                         }
                                         listProviders.add(tmpProvidersFacet);
                                     }
-                                    if(listProviders != null){
-                                        tmpFacet.setFacets(listProviders);
-                                    }
-                                    if(list == null){
-                                        list = new ArrayList<IngridFacet>();
-                                    }
-                                    list.add(tmpFacet);
+                                    list = listProviders;
                                     break;
                                 }
                             }
@@ -2126,7 +2113,6 @@ public class UtilsFacete {
                             for(IngridPartner partner : partners){
                                 IngridFacet tmpFacet = new IngridFacet();
                                 tmpFacet.setId(partner.getIdent());
-                                tmpFacet.setQueryType("OR_DIALOG");
                                 tmpFacet.setQuery("partner:"+ partner.getIdent());
                                 tmpFacet.setName(partner.getName());
                                 tmpFacet.setSort("SORT_BY_VALUE_DESC");
@@ -2341,7 +2327,7 @@ public class UtilsFacete {
         if(facets != null){
             if(type != null){
                 // OR
-                if(type.equals("OR") || type.equals("OR_DIALOG")){
+                if(type.equals("OR")){
                     String orQuery = "()";
                     for(IngridFacet ingridFacet : facets){
                         if(ingridFacet.isSelect() || ingridFacet.isParentHidden()){
@@ -2494,7 +2480,7 @@ public class UtilsFacete {
                 if(key != null){
                     if(facet.getId().equals(key)){
                         if(facet.getQueryType() != null){
-                            if(facet.getQueryType().equals("OR") || facet.getQueryType().equals("OR_DIALOG")){
+                            if(facet.getQueryType().equals("OR")){
                                 isOrSelect = true;
                             }
                         }
