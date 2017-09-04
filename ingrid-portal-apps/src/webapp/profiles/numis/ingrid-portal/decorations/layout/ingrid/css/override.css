@@ -391,7 +391,7 @@ thead {
     float: right;
     line-height: 1;
     margin-right: 0.625rem;
-    clear: both;
+    top: 65px;
 }
 
 #wrapper .service-header {
@@ -424,9 +424,9 @@ thead {
 }
 
 @media screen and (min-width: 940px) {
-	.header__widget > a {
-	    color: #616161;
-	}
+    .header__widget > a {
+        color: #616161;
+    }
 }
 
 #wrapper * {
@@ -456,9 +456,9 @@ thead {
 }
 
 @media screen and (min-width: 840px) {
-	#wrapper .block--padded {
-	    padding: 5rem 0;
-	}
+    #wrapper .block--padded {
+        padding: 5rem 0;
+    }
 }
 
 #wrapper .search-form .btn--primary {
@@ -467,9 +467,9 @@ thead {
 }
 
 @media screen and (min-width: 480px) {
-	#wrapper .search-form .btn--primary {
-	    width: 3.75rem;
-	}
+    #wrapper .search-form .btn--primary {
+        width: 3.75rem;
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -487,9 +487,9 @@ thead {
 }
 
 @media screen and (min-width: 480px) {
-	#wrapper .search-form .btn--primary .icon {
-	    font-size: 1.625rem;
-	}
+    #wrapper .search-form .btn--primary .icon {
+        font-size: 1.625rem;
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -510,11 +510,16 @@ thead {
     display: inline;
 }
 
+#wrapper .search-form__logo-md {
+    width: 12.5rem;
+    margin-bottom: 1.625rem;
+}
+
 @media screen and (min-width: 940px) {
-	#wrapper .search-form__logo-md {
-	    width: 15.375rem;
-	    margin-bottom: 2.25rem;
-	}
+    #wrapper .search-form__logo-md {
+        width: 15.375rem;
+        margin-bottom: 2.25rem;
+    }
 }
 
 .blink {
