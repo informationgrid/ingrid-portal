@@ -303,10 +303,12 @@ thead {
 }
 
 .desktop-logo {
+    float: left;
 }
 
 .mobile__logo {
     height: auto;
+    float: left;
 }
 
 .desktop__title p {
@@ -363,11 +365,44 @@ thead {
 
 
 <!-- mcloud -->
+/****** Webfonts ******/
+@font-face {
+  font-family: 'BundesSansWeb';
+  src: url("../fonts/BundesSansWeb/BundesSansWeb-Regular.eot");
+  src: url("../fonts/BundesSansWeb/BundesSansWeb-Regular.eot#iefix") format("eot"), url("../fonts/BundesSansWeb/BundesSansWeb-Regular.woff") format("woff"), url("../fonts/BundesSansWeb/BundesSansWeb-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'BundesSansWeb';
+  src: url("../fonts/BundesSansWeb/BundesSansWeb-Bold.eot");
+  src: url("../fonts/BundesSansWeb/BundesSansWeb-Bold.eot#iefix") format("eot"), url("../fonts/BundesSansWeb/BundesSansWeb-Bold.woff") format("woff"), url("../fonts/BundesSansWeb/BundesSansWeb-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'BundesSansWeb';
+  src: url("../fonts/BundesSansWeb/BundesSansWeb-BoldItalic.eot");
+  src: url("../fonts/BundesSansWeb/BundesSansWeb-BoldItalic.eot#iefix") format("eot"), url("../fonts/BundesSansWeb/BundesSansWeb-BoldItalic.woff") format("woff"), url("../fonts/BundesSansWeb/BundesSansWeb-BoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic; }
+
+@font-face {
+  font-family: 'BundesSansWeb';
+  src: url("../fonts/BundesSansWeb/BundesSansWeb-Italic.eot");
+  src: url("../fonts/BundesSansWeb/BundesSansWeb-Italic.eot#iefix") format("eot"), url("../fonts/BundesSansWeb/BundesSansWeb-Italic.woff") format("woff"), url("../fonts/BundesSansWeb/BundesSansWeb-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic; }
+
 .header {
     color: #fff;
     margin: auto;
     position: relative;
     z-index: 2;
+}
+
+#wrapper .header__widgets__section {
+    font-size: 1rem;
 }
 
 @media screen and (min-width: 940px) {
@@ -383,7 +418,7 @@ thead {
 
 #wrapper .sub-header {
     position: relative;
-    bottom: 0.525rem;
+    bottom: -4.0625rem;
     margin-right: 0 !important;
 }
 
@@ -391,13 +426,11 @@ thead {
     float: right;
     line-height: 1;
     margin-right: 0.625rem;
-    top: 65px;
 }
 
 #wrapper .service-header {
     position: relative;
     margin-right: 0 !important;
-    clear: both;
 }
 
 #wrapper .service-header {
@@ -429,8 +462,8 @@ thead {
     }
 }
 
-#wrapper * {
-    font-family: "BundesSansWeb", sans-serif;
+.ingrid #wrapper * {
+    font-family: "BundesSansWeb", sans-serif !important;
 }
 
 #wrapper .header__logo {
@@ -522,9 +555,49 @@ thead {
     }
 }
 
+.klar {
+    float: left;
+}
+
 .blink {
     animation: blink-animation 20s steps(50, start) infinite;
     -webkit-animation: blink-animation 20s steps(50, start) infinite;
+}
+
+@keyframes blink-animation {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes blink-animation {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .header__widget > a {

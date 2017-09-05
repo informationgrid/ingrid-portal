@@ -66,7 +66,7 @@
             <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
         #end
     </head>
-    <body>
+    <body class="ingrid">
     
     #set($mainMenu = $site.getMenu("main-menu"))
     #set($serviceMenu = $site.getMenu("service-menu"))
@@ -88,16 +88,14 @@
                     </div>
                 </div>
                 <div class="header__widgets__section header_logo_section">
-                    <img class="mq-hide-xxl" src="#GetPageResource('images/template/143067.png')"></img>
                     <a class="header__logo header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                        <img class="mq-hide-xxl" src="#GetPageResource('images/template/143067.png')"></img>
                         <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/niedersachsen.png')"></img>
                         <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/niedersachsen.png')"></img>
-                    </a>
-                    <div class="header__logo header__widget header__logo" style="margin-left: 0;">
-                        <span class="blink mq-hide-m">
+                        <span class="blink klar mq-hide-l">
                             <img src="#GetPageResource('images/template/klar.png')"></img>
                         </span>
-                    </div>
+                    </a>
                 </div>
                 #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)
