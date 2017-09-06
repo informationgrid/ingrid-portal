@@ -383,9 +383,14 @@ public class UtilsFacete {
                         for(IngridFacet facetDep : facetDepList){
                             IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
                             if(dependencyValue.isSelect()){
-                                facetDep.setDependencySelect(true);
+                                facetDep.setDependencySelect(dependencyValue.isSelect());
                             }else{
-                                facetDep.setDependencySelect(false);
+                                if(facetDep.getFacets() != null){
+                                    for(IngridFacet facetChild : facetDep.getFacets()){
+                                        facetChild.setSelect(dependencyValue.isSelect());
+                                    }
+                                }
+                                facetDep.setDependencySelect(dependencyValue.isSelect());
                             }
                         }
                     }
@@ -1701,9 +1706,14 @@ public class UtilsFacete {
                                 for(IngridFacet facetDep : facetDepList){
                                     IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
                                     if(dependencyValue.isSelect()){
-                                        facetDep.setDependencySelect(true);
+                                        facetDep.setDependencySelect(dependencyValue.isSelect());
                                     }else{
-                                        facetDep.setDependencySelect(false);
+                                        if(facetDep.getFacets() != null){
+                                            for(IngridFacet facetChild : facetDep.getFacets()){
+                                                facetChild.setSelect(dependencyValue.isSelect());
+                                            }
+                                        }
+                                        facetDep.setDependencySelect(dependencyValue.isSelect());
                                     }
                                 }
                             }
