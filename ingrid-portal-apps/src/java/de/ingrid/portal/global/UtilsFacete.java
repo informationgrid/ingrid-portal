@@ -381,7 +381,8 @@ public class UtilsFacete {
                     if(!isOldIPlug){
                         getDependencyFacetById(config, facetDepList, value);
                         for(IngridFacet facetDep : facetDepList){
-                            if(facetIsSelect){
+                            IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
+                            if(dependencyValue.isSelect()){
                                 facetDep.setDependencySelect(true);
                             }else{
                                 facetDep.setDependencySelect(false);
@@ -1693,6 +1694,19 @@ public class UtilsFacete {
                             //Set facet isSelect
                             IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), split[1]);
                             tmpFacetValue.setSelect(true);
+                            //Check dependency
+                            if(tmpFacetValue.getId() != null){
+                                ArrayList<IngridFacet> facetDepList = new ArrayList<IngridFacet>();
+                                getDependencyFacetById(config, facetDepList, tmpFacetValue.getId());
+                                for(IngridFacet facetDep : facetDepList){
+                                    IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
+                                    if(dependencyValue.isSelect()){
+                                        facetDep.setDependencySelect(true);
+                                    }else{
+                                        facetDep.setDependencySelect(false);
+                                    }
+                                }
+                            }
                         }
                     }
                 }

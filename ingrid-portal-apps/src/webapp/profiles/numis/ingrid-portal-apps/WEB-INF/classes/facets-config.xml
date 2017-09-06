@@ -282,6 +282,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.time</name>
         <id>modtime</id>
         <dependency>metadata</dependency>
+        <isOpen>true</isOpen>
         <facets>
             <!-- letzter Monat -->
             <facet>
@@ -330,6 +331,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_VALUE_DESC">
         <name>searchResult.facete.title.provider</name>
         <id>provider</id>
+        <isOpen>true</isOpen>
     </facet>
     <!-- Raumbezug -->
     <!-- Standard - Kann nicht erweitert werden -->
@@ -337,11 +339,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.area</name>
         <id>area</id>
         <hidden>address</hidden>
+        <isOpen>true</isOpen>
     </facet>
     <facet>
         <name>searchResult.facete.title.area</name>
         <id>area.map</id>
         <hidden>address</hidden>
+        <isOpen>true</isOpen>
     </facet>
     <!-- Raumbezug Adressen-->
     <!-- Standard - Kann nicht erweitert werden -->
@@ -349,6 +353,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.area.address</name>
         <dependency>address</dependency>
         <id>area.address</id>
+        <isOpen>true</isOpen>
     </facet>
     <!-- Attribute (Forschungsprojekte)-->
     <!-- Standard - Kann nicht erweitert werden -->
@@ -356,6 +361,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.attribute</name>
         <dependency>research</dependency>
         <id>attribute</id>
+        <isOpen>true</isOpen>
     </facet>
     <!-- Kategorie -->
     <facet>
