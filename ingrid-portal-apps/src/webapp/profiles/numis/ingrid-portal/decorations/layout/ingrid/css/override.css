@@ -127,15 +127,16 @@ thead {
 }
 
 .nav-desktop__dropdown {
-  border-top: 4px solid #E2E2E2;
+  border-top: 4px solid #e50046;
+  top: 45px;
 }
 
 .nav-desktop__dropdown a:hover, .nav-desktop__dropdown a:active {
-  color: #2C5C91 !important;
+  color: #000000 !important;
 }
 
 .nav__dropdown-item a:active {
-  color: #2C5C91 !important;
+  color: #000000 !important;
 }
 
 .dropmenu .is-active {
@@ -661,4 +662,12 @@ thead {
 #wrapper .widget__title {
     color: #2c2c2c;
     font-size: 1rem;
+}
+
+.field {
+    margin-bottom: 0;
+}
+
+.nav-desktop__dropdown li {
+    padding: 0.5rem 1rem;
 }
