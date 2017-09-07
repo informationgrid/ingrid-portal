@@ -30,8 +30,11 @@ INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'user_template_default_page_fragment_id'), 'ingrid-portal-apps::CategoryTeaser',      'portlet', 2, 0, -1, -1, -1, -1, -1);
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+11 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'user_template_default_page_fragment_id'), 'ingrid-portal-apps::IngridInformPortlet', 'portlet', 3, 0, -1, -1, -1, -1, -1);
 
--- Show '/language.link'
+-- Hide '/language.link'
 UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
+
+-- Show '/home.link'
+UPDATE link SET is_hidden = 0 WHERE path = '/home.link';
 
 -- Delete temporary table
 DROP TABLE IF EXISTS ingrid_temp;

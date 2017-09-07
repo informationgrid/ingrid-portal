@@ -120,7 +120,11 @@ UPDATE folder SET is_hidden = 1 WHERE path = '/cms';
 UPDATE folder SET is_hidden = 1 WHERE path = '/application';
 
 -- Show '/language.link'
-UPDATE link SET is_hidden = 0 WHERE path = '/language.link';
+UPDATE link   SET is_hidden = 0 WHERE path = '/language.link';
+
+-- Hide '/home.link'
+UPDATE link   SET is_hidden = 1 WHERE path = '/home.link';
+
 
 -- Delete temporary table
 DROP TABLE IF EXISTS ingrid_temp;
