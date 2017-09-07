@@ -505,15 +505,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro(renderSearchResultFacetSelectionItem $entry $action $title)
-    <div class="field-toggle field-toggle--check bx-bot-xs">
-        <input id="chk_fs_$entry.getId()" name="event" type="checkbox" onclick="location.href='$action'" checked>
-        <label class="field-toggle__label field-toggle__label--boxed" for="chk_fs_$entry.getId()">
-            <div class="field-toggle__icon field-toggle__icon-alt">
-                <svg class="icon">
-                    <use xlink:href="#tick">
-                </svg>
-            </div>
+    <li class="tag tag--small">
+        <a id="chk_fs_$entry.getId()" href="$action">
+            <svg class="icon icon-xs icon-marr-xs"> 
+                <use href="#cross"></use>
+            </svg>
             $title
-        </label>
-    </div>
+        </a>
+    </li>
 #end

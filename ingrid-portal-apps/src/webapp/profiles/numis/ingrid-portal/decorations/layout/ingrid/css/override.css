@@ -71,9 +71,15 @@ thead {
 }
 
 #btn_search {
-  background: #E0003C;
-  border-color: #E0003C;
+  background: #e50046;
+  border: 0.0625rem solid #e50046;
 }
+
+#btn_search:hover {
+  background: #E0003C;
+  border: 0.0625rem solid #E0003C;
+}
+
 #btn_search:not([disabled]):hover, #btn_search:not([disabled]):focus, #btn_search:not([disabled]):active {
   color: #fff !important;
 }
@@ -165,7 +171,11 @@ thead {
   color: #2C5C91;
 }
 
-.search-form input {
+#wrapper .search-form input {
+  border-color: #2C5C91;
+}
+
+#wrapper #SearchForm .search-form input {
   border-color: #e50046;
   padding: 1.25rem !important;
 }
@@ -369,31 +379,19 @@ thead {
 /****** Webfonts ******/
 @font-face {
   font-family: 'BundesSansWeb';
-  src: url("../fonts/BundesSansWeb/BundesSansWeb-Regular.eot");
-  src: url("../fonts/BundesSansWeb/BundesSansWeb-Regular.eot#iefix") format("eot"), url("../fonts/BundesSansWeb/BundesSansWeb-Regular.woff") format("woff"), url("../fonts/BundesSansWeb/BundesSansWeb-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal; }
-
-@font-face {
-  font-family: 'BundesSansWeb';
   src: url("../fonts/BundesSansWeb/BundesSansWeb-Bold.eot");
   src: url("../fonts/BundesSansWeb/BundesSansWeb-Bold.eot#iefix") format("eot"), url("../fonts/BundesSansWeb/BundesSansWeb-Bold.woff") format("woff"), url("../fonts/BundesSansWeb/BundesSansWeb-Bold.ttf") format("truetype");
   font-weight: bold;
-  font-style: normal; }
+  font-style: normal;
+}
 
 @font-face {
   font-family: 'BundesSansWeb';
-  src: url("../fonts/BundesSansWeb/BundesSansWeb-BoldItalic.eot");
-  src: url("../fonts/BundesSansWeb/BundesSansWeb-BoldItalic.eot#iefix") format("eot"), url("../fonts/BundesSansWeb/BundesSansWeb-BoldItalic.woff") format("woff"), url("../fonts/BundesSansWeb/BundesSansWeb-BoldItalic.ttf") format("truetype");
-  font-weight: bold;
-  font-style: italic; }
-
-@font-face {
-  font-family: 'BundesSansWeb';
-  src: url("../fonts/BundesSansWeb/BundesSansWeb-Italic.eot");
-  src: url("../fonts/BundesSansWeb/BundesSansWeb-Italic.eot#iefix") format("eot"), url("../fonts/BundesSansWeb/BundesSansWeb-Italic.woff") format("woff"), url("../fonts/BundesSansWeb/BundesSansWeb-Italic.ttf") format("truetype");
+  src: url("../fonts/BundesSansWeb/BundesSansWeb-Regular.eot");
+  src: url("../fonts/BundesSansWeb/BundesSansWeb-Regular.eot#iefix") format("eot"), url("../fonts/BundesSansWeb/BundesSansWeb-Regular.woff") format("woff"), url("../fonts/BundesSansWeb/BundesSansWeb-Regular.ttf") format("truetype");
   font-weight: normal;
-  font-style: italic; }
+  font-style: normal;
+}
 
 .header {
     color: #fff;
@@ -440,8 +438,7 @@ thead {
     margin-right: 0.625rem;
 }
 
-
-#wrapper .header__widgets__section .header__widget a.is-active, #wrapper .header__widgets__section .header__widget a.is-selected {
+#wrapper .header__widgets__section.sub-header .header__widget a.is-active, #wrapper .header__widgets__section.sub-header .header__widget a.is-selected {
     box-shadow: 0 14px 0 -6px #e50046;
 }
 
@@ -449,7 +446,7 @@ thead {
   border-style: none;
 }
 
-#wrapper .header__widgets__section .header__widget a {
+#wrapper .header__widgets__section.sub-header .header__widget a {
     padding-bottom: 1.375rem;
 }
 
@@ -464,7 +461,7 @@ thead {
 }
 
 .ingrid #wrapper * {
-    font-family: "BundesSansWeb", sans-serif !important;
+    font-family: "BundesSansWeb", sans-serif;
 }
 
 #wrapper .header__logo {
@@ -495,24 +492,24 @@ thead {
     }
 }
 
-#wrapper .search-form .btn--primary {
+#wrapper #SearchForm .search-form .btn--primary {
     position: relative;
     width: 2.5rem;
 }
 
 @media screen and (min-width: 480px) {
-    #wrapper .search-form .btn--primary {
+    #wrapper #SearchForm .search-form .btn--primary {
         width: 3.75rem;
     }
 }
 
 @media screen and (min-width: 768px) {
-    #wrapper .search-form .btn--primary {
+    #wrapper #SearchForm .search-form .btn--primary {
         width: 4.375rem;
     }
 }
 
-#wrapper .search-form .btn--primary .icon {
+#wrapper #SearchForm .search-form .btn--primary .icon {
     fill: #fff;
     position: absolute;
     top: 50%;
@@ -521,13 +518,13 @@ thead {
 }
 
 @media screen and (min-width: 480px) {
-    #wrapper .search-form .btn--primary .icon {
+    #wrapper #SearchForm .search-form .btn--primary .icon {
         font-size: 1.625rem;
     }
 }
 
 @media screen and (min-width: 768px) {
-    #wrapper .search-form .btn--primary .icon {
+    #wrapper #SearchForm .search-form .btn--primary .icon {
         font-size: 2.25rem;
     }
 }
@@ -632,8 +629,12 @@ thead {
     }
 }
 
-#wrapper .sidebar__filter .field-toggle--check {
+#wrapper .sidebar__widget__content .field-toggle--check {
     display: block;
+}
+
+#wrapper .sidebar__widget__content .field-toggle__label--highlight {
+    margin-bottom: 1rem;
 }
 
 #wrapper .field-toggle--number {
@@ -670,4 +671,8 @@ thead {
 
 .nav-desktop__dropdown li {
     padding: 0.5rem 1rem;
+}
+
+#wrapper .tx-sm {
+    font-size: 1rem;
 }
