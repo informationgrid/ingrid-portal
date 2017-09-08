@@ -166,7 +166,7 @@
                 #set ($salutation = "$!{salutation} $userNameFamily")
             #end
         #end
-        <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="#if($jetspeed.getLoggedOn())$salutation#else$$!linkTitle#end">
+        <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="#if($jetspeed.getLoggedOn())$salutation#else$!linkTitle#end">
             <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
                 <use xlink:href="#user"></use>
             </svg>
