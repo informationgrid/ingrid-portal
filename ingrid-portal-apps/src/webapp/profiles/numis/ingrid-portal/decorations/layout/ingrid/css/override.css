@@ -416,26 +416,34 @@ thead {
 }
 
 #wrapper .sub-header {
-    position: relative;
-    bottom: -4.0625rem;
+    position: absolute;
     margin-right: 0 !important;
 }
 
 #wrapper .sub-header {
-    float: right;
+    right: 0;
+    bottom: 0;
     line-height: 1;
     margin-right: 0.625rem;
 }
 
 #wrapper .service-header {
-    position: relative;
+    position: absolute;
     margin-right: 0 !important;
 }
 
 #wrapper .service-header {
-    float: right;
+    right: 0;
     line-height: 1;
     margin-right: 0.625rem;
+}
+
+#wrapper .service-header .header__widget .header__widget__text {
+    font-size: 0.775rem;
+}
+
+#wrapper .service-header .header__widget:not(:first-child) {
+    margin-left: 0.75rem;
 }
 
 #wrapper .header__widgets__section.sub-header .header__widget a.is-active, #wrapper .header__widgets__section.sub-header .header__widget a.is-selected {
@@ -450,7 +458,7 @@ thead {
     padding-bottom: 1.375rem;
 }
 
-#wrapper .header__widgets__section .header__widget__toggle {
+#wrapper .header__widgets__section.sub-header .header__widget__toggle {
     font-weight: 700;
 }
 
@@ -675,4 +683,19 @@ thead {
 
 #wrapper .tx-sm {
     font-size: 1rem;
+}
+
+@media screen and (min-width: 940px) {
+    .header__widget__icon {
+        height: 1em;
+    }
+}
+
+#wrapper .header_content {
+    position: relative;
+}
+@media screen and (max-width: 939px) {
+    #wrapper .header_content {
+        position: inherit;
+    }
 }

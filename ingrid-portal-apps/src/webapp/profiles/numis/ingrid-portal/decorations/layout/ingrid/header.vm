@@ -77,31 +77,33 @@
     <div id="wrapper" >
         <header class="header">
             <div class="ob-box-wide ob-box-padded ob-box-center">
-                <div class="header__widgets__section">
-                    <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
-                        <svg class="icon">
-                            <use xlink:href="#burger">
-                        </svg>
-                        <svg class="icon ob-fade">
-                            <use xlink:href="#cross">
-                        </svg>
+                <div class="header_content">
+                    <div class="header__widgets__section">
+                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                            <svg class="icon">
+                                <use xlink:href="#burger">
+                            </svg>
+                            <svg class="icon ob-fade">
+                                <use xlink:href="#cross">
+                            </svg>
+                        </div>
                     </div>
+                    <div class="header__widgets__section header_logo_section">
+                        <a class="header__logo header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                            <img class="mq-hide-xxl" src="#GetPageResource('images/template/143067.png')"></img>
+                            <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/niedersachsen.png')"></img>
+                            <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/niedersachsen.png')"></img>
+                            <span class="blink klar mq-hide-l">
+                                <img src="#GetPageResource('images/template/klar.png')"></img>
+                            </span>
+                        </a>
+                    </div>
+                    #if($serviceMenu && !$serviceMenu.empty)
+                        #includeServiceNavigation($serviceMenu)
+                    #end
+                    #if(!$mainMenu.empty)
+                        #includeMainNavigation($mainMenu)
+                    #end
                 </div>
-                <div class="header__widgets__section header_logo_section">
-                    <a class="header__logo header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                        <img class="mq-hide-xxl" src="#GetPageResource('images/template/143067.png')"></img>
-                        <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/niedersachsen.png')"></img>
-                        <img class="mq-show-xxl mobile__logo" src="#GetPageResource('images/template/niedersachsen.png')"></img>
-                        <span class="blink klar mq-hide-l">
-                            <img src="#GetPageResource('images/template/klar.png')"></img>
-                        </span>
-                    </a>
-                </div>
-                #if($serviceMenu && !$serviceMenu.empty)
-                    #includeServiceNavigation($serviceMenu)
-                #end
-                #if(!$mainMenu.empty)
-                    #includeMainNavigation($mainMenu)
-                #end
             </div>
         </header>

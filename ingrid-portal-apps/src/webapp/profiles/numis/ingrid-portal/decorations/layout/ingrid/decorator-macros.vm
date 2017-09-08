@@ -170,6 +170,7 @@
             <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
                 <use xlink:href="#user"></use>
             </svg>
+            <span class="header__widget__text mq-hide-xxl">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
         </a>
         #if($jetspeed.getLoggedOn())
             <div class="metamenu metamenu--wide">
@@ -202,6 +203,7 @@
             <svg class="header__widget__icon icon">
                 <use xlink:href="#gear"></use>
             </svg>
+            <span class="header__widget__text mq-hide-xxl">${linkName}</span>
         </a>
         <div class="metamenu">
             <div class="metamenu__box ob-container">
@@ -242,7 +244,8 @@
   #elseif($el == "/default-page.psml")
     <div class="header__widget">
         <a href="$linkUrl" title="$!linkTitle">
-            <i class="icon icon-house-2" style=""></i>
+            <i class="header__widget__icon icon icon-house-2" style=""></i>
+            <span class="header__widget__text mq-hide-xxl">${linkName}</span>
         </a>
     </div>
   #end
