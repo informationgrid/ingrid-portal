@@ -65,9 +65,9 @@ thead {
 }
 
 .btn--primary:not([disabled]):hover, .btn--primary:not([disabled]):focus, .btn--primary:not([disabled]):active {
-  background: #E2E2E2;
-  border-color: #E2E2E2;
-  color: #2C5C91 !important;
+  background: #2C5C91;
+  border-color: #2C5C91;
+  color: #FFFFFF !important;
 }
 
 #btn_search {
