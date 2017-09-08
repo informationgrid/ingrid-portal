@@ -417,7 +417,6 @@ thead {
 
 #wrapper .sub-header {
     position: absolute;
-    margin-right: 0 !important;
 }
 
 #wrapper .sub-header {
@@ -429,13 +428,18 @@ thead {
 
 #wrapper .service-header {
     position: absolute;
-    margin-right: 0 !important;
 }
 
 #wrapper .service-header {
     right: 0;
     line-height: 1;
     margin-right: 0.625rem;
+}
+
+@media screen and (max-width: 939px) {
+    .service-header {
+        margin-top: 0.625rem;
+    }
 }
 
 #wrapper .service-header .header__widget .header__widget__text {
