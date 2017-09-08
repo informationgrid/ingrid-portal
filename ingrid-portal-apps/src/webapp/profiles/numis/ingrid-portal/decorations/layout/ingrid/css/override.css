@@ -292,6 +292,10 @@ thead {
     color: #000000;
   }
 
+  .header__widget > a:hover, .header__widget > a:active {
+    color: #000000;
+  }
+
   .header__widget__icon.is-active {
     fill: #E0003C;
   }
