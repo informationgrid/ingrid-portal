@@ -288,10 +288,6 @@ thead {
 }
 
 @media screen and (min-width: 940px) {
-  .no-touchevents .header__widget > a:hover, .no-touchevents .header__widget > a:active {
-    color: #000000;
-  }
-
   .header__widget > a:hover, .header__widget > a:active {
     color: #000000;
   }
