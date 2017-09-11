@@ -218,12 +218,12 @@
     
     <!-- Mein Portal  -->
     <rule>
-        <from>/personalisierungsoptionen</from>
+        <from>/log-in</from>
         <to type="forward">/portal/service-myportal.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-myportal.psml</from>
-        <to>/personalisierungsoptionen</to>
+        <to>/log-in</to>
     </outbound-rule>
     
     <!-- Datenschutzbestimmung   -->
