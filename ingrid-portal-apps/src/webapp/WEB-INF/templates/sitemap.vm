@@ -349,6 +349,7 @@
         $MESSAGES.getString("sitemap.area.service.sitemap")</a>
         <p>$MESSAGES.getString("sitemap.area.service.sitemap.description")</p>
     </li>
+    #if($enableDisclaimer)
     <li>
         #set ($link = $renderResponse.encodeURL("/portal/disclaimer.psml"))
         <a href="$link" title="$MESSAGES.getString("sitemap.area.footer.disclaimer.tooltip")">
@@ -359,6 +360,8 @@
         </a>
         <p>$MESSAGES.getString("sitemap.area.footer.disclaimer.description")</p>
     </li>
+    #end
+    #if($enablePrivacy)
     <li>
         #set ($link = $renderResponse.encodeURL("/portal/privacy.psml"))
         <a href="$link" title="$MESSAGES.getString("sitemap.area.footer.privacy.tooltip")">
@@ -369,4 +372,5 @@
         </a>
         <p>$MESSAGES.getString("sitemap.area.footer.privacy.description")</p>
     </li>
+    #end
 </ul>
